@@ -12,9 +12,16 @@ set(map_SRCS
 	src/map/province.cpp
 )
 source_group(map FILES ${map_SRCS})
+set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
+
+set(util_SRCS
+)
+source_group(util FILES ${util_SRCS})
+set_source_files_properties(${util_SRCS} PROPERTIES UNITY_GROUP "util")
 
 set(metternich_SRCS
 	${map_SRCS}
+	${util_SRCS}
 )
 
 set(map_HDRS
@@ -22,8 +29,14 @@ set(map_HDRS
 )
 source_group(map FILES ${map_HDRS})
 
+set(util_HDRS
+	src/util/log_util.h
+)
+source_group(util FILES ${util_HDRS})
+
 set(metternich_HDRS
 	${map_HDRS}
+	${util_HDRS}
 	src/pch.h
 )
 
@@ -101,11 +114,9 @@ add_executable(metternich_test ${metternich_test_SRCS})
 add_test(metternich_test metternich_test)
 enable_testing()
 
-#target_precompile_headers(metternich PRIVATE src/pch.h)
+target_precompile_headers(metternich PRIVATE src/pch.h)
 
 set_target_properties(metternich PROPERTIES UNITY_BUILD_MODE GROUP)
-
-set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
 set_target_properties(metternich_test PROPERTIES UNITY_BUILD_MODE GROUP)
 set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test")
@@ -114,8 +125,8 @@ target_link_libraries(metternich ${metternich_LIBS})
 
 target_link_libraries(metternich ${metternich_LIBS})
 
-#target_precompile_headers(metternich_main REUSE_FROM metternich)
-#target_precompile_headers(metternich_test REUSE_FROM metternich)
+target_precompile_headers(metternich_main REUSE_FROM metternich)
+target_precompile_headers(metternich_test REUSE_FROM metternich)
 
 set_target_properties(metternich_main PROPERTIES OUTPUT_NAME ${BINARY_NAME})
 

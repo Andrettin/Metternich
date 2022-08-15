@@ -33,6 +33,7 @@
 #include <stack>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <thread>
 #include <tuple>
 #include <type_traits>
@@ -43,6 +44,7 @@
 
 /*
 #include <boost/asio/awaitable.hpp>
+*/
 
 #include <QApplication>
 #include <QColor>
@@ -69,4 +71,3 @@
 #include <QTranslator>
 #include <QVariant>
 #include <QVariantList>
-*/
