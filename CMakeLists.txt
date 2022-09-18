@@ -4,8 +4,11 @@ project(metternich VERSION 1.0.0)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo" CACHE STRING "" FORCE)
 
+add_subdirectory(archimedes)
+
 include_directories(
 	src
+	archimedes/src
 )
 
 set(map_SRCS
@@ -14,14 +17,8 @@ set(map_SRCS
 source_group(map FILES ${map_SRCS})
 set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
-set(util_SRCS
-)
-source_group(util FILES ${util_SRCS})
-set_source_files_properties(${util_SRCS} PROPERTIES UNITY_GROUP "util")
-
 set(metternich_SRCS
 	${map_SRCS}
-	${util_SRCS}
 )
 
 set(map_HDRS
@@ -29,15 +26,9 @@ set(map_HDRS
 )
 source_group(map FILES ${map_HDRS})
 
-set(util_HDRS
-	src/util/log_util.h
-)
-source_group(util FILES ${util_HDRS})
-
 set(metternich_HDRS
 	${map_HDRS}
-	${util_HDRS}
-	src/pch.h
+	src/metternich.h
 )
 
 set(metternich_main_SRCS
@@ -59,44 +50,7 @@ find_package(Boost 1.69.0 REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 add_definitions(-DBOOST_DATE_TIME_NO_LIB)
 
-#Qt5 modules
-#different modules have different licenses, make sure all modules used here are compatible with the GPL 2.0
-set(CMAKE_AUTOMOC ON)
-find_package(Qt5 5.14 COMPONENTS Core REQUIRED) #licensed under the GPL 2.0 (as well as the LGPL 3.0)
-find_package(Qt5 5.14 COMPONENTS Gui REQUIRED) #licensed under the GPL 2.0 (as well as the LGPL 3.0)
-find_package(Qt5 5.14 COMPONENTS Widgets REQUIRED) #licensed under the GPL 2.0 (as well as the LGPL 3.0)
-find_package(Qt5 5.14 COMPONENTS Multimedia REQUIRED) #licensed under the GPL 2.0 (as well as the LGPL 3.0)
-find_package(Qt5 5.14 COMPONENTS Location REQUIRED) #licensed under the GPL 2.0 (as well as the LGPL 3.0)
-find_package(Qt5 5.14 COMPONENTS Qml REQUIRED) #licensed under the GPL 2.0 (as well as the LGPL 3.0)
-find_package(Qt5 5.14 COMPONENTS Quick REQUIRED) #licensed under the GPL 2.0 (as well as the LGPL 3.0)
-
-set(QT_LIBRARIES
-	Qt5::Core
-	Qt5::Gui
-	Qt5::Widgets
-	Qt5::Multimedia
-	Qt5::Location
-	Qt5::Qml
-	Qt5::Quick
-)
-
-set(QT_LIBRARIES ${QT_LIBRARIES} Qt5::LocationPrivate)
-
-#find_package(SDL2 REQUIRED)
-#find_package(SDL2_mixer REQUIRED)
-
-#include_directories(
-#	${SDL2_INCLUDE_DIR}
-#	${SDL2_MIXER_INCLUDE_DIR}
-#)
-
 set(BINARY_NAME "metternich" CACHE PATH "Sets the name of the binary.")
-
-set(metternich_LIBS
-	${SDL2_LIBRARY}
-	${SDL2_MIXER_LIBRARY}
-	${QT_LIBRARIES}
-)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -114,17 +68,17 @@ add_executable(metternich_test ${metternich_test_SRCS})
 add_test(metternich_test metternich_test)
 enable_testing()
 
-target_precompile_headers(metternich PRIVATE src/pch.h)
+target_precompile_headers(metternich REUSE_FROM archimedes)
 
 set_target_properties(metternich PROPERTIES UNITY_BUILD_MODE GROUP)
 
 set_target_properties(metternich_test PROPERTIES UNITY_BUILD_MODE GROUP)
 set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test")
 
-target_link_libraries(metternich ${metternich_LIBS})
+target_link_libraries(metternich LINK_PUBLIC archimedes)
 
-target_precompile_headers(metternich_main REUSE_FROM metternich)
-target_precompile_headers(metternich_test REUSE_FROM metternich)
+target_precompile_headers(metternich_main REUSE_FROM archimedes)
+target_precompile_headers(metternich_test REUSE_FROM archimedes)
 
 set_target_properties(metternich_main PROPERTIES OUTPUT_NAME ${BINARY_NAME})
 
