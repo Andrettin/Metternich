@@ -123,8 +123,6 @@ set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test"
 
 target_link_libraries(metternich ${metternich_LIBS})
 
-target_link_libraries(metternich ${metternich_LIBS})
-
 target_precompile_headers(metternich_main REUSE_FROM metternich)
 target_precompile_headers(metternich_test REUSE_FROM metternich)
 
