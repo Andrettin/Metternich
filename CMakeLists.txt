@@ -7,8 +7,8 @@ set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo" CACHE STRING "" FORCE)
 add_subdirectory(archimedes)
 
 include_directories(
-	src
 	archimedes/src
+	src
 )
 
 set(map_SRCS
