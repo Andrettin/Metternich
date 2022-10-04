@@ -1,14 +1,14 @@
 #include "metternich.h"
 
-#include "map/province.h"
+#include "database/database.h"
+#include "util/event_loop.h"
+#include "util/exception_util.h"
 #include "util/log_util.h"
 
-#include <QApplication>
+#pragma warning(push, 0)
 #include <QDir>
 #include <QQmlApplicationEngine>
-
-#include <filesystem>
-#include <stdexcept>
+#pragma warning(pop)
 
 using namespace metternich;
 
@@ -40,6 +40,12 @@ static void clean_output()
 	}
 }
 
+static void on_exit_cleanup()
+{
+	database::get()->clear();
+	clean_output();
+}
+
 int main(int argc, char **argv)
 {
 	try {
@@ -67,17 +73,30 @@ int main(int argc, char **argv)
 			if (!obj && url == objUrl) {
 				QCoreApplication::exit(-1);
 			}
+
+			event_loop::get()->co_spawn([argc, argv]() -> boost::asio::awaitable<void> {
+				try {
+					co_await database::get()->load(true);
+					co_await database::get()->load(false);
+					database::get()->initialize();
+				} catch (const std::exception &exception) {
+					exception::report(exception);
+					QMetaObject::invokeMethod(QApplication::instance(), [] {
+						QApplication::exit(EXIT_FAILURE);
+					}, Qt::QueuedConnection);
+				}
+			});
 		}, Qt::QueuedConnection);
 
 		engine.load(url);
 
 		const int result = app.exec();
 
-		clean_output();
+		on_exit_cleanup();
 
 		return result;
 	} catch (const std::exception &exception) {
-		//exception::report(exception);
+		exception::report(exception);
 		return -1;
 	}
 }

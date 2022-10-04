@@ -50,7 +50,23 @@ find_package(Boost 1.69.0 REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 add_definitions(-DBOOST_DATE_TIME_NO_LIB)
 
-set(BINARY_NAME "metternich" CACHE PATH "Sets the name of the binary.")
+#Qt5 modules
+#different modules have different licenses, make sure all modules used here are compatible with the MIT license
+set(CMAKE_AUTOMOC ON)
+find_package(Qt5 5.14 COMPONENTS Core REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt5 5.14 COMPONENTS Gui REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt5 5.14 COMPONENTS Widgets REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt5 5.14 COMPONENTS Multimedia REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt5 5.14 COMPONENTS Location REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt5 5.14 COMPONENTS Qml REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt5 5.14 COMPONENTS Quick REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+
+if(MSVC)
+	add_definitions(/FI"metternich.h")
+else()
+	#GCC/Clang
+	add_definitions(-include metternich.h)
+endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -80,7 +96,7 @@ target_link_libraries(metternich LINK_PUBLIC archimedes)
 target_precompile_headers(metternich_main REUSE_FROM archimedes)
 target_precompile_headers(metternich_test REUSE_FROM archimedes)
 
-set_target_properties(metternich_main PROPERTIES OUTPUT_NAME ${BINARY_NAME})
+set_target_properties(metternich_main PROPERTIES OUTPUT_NAME "metternich")
 
 target_link_libraries(metternich_main LINK_PUBLIC metternich)
 target_link_libraries(metternich_test LINK_PUBLIC metternich)
