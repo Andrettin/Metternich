@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "province.h"
+#include "map/province.h"
 
 #include "util/assert_util.h"
 

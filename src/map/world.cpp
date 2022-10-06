@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "world.h"
+#include "map/world.h"
 
 #include "map/province.h"
 #include "util/geojson_util.h"
