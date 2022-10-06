@@ -53,6 +53,8 @@ set(metternich_test_SRCS
 	test/main.cpp
 )
 
+option(WITH_GEOJSON "Compile with support for generating map data from GeoJSON files" OFF)
+
 find_package(Boost 1.69.0 REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIRS})
@@ -68,6 +70,10 @@ find_package(Qt5 5.14 COMPONENTS Multimedia REQUIRED) #licensed under the GPL 2.
 find_package(Qt5 5.14 COMPONENTS Location REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
 find_package(Qt5 5.14 COMPONENTS Qml REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
 find_package(Qt5 5.14 COMPONENTS Quick REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+
+if(WITH_GEOJSON)
+	add_definitions(-DUSE_GEOJSON)
+endif()
 
 if(MSVC)
 	add_definitions(/FI"metternich.h")
