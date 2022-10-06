@@ -1,6 +1,7 @@
 #include "metternich.h"
 
 #include "database/database.h"
+#include "engine_interface.h"
 #include "util/event_loop.h"
 #include "util/exception_util.h"
 #include "util/log_util.h"
@@ -8,6 +9,7 @@
 #pragma warning(push, 0)
 #include <QDir>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #pragma warning(pop)
 
 using namespace metternich;
@@ -60,6 +62,8 @@ int main(int argc, char **argv)
 		app.setOrganizationDomain("andrettin.github.io");
 
 		QQmlApplicationEngine engine;
+
+		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
 
 		//const QString root_path = path::to_qstring(database::get()->get_root_path());
 		const QString root_path = QString::fromStdString(std::filesystem::current_path().string());

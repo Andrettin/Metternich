@@ -96,7 +96,7 @@ public:
 	}
 
 	void set_province_image_filepath(const std::filesystem::path &filepath);
-	void write_province_image();
+	Q_INVOKABLE void write_province_image();
 
 private:
 	QSize size = QSize(0, 0);

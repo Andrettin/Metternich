@@ -22,6 +22,7 @@ set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
 set(metternich_SRCS
 	${map_SRCS}
+	src/engine_interface.cpp
 )
 
 set(map_HDRS
@@ -34,6 +35,7 @@ source_group(map FILES ${map_HDRS})
 
 set(metternich_HDRS
 	${map_HDRS}
+	src/engine_interface.h
 	src/metternich.h
 )
 
