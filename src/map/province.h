@@ -43,6 +43,7 @@ public:
 		data_type::clear();
 		province::provinces_by_color.clear();
 	}
+
 private:
 	static inline color_map<province *> provinces_by_color;
 

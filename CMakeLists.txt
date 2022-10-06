@@ -14,6 +14,7 @@ include_directories(
 set(map_SRCS
 	src/map/province.cpp
 	src/map/province_container.cpp
+	src/map/world.cpp
 )
 source_group(map FILES ${map_SRCS})
 set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
@@ -25,6 +26,7 @@ set(metternich_SRCS
 set(map_HDRS
 	src/map/province.h
 	src/map/province_container.h
+	src/map/world.h
 )
 source_group(map FILES ${map_HDRS})
 
