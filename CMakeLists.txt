@@ -11,6 +11,13 @@ include_directories(
 	src
 )
 
+set(country_SRCS
+	src/country/country.cpp
+	src/country/country_type.cpp
+)
+source_group(country FILES ${country_SRCS})
+set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
+
 set(map_SRCS
 	src/map/map_template.cpp
 	src/map/province.cpp
@@ -21,9 +28,16 @@ source_group(map FILES ${map_SRCS})
 set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
 set(metternich_SRCS
+	${country_SRCS}
 	${map_SRCS}
 	src/engine_interface.cpp
 )
+
+set(country_HDRS
+	src/country/country.h
+	src/country/country_type.h
+)
+source_group(country FILES ${country_HDRS})
 
 set(map_HDRS
 	src/map/map_template.h
@@ -34,6 +48,7 @@ set(map_HDRS
 source_group(map FILES ${map_HDRS})
 
 set(metternich_HDRS
+	${country_HDRS}
 	${map_HDRS}
 	src/engine_interface.h
 	src/metternich.h

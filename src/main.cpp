@@ -1,10 +1,12 @@
 #include "metternich.h"
 
+#include "country/country_type.h"
 #include "database/database.h"
 #include "engine_interface.h"
 #include "util/event_loop.h"
 #include "util/exception_util.h"
 #include "util/log_util.h"
+#include "util/path_util.h"
 
 #pragma warning(push, 0)
 #include <QDir>
@@ -63,10 +65,11 @@ int main(int argc, char **argv)
 
 		QQmlApplicationEngine engine;
 
+		enum_converter<country_type>();
+
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
 
-		//const QString root_path = path::to_qstring(database::get()->get_root_path());
-		const QString root_path = QString::fromStdString(std::filesystem::current_path().string());
+		const QString root_path = path::to_qstring(database::get()->get_root_path());
 		engine.addImportPath(root_path + "/libraries/qml");
 
 		QUrl url = QDir(root_path + "/interface/").absoluteFilePath("Main.qml");
