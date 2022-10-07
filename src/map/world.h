@@ -7,6 +7,8 @@
 
 namespace metternich {
 
+class site;
+
 class world final : public named_data_entry, public data_type<world>
 {
 	Q_OBJECT
@@ -22,9 +24,22 @@ public:
 	{
 	}
 
+	const std::vector<const site *> &get_sites() const
+	{
+		return this->sites;
+	}
+
+	void add_site(const site *site)
+	{
+		this->sites.push_back(site);
+	}
+
 	std::vector<QVariantList> parse_geojson_folder(const std::string_view &folder) const;
 	terrain_geodata_map parse_terrain_geojson_folder() const;
 	province_map<std::vector<std::unique_ptr<QGeoShape>>> parse_provinces_geojson_folder() const;
+
+private:
+	std::vector<const site *> sites;
 };
 
 }

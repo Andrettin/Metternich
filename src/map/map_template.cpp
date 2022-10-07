@@ -5,6 +5,8 @@
 #include "database/defines.h"
 #include "map/map_projection.h"
 #include "map/province.h"
+#include "map/site.h"
+#include "map/site_type.h"
 #include "map/terrain_feature.h"
 #include "map/terrain_type.h"
 #include "map/world.h"
@@ -14,6 +16,11 @@
 #include "util/vector_util.h"
 
 namespace metternich {
+
+QPoint map_template::get_geocoordinate_pos(const geocoordinate &geocoordinate) const
+{
+	return this->map_projection->geocoordinate_to_point(geocoordinate, this->get_georectangle(), this->get_size());
+}
 
 void map_template::set_terrain_image_filepath(const std::filesystem::path &filepath)
 {
@@ -59,8 +66,42 @@ void map_template::write_terrain_image()
 	if (!this->get_terrain_image_filepath().empty()) {
 		base_image = QImage(path::to_qstring(this->get_terrain_image_filepath()));
 		assert_throw(!base_image.isNull());
+	} else {
+		base_image = QImage(this->get_size(), QImage::Format_RGBA8888);
+		base_image.fill(Qt::transparent);
 	}
 
+	//write terrain sites
+	const QRect map_rect(QPoint(0, 0), this->get_size());
+
+	for (const site *site : this->get_world()->get_sites()) {
+		if (site->get_type() != site_type::terrain) {
+			continue;
+		}
+
+		if (!this->get_georectangle().contains(site->get_geocoordinate())) {
+			continue;
+		}
+
+		const QPoint tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate());
+
+		if (!map_rect.contains(tile_pos)) {
+			continue;
+		}
+
+		if (base_image.pixelColor(tile_pos).alpha() != 0) {
+			//ignore already-written pixels
+			continue;
+		}
+
+		const QColor terrain_color = site->get_terrain_type()->get_color();
+
+		assert_throw(terrain_color.isValid());
+
+		base_image.setPixelColor(tile_pos, terrain_color);
+	}
+
+	//write terrain geoshapes
 	std::filesystem::path output_filepath = this->get_terrain_image_filepath().filename();
 	if (output_filepath.empty()) {
 		output_filepath = "terrain.png";
@@ -85,8 +126,7 @@ void map_template::write_terrain_image()
 					continue;
 				}
 
-				QColor terrain_color = output_image.pixelColor(x, y);
-				if (terrain_color.alpha() != 0) {
+				if (output_image.pixelColor(x, y).alpha() != 0) {
 					//ignore already-written pixels
 					continue;
 				}
@@ -102,7 +142,7 @@ void map_template::write_terrain_image()
 
 				assert_throw(terrain != nullptr);
 
-				terrain_color = terrain->get_color();
+				const QColor terrain_color = terrain->get_color();
 
 				assert_throw(terrain_color.isValid());
 

@@ -91,6 +91,8 @@ public:
 		this->georectangle.set_max_latitude(lat);
 	}
 
+	QPoint get_geocoordinate_pos(const geocoordinate &geocoordinate) const;
+
 	const std::filesystem::path &get_terrain_image_filepath() const
 	{
 		return this->terrain_image_filepath;

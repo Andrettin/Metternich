@@ -28,6 +28,8 @@ set(map_SRCS
 	src/map/map_template.cpp
 	src/map/province.cpp
 	src/map/province_container.cpp
+	src/map/site.cpp
+	src/map/site_type.cpp
 	src/map/terrain_feature.cpp
 	src/map/terrain_geodata_map.cpp
 	src/map/terrain_type.cpp
@@ -58,6 +60,8 @@ set(map_HDRS
 	src/map/map_template.h
 	src/map/province.h
 	src/map/province_container.h
+	src/map/site.h
+	src/map/site_type.h
 	src/map/terrain_feature.h
 	src/map/terrain_geodata_map.h
 	src/map/terrain_type.h
