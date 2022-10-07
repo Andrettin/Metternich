@@ -139,12 +139,12 @@ set_target_properties(metternich PROPERTIES UNITY_BUILD_MODE GROUP)
 set_target_properties(metternich_test PROPERTIES UNITY_BUILD_MODE GROUP)
 set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test")
 
-target_link_libraries(metternich LINK_PUBLIC archimedes)
+target_link_libraries(metternich PUBLIC archimedes)
 
 target_precompile_headers(metternich_main REUSE_FROM archimedes)
 target_precompile_headers(metternich_test REUSE_FROM archimedes)
 
 set_target_properties(metternich_main PROPERTIES OUTPUT_NAME "metternich")
 
-target_link_libraries(metternich_main LINK_PUBLIC metternich)
-target_link_libraries(metternich_test LINK_PUBLIC metternich)
+target_link_libraries(metternich_main PUBLIC metternich)
+target_link_libraries(metternich_test PUBLIC metternich)
