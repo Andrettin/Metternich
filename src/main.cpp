@@ -64,6 +64,8 @@ int main(int argc, char **argv)
 		app.setOrganizationName("Metternich");
 		app.setOrganizationDomain("andrettin.github.io");
 
+		database::get()->set_defines(defines::get());
+
 		QQmlApplicationEngine engine;
 
 		enum_converter<country_type>();
@@ -87,6 +89,7 @@ int main(int argc, char **argv)
 			event_loop::get()->co_spawn([argc, argv]() -> boost::asio::awaitable<void> {
 				try {
 					co_await database::get()->load(true);
+					database::get()->load_defines();
 					co_await database::get()->load(false);
 					database::get()->initialize();
 				} catch (const std::exception &exception) {
