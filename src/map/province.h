@@ -48,7 +48,6 @@ private:
 	static inline color_map<province *> provinces_by_color;
 
 public:
-
 	explicit province(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}

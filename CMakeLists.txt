@@ -22,6 +22,7 @@ set(map_SRCS
 	src/map/map_template.cpp
 	src/map/province.cpp
 	src/map/province_container.cpp
+	src/map/terrain_type.cpp
 	src/map/world.cpp
 )
 source_group(map FILES ${map_SRCS})
@@ -43,6 +44,7 @@ set(map_HDRS
 	src/map/map_template.h
 	src/map/province.h
 	src/map/province_container.h
+	src/map/terrain_type.h
 	src/map/world.h
 )
 source_group(map FILES ${map_HDRS})
