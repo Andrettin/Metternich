@@ -2,6 +2,7 @@
 
 #include "country/country_type.h"
 #include "database/database.h"
+#include "database/defines.h"
 #include "engine_interface.h"
 #include "util/event_loop.h"
 #include "util/exception_util.h"
@@ -66,6 +67,8 @@ int main(int argc, char **argv)
 		QQmlApplicationEngine engine;
 
 		enum_converter<country_type>();
+
+		qmlRegisterAnonymousType<defines>("", 1);
 
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
 

@@ -2,6 +2,7 @@
 
 #include "engine_interface.h"
 
+#include "database/defines.h"
 #include "map/map_template.h"
 #include "util/exception_util.h"
 
@@ -16,6 +17,11 @@ engine_interface::engine_interface()
 
 engine_interface::~engine_interface()
 {
+}
+
+defines *engine_interface::get_defines() const
+{
+	return defines::get();
 }
 
 QObject *engine_interface::get_map_template(const QString &identifier) const

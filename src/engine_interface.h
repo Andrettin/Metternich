@@ -4,12 +4,15 @@
 
 namespace metternich {
 
+class defines;
+
 //interface for the engine, to be used in the context of QML
 class engine_interface final : public QObject, public singleton<engine_interface>
 {
 	Q_OBJECT
 
 	Q_PROPERTY(bool running READ is_running NOTIFY running_changed)
+	Q_PROPERTY(metternich::defines* defines READ get_defines CONSTANT)
 
 public:
 	engine_interface();
@@ -30,6 +33,8 @@ public:
 
 		emit running_changed();
 	}
+
+	defines *get_defines() const;
 
 	Q_INVOKABLE QObject *get_map_template(const QString &identifier) const;
 

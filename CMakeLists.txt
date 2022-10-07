@@ -18,6 +18,12 @@ set(country_SRCS
 source_group(country FILES ${country_SRCS})
 set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
 
+set(database_SRCS
+	src/database/defines.cpp
+)
+source_group(database FILES ${database_SRCS})
+set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
+
 set(map_SRCS
 	src/map/map_template.cpp
 	src/map/province.cpp
@@ -30,6 +36,7 @@ set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
 set(metternich_SRCS
 	${country_SRCS}
+	${database_SRCS}
 	${map_SRCS}
 	src/engine_interface.cpp
 )
@@ -39,6 +46,11 @@ set(country_HDRS
 	src/country/country_type.h
 )
 source_group(country FILES ${country_HDRS})
+
+set(database_HDRS
+	src/database/defines.h
+)
+source_group(database FILES ${database_HDRS})
 
 set(map_HDRS
 	src/map/map_template.h
@@ -51,6 +63,7 @@ source_group(map FILES ${map_HDRS})
 
 set(metternich_HDRS
 	${country_HDRS}
+	${database_HDRS}
 	${map_HDRS}
 	src/engine_interface.h
 	src/metternich.h
