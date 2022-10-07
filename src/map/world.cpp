@@ -3,6 +3,8 @@
 #include "map/world.h"
 
 #include "map/province.h"
+#include "map/terrain_feature.h"
+#include "map/terrain_type.h"
 #include "util/geojson_util.h"
 #include "util/vector_util.h"
 
@@ -24,6 +26,21 @@ std::vector<QVariantList> world::parse_geojson_folder(const std::string_view &fo
 	}
 
 	return geojson_data_list;
+}
+
+terrain_geodata_map world::parse_terrain_geojson_folder() const
+{
+	const std::vector<QVariantList> geojson_data_list = this->parse_geojson_folder(world::terrain_map_folder);
+
+	return geojson::create_geodata_map<terrain_geodata_map>(geojson_data_list, [](const QVariantMap &properties) -> terrain_geodata_map::key_type {
+		if (properties.contains("terrain_feature")) {
+			const QString terrain_feature_identifier = properties.value("terrain_feature").toString();
+			return terrain_feature::get(terrain_feature_identifier.toStdString());
+		} else {
+			const QString terrain_type_identifier = properties.value("terrain_type").toString();
+			return terrain_type::get(terrain_type_identifier.toStdString());
+		}
+	}, nullptr);
 }
 
 province_map<std::vector<std::unique_ptr<QGeoShape>>> world::parse_provinces_geojson_folder() const

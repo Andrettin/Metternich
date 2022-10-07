@@ -24,6 +24,7 @@ class map_template final : public named_data_entry, public data_type<map_templat
 	Q_PROPERTY(archimedes::decimillesimal_int max_longitude READ get_max_longitude WRITE set_max_longitude)
 	Q_PROPERTY(archimedes::decimillesimal_int min_latitude READ get_min_latitude WRITE set_min_latitude)
 	Q_PROPERTY(archimedes::decimillesimal_int max_latitude READ get_max_latitude WRITE set_max_latitude)
+	Q_PROPERTY(std::filesystem::path terrain_image_filepath MEMBER terrain_image_filepath WRITE set_terrain_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_image_filepath MEMBER province_image_filepath WRITE set_province_image_filepath)
 
 public:
@@ -90,6 +91,14 @@ public:
 		this->georectangle.set_max_latitude(lat);
 	}
 
+	const std::filesystem::path &get_terrain_image_filepath() const
+	{
+		return this->terrain_image_filepath;
+	}
+
+	void set_terrain_image_filepath(const std::filesystem::path &filepath);
+	Q_INVOKABLE void write_terrain_image();
+
 	const std::filesystem::path &get_province_image_filepath() const
 	{
 		return this->province_image_filepath;
@@ -103,6 +112,7 @@ private:
 	metternich::world *world = nullptr;
 	archimedes::map_projection *map_projection = nullptr;
 	archimedes::georectangle georectangle = archimedes::georectangle(geocoordinate(geocoordinate::min_longitude, geocoordinate::min_latitude), geocoordinate(geocoordinate::max_longitude, geocoordinate::max_latitude));
+	std::filesystem::path terrain_image_filepath;
 	std::filesystem::path province_image_filepath;
 };
 
