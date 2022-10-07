@@ -11,6 +11,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color READ get_color WRITE set_color)
+	Q_PROPERTY(bool water_zone MEMBER water_zone READ is_water_zone)
 
 public:
 	static constexpr const char class_identifier[] = "province";
@@ -73,8 +74,14 @@ public:
 		province::provinces_by_color[color] = this;
 	}
 
+	bool is_water_zone() const
+	{
+		return this->water_zone;
+	}
+
 private:
 	QColor color;
+	bool water_zone = false;
 };
 
 }
