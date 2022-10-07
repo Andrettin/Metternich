@@ -17,6 +17,29 @@
 
 namespace metternich {
 
+void map_template::initialize()
+{
+	const QRect map_rect(QPoint(0, 0), this->get_size());
+
+	for (const site *site : this->get_world()->get_sites()) {
+		if (!this->get_georectangle().contains(site->get_geocoordinate())) {
+			continue;
+		}
+
+		const QPoint tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate());
+
+		if (!map_rect.contains(tile_pos)) {
+			continue;
+		}
+
+		assert_throw(!this->sites_by_position.contains(tile_pos));
+
+		this->sites_by_position[tile_pos] = site;
+	}
+
+	data_entry::initialize();
+}
+
 QPoint map_template::get_geocoordinate_pos(const geocoordinate &geocoordinate) const
 {
 	return this->map_projection->geocoordinate_to_point(geocoordinate, this->get_georectangle(), this->get_size());
@@ -72,20 +95,8 @@ void map_template::write_terrain_image()
 	}
 
 	//write terrain sites
-	const QRect map_rect(QPoint(0, 0), this->get_size());
-
-	for (const site *site : this->get_world()->get_sites()) {
+	for (const auto &[tile_pos, site] : this->sites_by_position) {
 		if (site->get_type() != site_type::terrain) {
-			continue;
-		}
-
-		if (!this->get_georectangle().contains(site->get_geocoordinate())) {
-			continue;
-		}
-
-		const QPoint tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate());
-
-		if (!map_rect.contains(tile_pos)) {
 			continue;
 		}
 

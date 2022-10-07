@@ -4,6 +4,7 @@
 #include "database/named_data_entry.h"
 #include "util/fractional_int.h"
 #include "util/georectangle.h"
+#include "util/point_container.h"
 
 namespace archimedes {
 	class map_projection;
@@ -11,6 +12,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class site;
 class world;
 
 class map_template final : public named_data_entry, public data_type<map_template>
@@ -35,6 +37,8 @@ public:
 	explicit map_template(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}
+
+	virtual void initialize() override;
 
 	const QSize &get_size() const
 	{
@@ -116,6 +120,7 @@ private:
 	archimedes::georectangle georectangle = archimedes::georectangle(geocoordinate(geocoordinate::min_longitude, geocoordinate::min_latitude), geocoordinate(geocoordinate::max_longitude, geocoordinate::max_latitude));
 	std::filesystem::path terrain_image_filepath;
 	std::filesystem::path province_image_filepath;
+	point_map<const site *> sites_by_position;
 };
 
 }
