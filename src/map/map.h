@@ -5,12 +5,22 @@
 namespace metternich {
 
 class terrain_type;
+class tile;
 
 class map final : public QObject, public singleton<map>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QSize size READ get_size NOTIFY size_changed)
+	Q_PROPERTY(int width READ get_width NOTIFY size_changed)
+	Q_PROPERTY(int height READ get_height NOTIFY size_changed)
+
 public:
+	map();
+	~map();
+
+	void clear();
+
 	const QSize &get_size() const
 	{
 		return this->size;
@@ -18,7 +28,12 @@ public:
 
 	void set_size(const QSize &size)
 	{
+		if (size == this->get_size()) {
+			return;
+		}
+
 		this->size = size;
+		emit size_changed();
 	}
 
 	int get_width() const
@@ -41,11 +56,16 @@ public:
 
 	int get_pos_index(const QPoint &pos) const;
 
+	tile *get_tile(const QPoint &pos) const;
+	void set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain);
+
 signals:
+	void size_changed();
 	void tile_terrain_changed(const QPoint &tile_pos);
 
 private:
 	QSize size;
+	std::unique_ptr<std::vector<tile>> tiles;
 };
 
 }
