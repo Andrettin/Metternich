@@ -5,6 +5,7 @@
 #include "database/defines.h"
 #include "engine_interface.h"
 #include "map/map.h"
+#include "map/map_grid_model.h"
 #include "map/site_type.h"
 #include "map/tile_image_provider.h"
 #include "util/event_loop.h"
@@ -76,6 +77,8 @@ int main(int argc, char **argv)
 
 		qmlRegisterAnonymousType<defines>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
+
+		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
 
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
 

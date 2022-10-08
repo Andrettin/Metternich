@@ -26,6 +26,7 @@ set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
 
 set(map_SRCS
 	src/map/map.cpp
+	src/map/map_grid_model.cpp
 	src/map/map_template.cpp
 	src/map/province.cpp
 	src/map/province_container.cpp
@@ -62,6 +63,7 @@ source_group(database FILES ${database_HDRS})
 
 set(map_HDRS
 	src/map/map.h
+	src/map/map_grid_model.h
 	src/map/map_template.h
 	src/map/province.h
 	src/map/province_container.h
