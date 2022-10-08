@@ -4,6 +4,7 @@
 #include "database/database.h"
 #include "database/defines.h"
 #include "engine_interface.h"
+#include "map/map.h"
 #include "map/site_type.h"
 #include "map/tile_image_provider.h"
 #include "util/event_loop.h"
@@ -74,6 +75,7 @@ int main(int argc, char **argv)
 		enum_converter<site_type>();
 
 		qmlRegisterAnonymousType<defines>("", 1);
+		qmlRegisterAnonymousType<map>("", 1);
 
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
 
