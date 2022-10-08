@@ -3,6 +3,7 @@
 #include "map/map_template.h"
 
 #include "database/defines.h"
+#include "map/map.h"
 #include "map/map_projection.h"
 #include "map/province.h"
 #include "map/site.h"
@@ -210,6 +211,39 @@ void map_template::write_province_image()
 	}
 
 	geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image);
+}
+
+void map_template::apply() const
+{
+	map *map = map::get();
+	map->clear();
+	map->set_size(this->get_size());
+	map->initialize();
+
+	this->apply_terrain();
+}
+
+void map_template::apply_terrain() const
+{
+	assert_throw(!this->get_terrain_image_filepath().empty());
+
+	const QImage terrain_image(path::to_qstring(this->get_terrain_image_filepath()));
+
+	map *map = map::get();
+
+	for (int x = 0; x < map->get_width(); ++x) {
+		for (int y = 0; y < map->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			const QColor tile_color = terrain_image.pixelColor(tile_pos);
+
+			if (terrain_image.pixelColor(tile_pos).alpha() == 0) {
+				continue;
+			}
+
+			const terrain_type *terrain = terrain_type::get_by_color(tile_color);
+			map->set_tile_terrain(tile_pos, terrain);
+		}
+	}
 }
 
 }

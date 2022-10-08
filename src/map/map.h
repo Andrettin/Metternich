@@ -19,6 +19,7 @@ public:
 	map();
 	~map();
 
+	void initialize();
 	void clear();
 
 	const QSize &get_size() const

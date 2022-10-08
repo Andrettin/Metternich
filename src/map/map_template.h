@@ -113,6 +113,9 @@ public:
 	void set_province_image_filepath(const std::filesystem::path &filepath);
 	Q_INVOKABLE void write_province_image();
 
+	void apply() const;
+	void apply_terrain() const;
+
 private:
 	QSize size = QSize(0, 0);
 	metternich::world *world = nullptr;

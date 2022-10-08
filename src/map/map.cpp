@@ -2,7 +2,10 @@
 
 #include "map/map.h"
 
+#include "database/defines.h"
+#include "game/game.h"
 #include "map/tile.h"
+#include "util/assert_util.h"
 #include "util/point_util.h"
 
 namespace metternich {
@@ -13,6 +16,22 @@ map::map()
 
 map::~map()
 {
+}
+
+void map::initialize()
+{
+	this->tiles = std::make_unique<std::vector<tile>>();
+
+	assert_throw(!this->get_size().isNull());
+
+	const int tile_quantity = this->get_width() * this->get_height();
+	this->tiles->reserve(tile_quantity);
+
+	const terrain_type *base_terrain = defines::get()->get_default_base_terrain();
+
+	for (int i = 0; i < tile_quantity; ++i) {
+		this->tiles->emplace_back(base_terrain, base_terrain);
+	}
 }
 
 void map::clear()
@@ -36,7 +55,9 @@ void map::set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain)
 	tile *tile = this->get_tile(tile_pos);
 	tile->set_terrain(terrain);
 
-	emit tile_terrain_changed(tile_pos);
+	if (game::get()->is_running()) {
+		emit tile_terrain_changed(tile_pos);
+	}
 }
 
 }
