@@ -2,6 +2,7 @@
 
 namespace metternich {
 
+class province;
 class terrain_type;
 
 class tile final
@@ -26,10 +27,21 @@ public:
 		return this->tile_frame;
 	}
 
+	const metternich::province *get_province() const
+	{
+		return this->province;
+	}
+
+	void set_province(const metternich::province *province)
+	{
+		this->province = province;
+	}
+
 private:
 	const terrain_type *terrain = nullptr;
 	short base_tile_frame = 0;
 	short tile_frame = 0;
+	const metternich::province *province = nullptr;
 };
 
 }

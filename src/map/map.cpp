@@ -61,4 +61,10 @@ void map::set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain)
 	}
 }
 
+void map::set_tile_province(const QPoint &tile_pos, const province *province)
+{
+	tile *tile = this->get_tile(tile_pos);
+	tile->set_province(province);
+}
+
 }
