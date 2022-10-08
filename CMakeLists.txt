@@ -30,6 +30,7 @@ set(map_SRCS
 	src/map/map_template.cpp
 	src/map/province.cpp
 	src/map/province_container.cpp
+	src/map/scenario.cpp
 	src/map/site.cpp
 	src/map/site_container.cpp
 	src/map/site_type.cpp
@@ -67,6 +68,7 @@ set(map_HDRS
 	src/map/map_template.h
 	src/map/province.h
 	src/map/province_container.h
+	src/map/scenario.h
 	src/map/site.h
 	src/map/site_container.h
 	src/map/site_type.h
