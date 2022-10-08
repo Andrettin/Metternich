@@ -35,6 +35,7 @@ set(map_SRCS
 	src/map/terrain_feature.cpp
 	src/map/terrain_geodata_map.cpp
 	src/map/terrain_type.cpp
+	src/map/tile.cpp
 	src/map/tile_image_provider.cpp
 	src/map/world.cpp
 )
@@ -70,6 +71,7 @@ set(map_HDRS
 	src/map/terrain_feature.h
 	src/map/terrain_geodata_map.h
 	src/map/terrain_type.h
+	src/map/tile.h
 	src/map/tile_image_provider.h
 	src/map/world.h
 )
