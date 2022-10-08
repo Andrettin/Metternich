@@ -26,4 +26,17 @@ void game::start_scenario(metternich::scenario *scenario)
 	});
 }
 
+void game::stop()
+{
+	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+		if (!this->is_running()) {
+			//already stopped
+			co_return;
+		}
+
+		this->set_running(false);
+		map::get()->clear();
+	});
+}
+
 }

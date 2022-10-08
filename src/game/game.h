@@ -30,6 +30,7 @@ public:
 	}
 
 	Q_INVOKABLE void start_scenario(metternich::scenario *scenario);
+	Q_INVOKABLE void stop();
 
 signals:
 	void running_changed();
