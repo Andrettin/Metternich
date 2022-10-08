@@ -24,6 +24,12 @@ set(database_SRCS
 source_group(database FILES ${database_SRCS})
 set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
 
+set(game_SRCS
+	src/game/game.cpp
+)
+source_group(game FILES ${game_SRCS})
+set_source_files_properties(${game_SRCS} PROPERTIES UNITY_GROUP "game")
+
 set(map_SRCS
 	src/map/map.cpp
 	src/map/map_grid_model.cpp
@@ -47,6 +53,7 @@ set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 set(metternich_SRCS
 	${country_SRCS}
 	${database_SRCS}
+	${game_SRCS}
 	${map_SRCS}
 	src/engine_interface.cpp
 )
@@ -61,6 +68,11 @@ set(database_HDRS
 	src/database/defines.h
 )
 source_group(database FILES ${database_HDRS})
+
+set(game_HDRS
+	src/game/game.h
+)
+source_group(game FILES ${game_HDRS})
 
 set(map_HDRS
 	src/map/map.h
@@ -84,6 +96,7 @@ source_group(map FILES ${map_HDRS})
 set(metternich_HDRS
 	${country_HDRS}
 	${database_HDRS}
+	${game_HDRS}
 	${map_HDRS}
 	src/engine_interface.h
 	src/metternich.h
