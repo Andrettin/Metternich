@@ -13,6 +13,7 @@ class defines final : public defines_base, public singleton<defines>
 
 	Q_PROPERTY(QSize tile_size MEMBER tile_size READ get_tile_size NOTIFY changed)
 	Q_PROPERTY(metternich::terrain_type* default_base_terrain MEMBER default_base_terrain)
+	Q_PROPERTY(metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
@@ -36,6 +37,11 @@ public:
 	const terrain_type *get_default_base_terrain() const
 	{
 		return this->default_base_terrain;
+	}
+
+	const terrain_type *get_unexplored_terrain() const
+	{
+		return this->unexplored_terrain;
 	}
 
 	const terrain_type *get_default_province_terrain() const
@@ -62,6 +68,7 @@ signals:
 private:
 	QSize tile_size = QSize(64, 64);
 	terrain_type *default_base_terrain = nullptr;
+	terrain_type *unexplored_terrain = nullptr;
 	terrain_type *default_province_terrain = nullptr;
 	terrain_type *default_water_zone_terrain = nullptr;
 	std::filesystem::path default_menu_background_filepath;

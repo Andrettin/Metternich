@@ -28,9 +28,10 @@ void map::initialize()
 	this->tiles->reserve(tile_quantity);
 
 	const terrain_type *base_terrain = defines::get()->get_default_base_terrain();
+	const terrain_type *unexplored_terrain = defines::get()->get_unexplored_terrain();
 
 	for (int i = 0; i < tile_quantity; ++i) {
-		this->tiles->emplace_back(base_terrain, base_terrain);
+		this->tiles->emplace_back(base_terrain, unexplored_terrain);
 	}
 }
 
