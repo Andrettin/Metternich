@@ -63,6 +63,11 @@ public:
 	void set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain);
 	void set_tile_province(const QPoint &tile_pos, const province *province);
 
+	const std::vector<const province *> &get_provinces() const
+	{
+		return this->provinces;
+	}
+
 signals:
 	void size_changed();
 	void tile_terrain_changed(const QPoint &tile_pos);

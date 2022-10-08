@@ -7,6 +7,7 @@
 namespace metternich {
 
 class province_game_data;
+class province_history;
 
 class province final : public named_data_entry, public data_type<province>
 {
@@ -19,6 +20,7 @@ public:
 	static constexpr const char class_identifier[] = "province";
 	static constexpr const char property_class_identifier[] = "metternich::province*";
 	static constexpr const char database_folder[] = "provinces";
+	static constexpr bool history_enabled = true;
 
 	static province *get_by_color(const QColor &color)
 	{
@@ -55,6 +57,14 @@ public:
 	~province();
 
 	virtual void check() const override;
+	virtual data_entry_history *get_history_base() override;
+
+	province_history *get_history() const
+	{
+		return this->history.get();
+	}
+
+	virtual void reset_history() override;
 
 	void reset_game_data();
 
@@ -90,6 +100,7 @@ public:
 private:
 	QColor color;
 	bool water_zone = false;
+	std::unique_ptr<province_history> history;
 	std::unique_ptr<province_game_data> game_data;
 };
 

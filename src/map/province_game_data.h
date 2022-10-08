@@ -2,6 +2,7 @@
 
 namespace metternich {
 
+class country;
 class province;
 
 class province_game_data final
@@ -11,8 +12,19 @@ public:
 	{
 	}
 
+	const country *get_owner() const
+	{
+		return this->owner;
+	}
+
+	void set_owner(const country *country)
+	{
+		this->owner = country;
+	}
+
 private:
 	const metternich::province *province = nullptr;
+	const country *owner = nullptr;
 };
 
 }

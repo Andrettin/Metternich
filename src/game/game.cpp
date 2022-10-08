@@ -2,9 +2,12 @@
 
 #include "game/game.h"
 
+#include "country/country.h"
 #include "map/map.h"
 #include "map/map_template.h"
 #include "map/province.h"
+#include "map/province_game_data.h"
+#include "map/province_history.h"
 #include "map/scenario.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
@@ -18,6 +21,7 @@ void game::setup_scenario(metternich::scenario *scenario)
 {
 	scenario->get_map_template()->apply();
 	map::get()->initialize();
+	this->apply_history(scenario);
 	this->create_diplomatic_map_image();
 }
 
@@ -46,6 +50,18 @@ void game::stop()
 	});
 }
 
+void game::apply_history(const scenario *scenario)
+{
+	database::get()->load_history(scenario->get_start_date(), scenario->get_timeline());
+
+	for (const province *province : map::get()->get_provinces()) {
+		const province_history *province_history = province->get_history();
+		province_game_data *province_game_data = province->get_game_data();
+
+		province_game_data->set_owner(province_history->get_owner());
+	}
+}
+
 void game::create_diplomatic_map_image()
 {
 	static constexpr QSize size(1024, 512);
@@ -66,7 +82,14 @@ void game::create_diplomatic_map_image()
 				continue;
 			}
 
-			const QColor tile_color = tile_province->get_color();
+			const province_game_data *province_game_data = tile_province->get_game_data();
+			const country *owner = province_game_data->get_owner();
+
+			if (owner == nullptr) {
+				continue;
+			}
+
+			const QColor tile_color = owner->get_color();
 
 			this->diplomatic_map_image.setPixelColor(x, y, tile_color);
 		}

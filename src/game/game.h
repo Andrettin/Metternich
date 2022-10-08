@@ -33,6 +33,8 @@ public:
 	Q_INVOKABLE void start();
 	Q_INVOKABLE void stop();
 
+	void apply_history(const scenario *scenario);
+
 	const QImage &get_diplomatic_map_image() const
 	{
 		return this->diplomatic_map_image;

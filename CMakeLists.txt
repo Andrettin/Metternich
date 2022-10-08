@@ -82,6 +82,8 @@ set(map_HDRS
 	src/map/map_template.h
 	src/map/province.h
 	src/map/province_container.h
+	src/map/province_game_data.h
+	src/map/province_history.h
 	src/map/scenario.h
 	src/map/site.h
 	src/map/site_container.h
