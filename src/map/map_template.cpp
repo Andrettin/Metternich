@@ -18,6 +18,9 @@
 
 namespace metternich {
 
+//map templates must be initialized after sites, as sites add themselves to the world site list in their initialization function, and during map template initialization the sites are then added to the map template's site position map
+const std::set<std::string> map_template::database_dependencies = { site::class_identifier };
+
 void map_template::initialize()
 {
 	const QRect map_rect(QPoint(0, 0), this->get_size());

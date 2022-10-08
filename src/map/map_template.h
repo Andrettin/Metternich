@@ -34,6 +34,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::map_template*";
 	static constexpr const char database_folder[] = "map_templates";
 
+	static const std::set<std::string> database_dependencies;
+
 	explicit map_template(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}
