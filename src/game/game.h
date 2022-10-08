@@ -13,6 +13,8 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(bool running READ is_running NOTIFY running_changed)
 
 public:
+	game();
+
 	bool is_running() const
 	{
 		return this->running;

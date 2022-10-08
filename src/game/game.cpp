@@ -17,6 +17,14 @@
 
 namespace metternich {
 
+game::game()
+{
+	static constexpr QSize diplomatic_map_image_size(1024, 512);
+
+	this->diplomatic_map_image = QImage(diplomatic_map_image_size, QImage::Format_RGBA8888);
+	this->diplomatic_map_image.fill(Qt::transparent);
+}
+
 void game::setup_scenario(metternich::scenario *scenario)
 {
 	scenario->get_map_template()->apply();
@@ -64,9 +72,6 @@ void game::apply_history(const scenario *scenario)
 
 void game::create_diplomatic_map_image()
 {
-	static constexpr QSize size(1024, 512);
-
-	this->diplomatic_map_image = QImage(size, QImage::Format_RGBA8888);
 	this->diplomatic_map_image.fill(Qt::transparent);
 
 	const map *map = map::get();
