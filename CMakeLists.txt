@@ -31,6 +31,7 @@ source_group(game FILES ${game_SRCS})
 set_source_files_properties(${game_SRCS} PROPERTIES UNITY_GROUP "game")
 
 set(map_SRCS
+	src/map/diplomatic_map_image_provider.cpp
 	src/map/map.cpp
 	src/map/map_grid_model.cpp
 	src/map/map_template.cpp
@@ -75,6 +76,7 @@ set(game_HDRS
 source_group(game FILES ${game_HDRS})
 
 set(map_HDRS
+	src/map/diplomatic_map_image_provider.h
 	src/map/map.h
 	src/map/map_grid_model.h
 	src/map/map_template.h

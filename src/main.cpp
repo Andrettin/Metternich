@@ -5,6 +5,7 @@
 #include "database/defines.h"
 #include "engine_interface.h"
 #include "game/game.h"
+#include "map/diplomatic_map_image_provider.h"
 #include "map/map.h"
 #include "map/map_grid_model.h"
 #include "map/scenario.h"
@@ -86,6 +87,7 @@ int main(int argc, char **argv)
 
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
 
+		engine.addImageProvider("diplomatic_map", new diplomatic_map_image_provider);
 		engine.addImageProvider("tile", new tile_image_provider);
 
 		const QString root_path = path::to_qstring(database::get()->get_root_path());

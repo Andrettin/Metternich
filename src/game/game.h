@@ -29,14 +29,24 @@ public:
 		emit running_changed();
 	}
 
-	Q_INVOKABLE void start_scenario(metternich::scenario *scenario);
+	Q_INVOKABLE void setup_scenario(metternich::scenario *scenario);
+	Q_INVOKABLE void start();
 	Q_INVOKABLE void stop();
+
+	const QImage &get_diplomatic_map_image() const
+	{
+		return this->diplomatic_map_image;
+	}
+
+	void create_diplomatic_map_image();
 
 signals:
 	void running_changed();
+	void diplomatic_map_image_changed();
 
 private:
 	bool running = false;
+	QImage diplomatic_map_image;
 };
 
 }
