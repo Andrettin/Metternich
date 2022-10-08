@@ -4,6 +4,7 @@
 
 #include "map/map.h"
 #include "map/map_template.h"
+#include "map/province.h"
 #include "map/scenario.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
@@ -16,6 +17,7 @@ namespace metternich {
 void game::setup_scenario(metternich::scenario *scenario)
 {
 	scenario->get_map_template()->apply();
+	map::get()->initialize();
 	this->create_diplomatic_map_image();
 }
 
@@ -57,7 +59,14 @@ void game::create_diplomatic_map_image()
 		for (int y = 0; y < map->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
 			const tile *tile = map->get_tile(tile_pos);
-			const QColor tile_color = tile->get_terrain()->get_color();
+			const province *tile_province = tile->get_province();
+
+			if (tile_province == nullptr) {
+				this->diplomatic_map_image.setPixelColor(x, y, QColor(Qt::black));
+				continue;
+			}
+
+			const QColor tile_color = tile_province->get_color();
 
 			this->diplomatic_map_image.setPixelColor(x, y, tile_color);
 		}

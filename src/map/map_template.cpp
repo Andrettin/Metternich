@@ -221,9 +221,10 @@ void map_template::apply() const
 	map *map = map::get();
 	map->clear();
 	map->set_size(this->get_size());
-	map->initialize();
+	map->create_tiles();
 
 	this->apply_terrain();
+	this->apply_provinces();
 }
 
 void map_template::apply_terrain() const
@@ -245,6 +246,29 @@ void map_template::apply_terrain() const
 
 			const terrain_type *terrain = terrain_type::get_by_color(tile_color);
 			map->set_tile_terrain(tile_pos, terrain);
+		}
+	}
+}
+
+void map_template::apply_provinces() const
+{
+	assert_throw(!this->get_province_image_filepath().empty());
+
+	const QImage province_image(path::to_qstring(this->get_province_image_filepath()));
+
+	map *map = map::get();
+
+	for (int x = 0; x < map->get_width(); ++x) {
+		for (int y = 0; y < map->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			const QColor tile_color = province_image.pixelColor(tile_pos);
+
+			if (province_image.pixelColor(tile_pos).alpha() == 0) {
+				continue;
+			}
+
+			const province *province = province::get_by_color(tile_color);
+			map->set_tile_province(tile_pos, province);
 		}
 	}
 }

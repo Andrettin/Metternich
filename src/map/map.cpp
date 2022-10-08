@@ -4,8 +4,11 @@
 
 #include "database/defines.h"
 #include "game/game.h"
+#include "map/province.h"
+#include "map/province_container.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/point_util.h"
 
 namespace metternich {
@@ -18,7 +21,7 @@ map::~map()
 {
 }
 
-void map::initialize()
+void map::create_tiles()
 {
 	this->tiles = std::make_unique<std::vector<tile>>();
 
@@ -35,8 +38,28 @@ void map::initialize()
 	}
 }
 
+void map::initialize()
+{
+	province_set provinces;
+
+	for (const tile &tile : *this->tiles) {
+		if (tile.get_province() == nullptr) {
+			continue;
+		}
+
+		provinces.insert(tile.get_province());
+	}
+
+	this->provinces = container::to_vector(provinces);
+}
+
 void map::clear()
 {
+	for (province *province : province::get_all()) {
+		province->reset_game_data();
+	}
+
+	this->provinces.clear();
 	this->tiles.reset();
 }
 

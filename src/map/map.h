@@ -20,6 +20,7 @@ public:
 	map();
 	~map();
 
+	void create_tiles();
 	void initialize();
 	void clear();
 
@@ -69,6 +70,7 @@ signals:
 private:
 	QSize size;
 	std::unique_ptr<std::vector<tile>> tiles;
+	std::vector<const province *> provinces; //the provinces which are on the map
 };
 
 }

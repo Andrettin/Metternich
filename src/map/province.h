@@ -6,6 +6,8 @@
 
 namespace metternich {
 
+class province_game_data;
+
 class province final : public named_data_entry, public data_type<province>
 {
 	Q_OBJECT
@@ -49,11 +51,17 @@ private:
 	static inline color_map<province *> provinces_by_color;
 
 public:
-	explicit province(const std::string &identifier) : named_data_entry(identifier)
-	{
-	}
+	explicit province(const std::string &identifier);
+	~province();
 
 	virtual void check() const override;
+
+	void reset_game_data();
+
+	province_game_data *get_game_data() const
+	{
+		return this->game_data.get();
+	}
 
 	const QColor &get_color() const
 	{
@@ -82,6 +90,7 @@ public:
 private:
 	QColor color;
 	bool water_zone = false;
+	std::unique_ptr<province_game_data> game_data;
 };
 
 }

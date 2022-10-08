@@ -117,6 +117,7 @@ public:
 
 	void apply() const;
 	void apply_terrain() const;
+	void apply_provinces() const;
 
 private:
 	QSize size = QSize(0, 0);
