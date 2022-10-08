@@ -11,6 +11,7 @@ class terrain_type final : public named_data_entry, public data_type<terrain_typ
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color READ get_color WRITE set_color)
+	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 
 public:
 	static constexpr const char class_identifier[] = "terrain_type";
@@ -52,6 +53,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	const QColor &get_color() const
@@ -73,8 +75,22 @@ public:
 		terrain_type::terrain_types_by_color[color] = this;
 	}
 
+	const std::filesystem::path &get_image_filepath() const
+	{
+		return this->image_filepath;
+	}
+
+	void set_image_filepath(const std::filesystem::path &filepath);
+
+	const std::vector<int> &get_tiles() const
+	{
+		return this->tiles;
+	}
+
 private:
 	QColor color;
+	std::filesystem::path image_filepath;
+	std::vector<int> tiles;
 };
 
 }

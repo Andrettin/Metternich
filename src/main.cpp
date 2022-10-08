@@ -5,6 +5,7 @@
 #include "database/defines.h"
 #include "engine_interface.h"
 #include "map/site_type.h"
+#include "map/tile_image_provider.h"
 #include "util/event_loop.h"
 #include "util/exception_util.h"
 #include "util/log_util.h"
@@ -75,6 +76,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<defines>("", 1);
 
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
+
+		engine.addImageProvider("tile", new tile_image_provider);
 
 		const QString root_path = path::to_qstring(database::get()->get_root_path());
 		engine.addImportPath(root_path + "/libraries/qml");
