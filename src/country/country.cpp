@@ -3,6 +3,7 @@
 #include "country/country.h"
 
 #include "country/country_type.h"
+#include "database/defines.h"
 #include "map/province.h"
 #include "util/assert_util.h"
 
@@ -31,6 +32,15 @@ void country::check() const
 {
 	assert_throw(this->get_capital_province() != nullptr);
 	assert_throw(this->get_color().isValid());
+}
+
+const QColor &country::get_color() const
+{
+	if (this->get_type() != country_type::great_power) {
+		return defines::get()->get_minor_nation_color();
+	}
+
+	return this->color;
 }
 
 }

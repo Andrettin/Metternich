@@ -31,10 +31,7 @@ public:
 		return this->type;
 	}
 
-	const QColor &get_color() const
-	{
-		return this->color;
-	}
+	const QColor &get_color() const;
 
 	const province *get_capital_province() const
 	{
