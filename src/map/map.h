@@ -16,6 +16,7 @@ class map final : public QObject, public singleton<map>
 	Q_PROPERTY(QSize size READ get_size NOTIFY size_changed)
 	Q_PROPERTY(int width READ get_width NOTIFY size_changed)
 	Q_PROPERTY(int height READ get_height NOTIFY size_changed)
+	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 
 public:
 	map();
@@ -70,9 +71,12 @@ public:
 		return this->provinces;
 	}
 
+	QVariantList get_provinces_qvariant_list() const;
+
 signals:
 	void size_changed();
 	void tile_terrain_changed(const QPoint &tile_pos);
+	void provinces_changed();
 
 private:
 	QSize size;

@@ -87,6 +87,7 @@ set(map_HDRS
 	src/map/scenario.h
 	src/map/site.h
 	src/map/site_container.h
+	src/map/site_game_data.h
 	src/map/site_type.h
 	src/map/terrain_feature.h
 	src/map/terrain_geodata_map.h

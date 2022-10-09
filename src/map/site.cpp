@@ -2,6 +2,7 @@
 
 #include "map/site.h"
 
+#include "map/site_game_data.h"
 #include "map/site_type.h"
 #include "map/world.h"
 #include "util/assert_util.h"
@@ -9,6 +10,10 @@
 namespace metternich {
 
 site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::settlement)
+{
+}
+
+site::~site()
 {
 }
 
@@ -29,6 +34,11 @@ void site::check() const
 	} else {
 		assert_throw(this->get_terrain_type() == nullptr);
 	}
+}
+
+void site::reset_game_data()
+{
+	this->game_data = make_qunique<site_game_data>(this);
 }
 
 }

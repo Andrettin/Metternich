@@ -6,6 +6,8 @@
 #include "game/game.h"
 #include "map/province.h"
 #include "map/province_container.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -51,12 +53,18 @@ void map::initialize()
 	}
 
 	this->provinces = container::to_vector(provinces);
+
+	emit provinces_changed();
 }
 
 void map::clear()
 {
 	for (province *province : province::get_all()) {
 		province->reset_game_data();
+	}
+
+	for (site *site : site::get_all()) {
+		site->reset_game_data();
 	}
 
 	this->provinces.clear();
@@ -94,6 +102,13 @@ void map::set_tile_settlement(const QPoint &tile_pos, const site *settlement)
 {
 	tile *tile = this->get_tile(tile_pos);
 	tile->set_settlement(settlement);
+
+	settlement->get_game_data()->set_tile_pos(tile_pos);
+}
+
+QVariantList map::get_provinces_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_provinces());
 }
 
 }

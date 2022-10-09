@@ -3,9 +3,11 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "util/geocoordinate.h"
+#include "util/qunique_ptr.h"
 
 namespace metternich {
 
+class site_game_data;
 class terrain_type;
 class world;
 enum class site_type;
@@ -18,6 +20,7 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(archimedes::geocoordinate geocoordinate MEMBER geocoordinate READ get_geocoordinate)
 	Q_PROPERTY(metternich::site_type type MEMBER type READ get_type)
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
+	Q_PROPERTY(metternich::site_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "site";
@@ -26,9 +29,17 @@ public:
 
 public:
 	explicit site(const std::string &identifier);
+	~site();
 
 	virtual void initialize() override;
 	virtual void check() const override;
+
+	void reset_game_data();
+
+	site_game_data *get_game_data() const
+	{
+		return this->game_data.get();
+	}
 
 	const metternich::world *get_world() const
 	{
@@ -50,11 +61,15 @@ public:
 		return this->terrain_type;
 	}
 
+signals:
+	void changed();
+
 private:
 	metternich::world *world = nullptr;
 	archimedes::geocoordinate geocoordinate;
 	site_type type;
 	metternich::terrain_type *terrain_type = nullptr;
+	qunique_ptr<site_game_data> game_data;
 };
 
 }

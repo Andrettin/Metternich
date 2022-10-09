@@ -8,7 +8,10 @@
 #include "map/diplomatic_map_image_provider.h"
 #include "map/map.h"
 #include "map/map_grid_model.h"
+#include "map/province.h"
 #include "map/scenario.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/site_type.h"
 #include "map/tile_image_provider.h"
 #include "util/event_loop.h"
@@ -81,7 +84,10 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<defines>("", 1);
 		qmlRegisterAnonymousType<game>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
+		qmlRegisterAnonymousType<province>("", 1);
 		qmlRegisterAnonymousType<scenario>("", 1);
+		qmlRegisterAnonymousType<site>("", 1);
+		qmlRegisterAnonymousType<site_game_data>("", 1);
 
 		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
 
