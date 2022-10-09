@@ -12,6 +12,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
+#include "util/exception_util.h"
 #include "util/event_loop.h"
 #include "util/path_util.h"
 
@@ -27,10 +28,15 @@ game::game()
 
 void game::setup_scenario(metternich::scenario *scenario)
 {
-	scenario->get_map_template()->apply();
-	map::get()->initialize();
-	this->apply_history(scenario);
-	this->create_diplomatic_map_image();
+	try {
+		scenario->get_map_template()->apply();
+		map::get()->initialize();
+		this->apply_history(scenario);
+		this->create_diplomatic_map_image();
+	} catch (const std::exception &exception) {
+		exception::report(exception);
+		std::terminate();
+	}
 }
 
 void game::start()
