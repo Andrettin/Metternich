@@ -13,6 +13,20 @@ enum class diplomacy_state {
 	colonial_overlord
 };
 
+inline diplomacy_state get_diplomacy_state_counterpart(const diplomacy_state state)
+{
+	switch (state) {
+		case diplomacy_state::colony:
+			return diplomacy_state::colonial_overlord;
+		case diplomacy_state::colonial_overlord:
+			return diplomacy_state::colony;
+		default:
+			return state;
+	}
+
+	throw std::runtime_error("Invalid diplomacy state: \"" + std::to_string(static_cast<int>(state)) + "\".");
+}
+
 inline std::string get_diplomacy_state_name(const diplomacy_state state)
 {
 	switch (state) {

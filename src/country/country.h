@@ -5,6 +5,7 @@
 
 namespace metternich {
 
+class country_game_data;
 class country_history;
 class province;
 enum class country_type;
@@ -36,6 +37,13 @@ public:
 
 	virtual void reset_history() override;
 
+	void reset_game_data();
+
+	country_game_data *get_game_data() const
+	{
+		return this->game_data.get();
+	}
+
 	country_type get_type() const
 	{
 		return this->type;
@@ -59,6 +67,7 @@ private:
 	province *capital_province = nullptr;
 	std::vector<const province *> provinces; //provinces for this country when it is generated in random maps
 	std::unique_ptr<country_history> history;
+	std::unique_ptr<country_game_data> game_data;
 };
 
 }
