@@ -1,6 +1,7 @@
 #include "metternich.h"
 
 #include "country/country_type.h"
+#include "country/diplomacy_state.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -80,6 +81,7 @@ int main(int argc, char **argv)
 		QQmlApplicationEngine engine;
 
 		enum_converter<country_type>();
+		enum_converter<diplomacy_state>();
 		enum_converter<site_type>();
 
 		qmlRegisterAnonymousType<defines>("", 1);

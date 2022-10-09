@@ -14,6 +14,7 @@ include_directories(
 set(country_SRCS
 	src/country/country.cpp
 	src/country/country_type.cpp
+	src/country/diplomacy_state.cpp
 )
 source_group(country FILES ${country_SRCS})
 set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
@@ -63,6 +64,7 @@ set(metternich_SRCS
 set(country_HDRS
 	src/country/country.h
 	src/country/country_type.h
+	src/country/diplomacy_state.h
 )
 source_group(country FILES ${country_HDRS})
 
