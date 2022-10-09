@@ -3,6 +3,7 @@
 namespace metternich {
 
 class province;
+class site;
 class terrain_type;
 
 class tile final
@@ -37,11 +38,22 @@ public:
 		this->province = province;
 	}
 
+	const site *get_settlement() const
+	{
+		return this->settlement;
+	}
+
+	void set_settlement(const site *settlement)
+	{
+		this->settlement = settlement;
+	}
+
 private:
 	const terrain_type *terrain = nullptr;
 	short base_tile_frame = 0;
 	short tile_frame = 0;
 	const metternich::province *province = nullptr;
+	const site *settlement = nullptr;
 };
 
 }

@@ -271,6 +271,15 @@ void map_template::apply_provinces() const
 			map->set_tile_province(tile_pos, province);
 		}
 	}
+
+	//apply tile settlements
+	for (const auto &[tile_pos, site] : this->sites_by_position) {
+		if (site->get_type() != site_type::settlement) {
+			continue;
+		}
+
+		map->set_tile_settlement(tile_pos, site);
+	}
 }
 
 }

@@ -5,6 +5,7 @@
 namespace metternich {
 
 class province;
+class site;
 class terrain_type;
 class tile;
 
@@ -62,6 +63,7 @@ public:
 	tile *get_tile(const QPoint &pos) const;
 	void set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain);
 	void set_tile_province(const QPoint &tile_pos, const province *province);
+	void set_tile_settlement(const QPoint &tile_pos, const site *settlement);
 
 	const std::vector<const province *> &get_provinces() const
 	{

@@ -8,6 +8,7 @@ namespace metternich {
 
 class province_game_data;
 class province_history;
+class site;
 
 class province final : public named_data_entry, public data_type<province>
 {
@@ -15,6 +16,7 @@ class province final : public named_data_entry, public data_type<province>
 
 	Q_PROPERTY(QColor color READ get_color WRITE set_color)
 	Q_PROPERTY(bool water_zone MEMBER water_zone READ is_water_zone)
+	Q_PROPERTY(metternich::site* capital_settlement MEMBER capital_settlement)
 
 public:
 	static constexpr const char class_identifier[] = "province";
@@ -97,9 +99,15 @@ public:
 		return this->water_zone;
 	}
 
+	const site *get_capital_settlement() const
+	{
+		return this->capital_settlement;
+	}
+
 private:
 	QColor color;
 	bool water_zone = false;
+	site *capital_settlement = nullptr;
 	std::unique_ptr<province_history> history;
 	std::unique_ptr<province_game_data> game_data;
 };

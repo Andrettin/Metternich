@@ -90,4 +90,10 @@ void map::set_tile_province(const QPoint &tile_pos, const province *province)
 	tile->set_province(province);
 }
 
+void map::set_tile_settlement(const QPoint &tile_pos, const site *settlement)
+{
+	tile *tile = this->get_tile(tile_pos);
+	tile->set_settlement(settlement);
+}
+
 }
