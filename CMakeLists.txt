@@ -20,6 +20,7 @@ set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
 
 set(database_SRCS
 	src/database/defines.cpp
+	src/database/preferences.cpp
 )
 source_group(database FILES ${database_SRCS})
 set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
@@ -67,6 +68,7 @@ source_group(country FILES ${country_HDRS})
 
 set(database_HDRS
 	src/database/defines.h
+	src/database/preferences.h
 )
 source_group(database FILES ${database_HDRS})
 

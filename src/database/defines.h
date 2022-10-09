@@ -12,6 +12,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_OBJECT
 
 	Q_PROPERTY(QSize tile_size MEMBER tile_size READ get_tile_size NOTIFY changed)
+	Q_PROPERTY(QSize scaled_tile_size READ get_scaled_tile_size NOTIFY scaled_tile_size_changed)
 	Q_PROPERTY(metternich::terrain_type* default_base_terrain MEMBER default_base_terrain)
 	Q_PROPERTY(metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
@@ -21,6 +22,8 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 
 public:
+	defines();
+
 	const QSize &get_tile_size() const
 	{
 		return this->tile_size;
@@ -35,6 +38,10 @@ public:
 	{
 		return this->get_tile_size().height();
 	}
+
+	QSize get_scaled_tile_size() const;
+	int get_scaled_tile_width() const;
+	int get_scaled_tile_height() const;
 
 	const terrain_type *get_default_base_terrain() const
 	{
@@ -78,6 +85,7 @@ public:
 
 signals:
 	void changed();
+	void scaled_tile_size_changed();
 
 private:
 	QSize tile_size = QSize(64, 64);

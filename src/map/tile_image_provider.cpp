@@ -3,13 +3,22 @@
 #include "map/tile_image_provider.h"
 
 #include "database/defines.h"
+#include "database/preferences.h"
 #include "map/terrain_type.h"
 #include "util/assert_util.h"
 #include "util/image_util.h"
 #include "util/path_util.h"
 #include "util/string_util.h"
+#include "util/thread_pool.h"
 
 namespace metternich {
+
+tile_image_provider::tile_image_provider()
+{
+	QObject::connect(preferences::get(), &preferences::scale_factor_changed, [this]() {
+		this->clear_images();
+	});
+}
 
 void tile_image_provider::load_image(const std::string &id)
 {
@@ -33,10 +42,27 @@ void tile_image_provider::load_image(const std::string &id)
 
 	assert_throw(!filepath.empty());
 
+	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+
+	const std::pair<std::filesystem::path, centesimal_int> scale_suffix_result = image::get_scale_suffixed_filepath(filepath, scale_factor);
+
+	centesimal_int image_scale_factor(1);
+
+	if (!scale_suffix_result.first.empty()) {
+		filepath = scale_suffix_result.first;
+		image_scale_factor = scale_suffix_result.second;
+	}
+
 	QImage image(path::to_qstring(filepath));
 
+	if (image_scale_factor != scale_factor) {
+		thread_pool::get()->co_spawn_sync([this, &image, &scale_factor, &image_scale_factor]() -> boost::asio::awaitable<void> {
+			image = co_await image::scale(image, scale_factor / image_scale_factor, defines::get()->get_tile_size() * image_scale_factor);
+		});
+	}
+
 	if (is_frame_image) {
-		const QSize &frame_size = defines::get()->get_tile_size();
+		const QSize &frame_size = defines::get()->get_scaled_tile_size();
 
 		//load the entire image, and cache all frames
 		std::vector<QImage> frame_images = image::to_frames(image, frame_size);

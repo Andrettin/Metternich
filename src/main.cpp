@@ -3,6 +3,7 @@
 #include "country/country_type.h"
 #include "database/database.h"
 #include "database/defines.h"
+#include "database/preferences.h"
 #include "engine_interface.h"
 #include "game/game.h"
 #include "map/diplomatic_map_image_provider.h"
@@ -84,6 +85,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<defines>("", 1);
 		qmlRegisterAnonymousType<game>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
+		qmlRegisterAnonymousType<preferences>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);
 		qmlRegisterAnonymousType<scenario>("", 1);
 		qmlRegisterAnonymousType<site>("", 1);
@@ -114,6 +116,7 @@ int main(int argc, char **argv)
 					database::get()->load_defines();
 					co_await database::get()->load(false);
 					database::get()->initialize();
+					preferences::get()->load();
 				} catch (const std::exception &exception) {
 					exception::report(exception);
 					QMetaObject::invokeMethod(QApplication::instance(), [] {
