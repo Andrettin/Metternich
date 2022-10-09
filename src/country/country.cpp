@@ -2,6 +2,7 @@
 
 #include "country/country.h"
 
+#include "country/country_history.h"
 #include "country/country_type.h"
 #include "database/defines.h"
 #include "map/province.h"
@@ -32,6 +33,16 @@ void country::check() const
 {
 	assert_throw(this->get_capital_province() != nullptr);
 	assert_throw(this->get_color().isValid());
+}
+
+data_entry_history *country::get_history_base()
+{
+	return this->history.get();
+}
+
+void country::reset_history()
+{
+	this->history = std::make_unique<country_history>(this);
 }
 
 const QColor &country::get_color() const

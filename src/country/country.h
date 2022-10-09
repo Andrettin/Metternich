@@ -5,6 +5,7 @@
 
 namespace metternich {
 
+class country_history;
 class province;
 enum class country_type;
 
@@ -20,11 +21,20 @@ public:
 	static constexpr const char class_identifier[] = "country";
 	static constexpr const char property_class_identifier[] = "metternich::country*";
 	static constexpr const char database_folder[] = "countries";
+	static constexpr bool history_enabled = true;
 
 	explicit country(const std::string &identifier);
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
+	virtual data_entry_history *get_history_base() override;
+
+	country_history *get_history() const
+	{
+		return this->history.get();
+	}
+
+	virtual void reset_history() override;
 
 	country_type get_type() const
 	{
@@ -48,6 +58,7 @@ private:
 	QColor color;
 	province *capital_province = nullptr;
 	std::vector<const province *> provinces; //provinces for this country when it is generated in random maps
+	std::unique_ptr<country_history> history;
 };
 
 }
