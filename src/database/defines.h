@@ -17,6 +17,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
 	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color)
+	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 
 public:
@@ -60,6 +61,13 @@ public:
 		return this->minor_nation_color;
 	}
 
+	const std::filesystem::path &get_default_settlement_image_filepath() const
+	{
+		return this->default_settlement_image_filepath;
+	}
+
+	void set_default_settlement_image_filepath(const std::filesystem::path &filepath);
+
 	QString get_default_menu_background_filepath_qstring() const;
 	void set_default_menu_background_filepath(const std::filesystem::path &filepath);
 
@@ -78,6 +86,7 @@ private:
 	terrain_type *default_province_terrain = nullptr;
 	terrain_type *default_water_zone_terrain = nullptr;
 	QColor minor_nation_color;
+	std::filesystem::path default_settlement_image_filepath;
 	std::filesystem::path default_menu_background_filepath;
 };
 
