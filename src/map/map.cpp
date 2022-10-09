@@ -2,6 +2,7 @@
 
 #include "map/map.h"
 
+#include "country/country.h"
 #include "database/defines.h"
 #include "game/game.h"
 #include "map/province.h"
@@ -59,6 +60,10 @@ void map::initialize()
 
 void map::clear()
 {
+	for (country *country : country::get_all()) {
+		country->reset_game_data();
+	}
+
 	for (province *province : province::get_all()) {
 		province->reset_game_data();
 	}
