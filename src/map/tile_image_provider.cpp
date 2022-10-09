@@ -15,20 +15,38 @@ void tile_image_provider::load_image(const std::string &id)
 {
 	const std::vector<std::string> id_list = string::split(id, '/');
 
-	const std::string &terrain_identifier = id_list.at(0);
-	const terrain_type *terrain = terrain_type::get(terrain_identifier);
+	const std::string &tile_image_type = id_list.at(0);
+	const std::string &identifier = id_list.at(1);
+	std::filesystem::path filepath;
 
-	const std::filesystem::path &filepath = terrain->get_image_filepath();
-	const QImage image(path::to_qstring(filepath));
+	bool is_frame_image = false;
 
-	const QSize &frame_size = defines::get()->get_tile_size();
+	if (tile_image_type == "terrain") {
+		const terrain_type *terrain = terrain_type::get(identifier);
+		filepath = terrain->get_image_filepath();
+		is_frame_image = true;
+	} else if (tile_image_type == "settlement") {
+		filepath = defines::get()->get_default_settlement_image_filepath();
+	} else {
+		assert_throw(false);
+	}
 
-	//load the entire image, and cache all frames
-	std::vector<QImage> frame_images = image::to_frames(image, frame_size);
+	assert_throw(!filepath.empty());
 
-	for (size_t i = 0; i < frame_images.size(); ++i) {
-		const std::string frame_id = terrain_identifier + "/" + std::to_string(i);
-		this->set_image(frame_id, std::move(frame_images.at(i)));
+	QImage image(path::to_qstring(filepath));
+
+	if (is_frame_image) {
+		const QSize &frame_size = defines::get()->get_tile_size();
+
+		//load the entire image, and cache all frames
+		std::vector<QImage> frame_images = image::to_frames(image, frame_size);
+
+		for (size_t i = 0; i < frame_images.size(); ++i) {
+			const std::string frame_id = tile_image_type + "/" + identifier + "/" + std::to_string(i);
+			this->set_image(frame_id, std::move(frame_images.at(i)));
+		}
+	} else {
+		this->set_image(id, std::move(image));
 	}
 }
 

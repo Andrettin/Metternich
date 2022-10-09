@@ -18,7 +18,7 @@ map_grid_model::map_grid_model()
 
 QString map_grid_model::build_image_source(const terrain_type *terrain, const short tile_frame)
 {
-	QString image_source = terrain->get_identifier_qstring();
+	QString image_source = "terrain/" + terrain->get_identifier_qstring();
 
 	image_source += "/" + QString::number(tile_frame);
 
@@ -60,6 +60,15 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return map_grid_model::build_image_source(defines::get()->get_default_base_terrain(), tile->get_base_tile());
 			case role::image_source:
 				return map_grid_model::build_image_source(tile->get_terrain(), tile->get_tile());
+			case role::overlay_image_sources: {
+				QStringList overlay_image_sources;
+
+				if (tile->get_settlement() != nullptr) {
+					overlay_image_sources.push_back("settlement/default");
+				}
+
+				return overlay_image_sources;
+			}
 			default:
 				throw std::runtime_error("Invalid map grid model role: " + std::to_string(role) + ".");
 		}
