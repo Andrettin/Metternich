@@ -42,6 +42,10 @@ void country_game_data::add_province(const province *province)
 	}
 
 	this->calculate_territory_rect();
+
+	if (this->get_provinces().size() == 1) {
+		game::get()->add_country(this->country);
+	}
 }
 
 void country_game_data::remove_province(const province *province)
@@ -69,6 +73,10 @@ void country_game_data::remove_province(const province *province)
 	}
 
 	this->calculate_territory_rect();
+
+	if (this->get_provinces().empty()) {
+		game::get()->remove_country(this->country);
+	}
 }
 
 void country_game_data::calculate_territory_rect()

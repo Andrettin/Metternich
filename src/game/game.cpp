@@ -40,6 +40,8 @@ void game::setup_scenario(metternich::scenario *scenario)
 
 		this->apply_history(scenario);
 		this->create_diplomatic_map_image();
+
+		emit countries_changed();
 	} catch (const std::exception &exception) {
 		exception::report(exception);
 		std::terminate();
@@ -67,6 +69,7 @@ void game::stop()
 		}
 
 		this->set_running(false);
+		this->clear();
 		map::get()->clear();
 	});
 }
@@ -85,6 +88,7 @@ void game::clear()
 	}
 
 	this->scenario = nullptr;
+	this->countries.clear();
 }
 
 void game::apply_history(const metternich::scenario *scenario)
@@ -98,8 +102,7 @@ void game::apply_history(const metternich::scenario *scenario)
 		province_game_data->set_owner(province_history->get_owner());
 	}
 
-	//FIXME: iterate only through the countries which are actually on the map instead
-	for (const country *country : country::get_all()) {
+	for (const country *country : this->get_countries()) {
 		const country_history *country_history = country->get_history();
 		country_game_data *country_game_data = country->get_game_data();
 
@@ -126,13 +129,8 @@ void game::create_diplomatic_map_image()
 
 	this->diplomatic_map_tile_pixel_size = this->diplomatic_map_image.size() / map::get()->get_size();
 
-	for (const country *country : country::get_all()) {
+	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
-
-		if (!country_game_data->is_alive()) {
-			continue;
-		}
-
 		country_game_data->create_diplomatic_map_image();
 	}
 
