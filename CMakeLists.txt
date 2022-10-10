@@ -41,6 +41,7 @@ set(map_SRCS
 	src/map/map_template.cpp
 	src/map/province.cpp
 	src/map/province_container.cpp
+	src/map/province_game_data.cpp
 	src/map/scenario.cpp
 	src/map/site.cpp
 	src/map/site_container.cpp

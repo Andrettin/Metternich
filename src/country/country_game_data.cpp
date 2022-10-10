@@ -7,6 +7,16 @@
 
 namespace metternich {
 
+void country_game_data::add_province(const province *province)
+{
+	this->provinces.push_back(province);
+}
+
+void country_game_data::remove_province(const province *province)
+{
+	std::erase(this->provinces, province);
+}
+
 diplomacy_state country_game_data::get_diplomacy_state(const metternich::country *other_country) const
 {
 	const auto find_iterator = this->diplomacy_states.find(other_country);

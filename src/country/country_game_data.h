@@ -3,6 +3,7 @@
 namespace metternich {
 
 class country;
+class province;
 enum class diplomacy_state;
 
 class country_game_data final
@@ -16,6 +17,9 @@ public:
 	{
 		return this->overlord;
 	}
+
+	void add_province(const province *province);
+	void remove_province(const province *province);
 
 	diplomacy_state get_diplomacy_state(const metternich::country *other_country) const;
 	void set_diplomacy_state(const metternich::country *other_country, const diplomacy_state state);

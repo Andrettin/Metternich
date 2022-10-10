@@ -17,10 +17,7 @@ public:
 		return this->owner;
 	}
 
-	void set_owner(const country *country)
-	{
-		this->owner = country;
-	}
+	void set_owner(const country *country);
 
 private:
 	const metternich::province *province = nullptr;
