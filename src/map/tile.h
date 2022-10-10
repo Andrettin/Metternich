@@ -2,6 +2,7 @@
 
 namespace metternich {
 
+class country;
 class province;
 class site;
 class terrain_type;
@@ -37,6 +38,8 @@ public:
 	{
 		this->province = province;
 	}
+
+	const country *get_owner() const;
 
 	const site *get_settlement() const
 	{
