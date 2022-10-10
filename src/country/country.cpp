@@ -14,6 +14,7 @@ namespace metternich {
 country::country(const std::string &identifier)
 	: named_data_entry(identifier), type(country_type::minor_nation)
 {
+	this->reset_game_data();
 }
 
 void country::process_gsml_scope(const gsml_data &scope)

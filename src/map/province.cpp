@@ -10,6 +10,7 @@ namespace metternich {
 
 province::province(const std::string &identifier) : named_data_entry(identifier)
 {
+	this->reset_game_data();
 }
 
 province::~province()

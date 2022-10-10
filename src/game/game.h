@@ -37,7 +37,9 @@ public:
 	Q_INVOKABLE void start();
 	Q_INVOKABLE void stop();
 
-	void apply_history(const scenario *scenario);
+	void clear();
+
+	void apply_history(const metternich::scenario *scenario);
 
 	const QImage &get_diplomatic_map_image() const
 	{
@@ -59,6 +61,7 @@ signals:
 
 private:
 	bool running = false;
+	const metternich::scenario *scenario = nullptr;
 	QImage diplomatic_map_image;
 	QSize diplomatic_map_tile_pixel_size;
 };

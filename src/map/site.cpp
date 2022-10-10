@@ -11,6 +11,7 @@ namespace metternich {
 
 site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::settlement)
 {
+	this->reset_game_data();
 }
 
 site::~site()

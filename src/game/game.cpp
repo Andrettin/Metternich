@@ -29,8 +29,15 @@ game::game()
 void game::setup_scenario(metternich::scenario *scenario)
 {
 	try {
-		scenario->get_map_template()->apply();
-		map::get()->initialize();
+		const metternich::scenario *old_scenario = this->scenario;
+		this->clear();
+		this->scenario = scenario;
+
+		if (old_scenario == nullptr || old_scenario->get_map_template() != scenario->get_map_template()) {
+			scenario->get_map_template()->apply();
+			map::get()->initialize();
+		}
+
 		this->apply_history(scenario);
 		this->create_diplomatic_map_image();
 	} catch (const std::exception &exception) {
@@ -64,7 +71,23 @@ void game::stop()
 	});
 }
 
-void game::apply_history(const scenario *scenario)
+void game::clear()
+{
+	//clear data related to the game (i.e. the data determined by history), but not that related only to the map
+	//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
+	for (country *country : country::get_all()) {
+		country->reset_game_data();
+	}
+
+	for (const province *province : province::get_all()) {
+		province_game_data *province_game_data = province->get_game_data();
+		province_game_data->set_owner(nullptr);
+	}
+
+	this->scenario = nullptr;
+}
+
+void game::apply_history(const metternich::scenario *scenario)
 {
 	database::get()->load_history(scenario->get_start_date(), scenario->get_timeline());
 
