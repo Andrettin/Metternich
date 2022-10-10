@@ -45,7 +45,6 @@ public:
 	}
 
 	void create_diplomatic_map_image();
-	void set_diplomatic_map_image_tile_color(const QPoint &tile_pos, const QColor &tile_color);
 
 	const QSize &get_diplomatic_map_tile_pixel_size() const
 	{

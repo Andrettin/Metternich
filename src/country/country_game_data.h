@@ -26,6 +26,11 @@ public:
 	void add_province(const province *province);
 	void remove_province(const province *province);
 
+	bool is_alive() const
+	{
+		return !this->get_provinces().empty();
+	}
+
 	void calculate_territory_rect();
 
 	const std::vector<QPoint> &get_border_tiles() const

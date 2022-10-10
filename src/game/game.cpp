@@ -31,8 +31,8 @@ void game::setup_scenario(metternich::scenario *scenario)
 	try {
 		scenario->get_map_template()->apply();
 		map::get()->initialize();
-		this->create_diplomatic_map_image();
 		this->apply_history(scenario);
+		this->create_diplomatic_map_image();
 	} catch (const std::exception &exception) {
 		exception::report(exception);
 		std::terminate();
@@ -99,36 +99,21 @@ void game::create_diplomatic_map_image()
 	}
 
 	this->diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
-	this->diplomatic_map_image.fill(Qt::transparent);
+	this->diplomatic_map_image.fill(Qt::black);
 
 	this->diplomatic_map_tile_pixel_size = this->diplomatic_map_image.size() / map::get()->get_size();
 
-	for (int x = 0; x < map->get_width(); ++x) {
-		for (int y = 0; y < map->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			const tile *tile = map->get_tile(tile_pos);
-			const province *tile_province = tile->get_province();
+	for (const country *country : country::get_all()) {
+		country_game_data *country_game_data = country->get_game_data();
 
-			if (tile_province == nullptr) {
-				this->set_diplomatic_map_image_tile_color(tile_pos, QColor(Qt::black));
-			}
+		if (!country_game_data->is_alive()) {
+			continue;
 		}
+
+		country_game_data->create_diplomatic_map_image();
 	}
 
 	emit diplomatic_map_image_changed();
-}
-
-void game::set_diplomatic_map_image_tile_color(const QPoint &tile_pos, const QColor &tile_color)
-{
-	const QSize &tile_pixel_size = this->get_diplomatic_map_tile_pixel_size();
-	const QPoint top_left_pixel_pos = tile_pos * size::to_point(tile_pixel_size);
-
-	for (int pixel_x_offset = 0; pixel_x_offset < tile_pixel_size.width(); ++pixel_x_offset) {
-		for (int pixel_y_offset = 0; pixel_y_offset < tile_pixel_size.height(); ++pixel_y_offset) {
-			const QPoint pixel_pos = top_left_pixel_pos + QPoint(pixel_x_offset, pixel_y_offset);
-			this->diplomatic_map_image.setPixelColor(pixel_pos, tile_color);
-		}
-	}
 }
 
 void game::update_diplomatic_map_image_country(const QImage &country_image, const QPoint &country_image_pos)

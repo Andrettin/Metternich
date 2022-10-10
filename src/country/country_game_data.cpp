@@ -87,7 +87,9 @@ void country_game_data::calculate_territory_rect()
 
 	this->territory_rect = territory_rect;
 
-	this->create_diplomatic_map_image();
+	if (game::get()->is_running()) {
+		this->create_diplomatic_map_image();
+	}
 }
 
 diplomacy_state country_game_data::get_diplomacy_state(const metternich::country *other_country) const
