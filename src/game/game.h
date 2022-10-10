@@ -13,6 +13,8 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(bool running READ is_running NOTIFY running_changed)
 
 public:
+	static constexpr QSize min_diplomatic_map_image_size = QSize(1024, 512);
+
 	game();
 
 	bool is_running() const
@@ -43,6 +45,14 @@ public:
 	}
 
 	void create_diplomatic_map_image();
+	void set_diplomatic_map_image_tile_color(const QPoint &tile_pos, const QColor &tile_color);
+
+	const QSize &get_diplomatic_map_tile_pixel_size() const
+	{
+		return this->diplomatic_map_tile_pixel_size;
+	}
+
+	void update_diplomatic_map_image_country(const QImage &country_image, const QPoint &country_image_pos);
 
 signals:
 	void running_changed();
@@ -51,6 +61,7 @@ signals:
 private:
 	bool running = false;
 	QImage diplomatic_map_image;
+	QSize diplomatic_map_tile_pixel_size;
 };
 
 }

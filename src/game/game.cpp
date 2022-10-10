@@ -18,15 +18,12 @@
 #include "util/exception_util.h"
 #include "util/event_loop.h"
 #include "util/path_util.h"
+#include "util/size_util.h"
 
 namespace metternich {
 
 game::game()
 {
-	static constexpr QSize diplomatic_map_image_size(1024, 512);
-
-	this->diplomatic_map_image = QImage(diplomatic_map_image_size, QImage::Format_RGBA8888);
-	this->diplomatic_map_image.fill(Qt::transparent);
 }
 
 void game::setup_scenario(metternich::scenario *scenario)
@@ -34,8 +31,8 @@ void game::setup_scenario(metternich::scenario *scenario)
 	try {
 		scenario->get_map_template()->apply();
 		map::get()->initialize();
-		this->apply_history(scenario);
 		this->create_diplomatic_map_image();
+		this->apply_history(scenario);
 	} catch (const std::exception &exception) {
 		exception::report(exception);
 		std::terminate();
@@ -92,9 +89,19 @@ void game::apply_history(const scenario *scenario)
 
 void game::create_diplomatic_map_image()
 {
-	this->diplomatic_map_image.fill(Qt::transparent);
+	static constexpr int min_tile_scale = 2;
 
 	const map *map = map::get();
+
+	QSize image_size = game::min_diplomatic_map_image_size;
+	if (map->get_width() >= image_size.width() || map->get_height() >= image_size.height()) {
+		image_size *= min_tile_scale;
+	}
+
+	this->diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
+	this->diplomatic_map_image.fill(Qt::transparent);
+
+	this->diplomatic_map_tile_pixel_size = this->diplomatic_map_image.size() / map::get()->get_size();
 
 	for (int x = 0; x < map->get_width(); ++x) {
 		for (int y = 0; y < map->get_height(); ++y) {
@@ -103,22 +110,32 @@ void game::create_diplomatic_map_image()
 			const province *tile_province = tile->get_province();
 
 			if (tile_province == nullptr) {
-				this->diplomatic_map_image.setPixelColor(x, y, QColor(Qt::black));
-				continue;
+				this->set_diplomatic_map_image_tile_color(tile_pos, QColor(Qt::black));
 			}
-
-			const province_game_data *province_game_data = tile_province->get_game_data();
-			const country *owner = province_game_data->get_owner();
-
-			if (owner == nullptr) {
-				continue;
-			}
-
-			const QColor tile_color = owner->get_game_data()->get_diplomatic_map_color();
-
-			this->diplomatic_map_image.setPixelColor(x, y, tile_color);
 		}
 	}
+
+	emit diplomatic_map_image_changed();
+}
+
+void game::set_diplomatic_map_image_tile_color(const QPoint &tile_pos, const QColor &tile_color)
+{
+	const QSize &tile_pixel_size = this->get_diplomatic_map_tile_pixel_size();
+	const QPoint top_left_pixel_pos = tile_pos * size::to_point(tile_pixel_size);
+
+	for (int pixel_x_offset = 0; pixel_x_offset < tile_pixel_size.width(); ++pixel_x_offset) {
+		for (int pixel_y_offset = 0; pixel_y_offset < tile_pixel_size.height(); ++pixel_y_offset) {
+			const QPoint pixel_pos = top_left_pixel_pos + QPoint(pixel_x_offset, pixel_y_offset);
+			this->diplomatic_map_image.setPixelColor(pixel_pos, tile_color);
+		}
+	}
+}
+
+void game::update_diplomatic_map_image_country(const QImage &country_image, const QPoint &country_image_pos)
+{
+	QPainter painter(&this->diplomatic_map_image);
+	painter.drawImage(country_image_pos, country_image);
+	painter.end();
 
 	emit diplomatic_map_image_changed();
 }

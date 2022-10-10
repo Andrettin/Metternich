@@ -18,8 +18,15 @@ public:
 		return this->overlord;
 	}
 
+	const std::vector<const province *> &get_provinces() const
+	{
+		return this->provinces;
+	}
+
 	void add_province(const province *province);
 	void remove_province(const province *province);
+
+	void calculate_territory_rect();
 
 	const std::vector<QPoint> &get_border_tiles() const
 	{
@@ -31,12 +38,17 @@ public:
 
 	const QColor &get_diplomatic_map_color() const;
 
+	void create_diplomatic_map_image();
+
 private:
 	const metternich::country *country = nullptr;
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;
+	QRect territory_rect;
 	std::vector<QPoint> border_tiles;
 	std::map<const metternich::country *, diplomacy_state> diplomacy_states;
+	QImage diplomatic_map_image;
+	std::vector<QPoint> diplomatic_map_border_pixels;
 };
 
 }
