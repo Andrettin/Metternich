@@ -111,6 +111,37 @@ void map::set_tile_settlement(const QPoint &tile_pos, const site *settlement)
 	settlement->get_game_data()->set_tile_pos(tile_pos);
 }
 
+bool map::is_tile_on_country_border(const QPoint &tile_pos) const
+{
+	const tile *tile = this->get_tile(tile_pos);
+	const country *tile_country = tile->get_owner();
+
+	if (tile_country == nullptr) {
+		return false;
+	}
+
+	bool result = false;
+
+	point::for_each_adjacent_until(tile_pos, [this, tile_country, &result](const QPoint &adjacent_pos) {
+		if (!this->contains(adjacent_pos)) {
+			result = true;
+			return true;
+		}
+
+		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+		const country *adjacent_country = adjacent_tile->get_owner();
+
+		if (tile_country != adjacent_country) {
+			result = true;
+			return true;
+		}
+
+		return false;
+	});
+
+	return result;
+}
+
 QVariantList map::get_provinces_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_provinces());

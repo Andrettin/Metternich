@@ -66,6 +66,8 @@ public:
 	void set_tile_province(const QPoint &tile_pos, const province *province);
 	void set_tile_settlement(const QPoint &tile_pos, const site *settlement);
 
+	bool is_tile_on_country_border(const QPoint &tile_pos) const;
+
 	const std::vector<const province *> &get_provinces() const
 	{
 		return this->provinces;
