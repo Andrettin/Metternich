@@ -24,4 +24,24 @@ void province_game_data::set_owner(const country *country)
 	}
 }
 
+void province_game_data::add_border_tile(const QPoint &tile_pos)
+{
+	this->border_tiles.push_back(tile_pos);
+
+	if (this->get_territory_rect().isNull()) {
+		this->territory_rect = QRect(tile_pos, QSize(1, 1));
+	} else {
+		if (tile_pos.x() < this->territory_rect.x()) {
+			this->territory_rect.setX(tile_pos.x());
+		} else if (tile_pos.x() > this->territory_rect.right()) {
+			this->territory_rect.setRight(tile_pos.x());
+		}
+		if (tile_pos.y() < this->territory_rect.y()) {
+			this->territory_rect.setY(tile_pos.y());
+		} else if (tile_pos.y() > this->territory_rect.bottom()) {
+			this->territory_rect.setBottom(tile_pos.y());
+		}
+	}
+}
+
 }
