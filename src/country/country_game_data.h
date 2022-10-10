@@ -21,6 +21,11 @@ public:
 	void add_province(const province *province);
 	void remove_province(const province *province);
 
+	const std::vector<QPoint> &get_border_tiles() const
+	{
+		return this->border_tiles;
+	}
+
 	diplomacy_state get_diplomacy_state(const metternich::country *other_country) const;
 	void set_diplomacy_state(const metternich::country *other_country, const diplomacy_state state);
 
@@ -30,6 +35,7 @@ private:
 	const metternich::country *country = nullptr;
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;
+	std::vector<QPoint> border_tiles;
 	std::map<const metternich::country *, diplomacy_state> diplomacy_states;
 };
 
