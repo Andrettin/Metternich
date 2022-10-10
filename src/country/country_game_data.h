@@ -29,6 +29,7 @@ public:
 private:
 	const metternich::country *country = nullptr;
 	const metternich::country *overlord = nullptr;
+	std::vector<const province *> provinces;
 	std::map<const metternich::country *, diplomacy_state> diplomacy_states;
 };
 
