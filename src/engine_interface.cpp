@@ -16,10 +16,6 @@ namespace metternich {
 engine_interface::engine_interface()
 {
 	connect(preferences::get(), &preferences::scale_factor_changed, this, &engine_interface::scale_factor_changed);
-
-	database::get()->register_on_initialization_function([]() {
-		engine_interface::get()->set_running(true);
-	});
 }
 
 engine_interface::~engine_interface()

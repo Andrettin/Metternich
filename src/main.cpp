@@ -119,6 +119,7 @@ int main(int argc, char **argv)
 					co_await database::get()->load(false);
 					database::get()->initialize();
 					preferences::get()->load();
+					engine_interface::get()->set_running(true);
 				} catch (const std::exception &exception) {
 					exception::report(exception);
 					QMetaObject::invokeMethod(QApplication::instance(), [] {
