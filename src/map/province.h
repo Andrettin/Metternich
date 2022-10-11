@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "util/color_container.h"
+#include "util/qunique_ptr.h"
 
 namespace metternich {
 
@@ -111,7 +112,7 @@ private:
 	QColor color;
 	bool water_zone = false;
 	site *capital_settlement = nullptr;
-	std::unique_ptr<province_history> history;
+	qunique_ptr<province_history> history;
 	std::unique_ptr<province_game_data> game_data;
 };
 

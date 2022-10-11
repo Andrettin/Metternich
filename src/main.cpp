@@ -1,5 +1,7 @@
 #include "metternich.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/country_type.h"
 #include "country/diplomacy_state.h"
 #include "database/database.h"
@@ -84,6 +86,8 @@ int main(int argc, char **argv)
 		enum_converter<diplomacy_state>();
 		enum_converter<site_type>();
 
+		qmlRegisterAnonymousType<country>("", 1);
+		qmlRegisterAnonymousType<country_game_data>("", 1);
 		qmlRegisterAnonymousType<defines>("", 1);
 		qmlRegisterAnonymousType<game>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);

@@ -29,7 +29,7 @@ data_entry_history *province::get_history_base()
 
 void province::reset_history()
 {
-	this->history = std::make_unique<province_history>(this);
+	this->history = make_qunique<province_history>(this);
 }
 
 void province::reset_game_data()

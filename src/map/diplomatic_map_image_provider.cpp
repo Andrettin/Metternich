@@ -2,8 +2,10 @@
 
 #include "map/diplomatic_map_image_provider.h"
 
-#include "game/game.h"
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "util/assert_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -12,7 +14,12 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 	Q_UNUSED(id);
 	Q_UNUSED(requested_size);
 
-	const QImage &image = game::get()->get_diplomatic_map_image();
+	const std::vector<std::string> id_list = string::split(id.toStdString(), '/');
+
+	const std::string &country_identifier = id_list.at(0);
+	const country *country = country::get(country_identifier);
+
+	const QImage &image = country->get_game_data()->get_diplomatic_map_image();
 
 	assert_log(!image.isNull());
 

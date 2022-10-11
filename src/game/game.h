@@ -12,6 +12,7 @@ class game final : public QObject, public singleton<game>
 	Q_OBJECT
 
 	Q_PROPERTY(bool running READ is_running NOTIFY running_changed)
+	Q_PROPERTY(QVariantList countries READ get_country_qvariant_list NOTIFY countries_changed)
 
 public:
 	static constexpr QSize min_diplomatic_map_image_size = QSize(1024, 512);
@@ -42,11 +43,6 @@ public:
 
 	void apply_history(const metternich::scenario *scenario);
 
-	const QImage &get_diplomatic_map_image() const
-	{
-		return this->diplomatic_map_image;
-	}
-
 	void create_diplomatic_map_image();
 
 	const QSize &get_diplomatic_map_tile_pixel_size() const
@@ -54,12 +50,12 @@ public:
 		return this->diplomatic_map_tile_pixel_size;
 	}
 
-	void update_diplomatic_map_image_country(const QImage &country_image, const QPoint &country_image_pos);
-
 	const std::vector<const country *> &get_countries() const
 	{
 		return this->countries;
 	}
+
+	QVariantList get_country_qvariant_list() const;
 
 	void add_country(const country *country)
 	{
@@ -81,13 +77,11 @@ public:
 
 signals:
 	void running_changed();
-	void diplomatic_map_image_changed();
 	void countries_changed();
 
 private:
 	bool running = false;
 	const metternich::scenario *scenario = nullptr;
-	QImage diplomatic_map_image;
 	QSize diplomatic_map_tile_pixel_size;
 	std::vector<const country *> countries; //the countries currently in the game, i.e. those with at least 1 province
 };

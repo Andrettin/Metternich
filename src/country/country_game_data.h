@@ -6,8 +6,12 @@ class country;
 class province;
 enum class diplomacy_state;
 
-class country_game_data final
+class country_game_data final : public QObject
 {
+	Q_OBJECT
+
+	Q_PROPERTY(QPoint diplomatic_map_image_pos READ get_diplomatic_map_image_pos NOTIFY diplomatic_map_image_changed)
+
 public:
 	explicit country_game_data(const metternich::country *country) : country(country)
 	{
@@ -31,6 +35,11 @@ public:
 		return !this->get_provinces().empty();
 	}
 
+	const QRect &get_territory_rect() const
+	{
+		return this->territory_rect;
+	}
+
 	void calculate_territory_rect();
 
 	const std::vector<QPoint> &get_border_tiles() const
@@ -43,7 +52,20 @@ public:
 
 	const QColor &get_diplomatic_map_color() const;
 
+	const QImage &get_diplomatic_map_image() const
+	{
+		return this->diplomatic_map_image;
+	}
+
 	void create_diplomatic_map_image();
+
+	const QPoint &get_diplomatic_map_image_pos() const
+	{
+		return this->diplomatic_map_image_pos;
+	}
+
+signals:
+	void diplomatic_map_image_changed();
 
 private:
 	const metternich::country *country = nullptr;
@@ -54,6 +76,7 @@ private:
 	std::map<const metternich::country *, diplomacy_state> diplomacy_states;
 	QImage diplomatic_map_image;
 	std::vector<QPoint> diplomatic_map_border_pixels;
+	QPoint diplomatic_map_image_pos;
 };
 
 }

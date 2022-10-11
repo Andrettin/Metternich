@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "util/qunique_ptr.h"
 
 namespace metternich {
 
@@ -17,6 +18,7 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(metternich::country_type type MEMBER type READ get_type)
 	Q_PROPERTY(QColor color MEMBER color READ get_color)
 	Q_PROPERTY(metternich::province* capital_province MEMBER capital_province)
+	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "country";
@@ -61,13 +63,16 @@ public:
 		return this->provinces;
 	}
 
+signals:
+	void changed();
+
 private:
 	country_type type;
 	QColor color;
 	province *capital_province = nullptr;
 	std::vector<const province *> provinces; //provinces for this country when it is generated in random maps
-	std::unique_ptr<country_history> history;
-	std::unique_ptr<country_game_data> game_data;
+	qunique_ptr<country_history> history;
+	qunique_ptr<country_game_data> game_data;
 };
 
 }

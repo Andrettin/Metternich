@@ -44,12 +44,12 @@ data_entry_history *country::get_history_base()
 
 void country::reset_history()
 {
-	this->history = std::make_unique<country_history>(this);
+	this->history = make_qunique<country_history>(this);
 }
 
 void country::reset_game_data()
 {
-	this->game_data = std::make_unique<country_game_data>(this);
+	this->game_data = make_qunique<country_game_data>(this);
 }
 
 const QColor &country::get_color() const

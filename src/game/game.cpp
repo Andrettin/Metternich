@@ -15,6 +15,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/exception_util.h"
 #include "util/event_loop.h"
 #include "util/path_util.h"
@@ -120,30 +121,22 @@ void game::create_diplomatic_map_image()
 	const map *map = map::get();
 
 	QSize image_size = game::min_diplomatic_map_image_size;
-	if (map->get_width() >= image_size.width() || map->get_height() >= image_size.height()) {
+	const QSize min_scaled_map_size = map->get_size() * min_tile_scale;
+	if (min_scaled_map_size.width() >= image_size.width() || min_scaled_map_size.height() >= image_size.height()) {
 		image_size *= min_tile_scale;
 	}
 
-	this->diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
-	this->diplomatic_map_image.fill(Qt::black);
-
-	this->diplomatic_map_tile_pixel_size = this->diplomatic_map_image.size() / map::get()->get_size();
+	this->diplomatic_map_tile_pixel_size = image_size / map::get()->get_size();
 
 	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
 		country_game_data->create_diplomatic_map_image();
 	}
-
-	emit diplomatic_map_image_changed();
 }
 
-void game::update_diplomatic_map_image_country(const QImage &country_image, const QPoint &country_image_pos)
+QVariantList game::get_country_qvariant_list() const
 {
-	QPainter painter(&this->diplomatic_map_image);
-	painter.drawImage(country_image_pos, country_image);
-	painter.end();
-
-	emit diplomatic_map_image_changed();
+	return container::to_qvariant_list(this->get_countries());
 }
 
 }

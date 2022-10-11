@@ -200,9 +200,9 @@ void country_game_data::create_diplomatic_map_image()
 		this->diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
 
-	const QPoint image_pos = this->territory_rect.topLeft() * size::to_point(tile_pixel_size);
+	this->diplomatic_map_image_pos = this->territory_rect.topLeft() * size::to_point(tile_pixel_size);
 
-	game::get()->update_diplomatic_map_image_country(this->diplomatic_map_image, image_pos);
+	emit diplomatic_map_image_changed();
 }
 
 }
