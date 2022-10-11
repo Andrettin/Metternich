@@ -8,6 +8,7 @@ namespace metternich {
 
 class country_game_data;
 class country_history;
+class era;
 class province;
 enum class country_type;
 
@@ -70,6 +71,7 @@ private:
 	country_type type;
 	QColor color;
 	province *capital_province = nullptr;
+	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	std::vector<const province *> provinces; //provinces for this country when it is generated in random maps
 	qunique_ptr<country_history> history;
 	qunique_ptr<country_game_data> game_data;

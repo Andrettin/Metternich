@@ -58,6 +58,12 @@ set(map_SRCS
 source_group(map FILES ${map_SRCS})
 set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
+set(time_SRCS
+	src/time/era.cpp
+)
+source_group(time FILES ${time_SRCS})
+set_source_files_properties(${time_SRCS} PROPERTIES UNITY_GROUP "time")
+
 set(maskedmousearea_SRCS
 	src/third_party/maskedmousearea/maskedmousearea.cpp
 )
@@ -69,6 +75,7 @@ set(metternich_SRCS
 	${database_SRCS}
 	${game_SRCS}
 	${map_SRCS}
+	${time_SRCS}
 	${maskedmousearea_SRCS}
 	src/engine_interface.cpp
 )
@@ -116,6 +123,11 @@ set(map_HDRS
 )
 source_group(map FILES ${map_HDRS})
 
+set(time_HDRS
+	src/time/era.h
+)
+source_group(time FILES ${time_HDRS})
+
 set(maskedmousearea_HDRS
 	src/third_party/maskedmousearea/maskedmousearea.h
 )
@@ -126,6 +138,7 @@ set(metternich_HDRS
 	${database_HDRS}
 	${game_HDRS}
 	${map_HDRS}
+	${time_HDRS}
 	${maskedmousearea_HDRS}
 	src/engine_interface.h
 	src/metternich.h

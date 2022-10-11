@@ -7,6 +7,7 @@
 #include "country/country_type.h"
 #include "database/defines.h"
 #include "map/province.h"
+#include "time/era.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -22,7 +23,11 @@ void country::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "provinces") {
+	if (tag == "eras") {
+		for (const std::string &value : values) {
+			this->eras.push_back(era::get(value));
+		}
+	} else if (tag == "provinces") {
 		for (const std::string &value : values) {
 			this->provinces.push_back(province::get(value));
 		}
