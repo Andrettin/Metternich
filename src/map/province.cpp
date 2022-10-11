@@ -5,6 +5,7 @@
 #include "map/province_game_data.h"
 #include "map/province_history.h"
 #include "util/assert_util.h"
+#include "util/log_util.h"
 
 namespace metternich {
 
@@ -19,6 +20,10 @@ province::~province()
 
 void province::check() const
 {
+	if (this->get_capital_settlement() == nullptr) {
+		log::log_error("Province \"" + this->get_identifier() + "\" has no capital settlement.");
+	}
+
 	assert_throw(this->get_color().isValid());
 }
 
