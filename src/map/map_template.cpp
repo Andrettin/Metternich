@@ -14,6 +14,7 @@
 #include "util/assert_util.h"
 #include "util/geoshape_util.h"
 #include "util/path_util.h"
+#include "util/point_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -36,7 +37,9 @@ void map_template::initialize()
 			continue;
 		}
 
-		assert_throw(!this->sites_by_position.contains(tile_pos));
+		if (this->sites_by_position.contains(tile_pos)) {
+			throw std::runtime_error("Both the sites of \"" + this->sites_by_position.find(tile_pos)->second->get_identifier() + "\" and \"" + site->get_identifier() + "\" occupy the " + point::to_string(tile_pos) + " position in map template \"" + this->get_identifier() + "\".");
+		}
 
 		this->sites_by_position[tile_pos] = site;
 	}
