@@ -23,6 +23,8 @@
 #include "util/log_util.h"
 #include "util/path_util.h"
 
+#include "maskedmousearea.h"
+
 #pragma warning(push, 0)
 #include <QDir>
 #include <QQmlApplicationEngine>
@@ -98,6 +100,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<site_game_data>("", 1);
 
 		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
+		qmlRegisterType<MaskedMouseArea>("MaskedMouseArea", 1, 0, "MaskedMouseArea");
 
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
 

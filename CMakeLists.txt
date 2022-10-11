@@ -9,6 +9,8 @@ add_subdirectory(archimedes)
 include_directories(
 	archimedes/src
 	src
+	src/third_party
+	src/third_party/maskedmousearea
 )
 
 set(country_SRCS
@@ -56,11 +58,18 @@ set(map_SRCS
 source_group(map FILES ${map_SRCS})
 set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
+set(maskedmousearea_SRCS
+	src/third_party/maskedmousearea/maskedmousearea.cpp
+)
+source_group(maskedmousearea FILES ${maskedmousearea_SRCS})
+set_source_files_properties(${maskedmousearea_SRCS} PROPERTIES UNITY_GROUP "maskedmousearea")
+
 set(metternich_SRCS
 	${country_SRCS}
 	${database_SRCS}
 	${game_SRCS}
 	${map_SRCS}
+	${maskedmousearea_SRCS}
 	src/engine_interface.cpp
 )
 
@@ -107,11 +116,17 @@ set(map_HDRS
 )
 source_group(map FILES ${map_HDRS})
 
+set(maskedmousearea_HDRS
+	src/third_party/maskedmousearea/maskedmousearea.h
+)
+source_group(maskedmousearea FILES ${maskedmousearea_HDRS})
+
 set(metternich_HDRS
 	${country_HDRS}
 	${database_HDRS}
 	${game_HDRS}
 	${map_HDRS}
+	${maskedmousearea_HDRS}
 	src/engine_interface.h
 	src/metternich.h
 )
