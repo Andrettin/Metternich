@@ -126,7 +126,12 @@ void game::create_diplomatic_map_image()
 		image_size *= min_tile_scale;
 	}
 
-	this->diplomatic_map_tile_pixel_size = image_size / map::get()->get_size();
+	if (image_size != this->diplomatic_map_image_size) {
+		this->diplomatic_map_image_size = image_size;
+		emit diplomatic_map_image_size_changed();
+	}
+
+	this->diplomatic_map_tile_pixel_size = this->diplomatic_map_image_size / map::get()->get_size();
 
 	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
