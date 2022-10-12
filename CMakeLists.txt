@@ -18,6 +18,7 @@ set(country_SRCS
 	src/country/country_game_data.cpp
 	src/country/country_history.cpp
 	src/country/country_type.cpp
+	src/country/culture.cpp
 	src/country/diplomacy_state.cpp
 )
 source_group(country FILES ${country_SRCS})
@@ -47,6 +48,7 @@ set(map_SRCS
 	src/map/scenario.cpp
 	src/map/site.cpp
 	src/map/site_container.cpp
+	src/map/site_game_data.cpp
 	src/map/site_type.cpp
 	src/map/terrain_feature.cpp
 	src/map/terrain_geodata_map.cpp
@@ -85,6 +87,8 @@ set(country_HDRS
 	src/country/country_game_data.h
 	src/country/country_history.h
 	src/country/country_type.h
+	src/country/cultural_group.h
+	src/country/culture.h
 	src/country/diplomacy_state.h
 )
 source_group(country FILES ${country_HDRS})

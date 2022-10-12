@@ -8,6 +8,7 @@ namespace metternich {
 
 class country_game_data;
 class country_history;
+class culture;
 class era;
 class province;
 enum class country_type;
@@ -18,6 +19,7 @@ class country final : public named_data_entry, public data_type<country>
 
 	Q_PROPERTY(metternich::country_type type MEMBER type READ get_type)
 	Q_PROPERTY(QColor color MEMBER color READ get_color)
+	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::province* capital_province MEMBER capital_province)
 	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY changed)
 
@@ -54,6 +56,11 @@ public:
 
 	const QColor &get_color() const;
 
+	const metternich::culture *get_culture() const
+	{
+		return this->culture;
+	}
+
 	const province *get_capital_province() const
 	{
 		return this->capital_province;
@@ -70,6 +77,7 @@ signals:
 private:
 	country_type type;
 	QColor color;
+	metternich::culture *culture = nullptr;
 	province *capital_province = nullptr;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	std::vector<const province *> provinces; //provinces for this country when it is generated in random maps
