@@ -62,6 +62,11 @@ void country::reset_game_data()
 	this->game_data = make_qunique<country_game_data>(this);
 }
 
+bool country::is_great_power() const
+{
+	return this->get_type() == country_type::great_power;
+}
+
 const QColor &country::get_color() const
 {
 	if (this->get_type() != country_type::great_power) {
