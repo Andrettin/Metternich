@@ -20,6 +20,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color)
 	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
+	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
 
 public:
 	defines();
@@ -83,6 +84,11 @@ public:
 		this->set_default_menu_background_filepath(std::filesystem::path(filepath));
 	}
 
+	int get_min_diplomatic_map_tile_scale() const
+	{
+		return this->min_diplomatic_map_tile_scale;
+	}
+
 signals:
 	void changed();
 	void scaled_tile_size_changed();
@@ -96,6 +102,7 @@ private:
 	QColor minor_nation_color;
 	std::filesystem::path default_settlement_image_filepath;
 	std::filesystem::path default_menu_background_filepath;
+	int min_diplomatic_map_tile_scale = 2;
 };
 
 }

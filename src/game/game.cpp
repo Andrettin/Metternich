@@ -6,6 +6,7 @@
 #include "country/country_game_data.h"
 #include "country/country_history.h"
 #include "country/diplomacy_state.h"
+#include "database/defines.h"
 #include "map/map.h"
 #include "map/map_template.h"
 #include "map/province.h"
@@ -116,7 +117,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 void game::create_diplomatic_map_image()
 {
-	static constexpr int min_tile_scale = 2;
+	const int min_tile_scale = defines::get()->get_min_diplomatic_map_tile_scale();
 
 	const map *map = map::get();
 
