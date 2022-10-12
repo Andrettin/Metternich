@@ -3,10 +3,15 @@
 namespace metternich {
 
 class country;
+class culture;
 class province;
 
-class province_game_data final
+class province_game_data final : public QObject
 {
+	Q_OBJECT
+
+	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
+
 public:
 	explicit province_game_data(const province *province) : province(province)
 	{
@@ -18,6 +23,14 @@ public:
 	}
 
 	void set_owner(const country *country);
+
+	const culture *get_culture() const;
+	const std::string &get_current_cultural_name() const;
+
+	QString get_current_cultural_name_qstring() const
+	{
+		return QString::fromStdString(this->get_current_cultural_name());
+	}
 
 	const QRect &get_territory_rect() const
 	{
@@ -40,6 +53,9 @@ public:
 	}
 
 	void add_border_tile(const QPoint &tile_pos);
+
+signals:
+	void culture_changed();
 
 private:
 	const metternich::province *province = nullptr;

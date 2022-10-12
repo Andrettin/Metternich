@@ -7,6 +7,8 @@
 
 namespace metternich {
 
+class cultural_group;
+class culture;
 class site_game_data;
 class terrain_type;
 class world;
@@ -31,6 +33,7 @@ public:
 	explicit site(const std::string &identifier);
 	~site();
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -61,6 +64,8 @@ public:
 		return this->terrain_type;
 	}
 
+	const std::string &get_cultural_name(const culture *culture) const;
+
 signals:
 	void changed();
 
@@ -69,6 +74,8 @@ private:
 	archimedes::geocoordinate geocoordinate;
 	site_type type;
 	metternich::terrain_type *terrain_type = nullptr;
+	std::map<const culture *, std::string> cultural_names;
+	std::map<const cultural_group *, std::string> cultural_group_names;
 	qunique_ptr<site_game_data> game_data;
 };
 

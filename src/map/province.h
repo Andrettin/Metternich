@@ -7,6 +7,8 @@
 
 namespace metternich {
 
+class cultural_group;
+class culture;
 class province_game_data;
 class province_history;
 class site;
@@ -59,6 +61,7 @@ public:
 	explicit province(const std::string &identifier);
 	~province();
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 	virtual data_entry_history *get_history_base() override;
 
@@ -105,6 +108,8 @@ public:
 		return this->capital_settlement;
 	}
 
+	const std::string &get_cultural_name(const culture *culture) const;
+
 signals:
 	void changed();
 
@@ -112,8 +117,10 @@ private:
 	QColor color;
 	bool water_zone = false;
 	site *capital_settlement = nullptr;
+	std::map<const culture *, std::string> cultural_names;
+	std::map<const cultural_group *, std::string> cultural_group_names;
 	qunique_ptr<province_history> history;
-	std::unique_ptr<province_game_data> game_data;
+	qunique_ptr<province_game_data> game_data;
 };
 
 }
