@@ -9,11 +9,17 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/tile.h"
+#include "util/container_util.h"
 #include "util/point_util.h"
 #include "util/size_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
+
+QVariantList country_game_data::get_provinces_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_provinces());
+}
 
 void country_game_data::add_province(const province *province)
 {
@@ -46,6 +52,10 @@ void country_game_data::add_province(const province *province)
 	if (this->get_provinces().size() == 1) {
 		game::get()->add_country(this->country);
 	}
+
+	if (game::get()->is_running()) {
+		emit provinces_changed();
+	}
 }
 
 void country_game_data::remove_province(const province *province)
@@ -76,6 +86,10 @@ void country_game_data::remove_province(const province *province)
 
 	if (this->get_provinces().empty()) {
 		game::get()->remove_country(this->country);
+	}
+
+	if (game::get()->is_running()) {
+		emit provinces_changed();
 	}
 }
 
@@ -200,7 +214,7 @@ void country_game_data::create_diplomatic_map_image()
 		this->diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
 
-	this->diplomatic_map_image_pos = this->territory_rect.topLeft() * size::to_point(tile_pixel_size);
+	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * size::to_point(tile_pixel_size), this->diplomatic_map_image.size());
 
 	emit diplomatic_map_image_changed();
 }
