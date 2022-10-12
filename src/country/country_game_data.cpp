@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/diplomacy_state.h"
+#include "database/defines.h"
 #include "game/game.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -208,7 +209,7 @@ void country_game_data::create_diplomatic_map_image()
 		}
 	}
 
-	static constexpr QColor border_pixel_color = QColor(147, 52, 12);
+	const QColor &border_pixel_color = defines::get()->get_country_border_color();
 
 	for (const QPoint &border_pixel_pos : this->diplomatic_map_border_pixels) {
 		this->diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);

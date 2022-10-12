@@ -18,6 +18,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
 	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color)
+	Q_PROPERTY(QColor country_border_color MEMBER country_border_color READ get_country_border_color)
 	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
@@ -69,6 +70,11 @@ public:
 		return this->minor_nation_color;
 	}
 
+	const QColor &get_country_border_color() const
+	{
+		return this->country_border_color;
+	}
+
 	const std::filesystem::path &get_default_settlement_image_filepath() const
 	{
 		return this->default_settlement_image_filepath;
@@ -100,6 +106,7 @@ private:
 	terrain_type *default_province_terrain = nullptr;
 	terrain_type *default_water_zone_terrain = nullptr;
 	QColor minor_nation_color;
+	QColor country_border_color;
 	std::filesystem::path default_settlement_image_filepath;
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;
