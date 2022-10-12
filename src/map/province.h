@@ -20,6 +20,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_PROPERTY(QColor color READ get_color WRITE set_color)
 	Q_PROPERTY(bool water_zone MEMBER water_zone READ is_water_zone)
 	Q_PROPERTY(metternich::site* capital_settlement MEMBER capital_settlement NOTIFY changed)
+	Q_PROPERTY(metternich::province_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "province";

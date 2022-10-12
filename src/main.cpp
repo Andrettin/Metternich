@@ -13,6 +13,7 @@
 #include "map/map.h"
 #include "map/map_grid_model.h"
 #include "map/province.h"
+#include "map/province_game_data.h"
 #include "map/scenario.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
@@ -95,6 +96,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<preferences>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);
+		qmlRegisterAnonymousType<province_game_data>("", 1);
 		qmlRegisterAnonymousType<scenario>("", 1);
 		qmlRegisterAnonymousType<site>("", 1);
 		qmlRegisterAnonymousType<site_game_data>("", 1);
