@@ -9,7 +9,6 @@
 #include "map/province.h"
 #include "time/era.h"
 #include "util/assert_util.h"
-#include "util/log_util.h"
 
 namespace metternich {
 
@@ -40,7 +39,7 @@ void country::process_gsml_scope(const gsml_data &scope)
 void country::check() const
 {
 	if (this->get_culture() == nullptr) {
-		log::log_error("Country \"" + this->get_identifier() + "\" has no culture.");
+		throw std::runtime_error("Country \"" + this->get_identifier() + "\" has no culture.");
 	}
 
 	assert_throw(this->get_capital_province() != nullptr);
