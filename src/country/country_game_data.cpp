@@ -156,7 +156,7 @@ void country_game_data::create_diplomatic_map_image()
 {
 	const QSize &tile_pixel_size = game::get()->get_diplomatic_map_tile_pixel_size();
 
-	this->diplomatic_map_image = QImage(this->territory_rect.size() * tile_pixel_size + QSize(tile_pixel_size.width() / 2, 0), QImage::Format_RGBA8888);
+	this->diplomatic_map_image = QImage(this->territory_rect.size() * tile_pixel_size, QImage::Format_RGBA8888);
 	this->diplomatic_map_image.fill(Qt::transparent);
 
 	const map *map = map::get();
@@ -165,11 +165,8 @@ void country_game_data::create_diplomatic_map_image()
 
 	std::vector<QPoint> country_pixels;
 
-	for (int y = 0; y < this->territory_rect.height(); ++y) {
-		const int abs_y = this->territory_rect.top() + y;
-		const QPoint tile_offset = (abs_y % 2) == 1 ? QPoint(tile_pixel_size.width() / 2, 0) : QPoint(0, 0);
-
-		for (int x = 0; x < this->territory_rect.width(); ++x) {
+	for (int x = 0; x < this->territory_rect.width(); ++x) {
+		for (int y = 0; y < this->territory_rect.height(); ++y) {
 			const QPoint relative_tile_pos = QPoint(x, y);
 			const tile *tile = map->get_tile(this->territory_rect.topLeft() + relative_tile_pos);
 
@@ -177,7 +174,7 @@ void country_game_data::create_diplomatic_map_image()
 				continue;
 			}
 
-			const QPoint top_left_pixel_pos = relative_tile_pos * size::to_point(tile_pixel_size) + tile_offset;
+			const QPoint top_left_pixel_pos = relative_tile_pos * size::to_point(tile_pixel_size);
 
 			for (int pixel_x_offset = 0; pixel_x_offset < tile_pixel_size.width(); ++pixel_x_offset) {
 				for (int pixel_y_offset = 0; pixel_y_offset < tile_pixel_size.height(); ++pixel_y_offset) {

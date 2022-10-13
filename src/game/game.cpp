@@ -127,15 +127,12 @@ void game::create_diplomatic_map_image()
 		image_size = min_scaled_map_size;
 	}
 
-	this->diplomatic_map_tile_pixel_size = image_size / map::get()->get_size();
-
-	//tile padding for hex placement
-	image_size += QSize(this->diplomatic_map_tile_pixel_size.width() / 2, 0);
-
 	if (image_size != this->diplomatic_map_image_size) {
 		this->diplomatic_map_image_size = image_size;
 		emit diplomatic_map_image_size_changed();
 	}
+
+	this->diplomatic_map_tile_pixel_size = this->diplomatic_map_image_size / map::get()->get_size();
 
 	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
