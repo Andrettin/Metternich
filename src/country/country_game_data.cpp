@@ -168,7 +168,7 @@ void country_game_data::create_diplomatic_map_image()
 	const map *map = map::get();
 
 	const QColor &color = this->get_diplomatic_map_color();
-	static const QColor selected_color(Qt::yellow);
+	const QColor &selected_color = defines::get()->get_selected_country_color();
 
 	std::vector<QPoint> country_pixels;
 
