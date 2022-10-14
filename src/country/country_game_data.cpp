@@ -159,9 +159,12 @@ void country_game_data::create_diplomatic_map_image()
 	this->diplomatic_map_image = QImage(this->territory_rect.size() * tile_pixel_size, QImage::Format_RGBA8888);
 	this->diplomatic_map_image.fill(Qt::transparent);
 
+	this->selected_diplomatic_map_image = this->diplomatic_map_image;
+
 	const map *map = map::get();
 
 	const QColor &color = this->get_diplomatic_map_color();
+	static const QColor selected_color(Qt::yellow);
 
 	std::vector<QPoint> country_pixels;
 
@@ -180,6 +183,7 @@ void country_game_data::create_diplomatic_map_image()
 				for (int pixel_y_offset = 0; pixel_y_offset < tile_pixel_size.height(); ++pixel_y_offset) {
 					const QPoint pixel_pos = top_left_pixel_pos + QPoint(pixel_x_offset, pixel_y_offset);
 					this->diplomatic_map_image.setPixelColor(pixel_pos, color);
+					this->selected_diplomatic_map_image.setPixelColor(pixel_pos, selected_color);
 
 					country_pixels.push_back(pixel_pos);
 				}
@@ -188,6 +192,7 @@ void country_game_data::create_diplomatic_map_image()
 	}
 
 	this->diplomatic_map_border_pixels.clear();
+
 	for (const QPoint &pixel_pos : country_pixels) {
 		if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (this->diplomatic_map_image.width() - 1) || pixel_pos.y() == (this->diplomatic_map_image.height() - 1)) {
 			this->diplomatic_map_border_pixels.push_back(pixel_pos);
@@ -213,6 +218,7 @@ void country_game_data::create_diplomatic_map_image()
 
 	for (const QPoint &border_pixel_pos : this->diplomatic_map_border_pixels) {
 		this->diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
+		this->selected_diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
 
 	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * size::to_point(tile_pixel_size), this->diplomatic_map_image.size());

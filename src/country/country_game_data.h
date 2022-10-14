@@ -67,6 +67,11 @@ public:
 		return this->diplomatic_map_image_rect;
 	}
 
+	const QImage &get_selected_diplomatic_map_image() const
+	{
+		return this->selected_diplomatic_map_image;
+	}
+
 signals:
 	void provinces_changed();
 	void diplomatic_map_image_changed();
@@ -79,6 +84,7 @@ private:
 	std::vector<QPoint> border_tiles;
 	std::map<const metternich::country *, diplomacy_state> diplomacy_states;
 	QImage diplomatic_map_image;
+	QImage selected_diplomatic_map_image;
 	std::vector<QPoint> diplomatic_map_border_pixels;
 	QRect diplomatic_map_image_rect;
 };

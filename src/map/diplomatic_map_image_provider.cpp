@@ -17,9 +17,12 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 	const std::vector<std::string> id_list = string::split(id.toStdString(), '/');
 
 	const std::string &country_identifier = id_list.at(0);
-	const country *country = country::get(country_identifier);
+	const bool selected = id_list.size() >= 2 && id_list.at(1) == "selected";
 
-	const QImage &image = country->get_game_data()->get_diplomatic_map_image();
+	const country *country = country::get(country_identifier);
+	const country_game_data *country_game_data = country->get_game_data();
+
+	const QImage &image = selected ? country_game_data->get_selected_diplomatic_map_image() : country_game_data->get_diplomatic_map_image();
 
 	assert_log(!image.isNull());
 
