@@ -16,7 +16,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
 
 public:
-	static constexpr QSize min_diplomatic_map_image_size = QSize(1024, 512);
+	static constexpr QSize min_diplomatic_map_image_size = QSize(512, 256);
 
 	game();
 

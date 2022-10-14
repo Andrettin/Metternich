@@ -5,15 +5,19 @@
 #include "country/country.h"
 #include "country/diplomacy_state.h"
 #include "database/defines.h"
+#include "database/preferences.h"
 #include "game/game.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/tile.h"
 #include "util/container_util.h"
+#include "util/image_util.h"
 #include "util/point_util.h"
 #include "util/size_util.h"
 #include "util/vector_util.h"
+
+#include "xbrz.h"
 
 namespace metternich {
 
@@ -221,7 +225,17 @@ void country_game_data::create_diplomatic_map_image()
 		this->selected_diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
 
-	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * size::to_point(tile_pixel_size), this->diplomatic_map_image.size());
+	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+
+	this->diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	});
+
+	this->selected_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	});
+
+	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * size::to_point(tile_pixel_size) * scale_factor, this->diplomatic_map_image.size());
 
 	emit diplomatic_map_image_changed();
 }

@@ -7,6 +7,7 @@
 #include "country/country_history.h"
 #include "country/diplomacy_state.h"
 #include "database/defines.h"
+#include "database/preferences.h"
 #include "map/map.h"
 #include "map/map_template.h"
 #include "map/province.h"
