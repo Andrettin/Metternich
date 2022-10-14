@@ -14,6 +14,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(bool running READ is_running NOTIFY running_changed)
 	Q_PROPERTY(QVariantList countries READ get_country_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
+	Q_PROPERTY(QSize diplomatic_map_tile_pixel_size READ get_diplomatic_map_tile_pixel_size NOTIFY diplomatic_map_image_size_changed)
 
 public:
 	static constexpr QSize min_diplomatic_map_image_size = QSize(512, 256);
