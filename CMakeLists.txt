@@ -194,6 +194,8 @@ endif()
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_UNITY_BUILD ON)
+
 if(MSVC)
 	add_compile_options(/W4 /w44800 /wd4244 /wd4458)
 else()
