@@ -40,7 +40,7 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 
 		if (is_vassalage) {
 			//a country can only have one overlord, so remove any other vassalage states
-			map::remove_value_if(this->diplomacy_states, [](const diplomacy_state state) {
+			archimedes::map::remove_value_if(this->diplomacy_states, [](const diplomacy_state state) {
 				return is_vassalage_diplomacy_state(state);
 			});
 		}

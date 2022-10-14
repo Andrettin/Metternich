@@ -11,6 +11,8 @@
 #include "util/string_util.h"
 #include "util/thread_pool.h"
 
+#include "xbrz.h"
+
 namespace metternich {
 
 tile_image_provider::tile_image_provider()
@@ -57,7 +59,9 @@ void tile_image_provider::load_image(const std::string &id)
 
 	if (image_scale_factor != scale_factor) {
 		thread_pool::get()->co_spawn_sync([this, &image, &scale_factor, &image_scale_factor]() -> boost::asio::awaitable<void> {
-			image = co_await image::scale(image, scale_factor / image_scale_factor, defines::get()->get_tile_size() * image_scale_factor);
+			image = co_await image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, defines::get()->get_tile_size() * image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+			});
 		});
 	}
 

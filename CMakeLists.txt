@@ -11,6 +11,7 @@ include_directories(
 	src
 	src/third_party
 	src/third_party/maskedmousearea
+	src/third_party/xbrz
 )
 
 set(country_SRCS
@@ -72,6 +73,12 @@ set(maskedmousearea_SRCS
 source_group(maskedmousearea FILES ${maskedmousearea_SRCS})
 set_source_files_properties(${maskedmousearea_SRCS} PROPERTIES UNITY_GROUP "maskedmousearea")
 
+set(xbrz_SRCS
+	src/third_party/xbrz/xbrz.cpp
+)
+source_group(xbrz FILES ${xbrz_SRCS})
+set_source_files_properties(${xbrz_SRCS} PROPERTIES UNITY_GROUP "xbrz")
+
 set(metternich_SRCS
 	${country_SRCS}
 	${database_SRCS}
@@ -79,6 +86,7 @@ set(metternich_SRCS
 	${map_SRCS}
 	${time_SRCS}
 	${maskedmousearea_SRCS}
+	${xbrz_SRCS}
 	src/engine_interface.cpp
 )
 
@@ -137,6 +145,13 @@ set(maskedmousearea_HDRS
 )
 source_group(maskedmousearea FILES ${maskedmousearea_HDRS})
 
+set(xbrz_HDRS
+	src/third_party/xbrz/xbrz.h
+	src/third_party/xbrz/xbrz_config.h
+	src/third_party/xbrz/xbrz_tools.h
+)
+source_group(xbrz FILES ${xbrz_HDRS})
+
 set(metternich_HDRS
 	${country_HDRS}
 	${database_HDRS}
@@ -144,6 +159,7 @@ set(metternich_HDRS
 	${map_HDRS}
 	${time_HDRS}
 	${maskedmousearea_HDRS}
+	${xbrz_HDRS}
 	src/engine_interface.h
 	src/metternich.h
 )
