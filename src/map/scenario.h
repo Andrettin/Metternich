@@ -9,6 +9,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class country;
 class map_template;
 
 class scenario final : public named_data_entry, public data_type<scenario>
@@ -19,6 +20,7 @@ class scenario final : public named_data_entry, public data_type<scenario>
 	Q_PROPERTY(archimedes::calendar* start_date_calendar MEMBER start_date_calendar)
 	Q_PROPERTY(archimedes::timeline* timeline MEMBER timeline NOTIFY changed)
 	Q_PROPERTY(metternich::map_template* map_template MEMBER map_template NOTIFY changed)
+	Q_PROPERTY(metternich::country* default_country MEMBER default_country NOTIFY changed)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
 
 public:
@@ -33,6 +35,7 @@ public:
 	}
 
 	virtual void initialize() override;
+	virtual void check() const override;
 
 	const QDateTime &get_start_date() const
 	{
@@ -49,6 +52,11 @@ public:
 		return this->map_template;
 	}
 
+	const country *get_default_country() const
+	{
+		return this->default_country;
+	}
+
 	bool is_hidden() const
 	{
 		return this->hidden;
@@ -62,6 +70,7 @@ private:
 	calendar *start_date_calendar = nullptr; //the calendar for the start date
 	archimedes::timeline *timeline = nullptr; //the timeline in which the scenario is set
 	metternich::map_template *map_template = nullptr;
+	country *default_country = nullptr;
 	bool hidden = false;
 };
 

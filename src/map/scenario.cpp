@@ -3,6 +3,7 @@
 #include "map/scenario.h"
 
 #include "time/calendar.h"
+#include "util/assert_util.h"
 
 namespace metternich {
 	
@@ -31,6 +32,13 @@ void scenario::initialize()
 	}
 
 	named_data_entry::initialize();
+}
+
+void scenario::check() const
+{
+	assert_throw(this->get_start_date().isValid());
+	assert_throw(this->get_map_template() != nullptr);
+	assert_throw(this->get_default_country() != nullptr);
 }
 
 }
