@@ -81,6 +81,7 @@ public:
 signals:
 	void size_changed();
 	void tile_terrain_changed(const QPoint &tile_pos);
+	void tile_culture_changed(const QPoint &tile_pos);
 	void provinces_changed();
 
 private:

@@ -47,6 +47,16 @@ public:
 		this->border_provinces.push_back(province);
 	}
 
+	const std::vector<QPoint> &get_tiles() const
+	{
+		return this->tiles;
+	}
+
+	void add_tile(const QPoint &tile_pos)
+	{
+		this->tiles.push_back(tile_pos);
+	}
+
 	const std::vector<QPoint> &get_border_tiles() const
 	{
 		return this->border_tiles;
@@ -62,6 +72,7 @@ private:
 	const country *owner = nullptr;
 	QRect territory_rect;
 	std::vector<const metternich::province *> border_provinces;
+	std::vector<QPoint> tiles;
 	std::vector<QPoint> border_tiles;
 };
 

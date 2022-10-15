@@ -4,6 +4,8 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "game/game.h"
+#include "map/map.h"
 #include "map/province.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
@@ -27,11 +29,17 @@ void province_game_data::set_owner(const country *country)
 		this->owner->get_game_data()->add_province(this->province);
 	}
 
-	if (old_owner == nullptr || this->owner == nullptr || old_owner->get_culture() != this->owner->get_culture()) {
-		emit culture_changed();
+	if (game::get()->is_running()) {
+		if (old_owner == nullptr || this->owner == nullptr || old_owner->get_culture() != this->owner->get_culture()) {
+			emit culture_changed();
 
-		if (this->province->get_capital_settlement() != nullptr) {
-			emit this->province->get_capital_settlement()->get_game_data()->culture_changed();
+			if (this->province->get_capital_settlement() != nullptr) {
+				emit this->province->get_capital_settlement()->get_game_data()->culture_changed();
+			}
+
+			for (const QPoint &tile_pos : this->tiles) {
+				emit map::get()->tile_culture_changed(tile_pos);
+			}
 		}
 	}
 }

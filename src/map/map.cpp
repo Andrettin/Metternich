@@ -82,6 +82,8 @@ void map::initialize()
 				return false;
 			});
 
+			tile_province->get_game_data()->add_tile(tile_pos);
+
 			if (is_border_tile) {
 				tile_province->get_game_data()->add_border_tile(tile_pos);
 			}

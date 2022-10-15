@@ -16,7 +16,9 @@ public:
 	enum class role {
 		base_image_source = Qt::UserRole,
 		image_source,
-		overlay_image_sources
+		overlay_image_sources,
+		site_name,
+		province_name
 	};
 
 	static QString build_image_source(const terrain_type *terrain, const short tile_frame);
@@ -48,11 +50,14 @@ public:
 		role_names.insert(static_cast<int>(role::base_image_source), "base_image_source");
 		role_names.insert(static_cast<int>(role::image_source), "image_source");
 		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");
+		role_names.insert(static_cast<int>(role::site_name), "site_name");
+		role_names.insert(static_cast<int>(role::province_name), "province_name");
 
 		return role_names;
 	}
 
 	void on_tile_terrain_changed(const QPoint &tile_pos);
+	void on_tile_culture_changed(const QPoint &tile_pos);
 };
 
 }
