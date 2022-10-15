@@ -10,7 +10,7 @@
 
 namespace metternich {
 
-const tile *site_game_data::get_tile() const
+tile *site_game_data::get_tile() const
 {
 	if (this->get_tile_pos() != QPoint(-1, -1)) {
 		return map::get()->get_tile(this->get_tile_pos());

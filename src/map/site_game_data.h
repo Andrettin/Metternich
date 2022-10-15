@@ -34,7 +34,7 @@ public:
 		emit tile_pos_changed();
 	}
 
-	const tile *get_tile() const;
+	tile *get_tile() const;
 
 	const province *get_province() const;
 	const culture *get_culture() const;

@@ -11,6 +11,7 @@ class commodity;
 class cultural_group;
 class culture;
 class site_game_data;
+class site_history;
 class terrain_type;
 class world;
 enum class site_type;
@@ -30,6 +31,7 @@ public:
 	static constexpr const char class_identifier[] = "site";
 	static constexpr const char property_class_identifier[] = "metternich::site*";
 	static constexpr const char database_folder[] = "sites";
+	static constexpr bool history_enabled = true;
 
 public:
 	explicit site(const std::string &identifier);
@@ -38,6 +40,14 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
+	virtual data_entry_history *get_history_base() override;
+
+	site_history *get_history() const
+	{
+		return this->history.get();
+	}
+
+	virtual void reset_history() override;
 
 	void reset_game_data();
 
@@ -84,6 +94,7 @@ private:
 	commodity *resource = nullptr;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
+	qunique_ptr<site_history> history;
 	qunique_ptr<site_game_data> game_data;
 };
 

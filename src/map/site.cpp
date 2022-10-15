@@ -5,6 +5,7 @@
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "map/site_game_data.h"
+#include "map/site_history.h"
 #include "map/site_type.h"
 #include "map/world.h"
 #include "util/assert_util.h"
@@ -62,6 +63,16 @@ void site::check() const
 	} else {
 		assert_throw(this->get_resource() == nullptr);
 	}
+}
+
+data_entry_history *site::get_history_base()
+{
+	return this->history.get();
+}
+
+void site::reset_history()
+{
+	this->history = make_qunique<site_history>(this);
 }
 
 void site::reset_game_data()

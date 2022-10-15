@@ -14,6 +14,10 @@
 #include "map/province_game_data.h"
 #include "map/province_history.h"
 #include "map/scenario.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
+#include "map/site_history.h"
+#include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
@@ -114,6 +118,22 @@ void game::apply_history(const metternich::scenario *scenario)
 		for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
 			country_game_data->set_diplomacy_state(other_country, diplomacy_state);
 			other_country->get_game_data()->set_diplomacy_state(country, get_diplomacy_state_counterpart(diplomacy_state));
+		}
+	}
+
+	for (const site *site : site::get_all()) {
+		const site_game_data *site_game_data = site->get_game_data();
+		tile *tile = site_game_data->get_tile();
+
+		if (tile == nullptr) {
+			continue;
+		}
+
+		const site_history *site_history = site->get_history();
+		
+		if (site_history->get_development_level() != 0) {
+			assert_throw(site->get_type() == site_type::resource);
+			tile->set_development_level(site_history->get_development_level());
 		}
 	}
 }
