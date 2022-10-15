@@ -64,6 +64,13 @@ public:
 		this->resource = resource;
 	}
 
+	int get_development_level() const
+	{
+		return this->development_level;
+	}
+
+	void set_development_level(const int level);
+
 private:
 	const terrain_type *terrain = nullptr;
 	short base_tile_frame = 0;
@@ -71,6 +78,7 @@ private:
 	const metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
 	const commodity *resource = nullptr;
+	int development_level = 0;
 };
 
 }

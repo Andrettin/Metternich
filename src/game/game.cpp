@@ -90,6 +90,8 @@ void game::clear()
 		province_game_data->set_owner(nullptr);
 	}
 
+	map::get()->clear_tile_game_data();
+
 	this->scenario = nullptr;
 	this->countries.clear();
 }

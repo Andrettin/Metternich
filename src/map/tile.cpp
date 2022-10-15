@@ -7,6 +7,7 @@
 #include "map/site.h"
 #include "map/site_type.h"
 #include "map/terrain_type.h"
+#include "util/assert_util.h"
 #include "util/random.h"
 
 namespace metternich {
@@ -43,6 +44,13 @@ const metternich::site *tile::get_settlement() const
 	}
 
 	return nullptr;
+}
+
+void tile::set_development_level(const int level)
+{
+	assert_throw(this->get_resource() != nullptr);
+
+	this->development_level = level;
 }
 
 }

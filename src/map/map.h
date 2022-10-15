@@ -26,6 +26,7 @@ public:
 	void create_tiles();
 	void initialize();
 	void clear();
+	void clear_tile_game_data();
 
 	const QSize &get_size() const
 	{

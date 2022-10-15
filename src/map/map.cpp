@@ -113,6 +113,17 @@ void map::clear()
 	this->tiles.reset();
 }
 
+void map::clear_tile_game_data()
+{
+	if (this->tiles == nullptr) {
+		return;
+	}
+
+	for (tile &tile : *this->tiles) {
+		tile.set_development_level(0);
+	}
+}
+
 int map::get_pos_index(const QPoint &pos) const
 {
 	return point::to_index(pos, this->get_width());
