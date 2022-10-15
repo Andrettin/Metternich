@@ -10,6 +10,7 @@ class country_game_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::country* overlord READ get_overlord_unconst NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
@@ -23,6 +24,16 @@ public:
 	{
 		return this->overlord;
 	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::country *get_overlord_unconst() const
+	{
+		return const_cast<metternich::country *>(this->get_overlord());
+	}
+
+public:
+	void set_overlord(const metternich::country *overlord);
 
 	const std::vector<const province *> &get_provinces() const
 	{
@@ -73,6 +84,7 @@ public:
 	}
 
 signals:
+	void overlord_changed();
 	void provinces_changed();
 	void diplomatic_map_image_changed();
 

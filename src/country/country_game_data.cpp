@@ -21,6 +21,19 @@
 
 namespace metternich {
 
+void country_game_data::set_overlord(const metternich::country *overlord)
+{
+	if (overlord == this->get_overlord()) {
+		return;
+	}
+
+	this->overlord = overlord;
+
+	if (game::get()->is_running()) {
+		emit overlord_changed();
+	}
+}
+
 QVariantList country_game_data::get_provinces_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_provinces());
@@ -133,10 +146,10 @@ diplomacy_state country_game_data::get_diplomacy_state(const metternich::country
 void country_game_data::set_diplomacy_state(const metternich::country *other_country, const diplomacy_state state)
 {
 	if (is_vassalage_diplomacy_state(state)) {
-		this->overlord = other_country;
+		this->set_overlord(other_country);
 	} else {
-		if (this->overlord == other_country) {
-			this->overlord = nullptr;
+		if (this->get_overlord() == other_country) {
+			this->set_overlord(nullptr);
 		}
 	}
 
