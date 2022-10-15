@@ -9,6 +9,7 @@
 #include "map/province.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/tile.h"
 
 namespace metternich {
 
@@ -38,7 +39,10 @@ void province_game_data::set_owner(const country *country)
 			}
 
 			for (const QPoint &tile_pos : this->tiles) {
-				emit map::get()->tile_culture_changed(tile_pos);
+				const tile *tile = map::get()->get_tile(tile_pos);
+				if (tile->get_site() != nullptr && tile->get_site() != this->province->get_capital_settlement()) {
+					emit tile->get_site()->get_game_data()->culture_changed();
+				}
 			}
 		}
 	}
