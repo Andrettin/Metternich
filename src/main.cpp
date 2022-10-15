@@ -21,6 +21,7 @@
 #include "map/tile_image_provider.h"
 #include "util/event_loop.h"
 #include "util/exception_util.h"
+#include "util/log_output_handler.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
 
@@ -34,44 +35,16 @@
 
 using namespace metternich;
 
-static void init_output()
-{
-	const std::filesystem::path error_log_path = std::filesystem::current_path() / "error.log";
-
-	if (std::filesystem::exists(error_log_path) && std::filesystem::file_size(error_log_path) > 1000000) {
-		std::filesystem::remove(error_log_path);
-	}
-
-	const std::string path_str = error_log_path.string();
-
-	const FILE *error_log_file = freopen(path_str.c_str(), "a", stderr);
-	if (error_log_file == nullptr) {
-		log::log_error("Failed to create error log.");
-	}
-}
-
-static void clean_output()
-{
-	std::cerr.clear();
-	fclose(stderr);
-
-	const std::filesystem::path error_log_path = std::filesystem::current_path() / "error.log";
-
-	if (std::filesystem::exists(error_log_path) && std::filesystem::file_size(error_log_path) == 0) {
-		std::filesystem::remove(error_log_path);
-	}
-}
-
 static void on_exit_cleanup()
 {
 	database::get()->clear();
-	clean_output();
 }
 
 int main(int argc, char **argv)
 {
 	try {
-		init_output();
+		const std::filesystem::path error_log_path = std::filesystem::current_path() / "error.log";
+		const log_output_handler log_output_handler(error_log_path);
 
 		qInstallMessageHandler(log::log_qt_message);
 
