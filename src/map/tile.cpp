@@ -4,6 +4,8 @@
 
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "util/random.h"
 
@@ -32,6 +34,15 @@ const country *tile::get_owner() const
 	}
 
 	return this->get_province()->get_game_data()->get_owner();
+}
+
+const metternich::site *tile::get_settlement() const
+{
+	if (this->get_site() != nullptr && this->get_site()->get_type() == site_type::settlement) {
+		return this->get_site();
+	}
+
+	return nullptr;
 }
 
 }

@@ -56,6 +56,12 @@ void site::check() const
 	} else {
 		assert_throw(this->get_terrain_type() == nullptr);
 	}
+
+	if (this->get_type() == site_type::resource) {
+		assert_throw(this->get_resource() != nullptr);
+	} else {
+		assert_throw(this->get_resource() == nullptr);
+	}
 }
 
 void site::reset_game_data()

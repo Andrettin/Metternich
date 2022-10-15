@@ -10,6 +10,7 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -139,12 +140,22 @@ void map::set_tile_province(const QPoint &tile_pos, const province *province)
 	tile->set_province(province);
 }
 
-void map::set_tile_settlement(const QPoint &tile_pos, const site *settlement)
+void map::set_tile_site(const QPoint &tile_pos, const site *site)
 {
 	tile *tile = this->get_tile(tile_pos);
-	tile->set_settlement(settlement);
+	tile->set_site(site);
 
-	settlement->get_game_data()->set_tile_pos(tile_pos);
+	if (site->get_type() == site_type::resource) {
+		tile->set_resource(site->get_resource());
+	}
+
+	site->get_game_data()->set_tile_pos(tile_pos);
+}
+
+void map::set_tile_resource(const QPoint &tile_pos, const commodity *resource)
+{
+	tile *tile = this->get_tile(tile_pos);
+	tile->set_resource(resource);
 }
 
 bool map::is_tile_on_country_border(const QPoint &tile_pos) const

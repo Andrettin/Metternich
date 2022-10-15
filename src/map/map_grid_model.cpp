@@ -3,6 +3,7 @@
 #include "map/map_grid_model.h"
 
 #include "database/defines.h"
+#include "economy/commodity.h"
 #include "map/map.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
@@ -18,7 +19,7 @@ map_grid_model::map_grid_model()
 
 QString map_grid_model::build_image_source(const terrain_type *terrain, const short tile_frame)
 {
-	QString image_source = "terrain/" + terrain->get_identifier_qstring();
+	QString image_source = "tile/terrain/" + terrain->get_identifier_qstring();
 
 	image_source += "/" + QString::number(tile_frame);
 
@@ -64,7 +65,11 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				QStringList overlay_image_sources;
 
 				if (tile->get_settlement() != nullptr) {
-					overlay_image_sources.push_back("settlement/default");
+					overlay_image_sources.push_back("tile/settlement/default");
+				}
+				
+				if (tile->get_resource() != nullptr) {
+					overlay_image_sources.push_back("icon/commodity/" + tile->get_resource()->get_identifier_qstring());
 				}
 
 				return overlay_image_sources;

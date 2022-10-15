@@ -2,6 +2,7 @@
 
 namespace metternich {
 
+class commodity;
 class country;
 class province;
 class site;
@@ -41,14 +42,26 @@ public:
 
 	const country *get_owner() const;
 
-	const site *get_settlement() const
+	const metternich::site *get_site() const
 	{
-		return this->settlement;
+		return this->site;
 	}
 
-	void set_settlement(const site *settlement)
+	void set_site(const metternich::site *site)
 	{
-		this->settlement = settlement;
+		this->site = site;
+	}
+
+	const metternich::site *get_settlement() const;
+
+	const commodity *get_resource() const
+	{
+		return this->resource;
+	}
+
+	void set_resource(const commodity *resource)
+	{
+		this->resource = resource;
 	}
 
 private:
@@ -56,7 +69,8 @@ private:
 	short base_tile_frame = 0;
 	short tile_frame = 0;
 	const metternich::province *province = nullptr;
-	const site *settlement = nullptr;
+	const metternich::site *site = nullptr;
+	const commodity *resource = nullptr;
 };
 
 }
