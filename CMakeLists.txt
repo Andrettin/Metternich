@@ -32,6 +32,12 @@ set(database_SRCS
 source_group(database FILES ${database_SRCS})
 set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
 
+set(economy_SRCS
+	src/economy/commodity.cpp
+)
+source_group(economy FILES ${economy_SRCS})
+set_source_files_properties(${economy_SRCS} PROPERTIES UNITY_GROUP "economy")
+
 set(game_SRCS
 	src/game/game.cpp
 )
@@ -67,6 +73,12 @@ set(time_SRCS
 source_group(time FILES ${time_SRCS})
 set_source_files_properties(${time_SRCS} PROPERTIES UNITY_GROUP "time")
 
+set(ui_SRCS
+	src/ui/icon_image_provider.cpp
+)
+source_group(ui FILES ${ui_SRCS})
+set_source_files_properties(${ui_SRCS} PROPERTIES UNITY_GROUP "ui")
+
 set(maskedmousearea_SRCS
 	src/third_party/maskedmousearea/maskedmousearea.cpp
 )
@@ -82,9 +94,11 @@ set_source_files_properties(${xbrz_SRCS} PROPERTIES UNITY_GROUP "xbrz")
 set(metternich_SRCS
 	${country_SRCS}
 	${database_SRCS}
+	${economy_SRCS}
 	${game_SRCS}
 	${map_SRCS}
 	${time_SRCS}
+	${ui_SRCS}
 	${maskedmousearea_SRCS}
 	${xbrz_SRCS}
 	src/engine_interface.cpp
@@ -106,6 +120,11 @@ set(database_HDRS
 	src/database/preferences.h
 )
 source_group(database FILES ${database_HDRS})
+
+set(economy_HDRS
+	src/economy/commodity.h
+)
+source_group(economy FILES ${economy_HDRS})
 
 set(game_HDRS
 	src/game/game.h
@@ -140,6 +159,11 @@ set(time_HDRS
 )
 source_group(time FILES ${time_HDRS})
 
+set(ui_HDRS
+	src/ui/icon_image_provider.h
+)
+source_group(ui FILES ${ui_HDRS})
+
 set(maskedmousearea_HDRS
 	src/third_party/maskedmousearea/maskedmousearea.h
 )
@@ -155,9 +179,11 @@ source_group(xbrz FILES ${xbrz_HDRS})
 set(metternich_HDRS
 	${country_HDRS}
 	${database_HDRS}
+	${economy_HDRS}
 	${game_HDRS}
 	${map_HDRS}
 	${time_HDRS}
+	${ui_HDRS}
 	${maskedmousearea_HDRS}
 	${xbrz_HDRS}
 	src/engine_interface.h
