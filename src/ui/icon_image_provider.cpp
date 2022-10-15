@@ -52,11 +52,8 @@ void icon_image_provider::load_image(const std::string &id)
 	QImage image(path::to_qstring(filepath));
 
 	if (image_scale_factor != scale_factor) {
-		thread_pool::get()->co_spawn_sync([this, &image, &scale_factor, &image_scale_factor]() -> boost::asio::awaitable<void> {
-			const centesimal_int final_scale_factor = scale_factor / image_scale_factor;
-			image = co_await image::scale<QImage::Format_ARGB32>(image, final_scale_factor, image.size() * final_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-			});
+		image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	}
 
