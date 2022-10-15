@@ -121,8 +121,14 @@ void map::clear_tile_game_data()
 		return;
 	}
 
-	for (tile &tile : *this->tiles) {
-		tile.set_development_level(0);
+	try {
+		for (tile &tile : *this->tiles) {
+			if (tile.get_development_level() != 0) {
+				tile.set_development_level(0);
+			}
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Failed to clear tile game data for the map."));
 	}
 }
 

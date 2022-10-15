@@ -83,58 +83,71 @@ void game::stop()
 
 void game::clear()
 {
-	//clear data related to the game (i.e. the data determined by history), but not that related only to the map
-	//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
-	for (country *country : country::get_all()) {
-		country->reset_game_data();
+	try {
+		//clear data related to the game (i.e. the data determined by history), but not that related only to the map
+		//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
+		for (country *country : country::get_all()) {
+			country->reset_game_data();
+		}
+
+		for (const province *province : province::get_all()) {
+			province_game_data *province_game_data = province->get_game_data();
+			province_game_data->set_owner(nullptr);
+		}
+
+		map::get()->clear_tile_game_data();
+
+		this->scenario = nullptr;
+		this->countries.clear();
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Failed to clear the game."));
 	}
-
-	for (const province *province : province::get_all()) {
-		province_game_data *province_game_data = province->get_game_data();
-		province_game_data->set_owner(nullptr);
-	}
-
-	map::get()->clear_tile_game_data();
-
-	this->scenario = nullptr;
-	this->countries.clear();
 }
 
 void game::apply_history(const metternich::scenario *scenario)
 {
-	database::get()->load_history(scenario->get_start_date(), scenario->get_timeline());
+	try {
+		database::get()->load_history(scenario->get_start_date(), scenario->get_timeline());
 
-	for (const province *province : map::get()->get_provinces()) {
-		const province_history *province_history = province->get_history();
-		province_game_data *province_game_data = province->get_game_data();
+		for (const province *province : map::get()->get_provinces()) {
+			const province_history *province_history = province->get_history();
+			province_game_data *province_game_data = province->get_game_data();
 
-		province_game_data->set_owner(province_history->get_owner());
-	}
-
-	for (const country *country : this->get_countries()) {
-		const country_history *country_history = country->get_history();
-		country_game_data *country_game_data = country->get_game_data();
-
-		for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
-			country_game_data->set_diplomacy_state(other_country, diplomacy_state);
-			other_country->get_game_data()->set_diplomacy_state(country, get_diplomacy_state_counterpart(diplomacy_state));
-		}
-	}
-
-	for (const site *site : site::get_all()) {
-		const site_game_data *site_game_data = site->get_game_data();
-		tile *tile = site_game_data->get_tile();
-
-		if (tile == nullptr) {
-			continue;
+			province_game_data->set_owner(province_history->get_owner());
 		}
 
-		const site_history *site_history = site->get_history();
-		
-		if (site_history->get_development_level() != 0) {
-			assert_throw(site->get_type() == site_type::resource);
-			tile->set_development_level(site_history->get_development_level());
+		for (const country *country : this->get_countries()) {
+			const country_history *country_history = country->get_history();
+			country_game_data *country_game_data = country->get_game_data();
+
+			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
+				country_game_data->set_diplomacy_state(other_country, diplomacy_state);
+				other_country->get_game_data()->set_diplomacy_state(country, get_diplomacy_state_counterpart(diplomacy_state));
+			}
 		}
+
+		for (const site *site : site::get_all()) {
+			const site_game_data *site_game_data = site->get_game_data();
+			tile *tile = site_game_data->get_tile();
+
+			if (tile == nullptr) {
+				continue;
+			}
+
+			const site_history *site_history = site->get_history();
+
+			if (site_history->get_development_level() != 0) {
+				assert_throw(site->get_type() == site_type::resource);
+
+				if (tile->get_resource() == nullptr) {
+					throw std::runtime_error("Failed to set development level for tile for resource site \"" + site->get_identifier() + "\", as it has no resource.");
+				}
+
+				tile->set_development_level(site_history->get_development_level());
+			}
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Failed to apply history."));
 	}
 }
 
