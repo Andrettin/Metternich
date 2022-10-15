@@ -82,6 +82,10 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return QVariant::fromValue(const_cast<site *>(tile->get_site()));
 			case role::province:
 				return QVariant::fromValue(const_cast<province *>(tile->get_province()));
+			case role::terrain:
+				return QVariant::fromValue(const_cast<terrain_type *>(tile->get_terrain()));
+			case role::resource:
+				return QVariant::fromValue(const_cast<commodity *>(tile->get_resource()));
 			default:
 				throw std::runtime_error("Invalid map grid model role: " + std::to_string(role) + ".");
 		}
@@ -95,7 +99,10 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 void map_grid_model::on_tile_terrain_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
-	emit dataChanged(index, index, { static_cast<int>(role::image_source) });
+	emit dataChanged(index, index, {
+		static_cast<int>(role::image_source),
+		static_cast<int>(role::terrain)
+	});
 }
 
 }

@@ -18,7 +18,9 @@ public:
 		image_source,
 		overlay_image_sources,
 		site,
-		province
+		province,
+		terrain,
+		resource
 	};
 
 	static QString build_image_source(const terrain_type *terrain, const short tile_frame);
@@ -52,6 +54,8 @@ public:
 		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");
 		role_names.insert(static_cast<int>(role::site), "site");
 		role_names.insert(static_cast<int>(role::province), "province");
+		role_names.insert(static_cast<int>(role::terrain), "terrain");
+		role_names.insert(static_cast<int>(role::resource), "resource");
 
 		return role_names;
 	}
