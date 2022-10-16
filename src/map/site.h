@@ -7,9 +7,9 @@
 
 namespace metternich {
 
-class commodity;
 class cultural_group;
 class culture;
+class resource;
 class site_game_data;
 class site_history;
 class terrain_type;
@@ -24,7 +24,7 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(archimedes::geocoordinate geocoordinate MEMBER geocoordinate READ get_geocoordinate)
 	Q_PROPERTY(metternich::site_type type MEMBER type READ get_type)
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
-	Q_PROPERTY(metternich::commodity* resource MEMBER resource)
+	Q_PROPERTY(metternich::resource* resource MEMBER resource)
 	Q_PROPERTY(metternich::site_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
@@ -76,7 +76,7 @@ public:
 		return this->terrain_type;
 	}
 
-	const commodity *get_resource() const
+	const metternich::resource *get_resource() const
 	{
 		return this->resource;
 	}
@@ -91,7 +91,7 @@ private:
 	archimedes::geocoordinate geocoordinate;
 	site_type type;
 	metternich::terrain_type *terrain_type = nullptr;
-	commodity *resource = nullptr;
+	metternich::resource *resource = nullptr;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	qunique_ptr<site_history> history;

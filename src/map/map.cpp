@@ -171,7 +171,7 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 	site->get_game_data()->set_tile_pos(tile_pos);
 }
 
-void map::set_tile_resource(const QPoint &tile_pos, const commodity *resource)
+void map::set_tile_resource(const QPoint &tile_pos, const resource *resource)
 {
 	tile *tile = this->get_tile(tile_pos);
 	tile->set_resource(resource);

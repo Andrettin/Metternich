@@ -34,6 +34,7 @@ set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
 
 set(economy_SRCS
 	src/economy/commodity.cpp
+	src/economy/resource.cpp
 )
 source_group(economy FILES ${economy_SRCS})
 set_source_files_properties(${economy_SRCS} PROPERTIES UNITY_GROUP "economy")
@@ -123,6 +124,7 @@ source_group(database FILES ${database_HDRS})
 
 set(economy_HDRS
 	src/economy/commodity.h
+	src/economy/resource.h
 )
 source_group(economy FILES ${economy_HDRS})
 

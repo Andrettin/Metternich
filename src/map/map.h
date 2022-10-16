@@ -4,8 +4,8 @@
 
 namespace metternich {
 
-class commodity;
 class province;
+class resource;
 class site;
 class terrain_type;
 class tile;
@@ -67,7 +67,7 @@ public:
 	void set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain);
 	void set_tile_province(const QPoint &tile_pos, const province *province);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
-	void set_tile_resource(const QPoint &tile_pos, const commodity *resource);
+	void set_tile_resource(const QPoint &tile_pos, const resource *resource);
 
 	bool is_tile_on_country_border(const QPoint &tile_pos) const;
 

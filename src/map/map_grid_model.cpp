@@ -4,6 +4,7 @@
 
 #include "database/defines.h"
 #include "economy/commodity.h"
+#include "economy/resource.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -73,7 +74,15 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 				
 				if (tile->get_resource() != nullptr) {
-					overlay_image_sources.push_back("icon/commodity/" + tile->get_resource()->get_identifier_qstring());
+					QString source = "icon/";
+
+					if (!tile->get_resource()->get_icon_filepath().empty()) {
+						source += "resource/" + tile->get_resource()->get_identifier_qstring();
+					} else {
+						source += "commodity/" + tile->get_resource()->get_commodity()->get_identifier_qstring();
+					}
+
+					overlay_image_sources.push_back(std::move(source));
 				}
 
 				return overlay_image_sources;
@@ -85,7 +94,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 			case role::terrain:
 				return QVariant::fromValue(const_cast<terrain_type *>(tile->get_terrain()));
 			case role::resource:
-				return QVariant::fromValue(const_cast<commodity *>(tile->get_resource()));
+				return QVariant::fromValue(const_cast<resource *>(tile->get_resource()));
 			default:
 				throw std::runtime_error("Invalid map grid model role: " + std::to_string(role) + ".");
 		}

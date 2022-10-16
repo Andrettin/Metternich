@@ -2,9 +2,9 @@
 
 namespace metternich {
 
-class commodity;
 class country;
 class province;
+class resource;
 class site;
 class terrain_type;
 
@@ -54,12 +54,12 @@ public:
 
 	const metternich::site *get_settlement() const;
 
-	const commodity *get_resource() const
+	const metternich::resource *get_resource() const
 	{
 		return this->resource;
 	}
 
-	void set_resource(const commodity *resource)
+	void set_resource(const metternich::resource *resource)
 	{
 		this->resource = resource;
 	}
@@ -77,7 +77,7 @@ private:
 	short tile_frame = 0;
 	const metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
-	const commodity *resource = nullptr;
+	const metternich::resource *resource = nullptr;
 	int development_level = 0;
 };
 
