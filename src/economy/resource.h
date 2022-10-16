@@ -6,6 +6,7 @@
 namespace metternich {
 
 class commodity;
+class icon;
 class technology;
 
 //resources are present on tiles, allowing the tile to produce a given commodity
@@ -15,7 +16,7 @@ class resource final : public named_data_entry, public data_type<resource>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::commodity* commodity MEMBER commodity)
-	Q_PROPERTY(std::filesystem::path icon_filepath MEMBER icon_filepath WRITE set_icon_filepath)
+	Q_PROPERTY(metternich::icon* icon MEMBER icon)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology)
 	Q_PROPERTY(metternich::technology* discovery_technology MEMBER discovery_technology)
 
@@ -35,12 +36,7 @@ public:
 		return this->commodity;
 	}
 
-	const std::filesystem::path &get_icon_filepath() const
-	{
-		return this->icon_filepath;
-	}
-
-	void set_icon_filepath(const std::filesystem::path &filepath);
+	const metternich::icon *get_icon() const;
 
 	const technology *get_required_technology() const
 	{
@@ -54,7 +50,7 @@ public:
 
 private:
 	metternich::commodity *commodity = nullptr;
-	std::filesystem::path icon_filepath;
+	metternich::icon *icon = nullptr;
 	technology *required_technology = nullptr; //technology which is required to see the resource on the tile
 	technology *discovery_technology = nullptr; //technology which is obtained when exploring this resource tile
 };

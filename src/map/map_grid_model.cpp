@@ -74,15 +74,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 				
 				if (tile->get_resource() != nullptr) {
-					QString source = "icon/";
-
-					if (!tile->get_resource()->get_icon_filepath().empty()) {
-						source += "resource/" + tile->get_resource()->get_identifier_qstring();
-					} else {
-						source += "commodity/" + tile->get_resource()->get_commodity()->get_identifier_qstring();
-					}
-
-					overlay_image_sources.push_back(std::move(source));
+					overlay_image_sources.push_back("icon/" + tile->get_resource()->get_identifier_qstring());
 				}
 
 				return overlay_image_sources;

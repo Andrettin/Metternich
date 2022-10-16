@@ -3,9 +3,7 @@
 #include "ui/icon_image_provider.h"
 
 #include "database/preferences.h"
-#include "economy/commodity.h"
-#include "economy/resource.h"
-#include "technology/technology.h"
+#include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/image_util.h"
 #include "util/path_util.h"
@@ -27,23 +25,10 @@ void icon_image_provider::load_image(const std::string &id)
 {
 	const std::vector<std::string> id_list = string::split(id, '/');
 
-	const std::string &type = id_list.at(0);
-	const std::string &identifier = id_list.at(1);
-	std::filesystem::path filepath;
+	const std::string &identifier = id_list.at(0);
+	const icon *icon = icon::get(identifier);
 
-	if (type == "commodity") {
-		const commodity *commodity = commodity::get(identifier);
-		filepath = commodity->get_icon_filepath();
-	} else if (type == "resource") {
-		const resource *resource = resource::get(identifier);
-		filepath = resource->get_icon_filepath();
-	} else if (type == "technology") {
-		const technology *technology = technology::get(identifier);
-		filepath = technology->get_icon_filepath();
-	} else {
-		assert_throw(false);
-	}
-
+	std::filesystem::path filepath = icon->get_filepath();
 	assert_throw(!filepath.empty());
 
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();

@@ -5,11 +5,13 @@
 
 namespace metternich {
 
+class icon;
+
 class technology final : public named_data_entry, public data_type<technology>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(std::filesystem::path icon_filepath MEMBER icon_filepath WRITE set_icon_filepath)
+	Q_PROPERTY(metternich::icon* icon MEMBER icon)
 
 public:
 	static constexpr const char class_identifier[] = "technology";
@@ -22,15 +24,13 @@ public:
 
 	virtual void check() const override;
 
-	const std::filesystem::path &get_icon_filepath() const
+	const metternich::icon *get_icon() const
 	{
-		return this->icon_filepath;
+		return this->icon;
 	}
 
-	void set_icon_filepath(const std::filesystem::path &filepath);
-
 private:
-	std::filesystem::path icon_filepath;
+	metternich::icon *icon = nullptr;
 };
 
 }

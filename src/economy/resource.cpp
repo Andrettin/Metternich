@@ -10,16 +10,16 @@ namespace metternich {
 void resource::check() const
 {
 	assert_throw(this->get_commodity() != nullptr);
-	assert_throw(!this->get_icon_filepath().empty() || !this->get_commodity()->get_icon_filepath().empty());
+	assert_throw(this->get_icon() != nullptr);
 }
 
-void resource::set_icon_filepath(const std::filesystem::path &filepath)
+const metternich::icon *resource::get_icon() const
 {
-	if (filepath == this->get_icon_filepath()) {
-		return;
+	if (this->icon != nullptr) {
+		return this->icon;
 	}
 
-	this->icon_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
+	return this->get_commodity()->get_icon();
 }
 
 }
