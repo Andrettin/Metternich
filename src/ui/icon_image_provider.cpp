@@ -5,6 +5,7 @@
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/image_util.h"
 #include "util/path_util.h"
@@ -36,6 +37,9 @@ void icon_image_provider::load_image(const std::string &id)
 	} else if (type == "resource") {
 		const resource *resource = resource::get(identifier);
 		filepath = resource->get_icon_filepath();
+	} else if (type == "technology") {
+		const technology *technology = technology::get(identifier);
+		filepath = technology->get_icon_filepath();
 	} else {
 		assert_throw(false);
 	}

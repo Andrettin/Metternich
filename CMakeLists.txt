@@ -68,6 +68,12 @@ set(map_SRCS
 source_group(map FILES ${map_SRCS})
 set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
+set(technology_SRCS
+	src/technology/technology.cpp
+)
+source_group(technology FILES ${technology_SRCS})
+set_source_files_properties(${technology_SRCS} PROPERTIES UNITY_GROUP "technology")
+
 set(time_SRCS
 	src/time/era.cpp
 )
@@ -98,6 +104,7 @@ set(metternich_SRCS
 	${economy_SRCS}
 	${game_SRCS}
 	${map_SRCS}
+	${technology_SRCS}
 	${time_SRCS}
 	${ui_SRCS}
 	${maskedmousearea_SRCS}
@@ -157,6 +164,11 @@ set(map_HDRS
 )
 source_group(map FILES ${map_HDRS})
 
+set(technology_HDRS
+	src/technology/technology.h
+)
+source_group(technology FILES ${technology_HDRS})
+
 set(time_HDRS
 	src/time/era.h
 )
@@ -185,6 +197,7 @@ set(metternich_HDRS
 	${economy_HDRS}
 	${game_HDRS}
 	${map_HDRS}
+	${technology_HDRS}
 	${time_HDRS}
 	${ui_HDRS}
 	${maskedmousearea_HDRS}
