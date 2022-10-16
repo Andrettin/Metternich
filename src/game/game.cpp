@@ -176,9 +176,40 @@ void game::create_diplomatic_map_image()
 	}
 }
 
-QVariantList game::get_country_qvariant_list() const
+QVariantList game::get_countries_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_countries());
+}
+
+void game::add_country(const country *country)
+{
+	this->countries.push_back(country);
+
+	if (country->is_great_power()) {
+		this->great_powers.push_back(country);
+	}
+
+	if (this->is_running()) {
+		emit countries_changed();
+	}
+}
+
+void game::remove_country(const country *country)
+{
+	std::erase(this->countries, country);
+
+	if (country->is_great_power()) {
+		std::erase(this->great_powers, country);
+	}
+
+	if (this->is_running()) {
+		emit countries_changed();
+	}
+}
+
+QVariantList game::get_great_powers_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_great_powers());
 }
 
 }

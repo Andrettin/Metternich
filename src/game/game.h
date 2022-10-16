@@ -12,7 +12,8 @@ class game final : public QObject, public singleton<game>
 	Q_OBJECT
 
 	Q_PROPERTY(bool running READ is_running NOTIFY running_changed)
-	Q_PROPERTY(QVariantList countries READ get_country_qvariant_list NOTIFY countries_changed)
+	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
+	Q_PROPERTY(QVariantList great_powers READ get_great_powers_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
 	Q_PROPERTY(QSize diplomatic_map_tile_pixel_size READ get_diplomatic_map_tile_pixel_size NOTIFY diplomatic_map_image_size_changed)
 	Q_PROPERTY(metternich::country* player_country READ get_player_country_unconst WRITE set_player_country NOTIFY player_country_changed)
@@ -51,25 +52,16 @@ public:
 		return this->countries;
 	}
 
-	QVariantList get_country_qvariant_list() const;
+	QVariantList get_countries_qvariant_list() const;
+	void add_country(const country *country);
+	void remove_country(const country *country);
 
-	void add_country(const country *country)
+	const std::vector<const country *> &get_great_powers() const
 	{
-		this->countries.push_back(country);
-
-		if (this->is_running()) {
-			emit countries_changed();
-		}
+		return this->great_powers;
 	}
 
-	void remove_country(const country *country)
-	{
-		std::erase(this->countries, country);
-
-		if (this->is_running()) {
-			emit countries_changed();
-		}
-	}
+	QVariantList get_great_powers_qvariant_list() const;
 
 	const country *get_player_country() const
 	{
@@ -116,6 +108,7 @@ private:
 	bool running = false;
 	const metternich::scenario *scenario = nullptr;
 	std::vector<const country *> countries; //the countries currently in the game, i.e. those with at least 1 province
+	std::vector<const country *> great_powers;
 	country *player_country = nullptr;
 	QSize diplomatic_map_image_size;
 	QSize diplomatic_map_tile_pixel_size;
