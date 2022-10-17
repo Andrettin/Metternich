@@ -103,9 +103,11 @@ void map_template::write_terrain_image()
 
 	//write terrain sites
 	for (const auto &[tile_pos, site] : this->sites_by_position) {
-		if (site->get_type() != site_type::terrain) {
+		if (site->get_terrain_type() == nullptr) {
 			continue;
 		}
+
+		assert_throw(site->get_type() == site_type::terrain || site->get_type() == site_type::resource);
 
 		if (base_image.pixelColor(tile_pos).alpha() != 0) {
 			//ignore already-written pixels
