@@ -12,6 +12,7 @@
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
+#include "ui/icon.h"
 #include "util/exception_util.h"
 #include "util/point_util.h"
 
@@ -74,7 +75,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 				
 				if (tile->get_resource() != nullptr) {
-					overlay_image_sources.push_back("icon/" + tile->get_resource()->get_identifier_qstring());
+					overlay_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
 				}
 
 				return overlay_image_sources;
