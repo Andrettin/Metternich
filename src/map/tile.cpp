@@ -8,14 +8,14 @@
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "util/assert_util.h"
-#include "util/random.h"
+#include "util/vector_random_util.h"
 
 namespace metternich {
 
 tile::tile(const terrain_type *base_terrain, const terrain_type *terrain) : terrain(terrain)
 {
-	this->base_tile_frame = random::get()->generate<short>(static_cast<short>(base_terrain->get_tiles().size()));
-	this->tile_frame = random::get()->generate<short>(static_cast<short>(terrain->get_tiles().size()));
+	this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
+	this->tile_frame = static_cast<short>(vector::get_random(terrain->get_tiles()));
 }
 
 void tile::set_terrain(const terrain_type *terrain)
@@ -25,7 +25,7 @@ void tile::set_terrain(const terrain_type *terrain)
 	}
 
 	this->terrain = terrain;
-	this->tile_frame = random::get()->generate<short>(static_cast<short>(terrain->get_tiles().size()));
+	this->tile_frame = static_cast<short>(vector::get_random(terrain->get_tiles()));
 }
 
 const country *tile::get_owner() const
