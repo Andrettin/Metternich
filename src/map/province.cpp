@@ -6,8 +6,10 @@
 #include "country/culture.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
+#include "map/region.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -41,8 +43,10 @@ void province::process_gsml_scope(const gsml_data &scope)
 
 void province::check() const
 {
-	if (this->get_capital_settlement() == nullptr) {
+	if (this->get_capital_settlement() == nullptr && !this->is_water_zone()) {
 		log::log_error("Province \"" + this->get_identifier() + "\" has no capital settlement.");
+	} else if (this->get_capital_settlement() != nullptr && this->is_water_zone()) {
+		throw std::runtime_error("Water zone \"" + this->get_identifier() + "\" has a capital settlement.");
 	}
 
 	assert_throw(this->get_color().isValid());
@@ -78,6 +82,21 @@ const std::string &province::get_cultural_name(const culture *culture) const
 	}
 
 	return this->get_name();
+}
+
+void province::add_region(region *region)
+{
+	if (!vector::contains(this->regions, region)) {
+		this->regions.push_back(region);
+	}
+
+	region->add_province(this);
+}
+
+void province::remove_region(region *region)
+{
+	std::erase(this->regions, region);
+	region->remove_province(this);
 }
 
 }

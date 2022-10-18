@@ -53,6 +53,7 @@ set(map_SRCS
 	src/map/province.cpp
 	src/map/province_container.cpp
 	src/map/province_game_data.cpp
+	src/map/region.cpp
 	src/map/scenario.cpp
 	src/map/site.cpp
 	src/map/site_container.cpp
@@ -150,6 +151,8 @@ set(map_HDRS
 	src/map/province_container.h
 	src/map/province_game_data.h
 	src/map/province_history.h
+	src/map/region.h
+	src/map/region_history.h
 	src/map/scenario.h
 	src/map/site.h
 	src/map/site_container.h

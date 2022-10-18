@@ -11,6 +11,7 @@ class cultural_group;
 class culture;
 class province_game_data;
 class province_history;
+class region;
 class site;
 
 class province final : public named_data_entry, public data_type<province>
@@ -20,6 +21,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_PROPERTY(QColor color READ get_color WRITE set_color)
 	Q_PROPERTY(bool water_zone MEMBER water_zone READ is_water_zone)
 	Q_PROPERTY(metternich::site* capital_settlement MEMBER capital_settlement NOTIFY changed)
+	Q_PROPERTY(std::vector<metternich::region *> regions READ get_regions)
 	Q_PROPERTY(metternich::province_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
@@ -111,6 +113,14 @@ public:
 
 	const std::string &get_cultural_name(const culture *culture) const;
 
+	const std::vector<region *> &get_regions() const
+	{
+		return this->regions;
+	}
+
+	Q_INVOKABLE void add_region(region *region);
+	Q_INVOKABLE void remove_region(region *region);
+
 signals:
 	void changed();
 
@@ -120,6 +130,7 @@ private:
 	site *capital_settlement = nullptr;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
+	std::vector<region *> regions; //regions where this province is located
 	qunique_ptr<province_history> history;
 	qunique_ptr<province_game_data> game_data;
 };
