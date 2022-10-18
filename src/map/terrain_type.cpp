@@ -41,7 +41,7 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 				}
 			});
 
-			this->adjacency_tiles[std::move(adjacency)] = std::move(tiles);
+			this->set_adjacency_tiles(adjacency, tiles);
 		});
 	} else {
 		data_entry::process_gsml_scope(scope);
@@ -62,6 +62,28 @@ void terrain_type::set_image_filepath(const std::filesystem::path &filepath)
 	}
 
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
+}
+
+void terrain_type::set_adjacency_tiles(const terrain_adjacency &adjacency, const std::vector<int> &tiles)
+{
+	const std::array<terrain_adjacency_type, terrain_adjacency::direction_count> &adjacency_data = adjacency.get_data();
+
+	//convert "any" to both "same" and "other" adjacency types
+	//this works recursively: we change the adjacency type for only one direction, but each recursive call will change for other further direction, until no direction is set to "any"
+	for (size_t i = 0; i < adjacency_data.size(); ++i) {
+		if (adjacency_data[i] == terrain_adjacency_type::any) {
+			terrain_adjacency same_adjacency = adjacency;
+			same_adjacency.get_data()[i] = terrain_adjacency_type::same;
+			this->set_adjacency_tiles(same_adjacency, tiles);
+
+			terrain_adjacency other_adjacency = adjacency;
+			other_adjacency.get_data()[i] = terrain_adjacency_type::other;
+			this->set_adjacency_tiles(other_adjacency, tiles);
+			return;
+		}
+	}
+
+	this->adjacency_tiles[adjacency] = tiles;
 }
 
 }

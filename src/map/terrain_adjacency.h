@@ -29,6 +29,16 @@ public:
 		return false;
 	}
 
+	const std::array<terrain_adjacency_type, terrain_adjacency::direction_count> &get_data() const
+	{
+		return this->direction_adjacency_types;
+	}
+
+	std::array<terrain_adjacency_type, terrain_adjacency::direction_count> &get_data()
+	{
+		return this->direction_adjacency_types;
+	}
+
 private:
 	std::array<terrain_adjacency_type, terrain_adjacency::direction_count> direction_adjacency_types{};
 };

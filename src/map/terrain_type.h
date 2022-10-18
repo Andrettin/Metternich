@@ -98,6 +98,8 @@ public:
 		return this->get_tiles();
 	}
 
+	void set_adjacency_tiles(const terrain_adjacency &adjacency, const std::vector<int> &tiles);
+
 private:
 	QColor color;
 	std::filesystem::path image_filepath;
