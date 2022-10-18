@@ -15,7 +15,6 @@ namespace metternich {
 tile::tile(const terrain_type *base_terrain, const terrain_type *terrain) : terrain(terrain)
 {
 	this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
-	this->tile_frame = static_cast<short>(vector::get_random(terrain->get_tiles()));
 }
 
 void tile::set_terrain(const terrain_type *terrain)
@@ -25,7 +24,6 @@ void tile::set_terrain(const terrain_type *terrain)
 	}
 
 	this->terrain = terrain;
-	this->tile_frame = static_cast<short>(vector::get_random(terrain->get_tiles()));
 }
 
 const country *tile::get_owner() const

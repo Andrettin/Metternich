@@ -5,17 +5,22 @@
 #include "country/country.h"
 #include "database/defines.h"
 #include "game/game.h"
+#include "map/direction.h"
 #include "map/province.h"
 #include "map/province_container.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_type.h"
+#include "map/terrain_adjacency.h"
+#include "map/terrain_adjacency_type.h"
+#include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/point_util.h"
 #include "util/vector_util.h"
+#include "util/vector_random_util.h"
 
 namespace metternich {
 
@@ -46,6 +51,13 @@ void map::create_tiles()
 
 void map::initialize()
 {
+	for (int x = 0; x < this->get_width(); ++x) {
+		for (int y = 0; y < this->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			this->update_tile_terrain_tile(tile_pos);
+		}
+	}
+
 	province_set provinces;
 
 	for (int x = 0; x < this->get_width(); ++x) {
@@ -149,8 +161,58 @@ void map::set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain)
 	tile->set_terrain(terrain);
 
 	if (game::get()->is_running()) {
+		//this tile and the surrounding ones need to have their displayed terrain tile updated, as adjacencies may have changed
+		for (int x_offset = -1; x_offset <= 1; ++x_offset) {
+			for (int y_offset = -1; y_offset <= 1; ++y_offset) {
+				const QPoint loop_tile_pos = tile_pos + QPoint(x_offset, y_offset);
+
+				if (!this->contains(loop_tile_pos)) {
+					continue;
+				}
+
+				this->update_tile_terrain_tile(loop_tile_pos);
+			}
+		}
+
 		emit tile_terrain_changed(tile_pos);
 	}
+}
+
+void map::update_tile_terrain_tile(const QPoint &tile_pos)
+{
+	static constexpr size_t direction_count = static_cast<size_t>(direction::count);
+	static_assert(direction_count == terrain_adjacency::direction_count);
+
+	tile *tile = this->get_tile(tile_pos);
+
+	terrain_adjacency adjacency;
+
+	for (size_t i = 0; i < direction_count; ++i) {
+		const direction direction = static_cast<archimedes::direction>(i);
+		const QPoint offset = direction_to_offset(direction);
+
+		const QPoint adjacent_tile_pos = tile_pos + offset;
+		terrain_adjacency_type adjacency_type = terrain_adjacency_type::same;
+
+		if (this->contains(adjacent_tile_pos)) {
+			const metternich::tile *adjacent_tile = this->get_tile(adjacent_tile_pos);
+
+			if (adjacent_tile->get_terrain() == tile->get_terrain()) {
+				adjacency_type = terrain_adjacency_type::same;
+			} else {
+				adjacency_type = terrain_adjacency_type::other;
+			}
+		} else {
+			adjacency_type = terrain_adjacency_type::same;
+		}
+
+		adjacency.set_direction_adjacency_type(direction, adjacency_type);
+	}
+
+	const std::vector<int> &terrain_tiles = tile->get_terrain()->get_adjacency_tiles(adjacency);
+	const short terrain_tile = static_cast<short>(vector::get_random(terrain_tiles));
+
+	tile->set_tile(terrain_tile);
 }
 
 void map::set_tile_province(const QPoint &tile_pos, const province *province)

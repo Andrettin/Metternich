@@ -159,6 +159,8 @@ set(map_HDRS
 	src/map/site_game_data.h
 	src/map/site_history.h
 	src/map/site_type.h
+	src/map/terrain_adjacency.h
+	src/map/terrain_adjacency_type.h
 	src/map/terrain_feature.h
 	src/map/terrain_geodata_map.h
 	src/map/terrain_type.h

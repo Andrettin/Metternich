@@ -65,6 +65,7 @@ public:
 
 	tile *get_tile(const QPoint &pos) const;
 	void set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain);
+	void update_tile_terrain_tile(const QPoint &tile_pos);
 	void set_tile_province(const QPoint &tile_pos, const province *province);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	void set_tile_resource(const QPoint &tile_pos, const resource *resource);

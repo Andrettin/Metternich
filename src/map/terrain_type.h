@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "map/terrain_adjacency.h"
 #include "util/color_container.h"
 
 namespace metternich {
@@ -87,10 +88,21 @@ public:
 		return this->tiles;
 	}
 
+	const std::vector<int> &get_adjacency_tiles(const terrain_adjacency &adjacency) const
+	{
+		const auto find_iterator = this->adjacency_tiles.find(adjacency);
+		if (find_iterator != this->adjacency_tiles.end()) {
+			return find_iterator->second;
+		}
+
+		return this->get_tiles();
+	}
+
 private:
 	QColor color;
 	std::filesystem::path image_filepath;
 	std::vector<int> tiles;
+	std::map<terrain_adjacency, std::vector<int>> adjacency_tiles;
 };
 
 }

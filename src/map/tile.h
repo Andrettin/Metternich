@@ -30,6 +30,11 @@ public:
 		return this->tile_frame;
 	}
 
+	void set_tile(const short tile)
+	{
+		this->tile_frame = tile;
+	}
+
 	const metternich::province *get_province() const
 	{
 		return this->province;
