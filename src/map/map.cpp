@@ -183,36 +183,40 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 	static constexpr size_t direction_count = static_cast<size_t>(direction::count);
 	static_assert(direction_count == terrain_adjacency::direction_count);
 
-	tile *tile = this->get_tile(tile_pos);
+	try {
+		tile *tile = this->get_tile(tile_pos);
 
-	terrain_adjacency adjacency;
+		terrain_adjacency adjacency;
 
-	for (size_t i = 0; i < direction_count; ++i) {
-		const direction direction = static_cast<archimedes::direction>(i);
-		const QPoint offset = direction_to_offset(direction);
+		for (size_t i = 0; i < direction_count; ++i) {
+			const direction direction = static_cast<archimedes::direction>(i);
+			const QPoint offset = direction_to_offset(direction);
 
-		const QPoint adjacent_tile_pos = tile_pos + offset;
-		terrain_adjacency_type adjacency_type = terrain_adjacency_type::same;
+			const QPoint adjacent_tile_pos = tile_pos + offset;
+			terrain_adjacency_type adjacency_type = terrain_adjacency_type::same;
 
-		if (this->contains(adjacent_tile_pos)) {
-			const metternich::tile *adjacent_tile = this->get_tile(adjacent_tile_pos);
+			if (this->contains(adjacent_tile_pos)) {
+				const metternich::tile *adjacent_tile = this->get_tile(adjacent_tile_pos);
 
-			if (adjacent_tile->get_terrain() == tile->get_terrain()) {
-				adjacency_type = terrain_adjacency_type::same;
+				if (adjacent_tile->get_terrain() == tile->get_terrain()) {
+					adjacency_type = terrain_adjacency_type::same;
+				} else {
+					adjacency_type = terrain_adjacency_type::other;
+				}
 			} else {
-				adjacency_type = terrain_adjacency_type::other;
+				adjacency_type = terrain_adjacency_type::same;
 			}
-		} else {
-			adjacency_type = terrain_adjacency_type::same;
+
+			adjacency.set_direction_adjacency_type(direction, adjacency_type);
 		}
 
-		adjacency.set_direction_adjacency_type(direction, adjacency_type);
+		const std::vector<int> &terrain_tiles = tile->get_terrain()->get_adjacency_tiles(adjacency);
+		const short terrain_tile = static_cast<short>(vector::get_random(terrain_tiles));
+
+		tile->set_tile(terrain_tile);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Failed to update terrain tile for tile pos " + point::to_string(tile_pos)));
 	}
-
-	const std::vector<int> &terrain_tiles = tile->get_terrain()->get_adjacency_tiles(adjacency);
-	const short terrain_tile = static_cast<short>(vector::get_random(terrain_tiles));
-
-	tile->set_tile(terrain_tile);
 }
 
 void map::set_tile_province(const QPoint &tile_pos, const province *province)
