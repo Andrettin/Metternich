@@ -8,6 +8,7 @@ namespace metternich {
 class commodity;
 class icon;
 class technology;
+class terrain_type;
 
 //resources are present on tiles, allowing the tile to produce a given commodity
 //multiple resources can produce the same commodity
@@ -29,6 +30,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	const metternich::commodity *get_commodity() const
@@ -48,11 +50,17 @@ public:
 		return this->discovery_technology;
 	}
 
+	const std::vector<const terrain_type *> &get_terrain_types() const
+	{
+		return this->terrain_types;
+	}
+
 private:
 	metternich::commodity *commodity = nullptr;
 	metternich::icon *icon = nullptr;
 	technology *required_technology = nullptr; //technology which is required to see the resource on the tile
 	technology *discovery_technology = nullptr; //technology which is obtained when exploring this resource tile
+	std::vector<const terrain_type *> terrain_types;
 };
 
 }

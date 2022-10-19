@@ -3,9 +3,24 @@
 #include "economy/resource.h"
 
 #include "economy/commodity.h"
+#include "map/terrain_type.h"
 #include "util/assert_util.h"
 
 namespace metternich {
+	
+void resource::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "terrain_types") {
+		for (const std::string &value : values) {
+			this->terrain_types.push_back(terrain_type::get(value));
+		}
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
+}
 
 void resource::check() const
 {

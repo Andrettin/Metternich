@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "database/defines.h"
+#include "economy/resource.h"
 #include "game/game.h"
 #include "map/direction.h"
 #include "map/province.h"
@@ -19,6 +20,7 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
+#include "util/log_util.h"
 #include "util/point_util.h"
 #include "util/vector_util.h"
 #include "util/vector_random_util.h"
@@ -245,6 +247,10 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 
 	if (site->get_type() == site_type::resource) {
 		tile->set_resource(site->get_resource());
+
+		if (!vector::contains(tile->get_resource()->get_terrain_types(), tile->get_terrain())) {
+			log::log_error("Tile " + point::to_string(tile_pos) + " has resource \"" + tile->get_resource()->get_identifier() + "\", which doesn't match its terrain type of \"" + tile->get_terrain()->get_identifier() + "\".");
+		}
 	}
 
 	site->get_game_data()->set_tile_pos(tile_pos);
