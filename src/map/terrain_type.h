@@ -89,6 +89,11 @@ public:
 		return this->tiles;
 	}
 
+	bool has_adjacency_tiles() const
+	{
+		return !this->adjacency_tiles.empty();
+	}
+
 	const std::vector<int> &get_adjacency_tiles(const terrain_adjacency &adjacency) const
 	{
 		const auto find_iterator = this->adjacency_tiles.find(adjacency);
@@ -96,7 +101,7 @@ public:
 			return find_iterator->second;
 		}
 
-		return this->get_tiles();
+		throw std::runtime_error("Failed to get adjacency tiles for a given terrain adjacency for the \"" + this->get_identifier() + "\" terrain type.");
 	}
 
 	void set_adjacency_tiles(const terrain_adjacency &adjacency, const std::vector<int> &tiles);

@@ -18,6 +18,7 @@
 #include "map/tile.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/exception_util.h"
 #include "util/point_util.h"
 #include "util/vector_util.h"
 #include "util/vector_random_util.h"
@@ -54,7 +55,12 @@ void map::initialize()
 	for (int x = 0; x < this->get_width(); ++x) {
 		for (int y = 0; y < this->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
-			this->update_tile_terrain_tile(tile_pos);
+
+			try {
+				this->update_tile_terrain_tile(tile_pos);
+			} catch (const std::exception &exception) {
+				exception::report(exception);
+			}
 		}
 	}
 
@@ -186,36 +192,43 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 	try {
 		tile *tile = this->get_tile(tile_pos);
 
-		terrain_adjacency adjacency;
+		const std::vector<int> *terrain_tiles = nullptr;
 
-		for (size_t i = 0; i < direction_count; ++i) {
-			const direction direction = static_cast<archimedes::direction>(i);
-			const QPoint offset = direction_to_offset(direction);
+		if (tile->get_terrain()->has_adjacency_tiles()) {
+			terrain_adjacency adjacency;
 
-			const QPoint adjacent_tile_pos = tile_pos + offset;
-			terrain_adjacency_type adjacency_type = terrain_adjacency_type::same;
+			for (size_t i = 0; i < direction_count; ++i) {
+				const direction direction = static_cast<archimedes::direction>(i);
+				const QPoint offset = direction_to_offset(direction);
 
-			if (this->contains(adjacent_tile_pos)) {
-				const metternich::tile *adjacent_tile = this->get_tile(adjacent_tile_pos);
+				const QPoint adjacent_tile_pos = tile_pos + offset;
+				terrain_adjacency_type adjacency_type = terrain_adjacency_type::same;
 
-				if (adjacent_tile->get_terrain() == tile->get_terrain()) {
-					adjacency_type = terrain_adjacency_type::same;
+				if (this->contains(adjacent_tile_pos)) {
+					const metternich::tile *adjacent_tile = this->get_tile(adjacent_tile_pos);
+
+					if (adjacent_tile->get_terrain() == tile->get_terrain()) {
+						adjacency_type = terrain_adjacency_type::same;
+					} else {
+						adjacency_type = terrain_adjacency_type::other;
+					}
 				} else {
-					adjacency_type = terrain_adjacency_type::other;
+					adjacency_type = terrain_adjacency_type::same;
 				}
-			} else {
-				adjacency_type = terrain_adjacency_type::same;
+
+				adjacency.set_direction_adjacency_type(direction, adjacency_type);
 			}
 
-			adjacency.set_direction_adjacency_type(direction, adjacency_type);
+			terrain_tiles = &tile->get_terrain()->get_adjacency_tiles(adjacency);
+		} else {
+			terrain_tiles = &tile->get_terrain()->get_tiles();
 		}
 
-		const std::vector<int> &terrain_tiles = tile->get_terrain()->get_adjacency_tiles(adjacency);
-		const short terrain_tile = static_cast<short>(vector::get_random(terrain_tiles));
+		const short terrain_tile = static_cast<short>(vector::get_random(*terrain_tiles));
 
 		tile->set_tile(terrain_tile);
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Failed to update terrain tile for tile pos " + point::to_string(tile_pos)));
+		std::throw_with_nested(std::runtime_error("Failed to update terrain tile for tile pos " + point::to_string(tile_pos) + "."));
 	}
 }
 
