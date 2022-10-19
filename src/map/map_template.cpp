@@ -121,6 +121,46 @@ void map_template::write_terrain_image()
 		base_image.setPixelColor(tile_pos, terrain_color);
 	}
 
+	QImage province_image;
+
+	if (!this->get_province_image_filepath().empty()) {
+		//write water zones
+		province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
+
+		assert_throw(province_image.size() == base_image.size());
+
+		for (int x = 0; x < province_image.width(); ++x) {
+			for (int y = 0; y < province_image.height(); ++y) {
+				const QColor province_color = province_image.pixelColor(x, y);
+
+				if (province_color.alpha() == 0) {
+					//ignore transparent pixels
+					continue;
+				}
+
+				if (base_image.pixelColor(x, y).alpha() != 0) {
+					//ignore already-written pixels
+					continue;
+				}
+
+				const province *province = province::get_by_color(province_color);
+
+				if (!province->is_water_zone()) {
+					continue;
+				}
+
+				const terrain_type *terrain = defines::get()->get_default_water_zone_terrain();
+				assert_throw(terrain != nullptr);
+
+				const QColor terrain_color = terrain->get_color();
+
+				assert_throw(terrain_color.isValid());
+
+				base_image.setPixelColor(x, y, terrain_color);
+			}
+		}
+	}
+
 	//write terrain geoshapes
 	std::filesystem::path output_filepath = this->get_terrain_image_filepath().filename();
 	if (output_filepath.empty()) {
@@ -131,7 +171,6 @@ void map_template::write_terrain_image()
 
 	if (!this->get_province_image_filepath().empty()) {
 		//write terrain based on provinces, for pixels without any terrain data set for them
-		const QImage province_image(path::to_qstring(this->get_province_image_filepath()));
 		QImage output_image(path::to_qstring(output_filepath));
 
 		assert_throw(!output_image.isNull());
@@ -153,12 +192,11 @@ void map_template::write_terrain_image()
 
 				const province *province = province::get_by_color(province_color);
 
-				const terrain_type *terrain = nullptr;
 				if (province->is_water_zone()) {
-					terrain = defines::get()->get_default_water_zone_terrain();
-				} else {
-					terrain = defines::get()->get_default_province_terrain();
+					continue;
 				}
+
+				const terrain_type *terrain = defines::get()->get_default_province_terrain();
 
 				assert_throw(terrain != nullptr);
 

@@ -27,6 +27,12 @@ bool terrain_geodata_map_compare::operator()(const terrain_geodata_key &terrain_
 		other_terrain = std::get<const terrain_type *>(other_terrain_variant);
 	}
 
+	const bool is_water = terrain != nullptr && terrain->is_water();
+	const bool is_other_water = other_terrain != nullptr && other_terrain->is_water();
+	if (is_water != is_other_water) {
+		return is_water; //give priority to water terrain, so that it is written first
+	}
+
 	if (terrain == other_terrain && terrain_feature != other_terrain_feature) {
 		if (terrain_feature == nullptr || other_terrain_feature == nullptr) {
 			return terrain_feature != nullptr;
