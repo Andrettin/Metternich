@@ -249,7 +249,7 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 		tile->set_resource(site->get_resource());
 
 		if (!vector::contains(tile->get_resource()->get_terrain_types(), tile->get_terrain())) {
-			log::log_error("Tile " + point::to_string(tile_pos) + " has resource \"" + tile->get_resource()->get_identifier() + "\", which doesn't match its terrain type of \"" + tile->get_terrain()->get_identifier() + "\".");
+			log::log_error("Tile " + point::to_string(tile_pos) + " has resource \"" + tile->get_resource()->get_identifier() + "\", which doesn't match its \"" + tile->get_terrain()->get_identifier() + "\" terrain type.");
 		}
 	}
 
