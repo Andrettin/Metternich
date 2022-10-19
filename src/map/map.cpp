@@ -249,12 +249,21 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 	tile *tile = this->get_tile(tile_pos);
 	tile->set_site(site);
 
-	if (site->get_type() == site_type::resource) {
-		tile->set_resource(site->get_resource());
+	switch (site->get_type()) {
+		case site_type::settlement:
+			if (tile->get_province() == nullptr || tile->get_province()->get_capital_settlement() != site) {
+				log::log_error("Settlement \"" + site->get_identifier() + "\" was not placed within its province.");
+			}
+			break;
+		case site_type::resource:
+			tile->set_resource(site->get_resource());
 
-		if (!vector::contains(tile->get_resource()->get_terrain_types(), tile->get_terrain())) {
-			log::log_error("Tile " + point::to_string(tile_pos) + " has resource \"" + tile->get_resource()->get_identifier() + "\", which doesn't match its \"" + tile->get_terrain()->get_identifier() + "\" terrain type.");
-		}
+			if (!vector::contains(tile->get_resource()->get_terrain_types(), tile->get_terrain())) {
+				log::log_error("Tile " + point::to_string(tile_pos) + " has resource \"" + tile->get_resource()->get_identifier() + "\", which doesn't match its \"" + tile->get_terrain()->get_identifier() + "\" terrain type.");
+			}
+			break;
+		default:
+			break;
 	}
 
 	site->get_game_data()->set_tile_pos(tile_pos);
