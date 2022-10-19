@@ -101,8 +101,11 @@ int main(int argc, char **argv)
 					co_await database::get()->load(true);
 					database::get()->load_defines();
 					co_await database::get()->load(false);
-					database::get()->initialize();
+
+					//load the preferences before initializing the database, so that is any initialization depends on the scale factor, it can work properly
 					preferences::get()->load();
+
+					database::get()->initialize();
 					engine_interface::get()->set_running(true);
 				} catch (const std::exception &exception) {
 					exception::report(exception);

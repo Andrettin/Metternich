@@ -26,6 +26,7 @@
 #include "util/event_loop.h"
 #include "util/path_util.h"
 #include "util/size_util.h"
+#include "util/thread_pool.h"
 
 namespace metternich {
 
@@ -170,10 +171,20 @@ void game::create_diplomatic_map_image()
 
 	this->diplomatic_map_tile_pixel_size = this->diplomatic_map_image_size / map::get()->get_size();
 
+	std::vector<boost::asio::awaitable<void>> awaitables;
+
 	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
-		country_game_data->create_diplomatic_map_image();
+
+		boost::asio::awaitable<void> awaitable = country_game_data->create_diplomatic_map_image();
+		awaitables.push_back(std::move(awaitable));
 	}
+
+	thread_pool::get()->co_spawn_sync([&awaitables]() -> boost::asio::awaitable<void> {
+		for (boost::asio::awaitable<void> &awaitable : awaitables) {
+			co_await std::move(awaitable);
+		}
+	});
 }
 
 QVariantList game::get_countries_qvariant_list() const

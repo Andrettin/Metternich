@@ -15,6 +15,7 @@
 #include "util/image_util.h"
 #include "util/point_util.h"
 #include "util/size_util.h"
+#include "util/thread_pool.h"
 #include "util/vector_util.h"
 
 #include "xbrz.h"
@@ -128,7 +129,9 @@ void country_game_data::calculate_territory_rect()
 	this->territory_rect = territory_rect;
 
 	if (game::get()->is_running()) {
-		this->create_diplomatic_map_image();
+		thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+			co_await this->create_diplomatic_map_image();
+		});
 	}
 }
 
@@ -169,7 +172,7 @@ const QColor &country_game_data::get_diplomatic_map_color() const
 	return this->country->get_color();
 }
 
-void country_game_data::create_diplomatic_map_image()
+boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 {
 	const QSize &tile_pixel_size = game::get()->get_diplomatic_map_tile_pixel_size();
 
@@ -240,13 +243,21 @@ void country_game_data::create_diplomatic_map_image()
 
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 
-	this->diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	QImage scaled_diplomatic_map_image;
+	QImage scaled_selected_diplomatic_map_image;
+
+	co_await thread_pool::get()->co_spawn_awaitable([this, &scale_factor, &scaled_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() -> boost::asio::awaitable<void> {
+		scaled_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+
+		scaled_selected_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
 	});
 
-	this->selected_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-	});
+	this->diplomatic_map_image = std::move(scaled_diplomatic_map_image);
+	this->selected_diplomatic_map_image = std::move(scaled_selected_diplomatic_map_image);
 
 	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * size::to_point(tile_pixel_size) * scale_factor, this->diplomatic_map_image.size());
 

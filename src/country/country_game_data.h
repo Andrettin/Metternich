@@ -71,7 +71,8 @@ public:
 		return this->diplomatic_map_image;
 	}
 
-	void create_diplomatic_map_image();
+	[[nodiscard]]
+	boost::asio::awaitable<void> create_diplomatic_map_image();
 
 	const QRect &get_diplomatic_map_image_rect() const
 	{

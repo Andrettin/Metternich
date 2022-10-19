@@ -20,6 +20,7 @@ public:
 	{
 	}
 
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const std::filesystem::path &get_filepath() const

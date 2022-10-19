@@ -16,12 +16,14 @@ namespace metternich {
 
 icon_image_provider::icon_image_provider()
 {
+	icon_image_provider::instance = this;
+
 	QObject::connect(preferences::get(), &preferences::scale_factor_changed, [this]() {
 		this->clear_images();
 	});
 }
 
-void icon_image_provider::load_image(const std::string &id)
+boost::asio::awaitable<void> icon_image_provider::load_image(const std::string &id)
 {
 	const std::vector<std::string> id_list = string::split(id, '/');
 
@@ -45,8 +47,10 @@ void icon_image_provider::load_image(const std::string &id)
 	QImage image(path::to_qstring(filepath));
 
 	if (image_scale_factor != scale_factor) {
-		image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		co_await thread_pool::get()->co_spawn_awaitable([this, &image, &scale_factor, &image_scale_factor]() -> boost::asio::awaitable<void> {
+			image = co_await image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+			});
 		});
 	}
 

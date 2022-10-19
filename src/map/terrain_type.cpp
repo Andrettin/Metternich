@@ -5,7 +5,9 @@
 #include "database/database.h"
 #include "map/direction.h"
 #include "map/terrain_adjacency_type.h"
+#include "map/tile_image_provider.h"
 #include "util/assert_util.h"
+#include "util/event_loop.h"
 
 namespace metternich {
 	
@@ -46,6 +48,15 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void terrain_type::initialize()
+{
+	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+		co_await tile_image_provider::get()->load_image("terrain/" + this->get_identifier());
+	});
+
+	data_entry::initialize();
 }
 
 void terrain_type::check() const
