@@ -82,6 +82,11 @@ void site::reset_game_data()
 	this->game_data = make_qunique<site_game_data>(this);
 }
 
+bool site::is_settlement() const
+{
+	return this->get_type() == site_type::settlement;
+}
+
 const std::string &site::get_cultural_name(const culture *culture) const
 {
 	if (culture != nullptr) {
