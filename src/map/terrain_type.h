@@ -13,6 +13,7 @@ class terrain_type final : public named_data_entry, public data_type<terrain_typ
 
 	Q_PROPERTY(QColor color READ get_color WRITE set_color)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
+	Q_PROPERTY(bool water MEMBER water READ is_water)
 
 public:
 	static constexpr const char class_identifier[] = "terrain_type";
@@ -83,6 +84,11 @@ public:
 	}
 
 	void set_image_filepath(const std::filesystem::path &filepath);
+	
+	bool is_water() const
+	{
+		return this->water;
+	}
 
 	const std::vector<int> &get_tiles() const
 	{
@@ -109,6 +115,7 @@ public:
 private:
 	QColor color;
 	std::filesystem::path image_filepath;
+	bool water = false;
 	std::vector<int> tiles;
 	std::map<terrain_adjacency, std::vector<int>> adjacency_tiles;
 };

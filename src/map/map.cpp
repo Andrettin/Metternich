@@ -238,6 +238,10 @@ void map::set_tile_province(const QPoint &tile_pos, const province *province)
 {
 	tile *tile = this->get_tile(tile_pos);
 	tile->set_province(province);
+
+	if (tile->get_terrain()->is_water() != province->is_water_zone()) {
+		log::log_error("Tile " + point::to_string(tile_pos) + " has terrain type \"" + tile->get_terrain()->get_identifier() + "\", which has a water value that doesn't match the tile's \"" + province->get_identifier() + "\" province.");
+	}
 }
 
 void map::set_tile_site(const QPoint &tile_pos, const site *site)
