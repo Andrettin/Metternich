@@ -83,7 +83,11 @@ void terrain_type::set_adjacency_tiles(const terrain_adjacency &adjacency, const
 		}
 	}
 
-	this->adjacency_tiles[adjacency] = tiles;
+	const auto result = this->adjacency_tiles.insert_or_assign(adjacency, tiles);
+
+	//if this is false, that means there was already a definition for the same adjacency data
+	//multiple adjacency definitions with the same adjacency data is an error
+	assert_throw(result.second); 
 }
 
 }
