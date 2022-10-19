@@ -31,7 +31,7 @@ void map_template::initialize()
 			continue;
 		}
 
-		const QPoint tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate());
+		const QPoint tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate()) + site->get_pos_offset();
 
 		if (!map_rect.contains(tile_pos)) {
 			continue;

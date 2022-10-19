@@ -22,6 +22,7 @@ class site final : public named_data_entry, public data_type<site>
 
 	Q_PROPERTY(metternich::world* world MEMBER world)
 	Q_PROPERTY(archimedes::geocoordinate geocoordinate MEMBER geocoordinate READ get_geocoordinate)
+	Q_PROPERTY(QPoint pos_offset MEMBER pos_offset READ get_pos_offset)
 	Q_PROPERTY(metternich::site_type type MEMBER type READ get_type)
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
 	Q_PROPERTY(metternich::resource* resource MEMBER resource)
@@ -66,6 +67,11 @@ public:
 		return this->geocoordinate;
 	}
 
+	const QPoint &get_pos_offset() const
+	{
+		return this->pos_offset;
+	}
+
 	site_type get_type() const
 	{
 		return this->type;
@@ -89,6 +95,7 @@ signals:
 private:
 	metternich::world *world = nullptr;
 	archimedes::geocoordinate geocoordinate;
+	QPoint pos_offset = QPoint(0, 0);
 	site_type type;
 	metternich::terrain_type *terrain_type = nullptr;
 	metternich::resource *resource = nullptr;
