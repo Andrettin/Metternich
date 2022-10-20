@@ -45,6 +45,7 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 	}
 
 	assert_throw(!filepath.empty());
+	assert_throw(std::filesystem::exists(filepath));
 
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 
@@ -58,6 +59,7 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 	}
 
 	QImage image(path::to_qstring(filepath));
+	assert_throw(!image.isNull());
 
 	if (image_scale_factor != scale_factor) {
 		co_await thread_pool::get()->co_spawn_awaitable([this, &image, &scale_factor, &image_scale_factor]() -> boost::asio::awaitable<void> {
