@@ -10,6 +10,7 @@ class country_game_data;
 class country_history;
 class culture;
 class era;
+class landed_title;
 class province;
 enum class country_type;
 
@@ -69,6 +70,13 @@ public:
 		return this->capital_province;
 	}
 
+	const landed_title *get_title() const
+	{
+		return this->title;
+	}
+
+	void create_title();
+
 	const std::vector<const province *> &get_provinces() const
 	{
 		return this->provinces;
@@ -82,6 +90,7 @@ private:
 	QColor color;
 	metternich::culture *culture = nullptr;
 	province *capital_province = nullptr;
+	landed_title *title = nullptr;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	std::vector<const province *> provinces; //provinces for this country when it is generated in random maps
 	qunique_ptr<country_history> history;

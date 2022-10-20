@@ -21,6 +21,8 @@ set(country_SRCS
 	src/country/country_type.cpp
 	src/country/culture.cpp
 	src/country/diplomacy_state.cpp
+	src/country/landed_title.cpp
+	src/country/landed_title_tier.cpp
 )
 source_group(country FILES ${country_SRCS})
 set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
@@ -122,6 +124,8 @@ set(country_HDRS
 	src/country/cultural_group.h
 	src/country/culture.h
 	src/country/diplomacy_state.h
+	src/country/landed_title.h
+	src/country/landed_title_tier.h
 )
 source_group(country FILES ${country_HDRS})
 

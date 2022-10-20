@@ -4,6 +4,7 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "country/landed_title.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
 #include "map/site_type.h"
@@ -25,7 +26,13 @@ void site::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "cultural_names") {
+	if (tag == "title") {
+		if (this->get_title() == nullptr) {
+			this->create_title();
+		}
+
+		database::process_gsml_data(this->title, scope);
+	} else if (tag == "cultural_names") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const culture *culture = culture::get(property.get_key());
 			this->cultural_names[culture] = property.get_value();
@@ -44,6 +51,10 @@ void site::initialize()
 {
 	assert_throw(this->world != nullptr);
 	this->world->add_site(this);
+
+	if (this->get_type() == site_type::resource && this->get_title() == nullptr) {
+		this->create_title();
+	}
 
 	data_entry::initialize();
 }
@@ -65,6 +76,10 @@ void site::check() const
 	} else {
 		assert_throw(this->get_resource() == nullptr);
 	}
+
+	if (this->get_title() != nullptr) {
+		assert_throw(this->get_type() == site_type::resource);
+	}
 }
 
 data_entry_history *site::get_history_base()
@@ -85,6 +100,12 @@ void site::reset_game_data()
 bool site::is_settlement() const
 {
 	return this->get_type() == site_type::settlement;
+}
+
+void site::create_title()
+{
+	this->title = landed_title::add(this->get_identifier(), this->get_module());
+	this->title->set_site(this);
 }
 
 const std::string &site::get_cultural_name(const culture *culture) const

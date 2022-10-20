@@ -4,6 +4,7 @@
 #include "country/country_game_data.h"
 #include "country/country_type.h"
 #include "country/diplomacy_state.h"
+#include "country/landed_title_tier.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -61,6 +62,7 @@ int main(int argc, char **argv)
 
 		enum_converter<country_type>();
 		enum_converter<diplomacy_state>();
+		enum_converter<landed_title_tier>();
 		enum_converter<site_type>();
 
 		qmlRegisterAnonymousType<country>("", 1);
