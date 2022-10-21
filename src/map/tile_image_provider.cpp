@@ -40,6 +40,14 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 		is_frame_image = true;
 	} else if (tile_image_type == "settlement") {
 		filepath = defines::get()->get_default_settlement_image_filepath();
+	} else if (tile_image_type == "borders") {
+		if (identifier == "province_border") {
+			filepath = defines::get()->get_province_border_image_filepath();
+		} else {
+			assert_throw(false);
+		}
+
+		is_frame_image = true;
 	} else {
 		assert_throw(false);
 	}

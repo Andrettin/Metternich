@@ -21,6 +21,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QColor country_border_color MEMBER country_border_color READ get_country_border_color)
 	Q_PROPERTY(QColor selected_country_color MEMBER selected_country_color READ get_selected_country_color)
 	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
+	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
 
@@ -88,6 +89,13 @@ public:
 
 	void set_default_settlement_image_filepath(const std::filesystem::path &filepath);
 
+	const std::filesystem::path &get_province_border_image_filepath() const
+	{
+		return this->province_border_image_filepath;
+	}
+
+	void set_province_border_image_filepath(const std::filesystem::path &filepath);
+
 	QString get_default_menu_background_filepath_qstring() const;
 	void set_default_menu_background_filepath(const std::filesystem::path &filepath);
 
@@ -115,6 +123,7 @@ private:
 	QColor country_border_color;
 	QColor selected_country_color;
 	std::filesystem::path default_settlement_image_filepath;
+	std::filesystem::path province_border_image_filepath;
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;
 };
