@@ -1,5 +1,9 @@
 #pragma once
 
+namespace archimedes {
+	enum class direction;
+}
+
 namespace metternich {
 
 class country;
@@ -76,6 +80,21 @@ public:
 
 	void set_development_level(const int level);
 
+	const std::vector<direction> &get_border_directions() const
+	{
+		return this->border_directions;
+	}
+
+	void add_border_direction(const direction direction)
+	{
+		this->border_directions.push_back(direction);
+	}
+
+	void sort_border_directions()
+	{
+		std::sort(this->border_directions.begin(), this->border_directions.end());
+	}
+
 private:
 	const terrain_type *terrain = nullptr;
 	short base_tile_frame = 0;
@@ -84,6 +103,7 @@ private:
 	const metternich::site *site = nullptr;
 	const metternich::resource *resource = nullptr;
 	int development_level = 0;
+	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 };
 
 }

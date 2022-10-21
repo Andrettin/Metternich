@@ -71,7 +71,7 @@ void map::initialize()
 	for (int x = 0; x < this->get_width(); ++x) {
 		for (int y = 0; y < this->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
-			const tile *tile = this->get_tile(tile_pos);
+			tile *tile = this->get_tile(tile_pos);
 			const province *tile_province = tile->get_province();
 
 			if (tile_province == nullptr) {
@@ -80,31 +80,36 @@ void map::initialize()
 
 			bool is_border_tile = false;
 
-			point::for_each_adjacent_until(tile_pos, [this, tile_province, &is_border_tile](const QPoint &adjacent_pos) {
+			point::for_each_adjacent(tile_pos, [this, tile, &tile_pos, tile_province, &is_border_tile](const QPoint &adjacent_pos) {
 				if (!this->contains(adjacent_pos)) {
 					is_border_tile = true;
-					return true;
+					return;
 				}
 
 				const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
 				const province *adjacent_province = adjacent_tile->get_province();
 
 				if (tile_province != adjacent_province) {
-					province_game_data *tile_province_game_data = tile_province->get_game_data();
-					if (adjacent_province != nullptr && !vector::contains(tile_province_game_data->get_border_provinces(), adjacent_province)) {
-						tile_province_game_data->add_border_province(adjacent_province);
+					if (!is_border_tile) {
+						province_game_data *tile_province_game_data = tile_province->get_game_data();
+						if (adjacent_province != nullptr && !vector::contains(tile_province_game_data->get_border_provinces(), adjacent_province)) {
+							tile_province_game_data->add_border_province(adjacent_province);
+						}
+
+						is_border_tile = true;
 					}
 
-					is_border_tile = true;
-					return true;
+					if (tile_province != nullptr && adjacent_province != nullptr && tile_province->is_water_zone() == adjacent_province->is_water_zone()) {
+						tile->add_border_direction(offset_to_direction(adjacent_pos - tile_pos));
+					}
 				}
-
-				return false;
 			});
 
 			tile_province->get_game_data()->add_tile(tile_pos);
 
 			if (is_border_tile) {
+				tile->sort_border_directions();
+
 				tile_province->get_game_data()->add_border_tile(tile_pos);
 			}
 
