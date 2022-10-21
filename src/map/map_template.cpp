@@ -101,26 +101,6 @@ void map_template::write_terrain_image()
 		base_image.fill(Qt::transparent);
 	}
 
-	//write terrain sites
-	for (const auto &[tile_pos, site] : this->sites_by_position) {
-		if (site->get_terrain_type() == nullptr) {
-			continue;
-		}
-
-		assert_throw(site->get_type() == site_type::terrain || site->get_type() == site_type::resource);
-
-		if (base_image.pixelColor(tile_pos).alpha() != 0) {
-			//ignore already-written pixels
-			continue;
-		}
-
-		const QColor terrain_color = site->get_terrain_type()->get_color();
-
-		assert_throw(terrain_color.isValid());
-
-		base_image.setPixelColor(tile_pos, terrain_color);
-	}
-
 	QImage province_image;
 
 	if (!this->get_province_image_filepath().empty()) {
@@ -290,6 +270,17 @@ void map_template::apply_terrain() const
 			const terrain_type *terrain = terrain_type::get_by_color(tile_color);
 			map->set_tile_terrain(tile_pos, terrain);
 		}
+	}
+
+	//apply site terrain
+	for (const auto &[tile_pos, site] : this->sites_by_position) {
+		if (site->get_terrain_type() == nullptr) {
+			continue;
+		}
+
+		assert_throw(site->get_type() == site_type::terrain || site->get_type() == site_type::resource);
+
+		map->set_tile_terrain(tile_pos, site->get_terrain_type());
 	}
 }
 
