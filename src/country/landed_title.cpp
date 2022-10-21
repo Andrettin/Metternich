@@ -56,7 +56,6 @@ landed_title::landed_title(const std::string &identifier)
 void landed_title::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
-	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "title_names") {
 		landed_title::process_title_names(this->title_names, scope);
