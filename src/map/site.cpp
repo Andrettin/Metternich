@@ -13,7 +13,7 @@
 
 namespace metternich {
 
-site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::settlement)
+site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::none)
 {
 	this->reset_game_data();
 }
@@ -78,6 +78,7 @@ void site::check() const
 	}
 
 	if (this->get_title() != nullptr) {
+		//only resource sites can have a landed title
 		assert_throw(this->get_type() == site_type::resource);
 	}
 }
