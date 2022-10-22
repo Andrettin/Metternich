@@ -87,6 +87,7 @@ set_source_files_properties(${time_SRCS} PROPERTIES UNITY_GROUP "time")
 set(ui_SRCS
 	src/ui/icon.cpp
 	src/ui/icon_image_provider.cpp
+	src/ui/interface_image_provider.cpp
 )
 source_group(ui FILES ${ui_SRCS})
 set_source_files_properties(${ui_SRCS} PROPERTIES UNITY_GROUP "ui")
@@ -188,6 +189,7 @@ source_group(time FILES ${time_HDRS})
 set(ui_HDRS
 	src/ui/icon.h
 	src/ui/icon_image_provider.h
+	src/ui/interface_image_provider.h
 )
 source_group(ui FILES ${ui_HDRS})
 
