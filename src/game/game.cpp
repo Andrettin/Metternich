@@ -151,6 +151,8 @@ void game::apply_history(const metternich::scenario *scenario)
 		std::throw_with_nested(std::runtime_error("Failed to apply history."));
 	}
 
+	this->calculate_great_power_ranks();
+
 	for (const country *country : this->get_countries()) {
 		emit country->game_data_changed();
 	}
@@ -190,6 +192,20 @@ void game::remove_country(const country *country)
 QVariantList game::get_great_powers_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_great_powers());
+}
+
+void game::calculate_great_power_ranks()
+{
+	//here we rank countries by province amount, but in the future this should be done by score instead
+	std::vector<const metternich::country *> great_powers = game::get()->get_great_powers();
+
+	std::sort(great_powers.begin(), great_powers.end(), [](const metternich::country *lhs, const metternich::country *rhs) {
+		return lhs->get_game_data()->get_score() > rhs->get_game_data()->get_score();
+	});
+
+	for (size_t i = 0; i < great_powers.size(); ++i) {
+		great_powers.at(i)->get_game_data()->set_rank(static_cast<int>(i));
+	}
 }
 
 void game::create_diplomatic_map_image()

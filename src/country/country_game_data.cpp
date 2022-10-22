@@ -31,7 +31,15 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 		return;
 	}
 
+	if (this->overlord != nullptr) {
+		this->overlord->get_game_data()->change_score(-this->get_province_count() * country::score_per_colonial_province);
+	}
+
 	this->overlord = overlord;
+
+	if (this->overlord != nullptr) {
+		this->overlord->get_game_data()->change_score(this->get_province_count() * country::score_per_colonial_province);
+	}
 
 	if (game::get()->is_running()) {
 		emit overlord_changed();
@@ -45,20 +53,7 @@ bool country_game_data::is_secondary_power() const
 		return false;
 	}
 
-	//here we rank countries by province amount, but in the future this should be done by score instead
-	std::vector<const metternich::country *> countries = game::get()->get_countries();
-
-	std::sort(countries.begin(), countries.end(), [](const metternich::country *lhs, const metternich::country *rhs) {
-		return lhs->get_game_data()->get_provinces().size() > rhs->get_game_data()->get_provinces().size();
-	});
-
-	for (size_t i = 0; i < country::max_great_powers; ++i) {
-		if (countries.at(i) == this->country) {
-			return false;
-		}
-	}
-
-	return true;
+	return this->get_rank() >= country::max_great_powers;
 }
 
 QVariantList country_game_data::get_provinces_qvariant_list() const
@@ -72,6 +67,12 @@ void country_game_data::add_province(const province *province)
 
 	const map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
+
+	this->change_score(country::score_per_province);
+
+	if (this->get_overlord() != nullptr) {
+		this->get_overlord()->get_game_data()->change_score(country::score_per_colonial_province);
+	}
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->change_resource_count(resource, count);
@@ -113,6 +114,12 @@ void country_game_data::remove_province(const province *province)
 
 	const map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
+
+	this->change_score(-country::score_per_province);
+
+	if (this->get_overlord() != nullptr) {
+		this->get_overlord()->get_game_data()->change_score(-country::score_per_colonial_province);
+	}
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->change_resource_count(resource, -count);

@@ -63,6 +63,8 @@ public:
 
 	QVariantList get_great_powers_qvariant_list() const;
 
+	void calculate_great_power_ranks();
+
 	const country *get_player_country() const
 	{
 		return this->player_country;

@@ -52,6 +52,11 @@ public:
 	void add_province(const province *province);
 	void remove_province(const province *province);
 
+	int get_province_count() const
+	{
+		return static_cast<int>(this->get_provinces().size());
+	}
+
 	bool is_alive() const
 	{
 		return !this->get_provinces().empty();
@@ -110,6 +115,26 @@ public:
 		return this->selected_diplomatic_map_image;
 	}
 
+	int get_rank() const
+	{
+		return this->rank;
+	}
+
+	void set_rank(const int rank)
+	{
+		this->rank = rank;
+	}
+
+	int get_score() const
+	{
+		return this->score;
+	}
+
+	void change_score(const int change)
+	{
+		this->score += change;
+	}
+
 signals:
 	void overlord_changed();
 	void diplomacy_states_changed();
@@ -128,6 +153,8 @@ private:
 	QImage selected_diplomatic_map_image;
 	std::vector<QPoint> diplomatic_map_border_pixels;
 	QRect diplomatic_map_image_rect;
+	int rank = 0;
+	int score = 0;
 };
 
 }
