@@ -26,6 +26,7 @@
 #include "util/log_output_handler.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
+#include "util/thread_pool.h"
 
 #include "maskedmousearea.h"
 
@@ -119,6 +120,11 @@ int main(int argc, char **argv)
 		}, Qt::QueuedConnection);
 
 		engine.load(url);
+
+		QObject::connect(&app, &QCoreApplication::aboutToQuit, &app, []() {
+			thread_pool::get()->stop();
+			event_loop::get()->stop();
+		});
 
 		const int result = app.exec();
 
