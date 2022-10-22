@@ -31,6 +31,7 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::country*";
 	static constexpr const char database_folder[] = "countries";
 	static constexpr bool history_enabled = true;
+	static constexpr size_t max_great_powers = 7; //maximum true great powers, all others are called secondary powers instead
 
 	explicit country(const std::string &identifier);
 

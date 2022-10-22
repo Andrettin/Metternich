@@ -3,6 +3,7 @@
 #include "country/country_game_data.h"
 
 #include "country/country.h"
+#include "country/country_type.h"
 #include "country/diplomacy_state.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -35,6 +36,29 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 	if (game::get()->is_running()) {
 		emit overlord_changed();
 	}
+}
+
+bool country_game_data::is_secondary_power() const
+{
+	//a country is a secondary power if its type is great power, and it is not high-ranking enough to be considered a true great power
+	if (this->country->get_type() != country_type::great_power) {
+		return false;
+	}
+
+	//here we rank countries by province amount, but in the future this should be done by score instead
+	std::vector<const metternich::country *> countries = game::get()->get_countries();
+
+	std::sort(countries.begin(), countries.end(), [](const metternich::country *lhs, const metternich::country *rhs) {
+		return lhs->get_game_data()->get_provinces().size() > rhs->get_game_data()->get_provinces().size();
+	});
+
+	for (size_t i = 0; i < country::max_great_powers; ++i) {
+		if (countries.at(i) == this->country) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 QVariantList country_game_data::get_provinces_qvariant_list() const

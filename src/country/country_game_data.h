@@ -14,6 +14,7 @@ class country_game_data final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country* overlord READ get_overlord_unconst NOTIFY overlord_changed)
+	Q_PROPERTY(bool secondary_power READ is_secondary_power NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList resource_counts READ get_resource_counts_qvariant_list NOTIFY provinces_changed)
@@ -39,6 +40,8 @@ private:
 
 public:
 	void set_overlord(const metternich::country *overlord);
+
+	bool is_secondary_power() const;
 
 	const std::vector<const province *> &get_provinces() const
 	{
