@@ -156,41 +156,6 @@ void game::apply_history(const metternich::scenario *scenario)
 	}
 }
 
-void game::create_diplomatic_map_image()
-{
-	const int min_tile_scale = defines::get()->get_min_diplomatic_map_tile_scale();
-
-	const map *map = map::get();
-
-	QSize image_size = game::min_diplomatic_map_image_size;
-	const QSize min_scaled_map_size = map->get_size() * min_tile_scale;
-	if (min_scaled_map_size.width() > image_size.width() || min_scaled_map_size.height() > image_size.height()) {
-		image_size = min_scaled_map_size;
-	}
-
-	if (image_size != this->diplomatic_map_image_size) {
-		this->diplomatic_map_image_size = image_size;
-		emit diplomatic_map_image_size_changed();
-	}
-
-	this->diplomatic_map_tile_pixel_size = this->diplomatic_map_image_size / map::get()->get_size();
-
-	std::vector<boost::asio::awaitable<void>> awaitables;
-
-	for (const country *country : this->get_countries()) {
-		country_game_data *country_game_data = country->get_game_data();
-
-		boost::asio::awaitable<void> awaitable = country_game_data->create_diplomatic_map_image();
-		awaitables.push_back(std::move(awaitable));
-	}
-
-	thread_pool::get()->co_spawn_sync([&awaitables]() -> boost::asio::awaitable<void> {
-		for (boost::asio::awaitable<void> &awaitable : awaitables) {
-			co_await std::move(awaitable);
-		}
-	});
-}
-
 QVariantList game::get_countries_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_countries());
@@ -225,6 +190,41 @@ void game::remove_country(const country *country)
 QVariantList game::get_great_powers_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_great_powers());
+}
+
+void game::create_diplomatic_map_image()
+{
+	const int min_tile_scale = defines::get()->get_min_diplomatic_map_tile_scale();
+
+	const map *map = map::get();
+
+	QSize image_size = game::min_diplomatic_map_image_size;
+	const QSize min_scaled_map_size = map->get_size() * min_tile_scale;
+	if (min_scaled_map_size.width() > image_size.width() || min_scaled_map_size.height() > image_size.height()) {
+		image_size = min_scaled_map_size;
+	}
+
+	if (image_size != this->diplomatic_map_image_size) {
+		this->diplomatic_map_image_size = image_size;
+		emit diplomatic_map_image_size_changed();
+	}
+
+	this->diplomatic_map_tile_pixel_size = this->diplomatic_map_image_size / map::get()->get_size();
+
+	std::vector<boost::asio::awaitable<void>> awaitables;
+
+	for (const country *country : this->get_countries()) {
+		country_game_data *country_game_data = country->get_game_data();
+
+		boost::asio::awaitable<void> awaitable = country_game_data->create_diplomatic_map_image();
+		awaitables.push_back(std::move(awaitable));
+	}
+
+	thread_pool::get()->co_spawn_sync([&awaitables]() -> boost::asio::awaitable<void> {
+		for (boost::asio::awaitable<void> &awaitable : awaitables) {
+			co_await std::move(awaitable);
+		}
+	});
 }
 
 }
