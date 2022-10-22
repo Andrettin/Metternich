@@ -64,6 +64,26 @@ void terrain_type::check() const
 	assert_throw(this->get_color().isValid());
 	assert_throw(!this->get_image_filepath().empty());
 	assert_throw(std::filesystem::exists(this->get_image_filepath()));
+
+	if (this->has_adjacency_tiles()) {
+		//check whether the terrain type has support for all possible adjacencies
+		std::vector<terrain_adjacency> possible_adjacencies;
+		possible_adjacencies.emplace_back();
+
+		for (size_t i = 0; i < terrain_adjacency::direction_count; ++i) {
+			for (const terrain_adjacency &adjacency : possible_adjacencies) {
+				terrain_adjacency other_adjacency = adjacency;
+				other_adjacency.get_data()[i] = terrain_adjacency_type::other;
+				possible_adjacencies.push_back(std::move(other_adjacency));
+			}
+		}
+
+		for (const terrain_adjacency &adjacency : possible_adjacencies) {
+			if (!this->adjacency_tiles.contains(adjacency)) {
+				throw std::runtime_error("No tiles provided for the adjacency for the \"" + this->get_identifier() + "\" terrain type:\n" + adjacency.to_string());
+			}
+		}
+	}
 }
 
 void terrain_type::set_image_filepath(const std::filesystem::path &filepath)
