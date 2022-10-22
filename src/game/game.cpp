@@ -85,15 +85,15 @@ void game::stop()
 void game::clear()
 {
 	try {
+		for (const province *province : province::get_all()) {
+			province_game_data *province_game_data = province->get_game_data();
+			province_game_data->set_owner(nullptr);
+		}
+
 		//clear data related to the game (i.e. the data determined by history), but not that related only to the map
 		//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
 		for (country *country : country::get_all()) {
 			country->reset_game_data();
-		}
-
-		for (const province *province : province::get_all()) {
-			province_game_data *province_game_data = province->get_game_data();
-			province_game_data->set_owner(nullptr);
 		}
 
 		map::get()->clear_tile_game_data();

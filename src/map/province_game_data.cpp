@@ -62,6 +62,16 @@ const std::string &province_game_data::get_current_cultural_name() const
 	return this->province->get_cultural_name(this->get_culture());
 }
 
+void province_game_data::add_tile(const QPoint &tile_pos)
+{
+	this->tiles.push_back(tile_pos);
+
+	const tile *tile = map::get()->get_tile(tile_pos);
+	if (tile->get_resource() != nullptr) {
+		++this->resource_counts[tile->get_resource()];
+	}
+}
+
 void province_game_data::add_border_tile(const QPoint &tile_pos)
 {
 	this->border_tiles.push_back(tile_pos);

@@ -6,6 +6,7 @@
 #include "country/diplomacy_state.h"
 #include "database/defines.h"
 #include "database/preferences.h"
+#include "economy/resource.h"
 #include "game/game.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -13,6 +14,7 @@
 #include "map/tile.h"
 #include "util/container_util.h"
 #include "util/image_util.h"
+#include "util/map_util.h"
 #include "util/point_util.h"
 #include "util/size_util.h"
 #include "util/thread_pool.h"
@@ -46,6 +48,10 @@ void country_game_data::add_province(const province *province)
 
 	const map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
+
+	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
+		this->change_resource_count(resource, count);
+	}
 
 	for (const metternich::province *border_province : province_game_data->get_border_provinces()) {
 		const metternich::province_game_data *border_province_game_data = border_province->get_game_data();
@@ -83,6 +89,10 @@ void country_game_data::remove_province(const province *province)
 
 	const map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
+
+	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
+		this->change_resource_count(resource, -count);
+	}
 
 	for (const QPoint &tile_pos : province_game_data->get_border_tiles()) {
 		std::erase(this->border_tiles, tile_pos);
@@ -133,6 +143,11 @@ void country_game_data::calculate_territory_rect()
 			co_await this->create_diplomatic_map_image();
 		});
 	}
+}
+
+QVariantList country_game_data::get_resource_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_resource_counts());
 }
 
 diplomacy_state country_game_data::get_diplomacy_state(const metternich::country *other_country) const

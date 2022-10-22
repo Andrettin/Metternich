@@ -1,5 +1,7 @@
 #pragma once
 
+#include "economy/resource_container.h"
+
 namespace metternich {
 
 class country;
@@ -13,6 +15,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(metternich::country* overlord READ get_overlord_unconst NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
+	Q_PROPERTY(QVariantList resource_counts READ get_resource_counts_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
 
 public:
@@ -61,6 +64,22 @@ public:
 		return this->border_tiles;
 	}
 
+	const resource_map<int> &get_resource_counts() const
+	{
+		return this->resource_counts;
+	}
+
+	QVariantList get_resource_counts_qvariant_list() const;
+
+	void change_resource_count(const resource *resource, const int change)
+	{
+		const int final_count = (this->resource_counts[resource] += change);
+
+		if (final_count == 0) {
+			this->resource_counts.erase(resource);
+		}
+	}
+
 	diplomacy_state get_diplomacy_state(const metternich::country *other_country) const;
 	void set_diplomacy_state(const metternich::country *other_country, const diplomacy_state state);
 
@@ -95,6 +114,7 @@ private:
 	std::vector<const province *> provinces;
 	QRect territory_rect;
 	std::vector<QPoint> border_tiles;
+	resource_map<int> resource_counts;
 	std::map<const metternich::country *, diplomacy_state> diplomacy_states;
 	QImage diplomatic_map_image;
 	QImage selected_diplomatic_map_image;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "economy/resource_container.h"
+
 namespace metternich {
 
 class country;
@@ -52,10 +54,7 @@ public:
 		return this->tiles;
 	}
 
-	void add_tile(const QPoint &tile_pos)
-	{
-		this->tiles.push_back(tile_pos);
-	}
+	void add_tile(const QPoint &tile_pos);
 
 	const std::vector<QPoint> &get_border_tiles() const
 	{
@@ -63,6 +62,11 @@ public:
 	}
 
 	void add_border_tile(const QPoint &tile_pos);
+
+	const resource_map<int> &get_resource_counts() const
+	{
+		return this->resource_counts;
+	}
 
 signals:
 	void culture_changed();
@@ -74,6 +78,7 @@ private:
 	std::vector<const metternich::province *> border_provinces;
 	std::vector<QPoint> tiles;
 	std::vector<QPoint> border_tiles;
+	resource_map<int> resource_counts;
 };
 
 }
