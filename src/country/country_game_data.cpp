@@ -176,6 +176,23 @@ void country_game_data::set_diplomacy_state(const metternich::country *other_cou
 	} else {
 		this->diplomacy_states[other_country] = state;
 	}
+
+	if (game::get()->is_running()) {
+		emit diplomacy_states_changed();
+	}
+}
+
+QVariantList country_game_data::get_vassals_qvariant_list() const
+{
+	std::vector<const metternich::country *> vassals;
+
+	for (const auto &[country, diplomacy_state] : this->diplomacy_states) {
+		if (is_overlordship_diplomacy_state(diplomacy_state)) {
+			vassals.push_back(country);
+		}
+	}
+
+	return container::to_qvariant_list(vassals);
 }
 
 const QColor &country_game_data::get_diplomatic_map_color() const

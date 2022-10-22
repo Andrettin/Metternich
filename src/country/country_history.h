@@ -1,5 +1,6 @@
 #pragma once
 
+#include "country/country_container.h"
 #include "database/data_entry_history.h"
 
 namespace metternich {
@@ -18,14 +19,14 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
-	const std::map<const metternich::country *, diplomacy_state> &get_diplomacy_states() const
+	const country_map<diplomacy_state> &get_diplomacy_states() const
 	{
 		return this->diplomacy_states;
 	}
 
 private:
 	const metternich::country *country = nullptr;
-	std::map<const metternich::country *, diplomacy_state> diplomacy_states;
+	country_map<diplomacy_state> diplomacy_states;
 };
 
 }

@@ -49,6 +49,16 @@ inline std::string get_diplomacy_state_name(const diplomacy_state state)
 	throw std::runtime_error("Invalid diplomacy state: \"" + std::to_string(static_cast<int>(state)) + "\".");
 }
 
+inline bool is_overlordship_diplomacy_state(const diplomacy_state state)
+{
+	switch (state) {
+		case diplomacy_state::colonial_overlord:
+			return true;
+		default:
+			return false;
+	}
+}
+
 inline bool is_vassalage_diplomacy_state(const diplomacy_state state)
 {
 	switch (state) {
