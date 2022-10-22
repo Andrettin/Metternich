@@ -150,6 +150,10 @@ void game::apply_history(const metternich::scenario *scenario)
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to apply history."));
 	}
+
+	for (const country *country : this->get_countries()) {
+		emit country->game_data_changed();
+	}
 }
 
 void game::create_diplomatic_map_image()

@@ -23,7 +23,7 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(QColor color MEMBER color READ get_color)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::province* capital_province MEMBER capital_province)
-	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY changed)
+	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
 	static constexpr const char class_identifier[] = "country";
@@ -84,6 +84,7 @@ public:
 
 signals:
 	void changed();
+	void game_data_changed() const;
 
 private:
 	country_type type;
