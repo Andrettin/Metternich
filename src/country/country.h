@@ -19,7 +19,8 @@ class country final : public named_data_entry, public data_type<country>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country_type type MEMBER type READ get_type)
-	Q_PROPERTY(bool great_power READ is_great_power)
+	Q_PROPERTY(bool great_power READ is_great_power NOTIFY changed)
+	Q_PROPERTY(bool tribe READ is_tribe NOTIFY changed)
 	Q_PROPERTY(QColor color MEMBER color READ get_color)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::province* capital_province MEMBER capital_province)
@@ -57,6 +58,7 @@ public:
 	}
 
 	bool is_great_power() const;
+	bool is_tribe() const;
 
 	const QColor &get_color() const;
 

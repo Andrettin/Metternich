@@ -73,6 +73,11 @@ bool country::is_great_power() const
 	return this->get_type() == country_type::great_power;
 }
 
+bool country::is_tribe() const
+{
+	return this->get_type() == country_type::tribe;
+}
+
 const QColor &country::get_color() const
 {
 	if (this->get_type() != country_type::great_power) {
