@@ -30,6 +30,27 @@
 
 namespace metternich {
 
+QDateTime game::normalize_date(const QDateTime &date)
+{
+	QDateTime normalized_date = date;
+	normalized_date.setTime(QTime(0, 0, 0));
+
+	QDate underlying_date = normalized_date.date();
+
+	if (underlying_date.day() != 1) {
+		underlying_date.setDate(underlying_date.year(), underlying_date.month(), 1);
+	}
+
+	const int month_rest = (underlying_date.month() - 1) % defines::get()->get_months_per_turn();
+	if (month_rest != 0) {
+		underlying_date.setDate(underlying_date.year(), underlying_date.month() - month_rest, underlying_date.day());
+	}
+
+	normalized_date.setDate(underlying_date);
+
+	return normalized_date;
+}
+
 game::game()
 {
 }
@@ -100,6 +121,9 @@ void game::clear()
 
 		this->scenario = nullptr;
 		this->countries.clear();
+
+		this->date = game::normalize_date(defines::get()->get_default_start_date());
+		this->turn = 1;
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to clear the game."));
 	}
@@ -108,6 +132,8 @@ void game::clear()
 void game::apply_history(const metternich::scenario *scenario)
 {
 	try {
+		this->date = game::normalize_date(scenario->get_start_date());
+
 		database::get()->load_history(scenario->get_start_date(), scenario->get_timeline());
 
 		for (const province *province : map::get()->get_provinces()) {
@@ -156,6 +182,25 @@ void game::apply_history(const metternich::scenario *scenario)
 	for (const country *country : this->get_countries()) {
 		emit country->game_data_changed();
 	}
+}
+
+void game::do_turn()
+{
+	const QDateTime old_date = this->date;
+	this->date = old_date.addMonths(defines::get()->get_months_per_turn());
+	assert_throw(this->date != old_date);
+
+	++this->turn;
+
+	emit turn_changed();
+}
+
+void game::do_turn_async()
+{
+	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+		this->do_turn();
+		co_return;
+	});
 }
 
 QVariantList game::get_countries_qvariant_list() const
