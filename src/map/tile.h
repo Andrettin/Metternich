@@ -95,6 +95,11 @@ public:
 		std::sort(this->border_directions.begin(), this->border_directions.end());
 	}
 
+	bool has_graphical_border() const
+	{
+		return !this->get_border_directions().empty();
+	}
+
 private:
 	const terrain_type *terrain = nullptr;
 	short base_tile_frame = 0;
