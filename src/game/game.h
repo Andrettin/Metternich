@@ -17,7 +17,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(QVariantList great_powers READ get_great_powers_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
-	Q_PROPERTY(QSize diplomatic_map_tile_pixel_size READ get_diplomatic_map_tile_pixel_size NOTIFY diplomatic_map_image_size_changed)
+	Q_PROPERTY(int diplomatic_map_tile_pixel_size READ get_diplomatic_map_tile_pixel_size NOTIFY diplomatic_map_image_size_changed)
 	Q_PROPERTY(metternich::country* player_country READ get_player_country_unconst WRITE set_player_country NOTIFY player_country_changed)
 
 public:
@@ -112,7 +112,7 @@ public:
 		return this->diplomatic_map_image_size;
 	}
 
-	const QSize &get_diplomatic_map_tile_pixel_size() const
+	int get_diplomatic_map_tile_pixel_size() const
 	{
 		return this->diplomatic_map_tile_pixel_size;
 	}
@@ -133,7 +133,7 @@ private:
 	std::vector<const country *> great_powers;
 	country *player_country = nullptr;
 	QSize diplomatic_map_image_size;
-	QSize diplomatic_map_tile_pixel_size;
+	int diplomatic_map_tile_pixel_size = 1;
 };
 
 }

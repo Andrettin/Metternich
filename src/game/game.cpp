@@ -270,7 +270,8 @@ void game::create_diplomatic_map_image()
 		emit diplomatic_map_image_size_changed();
 	}
 
-	this->diplomatic_map_tile_pixel_size = this->diplomatic_map_image_size / map::get()->get_size();
+	const QSize relative_size = this->diplomatic_map_image_size / map::get()->get_size();
+	this->diplomatic_map_tile_pixel_size = std::max(relative_size.width(), relative_size.height());
 
 	std::vector<boost::asio::awaitable<void>> awaitables;
 

@@ -169,7 +169,6 @@ private:
 	country_map<diplomacy_state> diplomacy_states;
 	QImage diplomatic_map_image;
 	QImage selected_diplomatic_map_image;
-	std::vector<QPoint> diplomatic_map_border_pixels;
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;
