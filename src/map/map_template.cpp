@@ -49,7 +49,7 @@ void map_template::initialize()
 
 QPoint map_template::get_geocoordinate_pos(const geocoordinate &geocoordinate) const
 {
-	return this->map_projection->geocoordinate_to_point(geocoordinate, this->get_georectangle(), this->get_size());
+	return this->map_projection->geocoordinate_to_point(geocoordinate, this->get_georectangle(), this->get_size(), this->geocoordinate_x_offset);
 }
 
 void map_template::set_terrain_image_filepath(const std::filesystem::path &filepath)
@@ -147,7 +147,7 @@ void map_template::write_terrain_image()
 		output_filepath = "terrain.png";
 	}
 
-	geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image);
+	geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image, this->geocoordinate_x_offset);
 
 	if (!this->get_province_image_filepath().empty()) {
 		//write terrain based on provinces, for pixels without any terrain data set for them
@@ -236,7 +236,7 @@ void map_template::write_province_image()
 		output_filepath = "provinces.png";
 	}
 
-	geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image);
+	geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image, this->geocoordinate_x_offset);
 }
 
 void map_template::apply() const
