@@ -151,6 +151,8 @@ void map::clear_tile_game_data()
 			if (tile.get_development_level() != 0) {
 				tile.set_development_level(0);
 			}
+
+			tile.clear_country_border_directions();
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to clear tile game data for the map."));
@@ -309,6 +311,27 @@ bool map::is_tile_on_country_border(const QPoint &tile_pos) const
 	});
 
 	return result;
+}
+
+void map::calculate_tile_country_border_directions(const QPoint &tile_pos)
+{
+	tile *tile = this->get_tile(tile_pos);
+	const country *tile_country = tile->get_owner();
+
+	tile->clear_country_border_directions();
+
+	point::for_each_adjacent(tile_pos, [this, tile, &tile_pos, tile_country](const QPoint &adjacent_pos) {
+		if (!this->contains(adjacent_pos)) {
+			return;
+		}
+
+		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+		const country *adjacent_country = adjacent_tile->get_owner();
+
+		if (tile_country != adjacent_country && tile_country != nullptr && adjacent_country != nullptr) {
+			tile->add_country_border_direction(offset_to_direction(adjacent_pos - tile_pos));
+		}
+	});
 }
 
 QVariantList map::get_provinces_qvariant_list() const

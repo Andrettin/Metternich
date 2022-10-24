@@ -100,6 +100,26 @@ public:
 		return !this->get_border_directions().empty();
 	}
 
+	const std::vector<direction> &get_country_border_directions() const
+	{
+		return this->country_border_directions;
+	}
+
+	void add_country_border_direction(const direction direction)
+	{
+		this->country_border_directions.push_back(direction);
+	}
+
+	void clear_country_border_directions()
+	{
+		this->country_border_directions.clear();
+	}
+
+	bool has_graphical_country_border() const
+	{
+		return !this->get_country_border_directions().empty();
+	}
+
 private:
 	const terrain_type *terrain = nullptr;
 	short base_tile_frame = 0;
@@ -109,6 +129,7 @@ private:
 	const metternich::resource *resource = nullptr;
 	int development_level = 0;
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
+	std::vector<direction> country_border_directions;
 };
 
 }

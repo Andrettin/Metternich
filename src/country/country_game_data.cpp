@@ -73,7 +73,7 @@ void country_game_data::add_province(const province *province)
 {
 	this->provinces.push_back(province);
 
-	const map *map = map::get();
+	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
 
 	this->change_score(country::score_per_province);
@@ -100,6 +100,10 @@ void country_game_data::add_province(const province *province)
 			if (!map->is_tile_on_country_border(tile_pos)) {
 				std::erase(this->border_tiles, tile_pos);
 			}
+
+			if (game::get()->is_running()) {
+				map->calculate_tile_country_border_directions(tile_pos);
+			}
 		}
 	}
 
@@ -124,7 +128,7 @@ void country_game_data::remove_province(const province *province)
 {
 	std::erase(this->provinces, province);
 
-	const map *map = map::get();
+	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
 
 	this->change_score(-country::score_per_province);
@@ -154,6 +158,10 @@ void country_game_data::remove_province(const province *province)
 		for (const QPoint &tile_pos : border_province_game_data->get_border_tiles()) {
 			if (map->is_tile_on_country_border(tile_pos) && !vector::contains(this->get_border_tiles(), tile_pos)) {
 				this->border_tiles.push_back(tile_pos);
+			}
+
+			if (game::get()->is_running()) {
+				map->calculate_tile_country_border_directions(tile_pos);
 			}
 		}
 	}

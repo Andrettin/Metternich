@@ -71,6 +71,7 @@ public:
 	void set_tile_resource(const QPoint &tile_pos, const resource *resource);
 
 	bool is_tile_on_country_border(const QPoint &tile_pos) const;
+	void calculate_tile_country_border_directions(const QPoint &tile_pos);
 
 	const std::vector<const province *> &get_provinces() const
 	{

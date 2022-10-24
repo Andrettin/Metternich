@@ -180,6 +180,10 @@ void game::apply_history(const metternich::scenario *scenario)
 	this->calculate_great_power_ranks();
 
 	for (const country *country : this->get_countries()) {
+		for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
+			map::get()->calculate_tile_country_border_directions(border_tile_pos);
+		}
+
 		emit country->game_data_changed();
 	}
 }
