@@ -51,6 +51,7 @@ void country::check() const
 
 	assert_throw(this->get_capital_province() != nullptr);
 	assert_throw(this->get_color().isValid());
+	assert_throw(this->get_palette() != nullptr);
 }
 
 data_entry_history *country::get_history_base()
@@ -85,6 +86,15 @@ const QColor &country::get_color() const
 	}
 
 	return this->color;
+}
+
+const country_palette *country::get_palette() const
+{
+	if (this->get_type() != country_type::great_power) {
+		return defines::get()->get_minor_nation_palette();
+	}
+
+	return this->palette;
 }
 
 void country::create_title()

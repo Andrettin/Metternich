@@ -2,6 +2,7 @@
 
 #include "map/tile_image_provider.h"
 
+#include "country/country_palette.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "map/terrain_type.h"
@@ -33,6 +34,7 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 	std::filesystem::path filepath;
 
 	bool is_frame_image = false;
+	const country_palette *country_palette = nullptr;
 
 	if (tile_image_type == "terrain") {
 		const terrain_type *terrain = terrain_type::get(identifier);
@@ -40,6 +42,9 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 		is_frame_image = true;
 	} else if (tile_image_type == "settlement") {
 		filepath = defines::get()->get_default_settlement_image_filepath();
+
+		const std::string &palette_identifier = id_list.at(2);
+		country_palette = country_palette::get(palette_identifier);
 	} else if (tile_image_type == "borders") {
 		if (identifier == "province_border") {
 			filepath = defines::get()->get_province_border_image_filepath();
@@ -68,6 +73,10 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 
 	QImage image(path::to_qstring(filepath));
 	assert_throw(!image.isNull());
+
+	if (country_palette != nullptr && country_palette != defines::get()->get_conversible_country_palette()) {
+		country_palette->apply_to_image(image, defines::get()->get_conversible_country_palette());
+	}
 
 	if (image_scale_factor != scale_factor) {
 		co_await thread_pool::get()->co_spawn_awaitable([this, &image, &scale_factor, &image_scale_factor]() -> boost::asio::awaitable<void> {

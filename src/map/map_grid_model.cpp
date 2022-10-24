@@ -2,6 +2,8 @@
 
 #include "map/map_grid_model.h"
 
+#include "country/country.h"
+#include "country/country_palette.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
@@ -77,7 +79,13 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 
 				if (tile->get_settlement() != nullptr) {
-					overlay_image_sources.push_back("tile/settlement/default");
+					const country_palette *country_palette = defines::get()->get_conversible_country_palette();
+					const country *tile_country = tile->get_owner();
+					if (tile_country != nullptr) {
+						country_palette = tile_country->get_palette();
+					}
+
+					overlay_image_sources.push_back("tile/settlement/default/" + country_palette->get_identifier_qstring());
 				}
 				
 				if (tile->get_resource() != nullptr) {
