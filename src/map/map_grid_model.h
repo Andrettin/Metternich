@@ -20,7 +20,8 @@ public:
 		site,
 		province,
 		terrain,
-		resource
+		resource,
+		upper_label
 	};
 
 	static QString build_image_source(const terrain_type *terrain, const short tile_frame);
@@ -56,6 +57,7 @@ public:
 		role_names.insert(static_cast<int>(role::province), "province");
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
 		role_names.insert(static_cast<int>(role::resource), "resource");
+		role_names.insert(static_cast<int>(role::upper_label), "upper_label");
 
 		return role_names;
 	}

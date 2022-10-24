@@ -94,6 +94,21 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return QVariant::fromValue(const_cast<terrain_type *>(tile->get_terrain()));
 			case role::resource:
 				return QVariant::fromValue(const_cast<resource *>(tile->get_resource()));
+			case role::upper_label: {
+				const QPoint upper_tile_pos = tile_pos - QPoint(0, 1);
+
+				if (!map::get()->contains(upper_tile_pos)) {
+					return QString();
+				}
+
+				const metternich::tile *upper_tile = map::get()->get_tile(upper_tile_pos);
+
+				if (upper_tile->get_settlement() != nullptr && upper_tile->get_province() != nullptr) {
+					return upper_tile->get_province()->get_game_data()->get_current_cultural_name_qstring();
+				}
+
+				return QString();
+			}
 			default:
 				throw std::runtime_error("Invalid map grid model role: " + std::to_string(role) + ".");
 		}
