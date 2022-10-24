@@ -353,7 +353,7 @@ boost::asio::awaitable<void> map::create_ocean_diplomatic_map_image()
 	this->ocean_diplomatic_map_image = QImage(this->get_size() * tile_pixel_size, QImage::Format_RGBA8888);
 	this->ocean_diplomatic_map_image.fill(Qt::transparent);
 
-	const QColor &color = QColor(191, 207, 207);
+	const QColor &color = defines::get()->get_ocean_color();
 
 	std::vector<QPoint> ocean_pixels;
 
