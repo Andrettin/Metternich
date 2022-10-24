@@ -22,6 +22,7 @@
 #include "map/tile_image_provider.h"
 #include "ui/icon_image_provider.h"
 #include "ui/interface_image_provider.h"
+#include "util/empty_image_provider.h"
 #include "util/event_loop.h"
 #include "util/exception_util.h"
 #include "util/log_output_handler.h"
@@ -85,6 +86,7 @@ int main(int argc, char **argv)
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
 
 		engine.addImageProvider("diplomatic_map", new diplomatic_map_image_provider);
+		engine.addImageProvider("empty", new empty_image_provider);
 		engine.addImageProvider("icon", new icon_image_provider);
 		engine.addImageProvider("interface", new interface_image_provider);
 		engine.addImageProvider("tile", new tile_image_provider);
