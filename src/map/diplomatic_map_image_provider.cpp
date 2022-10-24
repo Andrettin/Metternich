@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "map/map.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
 
@@ -16,21 +17,28 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 
 	const std::vector<std::string> id_list = string::split(id.toStdString(), '/');
 
-	const std::string &country_identifier = id_list.at(0);
+	const std::string &identifier = id_list.at(0);
 	const bool selected = id_list.size() >= 2 && id_list.at(1) == "selected";
 
-	const country *country = country::get(country_identifier);
-	const country_game_data *country_game_data = country->get_game_data();
+	const QImage *image = nullptr;
 
-	const QImage &image = selected ? country_game_data->get_selected_diplomatic_map_image() : country_game_data->get_diplomatic_map_image();
+	if (identifier == "ocean") {
+		image = &map::get()->get_ocean_diplomatic_map_image();
+	} else {
+		const country *country = country::get(identifier);
+		const country_game_data *country_game_data = country->get_game_data();
 
-	assert_log(!image.isNull());
-
-	if (size != nullptr) {
-		*size = image.size();
+		image = selected ? &country_game_data->get_selected_diplomatic_map_image() : &country_game_data->get_diplomatic_map_image();
 	}
 
-	return image;
+	assert_throw(image != nullptr);
+	assert_log(!image->isNull());
+
+	if (size != nullptr) {
+		*size = image->size();
+	}
+
+	return *image;
 }
 
 }

@@ -80,6 +80,14 @@ public:
 
 	QVariantList get_provinces_qvariant_list() const;
 
+	const QImage &get_ocean_diplomatic_map_image() const
+	{
+		return this->ocean_diplomatic_map_image;
+	}
+
+	[[nodiscard]]
+	boost::asio::awaitable<void> create_ocean_diplomatic_map_image();
+
 signals:
 	void size_changed();
 	void tile_terrain_changed(const QPoint &tile_pos);
@@ -89,6 +97,7 @@ private:
 	QSize size;
 	std::unique_ptr<std::vector<tile>> tiles;
 	std::vector<const province *> provinces; //the provinces which are on the map
+	QImage ocean_diplomatic_map_image;
 };
 
 }

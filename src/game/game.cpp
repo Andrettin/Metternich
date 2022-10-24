@@ -279,6 +279,11 @@ void game::create_diplomatic_map_image()
 
 	std::vector<boost::asio::awaitable<void>> awaitables;
 
+	if (map::get()->get_ocean_diplomatic_map_image().isNull()) {
+		boost::asio::awaitable<void> awaitable = map::get()->create_ocean_diplomatic_map_image();
+		awaitables.push_back(std::move(awaitable));
+	}
+
 	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
 
