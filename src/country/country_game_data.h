@@ -22,6 +22,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList colonial_resource_counts READ get_colonial_resource_counts_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList vassals READ get_vassals_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
+	Q_PROPERTY(int rank READ get_rank NOTIFY rank_changed)
 
 public:
 	explicit country_game_data(const metternich::country *country) : country(country)
@@ -141,7 +142,12 @@ public:
 
 	void set_rank(const int rank)
 	{
+		if (rank == this->get_rank()) {
+			return;
+		}
+
 		this->rank = rank;
+		emit rank_changed();
 	}
 
 	int get_score() const
@@ -159,6 +165,7 @@ signals:
 	void diplomacy_states_changed();
 	void provinces_changed();
 	void diplomatic_map_image_changed();
+	void rank_changed();
 
 private:
 	const metternich::country *country = nullptr;
