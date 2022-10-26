@@ -24,6 +24,8 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 
 	if (identifier == "ocean") {
 		image = &map::get()->get_ocean_diplomatic_map_image();
+	} else if (identifier == "minimap") {
+		image = &map::get()->get_minimap_image();
 	} else {
 		const country *country = country::get(identifier);
 		const country_game_data *country_game_data = country->get_game_data();

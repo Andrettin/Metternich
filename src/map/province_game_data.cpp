@@ -35,6 +35,8 @@ void province_game_data::set_owner(const country *country)
 			map::get()->calculate_tile_country_border_directions(tile_pos);
 		}
 
+		map::get()->update_minimap_rect(this->get_territory_rect());
+
 		if (old_owner == nullptr || this->owner == nullptr || old_owner->get_culture() != this->owner->get_culture()) {
 			emit culture_changed();
 

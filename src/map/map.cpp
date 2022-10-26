@@ -3,6 +3,7 @@
 #include "map/map.h"
 
 #include "country/country.h"
+#include "country/country_game_data.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/resource.h"
@@ -425,6 +426,42 @@ boost::asio::awaitable<void> map::create_ocean_diplomatic_map_image()
 	});
 
 	this->ocean_diplomatic_map_image = std::move(scaled_ocean_diplomatic_map_image);
+}
+
+void map::create_minimap_image()
+{
+	this->minimap_image = QImage(this->get_size(), QImage::Format_RGBA8888);
+	this->minimap_image.fill(Qt::transparent);
+
+	this->update_minimap_rect(QRect(QPoint(0, 0), this->get_size()));
+}
+
+void map::update_minimap_rect(const QRect &tile_rect)
+{
+	const int start_x = tile_rect.x();
+	const int start_y = tile_rect.y();
+
+	for (int x = start_x; x < this->get_width(); ++x) {
+		for (int y = start_y; y < this->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			const tile *tile = this->get_tile(tile_pos);
+			const terrain_type *terrain = tile->get_terrain();
+
+			if (terrain->is_water()) {
+				this->minimap_image.setPixelColor(tile_pos, defines::get()->get_ocean_color());
+				continue;
+			}
+
+			const country *country = tile->get_owner();
+
+			if (country != nullptr) {
+				this->minimap_image.setPixelColor(tile_pos, country->get_game_data()->get_diplomatic_map_color());
+				continue;
+			}
+
+			this->minimap_image.setPixelColor(tile_pos, defines::get()->get_unexplored_terrain()->get_color());
+		}
+	}
 }
 
 }

@@ -96,6 +96,8 @@ void game::start()
 			co_return;
 		}
 
+		map::get()->create_minimap_image();
+
 		this->set_running(true);
 	});
 }

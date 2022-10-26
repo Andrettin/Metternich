@@ -88,6 +88,14 @@ public:
 	[[nodiscard]]
 	boost::asio::awaitable<void> create_ocean_diplomatic_map_image();
 
+	const QImage &get_minimap_image() const
+	{
+		return this->minimap_image;
+	}
+
+	void create_minimap_image();
+	void update_minimap_rect(const QRect &tile_rect);
+
 signals:
 	void size_changed();
 	void tile_terrain_changed(const QPoint &tile_pos);
@@ -98,6 +106,7 @@ private:
 	std::unique_ptr<std::vector<tile>> tiles;
 	std::vector<const province *> provinces; //the provinces which are on the map
 	QImage ocean_diplomatic_map_image;
+	QImage minimap_image;
 };
 
 }
