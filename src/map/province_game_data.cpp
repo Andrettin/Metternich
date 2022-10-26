@@ -37,6 +37,8 @@ void province_game_data::set_owner(const country *country)
 
 		map::get()->update_minimap_rect(this->get_territory_rect());
 
+		emit owner_changed();
+
 		if (old_owner == nullptr || this->owner == nullptr || old_owner->get_culture() != this->owner->get_culture()) {
 			emit culture_changed();
 

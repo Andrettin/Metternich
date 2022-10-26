@@ -12,6 +12,7 @@ class province_game_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::country* owner READ get_owner_unconst NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 
 public:
@@ -24,6 +25,14 @@ public:
 		return this->owner;
 	}
 
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::country *get_owner_unconst() const
+	{
+		return const_cast<metternich::country *>(this->get_owner());
+	}
+
+public:
 	void set_owner(const country *country);
 
 	const culture *get_culture() const;
@@ -69,6 +78,7 @@ public:
 	}
 
 signals:
+	void owner_changed();
 	void culture_changed();
 
 private:
