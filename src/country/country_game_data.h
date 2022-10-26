@@ -6,6 +6,7 @@
 namespace metternich {
 
 class country;
+class country_palette;
 class province;
 enum class diplomacy_state;
 
@@ -113,6 +114,7 @@ public:
 	QVariantList get_vassals_qvariant_list() const;
 
 	const QColor &get_diplomatic_map_color() const;
+	const country_palette *get_palette() const;
 
 	const QImage &get_diplomatic_map_image() const
 	{

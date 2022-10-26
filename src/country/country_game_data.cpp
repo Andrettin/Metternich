@@ -264,6 +264,15 @@ const QColor &country_game_data::get_diplomatic_map_color() const
 	return this->country->get_color();
 }
 
+const country_palette *country_game_data::get_palette() const
+{
+	if (this->get_overlord() != nullptr) {
+		return this->get_overlord()->get_game_data()->get_palette();
+	}
+
+	return this->country->get_palette();
+}
+
 boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 {
 	const int tile_pixel_size = game::get()->get_diplomatic_map_tile_pixel_size();
