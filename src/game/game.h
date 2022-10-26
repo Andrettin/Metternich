@@ -119,6 +119,7 @@ public:
 
 signals:
 	void running_changed();
+	void setup_finished();
 	void turn_changed();
 	void countries_changed();
 	void player_country_changed();

@@ -59,6 +59,7 @@ void game::setup_scenario(metternich::scenario *scenario)
 {
 	try {
 		const metternich::scenario *old_scenario = this->scenario;
+
 		this->clear();
 		this->scenario = scenario;
 
@@ -71,6 +72,16 @@ void game::setup_scenario(metternich::scenario *scenario)
 		this->create_diplomatic_map_image();
 
 		emit countries_changed();
+
+		for (const country *country : this->get_countries()) {
+			for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
+				map::get()->calculate_tile_country_border_directions(border_tile_pos);
+			}
+
+			emit country->game_data_changed();
+		}
+
+		emit setup_finished();
 	} catch (const std::exception &exception) {
 		exception::report(exception);
 		std::terminate();
@@ -178,14 +189,6 @@ void game::apply_history(const metternich::scenario *scenario)
 	}
 
 	this->calculate_great_power_ranks();
-
-	for (const country *country : this->get_countries()) {
-		for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
-			map::get()->calculate_tile_country_border_directions(border_tile_pos);
-		}
-
-		emit country->game_data_changed();
-	}
 }
 
 void game::do_turn()
