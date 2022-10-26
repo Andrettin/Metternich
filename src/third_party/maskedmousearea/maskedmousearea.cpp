@@ -91,9 +91,10 @@ void MaskedMouseArea::setMaskSource(const QUrl &source)
 		//Metternich start
 		//m_maskImage = QImage(QQmlFile::urlToLocalFileOrQrc(source));
 		if (source.toString().startsWith("image://")) {
-			QString image_source = source.toString().remove("image://");
-			QString provider = image_source.section("/", 0, 0);
-			QString image_id = image_source.section("/", 1, 1);
+			const QString image_source = source.toString().remove("image://");
+			const QString provider = image_source.section("/", 0, 0);
+            Q_ASSERT(image_source.size() > (provider.size() + 1));
+			const QString image_id = image_source.mid(provider.size() + 1);
 			m_maskImage = static_cast<QQuickImageProvider *>(qmlEngine(this)->imageProvider(provider))->requestImage(image_id, nullptr, QSize());
 		} else {
 			m_maskImage = QImage(QQmlFile::urlToLocalFileOrQrc(source));
