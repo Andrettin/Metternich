@@ -112,6 +112,7 @@ public:
 	diplomacy_state get_diplomacy_state(const metternich::country *other_country) const;
 	void set_diplomacy_state(const metternich::country *other_country, const diplomacy_state state);
 
+	std::vector<const metternich::country *> get_vassals() const;
 	QVariantList get_vassals_qvariant_list() const;
 
 	const QColor &get_diplomatic_map_color() const;
@@ -160,6 +161,7 @@ public:
 		this->score += change;
 	}
 
+	int get_province_score() const;
 	void change_province_score(const int change);
 
 	bool can_declare_war_on(const metternich::country *other_country) const;

@@ -32,7 +32,7 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 	}
 
 	if (this->overlord != nullptr) {
-		this->overlord->get_game_data()->change_province_score(-this->get_province_count() * country::score_per_province * country::vassal_province_score_percent / 100);
+		this->overlord->get_game_data()->change_province_score(-this->get_province_score());
 
 		for (const auto &[resource, count] : this->get_resource_counts()) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, -count);
@@ -42,7 +42,7 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 	this->overlord = overlord;
 
 	if (this->overlord != nullptr) {
-		this->overlord->get_game_data()->change_province_score(this->get_province_count() * country::score_per_province * country::vassal_province_score_percent / 100);
+		this->overlord->get_game_data()->change_province_score(this->get_province_score());
 
 		for (const auto &[resource, count] : this->get_resource_counts()) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, count);
@@ -234,7 +234,7 @@ void country_game_data::set_diplomacy_state(const metternich::country *other_cou
 	}
 }
 
-QVariantList country_game_data::get_vassals_qvariant_list() const
+std::vector<const metternich::country *> country_game_data::get_vassals() const
 {
 	std::vector<const metternich::country *> vassals;
 
@@ -244,7 +244,12 @@ QVariantList country_game_data::get_vassals_qvariant_list() const
 		}
 	}
 
-	return container::to_qvariant_list(vassals);
+	return vassals;
+}
+
+QVariantList country_game_data::get_vassals_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_vassals());
 }
 
 const QColor &country_game_data::get_diplomatic_map_color() const
@@ -355,6 +360,17 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * scale_factor, this->diplomatic_map_image.size());
 
 	emit diplomatic_map_image_changed();
+}
+
+int country_game_data::get_province_score() const
+{
+	int score = this->get_province_count() * country::score_per_province;
+
+	for (const metternich::country *vassal : this->get_vassals()) {
+		score += vassal->get_game_data()->get_province_score() * country::vassal_province_score_percent / 100;
+	}
+
+	return score;
 }
 
 void country_game_data::change_province_score(const int change)
