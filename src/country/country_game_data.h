@@ -16,6 +16,8 @@ class country_game_data final : public QObject
 
 	Q_PROPERTY(metternich::country* overlord READ get_overlord_unconst NOTIFY overlord_changed)
 	Q_PROPERTY(bool secondary_power READ is_secondary_power NOTIFY provinces_changed)
+	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
+	Q_PROPERTY(QString vassalage_type_name READ get_vassalage_type_name_qstring NOTIFY vassalage_type_name_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList resource_counts READ get_resource_counts_qvariant_list NOTIFY provinces_changed)
@@ -29,6 +31,7 @@ class country_game_data final : public QObject
 public:
 	explicit country_game_data(const metternich::country *country) : country(country)
 	{
+		connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 	}
 
 	const metternich::country *get_overlord() const
@@ -47,6 +50,20 @@ public:
 	void set_overlord(const metternich::country *overlord);
 
 	bool is_secondary_power() const;
+
+	std::string get_type_name() const;
+
+	QString get_type_name_qstring() const
+	{
+		return QString::fromStdString(this->get_type_name());
+	}
+
+	std::string get_vassalage_type_name() const;
+
+	QString get_vassalage_type_name_qstring() const
+	{
+		return QString::fromStdString(this->get_vassalage_type_name());
+	}
 
 	const std::vector<const province *> &get_provinces() const
 	{
@@ -177,6 +194,8 @@ public:
 
 signals:
 	void overlord_changed();
+	void type_name_changed();
+	void vassalage_type_name_changed();
 	void diplomacy_states_changed();
 	void provinces_changed();
 	void diplomatic_map_image_changed();

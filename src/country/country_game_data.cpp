@@ -13,6 +13,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/tile.h"
+#include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/image_util.h"
 #include "util/map_util.h"
@@ -62,6 +63,50 @@ bool country_game_data::is_secondary_power() const
 	}
 
 	return this->get_rank() >= country::max_great_powers;
+}
+
+std::string country_game_data::get_type_name() const
+{
+	switch (this->country->get_type()) {
+		case country_type::great_power:
+			if (this->get_overlord() != nullptr) {
+				return "Subject Power";
+			}
+
+			if (this->is_secondary_power()) {
+				return "Secondary Power";
+			}
+
+			return "Great Power";
+		case country_type::minor_nation:
+			return "Minor Nation";
+		case country_type::tribe:
+			return "Tribe";
+		default:
+			assert_throw(false);
+	}
+
+	return std::string();
+}
+
+std::string country_game_data::get_vassalage_type_name() const
+{
+	if (this->get_overlord() == nullptr) {
+		return std::string();
+	}
+
+	switch (this->get_diplomacy_state(this->get_overlord())) {
+		case diplomacy_state::vassal:
+			return "Vassal";
+		case diplomacy_state::dynastic_vassal:
+			return "Dynastic Vassal";
+		case diplomacy_state::colony:
+			return "Colony";
+		default:
+			assert_throw(false);
+	}
+
+	return std::string();
 }
 
 QVariantList country_game_data::get_provinces_qvariant_list() const
@@ -215,6 +260,8 @@ diplomacy_state country_game_data::get_diplomacy_state(const metternich::country
 
 void country_game_data::set_diplomacy_state(const metternich::country *other_country, const diplomacy_state state)
 {
+	const diplomacy_state old_state = this->get_diplomacy_state(other_country);
+
 	if (is_vassalage_diplomacy_state(state)) {
 		this->set_overlord(other_country);
 	} else {
@@ -231,6 +278,11 @@ void country_game_data::set_diplomacy_state(const metternich::country *other_cou
 
 	if (game::get()->is_running()) {
 		emit diplomacy_states_changed();
+
+		if (is_vassalage_diplomacy_state(state) || is_vassalage_diplomacy_state(old_state)) {
+			emit type_name_changed();
+			emit vassalage_type_name_changed();
+		}
 	}
 }
 
