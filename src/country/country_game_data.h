@@ -19,7 +19,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList resource_counts READ get_resource_counts_qvariant_list NOTIFY provinces_changed)
-	Q_PROPERTY(QVariantList colonial_resource_counts READ get_colonial_resource_counts_qvariant_list NOTIFY diplomacy_states_changed)
+	Q_PROPERTY(QVariantList vassal_resource_counts READ get_vassal_resource_counts_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList vassals READ get_vassals_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
 	Q_PROPERTY(int rank READ get_rank NOTIFY rank_changed)
@@ -93,19 +93,19 @@ public:
 		}
 	}
 
-	const resource_map<int> &get_colonial_resource_counts() const
+	const resource_map<int> &get_vassal_resource_counts() const
 	{
-		return this->colonial_resource_counts;
+		return this->vassal_resource_counts;
 	}
 
-	QVariantList get_colonial_resource_counts_qvariant_list() const;
+	QVariantList get_vassal_resource_counts_qvariant_list() const;
 
-	void change_colonial_resource_count(const resource *resource, const int change)
+	void change_vassal_resource_count(const resource *resource, const int change)
 	{
-		const int final_count = (this->colonial_resource_counts[resource] += change);
+		const int final_count = (this->vassal_resource_counts[resource] += change);
 
 		if (final_count == 0) {
-			this->colonial_resource_counts.erase(resource);
+			this->vassal_resource_counts.erase(resource);
 		}
 	}
 
@@ -160,6 +160,8 @@ public:
 		this->score += change;
 	}
 
+	void change_province_score(const int change);
+
 signals:
 	void overlord_changed();
 	void diplomacy_states_changed();
@@ -174,7 +176,7 @@ private:
 	QRect territory_rect;
 	std::vector<QPoint> border_tiles;
 	resource_map<int> resource_counts;
-	resource_map<int> colonial_resource_counts;
+	resource_map<int> vassal_resource_counts;
 	country_map<diplomacy_state> diplomacy_states;
 	QImage diplomatic_map_image;
 	QImage selected_diplomatic_map_image;
