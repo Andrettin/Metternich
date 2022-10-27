@@ -252,6 +252,19 @@ QVariantList country_game_data::get_vassals_qvariant_list() const
 	return container::to_qvariant_list(this->get_vassals());
 }
 
+QVariantList country_game_data::get_colonies_qvariant_list() const
+{
+	std::vector<const metternich::country *> colonies;
+
+	for (const auto &[country, diplomacy_state] : this->diplomacy_states) {
+		if (diplomacy_state == diplomacy_state::colonial_overlord) {
+			colonies.push_back(country);
+		}
+	}
+
+	return container::to_qvariant_list(colonies);
+}
+
 const QColor &country_game_data::get_diplomatic_map_color() const
 {
 	if (this->get_overlord() != nullptr) {
