@@ -103,4 +103,9 @@ void country::create_title()
 	this->title->set_country(this);
 }
 
+bool country::can_declare_war() const
+{
+	return this->get_type() == country_type::great_power;
+}
+
 }

@@ -162,6 +162,8 @@ public:
 
 	void change_province_score(const int change);
 
+	bool can_declare_war_on(const metternich::country *other_country) const;
+
 signals:
 	void overlord_changed();
 	void diplomacy_states_changed();

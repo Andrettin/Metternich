@@ -366,4 +366,17 @@ void country_game_data::change_province_score(const int change)
 	}
 }
 
+bool country_game_data::can_declare_war_on(const metternich::country *other_country) const
+{
+	if (!this->country->can_declare_war()) {
+		return false;
+	}
+
+	if (this->get_overlord() != nullptr) {
+		return other_country == this->get_overlord();
+	}
+
+	return true;
+}
+
 }

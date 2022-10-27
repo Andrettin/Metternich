@@ -91,6 +91,8 @@ public:
 		return this->provinces;
 	}
 
+	bool can_declare_war() const;
+
 signals:
 	void changed();
 	void game_data_changed() const;
