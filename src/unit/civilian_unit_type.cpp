@@ -30,4 +30,9 @@ void civilian_unit_type::initialize()
 	data_entry::initialize();
 }
 
+void civilian_unit_type::check() const
+{
+	assert_throw(this->get_icon() != nullptr);
+}
+
 }

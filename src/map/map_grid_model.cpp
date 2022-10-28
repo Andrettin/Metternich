@@ -16,6 +16,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "ui/icon.h"
+#include "unit/civilian_unit.h"
 #include "util/exception_util.h"
 #include "util/point_util.h"
 
@@ -91,6 +92,10 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				
 				if (tile->get_resource() != nullptr) {
 					overlay_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
+				}
+
+				if (tile->get_civilian_unit() != nullptr) {
+					overlay_image_sources.push_back("icon/" + tile->get_civilian_unit()->get_icon()->get_identifier_qstring());
 				}
 
 				return overlay_image_sources;

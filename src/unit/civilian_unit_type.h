@@ -30,6 +30,7 @@ public:
 	}
 
 	virtual void initialize() override;
+	virtual void check() const override;
 
 	const civilian_unit_class *get_unit_class() const
 	{

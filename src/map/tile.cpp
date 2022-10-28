@@ -17,6 +17,10 @@ tile::tile(const terrain_type *base_terrain, const terrain_type *terrain) : terr
 	this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
 }
 
+tile::~tile()
+{
+}
+
 void tile::set_terrain(const terrain_type *terrain)
 {
 	if (terrain == this->get_terrain()) {
@@ -49,6 +53,17 @@ void tile::set_development_level(const int level)
 	assert_throw(this->get_resource() != nullptr);
 
 	this->development_level = level;
+}
+
+void tile::set_civilian_unit(std::unique_ptr<metternich::civilian_unit> &&civilian_unit)
+{
+	this->civilian_unit = std::move(civilian_unit);
+}
+
+std::unique_ptr<civilian_unit> tile::pop_civilian_unit()
+{
+	std::unique_ptr<metternich::civilian_unit> civilian_unit = std::move(this->civilian_unit);
+	return civilian_unit;
 }
 
 }
