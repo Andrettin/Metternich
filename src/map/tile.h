@@ -17,7 +17,6 @@ class tile final
 {
 public:
 	explicit tile(const terrain_type *base_terrain, const terrain_type *terrain);
-	~tile();
 
 	const terrain_type *get_terrain() const
 	{
@@ -124,11 +123,13 @@ public:
 	
 	metternich::civilian_unit *get_civilian_unit() const
 	{
-		return this->civilian_unit.get();
+		return this->civilian_unit;
 	}
 
-	void set_civilian_unit(std::unique_ptr<metternich::civilian_unit> &&civilian_unit);
-	std::unique_ptr<metternich::civilian_unit> pop_civilian_unit();
+	void set_civilian_unit(metternich::civilian_unit *civilian_unit)
+	{
+		this->civilian_unit = civilian_unit;
+	}
 
 private:
 	const terrain_type *terrain = nullptr;
@@ -140,7 +141,7 @@ private:
 	int development_level = 0;
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 	std::vector<direction> country_border_directions;
-	std::unique_ptr<metternich::civilian_unit> civilian_unit;
+	metternich::civilian_unit *civilian_unit = nullptr;
 };
 
 }

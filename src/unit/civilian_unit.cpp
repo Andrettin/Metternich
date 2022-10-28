@@ -2,6 +2,8 @@
 
 #include "unit/civilian_unit.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "map/map.h"
 #include "map/tile.h"
 #include "unit/civilian_unit_type.h"
@@ -28,14 +30,15 @@ void civilian_unit::set_tile_pos(const QPoint &tile_pos)
 		return;
 	}
 
-	tile *tile = this->get_tile();
-	if (tile != nullptr) {
-		std::unique_ptr<civilian_unit> unique_ptr = tile->pop_civilian_unit();
-		metternich::tile *new_tile = map::get()->get_tile(tile_pos);
-		new_tile->set_civilian_unit(std::move(unique_ptr));
+	if (this->get_tile() != nullptr) {
+		this->get_tile()->set_civilian_unit(nullptr);
 	}
 
 	this->tile_pos = tile_pos;
+
+	if (this->get_tile() != nullptr) {
+		this->get_tile()->set_civilian_unit(this);
+	}
 }
 
 tile *civilian_unit::get_tile() const
@@ -53,7 +56,8 @@ void civilian_unit::disband()
 
 	assert_throw(tile != nullptr);
 
-	tile->pop_civilian_unit();
+	tile->set_civilian_unit(nullptr);
+	this->get_owner()->get_game_data()->remove_civilian_unit(this);
 }
 
 }

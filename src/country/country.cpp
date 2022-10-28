@@ -19,6 +19,10 @@ country::country(const std::string &identifier)
 	this->reset_game_data();
 }
 
+country::~country()
+{
+}
+
 void country::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();

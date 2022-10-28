@@ -2,9 +2,11 @@
 
 #include "country/country_container.h"
 #include "economy/resource_container.h"
+#include "util/qunique_ptr.h"
 
 namespace metternich {
 
+class civilian_unit;
 class country;
 class country_palette;
 class province;
@@ -29,10 +31,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
 
 public:
-	explicit country_game_data(const metternich::country *country) : country(country)
-	{
-		connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
-	}
+	explicit country_game_data(const metternich::country *country);
+	~country_game_data();
 
 	const metternich::country *get_overlord() const
 	{
@@ -192,6 +192,9 @@ public:
 
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
+	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
+	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
+
 signals:
 	void overlord_changed();
 	void type_name_changed();
@@ -216,6 +219,7 @@ private:
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;
+	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 };
 
 }

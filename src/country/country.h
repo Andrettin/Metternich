@@ -39,6 +39,7 @@ public:
 	static constexpr int vassal_province_score_percent = 50;
 
 	explicit country(const std::string &identifier);
+	~country();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;

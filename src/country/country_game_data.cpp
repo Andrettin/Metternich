@@ -13,6 +13,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/tile.h"
+#include "unit/civilian_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/image_util.h"
@@ -25,6 +26,15 @@
 #include "xbrz.h"
 
 namespace metternich {
+
+country_game_data::country_game_data(const metternich::country *country) : country(country)
+{
+	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
+}
+
+country_game_data::~country_game_data()
+{
+}
 
 void country_game_data::set_overlord(const metternich::country *overlord)
 {
@@ -458,6 +468,21 @@ bool country_game_data::can_declare_war_on(const metternich::country *other_coun
 	}
 
 	return true;
+}
+
+void country_game_data::add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit)
+{
+	this->civilian_units.push_back(std::move(civilian_unit));
+}
+
+void country_game_data::remove_civilian_unit(metternich::civilian_unit *civilian_unit)
+{
+	for (size_t i = 0; i < this->civilian_units.size(); ++i) {
+		if (this->civilian_units[i].get() == civilian_unit) {
+			this->civilian_units.erase(this->civilian_units.begin() + i);
+			return;
+		}
+	}
 }
 
 }
