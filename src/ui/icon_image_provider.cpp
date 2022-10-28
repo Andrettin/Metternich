@@ -49,6 +49,11 @@ boost::asio::awaitable<void> icon_image_provider::load_image(const std::string &
 	QImage image(path::to_qstring(filepath));
 	assert_throw(!image.isNull());
 
+	if (id_list.size() >= 2 && id_list.at(1) == "selected") {
+		static const QColor selected_color(Qt::white);
+		image::set_outline_color(image, selected_color);
+	}
+
 	if (image_scale_factor != scale_factor) {
 		co_await thread_pool::get()->co_spawn_awaitable([this, &image, &scale_factor, &image_scale_factor]() -> boost::asio::awaitable<void> {
 			image = co_await image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
