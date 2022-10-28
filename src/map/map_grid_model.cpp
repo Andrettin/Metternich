@@ -94,10 +94,6 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 					overlay_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
 				}
 
-				if (tile->get_civilian_unit() != nullptr) {
-					overlay_image_sources.push_back("icon/" + tile->get_civilian_unit()->get_icon()->get_identifier_qstring());
-				}
-
 				return overlay_image_sources;
 			}
 			case role::site:
@@ -108,6 +104,8 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return QVariant::fromValue(const_cast<terrain_type *>(tile->get_terrain()));
 			case role::resource:
 				return QVariant::fromValue(const_cast<resource *>(tile->get_resource()));
+			case role::civilian_unit:
+				return QVariant::fromValue(tile->get_civilian_unit());
 			case role::upper_label: {
 				const QPoint upper_tile_pos = tile_pos - QPoint(0, 1);
 

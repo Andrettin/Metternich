@@ -21,6 +21,7 @@ public:
 		province,
 		terrain,
 		resource,
+		civilian_unit,
 		upper_label
 	};
 
@@ -57,6 +58,7 @@ public:
 		role_names.insert(static_cast<int>(role::province), "province");
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
 		role_names.insert(static_cast<int>(role::resource), "resource");
+		role_names.insert(static_cast<int>(role::civilian_unit), "civilian_unit");
 		role_names.insert(static_cast<int>(role::upper_label), "upper_label");
 
 		return role_names;
