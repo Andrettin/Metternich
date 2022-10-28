@@ -36,6 +36,11 @@ public:
 
 	tile *get_tile() const;
 
+	bool is_on_map() const
+	{
+		return this->tile_pos != QPoint(-1, -1);
+	}
+
 	const province *get_province() const;
 	const culture *get_culture() const;
 

@@ -20,6 +20,9 @@
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
+#include "unit/civilian_unit.h"
+#include "unit/historical_civilian_unit.h"
+#include "unit/historical_civilian_unit_history.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
@@ -185,6 +188,38 @@ void game::apply_history(const metternich::scenario *scenario)
 
 				tile->set_development_level(site_history->get_development_level());
 			}
+		}
+
+		for (const historical_civilian_unit *historical_civilian_unit : historical_civilian_unit::get_all()) {
+			const historical_civilian_unit_history *historical_civilian_unit_history = historical_civilian_unit->get_history();
+
+			if (!historical_civilian_unit_history->is_active()) {
+				continue;
+			}
+
+			const site *site = historical_civilian_unit_history->get_site();
+
+			assert_throw(site != nullptr);
+
+			if (!site->get_game_data()->is_on_map()) {
+				continue;
+			}
+
+			const QPoint tile_pos = site->get_game_data()->get_tile_pos();
+
+			const country *owner = historical_civilian_unit->get_owner();
+
+			if (owner == nullptr) {
+				owner = map::get()->get_tile(tile_pos)->get_owner();
+			}
+
+			assert_throw(owner != nullptr);
+			assert_throw(owner->get_game_data()->is_alive());
+
+			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner);
+			civilian_unit->set_tile_pos(tile_pos);
+
+			owner->get_game_data()->add_civilian_unit(std::move(civilian_unit));
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to apply history."));
