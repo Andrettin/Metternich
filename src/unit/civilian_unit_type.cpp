@@ -1,0 +1,33 @@
+#include "metternich.h"
+
+#include "unit/civilian_unit_type.h"
+
+#include "country/cultural_group.h"
+#include "country/culture.h"
+#include "unit/civilian_unit_class.h"
+#include "util/assert_util.h"
+
+namespace metternich {
+
+void civilian_unit_type::initialize()
+{
+	assert_throw(this->unit_class != nullptr);
+
+	this->unit_class->add_unit_type(this);
+
+	if (this->culture != nullptr) {
+		assert_throw(this->culture->get_civilian_class_unit_type(this->get_unit_class()) == nullptr);
+
+		this->culture->set_civilian_class_unit_type(this->get_unit_class(), this);
+	} else if (this->cultural_group != nullptr) {
+		assert_throw(this->cultural_group->get_civilian_class_unit_type(this->get_unit_class()) == nullptr);
+
+		this->cultural_group->set_civilian_class_unit_type(this->get_unit_class(), this);
+	} else {
+		this->unit_class->set_default_unit_type(this);
+	}
+
+	data_entry::initialize();
+}
+
+}

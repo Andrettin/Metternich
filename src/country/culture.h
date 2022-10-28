@@ -1,13 +1,13 @@
 #pragma once
 
+#include "country/culture_base.h"
 #include "database/data_type.h"
-#include "database/named_data_entry.h"
 
 namespace metternich {
 
 class cultural_group;
 
-class culture final : public named_data_entry, public data_type<culture>
+class culture final : public culture_base, public data_type<culture>
 {
 	Q_OBJECT
 
@@ -18,7 +18,7 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::culture*";
 	static constexpr const char database_folder[] = "cultures";
 
-	explicit culture(const std::string &identifier) : named_data_entry(identifier)
+	explicit culture(const std::string &identifier) : culture_base(identifier)
 	{
 	}
 

@@ -22,6 +22,7 @@ set(country_SRCS
 	src/country/country_palette.cpp
 	src/country/country_type.cpp
 	src/country/culture.cpp
+	src/country/culture_base.cpp
 	src/country/diplomacy_state.cpp
 	src/country/landed_title.cpp
 	src/country/landed_title_tier.cpp
@@ -95,6 +96,16 @@ set(ui_SRCS
 source_group(ui FILES ${ui_SRCS})
 set_source_files_properties(${ui_SRCS} PROPERTIES UNITY_GROUP "ui")
 
+set(unit_SRCS
+	src/unit/civilian_unit_class.cpp
+	src/unit/civilian_unit_class_container.cpp
+	src/unit/civilian_unit_type.cpp
+	src/unit/military_unit_class.cpp
+	src/unit/military_unit_domain.cpp
+)
+source_group(unit FILES ${unit_SRCS})
+set_source_files_properties(${unit_SRCS} PROPERTIES UNITY_GROUP "unit")
+
 set(maskedmousearea_SRCS
 	src/third_party/maskedmousearea/maskedmousearea.cpp
 )
@@ -116,6 +127,7 @@ set(metternich_SRCS
 	${technology_SRCS}
 	${time_SRCS}
 	${ui_SRCS}
+	${unit_SRCS}
 	${maskedmousearea_SRCS}
 	${xbrz_SRCS}
 	src/engine_interface.cpp
@@ -130,6 +142,7 @@ set(country_HDRS
 	src/country/country_type.h
 	src/country/cultural_group.h
 	src/country/culture.h
+	src/country/culture_base.h
 	src/country/diplomacy_state.h
 	src/country/landed_title.h
 	src/country/landed_title_tier.h
@@ -199,6 +212,15 @@ set(ui_HDRS
 )
 source_group(ui FILES ${ui_HDRS})
 
+set(unit_HDRS
+	src/unit/civilian_unit_class.h
+	src/unit/civilian_unit_class_container.h
+	src/unit/civilian_unit_type.h
+	src/unit/military_unit_class.h
+	src/unit/military_unit_domain.h
+)
+source_group(unit FILES ${unit_HDRS})
+
 set(maskedmousearea_HDRS
 	src/third_party/maskedmousearea/maskedmousearea.h
 )
@@ -220,6 +242,7 @@ set(metternich_HDRS
 	${technology_HDRS}
 	${time_HDRS}
 	${ui_HDRS}
+	${unit_HDRS}
 	${maskedmousearea_HDRS}
 	${xbrz_HDRS}
 	src/engine_interface.h

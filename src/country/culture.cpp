@@ -9,6 +9,8 @@ namespace metternich {
 void culture::check() const
 {
 	assert_throw(this->get_group() != nullptr);
+
+	culture_base::check();
 }
 
 }
