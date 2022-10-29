@@ -11,7 +11,9 @@ class civilian_unit final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::civilian_unit_type* type READ get_type_unconst NOTIFY type_changed)
 	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
+	Q_PROPERTY(metternich::country* owner READ get_owner_unconst CONSTANT)
 
 public:
 	explicit civilian_unit(const civilian_unit_type *type, const metternich::country *owner);
@@ -21,6 +23,14 @@ public:
 		return this->type;
 	}
 
+private:
+	//for the Qt property (pointers there can't be const)
+	civilian_unit_type *get_type_unconst() const
+	{
+		return const_cast<civilian_unit_type *>(this->get_type());
+	}
+
+public:
 	void set_type(const civilian_unit_type *type)
 	{
 		if (type == this->get_type()) {
@@ -28,7 +38,7 @@ public:
 		}
 
 		this->type = type;
-		emit icon_changed();
+		emit type_changed();
 	}
 
 	const icon *get_icon() const;
@@ -46,6 +56,14 @@ public:
 		return this->owner;
 	}
 
+private:
+	//for the Qt property (pointers there can't be const)
+	country *get_owner_unconst() const
+	{
+		return const_cast<country *>(this->get_owner());
+	}
+
+public:
 	const QPoint &get_tile_pos() const
 	{
 		return this->tile_pos;
@@ -57,6 +75,7 @@ public:
 	void disband();
 
 signals:
+	void type_changed();
 	void icon_changed();
 
 private:

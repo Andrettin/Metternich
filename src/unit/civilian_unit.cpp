@@ -17,6 +17,8 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const metternich::c
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_owner() != nullptr);
+
+	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
 }
 
 const icon *civilian_unit::get_icon() const
