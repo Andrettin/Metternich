@@ -14,6 +14,7 @@ class province_game_data final : public QObject
 
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
+	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 
 public:
 	explicit province_game_data(const province *province) : province(province)
@@ -80,6 +81,7 @@ public:
 signals:
 	void owner_changed();
 	void culture_changed();
+	void territory_changed();
 
 private:
 	const metternich::province *province = nullptr;

@@ -98,6 +98,8 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 			this->territory_rect.setBottom(tile_pos.y());
 		}
 	}
+
+	emit territory_changed();
 }
 
 }
