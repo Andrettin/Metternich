@@ -448,7 +448,7 @@ void map::update_minimap_rect(const QRect &tile_rect)
 			const terrain_type *terrain = tile->get_terrain();
 
 			if (terrain->is_water()) {
-				this->minimap_image.setPixelColor(tile_pos, defines::get()->get_ocean_color());
+				this->minimap_image.setPixelColor(tile_pos, defines::get()->get_minimap_ocean_color());
 				continue;
 			}
 

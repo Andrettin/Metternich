@@ -20,10 +20,11 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
-	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color)
+	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color NOTIFY changed)
 	Q_PROPERTY(QColor country_border_color MEMBER country_border_color READ get_country_border_color)
 	Q_PROPERTY(QColor selected_country_color MEMBER selected_country_color READ get_selected_country_color)
 	Q_PROPERTY(QColor ocean_color MEMBER ocean_color READ get_ocean_color)
+	Q_PROPERTY(QColor minimap_ocean_color MEMBER minimap_ocean_color READ get_minimap_ocean_color)
 	Q_PROPERTY(metternich::country_palette* conversible_country_palette MEMBER conversible_country_palette)
 	Q_PROPERTY(metternich::country_palette* minor_nation_palette MEMBER minor_nation_palette NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
@@ -103,6 +104,11 @@ public:
 		return this->ocean_color;
 	}
 
+	const QColor &get_minimap_ocean_color() const
+	{
+		return this->minimap_ocean_color;
+	}
+
 	const country_palette *get_conversible_country_palette() const
 	{
 		return this->conversible_country_palette;
@@ -156,6 +162,7 @@ private:
 	QColor country_border_color;
 	QColor selected_country_color;
 	QColor ocean_color;
+	QColor minimap_ocean_color;
 	country_palette *conversible_country_palette = nullptr;
 	country_palette *minor_nation_palette = nullptr;
 	std::filesystem::path default_settlement_image_filepath;
