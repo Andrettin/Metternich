@@ -289,6 +289,14 @@ void map::set_tile_resource(const QPoint &tile_pos, const resource *resource)
 	tile->set_resource(resource);
 }
 
+void map::set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)
+{
+	tile *tile = this->get_tile(tile_pos);
+	tile->set_civilian_unit(civilian_unit);
+
+	emit tile_civilian_unit_changed(tile_pos);
+}
+
 bool map::is_tile_on_country_border(const QPoint &tile_pos) const
 {
 	const tile *tile = this->get_tile(tile_pos);

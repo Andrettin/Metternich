@@ -65,6 +65,7 @@ public:
 	}
 
 	void on_tile_terrain_changed(const QPoint &tile_pos);
+	void on_tile_civilian_unit_changed(const QPoint &tile_pos);
 };
 
 }

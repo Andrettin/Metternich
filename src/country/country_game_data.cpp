@@ -485,4 +485,11 @@ void country_game_data::remove_civilian_unit(metternich::civilian_unit *civilian
 	}
 }
 
+void country_game_data::do_turn()
+{
+	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
+		civilian_unit->do_turn();
+	}
+}
+
 }

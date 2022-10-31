@@ -33,14 +33,16 @@ void civilian_unit::set_tile_pos(const QPoint &tile_pos)
 	}
 
 	if (this->get_tile() != nullptr) {
-		this->get_tile()->set_civilian_unit(nullptr);
+		map::get()->set_tile_civilian_unit(this->get_tile_pos(), nullptr);
 	}
 
 	this->tile_pos = tile_pos;
 
 	if (this->get_tile() != nullptr) {
-		this->get_tile()->set_civilian_unit(this);
+		map::get()->set_tile_civilian_unit(this->get_tile_pos(), this);
 	}
+
+	emit tile_pos_changed();
 }
 
 tile *civilian_unit::get_tile() const
@@ -50,6 +52,20 @@ tile *civilian_unit::get_tile() const
 	}
 
 	return map::get()->get_tile(tile_pos);
+}
+
+bool civilian_unit::can_move_to(const QPoint &tile_pos) const
+{
+	const tile *tile = map::get()->get_tile(tile_pos);
+
+	return tile->get_owner() == this->get_owner();
+}
+
+void civilian_unit::do_turn()
+{
+	if (this->is_moving()) {
+		this->set_original_tile_pos(QPoint(-1, -1));
+	}
 }
 
 void civilian_unit::disband()

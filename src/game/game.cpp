@@ -230,6 +230,10 @@ void game::apply_history(const metternich::scenario *scenario)
 
 void game::do_turn()
 {
+	for (const country *country : this->get_countries()) {
+		country->get_game_data()->do_turn();
+	}
+
 	const QDateTime old_date = this->date;
 	this->date = old_date.addMonths(defines::get()->get_months_per_turn());
 	assert_throw(this->date != old_date);

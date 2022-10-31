@@ -25,6 +25,7 @@ namespace metternich {
 map_grid_model::map_grid_model()
 {
 	connect(map::get(), &map::tile_terrain_changed, this, &map_grid_model::on_tile_terrain_changed);
+	connect(map::get(), &map::tile_civilian_unit_changed, this, &map_grid_model::on_tile_civilian_unit_changed);
 }
 
 QString map_grid_model::build_image_source(const terrain_type *terrain, const short tile_frame)
@@ -137,6 +138,14 @@ void map_grid_model::on_tile_terrain_changed(const QPoint &tile_pos)
 	emit dataChanged(index, index, {
 		static_cast<int>(role::image_source),
 		static_cast<int>(role::terrain)
+	});
+}
+
+void map_grid_model::on_tile_civilian_unit_changed(const QPoint &tile_pos)
+{
+	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
+	emit dataChanged(index, index, {
+		static_cast<int>(role::civilian_unit)
 	});
 }
 

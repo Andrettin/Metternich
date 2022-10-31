@@ -195,6 +195,8 @@ public:
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
 
+	void do_turn();
+
 signals:
 	void overlord_changed();
 	void type_name_changed();
