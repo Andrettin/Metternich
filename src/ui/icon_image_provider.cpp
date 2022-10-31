@@ -49,9 +49,16 @@ boost::asio::awaitable<void> icon_image_provider::load_image(const std::string &
 	QImage image(path::to_qstring(filepath));
 	assert_throw(!image.isNull());
 
-	if (id_list.size() >= 2 && id_list.at(1) == "selected") {
-		static const QColor selected_color(Qt::white);
-		image::set_outline_color(image, selected_color);
+	if (id_list.size() >= 2) {
+		const std::string &state = id_list.at(1);
+		if (state == "selected") {
+			static const QColor selected_color(Qt::white);
+			image::set_outline_color(image, selected_color);
+		} else if (state == "grayscale") {
+			image::apply_grayscale(image);
+		} else {
+			assert_throw(false);
+		}
 	}
 
 	if (image_scale_factor != scale_factor) {
