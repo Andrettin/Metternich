@@ -91,7 +91,7 @@ public:
 		this->set_tile_pos(tile_pos);
 	}
 
-	void cancel_move()
+	Q_INVOKABLE void cancel_move()
 	{
 		this->set_tile_pos(this->original_tile_pos);
 		this->set_original_tile_pos(QPoint(-1, -1));
