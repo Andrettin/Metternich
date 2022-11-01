@@ -49,6 +49,7 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 	} else if (tile_image_type == "improvement") {
 		const improvement *improvement = improvement::get(identifier);
 		filepath = improvement->get_image_filepath();
+		is_frame_image = true;
 	} else if (tile_image_type == "borders") {
 		if (identifier == "province_border") {
 			filepath = defines::get()->get_province_border_image_filepath();

@@ -17,6 +17,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_PROPERTY(metternich::resource* resource MEMBER resource)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value)
+	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
 
 public:
 	static constexpr const char class_identifier[] = "improvement";
@@ -54,11 +55,17 @@ public:
 		return this->terrain_types;
 	}
 
+	int get_variation_count() const
+	{
+		return this->variation_count;
+	}
+
 private:
 	metternich::resource *resource = nullptr; //the resource for which this improvement can be built
 	std::filesystem::path image_filepath;
 	int output_value = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
+	int variation_count = 1;
 };
 
 }

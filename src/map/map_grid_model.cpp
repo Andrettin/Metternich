@@ -94,7 +94,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 				
 				if (tile->get_improvement() != nullptr) {
-					overlay_image_sources.push_back("tile/improvement/" + tile->get_improvement()->get_identifier_qstring());
+					overlay_image_sources.push_back("tile/improvement/" + tile->get_improvement()->get_identifier_qstring() + "/" + QString::number(tile->get_improvement_variation()));
 				} else if (tile->get_resource() != nullptr) {
 					overlay_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
 				}

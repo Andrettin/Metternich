@@ -9,6 +9,7 @@
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "util/assert_util.h"
+#include "util/random.h"
 #include "util/vector_random_util.h"
 
 namespace metternich {
@@ -47,11 +48,19 @@ const metternich::site *tile::get_settlement() const
 
 void tile::set_improvement(const metternich::improvement *improvement)
 {
+	this->improvement = improvement;
+
 	if (improvement != nullptr) {
 		assert_throw(this->get_resource() == improvement->get_resource());
-	}
 
-	this->improvement = improvement;
+		if (improvement->get_variation_count() > 1) {
+			this->improvement_variation = random::get()->generate(improvement->get_variation_count());
+		} else {
+			this->improvement_variation = 0;
+		}
+	} else {
+		this->improvement_variation = 0;
+	}
 }
 
 }

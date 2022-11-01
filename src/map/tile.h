@@ -82,6 +82,11 @@ public:
 
 	void set_improvement(const metternich::improvement *improvement);
 
+	short get_improvement_variation() const
+	{
+		return this->improvement_variation;
+	}
+
 	const std::vector<direction> &get_border_directions() const
 	{
 		return this->border_directions;
@@ -140,6 +145,7 @@ private:
 	const metternich::site *site = nullptr;
 	const metternich::resource *resource = nullptr;
 	const metternich::improvement *improvement = nullptr;
+	int8_t improvement_variation = 0;
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 	std::vector<direction> country_border_directions;
 	metternich::civilian_unit *civilian_unit = nullptr;
