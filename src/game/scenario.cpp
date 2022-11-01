@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "map/scenario.h"
+#include "game/scenario.h"
 
 #include "time/calendar.h"
 #include "util/assert_util.h"

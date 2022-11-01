@@ -47,6 +47,7 @@ set_source_files_properties(${economy_SRCS} PROPERTIES UNITY_GROUP "economy")
 
 set(game_SRCS
 	src/game/game.cpp
+	src/game/scenario.cpp
 )
 source_group(game FILES ${game_SRCS})
 set_source_files_properties(${game_SRCS} PROPERTIES UNITY_GROUP "game")
@@ -60,7 +61,6 @@ set(map_SRCS
 	src/map/province_container.cpp
 	src/map/province_game_data.cpp
 	src/map/region.cpp
-	src/map/scenario.cpp
 	src/map/site.cpp
 	src/map/site_container.cpp
 	src/map/site_game_data.cpp
@@ -166,6 +166,7 @@ source_group(economy FILES ${economy_HDRS})
 
 set(game_HDRS
 	src/game/game.h
+	src/game/scenario.h
 )
 source_group(game FILES ${game_HDRS})
 
@@ -180,7 +181,6 @@ set(map_HDRS
 	src/map/province_history.h
 	src/map/region.h
 	src/map/region_history.h
-	src/map/scenario.h
 	src/map/site.h
 	src/map/site_container.h
 	src/map/site_game_data.h

@@ -5,9 +5,9 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "game/game.h"
+#include "game/scenario.h"
 #include "map/map.h"
 #include "map/map_template.h"
-#include "map/scenario.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
 
