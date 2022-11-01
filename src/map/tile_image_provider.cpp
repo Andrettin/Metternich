@@ -5,6 +5,7 @@
 #include "country/country_palette.h"
 #include "database/defines.h"
 #include "database/preferences.h"
+#include "infrastructure/improvement.h"
 #include "map/terrain_type.h"
 #include "util/assert_util.h"
 #include "util/image_util.h"
@@ -45,6 +46,9 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 
 		const std::string &palette_identifier = id_list.at(2);
 		country_palette = country_palette::get(palette_identifier);
+	} else if (tile_image_type == "improvement") {
+		const improvement *improvement = improvement::get(identifier);
+		filepath = improvement->get_image_filepath();
 	} else if (tile_image_type == "borders") {
 		if (identifier == "province_border") {
 			filepath = defines::get()->get_province_border_image_filepath();

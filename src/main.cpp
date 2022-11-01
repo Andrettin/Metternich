@@ -11,6 +11,7 @@
 #include "engine_interface.h"
 #include "game/game.h"
 #include "game/scenario.h"
+#include "infrastructure/improvement.h"
 #include "map/diplomatic_map_image_provider.h"
 #include "map/map.h"
 #include "map/map_grid_model.h"
@@ -74,6 +75,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<country_game_data>("", 1);
 		qmlRegisterAnonymousType<defines>("", 1);
 		qmlRegisterAnonymousType<game>("", 1);
+		qmlRegisterAnonymousType<improvement>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<preferences>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);

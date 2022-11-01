@@ -293,6 +293,14 @@ void map::set_tile_resource(const QPoint &tile_pos, const resource *resource)
 	tile->set_resource(resource);
 }
 
+void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improvement)
+{
+	tile *tile = this->get_tile(tile_pos);
+	tile->set_improvement(improvement);
+
+	emit tile_improvement_changed(tile_pos);
+}
+
 void map::set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)
 {
 	tile *tile = this->get_tile(tile_pos);

@@ -5,6 +5,7 @@
 namespace metternich {
 
 class civilian_unit;
+class improvement;
 class province;
 class resource;
 class site;
@@ -70,6 +71,7 @@ public:
 	void set_tile_province(const QPoint &tile_pos, const province *province);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	void set_tile_resource(const QPoint &tile_pos, const resource *resource);
+	void set_tile_improvement(const QPoint &tile_pos, const improvement *improvement);
 	void set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
 
 	bool is_tile_on_country_border(const QPoint &tile_pos) const;
@@ -101,6 +103,7 @@ public:
 signals:
 	void size_changed();
 	void tile_terrain_changed(const QPoint &tile_pos);
+	void tile_improvement_changed(const QPoint &tile_pos);
 	void tile_civilian_unit_changed(const QPoint &tile_pos);
 	void provinces_changed();
 
