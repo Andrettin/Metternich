@@ -21,6 +21,7 @@ public:
 		province,
 		terrain,
 		resource,
+		improvement,
 		civilian_unit,
 		upper_label
 	};
@@ -58,6 +59,7 @@ public:
 		role_names.insert(static_cast<int>(role::province), "province");
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
 		role_names.insert(static_cast<int>(role::resource), "resource");
+		role_names.insert(static_cast<int>(role::improvement), "improvement");
 		role_names.insert(static_cast<int>(role::civilian_unit), "civilian_unit");
 		role_names.insert(static_cast<int>(role::upper_label), "upper_label");
 
@@ -65,6 +67,7 @@ public:
 	}
 
 	void on_tile_terrain_changed(const QPoint &tile_pos);
+	void on_tile_improvement_changed(const QPoint &tile_pos);
 	void on_tile_civilian_unit_changed(const QPoint &tile_pos);
 };
 

@@ -8,6 +8,7 @@
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
+#include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -25,6 +26,7 @@ namespace metternich {
 map_grid_model::map_grid_model()
 {
 	connect(map::get(), &map::tile_terrain_changed, this, &map_grid_model::on_tile_terrain_changed);
+	connect(map::get(), &map::tile_improvement_changed, this, &map_grid_model::on_tile_improvement_changed);
 	connect(map::get(), &map::tile_civilian_unit_changed, this, &map_grid_model::on_tile_civilian_unit_changed);
 }
 
@@ -91,7 +93,9 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 					overlay_image_sources.push_back("tile/settlement/default/" + country_palette->get_identifier_qstring());
 				}
 				
-				if (tile->get_resource() != nullptr) {
+				if (tile->get_improvement() != nullptr) {
+					overlay_image_sources.push_back("tile/improvement/" + tile->get_improvement()->get_identifier_qstring());
+				} else if (tile->get_resource() != nullptr) {
 					overlay_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
 				}
 
@@ -105,6 +109,8 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return QVariant::fromValue(const_cast<terrain_type *>(tile->get_terrain()));
 			case role::resource:
 				return QVariant::fromValue(const_cast<resource *>(tile->get_resource()));
+			case role::improvement:
+				return QVariant::fromValue(const_cast<improvement *>(tile->get_improvement()));
 			case role::civilian_unit:
 				return QVariant::fromValue(tile->get_civilian_unit());
 			case role::upper_label: {
@@ -138,6 +144,15 @@ void map_grid_model::on_tile_terrain_changed(const QPoint &tile_pos)
 	emit dataChanged(index, index, {
 		static_cast<int>(role::image_source),
 		static_cast<int>(role::terrain)
+	});
+}
+
+void map_grid_model::on_tile_improvement_changed(const QPoint &tile_pos)
+{
+	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
+	emit dataChanged(index, index, {
+		static_cast<int>(role::overlay_image_sources),
+		static_cast<int>(role::improvement)
 	});
 }
 

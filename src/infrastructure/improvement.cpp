@@ -29,6 +29,17 @@ void improvement::check() const
 	if (this->get_output_commodity() != nullptr) {
 		assert_throw(this->get_output_value() > 0);
 	}
+
+	assert_log(!this->get_image_filepath().empty());
+}
+
+void improvement::set_image_filepath(const std::filesystem::path &filepath)
+{
+	if (filepath == this->get_image_filepath()) {
+		return;
+	}
+
+	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
 }
 
 const commodity *improvement::get_output_commodity() const

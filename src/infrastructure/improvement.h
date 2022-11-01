@@ -15,6 +15,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::resource* resource MEMBER resource)
+	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value)
 
 public:
@@ -34,6 +35,13 @@ public:
 		return this->resource;
 	}
 
+	const std::filesystem::path &get_image_filepath() const
+	{
+		return this->image_filepath;
+	}
+
+	void set_image_filepath(const std::filesystem::path &filepath);
+
 	const commodity *get_output_commodity() const;
 
 	int get_output_value() const
@@ -48,6 +56,7 @@ public:
 
 private:
 	metternich::resource *resource = nullptr; //the resource for which this improvement can be built
+	std::filesystem::path image_filepath;
 	int output_value = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
 };
