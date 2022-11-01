@@ -22,6 +22,7 @@
 #include "map/tile_image_provider.h"
 #include "ui/icon_image_provider.h"
 #include "ui/interface_image_provider.h"
+#include "unit/military_unit_domain.h"
 #include "util/empty_image_provider.h"
 #include "util/event_loop.h"
 #include "util/exception_util.h"
@@ -66,6 +67,7 @@ int main(int argc, char **argv)
 		enum_converter<country_type>();
 		enum_converter<diplomacy_state>();
 		enum_converter<landed_title_tier>();
+		enum_converter<military_unit_domain>();
 		enum_converter<site_type>();
 
 		qmlRegisterAnonymousType<country>("", 1);
