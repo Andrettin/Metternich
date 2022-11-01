@@ -2,6 +2,7 @@
 
 #include "map/tile.h"
 
+#include "infrastructure/improvement.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -44,11 +45,13 @@ const metternich::site *tile::get_settlement() const
 	return nullptr;
 }
 
-void tile::set_development_level(const int level)
+void tile::set_improvement(const metternich::improvement *improvement)
 {
-	assert_throw(this->get_resource() != nullptr);
+	if (improvement != nullptr) {
+		assert_throw(this->get_resource() == improvement->get_resource());
+	}
 
-	this->development_level = level;
+	this->improvement = improvement;
 }
 
 }

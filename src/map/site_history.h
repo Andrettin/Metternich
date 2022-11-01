@@ -4,27 +4,28 @@
 
 namespace metternich {
 
+class improvement;
 class site;
 
 class site_history final : public data_entry_history
 {
 	Q_OBJECT
 
-	Q_PROPERTY(int development_level MEMBER development_level READ get_development_level)
+	Q_PROPERTY(metternich::improvement* improvement MEMBER improvement)
 
 public:
 	explicit site_history(const metternich::site *site) : site(site)
 	{
 	}
 
-	int get_development_level() const
+	const metternich::improvement *get_improvement() const
 	{
-		return this->development_level;
+		return this->improvement;
 	}
 
 private:
 	const metternich::site *site = nullptr;
-	int development_level = 0;
+	metternich::improvement *improvement = nullptr;
 };
 
 }

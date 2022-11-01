@@ -155,8 +155,12 @@ void map::clear_tile_game_data()
 
 	try {
 		for (tile &tile : *this->tiles) {
-			if (tile.get_development_level() != 0) {
-				tile.set_development_level(0);
+			if (tile.get_improvement() != nullptr) {
+				tile.set_improvement(nullptr);
+			}
+
+			if (tile.get_civilian_unit() != nullptr) {
+				tile.set_civilian_unit(nullptr);
 			}
 
 			tile.clear_country_border_directions();

@@ -8,6 +8,7 @@ namespace metternich {
 
 class civilian_unit;
 class country;
+class improvement;
 class province;
 class resource;
 class site;
@@ -74,12 +75,12 @@ public:
 		this->resource = resource;
 	}
 
-	int get_development_level() const
+	const metternich::improvement *get_improvement() const
 	{
-		return this->development_level;
+		return this->improvement;
 	}
 
-	void set_development_level(const int level);
+	void set_improvement(const metternich::improvement *improvement);
 
 	const std::vector<direction> &get_border_directions() const
 	{
@@ -138,7 +139,7 @@ private:
 	const metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
 	const metternich::resource *resource = nullptr;
-	int development_level = 0;
+	const metternich::improvement *improvement = nullptr;
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 	std::vector<direction> country_border_directions;
 	metternich::civilian_unit *civilian_unit = nullptr;

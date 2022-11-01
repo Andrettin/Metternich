@@ -9,6 +9,7 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "game/scenario.h"
+#include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/map_template.h"
 #include "map/province.h"
@@ -179,14 +180,18 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const site_history *site_history = site->get_history();
 
-			if (site_history->get_development_level() != 0) {
+			if (site_history->get_improvement() != nullptr && site_history->get_improvement()->get_resource() != nullptr) {
 				assert_throw(site->get_type() == site_type::resource);
 
 				if (tile->get_resource() == nullptr) {
-					throw std::runtime_error("Failed to set development level for tile for resource site \"" + site->get_identifier() + "\", as it has no resource.");
+					throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as it has no resource.");
 				}
 
-				tile->set_development_level(site_history->get_development_level());
+				if (tile->get_resource() != site_history->get_improvement()->get_resource()) {
+					throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as its resource is different than that of the improvement.");
+				}
+
+				tile->set_improvement(site_history->get_improvement());
 			}
 		}
 
