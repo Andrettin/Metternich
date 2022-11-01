@@ -52,6 +52,12 @@ set(game_SRCS
 source_group(game FILES ${game_SRCS})
 set_source_files_properties(${game_SRCS} PROPERTIES UNITY_GROUP "game")
 
+set(infrastructure_SRCS
+	src/infrastructure/improvement.cpp
+)
+source_group(infrastructure FILES ${infrastructure_SRCS})
+set_source_files_properties(${infrastructure_SRCS} PROPERTIES UNITY_GROUP "infrastructure")
+
 set(map_SRCS
 	src/map/diplomatic_map_image_provider.cpp
 	src/map/map.cpp
@@ -125,6 +131,7 @@ set(metternich_SRCS
 	${database_SRCS}
 	${economy_SRCS}
 	${game_SRCS}
+	${infrastructure_SRCS}
 	${map_SRCS}
 	${technology_SRCS}
 	${time_SRCS}
@@ -169,6 +176,11 @@ set(game_HDRS
 	src/game/scenario.h
 )
 source_group(game FILES ${game_HDRS})
+
+set(infrastructure_HDRS
+	src/infrastructure/improvement.h
+)
+source_group(infrastructure FILES ${infrastructure_HDRS})
 
 set(map_HDRS
 	src/map/diplomatic_map_image_provider.h
@@ -243,6 +255,7 @@ set(metternich_HDRS
 	${database_HDRS}
 	${economy_HDRS}
 	${game_HDRS}
+	${infrastructure_HDRS}
 	${map_HDRS}
 	${technology_HDRS}
 	${time_HDRS}
