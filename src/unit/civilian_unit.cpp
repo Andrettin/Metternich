@@ -61,6 +61,19 @@ bool civilian_unit::can_move_to(const QPoint &tile_pos) const
 	return tile->get_owner() == this->get_owner();
 }
 
+void civilian_unit::cancel_move()
+{
+	assert_throw(map::get()->contains(this->original_tile_pos));
+
+	if (map::get()->get_tile(this->original_tile_pos)->get_civilian_unit() != nullptr) {
+		//cannot move back if the original tile is currently occupied by a different civilian unit
+		return;
+	}
+
+	this->set_tile_pos(this->original_tile_pos);
+	this->set_original_tile_pos(QPoint(-1, -1));
+}
+
 void civilian_unit::do_turn()
 {
 	if (this->is_moving()) {
