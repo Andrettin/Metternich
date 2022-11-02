@@ -371,12 +371,10 @@ boost::asio::awaitable<void> map::create_ocean_diplomatic_map_image()
 {
 	const int tile_pixel_size = game::get()->get_diplomatic_map_tile_pixel_size();
 
-	this->ocean_diplomatic_map_image = QImage(this->get_size() * tile_pixel_size, QImage::Format_RGBA8888);
+	this->ocean_diplomatic_map_image = QImage(this->get_size(), QImage::Format_RGBA8888);
 	this->ocean_diplomatic_map_image.fill(Qt::transparent);
 
 	const QColor &color = defines::get()->get_ocean_color();
-
-	std::vector<QPoint> ocean_pixels;
 
 	for (int x = 0; x < this->get_width(); ++x) {
 		for (int y = 0; y < this->get_height(); ++y) {
@@ -387,45 +385,61 @@ boost::asio::awaitable<void> map::create_ocean_diplomatic_map_image()
 				continue;
 			}
 
-			const QPoint top_left_pixel_pos = tile_pos * tile_pixel_size;
-
-			for (int pixel_x_offset = 0; pixel_x_offset < tile_pixel_size; ++pixel_x_offset) {
-				for (int pixel_y_offset = 0; pixel_y_offset < tile_pixel_size; ++pixel_y_offset) {
-					const QPoint pixel_pos = top_left_pixel_pos + QPoint(pixel_x_offset, pixel_y_offset);
-					this->ocean_diplomatic_map_image.setPixelColor(pixel_pos, color);
-
-					ocean_pixels.push_back(pixel_pos);
-				}
-			}
+			this->ocean_diplomatic_map_image.setPixelColor(tile_pos, color);
 		}
 	}
+
+	QImage scaled_ocean_diplomatic_map_image;
+
+	co_await thread_pool::get()->co_spawn_awaitable([this, tile_pixel_size, &scaled_ocean_diplomatic_map_image]() -> boost::asio::awaitable<void> {
+		scaled_ocean_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->ocean_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	this->ocean_diplomatic_map_image = std::move(scaled_ocean_diplomatic_map_image);
 
 	std::vector<QPoint> border_pixels;
 
 	const QRect image_rect = this->ocean_diplomatic_map_image.rect();
 
-	for (const QPoint &pixel_pos : ocean_pixels) {
-		if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (this->ocean_diplomatic_map_image.width() - 1) || pixel_pos.y() == (this->ocean_diplomatic_map_image.height() - 1)) {
-			continue;
-		}
+	for (int x = 0; x < this->ocean_diplomatic_map_image.width(); ++x) {
+		for (int y = 0; y < this->ocean_diplomatic_map_image.height(); ++y) {
+			const QPoint pixel_pos(x, y);
+			const QColor pixel_color = this->ocean_diplomatic_map_image.pixelColor(pixel_pos);
 
-		bool is_border_pixel = false;
-
-		point::for_each_cardinally_adjacent_until(pixel_pos, [this, &color, &image_rect, &is_border_pixel](const QPoint &adjacent_pos) {
-			if (!image_rect.contains(adjacent_pos)) {
-				return false;
+			if (pixel_color.alpha() == 0) {
+				continue;
 			}
 
-			if (this->ocean_diplomatic_map_image.pixelColor(adjacent_pos) == color) {
-				return false;
+			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (this->ocean_diplomatic_map_image.width() - 1) || pixel_pos.y() == (this->ocean_diplomatic_map_image.height() - 1)) {
+				continue;
 			}
 
-			is_border_pixel = true;
-			return true;
-		});
+			if (pixel_color != color) {
+				//blended color
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
 
-		if (is_border_pixel) {
-			border_pixels.push_back(pixel_pos);
+			bool is_border_pixel = false;
+
+			point::for_each_cardinally_adjacent_until(pixel_pos, [this, &color, &image_rect, &is_border_pixel](const QPoint &adjacent_pos) {
+				if (!image_rect.contains(adjacent_pos)) {
+					return false;
+				}
+
+				if (this->ocean_diplomatic_map_image.pixelColor(adjacent_pos).alpha() != 0) {
+					return false;
+				}
+
+				is_border_pixel = true;
+				return true;
+			});
+
+			if (is_border_pixel) {
+				border_pixels.push_back(pixel_pos);
+			}
 		}
 	}
 
@@ -436,8 +450,6 @@ boost::asio::awaitable<void> map::create_ocean_diplomatic_map_image()
 	}
 
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
-
-	QImage scaled_ocean_diplomatic_map_image;
 
 	co_await thread_pool::get()->co_spawn_awaitable([this, &scale_factor, &scaled_ocean_diplomatic_map_image]() -> boost::asio::awaitable<void> {
 		scaled_ocean_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->ocean_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
