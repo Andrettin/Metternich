@@ -28,9 +28,14 @@
 #include "util/container_util.h"
 #include "util/exception_util.h"
 #include "util/event_loop.h"
+#include "util/image_util.h"
 #include "util/path_util.h"
+#include "util/point_util.h"
 #include "util/size_util.h"
 #include "util/thread_pool.h"
+#include "util/vector_util.h"
+
+#include "xbrz.h"
 
 namespace metternich {
 
@@ -141,6 +146,8 @@ void game::clear()
 
 		this->date = game::normalize_date(defines::get()->get_default_start_date());
 		this->turn = 1;
+
+		this->diplomatic_map_selected_country = nullptr;
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to clear the game."));
 	}
@@ -239,6 +246,12 @@ void game::do_turn()
 		country->get_game_data()->do_turn();
 	}
 
+	if (this->diplomatic_map_changed) {
+		this->scaled_diplomatic_map_border_pixels.clear();
+		this->scale_diplomatic_map();
+		this->diplomatic_map_changed = false;
+	}
+
 	const QDateTime old_date = this->date;
 	this->date = old_date.addMonths(defines::get()->get_months_per_turn());
 	assert_throw(this->date != old_date);
@@ -318,19 +331,21 @@ void game::create_diplomatic_map_image()
 		image_size = min_scaled_map_size;
 	}
 
-	if (image_size != this->diplomatic_map_image_size) {
-		this->diplomatic_map_image_size = image_size;
-		emit diplomatic_map_image_size_changed();
+	const QSize relative_size = image_size / map::get()->get_size();
+
+	const int diplomatic_map_scale_factor = std::max(relative_size.width(), relative_size.height());
+	if (diplomatic_map_scale_factor != this->diplomatic_map_scale_factor) {
+		this->diplomatic_map_scale_factor = diplomatic_map_scale_factor;
+		emit diplomatic_map_scale_factor_changed();
 	}
 
-	const QSize relative_size = this->diplomatic_map_image_size / map::get()->get_size();
-	this->diplomatic_map_tile_pixel_size = std::max(relative_size.width(), relative_size.height());
+	this->diplomatic_map_image = QImage(map::get()->get_size(), QImage::Format_RGBA8888);
+	this->diplomatic_map_image.fill(Qt::transparent);
 
 	std::vector<boost::asio::awaitable<void>> awaitables;
 
 	if (map::get()->get_ocean_diplomatic_map_image().isNull()) {
-		boost::asio::awaitable<void> awaitable = map::get()->create_ocean_diplomatic_map_image();
-		awaitables.push_back(std::move(awaitable));
+		awaitables.push_back(map::get()->create_ocean_diplomatic_map_image());
 	}
 
 	for (const country *country : this->get_countries()) {
@@ -345,6 +360,124 @@ void game::create_diplomatic_map_image()
 			co_await std::move(awaitable);
 		}
 	});
+
+	this->update_diplomatic_map_image_rect(map::get()->get_ocean_diplomatic_map_image(), QPoint(0, 0));
+
+	for (const country *country : this->get_countries()) {
+		const country_game_data *country_game_data = country->get_game_data();
+		this->update_diplomatic_map_image_rect(country_game_data->get_diplomatic_map_image(), country_game_data->get_territory_rect().topLeft());
+	}
+
+	this->scaled_diplomatic_map_border_pixels.clear();
+	this->scale_diplomatic_map();
+}
+
+void game::update_diplomatic_map_image_rect(const QImage &rect_image, const QPoint &pos)
+{
+	QPainter painter(&this->diplomatic_map_image);
+	painter.drawImage(pos, rect_image);
+	painter.end();
+
+	if (game::get()->is_running()) {
+		this->diplomatic_map_changed = true;
+	}
+}
+
+void game::scale_diplomatic_map()
+{
+	const centesimal_int scale_factor = preferences::get()->get_scale_factor() * this->get_diplomatic_map_scale_factor();
+
+	thread_pool::get()->co_spawn_sync([this, &scale_factor]() -> boost::asio::awaitable<void> {
+		this->scaled_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	/*
+	//write border pixels
+	if (this->scaled_diplomatic_map_border_pixels.empty()) {
+		const QRect image_rect = this->scaled_diplomatic_map_image.rect();
+
+		std::vector<boost::asio::awaitable<std::vector<QPoint>>> awaitables;
+
+		static constexpr int block_count = 16;
+		const int block_width = this->scaled_diplomatic_map_image.width() / block_count;
+
+		for (int i = 0; i < block_count; ++i) {
+			boost::asio::awaitable<std::vector<QPoint>> awaitable = thread_pool::get()->co_spawn_awaitable([i, this, block_width, &image_rect]() -> boost::asio::awaitable<std::vector<QPoint>> {
+				std::vector<QPoint> border_pixels;
+
+				const int start_x = i * block_width;
+				const int end_x = start_x + block_width - 1;
+
+				for (int x = start_x; x <= end_x; ++x) {
+					for (int y = 0; y < this->scaled_diplomatic_map_image.height(); ++y) {
+						const QPoint pixel_pos(x, y);
+						const QColor pixel_color = this->scaled_diplomatic_map_image.pixelColor(pixel_pos);
+
+						if (pixel_color.alpha() == 0) {
+							continue;
+						}
+
+						bool is_border_pixel = false;
+						point::for_each_cardinally_adjacent_until(pixel_pos, [this, &pixel_color, &is_border_pixel, &image_rect](const QPoint &adjacent_pos) {
+							if (!image_rect.contains(adjacent_pos)) {
+								return false;
+							}
+
+							if (this->scaled_diplomatic_map_image.pixelColor(adjacent_pos) == pixel_color) {
+								return false;
+							}
+
+							is_border_pixel = true;
+							return true;
+						});
+
+						if (is_border_pixel) {
+							border_pixels.push_back(pixel_pos);
+						}
+					}
+				}
+
+				co_return border_pixels;
+			});
+
+			awaitables.push_back(std::move(awaitable));
+		}
+
+		thread_pool::get()->co_spawn_sync([&awaitables, this]() -> boost::asio::awaitable<void> {
+			for (boost::asio::awaitable<std::vector<QPoint>> &awaitable : awaitables) {
+				vector::merge(this->scaled_diplomatic_map_border_pixels, co_await std::move(awaitable));
+			}
+		});
+	}
+
+	const QColor &border_pixel_color = defines::get()->get_country_border_color();
+
+	for (const QPoint &border_pixel_pos : this->scaled_diplomatic_map_border_pixels) {
+		this->scaled_diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
+	}
+	*/
+}
+
+void game::set_diplomatic_map_selected_country(const country *country)
+{
+	if (country == this->diplomatic_map_selected_country) {
+		return;
+	}
+
+	if (this->diplomatic_map_selected_country != nullptr) {
+		this->update_diplomatic_map_image_rect(this->diplomatic_map_selected_country->get_game_data()->get_diplomatic_map_image(), this->diplomatic_map_selected_country->get_game_data()->get_territory_rect().topLeft());
+	}
+
+	this->diplomatic_map_selected_country = country;
+
+	if (this->diplomatic_map_selected_country != nullptr) {
+		this->update_diplomatic_map_image_rect(this->diplomatic_map_selected_country->get_game_data()->get_selected_diplomatic_map_image(), this->diplomatic_map_selected_country->get_game_data()->get_territory_rect().topLeft());
+	}
+
+	this->scale_diplomatic_map();
+	this->diplomatic_map_changed = false;
 }
 
 }

@@ -16,8 +16,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(int turn READ get_turn NOTIFY turn_changed)
 	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(QVariantList great_powers READ get_great_powers_qvariant_list NOTIFY countries_changed)
-	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
-	Q_PROPERTY(int diplomatic_map_tile_pixel_size READ get_diplomatic_map_tile_pixel_size NOTIFY diplomatic_map_image_size_changed)
+	Q_PROPERTY(int diplomatic_map_scale_factor READ get_diplomatic_map_scale_factor NOTIFY diplomatic_map_scale_factor_changed)
 	Q_PROPERTY(metternich::country* player_country READ get_player_country_unconst WRITE set_player_country NOTIFY player_country_changed)
 
 public:
@@ -105,17 +104,26 @@ public:
 		emit player_country_changed();
 	}
 
+	const QImage &get_diplomatic_map_image() const
+	{
+		return this->diplomatic_map_image;
+	}
+
+	const QImage &get_scaled_diplomatic_map_image() const
+	{
+		return this->scaled_diplomatic_map_image;
+	}
+
 	void create_diplomatic_map_image();
+	void update_diplomatic_map_image_rect(const QImage &rect_image, const QPoint &pos);
 
-	const QSize &get_diplomatic_map_image_size() const
+	int get_diplomatic_map_scale_factor() const
 	{
-		return this->diplomatic_map_image_size;
+		return this->diplomatic_map_scale_factor;
 	}
 
-	int get_diplomatic_map_tile_pixel_size() const
-	{
-		return this->diplomatic_map_tile_pixel_size;
-	}
+	void scale_diplomatic_map();
+	void set_diplomatic_map_selected_country(const country *country);
 
 signals:
 	void running_changed();
@@ -123,7 +131,7 @@ signals:
 	void turn_changed();
 	void countries_changed();
 	void player_country_changed();
-	void diplomatic_map_image_size_changed();
+	void diplomatic_map_scale_factor_changed();
 
 private:
 	bool running = false;
@@ -133,8 +141,12 @@ private:
 	std::vector<const country *> countries; //the countries currently in the game, i.e. those with at least 1 province
 	std::vector<const country *> great_powers;
 	country *player_country = nullptr;
-	QSize diplomatic_map_image_size;
-	int diplomatic_map_tile_pixel_size = 1;
+	QImage diplomatic_map_image;
+	QImage scaled_diplomatic_map_image;
+	int diplomatic_map_scale_factor = 1;
+	std::vector<QPoint> scaled_diplomatic_map_border_pixels;
+	const country *diplomatic_map_selected_country = nullptr;
+	bool diplomatic_map_changed = false;
 };
 
 }
