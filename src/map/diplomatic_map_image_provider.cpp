@@ -4,8 +4,6 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
-#include "database/preferences.h"
-#include "game/game.h"
 #include "map/map.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
@@ -19,30 +17,20 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 
 	const std::vector<std::string> id_list = string::split(id.toStdString(), '/');
 
-	const QImage *image = nullptr;
-	QImage created_image;
+	const std::string &identifier = id_list.at(0);
+	const bool selected = id_list.size() >= 2 && id_list.at(1) == "selected";
 
-	if (id_list.size() >= 1 && id_list.at(0) == "minimap") {
+	const QImage *image = nullptr;
+
+	if (identifier == "ocean") {
+		image = &map::get()->get_ocean_diplomatic_map_image();
+	} else if (identifier == "minimap") {
 		image = &map::get()->get_minimap_image();
-	} else if (id_list.size() >= 1 && id_list.at(0) == "country") {
-		const std::string &identifier = id_list.at(1);
+	} else {
 		const country *country = country::get(identifier);
 		const country_game_data *country_game_data = country->get_game_data();
-		created_image = country_game_data->get_diplomatic_map_image().scaled(country_game_data->get_diplomatic_map_image().size() * game::get()->get_diplomatic_map_scale_factor() * preferences::get()->get_scale_factor());
-		image = &created_image;
-	} else {
-		const bool selected = id_list.size() >= 1 && id_list.at(0) == "selected";
 
-		if (selected) {
-			const std::string &identifier = id_list.at(1);
-			const country *country = country::get(identifier);
-
-			game::get()->set_diplomatic_map_selected_country(country);
-		} else {
-			game::get()->set_diplomatic_map_selected_country(nullptr);
-		}
-
-		image = &game::get()->get_scaled_diplomatic_map_image();
+		image = selected ? &country_game_data->get_selected_diplomatic_map_image() : &country_game_data->get_diplomatic_map_image();
 	}
 
 	assert_throw(image != nullptr);
