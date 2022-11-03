@@ -108,8 +108,8 @@ std::string country_game_data::get_vassalage_type_name() const
 	switch (this->get_diplomacy_state(this->get_overlord())) {
 		case diplomacy_state::vassal:
 			return "Vassal";
-		case diplomacy_state::dynastic_vassal:
-			return "Dynastic Vassal";
+		case diplomacy_state::personal_union_subject:
+			return "Personal Union Subject";
 		case diplomacy_state::colony:
 			return "Colony";
 		default:
