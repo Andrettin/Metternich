@@ -99,6 +99,29 @@ void civilian_unit::cancel_move()
 	this->set_original_tile_pos(QPoint(-1, -1));
 }
 
+bool civilian_unit::can_build_improvement(const improvement *improvement) const
+{
+	if (improvement->get_required_technology() != nullptr && !this->get_owner()->get_game_data()->has_technology(improvement->get_required_technology())) {
+		return false;
+	}
+
+	return true;
+}
+
+void civilian_unit::build_improvement(const improvement *improvement)
+{
+	this->improvement_under_construction = improvement;
+
+	//FIXME: set the task completion turns depending on the work to be done
+	this->set_task_completion_turns(2);
+}
+
+void civilian_unit::cancel_work()
+{
+	this->set_task_completion_turns(0);
+	this->improvement_under_construction = nullptr;
+}
+
 const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(const QPoint &tile_pos) const
 {
 	const tile *tile = map::get()->get_tile(tile_pos);
@@ -109,6 +132,10 @@ const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(co
 
 	for (const improvement *improvement : improvement::get_all()) {
 		if (improvement->get_resource() != tile->get_resource()) {
+			continue;
+		}
+
+		if (!this->can_build_improvement(improvement)) {
 			continue;
 		}
 
@@ -126,20 +153,6 @@ const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(co
 	}
 
 	return nullptr;
-}
-
-void civilian_unit::build_improvement(const improvement *improvement)
-{
-	this->improvement_under_construction = improvement;
-
-	//FIXME: set the task completion turns depending on the work to be done
-	this->set_task_completion_turns(2);
-}
-
-void civilian_unit::cancel_work()
-{
-	this->set_task_completion_turns(0);
-	this->improvement_under_construction = nullptr;
 }
 
 void civilian_unit::do_turn()

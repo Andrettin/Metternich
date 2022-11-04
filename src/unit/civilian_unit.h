@@ -99,10 +99,11 @@ public:
 		return this->task_completion_turns > 0;
 	}
 
-	const improvement *get_buildable_resource_improvement_for_tile(const QPoint &tile_pos) const;
-
+	bool can_build_improvement(const improvement *improvement) const;
 	void build_improvement(const improvement *improvement);
 	void cancel_work();
+
+	const improvement *get_buildable_resource_improvement_for_tile(const QPoint &tile_pos) const;
 
 	void set_task_completion_turns(const int turns)
 	{
