@@ -5,6 +5,7 @@
 #include "economy/resource.h"
 #include "map/terrain_type.h"
 #include "util/assert_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 	
@@ -17,6 +18,13 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->terrain_types.push_back(terrain_type::get(value));
 		}
+	} else if (tag == "terrain_image_filepaths") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->terrain_image_filepaths[terrain_type::get(key)] = database::get()->get_graphics_path(this->get_module()) / value;
+		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -31,6 +39,10 @@ void improvement::check() const
 	}
 
 	assert_log(!this->get_image_filepath().empty());
+
+	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
+		assert_throw(vector::contains(this->get_terrain_types(), terrain) || vector::contains(this->get_resource()->get_terrain_types(), terrain));
+	}
 }
 
 void improvement::set_image_filepath(const std::filesystem::path &filepath)

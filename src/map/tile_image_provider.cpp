@@ -48,7 +48,14 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 		country_palette = country_palette::get(palette_identifier);
 	} else if (tile_image_type == "improvement") {
 		const improvement *improvement = improvement::get(identifier);
-		filepath = improvement->get_image_filepath();
+		if (id_list.size() >= 4) {
+			const std::string &terrain_identifier = id_list.at(2);
+			const terrain_type *terrain = terrain_type::get(terrain_identifier);
+			filepath = improvement->get_terrain_image_filepath(terrain);
+		} else {
+			filepath = improvement->get_image_filepath();
+		}
+		
 		is_frame_image = true;
 	} else if (tile_image_type == "borders") {
 		if (identifier == "province_border") {
@@ -97,8 +104,10 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 		//load the entire image, and cache all frames
 		std::vector<QImage> frame_images = image::to_frames(image, frame_size);
 
+		const std::string base_id = id.substr(0, id.find_last_of('/'));
+
 		for (size_t i = 0; i < frame_images.size(); ++i) {
-			const std::string frame_id = tile_image_type + "/" + identifier + "/" + std::to_string(i);
+			const std::string frame_id = base_id + "/" + std::to_string(i);
 			this->set_image(frame_id, std::move(frame_images.at(i)));
 		}
 	} else {

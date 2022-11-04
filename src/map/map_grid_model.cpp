@@ -94,7 +94,15 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 				
 				if (tile->get_improvement() != nullptr) {
-					overlay_image_sources.push_back("tile/improvement/" + tile->get_improvement()->get_identifier_qstring() + "/" + QString::number(tile->get_improvement_variation()));
+					QString image_source = "tile/improvement/" + tile->get_improvement()->get_identifier_qstring();
+
+					if (tile->get_improvement()->has_terrain_image_filepath(tile->get_terrain())) {
+						image_source += "/" + tile->get_terrain()->get_identifier_qstring();
+					}
+
+					image_source += "/" + QString::number(tile->get_improvement_variation());
+
+					overlay_image_sources.push_back(std::move(image_source));
 				} else if (tile->get_resource() != nullptr) {
 					overlay_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
 				}

@@ -43,6 +43,21 @@ public:
 
 	void set_image_filepath(const std::filesystem::path &filepath);
 
+	const std::filesystem::path &get_terrain_image_filepath(const terrain_type *terrain) const
+	{
+		const auto find_iterator = this->terrain_image_filepaths.find(terrain);
+		if (find_iterator != this->terrain_image_filepaths.end()) {
+			return find_iterator->second;
+		}
+
+		return this->get_image_filepath();
+	}
+
+	bool has_terrain_image_filepath(const terrain_type *terrain) const
+	{
+		return this->terrain_image_filepaths.contains(terrain);
+	}
+
 	const commodity *get_output_commodity() const;
 
 	int get_output_value() const
@@ -63,6 +78,7 @@ public:
 private:
 	metternich::resource *resource = nullptr; //the resource for which this improvement can be built
 	std::filesystem::path image_filepath;
+	std::map<const terrain_type *, std::filesystem::path> terrain_image_filepaths;
 	int output_value = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
 	int variation_count = 1;
