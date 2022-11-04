@@ -7,6 +7,7 @@ namespace metternich {
 
 class commodity;
 class resource;
+class technology;
 class terrain_type;
 
 //tile improvement
@@ -18,6 +19,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology)
 
 public:
 	static constexpr const char class_identifier[] = "improvement";
@@ -77,6 +79,11 @@ public:
 		return this->variation_count;
 	}
 
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
 	int get_score() const
 	{
 		return improvement::base_score * std::max(1, this->get_output_value());
@@ -89,6 +96,7 @@ private:
 	int output_value = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
 	int variation_count = 1;
+	technology *required_technology = nullptr;
 };
 
 }
