@@ -59,7 +59,15 @@ bool civilian_unit::can_move_to(const QPoint &tile_pos) const
 {
 	const tile *tile = map::get()->get_tile(tile_pos);
 
-	return tile->get_owner() == this->get_owner();
+	if (tile->get_owner() == this->get_owner()) {
+		return true;
+	}
+
+	if (tile->get_owner() != nullptr) {
+		return tile->get_owner()->get_game_data()->is_any_vassal_of(this->get_owner());
+	}
+
+	return false;
 }
 
 void civilian_unit::move_to(const QPoint &tile_pos)

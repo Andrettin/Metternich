@@ -49,6 +49,9 @@ private:
 public:
 	void set_overlord(const metternich::country *overlord);
 
+	bool is_vassal_of(const metternich::country *country) const;
+	bool is_any_vassal_of(const metternich::country *country) const;
+
 	bool is_secondary_power() const;
 
 	std::string get_type_name() const;

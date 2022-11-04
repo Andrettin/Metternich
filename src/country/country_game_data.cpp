@@ -65,6 +65,24 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 	}
 }
 
+bool country_game_data::is_vassal_of(const metternich::country *country) const
+{
+	return this->get_overlord() == country;
+}
+
+bool country_game_data::is_any_vassal_of(const metternich::country *country) const
+{
+	if (this->is_vassal_of(country)) {
+		return true;
+	}
+
+	if (this->get_overlord() != nullptr) {
+		return this->get_overlord()->get_game_data()->is_any_vassal_of(country);
+	}
+
+	return false;
+}
+
 bool country_game_data::is_secondary_power() const
 {
 	//a country is a secondary power if its type is great power, and it is not high-ranking enough to be considered a true great power
