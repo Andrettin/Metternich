@@ -100,6 +100,7 @@ public:
 	}
 
 	bool can_build_improvement(const improvement *improvement) const;
+	bool can_build_improvement_on_tile(const improvement *improvement, const QPoint &tile_pos) const;
 	void build_improvement(const improvement *improvement);
 	void cancel_work();
 

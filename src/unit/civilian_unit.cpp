@@ -108,6 +108,35 @@ bool civilian_unit::can_build_improvement(const improvement *improvement) const
 	return true;
 }
 
+bool civilian_unit::can_build_improvement_on_tile(const improvement *improvement, const QPoint &tile_pos) const
+{
+	if (!this->can_build_improvement(improvement)) {
+		return false;
+	}
+
+	const tile *tile = map::get()->get_tile(tile_pos);
+
+	if (improvement->get_resource() != nullptr && improvement->get_resource() != tile->get_resource()) {
+		return false;
+	}
+
+	if (improvement->get_required_improvement() != nullptr && tile->get_improvement() != improvement->get_required_improvement()) {
+		return false;
+	}
+
+	if (tile->get_improvement() != nullptr) {
+		if (improvement == tile->get_improvement()) {
+			return false;
+		}
+
+		if (improvement->get_output_value() <= tile->get_improvement()->get_output_value()) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void civilian_unit::build_improvement(const improvement *improvement)
 {
 	this->improvement_under_construction = improvement;
@@ -131,22 +160,12 @@ const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(co
 	}
 
 	for (const improvement *improvement : improvement::get_all()) {
-		if (improvement->get_resource() != tile->get_resource()) {
+		if (improvement->get_resource() == nullptr) {
 			continue;
 		}
 
-		if (!this->can_build_improvement(improvement)) {
+		if (!this->can_build_improvement_on_tile(improvement, tile_pos)) {
 			continue;
-		}
-
-		if (tile->get_improvement() != nullptr) {
-			if (improvement == tile->get_improvement()) {
-				continue;
-			}
-
-			if (improvement->get_output_value() <= tile->get_improvement()->get_output_value()) {
-				continue;
-			}
 		}
 
 		return improvement;
