@@ -30,6 +30,8 @@ public:
 	static constexpr const char database_folder[] = "provinces";
 	static constexpr bool history_enabled = true;
 
+	static constexpr int base_score = 100;
+
 	static province *get_by_color(const QColor &color)
 	{
 		province *province = province::try_get_by_color(color);

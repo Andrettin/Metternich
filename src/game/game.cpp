@@ -192,6 +192,10 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 
 				tile->set_improvement(site_history->get_improvement());
+
+				if (tile->get_improvement() != nullptr && tile->get_owner() != nullptr) {
+					tile->get_owner()->get_game_data()->change_province_score(tile->get_improvement()->get_score());
+				}
 			}
 		}
 

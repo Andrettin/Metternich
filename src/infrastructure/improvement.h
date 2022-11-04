@@ -24,6 +24,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::improvement*";
 	static constexpr const char database_folder[] = "improvements";
 
+	static constexpr int base_score = 50;
+
 	explicit improvement(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}
@@ -73,6 +75,11 @@ public:
 	int get_variation_count() const
 	{
 		return this->variation_count;
+	}
+
+	int get_score() const
+	{
+		return improvement::base_score * std::max(1, this->get_output_value());
 	}
 
 private:

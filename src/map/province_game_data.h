@@ -78,6 +78,8 @@ public:
 		return this->resource_counts;
 	}
 
+	int get_score() const;
+
 signals:
 	void owner_changed();
 	void culture_changed();
@@ -90,6 +92,7 @@ private:
 	std::vector<const metternich::province *> border_provinces;
 	std::vector<QPoint> tiles;
 	std::vector<QPoint> border_tiles;
+	std::vector<QPoint> resource_tiles;
 	resource_map<int> resource_counts;
 };
 

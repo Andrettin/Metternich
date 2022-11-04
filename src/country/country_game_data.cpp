@@ -149,7 +149,7 @@ void country_game_data::add_province(const province *province)
 	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
 
-	this->change_province_score(country::score_per_province);
+	this->change_province_score(province_game_data->get_score());
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->change_resource_count(resource, count);
@@ -200,7 +200,7 @@ void country_game_data::remove_province(const province *province)
 	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
 
-	this->change_province_score(-country::score_per_province);
+	this->change_province_score(-province_game_data->get_score());
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->change_resource_count(resource, -count);
@@ -474,7 +474,11 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 
 int country_game_data::get_province_score() const
 {
-	int score = this->get_province_count() * country::score_per_province;
+	int score = 0;
+
+	for (const province *province : this->get_provinces()) {
+		score += province->get_game_data()->get_score();
+	}
 
 	for (const metternich::country *vassal : this->get_vassals()) {
 		score += vassal->get_game_data()->get_province_score() * country::vassal_province_score_percent / 100;

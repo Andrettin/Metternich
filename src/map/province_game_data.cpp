@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "game/game.h"
+#include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/site.h"
@@ -76,6 +77,7 @@ void province_game_data::add_tile(const QPoint &tile_pos)
 
 	const tile *tile = map::get()->get_tile(tile_pos);
 	if (tile->get_resource() != nullptr) {
+		this->resource_tiles.push_back(tile_pos);
 		++this->resource_counts[tile->get_resource()];
 	}
 }
@@ -100,6 +102,21 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 	}
 
 	emit territory_changed();
+}
+
+int province_game_data::get_score() const
+{
+	int score = province::base_score;
+
+	for (const QPoint &tile_pos : this->resource_tiles) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+
+		if (tile->get_improvement() != nullptr) {
+			score += tile->get_improvement()->get_score();
+		}
+	}
+
+	return score;
 }
 
 }

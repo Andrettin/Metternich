@@ -8,6 +8,7 @@
 #include "database/preferences.h"
 #include "economy/resource.h"
 #include "game/game.h"
+#include "infrastructure/improvement.h"
 #include "map/direction.h"
 #include "map/province.h"
 #include "map/province_container.h"
@@ -296,7 +297,16 @@ void map::set_tile_resource(const QPoint &tile_pos, const resource *resource)
 void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improvement)
 {
 	tile *tile = this->get_tile(tile_pos);
+
+	if (tile->get_improvement() != nullptr && tile->get_owner() != nullptr) {
+		tile->get_owner()->get_game_data()->change_province_score(-tile->get_improvement()->get_score());
+	}
+
 	tile->set_improvement(improvement);
+
+	if (tile->get_improvement() != nullptr && tile->get_owner() != nullptr) {
+		tile->get_owner()->get_game_data()->change_province_score(tile->get_improvement()->get_score());
+	}
 
 	emit tile_improvement_changed(tile_pos);
 }

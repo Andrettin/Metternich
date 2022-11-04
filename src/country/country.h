@@ -35,7 +35,6 @@ public:
 	static constexpr bool history_enabled = true;
 
 	static constexpr size_t max_great_powers = 7; //maximum true great powers, all others are called secondary powers instead
-	static constexpr int score_per_province = 100;
 	static constexpr int vassal_province_score_percent = 50;
 
 	explicit country(const std::string &identifier);
