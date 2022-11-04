@@ -22,6 +22,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	const metternich::icon *get_icon() const
@@ -29,8 +30,14 @@ public:
 		return this->icon;
 	}
 
+	const std::vector<const technology *> get_prerequisites() const
+	{
+		return this->prerequisites;
+	}
+
 private:
 	metternich::icon *icon = nullptr;
+	std::vector<const technology *> prerequisites;
 };
 
 }
