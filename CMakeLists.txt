@@ -84,6 +84,7 @@ set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
 set(technology_SRCS
 	src/technology/technology.cpp
+	src/technology/technology_container.cpp
 )
 source_group(technology FILES ${technology_SRCS})
 set_source_files_properties(${technology_SRCS} PROPERTIES UNITY_GROUP "technology")
@@ -211,6 +212,7 @@ source_group(map FILES ${map_HDRS})
 
 set(technology_HDRS
 	src/technology/technology.h
+	src/technology/technology_container.h
 )
 source_group(technology FILES ${technology_HDRS})
 
