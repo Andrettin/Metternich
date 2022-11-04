@@ -164,6 +164,10 @@ void game::apply_history(const metternich::scenario *scenario)
 			const country_history *country_history = country->get_history();
 			country_game_data *country_game_data = country->get_game_data();
 
+			for (const technology *technology : country_history->get_technologies()) {
+				country_game_data->add_technology(technology);
+			}
+
 			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
 				country_game_data->set_diplomacy_state(other_country, diplomacy_state);
 				other_country->get_game_data()->set_diplomacy_state(country, get_diplomacy_state_counterpart(diplomacy_state));

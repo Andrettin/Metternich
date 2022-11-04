@@ -4,7 +4,7 @@ namespace metternich {
 
 class country;
 
-struct country_compare
+struct country_compare final
 {
 	bool operator()(const country *country, const metternich::country *other_country) const;
 };

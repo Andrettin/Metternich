@@ -2,6 +2,7 @@
 
 #include "country/country_container.h"
 #include "economy/resource_container.h"
+#include "technology/technology_container.h"
 #include "util/qunique_ptr.h"
 
 namespace metternich {
@@ -195,6 +196,16 @@ public:
 
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
+	bool has_technology(const technology *technology) const
+	{
+		return this->technologies.contains(technology);
+	}
+
+	void add_technology(const technology *technology)
+	{
+		this->technologies.insert(technology);
+	}
+
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
 
@@ -224,6 +235,7 @@ private:
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;
+	technology_set technologies;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 };
 
