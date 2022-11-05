@@ -15,12 +15,12 @@ class improvement final : public named_data_entry, public data_type<improvement>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::resource* resource MEMBER resource)
+	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
-	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value)
+	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
-	Q_PROPERTY(metternich::improvement* required_improvement MEMBER required_improvement)
-	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology)
+	Q_PROPERTY(metternich::improvement* required_improvement MEMBER required_improvement NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "improvement";
@@ -94,6 +94,9 @@ public:
 	{
 		return improvement::base_score * std::max(1, this->get_output_value());
 	}
+
+signals:
+	void changed();
 
 private:
 	metternich::resource *resource = nullptr; //the resource for which this improvement can be built

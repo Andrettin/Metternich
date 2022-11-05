@@ -16,10 +16,10 @@ class resource final : public named_data_entry, public data_type<resource>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::commodity* commodity MEMBER commodity)
+	Q_PROPERTY(metternich::commodity* commodity MEMBER commodity NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon)
-	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology)
-	Q_PROPERTY(metternich::technology* discovery_technology MEMBER discovery_technology)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(metternich::technology* discovery_technology MEMBER discovery_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "resource";
@@ -54,6 +54,9 @@ public:
 	{
 		return this->terrain_types;
 	}
+
+signals:
+	void changed();
 
 private:
 	metternich::commodity *commodity = nullptr;

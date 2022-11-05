@@ -11,7 +11,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::icon* icon MEMBER icon)
+	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "commodity";
@@ -28,6 +28,9 @@ public:
 	{
 		return this->icon;
 	}
+
+signals:
+	void changed();
 
 private:
 	metternich::icon *icon = nullptr;
