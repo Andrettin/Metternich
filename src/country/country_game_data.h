@@ -23,6 +23,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QString vassalage_type_name READ get_vassalage_type_name_qstring NOTIFY vassalage_type_name_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
+	Q_PROPERTY(QVariantList contiguous_territory_rects READ get_contiguous_territory_rects_qvariant_list NOTIFY provinces_changed)
+	Q_PROPERTY(QRect main_contiguous_territory_rect READ get_main_contiguous_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList resource_counts READ get_resource_counts_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList vassal_resource_counts READ get_vassal_resource_counts_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList vassals READ get_vassals_qvariant_list NOTIFY diplomacy_states_changed)
@@ -94,6 +96,18 @@ public:
 	}
 
 	void calculate_territory_rect();
+
+	const std::vector<QRect> &get_contiguous_territory_rects() const
+	{
+		return this->contiguous_territory_rects;
+	}
+
+	QVariantList get_contiguous_territory_rects_qvariant_list() const;
+
+	const QRect &get_main_contiguous_territory_rect() const
+	{
+		return this->main_contiguous_territory_rect;
+	}
 
 	const std::vector<QPoint> &get_border_tiles() const
 	{
@@ -226,6 +240,8 @@ private:
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;
 	QRect territory_rect;
+	std::vector<QRect> contiguous_territory_rects;
+	QRect main_contiguous_territory_rect;
 	std::vector<QPoint> border_tiles;
 	resource_map<int> resource_counts;
 	resource_map<int> vassal_resource_counts;

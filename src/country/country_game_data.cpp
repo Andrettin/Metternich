@@ -12,6 +12,8 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/tile.h"
 #include "unit/civilian_unit.h"
 #include "util/assert_util.h"
@@ -19,6 +21,7 @@
 #include "util/image_util.h"
 #include "util/map_util.h"
 #include "util/point_util.h"
+#include "util/rect_util.h"
 #include "util/size_util.h"
 #include "util/thread_pool.h"
 #include "util/vector_util.h"
@@ -245,6 +248,7 @@ void country_game_data::remove_province(const province *province)
 void country_game_data::calculate_territory_rect()
 {
 	QRect territory_rect;
+	this->contiguous_territory_rects.clear();
 
 	for (const province *province : this->get_provinces()) {
 		const province_game_data *province_game_data = province->get_game_data();
@@ -254,15 +258,59 @@ void country_game_data::calculate_territory_rect()
 		} else {
 			territory_rect = territory_rect.united(province_game_data->get_territory_rect());
 		}
+
+		this->contiguous_territory_rects.push_back(province_game_data->get_territory_rect());
+	}
+
+	bool changed = true;
+	while (changed) {
+		changed = false;
+
+		for (size_t i = 0; i < this->contiguous_territory_rects.size(); ++i) {
+			QRect &first_territory_rect = this->contiguous_territory_rects.at(i);
+
+			for (size_t j = i + 1; j < this->contiguous_territory_rects.size();) {
+				const QRect &second_territory_rect = this->contiguous_territory_rects.at(j);
+
+				if (first_territory_rect.intersects(second_territory_rect) || rect::is_adjacent_to(first_territory_rect, second_territory_rect)) {
+					first_territory_rect = first_territory_rect.united(second_territory_rect);
+					this->contiguous_territory_rects.erase(this->contiguous_territory_rects.begin() + j);
+					changed = true;
+				} else {
+					++j;
+				}
+			}
+		}
 	}
 
 	this->territory_rect = territory_rect;
+
+	const QPoint &capital_pos = this->country->get_capital_province()->get_capital_settlement()->get_game_data()->get_tile_pos();
+	int best_distance = std::numeric_limits<int>::max();
+	for (const QRect &contiguous_territory_rect : this->get_contiguous_territory_rects()) {
+		if (contiguous_territory_rect.contains(capital_pos)) {
+			this->main_contiguous_territory_rect = contiguous_territory_rect;
+			break;
+		}
+
+		int distance = rect::distance_to(contiguous_territory_rect, capital_pos);
+
+		if (distance < best_distance) {
+			best_distance = distance;
+			this->main_contiguous_territory_rect = contiguous_territory_rect;
+		}
+	}
 
 	if (game::get()->is_running()) {
 		thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
 			co_await this->create_diplomatic_map_image();
 		});
 	}
+}
+
+QVariantList country_game_data::get_contiguous_territory_rects_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_contiguous_territory_rects());
 }
 
 QVariantList country_game_data::get_resource_counts_qvariant_list() const
