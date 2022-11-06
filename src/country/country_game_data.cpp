@@ -86,6 +86,15 @@ bool country_game_data::is_any_vassal_of(const metternich::country *country) con
 	return false;
 }
 
+bool country_game_data::is_true_great_power() const
+{
+	if (this->country->get_type() != country_type::great_power) {
+		return false;
+	}
+
+	return this->get_rank() < country::max_great_powers;
+}
+
 bool country_game_data::is_secondary_power() const
 {
 	//a country is a secondary power if its type is great power, and it is not high-ranking enough to be considered a true great power

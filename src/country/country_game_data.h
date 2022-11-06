@@ -18,7 +18,8 @@ class country_game_data final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country* overlord READ get_overlord_unconst NOTIFY overlord_changed)
-	Q_PROPERTY(bool secondary_power READ is_secondary_power NOTIFY provinces_changed)
+	Q_PROPERTY(bool true_great_power READ is_true_great_power NOTIFY rank_changed)
+	Q_PROPERTY(bool secondary_power READ is_secondary_power NOTIFY rank_changed)
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
 	Q_PROPERTY(QString vassalage_type_name READ get_vassalage_type_name_qstring NOTIFY vassalage_type_name_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
@@ -55,6 +56,7 @@ public:
 	bool is_vassal_of(const metternich::country *country) const;
 	bool is_any_vassal_of(const metternich::country *country) const;
 
+	bool is_true_great_power() const;
 	bool is_secondary_power() const;
 
 	std::string get_type_name() const;
