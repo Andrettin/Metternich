@@ -33,6 +33,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
 	Q_PROPERTY(int rank READ get_rank NOTIFY rank_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
+	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 
 public:
 	explicit country_game_data(const metternich::country *country);
