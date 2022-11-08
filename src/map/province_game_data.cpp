@@ -11,8 +11,18 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
+#include "population/population_unit.h"
+#include "util/assert_util.h"
 
 namespace metternich {
+
+province_game_data::province_game_data(const metternich::province *province) : province(province)
+{
+}
+
+province_game_data::~province_game_data()
+{
+}
 
 void province_game_data::set_owner(const country *country)
 {
@@ -102,6 +112,28 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 	}
 
 	emit territory_changed();
+}
+
+void province_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
+{
+	this->population_units.push_back(std::move(population_unit));
+}
+
+qunique_ptr<population_unit> province_game_data::pop_population_unit(population_unit *population_unit)
+{
+	for (size_t i = 0; i < this->population_units.size();) {
+		if (this->population_units[i].get() == population_unit) {
+			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
+			this->population_units.erase(this->population_units.begin() + i);
+			return population_unit_unique_ptr;
+		} else {
+			++i;
+		}
+	}
+
+	assert_throw(false);
+
+	return nullptr;
 }
 
 int province_game_data::get_score() const

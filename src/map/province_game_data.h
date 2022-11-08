@@ -1,11 +1,13 @@
 #pragma once
 
 #include "economy/resource_container.h"
+#include "util/qunique_ptr.h"
 
 namespace metternich {
 
 class country;
 class culture;
+class population_unit;
 class province;
 
 class province_game_data final : public QObject
@@ -17,9 +19,9 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 
 public:
-	explicit province_game_data(const province *province) : province(province)
-	{
-	}
+	explicit province_game_data(const metternich::province *province);
+	province_game_data(const province_game_data &other) = delete;
+	~province_game_data();
 
 	const country *get_owner() const
 	{
@@ -78,7 +80,12 @@ public:
 		return this->resource_counts;
 	}
 
+	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
+	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
+
 	int get_score() const;
+
+	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
 	void owner_changed();
@@ -94,6 +101,7 @@ private:
 	std::vector<QPoint> border_tiles;
 	std::vector<QPoint> resource_tiles;
 	resource_map<int> resource_counts;
+	std::vector<qunique_ptr<population_unit>> population_units;
 };
 
 }

@@ -81,7 +81,6 @@ void civilian_unit::move_to(const QPoint &tile_pos)
 	}
 }
 
-
 void civilian_unit::cancel_move()
 {
 	assert_throw(map::get()->contains(this->original_tile_pos));

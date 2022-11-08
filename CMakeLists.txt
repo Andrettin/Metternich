@@ -82,6 +82,15 @@ set(map_SRCS
 source_group(map FILES ${map_SRCS})
 set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
+set(population_SRCS
+	src/population/population_class.cpp
+	src/population/population_class_container.cpp
+	src/population/population_type.cpp
+	src/population/population_unit.cpp
+)
+source_group(population FILES ${population_SRCS})
+set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "population")
+
 set(technology_SRCS
 	src/technology/technology.cpp
 	src/technology/technology_container.cpp
@@ -134,6 +143,7 @@ set(metternich_SRCS
 	${game_SRCS}
 	${infrastructure_SRCS}
 	${map_SRCS}
+	${population_SRCS}
 	${technology_SRCS}
 	${time_SRCS}
 	${ui_SRCS}
@@ -210,6 +220,14 @@ set(map_HDRS
 )
 source_group(map FILES ${map_HDRS})
 
+set(population_HDRS
+	src/population/population_class.h
+	src/population/population_class_container.h
+	src/population/population_type.h
+	src/population/population_unit.h
+)
+source_group(population FILES ${population_HDRS})
+
 set(technology_HDRS
 	src/technology/technology.h
 	src/technology/technology_container.h
@@ -259,6 +277,7 @@ set(metternich_HDRS
 	${game_HDRS}
 	${infrastructure_HDRS}
 	${map_HDRS}
+	${population_HDRS}
 	${technology_HDRS}
 	${time_HDRS}
 	${ui_HDRS}
