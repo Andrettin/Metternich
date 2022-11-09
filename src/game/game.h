@@ -50,6 +50,7 @@ public:
 	void clear();
 
 	void apply_history(const metternich::scenario *scenario);
+	void apply_population_history();
 
 	void do_turn();
 	Q_INVOKABLE void do_turn_async();

@@ -67,6 +67,7 @@ set(map_SRCS
 	src/map/province_container.cpp
 	src/map/province_game_data.cpp
 	src/map/region.cpp
+	src/map/region_history.cpp
 	src/map/site.cpp
 	src/map/site_container.cpp
 	src/map/site_game_data.cpp

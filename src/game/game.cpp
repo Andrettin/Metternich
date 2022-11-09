@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
+#include "country/culture.h"
 #include "country/diplomacy_state.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -204,6 +205,8 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 		}
 
+		this->apply_population_history();
+
 		for (const historical_civilian_unit *historical_civilian_unit : historical_civilian_unit::get_all()) {
 			const historical_civilian_unit_history *historical_civilian_unit_history = historical_civilian_unit->get_history();
 
@@ -240,6 +243,65 @@ void game::apply_history(const metternich::scenario *scenario)
 	}
 
 	this->calculate_great_power_ranks();
+}
+
+void game::apply_population_history()
+{
+	country_map<int> country_populations;
+
+	for (const province *province : map::get()->get_provinces()) {
+		province_history *province_history = province->get_history();
+		province_game_data *province_game_data = province->get_game_data();
+
+		const culture *culture = province_game_data->get_culture();
+
+		if (culture == nullptr) {
+			continue;
+		}
+
+		int population = province_history->get_population();
+
+		if (population != 0) {
+			const population_class *population_class = defines::get()->get_default_population_class();
+			const population_type *population_type = culture->get_population_class_type(population_class);
+
+			const int population_unit_count = population / defines::get()->get_population_per_unit();
+
+			for (int i = 0; i < population_unit_count; ++i) {
+				province_game_data->create_population_unit(population_type);
+			}
+
+			const int64_t remaining_population = population % defines::get()->get_population_per_unit();
+			population = remaining_population;
+		}
+
+		population = std::max<int64_t>(0, population);
+
+		//add the remaining population to remaining population data for the owner remaining population
+		if (population != 0 && province_game_data->get_owner() != nullptr) {
+			country_populations[province_game_data->get_owner()] += population;
+			population = 0;
+		}
+
+		province_history->set_population(population);
+	}
+
+	for (const auto &[country, population] : country_populations) {
+		const population_class *population_class = defines::get()->get_default_population_class();
+		const population_type *population_type = country->get_culture()->get_population_class_type(population_class);
+
+		province_game_data *capital_province_game_data = country->get_capital_province()->get_game_data();
+
+		if (capital_province_game_data->get_owner() != country) {
+			continue;
+		}
+
+		const int population_unit_count = population / defines::get()->get_population_per_unit();
+
+		for (int i = 0; i < population_unit_count; ++i) {
+			capital_province_game_data->create_population_unit(population_type);
+		}
+	}
 }
 
 void game::do_turn()

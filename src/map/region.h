@@ -21,6 +21,10 @@ public:
 	static constexpr const char database_folder[] = "regions";
 	static constexpr bool history_enabled = true;
 
+	static const std::set<std::string> history_database_dependencies;
+
+	static void load_history_database(const QDateTime &start_date, const timeline *current_timeline);
+
 public:
 	explicit region(const std::string &identifier);
 	~region();
