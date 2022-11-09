@@ -86,6 +86,7 @@ set(population_SRCS
 	src/population/population_class.cpp
 	src/population/population_class_container.cpp
 	src/population/population_type.cpp
+	src/population/population_type_container.cpp
 	src/population/population_unit.cpp
 )
 source_group(population FILES ${population_SRCS})
@@ -224,6 +225,7 @@ set(population_HDRS
 	src/population/population_class.h
 	src/population/population_class_container.h
 	src/population/population_type.h
+	src/population/population_type_container.h
 	src/population/population_unit.h
 )
 source_group(population FILES ${population_HDRS})
