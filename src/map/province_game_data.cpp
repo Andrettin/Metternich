@@ -186,6 +186,10 @@ void province_game_data::change_population_type_count(const population_type *typ
 		this->population_type_counts.erase(type);
 	}
 
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_province_score(change * population_unit::base_score);
+	}
+
 	if (game::get()->is_running()) {
 		emit population_type_counts_changed();
 	}
@@ -210,6 +214,10 @@ int province_game_data::get_score() const
 		if (tile->get_improvement() != nullptr) {
 			score += tile->get_improvement()->get_score();
 		}
+	}
+
+	for (const auto &[population_type, count] : this->get_population_type_counts()) {
+		score += population_unit::base_score * count;
 	}
 
 	return score;
