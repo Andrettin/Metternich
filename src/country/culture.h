@@ -29,6 +29,8 @@ public:
 		return this->group;
 	}
 
+	const population_type *get_population_class_type(const population_class *population_class) const;
+
 private:
 	cultural_group *group = nullptr;
 };
