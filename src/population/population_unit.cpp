@@ -24,6 +24,21 @@ const icon *population_unit::get_icon() const
 	return this->get_type()->get_icon();
 }
 
+void population_unit::set_type(const population_type *type)
+{
+	if (type == this->get_type()) {
+		return;
+	}
+
+	this->get_province()->get_game_data()->change_population_type_count(this->get_type(), -1);
+
+	this->type = type;
+
+	this->get_province()->get_game_data()->change_population_type_count(this->get_type(), 1);
+
+	emit type_changed();
+}
+
 void population_unit::set_province(const metternich::province *province)
 {
 	if (province == this->get_province()) {

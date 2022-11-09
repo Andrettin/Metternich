@@ -30,15 +30,7 @@ private:
 	}
 
 public:
-	void set_type(const population_type *type)
-	{
-		if (type == this->get_type()) {
-			return;
-		}
-
-		this->type = type;
-		emit type_changed();
-	}
+	void set_type(const population_type *type);
 
 	const icon *get_icon() const;
 
