@@ -15,7 +15,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(metternich::province* province READ get_province_unconst NOTIFY province_changed)
 
 public:
-	static constexpr int base_score = 10;
+	static constexpr int base_score = 1;
 
 	explicit population_unit(const population_type *type, const metternich::province *province);
 
