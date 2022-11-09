@@ -6,6 +6,7 @@
 namespace metternich {
 
 class country_palette;
+class population_class;
 class terrain_type;
 
 class defines final : public defines_base, public singleton<defines>
@@ -20,6 +21,8 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
+	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
+	Q_PROPERTY(int population_per_unit MEMBER population_per_unit READ get_population_per_unit)
 	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color NOTIFY changed)
 	Q_PROPERTY(QColor country_border_color MEMBER country_border_color READ get_country_border_color)
 	Q_PROPERTY(QColor selected_country_color MEMBER selected_country_color READ get_selected_country_color)
@@ -82,6 +85,16 @@ public:
 	const terrain_type *get_default_water_zone_terrain() const
 	{
 		return this->default_water_zone_terrain;
+	}
+
+	const population_class *get_default_population_class() const
+	{
+		return this->default_population_class;
+	}
+
+	int get_population_per_unit() const
+	{
+		return this->population_per_unit;
 	}
 
 	const QColor &get_minor_nation_color() const
@@ -158,6 +171,8 @@ private:
 	terrain_type *unexplored_terrain = nullptr;
 	terrain_type *default_province_terrain = nullptr;
 	terrain_type *default_water_zone_terrain = nullptr;
+	population_class *default_population_class = nullptr;
+	int population_per_unit = 10000;
 	QColor minor_nation_color;
 	QColor country_border_color;
 	QColor selected_country_color;
