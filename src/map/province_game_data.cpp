@@ -120,6 +120,8 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 void province_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
 {
 	this->change_population_type_count(population_unit->get_type(), 1);
+	this->change_population(defines::get()->get_population_per_unit());
+
 	this->population_units.push_back(std::move(population_unit));
 
 	if (game::get()->is_running()) {
@@ -132,6 +134,7 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 	for (size_t i = 0; i < this->population_units.size();) {
 		if (this->population_units[i].get() == population_unit) {
 			this->change_population_type_count(population_unit->get_type(), -1);
+			this->change_population(-defines::get()->get_population_per_unit());
 
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
 			this->population_units.erase(this->population_units.begin() + i);
@@ -161,6 +164,7 @@ void province_game_data::clear_population_units()
 {
 	this->population_units.clear();
 	this->population_type_counts.clear();
+	this->population = 0;
 }
 
 QVariantList province_game_data::get_population_type_counts_qvariant_list() const
@@ -187,9 +191,13 @@ void province_game_data::change_population_type_count(const population_type *typ
 	}
 }
 
-int province_game_data::get_population() const
+void province_game_data::change_population(const int change)
 {
-	return static_cast<int>(this->population_units.size()) * defines::get()->get_population_per_unit();
+	this->population += change;
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_population(change);
+	}
 }
 
 int province_game_data::get_score() const

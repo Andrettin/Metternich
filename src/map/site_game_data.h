@@ -13,7 +13,7 @@ class site_game_data final : public QObject
 
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
-	Q_PROPERTY(metternich::province *province READ get_province_unconst NOTIFY tile_pos_changed)
+	Q_PROPERTY(metternich::province* province READ get_province_unconst NOTIFY tile_pos_changed)
 
 public:
 	explicit site_game_data(const site *site) : site(site)

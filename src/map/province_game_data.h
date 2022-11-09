@@ -102,7 +102,12 @@ public:
 	QVariantList get_population_type_counts_qvariant_list() const;
 	void change_population_type_count(const population_type *type, const int change);
 
-	int get_population() const;
+	int get_population() const
+	{
+		return this->population;
+	}
+
+	void change_population(const int change);
 
 	int get_score() const;
 
@@ -126,6 +131,7 @@ private:
 	resource_map<int> resource_counts;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	population_type_map<int> population_type_counts;
+	int population = 0;
 };
 
 }

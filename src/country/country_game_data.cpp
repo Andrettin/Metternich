@@ -162,6 +162,7 @@ void country_game_data::add_province(const province *province)
 	const province_game_data *province_game_data = province->get_game_data();
 
 	this->change_province_score(province_game_data->get_score());
+	this->change_population(province_game_data->get_population());
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->change_resource_count(resource, count);
@@ -213,6 +214,7 @@ void country_game_data::remove_province(const province *province)
 	const province_game_data *province_game_data = province->get_game_data();
 
 	this->change_province_score(-province_game_data->get_score());
+	this->change_population(-province_game_data->get_population());
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->change_resource_count(resource, -count);
@@ -550,6 +552,15 @@ void country_game_data::change_province_score(const int change)
 
 	if (this->get_overlord() != nullptr) {
 		this->get_overlord()->get_game_data()->change_province_score(change * country::vassal_province_score_percent / 100);
+	}
+}
+
+void country_game_data::change_population(const int change)
+{
+	this->population += change;
+
+	if (game::get()->is_running()) {
+		emit population_changed();
 	}
 }
 

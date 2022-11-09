@@ -33,6 +33,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
 	Q_PROPERTY(int rank READ get_rank NOTIFY rank_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
+	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 
 public:
@@ -211,6 +212,13 @@ public:
 	int get_province_score() const;
 	void change_province_score(const int change);
 
+	int get_population() const
+	{
+		return this->population;
+	}
+
+	void change_population(const int change);
+
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
 	bool has_technology(const technology *technology) const
@@ -237,6 +245,7 @@ signals:
 	void diplomatic_map_image_changed();
 	void rank_changed();
 	void score_changed();
+	void population_changed();
 
 private:
 	const metternich::country *country = nullptr;
@@ -254,6 +263,7 @@ private:
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;
+	int population = 0;
 	technology_set technologies;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 };
