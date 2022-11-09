@@ -46,7 +46,7 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 	}
 
 	if (this->overlord != nullptr) {
-		this->overlord->get_game_data()->change_province_score(-this->get_province_score());
+		this->overlord->get_game_data()->change_score(-this->get_score() * country::vassal_score_percent / 100);
 
 		for (const auto &[resource, count] : this->get_resource_counts()) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, -count);
@@ -56,7 +56,7 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 	this->overlord = overlord;
 
 	if (this->overlord != nullptr) {
-		this->overlord->get_game_data()->change_province_score(this->get_province_score());
+		this->overlord->get_game_data()->change_score(this->get_score() * country::vassal_score_percent / 100);
 
 		for (const auto &[resource, count] : this->get_resource_counts()) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, count);
@@ -161,7 +161,7 @@ void country_game_data::add_province(const province *province)
 	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
 
-	this->change_province_score(province_game_data->get_score());
+	this->change_score(province_game_data->get_score());
 	this->change_population(province_game_data->get_population());
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
@@ -213,7 +213,7 @@ void country_game_data::remove_province(const province *province)
 	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
 
-	this->change_province_score(-province_game_data->get_score());
+	this->change_score(-province_game_data->get_score());
 	this->change_population(-province_game_data->get_population());
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
@@ -531,28 +531,24 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 	emit diplomatic_map_image_changed();
 }
 
-int country_game_data::get_province_score() const
+void country_game_data::change_score(const int change)
 {
-	int score = 0;
-
-	for (const province *province : this->get_provinces()) {
-		score += province->get_game_data()->get_score();
+	if (change == 0) {
+		return;
 	}
 
-	for (const metternich::country *vassal : this->get_vassals()) {
-		score += vassal->get_game_data()->get_province_score() * country::vassal_province_score_percent / 100;
-	}
+	const int old_vassal_score = this->get_score() * country::vassal_score_percent / 100;
 
-	return score;
-}
+	this->score += change;
 
-void country_game_data::change_province_score(const int change)
-{
-	this->change_score(change);
+	const int new_vassal_score = this->get_score() * country::vassal_score_percent / 100;
 
 	if (this->get_overlord() != nullptr) {
-		this->get_overlord()->get_game_data()->change_province_score(change * country::vassal_province_score_percent / 100);
+		const int vassal_score_change = new_vassal_score - old_vassal_score;
+		this->get_overlord()->get_game_data()->change_score(vassal_score_change);
 	}
+
+	emit score_changed();
 }
 
 void country_game_data::change_population(const int change)

@@ -187,7 +187,7 @@ void province_game_data::change_population_type_count(const population_type *typ
 	}
 
 	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_province_score(change * population_unit::base_score);
+		this->get_owner()->get_game_data()->change_score(change * population_unit::base_score);
 	}
 
 	if (game::get()->is_running()) {

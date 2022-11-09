@@ -198,19 +198,7 @@ public:
 		return this->score;
 	}
 
-	void change_score(const int change)
-	{
-		if (change == 0) {
-			return;
-		}
-
-		this->score += change;
-
-		emit score_changed();
-	}
-
-	int get_province_score() const;
-	void change_province_score(const int change);
+	void change_score(const int change);
 
 	int get_population() const
 	{
