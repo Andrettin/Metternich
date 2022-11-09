@@ -33,6 +33,7 @@ void population_type::initialize()
 void population_type::check() const
 {
 	assert_throw(this->get_icon() != nullptr);
+	assert_throw(this->get_small_icon() != nullptr);
 }
 
 }

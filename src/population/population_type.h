@@ -14,10 +14,11 @@ class population_type final : public named_data_entry, public data_type<populati
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::population_class* population_class MEMBER population_class)
-	Q_PROPERTY(metternich::culture* culture MEMBER culture)
-	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group)
-	Q_PROPERTY(metternich::icon* icon MEMBER icon)
+	Q_PROPERTY(metternich::population_class* population_class MEMBER population_class NOTIFY changed)
+	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
+	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
+	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(metternich::icon* small_icon MEMBER small_icon NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "population_type";
@@ -52,11 +53,20 @@ public:
 		return this->icon;
 	}
 
+	const metternich::icon *get_small_icon() const
+	{
+		return this->small_icon;
+	}
+
+signals:
+	void changed();
+
 private:
 	population_class *population_class = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *icon = nullptr;
+	metternich::icon *small_icon = nullptr;
 };
 
 }
