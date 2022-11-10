@@ -251,6 +251,10 @@ void game::apply_population_history()
 	country_map<int> country_populations;
 
 	for (const province *province : map::get()->get_provinces()) {
+		if (province->is_water_zone()) {
+			continue;
+		}
+
 		province_history *province_history = province->get_history();
 		province_game_data *province_game_data = province->get_game_data();
 
