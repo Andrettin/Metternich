@@ -11,7 +11,8 @@ class culture final : public culture_base, public data_type<culture>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::cultural_group* group MEMBER group)
+	Q_PROPERTY(metternich::cultural_group* group MEMBER group NOTIFY changed)
+	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "culture";
@@ -22,6 +23,7 @@ public:
 	{
 	}
 
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const cultural_group *get_group() const
@@ -29,10 +31,19 @@ public:
 		return this->group;
 	}
 
+	const QColor &get_color() const
+	{
+		return this->color;
+	}
+
 	const population_type *get_population_class_type(const population_class *population_class) const;
+
+signals:
+	void changed();
 
 private:
 	cultural_group *group = nullptr;
+	QColor color;
 };
 
 }
