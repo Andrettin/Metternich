@@ -258,6 +258,12 @@ void game::apply_population_history()
 		province_history *province_history = province->get_history();
 		province_game_data *province_game_data = province->get_game_data();
 
+		int population = province_history->get_population();
+
+		if (population == 0) {
+			continue;
+		}
+
 		const culture *culture = province_history->get_culture();
 
 		if (culture == nullptr) {
@@ -265,21 +271,17 @@ void game::apply_population_history()
 			continue;
 		}
 
-		int population = province_history->get_population();
+		const population_class *population_class = defines::get()->get_default_population_class();
+		const population_type *population_type = culture->get_population_class_type(population_class);
 
-		if (population != 0) {
-			const population_class *population_class = defines::get()->get_default_population_class();
-			const population_type *population_type = culture->get_population_class_type(population_class);
+		const int population_unit_count = population / defines::get()->get_population_per_unit();
 
-			const int population_unit_count = population / defines::get()->get_population_per_unit();
-
-			for (int i = 0; i < population_unit_count; ++i) {
-				province_game_data->create_population_unit(population_type, culture);
-			}
-
-			const int64_t remaining_population = population % defines::get()->get_population_per_unit();
-			population = remaining_population;
+		for (int i = 0; i < population_unit_count; ++i) {
+			province_game_data->create_population_unit(population_type, culture);
 		}
+
+		const int64_t remaining_population = population % defines::get()->get_population_per_unit();
+		population = remaining_population;
 
 		population = std::max<int64_t>(0, population);
 
