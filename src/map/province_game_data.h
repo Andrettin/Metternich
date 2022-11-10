@@ -91,7 +91,7 @@ public:
 
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
-	void create_population_unit(const population_type *type);
+	void create_population_unit(const population_type *type, const culture *culture);
 	void clear_population_units();
 
 	const population_type_map<int> &get_population_type_counts() const

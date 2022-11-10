@@ -154,9 +154,9 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 	return nullptr;
 }
 
-void province_game_data::create_population_unit(const population_type *type)
+void province_game_data::create_population_unit(const population_type *type, const culture *culture)
 {
-	auto population_unit = make_qunique<metternich::population_unit>(type, this->province);
+	auto population_unit = make_qunique<metternich::population_unit>(type, culture, this->province);
 	this->add_population_unit(std::move(population_unit));
 }
 

@@ -29,6 +29,7 @@
 #include "util/container_util.h"
 #include "util/exception_util.h"
 #include "util/event_loop.h"
+#include "util/log_util.h"
 #include "util/path_util.h"
 #include "util/size_util.h"
 #include "util/thread_pool.h"
@@ -253,9 +254,10 @@ void game::apply_population_history()
 		province_history *province_history = province->get_history();
 		province_game_data *province_game_data = province->get_game_data();
 
-		const culture *culture = province_game_data->get_culture();
+		const culture *culture = province_history->get_culture();
 
 		if (culture == nullptr) {
+			log::log_error("Province \"" + province->get_identifier() + "\" has no culture.");
 			continue;
 		}
 
@@ -268,7 +270,7 @@ void game::apply_population_history()
 			const int population_unit_count = population / defines::get()->get_population_per_unit();
 
 			for (int i = 0; i < population_unit_count; ++i) {
-				province_game_data->create_population_unit(population_type);
+				province_game_data->create_population_unit(population_type, culture);
 			}
 
 			const int64_t remaining_population = population % defines::get()->get_population_per_unit();
@@ -287,10 +289,18 @@ void game::apply_population_history()
 	}
 
 	for (const auto &[country, population] : country_populations) {
-		const population_class *population_class = defines::get()->get_default_population_class();
-		const population_type *population_type = country->get_culture()->get_population_class_type(population_class);
+		const province *capital_province = country->get_capital_province();
+		province_game_data *capital_province_game_data = capital_province->get_game_data();
 
-		province_game_data *capital_province_game_data = country->get_capital_province()->get_game_data();
+		const culture *culture = capital_province->get_history()->get_culture();
+
+		if (culture == nullptr) {
+			log::log_error("Province \"" + capital_province->get_identifier() + "\" has no culture.");
+			continue;
+		}
+
+		const population_class *population_class = defines::get()->get_default_population_class();
+		const population_type *population_type = culture->get_population_class_type(population_class);
 
 		if (capital_province_game_data->get_owner() != country) {
 			continue;
@@ -299,7 +309,7 @@ void game::apply_population_history()
 		const int population_unit_count = population / defines::get()->get_population_per_unit();
 
 		for (int i = 0; i < population_unit_count; ++i) {
-			capital_province_game_data->create_population_unit(population_type);
+			capital_province_game_data->create_population_unit(population_type, culture);
 		}
 	}
 }
