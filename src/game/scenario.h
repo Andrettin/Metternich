@@ -21,6 +21,7 @@ class scenario final : public named_data_entry, public data_type<scenario>
 	Q_PROPERTY(archimedes::timeline* timeline MEMBER timeline NOTIFY changed)
 	Q_PROPERTY(metternich::map_template* map_template MEMBER map_template NOTIFY changed)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
+	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "scenario";
@@ -56,6 +57,21 @@ public:
 		return this->hidden;
 	}
 
+	const std::string &get_description() const
+	{
+		return this->description;
+	}
+
+	Q_INVOKABLE void set_description(const std::string &description)
+	{
+		this->description = description;
+	}
+
+	QString get_description_qstring() const
+	{
+		return QString::fromStdString(this->get_description());
+	}
+
 signals:
 	void changed();
 
@@ -65,6 +81,7 @@ private:
 	archimedes::timeline *timeline = nullptr; //the timeline in which the scenario is set
 	metternich::map_template *map_template = nullptr;
 	bool hidden = false;
+	std::string description;
 };
 
 }

@@ -27,6 +27,7 @@
 #include "util/empty_image_provider.h"
 #include "util/event_loop.h"
 #include "util/exception_util.h"
+#include "util/gender.h"
 #include "util/log_output_handler.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
@@ -67,6 +68,7 @@ int main(int argc, char **argv)
 
 		enum_converter<country_type>();
 		enum_converter<diplomacy_state>();
+		enum_converter<gender>();
 		enum_converter<landed_title_tier>();
 		enum_converter<military_unit_domain>();
 		enum_converter<site_type>();
