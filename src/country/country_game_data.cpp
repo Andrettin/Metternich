@@ -164,6 +164,10 @@ void country_game_data::add_province(const province *province)
 	this->change_score(province_game_data->get_score());
 	this->change_population(province_game_data->get_population());
 
+	for (const auto &[culture, count] : province_game_data->get_population_culture_counts()) {
+		this->change_population_culture_count(culture, count);
+	}
+
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->change_resource_count(resource, count);
 
@@ -215,6 +219,10 @@ void country_game_data::remove_province(const province *province)
 
 	this->change_score(-province_game_data->get_score());
 	this->change_population(-province_game_data->get_population());
+
+	for (const auto &[culture, count] : province_game_data->get_population_culture_counts()) {
+		this->change_population_culture_count(culture, -count);
+	}
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->change_resource_count(resource, -count);
@@ -549,6 +557,30 @@ void country_game_data::change_score(const int change)
 	}
 
 	emit score_changed();
+}
+
+QVariantList country_game_data::get_population_culture_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_population_culture_counts());
+}
+
+void country_game_data::change_population_culture_count(const culture *culture, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->population_culture_counts[culture] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->population_culture_counts.erase(culture);
+	}
+
+	if (game::get()->is_running()) {
+		emit population_culture_counts_changed();
+	}
 }
 
 void country_game_data::change_population(const int change)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "country/country_container.h"
+#include "country/culture_container.h"
 #include "economy/resource_container.h"
 #include "technology/technology_container.h"
 #include "util/qunique_ptr.h"
@@ -10,6 +11,7 @@ namespace metternich {
 class civilian_unit;
 class country;
 class country_palette;
+class culture;
 class province;
 enum class diplomacy_state;
 
@@ -33,6 +35,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
 	Q_PROPERTY(int rank READ get_rank NOTIFY rank_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
+	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 
@@ -200,6 +203,14 @@ public:
 
 	void change_score(const int change);
 
+	const culture_map<int> &get_population_culture_counts() const
+	{
+		return this->population_culture_counts;
+	}
+
+	QVariantList get_population_culture_counts_qvariant_list() const;
+	void change_population_culture_count(const culture *culture, const int change);
+
 	int get_population() const
 	{
 		return this->population;
@@ -233,6 +244,7 @@ signals:
 	void diplomatic_map_image_changed();
 	void rank_changed();
 	void score_changed();
+	void population_culture_counts_changed();
 	void population_changed();
 
 private:
@@ -251,6 +263,7 @@ private:
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;
+	culture_map<int> population_culture_counts;
 	int population = 0;
 	technology_set technologies;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;

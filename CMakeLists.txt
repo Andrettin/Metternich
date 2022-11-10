@@ -23,6 +23,7 @@ set(country_SRCS
 	src/country/country_type.cpp
 	src/country/culture.cpp
 	src/country/culture_base.cpp
+	src/country/culture_container.cpp
 	src/country/diplomacy_state.cpp
 	src/country/landed_title.cpp
 	src/country/landed_title_tier.cpp
@@ -165,6 +166,7 @@ set(country_HDRS
 	src/country/cultural_group.h
 	src/country/culture.h
 	src/country/culture_base.h
+	src/country/culture_container.h
 	src/country/diplomacy_state.h
 	src/country/landed_title.h
 	src/country/landed_title_tier.h
@@ -322,6 +324,7 @@ find_package(Qt5 5.14 COMPONENTS Multimedia REQUIRED) #licensed under the GPL 2.
 find_package(Qt5 5.14 COMPONENTS Location REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
 find_package(Qt5 5.14 COMPONENTS Qml REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
 find_package(Qt5 5.14 COMPONENTS Quick REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt5 5.14 COMPONENTS Charts REQUIRED) #licensed under the GPL 3.0
 
 if(WITH_GEOJSON)
 	add_definitions(-DUSE_GEOJSON)
@@ -366,5 +369,5 @@ target_precompile_headers(metternich_test REUSE_FROM archimedes)
 
 set_target_properties(metternich_main PROPERTIES OUTPUT_NAME "metternich")
 
-target_link_libraries(metternich_main PUBLIC metternich)
+target_link_libraries(metternich_main PUBLIC metternich Qt5::Charts)
 target_link_libraries(metternich_test PUBLIC metternich)

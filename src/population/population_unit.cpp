@@ -47,7 +47,11 @@ void population_unit::set_culture(const metternich::culture *culture)
 		return;
 	}
 
+	this->get_province()->get_game_data()->change_population_culture_count(this->get_culture(), -1);
+
 	this->culture = culture;
+
+	this->get_province()->get_game_data()->change_population_culture_count(this->get_culture(), 1);
 
 	const population_type *culture_population_type = culture->get_population_class_type(this->get_type()->get_population_class());
 	if (culture_population_type != this->get_type()) {

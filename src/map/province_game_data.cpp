@@ -120,6 +120,7 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 void province_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
 {
 	this->change_population_type_count(population_unit->get_type(), 1);
+	this->change_population_culture_count(population_unit->get_culture(), 1);
 	this->change_population(defines::get()->get_population_per_unit());
 
 	this->population_units.push_back(std::move(population_unit));
@@ -134,6 +135,7 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 	for (size_t i = 0; i < this->population_units.size();) {
 		if (this->population_units[i].get() == population_unit) {
 			this->change_population_type_count(population_unit->get_type(), -1);
+			this->change_population_culture_count(population_unit->get_culture(), -1);
 			this->change_population(-defines::get()->get_population_per_unit());
 
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
@@ -164,6 +166,7 @@ void province_game_data::clear_population_units()
 {
 	this->population_units.clear();
 	this->population_type_counts.clear();
+	this->population_culture_counts.clear();
 	this->population = 0;
 }
 
@@ -192,6 +195,34 @@ void province_game_data::change_population_type_count(const population_type *typ
 
 	if (game::get()->is_running()) {
 		emit population_type_counts_changed();
+	}
+}
+
+QVariantList province_game_data::get_population_culture_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_population_culture_counts());
+}
+
+void province_game_data::change_population_culture_count(const culture *culture, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->population_culture_counts[culture] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->population_culture_counts.erase(culture);
+	}
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_population_culture_count(culture, change);
+	}
+
+	if (game::get()->is_running()) {
+		emit population_culture_counts_changed();
 	}
 }
 

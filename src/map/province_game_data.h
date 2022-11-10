@@ -1,5 +1,6 @@
 #pragma once
 
+#include "country/culture_container.h"
 #include "economy/resource_container.h"
 #include "population/population_type_container.h"
 #include "util/qunique_ptr.h"
@@ -19,8 +20,10 @@ class province_game_data final : public QObject
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
-	Q_PROPERTY(int population READ get_population NOTIFY population_units_changed)
+	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
+	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
+	Q_PROPERTY(int population READ get_population NOTIFY population_units_changed)
 
 public:
 	explicit province_game_data(const metternich::province *province);
@@ -94,6 +97,11 @@ public:
 	void create_population_unit(const population_type *type, const culture *culture);
 	void clear_population_units();
 
+	int get_population_unit_count() const
+	{
+		return static_cast<int>(this->population_units.size());
+	}
+
 	const population_type_map<int> &get_population_type_counts() const
 	{
 		return this->population_type_counts;
@@ -101,6 +109,14 @@ public:
 
 	QVariantList get_population_type_counts_qvariant_list() const;
 	void change_population_type_count(const population_type *type, const int change);
+
+	const culture_map<int> &get_population_culture_counts() const
+	{
+		return this->population_culture_counts;
+	}
+
+	QVariantList get_population_culture_counts_qvariant_list() const;
+	void change_population_culture_count(const culture *culture, const int change);
 
 	int get_population() const
 	{
@@ -119,6 +135,7 @@ signals:
 	void territory_changed();
 	void population_units_changed();
 	void population_type_counts_changed();
+	void population_culture_counts_changed();
 
 private:
 	const metternich::province *province = nullptr;
@@ -131,6 +148,7 @@ private:
 	resource_map<int> resource_counts;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	population_type_map<int> population_type_counts;
+	culture_map<int> population_culture_counts;
 	int population = 0;
 };
 
