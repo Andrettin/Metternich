@@ -14,6 +14,7 @@
 #include "map/tile.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
 
@@ -156,9 +157,9 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 	return nullptr;
 }
 
-void province_game_data::create_population_unit(const population_type *type, const culture *culture)
+void province_game_data::create_population_unit(const population_type *type, const culture *culture, const phenotype *phenotype)
 {
-	auto population_unit = make_qunique<metternich::population_unit>(type, culture, this->province);
+	auto population_unit = make_qunique<metternich::population_unit>(type, culture, phenotype, this->province);
 	this->add_population_unit(std::move(population_unit));
 }
 

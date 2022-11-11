@@ -11,11 +11,12 @@
 
 namespace metternich {
 
-population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::province *province)
-	: type(type), province(province), culture(culture)
+population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::phenotype *phenotype, const metternich::province *province)
+	: type(type), culture(culture), phenotype(phenotype), province(province)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
+	assert_throw(this->get_phenotype() != nullptr);
 	assert_throw(this->get_province() != nullptr);
 
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
@@ -23,7 +24,7 @@ population_unit::population_unit(const population_type *type, const metternich::
 
 const icon *population_unit::get_icon() const
 {
-	return this->get_type()->get_icon();
+	return this->get_type()->get_phenotype_icon(this->get_phenotype());
 }
 
 void population_unit::set_type(const population_type *type)
@@ -59,6 +60,22 @@ void population_unit::set_culture(const metternich::culture *culture)
 	}
 
 	emit culture_changed();
+}
+
+void population_unit::set_phenotype(const metternich::phenotype *phenotype)
+{
+	if (phenotype == this->get_phenotype()) {
+		return;
+	}
+
+	this->phenotype = phenotype;
+
+	emit phenotype_changed();
+}
+
+const icon *population_unit::get_small_icon() const
+{
+	return this->get_type()->get_phenotype_small_icon(this->get_phenotype());
 }
 
 void population_unit::set_province(const metternich::province *province)

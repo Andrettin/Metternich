@@ -276,7 +276,6 @@ void game::apply_population_history()
 
 				culture = province_culture;
 			}
-
 			assert_throw(culture != nullptr);
 
 			const population_type *population_type = group_key.type;
@@ -284,13 +283,18 @@ void game::apply_population_history()
 				const population_class *population_class = defines::get()->get_default_population_class();
 				population_type = culture->get_population_class_type(population_class);
 			}
-
 			assert_throw(population_type != nullptr);
+
+			const phenotype *phenotype = group_key.phenotype;
+			if (phenotype == nullptr) {
+				phenotype = culture->get_default_phenotype();
+			}
+			assert_throw(phenotype != nullptr);
 
 			const int population_unit_count = population / defines::get()->get_population_per_unit();
 
 			for (int i = 0; i < population_unit_count; ++i) {
-				province_game_data->create_population_unit(population_type, culture);
+				province_game_data->create_population_unit(population_type, culture, phenotype);
 			}
 
 			int64_t remaining_population = population % defines::get()->get_population_per_unit();
@@ -318,11 +322,21 @@ void game::apply_population_history()
 		const population_group_map<int> population_groups_copy = population_groups;
 		for (const auto &[group_key, population] : population_groups_copy) {
 			if (group_key.type != nullptr) {
-				population_groups[population_group_key(group_key.type, nullptr)];
+				population_groups[population_group_key(group_key.type, group_key.culture, nullptr)];
+				population_groups[population_group_key(group_key.type, nullptr, group_key.phenotype)];
+				population_groups[population_group_key(group_key.type, nullptr, nullptr)];
 			}
 
 			if (group_key.culture != nullptr) {
-				population_groups[population_group_key(nullptr, group_key.culture)];
+				population_groups[population_group_key(group_key.type, group_key.culture, nullptr)];
+				population_groups[population_group_key(nullptr, group_key.culture, group_key.phenotype)];
+				population_groups[population_group_key(nullptr, group_key.culture, nullptr)];
+			}
+
+			if (group_key.phenotype != nullptr) {
+				population_groups[population_group_key(group_key.type, nullptr, group_key.phenotype)];
+				population_groups[population_group_key(nullptr, group_key.culture, group_key.phenotype)];
+				population_groups[population_group_key(nullptr, nullptr, group_key.phenotype)];
 			}
 		}
 
@@ -340,7 +354,6 @@ void game::apply_population_history()
 
 				culture = province_culture;
 			}
-
 			assert_throw(culture != nullptr);
 
 			const population_type *population_type = group_key.type;
@@ -348,13 +361,18 @@ void game::apply_population_history()
 				const population_class *population_class = defines::get()->get_default_population_class();
 				population_type = culture->get_population_class_type(population_class);
 			}
-
 			assert_throw(population_type != nullptr);
+
+			const phenotype *phenotype = group_key.phenotype;
+			if (phenotype == nullptr) {
+				phenotype = culture->get_default_phenotype();
+			}
+			assert_throw(phenotype != nullptr);
 
 			const int population_unit_count = population / defines::get()->get_population_per_unit();
 
 			for (int i = 0; i < population_unit_count; ++i) {
-				capital_province_game_data->create_population_unit(population_type, culture);
+				capital_province_game_data->create_population_unit(population_type, culture, phenotype);
 			}
 
 			int64_t remaining_population = population % defines::get()->get_population_per_unit();
@@ -364,7 +382,9 @@ void game::apply_population_history()
 			if (remaining_population > 0) {
 				population_group_key group_key_copy = group_key;
 				
-				if (group_key.culture != nullptr) {
+				if (group_key.phenotype != nullptr) {
+					group_key_copy.phenotype = nullptr;
+				} else if (group_key.culture != nullptr) {
 					group_key_copy.culture = nullptr;
 				} else if (group_key.type != nullptr) {
 					group_key_copy.type = nullptr;

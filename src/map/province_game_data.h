@@ -9,6 +9,8 @@ namespace metternich {
 
 class country;
 class culture;
+class icon;
+class phenotype;
 class population_type;
 class population_unit;
 class province;
@@ -94,7 +96,7 @@ public:
 
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
-	void create_population_unit(const population_type *type, const culture *culture);
+	void create_population_unit(const population_type *type, const culture *culture, const phenotype *phenotype);
 	void clear_population_units();
 
 	int get_population_unit_count() const

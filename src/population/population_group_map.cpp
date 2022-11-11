@@ -3,6 +3,7 @@
 #include "population/population_group_map.h"
 
 #include "country/culture.h"
+#include "population/phenotype.h"
 #include "population/population_type.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
@@ -16,11 +17,26 @@ population_group_key::population_group_key(const std::string &key_str)
 	for (const std::string &subkey : subkeys) {
 		if (this->type == nullptr) {
 			this->type = population_type::try_get(subkey);
-		} else if (this->culture == nullptr) {
-			this->culture = culture::try_get(subkey);
-		} else {
-			assert_throw(false);
+			if (this->type != nullptr) {
+				continue;
+			}
 		}
+		
+		if (this->culture == nullptr) {
+			this->culture = culture::try_get(subkey);
+			if (this->culture != nullptr) {
+				continue;
+			}
+		}
+		
+		if (this->phenotype == nullptr) {
+			this->phenotype = phenotype::try_get(subkey);
+			if (this->phenotype != nullptr) {
+				continue;
+			}
+		}
+
+		assert_throw(false);
 	}
 }
 
@@ -46,6 +62,14 @@ bool population_group_key::operator<(const population_group_key &rhs) const
 		}
 
 		return this->culture->get_identifier() < this->culture->get_identifier();
+	}
+
+	if (this->phenotype != rhs.phenotype) {
+		if (this->phenotype == nullptr || rhs.phenotype == nullptr) {
+			return this->phenotype != nullptr;
+		}
+
+		return this->phenotype->get_identifier() < this->phenotype->get_identifier();
 	}
 
 	return false; //equal

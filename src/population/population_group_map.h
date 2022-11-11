@@ -2,15 +2,16 @@
 
 namespace metternich {
 
-class population_type;
 class culture;
+class phenotype;
+class population_type;
 
 struct population_group_key final
 {
 	population_group_key() = default;
 
-	explicit population_group_key(const population_type *type, const metternich::culture *culture)
-		: type(type), culture(culture)
+	explicit population_group_key(const population_type *type, const metternich::culture *culture, const metternich::phenotype *phenotype)
+		: type(type), culture(culture), phenotype(phenotype)
 	{
 	}
 
@@ -26,6 +27,10 @@ private:
 		}
 
 		if (this->culture != nullptr) {
+			++count;
+		}
+
+		if (this->phenotype != nullptr) {
 			++count;
 		}
 
@@ -51,6 +56,12 @@ public:
 			}
 		}
 
+		if (this->phenotype != other_group_key.phenotype) {
+			if (other_group_key.phenotype != nullptr) {
+				return false;
+			}
+		}
+
 		return true;
 	}
 
@@ -59,6 +70,7 @@ public:
 
 	const population_type *type = nullptr;
 	const metternich::culture *culture = nullptr;
+	const metternich::phenotype *phenotype = nullptr;
 };
 
 template <typename T>
