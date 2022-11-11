@@ -8,6 +8,8 @@
 #include "population/population_class.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
+#include "util/log_util.h"
+#include "util/random.h"
 
 namespace metternich {
 
@@ -41,8 +43,12 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 void population_type::initialize()
 {
 	assert_throw(this->population_class != nullptr);
-
 	this->population_class->add_population_type(this);
+
+	if (!this->color.isValid()) {
+		log::log_error("Population type \"" + this->get_identifier() + "\" has no color. A random one will be generated for it.");
+		this->color = random::get()->generate_color();
+	}
 
 	if (this->culture != nullptr) {
 		assert_throw(this->culture->get_population_class_type(this->get_population_class()) == nullptr);
@@ -61,6 +67,7 @@ void population_type::initialize()
 
 void population_type::check() const
 {
+	assert_throw(this->get_color().isValid());
 	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_small_icon() != nullptr);
 }

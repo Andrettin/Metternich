@@ -18,6 +18,7 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(metternich::population_class* population_class MEMBER population_class NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
+	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::icon* small_icon MEMBER small_icon NOTIFY changed)
 
@@ -48,6 +49,11 @@ public:
 	const metternich::cultural_group *get_cultural_group() const
 	{
 		return this->cultural_group;
+	}
+
+	const QColor &get_color() const
+	{
+		return this->color;
 	}
 
 	const metternich::icon *get_icon() const
@@ -87,6 +93,7 @@ private:
 	population_class *population_class = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
+	QColor color;
 	metternich::icon *icon = nullptr;
 	metternich::icon *small_icon = nullptr;
 	std::map<const phenotype *, const metternich::icon *> phenotype_icons;

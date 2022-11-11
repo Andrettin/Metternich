@@ -45,19 +45,19 @@ public:
 		}
 
 		if (this->type != other_group_key.type) {
-			if (other_group_key.type != nullptr) {
+			if (this->type != nullptr) {
 				return false;
 			}
 		}
 
 		if (this->culture != other_group_key.culture) {
-			if (other_group_key.culture != nullptr) {
+			if (this->culture != nullptr) {
 				return false;
 			}
 		}
 
 		if (this->phenotype != other_group_key.phenotype) {
-			if (other_group_key.phenotype != nullptr) {
+			if (this->phenotype != nullptr) {
 				return false;
 			}
 		}
