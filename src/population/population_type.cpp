@@ -4,10 +4,39 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "population/phenotype.h"
 #include "population/population_class.h"
+#include "ui/icon.h"
 #include "util/assert_util.h"
 
 namespace metternich {
+
+void population_type::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "phenotype_icons") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const phenotype *phenotype = phenotype::get(key);
+			const metternich::icon *icon = icon::get(value);
+			this->phenotype_icons[phenotype] = icon;
+		});
+	} else if (tag == "phenotype_small_icons") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const phenotype *phenotype = phenotype::get(key);
+			const metternich::icon *icon = icon::get(value);
+			this->phenotype_small_icons[phenotype] = icon;
+		});
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
+}
 
 void population_type::initialize()
 {

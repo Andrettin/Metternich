@@ -9,6 +9,7 @@ class population_class;
 class cultural_group;
 class culture;
 class icon;
+class phenotype;
 
 class population_type final : public named_data_entry, public data_type<population_type>
 {
@@ -30,6 +31,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -58,6 +60,26 @@ public:
 		return this->small_icon;
 	}
 
+	const metternich::icon *get_phenotype_icon(const phenotype *phenotype) const
+	{
+		const auto find_iterator = this->phenotype_icons.find(phenotype);
+		if (find_iterator != this->phenotype_icons.end()) {
+			return find_iterator->second;
+		}
+
+		return this->get_icon();
+	}
+
+	const metternich::icon *get_phenotype_small_icon(const phenotype *phenotype) const
+	{
+		const auto find_iterator = this->phenotype_small_icons.find(phenotype);
+		if (find_iterator != this->phenotype_small_icons.end()) {
+			return find_iterator->second;
+		}
+
+		return this->get_small_icon();
+	}
+
 signals:
 	void changed();
 
@@ -67,6 +89,8 @@ private:
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *icon = nullptr;
 	metternich::icon *small_icon = nullptr;
+	std::map<const phenotype *, const metternich::icon *> phenotype_icons;
+	std::map<const phenotype *, const metternich::icon *> phenotype_small_icons;
 };
 
 }
