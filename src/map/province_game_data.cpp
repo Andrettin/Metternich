@@ -15,6 +15,7 @@
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "ui/icon.h"
+#include "ui/icon_container.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
 
@@ -234,6 +235,30 @@ void province_game_data::change_population(const int change)
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_population(change);
 	}
+}
+
+QObject *province_game_data::get_population_type_small_icon(population_type *type) const
+{
+	icon_map<int> icon_counts;
+
+	for (const auto &population_unit : this->population_units) {
+		if (population_unit->get_type() != type) {
+			continue;
+		}
+
+		++icon_counts[population_unit->get_small_icon()];
+	}
+
+	const icon *best_icon = nullptr;
+	int best_icon_count = 0;
+	for (const auto &[icon, count] : icon_counts) {
+		if (count > best_icon_count) {
+			best_icon = icon;
+			best_icon_count = count;
+		}
+	}
+
+	return const_cast<icon *>(best_icon);
 }
 
 int province_game_data::get_score() const

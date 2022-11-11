@@ -127,6 +127,8 @@ public:
 
 	void change_population(const int change);
 
+	Q_INVOKABLE QObject *get_population_type_small_icon(metternich::population_type *type) const;
+
 	int get_score() const;
 
 	province_game_data &operator =(const province_game_data &other) = delete;

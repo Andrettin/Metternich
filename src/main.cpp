@@ -21,6 +21,7 @@
 #include "map/site_game_data.h"
 #include "map/site_type.h"
 #include "map/tile_image_provider.h"
+#include "population/population_type.h"
 #include "ui/icon_image_provider.h"
 #include "ui/interface_image_provider.h"
 #include "unit/military_unit_domain.h"
@@ -79,6 +80,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<game>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
+		qmlRegisterAnonymousType<population_type>("", 1);
 		qmlRegisterAnonymousType<preferences>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);
 		qmlRegisterAnonymousType<province_game_data>("", 1);
