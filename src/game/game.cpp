@@ -248,7 +248,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 void game::apply_population_history()
 {
-	country_map<int> country_populations;
+	country_map<population_group_map<int>> country_populations;
 
 	for (const province *province : map::get()->get_provinces()) {
 		if (province->is_water_zone()) {
@@ -258,64 +258,124 @@ void game::apply_population_history()
 		province_history *province_history = province->get_history();
 		province_game_data *province_game_data = province->get_game_data();
 
-		int population = province_history->get_population();
+		province_history->initialize_population();
 
-		if (population == 0) {
-			continue;
+		const culture *province_culture = province_history->get_culture();
+
+		for (const auto &[group_key, population] : province_history->get_population_groups()) {
+			if (population <= 0) {
+				continue;
+			}
+
+			const culture *culture = group_key.culture;
+			if (culture == nullptr) {
+				if (province_culture == nullptr) {
+					log::log_error("Province \"" + province->get_identifier() + "\" has no culture.");
+					continue;
+				}
+
+				culture = province_culture;
+			}
+
+			assert_throw(culture != nullptr);
+
+			const population_type *population_type = group_key.type;
+			if (population_type == nullptr) {
+				const population_class *population_class = defines::get()->get_default_population_class();
+				population_type = culture->get_population_class_type(population_class);
+			}
+
+			assert_throw(population_type != nullptr);
+
+			const int population_unit_count = population / defines::get()->get_population_per_unit();
+
+			for (int i = 0; i < population_unit_count; ++i) {
+				province_game_data->create_population_unit(population_type, culture);
+			}
+
+			int64_t remaining_population = population % defines::get()->get_population_per_unit();
+			remaining_population = std::max<int64_t>(0, remaining_population);
+
+			//add the remaining population to remaining population data for the owner remaining population
+			if (remaining_population != 0 && province_game_data->get_owner() != nullptr) {
+				country_populations[province_game_data->get_owner()][group_key] += remaining_population;
+			}
 		}
-
-		const culture *culture = province_history->get_culture();
-
-		if (culture == nullptr) {
-			log::log_error("Province \"" + province->get_identifier() + "\" has no culture.");
-			continue;
-		}
-
-		const population_class *population_class = defines::get()->get_default_population_class();
-		const population_type *population_type = culture->get_population_class_type(population_class);
-
-		const int population_unit_count = population / defines::get()->get_population_per_unit();
-
-		for (int i = 0; i < population_unit_count; ++i) {
-			province_game_data->create_population_unit(population_type, culture);
-		}
-
-		const int64_t remaining_population = population % defines::get()->get_population_per_unit();
-		population = remaining_population;
-
-		population = std::max<int64_t>(0, population);
-
-		//add the remaining population to remaining population data for the owner remaining population
-		if (population != 0 && province_game_data->get_owner() != nullptr) {
-			country_populations[province_game_data->get_owner()] += population;
-			population = 0;
-		}
-
-		province_history->set_population(population);
 	}
 
-	for (const auto &[country, population] : country_populations) {
+	for (auto &[country, population_groups] : country_populations) {
 		const province *capital_province = country->get_capital_province();
 		province_game_data *capital_province_game_data = capital_province->get_game_data();
-
-		const culture *culture = capital_province->get_history()->get_culture();
-
-		if (culture == nullptr) {
-			log::log_error("Province \"" + capital_province->get_identifier() + "\" has no culture.");
-			continue;
-		}
-
-		const population_class *population_class = defines::get()->get_default_population_class();
-		const population_type *population_type = culture->get_population_class_type(population_class);
 
 		if (capital_province_game_data->get_owner() != country) {
 			continue;
 		}
 
-		const int population_unit_count = population / defines::get()->get_population_per_unit();
+		const culture *province_culture = capital_province->get_history()->get_culture();
 
-		for (int i = 0; i < population_unit_count; ++i) {
-			capital_province_game_data->create_population_unit(population_type, culture);
+		//initialize entries for groups with less defined properties, since we might need to use them
+		population_groups[population_group_key()];
+		const population_group_map<int> population_groups_copy = population_groups;
+		for (const auto &[group_key, population] : population_groups_copy) {
+			if (group_key.type != nullptr) {
+				population_groups[population_group_key(group_key.type, nullptr)];
+			}
+
+			if (group_key.culture != nullptr) {
+				population_groups[population_group_key(nullptr, group_key.culture)];
+			}
+		}
+
+		for (const auto &[group_key, population] : population_groups) {
+			if (population <= 0) {
+				continue;
+			}
+
+			const culture *culture = group_key.culture;
+			if (culture == nullptr) {
+				if (province_culture == nullptr) {
+					log::log_error("Province \"" + capital_province->get_identifier() + "\" has no culture.");
+					continue;
+				}
+
+				culture = province_culture;
+			}
+
+			assert_throw(culture != nullptr);
+
+			const population_type *population_type = group_key.type;
+			if (population_type == nullptr) {
+				const population_class *population_class = defines::get()->get_default_population_class();
+				population_type = culture->get_population_class_type(population_class);
+			}
+
+			assert_throw(population_type != nullptr);
+
+			const int population_unit_count = population / defines::get()->get_population_per_unit();
+
+			for (int i = 0; i < population_unit_count; ++i) {
+				capital_province_game_data->create_population_unit(population_type, culture);
+			}
+
+			int64_t remaining_population = population % defines::get()->get_population_per_unit();
+			remaining_population = std::max<int64_t>(0, remaining_population);
+
+			//add the remaining population to broader groups
+			if (remaining_population > 0) {
+				population_group_key group_key_copy = group_key;
+				
+				if (group_key.culture != nullptr) {
+					group_key_copy.culture = nullptr;
+				} else if (group_key.type != nullptr) {
+					group_key_copy.type = nullptr;
+				} else {
+					continue;
+				}
+
+				const auto group_find_iterator = population_groups.find(group_key_copy);
+				assert_throw(group_find_iterator != population_groups.end());
+				group_find_iterator->second += remaining_population;
+			}
 		}
 	}
 }

@@ -67,6 +67,7 @@ set(map_SRCS
 	src/map/province.cpp
 	src/map/province_container.cpp
 	src/map/province_game_data.cpp
+	src/map/province_history.cpp
 	src/map/region.cpp
 	src/map/region_history.cpp
 	src/map/site.cpp
@@ -87,6 +88,7 @@ set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 set(population_SRCS
 	src/population/population_class.cpp
 	src/population/population_class_container.cpp
+	src/population/population_group_map.cpp
 	src/population/population_type.cpp
 	src/population/population_type_container.cpp
 	src/population/population_unit.cpp
@@ -227,6 +229,7 @@ source_group(map FILES ${map_HDRS})
 set(population_HDRS
 	src/population/population_class.h
 	src/population/population_class_container.h
+	src/population/population_group_map.h
 	src/population/population_type.h
 	src/population/population_type_container.h
 	src/population/population_unit.h

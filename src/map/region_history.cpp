@@ -9,39 +9,63 @@
 
 namespace metternich {
 
+void region_history::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "population_groups") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key_str = property.get_key();
+			const population_group_key key(key_str);
+
+			const std::string &value = property.get_value();
+			const int population = std::stoi(value);
+
+			if (population == 0) {
+				this->population_groups.erase(key);
+			} else {
+				this->population_groups[key] = population;
+			}
+		});
+	} else {
+		data_entry_history::process_gsml_scope(scope);
+	}
+}
+
 void region_history::distribute_population()
 {
-	int64_t population = this->get_population();
-
-	if (population == 0) {
-		return;
-	}
-
-	int unpopulated_province_count = 0;
-
-	//subtract the predefined population of provinces in the region from that of the region
-	for (const province *province : this->region->get_provinces()) {
-		const province_history *province_history = province->get_history();
-
-		if (province_history->get_population() != 0) {
-			population -= province_history->get_population();
-		} else {
-			++unpopulated_province_count;
+	for (const auto &[group_key, population] : this->population_groups) {
+		if (population == 0) {
+			continue;
 		}
-	}
 
-	if (population <= 0 || unpopulated_province_count == 0) {
-		return;
-	}
+		int64_t remaining_population = population;
+		int unpopulated_province_count = 0;
 
-	//apply the remaining population to provinces without a predefined population in history
-	const int64_t population_per_province = population / unpopulated_province_count;
+		//subtract the predefined population of provinces in the region from that of the region
+		for (const province *province : this->region->get_provinces()) {
+			const province_history *province_history = province->get_history();
 
-	for (const province *province : this->region->get_provinces()) {
-		province_history *province_history = province->get_history();
+			if (province_history->get_group_population(group_key) != 0) {
+				remaining_population -= province_history->get_group_population(group_key);
+			} else {
+				++unpopulated_province_count;
+			}
+		}
 
-		if (province_history->get_population() == 0) {
-			province_history->set_population(population_per_province);
+		if (remaining_population <= 0 || unpopulated_province_count == 0) {
+			return;
+		}
+
+		//apply the remaining population to provinces without a predefined population in history
+		const int64_t population_per_province = remaining_population / unpopulated_province_count;
+
+		for (const province *province : this->region->get_provinces()) {
+			province_history *province_history = province->get_history();
+
+			if (province_history->get_group_population(group_key) == 0) {
+				province_history->set_group_population(group_key, population_per_province);
+			}
 		}
 	}
 }
