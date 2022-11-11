@@ -227,6 +227,7 @@ set(map_HDRS
 source_group(map FILES ${map_HDRS})
 
 set(population_HDRS
+	src/population/phenotype.h
 	src/population/population_class.h
 	src/population/population_class_container.h
 	src/population/population_group_map.h
