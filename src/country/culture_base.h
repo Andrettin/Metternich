@@ -8,11 +8,14 @@
 namespace metternich {
 
 class civilian_unit_type;
+class phenotype;
 class population_type;
 
 class culture_base : public named_data_entry
 {
 	Q_OBJECT
+
+	Q_PROPERTY(metternich::phenotype* default_phenotype MEMBER default_phenotype)
 
 public:
 	explicit culture_base(const std::string &identifier) : named_data_entry(identifier)
@@ -21,6 +24,11 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
+
+	const phenotype *get_default_phenotype() const
+	{
+		return this->default_phenotype;
+	}
 
 	const population_type *get_population_class_type(const population_class *population_class) const
 	{
@@ -63,6 +71,7 @@ public:
 	}
 
 private:
+	phenotype *default_phenotype = nullptr;
 	population_class_map<const population_type *> population_class_types;
 	civilian_unit_class_map<const civilian_unit_type *> civilian_class_unit_types;
 };

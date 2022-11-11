@@ -25,7 +25,20 @@ void culture::check() const
 	assert_throw(this->get_group() != nullptr);
 	assert_throw(this->get_color().isValid());
 
+	if (this->get_default_phenotype() == nullptr) {
+		throw std::runtime_error("Culture \"" + this->get_identifier() + "\" has no default phenotype.");
+	}
+
 	culture_base::check();
+}
+
+const phenotype *culture::get_default_phenotype() const
+{
+	if (this->default_phenotype != nullptr) {
+		return this->default_phenotype;
+	}
+
+	return this->get_group()->get_default_phenotype();
 }
 
 const population_type *culture::get_population_class_type(const population_class *population_class) const

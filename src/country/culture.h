@@ -36,6 +36,8 @@ public:
 		return this->color;
 	}
 
+	const phenotype *get_default_phenotype() const;
+
 	const population_type *get_population_class_type(const population_class *population_class) const;
 
 signals:
@@ -44,6 +46,7 @@ signals:
 private:
 	cultural_group *group = nullptr;
 	QColor color;
+	phenotype *default_phenotype = nullptr;
 };
 
 }
