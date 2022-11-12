@@ -4,6 +4,7 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "economy/commodity.h"
 #include "population/phenotype.h"
 #include "population/population_class.h"
 #include "ui/icon.h"
@@ -34,6 +35,16 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			const phenotype *phenotype = phenotype::get(key);
 			const metternich::icon *icon = icon::get(value);
 			this->phenotype_small_icons[phenotype] = icon;
+		});
+	} else if (tag == "production_multipliers") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const commodity *commodity = commodity::get(key);
+			const centesimal_int multiplier(value);
+
+			this->production_multipliers[commodity] = multiplier;
 		});
 	} else {
 		data_entry::process_gsml_scope(scope);

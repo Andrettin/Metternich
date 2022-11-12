@@ -32,11 +32,10 @@ public:
 		this->technologies.push_back(technology);
 	}
 
-	Q_INVOKABLE void remove_region(technology *technology)
+	Q_INVOKABLE void remove_technology(technology *technology)
 	{
 		std::erase(this->technologies, technology);
 	}
-
 
 	const country_map<diplomacy_state> &get_diplomacy_states() const
 	{

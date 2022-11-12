@@ -2,6 +2,8 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/commodity_container.h"
+#include "util/fractional_int.h"
 
 namespace metternich {
 
@@ -86,6 +88,18 @@ public:
 		return this->get_small_icon();
 	}
 
+	const centesimal_int &get_production_multiplier(const commodity *commodity) const
+	{
+		static const centesimal_int default_multiplier(1);
+
+		const auto find_iterator = this->production_multipliers.find(commodity);
+		if (find_iterator != this->production_multipliers.end()) {
+			return find_iterator->second;
+		}
+
+		return default_multiplier;
+	}
+
 signals:
 	void changed();
 
@@ -98,6 +112,7 @@ private:
 	metternich::icon *small_icon = nullptr;
 	std::map<const phenotype *, const metternich::icon *> phenotype_icons;
 	std::map<const phenotype *, const metternich::icon *> phenotype_small_icons;
+	commodity_map<centesimal_int> production_multipliers;
 };
 
 }
