@@ -45,9 +45,10 @@ void region_history::distribute_population()
 		//subtract the predefined population of provinces in the region from that of the region
 		for (const province *province : this->region->get_provinces()) {
 			const province_history *province_history = province->get_history();
+			const int province_group_population = std::max(province_history->get_group_population(group_key), province_history->get_lower_bound_group_population(group_key));
 
-			if (province_history->get_group_population(group_key) != 0) {
-				remaining_population -= province_history->get_group_population(group_key);
+			if (province_group_population != 0) {
+				remaining_population -= province_group_population;
 			} else {
 				++unpopulated_province_count;
 			}
@@ -64,7 +65,12 @@ void region_history::distribute_population()
 			province_history *province_history = province->get_history();
 
 			if (province_history->get_group_population(group_key) == 0) {
-				province_history->set_group_population(group_key, population_per_province);
+				const int province_lower_bound_group_population = province_history->get_lower_bound_group_population(group_key);
+				province_history->set_group_population(group_key, population_per_province + province_lower_bound_group_population);
+
+				if (province_lower_bound_group_population > 0) {
+					province_history->set_lower_bound_group_population(group_key, 0);
+				}
 			}
 		}
 	}
