@@ -300,8 +300,16 @@ void game::apply_population_history()
 			int64_t remaining_population = population % defines::get()->get_population_per_unit();
 			remaining_population = std::max<int64_t>(0, remaining_population);
 
-			//add the remaining population to remaining population data for the owner remaining population
+			if (remaining_population != 0 && group_key.is_empty()) {
+				//if this is general population data, then add the remaining population to the stored population growth
+				province_game_data->change_population_growth(remaining_population * defines::get()->get_population_growth_threshold() / defines::get()->get_population_per_unit());
+
+				//there could still be population remaining that is so small that it can't be represented by population growth
+				remaining_population %= defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold();
+			}
+
 			if (remaining_population != 0 && province_game_data->get_owner() != nullptr) {
+				//add the remaining population to remaining population data for the owner remaining population
 				country_populations[province_game_data->get_owner()][group_key] += remaining_population;
 			}
 		}

@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/culture.h"
 #include "database/defines.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
@@ -18,6 +19,7 @@
 #include "ui/icon_container.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
+#include "util/vector_random_util.h"
 
 namespace metternich {
 
@@ -27,6 +29,13 @@ province_game_data::province_game_data(const metternich::province *province) : p
 
 province_game_data::~province_game_data()
 {
+}
+
+void province_game_data::do_turn()
+{
+	while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
+		this->grow_population();
+	}
 }
 
 void province_game_data::set_owner(const country *country)
@@ -236,6 +245,33 @@ void province_game_data::change_population(const int change)
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_population(change);
 	}
+}
+
+void province_game_data::change_population_growth(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->population_growth += change;
+
+	this->change_population(change * defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold());
+}
+
+void province_game_data::grow_population()
+{
+	if (this->population_units.empty()) {
+		throw std::runtime_error("Tried to grow population in a province which has no pre-existing population.");
+	}
+
+	const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
+	const culture *culture = population_unit->get_culture();
+	const phenotype *phenotype = population_unit->get_phenotype();
+	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
+
+	this->create_population_unit(population_type, culture, phenotype);
+
+	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
 
 QObject *province_game_data::get_population_type_small_icon(population_type *type) const

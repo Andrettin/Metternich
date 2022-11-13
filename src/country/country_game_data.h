@@ -45,6 +45,8 @@ public:
 	explicit country_game_data(const metternich::country *country);
 	~country_game_data();
 
+	void do_turn();
+
 	const metternich::country *get_overlord() const
 	{
 		return this->overlord;
@@ -242,8 +244,6 @@ public:
 
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
-
-	void do_turn();
 
 signals:
 	void overlord_changed();

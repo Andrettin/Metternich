@@ -17,6 +17,11 @@ struct population_group_key final
 
 	explicit population_group_key(const std::string &key_str);
 
+	bool is_empty() const
+	{
+		return this->get_defined_property_count() == 0;
+	}
+
 private:
 	int get_defined_property_count() const
 	{

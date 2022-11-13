@@ -32,6 +32,8 @@ public:
 	province_game_data(const province_game_data &other) = delete;
 	~province_game_data();
 
+	void do_turn();
+
 	bool is_on_map() const
 	{
 		return !this->get_tiles().empty();
@@ -127,6 +129,14 @@ public:
 
 	void change_population(const int change);
 
+	int get_population_growth() const
+	{
+		return this->population_growth;
+	}
+
+	void change_population_growth(const int change);
+	void grow_population();
+
 	Q_INVOKABLE QObject *get_population_type_small_icon(metternich::population_type *type) const;
 
 	int get_score() const;
@@ -154,6 +164,7 @@ private:
 	population_type_map<int> population_type_counts;
 	culture_map<int> population_culture_counts;
 	int population = 0;
+	int population_growth = 0; //population growth counter
 };
 
 }

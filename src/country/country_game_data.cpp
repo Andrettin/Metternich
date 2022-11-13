@@ -39,6 +39,17 @@ country_game_data::~country_game_data()
 {
 }
 
+void country_game_data::do_turn()
+{
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->do_turn();
+	}
+
+	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
+		civilian_unit->do_turn();
+	}
+}
+
 void country_game_data::set_overlord(const metternich::country *overlord)
 {
 	if (overlord == this->get_overlord()) {
@@ -647,13 +658,6 @@ void country_game_data::remove_civilian_unit(metternich::civilian_unit *civilian
 			this->civilian_units.erase(this->civilian_units.begin() + i);
 			return;
 		}
-	}
-}
-
-void country_game_data::do_turn()
-{
-	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
-		civilian_unit->do_turn();
 	}
 }
 
