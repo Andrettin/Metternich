@@ -388,21 +388,26 @@ void game::apply_population_history()
 
 			//add the remaining population to broader groups
 			if (remaining_population > 0) {
-				population_group_key group_key_copy = group_key;
-				
-				if (group_key.phenotype != nullptr) {
-					group_key_copy.phenotype = nullptr;
-				} else if (group_key.culture != nullptr) {
-					group_key_copy.culture = nullptr;
-				} else if (group_key.type != nullptr) {
-					group_key_copy.type = nullptr;
-				} else {
-					continue;
-				}
+				if (!group_key.is_empty()) {
+					population_group_key group_key_copy = group_key;
 
-				const auto group_find_iterator = population_groups.find(group_key_copy);
-				assert_throw(group_find_iterator != population_groups.end());
-				group_find_iterator->second += remaining_population;
+					if (group_key.phenotype != nullptr) {
+						group_key_copy.phenotype = nullptr;
+					} else if (group_key.culture != nullptr) {
+						group_key_copy.culture = nullptr;
+					} else if (group_key.type != nullptr) {
+						group_key_copy.type = nullptr;
+					} else {
+						assert_throw(false);
+					}
+
+					const auto group_find_iterator = population_groups.find(group_key_copy);
+					assert_throw(group_find_iterator != population_groups.end());
+					group_find_iterator->second += remaining_population;
+				} else {
+					//if this is general population data, then add the remaining population to the stored population growth
+					capital_province_game_data->change_population_growth(remaining_population *defines::get()->get_population_growth_threshold() / defines::get()->get_population_per_unit());
+				}
 			}
 		}
 	}
