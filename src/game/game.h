@@ -5,7 +5,9 @@
 namespace metternich {
 
 class country;
+class province;
 class scenario;
+struct population_group_key;
 
 class game final : public QObject, public singleton<game>
 {
@@ -51,6 +53,7 @@ public:
 
 	void apply_history(const metternich::scenario *scenario);
 	void apply_population_history();
+	int64_t apply_historical_population_group_to_province(const population_group_key &group_key, const int population, const province *province);
 
 	void do_turn();
 	Q_INVOKABLE void do_turn_async();

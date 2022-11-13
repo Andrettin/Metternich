@@ -2,6 +2,7 @@
 
 #include "database/data_entry_history.h"
 #include "population/population_group_map.h"
+#include "util/fractional_int.h"
 
 namespace metternich {
 
@@ -16,6 +17,7 @@ class province_history final : public data_entry_history
 	Q_PROPERTY(metternich::country* owner MEMBER owner)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
+	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 
 public:
 	explicit province_history(const province *province) : province(province)
@@ -126,12 +128,18 @@ public:
 		}
 	}
 
+	const centesimal_int &get_literacy_rate() const
+	{
+		return this->literacy_rate;
+	}
+
 private:
 	const metternich::province *province = nullptr;
 	country *owner = nullptr;
 	metternich::culture *culture = nullptr;
 	population_group_map<int> population_groups;
 	population_group_map<int> lower_bound_population_groups;
+	centesimal_int literacy_rate;
 };
 
 }

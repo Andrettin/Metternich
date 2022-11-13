@@ -260,53 +260,12 @@ void game::apply_population_history()
 
 		province_history->initialize_population();
 
-		const culture *province_culture = province_history->get_culture();
-
 		for (const auto &[group_key, population] : province_history->get_population_groups()) {
 			if (population <= 0) {
 				continue;
 			}
 
-			const culture *culture = group_key.culture;
-			if (culture == nullptr) {
-				if (province_culture == nullptr) {
-					log::log_error("Province \"" + province->get_identifier() + "\" has no culture.");
-					continue;
-				}
-
-				culture = province_culture;
-			}
-			assert_throw(culture != nullptr);
-
-			const population_type *population_type = group_key.type;
-			if (population_type == nullptr) {
-				const population_class *population_class = defines::get()->get_default_population_class();
-				population_type = culture->get_population_class_type(population_class);
-			}
-			assert_throw(population_type != nullptr);
-
-			const phenotype *phenotype = group_key.phenotype;
-			if (phenotype == nullptr) {
-				phenotype = culture->get_default_phenotype();
-			}
-			assert_throw(phenotype != nullptr);
-
-			const int population_unit_count = population / defines::get()->get_population_per_unit();
-
-			for (int i = 0; i < population_unit_count; ++i) {
-				province_game_data->create_population_unit(population_type, culture, phenotype);
-			}
-
-			int64_t remaining_population = population % defines::get()->get_population_per_unit();
-			remaining_population = std::max<int64_t>(0, remaining_population);
-
-			if (remaining_population != 0 && group_key.is_empty()) {
-				//if this is general population data, then add the remaining population to the stored population growth
-				province_game_data->change_population_growth(remaining_population * defines::get()->get_population_growth_threshold() / defines::get()->get_population_per_unit());
-
-				//there could still be population remaining that is so small that it can't be represented by population growth
-				remaining_population %= defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold();
-			}
+			const int64_t remaining_population = this->apply_historical_population_group_to_province(group_key, population, province);
 
 			if (remaining_population != 0 && province_game_data->get_owner() != nullptr) {
 				//add the remaining population to remaining population data for the owner remaining population
@@ -322,8 +281,6 @@ void game::apply_population_history()
 		if (capital_province_game_data->get_owner() != country) {
 			continue;
 		}
-
-		const culture *province_culture = capital_province->get_history()->get_culture();
 
 		//initialize entries for groups with less defined properties, since we might need to use them
 		population_groups[population_group_key()];
@@ -353,64 +310,100 @@ void game::apply_population_history()
 				continue;
 			}
 
-			const culture *culture = group_key.culture;
-			if (culture == nullptr) {
-				if (province_culture == nullptr) {
-					log::log_error("Province \"" + capital_province->get_identifier() + "\" has no culture.");
-					continue;
-				}
-
-				culture = province_culture;
-			}
-			assert_throw(culture != nullptr);
-
-			const population_type *population_type = group_key.type;
-			if (population_type == nullptr) {
-				const population_class *population_class = defines::get()->get_default_population_class();
-				population_type = culture->get_population_class_type(population_class);
-			}
-			assert_throw(population_type != nullptr);
-
-			const phenotype *phenotype = group_key.phenotype;
-			if (phenotype == nullptr) {
-				phenotype = culture->get_default_phenotype();
-			}
-			assert_throw(phenotype != nullptr);
-
-			const int population_unit_count = population / defines::get()->get_population_per_unit();
-
-			for (int i = 0; i < population_unit_count; ++i) {
-				capital_province_game_data->create_population_unit(population_type, culture, phenotype);
-			}
-
-			int64_t remaining_population = population % defines::get()->get_population_per_unit();
-			remaining_population = std::max<int64_t>(0, remaining_population);
+			const int64_t remaining_population = this->apply_historical_population_group_to_province(group_key, population, capital_province);
 
 			//add the remaining population to broader groups
-			if (remaining_population > 0) {
-				if (!group_key.is_empty()) {
-					population_group_key group_key_copy = group_key;
+			if (remaining_population > 0 && !group_key.is_empty()) {
+				population_group_key group_key_copy = group_key;
 
-					if (group_key.phenotype != nullptr) {
-						group_key_copy.phenotype = nullptr;
-					} else if (group_key.culture != nullptr) {
-						group_key_copy.culture = nullptr;
-					} else if (group_key.type != nullptr) {
-						group_key_copy.type = nullptr;
-					} else {
-						assert_throw(false);
-					}
-
-					const auto group_find_iterator = population_groups.find(group_key_copy);
-					assert_throw(group_find_iterator != population_groups.end());
-					group_find_iterator->second += remaining_population;
+				if (group_key.phenotype != nullptr) {
+					group_key_copy.phenotype = nullptr;
+				} else if (group_key.culture != nullptr) {
+					group_key_copy.culture = nullptr;
+				} else if (group_key.type != nullptr) {
+					group_key_copy.type = nullptr;
 				} else {
-					//if this is general population data, then add the remaining population to the stored population growth
-					capital_province_game_data->change_population_growth(remaining_population *defines::get()->get_population_growth_threshold() / defines::get()->get_population_per_unit());
+					assert_throw(false);
 				}
+
+				const auto group_find_iterator = population_groups.find(group_key_copy);
+				assert_throw(group_find_iterator != population_groups.end());
+				group_find_iterator->second += remaining_population;
 			}
 		}
 	}
+}
+
+int64_t game::apply_historical_population_group_to_province(const population_group_key &group_key, const int population, const province *province)
+{
+	if (population <= 0) {
+		return 0;
+	}
+
+	province_history *province_history = province->get_history();
+	province_game_data *province_game_data = province->get_game_data();
+
+	const culture *province_culture = province_history->get_culture();
+
+	const culture *culture = group_key.culture;
+	if (culture == nullptr) {
+		if (province_culture == nullptr) {
+			log::log_error("Province \"" + province->get_identifier() + "\" has no culture.");
+			return 0;
+		}
+
+		culture = province_culture;
+	}
+	assert_throw(culture != nullptr);
+
+	const phenotype *phenotype = group_key.phenotype;
+	if (phenotype == nullptr) {
+		phenotype = culture->get_default_phenotype();
+	}
+	assert_throw(phenotype != nullptr);
+
+	int population_unit_count = population / defines::get()->get_population_per_unit();
+
+	const population_type *population_type = group_key.type;
+	if (population_type == nullptr) {
+		centesimal_int literacy_rate = province_history->get_literacy_rate();
+		if (literacy_rate == 0 && province_game_data->get_owner() != nullptr) {
+			literacy_rate = province_game_data->get_owner()->get_history()->get_literacy_rate();
+		}
+
+		if (literacy_rate != 0) {
+			const int literate_population_unit_count = (population_unit_count * literacy_rate / 100).to_int();
+			population_unit_count -= literate_population_unit_count;
+
+			const population_class *literate_population_class = defines::get()->get_default_literate_population_class();
+			const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
+
+			for (int i = 0; i < literate_population_unit_count; ++i) {
+				province_game_data->create_population_unit(literate_population_type, culture, phenotype);
+			}
+		}
+
+		const population_class *population_class = defines::get()->get_default_population_class();
+		population_type = culture->get_population_class_type(population_class);
+	}
+	assert_throw(population_type != nullptr);
+
+	for (int i = 0; i < population_unit_count; ++i) {
+		province_game_data->create_population_unit(population_type, culture, phenotype);
+	}
+
+	int64_t remaining_population = population % defines::get()->get_population_per_unit();
+	remaining_population = std::max<int64_t>(0, remaining_population);
+
+	if (remaining_population != 0 && group_key.is_empty()) {
+		//if this is general population data, then add the remaining population to the stored population growth
+		province_game_data->change_population_growth(remaining_population * defines::get()->get_population_growth_threshold() / defines::get()->get_population_per_unit());
+
+		//there could still be population remaining that is so small that it can't be represented by population growth
+		remaining_population %= defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold();
+	}
+
+	return remaining_population;
 }
 
 void game::do_turn()

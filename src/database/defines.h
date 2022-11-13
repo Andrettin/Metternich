@@ -22,6 +22,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
 	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
+	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
 	Q_PROPERTY(int population_per_unit MEMBER population_per_unit READ get_population_per_unit)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold)
 	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color NOTIFY changed)
@@ -91,6 +92,11 @@ public:
 	const population_class *get_default_population_class() const
 	{
 		return this->default_population_class;
+	}
+
+	const population_class *get_default_literate_population_class() const
+	{
+		return this->default_literate_population_class;
 	}
 
 	int get_population_per_unit() const
@@ -178,6 +184,7 @@ private:
 	terrain_type *default_province_terrain = nullptr;
 	terrain_type *default_water_zone_terrain = nullptr;
 	population_class *default_population_class = nullptr;
+	population_class *default_literate_population_class = nullptr;
 	int population_per_unit = 10000;
 	int population_growth_threshold = 100;
 	QColor minor_nation_color;
