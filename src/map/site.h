@@ -36,6 +36,10 @@ public:
 	static constexpr const char database_folder[] = "sites";
 	static constexpr bool history_enabled = true;
 
+	static const std::set<std::string> history_database_dependencies;
+
+	static void load_history_database(const QDateTime &start_date, const timeline *current_timeline);
+
 public:
 	explicit site(const std::string &identifier);
 	~site();

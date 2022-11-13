@@ -5,13 +5,44 @@
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "country/landed_title.h"
+#include "map/province.h"
+#include "map/province_history.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
 #include "map/site_type.h"
+#include "map/tile.h"
 #include "map/world.h"
 #include "util/assert_util.h"
 
 namespace metternich {
+
+const std::set<std::string> site::history_database_dependencies = {
+	//must be loaded after provinces, since it relies on their population data having been loaded first
+	province::class_identifier
+};
+
+void site::load_history_database(const QDateTime &start_date, const timeline *current_timeline)
+{
+	data_type::load_history_database(start_date, current_timeline);
+
+	for (const site *site : site::get_all()) {
+		const tile *tile = site->get_game_data()->get_tile();
+
+		if (tile == nullptr) {
+			continue;
+		}
+
+		const province *tile_province = tile->get_province();
+
+		if (tile_province == nullptr) {
+			continue;
+		}
+
+		for (const auto &[group_key, population] : site->get_history()->get_population_groups()) {
+			tile_province->get_history()->change_lower_bound_group_population(group_key, population);
+		}
+	}
+}
 
 site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::none)
 {
