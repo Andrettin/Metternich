@@ -49,7 +49,9 @@ void region_history::distribute_population()
 
 			if (province_group_population != 0) {
 				remaining_population -= province_group_population;
-			} else {
+			}
+			
+			if (province_history->get_group_population(group_key) == 0) {
 				++unpopulated_province_count;
 			}
 		}
