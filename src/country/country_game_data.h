@@ -42,7 +42,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 
 public:
-	explicit country_game_data(const metternich::country *country);
+	explicit country_game_data(metternich::country *country);
 	~country_game_data();
 
 	void do_turn();
@@ -259,7 +259,7 @@ signals:
 	void population_changed();
 
 private:
-	const metternich::country *country = nullptr;
+	metternich::country *country = nullptr;
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;
 	QRect territory_rect;

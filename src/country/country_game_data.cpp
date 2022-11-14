@@ -30,7 +30,7 @@
 
 namespace metternich {
 
-country_game_data::country_game_data(const metternich::country *country) : country(country)
+country_game_data::country_game_data(metternich::country *country) : country(country)
 {
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 }

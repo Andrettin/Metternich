@@ -172,6 +172,10 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
+				if (!other_country->get_game_data()->is_alive()) {
+					continue;
+				}
+
 				country_game_data->set_diplomacy_state(other_country, diplomacy_state);
 				other_country->get_game_data()->set_diplomacy_state(country, get_diplomacy_state_counterpart(diplomacy_state));
 			}
@@ -447,7 +451,7 @@ void game::add_country(const country *country)
 	}
 }
 
-void game::remove_country(const country *country)
+void game::remove_country(country *country)
 {
 	std::erase(this->countries, country);
 
@@ -455,9 +459,19 @@ void game::remove_country(const country *country)
 		std::erase(this->great_powers, country);
 	}
 
+	for (const metternich::country *other_country : this->get_countries()) {
+		country_game_data *other_country_game_data = other_country->get_game_data();
+
+		if (other_country_game_data->get_diplomacy_state(country) != diplomacy_state::peace) {
+			other_country_game_data->set_diplomacy_state(country, diplomacy_state::peace);
+		}
+	}
+
 	if (this->is_running()) {
 		emit countries_changed();
 	}
+
+	country->reset_game_data();
 }
 
 QVariantList game::get_great_powers_qvariant_list() const

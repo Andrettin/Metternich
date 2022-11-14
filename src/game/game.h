@@ -75,7 +75,7 @@ public:
 
 	QVariantList get_countries_qvariant_list() const;
 	void add_country(const country *country);
-	void remove_country(const country *country);
+	void remove_country(country *country);
 
 	const std::vector<const country *> &get_great_powers() const
 	{
