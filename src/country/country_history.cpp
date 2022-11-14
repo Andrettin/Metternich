@@ -2,6 +2,7 @@
 
 #include "country/country_history.h"
 
+#include "country/consulate.h"
 #include "country/country.h"
 #include "country/diplomacy_state.h"
 #include "technology/technology.h"
@@ -16,6 +17,7 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 	if (tag == "diplomacy_state") {
 		const metternich::country *other_country = nullptr;
 		std::optional<diplomacy_state> state;
+
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
@@ -47,6 +49,28 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 		}
 
 		this->diplomacy_states[other_country] = state.value();
+	} else if (tag == "consulate") {
+		const metternich::country *other_country = nullptr;
+		const consulate *consulate = nullptr;
+
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			if (key == "country") {
+				other_country = country::get(value);
+			} else if (key == "consulate") {
+				consulate = consulate::get(value);
+			} else {
+				throw std::runtime_error("Invalid consulate property: \"" + key + "\".");
+			}
+		});
+
+		if (other_country == nullptr) {
+			throw std::runtime_error("Consulate history has no country.");
+		}
+
+		this->consulates[other_country] = consulate;
 	} else {
 		data_entry_history::process_gsml_scope(scope);
 	}

@@ -179,6 +179,15 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->set_diplomacy_state(other_country, diplomacy_state);
 				other_country->get_game_data()->set_diplomacy_state(country, get_diplomacy_state_counterpart(diplomacy_state));
 			}
+
+			for (const auto &[other_country, consulate] : country_history->get_consulates()) {
+				if (!other_country->get_game_data()->is_alive()) {
+					continue;
+				}
+
+				country_game_data->set_consulate(other_country, consulate);
+				other_country->get_game_data()->set_consulate(country, consulate);
+			}
 		}
 
 		for (const site *site : site::get_all()) {
@@ -464,6 +473,10 @@ void game::remove_country(country *country)
 
 		if (other_country_game_data->get_diplomacy_state(country) != diplomacy_state::peace) {
 			other_country_game_data->set_diplomacy_state(country, diplomacy_state::peace);
+		}
+
+		if (other_country_game_data->get_consulate(country) != nullptr) {
+			other_country_game_data->set_consulate(country, nullptr);
 		}
 	}
 

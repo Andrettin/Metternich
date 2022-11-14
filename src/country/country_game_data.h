@@ -10,6 +10,7 @@
 namespace metternich {
 
 class civilian_unit;
+class consulate;
 class country;
 class country_palette;
 class culture;
@@ -34,6 +35,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList vassal_resource_counts READ get_vassal_resource_counts_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList vassals READ get_vassals_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList colonies READ get_colonies_qvariant_list NOTIFY diplomacy_states_changed)
+	Q_PROPERTY(QVariantList consulates READ get_consulates_qvariant_list NOTIFY consulates_changed)
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
 	Q_PROPERTY(int rank READ get_rank NOTIFY rank_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
@@ -163,6 +165,21 @@ public:
 	diplomacy_state get_diplomacy_state(const metternich::country *other_country) const;
 	void set_diplomacy_state(const metternich::country *other_country, const diplomacy_state state);
 
+	QVariantList get_consulates_qvariant_list() const;
+
+	const consulate *get_consulate(const metternich::country *other_country) const
+	{
+		const auto find_iterator = this->consulates.find(other_country);
+
+		if (find_iterator != this->consulates.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	void set_consulate(const metternich::country *other_country, const consulate *consulate);
+
 	std::vector<const metternich::country *> get_vassals() const;
 	QVariantList get_vassals_qvariant_list() const;
 	QVariantList get_colonies_qvariant_list() const;
@@ -253,6 +270,7 @@ signals:
 	void type_name_changed();
 	void vassalage_type_name_changed();
 	void diplomacy_states_changed();
+	void consulates_changed();
 	void provinces_changed();
 	void diplomatic_map_image_changed();
 	void rank_changed();
@@ -272,6 +290,7 @@ private:
 	resource_map<int> resource_counts;
 	resource_map<int> vassal_resource_counts;
 	country_map<diplomacy_state> diplomacy_states;
+	country_map<const consulate *> consulates;
 	QImage diplomatic_map_image;
 	QImage selected_diplomatic_map_image;
 	QRect diplomatic_map_image_rect;

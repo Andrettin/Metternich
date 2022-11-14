@@ -15,6 +15,7 @@ include_directories(
 )
 
 set(country_SRCS
+	src/country/consulate.cpp
 	src/country/country.cpp
 	src/country/country_container.cpp
 	src/country/country_game_data.cpp
@@ -163,6 +164,7 @@ set(metternich_SRCS
 )
 
 set(country_HDRS
+	src/country/consulate.h
 	src/country/country.h
 	src/country/country_container.h
 	src/country/country_game_data.h

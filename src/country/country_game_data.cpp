@@ -403,6 +403,24 @@ void country_game_data::set_diplomacy_state(const metternich::country *other_cou
 	}
 }
 
+QVariantList country_game_data::get_consulates_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->consulates);
+}
+
+void country_game_data::set_consulate(const metternich::country *other_country, const consulate *consulate)
+{
+	if (consulate == nullptr) {
+		this->consulates.erase(other_country);
+	} else {
+		this->consulates[other_country] = consulate;
+	}
+
+	if (game::get()->is_running()) {
+		emit consulates_changed();
+	}
+}
+
 std::vector<const metternich::country *> country_game_data::get_vassals() const
 {
 	std::vector<const metternich::country *> vassals;

@@ -6,6 +6,7 @@
 
 namespace metternich {
 
+class consulate;
 class country;
 class technology;
 enum class diplomacy_state;
@@ -49,11 +50,17 @@ public:
 		return this->diplomacy_states;
 	}
 
+	const country_map<const consulate *> &get_consulates() const
+	{
+		return this->consulates;
+	}
+
 private:
 	const metternich::country *country = nullptr;
 	centesimal_int literacy_rate;
 	std::vector<technology *> technologies;
 	country_map<diplomacy_state> diplomacy_states;
+	country_map<const consulate *> consulates;
 };
 
 }
