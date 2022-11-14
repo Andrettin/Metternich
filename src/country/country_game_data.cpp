@@ -281,6 +281,11 @@ void country_game_data::remove_province(const province *province)
 	}
 }
 
+bool country_game_data::is_under_anarchy() const
+{
+	return this->country->get_capital_province()->get_game_data()->get_owner() != this->country;
+}
+
 void country_game_data::calculate_territory_rect()
 {
 	QRect territory_rect;
