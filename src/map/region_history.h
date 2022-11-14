@@ -12,6 +12,7 @@ class region_history final : public data_entry_history
 	Q_OBJECT
 
 	Q_PROPERTY(int population READ get_population WRITE set_population)
+	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 
 public:
 	explicit region_history(const metternich::region *region) : region(region)
@@ -45,9 +46,15 @@ public:
 
 	void distribute_population();
 
+	const centesimal_int &get_literacy_rate() const
+	{
+		return this->literacy_rate;
+	}
+
 private:
 	const metternich::region *region = nullptr;
 	population_group_map<int> population_groups;
+	centesimal_int literacy_rate;
 };
 
 }

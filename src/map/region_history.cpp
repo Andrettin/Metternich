@@ -34,6 +34,16 @@ void region_history::process_gsml_scope(const gsml_data &scope)
 
 void region_history::distribute_population()
 {
+	if (this->get_literacy_rate() != 0) {
+		for (const province *province : this->region->get_provinces()) {
+			province_history *province_history = province->get_history();
+
+			if (province_history->get_literacy_rate() == 0) {
+				province_history->set_literacy_rate(this->get_literacy_rate());
+			}
+		}
+	}
+
 	for (const auto &[group_key, population] : this->population_groups) {
 		if (population == 0) {
 			continue;

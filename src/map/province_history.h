@@ -133,6 +133,11 @@ public:
 		return this->literacy_rate;
 	}
 
+	void set_literacy_rate(const centesimal_int &literacy_rate)
+	{
+		this->literacy_rate = literacy_rate;
+	}
+
 private:
 	const metternich::province *province = nullptr;
 	country *owner = nullptr;
