@@ -277,6 +277,10 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 		case site_type::resource:
 			tile->set_resource(site->get_resource());
 
+			if (tile->get_resource()->is_coastal() && !this->is_tile_coastal(tile_pos)) {
+				log::log_error("Tile " + point::to_string(tile_pos) + " has coastal resource \"" + tile->get_resource()->get_identifier() + "\", but is not coastal.");
+			}
+
 			if (!vector::contains(tile->get_resource()->get_terrain_types(), tile->get_terrain())) {
 				log::log_error("Tile " + point::to_string(tile_pos) + " has resource \"" + tile->get_resource()->get_identifier() + "\", which doesn't match its \"" + tile->get_terrain()->get_identifier() + "\" terrain type.");
 			}
@@ -317,6 +321,34 @@ void map::set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian
 	tile->set_civilian_unit(civilian_unit);
 
 	emit tile_civilian_unit_changed(tile_pos);
+}
+
+bool map::is_tile_coastal(const QPoint &tile_pos) const
+{
+	const tile *tile = this->get_tile(tile_pos);
+
+	if (tile->get_terrain()->is_water()) {
+		return false;
+	}
+
+	bool result = false;
+
+	point::for_each_adjacent_until(tile_pos, [this, &result](const QPoint &adjacent_pos) {
+		if (!this->contains(adjacent_pos)) {
+			return false;
+		}
+
+		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+
+		if (adjacent_tile->get_terrain()->is_water()) {
+			result = true;
+			return true;
+		}
+
+		return false;
+	});
+
+	return result;
 }
 
 bool map::is_tile_on_country_border(const QPoint &tile_pos) const

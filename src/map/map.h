@@ -74,6 +74,8 @@ public:
 	void set_tile_improvement(const QPoint &tile_pos, const improvement *improvement);
 	void set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
 
+	bool is_tile_coastal(const QPoint &tile_pos) const;
+
 	bool is_tile_on_country_border(const QPoint &tile_pos) const;
 	void calculate_tile_country_border_directions(const QPoint &tile_pos);
 
