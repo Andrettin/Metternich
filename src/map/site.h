@@ -27,7 +27,7 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(metternich::site_type type MEMBER type READ get_type)
 	Q_PROPERTY(bool settlement READ is_settlement NOTIFY changed)
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
-	Q_PROPERTY(metternich::resource* resource MEMBER resource)
+	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(metternich::site_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
