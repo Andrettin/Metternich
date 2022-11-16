@@ -1,6 +1,7 @@
 #pragma once
 
 #include "database/data_entry_history.h"
+#include "infrastructure/building_slot_type_container.h"
 #include "population/population_group_map.h"
 
 namespace metternich {
@@ -25,6 +26,11 @@ public:
 	const metternich::improvement *get_improvement() const
 	{
 		return this->improvement;
+	}
+
+	const building_slot_type_map<const building_type *> &get_buildings() const
+	{
+		return this->buildings;
 	}
 
 	int get_population() const
@@ -68,6 +74,7 @@ public:
 private:
 	const metternich::site *site = nullptr;
 	metternich::improvement *improvement = nullptr;
+	building_slot_type_map<const building_type *> buildings;
 	population_group_map<int> population_groups;
 };
 
