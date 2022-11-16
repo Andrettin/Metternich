@@ -7,6 +7,7 @@
 #include "country/culture.h"
 #include "database/defines.h"
 #include "game/game.h"
+#include "infrastructure/building_slot.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -126,6 +127,11 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 	}
 
 	emit territory_changed();
+}
+
+void province_game_data::clear_buildings()
+{
+	this->building_slots.clear();
 }
 
 void province_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)

@@ -128,6 +128,7 @@ void game::clear()
 		for (const province *province : province::get_all()) {
 			province_game_data *province_game_data = province->get_game_data();
 			province_game_data->set_owner(nullptr);
+			province_game_data->clear_buildings();
 			province_game_data->clear_population_units();
 		}
 

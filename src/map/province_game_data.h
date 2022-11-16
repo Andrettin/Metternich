@@ -7,6 +7,7 @@
 
 namespace metternich {
 
+class building_slot;
 class country;
 class culture;
 class icon;
@@ -96,6 +97,8 @@ public:
 		return this->resource_counts;
 	}
 
+	void clear_buildings();
+
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
 	void create_population_unit(const population_type *type, const culture *culture, const phenotype *phenotype);
@@ -160,6 +163,7 @@ private:
 	std::vector<QPoint> border_tiles;
 	std::vector<QPoint> resource_tiles;
 	resource_map<int> resource_counts;
+	std::vector<qunique_ptr<building_slot>> building_slots;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	population_type_map<int> population_type_counts;
 	culture_map<int> population_culture_counts;
