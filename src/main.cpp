@@ -13,6 +13,7 @@
 #include "game/game.h"
 #include "game/scenario.h"
 #include "infrastructure/building_slot.h"
+#include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/diplomatic_map_image_provider.h"
 #include "map/map.h"
@@ -77,6 +78,7 @@ int main(int argc, char **argv)
 		enum_converter<site_type>();
 
 		qmlRegisterAnonymousType<building_slot>("", 1);
+		qmlRegisterAnonymousType<building_type>("", 1);
 		qmlRegisterAnonymousType<consulate>("", 1);
 		qmlRegisterAnonymousType<country>("", 1);
 		qmlRegisterAnonymousType<country_game_data>("", 1);

@@ -7,8 +7,10 @@
 #include "country/culture.h"
 #include "database/defines.h"
 #include "game/game.h"
+#include "infrastructure/building_class.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_slot_type.h"
+#include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -142,6 +144,21 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 QVariantList province_game_data::get_building_slots_qvariant_list() const
 {
 	return container::to_qvariant_list(this->building_slots);
+}
+
+void province_game_data::set_slot_building(const building_slot_type *slot_type, const building_type *building)
+{
+	if (building != nullptr) {
+		assert_throw(building->get_building_class()->get_slot_type() == slot_type);
+	}
+
+	const auto find_iterator = this->building_slot_map.find(slot_type);
+	if (find_iterator != this->building_slot_map.end()) {
+		find_iterator->second->set_building(building);
+		return;
+	}
+
+	assert_throw(false);
 }
 
 void province_game_data::clear_buildings()

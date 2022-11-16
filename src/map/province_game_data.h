@@ -9,6 +9,7 @@
 namespace metternich {
 
 class building_slot;
+class building_type;
 class country;
 class culture;
 class icon;
@@ -100,6 +101,7 @@ public:
 	}
 
 	QVariantList get_building_slots_qvariant_list() const;
+	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
 	void clear_buildings();
 
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
