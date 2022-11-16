@@ -57,6 +57,10 @@ source_group(game FILES ${game_SRCS})
 set_source_files_properties(${game_SRCS} PROPERTIES UNITY_GROUP "game")
 
 set(infrastructure_SRCS
+	src/infrastructure/building_class.cpp
+	src/infrastructure/building_class_container.cpp
+	src/infrastructure/building_type.cpp
+	src/infrastructure/building_type_container.cpp
 	src/infrastructure/improvement.cpp
 )
 source_group(infrastructure FILES ${infrastructure_SRCS})
@@ -203,6 +207,10 @@ set(game_HDRS
 source_group(game FILES ${game_HDRS})
 
 set(infrastructure_HDRS
+	src/infrastructure/building_class.h
+	src/infrastructure/building_class_container.h
+	src/infrastructure/building_type.h
+	src/infrastructure/building_type_container.h
 	src/infrastructure/improvement.h
 )
 source_group(infrastructure FILES ${infrastructure_HDRS})

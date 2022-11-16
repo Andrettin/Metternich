@@ -3,6 +3,7 @@
 #include "country/culture.h"
 
 #include "country/cultural_group.h"
+#include "infrastructure/building_class.h"
 #include "population/population_class.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
@@ -39,6 +40,24 @@ const phenotype *culture::get_default_phenotype() const
 	}
 
 	return this->get_group()->get_default_phenotype();
+}
+
+const building_type *culture::get_building_class_type(const building_class *building_class) const
+{
+	const building_type *type = culture_base::get_building_class_type(building_class);
+	if (type != nullptr) {
+		return type;
+	}
+
+	if (this->get_group() != nullptr) {
+		type = this->get_group()->get_building_class_type(building_class);
+		if (type != nullptr) {
+			return type;
+		}
+	}
+
+	return building_class->get_default_building_type();
+
 }
 
 const population_type *culture::get_population_class_type(const population_class *population_class) const

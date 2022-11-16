@@ -2,6 +2,8 @@
 
 #include "country/culture_base.h"
 
+#include "infrastructure/building_class.h"
+#include "infrastructure/building_type.h"
 #include "population/population_class.h"
 #include "population/population_type.h"
 #include "unit/civilian_unit_class.h"
@@ -14,7 +16,16 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "population_class_types") {
+	if (tag == "building_class_types") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const building_class *building_class = building_class::get(key);
+			const building_type *building_type = building_type::get(value);
+			this->set_building_class_type(building_class, building_type);
+		});
+	} else if (tag == "population_class_types") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
