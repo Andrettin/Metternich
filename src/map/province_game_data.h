@@ -2,6 +2,7 @@
 
 #include "country/culture_container.h"
 #include "economy/resource_container.h"
+#include "infrastructure/building_slot_type_container.h"
 #include "population/population_type_container.h"
 #include "util/qunique_ptr.h"
 
@@ -23,6 +24,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
+	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
@@ -97,6 +99,7 @@ public:
 		return this->resource_counts;
 	}
 
+	QVariantList get_building_slots_qvariant_list() const;
 	void clear_buildings();
 
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
@@ -164,6 +167,7 @@ private:
 	std::vector<QPoint> resource_tiles;
 	resource_map<int> resource_counts;
 	std::vector<qunique_ptr<building_slot>> building_slots;
+	building_slot_type_map<building_slot *> building_slot_map;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	population_type_map<int> population_type_counts;
 	culture_map<int> population_culture_counts;

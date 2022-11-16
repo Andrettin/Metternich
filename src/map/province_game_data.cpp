@@ -8,6 +8,7 @@
 #include "database/defines.h"
 #include "game/game.h"
 #include "infrastructure/building_slot.h"
+#include "infrastructure/building_slot_type.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -19,6 +20,7 @@
 #include "ui/icon.h"
 #include "ui/icon_container.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/map_util.h"
 #include "util/vector_random_util.h"
 
@@ -26,6 +28,14 @@ namespace metternich {
 
 province_game_data::province_game_data(const metternich::province *province) : province(province)
 {
+	//initialize building slots, placing them in random order
+	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
+	vector::shuffle(building_slot_types);
+
+	for (const building_slot_type *building_slot_type : building_slot_types) {
+		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->province));
+		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
+	}
 }
 
 province_game_data::~province_game_data()
@@ -129,9 +139,16 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 	emit territory_changed();
 }
 
+QVariantList province_game_data::get_building_slots_qvariant_list() const
+{
+	return container::to_qvariant_list(this->building_slots);
+}
+
 void province_game_data::clear_buildings()
 {
-	this->building_slots.clear();
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		building_slot->set_building(nullptr);
+	}
 }
 
 void province_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
