@@ -218,6 +218,15 @@ void game::apply_history(const metternich::scenario *scenario)
 					tile->get_owner()->get_game_data()->change_score(tile->get_improvement()->get_score());
 				}
 			}
+
+			if (site->is_settlement()) {
+				const province *province = tile->get_province();
+				province_game_data *province_game_data = province->get_game_data();
+
+				for (const auto &[building_slot_type, building] : site_history->get_buildings()) {
+					province_game_data->set_slot_building(building_slot_type, building);
+				}
+			}
 		}
 
 		this->apply_population_history();
