@@ -3,10 +3,41 @@
 #include "map/site_history.h"
 
 #include "database/gsml_data.h"
+#include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
+#include "map/site.h"
+#include "util/assert_util.h"
 
 namespace metternich {
+
+void site_history::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "buildings") {
+		const building_type *building = building_type::get(value);
+		const building_slot_type *slot_type = building->get_building_class()->get_slot_type();
+
+		switch (property.get_operator()) {
+			case gsml_operator::addition:
+				this->buildings[slot_type] = building;
+				break;
+			case gsml_operator::subtraction:
+				if (this->get_building(slot_type) != building) {
+					throw std::runtime_error("Tried to remove the \"" + building->get_identifier() + "\" building in the history of the \"" + this->site->get_identifier() + "\" site, but the building was not present.");
+				}
+
+				this->buildings.erase(slot_type);
+				break;
+			default:
+				assert_throw(false);
+		}
+	} else {
+		data_entry_history::process_gsml_property(property);
+	}
+}
 
 void site_history::process_gsml_scope(const gsml_data &scope)
 {

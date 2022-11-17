@@ -21,6 +21,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
 	const metternich::improvement *get_improvement() const
@@ -31,6 +32,16 @@ public:
 	const building_slot_type_map<const building_type *> &get_buildings() const
 	{
 		return this->buildings;
+	}
+
+	const building_type *get_building(const building_slot_type *slot_type) const
+	{
+		const auto find_iterator = this->buildings.find(slot_type);
+		if (find_iterator != this->buildings.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
 	}
 
 	int get_population() const
