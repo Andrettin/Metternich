@@ -43,6 +43,7 @@ set(economy_SRCS
 	src/economy/commodity.cpp
 	src/economy/commodity_container.cpp
 	src/economy/employment_type.cpp
+	src/economy/food_type.cpp
 	src/economy/resource.cpp
 	src/economy/resource_container.cpp
 )
@@ -197,6 +198,7 @@ set(economy_HDRS
 	src/economy/commodity.h
 	src/economy/commodity_container.h
 	src/economy/employment_type.h
+	src/economy/food_type.h
 	src/economy/resource.h
 	src/economy/resource_container.h
 )

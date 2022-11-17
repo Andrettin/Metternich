@@ -9,6 +9,7 @@
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
+#include "economy/food_type.h"
 #include "engine_interface.h"
 #include "game/game.h"
 #include "game/scenario.h"
@@ -72,6 +73,7 @@ int main(int argc, char **argv)
 
 		enum_converter<country_type>();
 		enum_converter<diplomacy_state>();
+		enum_converter<food_type>();
 		enum_converter<gender>();
 		enum_converter<landed_title_tier>();
 		enum_converter<military_unit_domain>();
