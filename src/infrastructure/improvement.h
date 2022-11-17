@@ -6,6 +6,7 @@
 namespace metternich {
 
 class commodity;
+class employment_type;
 class resource;
 class technology;
 class terrain_type;
@@ -17,6 +18,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
+	Q_PROPERTY(metternich::employment_type* employment_type MEMBER employment_type NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
 	Q_PROPERTY(metternich::improvement* required_improvement MEMBER required_improvement NOTIFY changed)
@@ -63,6 +65,11 @@ public:
 		return this->terrain_image_filepaths.contains(terrain);
 	}
 
+	const metternich::employment_type *get_employment_type() const
+	{
+		return this->employment_type;
+	}
+
 	const commodity *get_output_commodity() const;
 
 	int get_output_value() const
@@ -102,6 +109,7 @@ private:
 	metternich::resource *resource = nullptr; //the resource for which this improvement can be built
 	std::filesystem::path image_filepath;
 	std::map<const terrain_type *, std::filesystem::path> terrain_image_filepaths;
+	metternich::employment_type *employment_type = nullptr;
 	int output_value = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
 	int variation_count = 1;

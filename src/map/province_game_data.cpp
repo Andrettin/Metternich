@@ -6,6 +6,10 @@
 #include "country/country_game_data.h"
 #include "country/culture.h"
 #include "database/defines.h"
+#include "economy/commodity.h"
+#include "economy/commodity_container.h"
+#include "economy/employment_type.h"
+#include "economy/resource.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot.h"
@@ -25,6 +29,7 @@
 #include "util/container_util.h"
 #include "util/map_util.h"
 #include "util/vector_random_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -46,9 +51,52 @@ province_game_data::~province_game_data()
 
 void province_game_data::do_turn()
 {
+	this->assign_workers();
+	this->do_production();
+
 	while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
 		this->grow_population();
 	}
+
+	while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
+		//starvation
+		this->decrease_population();
+	}
+}
+
+void province_game_data::do_production()
+{
+	commodity_map<centesimal_int> output_per_commodity;
+
+	for (const QPoint &tile_pos : this->resource_tiles) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+
+		if (tile->get_improvement() == nullptr) {
+			continue;
+		}
+
+		if (tile->get_improvement()->get_employment_type() == nullptr) {
+			continue;
+		}
+
+		const employment_type *employment_type = tile->get_improvement()->get_employment_type();
+
+		for (const population_unit *employee : tile->get_employees()) {
+			output_per_commodity[employment_type->get_output_commodity()] += employee->get_employment_output(employment_type);
+		}
+	}
+
+	//handle food
+	centesimal_int food_output;
+	for (const auto &[commodity, output] : output_per_commodity) {
+		if (commodity->is_food()) {
+			food_output += output;
+		}
+	}
+
+	const int food_consumption = this->get_food_consumption();
+	const int net_food = food_output.to_int() - food_consumption;
+	this->change_population_growth(net_food);
 }
 
 void province_game_data::set_owner(const country *country)
@@ -185,6 +233,10 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 {
 	for (size_t i = 0; i < this->population_units.size();) {
 		if (this->population_units[i].get() == population_unit) {
+			if (population_unit->is_employed()) {
+				this->unassign_worker(population_unit);
+			}
+
 			this->change_population_type_count(population_unit->get_type(), -1);
 			this->change_population_culture_count(population_unit->get_culture(), -1);
 			this->change_population(-defines::get()->get_population_per_unit());
@@ -219,6 +271,7 @@ void province_game_data::clear_population_units()
 	this->population_type_counts.clear();
 	this->population_culture_counts.clear();
 	this->population = 0;
+	this->population_growth = 0;
 }
 
 QVariantList province_game_data::get_population_type_counts_qvariant_list() const
@@ -280,10 +333,18 @@ void province_game_data::change_population_culture_count(const culture *culture,
 
 void province_game_data::change_population(const int change)
 {
+	if (change == 0) {
+		return;
+	}
+
 	this->population += change;
 
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_population(change);
+	}
+
+	if (game::get()->is_running()) {
+		emit population_changed();
 	}
 }
 
@@ -310,8 +371,20 @@ void province_game_data::grow_population()
 	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
 
 	this->create_population_unit(population_type, culture, phenotype);
+	this->assign_worker(this->population_units.back().get());
 
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
+}
+
+void province_game_data::decrease_population()
+{
+	this->change_population_growth(defines::get()->get_population_growth_threshold());
+
+	if (this->population_units.empty()) {
+		return;
+	}
+
+	this->pop_population_unit(this->population_units.back().get());
 }
 
 QObject *province_game_data::get_population_type_small_icon(population_type *type) const
@@ -336,6 +409,91 @@ QObject *province_game_data::get_population_type_small_icon(population_type *typ
 	}
 
 	return const_cast<icon *>(best_icon);
+}
+
+void province_game_data::assign_workers()
+{
+	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
+		if (population_unit->is_employed()) {
+			continue;
+		}
+
+		this->assign_worker(population_unit.get());
+	}
+}
+
+void province_game_data::assign_worker(population_unit *population_unit)
+{
+	for (const QPoint &tile_pos : this->resource_tiles) {
+		tile *tile = map::get()->get_tile(tile_pos);
+
+		if (!tile->get_resource()->get_commodity()->is_food()) {
+			//give priority to food-producing tiles
+			continue;
+		}
+
+		const bool assigned = this->try_assign_worker_to_tile(population_unit, tile);
+		if (assigned) {
+			return;
+		}
+	}
+
+	for (const QPoint &tile_pos : this->resource_tiles) {
+		tile *tile = map::get()->get_tile(tile_pos);
+
+		if (tile->get_resource()->get_commodity()->is_food()) {
+			//already processed
+			continue;
+		}
+
+		const bool assigned = this->try_assign_worker_to_tile(population_unit, tile);
+		if (assigned) {
+			return;
+		}
+	}
+}
+
+bool province_game_data::try_assign_worker_to_tile(population_unit *population_unit, tile *tile)
+{
+	if (tile->get_improvement() == nullptr) {
+		return false;
+	}
+
+	if (tile->get_improvement()->get_employment_type() == nullptr) {
+		return false;
+	}
+
+	if (tile->get_employee_count() >= tile->get_employment_capacity()) {
+		return false;
+	}
+
+	if (!vector::contains(tile->get_improvement()->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
+		return false;
+	}
+
+	this->assign_worker_to_tile(population_unit, tile);
+	return true;
+}
+
+void province_game_data::assign_worker_to_tile(population_unit *population_unit, tile *tile)
+{
+	tile->add_employee(population_unit);
+	population_unit->set_employed(true);
+}
+
+void province_game_data::unassign_worker(population_unit *population_unit)
+{
+	for (const QPoint &tile_pos : this->resource_tiles) {
+		tile *tile = map::get()->get_tile(tile_pos);
+
+		if (!vector::contains(tile->get_employees(), population_unit)) {
+			continue;
+		}
+
+		tile->remove_employee(population_unit);
+		population_unit->set_employed(false);
+		break;
+	}
 }
 
 int province_game_data::get_score() const

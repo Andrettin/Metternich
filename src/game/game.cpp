@@ -104,6 +104,11 @@ void game::start()
 
 		map::get()->create_minimap_image();
 
+		for (const province *province : map::get()->get_provinces()) {
+			province_game_data *province_game_data = province->get_game_data();
+			province_game_data->assign_workers();
+		}
+
 		this->set_running(true);
 	});
 }

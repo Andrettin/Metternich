@@ -3,6 +3,7 @@
 namespace metternich {
 
 class culture;
+class employment_type;
 class icon;
 class phenotype;
 class population_type;
@@ -95,6 +96,18 @@ private:
 public:
 	void set_province(const metternich::province *province);
 
+	bool is_employed() const
+	{
+		return this->employed;
+	}
+
+	void set_employed(const bool employed)
+	{
+		this->employed = employed;
+	}
+
+	centesimal_int get_employment_output(const employment_type *employment_type) const;
+
 signals:
 	void type_changed();
 	void culture_changed();
@@ -107,6 +120,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::province *province = nullptr;
+	bool employed = false;
 };
 
 }

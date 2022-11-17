@@ -2,6 +2,7 @@
 
 #include "infrastructure/improvement.h"
 
+#include "economy/employment_type.h"
 #include "economy/resource.h"
 #include "map/terrain_type.h"
 #include "util/assert_util.h"
@@ -36,6 +37,11 @@ void improvement::check() const
 
 	if (this->get_output_commodity() != nullptr) {
 		assert_throw(this->get_output_value() > 0);
+	}
+
+	if (this->get_employment_type() != nullptr) {
+		assert_throw(this->get_resource() != nullptr);
+		assert_throw(this->get_employment_type()->get_output_commodity() == this->get_resource()->get_commodity());
 	}
 
 	assert_log(!this->get_image_filepath().empty());

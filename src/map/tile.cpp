@@ -63,4 +63,13 @@ void tile::set_improvement(const metternich::improvement *improvement)
 	}
 }
 
+int tile::get_employment_capacity() const
+{
+	if (this->get_improvement() != nullptr) {
+		return this->get_improvement()->get_output_value();
+	}
+
+	return 0;
+}
+
 }

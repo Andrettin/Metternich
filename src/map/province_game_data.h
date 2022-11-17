@@ -17,6 +17,7 @@ class phenotype;
 class population_type;
 class population_unit;
 class province;
+class tile;
 
 class province_game_data final : public QObject
 {
@@ -29,7 +30,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
-	Q_PROPERTY(int population READ get_population NOTIFY population_units_changed)
+	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 
 public:
 	explicit province_game_data(const metternich::province *province);
@@ -37,6 +38,7 @@ public:
 	~province_game_data();
 
 	void do_turn();
+	void do_production();
 
 	bool is_on_map() const
 	{
@@ -144,8 +146,21 @@ public:
 
 	void change_population_growth(const int change);
 	void grow_population();
+	void decrease_population();
 
 	Q_INVOKABLE QObject *get_population_type_small_icon(metternich::population_type *type) const;
+
+	void assign_workers();
+	void assign_worker(population_unit *population_unit);
+	bool try_assign_worker_to_tile(population_unit *population_unit, tile *tile);
+	void assign_worker_to_tile(population_unit *population_unit, tile *tile);
+
+	void unassign_worker(population_unit *population_unit);
+
+	int get_food_consumption() const
+	{
+		return this->get_population_unit_count();
+	}
 
 	int get_score() const;
 
@@ -158,6 +173,7 @@ signals:
 	void population_units_changed();
 	void population_type_counts_changed();
 	void population_culture_counts_changed();
+	void population_changed();
 
 private:
 	const metternich::province *province = nullptr;
