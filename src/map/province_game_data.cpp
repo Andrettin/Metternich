@@ -94,7 +94,7 @@ void province_game_data::do_production()
 		}
 	}
 
-	const int food_consumption = this->get_food_consumption();
+	const int food_consumption = std::max(0, this->get_food_consumption() - this->get_free_food_consumption());
 	const int net_food = food_output.to_int() - food_consumption;
 	this->change_population_growth(net_food);
 }
@@ -479,6 +479,11 @@ void province_game_data::assign_worker_to_tile(population_unit *population_unit,
 {
 	tile->add_employee(population_unit);
 	population_unit->set_employed(true);
+
+	if (tile->get_resource()->get_commodity()->is_food()) {
+		//food-producing workers don't consume food
+		this->free_food_consumption += 1;
+	}
 }
 
 void province_game_data::unassign_worker(population_unit *population_unit)
@@ -492,6 +497,10 @@ void province_game_data::unassign_worker(population_unit *population_unit)
 
 		tile->remove_employee(population_unit);
 		population_unit->set_employed(false);
+
+		if (tile->get_resource()->get_commodity()->is_food()) {
+			this->free_food_consumption -= 1;
+		}
 		break;
 	}
 }

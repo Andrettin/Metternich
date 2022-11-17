@@ -162,6 +162,11 @@ public:
 		return this->get_population_unit_count();
 	}
 
+	int get_free_food_consumption() const
+	{
+		return this->free_food_consumption;
+	}
+
 	int get_score() const;
 
 	province_game_data &operator =(const province_game_data &other) = delete;
@@ -191,6 +196,7 @@ private:
 	culture_map<int> population_culture_counts;
 	int population = 0;
 	int population_growth = 0; //population growth counter
+	int free_food_consumption = 0;
 };
 
 }
