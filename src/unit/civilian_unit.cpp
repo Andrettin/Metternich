@@ -128,7 +128,16 @@ bool civilian_unit::can_build_improvement_on_tile(const improvement *improvement
 			return false;
 		}
 
-		if (improvement->get_output_value() <= tile->get_improvement()->get_output_value()) {
+		if (improvement->get_employment_capacity() < tile->get_improvement()->get_employment_capacity()) {
+			return false;
+		}
+
+		if (improvement->get_output_multiplier() < tile->get_improvement()->get_output_multiplier()) {
+			return false;
+		}
+
+		if (improvement->get_employment_capacity() == tile->get_improvement()->get_employment_capacity() && improvement->get_output_multiplier() == tile->get_improvement()->get_output_multiplier()) {
+			//the improvement must be better in some way
 			return false;
 		}
 	}

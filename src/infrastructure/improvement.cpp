@@ -36,12 +36,13 @@ void improvement::check() const
 	assert_throw(this->get_resource() != nullptr || !this->get_terrain_types().empty());
 
 	if (this->get_output_commodity() != nullptr) {
-		assert_throw(this->get_output_value() > 0);
+		assert_throw(this->get_output_multiplier() > 0);
 	}
 
 	if (this->get_employment_type() != nullptr) {
 		assert_throw(this->get_resource() != nullptr);
 		assert_throw(this->get_employment_type()->get_output_commodity() == this->get_resource()->get_commodity());
+		assert_throw(this->get_employment_capacity() > 0);
 	}
 
 	assert_log(!this->get_image_filepath().empty());
