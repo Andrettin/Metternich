@@ -59,7 +59,7 @@ void province_game_data::do_turn()
 		this->grow_population();
 	}
 
-	while (this->get_population_growth() < 0) {
+	while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
 		//starvation
 		this->decrease_population();
 	}
