@@ -113,6 +113,17 @@ public:
 
 	centesimal_int get_employment_output(const employment_type *employment_type) const;
 
+	centesimal_int get_employment_output() const
+	{
+		if (this->get_employment_type() != nullptr) {
+			return this->get_employment_output(this->get_employment_type());
+		}
+
+		return centesimal_int(0);
+	}
+
+	bool produces_food() const;
+
 signals:
 	void type_changed();
 	void culture_changed();

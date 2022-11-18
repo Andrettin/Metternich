@@ -3,6 +3,7 @@
 #include "population/population_unit.h"
 
 #include "country/culture.h"
+#include "economy/commodity.h"
 #include "economy/employment_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -90,9 +91,18 @@ void population_unit::set_province(const metternich::province *province)
 	emit province_changed();
 }
 
-centesimal_int population_unit::get_employment_output(const employment_type *employment_type) const
+centesimal_int population_unit::get_employment_output(const metternich::employment_type *employment_type) const
 {
 	return employment_type->get_output_multiplier() * this->get_type()->get_production_multiplier(employment_type->get_output_commodity());
+}
+
+bool population_unit::produces_food() const
+{
+	if (this->get_employment_type() != nullptr) {
+		return this->get_employment_type()->get_output_commodity()->is_food();
+	}
+
+	return false;
 }
 
 }

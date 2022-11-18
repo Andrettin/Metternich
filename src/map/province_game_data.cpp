@@ -396,7 +396,23 @@ void province_game_data::decrease_population()
 		return;
 	}
 
-	this->pop_population_unit(this->population_units.back().get());
+	population_unit *best_population_unit = nullptr;
+
+	for (auto it = this->population_units.rbegin(); it != this->population_units.rend(); ++it) {
+		population_unit *population_unit = it->get();
+
+		if (
+			best_population_unit == nullptr
+			|| (best_population_unit->produces_food() && !population_unit->produces_food())
+			|| (best_population_unit->produces_food() == population_unit->produces_food() && best_population_unit->get_employment_output() < population_unit->get_employment_output())
+		) {
+			best_population_unit = population_unit;
+		}
+	}
+
+	assert_throw(best_population_unit != nullptr);
+
+	this->pop_population_unit(best_population_unit);
 }
 
 QObject *province_game_data::get_population_type_small_icon(population_type *type) const
