@@ -34,6 +34,8 @@ class province_game_data final : public QObject
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 
 public:
+	static constexpr int base_free_food_consumption = 1;
+
 	explicit province_game_data(const metternich::province *province);
 	province_game_data(const province_game_data &other) = delete;
 	~province_game_data();
@@ -145,7 +147,13 @@ public:
 		return this->population_growth;
 	}
 
-	void change_population_growth(const int change);
+	void set_population_growth(const int growth);
+
+	void change_population_growth(const int change)
+	{
+		this->set_population_growth(this->get_population_growth() + change);
+	}
+
 	void grow_population();
 	void decrease_population();
 

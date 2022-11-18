@@ -33,7 +33,8 @@
 
 namespace metternich {
 
-province_game_data::province_game_data(const metternich::province *province) : province(province)
+province_game_data::province_game_data(const metternich::province *province)
+	: province(province), free_food_consumption(province_game_data::base_free_food_consumption)
 {
 	//initialize building slots, placing them in random order
 	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
@@ -87,16 +88,22 @@ void province_game_data::do_production()
 	}
 
 	//handle food
-	centesimal_int food_output;
-	for (const auto &[commodity, output] : output_per_commodity) {
-		if (commodity->is_food()) {
-			food_output += output;
+	if (this->get_population_unit_count() != 0) {
+		centesimal_int food_output;
+		for (const auto &[commodity, output] : output_per_commodity) {
+			if (commodity->is_food()) {
+				food_output += output;
+			}
+		}
+
+		const int food_consumption = this->get_food_consumption() - this->get_free_food_consumption();
+		const int net_food = food_output.to_int() - food_consumption;
+		this->change_population_growth(net_food);
+	} else {
+		if (this->get_population_growth() != 0) {
+			this->set_population_growth(0);
 		}
 	}
-
-	const int food_consumption = std::max(0, this->get_food_consumption() - this->get_free_food_consumption());
-	const int net_food = food_output.to_int() - food_consumption;
-	this->change_population_growth(net_food);
 }
 
 void province_game_data::set_owner(const country *country)
@@ -272,6 +279,7 @@ void province_game_data::clear_population_units()
 	this->population_culture_counts.clear();
 	this->population = 0;
 	this->population_growth = 0;
+	this->free_food_consumption = province_game_data::base_free_food_consumption;
 }
 
 QVariantList province_game_data::get_population_type_counts_qvariant_list() const
@@ -348,13 +356,15 @@ void province_game_data::change_population(const int change)
 	}
 }
 
-void province_game_data::change_population_growth(const int change)
+void province_game_data::set_population_growth(const int growth)
 {
-	if (change == 0) {
+	if (growth == this->get_population_growth()) {
 		return;
 	}
 
-	this->population_growth += change;
+	const int change = growth - this->get_population_growth();
+
+	this->population_growth = growth;
 
 	this->change_population(change * defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold());
 
@@ -365,27 +375,19 @@ void province_game_data::change_population_growth(const int change)
 
 void province_game_data::grow_population()
 {
-	this->change_population_growth(-defines::get()->get_population_growth_threshold());
-
-	const culture *culture = nullptr;
-	const phenotype *phenotype = nullptr;
-	if (!this->population_units.empty()) {
-		const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
-		culture = population_unit->get_culture();
-		phenotype = population_unit->get_phenotype();
-	} else {
-		if (this->get_owner() == nullptr) {
-			return;
-		}
-
-		culture = this->get_owner()->get_culture();
-		phenotype = culture->get_default_phenotype();
+	if (this->population_units.empty()) {
+		throw std::runtime_error("Tried to grow population in a province which has no pre-existing population.");
 	}
 
+	const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
+	const culture *culture = population_unit->get_culture();
+	const phenotype *phenotype = population_unit->get_phenotype();
 	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
 
 	this->create_population_unit(population_type, culture, phenotype);
 	this->assign_worker(this->population_units.back().get());
+
+	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
 
 void province_game_data::decrease_population()
