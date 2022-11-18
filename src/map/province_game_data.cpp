@@ -58,7 +58,7 @@ void province_game_data::do_turn()
 		this->grow_population();
 	}
 
-	while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
+	while (this->get_population_growth() < 0) {
 		//starvation
 		this->decrease_population();
 	}
@@ -82,7 +82,7 @@ void province_game_data::do_production()
 		const employment_type *employment_type = tile->get_improvement()->get_employment_type();
 
 		for (const population_unit *employee : tile->get_employees()) {
-			output_per_commodity[employment_type->get_output_commodity()] += employee->get_employment_output(employment_type);
+			output_per_commodity[employment_type->get_output_commodity()] += employee->get_employment_output(employment_type) * tile->get_improvement()->get_output_multiplier();
 		}
 	}
 
@@ -357,23 +357,35 @@ void province_game_data::change_population_growth(const int change)
 	this->population_growth += change;
 
 	this->change_population(change * defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold());
+
+	if (game::get()->is_running()) {
+		emit population_growth_changed();
+	}
 }
 
 void province_game_data::grow_population()
 {
-	if (this->population_units.empty()) {
-		throw std::runtime_error("Tried to grow population in a province which has no pre-existing population.");
+	this->change_population_growth(-defines::get()->get_population_growth_threshold());
+
+	const culture *culture = nullptr;
+	const phenotype *phenotype = nullptr;
+	if (!this->population_units.empty()) {
+		const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
+		culture = population_unit->get_culture();
+		phenotype = population_unit->get_phenotype();
+	} else {
+		if (this->get_owner() == nullptr) {
+			return;
+		}
+
+		culture = this->get_owner()->get_culture();
+		phenotype = culture->get_default_phenotype();
 	}
 
-	const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
-	const culture *culture = population_unit->get_culture();
-	const phenotype *phenotype = population_unit->get_phenotype();
 	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
 
 	this->create_population_unit(population_type, culture, phenotype);
 	this->assign_worker(this->population_units.back().get());
-
-	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
 
 void province_game_data::decrease_population()

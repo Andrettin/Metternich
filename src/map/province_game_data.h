@@ -31,6 +31,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
+	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 
 public:
 	explicit province_game_data(const metternich::province *province);
@@ -179,6 +180,7 @@ signals:
 	void population_type_counts_changed();
 	void population_culture_counts_changed();
 	void population_changed();
+	void population_growth_changed();
 
 private:
 	const metternich::province *province = nullptr;
