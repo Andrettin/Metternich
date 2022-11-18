@@ -98,12 +98,17 @@ public:
 
 	bool is_employed() const
 	{
-		return this->employed;
+		return this->get_employment_type() != nullptr;
 	}
 
-	void set_employed(const bool employed)
+	const metternich::employment_type *get_employment_type() const
 	{
-		this->employed = employed;
+		return this->employment_type;
+	}
+
+	void set_employment_type(const metternich::employment_type *employment_type)
+	{
+		this->employment_type = employment_type;
 	}
 
 	centesimal_int get_employment_output(const employment_type *employment_type) const;
@@ -120,7 +125,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::province *province = nullptr;
-	bool employed = false;
+	const metternich::employment_type *employment_type = nullptr;
 };
 
 }

@@ -490,7 +490,7 @@ bool province_game_data::try_assign_worker_to_tile(population_unit *population_u
 void province_game_data::assign_worker_to_tile(population_unit *population_unit, tile *tile)
 {
 	tile->add_employee(population_unit);
-	population_unit->set_employed(true);
+	population_unit->set_employment_type(tile->get_improvement()->get_employment_type());
 
 	if (tile->get_resource()->get_commodity()->is_food()) {
 		//food-producing workers don't consume food
@@ -508,7 +508,7 @@ void province_game_data::unassign_worker(population_unit *population_unit)
 		}
 
 		tile->remove_employee(population_unit);
-		population_unit->set_employed(false);
+		population_unit->set_employment_type(nullptr);
 
 		if (tile->get_resource()->get_commodity()->is_food()) {
 			this->free_food_consumption -= 1;
