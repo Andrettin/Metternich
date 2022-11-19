@@ -101,6 +101,11 @@ public:
 
 	void add_border_tile(const QPoint &tile_pos);
 
+	const std::vector<QPoint> &get_resource_tiles() const
+	{
+		return this->resource_tiles;
+	}
+
 	const resource_map<int> &get_resource_counts() const
 	{
 		return this->resource_counts;

@@ -49,6 +49,7 @@ public:
 	~country_game_data();
 
 	void do_turn();
+	void do_ai_turn();
 
 	const metternich::country *get_overlord() const
 	{

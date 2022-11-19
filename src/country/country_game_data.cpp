@@ -50,6 +50,13 @@ void country_game_data::do_turn()
 	}
 }
 
+void country_game_data::do_ai_turn()
+{
+	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
+		civilian_unit->do_ai_turn();
+	}
+}
+
 void country_game_data::set_overlord(const metternich::country *overlord)
 {
 	if (overlord == this->get_overlord()) {

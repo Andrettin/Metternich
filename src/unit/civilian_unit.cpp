@@ -31,6 +31,50 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owne
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
 }
 
+void civilian_unit::do_turn()
+{
+	if (this->is_moving()) {
+		this->set_original_tile_pos(QPoint(-1, -1));
+	}
+
+	if (this->task_completion_turns > 0) {
+		this->set_task_completion_turns(this->task_completion_turns - 1);
+
+		if (this->task_completion_turns == 0) {
+			if (this->improvement_under_construction != nullptr) {
+				map::get()->set_tile_improvement(this->get_tile_pos(), this->improvement_under_construction);
+				this->improvement_under_construction = nullptr;
+			}
+		}
+	}
+}
+
+void civilian_unit::do_ai_turn()
+{
+	if (this->is_busy()) {
+		return;
+	}
+
+	for (const province *province : this->get_owner()->get_provinces()) {
+		for (const QPoint &resource_tile_pos : province->get_game_data()->get_resource_tiles()) {
+			if (resource_tile_pos != this->get_tile_pos() && !this->can_move_to(resource_tile_pos)) {
+				continue;
+			}
+
+			const improvement *improvement = this->get_buildable_resource_improvement_for_tile(resource_tile_pos);
+			if (improvement == nullptr) {
+				continue;
+			}
+
+			if (resource_tile_pos == this->get_tile_pos()) {
+				this->build_improvement(improvement);
+			} else {
+				this->move_to(resource_tile_pos);
+			}
+		}
+	}
+}
+
 const icon *civilian_unit::get_icon() const
 {
 	return this->get_type()->get_icon();
@@ -67,6 +111,10 @@ tile *civilian_unit::get_tile() const
 bool civilian_unit::can_move_to(const QPoint &tile_pos) const
 {
 	const tile *tile = map::get()->get_tile(tile_pos);
+
+	if (tile->get_civilian_unit() != nullptr) {
+		return false;
+	}
 
 	if (tile->get_owner() == this->get_owner()) {
 		return true;
@@ -189,24 +237,6 @@ const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(co
 	}
 
 	return nullptr;
-}
-
-void civilian_unit::do_turn()
-{
-	if (this->is_moving()) {
-		this->set_original_tile_pos(QPoint(-1, -1));
-	}
-
-	if (this->task_completion_turns > 0) {
-		this->set_task_completion_turns(this->task_completion_turns - 1);
-
-		if (this->task_completion_turns == 0) {
-			if (this->improvement_under_construction != nullptr) {
-				map::get()->set_tile_improvement(this->get_tile_pos(), this->improvement_under_construction);
-				this->improvement_under_construction = nullptr;
-			}
-		}
-	}
 }
 
 void civilian_unit::disband()

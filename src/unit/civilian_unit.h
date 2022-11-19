@@ -25,6 +25,9 @@ class civilian_unit final : public QObject
 public:
 	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const province *home_province, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::phenotype *phenotype);
 
+	void do_turn();
+	void do_ai_turn();
+
 	const civilian_unit_type *get_type() const
 	{
 		return this->type;
@@ -145,7 +148,6 @@ public:
 		emit task_completion_turns_changed();
 	}
 
-	void do_turn();
 	void disband();
 
 signals:

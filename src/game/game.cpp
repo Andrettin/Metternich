@@ -472,6 +472,14 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 void game::do_turn()
 {
 	for (const country *country : this->get_countries()) {
+		if (country == this->get_player_country()) {
+			continue;
+		}
+
+		country->get_game_data()->do_ai_turn();
+	}
+
+	for (const country *country : this->get_countries()) {
 		country->get_game_data()->do_turn();
 	}
 
