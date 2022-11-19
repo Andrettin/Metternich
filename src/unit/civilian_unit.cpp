@@ -215,7 +215,7 @@ void civilian_unit::disband()
 
 	assert_throw(tile != nullptr);
 
-	tile->set_civilian_unit(nullptr);
+	map::get()->set_tile_civilian_unit(this->get_tile_pos(), nullptr);
 
 	assert_throw(this->get_home_province() != nullptr);
 	this->get_home_province()->get_game_data()->remove_civilian_unit(this);
