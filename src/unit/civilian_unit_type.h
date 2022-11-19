@@ -20,9 +20,9 @@ class civilian_unit_type final : public named_data_entry, public data_type<civil
 	Q_PROPERTY(metternich::icon* icon MEMBER icon)
 
 public:
-	static constexpr const char *class_identifier = "civilian_unit_type";
+	static constexpr const char class_identifier[] = "civilian_unit_type";
 	static constexpr const char property_class_identifier[] = "metternich::civilian_unit_type*";
-	static constexpr const char *database_folder = "civilian_unit_types";
+	static constexpr const char database_folder[] = "civilian_unit_types";
 
 public:
 	explicit civilian_unit_type(const std::string &identifier) : named_data_entry(identifier)

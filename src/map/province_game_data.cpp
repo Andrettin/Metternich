@@ -25,6 +25,7 @@
 #include "population/population_unit.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
+#include "unit/civilian_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/map_util.h"
@@ -398,6 +399,29 @@ void province_game_data::decrease_population()
 		return;
 	}
 
+	this->pop_population_unit(this->choose_starvation_population_unit());
+}
+
+population_unit *province_game_data::choose_starvation_population_unit()
+{
+	civilian_unit *best_civilian_unit = nullptr;
+
+	for (auto it = this->civilian_units.rbegin(); it != this->civilian_units.rend(); ++it) {
+		civilian_unit *civilian_unit = *it;
+
+		if (
+			best_civilian_unit == nullptr
+			|| (best_civilian_unit->is_busy() && !civilian_unit->is_busy())
+		) {
+			best_civilian_unit = civilian_unit;
+		}
+	}
+
+	if (best_civilian_unit != nullptr) {
+		best_civilian_unit->disband();
+		return this->population_units.back().get();
+	}
+
 	population_unit *best_population_unit = nullptr;
 
 	for (auto it = this->population_units.rbegin(); it != this->population_units.rend(); ++it) {
@@ -407,14 +431,13 @@ void province_game_data::decrease_population()
 			best_population_unit == nullptr
 			|| (best_population_unit->produces_food() && !population_unit->produces_food())
 			|| (best_population_unit->produces_food() == population_unit->produces_food() && best_population_unit->get_employment_output() < population_unit->get_employment_output())
-		) {
+			) {
 			best_population_unit = population_unit;
 		}
 	}
 
 	assert_throw(best_population_unit != nullptr);
-
-	this->pop_population_unit(best_population_unit);
+	return best_population_unit;
 }
 
 QObject *province_game_data::get_population_type_small_icon(population_type *type) const

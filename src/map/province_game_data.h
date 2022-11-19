@@ -10,6 +10,7 @@ namespace metternich {
 
 class building_slot;
 class building_type;
+class civilian_unit;
 class country;
 class culture;
 class icon;
@@ -156,6 +157,7 @@ public:
 
 	void grow_population();
 	void decrease_population();
+	population_unit *choose_starvation_population_unit();
 
 	Q_INVOKABLE QObject *get_population_type_small_icon(metternich::population_type *type) const;
 
@@ -168,7 +170,7 @@ public:
 
 	int get_food_consumption() const
 	{
-		return this->get_population_unit_count();
+		return this->get_population_unit_count() + static_cast<int>(this->civilian_units.size());
 	}
 
 	int get_free_food_consumption() const
@@ -177,6 +179,16 @@ public:
 	}
 
 	int get_score() const;
+
+	void add_civilian_unit(civilian_unit *civilian_unit)
+	{
+		this->civilian_units.push_back(civilian_unit);
+	}
+
+	void remove_civilian_unit(civilian_unit *civilian_unit)
+	{
+		std::erase(this->civilian_units, civilian_unit);
+	}
 
 	province_game_data &operator =(const province_game_data &other) = delete;
 
@@ -207,6 +219,7 @@ private:
 	int population = 0;
 	int population_growth = 0; //population growth counter
 	int free_food_consumption = 0;
+	std::vector<civilian_unit *> civilian_units;
 };
 
 }

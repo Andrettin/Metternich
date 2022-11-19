@@ -4,8 +4,11 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/culture.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
 #include "map/tile.h"
 #include "unit/civilian_unit_type.h"
 #include "ui/icon.h"
@@ -13,11 +16,17 @@
 
 namespace metternich {
 
-civilian_unit::civilian_unit(const civilian_unit_type *type, const metternich::country *owner)
-	: type(type), owner(owner)
+civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owner, const province *home_province, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::phenotype *phenotype)
+	: type(type), owner(owner), home_province(home_province), population_type(population_type), culture(culture), phenotype(phenotype)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_owner() != nullptr);
+	assert_throw(this->get_home_province() != nullptr);
+	assert_throw(this->get_population_type() != nullptr);
+	assert_throw(this->get_culture() != nullptr);
+	assert_throw(this->get_phenotype() != nullptr);
+
+	this->get_home_province()->get_game_data()->add_civilian_unit(this);
 
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
 }
@@ -207,6 +216,11 @@ void civilian_unit::disband()
 	assert_throw(tile != nullptr);
 
 	tile->set_civilian_unit(nullptr);
+
+	assert_throw(this->get_home_province() != nullptr);
+	this->get_home_province()->get_game_data()->remove_civilian_unit(this);
+	this->get_home_province()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_phenotype());
+
 	this->get_owner()->get_game_data()->remove_civilian_unit(this);
 }
 

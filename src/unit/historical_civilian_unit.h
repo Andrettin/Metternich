@@ -8,7 +8,11 @@ namespace metternich {
 
 class civilian_unit_type;
 class country;
+class culture;
 class historical_civilian_unit_history;
+class phenotype;
+class population_type;
+class province;
 
 class historical_civilian_unit final : public named_data_entry, public data_type<historical_civilian_unit>
 {
@@ -16,6 +20,10 @@ class historical_civilian_unit final : public named_data_entry, public data_type
 
 	Q_PROPERTY(metternich::civilian_unit_type* type MEMBER type)
 	Q_PROPERTY(metternich::country* owner MEMBER owner)
+	Q_PROPERTY(metternich::province* home_province MEMBER home_province)
+	Q_PROPERTY(metternich::population_type* population_type MEMBER population_type)
+	Q_PROPERTY(metternich::culture* culture MEMBER culture)
+	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype)
 
 public:
 	static constexpr const char class_identifier[] = "historical_civilian_unit";
@@ -46,9 +54,33 @@ public:
 		return this->owner;
 	}
 
+	const province *get_home_province() const
+	{
+		return this->home_province;
+	}
+
+	const metternich::population_type *get_population_type() const
+	{
+		return this->population_type;
+	}
+
+	const metternich::culture *get_culture() const
+	{
+		return this->culture;
+	}
+
+	const metternich::phenotype *get_phenotype() const
+	{
+		return this->phenotype;
+	}
+
 private:
 	civilian_unit_type *type = nullptr;
 	country *owner = nullptr;
+	province *home_province = nullptr;
+	metternich::population_type *population_type = nullptr;
+	metternich::culture *culture = nullptr;
+	metternich::phenotype *phenotype = nullptr;
 	qunique_ptr<historical_civilian_unit_history> history;
 };
 

@@ -252,17 +252,52 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			const QPoint tile_pos = site->get_game_data()->get_tile_pos();
+			const tile *tile = map::get()->get_tile(tile_pos);
 
 			const country *owner = historical_civilian_unit->get_owner();
 
 			if (owner == nullptr) {
-				owner = map::get()->get_tile(tile_pos)->get_owner();
+				owner = tile->get_owner();
 			}
 
 			assert_throw(owner != nullptr);
 			assert_throw(owner->get_game_data()->is_alive());
 
-			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner);
+			const province *home_province = historical_civilian_unit->get_home_province();
+			if (home_province == nullptr) {
+				if (tile->get_province()->get_game_data()->get_owner() == owner) {
+					home_province = tile->get_province();
+				} else if (!owner->get_game_data()->is_under_anarchy()) {
+					home_province = owner->get_capital_province();
+				} else {
+					continue;
+				}
+			}
+			assert_throw(home_province != nullptr);
+
+			const culture *culture = historical_civilian_unit->get_culture();
+			if (culture == nullptr) {
+				if (home_province->get_game_data()->get_culture() != nullptr) {
+					culture = home_province->get_game_data()->get_culture();
+				} else {
+					culture = owner->get_culture();
+				}
+			}
+			assert_throw(culture != nullptr);
+
+			const population_type *population_type = historical_civilian_unit->get_population_type();
+			if (population_type == nullptr) {
+				population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
+			}
+			assert_throw(population_type != nullptr);
+
+			const phenotype *phenotype = historical_civilian_unit->get_phenotype();
+			if (phenotype == nullptr) {
+				phenotype = culture->get_default_phenotype();
+			}
+			assert_throw(phenotype != nullptr);
+
+			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, home_province, population_type, culture, phenotype);
 			civilian_unit->set_tile_pos(tile_pos);
 
 			owner->get_game_data()->add_civilian_unit(std::move(civilian_unit));
