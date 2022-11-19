@@ -440,13 +440,9 @@ void game::do_turn()
 		country->get_game_data()->do_turn();
 	}
 
-	const QDateTime old_date = this->date;
-	this->date = old_date.addMonths(defines::get()->get_months_per_turn());
-	assert_throw(this->date != old_date);
+	this->calculate_great_power_ranks();
 
-	++this->turn;
-
-	emit turn_changed();
+	this->increment_turn();
 }
 
 void game::do_turn_async()
@@ -455,6 +451,17 @@ void game::do_turn_async()
 		this->do_turn();
 		co_return;
 	});
+}
+
+void game::increment_turn()
+{
+	const QDateTime old_date = this->date;
+	this->date = old_date.addMonths(defines::get()->get_months_per_turn());
+	assert_throw(this->date != old_date);
+
+	++this->turn;
+
+	emit turn_changed();
 }
 
 QVariantList game::get_countries_qvariant_list() const

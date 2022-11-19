@@ -68,6 +68,8 @@ public:
 		return this->turn;
 	}
 
+	void increment_turn();
+
 	const std::vector<const country *> &get_countries() const
 	{
 		return this->countries;
