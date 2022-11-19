@@ -281,6 +281,7 @@ void province_game_data::clear_population_units()
 	this->population = 0;
 	this->population_growth = 0;
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
+	this->civilian_units.clear();
 }
 
 QVariantList province_game_data::get_population_type_counts_qvariant_list() const
