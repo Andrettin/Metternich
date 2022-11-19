@@ -211,6 +211,10 @@ void civilian_unit::do_turn()
 
 void civilian_unit::disband()
 {
+	if (this->is_working()) {
+		this->cancel_work();
+	}
+
 	tile *tile = this->get_tile();
 
 	assert_throw(tile != nullptr);
