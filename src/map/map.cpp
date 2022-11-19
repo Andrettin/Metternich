@@ -314,6 +314,10 @@ void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improv
 	}
 
 	emit tile_improvement_changed(tile_pos);
+
+	if (tile->get_site() != nullptr) {
+		emit tile->get_site()->get_game_data()->improvement_changed();
+	}
 }
 
 void map::set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)

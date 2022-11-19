@@ -44,4 +44,14 @@ const std::string &site_game_data::get_current_cultural_name() const
 	return this->site->get_cultural_name(this->get_culture());
 }
 
+const improvement *site_game_data::get_improvement() const
+{
+	const tile *tile = this->get_tile();
+	if (tile != nullptr) {
+		return tile->get_improvement();
+	}
+
+	return nullptr;
+}
+
 }
