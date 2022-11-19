@@ -55,7 +55,7 @@ void civilian_unit::do_ai_turn()
 		return;
 	}
 
-	for (const province *province : this->get_owner()->get_provinces()) {
+	for (const province *province : this->get_owner()->get_game_data()->get_provinces()) {
 		for (const QPoint &resource_tile_pos : province->get_game_data()->get_resource_tiles()) {
 			if (resource_tile_pos != this->get_tile_pos() && !this->can_move_to(resource_tile_pos)) {
 				continue;
@@ -68,8 +68,10 @@ void civilian_unit::do_ai_turn()
 
 			if (resource_tile_pos == this->get_tile_pos()) {
 				this->build_improvement(improvement);
+				return;
 			} else {
 				this->move_to(resource_tile_pos);
+				return;
 			}
 		}
 	}
