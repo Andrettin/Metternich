@@ -3,6 +3,7 @@
 #include "map/map_template.h"
 
 #include "database/defines.h"
+#include "map/direction.h"
 #include "map/map.h"
 #include "map/map_projection.h"
 #include "map/province.h"
@@ -10,6 +11,7 @@
 #include "map/site_type.h"
 #include "map/terrain_feature.h"
 #include "map/terrain_type.h"
+#include "map/tile.h"
 #include "map/world.h"
 #include "util/assert_util.h"
 #include "util/exception_util.h"
@@ -202,6 +204,77 @@ void map_template::write_terrain_image()
 	}
 }
 
+void map_template::set_river_image_filepath(const std::filesystem::path &filepath)
+{
+	if (filepath == this->get_river_image_filepath()) {
+		return;
+	}
+
+	this->river_image_filepath = database::get()->get_maps_path(this->get_module()) / filepath;
+}
+
+void map_template::write_river_image()
+{
+	try {
+		assert_throw(this->get_world() != nullptr);
+
+		terrain_geodata_map terrain_geodata_map = this->get_world()->parse_terrain_geojson_folder();
+
+		color_map<std::vector<std::unique_ptr<QGeoShape>>> geodata_map;
+
+		for (auto &[terrain_variant, geoshapes] : terrain_geodata_map) {
+			QColor color;
+
+			if (std::holds_alternative<const terrain_feature *>(terrain_variant)) {
+				const terrain_feature *terrain_feature = std::get<const metternich::terrain_feature *>(terrain_variant);
+
+				if (!terrain_feature->is_river()) {
+					continue;
+				}
+
+				if (terrain_feature->is_hidden()) {
+					continue;
+				}
+
+				color = QColor(Qt::blue);
+			} else {
+				continue;
+			}
+
+			if (!color.isValid()) {
+				throw std::runtime_error("River has no valid color.");
+			}
+
+			vector::merge(geodata_map[color], std::move(geoshapes));
+		}
+
+		assert_throw(this->map_projection != nullptr);
+
+		this->map_projection->validate_area(this->get_georectangle(), this->get_size());
+
+		QImage base_image;
+
+		if (!this->get_river_image_filepath().empty()) {
+			base_image = QImage(path::to_qstring(this->get_river_image_filepath()));
+			assert_throw(!base_image.isNull());
+		} else {
+			base_image = QImage(this->get_size(), QImage::Format_RGBA8888);
+			base_image.fill(Qt::transparent);
+		}
+
+		//write river geoshapes
+		std::filesystem::path output_filepath = this->get_river_image_filepath().filename();
+		if (output_filepath.empty()) {
+			output_filepath = "rivers.png";
+		}
+
+		geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image, this->geocoordinate_x_offset);
+	} catch (const std::exception &exception) {
+		exception::report(exception);
+		std::terminate();
+	}
+}
+
 void map_template::set_province_image_filepath(const std::filesystem::path &filepath)
 {
 	if (filepath == this->get_province_image_filepath()) {
@@ -262,6 +335,7 @@ void map_template::apply() const
 	map->create_tiles();
 
 	this->apply_terrain();
+	this->apply_rivers();
 	this->apply_provinces();
 }
 
@@ -278,7 +352,7 @@ void map_template::apply_terrain() const
 			const QPoint tile_pos(x, y);
 			const QColor tile_color = terrain_image.pixelColor(tile_pos);
 
-			if (terrain_image.pixelColor(tile_pos).alpha() == 0) {
+			if (tile_color.alpha() == 0) {
 				continue;
 			}
 
@@ -299,6 +373,49 @@ void map_template::apply_terrain() const
 	}
 }
 
+void map_template::apply_rivers() const
+{
+	if (this->get_river_image_filepath().empty()) {
+		return;
+	}
+
+	const QImage river_image(path::to_qstring(this->get_river_image_filepath()));
+
+	map *map = map::get();
+
+	static const QColor river_color = QColor(Qt::blue);
+
+	for (int x = 0; x < map->get_width(); ++x) {
+		for (int y = 0; y < map->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			const QColor tile_color = river_image.pixelColor(tile_pos);
+
+			if (tile_color != river_color) {
+				continue;
+			}
+
+			tile *tile = map->get_tile(tile_pos);
+			if (tile->get_terrain()->is_water()) {
+				continue;
+			}
+
+			point::for_each_adjacent(tile_pos, [map, &river_image, &tile_pos, tile](const QPoint &adjacent_pos) {
+				if (!map->contains(adjacent_pos)) {
+					return;
+				}
+				
+				const QColor adjacent_tile_color = river_image.pixelColor(adjacent_pos);
+
+				if (adjacent_tile_color != river_color) {
+					return;
+				}
+
+				tile->add_river_direction(offset_to_direction(adjacent_pos - tile_pos));
+			});
+		}
+	}
+}
+
 void map_template::apply_provinces() const
 {
 	assert_throw(!this->get_province_image_filepath().empty());
@@ -312,7 +429,7 @@ void map_template::apply_provinces() const
 			const QPoint tile_pos(x, y);
 			const QColor tile_color = province_image.pixelColor(tile_pos);
 
-			if (province_image.pixelColor(tile_pos).alpha() == 0) {
+			if (tile_color.alpha() == 0) {
 				continue;
 			}
 

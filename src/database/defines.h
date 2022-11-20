@@ -34,6 +34,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::country_palette* conversible_country_palette MEMBER conversible_country_palette)
 	Q_PROPERTY(metternich::country_palette* minor_nation_palette MEMBER minor_nation_palette NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
+	Q_PROPERTY(std::filesystem::path river_image_filepath MEMBER river_image_filepath WRITE set_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
@@ -154,6 +155,13 @@ public:
 
 	void set_default_settlement_image_filepath(const std::filesystem::path &filepath);
 
+	const std::filesystem::path &get_river_image_filepath() const
+	{
+		return this->river_image_filepath;
+	}
+
+	void set_river_image_filepath(const std::filesystem::path &filepath);
+
 	const std::filesystem::path &get_province_border_image_filepath() const
 	{
 		return this->province_border_image_filepath;
@@ -181,7 +189,7 @@ public:
 			return find_iterator->second;
 		}
 
-		throw std::runtime_error("Failed to get river adjacency tile for a given adjacency.");
+		throw std::runtime_error("Failed to get river adjacency tile for adjacency:\n" + adjacency.to_string());
 	}
 
 	void set_river_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
@@ -210,6 +218,7 @@ private:
 	country_palette *conversible_country_palette = nullptr;
 	country_palette *minor_nation_palette = nullptr;
 	std::filesystem::path default_settlement_image_filepath;
+	std::filesystem::path river_image_filepath;
 	std::filesystem::path province_border_image_filepath;
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;

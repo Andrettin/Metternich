@@ -249,6 +249,22 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 		const short terrain_tile = static_cast<short>(vector::get_random(*terrain_tiles));
 
 		tile->set_tile(terrain_tile);
+
+		if (!tile->get_river_directions().empty()) {
+			terrain_adjacency adjacency;
+
+			for (size_t i = 0; i < direction_count; ++i) {
+				const direction direction = static_cast<archimedes::direction>(i);
+				adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::other);
+			}
+
+			for (const direction direction : tile->get_river_directions()) {
+				adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+			}
+
+			const int river_frame = defines::get()->get_river_adjacency_tile(adjacency);
+			tile->set_river_frame(river_frame);
+		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to update terrain tile for tile pos " + point::to_string(tile_pos) + "."));
 	}

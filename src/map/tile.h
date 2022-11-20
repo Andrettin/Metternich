@@ -88,6 +88,33 @@ public:
 		return this->improvement_variation;
 	}
 
+	const std::vector<direction> &get_river_directions() const
+	{
+		return this->river_directions;
+	}
+
+	void add_river_direction(const direction direction);
+
+	void sort_river_directions()
+	{
+		std::sort(this->river_directions.begin(), this->river_directions.end());
+	}
+
+	bool has_river() const
+	{
+		return this->get_river_frame() != -1;
+	}
+
+	short get_river_frame() const
+	{
+		return this->river_frame;
+	}
+
+	void set_river_frame(const short frame)
+	{
+		this->river_frame = frame;
+	}
+
 	const std::vector<direction> &get_border_directions() const
 	{
 		return this->border_directions;
@@ -174,6 +201,8 @@ private:
 	const metternich::resource *resource = nullptr;
 	const metternich::improvement *improvement = nullptr;
 	int8_t improvement_variation = 0;
+	std::vector<direction> river_directions;
+	short river_frame = -1;
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 	std::vector<direction> country_border_directions;
 	metternich::civilian_unit *civilian_unit = nullptr;

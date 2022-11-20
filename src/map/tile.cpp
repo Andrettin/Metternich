@@ -11,6 +11,7 @@
 #include "util/assert_util.h"
 #include "util/random.h"
 #include "util/vector_random_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -61,6 +62,15 @@ void tile::set_improvement(const metternich::improvement *improvement)
 	} else {
 		this->improvement_variation = 0;
 	}
+}
+
+void tile::add_river_direction(const direction direction)
+{
+	if (vector::contains(this->get_river_directions(), direction)) {
+		return;
+	}
+
+	this->river_directions.push_back(direction);
 }
 
 int tile::get_employment_capacity() const

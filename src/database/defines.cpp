@@ -64,6 +64,15 @@ void defines::set_default_settlement_image_filepath(const std::filesystem::path 
 	this->default_settlement_image_filepath = database::get()->get_graphics_filepath(filepath);
 }
 
+void defines::set_river_image_filepath(const std::filesystem::path &filepath)
+{
+	if (filepath == this->get_river_image_filepath()) {
+		return;
+	}
+
+	this->river_image_filepath = database::get()->get_graphics_filepath(filepath);
+}
+
 void defines::set_province_border_image_filepath(const std::filesystem::path &filepath)
 {
 	if (filepath == this->get_province_border_image_filepath()) {

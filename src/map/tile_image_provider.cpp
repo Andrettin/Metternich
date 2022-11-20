@@ -65,6 +65,9 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 		}
 
 		is_frame_image = true;
+	} else if (tile_image_type == "river") {
+		filepath = defines::get()->get_river_image_filepath();
+		is_frame_image = true;
 	} else {
 		assert_throw(false);
 	}

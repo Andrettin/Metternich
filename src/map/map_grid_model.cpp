@@ -77,6 +77,10 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 			case role::overlay_image_sources: {
 				QStringList overlay_image_sources;
 
+				if (tile->has_river()) {
+					overlay_image_sources.push_back("tile/river/" + QString::number(tile->get_river_frame()));
+				}
+
 				if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {
 					for (const direction direction : tile->get_border_directions()) {
 						overlay_image_sources.push_back("tile/borders/province_border/" + QString::number(static_cast<int>(direction)));
