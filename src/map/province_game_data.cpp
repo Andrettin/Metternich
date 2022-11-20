@@ -238,6 +238,7 @@ void province_game_data::set_slot_building(const building_slot_type *slot_type, 
 void province_game_data::clear_buildings()
 {
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		building_slot->clear_employees();
 		building_slot->set_building(nullptr);
 	}
 }
@@ -492,6 +493,19 @@ void province_game_data::assign_workers()
 
 		this->assign_worker(population_unit.get());
 	}
+}
+
+void province_game_data::reassign_workers()
+{
+	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
+		if (!population_unit->is_employed()) {
+			continue;
+		}
+
+		this->unassign_worker(population_unit.get());
+	}
+
+	this->assign_workers();
 }
 
 void province_game_data::assign_worker(population_unit *population_unit)

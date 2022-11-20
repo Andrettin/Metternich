@@ -2,8 +2,11 @@
 
 #include "infrastructure/building_slot.h"
 
+#include "game/game.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_type.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -27,7 +30,11 @@ void building_slot::set_building(const building_type *building)
 
 	this->building = building;
 
-	emit building_changed();
+	if (game::get()->is_running()) {
+		this->get_province()->get_game_data()->reassign_workers();
+
+		emit building_changed();
+	}
 }
 
 int building_slot::get_employment_capacity() const

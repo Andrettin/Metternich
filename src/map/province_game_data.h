@@ -167,6 +167,7 @@ public:
 	Q_INVOKABLE QObject *get_population_type_small_icon(metternich::population_type *type) const;
 
 	void assign_workers();
+	void reassign_workers();
 	void assign_worker(population_unit *population_unit);
 	bool try_assign_worker_to_tile(population_unit *population_unit, tile *tile);
 	void assign_worker_to_tile(population_unit *population_unit, tile *tile);
