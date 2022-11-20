@@ -80,6 +80,10 @@ void map_template::write_terrain_image()
 				continue;
 			}
 
+			if (terrain_feature->is_hidden()) {
+				continue;
+			}
+
 			color = terrain_feature->get_terrain_type()->get_color();
 		} else {
 			const terrain_type *terrain_type = std::get<const metternich::terrain_type *>(terrain_variant);

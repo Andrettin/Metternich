@@ -14,6 +14,7 @@ class terrain_feature final : public named_data_entry, public data_type<terrain_
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
 	Q_PROPERTY(bool river MEMBER river READ is_river)
 	Q_PROPERTY(QColor color MEMBER color READ get_color)
+	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden)
 
 public:
 	static constexpr const char class_identifier[] = "terrain_feature";
@@ -42,10 +43,16 @@ public:
 		return this->color;
 	}
 
+	bool is_hidden() const
+	{
+		return this->hidden;
+	}
+
 private:
 	metternich::terrain_type *terrain_type = nullptr;
 	bool river = false;;
 	QColor color;
+	bool hidden = false;
 };
 
 }
