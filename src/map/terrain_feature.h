@@ -12,6 +12,7 @@ class terrain_feature final : public named_data_entry, public data_type<terrain_
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
+	Q_PROPERTY(bool river MEMBER river READ is_river)
 	Q_PROPERTY(QColor color MEMBER color READ get_color)
 
 public:
@@ -31,6 +32,11 @@ public:
 		return this->terrain_type;
 	}
 
+	bool is_river() const
+	{
+		return this->river;
+	}
+
 	const QColor &get_color() const
 	{
 		return this->color;
@@ -38,6 +44,7 @@ public:
 
 private:
 	metternich::terrain_type *terrain_type = nullptr;
+	bool river = false;;
 	QColor color;
 };
 

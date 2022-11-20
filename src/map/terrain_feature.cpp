@@ -8,7 +8,8 @@ namespace metternich {
 
 void terrain_feature::check() const
 {
-	assert_throw(this->get_terrain_type() != nullptr);
+	assert_throw(this->get_terrain_type() != nullptr || this->is_river());
+	assert_throw(!(this->get_terrain_type() != nullptr && this->is_river()));
 }
 
 }

@@ -75,6 +75,11 @@ void map_template::write_terrain_image()
 
 		if (std::holds_alternative<const terrain_feature *>(terrain_variant)) {
 			const terrain_feature *terrain_feature = std::get<const metternich::terrain_feature *>(terrain_variant);
+
+			if (terrain_feature->is_river()) {
+				continue;
+			}
+
 			color = terrain_feature->get_terrain_type()->get_color();
 		} else {
 			const terrain_type *terrain_type = std::get<const metternich::terrain_type *>(terrain_variant);
