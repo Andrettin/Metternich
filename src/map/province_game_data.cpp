@@ -72,19 +72,37 @@ void province_game_data::do_production()
 
 	for (const QPoint &tile_pos : this->resource_tiles) {
 		const tile *tile = map::get()->get_tile(tile_pos);
+		const improvement *improvement = tile->get_improvement();
 
-		if (tile->get_improvement() == nullptr) {
+		if (improvement == nullptr) {
 			continue;
 		}
 
-		if (tile->get_improvement()->get_employment_type() == nullptr) {
+		if (improvement->get_employment_type() == nullptr) {
 			continue;
 		}
 
-		const employment_type *employment_type = tile->get_improvement()->get_employment_type();
+		const employment_type *employment_type = improvement->get_employment_type();
 
 		for (const population_unit *employee : tile->get_employees()) {
-			output_per_commodity[employment_type->get_output_commodity()] += employee->get_employment_output(employment_type) * tile->get_improvement()->get_output_multiplier();
+			output_per_commodity[employment_type->get_output_commodity()] += employee->get_employment_output(employment_type) * improvement->get_output_multiplier();
+		}
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		const building_type *building_type = building_slot->get_building();
+		if (building_type == nullptr) {
+			continue;
+		}
+
+		if (building_type->get_employment_type() == nullptr) {
+			continue;
+		}
+
+		const employment_type *employment_type = building_type->get_employment_type();
+
+		for (const population_unit *employee : building_slot->get_employees()) {
+			output_per_commodity[employment_type->get_output_commodity()] += employee->get_employment_output(employment_type) * building_type->get_output_multiplier();
 		}
 	}
 
@@ -432,7 +450,7 @@ population_unit *province_game_data::choose_starvation_population_unit()
 			best_population_unit == nullptr
 			|| (best_population_unit->produces_food() && !population_unit->produces_food())
 			|| (best_population_unit->produces_food() == population_unit->produces_food() && best_population_unit->get_employment_output() < population_unit->get_employment_output())
-			) {
+		) {
 			best_population_unit = population_unit;
 		}
 	}
@@ -492,6 +510,28 @@ void province_game_data::assign_worker(population_unit *population_unit)
 		}
 	}
 
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		const building_type *building_type = building_slot->get_building();
+		if (building_type == nullptr) {
+			continue;
+		}
+
+		const employment_type *employment_type = building_type->get_employment_type();
+		if (employment_type == nullptr) {
+			continue;
+		}
+
+		if (!employment_type->get_output_commodity()->is_food()) {
+			//give priority to food-producing buildings
+			continue;
+		}
+
+		const bool assigned = this->try_assign_worker_to_building(population_unit, building_slot.get());
+		if (assigned) {
+			return;
+		}
+	}
+
 	for (const QPoint &tile_pos : this->resource_tiles) {
 		tile *tile = map::get()->get_tile(tile_pos);
 
@@ -501,6 +541,28 @@ void province_game_data::assign_worker(population_unit *population_unit)
 		}
 
 		const bool assigned = this->try_assign_worker_to_tile(population_unit, tile);
+		if (assigned) {
+			return;
+		}
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		const building_type *building_type = building_slot->get_building();
+		if (building_type == nullptr) {
+			continue;
+		}
+
+		const employment_type *employment_type = building_type->get_employment_type();
+		if (employment_type == nullptr) {
+			continue;
+		}
+
+		if (employment_type->get_output_commodity()->is_food()) {
+			//already processed
+			continue;
+		}
+
+		const bool assigned = this->try_assign_worker_to_building(population_unit, building_slot.get());
 		if (assigned) {
 			return;
 		}
@@ -538,6 +600,34 @@ void province_game_data::assign_worker_to_tile(population_unit *population_unit,
 	this->free_food_consumption += 1;
 }
 
+bool province_game_data::try_assign_worker_to_building(population_unit *population_unit, building_slot *building_slot)
+{
+	if (building_slot->get_building() == nullptr) {
+		return false;
+	}
+
+	if (building_slot->get_building()->get_employment_type() == nullptr) {
+		return false;
+	}
+
+	if (building_slot->get_employee_count() >= building_slot->get_employment_capacity()) {
+		return false;
+	}
+
+	if (!vector::contains(building_slot->get_building()->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
+		return false;
+	}
+
+	this->assign_worker_to_building(population_unit, building_slot);
+	return true;
+}
+
+void province_game_data::assign_worker_to_building(population_unit *population_unit, building_slot *building_slot)
+{
+	building_slot->add_employee(population_unit);
+	population_unit->set_employment_type(building_slot->get_building()->get_employment_type());
+}
+
 void province_game_data::unassign_worker(population_unit *population_unit)
 {
 	for (const QPoint &tile_pos : this->resource_tiles) {
@@ -551,7 +641,17 @@ void province_game_data::unassign_worker(population_unit *population_unit)
 		population_unit->set_employment_type(nullptr);
 
 		this->free_food_consumption -= 1;
-		break;
+		return;
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		if (!vector::contains(building_slot->get_employees(), population_unit)) {
+			continue;
+		}
+
+		building_slot->remove_employee(population_unit);
+		population_unit->set_employment_type(nullptr);
+		return;
 	}
 }
 

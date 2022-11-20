@@ -170,6 +170,8 @@ public:
 	void assign_worker(population_unit *population_unit);
 	bool try_assign_worker_to_tile(population_unit *population_unit, tile *tile);
 	void assign_worker_to_tile(population_unit *population_unit, tile *tile);
+	bool try_assign_worker_to_building(population_unit *population_unit, building_slot *building_slot);
+	void assign_worker_to_building(population_unit *population_unit, building_slot *building_slot);
 
 	void unassign_worker(population_unit *population_unit);
 

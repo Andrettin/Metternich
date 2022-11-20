@@ -4,6 +4,7 @@ namespace metternich {
 
 class building_slot_type;
 class building_type;
+class population_unit;
 class province;
 
 class building_slot final : public QObject
@@ -48,6 +49,34 @@ private:
 		return const_cast<metternich::province *>(this->get_province());
 	}
 
+public:
+	const std::vector<population_unit *> &get_employees() const
+	{
+		return this->employees;
+	}
+
+	void clear_employees()
+	{
+		this->employees.clear();
+	}
+
+	void add_employee(population_unit *population_unit)
+	{
+		this->employees.push_back(population_unit);
+	}
+
+	void remove_employee(population_unit *population_unit)
+	{
+		std::erase(this->employees, population_unit);
+	}
+
+	int get_employee_count() const
+	{
+		return static_cast<int>(this->get_employees().size());
+	}
+
+	int get_employment_capacity() const;
+
 signals:
 	void building_changed();
 
@@ -55,6 +84,7 @@ private:
 	const building_slot_type *type = nullptr;
 	const building_type *building = nullptr;
 	const metternich::province *province = nullptr;
+	std::vector<population_unit *> employees;
 };
 
 }

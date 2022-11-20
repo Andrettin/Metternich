@@ -4,6 +4,7 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "economy/employment_type.h"
 #include "infrastructure/building_class.h"
 #include "util/assert_util.h"
 
@@ -32,6 +33,21 @@ void building_type::initialize()
 void building_type::check() const
 {
 	assert_throw(this->get_icon() != nullptr);
+
+	if (this->get_employment_type() != nullptr) {
+		assert_throw(this->get_output_commodity() != nullptr);
+		assert_throw(this->get_output_multiplier() > 0);
+		assert_throw(this->get_employment_capacity() > 0);
+	}
+}
+
+const commodity *building_type::get_output_commodity() const
+{
+	if (this->get_employment_type() != nullptr) {
+		return this->get_employment_type()->get_output_commodity();
+	}
+
+	return nullptr;
 }
 
 }

@@ -30,4 +30,13 @@ void building_slot::set_building(const building_type *building)
 	emit building_changed();
 }
 
+int building_slot::get_employment_capacity() const
+{
+	if (this->get_building() != nullptr) {
+		return this->get_building()->get_employment_capacity();
+	}
+
+	return 0;
+}
+
 }
