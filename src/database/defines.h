@@ -1,6 +1,7 @@
 #pragma once
 
 #include "database/defines_base.h"
+#include "map/terrain_adjacency.h"
 #include "util/singleton.h"
 
 namespace metternich {
@@ -39,6 +40,8 @@ class defines final : public defines_base, public singleton<defines>
 
 public:
 	defines();
+
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 
 	const QSize &get_tile_size() const
 	{
@@ -171,6 +174,18 @@ public:
 		return this->min_diplomatic_map_tile_scale;
 	}
 
+	int get_river_adjacency_tile(const terrain_adjacency &adjacency) const
+	{
+		const auto find_iterator = this->river_adjacency_tiles.find(adjacency);
+		if (find_iterator != this->river_adjacency_tiles.end()) {
+			return find_iterator->second;
+		}
+
+		throw std::runtime_error("Failed to get river adjacency tile for a given adjacency.");
+	}
+
+	void set_river_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
+
 signals:
 	void changed();
 	void scaled_tile_size_changed();
@@ -198,6 +213,7 @@ private:
 	std::filesystem::path province_border_image_filepath;
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;
+	std::map<terrain_adjacency, int> river_adjacency_tiles;
 };
 
 }
