@@ -19,6 +19,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(metternich::civilian_unit_type* type READ get_type_unconst NOTIFY type_changed)
 	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst CONSTANT)
+	Q_PROPERTY(metternich::province* home_province READ get_home_province_unconst CONSTANT)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_tile_pos_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
 
@@ -79,6 +80,14 @@ public:
 		return this->home_province;
 	}
 
+private:
+	//for the Qt property (pointers there can't be const)
+	province *get_home_province_unconst() const
+	{
+		return const_cast<province *>(this->get_home_province());
+	}
+
+public:
 	const metternich::population_type *get_population_type() const
 	{
 		return this->population_type;
