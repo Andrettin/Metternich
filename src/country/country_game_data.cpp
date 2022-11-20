@@ -55,6 +55,16 @@ void country_game_data::do_ai_turn()
 	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 		civilian_unit->do_ai_turn();
 	}
+
+	for (size_t i = 0; i < this->civilian_units.size();) {
+		civilian_unit *civilian_unit = this->civilian_units.at(i).get();
+		if (civilian_unit->is_busy()) {
+			++i;
+		} else {
+			//if the civilian unit is idle, this means that nothing was found for it to do above; in that case, disband it
+			civilian_unit->disband();
+		}
+	}
 }
 
 void country_game_data::set_overlord(const metternich::country *overlord)
