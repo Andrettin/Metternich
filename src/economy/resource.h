@@ -21,6 +21,7 @@ class resource final : public named_data_entry, public data_type<resource>
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* discovery_technology MEMBER discovery_technology NOTIFY changed)
 	Q_PROPERTY(bool coastal MEMBER coastal READ is_coastal NOTIFY changed)
+	Q_PROPERTY(bool near_water MEMBER near_water READ is_near_water NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "resource";
@@ -56,6 +57,11 @@ public:
 		return this->coastal;
 	}
 
+	bool is_near_water() const
+	{
+		return this->near_water;
+	}
+
 	const std::vector<const terrain_type *> &get_terrain_types() const
 	{
 		return this->terrain_types;
@@ -70,6 +76,7 @@ private:
 	technology *required_technology = nullptr; //technology which is required to see the resource on the tile
 	technology *discovery_technology = nullptr; //technology which is obtained when exploring this resource tile
 	bool coastal = false;
+	bool near_water = false;
 	std::vector<const terrain_type *> terrain_types;
 };
 
