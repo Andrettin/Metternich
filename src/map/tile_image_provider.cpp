@@ -129,7 +129,7 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 				}
 			}
 
-			if (has_conversible_color) {
+			if (!has_conversible_color) {
 				const std::string base_id = id.substr(0, id.find_last_of('/'));
 
 				for (const metternich::country_palette *palette : country_palette::get_all()) {
