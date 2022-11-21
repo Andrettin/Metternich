@@ -35,6 +35,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::country_palette* minor_nation_palette MEMBER minor_nation_palette NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
 	Q_PROPERTY(std::filesystem::path river_image_filepath MEMBER river_image_filepath WRITE set_river_image_filepath)
+	Q_PROPERTY(std::filesystem::path rivermouth_image_filepath MEMBER rivermouth_image_filepath WRITE set_rivermouth_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
@@ -162,6 +163,13 @@ public:
 
 	void set_river_image_filepath(const std::filesystem::path &filepath);
 
+	const std::filesystem::path &get_rivermouth_image_filepath() const
+	{
+		return this->rivermouth_image_filepath;
+	}
+
+	void set_rivermouth_image_filepath(const std::filesystem::path &filepath);
+
 	const std::filesystem::path &get_province_border_image_filepath() const
 	{
 		return this->province_border_image_filepath;
@@ -194,6 +202,18 @@ public:
 
 	void set_river_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
 
+	int get_rivermouth_adjacency_tile(const terrain_adjacency &adjacency) const
+	{
+		const auto find_iterator = this->rivermouth_adjacency_tiles.find(adjacency);
+		if (find_iterator != this->rivermouth_adjacency_tiles.end()) {
+			return find_iterator->second;
+		}
+
+		throw std::runtime_error("Failed to get rivermouth adjacency tile for adjacency:\n" + adjacency.to_string());
+	}
+
+	void set_rivermouth_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
+
 signals:
 	void changed();
 	void scaled_tile_size_changed();
@@ -219,10 +239,12 @@ private:
 	country_palette *minor_nation_palette = nullptr;
 	std::filesystem::path default_settlement_image_filepath;
 	std::filesystem::path river_image_filepath;
+	std::filesystem::path rivermouth_image_filepath;
 	std::filesystem::path province_border_image_filepath;
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;
 	std::map<terrain_adjacency, int> river_adjacency_tiles;
+	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;
 };
 
 }

@@ -395,9 +395,6 @@ void map_template::apply_rivers() const
 			}
 
 			tile *tile = map->get_tile(tile_pos);
-			if (tile->get_terrain()->is_water()) {
-				continue;
-			}
 
 			point::for_each_adjacent(tile_pos, [map, &river_image, &tile_pos, tile](const QPoint &adjacent_pos) {
 				if (!map->contains(adjacent_pos)) {

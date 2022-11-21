@@ -78,7 +78,14 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				QStringList overlay_image_sources;
 
 				if (tile->has_river()) {
-					overlay_image_sources.push_back("tile/river/" + QString::number(tile->get_river_frame()));
+					QString river_image_source = "tile/";
+					if (tile->get_terrain()->is_water()) {
+						river_image_source += "rivermouth";
+					} else {
+						river_image_source += "river";
+					}
+					river_image_source += "/" + QString::number(tile->get_river_frame());
+					overlay_image_sources.push_back(std::move(river_image_source));
 				}
 
 				if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {
