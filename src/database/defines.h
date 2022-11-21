@@ -44,6 +44,7 @@ public:
 	defines();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 
 	const QSize &get_tile_size() const
 	{

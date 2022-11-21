@@ -2,11 +2,14 @@
 
 #include "database/defines.h"
 
+#include "country/country_palette.h"
 #include "database/database.h"
 #include "database/preferences.h"
 #include "map/direction.h"
 #include "map/terrain_adjacency_type.h"
+#include "map/tile_image_provider.h"
 #include "util/assert_util.h"
+#include "util/event_loop.h"
 #include "util/path_util.h"
 
 namespace metternich {
@@ -52,6 +55,25 @@ void defines::process_gsml_scope(const gsml_data &scope)
 	} else {
 		database::get()->process_gsml_scope_for_object(this, scope);
 	}
+}
+
+void defines::initialize()
+{
+	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+		co_await tile_image_provider::get()->load_image("borders/province_border");
+	});
+
+	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+		co_await tile_image_provider::get()->load_image("river/0");
+	});
+
+	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+		co_await tile_image_provider::get()->load_image("rivermouth/0");
+	});
+
+	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+		co_await tile_image_provider::get()->load_image("settlement/default/" + this->get_conversible_country_palette()->get_identifier());
+	});
 }
 
 QSize defines::get_scaled_tile_size() const
