@@ -15,6 +15,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
+#include "population/phenotype.h"
 #include "unit/civilian_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -198,6 +199,9 @@ void country_game_data::add_province(const province *province)
 	for (const auto &[culture, count] : province_game_data->get_population_culture_counts()) {
 		this->change_population_culture_count(culture, count);
 	}
+	for (const auto &[phenotype, count] : province_game_data->get_population_phenotype_counts()) {
+		this->change_population_phenotype_count(phenotype, count);
+	}
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->change_resource_count(resource, count);
@@ -256,6 +260,9 @@ void country_game_data::remove_province(const province *province)
 	}
 	for (const auto &[culture, count] : province_game_data->get_population_culture_counts()) {
 		this->change_population_culture_count(culture, -count);
+	}
+	for (const auto &[phenotype, count] : province_game_data->get_population_phenotype_counts()) {
+		this->change_population_phenotype_count(phenotype, -count);
 	}
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
@@ -661,6 +668,30 @@ void country_game_data::change_population_culture_count(const culture *culture, 
 
 	if (game::get()->is_running()) {
 		emit population_culture_counts_changed();
+	}
+}
+
+QVariantList country_game_data::get_population_phenotype_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_population_phenotype_counts());
+}
+
+void country_game_data::change_population_phenotype_count(const phenotype *phenotype, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->population_phenotype_counts[phenotype] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->population_phenotype_counts.erase(phenotype);
+	}
+
+	if (game::get()->is_running()) {
+		emit population_phenotype_counts_changed();
 	}
 }
 

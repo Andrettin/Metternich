@@ -70,7 +70,11 @@ void population_unit::set_phenotype(const metternich::phenotype *phenotype)
 		return;
 	}
 
+	this->get_province()->get_game_data()->change_population_phenotype_count(this->get_phenotype(), -1);
+
 	this->phenotype = phenotype;
+
+	this->get_province()->get_game_data()->change_population_phenotype_count(this->get_phenotype(), 1);
 
 	emit phenotype_changed();
 }

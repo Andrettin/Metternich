@@ -21,6 +21,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
+#include "population/phenotype.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "ui/icon.h"
@@ -247,6 +248,7 @@ void province_game_data::add_population_unit(qunique_ptr<population_unit> &&popu
 {
 	this->change_population_type_count(population_unit->get_type(), 1);
 	this->change_population_culture_count(population_unit->get_culture(), 1);
+	this->change_population_phenotype_count(population_unit->get_phenotype(), 1);
 	this->change_population(defines::get()->get_population_per_unit());
 
 	this->population_units.push_back(std::move(population_unit));
@@ -266,6 +268,7 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 
 			this->change_population_type_count(population_unit->get_type(), -1);
 			this->change_population_culture_count(population_unit->get_culture(), -1);
+			this->change_population_phenotype_count(population_unit->get_phenotype(), -1);
 			this->change_population(-defines::get()->get_population_per_unit());
 
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
@@ -297,6 +300,7 @@ void province_game_data::clear_population_units()
 	this->population_units.clear();
 	this->population_type_counts.clear();
 	this->population_culture_counts.clear();
+	this->population_phenotype_counts.clear();
 	this->population = 0;
 	this->population_growth = 0;
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
@@ -357,6 +361,34 @@ void province_game_data::change_population_culture_count(const culture *culture,
 
 	if (game::get()->is_running()) {
 		emit population_culture_counts_changed();
+	}
+}
+
+QVariantList province_game_data::get_population_phenotype_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_population_phenotype_counts());
+}
+
+void province_game_data::change_population_phenotype_count(const phenotype *phenotype, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->population_phenotype_counts[phenotype] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->population_phenotype_counts.erase(phenotype);
+	}
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_population_phenotype_count(phenotype, change);
+	}
+
+	if (game::get()->is_running()) {
+		emit population_phenotype_counts_changed();
 	}
 }
 

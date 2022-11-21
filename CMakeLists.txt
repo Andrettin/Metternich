@@ -97,6 +97,8 @@ source_group(map FILES ${map_SRCS})
 set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
 set(population_SRCS
+	src/population/phenotype.cpp
+	src/population/phenotype_container.cpp
 	src/population/population_class.cpp
 	src/population/population_class_container.cpp
 	src/population/population_group_map.cpp
@@ -251,6 +253,7 @@ source_group(map FILES ${map_HDRS})
 
 set(population_HDRS
 	src/population/phenotype.h
+	src/population/phenotype_container.h
 	src/population/population_class.h
 	src/population/population_class_container.h
 	src/population/population_group_map.h

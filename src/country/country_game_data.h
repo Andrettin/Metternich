@@ -3,6 +3,7 @@
 #include "country/country_container.h"
 #include "country/culture_container.h"
 #include "economy/resource_container.h"
+#include "population/phenotype_container.h"
 #include "population/population_type_container.h"
 #include "technology/technology_container.h"
 #include "util/qunique_ptr.h"
@@ -41,6 +42,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
 	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
+	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 
@@ -244,6 +246,14 @@ public:
 	QVariantList get_population_culture_counts_qvariant_list() const;
 	void change_population_culture_count(const culture *culture, const int change);
 
+	const phenotype_map<int> &get_population_phenotype_counts() const
+	{
+		return this->population_phenotype_counts;
+	}
+
+	QVariantList get_population_phenotype_counts_qvariant_list() const;
+	void change_population_phenotype_count(const phenotype *phenotype, const int change);
+
 	int get_population() const
 	{
 		return this->population;
@@ -278,6 +288,7 @@ signals:
 	void score_changed();
 	void population_type_counts_changed();
 	void population_culture_counts_changed();
+	void population_phenotype_counts_changed();
 	void population_changed();
 
 private:
@@ -299,6 +310,7 @@ private:
 	int score = 0;
 	population_type_map<int> population_type_counts;
 	culture_map<int> population_culture_counts;
+	phenotype_map<int> population_phenotype_counts;
 	int population = 0;
 	technology_set technologies;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
