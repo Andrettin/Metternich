@@ -74,16 +74,24 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return map_grid_model::build_image_source(defines::get()->get_default_base_terrain(), tile->get_base_tile());
 			case role::image_source:
 				return map_grid_model::build_image_source(tile->get_terrain(), tile->get_tile());
+			case role::underlay_image_sources: {
+				QStringList underlay_image_sources;
+
+				if (tile->has_river() && tile->get_terrain()->is_water()) {
+					QString river_image_source = "tile/";
+					river_image_source += "rivermouth";
+					river_image_source += "/" + QString::number(tile->get_river_frame());
+					underlay_image_sources.push_back(std::move(river_image_source));
+				}
+
+				return underlay_image_sources;
+			}
 			case role::overlay_image_sources: {
 				QStringList overlay_image_sources;
 
-				if (tile->has_river()) {
+				if (tile->has_river() && !tile->get_terrain()->is_water()) {
 					QString river_image_source = "tile/";
-					if (tile->get_terrain()->is_water()) {
-						river_image_source += "rivermouth";
-					} else {
-						river_image_source += "river";
-					}
+					river_image_source += "river";
 					river_image_source += "/" + QString::number(tile->get_river_frame());
 					overlay_image_sources.push_back(std::move(river_image_source));
 				}
@@ -162,6 +170,8 @@ void map_grid_model::on_tile_terrain_changed(const QPoint &tile_pos)
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
 		static_cast<int>(role::image_source),
+		static_cast<int>(role::underlay_image_sources),
+		static_cast<int>(role::overlay_image_sources),
 		static_cast<int>(role::terrain)
 	});
 }

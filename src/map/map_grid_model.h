@@ -16,6 +16,7 @@ public:
 	enum class role {
 		base_image_source = Qt::UserRole,
 		image_source,
+		underlay_image_sources,
 		overlay_image_sources,
 		site,
 		province,
@@ -54,6 +55,7 @@ public:
 
 		role_names.insert(static_cast<int>(role::base_image_source), "base_image_source");
 		role_names.insert(static_cast<int>(role::image_source), "image_source");
+		role_names.insert(static_cast<int>(role::underlay_image_sources), "underlay_image_sources");
 		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");
 		role_names.insert(static_cast<int>(role::site), "site");
 		role_names.insert(static_cast<int>(role::province), "province");
