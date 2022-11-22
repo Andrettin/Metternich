@@ -28,7 +28,15 @@ void building_slot::set_building(const building_type *building)
 		assert_throw(building->get_building_class()->get_slot_type() == this->get_type());
 	}
 
+	if (this->get_building() != nullptr) {
+		this->get_province()->get_game_data()->change_score(-this->get_building()->get_score());
+	}
+
 	this->building = building;
+
+	if (this->get_building() != nullptr) {
+		this->get_province()->get_game_data()->change_score(this->get_building()->get_score());
+	}
 
 	if (game::get()->is_running()) {
 		this->get_province()->get_game_data()->reassign_workers();
