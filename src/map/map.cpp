@@ -328,14 +328,14 @@ void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improv
 {
 	tile *tile = this->get_tile(tile_pos);
 
-	if (tile->get_improvement() != nullptr && tile->get_owner() != nullptr) {
-		tile->get_owner()->get_game_data()->change_score(-tile->get_improvement()->get_score());
+	if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
+		tile->get_province()->get_game_data()->change_score(-tile->get_improvement()->get_score());
 	}
 
 	tile->set_improvement(improvement);
 
-	if (tile->get_improvement() != nullptr && tile->get_owner() != nullptr) {
-		tile->get_owner()->get_game_data()->change_score(tile->get_improvement()->get_score());
+	if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
+		tile->get_province()->get_game_data()->change_score(tile->get_improvement()->get_score());
 	}
 
 	if (game::get()->is_running()) {

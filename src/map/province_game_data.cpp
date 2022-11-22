@@ -52,6 +52,14 @@ province_game_data::~province_game_data()
 {
 }
 
+void province_game_data::clear_non_map_data()
+{
+	this->set_owner(nullptr);
+	this->clear_population_units();
+	this->clear_buildings();
+	this->score = province::base_score;
+}
+
 void province_game_data::do_turn()
 {
 	this->assign_workers();
@@ -328,7 +336,7 @@ void province_game_data::change_population_type_count(const population_type *typ
 
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_population_type_count(type, change);
-		this->get_owner()->get_game_data()->change_score(change * population_unit::base_score);
+		this->change_score(change * population_unit::base_score);
 	}
 
 	if (game::get()->is_running()) {
@@ -701,23 +709,17 @@ void province_game_data::unassign_worker(population_unit *population_unit)
 	}
 }
 
-int province_game_data::get_score() const
+void province_game_data::change_score(const int change)
 {
-	int score = province::base_score;
-
-	for (const QPoint &tile_pos : this->resource_tiles) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-
-		if (tile->get_improvement() != nullptr) {
-			score += tile->get_improvement()->get_score();
-		}
+	if (change == 0) {
+		return;
 	}
 
-	for (const auto &[population_type, count] : this->get_population_type_counts()) {
-		score += population_unit::base_score * count;
-	}
+	this->score += change;
 
-	return score;
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_score(change);
+	}
 }
 
 }

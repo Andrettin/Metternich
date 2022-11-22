@@ -132,9 +132,7 @@ void game::clear()
 	try {
 		for (const province *province : province::get_all()) {
 			province_game_data *province_game_data = province->get_game_data();
-			province_game_data->set_owner(nullptr);
-			province_game_data->clear_buildings();
-			province_game_data->clear_population_units();
+			province_game_data->clear_non_map_data();
 		}
 
 		//clear data related to the game (i.e. the data determined by history), but not that related only to the map
@@ -219,8 +217,8 @@ void game::apply_history(const metternich::scenario *scenario)
 
 				tile->set_improvement(site_history->get_improvement());
 
-				if (tile->get_improvement() != nullptr && tile->get_owner() != nullptr) {
-					tile->get_owner()->get_game_data()->change_score(tile->get_improvement()->get_score());
+				if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
+					tile->get_province()->get_game_data()->change_score(tile->get_improvement()->get_score());
 				}
 			}
 

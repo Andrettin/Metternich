@@ -43,6 +43,8 @@ public:
 	province_game_data(const province_game_data &other) = delete;
 	~province_game_data();
 
+	void clear_non_map_data();
+
 	void do_turn();
 	void do_production();
 
@@ -196,7 +198,12 @@ public:
 		return this->free_food_consumption;
 	}
 
-	int get_score() const;
+	int get_score() const
+	{
+		return this->score;
+	}
+
+	void change_score(const int change);
 
 	void add_civilian_unit(civilian_unit *civilian_unit)
 	{
@@ -239,6 +246,7 @@ private:
 	int population = 0;
 	int population_growth = 0; //population growth counter
 	int free_food_consumption = 0;
+	int score = 0;
 	std::vector<civilian_unit *> civilian_units;
 };
 
