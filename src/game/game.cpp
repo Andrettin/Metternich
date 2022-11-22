@@ -133,7 +133,7 @@ void game::clear()
 	try {
 		for (const province *province : province::get_all()) {
 			province_game_data *province_game_data = province->get_game_data();
-			province_game_data->clear_non_map_data();
+			province_game_data->reset_non_map_data();
 		}
 
 		//clear data related to the game (i.e. the data determined by history), but not that related only to the map

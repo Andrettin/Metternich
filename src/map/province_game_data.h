@@ -43,7 +43,7 @@ public:
 	province_game_data(const province_game_data &other) = delete;
 	~province_game_data();
 
-	void clear_non_map_data();
+	void reset_non_map_data();
 
 	void do_turn();
 	void do_production();

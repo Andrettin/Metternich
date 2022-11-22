@@ -46,13 +46,15 @@ province_game_data::province_game_data(const metternich::province *province)
 		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->province));
 		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
 	}
+
+	this->reset_non_map_data();
 }
 
 province_game_data::~province_game_data()
 {
 }
 
-void province_game_data::clear_non_map_data()
+void province_game_data::reset_non_map_data()
 {
 	this->set_owner(nullptr);
 	this->clear_population_units();
