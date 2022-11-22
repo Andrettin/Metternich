@@ -10,6 +10,7 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "game/scenario.h"
+#include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/map_template.h"
@@ -222,12 +223,16 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 			}
 
-			if (site->is_settlement()) {
-				const province *province = tile->get_province();
-				province_game_data *province_game_data = province->get_game_data();
+			const province *tile_province = tile->get_province();
+
+			if (tile_province != nullptr) {
+				province_game_data *tile_province_game_data = tile_province->get_game_data();
 
 				for (const auto &[building_slot_type, building] : site_history->get_buildings()) {
-					province_game_data->set_slot_building(building_slot_type, building);
+					const building_type *slot_building = tile_province_game_data->get_slot_building(building_slot_type);
+					if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
+						tile_province_game_data->set_slot_building(building_slot_type, building);
+					}
 				}
 			}
 		}

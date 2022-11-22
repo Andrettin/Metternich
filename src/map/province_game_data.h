@@ -116,6 +116,7 @@ public:
 	}
 
 	QVariantList get_building_slots_qvariant_list() const;
+	const building_type *get_slot_building(const building_slot_type *slot_type) const;
 	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
 	void clear_buildings();
 

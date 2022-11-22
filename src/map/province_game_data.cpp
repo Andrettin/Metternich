@@ -229,6 +229,18 @@ QVariantList province_game_data::get_building_slots_qvariant_list() const
 	return container::to_qvariant_list(this->building_slots);
 }
 
+const building_type *province_game_data::get_slot_building(const building_slot_type *slot_type) const
+{
+	const auto find_iterator = this->building_slot_map.find(slot_type);
+	if (find_iterator != this->building_slot_map.end()) {
+		return find_iterator->second->get_building();
+	}
+
+	assert_throw(false);
+
+	return nullptr;
+}
+
 void province_game_data::set_slot_building(const building_slot_type *slot_type, const building_type *building)
 {
 	if (building != nullptr) {
