@@ -66,15 +66,7 @@ void province_game_data::do_turn()
 {
 	this->assign_workers();
 	this->do_production();
-
-	while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
-		this->grow_population();
-	}
-
-	while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
-		//starvation
-		this->decrease_population();
-	}
+	this->do_population_growth();
 }
 
 void province_game_data::do_production()
@@ -133,6 +125,20 @@ void province_game_data::do_production()
 		if (this->get_population_growth() != 0) {
 			this->set_population_growth(0);
 		}
+	}
+
+	//FIXME: add produced commodities to the country's storage
+}
+
+void province_game_data::do_population_growth()
+{
+	while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
+		this->grow_population();
+	}
+
+	while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
+		//starvation
+		this->decrease_population();
 	}
 }
 

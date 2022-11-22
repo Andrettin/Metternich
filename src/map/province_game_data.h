@@ -47,6 +47,7 @@ public:
 
 	void do_turn();
 	void do_production();
+	void do_population_growth();
 
 	bool is_on_map() const
 	{
