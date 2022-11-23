@@ -102,7 +102,7 @@ public:
 
 	bool has_river() const
 	{
-		return this->get_river_frame() != -1;
+		return !this->get_river_directions().empty();
 	}
 
 	short get_river_frame() const
