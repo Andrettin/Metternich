@@ -7,6 +7,7 @@
 #include "country/diplomacy_state.h"
 #include "database/defines.h"
 #include "database/preferences.h"
+#include "economy/commodity.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "map/map.h"
@@ -701,6 +702,28 @@ void country_game_data::change_population(const int change)
 
 	if (game::get()->is_running()) {
 		emit population_changed();
+	}
+}
+
+QVariantList country_game_data::get_stored_commodities_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_stored_commodities());
+}
+
+void country_game_data::set_stored_commodity(const commodity *commodity, const int value)
+{
+	if (value == this->get_stored_commodity(commodity)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->stored_commodities.erase(commodity);
+	} else {
+		this->stored_commodities[commodity] = value;
+	}
+
+	if (game::get()->is_running()) {
+		emit stored_commodities_changed();
 	}
 }
 

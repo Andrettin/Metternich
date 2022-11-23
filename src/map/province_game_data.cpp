@@ -127,7 +127,15 @@ void province_game_data::do_production()
 		}
 	}
 
-	//FIXME: add produced commodities to the country's storage
+	if (this->get_owner() != nullptr) {
+		for (const auto &[commodity, output] : output_per_commodity) {
+			if (commodity->is_food()) {
+				continue;
+			}
+
+			this->get_owner()->get_game_data()->change_stored_commodity(commodity, output.to_int());
+		}
+	}
 }
 
 void province_game_data::do_population_growth()

@@ -2,6 +2,7 @@
 
 #include "country/country_container.h"
 #include "country/culture_container.h"
+#include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "population/phenotype_container.h"
 #include "population/population_type_container.h"
@@ -44,6 +45,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
+	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 
 public:
@@ -261,6 +263,31 @@ public:
 
 	void change_population(const int change);
 
+	const commodity_map<int> &get_stored_commodities() const
+	{
+		return this->stored_commodities;
+	}
+
+	QVariantList get_stored_commodities_qvariant_list() const;
+
+	int get_stored_commodity(const commodity *commodity) const
+	{
+		const auto find_iterator = this->stored_commodities.find(commodity);
+
+		if (find_iterator != this->stored_commodities.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_stored_commodity(const commodity *commodity, const int value);
+
+	void change_stored_commodity(const commodity *commodity, const int value)
+	{
+		this->set_stored_commodity(commodity, this->get_stored_commodity(commodity) + value);
+	}
+
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
 	bool has_technology(const technology *technology) const
@@ -290,6 +317,7 @@ signals:
 	void population_culture_counts_changed();
 	void population_phenotype_counts_changed();
 	void population_changed();
+	void stored_commodities_changed();
 
 private:
 	metternich::country *country = nullptr;
@@ -312,6 +340,7 @@ private:
 	culture_map<int> population_culture_counts;
 	phenotype_map<int> population_phenotype_counts;
 	int population = 0;
+	commodity_map<int> stored_commodities;
 	technology_set technologies;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 };
