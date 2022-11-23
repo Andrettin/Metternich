@@ -432,25 +432,29 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 
 	const population_type *population_type = group_key.type;
 	if (population_type == nullptr) {
-		centesimal_int literacy_rate = province_history->get_literacy_rate();
-		if (literacy_rate == 0 && province_game_data->get_owner() != nullptr) {
-			literacy_rate = province_game_data->get_owner()->get_history()->get_literacy_rate();
-		}
-
-		if (literacy_rate != 0) {
-			const int literate_population_unit_count = (population_unit_count * literacy_rate / 100).to_int();
-			population_unit_count -= literate_population_unit_count;
-
-			const population_class *literate_population_class = defines::get()->get_default_literate_population_class();
-			const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
-
-			for (int i = 0; i < literate_population_unit_count; ++i) {
-				province_game_data->create_population_unit(literate_population_type, culture, phenotype);
+		if (province_game_data->get_owner() != nullptr && province_game_data->get_owner()->is_tribe()) {
+			population_type = culture->get_population_class_type(defines::get()->get_default_tribal_population_class());
+		} else {
+			centesimal_int literacy_rate = province_history->get_literacy_rate();
+			if (literacy_rate == 0 && province_game_data->get_owner() != nullptr) {
+				literacy_rate = province_game_data->get_owner()->get_history()->get_literacy_rate();
 			}
-		}
 
-		const population_class *population_class = defines::get()->get_default_population_class();
-		population_type = culture->get_population_class_type(population_class);
+			if (literacy_rate != 0) {
+				const int literate_population_unit_count = (population_unit_count * literacy_rate / 100).to_int();
+				population_unit_count -= literate_population_unit_count;
+
+				const population_class *literate_population_class = defines::get()->get_default_literate_population_class();
+				const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
+
+				for (int i = 0; i < literate_population_unit_count; ++i) {
+					province_game_data->create_population_unit(literate_population_type, culture, phenotype);
+				}
+			}
+
+			const population_class *population_class = defines::get()->get_default_population_class();
+			population_type = culture->get_population_class_type(population_class);
+		}
 	}
 	assert_throw(population_type != nullptr);
 
