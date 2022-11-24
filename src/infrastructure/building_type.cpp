@@ -6,6 +6,7 @@
 #include "country/culture.h"
 #include "economy/employment_type.h"
 #include "infrastructure/building_class.h"
+#include "infrastructure/building_slot_type.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -14,6 +15,7 @@ void building_type::initialize()
 {
 	assert_throw(this->building_class != nullptr);
 	this->building_class->add_building_type(this);
+	this->building_class->get_slot_type()->add_building_type(this);
 
 	if (this->culture != nullptr) {
 		assert_throw(this->culture->get_building_class_type(this->get_building_class()) == nullptr);

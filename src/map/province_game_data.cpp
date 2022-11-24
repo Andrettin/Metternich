@@ -166,7 +166,7 @@ void province_game_data::set_owner(const country *country)
 		old_owner->get_game_data()->remove_province(this->province);
 
 		if (this->is_capital()) {
-			this->change_housing(-province_game_data::capital_housing);
+			this->remove_capitol();
 		}
 	}
 
@@ -176,7 +176,7 @@ void province_game_data::set_owner(const country *country)
 		this->owner->get_game_data()->add_province(this->province);
 
 		if (this->is_capital()) {
-			this->change_housing(province_game_data::capital_housing);
+			this->add_capitol();
 		}
 	}
 
@@ -308,6 +308,44 @@ void province_game_data::clear_buildings()
 		building_slot->clear_employees();
 		building_slot->set_building(nullptr);
 	}
+}
+
+void province_game_data::add_capitol()
+{
+	assert_throw(this->is_capital());
+	assert_throw(this->get_culture() != nullptr);
+
+	const building_class *capitol_building_class = defines::get()->get_capitol_building_class();
+	const building_type *capitol_building_type = this->get_culture()->get_building_class_type(capitol_building_class);
+	this->set_slot_building(capitol_building_class->get_slot_type(), capitol_building_type);
+}
+
+void province_game_data::remove_capitol()
+{
+	const building_class *capitol_building_class = defines::get()->get_capitol_building_class();
+	const building_slot_type *capitol_slot_type = capitol_building_class->get_slot_type();
+
+	const building_type *current_slot_building = this->get_slot_building(capitol_slot_type);
+	if (current_slot_building == nullptr || current_slot_building->get_building_class() != capitol_building_class) {
+		return;
+	}
+
+	//remove the capitol and replace it with the next-best building
+	const building_type *best_building_type = nullptr;
+
+	if (this->get_culture() != nullptr) {
+		for (const building_type *building_type : capitol_slot_type->get_building_types()) {
+			if (this->get_culture()->get_building_class_type(building_type->get_building_class()) != building_type) {
+				continue;
+			}
+
+			if (best_building_type == nullptr || best_building_type->get_score() < building_type->get_score()) {
+				best_building_type = building_type;
+			}
+		}
+	}
+
+	this->set_slot_building(capitol_slot_type, best_building_type);
 }
 
 void province_game_data::on_building_gained(const building_type *building, const int multiplier)

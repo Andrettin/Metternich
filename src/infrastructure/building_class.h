@@ -24,7 +24,7 @@ public:
 	{
 	}
 
-	const building_slot_type *get_slot_type() const
+	building_slot_type *get_slot_type() const
 	{
 		return this->slot_type;
 	}

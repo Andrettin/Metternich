@@ -42,7 +42,6 @@ public:
 	static constexpr int base_free_food_consumption = 1;
 	static constexpr int river_housing = 3;
 	static constexpr int coastal_housing = 1;
-	static constexpr int capital_housing = 10;
 
 	explicit province_game_data(const metternich::province *province);
 	province_game_data(const province_game_data &other) = delete;
@@ -129,6 +128,9 @@ public:
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
 	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
 	void clear_buildings();
+
+	void add_capitol();
+	void remove_capitol();
 
 	void on_building_gained(const building_type *building, const int multiplier);
 
