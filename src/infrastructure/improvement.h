@@ -31,7 +31,7 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::improvement*";
 	static constexpr const char database_folder[] = "improvements";
 
-	static constexpr int base_score = 50;
+	static constexpr int base_score = 10;
 
 	explicit improvement(const std::string &identifier) : named_data_entry(identifier)
 	{
@@ -111,7 +111,7 @@ public:
 
 	int get_score() const
 	{
-		return improvement::base_score * std::max(1, this->get_employment_capacity() * this->get_output_multiplier());
+		return improvement::base_score * std::max(1, this->get_employment_capacity() * this->get_output_multiplier() + this->get_housing());
 	}
 
 signals:

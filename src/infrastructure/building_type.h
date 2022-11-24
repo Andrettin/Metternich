@@ -32,7 +32,7 @@ public:
 	static constexpr const char database_folder[] = "building_types";
 
 public:
-	static constexpr int base_score = 50;
+	static constexpr int base_score = 10;
 
 	explicit building_type(const std::string &identifier) : named_data_entry(identifier)
 	{
@@ -85,7 +85,7 @@ public:
 
 	int get_score() const
 	{
-		return building_type::base_score * std::max(1, this->get_employment_capacity() * this->get_output_multiplier());
+		return building_type::base_score * std::max(1, this->get_employment_capacity() * this->get_output_multiplier() + this->get_housing());
 	}
 
 signals:
