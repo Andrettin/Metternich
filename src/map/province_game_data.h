@@ -15,6 +15,7 @@ class civilian_unit;
 class country;
 class culture;
 class icon;
+class improvement;
 class phenotype;
 class population_type;
 class population_unit;
@@ -35,9 +36,13 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
+	Q_PROPERTY(int housing READ get_housing NOTIFY housing_changed)
 
 public:
 	static constexpr int base_free_food_consumption = 1;
+	static constexpr int base_housing = 2;
+	static constexpr int river_housing = 3;
+	static constexpr int coastal_housing = 1;
 
 	explicit province_game_data(const metternich::province *province);
 	province_game_data(const province_game_data &other) = delete;
@@ -116,10 +121,14 @@ public:
 		return this->resource_counts;
 	}
 
+	void on_improvement_gained(const improvement *improvement, const int multiplier);
+
 	QVariantList get_building_slots_qvariant_list() const;
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
 	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
 	void clear_buildings();
+
+	void on_building_gained(const building_type *building, const int multiplier);
 
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
@@ -200,6 +209,14 @@ public:
 		return this->free_food_consumption;
 	}
 
+	int get_housing() const
+	{
+		return this->housing;
+	}
+
+	void change_housing(const int change);
+	void initialize_housing();
+
 	int get_score() const
 	{
 		return this->score;
@@ -229,6 +246,7 @@ signals:
 	void population_phenotype_counts_changed();
 	void population_changed();
 	void population_growth_changed();
+	void housing_changed();
 
 private:
 	const metternich::province *province = nullptr;
@@ -248,6 +266,7 @@ private:
 	int population = 0;
 	int population_growth = 0; //population growth counter
 	int free_food_consumption = 0;
+	int housing = 0;
 	int score = 0;
 	std::vector<civilian_unit *> civilian_units;
 };

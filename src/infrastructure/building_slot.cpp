@@ -31,13 +31,13 @@ void building_slot::set_building(const building_type *building)
 	province_game_data *province_game_data = this->get_province()->get_game_data();
 
 	if (this->get_building() != nullptr) {
-		province_game_data->change_score(-this->get_building()->get_score());
+		province_game_data->on_building_gained(this->get_building(), -1);
 	}
 
 	this->building = building;
 
 	if (this->get_building() != nullptr) {
-		province_game_data->change_score(this->get_building()->get_score());
+		province_game_data->on_building_gained(this->get_building(), 1);
 	}
 
 	if (game::get()->is_running()) {

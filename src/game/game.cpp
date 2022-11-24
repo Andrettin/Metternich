@@ -166,6 +166,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			province_game_data *province_game_data = province->get_game_data();
 
 			province_game_data->set_owner(province_history->get_owner());
+			province_game_data->initialize_housing();
 		}
 
 		for (const country *country : this->get_countries()) {
@@ -219,7 +220,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				tile->set_improvement(site_history->get_improvement());
 
 				if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
-					tile->get_province()->get_game_data()->change_score(tile->get_improvement()->get_score());
+					tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
 				}
 			}
 

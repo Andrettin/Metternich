@@ -60,6 +60,7 @@ void province_game_data::reset_non_map_data()
 	this->clear_population_units();
 	this->clear_buildings();
 	this->score = province::base_score;
+	this->housing = 0;
 }
 
 void province_game_data::do_turn()
@@ -120,7 +121,11 @@ void province_game_data::do_production()
 
 		const int food_consumption = this->get_food_consumption() - this->get_free_food_consumption();
 		const int net_food = food_output.to_int() - food_consumption;
-		this->change_population_growth(net_food);
+		const int available_housing = this->get_housing() - this->get_population_unit_count();
+
+		const int population_growth_change = std::min(net_food, available_housing);
+
+		this->change_population_growth(population_growth_change);
 	} else {
 		if (this->get_population_growth() != 0) {
 			this->set_population_growth(0);
@@ -240,6 +245,14 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 	emit territory_changed();
 }
 
+void province_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
+{
+	assert_throw(improvement != nullptr);
+
+	this->change_score(improvement->get_score() * multiplier);
+	this->change_housing(improvement->get_housing() * multiplier);
+}
+
 QVariantList province_game_data::get_building_slots_qvariant_list() const
 {
 	return container::to_qvariant_list(this->building_slots);
@@ -278,6 +291,14 @@ void province_game_data::clear_buildings()
 		building_slot->clear_employees();
 		building_slot->set_building(nullptr);
 	}
+}
+
+void province_game_data::on_building_gained(const building_type *building, const int multiplier)
+{
+	assert_throw(building != nullptr);
+
+	this->change_score(building->get_score() * multiplier);
+	this->change_housing(building->get_housing() * multiplier);
 }
 
 void province_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
@@ -734,6 +755,38 @@ void province_game_data::unassign_worker(population_unit *population_unit)
 		building_slot->remove_employee(population_unit);
 		population_unit->set_employment_type(nullptr);
 		return;
+	}
+}
+
+void province_game_data::change_housing(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->housing += change;
+
+	if (game::get()->is_running()) {
+		emit housing_changed();
+	}
+}
+
+void province_game_data::initialize_housing()
+{
+	this->housing = province_game_data::base_housing;
+
+	const site *settlement = this->province->get_capital_settlement();
+
+	if (settlement != nullptr) {
+		const site_game_data *settlement_game_data = settlement->get_game_data();
+
+		if (settlement_game_data->get_tile()->has_river()) {
+			this->housing += province_game_data::river_housing;
+		}
+
+		if (map::get()->is_tile_coastal(settlement_game_data->get_tile_pos())) {
+			this->housing += province_game_data::coastal_housing;
+		}
 	}
 }
 
