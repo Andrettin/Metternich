@@ -74,6 +74,8 @@ private:
 public:
 	void set_owner(const country *country);
 
+	bool is_capital() const;
+
 	const culture *get_culture() const;
 	const std::string &get_current_cultural_name() const;
 

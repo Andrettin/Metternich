@@ -198,6 +198,15 @@ void province_game_data::set_owner(const country *country)
 	}
 }
 
+bool province_game_data::is_capital() const
+{
+	if (this->get_owner() == nullptr) {
+		return false;
+	}
+
+	return this->get_owner()->get_capital_province() == this->province;
+}
+
 const culture *province_game_data::get_culture() const
 {
 	if (this->get_owner() != nullptr) {

@@ -6,6 +6,7 @@
 
 namespace metternich {
 
+class building_class;
 class country_palette;
 class population_class;
 class terrain_type;
@@ -22,6 +23,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
+	Q_PROPERTY(metternich::building_class* capitol_building_class MEMBER capitol_building_class)
 	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
 	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
 	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
@@ -94,6 +96,11 @@ public:
 	const terrain_type *get_default_water_zone_terrain() const
 	{
 		return this->default_water_zone_terrain;
+	}
+
+	const building_class *get_capitol_building_class() const
+	{
+		return this->capitol_building_class;
 	}
 
 	const population_class *get_default_population_class() const
@@ -233,6 +240,7 @@ private:
 	terrain_type *unexplored_terrain = nullptr;
 	terrain_type *default_province_terrain = nullptr;
 	terrain_type *default_water_zone_terrain = nullptr;
+	building_class *capitol_building_class = nullptr;
 	population_class *default_population_class = nullptr;
 	population_class *default_tribal_population_class = nullptr;
 	population_class *default_literate_population_class = nullptr;

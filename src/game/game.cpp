@@ -10,6 +10,7 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "game/scenario.h"
+#include "infrastructure/building_class.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
@@ -167,6 +168,14 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			province_game_data->set_owner(province_history->get_owner());
 			province_game_data->initialize_housing();
+
+			if (province_game_data->is_capital()) {
+				assert_throw(province_game_data->get_culture() != nullptr);
+
+				const building_class *capitol_building_class = defines::get()->get_capitol_building_class();
+				const building_type *capitol_building_type = province_game_data->get_culture()->get_building_class_type(capitol_building_class);
+				province_game_data->set_slot_building(capitol_building_class->get_slot_type(), capitol_building_type);
+			}
 		}
 
 		for (const country *country : this->get_countries()) {
