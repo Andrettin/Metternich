@@ -782,7 +782,7 @@ void province_game_data::change_housing(const int change)
 
 void province_game_data::initialize_housing()
 {
-	this->housing = province_game_data::base_housing;
+	this->housing = defines::get()->get_base_housing();
 
 	const site *settlement = this->province->get_capital_settlement();
 

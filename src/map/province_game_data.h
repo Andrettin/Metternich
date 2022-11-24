@@ -40,7 +40,6 @@ class province_game_data final : public QObject
 
 public:
 	static constexpr int base_free_food_consumption = 1;
-	static constexpr int base_housing = 2;
 	static constexpr int river_housing = 3;
 	static constexpr int coastal_housing = 1;
 
