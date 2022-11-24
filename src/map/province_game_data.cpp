@@ -164,12 +164,20 @@ void province_game_data::set_owner(const country *country)
 	const metternich::country *old_owner = this->owner;
 	if (old_owner != nullptr) {
 		old_owner->get_game_data()->remove_province(this->province);
+
+		if (this->is_capital()) {
+			this->change_housing(-province_game_data::capital_housing);
+		}
 	}
 
 	this->owner = country;
 
 	if (this->owner != nullptr) {
 		this->owner->get_game_data()->add_province(this->province);
+
+		if (this->is_capital()) {
+			this->change_housing(province_game_data::capital_housing);
+		}
 	}
 
 	if (game::get()->is_running()) {

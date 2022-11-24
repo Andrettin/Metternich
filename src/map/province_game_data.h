@@ -42,6 +42,7 @@ public:
 	static constexpr int base_free_food_consumption = 1;
 	static constexpr int river_housing = 3;
 	static constexpr int coastal_housing = 1;
+	static constexpr int capital_housing = 10;
 
 	explicit province_game_data(const metternich::province *province);
 	province_game_data(const province_game_data &other) = delete;
