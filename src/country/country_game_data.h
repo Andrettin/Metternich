@@ -16,6 +16,7 @@ class consulate;
 class country;
 class country_palette;
 class culture;
+class population_unit;
 class province;
 enum class diplomacy_state;
 
@@ -263,6 +264,16 @@ public:
 
 	void change_population(const int change);
 
+	void add_population_unit(population_unit *population_unit)
+	{
+		this->population_units.push_back(population_unit);
+	}
+
+	void remove_population_unit(population_unit *population_unit)
+	{
+		std::erase(this->population_units, population_unit);
+	}
+
 	const commodity_map<int> &get_stored_commodities() const
 	{
 		return this->stored_commodities;
@@ -342,6 +353,7 @@ private:
 	int population = 0;
 	commodity_map<int> stored_commodities;
 	technology_set technologies;
+	std::vector<population_unit *> population_units;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 };
 

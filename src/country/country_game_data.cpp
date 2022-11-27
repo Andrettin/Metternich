@@ -204,6 +204,10 @@ void country_game_data::add_province(const province *province)
 		this->change_population_phenotype_count(phenotype, count);
 	}
 
+	for (const qunique_ptr<population_unit> &population_unit : province_game_data->get_population_units()) {
+		this->add_population_unit(population_unit.get());
+	}
+
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->change_resource_count(resource, count);
 
@@ -264,6 +268,10 @@ void country_game_data::remove_province(const province *province)
 	}
 	for (const auto &[phenotype, count] : province_game_data->get_population_phenotype_counts()) {
 		this->change_population_phenotype_count(phenotype, -count);
+	}
+
+	for (const qunique_ptr<population_unit> &population_unit : province_game_data->get_population_units()) {
+		this->remove_population_unit(population_unit.get());
 	}
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {

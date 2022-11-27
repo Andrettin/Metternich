@@ -139,6 +139,11 @@ public:
 	void create_population_unit(const population_type *type, const culture *culture, const phenotype *phenotype);
 	void clear_population_units();
 
+	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
+	{
+		return this->population_units;
+	}
+
 	int get_population_unit_count() const
 	{
 		return static_cast<int>(this->population_units.size());
