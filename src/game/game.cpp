@@ -398,6 +398,11 @@ void game::apply_population_history()
 				assert_throw(group_find_iterator != population_groups.end());
 				group_find_iterator->second += remaining_population;
 			}
+
+			if (remaining_population != 0 && group_key.is_empty()) {
+				//if this is general population data, then add the remaining population to the stored population growth
+				country->get_game_data()->change_population_growth(remaining_population * defines::get()->get_population_growth_threshold() / defines::get()->get_population_per_unit());
+			}
 		}
 	}
 }
@@ -466,14 +471,6 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 
 	int64_t remaining_population = population % defines::get()->get_population_per_unit();
 	remaining_population = std::max<int64_t>(0, remaining_population);
-
-	if (remaining_population != 0 && group_key.is_empty()) {
-		//if this is general population data, then add the remaining population to the stored population growth
-		province_game_data->change_population_growth(remaining_population * defines::get()->get_population_growth_threshold() / defines::get()->get_population_per_unit());
-
-		//there could still be population remaining that is so small that it can't be represented by population growth
-		remaining_population %= defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold();
-	}
 
 	return remaining_population;
 }

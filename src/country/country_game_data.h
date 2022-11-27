@@ -46,6 +46,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
+	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 
@@ -54,6 +55,7 @@ public:
 	~country_game_data();
 
 	void do_turn();
+	void do_population_growth();
 	void do_ai_turn();
 
 	const metternich::country *get_overlord() const
@@ -235,6 +237,16 @@ public:
 
 	void change_score(const int change);
 
+	void add_population_unit(population_unit *population_unit)
+	{
+		this->population_units.push_back(population_unit);
+	}
+
+	void remove_population_unit(population_unit *population_unit)
+	{
+		std::erase(this->population_units, population_unit);
+	}
+
 	const population_type_map<int> &get_population_type_counts() const
 	{
 		return this->population_type_counts;
@@ -266,14 +278,16 @@ public:
 
 	void change_population(const int change);
 
-	void add_population_unit(population_unit *population_unit)
+	int get_population_growth() const
 	{
-		this->population_units.push_back(population_unit);
+		return this->population_growth;
 	}
 
-	void remove_population_unit(population_unit *population_unit)
+	void set_population_growth(const int growth);
+
+	void change_population_growth(const int change)
 	{
-		std::erase(this->population_units, population_unit);
+		this->set_population_growth(this->get_population_growth() + change);
 	}
 
 	const commodity_map<int> &get_stored_commodities() const
@@ -330,6 +344,7 @@ signals:
 	void population_culture_counts_changed();
 	void population_phenotype_counts_changed();
 	void population_changed();
+	void population_growth_changed();
 	void stored_commodities_changed();
 
 private:
@@ -349,13 +364,14 @@ private:
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;
+	std::vector<population_unit *> population_units;
 	population_type_map<int> population_type_counts;
 	culture_map<int> population_culture_counts;
 	phenotype_map<int> population_phenotype_counts;
 	int population = 0;
+	int population_growth = 0; //population growth counter
 	commodity_map<int> stored_commodities;
 	technology_set technologies;
-	std::vector<population_unit *> population_units;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 };
 

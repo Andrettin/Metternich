@@ -17,6 +17,7 @@
 #include "map/site_game_data.h"
 #include "map/tile.h"
 #include "population/phenotype.h"
+#include "population/population_unit.h"
 #include "unit/civilian_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -48,8 +49,57 @@ void country_game_data::do_turn()
 		province->get_game_data()->do_turn();
 	}
 
+	this->do_population_growth();
+
 	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 		civilian_unit->do_turn();
+	}
+}
+
+void country_game_data::do_population_growth()
+{
+	if (this->population_units.empty()) {
+		this->set_population_growth(0);
+		return;
+	}
+
+	int stored_food = 0;
+	for (const auto &[commodity, quantity] : this->get_stored_commodities()) {
+		if (commodity->is_food()) {
+			stored_food += quantity;
+		}
+	}
+
+	int food_consumption = 0;
+
+	for (const province *province : this->get_provinces()) {
+		food_consumption += province->get_game_data()->get_food_consumption() - province->get_game_data()->get_free_food_consumption();
+	}
+
+	const int net_food = stored_food - food_consumption;
+
+	this->change_population_growth(net_food);
+
+	for (auto &[commodity, quantity] : this->stored_commodities) {
+		if (!commodity->is_food()) {
+			continue;
+		}
+
+		quantity = 0;
+	}
+
+	while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
+		this->get_random_population_weighted_province()->get_game_data()->grow_population();
+	}
+
+	while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
+		//starvation
+		this->get_random_population_weighted_province()->get_game_data()->decrease_population();
+
+		if (this->population_units.empty()) {
+			this->set_population_growth(0);
+			return;
+		}
 	}
 }
 
@@ -720,6 +770,23 @@ void country_game_data::change_population(const int change)
 
 	if (game::get()->is_running()) {
 		emit population_changed();
+	}
+}
+
+void country_game_data::set_population_growth(const int growth)
+{
+	if (growth == this->get_population_growth()) {
+		return;
+	}
+
+	const int change = growth - this->get_population_growth();
+
+	this->population_growth = growth;
+
+	this->change_population(change * defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold());
+
+	if (game::get()->is_running()) {
+		emit population_growth_changed();
 	}
 }
 

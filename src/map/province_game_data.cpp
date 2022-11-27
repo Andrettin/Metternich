@@ -67,7 +67,6 @@ void province_game_data::do_turn()
 {
 	this->assign_workers();
 	this->do_production();
-	this->do_population_growth();
 }
 
 void province_game_data::do_production()
@@ -110,48 +109,10 @@ void province_game_data::do_production()
 		}
 	}
 
-	//handle food
-	if (this->get_population_unit_count() != 0) {
-		centesimal_int food_output;
-		for (const auto &[commodity, output] : output_per_commodity) {
-			if (commodity->is_food()) {
-				food_output += output;
-			}
-		}
-
-		const int food_consumption = this->get_food_consumption() - this->get_free_food_consumption();
-		const int net_food = food_output.to_int() - food_consumption;
-		const int available_housing = this->get_housing() - this->get_population_unit_count();
-
-		const int population_growth_change = std::min(net_food, available_housing);
-
-		this->change_population_growth(population_growth_change);
-	} else {
-		if (this->get_population_growth() != 0) {
-			this->set_population_growth(0);
-		}
-	}
-
 	if (this->get_owner() != nullptr) {
 		for (const auto &[commodity, output] : output_per_commodity) {
-			if (commodity->is_food()) {
-				continue;
-			}
-
 			this->get_owner()->get_game_data()->change_stored_commodity(commodity, output.to_int());
 		}
-	}
-}
-
-void province_game_data::do_population_growth()
-{
-	while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
-		this->grow_population();
-	}
-
-	while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
-		//starvation
-		this->decrease_population();
 	}
 }
 
@@ -422,7 +383,6 @@ void province_game_data::clear_population_units()
 	this->population_culture_counts.clear();
 	this->population_phenotype_counts.clear();
 	this->population = 0;
-	this->population_growth = 0;
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
 	this->civilian_units.clear();
 }
@@ -529,28 +489,13 @@ void province_game_data::change_population(const int change)
 	}
 }
 
-void province_game_data::set_population_growth(const int growth)
-{
-	if (growth == this->get_population_growth()) {
-		return;
-	}
-
-	const int change = growth - this->get_population_growth();
-
-	this->population_growth = growth;
-
-	this->change_population(change * defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold());
-
-	if (game::get()->is_running()) {
-		emit population_growth_changed();
-	}
-}
-
 void province_game_data::grow_population()
 {
 	if (this->population_units.empty()) {
 		throw std::runtime_error("Tried to grow population in a province which has no pre-existing population.");
 	}
+
+	assert_throw(this->get_owner() != nullptr);
 
 	const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
 	const culture *culture = population_unit->get_culture();
@@ -560,16 +505,14 @@ void province_game_data::grow_population()
 	this->create_population_unit(population_type, culture, phenotype);
 	this->assign_worker(this->population_units.back().get());
 
-	this->change_population_growth(-defines::get()->get_population_growth_threshold());
+	this->get_owner()->get_game_data()->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
 
 void province_game_data::decrease_population()
 {
-	this->change_population_growth(defines::get()->get_population_growth_threshold());
+	assert_throw(!this->population_units.empty());
 
-	if (this->population_units.empty()) {
-		return;
-	}
+	this->get_owner()->get_game_data()->change_population_growth(defines::get()->get_population_growth_threshold());
 
 	this->pop_population_unit(this->choose_starvation_population_unit());
 }

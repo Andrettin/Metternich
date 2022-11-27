@@ -35,7 +35,6 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
-	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 	Q_PROPERTY(int housing READ get_housing NOTIFY housing_changed)
 
 public:
@@ -51,7 +50,6 @@ public:
 
 	void do_turn();
 	void do_production();
-	void do_population_growth();
 
 	bool is_on_map() const
 	{
@@ -180,18 +178,6 @@ public:
 
 	void change_population(const int change);
 
-	int get_population_growth() const
-	{
-		return this->population_growth;
-	}
-
-	void set_population_growth(const int growth);
-
-	void change_population_growth(const int change)
-	{
-		this->set_population_growth(this->get_population_growth() + change);
-	}
-
 	void grow_population();
 	void decrease_population();
 	population_unit *choose_starvation_population_unit();
@@ -254,7 +240,6 @@ signals:
 	void population_culture_counts_changed();
 	void population_phenotype_counts_changed();
 	void population_changed();
-	void population_growth_changed();
 	void housing_changed();
 
 private:
@@ -273,7 +258,6 @@ private:
 	culture_map<int> population_culture_counts;
 	phenotype_map<int> population_phenotype_counts;
 	int population = 0;
-	int population_growth = 0; //population growth counter
 	int free_food_consumption = 0;
 	int housing = 0;
 	int score = 0;
