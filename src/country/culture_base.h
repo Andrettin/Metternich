@@ -19,6 +19,7 @@ class culture_base : public named_data_entry
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::cultural_group* group MEMBER group NOTIFY changed)
+	Q_PROPERTY(metternich::cultural_group* upper_group MEMBER group NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* default_phenotype MEMBER default_phenotype)
 
 public:
