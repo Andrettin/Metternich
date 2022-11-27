@@ -109,4 +109,16 @@ bool population_unit::produces_food() const
 	return false;
 }
 
+void population_unit::migrate_to(const metternich::province *province)
+{
+	qunique_ptr<population_unit> unique_ptr = this->get_province()->get_game_data()->pop_population_unit(this);
+
+	assert_throw(unique_ptr != nullptr);
+
+	province->get_game_data()->add_population_unit(std::move(unique_ptr));
+	this->set_province(province);
+
+	province->get_game_data()->assign_worker(this);
+}
+
 }

@@ -662,19 +662,7 @@ void province_game_data::assign_worker(population_unit *population_unit)
 
 bool province_game_data::try_assign_worker_to_tile(population_unit *population_unit, tile *tile)
 {
-	if (tile->get_improvement() == nullptr) {
-		return false;
-	}
-
-	if (tile->get_improvement()->get_employment_type() == nullptr) {
-		return false;
-	}
-
-	if (tile->get_employee_count() >= tile->get_employment_capacity()) {
-		return false;
-	}
-
-	if (!vector::contains(tile->get_improvement()->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
+	if (!this->can_tile_employ_worker(population_unit, tile)) {
 		return false;
 	}
 
@@ -693,19 +681,7 @@ void province_game_data::assign_worker_to_tile(population_unit *population_unit,
 
 bool province_game_data::try_assign_worker_to_building(population_unit *population_unit, building_slot *building_slot)
 {
-	if (building_slot->get_building() == nullptr) {
-		return false;
-	}
-
-	if (building_slot->get_building()->get_employment_type() == nullptr) {
-		return false;
-	}
-
-	if (building_slot->get_employee_count() >= building_slot->get_employment_capacity()) {
-		return false;
-	}
-
-	if (!vector::contains(building_slot->get_building()->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
+	if (!this->can_building_employ_worker(population_unit, building_slot)) {
 		return false;
 	}
 
@@ -744,6 +720,67 @@ void province_game_data::unassign_worker(population_unit *population_unit)
 		population_unit->set_employment_type(nullptr);
 		return;
 	}
+}
+
+bool province_game_data::can_tile_employ_worker(const population_unit *population_unit, const tile *tile) const
+{
+	if (tile->get_improvement() == nullptr) {
+		return false;
+	}
+
+	if (tile->get_improvement()->get_employment_type() == nullptr) {
+		return false;
+	}
+
+	if (tile->get_employee_count() >= tile->get_employment_capacity()) {
+		return false;
+	}
+
+	if (!vector::contains(tile->get_improvement()->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
+		return false;
+	}
+
+	return true;
+}
+
+bool province_game_data::can_building_employ_worker(const population_unit *population_unit, const building_slot *building_slot) const
+{
+	if (building_slot->get_building() == nullptr) {
+		return false;
+	}
+
+	if (building_slot->get_building()->get_employment_type() == nullptr) {
+		return false;
+	}
+
+	if (building_slot->get_employee_count() >= building_slot->get_employment_capacity()) {
+		return false;
+	}
+
+	if (!vector::contains(building_slot->get_building()->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
+		return false;
+	}
+
+	return true;
+}
+
+bool province_game_data::has_employment_for_worker(const population_unit *population_unit) const
+{
+	for (const QPoint &tile_pos : this->resource_tiles) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+
+		if (this->can_tile_employ_worker(population_unit, tile)) {
+			return true;
+		}
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		if (this->can_building_employ_worker(population_unit, building_slot.get())) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void province_game_data::change_housing(const int change)

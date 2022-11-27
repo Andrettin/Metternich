@@ -204,6 +204,10 @@ public:
 		return this->free_food_consumption;
 	}
 
+	bool can_tile_employ_worker(const population_unit *population_unit, const tile *tile) const;
+	bool can_building_employ_worker(const population_unit *population_unit, const building_slot *building_slot) const;
+	bool has_employment_for_worker(const population_unit *population_unit) const;
+
 	int get_housing() const
 	{
 		return this->housing;

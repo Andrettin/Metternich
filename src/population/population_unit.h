@@ -124,6 +124,8 @@ public:
 
 	bool produces_food() const;
 
+	void migrate_to(const metternich::province *province);
+
 signals:
 	void type_changed();
 	void culture_changed();

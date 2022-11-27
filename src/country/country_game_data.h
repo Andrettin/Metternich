@@ -56,6 +56,7 @@ public:
 
 	void do_turn();
 	void do_population_growth();
+	void do_migration();
 	void do_ai_turn();
 
 	const metternich::country *get_overlord() const

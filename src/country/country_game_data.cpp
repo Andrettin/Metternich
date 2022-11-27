@@ -45,6 +45,8 @@ country_game_data::~country_game_data()
 
 void country_game_data::do_turn()
 {
+	this->do_migration();
+
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->do_turn();
 	}
@@ -99,6 +101,26 @@ void country_game_data::do_population_growth()
 		if (this->population_units.empty()) {
 			this->set_population_growth(0);
 			return;
+		}
+	}
+}
+
+void country_game_data::do_migration()
+{
+	const std::vector<population_unit *> population_units = this->population_units;
+
+	for (population_unit *population_unit : population_units) {
+		if (population_unit->is_employed()) {
+			continue;
+		}
+
+		for (const province *province : this->get_provinces()) {
+			province_game_data *province_game_data = province->get_game_data();
+
+			if (province_game_data->has_employment_for_worker(population_unit)) {
+				population_unit->migrate_to(province);
+				break;
+			}
 		}
 	}
 }
