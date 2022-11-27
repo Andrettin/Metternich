@@ -60,7 +60,6 @@ void province_game_data::reset_non_map_data()
 	this->clear_population_units();
 	this->clear_buildings();
 	this->score = province::base_score;
-	this->housing = 0;
 }
 
 void province_game_data::do_turn()
@@ -228,7 +227,6 @@ void province_game_data::on_improvement_gained(const improvement *improvement, c
 	assert_throw(improvement != nullptr);
 
 	this->change_score(improvement->get_score() * multiplier);
-	this->change_housing(improvement->get_housing() * multiplier);
 }
 
 QVariantList province_game_data::get_building_slots_qvariant_list() const
@@ -314,7 +312,6 @@ void province_game_data::on_building_gained(const building_type *building, const
 	assert_throw(building != nullptr);
 
 	this->change_score(building->get_score() * multiplier);
-	this->change_housing(building->get_housing() * multiplier);
 }
 
 void province_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
@@ -781,38 +778,6 @@ bool province_game_data::has_employment_for_worker(const population_unit *popula
 	}
 
 	return false;
-}
-
-void province_game_data::change_housing(const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->housing += change;
-
-	if (game::get()->is_running()) {
-		emit housing_changed();
-	}
-}
-
-void province_game_data::initialize_housing()
-{
-	this->housing = defines::get()->get_base_housing();
-
-	const site *settlement = this->province->get_capital_settlement();
-
-	if (settlement != nullptr) {
-		const site_game_data *settlement_game_data = settlement->get_game_data();
-
-		if (settlement_game_data->get_tile()->has_river()) {
-			this->housing += province_game_data::river_housing;
-		}
-
-		if (map::get()->is_tile_coastal(settlement_game_data->get_tile_pos())) {
-			this->housing += province_game_data::coastal_housing;
-		}
-	}
 }
 
 void province_game_data::change_score(const int change)

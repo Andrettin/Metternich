@@ -35,12 +35,9 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
-	Q_PROPERTY(int housing READ get_housing NOTIFY housing_changed)
 
 public:
 	static constexpr int base_free_food_consumption = 1;
-	static constexpr int river_housing = 3;
-	static constexpr int coastal_housing = 1;
 
 	explicit province_game_data(const metternich::province *province);
 	province_game_data(const province_game_data &other) = delete;
@@ -208,14 +205,6 @@ public:
 	bool can_building_employ_worker(const population_unit *population_unit, const building_slot *building_slot) const;
 	bool has_employment_for_worker(const population_unit *population_unit) const;
 
-	int get_housing() const
-	{
-		return this->housing;
-	}
-
-	void change_housing(const int change);
-	void initialize_housing();
-
 	int get_score() const
 	{
 		return this->score;
@@ -244,7 +233,6 @@ signals:
 	void population_culture_counts_changed();
 	void population_phenotype_counts_changed();
 	void population_changed();
-	void housing_changed();
 
 private:
 	const metternich::province *province = nullptr;
@@ -263,7 +251,6 @@ private:
 	phenotype_map<int> population_phenotype_counts;
 	int population = 0;
 	int free_food_consumption = 0;
-	int housing = 0;
 	int score = 0;
 	std::vector<civilian_unit *> civilian_units;
 };

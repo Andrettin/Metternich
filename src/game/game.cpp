@@ -166,7 +166,6 @@ void game::apply_history(const metternich::scenario *scenario)
 			const province_history *province_history = province->get_history();
 			province_game_data *province_game_data = province->get_game_data();
 
-			province_game_data->initialize_housing();
 			province_game_data->set_owner(province_history->get_owner());
 		}
 
