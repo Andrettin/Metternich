@@ -157,6 +157,8 @@ public:
 		emit task_completion_turns_changed();
 	}
 
+	void disband(const bool restore_population_unit);
+
 	Q_INVOKABLE void disband();
 
 signals:

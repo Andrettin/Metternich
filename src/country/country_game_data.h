@@ -290,6 +290,8 @@ public:
 		this->set_population_growth(this->get_population_growth() + change);
 	}
 
+	void decrease_population();
+
 	const commodity_map<int> &get_stored_commodities() const
 	{
 		return this->stored_commodities;

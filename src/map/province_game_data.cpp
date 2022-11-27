@@ -519,24 +519,6 @@ void province_game_data::decrease_population()
 
 population_unit *province_game_data::choose_starvation_population_unit()
 {
-	civilian_unit *best_civilian_unit = nullptr;
-
-	for (auto it = this->civilian_units.rbegin(); it != this->civilian_units.rend(); ++it) {
-		civilian_unit *civilian_unit = *it;
-
-		if (
-			best_civilian_unit == nullptr
-			|| (best_civilian_unit->is_busy() && !civilian_unit->is_busy())
-		) {
-			best_civilian_unit = civilian_unit;
-		}
-	}
-
-	if (best_civilian_unit != nullptr) {
-		best_civilian_unit->disband();
-		return this->population_units.back().get();
-	}
-
 	population_unit *best_population_unit = nullptr;
 
 	for (auto it = this->population_units.rbegin(); it != this->population_units.rend(); ++it) {

@@ -94,7 +94,7 @@ void country_game_data::do_population_growth()
 
 	while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
 		//starvation
-		this->get_random_population_weighted_province()->get_game_data()->decrease_population();
+		this->decrease_population();
 
 		if (this->population_units.empty()) {
 			this->set_population_growth(0);
@@ -788,6 +788,29 @@ void country_game_data::set_population_growth(const int growth)
 	if (game::get()->is_running()) {
 		emit population_growth_changed();
 	}
+}
+
+void country_game_data::decrease_population()
+{
+	civilian_unit *best_civilian_unit = nullptr;
+
+	for (auto it = this->civilian_units.rbegin(); it != this->civilian_units.rend(); ++it) {
+		civilian_unit *civilian_unit = it->get();
+
+		if (
+			best_civilian_unit == nullptr
+			|| (best_civilian_unit->is_busy() && !civilian_unit->is_busy())
+		) {
+			best_civilian_unit = civilian_unit;
+		}
+	}
+
+	if (best_civilian_unit != nullptr) {
+		best_civilian_unit->disband(false);
+		return;
+	}
+
+	this->get_random_population_weighted_province()->get_game_data()->decrease_population();
 }
 
 QVariantList country_game_data::get_stored_commodities_qvariant_list() const

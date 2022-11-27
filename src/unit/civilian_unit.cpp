@@ -241,7 +241,7 @@ const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(co
 	return nullptr;
 }
 
-void civilian_unit::disband()
+void civilian_unit::disband(const bool restore_population_unit)
 {
 	if (this->is_working()) {
 		this->cancel_work();
@@ -255,9 +255,18 @@ void civilian_unit::disband()
 
 	assert_throw(this->get_home_province() != nullptr);
 	this->get_home_province()->get_game_data()->remove_civilian_unit(this);
-	this->get_home_province()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_phenotype());
+
+	if (restore_population_unit) {
+		this->get_home_province()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_phenotype());
+	}
 
 	this->get_owner()->get_game_data()->remove_civilian_unit(this);
 }
+
+void civilian_unit::disband()
+{
+	this->disband(true);
+}
+
 
 }
