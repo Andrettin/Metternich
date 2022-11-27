@@ -2,6 +2,7 @@
 
 #include "country/culture_base.h"
 
+#include "country/cultural_group.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_type.h"
 #include "population/population_class.h"
@@ -50,9 +51,72 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 
 void culture_base::check() const
 {
+	for (const auto &[building_class, building_type] : this->building_class_types) {
+		assert_throw(building_type->get_building_class() == building_class);
+	}
+
+	for (const auto &[population_class, population_type] : this->population_class_types) {
+		assert_throw(population_type->get_population_class() == population_class);
+	}
+
 	for (const auto &[unit_class, unit_type] : this->civilian_class_unit_types) {
 		assert_throw(unit_type->get_unit_class() == unit_class);
 	}
+}
+
+
+const phenotype *culture_base::get_default_phenotype() const
+{
+	if (this->default_phenotype != nullptr) {
+		return this->default_phenotype;
+	}
+
+	return this->get_group()->get_default_phenotype();
+}
+
+const building_type *culture_base::get_building_class_type(const building_class *building_class) const
+{
+	const auto find_iterator = this->building_class_types.find(building_class);
+	if (find_iterator != this->building_class_types.end()) {
+		return find_iterator->second;
+	}
+
+	if (this->get_group() != nullptr) {
+		return this->get_group()->get_building_class_type(building_class);
+	}
+
+	return building_class->get_default_building_type();
+
+}
+
+const population_type *culture_base::get_population_class_type(const population_class *population_class) const
+{
+	const auto find_iterator = this->population_class_types.find(population_class);
+	if (find_iterator != this->population_class_types.end()) {
+		return find_iterator->second;
+	}
+
+	if (this->get_group() != nullptr) {
+		return this->get_group()->get_population_class_type(population_class);
+	}
+
+	return population_class->get_default_population_type();
+
+}
+
+const civilian_unit_type *culture_base::get_civilian_class_unit_type(const civilian_unit_class *unit_class) const
+{
+	const auto find_iterator = this->civilian_class_unit_types.find(unit_class);
+	if (find_iterator != this->civilian_class_unit_types.end()) {
+		return find_iterator->second;
+	}
+
+	if (this->get_group() != nullptr) {
+		return this->get_group()->get_civilian_class_unit_type(unit_class);
+	}
+
+	return unit_class->get_default_unit_type();
+
 }
 
 }

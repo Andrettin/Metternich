@@ -11,7 +11,6 @@ class culture final : public culture_base, public data_type<culture>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::cultural_group* group MEMBER group NOTIFY changed)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 
 public:
@@ -26,28 +25,18 @@ public:
 	virtual void initialize() override;
 	virtual void check() const override;
 
-	const cultural_group *get_group() const
-	{
-		return this->group;
-	}
+	using culture_base::get_group;
 
 	const QColor &get_color() const
 	{
 		return this->color;
 	}
 
-	const phenotype *get_default_phenotype() const;
-
-	const building_type *get_building_class_type(const building_class *building_class) const;
-	const population_type *get_population_class_type(const population_class *population_class) const;
-
 signals:
 	void changed();
 
 private:
-	cultural_group *group = nullptr;
 	QColor color;
-	phenotype *default_phenotype = nullptr;
 };
 
 }

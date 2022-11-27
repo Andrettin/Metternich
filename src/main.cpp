@@ -4,6 +4,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_type.h"
+#include "country/cultural_group_rank.h"
 #include "country/diplomacy_state.h"
 #include "country/landed_title_tier.h"
 #include "database/database.h"
@@ -72,6 +73,7 @@ int main(int argc, char **argv)
 		QQmlApplicationEngine engine;
 
 		enum_converter<country_type>();
+		enum_converter<cultural_group_rank>();
 		enum_converter<diplomacy_state>();
 		enum_converter<food_type>();
 		enum_converter<gender>();
