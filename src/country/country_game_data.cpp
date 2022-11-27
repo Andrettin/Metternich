@@ -26,6 +26,7 @@
 #include "util/rect_util.h"
 #include "util/size_util.h"
 #include "util/thread_pool.h"
+#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 #include "xbrz.h"
@@ -312,6 +313,15 @@ void country_game_data::remove_province(const province *province)
 	if (game::get()->is_running()) {
 		emit provinces_changed();
 	}
+}
+
+const province *country_game_data::get_random_population_weighted_province() const
+{
+	if (this->population_units.empty()) {
+		return nullptr;
+	}
+
+	return vector::get_random(this->population_units)->get_province();
 }
 
 bool country_game_data::is_under_anarchy() const

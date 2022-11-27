@@ -105,6 +105,8 @@ public:
 		return static_cast<int>(this->get_provinces().size());
 	}
 
+	const province *get_random_population_weighted_province() const;
+
 	bool is_alive() const
 	{
 		return !this->get_provinces().empty();
