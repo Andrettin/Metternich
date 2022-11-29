@@ -586,7 +586,7 @@ void game::create_diplomatic_map_image()
 
 	const map *map = map::get();
 
-	QSize image_size = game::min_diplomatic_map_image_size;
+	QSize image_size = game::min_diplomatic_map_image_size * preferences::get()->get_scale_factor();
 	const QSize min_scaled_map_size = map->get_size() * min_tile_scale;
 	if (min_scaled_map_size.width() > image_size.width() || min_scaled_map_size.height() > image_size.height()) {
 		image_size = min_scaled_map_size;
