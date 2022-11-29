@@ -14,6 +14,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
+#include "map/map_generator.h"
 #include "map/map_template.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -61,6 +62,21 @@ QDateTime game::normalize_date(const QDateTime &date)
 
 game::game()
 {
+}
+
+void game::create_random_map()
+{
+	try {
+		this->clear();
+
+		map_generator map_generator(QSize(256, 128));
+		map_generator.generate();
+
+		this->on_setup_finished();
+	} catch (const std::exception &exception) {
+		exception::report(exception);
+		std::terminate();
+	}
 }
 
 void game::setup_scenario(metternich::scenario *scenario)
