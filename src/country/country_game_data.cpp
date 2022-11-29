@@ -589,6 +589,9 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 {
 	const int tile_pixel_size = game::get()->get_diplomatic_map_tile_pixel_size();
 
+	assert_throw(this->territory_rect.width() > 0);
+	assert_throw(this->territory_rect.height() > 0);
+
 	this->diplomatic_map_image = QImage(this->territory_rect.size(), QImage::Format_RGBA8888);
 	this->diplomatic_map_image.fill(Qt::transparent);
 

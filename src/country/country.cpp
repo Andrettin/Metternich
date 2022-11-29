@@ -56,6 +56,10 @@ void country::check() const
 	assert_throw(this->get_capital_province() != nullptr);
 	assert_throw(this->get_color().isValid());
 	assert_throw(this->get_palette() != nullptr);
+
+	if (!this->get_provinces().empty()) {
+		assert_throw(this->get_provinces().at(0) == this->get_capital_province());
+	}
 }
 
 data_entry_history *country::get_history_base()
