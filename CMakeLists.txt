@@ -74,6 +74,7 @@ set_source_files_properties(${infrastructure_SRCS} PROPERTIES UNITY_GROUP "infra
 set(map_SRCS
 	src/map/diplomatic_map_image_provider.cpp
 	src/map/map.cpp
+	src/map/map_generator.cpp
 	src/map/map_grid_model.cpp
 	src/map/map_template.cpp
 	src/map/province.cpp
@@ -230,6 +231,7 @@ source_group(infrastructure FILES ${infrastructure_HDRS})
 set(map_HDRS
 	src/map/diplomatic_map_image_provider.h
 	src/map/map.h
+	src/map/map_generator.h
 	src/map/map_grid_model.h
 	src/map/map_template.h
 	src/map/province.h
