@@ -55,6 +55,8 @@ public:
 	void apply_population_history();
 	int64_t apply_historical_population_group_to_province(const population_group_key &group_key, const int population, const province *province);
 
+	void on_setup_finished();
+
 	void do_turn();
 	Q_INVOKABLE void do_turn_async();
 

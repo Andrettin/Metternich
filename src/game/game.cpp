@@ -77,19 +77,7 @@ void game::setup_scenario(metternich::scenario *scenario)
 		}
 
 		this->apply_history(scenario);
-		this->create_diplomatic_map_image();
-
-		emit countries_changed();
-
-		for (const country *country : this->get_countries()) {
-			for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
-				map::get()->calculate_tile_country_border_directions(border_tile_pos);
-			}
-
-			emit country->game_data_changed();
-		}
-
-		emit setup_finished();
+		this->on_setup_finished();
 	} catch (const std::exception &exception) {
 		exception::report(exception);
 		std::terminate();
@@ -309,8 +297,6 @@ void game::apply_history(const metternich::scenario *scenario)
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to apply history."));
 	}
-
-	this->calculate_great_power_ranks();
 }
 
 void game::apply_population_history()
@@ -472,6 +458,24 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 	remaining_population = std::max<int64_t>(0, remaining_population);
 
 	return remaining_population;
+}
+
+void game::on_setup_finished()
+{
+	this->calculate_great_power_ranks();
+	this->create_diplomatic_map_image();
+
+	emit countries_changed();
+
+	for (const country *country : this->get_countries()) {
+		for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
+			map::get()->calculate_tile_country_border_directions(border_tile_pos);
+		}
+
+		emit country->game_data_changed();
+	}
+
+	emit setup_finished();
 }
 
 void game::do_turn()
