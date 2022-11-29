@@ -48,7 +48,9 @@ void map_generator::generate_terrain()
 
 void map_generator::generate_provinces()
 {
-	this->province_count = this->get_width() * this->get_height() / 256;
+	const int map_area = this->get_width() * this->get_height();
+
+	this->province_count = map_area / 256;
 
 	this->province_seeds = this->generate_province_seeds(static_cast<size_t>(this->province_count));
 	this->expand_province_seeds(this->province_seeds);
@@ -71,7 +73,7 @@ void map_generator::generate_provinces()
 	vector::shuffle(potential_powers);
 	vector::shuffle(potential_minor_nations);
 
-	static constexpr int max_powers = 7;
+	const int max_powers = map_area / 1024;
 	int power_count = 0;
 
 	for (const country *country : potential_powers) {
