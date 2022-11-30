@@ -8,6 +8,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "util/assert_util.h"
+#include "util/number_util.h"
 #include "util/point_util.h"
 #include "util/vector_util.h"
 #include "util/vector_random_util.h"
@@ -21,7 +22,9 @@ void map_generator::generate()
 	map->set_size(this->get_size());
 	map->create_tiles();
 
-	this->tile_provinces.resize(this->get_width() * this->get_height(), -1);
+	const int tile_count = this->get_width() * this->get_height();
+	this->tile_provinces.resize(tile_count, -1);
+	this->tile_climates.resize(tile_count, climate_type::none);
 
 	this->generate_terrain();
 	this->generate_provinces();
@@ -35,14 +38,247 @@ void map_generator::generate()
 
 void map_generator::generate_terrain()
 {
+	const int tile_count = this->get_width() * this->get_height();
+	const int sqrt_tile_count = std::max(1, number::sqrt(tile_count / 1000));
+	this->cold_threshold = ((std::max(0, 100 * map_generator::temperate_threshold / 3 - 1 * map_generator::max_latitude) + 1 * map_generator::max_latitude * sqrt_tile_count) / (100 * sqrt_tile_count)) * 2;
+
+	this->generate_climate(false);
+	this->generate_heightmap();
+	this->generate_land();
+}
+
+void map_generator::generate_climate(const bool real)
+{
+	std::vector<int> tile_climate_values;
+	tile_climate_values.resize(this->tile_climates.size(), -1);
+
+	if (real) {
+		//FIXME: implement
+	} else {
+		for (int x = 0; x < this->get_width(); ++x) {
+			for (int y = 0; y < this->get_height(); ++y) {
+				const QPoint tile_pos(x, y);
+				const int tile_index = point::to_index(tile_pos, this->get_width());
+				tile_climate_values[tile_index] = this->get_tile_colatitude(tile_pos);
+			}
+		}
+	}
+
+	this->adjust_tile_values(tile_climate_values, 0, map_generator::max_latitude);
+
+	for (size_t i = 0; i < tile_climate_values.size(); ++i) {
+		const int climate_value = tile_climate_values[i];
+		if (climate_value >= map_generator::tropical_threshold) {
+			this->tile_climates[i] = climate_type::tropical;
+		} else if (climate_value >= map_generator::temperate_threshold) {
+			this->tile_climates[i] = climate_type::temperate;
+		} else if (climate_value >= cold_threshold) {
+			this->tile_climates[i] = climate_type::cold;
+		} else {
+			this->tile_climates[i] = climate_type::frozen;
+		}
+	}
+}
+
+void map_generator::generate_heightmap()
+{
+	static constexpr bool x_wrap = true;
+	static constexpr bool y_wrap = false;
+
+	const int x_div = 6;
+	const int y_div = 6;
+
+	int x_div_2 = x_div + (x_wrap ? 0 : 1);
+	int y_div_2 = y_div + (y_wrap ? 0 : 1);
+
+	int x_max = this->get_width() - (x_wrap ? 0 : 1);
+	int y_max = this->get_height() - (y_wrap ? 0 : 1);
+
+	int x_current = 0;
+	int y_current = 0;
+
+	int step = this->get_width() + this->get_height();
+
+	int avoid_edge = (100 - map_generator::land_percent) * step / 100 + step / 3;
+
+	const int tile_count = this->get_width() * this->get_height();
+	this->tile_heights.resize(tile_count, 0);
+
+	const map *map = map::get();
+
+	for (x_current = 0; x_current < x_div_2; ++x_current) {
+		for (y_current = 0; y_current < y_div_2; ++y_current) {
+			const int x = x_current * x_max / x_div;
+			const int y = y_current * y_max / y_div;
+
+			const QPoint tile_pos = this->get_wrapped_tile_pos(QPoint(x, y));
+			assert_throw(map->contains(tile_pos));
+
+			int &tile_height = this->tile_heights[point::to_index(tile_pos, this->get_width())];
+			tile_height = random::get()->generate(2 * step) - (2 * step) / 2;
+
+			if (this->is_tile_on_edge(tile_pos)) {
+				tile_height -= avoid_edge;
+			}
+
+			if (this->get_tile_colatitude(tile_pos) <= (this->cold_threshold / 4) && map_generator::pole_flattening > 0) {
+				tile_height -= random::get()->generate(avoid_edge * map_generator::pole_flattening / 100);
+			}
+		}
+	}
+
+	for (x_current = 0; x_current < x_div; ++x_current) {
+		for (y_current = 0; y_current < y_div; ++y_current) {
+			const QPoint top_left(x_current * x_max / x_div, y_current * y_max / y_div);
+			const QPoint bottom_right((x_current + 1) * x_max / x_div, (y_current + 1) * y_max / y_div);
+			const QRect rect(top_left, bottom_right - QPoint(1, 1));
+			this->generate_rectangle_height(step, rect);
+		}
+	}
+
+	for (int &tile_height : this->tile_heights) {
+		tile_height = 8 * tile_height + random::get()->generate(4) - 2;
+	}
+
+	this->adjust_tile_values(this->tile_heights, 0, map_generator::max_height);
+}
+
+void map_generator::generate_rectangle_height(const int step, const QRect &rect)
+{
+	std::array<std::array<int, 2>, 2> val{};
+	int x1_wrap = rect.right() + 1;
+	int y1_wrap = rect.bottom() + 1;
+
+	if (rect.width() <= 0 || rect.height() <= 0) {
+		return;
+	}
+
+	if (rect.width() == 1 && rect.height() == 1) {
+		return;
+	}
+
+	if (rect.right() == (this->get_width() - 1)) {
+		x1_wrap = 0;
+	}
+
+	if (rect.bottom() == (this->get_height() - 1)) {
+		y1_wrap = 0;
+	}
+
+	val[0][0] = this->tile_heights[point::to_index(this->get_wrapped_tile_pos(rect.topLeft()), this->get_width())];
+	val[0][1] = this->tile_heights[point::to_index(this->get_wrapped_tile_pos(QPoint(rect.left(), y1_wrap)), this->get_width())];
+	val[1][0] = this->tile_heights[point::to_index(this->get_wrapped_tile_pos(QPoint(x1_wrap, rect.top())), this->get_width())];
+	val[1][1] = this->tile_heights[point::to_index(this->get_wrapped_tile_pos(QPoint(x1_wrap, y1_wrap)), this->get_width())];
+
+	const int center_x = (rect.left() + rect.right() + 1) / 2;
+	const int center_y = (rect.top() + rect.bottom() + 1) / 2;
+	const QPoint center_pos(center_x, center_y);
+
+	this->set_height_midpoints(QPoint(center_x, rect.top()), (val[0][0] + val[1][0]) / 2 + random::get()->generate(step) - step / 2);
+	this->set_height_midpoints(QPoint(center_x, y1_wrap), (val[0][1] + val[1][1]) / 2 + random::get()->generate(step) - step / 2);
+	this->set_height_midpoints(QPoint(rect.left(), center_y), (val[0][0] + val[0][1]) / 2 + random::get()->generate(step) - step / 2);
+	this->set_height_midpoints(QPoint(x1_wrap, center_y), (val[1][0] + val[1][1]) / 2 + random::get()->generate(step) - step / 2);
+
+	this->set_height_midpoints(center_pos, ((val[0][0] + val[0][1] + val[1][0] + val[1][1]) / 4 + random::get()->generate(step) - step / 2));
+
+	this->generate_rectangle_height(2 * step / 3, QRect(rect.topLeft(), center_pos - QPoint(1, 1)));
+	this->generate_rectangle_height(2 * step / 3, QRect(QPoint(rect.left(), center_y), QPoint(center_x, rect.bottom()) - QPoint(1, 1)));
+	this->generate_rectangle_height(2 * step / 3, QRect(QPoint(center_x, rect.top()), QPoint(rect.right(), center_y) - QPoint(1, 1)));
+	this->generate_rectangle_height(2 * step / 3, QRect(center_pos, rect.bottomRight() - QPoint(1, 1)));
+}
+
+void map_generator::set_height_midpoints(const QPoint &tile_pos, const int value)
+{
+	int &tile_height = this->tile_heights[point::to_index(tile_pos, this->get_width())];
+
+	if (this->get_tile_colatitude(tile_pos) <= (this->cold_threshold / 4)) {
+		tile_height = value * (100 - map_generator::pole_flattening) / 100;
+	} else if (!this->is_tile_on_edge(tile_pos) && tile_height == 0) {
+		tile_height = value;
+	}
+}
+
+void map_generator::generate_land()
+{
+	this->normalize_pole_heights();
+
 	map *map = map::get();
+
+	const terrain_type *land_terrain = defines::get()->get_default_province_terrain();
+	const terrain_type *water_terrain = defines::get()->get_default_water_zone_terrain();
+
+	const int shore_height_level = (map_generator::max_height * (100 - map_generator::land_percent)) / 100;
 
 	for (int x = 0; x < map->get_width(); ++x) {
 		for (int y = 0; y < map->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
-			const terrain_type *terrain = defines::get()->get_default_province_terrain();
-			map->set_tile_terrain(tile_pos, terrain);
+			const int tile_index = point::to_index(tile_pos, this->get_width());
+			const int tile_height = this->tile_heights[tile_index];
+			if (tile_height < shore_height_level) {
+				map->set_tile_terrain(tile_pos, water_terrain);
+			} else {
+				map->set_tile_terrain(tile_pos, land_terrain);
+			}
 		}
+	}
+}
+
+void map_generator::normalize_pole_heights()
+{
+	for (int x = 0; x < this->get_width(); ++x) {
+		for (int y = 0; y < this->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			const int tile_index = point::to_index(tile_pos, this->get_width());
+
+			if (this->get_tile_colatitude(tile_pos) <= this->cold_threshold * 5 / 2 / 2) {
+				this->tile_heights[tile_index] *= this->get_tile_pole_height_factor(tile_pos);
+				this->tile_heights[tile_index] /= 100;
+			} else if (this->is_tile_on_edge(tile_pos)) {
+				this->tile_heights[tile_index] = 0;
+			}
+		}
+	}
+}
+
+void map_generator::adjust_tile_values(std::vector<int> &tile_values, const int min_value, const int max_value)
+{
+	const int delta = max_value - min_value;
+
+	int min_old_value = 0;
+	int max_old_value = 0;
+
+	bool first = true;
+
+	for (const int old_value : tile_values) {
+		if (first) {
+			first = false;
+			min_old_value = old_value;
+			max_old_value = old_value;
+		} else {
+			max_old_value = std::max(max_old_value, old_value);
+			min_old_value = std::min(min_old_value, old_value);
+		}
+	}
+
+	const int old_size = 1 + max_old_value - min_old_value;
+
+	std::vector<int> frequencies;
+	frequencies.resize(old_size, 0);
+
+	for (int &tile_value : tile_values) {
+		tile_value -= min_old_value;
+		++frequencies[tile_value];
+	}
+
+	int count = 0;
+
+	for (int &frequency : frequencies) {
+		count += frequency;
+		frequency = min_value + (count * delta) / static_cast<int>(tile_values.size());
+	}
+
+	for (int &tile_value : tile_values) {
+		tile_value = frequencies[tile_value];
 	}
 }
 
