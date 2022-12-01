@@ -13,6 +13,7 @@ class region final : public named_data_entry, public data_type<region>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(bool ocean MEMBER ocean READ is_ocean)
 	Q_PROPERTY(std::vector<metternich::region *> superregions READ get_superregions)
 
 public:
@@ -38,6 +39,11 @@ public:
 	}
 
 	virtual void reset_history() override;
+
+	bool is_ocean() const
+	{
+		return this->ocean;
+	}
 
 	const std::vector<province *> &get_provinces() const
 	{
@@ -71,6 +77,7 @@ public:
 	bool is_part_of(const region *other_region) const;
 
 private:
+	bool ocean = false;
 	std::vector<province *> provinces; //provinces located in the region
 	std::vector<region *> subregions; //subregions of this region
 	std::vector<region *> superregions; //regions for which this region is a subregion
