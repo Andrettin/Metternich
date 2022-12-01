@@ -534,13 +534,16 @@ std::vector<const province *> map_generator::generate_province_group(const std::
 
 				int distance = std::numeric_limits<int>::max();
 
-				for (const auto &[other_province_index, other_province] : this->provinces_by_index) {
-					if (province->is_water_zone()) {
-						continue;
-					}
+				if (!province->is_water_zone()) {
+					//generate land provinces as distant from other already-generated land provinces as possible
+					for (const auto &[other_province_index, other_province] : this->provinces_by_index) {
+						if (other_province->is_water_zone()) {
+							continue;
+						}
 
-					const QPoint &other_province_seed = this->province_seeds.at(other_province_index);
-					distance = std::min(distance, point::distance_to(province_seed, other_province_seed));
+						const QPoint &other_province_seed = this->province_seeds.at(other_province_index);
+						distance = std::min(distance, point::distance_to(province_seed, other_province_seed));
+					}
 				}
 
 				if (distance > best_distance) {
