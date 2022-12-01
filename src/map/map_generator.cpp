@@ -447,11 +447,24 @@ bool map_generator::generate_country(const country *country)
 	}
 
 	static constexpr int max_country_provinces = 8;
+
+	const std::vector<const province *> provinces = this->generate_province_group(country->get_provinces(), max_country_provinces, country->get_capital_province());
+
+	for (const province *province : provinces) {
+		this->province_owners[province] = country;
+	}
+
+	return !provinces.empty();
+}
+
+std::vector<const province *> map_generator::generate_province_group(const std::vector<const province *> &potential_provinces, const int max_provinces, const province *capital_province)
+{
+	std::vector<const province *> provinces;
+
 	int generated_province_count = 0;
+	std::vector<int> group_province_indexes;
 
-	std::vector<int> country_province_indexes;
-
-	for (const province *province : country->get_provinces()) {
+	for (const province *province : potential_provinces) {
 		if (this->generated_provinces.contains(province)) {
 			continue;
 		}
@@ -475,7 +488,11 @@ bool map_generator::generate_country(const country *country)
 				int distance = std::numeric_limits<int>::max();
 
 				for (const auto &[other_province_index, other_province] : this->provinces_by_index) {
-					const QPoint &other_province_seed = this->province_seeds.at(i);
+					if (province->is_water_zone()) {
+						continue;
+					}
+
+					const QPoint &other_province_seed = this->province_seeds.at(other_province_index);
 					distance = std::min(distance, point::distance_to(province_seed, other_province_seed));
 				}
 
@@ -483,7 +500,7 @@ bool map_generator::generate_country(const country *country)
 					best_province_indexes.clear();
 					best_distance = distance;
 				}
-					
+
 				if (distance == best_distance) {
 					best_province_indexes.push_back(i);
 				}
@@ -496,7 +513,7 @@ bool map_generator::generate_country(const country *country)
 			//pick a province bordering one of the country's existing provinces
 			std::vector<int> potential_province_indexes;
 
-			for (const int country_province_index : country_province_indexes) {
+			for (const int country_province_index : group_province_indexes) {
 				for (const int border_province_index : this->province_border_provinces[country_province_index]) {
 					if (vector::contains(potential_province_indexes, border_province_index)) {
 						continue;
@@ -517,22 +534,22 @@ bool map_generator::generate_country(const country *country)
 		}
 
 		if (province_index == -1) {
-			if (province == country->get_capital_province()) {
-				return false;
+			if (capital_province != nullptr && province == capital_province) {
+				return {};
 			}
 
 			continue;
 		}
 
 		this->provinces_by_index[province_index] = province;
-		country_province_indexes.push_back(province_index);
+		group_province_indexes.push_back(province_index);
 
 		this->generated_provinces.insert(province);
 		++generated_province_count;
 
-		this->province_owners[province] = country;
+		provinces.push_back(province);
 
-		if (generated_province_count == max_country_provinces) {
+		if (generated_province_count == max_provinces) {
 			break;
 		}
 
@@ -541,7 +558,7 @@ bool map_generator::generate_country(const country *country)
 		}
 	}
 
-	return true;
+	return provinces;
 }
 
 }
