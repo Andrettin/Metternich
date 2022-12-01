@@ -96,7 +96,7 @@ void map_generator::generate_terrain()
 void map_generator::generate_elevation()
 {
 	const int map_area = this->get_width() * this->get_height();
-	const int mountain_seed_count = map_area / 4096;
+	const int mountain_seed_count = map_area / 1024;
 
 	std::vector<QPoint> potential_positions;
 	potential_positions.reserve(this->tile_elevation_types.size());
@@ -129,9 +129,26 @@ void map_generator::generate_elevation()
 
 	assert_throw(static_cast<int>(mountain_seeds.size()) == mountain_seed_count);
 
-	vector::merge(mountain_seeds, this->expand_elevation_seeds(mountain_seeds, elevation_type::mountains, 42));
-	const std::vector<QPoint> hill_seeds = this->expand_elevation_seeds(mountain_seeds, elevation_type::hills, 45);
-	this->expand_elevation_seeds(hill_seeds, elevation_type::flatlands, 45);
+	const int min_land_tiles = map_area * map_generator::min_land_percent / 100;
+	const int max_land_tiles = map_area * map_generator::max_land_percent / 100;
+
+	int land_tile_count = 0;
+
+	vector::merge(mountain_seeds, this->expand_elevation_seeds(mountain_seeds, elevation_type::mountains, 42, max_land_tiles - land_tile_count));
+	land_tile_count += static_cast<int>(mountain_seeds.size());
+
+	const std::vector<QPoint> hill_seeds = this->expand_elevation_seeds(mountain_seeds, elevation_type::hills, 42, max_land_tiles - land_tile_count);
+	land_tile_count += static_cast<int>(hill_seeds.size());
+
+	std::vector<QPoint> flatland_seeds = this->expand_elevation_seeds(hill_seeds, elevation_type::flatlands, 48, max_land_tiles - land_tile_count);
+	land_tile_count += static_cast<int>(flatland_seeds.size());
+	vector::merge(flatland_seeds, hill_seeds);
+
+	while (land_tile_count < min_land_tiles) {
+		std::vector<QPoint> new_flatland_seeds = this->expand_elevation_seeds(flatland_seeds, elevation_type::flatlands, 50, max_land_tiles - land_tile_count);
+		land_tile_count += static_cast<int>(new_flatland_seeds.size());
+		vector::merge(flatland_seeds, std::move(new_flatland_seeds));
+	}
 
 	//make the remaining tiles into water
 	for (int x = 0; x < this->get_width(); ++x) {
@@ -148,7 +165,7 @@ void map_generator::generate_elevation()
 	}
 }
 
-std::vector<QPoint> map_generator::expand_elevation_seeds(const std::vector<QPoint> &base_seeds, const elevation_type elevation_type, const int expansion_chance)
+std::vector<QPoint> map_generator::expand_elevation_seeds(const std::vector<QPoint> &base_seeds, const elevation_type elevation_type, const int expansion_chance, const int max_tiles)
 {
 	const map *map = map::get();
 	const QSize &map_size = this->get_size();
@@ -156,10 +173,16 @@ std::vector<QPoint> map_generator::expand_elevation_seeds(const std::vector<QPoi
 	std::vector<QPoint> seeds = base_seeds;
 	std::vector<QPoint> generated_seeds;
 
+	int generated_count = 0;
+
 	while (!seeds.empty()) {
 		QPoint seed_pos = vector::take_random(seeds);
 
 		point::for_each_cardinally_adjacent(seed_pos, [&](QPoint &&adjacent_pos) {
+			if (generated_count >= max_tiles) {
+				return;
+			}
+
 			if (!map->contains(adjacent_pos)) {
 				return;
 			}
@@ -174,8 +197,13 @@ std::vector<QPoint> map_generator::expand_elevation_seeds(const std::vector<QPoi
 				adjacent_elevation_type = elevation_type;
 				generated_seeds.push_back(adjacent_pos);
 				seeds.push_back(std::move(adjacent_pos));
+				++generated_count;
 			}
 		});
+
+		if (generated_count >= max_tiles) {
+			break;
+		}
 	}
 
 	return generated_seeds;
