@@ -5,6 +5,7 @@
 namespace metternich {
 
 class country;
+class region;
 
 class map_generator final
 {
@@ -61,6 +62,7 @@ private:
 	void generate_provinces();
 	std::vector<QPoint> generate_province_seeds(const size_t seed_count);
 	void expand_province_seeds(const std::vector<QPoint> &base_seeds);
+	bool generate_ocean(const region *ocean);
 	bool generate_country(const country *country);
 	std::vector<const province *> generate_province_group(const std::vector<const province *> &potential_provinces, const int max_provinces, const province *capital_province);
 

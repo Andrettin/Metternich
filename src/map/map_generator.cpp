@@ -7,6 +7,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/region.h"
 #include "util/assert_util.h"
 #include "util/number_util.h"
 #include "util/point_util.h"
@@ -291,6 +292,34 @@ void map_generator::generate_provinces()
 	this->province_seeds = this->generate_province_seeds(static_cast<size_t>(this->province_count));
 	this->expand_province_seeds(this->province_seeds);
 
+	std::vector<const region *> potential_oceans;
+
+	for (const region *region : region::get_all()) {
+		if (!region->is_ocean()) {
+			continue;
+		}
+
+		if (region->get_provinces().empty()) {
+			continue;
+		}
+
+		potential_oceans.push_back(region);
+	}
+
+	vector::shuffle(potential_oceans);
+
+	static constexpr int max_ocean_percent = 100 - map_generator::land_percent;
+
+	for (const region *ocean : potential_oceans) {
+		const int generated_sea_zones = static_cast<int>(this->generated_provinces.size());
+		const int max_remaining_ocean_provinces = this->province_count * 100 / max_ocean_percent - generated_sea_zones;
+		if (max_remaining_ocean_provinces <= 0) {
+			break;
+		}
+
+		this->generate_ocean(ocean);
+	}
+
 	std::vector<const country *> potential_powers;
 	std::vector<const country *> potential_minor_nations;
 
@@ -438,6 +467,24 @@ void map_generator::expand_province_seeds(const std::vector<QPoint> &base_seeds)
 
 		seeds.push_back(std::move(adjacent_pos));
 	}
+}
+
+bool map_generator::generate_ocean(const region *ocean)
+{
+	static constexpr int max_ocean_percent = 100 - map_generator::land_percent;
+	const int generated_sea_zones = static_cast<int>(this->generated_provinces.size());
+	const int max_remaining_ocean_provinces = this->province_count * 100 / max_ocean_percent - generated_sea_zones;
+
+	std::vector<const province *> potential_provinces;
+	for (const province *province : ocean->get_provinces()) {
+		potential_provinces.push_back(province);
+	}
+
+	vector::shuffle(potential_provinces);
+
+	const std::vector<const province *> provinces = this->generate_province_group(potential_provinces, max_remaining_ocean_provinces, nullptr);
+
+	return !provinces.empty();
 }
 
 bool map_generator::generate_country(const country *country)
