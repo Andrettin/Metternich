@@ -32,6 +32,7 @@ void map_generator::generate()
 
 	this->generate_terrain();
 	this->generate_provinces();
+	this->generate_countries();
 
 	//assign terrain
 	const terrain_type *land_terrain = defines::get()->get_default_province_terrain();
@@ -86,6 +87,7 @@ void map_generator::generate()
 		assert_throw(province_index >= 0);
 
 		const auto find_iterator = this->provinces_by_index.find(province_index);
+		//assert_throw(find_iterator != this->provinces_by_index.end());
 
 		if (find_iterator == this->provinces_by_index.end()) {
 			continue;
@@ -304,7 +306,7 @@ void map_generator::generate_provinces()
 {
 	const int map_area = this->get_width() * this->get_height();
 
-	this->province_count = map_area / 256;
+	this->province_count = map_area / 128;
 
 	this->province_seeds = this->generate_province_seeds(static_cast<size_t>(this->province_count));
 	this->expand_province_seeds(this->province_seeds);
@@ -319,73 +321,6 @@ void map_generator::generate_provinces()
 		this->tile_elevation_types[tile_index] = elevation_type::water;
 		this->tile_elevation_types[province_seed_index] = elevation_type::water;
 	});
-
-	std::vector<const region *> potential_oceans;
-
-	for (const region *region : region::get_all()) {
-		if (!region->is_ocean()) {
-			continue;
-		}
-
-		if (region->get_provinces().empty()) {
-			continue;
-		}
-
-		potential_oceans.push_back(region);
-	}
-
-	vector::shuffle(potential_oceans);
-
-	for (const region *ocean : potential_oceans) {
-		if (static_cast<int>(this->generated_provinces.size()) >= this->province_count) {
-			break;
-		}
-
-		this->generate_ocean(ocean);
-	}
-
-	std::vector<const country *> potential_powers;
-	std::vector<const country *> potential_minor_nations;
-
-	for (const country *country : country::get_all()) {
-		if (country->get_provinces().empty()) {
-			continue;
-		}
-
-		if (country->is_great_power()) {
-			potential_powers.push_back(country);
-		} else {
-			potential_minor_nations.push_back(country);
-		}
-	}
-
-	vector::shuffle(potential_powers);
-	vector::shuffle(potential_minor_nations);
-
-	const int max_powers = map_area / 1024;
-	int power_count = 0;
-
-	for (const country *country : potential_powers) {
-		if (static_cast<int>(this->generated_provinces.size()) >= this->province_count) {
-			break;
-		}
-
-		if (this->generate_country(country)) {
-			++power_count;
-			if (power_count == max_powers) {
-				break;
-			}
-		}
-	}
-
-	for (const country *country : potential_minor_nations) {
-		if (static_cast<int>(this->generated_provinces.size()) >= this->province_count) {
-			break;
-		}
-
-		this->generate_country(country);
-	}
-
 }
 
 std::vector<QPoint> map_generator::generate_province_seeds(const size_t seed_count)
@@ -542,6 +477,78 @@ void map_generator::expand_province_seeds(const std::vector<QPoint> &base_seeds)
 			remaining_positions.erase(remaining_positions.begin() + i);
 		}
 	}
+}
+
+void map_generator::generate_countries()
+{
+	std::vector<const region *> potential_oceans;
+
+	for (const region *region : region::get_all()) {
+		if (!region->is_ocean()) {
+			continue;
+		}
+
+		if (region->get_provinces().empty()) {
+			continue;
+		}
+
+		potential_oceans.push_back(region);
+	}
+
+	vector::shuffle(potential_oceans);
+
+	for (const region *ocean : potential_oceans) {
+		if (static_cast<int>(this->generated_provinces.size()) >= this->province_count) {
+			break;
+		}
+
+		this->generate_ocean(ocean);
+	}
+
+	std::vector<const country *> potential_powers;
+	std::vector<const country *> potential_minor_nations;
+
+	for (const country *country : country::get_all()) {
+		if (country->get_provinces().empty()) {
+			continue;
+		}
+
+		if (country->is_great_power()) {
+			potential_powers.push_back(country);
+		} else {
+			potential_minor_nations.push_back(country);
+		}
+	}
+
+	vector::shuffle(potential_powers);
+	vector::shuffle(potential_minor_nations);
+
+	const int map_area = this->get_width() * this->get_height();
+	const int max_powers = map_area / 1024;
+	int power_count = 0;
+
+	for (const country *country : potential_powers) {
+		if (static_cast<int>(this->generated_provinces.size()) >= this->province_count) {
+			break;
+		}
+
+		if (this->generate_country(country)) {
+			++power_count;
+			if (power_count == max_powers) {
+				break;
+			}
+		}
+	}
+
+	for (const country *country : potential_minor_nations) {
+		if (static_cast<int>(this->generated_provinces.size()) >= this->province_count) {
+			break;
+		}
+
+		this->generate_country(country);
+	}
+
+	//assert_throw(static_cast<int>(this->generated_provinces.size()) == this->province_count);
 }
 
 bool map_generator::generate_ocean(const region *ocean)
