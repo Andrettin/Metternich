@@ -125,40 +125,7 @@ void map_generator::generate_terrain()
 
 void map_generator::generate_elevation()
 {
-	const int map_area = this->get_width() * this->get_height();
-	const int elevation_seed_count = map_area / 1024;
-
-	std::vector<QPoint> potential_positions;
-	potential_positions.reserve(this->tile_elevations.size());
-
-	for (int x = 0; x < this->get_width(); ++x) {
-		for (int y = 0; y < this->get_height(); ++y) {
-			potential_positions.emplace_back(x, y);
-		}
-	}
-
-	std::vector<QPoint> elevation_seeds;
-	elevation_seeds.reserve(elevation_seed_count);
-
-	for (int i = 0; i < elevation_seed_count; ++i) {
-		while (!potential_positions.empty()) {
-			QPoint random_pos = vector::take_random(potential_positions);
-
-			const int tile_index = point::to_index(random_pos, this->get_width());
-			int &tile_elevation = this->tile_elevations[tile_index];
-			if (tile_elevation != -1) {
-				continue;
-			}
-
-			tile_elevation = map_generator::max_elevation;
-
-			elevation_seeds.push_back(std::move(random_pos));
-			break;
-		}
-	}
-
-	assert_throw(static_cast<int>(elevation_seeds.size()) == elevation_seed_count);
-
+	const std::vector<QPoint> elevation_seeds = this->generate_elevation_seeds();
 	this->expand_elevation_seeds(elevation_seeds);
 
 	//make the remaining tiles into water
@@ -176,29 +143,77 @@ void map_generator::generate_elevation()
 	}
 }
 
+std::vector<QPoint> map_generator::generate_elevation_seeds()
+{
+	return this->generate_tile_value_seeds(this->tile_elevations);
+}
+
 void map_generator::expand_elevation_seeds(const std::vector<QPoint> &base_seeds)
 {
+	this->expand_tile_value_seeds(base_seeds, this->tile_elevations);
+}
+
+std::vector<QPoint> map_generator::generate_tile_value_seeds(std::vector<int> &tile_values)
+{
+	const int map_area = this->get_width() * this->get_height();
+	const int seed_count = map_area / 1024;
+
+	std::vector<QPoint> potential_positions;
+	potential_positions.reserve(tile_values.size());
+
+	for (int x = 0; x < this->get_width(); ++x) {
+		for (int y = 0; y < this->get_height(); ++y) {
+			potential_positions.emplace_back(x, y);
+		}
+	}
+
+	std::vector<QPoint> seeds;
+	seeds.reserve(seed_count);
+
+	for (int i = 0; i < seed_count; ++i) {
+		while (!potential_positions.empty()) {
+			QPoint random_pos = vector::take_random(potential_positions);
+
+			const int tile_index = point::to_index(random_pos, this->get_width());
+			int &tile_elevation = tile_values[tile_index];
+			if (tile_elevation != -1) {
+				continue;
+			}
+
+			tile_elevation = map_generator::max_tile_value;
+
+			seeds.push_back(std::move(random_pos));
+			break;
+		}
+	}
+
+	assert_throw(static_cast<int>(seeds.size()) == seed_count);
+
+	return seeds;
+}
+
+void map_generator::expand_tile_value_seeds(const std::vector<QPoint> &base_seeds, std::vector<int> &tile_values)
+{
 	const map *map = map::get();
-	const QSize &map_size = this->get_size();
 
 	std::vector<QPoint> seeds = base_seeds;
 
 	while (!seeds.empty()) {
 		const QPoint seed_pos = vector::take_random(seeds);
 
-		const int elevation = this->tile_elevations[point::to_index(seed_pos, map_size)];
+		const int tile_value = tile_values[point::to_index(seed_pos, this->get_width())];
 
 		point::for_each_cardinally_adjacent(seed_pos, [&](QPoint &&adjacent_pos) {
 			if (!map->contains(adjacent_pos)) {
 				return;
 			}
 
-			int &adjacent_elevation = this->tile_elevations[point::to_index(adjacent_pos, map_size)];
-			if (adjacent_elevation != -1) {
+			int &adjacent_tile_value = tile_values[point::to_index(adjacent_pos, this->get_width())];
+			if (adjacent_tile_value != -1) {
 				return;
 			}
 
-			adjacent_elevation = std::max(0, elevation - random::get()->generate_in_range(0, 50));
+			adjacent_tile_value = std::max(0, tile_value - random::get()->generate_in_range(0, 50));
 			seeds.push_back(std::move(adjacent_pos));
 		});
 	}
