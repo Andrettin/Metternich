@@ -138,20 +138,20 @@ void map_generator::generate_terrain()
 
 void map_generator::generate_elevation()
 {
-	const std::vector<QPoint> elevation_seeds = this->generate_tile_value_seeds(this->tile_elevations);
+	const std::vector<QPoint> elevation_seeds = this->generate_tile_value_seeds(this->tile_elevations, 1024);
 	this->expand_tile_value_seeds(elevation_seeds, this->tile_elevations);
 }
 
 void map_generator::generate_forestation()
 {
-	const std::vector<QPoint> seeds = this->generate_tile_value_seeds(this->tile_forestations);
+	const std::vector<QPoint> seeds = this->generate_tile_value_seeds(this->tile_forestations, 256);
 	this->expand_tile_value_seeds(seeds, this->tile_forestations);
 }
 
-std::vector<QPoint> map_generator::generate_tile_value_seeds(std::vector<int> &tile_values)
+std::vector<QPoint> map_generator::generate_tile_value_seeds(std::vector<int> &tile_values, const int seed_divisor)
 {
 	const int map_area = this->get_width() * this->get_height();
-	const int seed_count = map_area / 1024;
+	const int seed_count = map_area / seed_divisor;
 
 	std::vector<QPoint> potential_positions;
 	potential_positions.reserve(tile_values.size());

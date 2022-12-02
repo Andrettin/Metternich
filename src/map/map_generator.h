@@ -70,7 +70,7 @@ private:
 	void generate_terrain();
 	void generate_elevation();
 	void generate_forestation();
-	std::vector<QPoint> generate_tile_value_seeds(std::vector<int> &tile_values);
+	std::vector<QPoint> generate_tile_value_seeds(std::vector<int> &tile_values, const int seed_divisor);
 	void expand_tile_value_seeds(const std::vector<QPoint> &base_seeds, std::vector<int> &tile_values);
 	void generate_climate(const bool real);
 	void adjust_tile_values(std::vector<int> &tile_values, const int min_value, const int max_value);
