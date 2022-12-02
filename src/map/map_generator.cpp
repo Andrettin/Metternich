@@ -30,8 +30,8 @@ void map_generator::generate()
 	this->tile_elevation_types.resize(tile_count, elevation_type::none);
 	this->tile_climates.resize(tile_count, climate_type::none);
 
-	this->generate_terrain();
 	this->generate_provinces();
+	this->generate_terrain();
 	this->generate_countries();
 
 	//assign terrain
@@ -107,6 +107,17 @@ void map_generator::generate()
 
 void map_generator::generate_terrain()
 {
+	//ensure edge provinces are water
+	const QRect map_rect(QPoint(0, 0), this->get_size());
+	rect::for_each_edge_point(map_rect, [&](const QPoint &tile_pos) {
+		const int tile_index = point::to_index(tile_pos, this->get_width());
+		const int province_index = this->tile_provinces[tile_index];
+		const QPoint &province_seed = this->province_seeds.at(province_index);
+		const int province_seed_index = point::to_index(province_seed, this->get_width());
+		this->tile_elevation_types[tile_index] = elevation_type::water;
+		this->tile_elevation_types[province_seed_index] = elevation_type::water;
+	});
+
 	this->generate_elevation();
 	//this->generate_climate();
 }
@@ -310,17 +321,6 @@ void map_generator::generate_provinces()
 
 	this->province_seeds = this->generate_province_seeds(static_cast<size_t>(this->province_count));
 	this->expand_province_seeds(this->province_seeds);
-
-	//ensure edge provinces are water
-	const QRect map_rect(QPoint(0, 0), this->get_size());
-	rect::for_each_edge_point(map_rect, [&](const QPoint &tile_pos) {
-		const int tile_index = point::to_index(tile_pos, this->get_width());
-		const int province_index = this->tile_provinces[tile_index];
-		const QPoint &province_seed = this->province_seeds.at(province_index);
-		const int province_seed_index = point::to_index(province_seed, this->get_width());
-		this->tile_elevation_types[tile_index] = elevation_type::water;
-		this->tile_elevation_types[province_seed_index] = elevation_type::water;
-	});
 }
 
 std::vector<QPoint> map_generator::generate_province_seeds(const size_t seed_count)
