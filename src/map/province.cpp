@@ -48,8 +48,6 @@ void province::check() const
 	} else if (this->get_capital_settlement() != nullptr && this->is_water_zone()) {
 		throw std::runtime_error("Water zone \"" + this->get_identifier() + "\" has a capital settlement.");
 	}
-
-	assert_throw(this->get_color().isValid());
 }
 
 data_entry_history *province::get_history_base()

@@ -30,6 +30,8 @@ void map_template::initialize()
 	const QRect map_rect(QPoint(0, 0), this->get_size());
 
 	for (const site *site : this->get_world()->get_sites()) {
+		assert_throw(site->get_geocoordinate().is_valid());
+
 		if (!this->get_georectangle().contains(site->get_geocoordinate())) {
 			continue;
 		}

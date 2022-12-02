@@ -92,8 +92,6 @@ void site::initialize()
 
 void site::check() const
 {
-	assert_throw(this->get_geocoordinate().is_valid());
-
 	if (this->get_type() == site_type::terrain) {
 		assert_throw(this->get_terrain_type() != nullptr);
 	} else {
