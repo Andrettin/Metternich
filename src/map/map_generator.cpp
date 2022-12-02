@@ -80,6 +80,22 @@ void map_generator::generate()
 		}
 	}
 
+	//assign provinces
+	for (size_t i = 0; i < this->tile_provinces.size(); ++i) {
+		const int province_index = this->tile_provinces[i];
+		assert_throw(province_index >= 0);
+
+		const auto find_iterator = this->provinces_by_index.find(province_index);
+
+		if (find_iterator == this->provinces_by_index.end()) {
+			continue;
+		}
+
+		const province *province = find_iterator->second;
+		assert_throw(province != nullptr);
+		map->set_tile_province(point::from_index(static_cast<int>(i), this->get_width()), province);
+	}
+
 	map->initialize();
 
 	for (const auto &[province, country] : this->province_owners) {
@@ -370,25 +386,6 @@ void map_generator::generate_provinces()
 		this->generate_country(country);
 	}
 
-	assert_throw(static_cast<int>(this->generated_provinces.size()) == this->province_count);
-
-	map *map = map::get();
-
-	for (size_t i = 0; i < this->tile_provinces.size(); ++i) {
-		const int province_index = this->tile_provinces[i];
-		assert_throw(province_index >= 0);
-
-		const auto find_iterator = this->provinces_by_index.find(province_index);
-		assert_throw(find_iterator != this->provinces_by_index.end());
-
-		if (find_iterator == this->provinces_by_index.end()) {
-			continue;
-		}
-
-		const province *province = find_iterator->second;
-		assert_throw(province != nullptr);
-		map->set_tile_province(point::from_index(static_cast<int>(i), this->get_width()), province);
-	}
 }
 
 std::vector<QPoint> map_generator::generate_province_seeds(const size_t seed_count)
