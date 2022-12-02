@@ -28,6 +28,7 @@ void map_generator::generate()
 	const int tile_count = this->get_width() * this->get_height();
 	this->tile_provinces.resize(tile_count, -1);
 	this->tile_elevations.resize(tile_count, -1);
+	this->tile_forestations.resize(tile_count, -1);
 	this->tile_climates.resize(tile_count, climate_type::none);
 
 	this->generate_provinces();
@@ -36,6 +37,7 @@ void map_generator::generate()
 
 	//assign terrain
 	const terrain_type *land_terrain = defines::get()->get_default_province_terrain();
+	const terrain_type *forest_terrain = terrain_type::get("conifer_forest");
 	const terrain_type *hills_terrain = terrain_type::get("barren_hills");
 	const terrain_type *mountains_terrain = terrain_type::get("mountains");
 	const terrain_type *water_terrain = defines::get()->get_default_water_zone_terrain();
@@ -60,13 +62,23 @@ void map_generator::generate()
 			const terrain_type *terrain = nullptr;
 
 			const elevation_type elevation_type = this->get_tile_elevation_type(tile_pos);
+			const forestation_type forestation_type = this->get_tile_forestation_type(tile_pos);
 
 			switch (elevation_type) {
 				case elevation_type::water:
 					terrain = water_terrain;
 					break;
 				case elevation_type::flatlands:
-					terrain = land_terrain;
+					switch (forestation_type) {
+						case forestation_type::none:
+							terrain = land_terrain;
+							break;
+						case forestation_type::forest:
+							terrain = forest_terrain;
+							break;
+						default:
+							assert_throw(false);
+					}
 					break;
 				case elevation_type::hills:
 					terrain = hills_terrain;
@@ -121,36 +133,19 @@ void map_generator::generate_terrain()
 
 	this->generate_elevation();
 	//this->generate_climate();
+	this->generate_forestation();
 }
 
 void map_generator::generate_elevation()
 {
-	const std::vector<QPoint> elevation_seeds = this->generate_elevation_seeds();
-	this->expand_elevation_seeds(elevation_seeds);
-
-	//make the remaining tiles into water
-	for (int x = 0; x < this->get_width(); ++x) {
-		for (int y = 0; y < this->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			const int tile_index = point::to_index(tile_pos, this->get_width());
-			int &tile_elevation = this->tile_elevations[tile_index];
-			if (tile_elevation != -1) {
-				continue;
-			}
-
-			tile_elevation = 0;
-		}
-	}
+	const std::vector<QPoint> elevation_seeds = this->generate_tile_value_seeds(this->tile_elevations);
+	this->expand_tile_value_seeds(elevation_seeds, this->tile_elevations);
 }
 
-std::vector<QPoint> map_generator::generate_elevation_seeds()
+void map_generator::generate_forestation()
 {
-	return this->generate_tile_value_seeds(this->tile_elevations);
-}
-
-void map_generator::expand_elevation_seeds(const std::vector<QPoint> &base_seeds)
-{
-	this->expand_tile_value_seeds(base_seeds, this->tile_elevations);
+	const std::vector<QPoint> seeds = this->generate_tile_value_seeds(this->tile_forestations);
+	this->expand_tile_value_seeds(seeds, this->tile_forestations);
 }
 
 std::vector<QPoint> map_generator::generate_tile_value_seeds(std::vector<int> &tile_values)
@@ -175,12 +170,12 @@ std::vector<QPoint> map_generator::generate_tile_value_seeds(std::vector<int> &t
 			QPoint random_pos = vector::take_random(potential_positions);
 
 			const int tile_index = point::to_index(random_pos, this->get_width());
-			int &tile_elevation = tile_values[tile_index];
-			if (tile_elevation != -1) {
+			int &tile_value = tile_values[tile_index];
+			if (tile_value != -1) {
 				continue;
 			}
 
-			tile_elevation = map_generator::max_tile_value;
+			tile_value = map_generator::max_tile_value;
 
 			seeds.push_back(std::move(random_pos));
 			break;
@@ -694,6 +689,17 @@ map_generator::elevation_type map_generator::get_tile_elevation_type(const QPoin
 		return elevation_type::flatlands;
 	} else {
 		return elevation_type::water;
+	}
+}
+
+map_generator::forestation_type map_generator::get_tile_forestation_type(const QPoint &tile_pos) const
+{
+	const int forestation = this->tile_forestations[point::to_index(tile_pos, this->get_width())];
+
+	if (forestation >= map_generator::min_forest_forestation) {
+		return forestation_type::forest;
+	} else {
+		return forestation_type::none;
 	}
 }
 

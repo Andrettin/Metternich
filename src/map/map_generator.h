@@ -21,6 +21,8 @@ private:
 	static constexpr int min_hill_elevation = 800;
 	static constexpr int min_mountain_elevation = 900;
 
+	static constexpr int min_forest_forestation = 900;
+
 	enum class elevation_type {
 		none,
 		water,
@@ -35,6 +37,11 @@ private:
 		temperate,
 		cold,
 		frozen
+	};
+
+	enum class forestation_type {
+		none,
+		forest
 	};
 
 public:
@@ -62,8 +69,7 @@ public:
 private:
 	void generate_terrain();
 	void generate_elevation();
-	std::vector<QPoint> generate_elevation_seeds();
-	void expand_elevation_seeds(const std::vector<QPoint> &base_seeds);
+	void generate_forestation();
 	std::vector<QPoint> generate_tile_value_seeds(std::vector<int> &tile_values);
 	void expand_tile_value_seeds(const std::vector<QPoint> &base_seeds, std::vector<int> &tile_values);
 	void generate_climate(const bool real);
@@ -84,6 +90,8 @@ private:
 	{
 		return this->get_tile_elevation_type(tile_pos) == elevation_type::water;
 	}
+
+	forestation_type get_tile_forestation_type(const QPoint &tile_pos) const;
 
 	int get_tile_latitude(const QPoint &tile_pos) const
 	{
@@ -117,6 +125,7 @@ private:
 	std::vector<QPoint> province_seeds;
 	std::vector<int> tile_provinces;
 	std::vector<int> tile_elevations;
+	std::vector<int> tile_forestations;
 	std::vector<climate_type> tile_climates;
 	std::map<int, std::set<int>> province_border_provinces;
 	province_set generated_provinces;
