@@ -63,9 +63,9 @@ int main(int argc, char **argv)
 		qInstallMessageHandler(log::log_qt_message);
 
 		QApplication app(argc, argv);
-		app.setApplicationName("Metternich");
+		app.setApplicationName("Iron Barons");
 		app.setApplicationVersion("1.0.0");
-		app.setOrganizationName("Metternich");
+		app.setOrganizationName("Iron Barons");
 		app.setOrganizationDomain("andrettin.github.io");
 
 		database::get()->set_defines(defines::get());
