@@ -39,30 +39,6 @@ private:
 		frozen
 	};
 
-	struct terrain_data final
-	{
-		elevation_type get_elevation_type() const
-		{
-			if (this->elevation >= map_generator::min_mountain_elevation) {
-				return elevation_type::mountains;
-			} else if (this->elevation >= map_generator::min_hill_elevation) {
-				return elevation_type::hills;
-			} else if (this->elevation >= map_generator::min_land_elevation) {
-				return elevation_type::flatlands;
-			} else {
-				return elevation_type::water;
-			}
-		}
-
-		bool is_water() const
-		{
-			return this->get_elevation_type() == elevation_type::water;
-		}
-
-		int elevation = -1;
-		int moisture = -1;
-	};
-
 public:
 	explicit map_generator(const QSize &size) : size(size)
 	{
@@ -101,6 +77,13 @@ private:
 	bool generate_country(const country *country);
 	std::vector<const province *> generate_province_group(const std::vector<const province *> &potential_provinces, const int max_provinces, const province *capital_province);
 
+	elevation_type get_tile_elevation_type(const QPoint &tile_pos) const;
+
+	bool is_tile_water(const QPoint &tile_pos) const
+	{
+		return this->get_tile_elevation_type(tile_pos) == elevation_type::water;
+	}
+
 	int get_tile_latitude(const QPoint &tile_pos) const
 	{
 		int latitude = tile_pos.y();
@@ -132,7 +115,7 @@ private:
 	int province_count = 0;
 	std::vector<QPoint> province_seeds;
 	std::vector<int> tile_provinces;
-	std::vector<terrain_data> tile_terrain_data;
+	std::vector<int> tile_elevations;
 	std::vector<climate_type> tile_climates;
 	std::map<int, std::set<int>> province_border_provinces;
 	province_set generated_provinces;
