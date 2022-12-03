@@ -14,6 +14,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
+#include "util/log_util.h"
 #include "util/number_util.h"
 #include "util/point_util.h"
 #include "util/rect_util.h"
@@ -45,9 +46,9 @@ void map_generator::generate()
 		assert_throw(province_index >= 0);
 
 		const auto find_iterator = this->provinces_by_index.find(province_index);
-		//assert_throw(find_iterator != this->provinces_by_index.end());
 
 		if (find_iterator == this->provinces_by_index.end()) {
+			log::log_error("No province was generated for province index " + std::to_string(province_index) + ".");
 			continue;
 		}
 
@@ -555,7 +556,9 @@ void map_generator::generate_countries()
 		this->generate_country(country);
 	}
 
-	//assert_throw(static_cast<int>(this->generated_provinces.size()) == this->province_count);
+	if (static_cast<int>(this->generated_provinces.size()) != this->province_count) {
+		log::log_error(std::to_string(this->generated_provinces.size()) + " provinces were generated, but " + std::to_string(this->province_count) + " were needed.");
+	}
 }
 
 bool map_generator::generate_ocean(const region *ocean)
