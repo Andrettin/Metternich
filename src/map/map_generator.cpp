@@ -316,7 +316,7 @@ void map_generator::generate_provinces()
 {
 	const int map_area = this->get_width() * this->get_height();
 
-	this->province_count = map_area / 128;
+	this->province_count = map_area / 64;
 
 	this->province_seeds = this->generate_province_seeds(static_cast<size_t>(this->province_count));
 	this->expand_province_seeds(this->province_seeds);
@@ -324,7 +324,7 @@ void map_generator::generate_provinces()
 
 std::vector<QPoint> map_generator::generate_province_seeds(const size_t seed_count)
 {
-	static constexpr int min_province_seed_distance = 8;
+	static constexpr int min_province_seed_distance = 6;
 
 	std::vector<QPoint> potential_positions;
 	potential_positions.reserve(this->tile_provinces.size());
@@ -360,7 +360,9 @@ std::vector<QPoint> map_generator::generate_province_seeds(const size_t seed_cou
 		}
 	}
 
-	assert_throw(province_seeds.size() == seed_count);
+	if (province_seeds.size() != seed_count) {
+		throw std::runtime_error("Could only generate " + std::to_string(province_seeds.size()) + " province seeds out of the required " + std::to_string(seed_count) + ".");
+	}
 
 	for (size_t i = 0; i < province_seeds.size(); ++i) {
 		const QPoint seed_pos = province_seeds.at(i);
