@@ -303,7 +303,7 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 		case site_type::resource:
 			tile->set_resource(site->get_resource());
 
-			if (tile->get_resource()->is_near_water() && !tile->has_river() && !this->is_tile_coastal(tile_pos)) {
+			if (tile->get_resource()->is_near_water() && !this->is_tile_near_water(tile_pos)) {
 				log::log_error("Tile " + point::to_string(tile_pos) + " has near water resource \"" + tile->get_resource()->get_identifier() + "\", but is not near water.");
 			}
 
@@ -359,6 +359,12 @@ void map::set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian
 	tile->set_civilian_unit(civilian_unit);
 
 	emit tile_civilian_unit_changed(tile_pos);
+}
+
+bool map::is_tile_near_water(const QPoint &tile_pos) const
+{
+	const tile *tile = this->get_tile(tile_pos);
+	return tile->has_river() || this->is_tile_coastal(tile_pos);
 }
 
 bool map::is_tile_coastal(const QPoint &tile_pos) const

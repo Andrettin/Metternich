@@ -10,6 +10,7 @@
 #include "map/province_game_data.h"
 #include "map/region.h"
 #include "map/site.h"
+#include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
@@ -139,6 +140,21 @@ void map_generator::generate_terrain()
 			}
 
 			map->set_tile_terrain(tile_pos, terrain);
+		}
+	}
+
+	//build the province tiles by terrain map
+	for (size_t i = 0; i < this->province_tiles.size(); ++i) {
+		this->province_tiles_by_terrain.emplace_back();
+		this->province_near_water_tiles_by_terrain.emplace_back();
+
+		for (const QPoint &tile_pos : this->province_tiles.at(i)) {
+			const terrain_type *terrain = map->get_tile(tile_pos)->get_terrain();
+			this->province_tiles_by_terrain[i][terrain].push_back(tile_pos);
+
+			if (map->is_tile_near_water(tile_pos)) {
+				this->province_near_water_tiles_by_terrain[i][terrain].push_back(tile_pos);
+			}
 		}
 	}
 }
@@ -689,25 +705,27 @@ bool map_generator::can_assign_province_to_province_index(const province *provin
 	}
 
 	if (!province->get_sites().empty()) {
-		std::map<const terrain_type *, int> available_terrain_counts;
+		terrain_type_map<int> available_terrain_counts;
+		for (const auto &[terrain, tiles] : this->province_tiles_by_terrain[province_index]) {
+			available_terrain_counts[terrain] = static_cast<int>(tiles.size());
+		}
 
-		const map *map = map::get();
-
-		for (const QPoint &tile_pos : this->province_tiles.at(province_index)) {
-			const terrain_type *terrain = map->get_tile(tile_pos)->get_terrain();
-			available_terrain_counts[terrain]++;
+		terrain_type_map<int> available_near_water_terrain_counts;
+		for (const auto &[terrain, tiles] : this->province_near_water_tiles_by_terrain[province_index]) {
+			available_near_water_terrain_counts[terrain] = static_cast<int>(tiles.size());
 		}
 
 		for (const site *site : province->get_sites()) {
-			if (site->get_resource() == nullptr) {
+			const resource *resource = site->get_resource();
+			if (resource == nullptr) {
 				continue;
 			}
 
-			const std::vector<const terrain_type *> &site_terrains = site->get_resource()->get_terrain_types();
+			const std::vector<const terrain_type *> &site_terrains = resource->get_terrain_types();
 
 			bool has_terrain = false;
 			for (const terrain_type *terrain : site_terrains) {
-				int &terrain_count = available_terrain_counts[terrain];
+				int &terrain_count = resource->is_near_water() ? available_near_water_terrain_counts[terrain] : available_terrain_counts[terrain];
 				if (terrain_count > 0) {
 					has_terrain = true;
 					--terrain_count;
@@ -728,20 +746,12 @@ void map_generator::generate_sites()
 {
 	map *map = map::get();
 
-	//place capital settlements
-	for (size_t i = 0; i < this->province_seeds.size(); ++i) {
-		const QPoint &province_seed = this->province_seeds[i];
-		const int province_index = static_cast<int>(i);
-
-		const auto find_iterator = this->provinces_by_index.find(province_index);
-		//assert_throw(find_iterator != this->provinces_by_index.end());
-
-		if (find_iterator == this->provinces_by_index.end()) {
-			continue;
-		}
-
-		const province *province = find_iterator->second;
+	for (const auto &[province_index, province] : this->provinces_by_index) {
 		assert_throw(province != nullptr);
+
+		const QPoint &province_seed = this->province_seeds[province_index];
+
+		//place capital settlement
 		if (province->get_capital_settlement() != nullptr) {
 			map->set_tile_site(province_seed, province->get_capital_settlement());
 
@@ -750,6 +760,39 @@ void map_generator::generate_sites()
 			if (map->get_tile(province_seed)->get_terrain() != defines::get()->get_default_province_terrain()) {
 				map->set_tile_terrain(province_seed, defines::get()->get_default_province_terrain());
 			}
+		}
+
+		for (const site *site : province->get_sites()) {
+			if (site->get_type() != site_type::resource) {
+				continue;
+			}
+
+			const resource *resource = site->get_resource();
+			const std::vector<const terrain_type *> &site_terrains = resource->get_terrain_types();
+
+			const terrain_type_map<std::vector<QPoint>> &province_tiles_by_terrain = resource->is_near_water() ? this->province_tiles_by_terrain[province_index] : this->province_near_water_tiles_by_terrain[province_index];
+
+			std::vector<QPoint> potential_positions;
+
+			for (const terrain_type *terrain : site_terrains) {
+				const auto find_iterator = province_tiles_by_terrain.find(terrain);
+				if (find_iterator == province_tiles_by_terrain.end()) {
+					continue;
+				}
+
+				for (const QPoint &tile_pos : find_iterator->second) {
+					if (map->get_tile(tile_pos)->get_site() != nullptr) {
+						continue;
+					}
+
+					potential_positions.push_back(tile_pos);
+				}
+			}
+
+			assert_throw(!potential_positions.empty());
+
+			const QPoint &site_pos = vector::get_random(potential_positions);
+			map->set_tile_site(site_pos, site);
 		}
 	}
 }

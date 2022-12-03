@@ -1,6 +1,7 @@
 #pragma once
 
 #include "map/province_container.h"
+#include "map/terrain_type_container.h"
 
 namespace metternich {
 
@@ -127,6 +128,8 @@ private:
 	int province_count = 0;
 	std::vector<QPoint> province_seeds;
 	std::vector<std::vector<QPoint>> province_tiles;
+	std::vector<terrain_type_map<std::vector<QPoint>>> province_tiles_by_terrain;
+	std::vector<terrain_type_map<std::vector<QPoint>>> province_near_water_tiles_by_terrain;
 	std::vector<int> tile_provinces;
 	std::vector<int> tile_elevations;
 	std::vector<int> tile_forestations;
