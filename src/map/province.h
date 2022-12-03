@@ -123,6 +123,16 @@ public:
 	Q_INVOKABLE void add_region(region *region);
 	Q_INVOKABLE void remove_region(region *region);
 
+	const std::vector<const site *> &get_sites() const
+	{
+		return this->sites;
+	}
+
+	void add_site(const site *site)
+	{
+		this->sites.push_back(site);
+	}
+
 signals:
 	void changed();
 
@@ -133,6 +143,7 @@ private:
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	std::vector<region *> regions; //regions where this province is located
+	std::vector<const site *> sites; //sites located in this province, used for map generation
 	qunique_ptr<province_history> history;
 	qunique_ptr<province_game_data> game_data;
 };

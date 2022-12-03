@@ -10,6 +10,7 @@ namespace metternich {
 class cultural_group;
 class culture;
 class landed_title;
+class province;
 class resource;
 class site_game_data;
 class site_history;
@@ -28,6 +29,7 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(bool settlement READ is_settlement NOTIFY changed)
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
+	Q_PROPERTY(metternich::province* province MEMBER province NOTIFY changed)
 	Q_PROPERTY(metternich::site_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
@@ -102,6 +104,11 @@ public:
 
 	void create_title();
 
+	const metternich::province *get_province() const
+	{
+		return this->province;
+	}
+
 	const std::string &get_cultural_name(const culture *culture) const;
 
 signals:
@@ -115,6 +122,7 @@ private:
 	metternich::terrain_type *terrain_type = nullptr;
 	metternich::resource *resource = nullptr;
 	landed_title *title = nullptr;
+	metternich::province *province = nullptr;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	qunique_ptr<site_history> history;

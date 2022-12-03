@@ -32,7 +32,7 @@ void site::load_history_database(const QDateTime &start_date, const timeline *cu
 			continue;
 		}
 
-		const province *tile_province = tile->get_province();
+		const metternich::province *tile_province = tile->get_province();
 
 		if (tile_province == nullptr) {
 			continue;
@@ -82,6 +82,10 @@ void site::initialize()
 {
 	assert_throw(this->world != nullptr);
 	this->world->add_site(this);
+
+	if (this->get_province() != nullptr) {
+		this->province->add_site(this);
+	}
 
 	if (this->get_type() == site_type::resource && this->get_title() == nullptr) {
 		this->create_title();
