@@ -659,24 +659,43 @@ std::vector<const province *> map_generator::generate_province_group(const std::
 			}
 		} else {
 			//pick a province bordering one of the country's existing provinces
-			std::vector<int> potential_province_indexes;
+			std::map<int, int> province_index_border_counts;
+			std::set<int> checked_province_indexes;
 
 			for (const int country_province_index : group_province_indexes) {
 				for (const int border_province_index : this->province_border_provinces[country_province_index]) {
-					if (vector::contains(potential_province_indexes, border_province_index)) {
-						continue;
+					if (checked_province_indexes.contains(border_province_index)) {
+						if (!province_index_border_counts.contains(border_province_index)) {
+							//already checked for suitability and deemed unsuitable
+							continue;
+						}
+					} else {
+						checked_province_indexes.insert(border_province_index);
+						//make the suitability check if it hasn't been done yet
+						if (!this->can_assign_province_to_province_index(province, border_province_index)) {
+							continue;
+						}
 					}
 
-					if (!this->can_assign_province_to_province_index(province, border_province_index)) {
-						continue;
-					}
-
-					potential_province_indexes.push_back(border_province_index);
+					++province_index_border_counts[border_province_index];
 				}
 			}
 
-			if (!potential_province_indexes.empty()) {
-				province_index = vector::get_random(potential_province_indexes);
+			std::vector<int> best_province_indexes;
+			int best_border_count = 0;
+			for (const auto &[border_province_index, border_count] : province_index_border_counts) {
+				if (border_count > best_border_count) {
+					best_province_indexes.clear();
+					best_border_count = border_count;
+				}
+
+				if (border_count == best_border_count) {
+					best_province_indexes.push_back(border_province_index);
+				}
+			}
+
+			if (!best_province_indexes.empty()) {
+				province_index = vector::get_random(best_province_indexes);
 			}
 		}
 
