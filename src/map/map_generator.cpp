@@ -55,6 +55,8 @@ void map_generator::generate()
 		map->set_tile_province(point::from_index(static_cast<int>(i), this->get_width()), province);
 	}
 
+	this->generate_sites();
+
 	map->initialize();
 
 	for (const auto &[province, country] : this->province_owners) {
@@ -720,6 +722,36 @@ bool map_generator::can_assign_province_to_province_index(const province *provin
 	}
 
 	return true;
+}
+
+void map_generator::generate_sites()
+{
+	map *map = map::get();
+
+	//place capital settlements
+	for (size_t i = 0; i < this->province_seeds.size(); ++i) {
+		const QPoint &province_seed = this->province_seeds[i];
+		const int province_index = static_cast<int>(i);
+
+		const auto find_iterator = this->provinces_by_index.find(province_index);
+		//assert_throw(find_iterator != this->provinces_by_index.end());
+
+		if (find_iterator == this->provinces_by_index.end()) {
+			continue;
+		}
+
+		const province *province = find_iterator->second;
+		assert_throw(province != nullptr);
+		if (province->get_capital_settlement() != nullptr) {
+			map->set_tile_site(province_seed, province->get_capital_settlement());
+
+			//change non-flatlands terrain to flatlands for settlements
+			//FIXME: move the settlement position instead
+			if (map->get_tile(province_seed)->get_terrain() != defines::get()->get_default_province_terrain()) {
+				map->set_tile_terrain(province_seed, defines::get()->get_default_province_terrain());
+			}
+		}
+	}
 }
 
 map_generator::elevation_type map_generator::get_tile_elevation_type(const QPoint &tile_pos) const

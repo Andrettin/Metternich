@@ -85,6 +85,8 @@ private:
 	std::vector<const province *> generate_province_group(const std::vector<const province *> &potential_provinces, const int max_provinces, const province *capital_province);
 	bool can_assign_province_to_province_index(const province *province, const int province_index) const;
 
+	void generate_sites();
+
 	elevation_type get_tile_elevation_type(const QPoint &tile_pos) const;
 
 	bool is_tile_water(const QPoint &tile_pos) const
