@@ -290,7 +290,7 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 	tile *tile = this->get_tile(tile_pos);
 	tile->set_site(site);
 
-	if (site->get_province() != tile->get_province()) {
+	if (site->get_province() != nullptr && site->get_province() != tile->get_province()) {
 		log::log_error("Site \"" + site->get_identifier() + "\" was not placed within its province.");
 	}
 

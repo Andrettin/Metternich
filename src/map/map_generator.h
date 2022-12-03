@@ -6,6 +6,7 @@
 namespace metternich {
 
 class country;
+class era;
 class region;
 
 class map_generator final
@@ -46,7 +47,8 @@ private:
 	};
 
 public:
-	explicit map_generator(const QSize &size) : size(size)
+	explicit map_generator(const QSize &size, const metternich::era *era)
+		: size(size), era(era)
 	{
 	}
 
@@ -124,6 +126,7 @@ private:
 
 private:
 	QSize size = QSize(0, 0);
+	const metternich::era *era = nullptr;
 	int cold_threshold = 0;
 	int province_count = 0;
 	std::vector<QPoint> province_seeds;

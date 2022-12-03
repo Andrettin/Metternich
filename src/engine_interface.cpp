@@ -8,6 +8,7 @@
 #include "game/scenario.h"
 #include "map/map.h"
 #include "map/map_template.h"
+#include "time/era.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
 
@@ -60,6 +61,11 @@ QObject *engine_interface::get_map_template(const QString &identifier) const
 QVariantList engine_interface::get_scenarios() const
 {
 	return container::to_qvariant_list(scenario::get_all());
+}
+
+QVariantList engine_interface::get_eras() const
+{
+	return container::to_qvariant_list(era::get_all());
 }
 
 }

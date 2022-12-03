@@ -516,6 +516,10 @@ void map_generator::generate_countries()
 			continue;
 		}
 
+		if (!vector::contains(country->get_eras(), this->era)) {
+			continue;
+		}
+
 		if (country->is_great_power()) {
 			potential_powers.push_back(country);
 		} else {

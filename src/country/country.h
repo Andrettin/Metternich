@@ -86,6 +86,11 @@ public:
 
 	void create_title();
 
+	const std::vector<const era *> &get_eras() const
+	{
+		return this->eras;
+	}
+
 	const std::vector<const province *> &get_provinces() const
 	{
 		return this->provinces;
