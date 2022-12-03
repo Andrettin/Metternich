@@ -46,7 +46,7 @@ public:
 		emit running_changed();
 	}
 
-	Q_INVOKABLE void create_random_map(metternich::era *era);
+	Q_INVOKABLE void create_random_map(const QSize &map_size, metternich::era *era);
 	Q_INVOKABLE void setup_scenario(metternich::scenario *scenario);
 	Q_INVOKABLE void start();
 	Q_INVOKABLE void stop();

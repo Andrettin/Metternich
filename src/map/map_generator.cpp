@@ -48,7 +48,6 @@ void map_generator::generate()
 		const auto find_iterator = this->provinces_by_index.find(province_index);
 
 		if (find_iterator == this->provinces_by_index.end()) {
-			log::log_error("No province was generated for province index " + std::to_string(province_index) + ".");
 			continue;
 		}
 

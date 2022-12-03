@@ -64,12 +64,12 @@ game::game()
 {
 }
 
-void game::create_random_map(metternich::era *era)
+void game::create_random_map(const QSize &map_size, metternich::era *era)
 {
 	try {
 		this->clear();
 
-		map_generator map_generator(QSize(256, 128), era);
+		map_generator map_generator(map_size, era);
 		map_generator.generate();
 
 		this->on_setup_finished();
