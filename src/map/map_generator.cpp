@@ -770,7 +770,7 @@ void map_generator::generate_sites()
 			const resource *resource = site->get_resource();
 			const std::vector<const terrain_type *> &site_terrains = resource->get_terrain_types();
 
-			const terrain_type_map<std::vector<QPoint>> &province_tiles_by_terrain = resource->is_near_water() ? this->province_tiles_by_terrain[province_index] : this->province_near_water_tiles_by_terrain[province_index];
+			const terrain_type_map<std::vector<QPoint>> &province_tiles_by_terrain = resource->is_near_water() ? this->province_near_water_tiles_by_terrain[province_index] : this->province_tiles_by_terrain[province_index];
 
 			std::vector<QPoint> potential_positions;
 
