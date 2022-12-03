@@ -83,6 +83,7 @@ private:
 	bool generate_ocean(const region *ocean);
 	bool generate_country(const country *country);
 	std::vector<const province *> generate_province_group(const std::vector<const province *> &potential_provinces, const int max_provinces, const province *capital_province);
+	bool can_assign_province_to_province_index(const province *province, const int province_index) const;
 
 	elevation_type get_tile_elevation_type(const QPoint &tile_pos) const;
 
@@ -123,6 +124,7 @@ private:
 	int cold_threshold = 0;
 	int province_count = 0;
 	std::vector<QPoint> province_seeds;
+	std::vector<std::vector<QPoint>> province_tiles;
 	std::vector<int> tile_provinces;
 	std::vector<int> tile_elevations;
 	std::vector<int> tile_forestations;

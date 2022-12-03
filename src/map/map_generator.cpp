@@ -4,11 +4,14 @@
 
 #include "country/country.h"
 #include "database/defines.h"
+#include "economy/resource.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/region.h"
+#include "map/site.h"
 #include "map/terrain_type.h"
+#include "map/tile.h"
 #include "util/assert_util.h"
 #include "util/number_util.h"
 #include "util/point_util.h"
@@ -34,65 +37,6 @@ void map_generator::generate()
 	this->generate_provinces();
 	this->generate_terrain();
 	this->generate_countries();
-
-	//assign terrain
-	const terrain_type *land_terrain = defines::get()->get_default_province_terrain();
-	const terrain_type *forest_terrain = terrain_type::get("conifer_forest");
-	const terrain_type *hills_terrain = terrain_type::get("barren_hills");
-	const terrain_type *mountains_terrain = terrain_type::get("mountains");
-	const terrain_type *water_terrain = defines::get()->get_default_water_zone_terrain();
-
-	for (int x = 0; x < map->get_width(); ++x) {
-		for (int y = 0; y < map->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			const int tile_index = point::to_index(tile_pos, this->get_width());
-
-			int &elevation = this->tile_elevations[tile_index];
-			const bool is_water = this->is_tile_water(tile_pos);
-
-			const int province_index = this->tile_provinces[tile_index];
-			const bool province_is_water = this->is_tile_water(this->province_seeds[province_index]);
-
-			if (province_is_water && !is_water) {
-				elevation = 0;
-			} else if (!province_is_water && is_water) {
-				elevation = map_generator::min_land_elevation;
-			}
-
-			const terrain_type *terrain = nullptr;
-
-			const elevation_type elevation_type = this->get_tile_elevation_type(tile_pos);
-			const forestation_type forestation_type = this->get_tile_forestation_type(tile_pos);
-
-			switch (elevation_type) {
-				case elevation_type::water:
-					terrain = water_terrain;
-					break;
-				case elevation_type::flatlands:
-					switch (forestation_type) {
-						case forestation_type::none:
-							terrain = land_terrain;
-							break;
-						case forestation_type::forest:
-							terrain = forest_terrain;
-							break;
-						default:
-							assert_throw(false);
-					}
-					break;
-				case elevation_type::hills:
-					terrain = hills_terrain;
-					break;
-				case elevation_type::mountains:
-					terrain = mountains_terrain;
-					break;
-				default:
-					assert_throw(false);
-			}
-
-			map->set_tile_terrain(tile_pos, terrain);
-		}
-	}
 
 	//assign provinces
 	for (size_t i = 0; i < this->tile_provinces.size(); ++i) {
@@ -134,6 +78,67 @@ void map_generator::generate_terrain()
 	this->generate_elevation();
 	//this->generate_climate();
 	this->generate_forestation();
+
+	//assign terrain
+	const terrain_type *land_terrain = defines::get()->get_default_province_terrain();
+	const terrain_type *forest_terrain = terrain_type::get("conifer_forest");
+	const terrain_type *hills_terrain = terrain_type::get("barren_hills");
+	const terrain_type *mountains_terrain = terrain_type::get("mountains");
+	const terrain_type *water_terrain = defines::get()->get_default_water_zone_terrain();
+
+	map *map = map::get();
+
+	for (int x = 0; x < map->get_width(); ++x) {
+		for (int y = 0; y < map->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			const int tile_index = point::to_index(tile_pos, this->get_width());
+
+			int &elevation = this->tile_elevations[tile_index];
+			const bool is_water = this->is_tile_water(tile_pos);
+
+			const int province_index = this->tile_provinces[tile_index];
+			const bool province_is_water = this->is_tile_water(this->province_seeds[province_index]);
+
+			if (province_is_water && !is_water) {
+				elevation = 0;
+			} else if (!province_is_water && is_water) {
+				elevation = map_generator::min_land_elevation;
+			}
+
+			const terrain_type *terrain = nullptr;
+
+			const elevation_type elevation_type = this->get_tile_elevation_type(tile_pos);
+			const forestation_type forestation_type = this->get_tile_forestation_type(tile_pos);
+
+			switch (elevation_type) {
+				case elevation_type::water:
+					terrain = water_terrain;
+					break;
+				case elevation_type::flatlands:
+					switch (forestation_type) {
+					case forestation_type::none:
+						terrain = land_terrain;
+						break;
+					case forestation_type::forest:
+						terrain = forest_terrain;
+						break;
+					default:
+						assert_throw(false);
+					}
+					break;
+				case elevation_type::hills:
+					terrain = hills_terrain;
+					break;
+				case elevation_type::mountains:
+					terrain = mountains_terrain;
+					break;
+				default:
+					assert_throw(false);
+			}
+
+			map->set_tile_terrain(tile_pos, terrain);
+		}
+	}
 }
 
 void map_generator::generate_elevation()
@@ -341,7 +346,9 @@ std::vector<QPoint> map_generator::generate_province_seeds(const size_t seed_cou
 
 	for (size_t i = 0; i < province_seeds.size(); ++i) {
 		const QPoint seed_pos = province_seeds.at(i);
-		this->tile_provinces[point::to_index(seed_pos, this->get_width())] = static_cast<int>(i);
+		const int tile_index = point::to_index(seed_pos, this->get_width());
+		this->tile_provinces[tile_index] = static_cast<int>(i);
+		this->province_tiles.push_back({ seed_pos });
 	}
 
 	return province_seeds;
@@ -390,6 +397,7 @@ void map_generator::expand_province_seeds(const std::vector<QPoint> &base_seeds)
 
 		QPoint adjacent_pos = vector::take_random(adjacent_positions);
 		this->tile_provinces[point::to_index(adjacent_pos, map_size)] = province_index;
+		this->province_tiles[province_index].push_back(adjacent_pos);
 
 		seeds.push_back(std::move(adjacent_pos));
 	}
@@ -449,6 +457,7 @@ void map_generator::expand_province_seeds(const std::vector<QPoint> &base_seeds)
 
 			//set the province to the same as the most-neighbored one
 			this->tile_provinces[tile_index] = best_province_index;
+			this->province_tiles[best_province_index].push_back(tile_pos);
 
 			remaining_positions.erase(remaining_positions.begin() + i);
 		}
@@ -579,17 +588,11 @@ std::vector<const province *> map_generator::generate_province_group(const std::
 
 			//get the provinces which are as far away from other powers as possible
 			for (int i = 0; i < this->province_count; ++i) {
-				if (this->provinces_by_index.contains(i)) {
-					//already generated
+				if (!this->can_assign_province_to_province_index(province, i)) {
 					continue;
 				}
 
 				const QPoint &province_seed = this->province_seeds.at(i);
-
-				if (this->is_tile_water(province_seed) != province->is_water_zone()) {
-					//can only generate water zones on water, and land provinces on land
-					continue;
-				}
 
 				int distance = std::numeric_limits<int>::max();
 
@@ -628,15 +631,7 @@ std::vector<const province *> map_generator::generate_province_group(const std::
 						continue;
 					}
 
-					if (this->provinces_by_index.contains(border_province_index)) {
-						//already generated
-						continue;
-					}
-
-					const QPoint &province_seed = this->province_seeds.at(border_province_index);
-
-					if (this->is_tile_water(province_seed) != province->is_water_zone()) {
-						//can only generate water zones on water, and land provinces on land
+					if (!this->can_assign_province_to_province_index(province, border_province_index)) {
 						continue;
 					}
 
@@ -675,6 +670,56 @@ std::vector<const province *> map_generator::generate_province_group(const std::
 	}
 
 	return provinces;
+}
+
+bool map_generator::can_assign_province_to_province_index(const province *province, const int province_index) const
+{
+	if (this->provinces_by_index.contains(province_index)) {
+		//already generated
+		return false;
+	}
+
+	const QPoint &province_seed = this->province_seeds.at(province_index);
+
+	if (this->is_tile_water(province_seed) != province->is_water_zone()) {
+		//can only generate water zones on water, and land provinces on land
+		return false;
+	}
+
+	if (!province->get_sites().empty()) {
+		std::map<const terrain_type *, int> available_terrain_counts;
+
+		const map *map = map::get();
+
+		for (const QPoint &tile_pos : this->province_tiles.at(province_index)) {
+			const terrain_type *terrain = map->get_tile(tile_pos)->get_terrain();
+			available_terrain_counts[terrain]++;
+		}
+
+		for (const site *site : province->get_sites()) {
+			if (site->get_resource() == nullptr) {
+				continue;
+			}
+
+			const std::vector<const terrain_type *> &site_terrains = site->get_resource()->get_terrain_types();
+
+			bool has_terrain = false;
+			for (const terrain_type *terrain : site_terrains) {
+				int &terrain_count = available_terrain_counts[terrain];
+				if (terrain_count > 0) {
+					has_terrain = true;
+					--terrain_count;
+					break;
+				}
+			}
+
+			if (!has_terrain) {
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 map_generator::elevation_type map_generator::get_tile_elevation_type(const QPoint &tile_pos) const
