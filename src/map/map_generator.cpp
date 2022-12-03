@@ -214,26 +214,31 @@ void map_generator::expand_tile_value_seeds(const std::vector<QPoint> &base_seed
 {
 	const map *map = map::get();
 
-	std::vector<QPoint> seeds = base_seeds;
+	std::vector<QPoint> seeds = vector::shuffled(base_seeds);
 
 	while (!seeds.empty()) {
-		const QPoint seed_pos = vector::take_random(seeds);
+		std::vector<QPoint> new_seeds;
 
-		const int tile_value = tile_values[point::to_index(seed_pos, this->get_width())];
+		for (const QPoint &seed_pos : seeds) {
+			const int tile_value = tile_values[point::to_index(seed_pos, this->get_width())];
 
-		point::for_each_cardinally_adjacent(seed_pos, [&](QPoint &&adjacent_pos) {
-			if (!map->contains(adjacent_pos)) {
-				return;
-			}
+			point::for_each_cardinally_adjacent(seed_pos, [&](QPoint &&adjacent_pos) {
+				if (!map->contains(adjacent_pos)) {
+					return;
+				}
 
-			int &adjacent_tile_value = tile_values[point::to_index(adjacent_pos, this->get_width())];
-			if (adjacent_tile_value != -1) {
-				return;
-			}
+				int &adjacent_tile_value = tile_values[point::to_index(adjacent_pos, this->get_width())];
+				if (adjacent_tile_value != -1) {
+					return;
+				}
 
-			adjacent_tile_value = std::max(0, tile_value - random::get()->generate_in_range(0, 50));
-			seeds.push_back(std::move(adjacent_pos));
-		});
+				adjacent_tile_value = std::max(0, tile_value - random::get()->generate_in_range(0, 50));
+				new_seeds.push_back(std::move(adjacent_pos));
+			});
+		}
+
+		seeds = std::move(new_seeds);
+		vector::shuffle(seeds);
 	}
 }
 
@@ -379,47 +384,52 @@ void map_generator::expand_province_seeds(const std::vector<QPoint> &base_seeds)
 	const map *map = map::get();
 	const QSize &map_size = this->get_size();
 
-	std::vector<QPoint> seeds = base_seeds;
+	std::vector<QPoint> seeds = vector::shuffled(base_seeds);
 
 	while (!seeds.empty()) {
-		QPoint seed_pos = vector::take_random(seeds);
+		std::vector<QPoint> new_seeds;
 
-		const int tile_index = point::to_index(seed_pos, map_size);
-		const int province_index = this->tile_provinces[tile_index];
+		for (const QPoint &seed_pos : seeds) {
+			const int tile_index = point::to_index(seed_pos, map_size);
+			const int province_index = this->tile_provinces[tile_index];
 
-		std::vector<QPoint> adjacent_positions;
+			std::vector<QPoint> adjacent_positions;
 
-		point::for_each_cardinally_adjacent(seed_pos, [&](QPoint &&adjacent_pos) {
-			if (!map->contains(adjacent_pos)) {
-				return;
+			point::for_each_cardinally_adjacent(seed_pos, [&](QPoint &&adjacent_pos) {
+				if (!map->contains(adjacent_pos)) {
+					return;
+				}
+
+				const int adjacent_tile_index = point::to_index(adjacent_pos, map_size);
+				const int adjacent_province_index = this->tile_provinces[adjacent_tile_index];
+				if (adjacent_province_index != -1) {
+					//the adjacent tile must not have a province assigned yet
+					this->province_border_provinces[province_index].insert(adjacent_province_index);
+					this->province_border_provinces[adjacent_province_index].insert(province_index);
+					return;
+				}
+
+				adjacent_positions.push_back(std::move(adjacent_pos));
+			});
+
+			if (adjacent_positions.empty()) {
+				continue;
 			}
 
-			const int adjacent_tile_index = point::to_index(adjacent_pos, map_size);
-			const int adjacent_province_index = this->tile_provinces[adjacent_tile_index];
-			if (adjacent_province_index != -1) {
-				//the adjacent tile must not have a province assigned yet
-				this->province_border_provinces[province_index].insert(adjacent_province_index);
-				this->province_border_provinces[adjacent_province_index].insert(province_index);
-				return;
+			if (adjacent_positions.size() > 1) {
+				//push the seed back again for another try, since it may be able to generate further in the future
+				new_seeds.push_back(std::move(seed_pos));
 			}
 
-			adjacent_positions.push_back(std::move(adjacent_pos));
-		});
+			QPoint adjacent_pos = vector::get_random(adjacent_positions);
+			this->tile_provinces[point::to_index(adjacent_pos, map_size)] = province_index;
+			this->province_tiles[province_index].push_back(adjacent_pos);
 
-		if (adjacent_positions.empty()) {
-			continue;
+			new_seeds.push_back(std::move(adjacent_pos));
 		}
 
-		if (adjacent_positions.size() > 1) {
-			//push the seed back again for another try, since it may be able to generate further in the future
-			seeds.push_back(std::move(seed_pos));
-		}
-
-		QPoint adjacent_pos = vector::take_random(adjacent_positions);
-		this->tile_provinces[point::to_index(adjacent_pos, map_size)] = province_index;
-		this->province_tiles[province_index].push_back(adjacent_pos);
-
-		seeds.push_back(std::move(adjacent_pos));
+		seeds = std::move(new_seeds);
+		vector::shuffle(seeds);
 	}
 
 	//set tiles without provinces (e.g. water tiles which are enclaves in land provinces) to the most-neighbored province
