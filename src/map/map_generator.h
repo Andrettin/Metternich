@@ -86,6 +86,7 @@ private:
 	bool generate_ocean(const region *ocean);
 	bool generate_country(const country *country);
 	std::vector<const province *> generate_province_group(const std::vector<const province *> &potential_provinces, const int max_provinces, const province *capital_province);
+	int generate_province(const province *province, std::vector<int> &group_province_indexes);
 	bool can_assign_province_to_province_index(const province *province, const int province_index) const;
 
 	void generate_sites();

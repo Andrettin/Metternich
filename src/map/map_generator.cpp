@@ -606,116 +606,26 @@ bool map_generator::generate_country(const country *country)
 std::vector<const province *> map_generator::generate_province_group(const std::vector<const province *> &potential_provinces, const int max_provinces, const province *capital_province)
 {
 	std::vector<const province *> provinces;
-
-	int generated_province_count = 0;
 	std::vector<int> group_province_indexes;
 
-	for (const province *province : potential_provinces) {
-		if (this->generated_provinces.contains(province)) {
-			continue;
-		}
-
-		int province_index = -1;
-
-		if (generated_province_count == 0) {
-			//first province
-			std::vector<int> best_province_indexes;
-			int best_distance = 0;
-
-			//get the provinces which are as far away from other powers as possible
-			for (int i = 0; i < this->province_count; ++i) {
-				if (!this->can_assign_province_to_province_index(province, i)) {
-					continue;
-				}
-
-				const QPoint &province_seed = this->province_seeds.at(i);
-
-				int distance = std::numeric_limits<int>::max();
-
-				if (!province->is_water_zone()) {
-					//generate land provinces as distant from other already-generated land provinces as possible
-					for (const auto &[other_province_index, other_province] : this->provinces_by_index) {
-						if (other_province->is_water_zone()) {
-							continue;
-						}
-
-						const QPoint &other_province_seed = this->province_seeds.at(other_province_index);
-						distance = std::min(distance, point::distance_to(province_seed, other_province_seed));
-					}
-				}
-
-				if (distance > best_distance) {
-					best_province_indexes.clear();
-					best_distance = distance;
-				}
-
-				if (distance == best_distance) {
-					best_province_indexes.push_back(i);
-				}
-			}
-
-			if (!best_province_indexes.empty()) {
-				province_index = vector::get_random(best_province_indexes);
-			}
-		} else {
-			//pick a province bordering one of the country's existing provinces
-			std::map<int, int> province_index_border_counts;
-			std::set<int> checked_province_indexes;
-
-			for (const int country_province_index : group_province_indexes) {
-				for (const int border_province_index : this->province_border_provinces[country_province_index]) {
-					if (checked_province_indexes.contains(border_province_index)) {
-						if (!province_index_border_counts.contains(border_province_index)) {
-							//already checked for suitability and deemed unsuitable
-							continue;
-						}
-					} else {
-						checked_province_indexes.insert(border_province_index);
-						//make the suitability check if it hasn't been done yet
-						if (!this->can_assign_province_to_province_index(province, border_province_index)) {
-							continue;
-						}
-					}
-
-					++province_index_border_counts[border_province_index];
-				}
-			}
-
-			std::vector<int> best_province_indexes;
-			int best_border_count = 0;
-			for (const auto &[border_province_index, border_count] : province_index_border_counts) {
-				if (border_count > best_border_count) {
-					best_province_indexes.clear();
-					best_border_count = border_count;
-				}
-
-				if (border_count == best_border_count) {
-					best_province_indexes.push_back(border_province_index);
-				}
-			}
-
-			if (!best_province_indexes.empty()) {
-				province_index = vector::get_random(best_province_indexes);
-			}
-		}
-
+	if (capital_province != nullptr) {
+		const int province_index = this->generate_province(capital_province, group_province_indexes);
 		if (province_index == -1) {
-			if (capital_province != nullptr && province == capital_province) {
-				return {};
-			}
-
-			continue;
+			return {};
 		}
 
-		this->provinces_by_index[province_index] = province;
-		group_province_indexes.push_back(province_index);
+		provinces.push_back(capital_province);
+	}
 
-		this->generated_provinces.insert(province);
-		++generated_province_count;
+	for (const province *province : vector::shuffled(potential_provinces)) {
+		const int province_index = this->generate_province(province, group_province_indexes);
+		if (province_index == -1) {
+			continue;
+		}
 
 		provinces.push_back(province);
 
-		if (max_provinces > 0 && generated_province_count == max_provinces) {
+		if (max_provinces > 0 && static_cast<int>(group_province_indexes.size()) == max_provinces) {
 			break;
 		}
 
@@ -725,6 +635,109 @@ std::vector<const province *> map_generator::generate_province_group(const std::
 	}
 
 	return provinces;
+}
+
+int map_generator::generate_province(const province *province, std::vector<int> &group_province_indexes)
+{
+	if (this->generated_provinces.contains(province)) {
+		return -1;
+	}
+
+	int province_index = -1;
+	const size_t group_generated_province_count = group_province_indexes.size();
+
+	if (group_generated_province_count == 0) {
+		//first province
+		std::vector<int> best_province_indexes;
+		int best_distance = 0;
+
+		//get the provinces which are as far away from other powers as possible
+		for (int i = 0; i < this->province_count; ++i) {
+			if (!this->can_assign_province_to_province_index(province, i)) {
+				continue;
+			}
+
+			const QPoint &province_seed = this->province_seeds.at(i);
+
+			int distance = std::numeric_limits<int>::max();
+
+			if (!province->is_water_zone()) {
+				//generate land provinces as distant from other already-generated land provinces as possible
+				for (const auto &[other_province_index, other_province] : this->provinces_by_index) {
+					if (other_province->is_water_zone()) {
+						continue;
+					}
+
+					const QPoint &other_province_seed = this->province_seeds.at(other_province_index);
+					distance = std::min(distance, point::distance_to(province_seed, other_province_seed));
+				}
+			}
+
+			if (distance > best_distance) {
+				best_province_indexes.clear();
+				best_distance = distance;
+			}
+
+			if (distance == best_distance) {
+				best_province_indexes.push_back(i);
+			}
+		}
+
+		if (!best_province_indexes.empty()) {
+			province_index = vector::get_random(best_province_indexes);
+		}
+	} else {
+		//pick a province bordering one of the country's existing provinces
+		std::map<int, int> province_index_border_counts;
+		std::set<int> checked_province_indexes;
+
+		for (const int country_province_index : group_province_indexes) {
+			for (const int border_province_index : this->province_border_provinces[country_province_index]) {
+				if (checked_province_indexes.contains(border_province_index)) {
+					if (!province_index_border_counts.contains(border_province_index)) {
+						//already checked for suitability and deemed unsuitable
+						continue;
+					}
+				} else {
+					checked_province_indexes.insert(border_province_index);
+					//make the suitability check if it hasn't been done yet
+					if (!this->can_assign_province_to_province_index(province, border_province_index)) {
+						continue;
+					}
+				}
+
+				++province_index_border_counts[border_province_index];
+			}
+		}
+
+		std::vector<int> best_province_indexes;
+		int best_border_count = 0;
+		for (const auto &[border_province_index, border_count] : province_index_border_counts) {
+			if (border_count > best_border_count) {
+				best_province_indexes.clear();
+				best_border_count = border_count;
+			}
+
+			if (border_count == best_border_count) {
+				best_province_indexes.push_back(border_province_index);
+			}
+		}
+
+		if (!best_province_indexes.empty()) {
+			province_index = vector::get_random(best_province_indexes);
+		}
+	}
+
+	if (province_index == -1) {
+		return province_index;
+	}
+
+	this->provinces_by_index[province_index] = province;
+	group_province_indexes.push_back(province_index);
+
+	this->generated_provinces.insert(province);
+
+	return province_index;
 }
 
 bool map_generator::can_assign_province_to_province_index(const province *province, const int province_index) const
