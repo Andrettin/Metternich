@@ -161,14 +161,14 @@ void map_generator::generate_terrain()
 
 void map_generator::generate_elevation()
 {
-	const std::vector<QPoint> elevation_seeds = this->generate_tile_value_seeds(this->tile_elevations, 1024);
-	this->expand_tile_value_seeds(elevation_seeds, this->tile_elevations);
+	const std::vector<QPoint> elevation_seeds = this->generate_tile_value_seeds(this->tile_elevations, 2048);
+	this->expand_tile_value_seeds(elevation_seeds, this->tile_elevations, 50);
 }
 
 void map_generator::generate_forestation()
 {
 	const std::vector<QPoint> seeds = this->generate_tile_value_seeds(this->tile_forestations, 256);
-	this->expand_tile_value_seeds(seeds, this->tile_forestations);
+	this->expand_tile_value_seeds(seeds, this->tile_forestations, 50);
 }
 
 std::vector<QPoint> map_generator::generate_tile_value_seeds(std::vector<int> &tile_values, const int seed_divisor)
@@ -210,7 +210,7 @@ std::vector<QPoint> map_generator::generate_tile_value_seeds(std::vector<int> &t
 	return seeds;
 }
 
-void map_generator::expand_tile_value_seeds(const std::vector<QPoint> &base_seeds, std::vector<int> &tile_values)
+void map_generator::expand_tile_value_seeds(const std::vector<QPoint> &base_seeds, std::vector<int> &tile_values, const int max_decrease)
 {
 	const map *map = map::get();
 
@@ -232,7 +232,7 @@ void map_generator::expand_tile_value_seeds(const std::vector<QPoint> &base_seed
 					return;
 				}
 
-				adjacent_tile_value = std::max(0, tile_value - random::get()->generate_in_range(0, 50));
+				adjacent_tile_value = std::max(0, tile_value - random::get()->generate_in_range(0, max_decrease));
 				new_seeds.push_back(std::move(adjacent_pos));
 			});
 		}
