@@ -3,6 +3,7 @@
 #include "map/map_generator.h"
 
 #include "country/country.h"
+#include "country/culture.h"
 #include "database/defines.h"
 #include "economy/resource.h"
 #include "map/map.h"
@@ -61,7 +62,24 @@ void map_generator::generate()
 	map->initialize();
 
 	for (const auto &[province, country] : this->province_owners) {
-		province->get_game_data()->set_owner(country);
+		province_game_data *province_game_data = province->get_game_data();
+		province_game_data->set_owner(country);
+
+		//add population
+		const int population_unit_count = province_game_data->is_capital() ? 4 : 1;
+		const population_class *population_class = nullptr;
+		if (country->is_tribe()) {
+			population_class = defines::get()->get_default_tribal_population_class();
+		} else {
+			population_class = defines::get()->get_default_population_class();
+		}
+
+		const culture *culture = country->get_culture();
+		const population_type *population_type = culture->get_population_class_type(population_class);
+
+		for (int i = 0; i < population_unit_count; ++i) {
+			province_game_data->create_population_unit(population_type, culture, culture->get_default_phenotype());
+		}
 	}
 }
 
