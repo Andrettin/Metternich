@@ -34,8 +34,8 @@ void map_generator::generate()
 	const int tile_count = this->get_width() * this->get_height();
 	this->tile_provinces.resize(tile_count, -1);
 	this->tile_elevations.resize(tile_count, -1);
+	this->tile_temperatures.resize(tile_count, -1);
 	this->tile_forestations.resize(tile_count, -1);
-	this->tile_climates.resize(tile_count, climate_type::none);
 
 	this->generate_provinces();
 	this->generate_terrain();
@@ -97,11 +97,12 @@ void map_generator::generate_terrain()
 	});
 
 	this->generate_elevation();
-	//this->generate_climate();
+	this->generate_temperature();
 	this->generate_forestation();
 
 	//assign terrain
 	const terrain_type *land_terrain = defines::get()->get_default_province_terrain();
+	const terrain_type *tropical_land_terrain = terrain_type::get("savannah");
 	const terrain_type *forest_terrain = terrain_type::get("conifer_forest");
 	const terrain_type *hills_terrain = terrain_type::get("barren_hills");
 	const terrain_type *mountains_terrain = terrain_type::get("mountains");
@@ -129,6 +130,7 @@ void map_generator::generate_terrain()
 			const terrain_type *terrain = nullptr;
 
 			const elevation_type elevation_type = this->get_tile_elevation_type(tile_pos);
+			const temperature_type temperature_type = this->get_tile_temperature_type(tile_pos);
 			const forestation_type forestation_type = this->get_tile_forestation_type(tile_pos);
 
 			switch (elevation_type) {
@@ -137,14 +139,25 @@ void map_generator::generate_terrain()
 					break;
 				case elevation_type::flatlands:
 					switch (forestation_type) {
-					case forestation_type::none:
-						terrain = land_terrain;
-						break;
-					case forestation_type::forest:
-						terrain = forest_terrain;
-						break;
-					default:
-						assert_throw(false);
+						case forestation_type::none:
+							switch (temperature_type) {
+								case temperature_type::frozen:
+								case temperature_type::cold:
+								case temperature_type::temperate:
+									terrain = land_terrain;
+									break;
+								case temperature_type::tropical:
+									terrain = tropical_land_terrain;
+									break;
+								default:
+									assert_throw(false);
+							}
+							break;
+						case forestation_type::forest:
+							terrain = forest_terrain;
+							break;
+						default:
+							assert_throw(false);
 					}
 					break;
 				case elevation_type::hills:
@@ -181,6 +194,21 @@ void map_generator::generate_elevation()
 {
 	const std::vector<QPoint> elevation_seeds = this->generate_tile_value_seeds(this->tile_elevations, 2048);
 	this->expand_tile_value_seeds(elevation_seeds, this->tile_elevations, 50);
+}
+
+void map_generator::generate_temperature()
+{
+	//temperature is a function of latitude and elevation
+	for (int x = 0; x < this->get_width(); ++x) {
+		for (int y = 0; y < this->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			const int tile_index = point::to_index(tile_pos, this->get_width());
+			const int colatitude = this->get_tile_colatitude(tile_pos);
+			const int elevation = this->tile_elevations[tile_index];
+			const int elevation_temperature_factor = map_generator::max_tile_value - (elevation - map_generator::min_land_elevation) * 2;
+			this->tile_temperatures[tile_index] = std::max(0, (colatitude + elevation_temperature_factor) / 2);
+		}
+	}
 }
 
 void map_generator::generate_forestation()
@@ -257,81 +285,6 @@ void map_generator::expand_tile_value_seeds(const std::vector<QPoint> &base_seed
 
 		seeds = std::move(new_seeds);
 		vector::shuffle(seeds);
-	}
-}
-
-void map_generator::generate_climate(const bool real)
-{
-	std::vector<int> tile_climate_values;
-	tile_climate_values.resize(this->tile_climates.size(), -1);
-
-	if (real) {
-		//FIXME: implement
-	} else {
-		for (int x = 0; x < this->get_width(); ++x) {
-			for (int y = 0; y < this->get_height(); ++y) {
-				const QPoint tile_pos(x, y);
-				const int tile_index = point::to_index(tile_pos, this->get_width());
-				tile_climate_values[tile_index] = this->get_tile_colatitude(tile_pos);
-			}
-		}
-	}
-
-	this->adjust_tile_values(tile_climate_values, 0, map_generator::max_latitude);
-
-	for (size_t i = 0; i < tile_climate_values.size(); ++i) {
-		const int climate_value = tile_climate_values[i];
-		if (climate_value >= map_generator::tropical_threshold) {
-			this->tile_climates[i] = climate_type::tropical;
-		} else if (climate_value >= map_generator::temperate_threshold) {
-			this->tile_climates[i] = climate_type::temperate;
-		} else if (climate_value >= cold_threshold) {
-			this->tile_climates[i] = climate_type::cold;
-		} else {
-			this->tile_climates[i] = climate_type::frozen;
-		}
-	}
-}
-
-void map_generator::adjust_tile_values(std::vector<int> &tile_values, const int min_value, const int max_value)
-{
-	const int delta = max_value - min_value;
-
-	int min_old_value = 0;
-	int max_old_value = 0;
-
-	bool first = true;
-
-	for (const int old_value : tile_values) {
-		if (first) {
-			first = false;
-			min_old_value = old_value;
-			max_old_value = old_value;
-		} else {
-			max_old_value = std::max(max_old_value, old_value);
-			min_old_value = std::min(min_old_value, old_value);
-		}
-	}
-
-	const int old_size = 1 + max_old_value - min_old_value;
-
-	std::vector<int> frequencies;
-	frequencies.resize(old_size, 0);
-
-	for (int &tile_value : tile_values) {
-		tile_value -= min_old_value;
-		++frequencies[tile_value];
-	}
-
-	int count = 0;
-
-	for (int &frequency : frequencies) {
-		count += frequency;
-		frequency = min_value + (count * delta) / static_cast<int>(tile_values.size());
-	}
-
-	for (int &tile_value : tile_values) {
-		tile_value = frequencies[tile_value];
 	}
 }
 
@@ -877,6 +830,19 @@ map_generator::elevation_type map_generator::get_tile_elevation_type(const QPoin
 		return elevation_type::flatlands;
 	} else {
 		return elevation_type::water;
+	}
+}
+
+map_generator::temperature_type map_generator::get_tile_temperature_type(const QPoint &tile_pos) const
+{
+	const int temperature = this->tile_temperatures[point::to_index(tile_pos, this->get_width())];
+
+	if (temperature >= map_generator::min_tropical_temperature) {
+		return temperature_type::tropical;
+	} else if (temperature >= map_generator::min_temperate_temperature) {
+		return temperature_type::temperate;
+	} else {
+		return temperature_type::cold;
 	}
 }
 
