@@ -813,7 +813,7 @@ boost::asio::awaitable<void> province_game_data::create_province_map_image()
 
 	const map *map = map::get();
 
-	const QColor &color = defines::get()->get_minor_nation_color();
+	const QColor &color = this->province->is_water_zone() ? defines::get()->get_ocean_color() : defines::get()->get_minor_nation_color();
 	const QColor &selected_color = defines::get()->get_selected_country_color();
 
 	for (int x = 0; x < this->territory_rect.width(); ++x) {
