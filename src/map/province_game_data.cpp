@@ -6,6 +6,7 @@
 #include "country/country_game_data.h"
 #include "country/culture.h"
 #include "database/defines.h"
+#include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/commodity_container.h"
 #include "economy/employment_type.h"
@@ -29,9 +30,14 @@
 #include "unit/civilian_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/image_util.h"
 #include "util/map_util.h"
+#include "util/point_util.h"
+#include "util/thread_pool.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
+
+#include "xbrz.h"
 
 namespace metternich {
 
@@ -791,6 +797,116 @@ void province_game_data::change_score(const int change)
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score(change);
 	}
+}
+
+boost::asio::awaitable<void> province_game_data::create_province_map_image()
+{
+	const int tile_pixel_size = game::get()->get_diplomatic_map_tile_pixel_size();
+
+	assert_throw(this->territory_rect.width() > 0);
+	assert_throw(this->territory_rect.height() > 0);
+
+	this->province_map_image = QImage(this->territory_rect.size(), QImage::Format_RGBA8888);
+	this->province_map_image.fill(Qt::transparent);
+
+	this->selected_province_map_image = this->province_map_image;
+
+	const map *map = map::get();
+
+	const QColor &color = defines::get()->get_minor_nation_color();
+	const QColor &selected_color = defines::get()->get_selected_country_color();
+
+	for (int x = 0; x < this->territory_rect.width(); ++x) {
+		for (int y = 0; y < this->territory_rect.height(); ++y) {
+			const QPoint relative_tile_pos = QPoint(x, y);
+			const tile *tile = map->get_tile(this->territory_rect.topLeft() + relative_tile_pos);
+
+			if (tile->get_province() != this->province) {
+				continue;
+			}
+
+			this->province_map_image.setPixelColor(relative_tile_pos, color);
+			this->selected_province_map_image.setPixelColor(relative_tile_pos, selected_color);
+		}
+	}
+
+	QImage scaled_province_map_image;
+	QImage scaled_selected_province_map_image;
+
+	co_await thread_pool::get()->co_spawn_awaitable([this, tile_pixel_size, &scaled_province_map_image, &scaled_selected_province_map_image]() -> boost::asio::awaitable<void> {
+		scaled_province_map_image = co_await image::scale<QImage::Format_ARGB32>(this->province_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+
+		scaled_selected_province_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_province_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	this->province_map_image = std::move(scaled_province_map_image);
+	this->selected_province_map_image = std::move(scaled_selected_province_map_image);
+
+	std::vector<QPoint> border_pixels;
+
+	for (int x = 0; x < this->province_map_image.width(); ++x) {
+		for (int y = 0; y < this->province_map_image.height(); ++y) {
+			const QPoint pixel_pos(x, y);
+			const QColor pixel_color = this->province_map_image.pixelColor(pixel_pos);
+			
+			if (pixel_color.alpha() == 0) {
+				continue;
+			}
+
+			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (this->province_map_image.width() - 1) || pixel_pos.y() == (this->province_map_image.height() - 1)) {
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			if (pixel_color != color) {
+				//blended color
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			bool is_border_pixel = false;
+			point::for_each_cardinally_adjacent_until(pixel_pos, [this, &color, &is_border_pixel](const QPoint &adjacent_pos) {
+				if (this->province_map_image.pixelColor(adjacent_pos).alpha() != 0) {
+					return false;
+				}
+
+				is_border_pixel = true;
+				return true;
+			});
+
+			if (is_border_pixel) {
+				border_pixels.push_back(pixel_pos);
+			}
+		}
+	}
+
+	const QColor &border_pixel_color = defines::get()->get_country_border_color();
+
+	for (const QPoint &border_pixel_pos : border_pixels) {
+		this->province_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
+		this->selected_province_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
+	}
+
+	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+
+	co_await thread_pool::get()->co_spawn_awaitable([this, &scale_factor, &scaled_province_map_image, &scaled_selected_province_map_image]() -> boost::asio::awaitable<void> {
+		scaled_province_map_image = co_await image::scale<QImage::Format_ARGB32>(this->province_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+
+		scaled_selected_province_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_province_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	this->province_map_image = std::move(scaled_province_map_image);
+	this->selected_province_map_image = std::move(scaled_selected_province_map_image);
+
+	this->province_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * scale_factor, this->province_map_image.size());
 }
 
 }

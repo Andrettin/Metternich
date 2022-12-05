@@ -126,6 +126,19 @@ void map::initialize()
 
 	this->provinces = container::to_vector(provinces);
 
+	std::vector<boost::asio::awaitable<void>> awaitables;
+
+	for (const province *province : map::get()->get_provinces()) {
+		boost::asio::awaitable<void> awaitable = province->get_game_data()->create_province_map_image();
+		awaitables.push_back(std::move(awaitable));
+	}
+
+	thread_pool::get()->co_spawn_sync([&awaitables]() -> boost::asio::awaitable<void> {
+		for (boost::asio::awaitable<void> &awaitable : awaitables) {
+			co_await std::move(awaitable);
+		}
+	});
+
 	emit provinces_changed();
 }
 
