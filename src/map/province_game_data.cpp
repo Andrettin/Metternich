@@ -830,15 +830,17 @@ boost::asio::awaitable<void> province_game_data::create_province_map_image()
 		}
 	}
 
+	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+
 	QImage scaled_province_map_image;
 	QImage scaled_selected_province_map_image;
 
-	co_await thread_pool::get()->co_spawn_awaitable([this, tile_pixel_size, &scaled_province_map_image, &scaled_selected_province_map_image]() -> boost::asio::awaitable<void> {
-		scaled_province_map_image = co_await image::scale<QImage::Format_ARGB32>(this->province_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await thread_pool::get()->co_spawn_awaitable([this, tile_pixel_size, &scale_factor, &scaled_province_map_image, &scaled_selected_province_map_image]() -> boost::asio::awaitable<void> {
+		scaled_province_map_image = co_await image::scale<QImage::Format_ARGB32>(this->province_map_image, tile_pixel_size * scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 
-		scaled_selected_province_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_province_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		scaled_selected_province_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_province_map_image, tile_pixel_size * scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
@@ -890,21 +892,6 @@ boost::asio::awaitable<void> province_game_data::create_province_map_image()
 		this->province_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
 		this->selected_province_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
-
-	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
-
-	co_await thread_pool::get()->co_spawn_awaitable([this, &scale_factor, &scaled_province_map_image, &scaled_selected_province_map_image]() -> boost::asio::awaitable<void> {
-		scaled_province_map_image = co_await image::scale<QImage::Format_ARGB32>(this->province_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-
-		scaled_selected_province_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_province_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-	});
-
-	this->province_map_image = std::move(scaled_province_map_image);
-	this->selected_province_map_image = std::move(scaled_selected_province_map_image);
 
 	this->province_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * scale_factor, this->province_map_image.size());
 }
