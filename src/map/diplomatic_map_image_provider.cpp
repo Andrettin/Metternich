@@ -7,6 +7,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/province_map_mode.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
 
@@ -20,7 +21,6 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 	const std::vector<std::string> id_list = string::split(id.toStdString(), '/');
 
 	const std::string &identifier = id_list.at(0);
-	const bool selected = id_list.size() >= 2 && id_list.at(1) == "selected";
 
 	const QImage *image = nullptr;
 
@@ -32,12 +32,19 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 		const std::string &province_identifier = id_list.at(1);
 		const province *province = province::get(province_identifier);
 		const province_game_data *province_game_data = province->get_game_data();
-		const bool province_selected = id_list.size() >= 3 && id_list.at(2) == "selected";
 
-		image = province_selected ? &province_game_data->get_selected_province_map_image() : &province_game_data->get_province_map_image();
+		const std::string &province_mode_identifier = id_list.at(2);
+		if (province_mode_identifier == "selected") {
+			image = &province_game_data->get_selected_province_map_image();
+		} else if (province_mode_identifier == "culture") {
+			image = &province_game_data->get_province_map_mode_image(province_map_mode::culture);
+		} else {
+			image = &province_game_data->get_province_map_image();
+		}
 	} else {
 		const country *country = country::get(identifier);
 		const country_game_data *country_game_data = country->get_game_data();
+		const bool selected = id_list.size() >= 2 && id_list.at(1) == "selected";
 
 		image = selected ? &country_game_data->get_selected_diplomatic_map_image() : &country_game_data->get_diplomatic_map_image();
 	}

@@ -19,6 +19,7 @@
 #include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
+#include "map/province_map_mode.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
@@ -156,6 +157,12 @@ void province_game_data::set_owner(const country *country)
 		emit owner_changed();
 
 		if (old_owner == nullptr || this->owner == nullptr || old_owner->get_culture() != this->owner->get_culture()) {
+			if (game::get()->is_running()) {
+				thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+					co_await this->create_province_map_mode_image(province_map_mode::culture);
+				});
+			}
+
 			emit culture_changed();
 
 			if (this->province->get_capital_settlement() != nullptr) {
@@ -893,7 +900,46 @@ boost::asio::awaitable<void> province_game_data::create_province_map_image()
 		this->selected_province_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
 
+	this->province_map_mode_images[province_map_mode::culture] = this->province_map_image;
+
 	this->province_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * scale_factor, this->province_map_image.size());
+}
+
+boost::asio::awaitable<void> province_game_data::create_province_map_mode_image(const province_map_mode mode)
+{
+	QImage image = this->province_map_image;
+
+	const QColor &base_color = this->province->is_water_zone() ? defines::get()->get_ocean_color() : defines::get()->get_minor_nation_color();
+	QColor color = base_color;
+
+	switch (mode) {
+		case province_map_mode::culture:
+			if (this->get_culture() != nullptr) {
+				color = this->get_culture()->get_color();
+			}
+			break;
+		default:
+			assert_throw(false);
+			break;
+	}
+
+	if (color != base_color) {
+		for (int x = 0; x < image.width(); ++x) {
+			for (int y = 0; y < image.height(); ++y) {
+				const QPoint pixel_pos(x, y);
+				const QColor pixel_color = image.pixelColor(pixel_pos);
+
+				if (pixel_color != base_color) {
+					continue;
+				}
+
+				image.setPixelColor(pixel_pos, color);
+			}
+		}
+	}
+
+	this->province_map_mode_images[mode] = std::move(image);
+	co_return;
 }
 
 }

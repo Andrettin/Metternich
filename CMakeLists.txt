@@ -239,6 +239,7 @@ set(map_HDRS
 	src/map/province_container.h
 	src/map/province_game_data.h
 	src/map/province_history.h
+	src/map/province_map_mode.h
 	src/map/region.h
 	src/map/region_history.h
 	src/map/site.h
