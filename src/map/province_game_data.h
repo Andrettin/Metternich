@@ -28,6 +28,7 @@ class province_game_data final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst NOTIFY owner_changed)
+	Q_PROPERTY(metternich::culture* culture READ get_culture_unconst NOTIFY culture_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
@@ -72,7 +73,22 @@ public:
 
 	bool is_capital() const;
 
-	const culture *get_culture() const;
+	const metternich::culture *get_culture() const
+	{
+		return this->culture;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::culture *get_culture_unconst() const
+	{
+		return const_cast<metternich::culture *>(this->get_culture());
+	}
+
+public:
+	void set_culture(const metternich::culture *culture);
+	void calculate_culture();
+
 	const std::string &get_current_cultural_name() const;
 
 	QString get_current_cultural_name_qstring() const
@@ -133,7 +149,7 @@ public:
 
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
-	void create_population_unit(const population_type *type, const culture *culture, const phenotype *phenotype);
+	void create_population_unit(const population_type *type, const metternich::culture *culture, const phenotype *phenotype);
 	void clear_population_units();
 
 	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
@@ -160,7 +176,7 @@ public:
 	}
 
 	QVariantList get_population_culture_counts_qvariant_list() const;
-	void change_population_culture_count(const culture *culture, const int change);
+	void change_population_culture_count(const metternich::culture *culture, const int change);
 
 	const phenotype_map<int> &get_population_phenotype_counts() const
 	{
@@ -270,6 +286,7 @@ signals:
 private:
 	const metternich::province *province = nullptr;
 	const country *owner = nullptr;
+	const metternich::culture *culture = nullptr;
 	QRect territory_rect;
 	std::vector<const metternich::province *> border_provinces;
 	std::vector<QPoint> tiles;

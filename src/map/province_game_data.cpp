@@ -142,6 +142,10 @@ void province_game_data::set_owner(const country *country)
 	if (this->owner != nullptr) {
 		this->owner->get_game_data()->add_province(this->province);
 
+		if (this->get_population_unit_count() == 0) {
+			this->calculate_culture();
+		}
+
 		if (this->is_capital()) {
 			this->add_capitol();
 		}
@@ -155,27 +159,6 @@ void province_game_data::set_owner(const country *country)
 		map::get()->update_minimap_rect(this->get_territory_rect());
 
 		emit owner_changed();
-
-		if (old_owner == nullptr || this->owner == nullptr || old_owner->get_culture() != this->owner->get_culture()) {
-			if (game::get()->is_running()) {
-				thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
-					co_await this->create_province_map_mode_image(province_map_mode::culture);
-				});
-			}
-
-			emit culture_changed();
-
-			if (this->province->get_capital_settlement() != nullptr) {
-				emit this->province->get_capital_settlement()->get_game_data()->culture_changed();
-			}
-
-			for (const QPoint &tile_pos : this->tiles) {
-				const tile *tile = map::get()->get_tile(tile_pos);
-				if (tile->get_site() != nullptr && tile->get_site() != this->province->get_capital_settlement()) {
-					emit tile->get_site()->get_game_data()->culture_changed();
-				}
-			}
-		}
 	}
 }
 
@@ -188,13 +171,74 @@ bool province_game_data::is_capital() const
 	return this->get_owner()->get_capital_province() == this->province;
 }
 
-const culture *province_game_data::get_culture() const
+void province_game_data::set_culture(const metternich::culture *culture)
 {
-	if (this->get_owner() != nullptr) {
-		return this->get_owner()->get_culture();
+	if (culture == this->get_culture()) {
+		return;
 	}
 
-	return nullptr;
+	this->culture = culture;
+
+	if (culture != nullptr) {
+		//update buildings for the new culture
+		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+			const building_type *building = building_slot->get_building();
+
+			if (building == nullptr) {
+				continue;
+			}
+
+			const building_type *new_building = culture->get_building_class_type(building->get_building_class());
+
+			if (new_building != building) {
+				building_slot->set_building(building);
+			}
+		}
+	}
+
+	if (game::get()->is_running()) {
+		thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+			co_await this->create_province_map_mode_image(province_map_mode::culture);
+		});
+	}
+
+	emit culture_changed();
+
+	if (this->province->get_capital_settlement() != nullptr) {
+		emit this->province->get_capital_settlement()->get_game_data()->culture_changed();
+	}
+
+	for (const QPoint &tile_pos : this->tiles) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+		if (tile->get_site() != nullptr && tile->get_site() != this->province->get_capital_settlement()) {
+			emit tile->get_site()->get_game_data()->culture_changed();
+		}
+	}
+}
+
+void province_game_data::calculate_culture()
+{
+	if (this->get_population_unit_count() == 0) {
+		if (this->get_owner() != nullptr) {
+			this->set_culture(this->get_owner()->get_culture());
+		} else {
+			this->set_culture(nullptr);
+		}
+
+		return;
+	}
+
+	const metternich::culture *best_culture = nullptr;
+	int best_count = 0;
+
+	for (const auto &[culture, count] : this->get_population_culture_counts()) {
+		if (count > best_count) {
+			best_count = count;
+			best_culture = culture;
+		}
+	}
+
+	this->set_culture(best_culture);
 }
 
 const std::string &province_game_data::get_current_cultural_name() const
@@ -380,7 +424,7 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 	return nullptr;
 }
 
-void province_game_data::create_population_unit(const population_type *type, const culture *culture, const phenotype *phenotype)
+void province_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const phenotype *phenotype)
 {
 	auto population_unit = make_qunique<metternich::population_unit>(type, culture, phenotype, this->province);
 	this->add_population_unit(std::move(population_unit));
@@ -431,7 +475,7 @@ QVariantList province_game_data::get_population_culture_counts_qvariant_list() c
 	return archimedes::map::to_qvariant_list(this->get_population_culture_counts());
 }
 
-void province_game_data::change_population_culture_count(const culture *culture, const int change)
+void province_game_data::change_population_culture_count(const metternich::culture *culture, const int change)
 {
 	if (change == 0) {
 		return;
@@ -450,6 +494,8 @@ void province_game_data::change_population_culture_count(const culture *culture,
 	}
 
 	if (game::get()->is_running()) {
+		this->calculate_culture();
+
 		emit population_culture_counts_changed();
 	}
 }
@@ -508,7 +554,7 @@ void province_game_data::grow_population()
 	assert_throw(this->get_owner() != nullptr);
 
 	const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
-	const culture *culture = population_unit->get_culture();
+	const metternich::culture *culture = population_unit->get_culture();
 	const phenotype *phenotype = population_unit->get_phenotype();
 	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
 

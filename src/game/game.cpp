@@ -171,7 +171,9 @@ void game::apply_history(const metternich::scenario *scenario)
 			const province_history *province_history = province->get_history();
 			province_game_data *province_game_data = province->get_game_data();
 
-			province_game_data->set_owner(province_history->get_owner());
+			const country *owner = province_history->get_owner();
+
+			province_game_data->set_owner(owner);
 		}
 
 		for (const country *country : this->get_countries()) {
@@ -310,6 +312,11 @@ void game::apply_history(const metternich::scenario *scenario)
 			civilian_unit->set_tile_pos(tile_pos);
 
 			owner->get_game_data()->add_civilian_unit(std::move(civilian_unit));
+		}
+
+		for (const province *province : map::get()->get_provinces()) {
+			province_game_data *province_game_data = province->get_game_data();
+			province_game_data->calculate_culture();
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to apply history."));
