@@ -20,8 +20,12 @@ class map final : public QObject, public singleton<map>
 	Q_PROPERTY(int width READ get_width NOTIFY size_changed)
 	Q_PROPERTY(int height READ get_height NOTIFY size_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
+	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
+	Q_PROPERTY(int diplomatic_map_tile_pixel_size READ get_diplomatic_map_tile_pixel_size NOTIFY diplomatic_map_image_size_changed)
 
 public:
+	static constexpr QSize min_diplomatic_map_image_size = QSize(512, 256);
+
 	map();
 	~map();
 
@@ -87,6 +91,8 @@ public:
 
 	QVariantList get_provinces_qvariant_list() const;
 
+	void initialize_diplomatic_map();
+
 	const QImage &get_ocean_diplomatic_map_image() const
 	{
 		return this->ocean_diplomatic_map_image;
@@ -94,6 +100,16 @@ public:
 
 	[[nodiscard]]
 	boost::asio::awaitable<void> create_ocean_diplomatic_map_image();
+
+	const QSize &get_diplomatic_map_image_size() const
+	{
+		return this->diplomatic_map_image_size;
+	}
+
+	int get_diplomatic_map_tile_pixel_size() const
+	{
+		return this->diplomatic_map_tile_pixel_size;
+	}
 
 	const QImage &get_minimap_image() const
 	{
@@ -109,12 +125,15 @@ signals:
 	void tile_improvement_changed(const QPoint &tile_pos);
 	void tile_civilian_unit_changed(const QPoint &tile_pos);
 	void provinces_changed();
+	void diplomatic_map_image_size_changed();
 
 private:
 	QSize size;
 	std::unique_ptr<std::vector<tile>> tiles;
 	std::vector<const province *> provinces; //the provinces which are on the map
 	QImage ocean_diplomatic_map_image;
+	QSize diplomatic_map_image_size;
+	int diplomatic_map_tile_pixel_size = 1;
 	QImage minimap_image;
 };
 

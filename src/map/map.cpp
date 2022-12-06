@@ -126,18 +126,7 @@ void map::initialize()
 
 	this->provinces = container::to_vector(provinces);
 
-	std::vector<boost::asio::awaitable<void>> awaitables;
-
-	for (const province *province : map::get()->get_provinces()) {
-		boost::asio::awaitable<void> awaitable = province->get_game_data()->create_province_map_image();
-		awaitables.push_back(std::move(awaitable));
-	}
-
-	thread_pool::get()->co_spawn_sync([&awaitables]() -> boost::asio::awaitable<void> {
-		for (boost::asio::awaitable<void> &awaitable : awaitables) {
-			co_await std::move(awaitable);
-		}
-	});
+	this->initialize_diplomatic_map();
 
 	emit provinces_changed();
 }
@@ -466,9 +455,42 @@ QVariantList map::get_provinces_qvariant_list() const
 }
 
 
+void map::initialize_diplomatic_map()
+{
+	const int min_tile_scale = defines::get()->get_min_diplomatic_map_tile_scale();
+
+	QSize image_size = map::min_diplomatic_map_image_size * preferences::get()->get_scale_factor();
+	const QSize min_scaled_map_size = this->get_size() * min_tile_scale;
+	if (min_scaled_map_size.width() > image_size.width() || min_scaled_map_size.height() > image_size.height()) {
+		image_size = min_scaled_map_size;
+	}
+
+	if (image_size != this->diplomatic_map_image_size) {
+		this->diplomatic_map_image_size = image_size;
+		emit diplomatic_map_image_size_changed();
+	}
+
+	const QSize relative_size = this->diplomatic_map_image_size / map::get()->get_size();
+	this->diplomatic_map_tile_pixel_size = std::max(relative_size.width(), relative_size.height());
+
+	//create the base province map images
+	std::vector<boost::asio::awaitable<void>> awaitables;
+
+	for (const province *province : map::get()->get_provinces()) {
+		boost::asio::awaitable<void> awaitable = province->get_game_data()->create_province_map_image();
+		awaitables.push_back(std::move(awaitable));
+	}
+
+	thread_pool::get()->co_spawn_sync([&awaitables]() -> boost::asio::awaitable<void> {
+		for (boost::asio::awaitable<void> &awaitable : awaitables) {
+			co_await std::move(awaitable);
+		}
+	});
+}
+
 boost::asio::awaitable<void> map::create_ocean_diplomatic_map_image()
 {
-	const int tile_pixel_size = game::get()->get_diplomatic_map_tile_pixel_size();
+	const int tile_pixel_size = this->get_diplomatic_map_tile_pixel_size();
 
 	this->ocean_diplomatic_map_image = QImage(this->get_size(), QImage::Format_RGBA8888);
 	this->ocean_diplomatic_map_image.fill(Qt::transparent);

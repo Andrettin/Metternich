@@ -598,24 +598,6 @@ void game::calculate_great_power_ranks()
 
 void game::create_diplomatic_map_image()
 {
-	const int min_tile_scale = defines::get()->get_min_diplomatic_map_tile_scale();
-
-	const map *map = map::get();
-
-	QSize image_size = game::min_diplomatic_map_image_size * preferences::get()->get_scale_factor();
-	const QSize min_scaled_map_size = map->get_size() * min_tile_scale;
-	if (min_scaled_map_size.width() > image_size.width() || min_scaled_map_size.height() > image_size.height()) {
-		image_size = min_scaled_map_size;
-	}
-
-	if (image_size != this->diplomatic_map_image_size) {
-		this->diplomatic_map_image_size = image_size;
-		emit diplomatic_map_image_size_changed();
-	}
-
-	const QSize relative_size = this->diplomatic_map_image_size / map::get()->get_size();
-	this->diplomatic_map_tile_pixel_size = std::max(relative_size.width(), relative_size.height());
-
 	std::vector<boost::asio::awaitable<void>> awaitables;
 
 	if (map::get()->get_ocean_diplomatic_map_image().isNull()) {

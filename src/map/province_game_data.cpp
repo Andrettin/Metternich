@@ -801,7 +801,7 @@ void province_game_data::change_score(const int change)
 
 boost::asio::awaitable<void> province_game_data::create_province_map_image()
 {
-	const int tile_pixel_size = game::get()->get_diplomatic_map_tile_pixel_size();
+	const int tile_pixel_size = map::get()->get_diplomatic_map_tile_pixel_size();
 
 	assert_throw(this->territory_rect.width() > 0);
 	assert_throw(this->territory_rect.height() > 0);

@@ -19,13 +19,9 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(int turn READ get_turn NOTIFY turn_changed)
 	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(QVariantList great_powers READ get_great_powers_qvariant_list NOTIFY countries_changed)
-	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
-	Q_PROPERTY(int diplomatic_map_tile_pixel_size READ get_diplomatic_map_tile_pixel_size NOTIFY diplomatic_map_image_size_changed)
 	Q_PROPERTY(metternich::country* player_country READ get_player_country_unconst WRITE set_player_country NOTIFY player_country_changed)
 
 public:
-	static constexpr QSize min_diplomatic_map_image_size = QSize(512, 256);
-
 	static QDateTime normalize_date(const QDateTime &date);
 
 	game();
@@ -117,23 +113,12 @@ public:
 
 	void create_diplomatic_map_image();
 
-	const QSize &get_diplomatic_map_image_size() const
-	{
-		return this->diplomatic_map_image_size;
-	}
-
-	int get_diplomatic_map_tile_pixel_size() const
-	{
-		return this->diplomatic_map_tile_pixel_size;
-	}
-
 signals:
 	void running_changed();
 	void setup_finished();
 	void turn_changed();
 	void countries_changed();
 	void player_country_changed();
-	void diplomatic_map_image_size_changed();
 
 private:
 	bool running = false;
@@ -143,8 +128,6 @@ private:
 	std::vector<const country *> countries; //the countries currently in the game, i.e. those with at least 1 province
 	std::vector<const country *> great_powers;
 	country *player_country = nullptr;
-	QSize diplomatic_map_image_size;
-	int diplomatic_map_tile_pixel_size = 1;
 };
 
 }

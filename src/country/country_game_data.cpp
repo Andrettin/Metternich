@@ -587,7 +587,9 @@ const country_palette *country_game_data::get_palette() const
 
 boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 {
-	const int tile_pixel_size = game::get()->get_diplomatic_map_tile_pixel_size();
+	const map *map = map::get();
+
+	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
 
 	assert_throw(this->territory_rect.width() > 0);
 	assert_throw(this->territory_rect.height() > 0);
@@ -596,8 +598,6 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 	this->diplomatic_map_image.fill(Qt::transparent);
 
 	this->selected_diplomatic_map_image = this->diplomatic_map_image;
-
-	const map *map = map::get();
 
 	const QColor &color = this->get_diplomatic_map_color();
 	const QColor &selected_color = defines::get()->get_selected_country_color();
