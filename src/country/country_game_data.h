@@ -19,6 +19,7 @@ class culture;
 class population_unit;
 class province;
 enum class diplomacy_state;
+enum class diplomatic_map_mode;
 
 class country_game_data final : public QObject
 {
@@ -216,6 +217,19 @@ public:
 		return this->selected_diplomatic_map_image;
 	}
 
+	const QImage &get_diplomatic_map_mode_image(const diplomatic_map_mode mode) const
+	{
+		const auto find_iterator = this->diplomatic_map_mode_images.find(mode);
+		if (find_iterator != this->diplomatic_map_mode_images.end()) {
+			return find_iterator->second;
+		}
+
+		throw std::runtime_error("No diplomatic map image found for mode " + std::to_string(static_cast<int>(mode)) + ".");
+	}
+
+	[[nodiscard]]
+	boost::asio::awaitable<void> create_diplomatic_map_mode_image(const diplomatic_map_mode mode);
+
 	int get_rank() const
 	{
 		return this->rank;
@@ -364,6 +378,7 @@ private:
 	country_map<const consulate *> consulates;
 	QImage diplomatic_map_image;
 	QImage selected_diplomatic_map_image;
+	std::map<diplomatic_map_mode, QImage> diplomatic_map_mode_images;
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;

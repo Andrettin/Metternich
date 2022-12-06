@@ -21,7 +21,6 @@ class population_type;
 class population_unit;
 class province;
 class tile;
-enum class province_map_mode;
 
 class province_game_data final : public QObject
 {
@@ -37,7 +36,6 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
-	Q_PROPERTY(QRect province_map_image_rect READ get_province_map_image_rect CONSTANT)
 
 public:
 	static constexpr int base_free_food_consumption = 1;
@@ -240,37 +238,6 @@ public:
 		std::erase(this->civilian_units, civilian_unit);
 	}
 
-	const QImage &get_province_map_image() const
-	{
-		return this->province_map_image;
-	}
-
-	[[nodiscard]]
-	boost::asio::awaitable<void> create_province_map_image();
-
-	const QRect &get_province_map_image_rect() const
-	{
-		return this->province_map_image_rect;
-	}
-
-	const QImage &get_selected_province_map_image() const
-	{
-		return this->selected_province_map_image;
-	}
-
-	const QImage &get_province_map_mode_image(const province_map_mode mode) const
-	{
-		const auto find_iterator = this->province_map_mode_images.find(mode);
-		if (find_iterator != this->province_map_mode_images.end()) {
-			return find_iterator->second;
-		}
-
-		throw std::runtime_error("No province map image found for mode " + std::to_string(static_cast<int>(mode)) + ".");
-	}
-
-	[[nodiscard]]
-	boost::asio::awaitable<void> create_province_map_mode_image(const province_map_mode mode);
-
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
@@ -303,10 +270,6 @@ private:
 	int free_food_consumption = 0;
 	int score = 0;
 	std::vector<civilian_unit *> civilian_units;
-	QImage province_map_image;
-	QImage selected_province_map_image;
-	std::map<province_map_mode, QImage> province_map_mode_images;
-	QRect province_map_image_rect;
 };
 
 }

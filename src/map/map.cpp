@@ -472,20 +472,6 @@ void map::initialize_diplomatic_map()
 
 	const QSize relative_size = this->diplomatic_map_image_size / map::get()->get_size();
 	this->diplomatic_map_tile_pixel_size = std::max(relative_size.width(), relative_size.height());
-
-	//create the base province map images
-	std::vector<boost::asio::awaitable<void>> awaitables;
-
-	for (const province *province : map::get()->get_provinces()) {
-		boost::asio::awaitable<void> awaitable = province->get_game_data()->create_province_map_image();
-		awaitables.push_back(std::move(awaitable));
-	}
-
-	thread_pool::get()->co_spawn_sync([&awaitables]() -> boost::asio::awaitable<void> {
-		for (boost::asio::awaitable<void> &awaitable : awaitables) {
-			co_await std::move(awaitable);
-		}
-	});
 }
 
 boost::asio::awaitable<void> map::create_ocean_diplomatic_map_image()

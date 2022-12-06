@@ -19,7 +19,6 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
-#include "map/province_map_mode.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
@@ -617,13 +616,6 @@ void game::create_diplomatic_map_image()
 		country_game_data *country_game_data = country->get_game_data();
 
 		boost::asio::awaitable<void> awaitable = country_game_data->create_diplomatic_map_image();
-		awaitables.push_back(std::move(awaitable));
-	}
-
-	for (const province *province : map::get()->get_provinces()) {
-		province_game_data *province_game_data = province->get_game_data();
-
-		boost::asio::awaitable<void> awaitable = province_game_data->create_province_map_mode_image(province_map_mode::culture);
 		awaitables.push_back(std::move(awaitable));
 	}
 

@@ -4,12 +4,14 @@
 
 #include "country/country.h"
 #include "country/country_type.h"
+#include "country/culture.h"
 #include "country/diplomacy_state.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "game/game.h"
+#include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -694,7 +696,109 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 
 	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * scale_factor, this->diplomatic_map_image.size());
 
+	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::culture);
+
 	emit diplomatic_map_image_changed();
+}
+
+boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode)
+{
+	const map *map = map::get();
+
+	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
+
+	assert_throw(this->territory_rect.width() > 0);
+	assert_throw(this->territory_rect.height() > 0);
+
+	QImage &image = this->diplomatic_map_mode_images[mode];
+
+	image = QImage(this->territory_rect.size(), QImage::Format_RGBA8888);
+	image.fill(Qt::transparent);
+
+	for (int x = 0; x < this->territory_rect.width(); ++x) {
+		for (int y = 0; y < this->territory_rect.height(); ++y) {
+			const QPoint relative_tile_pos = QPoint(x, y);
+			const tile *tile = map->get_tile(this->territory_rect.topLeft() + relative_tile_pos);
+
+			if (tile->get_owner() != this->country) {
+				continue;
+			}
+
+			const QColor *color = nullptr;
+
+			switch (mode) {
+				case diplomatic_map_mode::culture:
+					color = &tile->get_province()->get_game_data()->get_culture()->get_color();
+					break;
+			}
+
+			image.setPixelColor(relative_tile_pos, *color);
+		}
+	}
+
+	QImage scaled_image;
+
+	co_await thread_pool::get()->co_spawn_awaitable([this, tile_pixel_size, &image, &scaled_image]() -> boost::asio::awaitable<void> {
+		scaled_image = co_await image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	image = std::move(scaled_image);
+
+	std::vector<QPoint> border_pixels;
+
+	for (int x = 0; x < image.width(); ++x) {
+		for (int y = 0; y < image.height(); ++y) {
+			const QPoint pixel_pos(x, y);
+			const QColor pixel_color = image.pixelColor(pixel_pos);
+			
+			if (pixel_color.alpha() == 0) {
+				continue;
+			}
+
+			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (image.width() - 1) || pixel_pos.y() == (image.height() - 1)) {
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			if (pixel_color.alpha() != 255) {
+				//blended color
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			bool is_border_pixel = false;
+			point::for_each_cardinally_adjacent_until(pixel_pos, [this, &image, &is_border_pixel](const QPoint &adjacent_pos) {
+				if (image.pixelColor(adjacent_pos).alpha() != 0) {
+					return false;
+				}
+
+				is_border_pixel = true;
+				return true;
+			});
+
+			if (is_border_pixel) {
+				border_pixels.push_back(pixel_pos);
+			}
+		}
+	}
+
+	const QColor &border_pixel_color = defines::get()->get_country_border_color();
+
+	for (const QPoint &border_pixel_pos : border_pixels) {
+		image.setPixelColor(border_pixel_pos, border_pixel_color);
+	}
+
+	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+
+	co_await thread_pool::get()->co_spawn_awaitable([this, &scale_factor, &image, &scaled_image]() -> boost::asio::awaitable<void> {
+		scaled_image = co_await image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	image = std::move(scaled_image);
 }
 
 void country_game_data::change_score(const int change)

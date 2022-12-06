@@ -231,6 +231,7 @@ source_group(infrastructure FILES ${infrastructure_HDRS})
 
 set(map_HDRS
 	src/map/diplomatic_map_image_provider.h
+	src/map/diplomatic_map_mode.h
 	src/map/map.h
 	src/map/map_generator.h
 	src/map/map_grid_model.h
@@ -239,7 +240,6 @@ set(map_HDRS
 	src/map/province_container.h
 	src/map/province_game_data.h
 	src/map/province_history.h
-	src/map/province_map_mode.h
 	src/map/region.h
 	src/map/region_history.h
 	src/map/site.h

@@ -2,7 +2,7 @@
 
 namespace metternich {
 
-enum class province_map_mode {
+enum class diplomatic_map_mode {
 	culture
 };
 
