@@ -62,6 +62,9 @@ class MaskedMouseArea : public QQuickItem
     Q_PROPERTY(bool containsMouse READ containsMouse NOTIFY containsMouseChanged)
     Q_PROPERTY(QUrl maskSource READ maskSource WRITE setMaskSource NOTIFY maskSourceChanged)
     Q_PROPERTY(qreal alphaThreshold READ alphaThreshold WRITE setAlphaThreshold NOTIFY alphaThresholdChanged)
+    //Metternich start
+    Q_PROPERTY(QPointF mousePos READ mousePos NOTIFY mousePosChanged)
+    //Metternich end
 
 public:
     MaskedMouseArea(QQuickItem *parent = 0);
@@ -77,6 +80,21 @@ public:
     qreal alphaThreshold() const { return m_alphaThreshold; }
     void setAlphaThreshold(qreal threshold);
 
+    //Metternich start
+    const QPointF &mousePos() const
+    {
+        return m_mousePos;
+    }
+
+    void setMousePos(const QPointF &pos)
+    {
+        if (pos != m_mousePos) {
+            m_mousePos = pos;
+            emit mousePosChanged();
+        }
+    }
+    //Metternich end
+
 signals:
     void pressed();
     void released();
@@ -86,6 +104,9 @@ signals:
     void maskSourceChanged();
     void containsMouseChanged();
     void alphaThresholdChanged();
+    //Metternich start
+    void mousePosChanged();
+    //Metternich end
 
 protected:
     void setPressed(bool pressed);
@@ -96,6 +117,18 @@ protected:
     void hoverLeaveEvent(QHoverEvent *event);
     void mouseUngrabEvent();
 
+    //Metternich start
+    void mouseMoveEvent(QMouseEvent *event) override
+    {
+        setMousePos(event->localPos());
+    }
+
+    void hoverMoveEvent(QHoverEvent *event) override
+    {
+        setMousePos(event->posF());
+    }
+    //Metternich end
+
 private:
     bool m_pressed;
     QUrl m_maskSource;
@@ -103,6 +136,9 @@ private:
     QPointF m_pressPoint;
     qreal m_alphaThreshold;
     bool m_containsMouse;
+    //Metternich start
+    QPointF m_mousePos;
+    //Metternich end
 };
 
 #endif
