@@ -37,7 +37,6 @@ void map_generator::generate()
 	const int tile_count = this->get_width() * this->get_height();
 	this->tile_provinces.resize(tile_count, -1);
 	this->tile_elevations.resize(tile_count, -1);
-	this->tile_temperatures.resize(tile_count, -1);
 	this->tile_forestations.resize(tile_count, -1);
 
 	this->generate_provinces();
@@ -100,7 +99,6 @@ void map_generator::generate_terrain()
 	});
 
 	this->generate_elevation();
-	this->generate_temperature();
 	this->generate_forestation();
 
 	//assign terrain
@@ -153,20 +151,6 @@ void map_generator::generate_elevation()
 {
 	const std::vector<QPoint> elevation_seeds = this->generate_tile_value_seeds(this->tile_elevations, 2048);
 	this->expand_tile_value_seeds(elevation_seeds, this->tile_elevations, 50);
-}
-
-void map_generator::generate_temperature()
-{
-	//temperature is a function of latitude and elevation
-	for (int x = 0; x < this->get_width(); ++x) {
-		for (int y = 0; y < this->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			const int tile_index = point::to_index(tile_pos, this->get_width());
-			const int colatitude = this->get_tile_colatitude(tile_pos);
-			const int land_elevation = std::max(0, this->tile_elevations[tile_index] - map_generator::min_land_elevation);
-			this->tile_temperatures[tile_index] = std::max(0, colatitude - land_elevation / 2);
-		}
-	}
 }
 
 void map_generator::generate_forestation()
