@@ -33,6 +33,8 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 		const std::string &mode_identifier = id_list.at(1);
 		if (mode_identifier == "selected") {
 			image = &country_game_data->get_selected_diplomatic_map_image();
+		} else if (mode_identifier == "terrain") {
+			image = &country_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::terrain);
 		} else if (mode_identifier == "culture") {
 			image = &country_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::culture);
 		} else {

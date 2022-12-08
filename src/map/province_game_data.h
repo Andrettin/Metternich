@@ -3,6 +3,7 @@
 #include "country/culture_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_slot_type_container.h"
+#include "map/terrain_type_container.h"
 #include "population/phenotype_container.h"
 #include "population/population_type_container.h"
 #include "util/qunique_ptr.h"
@@ -133,6 +134,11 @@ public:
 		return this->resource_counts;
 	}
 
+	const terrain_type_map<int> &get_tile_terrain_counts() const
+	{
+		return this->tile_terrain_counts;
+	}
+
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
 
 	QVariantList get_building_slots_qvariant_list() const;
@@ -260,6 +266,7 @@ private:
 	std::vector<QPoint> border_tiles;
 	std::vector<QPoint> resource_tiles;
 	resource_map<int> resource_counts;
+	terrain_type_map<int> tile_terrain_counts;
 	std::vector<qunique_ptr<building_slot>> building_slots;
 	building_slot_type_map<building_slot *> building_slot_map;
 	std::vector<qunique_ptr<population_unit>> population_units;

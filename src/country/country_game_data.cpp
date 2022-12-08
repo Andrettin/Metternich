@@ -17,6 +17,7 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/phenotype.h"
 #include "population/population_unit.h"
@@ -291,6 +292,10 @@ void country_game_data::add_province(const province *province)
 		}
 	}
 
+	for (const auto &[terrain, count] : province_game_data->get_tile_terrain_counts()) {
+		this->change_tile_terrain_count(terrain, count);
+	}
+
 	for (const metternich::province *border_province : province_game_data->get_border_provinces()) {
 		const metternich::province_game_data *border_province_game_data = border_province->get_game_data();
 		if (border_province_game_data->get_owner() != this->country) {
@@ -355,6 +360,10 @@ void country_game_data::remove_province(const province *province)
 		if (this->get_overlord() != nullptr) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, -count);
 		}
+	}
+
+	for (const auto &[terrain, count] : province_game_data->get_tile_terrain_counts()) {
+		this->change_tile_terrain_count(terrain, -count);
 	}
 
 	for (const QPoint &tile_pos : province_game_data->get_border_tiles()) {
@@ -479,6 +488,11 @@ QVariantList country_game_data::get_resource_counts_qvariant_list() const
 QVariantList country_game_data::get_vassal_resource_counts_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_vassal_resource_counts());
+}
+
+QVariantList country_game_data::get_tile_terrain_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_tile_terrain_counts());
 }
 
 diplomacy_state country_game_data::get_diplomacy_state(const metternich::country *other_country) const
@@ -696,6 +710,7 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 
 	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * scale_factor, this->diplomatic_map_image.size());
 
+	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::terrain);
 	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::culture);
 
 	emit diplomatic_map_image_changed();
@@ -727,6 +742,9 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image
 			const QColor *color = nullptr;
 
 			switch (mode) {
+				case diplomatic_map_mode::terrain:
+					color = &tile->get_terrain()->get_color();
+					break;
 				case diplomatic_map_mode::culture:
 					color = &tile->get_province()->get_game_data()->get_culture()->get_color();
 					break;

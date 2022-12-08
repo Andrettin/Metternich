@@ -11,9 +11,9 @@ class terrain_type final : public named_data_entry, public data_type<terrain_typ
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QColor color READ get_color WRITE set_color)
+	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
-	Q_PROPERTY(bool water MEMBER water READ is_water)
+	Q_PROPERTY(bool water MEMBER water READ is_water NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "terrain_type";
@@ -111,6 +111,9 @@ public:
 	}
 
 	void set_adjacency_tiles(const terrain_adjacency &adjacency, const std::vector<int> &tiles);
+
+signals:
+	void changed();
 
 private:
 	QColor color;

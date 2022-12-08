@@ -4,6 +4,7 @@
 #include "country/culture_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
+#include "map/terrain_type_container.h"
 #include "population/phenotype_container.h"
 #include "population/population_type_container.h"
 #include "technology/technology_container.h"
@@ -37,6 +38,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QRect main_contiguous_territory_rect READ get_main_contiguous_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList resource_counts READ get_resource_counts_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList vassal_resource_counts READ get_vassal_resource_counts_qvariant_list NOTIFY diplomacy_states_changed)
+	Q_PROPERTY(QVariantList tile_terrain_counts READ get_tile_terrain_counts_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList vassals READ get_vassals_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList colonies READ get_colonies_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList consulates READ get_consulates_qvariant_list NOTIFY consulates_changed)
@@ -171,6 +173,22 @@ public:
 
 		if (final_count == 0) {
 			this->vassal_resource_counts.erase(resource);
+		}
+	}
+
+	const terrain_type_map<int> &get_tile_terrain_counts() const
+	{
+		return this->tile_terrain_counts;
+	}
+
+	QVariantList get_tile_terrain_counts_qvariant_list() const;
+
+	void change_tile_terrain_count(const terrain_type *terrain, const int change)
+	{
+		const int final_count = (this->tile_terrain_counts[terrain] += change);
+
+		if (final_count == 0) {
+			this->tile_terrain_counts.erase(terrain);
 		}
 	}
 
@@ -374,6 +392,7 @@ private:
 	std::vector<QPoint> border_tiles;
 	resource_map<int> resource_counts;
 	resource_map<int> vassal_resource_counts;
+	terrain_type_map<int> tile_terrain_counts;
 	country_map<diplomacy_state> diplomacy_states;
 	country_map<const consulate *> consulates;
 	QImage diplomatic_map_image;

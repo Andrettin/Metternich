@@ -253,9 +253,14 @@ void province_game_data::add_tile(const QPoint &tile_pos)
 	this->tiles.push_back(tile_pos);
 
 	const tile *tile = map::get()->get_tile(tile_pos);
+
 	if (tile->get_resource() != nullptr) {
 		this->resource_tiles.push_back(tile_pos);
 		++this->resource_counts[tile->get_resource()];
+	}
+
+	if (tile->get_terrain() != nullptr) {
+		++this->tile_terrain_counts[tile->get_terrain()];
 	}
 }
 
