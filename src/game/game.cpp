@@ -25,6 +25,7 @@
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
+#include "time/era.h"
 #include "unit/civilian_unit.h"
 #include "unit/historical_civilian_unit.h"
 #include "unit/historical_civilian_unit_history.h"
@@ -71,6 +72,8 @@ void game::create_random_map(const QSize &map_size, metternich::era *era)
 
 		map_generator map_generator(map_size, era);
 		map_generator.generate();
+
+		this->date = game::normalize_date(era->get_start_date());
 
 		this->on_setup_finished();
 	} catch (const std::exception &exception) {
