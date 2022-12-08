@@ -112,12 +112,13 @@ private:
 private:
 	QSize size = QSize(0, 0);
 	const metternich::era *era = nullptr;
-	int cold_threshold = 0;
 	int province_count = 0;
 	std::vector<QPoint> province_seeds;
 	std::vector<std::vector<QPoint>> province_tiles;
 	std::vector<terrain_type_map<std::vector<QPoint>>> province_tiles_by_terrain;
 	std::vector<terrain_type_map<std::vector<QPoint>>> province_near_water_tiles_by_terrain;
+	std::set<int> sea_zones;
+	std::set<int> lakes;
 	std::vector<int> tile_provinces;
 	std::vector<int> tile_elevations;
 	std::vector<int> tile_moistures;

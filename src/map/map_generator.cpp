@@ -19,6 +19,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/log_util.h"
 #include "util/number_util.h"
 #include "util/point_util.h"
@@ -98,6 +99,7 @@ void map_generator::generate_terrain()
 		const int province_seed_index = point::to_index(province_seed, this->get_width());
 		this->tile_elevations[tile_index] = 0;
 		this->tile_elevations[province_seed_index] = 0;
+		this->sea_zones.insert(province_index);
 	});
 
 	this->generate_elevation();
@@ -148,6 +150,44 @@ void map_generator::generate_terrain()
 				this->province_near_water_tiles_by_terrain[i][terrain].push_back(tile_pos);
 			}
 		}
+	}
+
+	//designate which water zones are seas and which are lakes
+	//lakes are water zones which have no connection to the seas on the edge of the map
+
+	std::vector<int> sea_zones = container::to_vector(this->sea_zones);
+
+	for (size_t i = 0; i < sea_zones.size(); ++i) {
+		const int province_index = sea_zones.at(i);
+
+		for (const int border_province_index : this->province_border_provinces[province_index]) {
+			const QPoint &province_seed = this->province_seeds.at(border_province_index);
+
+			if (!this->is_tile_water(province_seed)) {
+				continue;
+			}
+
+			if (this->sea_zones.contains(border_province_index)) {
+				continue;
+			}
+
+			sea_zones.push_back(border_province_index);
+			this->sea_zones.insert(border_province_index);
+		}
+	}
+
+	for (int i = 0; i < this->province_count; ++i) {
+		const QPoint &province_seed = this->province_seeds.at(i);
+
+		if (!this->is_tile_water(province_seed)) {
+			continue;
+		}
+
+		if (this->sea_zones.contains(i)) {
+			continue;
+		}
+
+		this->lakes.insert(i);
 	}
 }
 
@@ -443,6 +483,44 @@ void map_generator::generate_countries()
 		this->generate_ocean(ocean);
 	}
 
+	std::vector<const province *> potential_seas;
+	std::vector<const province *> potential_lakes;
+
+	for (const province *province : province::get_all()) {
+		if (province->is_sea()) {
+			potential_seas.push_back(province);
+		} else if (province->is_lake()) {
+			potential_lakes.push_back(province);
+		}
+	}
+
+	vector::shuffle(potential_seas);
+	vector::shuffle(potential_lakes);
+
+	for (const province *province : potential_seas) {
+		if (static_cast<int>(this->generated_provinces.size()) == this->province_count) {
+			break;
+		}
+
+		std::vector<int> group_province_indexes;
+		const int province_index = this->generate_province(province, group_province_indexes);
+		if (province_index == -1) {
+			break;
+		}
+	}
+
+	for (const province *province : potential_lakes) {
+		if (static_cast<int>(this->generated_provinces.size()) == this->province_count) {
+			break;
+		}
+
+		std::vector<int> group_province_indexes;
+		const int province_index = this->generate_province(province, group_province_indexes);
+		if (province_index == -1) {
+			break;
+		}
+	}
+
 	std::vector<const country *> potential_powers;
 	std::vector<const country *> potential_minor_nations;
 
@@ -674,6 +752,14 @@ bool map_generator::can_assign_province_to_province_index(const province *provin
 
 	if (this->is_tile_water(province_seed) != province->is_water_zone()) {
 		//can only generate water zones on water, and land provinces on land
+		return false;
+	}
+
+	if (province->is_sea() && !this->sea_zones.contains(province_index)) {
+		return false;
+	}
+
+	if (province->is_lake() && !this->lakes.contains(province_index)) {
 		return false;
 	}
 
