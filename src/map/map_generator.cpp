@@ -6,12 +6,15 @@
 #include "country/culture.h"
 #include "database/defines.h"
 #include "economy/resource.h"
+#include "map/elevation_type.h"
+#include "map/forestation_type.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/region.h"
 #include "map/site.h"
 #include "map/site_type.h"
+#include "map/temperature_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
@@ -101,13 +104,6 @@ void map_generator::generate_terrain()
 	this->generate_forestation();
 
 	//assign terrain
-	const terrain_type *land_terrain = defines::get()->get_default_province_terrain();
-	const terrain_type *tropical_land_terrain = terrain_type::get("savannah");
-	const terrain_type *forest_terrain = terrain_type::get("conifer_forest");
-	const terrain_type *hills_terrain = terrain_type::get("barren_hills");
-	const terrain_type *mountains_terrain = terrain_type::get("mountains");
-	const terrain_type *water_terrain = defines::get()->get_default_water_zone_terrain();
-
 	map *map = map::get();
 
 	for (int x = 0; x < map->get_width(); ++x) {
@@ -127,48 +123,11 @@ void map_generator::generate_terrain()
 				elevation = map_generator::min_land_elevation;
 			}
 
-			const terrain_type *terrain = nullptr;
-
 			const elevation_type elevation_type = this->get_tile_elevation_type(tile_pos);
 			const temperature_type temperature_type = this->get_tile_temperature_type(tile_pos);
 			const forestation_type forestation_type = this->get_tile_forestation_type(tile_pos);
 
-			switch (elevation_type) {
-				case elevation_type::water:
-					terrain = water_terrain;
-					break;
-				case elevation_type::flatlands:
-					switch (forestation_type) {
-						case forestation_type::none:
-							switch (temperature_type) {
-								case temperature_type::frozen:
-								case temperature_type::cold:
-								case temperature_type::temperate:
-									terrain = land_terrain;
-									break;
-								case temperature_type::tropical:
-									terrain = tropical_land_terrain;
-									break;
-								default:
-									assert_throw(false);
-							}
-							break;
-						case forestation_type::forest:
-							terrain = forest_terrain;
-							break;
-						default:
-							assert_throw(false);
-					}
-					break;
-				case elevation_type::hills:
-					terrain = hills_terrain;
-					break;
-				case elevation_type::mountains:
-					terrain = mountains_terrain;
-					break;
-				default:
-					assert_throw(false);
-			}
+			const terrain_type *terrain = terrain_type::get_by_biome(elevation_type, temperature_type, forestation_type);
 
 			map->set_tile_terrain(tile_pos, terrain);
 		}
@@ -817,7 +776,7 @@ void map_generator::generate_sites()
 	}
 }
 
-map_generator::elevation_type map_generator::get_tile_elevation_type(const QPoint &tile_pos) const
+elevation_type map_generator::get_tile_elevation_type(const QPoint &tile_pos) const
 {
 	const int elevation = this->tile_elevations[point::to_index(tile_pos, this->get_width())];
 
@@ -832,7 +791,12 @@ map_generator::elevation_type map_generator::get_tile_elevation_type(const QPoin
 	}
 }
 
-map_generator::temperature_type map_generator::get_tile_temperature_type(const QPoint &tile_pos) const
+bool map_generator::is_tile_water(const QPoint &tile_pos) const
+{
+	return this->get_tile_elevation_type(tile_pos) == elevation_type::water;
+}
+
+temperature_type map_generator::get_tile_temperature_type(const QPoint &tile_pos) const
 {
 	const int temperature = this->tile_temperatures[point::to_index(tile_pos, this->get_width())];
 
@@ -845,7 +809,7 @@ map_generator::temperature_type map_generator::get_tile_temperature_type(const Q
 	}
 }
 
-map_generator::forestation_type map_generator::get_tile_forestation_type(const QPoint &tile_pos) const
+forestation_type map_generator::get_tile_forestation_type(const QPoint &tile_pos) const
 {
 	const int forestation = this->tile_forestations[point::to_index(tile_pos, this->get_width())];
 

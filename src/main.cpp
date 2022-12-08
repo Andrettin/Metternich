@@ -18,6 +18,8 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/diplomatic_map_image_provider.h"
+#include "map/elevation_type.h"
+#include "map/forestation_type.h"
 #include "map/map.h"
 #include "map/map_grid_model.h"
 #include "map/province.h"
@@ -25,6 +27,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_type.h"
+#include "map/temperature_type.h"
 #include "map/tile_image_provider.h"
 #include "population/population_type.h"
 #include "time/era.h"
@@ -76,11 +79,14 @@ int main(int argc, char **argv)
 		enum_converter<country_type>();
 		enum_converter<cultural_group_rank>();
 		enum_converter<diplomacy_state>();
+		enum_converter<elevation_type>();
 		enum_converter<food_type>();
+		enum_converter<forestation_type>();
 		enum_converter<gender>();
 		enum_converter<landed_title_tier>();
 		enum_converter<military_unit_domain>();
 		enum_converter<site_type>();
+		enum_converter<temperature_type>();
 
 		qmlRegisterAnonymousType<building_slot>("", 1);
 		qmlRegisterAnonymousType<building_type>("", 1);

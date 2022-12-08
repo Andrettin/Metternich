@@ -73,6 +73,8 @@ set_source_files_properties(${infrastructure_SRCS} PROPERTIES UNITY_GROUP "infra
 
 set(map_SRCS
 	src/map/diplomatic_map_image_provider.cpp
+	src/map/elevation_type.cpp
+	src/map/forestation_type.cpp
 	src/map/map.cpp
 	src/map/map_generator.cpp
 	src/map/map_grid_model.cpp
@@ -88,6 +90,7 @@ set(map_SRCS
 	src/map/site_game_data.cpp
 	src/map/site_history.cpp
 	src/map/site_type.cpp
+	src/map/temperature_type.cpp
 	src/map/terrain_adjacency.cpp
 	src/map/terrain_feature.cpp
 	src/map/terrain_geodata_map.cpp
@@ -232,6 +235,8 @@ source_group(infrastructure FILES ${infrastructure_HDRS})
 set(map_HDRS
 	src/map/diplomatic_map_image_provider.h
 	src/map/diplomatic_map_mode.h
+	src/map/elevation_type.h
+	src/map/forestation_type.h
 	src/map/map.h
 	src/map/map_generator.h
 	src/map/map_grid_model.h
@@ -247,6 +252,7 @@ set(map_HDRS
 	src/map/site_game_data.h
 	src/map/site_history.h
 	src/map/site_type.h
+	src/map/temperature_type.h
 	src/map/terrain_adjacency.h
 	src/map/terrain_adjacency_type.h
 	src/map/terrain_feature.h

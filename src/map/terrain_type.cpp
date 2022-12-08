@@ -4,12 +4,49 @@
 
 #include "database/database.h"
 #include "map/direction.h"
+#include "map/elevation_type.h"
+#include "map/forestation_type.h"
 #include "map/terrain_adjacency_type.h"
+#include "map/temperature_type.h"
 #include "map/tile_image_provider.h"
 #include "util/assert_util.h"
 #include "util/event_loop.h"
 
 namespace metternich {
+
+terrain_type *terrain_type::try_get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::forestation_type forestation_type)
+{
+	const auto find_iterator = terrain_type::terrain_types_by_biome.find(elevation_type);
+	if (find_iterator == terrain_type::terrain_types_by_biome.end()) {
+		return nullptr;
+	}
+
+	const auto find_iterator_2 = find_iterator->second.find(temperature_type);
+	if (find_iterator_2 == find_iterator->second.end()) {
+		if (temperature_type != temperature_type::none) {
+			return terrain_type::try_get_by_biome(elevation_type, temperature_type::none, forestation_type);
+		}
+
+		return nullptr;
+	}
+
+	const auto find_iterator_3 = find_iterator_2->second.find(forestation_type);
+	if (find_iterator_3 == find_iterator_2->second.end()) {
+		if (forestation_type != forestation_type::none) {
+			return terrain_type::try_get_by_biome(elevation_type, temperature_type, forestation_type::none);
+		}
+
+		return nullptr;
+	}
+
+	return find_iterator_3->second;
+}
+
+terrain_type::terrain_type(const std::string &identifier)
+	: named_data_entry(identifier), elevation_type(elevation_type::none), forestation_type(forestation_type::none), temperature_type(temperature_type::none)
+{
+}
+
 	
 void terrain_type::process_gsml_scope(const gsml_data &scope)
 {
@@ -52,6 +89,10 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 
 void terrain_type::initialize()
 {
+	if (this->get_elevation_type() != elevation_type::none) {
+		assign_to_biome(this->get_elevation_type(), this->get_temperature_type(), this->get_forestation_type());
+	}
+
 	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
 		co_await tile_image_provider::get()->load_image("terrain/" + this->get_identifier());
 	});
@@ -64,6 +105,8 @@ void terrain_type::check() const
 	assert_throw(this->get_color().isValid());
 	assert_throw(!this->get_image_filepath().empty());
 	assert_throw(std::filesystem::exists(this->get_image_filepath()));
+
+
 
 	if (this->has_adjacency_tiles()) {
 		//check whether the terrain type has support for all possible adjacencies
@@ -93,6 +136,14 @@ void terrain_type::set_image_filepath(const std::filesystem::path &filepath)
 	}
 
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
+}
+
+void terrain_type::assign_to_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::forestation_type forestation_type)
+{
+	assert_throw(elevation_type != elevation_type::none);
+	assert_throw(terrain_type::terrain_types_by_biome[elevation_type][temperature_type][forestation_type] == nullptr);
+
+	terrain_type::terrain_types_by_biome[elevation_type][temperature_type][forestation_type] = this;
 }
 
 void terrain_type::set_adjacency_tiles(const terrain_adjacency &adjacency, const std::vector<int> &tiles)

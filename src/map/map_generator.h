@@ -8,6 +8,9 @@ namespace metternich {
 class country;
 class era;
 class region;
+enum class elevation_type;
+enum class forestation_type;
+enum class temperature_type;
 
 class map_generator final
 {
@@ -22,27 +25,6 @@ private:
 	static constexpr int min_tropical_temperature = 750;
 
 	static constexpr int min_forest_forestation = 900;
-
-	enum class elevation_type {
-		none,
-		water,
-		flatlands,
-		hills,
-		mountains
-	};
-
-	enum class temperature_type {
-		none,
-		frozen,
-		cold,
-		temperate,
-		tropical
-	};
-
-	enum class forestation_type {
-		none,
-		forest
-	};
 
 public:
 	explicit map_generator(const QSize &size, const metternich::era *era)
@@ -89,11 +71,7 @@ private:
 	void generate_sites();
 
 	elevation_type get_tile_elevation_type(const QPoint &tile_pos) const;
-
-	bool is_tile_water(const QPoint &tile_pos) const
-	{
-		return this->get_tile_elevation_type(tile_pos) == elevation_type::water;
-	}
+	bool is_tile_water(const QPoint &tile_pos) const;
 
 	temperature_type get_tile_temperature_type(const QPoint &tile_pos) const;
 	forestation_type get_tile_forestation_type(const QPoint &tile_pos) const;
