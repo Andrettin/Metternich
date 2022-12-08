@@ -204,9 +204,8 @@ void map_generator::generate_temperature()
 			const QPoint tile_pos(x, y);
 			const int tile_index = point::to_index(tile_pos, this->get_width());
 			const int colatitude = this->get_tile_colatitude(tile_pos);
-			const int elevation = this->tile_elevations[tile_index];
-			const int elevation_temperature_factor = map_generator::max_tile_value - (elevation - map_generator::min_land_elevation) * 2;
-			this->tile_temperatures[tile_index] = std::max(0, (colatitude + elevation_temperature_factor) / 2);
+			const int land_elevation = std::max(0, this->tile_elevations[tile_index] - map_generator::min_land_elevation);
+			this->tile_temperatures[tile_index] = std::max(0, colatitude - land_elevation / 2);
 		}
 	}
 }
