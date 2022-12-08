@@ -718,10 +718,14 @@ void map_generator::generate_sites()
 		if (province->get_capital_settlement() != nullptr) {
 			map->set_tile_site(province_seed, province->get_capital_settlement());
 
-			//change non-flatlands terrain to flatlands for settlements
-			//FIXME: move the settlement position instead
-			if (map->get_tile(province_seed)->get_terrain() != defines::get()->get_default_province_terrain()) {
-				map->set_tile_terrain(province_seed, defines::get()->get_default_province_terrain());
+			//change non-flatlands or forested terrain to unforested flatlands for settlements
+			const terrain_type *tile_terrain = map->get_tile(province_seed)->get_terrain();
+			if (tile_terrain->get_elevation_type() != elevation_type::flatlands || tile_terrain->get_forestation_type() != forestation_type::none) {
+				const temperature_type temperature_type = this->get_tile_temperature_type(province_seed);
+
+				const terrain_type *terrain = terrain_type::get_by_biome(elevation_type::flatlands, temperature_type, forestation_type::none);
+
+				map->set_tile_terrain(province_seed, terrain);
 			}
 		}
 
