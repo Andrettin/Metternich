@@ -52,7 +52,6 @@ public:
 private:
 	void generate_terrain();
 	void generate_elevation();
-	void generate_temperature();
 	void generate_forestation();
 	std::vector<QPoint> generate_tile_value_seeds(std::vector<int> &tile_values, const int seed_divisor);
 	void expand_tile_value_seeds(const std::vector<QPoint> &base_seeds, std::vector<int> &tile_values, const int max_decrease);
@@ -73,6 +72,7 @@ private:
 	elevation_type get_tile_elevation_type(const QPoint &tile_pos) const;
 	bool is_tile_water(const QPoint &tile_pos) const;
 
+	int get_tile_temperature(const QPoint &tile_pos) const;
 	temperature_type get_tile_temperature_type(const QPoint &tile_pos) const;
 	forestation_type get_tile_forestation_type(const QPoint &tile_pos) const;
 
@@ -112,7 +112,6 @@ private:
 	std::vector<terrain_type_map<std::vector<QPoint>>> province_near_water_tiles_by_terrain;
 	std::vector<int> tile_provinces;
 	std::vector<int> tile_elevations;
-	std::vector<int> tile_temperatures;
 	std::vector<int> tile_forestations;
 	std::map<int, std::set<int>> province_border_provinces;
 	province_set generated_provinces;

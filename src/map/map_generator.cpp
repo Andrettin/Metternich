@@ -796,9 +796,18 @@ bool map_generator::is_tile_water(const QPoint &tile_pos) const
 	return this->get_tile_elevation_type(tile_pos) == elevation_type::water;
 }
 
+int map_generator::get_tile_temperature(const QPoint &tile_pos) const
+{
+	//temperature is a function of latitude and elevation
+	const int tile_index = point::to_index(tile_pos, this->get_width());
+	const int colatitude = this->get_tile_colatitude(tile_pos);
+	const int land_elevation = std::max(0, this->tile_elevations[tile_index] - map_generator::min_land_elevation);
+	return std::max(0, colatitude - land_elevation / 2);
+}
+
 temperature_type map_generator::get_tile_temperature_type(const QPoint &tile_pos) const
 {
-	const int temperature = this->tile_temperatures[point::to_index(tile_pos, this->get_width())];
+	const int temperature = this->get_tile_temperature(tile_pos);
 
 	if (temperature >= map_generator::min_tropical_temperature) {
 		return temperature_type::tropical;
