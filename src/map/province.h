@@ -19,7 +19,8 @@ class province final : public named_data_entry, public data_type<province>
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
-	Q_PROPERTY(bool water_zone MEMBER water_zone READ is_water_zone NOTIFY changed)
+	Q_PROPERTY(bool sea MEMBER sea READ is_sea NOTIFY changed)
+	Q_PROPERTY(bool lake MEMBER lake READ is_lake NOTIFY changed)
 	Q_PROPERTY(metternich::site* capital_settlement MEMBER capital_settlement NOTIFY changed)
 	Q_PROPERTY(std::vector<metternich::region *> regions READ get_regions NOTIFY changed)
 	Q_PROPERTY(metternich::province_game_data* game_data READ get_game_data NOTIFY changed)
@@ -103,9 +104,19 @@ public:
 		province::provinces_by_color[color] = this;
 	}
 
+	bool is_sea() const
+	{
+		return this->sea;
+	}
+
+	bool is_lake() const
+	{
+		return this->lake;
+	}
+
 	bool is_water_zone() const
 	{
-		return this->water_zone;
+		return this->is_sea() || this->is_lake();
 	}
 
 	const site *get_capital_settlement() const
@@ -138,7 +149,8 @@ signals:
 
 private:
 	QColor color;
-	bool water_zone = false;
+	bool sea = false;
+	bool lake = false;
 	site *capital_settlement = nullptr;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
