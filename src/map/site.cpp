@@ -13,6 +13,7 @@
 #include "map/tile.h"
 #include "map/world.h"
 #include "util/assert_util.h"
+#include "util/log_util.h"
 
 namespace metternich {
 
@@ -106,6 +107,10 @@ void site::check() const
 
 	if (this->get_type() == site_type::resource) {
 		assert_throw(this->get_resource() != nullptr);
+
+		if (this->get_province() == nullptr && this->get_geocoordinate().is_valid()) {
+			log::log_error("Resource site \"" + this->get_identifier() + "\" has no province, but has a valid geocoordinate.");
+		}
 	} else {
 		assert_throw(this->get_resource() == nullptr);
 	}
