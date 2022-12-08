@@ -487,7 +487,7 @@ void map_generator::generate_countries()
 	std::vector<const province *> potential_lakes;
 
 	for (const province *province : province::get_all()) {
-		if (province->is_sea()) {
+		if (province->is_sea() || province->is_bay()) {
 			potential_seas.push_back(province);
 		} else if (province->is_lake()) {
 			potential_lakes.push_back(province);
@@ -503,10 +503,7 @@ void map_generator::generate_countries()
 		}
 
 		std::vector<int> group_province_indexes;
-		const int province_index = this->generate_province(province, group_province_indexes);
-		if (province_index == -1) {
-			break;
-		}
+		this->generate_province(province, group_province_indexes);
 	}
 
 	for (const province *province : potential_lakes) {
@@ -515,10 +512,7 @@ void map_generator::generate_countries()
 		}
 
 		std::vector<int> group_province_indexes;
-		const int province_index = this->generate_province(province, group_province_indexes);
-		if (province_index == -1) {
-			break;
-		}
+		this->generate_province(province, group_province_indexes);
 	}
 
 	std::vector<const country *> potential_powers;
@@ -755,12 +749,29 @@ bool map_generator::can_assign_province_to_province_index(const province *provin
 		return false;
 	}
 
-	if (province->is_sea() && !this->sea_zones.contains(province_index)) {
+	if ((province->is_sea() || province->is_bay()) && !this->sea_zones.contains(province_index)) {
 		return false;
 	}
 
 	if (province->is_lake() && !this->lakes.contains(province_index)) {
 		return false;
+	}
+
+	if (province->is_bay()) {
+		//bays can only appear adjacent to land provinces
+		bool has_adjacent_land = false;
+		for (const int border_province_index : this->province_border_provinces.find(province_index)->second) {
+			const QPoint &border_province_seed = this->province_seeds.at(border_province_index);
+
+			if (!this->is_tile_water(border_province_seed)) {
+				has_adjacent_land = true;
+				break;
+			}
+		}
+
+		if (!has_adjacent_land) {
+			return false;
+		}
 	}
 
 	if (!province->get_sites().empty()) {

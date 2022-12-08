@@ -20,6 +20,7 @@ class province final : public named_data_entry, public data_type<province>
 
 	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
 	Q_PROPERTY(bool sea MEMBER sea READ is_sea NOTIFY changed)
+	Q_PROPERTY(bool bay MEMBER bay READ is_bay NOTIFY changed)
 	Q_PROPERTY(bool lake MEMBER lake READ is_lake NOTIFY changed)
 	Q_PROPERTY(metternich::site* capital_settlement MEMBER capital_settlement NOTIFY changed)
 	Q_PROPERTY(std::vector<metternich::region *> regions READ get_regions NOTIFY changed)
@@ -109,6 +110,11 @@ public:
 		return this->sea;
 	}
 
+	bool is_bay() const
+	{
+		return this->bay;
+	}
+
 	bool is_lake() const
 	{
 		return this->lake;
@@ -116,7 +122,7 @@ public:
 
 	bool is_water_zone() const
 	{
-		return this->is_sea() || this->is_lake();
+		return this->is_sea() || this->is_bay() || this->is_lake();
 	}
 
 	const site *get_capital_settlement() const
@@ -150,6 +156,7 @@ signals:
 private:
 	QColor color;
 	bool sea = false;
+	bool bay = false;
 	bool lake = false;
 	site *capital_settlement = nullptr;
 	std::map<const culture *, std::string> cultural_names;
