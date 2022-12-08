@@ -9,6 +9,7 @@
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
 #include "map/map.h"
+#include "map/moisture_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/region.h"
@@ -37,6 +38,7 @@ void map_generator::generate()
 	const int tile_count = this->get_width() * this->get_height();
 	this->tile_provinces.resize(tile_count, -1);
 	this->tile_elevations.resize(tile_count, -1);
+	this->tile_moistures.resize(tile_count, -1);
 	this->tile_forestations.resize(tile_count, -1);
 
 	this->generate_provinces();
@@ -99,6 +101,7 @@ void map_generator::generate_terrain()
 	});
 
 	this->generate_elevation();
+	this->generate_moisture();
 	this->generate_forestation();
 
 	//assign terrain
@@ -123,9 +126,10 @@ void map_generator::generate_terrain()
 
 			const elevation_type elevation_type = this->get_tile_elevation_type(tile_pos);
 			const temperature_type temperature_type = this->get_tile_temperature_type(tile_pos);
+			const moisture_type moisture_type = this->get_tile_moisture_type(tile_pos);
 			const forestation_type forestation_type = this->get_tile_forestation_type(tile_pos);
 
-			const terrain_type *terrain = terrain_type::get_by_biome(elevation_type, temperature_type, forestation_type);
+			const terrain_type *terrain = terrain_type::get_by_biome(elevation_type, temperature_type, moisture_type, forestation_type);
 
 			map->set_tile_terrain(tile_pos, terrain);
 		}
@@ -151,6 +155,12 @@ void map_generator::generate_elevation()
 {
 	const std::vector<QPoint> elevation_seeds = this->generate_tile_value_seeds(this->tile_elevations, 2048);
 	this->expand_tile_value_seeds(elevation_seeds, this->tile_elevations, 50);
+}
+
+void map_generator::generate_moisture()
+{
+	const std::vector<QPoint> seeds = this->generate_tile_value_seeds(this->tile_moistures, 2048);
+	this->expand_tile_value_seeds(seeds, this->tile_moistures, 50);
 }
 
 void map_generator::generate_forestation()
@@ -722,8 +732,9 @@ void map_generator::generate_sites()
 			const terrain_type *tile_terrain = map->get_tile(province_seed)->get_terrain();
 			if (tile_terrain->get_elevation_type() != elevation_type::flatlands || tile_terrain->get_forestation_type() != forestation_type::none) {
 				const temperature_type temperature_type = this->get_tile_temperature_type(province_seed);
+				const moisture_type moisture_type = this->get_tile_moisture_type(province_seed);
 
-				const terrain_type *terrain = terrain_type::get_by_biome(elevation_type::flatlands, temperature_type, forestation_type::none);
+				const terrain_type *terrain = terrain_type::get_by_biome(elevation_type::flatlands, temperature_type, moisture_type, forestation_type::none);
 
 				map->set_tile_terrain(province_seed, terrain);
 			}
@@ -803,6 +814,23 @@ temperature_type map_generator::get_tile_temperature_type(const QPoint &tile_pos
 		return temperature_type::temperate;
 	} else {
 		return temperature_type::cold;
+	}
+}
+
+moisture_type map_generator::get_tile_moisture_type(const QPoint &tile_pos) const
+{
+	const int moisture = this->tile_moistures[point::to_index(tile_pos, this->get_width())];
+
+	if (moisture >= map_generator::min_wet_moisture) {
+		return moisture_type::wet;
+	} else if (moisture >= map_generator::min_moist_moisture) {
+		return moisture_type::moist;
+	} else if (moisture >= map_generator::min_dry_moisture) {
+		return moisture_type::dry;
+	} else if (moisture >= map_generator::min_semi_arid_moisture) {
+		return moisture_type::semi_arid;
+	} else {
+		return moisture_type::arid;
 	}
 }
 

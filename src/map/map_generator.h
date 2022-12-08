@@ -10,6 +10,7 @@ class era;
 class region;
 enum class elevation_type;
 enum class forestation_type;
+enum class moisture_type;
 enum class temperature_type;
 
 class map_generator final
@@ -23,6 +24,11 @@ private:
 
 	static constexpr int min_temperate_temperature = 250;
 	static constexpr int min_tropical_temperature = 750;
+
+	static constexpr int min_semi_arid_moisture = 100;
+	static constexpr int min_dry_moisture = 300;
+	static constexpr int min_moist_moisture = 600;
+	static constexpr int min_wet_moisture = 900;
 
 	static constexpr int min_forest_forestation = 900;
 
@@ -52,6 +58,7 @@ public:
 private:
 	void generate_terrain();
 	void generate_elevation();
+	void generate_moisture();
 	void generate_forestation();
 	std::vector<QPoint> generate_tile_value_seeds(std::vector<int> &tile_values, const int seed_divisor);
 	void expand_tile_value_seeds(const std::vector<QPoint> &base_seeds, std::vector<int> &tile_values, const int max_decrease);
@@ -74,6 +81,7 @@ private:
 
 	int get_tile_temperature(const QPoint &tile_pos) const;
 	temperature_type get_tile_temperature_type(const QPoint &tile_pos) const;
+	moisture_type get_tile_moisture_type(const QPoint &tile_pos) const;
 	forestation_type get_tile_forestation_type(const QPoint &tile_pos) const;
 
 	int get_tile_latitude(const QPoint &tile_pos) const
@@ -112,6 +120,7 @@ private:
 	std::vector<terrain_type_map<std::vector<QPoint>>> province_near_water_tiles_by_terrain;
 	std::vector<int> tile_provinces;
 	std::vector<int> tile_elevations;
+	std::vector<int> tile_moistures;
 	std::vector<int> tile_forestations;
 	std::map<int, std::set<int>> province_border_provinces;
 	province_set generated_provinces;

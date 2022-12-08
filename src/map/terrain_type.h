@@ -9,6 +9,7 @@ namespace metternich {
 
 enum class elevation_type;
 enum class forestation_type;
+enum class moisture_type;
 enum class temperature_type;
 
 class terrain_type final : public named_data_entry, public data_type<terrain_type>
@@ -19,8 +20,9 @@ class terrain_type final : public named_data_entry, public data_type<terrain_typ
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(bool water MEMBER water READ is_water NOTIFY changed)
 	Q_PROPERTY(metternich::elevation_type elevation_type MEMBER elevation_type READ get_elevation_type NOTIFY changed)
-	Q_PROPERTY(metternich::forestation_type forestation_type MEMBER forestation_type READ get_forestation_type NOTIFY changed)
 	Q_PROPERTY(metternich::temperature_type temperature_type MEMBER temperature_type READ get_temperature_type NOTIFY changed)
+	Q_PROPERTY(metternich::moisture_type moisture_type MEMBER moisture_type READ get_moisture_type NOTIFY changed)
+	Q_PROPERTY(metternich::forestation_type forestation_type MEMBER forestation_type READ get_forestation_type NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "terrain_type";
@@ -48,18 +50,8 @@ public:
 		return nullptr;
 	}
 
-	static terrain_type *get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::forestation_type forestation_type)
-	{
-		terrain_type *terrain_type = terrain_type::try_get_by_biome(elevation_type, temperature_type, forestation_type);
-
-		if (terrain_type == nullptr) {
-			throw std::runtime_error("No terrain type found for biome.");
-		}
-
-		return terrain_type;
-	}
-
-	static terrain_type *try_get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::forestation_type forestation_type);
+	static terrain_type *get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type);
+	static terrain_type *try_get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type);
 
 	static void clear()
 	{
@@ -69,7 +61,7 @@ public:
 
 private:
 	static inline color_map<terrain_type *> terrain_types_by_color;
-	static inline std::map<elevation_type, std::map<temperature_type, std::map<forestation_type, terrain_type *>>> terrain_types_by_biome;
+	static inline std::map<elevation_type, std::map<temperature_type, std::map<moisture_type, std::map<forestation_type, terrain_type *>>>> terrain_types_by_biome;
 
 public:
 	explicit terrain_type(const std::string &identifier);
@@ -114,17 +106,22 @@ public:
 		return this->elevation_type;
 	}
 
-	forestation_type get_forestation_type() const
-	{
-		return this->forestation_type;
-	}
-
 	temperature_type get_temperature_type() const
 	{
 		return this->temperature_type;
 	}
 
-	void assign_to_biome(const elevation_type elevation_type, const temperature_type temperature_type, const forestation_type forestation_type);
+	moisture_type get_moisture_type() const
+	{
+		return this->moisture_type;
+	}
+
+	forestation_type get_forestation_type() const
+	{
+		return this->forestation_type;
+	}
+
+	void assign_to_biome(const elevation_type elevation_type, const temperature_type temperature_type, const moisture_type moisture_type, const forestation_type forestation_type);
 
 	const std::vector<int> &get_tiles() const
 	{
@@ -156,8 +153,9 @@ private:
 	std::filesystem::path image_filepath;
 	bool water = false;
 	metternich::elevation_type elevation_type;
-	metternich::forestation_type forestation_type;
 	metternich::temperature_type temperature_type;
+	metternich::moisture_type moisture_type;
+	metternich::forestation_type forestation_type;
 	std::vector<int> tiles;
 	std::map<terrain_adjacency, std::vector<int>> adjacency_tiles;
 };

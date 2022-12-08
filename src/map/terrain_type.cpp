@@ -6,6 +6,7 @@
 #include "map/direction.h"
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
+#include "map/moisture_type.h"
 #include "map/terrain_adjacency_type.h"
 #include "map/temperature_type.h"
 #include "map/tile_image_provider.h"
@@ -14,7 +15,18 @@
 
 namespace metternich {
 
-terrain_type *terrain_type::try_get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::forestation_type forestation_type)
+terrain_type *terrain_type::get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type)
+{
+	terrain_type *terrain_type = terrain_type::try_get_by_biome(elevation_type, temperature_type, moisture_type, forestation_type);
+
+	if (terrain_type == nullptr) {
+		throw std::runtime_error("No terrain type found for " + enum_converter<metternich::elevation_type>::to_string(elevation_type) + ", " + enum_converter<metternich::temperature_type>::to_string(temperature_type) + ", " + enum_converter<metternich::moisture_type>::to_string(moisture_type) + ", " + enum_converter<metternich::forestation_type>::to_string(forestation_type) + " biome.");
+	}
+
+	return terrain_type;
+}
+
+terrain_type *terrain_type::try_get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type)
 {
 	const auto find_iterator = terrain_type::terrain_types_by_biome.find(elevation_type);
 	if (find_iterator == terrain_type::terrain_types_by_biome.end()) {
@@ -24,26 +36,43 @@ terrain_type *terrain_type::try_get_by_biome(const metternich::elevation_type el
 	const auto find_iterator_2 = find_iterator->second.find(temperature_type);
 	if (find_iterator_2 == find_iterator->second.end()) {
 		if (temperature_type != temperature_type::none) {
-			return terrain_type::try_get_by_biome(elevation_type, temperature_type::none, forestation_type);
+			return terrain_type::try_get_by_biome(elevation_type, temperature_type::none, moisture_type, forestation_type);
 		}
 
 		return nullptr;
 	}
 
-	const auto find_iterator_3 = find_iterator_2->second.find(forestation_type);
+	const auto find_iterator_3 = find_iterator_2->second.find(moisture_type);
 	if (find_iterator_3 == find_iterator_2->second.end()) {
-		if (forestation_type != forestation_type::none) {
-			return terrain_type::try_get_by_biome(elevation_type, temperature_type, forestation_type::none);
+		if (moisture_type != moisture_type::none) {
+			return terrain_type::try_get_by_biome(elevation_type, temperature_type, moisture_type::none, forestation_type);
 		}
 
 		return nullptr;
 	}
 
-	return find_iterator_3->second;
+	const auto find_iterator_4 = find_iterator_3->second.find(forestation_type);
+	if (find_iterator_4 == find_iterator_3->second.end()) {
+		if (forestation_type != forestation_type::none) {
+			return terrain_type::try_get_by_biome(elevation_type, temperature_type, moisture_type, forestation_type::none);
+		}
+
+		if (moisture_type != moisture_type::none) {
+			return terrain_type::try_get_by_biome(elevation_type, temperature_type, moisture_type::none, forestation_type);
+		}
+
+		if (temperature_type != temperature_type::none) {
+			return terrain_type::try_get_by_biome(elevation_type, temperature_type::none, moisture_type, forestation_type);
+		}
+
+		return nullptr;
+	}
+
+	return find_iterator_4->second;
 }
 
 terrain_type::terrain_type(const std::string &identifier)
-	: named_data_entry(identifier), elevation_type(elevation_type::none), forestation_type(forestation_type::none), temperature_type(temperature_type::none)
+	: named_data_entry(identifier), elevation_type(elevation_type::none), temperature_type(temperature_type::none), moisture_type(moisture_type::none), forestation_type(forestation_type::none)
 {
 }
 
@@ -90,7 +119,7 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 void terrain_type::initialize()
 {
 	if (this->get_elevation_type() != elevation_type::none) {
-		assign_to_biome(this->get_elevation_type(), this->get_temperature_type(), this->get_forestation_type());
+		assign_to_biome(this->get_elevation_type(), this->get_temperature_type(), this->get_moisture_type(), this->get_forestation_type());
 	}
 
 	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
@@ -138,12 +167,12 @@ void terrain_type::set_image_filepath(const std::filesystem::path &filepath)
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
 }
 
-void terrain_type::assign_to_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::forestation_type forestation_type)
+void terrain_type::assign_to_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type)
 {
 	assert_throw(elevation_type != elevation_type::none);
-	assert_throw(terrain_type::terrain_types_by_biome[elevation_type][temperature_type][forestation_type] == nullptr);
+	assert_throw(terrain_type::terrain_types_by_biome[elevation_type][temperature_type][moisture_type][forestation_type] == nullptr);
 
-	terrain_type::terrain_types_by_biome[elevation_type][temperature_type][forestation_type] = this;
+	terrain_type::terrain_types_by_biome[elevation_type][temperature_type][moisture_type][forestation_type] = this;
 }
 
 void terrain_type::set_adjacency_tiles(const terrain_adjacency &adjacency, const std::vector<int> &tiles)

@@ -22,6 +22,7 @@
 #include "map/forestation_type.h"
 #include "map/map.h"
 #include "map/map_grid_model.h"
+#include "map/moisture_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -85,6 +86,7 @@ int main(int argc, char **argv)
 		enum_converter<gender>();
 		enum_converter<landed_title_tier>();
 		enum_converter<military_unit_domain>();
+		enum_converter<moisture_type>();
 		enum_converter<site_type>();
 		enum_converter<temperature_type>();
 
