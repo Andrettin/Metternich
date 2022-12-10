@@ -26,6 +26,7 @@
 #include "population/phenotype.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "script/condition/and_condition.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
 #include "unit/civilian_unit.h"
@@ -132,10 +133,18 @@ void province_game_data::do_cultural_change()
 
 		std::vector<const metternich::culture *> potential_cultures;
 
+		read_only_context ctx = read_only_context::from_scope(population_unit.get());
+
 		for (const metternich::culture *culture : current_culture->get_derived_cultures()) {
-			if (this->province->has_core_country_of_culture(culture)) {
-				potential_cultures.push_back(culture);
+			if (!this->province->has_core_country_of_culture(culture)) {
+				continue;
 			}
+
+			if (culture->get_derivation_conditions() != nullptr && !culture->get_derivation_conditions()->check(population_unit.get(), ctx)) {
+				continue;
+			}
+
+			potential_cultures.push_back(culture);
 		}
 
 		if (!potential_cultures.empty() && random::get()->generate(100) < cultural_derivation_chance) {
