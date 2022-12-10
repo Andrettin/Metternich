@@ -7,17 +7,17 @@ namespace metternich {
 class province;
 
 template <typename upper_scope_type>
-class province_condition final : public scope_condition<upper_scope_type, province>
+class location_condition final : public scope_condition<upper_scope_type, province>
 {
 public:
-	explicit province_condition(const gsml_operator condition_operator)
+	explicit location_condition(const gsml_operator condition_operator)
 		: scope_condition<upper_scope_type, province>(condition_operator)
 	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "province";
+		static const std::string class_identifier = "location";
 		return class_identifier;
 	}
 
@@ -30,7 +30,7 @@ public:
 
 	virtual std::string get_scope_name() const override
 	{
-		return "Province";
+		return "Location";
 	}
 };
 

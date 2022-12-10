@@ -7,9 +7,9 @@
 #include "database/named_data_entry.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
+#include "script/condition/location_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
-#include "script/condition/province_condition.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -40,8 +40,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 	}
 
 	if constexpr (std::is_same_v<scope_type, population_unit>) {
-		if (tag == "province") {
-			condition = std::make_unique<province_condition<scope_type>>(condition_operator);
+		if (tag == "location") {
+			condition = std::make_unique<location_condition<scope_type>>(condition_operator);
 		}
 	}
 
