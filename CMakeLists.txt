@@ -117,6 +117,21 @@ set(population_SRCS
 source_group(population FILES ${population_SRCS})
 set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "population")
 
+set(script_SRCS
+	src/script/context.cpp
+)
+source_group(script FILES ${script_SRCS})
+set_source_files_properties(${script_SRCS} PROPERTIES UNITY_GROUP "script")
+
+set(script_condition_SRCS
+	src/script/condition/and_condition.cpp
+	src/script/condition/condition.cpp
+	src/script/condition/not_condition.cpp
+	src/script/condition/or_condition.cpp
+)
+source_group(script\\condition FILES ${script_condition_SRCS})
+set_source_files_properties(${script_condition_SRCS} PROPERTIES UNITY_GROUP "script_condition")
+
 set(technology_SRCS
 	src/technology/technology.cpp
 	src/technology/technology_container.cpp
@@ -171,6 +186,8 @@ set(metternich_SRCS
 	${infrastructure_SRCS}
 	${map_SRCS}
 	${population_SRCS}
+	${script_SRCS}
+	${script_condition_SRCS}
 	${technology_SRCS}
 	${time_SRCS}
 	${ui_SRCS}
@@ -279,6 +296,19 @@ set(population_HDRS
 )
 source_group(population FILES ${population_HDRS})
 
+set(script_HDRS
+	src/script/context.h
+)
+source_group(script FILES ${script_HDRS})
+
+set(script_condition_HDRS
+	src/script/condition/and_condition.h
+	src/script/condition/condition.h
+	src/script/condition/not_condition.h
+	src/script/condition/or_condition.h
+)
+source_group(script\\condition FILES ${script_condition_HDRS})
+
 set(technology_HDRS
 	src/technology/technology.h
 	src/technology/technology_container.h
@@ -330,6 +360,8 @@ set(metternich_HDRS
 	${infrastructure_HDRS}
 	${map_HDRS}
 	${population_HDRS}
+	${script_HDRS}
+	${script_condition_HDRS}
 	${technology_HDRS}
 	${time_HDRS}
 	${ui_HDRS}

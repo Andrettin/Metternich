@@ -6,6 +6,10 @@
 namespace metternich {
 
 class cultural_group;
+class population_unit;
+
+template <typename scope_type>
+class condition;
 
 class culture final : public culture_base, public data_type<culture>
 {
@@ -18,9 +22,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::culture*";
 	static constexpr const char database_folder[] = "cultures";
 
-	explicit culture(const std::string &identifier) : culture_base(identifier)
-	{
-	}
+	explicit culture(const std::string &identifier);
+	~culture();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
@@ -38,12 +41,18 @@ public:
 		return this->derived_cultures;
 	}
 
+	const condition<population_unit> *get_derivation_conditions() const
+	{
+		return this->derivation_conditions.get();
+	}
+
 signals:
 	void changed();
 
 private:
 	QColor color;
 	std::vector<const culture *> derived_cultures;
+	std::unique_ptr<const condition<population_unit>> derivation_conditions;
 };
 
 }

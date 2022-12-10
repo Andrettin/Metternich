@@ -1,5 +1,7 @@
 #pragma once
 
+#include "util/fractional_int.h"
+
 namespace metternich {
 
 class culture;
