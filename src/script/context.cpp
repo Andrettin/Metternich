@@ -54,10 +54,24 @@ context context::from_scope(const population_unit *population_unit)
 	return ctx;
 }
 
+context context::from_scope(const province *province)
+{
+	context ctx;
+	ctx.current_country = province->get_game_data()->get_owner();
+	return ctx;
+}
+
 read_only_context read_only_context::from_scope(const population_unit *population_unit)
 {
 	read_only_context ctx;
 	ctx.current_country = population_unit->get_province()->get_game_data()->get_owner();
+	return ctx;
+}
+
+read_only_context read_only_context::from_scope(const province *province)
+{
+	read_only_context ctx;
+	ctx.current_country = province->get_game_data()->get_owner();
 	return ctx;
 }
 

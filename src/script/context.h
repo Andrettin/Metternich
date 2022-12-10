@@ -9,6 +9,7 @@ namespace metternich {
 
 class country;
 class population_unit;
+class province;
 
 //script context for e.g. events
 template <bool read_only>
@@ -35,6 +36,7 @@ struct context final : context_base<false>
 	}
 
 	static context from_scope(const population_unit *population_unit);
+	static context from_scope(const province *province);
 };
 
 struct read_only_context final : context_base<true>
@@ -48,6 +50,7 @@ public:
 	}
 
 	static read_only_context from_scope(const population_unit *population_unit);
+	static read_only_context from_scope(const province *province);
 
 	read_only_context()
 	{

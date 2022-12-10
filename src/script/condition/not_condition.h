@@ -6,6 +6,7 @@ namespace metternich {
 
 class country;
 class population_unit;
+class province;
 
 template <typename scope_type>
 class not_condition final : public condition<scope_type>
@@ -80,5 +81,6 @@ private:
 
 extern template class not_condition<country>;
 extern template class not_condition<population_unit>;
+extern template class not_condition<province>;
 
 }

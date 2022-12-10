@@ -5,11 +5,12 @@
 #include "database/database.h"
 #include "database/gsml_operator.h"
 #include "database/named_data_entry.h"
+#include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
+#include "script/condition/province_condition.h"
 #include "util/string_util.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -36,6 +37,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		condition = std::make_unique<or_condition<scope_type>>(condition_operator);
 	} else if (tag == "not") {
 		condition = std::make_unique<not_condition<scope_type>>(condition_operator);
+	}
+
+	if constexpr (std::is_same_v<scope_type, population_unit>) {
+		if (tag == "province") {
+			condition = std::make_unique<province_condition<scope_type>>(condition_operator);
+		}
 	}
 
 	if (condition == nullptr) {

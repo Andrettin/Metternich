@@ -306,6 +306,9 @@ set(script_condition_HDRS
 	src/script/condition/condition.h
 	src/script/condition/not_condition.h
 	src/script/condition/or_condition.h
+	src/script/condition/province_condition.h
+	src/script/condition/scope_condition.h
+	src/script/condition/scope_condition_base.h
 )
 source_group(script\\condition FILES ${script_condition_HDRS})
 
