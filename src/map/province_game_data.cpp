@@ -427,17 +427,17 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 				this->unassign_worker(population_unit);
 			}
 
-			this->change_population_type_count(population_unit->get_type(), -1);
-			this->change_population_culture_count(population_unit->get_culture(), -1);
-			this->change_population_phenotype_count(population_unit->get_phenotype(), -1);
-			this->change_population(-defines::get()->get_population_per_unit());
+			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
+			this->population_units.erase(this->population_units.begin() + i);
 
 			if (this->get_owner() != nullptr) {
 				this->get_owner()->get_game_data()->remove_population_unit(population_unit);
 			}
 
-			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
-			this->population_units.erase(this->population_units.begin() + i);
+			this->change_population_type_count(population_unit->get_type(), -1);
+			this->change_population_culture_count(population_unit->get_culture(), -1);
+			this->change_population_phenotype_count(population_unit->get_phenotype(), -1);
+			this->change_population(-defines::get()->get_population_per_unit());
 
 			if (game::get()->is_running()) {
 				emit population_units_changed();
