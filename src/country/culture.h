@@ -22,6 +22,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -32,11 +33,17 @@ public:
 		return this->color;
 	}
 
+	const std::vector<const culture *> &get_derived_cultures() const
+	{
+		return this->derived_cultures;
+	}
+
 signals:
 	void changed();
 
 private:
 	QColor color;
+	std::vector<const culture *> derived_cultures;
 };
 
 }

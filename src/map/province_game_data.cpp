@@ -73,6 +73,7 @@ void province_game_data::do_turn()
 {
 	this->assign_workers();
 	this->do_production();
+	this->do_cultural_change();
 }
 
 void province_game_data::do_production()
@@ -118,6 +119,28 @@ void province_game_data::do_production()
 	if (this->get_owner() != nullptr) {
 		for (const auto &[commodity, output] : output_per_commodity) {
 			this->get_owner()->get_game_data()->change_stored_commodity(commodity, output.to_int());
+		}
+	}
+}
+
+void province_game_data::do_cultural_change()
+{
+	static constexpr int cultural_derivation_chance = 1;
+
+	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
+		const metternich::culture *current_culture = population_unit->get_culture();
+
+		std::vector<const metternich::culture *> potential_cultures;
+
+		for (const metternich::culture *culture : current_culture->get_derived_cultures()) {
+			if (this->province->has_core_country_of_culture(culture)) {
+				potential_cultures.push_back(culture);
+			}
+		}
+
+		if (!potential_cultures.empty() && random::get()->generate(100) < cultural_derivation_chance) {
+			const metternich::culture *new_culture = vector::get_random(potential_cultures);
+			population_unit->set_culture(new_culture);
 		}
 	}
 }

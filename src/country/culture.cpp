@@ -11,6 +11,20 @@
 
 namespace metternich {
 
+void culture::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "derived_cultures") {
+		for (const std::string &value : values) {
+			this->derived_cultures.push_back(culture::get(value));
+		}
+	} else {
+		culture_base::process_gsml_scope(scope);
+	}
+}
+
 void culture::initialize()
 {
 	if (!this->color.isValid()) {
