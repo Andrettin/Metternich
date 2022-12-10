@@ -7,6 +7,7 @@
 #include "database/named_data_entry.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
+#include "script/condition/core_condition.h"
 #include "script/condition/location_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
@@ -18,8 +19,14 @@ template <typename scope_type>
 std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_property(const gsml_property &property)
 {
 	const std::string &key = property.get_key();
-	//const gsml_operator condition_operator = property.get_operator();
-	//const std::string &value = property.get_value();
+	const gsml_operator condition_operator = property.get_operator();
+	const std::string &value = property.get_value();
+
+	if constexpr (std::is_same_v<scope_type, province>) {
+		if (key == "core") {
+			return std::make_unique<core_condition>(value, condition_operator);
+		}
+	}
 
 	throw std::runtime_error("Invalid condition property: \"" + key + "\".");
 }
