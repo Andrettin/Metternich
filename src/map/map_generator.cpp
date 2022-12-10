@@ -519,7 +519,7 @@ void map_generator::generate_countries()
 	std::vector<const country *> potential_minor_nations;
 
 	for (const country *country : country::get_all()) {
-		if (country->get_provinces().empty()) {
+		if (country->get_core_provinces().empty()) {
 			continue;
 		}
 
@@ -574,8 +574,6 @@ bool map_generator::generate_ocean(const region *ocean)
 		potential_provinces.push_back(province);
 	}
 
-	vector::shuffle(potential_provinces);
-
 	const std::vector<const province *> provinces = this->generate_province_group(potential_provinces, 0, nullptr);
 
 	return !provinces.empty();
@@ -589,7 +587,12 @@ bool map_generator::generate_country(const country *country)
 
 	static constexpr int max_country_provinces = 8;
 
-	const std::vector<const province *> provinces = this->generate_province_group(country->get_provinces(), max_country_provinces, country->get_capital_province());
+	std::vector<const province *> potential_provinces;
+	for (const province *province : country->get_core_provinces()) {
+		potential_provinces.push_back(province);
+	}
+
+	const std::vector<const province *> provinces = this->generate_province_group(potential_provinces, max_country_provinces, country->get_capital_province());
 
 	for (const province *province : provinces) {
 		this->province_owners[province] = country;

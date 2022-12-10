@@ -7,6 +7,7 @@
 
 namespace metternich {
 
+class country;
 class cultural_group;
 class culture;
 class province_game_data;
@@ -140,6 +141,18 @@ public:
 	Q_INVOKABLE void add_region(region *region);
 	Q_INVOKABLE void remove_region(region *region);
 
+	const std::vector<const country *> &get_core_countries() const
+	{
+		return this->core_countries;
+	}
+
+	void add_core_country(const country *country)
+	{
+		this->core_countries.push_back(country);
+	}
+
+	bool has_core_country_of_culture(const culture *culture) const;
+
 	const std::vector<const site *> &get_sites() const
 	{
 		return this->sites;
@@ -162,6 +175,7 @@ private:
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	std::vector<region *> regions; //regions where this province is located
+	std::vector<const country *> core_countries;
 	std::vector<const site *> sites; //sites located in this province, used for map generation
 	qunique_ptr<province_history> history;
 	qunique_ptr<province_game_data> game_data;

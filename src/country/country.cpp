@@ -38,13 +38,22 @@ void country::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->eras.push_back(era::get(value));
 		}
-	} else if (tag == "provinces") {
+	} else if (tag == "core_provinces") {
 		for (const std::string &value : values) {
-			this->provinces.push_back(province::get(value));
+			this->core_provinces.push_back(province::get(value));
 		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void country::initialize()
+{
+	for (province *province : this->get_core_provinces()) {
+		province->add_core_country(this);
+	}
+
+	data_entry::initialize();
 }
 
 void country::check() const
@@ -57,8 +66,8 @@ void country::check() const
 	assert_throw(this->get_color().isValid());
 	assert_throw(this->get_palette() != nullptr);
 
-	if (!this->get_provinces().empty()) {
-		assert_throw(this->get_provinces().at(0) == this->get_capital_province());
+	if (!this->get_core_provinces().empty()) {
+		assert_throw(this->get_core_provinces().at(0) == this->get_capital_province());
 	}
 }
 

@@ -2,6 +2,7 @@
 
 #include "map/province.h"
 
+#include "country/country.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "map/province_game_data.h"
@@ -95,6 +96,17 @@ void province::remove_region(region *region)
 {
 	std::erase(this->regions, region);
 	region->remove_province(this);
+}
+
+bool province::has_core_country_of_culture(const culture *culture) const
+{
+	for (const country *country : this->get_core_countries()) {
+		if (country->get_culture() == culture) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 }

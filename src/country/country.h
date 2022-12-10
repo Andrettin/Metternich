@@ -41,6 +41,7 @@ public:
 	~country();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 	virtual data_entry_history *get_history_base() override;
 
@@ -91,9 +92,9 @@ public:
 		return this->eras;
 	}
 
-	const std::vector<const province *> &get_provinces() const
+	const std::vector<province *> &get_core_provinces() const
 	{
-		return this->provinces;
+		return this->core_provinces;
 	}
 
 	bool can_declare_war() const;
@@ -110,7 +111,7 @@ private:
 	province *capital_province = nullptr;
 	landed_title *title = nullptr;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
-	std::vector<const province *> provinces; //provinces for this country when it is generated in random maps
+	std::vector<province *> core_provinces;
 	qunique_ptr<country_history> history;
 	qunique_ptr<country_game_data> game_data;
 };
