@@ -718,6 +718,8 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 
 boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode)
 {
+	static const QColor empty_color(Qt::black);
+
 	const map *map = map::get();
 
 	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
@@ -745,9 +747,15 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image
 				case diplomatic_map_mode::terrain:
 					color = &tile->get_terrain()->get_color();
 					break;
-				case diplomatic_map_mode::culture:
-					color = &tile->get_province()->get_game_data()->get_culture()->get_color();
+				case diplomatic_map_mode::culture: {
+					const culture *culture = tile->get_province()->get_game_data()->get_culture();
+					if (culture != nullptr) {
+						color = &tile->get_province()->get_game_data()->get_culture()->get_color();
+					} else {
+						color = &empty_color;
+					}
 					break;
+				}
 			}
 
 			image.setPixelColor(relative_tile_pos, *color);
