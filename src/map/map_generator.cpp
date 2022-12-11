@@ -199,8 +199,8 @@ void map_generator::generate_elevation()
 
 void map_generator::generate_moisture()
 {
-	const std::vector<QPoint> seeds = this->generate_tile_value_seeds(this->tile_moistures, 2048);
-	this->expand_tile_value_seeds(seeds, this->tile_moistures, 50);
+	const std::vector<QPoint> seeds = this->generate_tile_value_seeds(this->tile_moistures, 256);
+	this->expand_tile_value_seeds(seeds, this->tile_moistures, 100);
 }
 
 void map_generator::generate_forestation()
