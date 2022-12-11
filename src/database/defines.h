@@ -7,7 +7,6 @@
 namespace metternich {
 
 class building_class;
-class country_palette;
 class population_class;
 class terrain_type;
 
@@ -34,8 +33,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QColor selected_country_color MEMBER selected_country_color READ get_selected_country_color)
 	Q_PROPERTY(QColor ocean_color MEMBER ocean_color READ get_ocean_color)
 	Q_PROPERTY(QColor minimap_ocean_color MEMBER minimap_ocean_color READ get_minimap_ocean_color)
-	Q_PROPERTY(metternich::country_palette* conversible_country_palette MEMBER conversible_country_palette)
-	Q_PROPERTY(metternich::country_palette* minor_nation_palette MEMBER minor_nation_palette NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
 	Q_PROPERTY(std::filesystem::path river_image_filepath MEMBER river_image_filepath WRITE set_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path rivermouth_image_filepath MEMBER rivermouth_image_filepath WRITE set_rivermouth_image_filepath)
@@ -153,16 +150,6 @@ public:
 		return this->minimap_ocean_color;
 	}
 
-	const country_palette *get_conversible_country_palette() const
-	{
-		return this->conversible_country_palette;
-	}
-
-	const country_palette *get_minor_nation_palette() const
-	{
-		return this->minor_nation_palette;
-	}
-
 	const std::filesystem::path &get_default_settlement_image_filepath() const
 	{
 		return this->default_settlement_image_filepath;
@@ -251,8 +238,6 @@ private:
 	QColor selected_country_color;
 	QColor ocean_color;
 	QColor minimap_ocean_color;
-	country_palette *conversible_country_palette = nullptr;
-	country_palette *minor_nation_palette = nullptr;
 	std::filesystem::path default_settlement_image_filepath;
 	std::filesystem::path river_image_filepath;
 	std::filesystem::path rivermouth_image_filepath;

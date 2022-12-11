@@ -15,7 +15,6 @@ namespace metternich {
 class civilian_unit;
 class consulate;
 class country;
-class country_palette;
 class culture;
 class population_unit;
 class province;
@@ -215,7 +214,6 @@ public:
 	QVariantList get_colonies_qvariant_list() const;
 
 	const QColor &get_diplomatic_map_color() const;
-	const country_palette *get_palette() const;
 
 	const QImage &get_diplomatic_map_image() const
 	{

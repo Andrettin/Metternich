@@ -2,7 +2,6 @@
 
 #include "map/tile_image_provider.h"
 
-#include "country/country_palette.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "infrastructure/improvement.h"
@@ -35,7 +34,6 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 	std::filesystem::path filepath;
 
 	bool is_frame_image = false;
-	const country_palette *country_palette = nullptr;
 
 	if (tile_image_type == "terrain") {
 		const terrain_type *terrain = terrain_type::get(identifier);
@@ -43,9 +41,6 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 		is_frame_image = true;
 	} else if (tile_image_type == "settlement") {
 		filepath = defines::get()->get_default_settlement_image_filepath();
-
-		const std::string &palette_identifier = id_list.at(2);
-		country_palette = country_palette::get(palette_identifier);
 	} else if (tile_image_type == "improvement") {
 		const improvement *improvement = improvement::get(identifier);
 		if (id_list.size() >= 4) {
@@ -92,10 +87,6 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 	QImage image(path::to_qstring(filepath));
 	assert_throw(!image.isNull());
 
-	if (country_palette != nullptr && country_palette != defines::get()->get_conversible_country_palette()) {
-		country_palette->apply_to_image(image, defines::get()->get_conversible_country_palette());
-	}
-
 	if (image_scale_factor != scale_factor) {
 		co_await thread_pool::get()->co_spawn_awaitable([this, &image, &scale_factor, &image_scale_factor]() -> boost::asio::awaitable<void> {
 			image = co_await image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, defines::get()->get_tile_size() * image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
@@ -117,31 +108,6 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 			this->set_image(frame_id, std::move(frame_images.at(i)));
 		}
 	} else {
-		if (country_palette != nullptr && country_palette == defines::get()->get_conversible_country_palette()) {
-			const std::vector<QColor> &conversible_colors = defines::get()->get_conversible_country_palette()->get_colors();
-			const color_set image_colors = image::get_colors(image.convertToFormat(QImage::Format_RGBA8888));
-
-			bool has_conversible_color = false;
-			for (const QColor &conversible_color : conversible_colors) {
-				if (image_colors.contains(conversible_color)) {
-					has_conversible_color = true;
-					break;
-				}
-			}
-
-			if (!has_conversible_color) {
-				const std::string base_id = id.substr(0, id.find_last_of('/'));
-
-				for (const metternich::country_palette *palette : country_palette::get_all()) {
-					if (palette == country_palette) {
-						continue;
-					}
-
-					this->set_image(base_id + "/" + palette->get_identifier(), QImage(image));
-				}
-			}
-		}
-
 		this->set_image(id, std::move(image));
 	}
 }
