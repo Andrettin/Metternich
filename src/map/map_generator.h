@@ -22,7 +22,7 @@ private:
 	static constexpr int min_hill_elevation = 800;
 	static constexpr int min_mountain_elevation = 900;
 
-	static constexpr int min_temperate_temperature = 250;
+	static constexpr int min_temperate_temperature = 100;
 	static constexpr int min_tropical_temperature = 750;
 
 	static constexpr int min_semi_arid_moisture = 100;
