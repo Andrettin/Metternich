@@ -48,6 +48,10 @@ terrain_type *terrain_type::try_get_by_biome(const metternich::elevation_type el
 			return terrain_type::try_get_by_biome(elevation_type, temperature_type, moisture_type::none, forestation_type);
 		}
 
+		if (temperature_type != temperature_type::none) {
+			return terrain_type::try_get_by_biome(elevation_type, temperature_type::none, moisture_type, forestation_type);
+		}
+
 		return nullptr;
 	}
 
