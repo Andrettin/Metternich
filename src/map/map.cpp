@@ -311,6 +311,34 @@ void map::add_tile_river_direction(const QPoint &tile_pos, const direction direc
 			}
 			break;
 		}
+		case direction::northwest: {
+			const QPoint northwest_tile_pos = tile_pos + QPoint(-1, -1);
+			if (this->contains(northwest_tile_pos)) {
+				this->get_tile(northwest_tile_pos)->add_river_direction(direction::southeast);
+			}
+			break;
+		}
+		case direction::northeast: {
+			const QPoint northeast_tile_pos = tile_pos + QPoint(1, -1);
+			if (this->contains(northeast_tile_pos)) {
+				this->get_tile(northeast_tile_pos)->add_river_direction(direction::southwest);
+			}
+			break;
+		}
+		case direction::southwest: {
+			const QPoint southwest_tile_pos = tile_pos + QPoint(-1, 1);
+			if (this->contains(southwest_tile_pos)) {
+				this->get_tile(southwest_tile_pos)->add_river_direction(direction::northeast);
+			}
+			break;
+		}
+		case direction::southeast: {
+			const QPoint southeast_tile_pos = tile_pos + QPoint(1, 1);
+			if (this->contains(southeast_tile_pos)) {
+				this->get_tile(southeast_tile_pos)->add_river_direction(direction::northwest);
+			}
+			break;
+		}
 		default:
 			break;
 	}

@@ -425,12 +425,16 @@ void map_template::apply_rivers() const
 					) {
 						map->add_tile_river_direction(tile_pos, direction::east);
 						map->add_tile_river_direction(tile_pos, direction::south);
+					} else if ((base_direction_flags & direction_flag::northwest) != 0) {
+						map->add_tile_river_direction(tile_pos, direction::east);
+						map->add_tile_river_direction(tile_pos, direction::northeast);
 					} else {
 						map->add_tile_river_direction(tile_pos, direction::east);
 					}
 				} else if ((base_direction_flags & direction_flag::west) != 0) {
 					map->add_tile_river_direction(tile_pos, direction::east);
 					map->add_tile_river_direction(tile_pos, direction::south);
+					map->add_tile_river_direction(tile_pos, direction::southeast);
 				} else if ((base_direction_flags & direction_flag::east) != 0) {
 					if ((base_direction_flags & direction_flag::northwest) != 0) {
 						map->add_tile_river_direction(tile_pos, direction::east);
@@ -447,10 +451,17 @@ void map_template::apply_rivers() const
 					} else {
 						map->add_tile_river_direction(tile_pos, direction::south);
 					}
+				} else if ((base_direction_flags & direction_flag::east) != 0) {
+					map->add_tile_river_direction(tile_pos, direction::southeast);
 				}
 			} else if ((base_direction_flags & direction_flag::west) != 0) {
 				if ((base_direction_flags & direction_flag::east) != 0) {
-					map->add_tile_river_direction(tile_pos, direction::south);
+					if ((base_direction_flags & direction_flag::northwest) != 0) {
+						map->add_tile_river_direction(tile_pos, direction::south);
+						map->add_tile_river_direction(tile_pos, direction::southwest);
+					} else {
+						map->add_tile_river_direction(tile_pos, direction::south);
+					}
 				}
 			}
 		}
