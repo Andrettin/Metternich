@@ -16,6 +16,7 @@
 #include "util/assert_util.h"
 #include "util/exception_util.h"
 #include "util/geoshape_util.h"
+#include "util/log_util.h"
 #include "util/path_util.h"
 #include "util/point_util.h"
 #include "util/vector_util.h"
@@ -258,15 +259,17 @@ void map_template::write_river_image()
 
 		this->map_projection->validate_area(this->get_georectangle(), this->get_size());
 
-		QImage base_image;
+		QImage image;
 
 		if (!this->get_river_image_filepath().empty()) {
-			base_image = QImage(path::to_qstring(this->get_river_image_filepath()));
-			assert_throw(!base_image.isNull());
+			image = QImage(path::to_qstring(this->get_river_image_filepath()));
+			assert_throw(!image.isNull());
 		} else {
-			base_image = QImage(this->get_size(), QImage::Format_RGBA8888);
-			base_image.fill(Qt::transparent);
+			image = QImage(this->get_size(), QImage::Format_RGBA8888);
+			image.fill(Qt::transparent);
 		}
+
+		assert_throw(image.size() == this->get_size());
 
 		//write river geoshapes
 		std::filesystem::path output_filepath = this->get_river_image_filepath().filename();
@@ -274,7 +277,65 @@ void map_template::write_river_image()
 			output_filepath = "rivers.png";
 		}
 
-		geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image, this->geocoordinate_x_offset);
+		const QRect image_rect = image.rect();
+
+		for (const auto &[color, geoshapes] : geodata_map) {
+			for (const std::unique_ptr<QGeoShape> &geoshape : geoshapes) {
+				assert_throw(geoshape->type() == QGeoShape::PathType);
+
+				const QGeoPath *geopath = static_cast<const QGeoPath *>(geoshape.get());
+
+				for (const QGeoCoordinate &qgeocoordinate : geopath->path()) {
+					const archimedes::geocoordinate geocoordinate(qgeocoordinate);
+					const QPoint pixel_pos = this->map_projection->geocoordinate_to_point(geocoordinate, this->get_georectangle(), image.size(), this->geocoordinate_x_offset);
+
+					if (!image_rect.contains(pixel_pos)) {
+						//only write to the image if the position is actually in it
+						continue;
+					}
+
+					uint8_t direction_flags = static_cast<uint8_t>(image.pixelColor(pixel_pos).blue());
+
+					uint8_t new_direction_flags = direction_flags;
+
+					const archimedes::geocoordinate tile_center_geocoordinate = this->map_projection->point_to_geocoordinate(pixel_pos, this->get_georectangle(), image.size(), this->geocoordinate_x_offset);
+
+					log::log_error("Geocoordinate: (" + geocoordinate.get_longitude().to_string() + ", " + geocoordinate.get_latitude().to_string() + "), Tile Center Geocoordinate: (" + tile_center_geocoordinate.get_longitude().to_string() + ", " + tile_center_geocoordinate.get_latitude().to_string() + ")");
+
+					const QPoint reference_pos = this->map_projection->geocoordinate_to_point(geocoordinate, this->get_georectangle(), image.size() * 100, this->geocoordinate_x_offset * 100);
+					const QPoint tile_center_reference_pos = this->map_projection->geocoordinate_to_point(tile_center_geocoordinate, this->get_georectangle(), image.size() * 100, this->geocoordinate_x_offset * 100);
+					const int longitude_distance = std::abs(reference_pos.x() - tile_center_reference_pos.x());
+					const int latitude_distance = std::abs(reference_pos.y() - tile_center_reference_pos.y());
+
+					log::log_error("Longitude Distance: " + std::to_string(longitude_distance));
+					log::log_error("Latitude Distance: " + std::to_string(latitude_distance));
+
+					if (longitude_distance >= 50) {
+						if (geocoordinate.get_latitude() <= tile_center_geocoordinate.get_latitude()) {
+							new_direction_flags |= direction_flag::south;
+						} else {
+							new_direction_flags |= direction_flag::north;
+						}
+					}
+					
+					if (latitude_distance >= 50) {
+						if (geocoordinate.get_longitude() >= tile_center_geocoordinate.get_longitude()) {
+							new_direction_flags |= direction_flag::east;
+						} else {
+							new_direction_flags |= direction_flag::west;
+						}
+					}
+
+					if (new_direction_flags == direction_flags) {
+						continue;
+					}
+
+					geoshape::write_pixel_to_image(pixel_pos, QColor(0, 0, new_direction_flags), image);
+				}
+			}
+		}
+
+		image.save(path::to_qstring(output_filepath));
 	} catch (const std::exception &exception) {
 		exception::report(exception);
 		std::terminate();
@@ -389,32 +450,45 @@ void map_template::apply_rivers() const
 
 	map *map = map::get();
 
-	static const QColor river_color = QColor(Qt::blue);
+	static const QColor empty_color = QColor(Qt::black);
 
 	for (int x = 0; x < map->get_width(); ++x) {
 		for (int y = 0; y < map->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
 			const QColor tile_color = river_image.pixelColor(tile_pos);
 
-			if (tile_color != river_color) {
+			if (tile_color.alpha() == 0 || tile_color == empty_color) {
 				continue;
 			}
 
+			const uint8_t direction_flags = static_cast<uint8_t>(tile_color.blue());
+
 			tile *tile = map->get_tile(tile_pos);
 
-			point::for_each_adjacent(tile_pos, [map, &river_image, &tile_pos, tile](const QPoint &adjacent_pos) {
-				if (!map->contains(adjacent_pos)) {
-					return;
-				}
-				
-				const QColor adjacent_tile_color = river_image.pixelColor(adjacent_pos);
-
-				if (adjacent_tile_color != river_color) {
-					return;
-				}
-
-				tile->add_river_direction(offset_to_direction(adjacent_pos - tile_pos));
-			});
+			if ((direction_flags & direction_flag::north) != 0) {
+				tile->add_river_direction(direction::north);
+			}
+			if ((direction_flags & direction_flag::south) != 0) {
+				tile->add_river_direction(direction::south);
+			}
+			if ((direction_flags & direction_flag::west) != 0) {
+				tile->add_river_direction(direction::west);
+			}
+			if ((direction_flags & direction_flag::east) != 0) {
+				tile->add_river_direction(direction::east);
+			}
+			if ((direction_flags & direction_flag::northwest) != 0) {
+				tile->add_river_direction(direction::northwest);
+			}
+			if ((direction_flags & direction_flag::northeast) != 0) {
+				tile->add_river_direction(direction::northeast);
+			}
+			if ((direction_flags & direction_flag::southwest) != 0) {
+				tile->add_river_direction(direction::southwest);
+			}
+			if ((direction_flags & direction_flag::southeast) != 0) {
+				tile->add_river_direction(direction::southeast);
+			}
 		}
 	}
 }
