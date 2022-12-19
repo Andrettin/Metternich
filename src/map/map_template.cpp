@@ -439,6 +439,7 @@ void map_template::apply_rivers() const
 					if ((base_direction_flags & direction_flag::northwest) != 0) {
 						map->add_tile_river_direction(tile_pos, direction::east);
 						map->add_tile_river_direction(tile_pos, direction::north);
+						map->add_tile_river_direction(tile_pos, direction::northeast);
 					} else {
 						map->add_tile_river_direction(tile_pos, direction::east);
 					}
@@ -448,6 +449,7 @@ void map_template::apply_rivers() const
 					if ((base_direction_flags & direction_flag::northwest) != 0) {
 						map->add_tile_river_direction(tile_pos, direction::west);
 						map->add_tile_river_direction(tile_pos, direction::south);
+						map->add_tile_river_direction(tile_pos, direction::southwest);
 					} else {
 						map->add_tile_river_direction(tile_pos, direction::south);
 					}
