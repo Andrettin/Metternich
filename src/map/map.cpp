@@ -277,6 +277,45 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 	}
 }
 
+void map::add_tile_river_direction(const QPoint &tile_pos, const direction direction)
+{
+	tile *tile = this->get_tile(tile_pos);
+	tile->add_river_direction(direction);
+
+	switch (direction) {
+		case direction::west: {
+			const QPoint west_tile_pos = tile_pos + QPoint(-1, 0);
+			if (this->contains(west_tile_pos)) {
+				this->get_tile(west_tile_pos)->add_river_direction(direction::east);
+			}
+			break;
+		}
+		case direction::east: {
+			const QPoint east_tile_pos = tile_pos + QPoint(1, 0);
+			if (this->contains(east_tile_pos)) {
+				this->get_tile(east_tile_pos)->add_river_direction(direction::west);
+			}
+			break;
+		}
+		case direction::north: {
+			const QPoint north_tile_pos = tile_pos + QPoint(0, -1);
+			if (this->contains(north_tile_pos)) {
+				this->get_tile(north_tile_pos)->add_river_direction(direction::south);
+			}
+			break;
+		}
+		case direction::south: {
+			const QPoint south_tile_pos = tile_pos + QPoint(0, 1);
+			if (this->contains(south_tile_pos)) {
+				this->get_tile(south_tile_pos)->add_river_direction(direction::north);
+			}
+			break;
+		}
+		default:
+			break;
+	}
+}
+
 void map::set_tile_province(const QPoint &tile_pos, const province *province)
 {
 	tile *tile = this->get_tile(tile_pos);
