@@ -32,6 +32,10 @@ void map_template::initialize()
 	for (const site *site : this->get_world()->get_sites()) {
 		assert_throw(site->get_geocoordinate().is_valid());
 
+		if (site->get_geocoordinate().is_null()) {
+			continue;
+		}
+
 		if (!this->get_georectangle().contains(site->get_geocoordinate())) {
 			continue;
 		}
