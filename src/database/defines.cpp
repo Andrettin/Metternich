@@ -9,6 +9,7 @@
 #include "map/tile_image_provider.h"
 #include "util/assert_util.h"
 #include "util/event_loop.h"
+#include "util/log_util.h"
 #include "util/path_util.h"
 
 namespace metternich {
@@ -136,6 +137,18 @@ void defines::set_default_menu_background_filepath(const std::filesystem::path &
 	this->default_menu_background_filepath = database::get()->get_graphics_filepath(filepath);
 }
 
+int defines::get_river_adjacency_tile(const terrain_adjacency &adjacency) const
+{
+	const auto find_iterator = this->river_adjacency_tiles.find(adjacency);
+	if (find_iterator != this->river_adjacency_tiles.end()) {
+		return find_iterator->second;
+	}
+
+	log::log_error("Failed to get river adjacency tile for adjacency:\n" + adjacency.to_string());
+
+	return -1;
+}
+
 void defines::set_river_adjacency_tile(const terrain_adjacency &adjacency, const int tile)
 {
 	const std::array<terrain_adjacency_type, terrain_adjacency::direction_count> &adjacency_data = adjacency.get_data();
@@ -159,7 +172,19 @@ void defines::set_river_adjacency_tile(const terrain_adjacency &adjacency, const
 
 	//if this is false, that means there was already a definition for the same adjacency data
 	//multiple adjacency definitions with the same adjacency data is an error
-	assert_throw(result.second);
+	assert_log(result.second);
+}
+
+int defines::get_rivermouth_adjacency_tile(const terrain_adjacency &adjacency) const
+{
+	const auto find_iterator = this->rivermouth_adjacency_tiles.find(adjacency);
+	if (find_iterator != this->rivermouth_adjacency_tiles.end()) {
+		return find_iterator->second;
+	}
+
+	log::log_error("Failed to get rivermouth adjacency tile for adjacency:\n" + adjacency.to_string());
+
+	return -1;
 }
 
 void defines::set_rivermouth_adjacency_tile(const terrain_adjacency &adjacency, const int tile)

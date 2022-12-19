@@ -191,28 +191,9 @@ public:
 		return this->min_diplomatic_map_tile_scale;
 	}
 
-	int get_river_adjacency_tile(const terrain_adjacency &adjacency) const
-	{
-		const auto find_iterator = this->river_adjacency_tiles.find(adjacency);
-		if (find_iterator != this->river_adjacency_tiles.end()) {
-			return find_iterator->second;
-		}
-
-		throw std::runtime_error("Failed to get river adjacency tile for adjacency:\n" + adjacency.to_string());
-	}
-
+	int get_river_adjacency_tile(const terrain_adjacency &adjacency) const;
 	void set_river_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
-
-	int get_rivermouth_adjacency_tile(const terrain_adjacency &adjacency) const
-	{
-		const auto find_iterator = this->rivermouth_adjacency_tiles.find(adjacency);
-		if (find_iterator != this->rivermouth_adjacency_tiles.end()) {
-			return find_iterator->second;
-		}
-
-		throw std::runtime_error("Failed to get rivermouth adjacency tile for adjacency:\n" + adjacency.to_string());
-	}
-
+	int get_rivermouth_adjacency_tile(const terrain_adjacency &adjacency) const;
 	void set_rivermouth_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
 
 signals:
