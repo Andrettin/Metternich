@@ -400,9 +400,9 @@ void map_template::apply_rivers() const
 				continue;
 			}
 
-			tile *tile = map->get_tile(tile_pos);
+			uint8_t base_direction_flags = direction_flag::none;
 
-			point::for_each_adjacent(tile_pos, [map, &river_image, &tile_pos, tile](const QPoint &adjacent_pos) {
+			point::for_each_adjacent(tile_pos, [map, &river_image, &tile_pos, &base_direction_flags](const QPoint &adjacent_pos) {
 				if (!map->contains(adjacent_pos)) {
 					return;
 				}
@@ -413,8 +413,46 @@ void map_template::apply_rivers() const
 					return;
 				}
 
-				tile->add_river_direction(offset_to_direction(adjacent_pos - tile_pos));
+				const direction direction = offset_to_direction(adjacent_pos - tile_pos);
+				base_direction_flags |= direction_to_flag(direction);
 			});
+
+			if ((base_direction_flags & direction_flag::north) != 0) {
+				if ((base_direction_flags & direction_flag::south) != 0) {
+					if (
+						(base_direction_flags & direction_flag::west) != 0
+						&& (base_direction_flags & direction_flag::southeast) != 0
+					) {
+						map->add_tile_river_direction(tile_pos, direction::east);
+						map->add_tile_river_direction(tile_pos, direction::south);
+					} else {
+						map->add_tile_river_direction(tile_pos, direction::east);
+					}
+				} else if ((base_direction_flags & direction_flag::west) != 0) {
+					map->add_tile_river_direction(tile_pos, direction::east);
+					map->add_tile_river_direction(tile_pos, direction::south);
+				} else if ((base_direction_flags & direction_flag::east) != 0) {
+					if ((base_direction_flags & direction_flag::northwest) != 0) {
+						map->add_tile_river_direction(tile_pos, direction::east);
+						map->add_tile_river_direction(tile_pos, direction::north);
+					} else {
+						map->add_tile_river_direction(tile_pos, direction::east);
+					}
+				}
+			} else if ((base_direction_flags & direction_flag::south) != 0) {
+				if ((base_direction_flags & direction_flag::west) != 0) {
+					if ((base_direction_flags & direction_flag::northwest) != 0) {
+						map->add_tile_river_direction(tile_pos, direction::west);
+						map->add_tile_river_direction(tile_pos, direction::south);
+					} else {
+						map->add_tile_river_direction(tile_pos, direction::south);
+					}
+				}
+			} else if ((base_direction_flags & direction_flag::west) != 0) {
+				if ((base_direction_flags & direction_flag::east) != 0) {
+					map->add_tile_river_direction(tile_pos, direction::south);
+				}
+			}
 		}
 	}
 }
