@@ -78,7 +78,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 
 				if (tile->has_river() && tile->get_terrain()->is_water() && tile->get_river_frame() != -1) {
 					QString river_image_source = "tile/";
-					river_image_source += "rivermouth";
+					river_image_source += "river";
 					river_image_source += "/" + QString::number(tile->get_river_frame());
 					underlay_image_sources.push_back(std::move(river_image_source));
 				}

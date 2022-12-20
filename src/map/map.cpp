@@ -264,12 +264,7 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 				adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::same);
 			}
 
-			int river_frame = -1;
-			if (tile->get_terrain()->is_water()) {
-				river_frame = defines::get()->get_rivermouth_adjacency_tile(adjacency);
-			} else {
-				river_frame = defines::get()->get_river_adjacency_tile(adjacency);
-			}
+			const int river_frame = defines::get()->get_river_adjacency_tile(adjacency);
 
 			if (river_frame != -1) {
 				tile->set_river_frame(river_frame);
