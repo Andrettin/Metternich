@@ -280,37 +280,81 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 	}
 }
 
-void map::add_tile_river_direction(const QPoint &tile_pos, const direction direction)
+void map::add_tile_river_direction(const QPoint &tile_pos, const direction direction, const bool riverhead)
 {
 	tile *tile = this->get_tile(tile_pos);
 	tile->add_river_direction(direction);
 
 	switch (direction) {
 		case direction::west: {
+			if (!riverhead) {
+				tile->add_river_direction(direction::northwest);
+				tile->add_river_direction(direction::southwest);
+			}
+
 			const QPoint west_tile_pos = tile_pos + QPoint(-1, 0);
 			if (this->contains(west_tile_pos)) {
-				this->get_tile(west_tile_pos)->add_river_direction(direction::east);
+				metternich::tile *west_tile = this->get_tile(west_tile_pos);
+				west_tile->add_river_direction(direction::east);
+
+				if (!riverhead) {
+					west_tile->add_river_direction(direction::northeast);
+					west_tile->add_river_direction(direction::southeast);
+				}
 			}
 			break;
 		}
 		case direction::east: {
+			if (!riverhead) {
+				tile->add_river_direction(direction::northeast);
+				tile->add_river_direction(direction::southeast);
+			}
+
 			const QPoint east_tile_pos = tile_pos + QPoint(1, 0);
 			if (this->contains(east_tile_pos)) {
-				this->get_tile(east_tile_pos)->add_river_direction(direction::west);
+				metternich::tile *east_tile = this->get_tile(east_tile_pos);
+				east_tile->add_river_direction(direction::west);
+
+				if (!riverhead) {
+					east_tile->add_river_direction(direction::northwest);
+					east_tile->add_river_direction(direction::southwest);
+				}
 			}
 			break;
 		}
 		case direction::north: {
+			if (!riverhead) {
+				tile->add_river_direction(direction::northwest);
+				tile->add_river_direction(direction::northeast);
+			}
+
 			const QPoint north_tile_pos = tile_pos + QPoint(0, -1);
 			if (this->contains(north_tile_pos)) {
-				this->get_tile(north_tile_pos)->add_river_direction(direction::south);
+				metternich::tile *north_tile = this->get_tile(north_tile_pos);
+				north_tile->add_river_direction(direction::south);
+
+				if (!riverhead) {
+					north_tile->add_river_direction(direction::southwest);
+					north_tile->add_river_direction(direction::southeast);
+				}
 			}
 			break;
 		}
 		case direction::south: {
+			if (!riverhead) {
+				tile->add_river_direction(direction::southwest);
+				tile->add_river_direction(direction::southeast);
+			}
+
 			const QPoint south_tile_pos = tile_pos + QPoint(0, 1);
 			if (this->contains(south_tile_pos)) {
-				this->get_tile(south_tile_pos)->add_river_direction(direction::north);
+				metternich::tile *south_tile = this->get_tile(south_tile_pos);
+				south_tile->add_river_direction(direction::north);
+
+				if (!riverhead) {
+					south_tile->add_river_direction(direction::northwest);
+					south_tile->add_river_direction(direction::northeast);
+				}
 			}
 			break;
 		}

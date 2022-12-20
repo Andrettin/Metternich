@@ -443,6 +443,14 @@ void map_template::apply_rivers() const
 					} else {
 						map->add_tile_river_direction(tile_pos, direction::east);
 					}
+				} else {
+					map->add_tile_river_direction(tile_pos, direction::east, true);
+					map->add_tile_river_direction(tile_pos, direction::northeast, true);
+
+					const QPoint east_tile_pos = tile_pos + QPoint(1, 0);
+					if (map->contains(east_tile_pos)) {
+						map->get_tile(east_tile_pos)->add_river_direction(direction::northwest);
+					}
 				}
 			} else if ((base_direction_flags & direction_flag::south) != 0) {
 				if ((base_direction_flags & direction_flag::west) != 0) {
@@ -455,6 +463,14 @@ void map_template::apply_rivers() const
 					}
 				} else if ((base_direction_flags & direction_flag::east) != 0) {
 					map->add_tile_river_direction(tile_pos, direction::southeast);
+				} else {
+					map->add_tile_river_direction(tile_pos, direction::east, true);
+					map->add_tile_river_direction(tile_pos, direction::southeast, true);
+
+					const QPoint east_tile_pos = tile_pos + QPoint(1, 0);
+					if (map->contains(east_tile_pos)) {
+						map->get_tile(east_tile_pos)->add_river_direction(direction::southwest);
+					}
 				}
 			} else if ((base_direction_flags & direction_flag::west) != 0) {
 				if ((base_direction_flags & direction_flag::east) != 0) {
@@ -464,6 +480,22 @@ void map_template::apply_rivers() const
 					} else {
 						map->add_tile_river_direction(tile_pos, direction::south);
 					}
+				} else {
+					map->add_tile_river_direction(tile_pos, direction::south, true);
+					map->add_tile_river_direction(tile_pos, direction::southwest, true);
+
+					const QPoint south_tile_pos = tile_pos + QPoint(0, 1);
+					if (map->contains(south_tile_pos)) {
+						map->get_tile(south_tile_pos)->add_river_direction(direction::northwest);
+					}
+				}
+			} else if ((base_direction_flags & direction_flag::east) != 0) {
+				map->add_tile_river_direction(tile_pos, direction::south, true);
+				map->add_tile_river_direction(tile_pos, direction::southeast, true);
+
+				const QPoint south_tile_pos = tile_pos + QPoint(0, 1);
+				if (map->contains(south_tile_pos)) {
+					map->get_tile(south_tile_pos)->add_river_direction(direction::northeast);
 				}
 			}
 		}
