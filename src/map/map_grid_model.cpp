@@ -75,22 +75,14 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return map_grid_model::build_image_source(tile->get_terrain(), tile->get_tile());
 			case role::underlay_image_sources: {
 				QStringList underlay_image_sources;
-
-				if (tile->has_river() && tile->get_terrain()->is_water() && tile->get_river_frame() != -1) {
-					QString river_image_source = "tile/";
-					river_image_source += "rivermouth";
-					river_image_source += "/" + QString::number(tile->get_river_frame());
-					underlay_image_sources.push_back(std::move(river_image_source));
-				}
-
 				return underlay_image_sources;
 			}
 			case role::overlay_image_sources: {
 				QStringList overlay_image_sources;
 
-				if (tile->has_river() && !tile->get_terrain()->is_water() && tile->get_river_frame() != -1) {
+				if (tile->has_river() && tile->get_river_frame() != -1) {
 					QString river_image_source = "tile/";
-					river_image_source += "river";
+					river_image_source += tile->get_terrain()->is_water() ? "rivermouth" : "river";
 					river_image_source += "/" + QString::number(tile->get_river_frame());
 					overlay_image_sources.push_back(std::move(river_image_source));
 				}
