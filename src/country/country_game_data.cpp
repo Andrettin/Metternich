@@ -468,11 +468,36 @@ void country_game_data::calculate_territory_rect()
 		}
 	}
 
+	this->calculate_territory_rect_center();
+
 	if (game::get()->is_running()) {
 		thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
 			co_await this->create_diplomatic_map_image();
 		});
 	}
+}
+
+void country_game_data::calculate_territory_rect_center()
+{
+	if (this->get_provinces().empty()) {
+		return;
+	}
+
+	QPoint sum(0, 0);
+	int tile_count = 0;
+
+	for (const province *province : this->get_provinces()) {
+		const province_game_data *province_game_data = province->get_game_data();
+		if (!this->get_main_contiguous_territory_rect().contains(province_game_data->get_territory_rect())) {
+			continue;
+		}
+
+		const int province_tile_count = static_cast<int>(province_game_data->get_tiles().size());
+		sum += province_game_data->get_territory_rect_center() * province_tile_count;
+		tile_count += province_tile_count;
+	}
+
+	this->territory_rect_center = QPoint(sum.x() / tile_count, sum.y() / tile_count);
 }
 
 QVariantList country_game_data::get_contiguous_territory_rects_qvariant_list() const

@@ -280,6 +280,21 @@ const std::string &province_game_data::get_current_cultural_name() const
 	return this->province->get_cultural_name(this->get_culture());
 }
 
+void province_game_data::calculate_territory_rect_center()
+{
+	const int tile_count = static_cast<int>(this->get_tiles().size());
+
+	assert_throw(tile_count > 0);
+
+	QPoint sum(0, 0);
+
+	for (const QPoint &tile_pos : this->get_tiles()) {
+		sum += tile_pos;
+	}
+
+	this->territory_rect_center = QPoint(sum.x() / tile_count, sum.y() / tile_count);
+}
+
 void province_game_data::add_tile(const QPoint &tile_pos)
 {
 	this->tiles.push_back(tile_pos);

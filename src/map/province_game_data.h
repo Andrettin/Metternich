@@ -101,6 +101,13 @@ public:
 		return this->territory_rect;
 	}
 
+	const QPoint &get_territory_rect_center() const
+	{
+		return this->territory_rect_center;
+	}
+
+	void calculate_territory_rect_center();
+
 	const std::vector<const metternich::province *> &get_border_provinces() const
 	{
 		return this->border_provinces;
@@ -262,6 +269,7 @@ private:
 	const country *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	QRect territory_rect;
+	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<const metternich::province *> border_provinces;
 	std::vector<QPoint> tiles;
 	std::vector<QPoint> border_tiles;

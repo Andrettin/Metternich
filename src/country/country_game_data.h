@@ -33,6 +33,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(bool anarchy READ is_under_anarchy NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
+	Q_PROPERTY(QPoint territory_rect_center READ get_territory_rect_center NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList contiguous_territory_rects READ get_contiguous_territory_rects_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect main_contiguous_territory_rect READ get_main_contiguous_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList resource_counts READ get_resource_counts_qvariant_list NOTIFY provinces_changed)
@@ -125,6 +126,13 @@ public:
 	}
 
 	void calculate_territory_rect();
+
+	const QPoint &get_territory_rect_center() const
+	{
+		return this->territory_rect_center;
+	}
+
+	void calculate_territory_rect_center();
 
 	const std::vector<QRect> &get_contiguous_territory_rects() const
 	{
@@ -387,6 +395,7 @@ private:
 	QRect territory_rect;
 	std::vector<QRect> contiguous_territory_rects;
 	QRect main_contiguous_territory_rect;
+	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<QPoint> border_tiles;
 	resource_map<int> resource_counts;
 	resource_map<int> vassal_resource_counts;
