@@ -192,6 +192,24 @@ bool country_game_data::is_any_vassal_of(const metternich::country *country) con
 	return false;
 }
 
+bool country_game_data::is_overlord_of(const metternich::country *country) const
+{
+	return country->get_game_data()->is_vassal_of(this->country);
+}
+
+bool country_game_data::is_any_overlord_of(const metternich::country *country) const
+{
+	if (this->is_overlord_of(country)) {
+		return true;
+	}
+
+	if (this->get_overlord() != nullptr) {
+		return this->get_overlord()->get_game_data()->is_any_overlord_of(country);
+	}
+
+	return false;
+}
+
 bool country_game_data::is_true_great_power() const
 {
 	if (this->country->get_type() != country_type::great_power) {

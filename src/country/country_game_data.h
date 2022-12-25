@@ -79,6 +79,8 @@ public:
 
 	bool is_vassal_of(const metternich::country *country) const;
 	bool is_any_vassal_of(const metternich::country *country) const;
+	bool is_overlord_of(const metternich::country *country) const;
+	bool is_any_overlord_of(const metternich::country *country) const;
 
 	bool is_true_great_power() const;
 	bool is_secondary_power() const;
