@@ -9,6 +9,7 @@ namespace metternich {
 class building_class;
 class population_class;
 class terrain_type;
+enum class diplomacy_state;
 
 class defines final : public defines_base, public singleton<defines>
 {
@@ -150,6 +151,16 @@ public:
 		return this->minimap_ocean_color;
 	}
 
+	const QColor &get_diplomacy_state_color(const diplomacy_state state) const
+	{
+		const auto find_iterator = this->diplomacy_state_colors.find(state);
+		if (find_iterator != this->diplomacy_state_colors.end()) {
+			return find_iterator->second;
+		}
+
+		throw std::runtime_error("Failed to get color for diplomacy state: " + static_cast<int>(state));
+	}
+
 	const std::filesystem::path &get_default_settlement_image_filepath() const
 	{
 		return this->default_settlement_image_filepath;
@@ -219,6 +230,7 @@ private:
 	QColor selected_country_color;
 	QColor ocean_color;
 	QColor minimap_ocean_color;
+	std::map<diplomacy_state, QColor> diplomacy_state_colors;
 	std::filesystem::path default_settlement_image_filepath;
 	std::filesystem::path river_image_filepath;
 	std::filesystem::path rivermouth_image_filepath;

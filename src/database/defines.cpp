@@ -2,6 +2,7 @@
 
 #include "database/defines.h"
 
+#include "country/diplomacy_state.h"
 #include "database/database.h"
 #include "database/preferences.h"
 #include "map/direction.h"
@@ -24,7 +25,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "river_adjacency_tiles") {
+	if (tag == "diplomacy_state_colors") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const diplomacy_state diplomacy_state = enum_converter<metternich::diplomacy_state>::to_enum(child_tag);
+			this->diplomacy_state_colors[diplomacy_state] = child_scope.to_color();
+		});
+	} else if (tag == "river_adjacency_tiles") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const int tile = std::stoi(child_scope.get_tag());
 
