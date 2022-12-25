@@ -553,7 +553,30 @@ void country_game_data::set_diplomacy_state(const metternich::country *other_cou
 {
 	const diplomacy_state old_state = this->get_diplomacy_state(other_country);
 
+	if (state == old_state) {
+		return;
+	}
+
+	//minor nations cannot have diplomacy with one another
+	assert_throw(this->country->is_great_power() || other_country->is_great_power());
+
+	switch (state) {
+		case diplomacy_state::alliance:
+			//only great powers can ally between themselves
+			assert_throw(this->country->is_great_power() && other_country->is_great_power());
+			break;
+		case diplomacy_state::non_aggression_pact:
+			//non-aggression pacts can only be formed between a great power and a minor nation
+			assert_throw(this->country->is_great_power() != other_country->is_great_power());
+			break;
+		default:
+			break;
+	}
+
 	if (is_vassalage_diplomacy_state(state)) {
+		//only great powers can have vassals
+		assert_throw(other_country->is_great_power());
+
 		this->set_overlord(other_country);
 	} else {
 		if (this->get_overlord() == other_country) {
