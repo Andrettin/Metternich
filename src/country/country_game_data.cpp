@@ -613,6 +613,22 @@ void country_game_data::change_diplomacy_state_count(const diplomacy_state state
 		this->diplomacy_state_counts.erase(state);
 		this->diplomacy_state_diplomatic_map_images.erase(state);
 	}
+
+	//if the change added the diplomacy state to the map, then we need to create the diplomatic map image for it
+	if (game::get()->is_running() && final_count == change && !is_vassalage_diplomacy_state(state) && !is_overlordship_diplomacy_state(state)) {
+		thread_pool::get()->co_spawn_sync([this, state]() -> boost::asio::awaitable<void> {
+			co_await create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic, state);
+		});
+	}
+}
+
+QString country_game_data::get_diplomacy_state_diplomatic_map_suffix(metternich::country *other_country) const
+{
+	if (other_country == this->country || this->is_any_overlord_of(other_country) || this->is_any_vassal_of(other_country)) {
+		return "empire";
+	}
+
+	return QString::fromStdString(enum_converter<diplomacy_state>::to_string(this->get_diplomacy_state(other_country)));
 }
 
 QVariantList country_game_data::get_consulates_qvariant_list() const
@@ -782,15 +798,25 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 
 	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * scale_factor, this->diplomatic_map_image.size());
 
-	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::terrain);
-	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::culture);
+	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic, {});
+	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic, diplomacy_state::peace);
+
+	for (const auto &[diplomacy_state, count] : this->get_diplomacy_state_counts()) {
+		if (!is_vassalage_diplomacy_state(diplomacy_state) && !is_overlordship_diplomacy_state(diplomacy_state)) {
+			co_await create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic, diplomacy_state);
+		}
+	}
+
+	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::terrain, {});
+	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::cultural, {});
 
 	emit diplomatic_map_image_changed();
 }
 
-boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode)
+boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode, const std::optional<diplomacy_state> &diplomacy_state)
 {
 	static const QColor empty_color(Qt::black);
+	static constexpr QColor diplomatic_self_color(170, 148, 214);
 
 	const map *map = map::get();
 
@@ -799,7 +825,7 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image
 	assert_throw(this->territory_rect.width() > 0);
 	assert_throw(this->territory_rect.height() > 0);
 
-	QImage &image = this->diplomatic_map_mode_images[mode];
+	QImage &image = (mode == diplomatic_map_mode::diplomatic && diplomacy_state.has_value()) ? this->diplomacy_state_diplomatic_map_images[diplomacy_state.value()] : this->diplomatic_map_mode_images[mode];
 
 	image = QImage(this->territory_rect.size(), QImage::Format_RGBA8888);
 	image.fill(Qt::transparent);
@@ -816,10 +842,17 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image
 			const QColor *color = nullptr;
 
 			switch (mode) {
+				case diplomatic_map_mode::diplomatic:
+					if (diplomacy_state.has_value()) {
+						color = &defines::get()->get_diplomacy_state_color(diplomacy_state.value());
+					} else {
+						color = &diplomatic_self_color;
+					}
+					break;
 				case diplomatic_map_mode::terrain:
 					color = &tile->get_terrain()->get_color();
 					break;
-				case diplomatic_map_mode::culture: {
+				case diplomatic_map_mode::cultural: {
 					const culture *culture = tile->get_province()->get_game_data()->get_culture();
 					if (culture != nullptr) {
 						color = &tile->get_province()->get_game_data()->get_culture()->get_color();

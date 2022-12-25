@@ -210,6 +210,7 @@ public:
 	}
 
 	void change_diplomacy_state_count(const diplomacy_state state, const int change);
+	Q_INVOKABLE QString get_diplomacy_state_diplomatic_map_suffix(metternich::country *other_country) const;
 
 	QVariantList get_consulates_qvariant_list() const;
 
@@ -261,7 +262,17 @@ public:
 	}
 
 	[[nodiscard]]
-	boost::asio::awaitable<void> create_diplomatic_map_mode_image(const diplomatic_map_mode mode);
+	boost::asio::awaitable<void> create_diplomatic_map_mode_image(const diplomatic_map_mode mode, const std::optional<diplomacy_state> &diplomacy_state);
+
+	const QImage &get_diplomacy_state_diplomatic_map_image(const diplomacy_state state) const
+	{
+		const auto find_iterator = this->diplomacy_state_diplomatic_map_images.find(state);
+		if (find_iterator != this->diplomacy_state_diplomatic_map_images.end()) {
+			return find_iterator->second;
+		}
+
+		throw std::runtime_error("No diplomacy state diplomatic map image found for state " + std::to_string(static_cast<int>(state)) + ".");
+	}
 
 	int get_rank() const
 	{
@@ -415,6 +426,7 @@ private:
 	QImage diplomatic_map_image;
 	QImage selected_diplomatic_map_image;
 	std::map<diplomatic_map_mode, QImage> diplomatic_map_mode_images;
+	std::map<diplomacy_state, QImage> diplomacy_state_diplomatic_map_images;
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;

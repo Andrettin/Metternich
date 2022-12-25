@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/diplomacy_state.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "util/assert_util.h"
@@ -33,10 +34,22 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 		const std::string &mode_identifier = id_list.at(1);
 		if (mode_identifier == "selected") {
 			image = &country_game_data->get_selected_diplomatic_map_image();
+		} else if (mode_identifier == "diplomatic") {
+			std::optional<diplomacy_state> diplomacy_state;
+			const std::string &diplomacy_state_identifier = id_list.at(2);
+			if (diplomacy_state_identifier != "empire") {
+				diplomacy_state = enum_converter<metternich::diplomacy_state>::to_enum(diplomacy_state_identifier);
+			}
+			
+			if (diplomacy_state.has_value()) {
+				image = &country_game_data->get_diplomacy_state_diplomatic_map_image(diplomacy_state.value());
+			} else {
+				image = &country_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic);
+			}
 		} else if (mode_identifier == "terrain") {
 			image = &country_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::terrain);
-		} else if (mode_identifier == "culture") {
-			image = &country_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::culture);
+		} else if (mode_identifier == "cultural") {
+			image = &country_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::cultural);
 		} else {
 			image = &country_game_data->get_diplomatic_map_image();
 		}
