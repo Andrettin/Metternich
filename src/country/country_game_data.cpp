@@ -584,10 +584,15 @@ void country_game_data::set_diplomacy_state(const metternich::country *other_cou
 		}
 	}
 
+	if (old_state != diplomacy_state::peace) {
+		this->change_diplomacy_state_count(old_state, -1);
+	}
+
 	if (state == diplomacy_state::peace) {
 		this->diplomacy_states.erase(other_country);
 	} else {
 		this->diplomacy_states[other_country] = state;
+		this->change_diplomacy_state_count(state, 1);
 	}
 
 	if (game::get()->is_running()) {
@@ -597,6 +602,16 @@ void country_game_data::set_diplomacy_state(const metternich::country *other_cou
 			emit type_name_changed();
 			emit vassalage_type_name_changed();
 		}
+	}
+}
+
+void country_game_data::change_diplomacy_state_count(const diplomacy_state state, const int change)
+{
+	const int final_count = (this->diplomacy_state_counts[state] += change);
+
+	if (final_count == 0) {
+		this->diplomacy_state_counts.erase(state);
+		this->diplomacy_state_diplomatic_map_images.erase(state);
 	}
 }
 
@@ -694,12 +709,12 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 
 	co_await thread_pool::get()->co_spawn_awaitable([this, tile_pixel_size, &scaled_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() -> boost::asio::awaitable<void> {
 		scaled_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
+		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	});
 
-		scaled_selected_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
+	scaled_selected_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	});
 	});
 
 	this->diplomatic_map_image = std::move(scaled_diplomatic_map_image);
@@ -711,7 +726,7 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 		for (int y = 0; y < this->diplomatic_map_image.height(); ++y) {
 			const QPoint pixel_pos(x, y);
 			const QColor pixel_color = this->diplomatic_map_image.pixelColor(pixel_pos);
-			
+
 			if (pixel_color.alpha() == 0) {
 				continue;
 			}
@@ -733,8 +748,8 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 					return false;
 				}
 
-				is_border_pixel = true;
-				return true;
+			is_border_pixel = true;
+			return true;
 			});
 
 			if (is_border_pixel) {

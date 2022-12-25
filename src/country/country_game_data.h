@@ -204,6 +204,13 @@ public:
 	diplomacy_state get_diplomacy_state(const metternich::country *other_country) const;
 	void set_diplomacy_state(const metternich::country *other_country, const diplomacy_state state);
 
+	const std::map<diplomacy_state, int> &get_diplomacy_state_counts() const
+	{
+		return this->diplomacy_state_counts;
+	}
+
+	void change_diplomacy_state_count(const diplomacy_state state, const int change);
+
 	QVariantList get_consulates_qvariant_list() const;
 
 	const consulate *get_consulate(const metternich::country *other_country) const
@@ -403,6 +410,7 @@ private:
 	resource_map<int> vassal_resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
 	country_map<diplomacy_state> diplomacy_states;
+	std::map<diplomacy_state, int> diplomacy_state_counts;
 	country_map<const consulate *> consulates;
 	QImage diplomatic_map_image;
 	QImage selected_diplomatic_map_image;
