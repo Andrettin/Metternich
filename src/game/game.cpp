@@ -133,6 +133,7 @@ void game::stop()
 		this->set_running(false);
 		this->clear();
 		map::get()->clear();
+		this->set_player_country(nullptr);
 	});
 }
 
