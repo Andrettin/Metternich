@@ -36,6 +36,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QPoint territory_rect_center READ get_territory_rect_center NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList contiguous_territory_rects READ get_contiguous_territory_rects_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect main_contiguous_territory_rect READ get_main_contiguous_territory_rect NOTIFY provinces_changed)
+	Q_PROPERTY(QRect text_rect READ get_text_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList resource_counts READ get_resource_counts_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList vassal_resource_counts READ get_vassal_resource_counts_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList tile_terrain_counts READ get_tile_terrain_counts_qvariant_list NOTIFY provinces_changed)
@@ -147,6 +148,13 @@ public:
 	{
 		return this->main_contiguous_territory_rect;
 	}
+
+	const QRect &get_text_rect() const
+	{
+		return this->text_rect;
+	}
+
+	void calculate_text_rect();
 
 	const std::vector<QPoint> &get_border_tiles() const
 	{
@@ -415,6 +423,7 @@ private:
 	QRect territory_rect;
 	std::vector<QRect> contiguous_territory_rects;
 	QRect main_contiguous_territory_rect;
+	QRect text_rect;
 	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<QPoint> border_tiles;
 	resource_map<int> resource_counts;

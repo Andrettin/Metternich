@@ -487,6 +487,7 @@ void country_game_data::calculate_territory_rect()
 	}
 
 	this->calculate_territory_rect_center();
+	this->calculate_text_rect();
 
 	if (game::get()->is_running()) {
 		thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
@@ -521,6 +522,122 @@ void country_game_data::calculate_territory_rect_center()
 QVariantList country_game_data::get_contiguous_territory_rects_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_contiguous_territory_rects());
+}
+
+void country_game_data::calculate_text_rect()
+{
+	this->text_rect = QRect();
+
+	if (!this->is_alive()) {
+		return;
+	}
+
+	QPoint center_pos = this->get_territory_rect_center();
+
+	const map *map = map::get();
+
+	if (map->get_tile(center_pos)->get_owner() != this->country) {
+		center_pos = this->country->get_capital_province()->get_capital_settlement()->get_game_data()->get_tile_pos();
+
+		if (map->get_tile(center_pos)->get_owner() != this->country) {
+			return;
+		}
+	}
+
+	this->text_rect = QRect(center_pos, QSize(1, 1));
+
+	bool changed = true;
+	while (changed) {
+		changed = false;
+
+		bool can_expand_left = true;
+		const int left_x = this->text_rect.left() - 1;
+		for (int y = this->text_rect.top(); y <= this->text_rect.bottom(); ++y) {
+			const QPoint adjacent_pos(left_x, y);
+
+			if (!this->main_contiguous_territory_rect.contains(adjacent_pos)) {
+				can_expand_left = false;
+				break;
+			}
+
+			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
+
+			if (adjacent_tile->get_owner() != this->country) {
+				can_expand_left = false;
+				break;
+			}
+		}
+		if (can_expand_left) {
+			this->text_rect.setLeft(left_x);
+			changed = true;
+		}
+
+		bool can_expand_right = true;
+		const int right_x = this->text_rect.right() + 1;
+		for (int y = this->text_rect.top(); y <= this->text_rect.bottom(); ++y) {
+			const QPoint adjacent_pos(right_x, y);
+
+			if (!this->main_contiguous_territory_rect.contains(adjacent_pos)) {
+				can_expand_right = false;
+				break;
+			}
+
+			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
+
+			if (adjacent_tile->get_owner() != this->country) {
+				can_expand_right = false;
+				break;
+			}
+		}
+		if (can_expand_right) {
+			this->text_rect.setRight(right_x);
+			changed = true;
+		}
+
+		bool can_expand_up = true;
+		const int up_y = this->text_rect.top() - 1;
+		for (int x = this->text_rect.left(); x <= this->text_rect.right(); ++x) {
+			const QPoint adjacent_pos(x, up_y);
+
+			if (!this->main_contiguous_territory_rect.contains(adjacent_pos)) {
+				can_expand_up = false;
+				break;
+			}
+
+			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
+
+			if (adjacent_tile->get_owner() != this->country) {
+				can_expand_up = false;
+				break;
+			}
+		}
+		if (can_expand_up) {
+			this->text_rect.setTop(up_y);
+			changed = true;
+		}
+
+		bool can_expand_down = true;
+		const int down_y = this->text_rect.bottom() + 1;
+		for (int x = this->text_rect.left(); x <= this->text_rect.right(); ++x) {
+			const QPoint adjacent_pos(x, down_y);
+
+			if (!this->main_contiguous_territory_rect.contains(adjacent_pos)) {
+				can_expand_down = false;
+				break;
+			}
+
+			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
+
+			if (adjacent_tile->get_owner() != this->country) {
+				can_expand_down = false;
+				break;
+			}
+		}
+		if (can_expand_down) {
+			this->text_rect.setBottom(down_y);
+			changed = true;
+		}
+	}
 }
 
 QVariantList country_game_data::get_resource_counts_qvariant_list() const
