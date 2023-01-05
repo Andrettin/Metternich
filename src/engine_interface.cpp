@@ -4,6 +4,7 @@
 
 #include "database/defines.h"
 #include "database/preferences.h"
+#include "game/event_instance.h"
 #include "game/game.h"
 #include "game/scenario.h"
 #include "map/map.h"
@@ -66,6 +67,22 @@ QVariantList engine_interface::get_scenarios() const
 QVariantList engine_interface::get_eras() const
 {
 	return container::to_qvariant_list(era::get_all());
+}
+
+void engine_interface::add_event_instance(qunique_ptr<event_instance> &&event_instance)
+{
+	metternich::event_instance *event_instance_ptr = event_instance.get();
+	this->event_instances.push_back(std::move(event_instance));
+	emit event_fired(event_instance_ptr);
+}
+
+void engine_interface::remove_event_instance(event_instance *event_instance)
+{
+	emit event_closed(event_instance);
+
+	std::erase_if(this->event_instances, [event_instance](const qunique_ptr<metternich::event_instance> &element) {
+		return element.get() == event_instance;
+	});
 }
 
 }

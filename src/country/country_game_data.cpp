@@ -10,6 +10,7 @@
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
+#include "game/event.h"
 #include "game/game.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -21,6 +22,7 @@
 #include "map/tile.h"
 #include "population/phenotype.h"
 #include "population/population_unit.h"
+#include "script/condition/condition.h"
 #include "unit/civilian_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -59,6 +61,8 @@ void country_game_data::do_turn()
 	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 		civilian_unit->do_turn();
 	}
+
+	this->do_events();
 }
 
 void country_game_data::do_population_growth()
@@ -125,6 +129,19 @@ void country_game_data::do_migration()
 				break;
 			}
 		}
+	}
+}
+
+void country_game_data::do_events()
+{
+	const read_only_context ctx = read_only_context::from_scope(this->country);
+
+	for (const metternich::event *event : event::get_all()) {
+		if (event->get_conditions() != nullptr && !event->get_conditions()->check(this->country, ctx)) {
+			continue;
+		}
+
+		event->fire(this->country);
 	}
 }
 

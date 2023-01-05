@@ -1,10 +1,12 @@
 #pragma once
 
+#include "util/qunique_ptr.h"
 #include "util/singleton.h"
 
 namespace metternich {
 
 class defines;
+class event_instance;
 class game;
 class map;
 class preferences;
@@ -23,6 +25,7 @@ class engine_interface final : public QObject, public singleton<engine_interface
 
 public:
 	engine_interface();
+	engine_interface(const engine_interface &other) = delete;
 	~engine_interface();
 
 	bool is_running() const
@@ -52,12 +55,20 @@ public:
 	Q_INVOKABLE QVariantList get_scenarios() const;
 	Q_INVOKABLE QVariantList get_eras() const;
 
+	void add_event_instance(qunique_ptr<event_instance> &&event_instance);
+	void remove_event_instance(event_instance *event_instance);
+
+	engine_interface &operator =(const engine_interface &other) = delete;
+
 signals:
 	void running_changed();
 	void scale_factor_changed();
+	void event_fired(QObject *event_instance);
+	void event_closed(QObject *event_instance);
 
 private:
 	bool running = false;
+	std::vector<qunique_ptr<event_instance>> event_instances;
 };
 
 }
