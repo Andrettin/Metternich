@@ -7,6 +7,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "script/condition/and_condition.h"
+#include "script/factor.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -19,11 +20,31 @@ event::~event()
 {
 }
 
+void event::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const gsml_operator gsml_operator = property.get_operator();
+	const std::string &value = property.get_value();
+
+	if (key == "random_weight") {
+		if (gsml_operator != gsml_operator::assignment) {
+			throw std::runtime_error("Invalid operator for property \"" + key + "\".");
+		}
+
+		this->set_random_weight(std::stoi(value));
+	} else {
+		data_entry::process_gsml_property(property);
+	}
+}
+
 void event::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "conditions") {
+	if (tag == "random_weight_factor") {
+		this->random_weight_factor = std::make_unique<factor<country>>();
+		database::process_gsml_data(this->random_weight_factor, scope);
+	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
@@ -35,10 +56,23 @@ void event::process_gsml_scope(const gsml_data &scope)
 void event::initialize()
 {
 	if (this->get_trigger() != event_trigger::none) {
-		event::trigger_events[this->get_trigger()].push_back(this);
+		if (this->is_random()) {
+			event::trigger_random_events[this->get_trigger()].push_back(this);
+		} else {
+			event::trigger_events[this->get_trigger()].push_back(this);
+		}
 	}
 
 	data_entry::initialize();
+}
+
+void event::set_random_weight(const int weight)
+{
+	if (weight != 0) {
+		this->random_weight_factor = std::make_unique<factor<country>>(weight);
+	} else {
+		this->random_weight_factor.reset();
+	}
 }
 
 void event::fire(const country *country) const

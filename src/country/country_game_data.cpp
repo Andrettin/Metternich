@@ -24,6 +24,7 @@
 #include "population/phenotype.h"
 #include "population/population_unit.h"
 #include "script/condition/condition.h"
+#include "script/factor.h"
 #include "unit/civilian_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -138,10 +139,10 @@ void country_game_data::do_events()
 	const bool is_last_turn_of_year = (game::get()->get_date().date().month() + defines::get()->get_months_per_turn()) > 12;
 
 	if (is_last_turn_of_year) {
-		this->check_events(event::get_trigger_events(event_trigger::yearly_pulse));
+		this->check_events(event_trigger::yearly_pulse);
 	}
 
-	this->check_events(event::get_trigger_events(event_trigger::quarterly_pulse));
+	this->check_events(event_trigger::quarterly_pulse);
 }
 
 void country_game_data::do_ai_turn()
@@ -1256,20 +1257,54 @@ void country_game_data::remove_civilian_unit(metternich::civilian_unit *civilian
 	}
 }
 
-void country_game_data::check_events(const std::vector<const metternich::event *> &events)
+void country_game_data::check_events(const event_trigger trigger)
 {
-	if (events.empty()) {
-		return;
-	}
+	assert_throw(trigger != event_trigger::none);
 
 	const read_only_context ctx = read_only_context::from_scope(this->country);
 
-	for (const metternich::event *event : events) {
+	for (const metternich::event *event : event::get_trigger_events(trigger)) {
 		if (event->get_conditions() != nullptr && !event->get_conditions()->check(this->country, ctx)) {
 			continue;
 		}
 
 		event->fire(this->country);
+	}
+
+	this->check_random_events(trigger, ctx);
+}
+
+void country_game_data::check_random_events(const event_trigger trigger, const read_only_context &ctx)
+{
+	std::vector<const metternich::event *> random_events;
+
+	for (const metternich::event *event : event::get_trigger_random_events(trigger)) {
+		if (event == nullptr) {
+			random_events.push_back(event);
+			continue;
+		}
+
+		const int weight = event->get_random_weight_factor()->calculate(this->country);
+
+		for (int i = 0; i < weight; ++i) {
+			random_events.push_back(event);
+		}
+	}
+
+	while (!random_events.empty()) {
+		const metternich::event *event = vector::get_random(random_events);
+
+		if (event == nullptr) {
+			//a null event represents no event happening for the player for this check
+			break;
+		}
+
+		if (event->get_conditions() == nullptr || event->get_conditions()->check(this->country, ctx)) {
+			event->fire(this->country);
+			break;
+		}
+
+		std::erase(random_events, event);
 	}
 }
 

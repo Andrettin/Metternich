@@ -121,6 +121,8 @@ set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "populatio
 
 set(script_SRCS
 	src/script/context.cpp
+	src/script/factor.cpp
+	src/script/factor_modifier.cpp
 )
 source_group(script FILES ${script_SRCS})
 set_source_files_properties(${script_SRCS} PROPERTIES UNITY_GROUP "script")
@@ -302,6 +304,8 @@ source_group(population FILES ${population_HDRS})
 
 set(script_HDRS
 	src/script/context.h
+	src/script/factor.h
+	src/script/factor_modifier.h
 )
 source_group(script FILES ${script_HDRS})
 
