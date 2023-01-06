@@ -52,6 +52,15 @@ public:
 		return empty_list;
 	}
 
+	static void add_trigger_none_random_weight(const event_trigger trigger, const int weight)
+	{
+		std::vector<const event *> &events = event::trigger_random_events[trigger];
+
+		for (int i = 0; i < weight; ++i) {
+			events.push_back(nullptr);
+		}
+	}
+
 	static void clear()
 	{
 		data_type::clear();

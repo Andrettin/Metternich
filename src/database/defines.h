@@ -10,6 +10,7 @@ class building_class;
 class population_class;
 class terrain_type;
 enum class diplomacy_state;
+enum class event_trigger;
 
 class defines final : public defines_base, public singleton<defines>
 {
@@ -189,6 +190,11 @@ public:
 
 	void set_province_border_image_filepath(const std::filesystem::path &filepath);
 
+	const std::map<event_trigger, int> get_event_trigger_none_random_weights() const
+	{
+		return this->event_trigger_none_random_weights;
+	}
+
 	QString get_default_menu_background_filepath_qstring() const;
 	void set_default_menu_background_filepath(const std::filesystem::path &filepath);
 
@@ -235,6 +241,7 @@ private:
 	std::filesystem::path river_image_filepath;
 	std::filesystem::path rivermouth_image_filepath;
 	std::filesystem::path province_border_image_filepath;
+	std::map<event_trigger, int> event_trigger_none_random_weights; //the weight for no event happening for a given event trigger's random event selection
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;
 	std::map<terrain_adjacency, int> river_adjacency_tiles;

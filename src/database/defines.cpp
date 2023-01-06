@@ -5,6 +5,8 @@
 #include "country/diplomacy_state.h"
 #include "database/database.h"
 #include "database/preferences.h"
+#include "game/event.h"
+#include "game/event_trigger.h"
 #include "map/direction.h"
 #include "map/terrain_adjacency_type.h"
 #include "map/tile_image_provider.h"
@@ -30,6 +32,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			const std::string &child_tag = child_scope.get_tag();
 			const diplomacy_state diplomacy_state = enum_converter<metternich::diplomacy_state>::to_enum(child_tag);
 			this->diplomacy_state_colors[diplomacy_state] = child_scope.to_color();
+		});
+	} else if (tag == "event_trigger_none_random_weights") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const event_trigger trigger = enum_converter<event_trigger>::to_enum(property.get_key());
+			const int weight = std::stoi(property.get_value());
+
+			this->event_trigger_none_random_weights[trigger] = weight;
 		});
 	} else if (tag == "river_adjacency_tiles") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
@@ -66,6 +75,10 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 void defines::initialize()
 {
+	for (const auto &[event_trigger, random_weight] : defines::get()->get_event_trigger_none_random_weights()) {
+		event::add_trigger_none_random_weight(event_trigger, random_weight);
+	}
+
 	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
 		co_await tile_image_provider::get()->load_image("borders/province_border");
 	});
