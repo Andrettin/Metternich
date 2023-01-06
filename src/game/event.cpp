@@ -4,12 +4,14 @@
 
 #include "engine_interface.h"
 #include "game/event_instance.h"
+#include "game/event_trigger.h"
 #include "game/game.h"
 #include "script/condition/and_condition.h"
+#include "util/assert_util.h"
 
 namespace metternich {
 
-event::event(const std::string &identifier) : named_data_entry(identifier)
+event::event(const std::string &identifier) : named_data_entry(identifier), trigger(event_trigger::none)
 {
 }
 
@@ -28,6 +30,15 @@ void event::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void event::initialize()
+{
+	if (this->get_trigger() != event_trigger::none) {
+		event::trigger_events[this->get_trigger()].push_back(this);
+	}
+
+	data_entry::initialize();
 }
 
 void event::fire(const country *country) const

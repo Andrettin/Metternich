@@ -12,6 +12,7 @@
 #include "database/preferences.h"
 #include "economy/food_type.h"
 #include "engine_interface.h"
+#include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/scenario.h"
 #include "infrastructure/building_slot.h"
@@ -81,6 +82,7 @@ int main(int argc, char **argv)
 		enum_converter<cultural_group_rank>();
 		enum_converter<diplomacy_state>();
 		enum_converter<elevation_type>();
+		enum_converter<event_trigger>();
 		enum_converter<food_type>();
 		enum_converter<forestation_type>();
 		enum_converter<gender>();

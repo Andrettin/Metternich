@@ -16,6 +16,7 @@ class civilian_unit;
 class consulate;
 class country;
 class culture;
+class event;
 class population_unit;
 class province;
 enum class diplomacy_state;
@@ -399,6 +400,8 @@ public:
 
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
+
+	void check_events(const std::vector<const metternich::event *> &events);
 
 signals:
 	void overlord_changed();

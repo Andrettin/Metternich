@@ -11,6 +11,7 @@
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "game/event.h"
+#include "game/event_trigger.h"
 #include "game/game.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -134,15 +135,13 @@ void country_game_data::do_migration()
 
 void country_game_data::do_events()
 {
-	const read_only_context ctx = read_only_context::from_scope(this->country);
+	const bool is_last_turn_of_year = (game::get()->get_date().date().month() + defines::get()->get_months_per_turn()) > 12;
 
-	for (const metternich::event *event : event::get_all()) {
-		if (event->get_conditions() != nullptr && !event->get_conditions()->check(this->country, ctx)) {
-			continue;
-		}
-
-		event->fire(this->country);
+	if (is_last_turn_of_year) {
+		this->check_events(event::get_trigger_events(event_trigger::yearly_pulse));
 	}
+
+	this->check_events(event::get_trigger_events(event_trigger::quarterly_pulse));
 }
 
 void country_game_data::do_ai_turn()
@@ -1254,6 +1253,23 @@ void country_game_data::remove_civilian_unit(metternich::civilian_unit *civilian
 			this->civilian_units.erase(this->civilian_units.begin() + i);
 			return;
 		}
+	}
+}
+
+void country_game_data::check_events(const std::vector<const metternich::event *> &events)
+{
+	if (events.empty()) {
+		return;
+	}
+
+	const read_only_context ctx = read_only_context::from_scope(this->country);
+
+	for (const metternich::event *event : events) {
+		if (event->get_conditions() != nullptr && !event->get_conditions()->check(this->country, ctx)) {
+			continue;
+		}
+
+		event->fire(this->country);
 	}
 }
 
