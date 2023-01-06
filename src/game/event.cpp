@@ -4,6 +4,7 @@
 
 #include "engine_interface.h"
 #include "game/event_instance.h"
+#include "game/event_option.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "script/condition/and_condition.h"
@@ -48,6 +49,10 @@ void event::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<country>>();
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
+	} else if (tag == "option") {
+		auto option = std::make_unique<event_option>();
+		database::process_gsml_data(option, scope);
+		this->options.push_back(std::move(option));
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -64,6 +69,17 @@ void event::initialize()
 	}
 
 	data_entry::initialize();
+}
+
+void event::check() const
+{
+	if (this->get_conditions() != nullptr) {
+		this->get_conditions()->check_validity();
+	}
+
+	for (const std::unique_ptr<event_option> &option : this->get_options()) {
+		option->check();
+	}
 }
 
 void event::set_random_weight(const int weight)

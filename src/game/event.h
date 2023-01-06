@@ -6,6 +6,7 @@
 namespace metternich {
 
 class country;
+class event_option;
 enum class event_trigger;
 
 template <typename scope_type>
@@ -79,6 +80,7 @@ public:
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	void initialize() override;
+	void check() const override;
 
 	const std::string &get_description() const
 	{
@@ -125,6 +127,11 @@ public:
 		return this->random_weight_factor.get();
 	}
 
+	const std::vector<std::unique_ptr<event_option>> &get_options() const
+	{
+		return this->options;
+	}
+
 	const condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -140,6 +147,7 @@ private:
 	event_trigger trigger;
 	std::unique_ptr<factor<country>> random_weight_factor;
 	std::unique_ptr<const condition<country>> conditions;
+	std::vector<std::unique_ptr<event_option>> options;
 };
 
 }
