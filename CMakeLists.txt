@@ -136,6 +136,13 @@ set(script_condition_SRCS
 source_group(script\\condition FILES ${script_condition_SRCS})
 set_source_files_properties(${script_condition_SRCS} PROPERTIES UNITY_GROUP "script_condition")
 
+set(script_effect_SRCS
+	src/script/effect/effect.cpp
+	src/script/effect/effect_list.cpp
+)
+source_group(script\\effect FILES ${script_effect_SRCS})
+set_source_files_properties(${script_effect_SRCS} PROPERTIES UNITY_GROUP "script_effect")
+
 set(technology_SRCS
 	src/technology/technology.cpp
 	src/technology/technology_container.cpp
@@ -192,6 +199,7 @@ set(metternich_SRCS
 	${population_SRCS}
 	${script_SRCS}
 	${script_condition_SRCS}
+	${script_effect_SRCS}
 	${technology_SRCS}
 	${time_SRCS}
 	${ui_SRCS}
@@ -321,6 +329,13 @@ set(script_condition_HDRS
 )
 source_group(script\\condition FILES ${script_condition_HDRS})
 
+set(script_effect_HDRS
+	src/script/effect/effect.h
+	src/script/effect/effect_list.h
+	src/script/effect/wealth_effect.h
+)
+source_group(script\\effect FILES ${script_effect_HDRS})
+
 set(technology_HDRS
 	src/technology/technology.h
 	src/technology/technology_container.h
@@ -374,6 +389,7 @@ set(metternich_HDRS
 	${population_HDRS}
 	${script_HDRS}
 	${script_condition_HDRS}
+	${script_effect_HDRS}
 	${technology_HDRS}
 	${time_HDRS}
 	${ui_HDRS}
