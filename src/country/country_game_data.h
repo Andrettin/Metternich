@@ -54,6 +54,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
+	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 
@@ -363,6 +364,27 @@ public:
 
 	void decrease_population();
 
+	int get_wealth() const
+	{
+		return this->wealth;
+	}
+
+	void set_wealth(const int wealth)
+	{
+		if (wealth == this->get_wealth()) {
+			return;
+		}
+
+		this->wealth = wealth;
+
+		emit wealth_changed();
+	}
+
+	void change_wealth(const int change)
+	{
+		this->set_wealth(this->get_wealth() + change);
+	}
+
 	const commodity_map<int> &get_stored_commodities() const
 	{
 		return this->stored_commodities;
@@ -421,6 +443,7 @@ signals:
 	void population_phenotype_counts_changed();
 	void population_changed();
 	void population_growth_changed();
+	void wealth_changed();
 	void stored_commodities_changed();
 
 private:
@@ -452,6 +475,7 @@ private:
 	phenotype_map<int> population_phenotype_counts;
 	int population = 0;
 	int population_growth = 0; //population growth counter
+	int wealth = 0;
 	commodity_map<int> stored_commodities;
 	technology_set technologies;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
