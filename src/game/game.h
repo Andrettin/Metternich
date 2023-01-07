@@ -63,6 +63,8 @@ public:
 		return this->date;
 	}
 
+	QDateTime get_next_date() const;
+
 	int get_turn() const
 	{
 		return this->turn;

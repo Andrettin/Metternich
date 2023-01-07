@@ -532,11 +532,16 @@ void game::do_turn_async()
 	});
 }
 
+QDateTime game::get_next_date() const
+{
+	return this->get_date().addMonths(defines::get()->get_months_per_turn());
+}
+
 void game::increment_turn()
 {
-	const QDateTime old_date = this->date;
-	this->date = old_date.addMonths(defines::get()->get_months_per_turn());
-	assert_throw(this->date != old_date);
+	const QDateTime old_date = this->get_date();
+	this->date = this->get_next_date();
+	assert_throw(this->get_date() != old_date);
 
 	++this->turn;
 
