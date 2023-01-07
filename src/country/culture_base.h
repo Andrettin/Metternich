@@ -37,7 +37,7 @@ protected:
 	}
 
 public:
-	const phenotype *get_default_phenotype() const;
+	phenotype *get_default_phenotype() const;
 
 	const building_type *get_building_class_type(const building_class *building_class) const;
 

@@ -65,7 +65,7 @@ void culture_base::check() const
 }
 
 
-const phenotype *culture_base::get_default_phenotype() const
+phenotype *culture_base::get_default_phenotype() const
 {
 	if (this->default_phenotype != nullptr) {
 		return this->default_phenotype;

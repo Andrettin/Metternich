@@ -14,6 +14,13 @@ include_directories(
 	src/third_party/xbrz
 )
 
+set(character_SRCS
+	src/character/character.cpp
+	src/character/character_type.cpp
+)
+source_group(character FILES ${character_SRCS})
+set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")
+
 set(country_SRCS
 	src/country/consulate.cpp
 	src/country/country.cpp
@@ -191,6 +198,7 @@ source_group(xbrz FILES ${xbrz_SRCS})
 set_source_files_properties(${xbrz_SRCS} PROPERTIES UNITY_GROUP "xbrz")
 
 set(metternich_SRCS
+	${character_SRCS}
 	${country_SRCS}
 	${database_SRCS}
 	${economy_SRCS}
@@ -209,6 +217,12 @@ set(metternich_SRCS
 	${xbrz_SRCS}
 	src/engine_interface.cpp
 )
+
+set(character_HDRS
+	src/character/character.h
+	src/character/character_type.h
+)
+source_group(character FILES ${character_HDRS})
 
 set(country_HDRS
 	src/country/consulate.h
@@ -383,6 +397,7 @@ set(xbrz_HDRS
 source_group(xbrz FILES ${xbrz_HDRS})
 
 set(metternich_HDRS
+	${character_HDRS}
 	${country_HDRS}
 	${database_HDRS}
 	${economy_HDRS}
