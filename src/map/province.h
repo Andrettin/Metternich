@@ -7,6 +7,7 @@
 
 namespace metternich {
 
+class character;
 class country;
 class cultural_group;
 class culture;
@@ -163,6 +164,16 @@ public:
 		this->sites.push_back(site);
 	}
 
+	const std::vector<const character *> &get_characters() const
+	{
+		return this->characters;
+	}
+
+	void add_character(const character *character)
+	{
+		this->characters.push_back(character);
+	}
+
 signals:
 	void changed();
 
@@ -177,6 +188,7 @@ private:
 	std::vector<region *> regions; //regions where this province is located
 	std::vector<const country *> core_countries;
 	std::vector<const site *> sites; //sites located in this province, used for map generation
+	std::vector<const character *> characters; //characters who have this province as their home
 	qunique_ptr<province_history> history;
 	qunique_ptr<province_game_data> game_data;
 };

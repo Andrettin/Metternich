@@ -3,12 +3,17 @@
 #include "character/character.h"
 
 #include "country/culture.h"
+#include "map/province.h"
 #include "util/assert_util.h"
 
 namespace metternich {
 
 void character::initialize()
 {
+	if (this->get_home_province() != nullptr) {
+		this->home_province->add_character(this);
+	}
+
 	if (this->get_phenotype() == nullptr && this->get_culture() != nullptr) {
 		this->phenotype = this->get_culture()->get_default_phenotype();
 	}
