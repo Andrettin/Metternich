@@ -14,6 +14,8 @@ class character final : public named_data_entry, public data_type<character>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString surname READ get_surname_qstring NOTIFY changed)
+	Q_PROPERTY(QString full_name READ get_full_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_type* type MEMBER type NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
@@ -34,6 +36,28 @@ public:
 
 	virtual void initialize() override;
 	virtual void check() const override;
+
+	const std::string &get_surname() const
+	{
+		return this->surname;
+	}
+
+	Q_INVOKABLE void set_surname(const std::string &surname)
+	{
+		this->surname = surname;
+	}
+
+	QString get_surname_qstring() const
+	{
+		return QString::fromStdString(this->get_surname());
+	}
+
+	std::string get_full_name() const;
+
+	QString get_full_name_qstring() const
+	{
+		return QString::fromStdString(this->get_full_name());
+	}
 
 	const character_type *get_type() const
 	{
@@ -79,6 +103,7 @@ signals:
 	void changed();
 
 private:
+	std::string surname;
 	character_type *type = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::phenotype *phenotype = nullptr;

@@ -73,4 +73,22 @@ void character::check() const
 	assert_throw(this->get_birth_date() <= this->get_death_date());
 }
 
+std::string character::get_full_name() const
+{
+	const std::string &name = this->get_name();
+	std::string full_name = name;
+
+	if (full_name.empty() && !this->get_surname().empty()) {
+		full_name = this->get_surname();
+	}
+
+	if (!this->get_surname().empty()) {
+		if (!name.empty()) {
+			full_name += " " + this->get_surname();
+		}
+	}
+
+	return full_name;
+}
+
 }
