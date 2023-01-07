@@ -8,6 +8,7 @@
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/core_condition.h"
+#include "script/condition/country_type_condition.h"
 #include "script/condition/location_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
@@ -22,7 +23,11 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	const gsml_operator condition_operator = property.get_operator();
 	const std::string &value = property.get_value();
 
-	if constexpr (std::is_same_v<scope_type, province>) {
+	if constexpr (std::is_same_v<scope_type, country>) {
+		if (key == "country_type") {
+			return std::make_unique<country_type_condition>(value, condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, province>) {
 		if (key == "core") {
 			return std::make_unique<core_condition>(value, condition_operator);
 		}

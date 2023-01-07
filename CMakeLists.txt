@@ -323,6 +323,7 @@ set(script_condition_HDRS
 	src/script/condition/and_condition.h
 	src/script/condition/condition.h
 	src/script/condition/core_condition.h
+	src/script/condition/country_type_condition.h
 	src/script/condition/location_condition.h
 	src/script/condition/not_condition.h
 	src/script/condition/or_condition.h
