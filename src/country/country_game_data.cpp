@@ -2,6 +2,7 @@
 
 #include "country/country_game_data.h"
 
+#include "character/character.h"
 #include "country/country.h"
 #include "country/country_type.h"
 #include "country/culture.h"
@@ -1240,6 +1241,11 @@ bool country_game_data::can_declare_war_on(const metternich::country *other_coun
 	}
 
 	return true;
+}
+
+QVariantList country_game_data::get_characters_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_characters());
 }
 
 void country_game_data::add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit)

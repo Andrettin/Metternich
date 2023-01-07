@@ -12,6 +12,7 @@
 
 namespace metternich {
 
+class character;
 class civilian_unit;
 class consulate;
 class country;
@@ -57,6 +58,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
+	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
 
 public:
 	explicit country_game_data(metternich::country *country);
@@ -422,6 +424,25 @@ public:
 		this->technologies.insert(technology);
 	}
 
+	const std::vector<const character *> &get_characters() const
+	{
+		return this->characters;
+	}
+
+	QVariantList get_characters_qvariant_list() const;
+
+	void add_character(const character *character)
+	{
+		this->characters.push_back(character);
+		emit characters_changed();
+	}
+
+	void remove_character(const character *character)
+	{
+		std::erase(this->characters, character);
+		emit characters_changed();
+	}
+
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
 
@@ -445,6 +466,7 @@ signals:
 	void population_growth_changed();
 	void wealth_changed();
 	void stored_commodities_changed();
+	void characters_changed();
 
 private:
 	metternich::country *country = nullptr;
@@ -478,6 +500,7 @@ private:
 	int wealth = 0;
 	commodity_map<int> stored_commodities;
 	technology_set technologies;
+	std::vector<const character *> characters;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 };
 
