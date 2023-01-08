@@ -66,7 +66,7 @@ void country_game_data::do_turn()
 		civilian_unit->do_turn();
 	}
 
-	this->check_characters();
+	this->check_characters(game::get()->get_next_date());
 
 	this->do_events();
 }
@@ -1251,7 +1251,7 @@ QVariantList country_game_data::get_characters_qvariant_list() const
 	return container::to_qvariant_list(this->get_characters());
 }
 
-void country_game_data::check_characters()
+void country_game_data::check_characters(const QDateTime &date)
 {
 	for (size_t i = 0; i < this->get_characters().size();) {
 		const character *character = this->get_characters().at(0);
@@ -1270,15 +1270,13 @@ void country_game_data::check_characters()
 		}
 	}
 
-	const QDateTime next_date = game::get()->get_next_date();
-
 	for (const province *province : this->get_provinces()) {
 		for (const character *character : province->get_characters()) {
 			if (character->get_game_data()->get_employer() != nullptr) {
 				continue;
 			}
 
-			if (next_date >= character->get_start_date() && next_date <= character->get_end_date()) {
+			if (date >= character->get_start_date() && date < character->get_end_date()) {
 				this->add_character(character);
 				character->get_game_data()->set_employer(this->country);
 			}

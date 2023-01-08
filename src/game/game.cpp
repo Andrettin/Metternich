@@ -121,7 +121,7 @@ void game::start()
 
 		for (const country *country : this->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
-			country_game_data->check_characters();
+			country_game_data->check_characters(this->get_date());
 		}
 
 		this->set_running(true);

@@ -430,7 +430,7 @@ public:
 	}
 
 	QVariantList get_characters_qvariant_list() const;
-	void check_characters();
+	void check_characters(const QDateTime &date);
 
 	void add_character(const character *character)
 	{
