@@ -44,7 +44,7 @@ namespace metternich {
 QDateTime game::normalize_date(const QDateTime &date)
 {
 	QDateTime normalized_date = date;
-	normalized_date.setTime(QTime(0, 0, 0));
+	normalized_date.setTime(QTime(12, 0, 0));
 
 	QDate underlying_date = normalized_date.date();
 
