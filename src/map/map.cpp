@@ -137,10 +137,6 @@ void map::initialize()
 
 void map::clear()
 {
-	for (country *country : country::get_all()) {
-		country->reset_game_data();
-	}
-
 	for (province *province : province::get_all()) {
 		province->reset_game_data();
 	}
