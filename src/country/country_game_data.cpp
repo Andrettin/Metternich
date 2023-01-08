@@ -3,6 +3,7 @@
 #include "country/country_game_data.h"
 
 #include "character/character.h"
+#include "character/character_game_data.h"
 #include "country/country.h"
 #include "country/country_type.h"
 #include "country/culture.h"
@@ -64,6 +65,8 @@ void country_game_data::do_turn()
 	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 		civilian_unit->do_turn();
 	}
+
+	this->check_characters();
 
 	this->do_events();
 }
@@ -1246,6 +1249,41 @@ bool country_game_data::can_declare_war_on(const metternich::country *other_coun
 QVariantList country_game_data::get_characters_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_characters());
+}
+
+void country_game_data::check_characters()
+{
+	for (size_t i = 0; i < this->get_characters().size();) {
+		const character *character = this->get_characters().at(0);
+		const metternich::country *home_province_owner = character->get_home_province()->get_game_data()->get_owner();
+
+		if (game::get()->get_date() >= character->get_end_date()) {
+			this->remove_character(character);
+			character->get_game_data()->set_employer(nullptr);
+		} else if (home_province_owner != this->country) {
+			//if we lost their home province, move the character to the province's new owner
+			this->remove_character(character);
+			home_province_owner->get_game_data()->add_character(character);
+			character->get_game_data()->set_employer(home_province_owner);
+		} else {
+			++i;
+		}
+	}
+
+	const QDateTime next_date = game::get()->get_next_date();
+
+	for (const province *province : this->get_provinces()) {
+		for (const character *character : province->get_characters()) {
+			if (character->get_game_data()->get_employer() != nullptr) {
+				continue;
+			}
+
+			if (next_date >= character->get_start_date() && next_date <= character->get_end_date()) {
+				this->add_character(character);
+				character->get_game_data()->set_employer(this->country);
+			}
+		}
+	}
 }
 
 void country_game_data::add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit)

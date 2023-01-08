@@ -430,6 +430,7 @@ public:
 	}
 
 	QVariantList get_characters_qvariant_list() const;
+	void check_characters();
 
 	void add_character(const character *character)
 	{
