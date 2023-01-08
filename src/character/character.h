@@ -2,9 +2,11 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "util/qunique_ptr.h"
 
 namespace metternich {
 
+class character_game_data;
 class character_type;
 class culture;
 class icon;
@@ -26,18 +28,25 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(QDateTime end_date MEMBER end_date READ get_end_date NOTIFY changed)
 	Q_PROPERTY(QDateTime birth_date MEMBER birth_date READ get_birth_date NOTIFY changed)
 	Q_PROPERTY(QDateTime death_date MEMBER death_date READ get_death_date NOTIFY changed)
+	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
 	static constexpr const char class_identifier[] = "character";
 	static constexpr const char property_class_identifier[] = "metternich::character*";
 	static constexpr const char database_folder[] = "characters";
 
-	explicit character(const std::string &identifier) : named_data_entry(identifier)
-	{
-	}
+	explicit character(const std::string &identifier);
+	~character();
 
 	virtual void initialize() override;
 	virtual void check() const override;
+
+	void reset_game_data();
+
+	character_game_data *get_game_data() const
+	{
+		return this->game_data.get();
+	}
 
 	const std::string &get_surname() const
 	{
@@ -113,6 +122,7 @@ public:
 
 signals:
 	void changed();
+	void game_data_changed() const;
 
 private:
 	std::string surname;
@@ -124,6 +134,7 @@ private:
 	QDateTime end_date;
 	QDateTime birth_date;
 	QDateTime death_date;
+	qunique_ptr<character_game_data> game_data;
 };
 
 }

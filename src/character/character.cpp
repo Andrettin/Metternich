@@ -2,12 +2,22 @@
 
 #include "character/character.h"
 
+#include "character/character_game_data.h"
 #include "character/character_type.h"
 #include "country/culture.h"
 #include "map/province.h"
 #include "util/assert_util.h"
 
 namespace metternich {
+
+character::character(const std::string &identifier) : named_data_entry(identifier)
+{
+	this->reset_game_data();
+}
+
+character::~character()
+{
+}
 
 void character::initialize()
 {
@@ -77,6 +87,11 @@ void character::check() const
 	assert_throw(this->get_end_date() >= this->get_birth_date());
 	assert_throw(this->get_end_date() <= this->get_death_date());
 	assert_throw(this->get_birth_date() <= this->get_death_date());
+}
+
+void character::reset_game_data()
+{
+	this->game_data = make_qunique<character_game_data>(this);
 }
 
 std::string character::get_full_name() const

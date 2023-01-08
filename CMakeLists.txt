@@ -16,6 +16,7 @@ include_directories(
 
 set(character_SRCS
 	src/character/character.cpp
+	src/character/character_game_data.cpp
 	src/character/character_type.cpp
 )
 source_group(character FILES ${character_SRCS})
@@ -220,6 +221,7 @@ set(metternich_SRCS
 
 set(character_HDRS
 	src/character/character.h
+	src/character/character_game_data.h
 	src/character/character_type.h
 )
 source_group(character FILES ${character_HDRS})

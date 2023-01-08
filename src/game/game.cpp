@@ -2,6 +2,7 @@
 
 #include "game/game.h"
 
+#include "character/character.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
@@ -149,6 +150,10 @@ void game::clear()
 		//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
 		for (country *country : country::get_all()) {
 			country->reset_game_data();
+		}
+
+		for (character *character : character::get_all()) {
+			character->reset_game_data();
 		}
 
 		map::get()->clear_tile_game_data();
