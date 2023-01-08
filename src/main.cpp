@@ -1,5 +1,7 @@
 #include "metternich.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
@@ -94,6 +96,8 @@ int main(int argc, char **argv)
 
 		qmlRegisterAnonymousType<building_slot>("", 1);
 		qmlRegisterAnonymousType<building_type>("", 1);
+		qmlRegisterAnonymousType<character>("", 1);
+		qmlRegisterAnonymousType<character_game_data>("", 1);
 		qmlRegisterAnonymousType<consulate>("", 1);
 		qmlRegisterAnonymousType<country>("", 1);
 		qmlRegisterAnonymousType<country_game_data>("", 1);
