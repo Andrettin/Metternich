@@ -2,6 +2,7 @@
 
 #include "character/character.h"
 
+#include "character/character_type.h"
 #include "country/culture.h"
 #include "map/province.h"
 #include "util/assert_util.h"
@@ -94,6 +95,12 @@ std::string character::get_full_name() const
 	}
 
 	return full_name;
+}
+
+const icon *character::get_portrait() const
+{
+	assert_throw(this->get_type() != nullptr);
+	return this->get_type()->get_portrait();
 }
 
 }

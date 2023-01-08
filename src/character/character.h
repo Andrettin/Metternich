@@ -7,6 +7,7 @@ namespace metternich {
 
 class character_type;
 class culture;
+class icon;
 class phenotype;
 class province;
 
@@ -19,6 +20,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::character_type* type MEMBER type NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
+	Q_PROPERTY(metternich::icon* portrait READ get_portrait_unconst NOTIFY changed)
 	Q_PROPERTY(metternich::province* home_province MEMBER home_province NOTIFY changed)
 	Q_PROPERTY(QDateTime start_date MEMBER start_date READ get_start_date NOTIFY changed)
 	Q_PROPERTY(QDateTime end_date MEMBER end_date READ get_end_date NOTIFY changed)
@@ -74,6 +76,16 @@ public:
 		return this->phenotype;
 	}
 
+	const icon *get_portrait() const;
+
+private:
+	//for the Qt property (pointers there can't be const)
+	icon *get_portrait_unconst() const
+	{
+		return const_cast<icon *>(this->get_portrait());
+	}
+
+public:
 	const province *get_home_province() const
 	{
 		return this->home_province;
