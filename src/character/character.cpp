@@ -7,10 +7,11 @@
 #include "country/culture.h"
 #include "map/province.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 
 namespace metternich {
 
-character::character(const std::string &identifier) : named_data_entry(identifier)
+character::character(const std::string &identifier) : named_data_entry(identifier), gender(gender::none)
 {
 	this->reset_game_data();
 }
@@ -76,6 +77,11 @@ void character::check() const
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
 	assert_throw(this->get_home_province() != nullptr);
+
+	if (this->get_gender() == gender::none) {
+		throw std::runtime_error("Character \"" + this->get_identifier() + "\" has no gender.");
+	}
+
 	assert_throw(this->get_start_date().isValid());
 	assert_throw(this->get_end_date().isValid());
 	assert_throw(this->get_birth_date().isValid());
