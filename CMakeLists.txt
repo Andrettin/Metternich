@@ -19,6 +19,8 @@ set(character_SRCS
 	src/character/character.cpp
 	src/character/character_game_data.cpp
 	src/character/character_type.cpp
+	src/character/trait.cpp
+	src/character/trait_type.cpp
 )
 source_group(character FILES ${character_SRCS})
 set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")
@@ -225,6 +227,8 @@ set(character_HDRS
 	src/character/character.h
 	src/character/character_game_data.h
 	src/character/character_type.h
+	src/character/trait.h
+	src/character/trait_type.h
 )
 source_group(character FILES ${character_HDRS})
 

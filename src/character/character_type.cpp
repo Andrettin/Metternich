@@ -3,7 +3,6 @@
 #include "character/character_type.h"
 
 #include "character/attribute.h"
-#include "country/culture.h"
 #include "util/assert_util.h"
 
 namespace metternich {
