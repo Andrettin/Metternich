@@ -5,6 +5,7 @@
 
 namespace metternich {
 
+class character_type;
 class icon;
 enum class attribute;
 enum class trait_type;
@@ -41,12 +42,22 @@ public:
 		return this->attribute_bonuses;
 	}
 
+	bool is_available_for_character_type(const character_type *character_type) const
+	{
+		if (this->character_types.empty()) {
+			return true;
+		}
+
+		return this->character_types.contains(character_type);
+	}
+
 signals:
 	void changed();
 
 private:
 	trait_type type;
 	metternich::icon *icon = nullptr;
+	std::set<const character_type *> character_types; //character types for which this trait is available
 	std::map<attribute, int> attribute_bonuses;
 };
 
