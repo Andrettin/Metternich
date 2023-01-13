@@ -5,6 +5,7 @@
 #include "character/character_game_data.h"
 #include "character/character_type.h"
 #include "character/trait.h"
+#include "character/trait_type.h"
 #include "country/culture.h"
 #include "map/province.h"
 #include "util/assert_util.h"
@@ -108,6 +109,16 @@ void character::check() const
 	assert_throw(this->get_end_date() >= this->get_birth_date());
 	assert_throw(this->get_end_date() <= this->get_death_date());
 	assert_throw(this->get_birth_date() <= this->get_death_date());
+
+	std::set<trait_type> trait_types;
+
+	for (const trait *trait : this->get_traits()) {
+		if (trait_types.contains(trait->get_type())) {
+			throw std::runtime_error("Character \"" + this->get_identifier() + "\" has multiple traits of type \"" + enum_converter<trait_type>::to_string(trait->get_type()) + "\".");
+		}
+
+		trait_types.insert(trait->get_type());
+	}
 }
 
 void character::reset_game_data()
