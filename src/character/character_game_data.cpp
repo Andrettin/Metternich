@@ -14,7 +14,9 @@ character_game_data::character_game_data(const metternich::character *character)
 {
 	connect(game::get(), &game::turn_changed, this, &character_game_data::age_changed);
 
-	this->calculate_attributes();
+	for (const trait *trait : this->character->get_traits()) {
+		this->add_trait(trait);
+	}
 }
 
 void character_game_data::set_employer(const metternich::country *employer)
@@ -45,15 +47,19 @@ int character_game_data::get_age() const
 	return age;
 }
 
-void character_game_data::calculate_attributes()
+void character_game_data::add_trait(const trait *trait)
 {
-	for (const trait *trait : this->character->get_traits()) {
+	this->traits.push_back(trait);
+
+	if (!trait->get_attribute_bonuses().empty()) {
 		for (const auto &[attribute, bonus] : trait->get_attribute_bonuses()) {
 			this->attribute_values[attribute] += bonus;
 		}
+
+		emit attributes_changed();
 	}
 
-	emit attributes_changed();
+	emit traits_changed();
 }
 
 int character_game_data::get_primary_attribute_value() const

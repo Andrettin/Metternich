@@ -34,6 +34,13 @@ public:
 
 	int get_age() const;
 
+	const std::vector<const trait *> &get_traits() const
+	{
+		return this->traits;
+	}
+
+	void add_trait(const trait *trait);
+
 	int get_attribute_value(const attribute attribute) const
 	{
 		const auto find_iterator = this->attribute_values.find(attribute);
@@ -44,18 +51,18 @@ public:
 		return 0;
 	}
 
-	void calculate_attributes();
-
 	int get_primary_attribute_value() const;
 
 signals:
 	void employer_changed();
 	void age_changed();
+	void traits_changed();
 	void attributes_changed();
 
 private:
 	const metternich::character *character = nullptr;
 	const metternich::country *employer = nullptr;
+	std::vector<const trait *> traits;
 	std::map<attribute, int> attribute_values;
 };
 
