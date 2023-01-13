@@ -16,6 +16,7 @@ class culture;
 class icon;
 class phenotype;
 class province;
+class trait;
 
 class character final : public named_data_entry, public data_type<character>
 {
@@ -43,6 +44,7 @@ public:
 	explicit character(const std::string &identifier);
 	~character();
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -130,6 +132,11 @@ public:
 		return this->death_date;
 	}
 
+	const std::vector<const trait *> &get_traits() const
+	{
+		return this->traits;
+	}
+
 signals:
 	void changed();
 	void game_data_changed() const;
@@ -145,6 +152,7 @@ private:
 	QDateTime end_date;
 	QDateTime birth_date;
 	QDateTime death_date;
+	std::vector<const trait *> traits;
 	qunique_ptr<character_game_data> game_data;
 };
 

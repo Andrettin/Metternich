@@ -4,6 +4,7 @@
 
 #include "character/character_game_data.h"
 #include "character/character_type.h"
+#include "character/trait.h"
 #include "country/culture.h"
 #include "map/province.h"
 #include "util/assert_util.h"
@@ -18,6 +19,20 @@ character::character(const std::string &identifier) : named_data_entry(identifie
 
 character::~character()
 {
+}
+
+void character::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "traits") {
+		for (const std::string &value : values) {
+			this->traits.push_back(trait::get(value));
+		}
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
 }
 
 void character::initialize()

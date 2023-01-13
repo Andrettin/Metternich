@@ -6,6 +6,7 @@
 namespace metternich {
 
 class icon;
+enum class attribute;
 enum class trait_type;
 
 class trait final : public named_data_entry, public data_type<trait>
@@ -22,6 +23,7 @@ public:
 
 	explicit trait(const std::string &identifier);
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	trait_type get_type() const
@@ -34,12 +36,18 @@ public:
 		return this->icon;
 	}
 
+	const std::map<attribute, int> &get_attribute_bonuses() const
+	{
+		return this->attribute_bonuses;
+	}
+
 signals:
 	void changed();
 
 private:
 	trait_type type;
 	metternich::icon *icon = nullptr;
+	std::map<attribute, int> attribute_bonuses;
 };
 
 }
