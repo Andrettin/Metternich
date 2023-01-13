@@ -10,6 +10,7 @@
 #include "map/direction.h"
 #include "map/terrain_adjacency_type.h"
 #include "map/tile_image_provider.h"
+#include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/event_loop.h"
 #include "util/log_util.h"
@@ -39,6 +40,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			const int weight = std::stoi(property.get_value());
 
 			this->event_trigger_none_random_weights[trigger] = weight;
+		});
+	} else if (tag == "attribute_icons") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const attribute attribute = enum_converter<metternich::attribute>::to_enum(property.get_key());
+			const icon *icon = icon::get(property.get_value());
+
+			this->attribute_icons[attribute] = icon;
 		});
 	} else if (tag == "river_adjacency_tiles") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
@@ -155,6 +163,17 @@ QString defines::get_default_menu_background_filepath_qstring() const
 void defines::set_default_menu_background_filepath(const std::filesystem::path &filepath)
 {
 	this->default_menu_background_filepath = database::get()->get_graphics_filepath(filepath);
+}
+
+Q_INVOKABLE QString defines::get_attribute_icon_identifier(const int attribute_index) const
+{
+	const icon *icon = this->get_attribute_icon(static_cast<attribute>(attribute_index));
+
+	if (icon != nullptr) {
+		return icon->get_identifier_qstring();
+	}
+
+	return QString();
 }
 
 int defines::get_river_adjacency_tile(const terrain_adjacency &adjacency) const

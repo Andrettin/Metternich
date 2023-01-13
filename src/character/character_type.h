@@ -14,6 +14,7 @@ class character_type final : public named_data_entry, public data_type<character
 
 	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::attribute primary_attribute MEMBER primary_attribute NOTIFY changed)
+	Q_PROPERTY(int primary_attribute_index READ get_primary_attribute_index CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "character_type";
@@ -32,6 +33,11 @@ public:
 	attribute get_primary_attribute() const
 	{
 		return this->primary_attribute;
+	}
+
+	int get_primary_attribute_index() const
+	{
+		return static_cast<int>(this->get_primary_attribute());
 	}
 
 signals:

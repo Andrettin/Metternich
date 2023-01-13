@@ -7,8 +7,10 @@
 namespace metternich {
 
 class building_class;
+class icon;
 class population_class;
 class terrain_type;
+enum class attribute;
 enum class diplomacy_state;
 enum class event_trigger;
 
@@ -208,6 +210,18 @@ public:
 		return this->min_diplomatic_map_tile_scale;
 	}
 
+	const icon *get_attribute_icon(const attribute attribute) const
+	{
+		const auto find_iterator = this->attribute_icons.find(attribute);
+		if (find_iterator != this->attribute_icons.end()) {
+			return find_iterator->second;
+		}
+
+		throw std::runtime_error("Failed to get icon for attribute: " + static_cast<int>(attribute));
+	}
+
+	Q_INVOKABLE QString get_attribute_icon_identifier(const int attribute_index) const;
+
 	int get_river_adjacency_tile(const terrain_adjacency &adjacency) const;
 	void set_river_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
 	int get_rivermouth_adjacency_tile(const terrain_adjacency &adjacency) const;
@@ -244,6 +258,7 @@ private:
 	std::map<event_trigger, int> event_trigger_none_random_weights; //the weight for no event happening for a given event trigger's random event selection
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;
+	std::map<attribute, const icon *> attribute_icons;
 	std::map<terrain_adjacency, int> river_adjacency_tiles;
 	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;
 };
