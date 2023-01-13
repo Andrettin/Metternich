@@ -5,8 +5,10 @@
 #include "character/character.h"
 #include "character/character_type.h"
 #include "character/trait.h"
+#include "character/trait_type.h"
 #include "country/country.h"
 #include "game/game.h"
+#include "util/vector_random_util.h"
 
 namespace metternich {
 
@@ -16,6 +18,20 @@ character_game_data::character_game_data(const metternich::character *character)
 
 	for (const trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);
+	}
+
+	std::set<trait_type> trait_types;
+
+	for (const trait *trait : this->get_traits()) {
+		trait_types.insert(trait->get_type());
+	}
+
+	static const std::vector<trait_type> required_trait_types = { trait_type::education, trait_type::background, trait_type::personality };
+
+	for (const trait_type trait_type : required_trait_types) {
+		if (!trait_types.contains(trait_type)) {
+			this->generate_trait(trait_type);
+		}
 	}
 }
 
@@ -60,6 +76,29 @@ void character_game_data::add_trait(const trait *trait)
 	}
 
 	emit traits_changed();
+}
+
+void character_game_data::generate_trait(const trait_type trait_type)
+{
+	std::vector<const trait *> potential_traits;
+
+	for (const trait *trait : trait::get_all()) {
+		if (trait->get_type() != trait_type) {
+			continue;
+		}
+
+		if (!trait->is_available_for_character_type(this->character->get_type())) {
+			continue;
+		}
+
+		potential_traits.push_back(trait);
+	}
+
+	if (potential_traits.empty()) {
+		return;
+	}
+
+	this->add_trait(vector::get_random(potential_traits));
 }
 
 int character_game_data::get_primary_attribute_value() const

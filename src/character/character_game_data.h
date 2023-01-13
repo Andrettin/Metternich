@@ -5,6 +5,7 @@ namespace metternich {
 class character;
 class country;
 enum class attribute;
+enum class trait_type;
 
 class character_game_data final : public QObject
 {
@@ -40,6 +41,7 @@ public:
 	}
 
 	void add_trait(const trait *trait);
+	void generate_trait(const trait_type trait_type);
 
 	int get_attribute_value(const attribute attribute) const
 	{
