@@ -12,6 +12,7 @@ const std::string enum_converter<metternich::trait_type>::property_class_identif
 template <>
 const std::map<std::string, metternich::trait_type> enum_converter<metternich::trait_type>::string_to_enum_map = {
 	{ "none", metternich::trait_type::none },
+	{ "education", metternich::trait_type::education },
 	{ "background", metternich::trait_type::background },
 	{ "personality", metternich::trait_type::personality }
 };
