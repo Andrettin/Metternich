@@ -11,6 +11,13 @@ template <typename scope_type>
 std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_gsml_property(const gsml_property &property)
 {
 	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if constexpr (std::is_same_v<scope_type, const character>) {
+		if (enum_converter<attribute>::has_value(key)) {
+			return std::make_unique<attribute_modifier_effect>(enum_converter<attribute>::to_enum(key), value);
+		}
+	}
 
 	throw std::runtime_error("Invalid modifier effect: \"" + key + "\".");
 }

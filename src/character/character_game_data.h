@@ -4,6 +4,7 @@ namespace metternich {
 
 class character;
 class country;
+class trait;
 enum class attribute;
 enum class trait_type;
 
@@ -43,14 +44,32 @@ public:
 	void add_trait(const trait *trait);
 	void generate_trait(const trait_type trait_type);
 
-	int get_attribute_value(const attribute attribute) const
+	int get_unclamped_attribute_value(const attribute attribute) const
 	{
 		const auto find_iterator = this->attribute_values.find(attribute);
-		if (find_iterator != this->attribute_values.end() && find_iterator->second >= 0) {
+		if (find_iterator != this->attribute_values.end()) {
 			return find_iterator->second;
 		}
 
 		return 0;
+	}
+
+	int get_attribute_value(const attribute attribute) const
+	{
+		const int value = this->get_unclamped_attribute_value(attribute);
+
+		if (value >= 0) {
+			return value;
+		}
+
+		return 0;
+	}
+
+	void set_attribute_value(const attribute attribute, const int value);
+
+	void change_attribute_value(const attribute attribute, const int change)
+	{
+		this->set_attribute_value(attribute, this->get_unclamped_attribute_value(attribute) + change);
 	}
 
 	int get_primary_attribute_value() const;

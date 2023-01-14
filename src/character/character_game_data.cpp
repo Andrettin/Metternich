@@ -101,6 +101,23 @@ void character_game_data::generate_trait(const trait_type trait_type)
 	this->add_trait(vector::get_random(potential_traits));
 }
 
+void character_game_data::set_attribute_value(const attribute attribute, const int value)
+{
+	if (value == this->get_unclamped_attribute_value(attribute)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->attribute_values.erase(attribute);
+	} else {
+		this->attribute_values[attribute] = value;
+	}
+
+	if (game::get()->is_running()) {
+		emit attributes_changed();
+	}
+}
+
 int character_game_data::get_primary_attribute_value() const
 {
 	return this->get_attribute_value(this->character->get_type()->get_primary_attribute());
