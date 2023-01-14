@@ -2,6 +2,7 @@
 
 #include "character/character_game_data.h"
 
+#include "character/attribute.h"
 #include "character/character.h"
 #include "character/character_type.h"
 #include "character/trait.h"
@@ -129,6 +130,31 @@ void character_game_data::set_attribute_value(const attribute attribute, const i
 int character_game_data::get_primary_attribute_value() const
 {
 	return this->get_attribute_value(this->character->get_type()->get_primary_attribute());
+}
+
+int character_game_data::get_diplomacy() const
+{
+	return this->get_attribute_value(attribute::diplomacy);
+}
+
+int character_game_data::get_martial() const
+{
+	return this->get_attribute_value(attribute::martial);
+}
+
+int character_game_data::get_stewardship() const
+{
+	return this->get_attribute_value(attribute::stewardship);
+}
+
+int character_game_data::get_intrigue() const
+{
+	return this->get_attribute_value(attribute::intrigue);
+}
+
+int character_game_data::get_learning() const
+{
+	return this->get_attribute_value(attribute::learning);
 }
 
 }
