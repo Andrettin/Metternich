@@ -110,6 +110,22 @@ void character_game_data::generate_trait(const trait_type trait_type)
 	this->add_trait(vector::get_random(potential_traits));
 }
 
+int character_game_data::get_attribute_value(const attribute attribute) const
+{
+	const int value = this->get_unclamped_attribute_value(attribute);
+
+	if (value >= 0) {
+		return value;
+	}
+
+	if (attribute == this->character->get_type()->get_primary_attribute()) {
+		//the primary attribute must always be at least 1, so that the character isn't completely useless
+		return 1;
+	}
+
+	return 0;
+}
+
 void character_game_data::set_attribute_value(const attribute attribute, const int value)
 {
 	if (value == this->get_unclamped_attribute_value(attribute)) {

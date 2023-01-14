@@ -64,17 +64,7 @@ public:
 		return 0;
 	}
 
-	int get_attribute_value(const attribute attribute) const
-	{
-		const int value = this->get_unclamped_attribute_value(attribute);
-
-		if (value >= 0) {
-			return value;
-		}
-
-		return 0;
-	}
-
+	int get_attribute_value(const attribute attribute) const;
 	void set_attribute_value(const attribute attribute, const int value);
 
 	void change_attribute_value(const attribute attribute, const int change)
