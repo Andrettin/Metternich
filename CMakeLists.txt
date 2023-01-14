@@ -135,6 +135,7 @@ set(script_SRCS
 	src/script/context.cpp
 	src/script/factor.cpp
 	src/script/factor_modifier.cpp
+	src/script/modifier.cpp
 )
 source_group(script FILES ${script_SRCS})
 set_source_files_properties(${script_SRCS} PROPERTIES UNITY_GROUP "script")
@@ -154,6 +155,12 @@ set(script_effect_SRCS
 )
 source_group(script\\effect FILES ${script_effect_SRCS})
 set_source_files_properties(${script_effect_SRCS} PROPERTIES UNITY_GROUP "script_effect")
+
+set(script_modifier_effect_SRCS
+	src/script/modifier_effect/modifier_effect.cpp
+)
+source_group(script\\modifier_effect FILES ${script_modifier_effect_SRCS})
+set_source_files_properties(${script_modifier_effect_SRCS} PROPERTIES UNITY_GROUP "script_modifier_effect")
 
 set(technology_SRCS
 	src/technology/technology.cpp
@@ -213,6 +220,7 @@ set(metternich_SRCS
 	${script_SRCS}
 	${script_condition_SRCS}
 	${script_effect_SRCS}
+	${script_modifier_effect_SRCS}
 	${technology_SRCS}
 	${time_SRCS}
 	${ui_SRCS}
@@ -338,6 +346,7 @@ set(script_HDRS
 	src/script/context.h
 	src/script/factor.h
 	src/script/factor_modifier.h
+	src/script/modifier.h
 )
 source_group(script FILES ${script_HDRS})
 
@@ -360,6 +369,11 @@ set(script_effect_HDRS
 	src/script/effect/wealth_effect.h
 )
 source_group(script\\effect FILES ${script_effect_HDRS})
+
+set(script_modifier_effect_HDRS
+	src/script/modifier_effect/modifier_effect.h
+)
+source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})
 
 set(technology_HDRS
 	src/technology/technology.h
@@ -416,6 +430,7 @@ set(metternich_HDRS
 	${script_HDRS}
 	${script_condition_HDRS}
 	${script_effect_HDRS}
+	${script_modifier_effect_HDRS}
 	${technology_HDRS}
 	${time_HDRS}
 	${ui_HDRS}
