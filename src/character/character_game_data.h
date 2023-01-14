@@ -15,6 +15,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(metternich::country* employer READ get_employer_unconst NOTIFY employer_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(int primary_attribute_value READ get_primary_attribute_value NOTIFY attributes_changed)
+	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 
 public:
 	explicit character_game_data(const metternich::character *character);
@@ -42,6 +43,8 @@ public:
 	{
 		return this->traits;
 	}
+
+	QVariantList get_traits_qvariant_list() const;
 
 	void add_trait(const trait *trait);
 	void generate_trait(const trait_type trait_type);

@@ -9,6 +9,7 @@
 #include "country/country.h"
 #include "game/game.h"
 #include "script/modifier.h"
+#include "util/container_util.h"
 #include "util/vector_random_util.h"
 
 namespace metternich {
@@ -65,6 +66,11 @@ int character_game_data::get_age() const
 	}
 
 	return age;
+}
+
+QVariantList character_game_data::get_traits_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_traits());
 }
 
 void character_game_data::add_trait(const trait *trait)
