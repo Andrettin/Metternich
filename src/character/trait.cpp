@@ -23,13 +23,9 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->character_types.insert(character_type::get(value));
 		}
-	} else if (tag == "attribute_bonuses") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			this->attribute_bonuses[enum_converter<attribute>::to_enum(key)] = std::stoi(value);
-		});
+	} else if (tag == "modifier") {
+		this->modifier = std::make_unique<metternich::modifier<const character>>();
+		database::process_gsml_data(this->modifier, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

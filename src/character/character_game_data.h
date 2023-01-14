@@ -19,6 +19,8 @@ class character_game_data final : public QObject
 public:
 	explicit character_game_data(const metternich::character *character);
 
+	void on_game_started();
+
 	const metternich::country *get_employer() const
 	{
 		return this->employer;

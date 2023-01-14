@@ -3,6 +3,7 @@
 #include "game/game.h"
 
 #include "character/character.h"
+#include "character/character_game_data.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
@@ -510,6 +511,10 @@ void game::on_setup_finished()
 		}
 
 		emit country->game_data_changed();
+	}
+
+	for (const character *character : character::get_all()) {
+		character->get_game_data()->on_game_started();
 	}
 
 	emit setup_finished();

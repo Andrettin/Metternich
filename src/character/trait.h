@@ -5,10 +5,14 @@
 
 namespace metternich {
 
+class character;
 class character_type;
 class icon;
 enum class attribute;
 enum class trait_type;
+
+template <typename scope_type>
+class modifier;
 
 class trait final : public named_data_entry, public data_type<trait>
 {
@@ -37,11 +41,6 @@ public:
 		return this->icon;
 	}
 
-	const std::map<attribute, int> &get_attribute_bonuses() const
-	{
-		return this->attribute_bonuses;
-	}
-
 	bool is_available_for_character_type(const character_type *character_type) const
 	{
 		if (this->character_types.empty()) {
@@ -51,6 +50,11 @@ public:
 		return this->character_types.contains(character_type);
 	}
 
+	const metternich::modifier<const character> *get_modifier() const
+	{
+		return this->modifier.get();
+	}
+
 signals:
 	void changed();
 
@@ -58,7 +62,7 @@ private:
 	trait_type type;
 	metternich::icon *icon = nullptr;
 	std::set<const character_type *> character_types; //character types for which this trait is available
-	std::map<attribute, int> attribute_bonuses;
+	std::unique_ptr<metternich::modifier<const character>> modifier;
 };
 
 }

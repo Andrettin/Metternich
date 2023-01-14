@@ -128,6 +128,7 @@ void character::check() const
 void character::reset_game_data()
 {
 	this->game_data = make_qunique<character_game_data>(this);
+	emit game_data_changed();
 }
 
 std::string character::get_full_name() const
