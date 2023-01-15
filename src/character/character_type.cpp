@@ -18,4 +18,9 @@ void character_type::check() const
 	assert_throw(this->get_primary_attribute() != attribute::none);
 }
 
+QString character_type::get_primary_attribute_name_qstring() const
+{
+	return QString::fromStdString(get_attribute_name(this->get_primary_attribute()));
+}
+
 }
