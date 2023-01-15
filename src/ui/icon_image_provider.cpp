@@ -35,7 +35,11 @@ boost::asio::awaitable<void> icon_image_provider::load_image(const std::string &
 	assert_throw(!filepath.empty());
 	assert_throw(std::filesystem::exists(filepath));
 
-	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+	centesimal_int scale_factor = preferences::get()->get_scale_factor();
+
+	if (id_list.size() >= 2 && id_list.at(1) == "small") {
+		scale_factor /= 2;
+	}
 
 	const std::pair<std::filesystem::path, centesimal_int> scale_suffix_result = image::get_scale_suffixed_filepath(filepath, scale_factor);
 
@@ -50,13 +54,13 @@ boost::asio::awaitable<void> icon_image_provider::load_image(const std::string &
 	assert_throw(!image.isNull());
 
 	if (id_list.size() >= 2) {
-		const std::string &state = id_list.at(1);
+		const std::string &state = id_list.back();
 		if (state == "selected") {
 			static const QColor selected_color(Qt::white);
 			image::set_outline_color(image, selected_color);
 		} else if (state == "grayscale") {
 			image::apply_grayscale(image);
-		} else {
+		} else if (state != "small") {
 			assert_throw(false);
 		}
 	}
