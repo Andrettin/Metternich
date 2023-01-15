@@ -5,6 +5,7 @@
 #include "character/attribute.h"
 #include "character/character_type.h"
 #include "character/trait_type.h"
+#include "script/modifier.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -35,6 +36,15 @@ void trait::check() const
 {
 	assert_throw(this->get_type() != trait_type::none);
 	assert_throw(this->get_icon() != nullptr);
+}
+
+QString trait::get_modifier_string() const
+{
+	if (this->get_modifier() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->get_modifier()->get_string());
 }
 
 }

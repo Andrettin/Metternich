@@ -20,6 +20,7 @@ class trait final : public named_data_entry, public data_type<trait>
 
 	Q_PROPERTY(metternich::trait_type type MEMBER type NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "trait";
@@ -54,6 +55,8 @@ public:
 	{
 		return this->modifier.get();
 	}
+
+	QString get_modifier_string() const;
 
 signals:
 	void changed();
