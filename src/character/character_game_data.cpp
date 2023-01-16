@@ -8,6 +8,8 @@
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "country/country.h"
+#include "country/country_game_data.h"
+#include "country/landed_title.h"
 #include "game/game.h"
 #include "script/modifier.h"
 #include "util/container_util.h"
@@ -171,6 +173,16 @@ int character_game_data::get_intrigue() const
 int character_game_data::get_learning() const
 {
 	return this->get_attribute_value(attribute::learning);
+}
+
+QVariantList character_game_data::get_landed_titles_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_landed_titles());
+}
+
+bool character_game_data::is_ruler() const
+{
+	return this->get_employer() != nullptr && this->get_employer()->get_game_data()->get_ruler() == this->character;
 }
 
 }

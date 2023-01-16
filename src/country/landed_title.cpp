@@ -2,6 +2,7 @@
 
 #include "country/landed_title.h"
 
+#include "country/country.h"
 #include "country/landed_title_tier.h"
 #include "map/site.h"
 #include "util/assert_util.h"
@@ -87,10 +88,17 @@ void landed_title::check() const
 	assert_throw(this->get_max_tier() != landed_title_tier::none);
 }
 
+void landed_title::set_country(const metternich::country *country)
+{
+	this->country = country;
+	this->set_name(this->get_country()->get_name());
+}
+
 void landed_title::set_site(const metternich::site *site)
 {
 	this->site = site;
 	this->default_tier = landed_title_tier::barony; //resource sites are baronies by default
+	this->set_name(this->get_site()->get_name());
 }
 
 }

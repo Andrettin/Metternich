@@ -59,6 +59,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
+	Q_PROPERTY(metternich::character *ruler READ get_ruler_unconst NOTIFY ruler_changed)
 
 public:
 	explicit country_game_data(metternich::country *country);
@@ -441,8 +442,28 @@ public:
 	void remove_character(const character *character)
 	{
 		std::erase(this->characters, character);
+
+		if (character == this->get_ruler()) {
+			this->set_ruler(nullptr);
+		}
+
 		emit characters_changed();
 	}
+
+	const character *get_ruler() const
+	{
+		return this->ruler;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	character *get_ruler_unconst() const
+	{
+		return const_cast<character *>(this->get_ruler());
+	}
+
+public:
+	void set_ruler(const character *ruler);
 
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
@@ -468,6 +489,7 @@ signals:
 	void wealth_changed();
 	void stored_commodities_changed();
 	void characters_changed();
+	void ruler_changed();
 
 private:
 	metternich::country *country = nullptr;
@@ -502,6 +524,7 @@ private:
 	commodity_map<int> stored_commodities;
 	technology_set technologies;
 	std::vector<const character *> characters;
+	const character *ruler = nullptr;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 };
 

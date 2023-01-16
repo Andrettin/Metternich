@@ -10,6 +10,7 @@
 #include "map/province.h"
 #include "time/era.h"
 #include "util/assert_util.h"
+#include "util/log_util.h"
 
 namespace metternich {
 
@@ -60,6 +61,10 @@ void country::check() const
 {
 	if (this->get_culture() == nullptr) {
 		throw std::runtime_error("Country \"" + this->get_identifier() + "\" has no culture.");
+	}
+
+	if (this->get_title() == nullptr) {
+		log::log_error("Country \"" + this->get_identifier() + "\" has no landed title.");
 	}
 
 	assert_throw(this->get_capital_province() != nullptr);

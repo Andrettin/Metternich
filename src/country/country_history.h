@@ -6,6 +6,7 @@
 
 namespace metternich {
 
+class character;
 class consulate;
 class country;
 class technology;
@@ -15,6 +16,7 @@ class country_history final : public data_entry_history
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::character* ruler MEMBER ruler)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<metternich::technology *> technologies READ get_technologies)
 
@@ -24,6 +26,11 @@ public:
 	}
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+
+	const character *get_ruler() const
+	{
+		return this->ruler;
+	}
 
 	const centesimal_int &get_literacy_rate() const
 	{
@@ -57,6 +64,7 @@ public:
 
 private:
 	const metternich::country *country = nullptr;
+	character *ruler = nullptr;
 	centesimal_int literacy_rate;
 	std::vector<technology *> technologies;
 	country_map<diplomacy_state> diplomacy_states;

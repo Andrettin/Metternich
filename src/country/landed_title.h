@@ -46,10 +46,7 @@ public:
 		return this->country;
 	}
 
-	void set_country(const metternich::country *country)
-	{
-		this->country = country;
-	}
+	void set_country(const metternich::country *country);
 
 	const metternich::site *get_site() const
 	{

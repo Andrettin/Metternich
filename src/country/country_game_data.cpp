@@ -1284,6 +1284,28 @@ void country_game_data::check_characters(const QDateTime &date)
 	}
 }
 
+void country_game_data::set_ruler(const character *ruler)
+{
+	if (ruler == this->get_ruler()) {
+		return;
+	}
+
+	if (this->ruler != nullptr) {
+		this->ruler->get_game_data()->remove_landed_title(this->country->get_title());
+	}
+
+	this->ruler = ruler;
+
+	if (this->ruler != nullptr) {
+		assert_throw(this->country->get_title() != nullptr);
+		this->ruler->get_game_data()->add_landed_title(this->country->get_title());
+	}
+
+	if (game::get()->is_running()) {
+		emit ruler_changed();
+	}
+}
+
 void country_game_data::add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit)
 {
 	this->civilian_units.push_back(std::move(civilian_unit));

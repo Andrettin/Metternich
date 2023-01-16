@@ -4,6 +4,7 @@ namespace metternich {
 
 class character;
 class country;
+class landed_title;
 class trait;
 enum class attribute;
 enum class trait_type;
@@ -21,6 +22,8 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int intrigue READ get_intrigue NOTIFY attributes_changed)
 	Q_PROPERTY(int learning READ get_learning NOTIFY attributes_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
+	Q_PROPERTY(QVariantList landed_titles READ get_landed_titles_qvariant_list NOTIFY landed_titles_changed)
+	Q_PROPERTY(bool ruler READ is_ruler NOTIFY landed_titles_changed)
 
 public:
 	explicit character_game_data(const metternich::character *character);
@@ -79,17 +82,40 @@ public:
 	int get_intrigue() const;
 	int get_learning() const;
 
+	const std::vector<const landed_title *> &get_landed_titles() const
+	{
+		return this->landed_titles;
+	}
+
+	QVariantList get_landed_titles_qvariant_list() const;
+
+	void add_landed_title(const landed_title *landed_title)
+	{
+		this->landed_titles.push_back(landed_title);
+		emit landed_titles_changed();
+	}
+
+	void remove_landed_title(const landed_title *landed_title)
+	{
+		std::erase(this->landed_titles, landed_title);
+		emit landed_titles_changed();
+	}
+
+	bool is_ruler() const;
+
 signals:
 	void employer_changed();
 	void age_changed();
 	void traits_changed();
 	void attributes_changed();
+	void landed_titles_changed();
 
 private:
 	const metternich::character *character = nullptr;
 	const metternich::country *employer = nullptr;
 	std::vector<const trait *> traits;
 	std::map<attribute, int> attribute_values;
+	std::vector<const landed_title *> landed_titles;
 };
 
 }

@@ -194,6 +194,16 @@ void game::apply_history(const metternich::scenario *scenario)
 			const country_history *country_history = country->get_history();
 			country_game_data *country_game_data = country->get_game_data();
 
+			if (country_history->get_ruler() != nullptr) {
+				if (country_history->get_ruler()->get_game_data()->get_employer() != nullptr) {
+					throw std::runtime_error("Cannot set \"" + country_history->get_ruler()->get_identifier() + "\" as the ruler of \"" + country->get_identifier() + "\", as it is already employed by another country.");
+				}
+
+				country_game_data->add_character(country_history->get_ruler());
+				country_history->get_ruler()->get_game_data()->set_employer(country);
+				country_game_data->set_ruler(country_history->get_ruler());
+			}
+
 			for (const technology *technology : country_history->get_technologies()) {
 				country_game_data->add_technology(technology);
 			}
