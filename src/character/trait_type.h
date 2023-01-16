@@ -6,7 +6,7 @@ namespace metternich {
 
 enum class trait_type {
 	none,
-	education,
+	expertise,
 	background,
 	personality
 };

@@ -34,7 +34,7 @@ void character_game_data::on_game_started()
 		trait_types.insert(trait->get_type());
 	}
 
-	static const std::vector<trait_type> required_trait_types = { trait_type::education, trait_type::background, trait_type::personality };
+	static const std::vector<trait_type> required_trait_types = { trait_type::expertise, trait_type::background, trait_type::personality };
 
 	for (const trait_type trait_type : required_trait_types) {
 		if (!trait_types.contains(trait_type)) {
