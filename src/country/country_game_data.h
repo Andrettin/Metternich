@@ -450,6 +450,8 @@ public:
 		emit characters_changed();
 	}
 
+	void clear_characters();
+
 	const character *get_ruler() const
 	{
 		return this->ruler;

@@ -9,6 +9,8 @@
 #include "country/country_type.h"
 #include "country/cultural_group_rank.h"
 #include "country/diplomacy_state.h"
+#include "country/landed_title.h"
+#include "country/landed_title_game_data.h"
 #include "country/landed_title_tier.h"
 #include "database/database.h"
 #include "database/defines.h"
@@ -107,6 +109,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<era>("", 1);
 		qmlRegisterAnonymousType<game>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);
+		qmlRegisterAnonymousType<landed_title>("", 1);
+		qmlRegisterAnonymousType<landed_title_game_data>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<population_type>("", 1);
 		qmlRegisterAnonymousType<preferences>("", 1);

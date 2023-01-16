@@ -39,6 +39,7 @@ set(country_SRCS
 	src/country/culture_container.cpp
 	src/country/diplomacy_state.cpp
 	src/country/landed_title.cpp
+	src/country/landed_title_game_data.cpp
 	src/country/landed_title_tier.cpp
 )
 source_group(country FILES ${country_SRCS})
@@ -254,6 +255,7 @@ set(country_HDRS
 	src/country/culture_container.h
 	src/country/diplomacy_state.h
 	src/country/landed_title.h
+	src/country/landed_title_game_data.h
 	src/country/landed_title_tier.h
 )
 source_group(country FILES ${country_HDRS})

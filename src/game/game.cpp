@@ -9,6 +9,7 @@
 #include "country/country_history.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
+#include "country/landed_title.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "game/scenario.h"
@@ -160,6 +161,10 @@ void game::clear()
 
 		for (character *character : character::get_all()) {
 			character->reset_game_data();
+		}
+
+		for (landed_title *landed_title : landed_title::get_all()) {
+			landed_title->reset_game_data();
 		}
 
 		map::get()->clear_tile_game_data();
@@ -598,6 +603,8 @@ void game::remove_country(country *country)
 	if (country->is_great_power()) {
 		std::erase(this->great_powers, country);
 	}
+
+	country->get_game_data()->clear_characters();
 
 	for (const metternich::country *other_country : this->get_countries()) {
 		country_game_data *other_country_game_data = other_country->get_game_data();

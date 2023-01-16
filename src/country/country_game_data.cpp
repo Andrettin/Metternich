@@ -8,6 +8,8 @@
 #include "country/country_type.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
+#include "country/landed_title.h"
+#include "country/landed_title_game_data.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
@@ -1284,22 +1286,28 @@ void country_game_data::check_characters(const QDateTime &date)
 	}
 }
 
+void country_game_data::clear_characters()
+{
+	this->set_ruler(nullptr);
+
+	for (const character *character : this->get_characters()) {
+		character->get_game_data()->set_employer(nullptr);
+	}
+
+	this->characters.clear();
+	emit characters_changed();
+}
+
 void country_game_data::set_ruler(const character *ruler)
 {
 	if (ruler == this->get_ruler()) {
 		return;
 	}
 
-	if (this->ruler != nullptr) {
-		this->ruler->get_game_data()->remove_landed_title(this->country->get_title());
-	}
-
 	this->ruler = ruler;
 
-	if (this->ruler != nullptr) {
-		assert_throw(this->country->get_title() != nullptr);
-		this->ruler->get_game_data()->add_landed_title(this->country->get_title());
-	}
+	assert_throw(this->country->get_title() != nullptr);
+	this->country->get_title()->get_game_data()->set_holder(this->ruler);
 
 	if (game::get()->is_running()) {
 		emit ruler_changed();
