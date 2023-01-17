@@ -34,6 +34,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(QDateTime end_date MEMBER end_date READ get_end_date NOTIFY changed)
 	Q_PROPERTY(QDateTime birth_date MEMBER birth_date READ get_birth_date NOTIFY changed)
 	Q_PROPERTY(QDateTime death_date MEMBER death_date READ get_death_date NOTIFY changed)
+	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
@@ -132,6 +133,11 @@ public:
 		return this->death_date;
 	}
 
+	int get_level() const
+	{
+		return this->level;
+	}
+
 	const std::vector<const trait *> &get_traits() const
 	{
 		return this->traits;
@@ -152,6 +158,7 @@ private:
 	QDateTime end_date;
 	QDateTime birth_date;
 	QDateTime death_date;
+	int level = 1;
 	std::vector<const trait *> traits;
 	qunique_ptr<character_game_data> game_data;
 };

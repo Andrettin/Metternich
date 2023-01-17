@@ -20,6 +20,7 @@ class trait final : public named_data_entry, public data_type<trait>
 
 	Q_PROPERTY(metternich::trait_type type MEMBER type NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 
 public:
@@ -40,6 +41,11 @@ public:
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	int get_level() const
+	{
+		return this->level;
 	}
 
 	bool is_available_for_character_type(const character_type *character_type) const
@@ -64,6 +70,7 @@ signals:
 private:
 	trait_type type;
 	metternich::icon *icon = nullptr;
+	int level = 0;
 	std::set<const character_type *> character_types; //character types for which this trait is available
 	std::unique_ptr<metternich::modifier<const character>> modifier;
 };

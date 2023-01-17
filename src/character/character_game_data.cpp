@@ -14,6 +14,7 @@
 #include "script/modifier.h"
 #include "util/container_util.h"
 #include "util/vector_random_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -34,13 +35,15 @@ void character_game_data::on_game_started()
 		trait_types.insert(trait->get_type());
 	}
 
-	static const std::vector<trait_type> required_trait_types = { trait_type::expertise, trait_type::background, trait_type::personality };
+	static const std::vector<trait_type> required_trait_types = { trait_type::background, trait_type::personality };
 
 	for (const trait_type trait_type : required_trait_types) {
 		if (!trait_types.contains(trait_type)) {
-			this->generate_trait(trait_type);
+			this->generate_trait(trait_type, 1);
 		}
 	}
+
+	this->generate_expertise_traits();
 }
 
 void character_game_data::set_employer(const metternich::country *employer)
@@ -76,6 +79,11 @@ QVariantList character_game_data::get_traits_qvariant_list() const
 	return container::to_qvariant_list(this->get_traits());
 }
 
+bool character_game_data::has_trait(const trait *trait) const
+{
+	return vector::contains(this->get_traits(), trait);
+}
+
 void character_game_data::add_trait(const trait *trait)
 {
 	this->traits.push_back(trait);
@@ -89,7 +97,7 @@ void character_game_data::add_trait(const trait *trait)
 	}
 }
 
-void character_game_data::generate_trait(const trait_type trait_type)
+const trait *character_game_data::generate_trait(const trait_type trait_type, const int max_level)
 {
 	std::vector<const trait *> potential_traits;
 
@@ -98,7 +106,15 @@ void character_game_data::generate_trait(const trait_type trait_type)
 			continue;
 		}
 
+		if (this->has_trait(trait)) {
+			continue;
+		}
+
 		if (!trait->is_available_for_character_type(this->character->get_type())) {
+			continue;
+		}
+
+		if (trait->get_level() > max_level) {
 			continue;
 		}
 
@@ -106,10 +122,37 @@ void character_game_data::generate_trait(const trait_type trait_type)
 	}
 
 	if (potential_traits.empty()) {
-		return;
+		return nullptr;
 	}
 
-	this->add_trait(vector::get_random(potential_traits));
+	const trait *trait = vector::get_random(potential_traits);
+	this->add_trait(trait);
+	return trait;
+}
+
+void character_game_data::generate_expertise_traits()
+{
+	const int initial_trait_level = this->get_total_trait_level();
+
+	for (int i = initial_trait_level; i < this->character->get_level();) {
+		const trait *trait = this->generate_trait(trait_type::expertise, this->character->get_level() - i);
+		if (trait == nullptr) {
+			return;
+		}
+
+		i += trait->get_level();
+	}
+}
+
+int character_game_data::get_total_trait_level() const
+{
+	int level = 0;
+
+	for (const trait *trait : this->get_traits()) {
+		level += trait->get_level();
+	}
+
+	return level;
 }
 
 int character_game_data::get_attribute_value(const attribute attribute) const

@@ -36,6 +36,12 @@ void trait::check() const
 {
 	assert_throw(this->get_type() != trait_type::none);
 	assert_throw(this->get_icon() != nullptr);
+
+	if (this->get_type() == trait_type::expertise && this->get_level() == 0) {
+		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is an expertise trait, but has no level.");
+	} else if (this->get_type() != trait_type::expertise && this->get_level() > 0) {
+		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is not an expertise trait, but has a level.");
+	}
 }
 
 QString trait::get_modifier_string() const
