@@ -18,6 +18,7 @@ or_condition<scope_type>::or_condition(std::vector<std::unique_ptr<const conditi
 {
 }
 
+template class or_condition<character>;
 template class or_condition<country>;
 template class or_condition<population_unit>;
 template class or_condition<province>;

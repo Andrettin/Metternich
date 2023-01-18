@@ -113,10 +113,6 @@ void character::check() const
 	std::set<trait_type> trait_types;
 
 	for (const trait *trait : this->get_traits()) {
-		if (!trait->is_available_for_character_type(this->get_type())) {
-			throw std::runtime_error("Character \"" + this->get_identifier() + "\" has trait \"" + trait->get_identifier() + "\", which is not available for their character type.");
-		}
-
 		if (trait_types.contains(trait->get_type())) {
 			throw std::runtime_error("Character \"" + this->get_identifier() + "\" has multiple traits of type \"" + enum_converter<trait_type>::to_string(trait->get_type()) + "\".");
 		}

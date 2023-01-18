@@ -4,6 +4,7 @@
 
 namespace metternich {
 
+class character;
 class country;
 class population_unit;
 class province;
@@ -79,6 +80,7 @@ private:
 	std::vector<std::unique_ptr<const condition<scope_type>>> conditions; //the conditions of which none should be true
 };
 
+extern template class not_condition<character>;
 extern template class not_condition<country>;
 extern template class not_condition<population_unit>;
 extern template class not_condition<province>;

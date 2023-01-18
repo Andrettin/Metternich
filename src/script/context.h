@@ -7,6 +7,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class character;
 class country;
 class population_unit;
 class province;
@@ -21,6 +22,8 @@ struct context_base
 
 	const country *source_country = nullptr;
 	const country *current_country = nullptr;
+	const character *source_character = nullptr;
+	const character *current_character = nullptr;
 };
 
 extern template struct context_base<false>;
@@ -28,13 +31,14 @@ extern template struct context_base<true>;
 
 struct context final : context_base<false>
 {
-	static context from_scope(country *country)
+	static context from_scope(const country *country)
 	{
 		context ctx;
 		ctx.current_country = country;
 		return ctx;
 	}
 
+	static context from_scope(const character *character);
 	static context from_scope(const population_unit *population_unit);
 	static context from_scope(const province *province);
 };
@@ -49,6 +53,7 @@ public:
 		return ctx;
 	}
 
+	static read_only_context from_scope(const character *character);
 	static read_only_context from_scope(const population_unit *population_unit);
 	static read_only_context from_scope(const province *province);
 

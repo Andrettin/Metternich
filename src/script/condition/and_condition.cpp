@@ -44,6 +44,7 @@ void and_condition<scope_type>::check_validity() const
 	}
 }
 
+template class and_condition<character>;
 template class and_condition<country>;
 template class and_condition<population_unit>;
 template class and_condition<province>;

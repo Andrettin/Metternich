@@ -11,6 +11,7 @@
 #include "country/country_game_data.h"
 #include "country/landed_title.h"
 #include "game/game.h"
+#include "script/condition/condition.h"
 #include "script/modifier.h"
 #include "util/container_util.h"
 #include "util/vector_random_util.h"
@@ -86,6 +87,12 @@ bool character_game_data::has_trait(const trait *trait) const
 
 void character_game_data::add_trait(const trait *trait)
 {
+	const read_only_context ctx = read_only_context::from_scope(this->character);
+
+	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, ctx)) {
+		throw std::runtime_error("Tried to add trait \"" + trait->get_identifier() + "\" to character \"" + this->character->get_identifier() + "\", for which the trait's conditions are not fulfilled.");
+	}
+
 	this->traits.push_back(trait);
 
 	if (trait->get_modifier() != nullptr) {
@@ -101,6 +108,8 @@ const trait *character_game_data::generate_trait(const trait_type trait_type, co
 {
 	std::vector<const trait *> potential_traits;
 
+	const read_only_context ctx = read_only_context::from_scope(this->character);
+
 	for (const trait *trait : trait::get_all()) {
 		if (trait->get_type() != trait_type) {
 			continue;
@@ -110,7 +119,7 @@ const trait *character_game_data::generate_trait(const trait_type trait_type, co
 			continue;
 		}
 
-		if (!trait->is_available_for_character_type(this->character->get_type())) {
+		if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, ctx)) {
 			continue;
 		}
 

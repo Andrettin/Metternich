@@ -12,6 +12,9 @@ enum class attribute;
 enum class trait_type;
 
 template <typename scope_type>
+class condition;
+
+template <typename scope_type>
 class modifier;
 
 class trait final : public named_data_entry, public data_type<trait>
@@ -48,13 +51,9 @@ public:
 		return this->level;
 	}
 
-	bool is_available_for_character_type(const character_type *character_type) const
+	const condition<character> *get_conditions() const
 	{
-		if (this->character_types.empty()) {
-			return true;
-		}
-
-		return this->character_types.contains(character_type);
+		return this->conditions.get();
 	}
 
 	const metternich::modifier<const character> *get_modifier() const
@@ -71,7 +70,7 @@ private:
 	trait_type type;
 	metternich::icon *icon = nullptr;
 	int level = 0;
-	std::set<const character_type *> character_types; //character types for which this trait is available
+	std::unique_ptr<const condition<character>> conditions;
 	std::unique_ptr<metternich::modifier<const character>> modifier;
 };
 

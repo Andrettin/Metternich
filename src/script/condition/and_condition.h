@@ -4,6 +4,7 @@
 
 namespace metternich {
 
+class character;
 class country;
 class population_unit;
 class province;
@@ -94,6 +95,7 @@ private:
 	std::vector<std::unique_ptr<const condition<scope_type>>> conditions; //the conditions of which all should be true
 };
 
+extern template class and_condition<character>;
 extern template class and_condition<country>;
 extern template class and_condition<population_unit>;
 extern template class and_condition<province>;

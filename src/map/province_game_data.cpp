@@ -133,7 +133,7 @@ void province_game_data::do_cultural_change()
 
 		std::vector<const metternich::culture *> potential_cultures;
 
-		read_only_context ctx = read_only_context::from_scope(population_unit.get());
+		const read_only_context ctx = read_only_context::from_scope(population_unit.get());
 
 		for (const metternich::culture *culture : current_culture->get_derived_cultures()) {
 			if (!this->province->has_core_country_of_culture(culture)) {

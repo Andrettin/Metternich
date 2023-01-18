@@ -2,6 +2,8 @@
 
 #include "script/context.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "country/country.h"
 #include "database/gsml_data.h"
 #include "map/province.h"
@@ -20,6 +22,10 @@ void context_base<read_only>::process_gsml_property(const gsml_property &propert
 		this->source_country = country::get(value);
 	} else if (key == "current_country") {
 		this->current_country = country::get(value);
+	} else if (key == "source_character") {
+		this->source_character = character::get(value);
+	} else if (key == "current_character") {
+		this->current_character = character::get(value);
 	} else {
 		throw std::runtime_error("Invalid context property: \"" + key + "\".");
 	}
@@ -44,7 +50,23 @@ gsml_data context_base<read_only>::to_gsml_data(const std::string &tag) const
 		data.add_property("current_country", this->current_country->get_identifier());
 	}
 
+	if (this->source_character != nullptr) {
+		data.add_property("source_character", this->source_character->get_identifier());
+	}
+
+	if (this->current_character != nullptr) {
+		data.add_property("current_character", this->current_character->get_identifier());
+	}
+
 	return data;
+}
+
+context context::from_scope(const character *character)
+{
+	context ctx;
+	ctx.current_character = character;
+	ctx.current_country = character->get_game_data()->get_employer();
+	return ctx;
 }
 
 context context::from_scope(const population_unit *population_unit)
@@ -58,6 +80,14 @@ context context::from_scope(const province *province)
 {
 	context ctx;
 	ctx.current_country = province->get_game_data()->get_owner();
+	return ctx;
+}
+
+read_only_context read_only_context::from_scope(const character *character)
+{
+	context ctx;
+	ctx.current_character = character;
+	ctx.current_country = character->get_game_data()->get_employer();
 	return ctx;
 }
 
