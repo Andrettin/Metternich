@@ -2,6 +2,7 @@
 
 #include "country/country_container.h"
 #include "country/culture_container.h"
+#include "country/religion_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "map/terrain_type_container.h"
@@ -20,6 +21,7 @@ class culture;
 class event;
 class population_unit;
 class province;
+class religion;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
 enum class event_trigger;
@@ -29,6 +31,7 @@ class country_game_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::religion* religion READ get_religion_unconst NOTIFY religion_changed)
 	Q_PROPERTY(metternich::country* overlord READ get_overlord_unconst NOTIFY overlord_changed)
 	Q_PROPERTY(bool true_great_power READ is_true_great_power NOTIFY rank_changed)
 	Q_PROPERTY(bool secondary_power READ is_secondary_power NOTIFY rank_changed)
@@ -52,6 +55,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
 	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
+	Q_PROPERTY(QVariantList population_religion_counts READ get_population_religion_counts_qvariant_list NOTIFY population_religion_counts_changed)
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
@@ -70,6 +74,21 @@ public:
 	void do_migration();
 	void do_events();
 	void do_ai_turn();
+
+	const metternich::religion *get_religion() const
+	{
+		return this->religion;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::religion *get_religion_unconst() const
+	{
+		return const_cast<metternich::religion *>(this->get_religion());
+	}
+
+public:
+	void set_religion(const metternich::religion *religion);
 
 	const metternich::country *get_overlord() const
 	{
@@ -338,6 +357,14 @@ public:
 	QVariantList get_population_culture_counts_qvariant_list() const;
 	void change_population_culture_count(const culture *culture, const int change);
 
+	const religion_map<int> &get_population_religion_counts() const
+	{
+		return this->population_religion_counts;
+	}
+
+	QVariantList get_population_religion_counts_qvariant_list() const;
+	void change_population_religion_count(const religion *religion, const int change);
+
 	const phenotype_map<int> &get_population_phenotype_counts() const
 	{
 		return this->population_phenotype_counts;
@@ -474,6 +501,7 @@ public:
 	void check_random_events(const event_trigger trigger, const read_only_context &ctx);
 
 signals:
+	void religion_changed();
 	void overlord_changed();
 	void type_name_changed();
 	void vassalage_type_name_changed();
@@ -485,6 +513,7 @@ signals:
 	void score_changed();
 	void population_type_counts_changed();
 	void population_culture_counts_changed();
+	void population_religion_counts_changed();
 	void population_phenotype_counts_changed();
 	void population_changed();
 	void population_growth_changed();
@@ -495,6 +524,7 @@ signals:
 
 private:
 	metternich::country *country = nullptr;
+	const metternich::religion *religion = nullptr;
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;
 	QRect territory_rect;
@@ -519,6 +549,7 @@ private:
 	std::vector<population_unit *> population_units;
 	population_type_map<int> population_type_counts;
 	culture_map<int> population_culture_counts;
+	religion_map<int> population_religion_counts;
 	phenotype_map<int> population_phenotype_counts;
 	int population = 0;
 	int population_growth = 0; //population growth counter

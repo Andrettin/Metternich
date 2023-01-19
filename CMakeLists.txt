@@ -41,6 +41,8 @@ set(country_SRCS
 	src/country/landed_title.cpp
 	src/country/landed_title_game_data.cpp
 	src/country/landed_title_tier.cpp
+	src/country/religion.cpp
+	src/country/religion_container.cpp
 )
 source_group(country FILES ${country_SRCS})
 set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
@@ -257,6 +259,8 @@ set(country_HDRS
 	src/country/landed_title.h
 	src/country/landed_title_game_data.h
 	src/country/landed_title_tier.h
+	src/country/religion.h
+	src/country/religion_container.h
 )
 source_group(country FILES ${country_HDRS})
 

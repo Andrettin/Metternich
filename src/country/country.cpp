@@ -63,6 +63,10 @@ void country::check() const
 		throw std::runtime_error("Country \"" + this->get_identifier() + "\" has no culture.");
 	}
 
+	if (this->get_default_religion() == nullptr) {
+		throw std::runtime_error("Country \"" + this->get_identifier() + "\" has no default religion.");
+	}
+
 	if (this->get_title() == nullptr) {
 		log::log_error("Country \"" + this->get_identifier() + "\" has no landed title.");
 	}

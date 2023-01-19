@@ -3,6 +3,7 @@
 #include "population/population_group_map.h"
 
 #include "country/culture.h"
+#include "country/religion.h"
 #include "population/phenotype.h"
 #include "population/population_type.h"
 #include "util/assert_util.h"
@@ -25,6 +26,13 @@ population_group_key::population_group_key(const std::string &key_str)
 		if (this->culture == nullptr) {
 			this->culture = culture::try_get(subkey);
 			if (this->culture != nullptr) {
+				continue;
+			}
+		}
+		
+		if (this->religion == nullptr) {
+			this->religion = religion::try_get(subkey);
+			if (this->religion != nullptr) {
 				continue;
 			}
 		}
@@ -62,6 +70,14 @@ bool population_group_key::operator<(const population_group_key &rhs) const
 		}
 
 		return this->culture->get_identifier() < this->culture->get_identifier();
+	}
+
+	if (this->religion != rhs.religion) {
+		if (this->religion == nullptr || rhs.religion == nullptr) {
+			return this->religion != nullptr;
+		}
+
+		return this->religion->get_identifier() < this->religion->get_identifier();
 	}
 
 	if (this->phenotype != rhs.phenotype) {

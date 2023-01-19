@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
+#include "country/religion.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
@@ -176,6 +177,7 @@ void province_game_data::set_owner(const country *country)
 
 		if (this->get_population_unit_count() == 0) {
 			this->calculate_culture();
+			this->calculate_religion();
 		}
 
 		if (this->is_capital()) {
@@ -273,6 +275,50 @@ void province_game_data::calculate_culture()
 	}
 
 	this->set_culture(best_culture);
+}
+
+void province_game_data::set_religion(const metternich::religion *religion)
+{
+	if (religion == this->get_religion()) {
+		return;
+	}
+
+	this->religion = religion;
+
+	if (game::get()->is_running()) {
+		if (this->get_owner() != nullptr) {
+			thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+				co_await this->get_owner()->get_game_data()->create_diplomatic_map_mode_image(diplomatic_map_mode::religious, {});
+			});
+		}
+	}
+
+	emit religion_changed();
+}
+
+void province_game_data::calculate_religion()
+{
+	if (this->get_population_unit_count() == 0) {
+		if (this->get_owner() != nullptr) {
+			this->set_religion(this->get_owner()->get_game_data()->get_religion());
+		} else {
+			this->set_religion(nullptr);
+		}
+
+		return;
+	}
+
+	const metternich::religion *best_religion = nullptr;
+	int best_count = 0;
+
+	for (const auto &[religion, count] : this->get_population_religion_counts()) {
+		if (count > best_count) {
+			best_count = count;
+			best_religion = religion;
+		}
+	}
+
+	this->set_religion(best_religion);
 }
 
 const std::string &province_game_data::get_current_cultural_name() const
@@ -429,6 +475,7 @@ void province_game_data::add_population_unit(qunique_ptr<population_unit> &&popu
 {
 	this->change_population_type_count(population_unit->get_type(), 1);
 	this->change_population_culture_count(population_unit->get_culture(), 1);
+	this->change_population_religion_count(population_unit->get_religion(), 1);
 	this->change_population_phenotype_count(population_unit->get_phenotype(), 1);
 	this->change_population(defines::get()->get_population_per_unit());
 
@@ -460,6 +507,7 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 
 			this->change_population_type_count(population_unit->get_type(), -1);
 			this->change_population_culture_count(population_unit->get_culture(), -1);
+			this->change_population_religion_count(population_unit->get_religion(), -1);
 			this->change_population_phenotype_count(population_unit->get_phenotype(), -1);
 			this->change_population(-defines::get()->get_population_per_unit());
 
@@ -478,9 +526,9 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 	return nullptr;
 }
 
-void province_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const phenotype *phenotype)
+void province_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype)
 {
-	auto population_unit = make_qunique<metternich::population_unit>(type, culture, phenotype, this->province);
+	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, this->province);
 	this->add_population_unit(std::move(population_unit));
 }
 
@@ -489,6 +537,7 @@ void province_game_data::clear_population_units()
 	this->population_units.clear();
 	this->population_type_counts.clear();
 	this->population_culture_counts.clear();
+	this->population_religion_counts.clear();
 	this->population_phenotype_counts.clear();
 	this->population = 0;
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
@@ -554,6 +603,36 @@ void province_game_data::change_population_culture_count(const metternich::cultu
 	}
 }
 
+QVariantList province_game_data::get_population_religion_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_population_religion_counts());
+}
+
+void province_game_data::change_population_religion_count(const metternich::religion *religion, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->population_religion_counts[religion] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->population_religion_counts.erase(religion);
+	}
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_population_religion_count(religion, change);
+	}
+
+	if (game::get()->is_running()) {
+		this->calculate_religion();
+
+		emit population_religion_counts_changed();
+	}
+}
+
 QVariantList province_game_data::get_population_phenotype_counts_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_population_phenotype_counts());
@@ -609,10 +688,11 @@ void province_game_data::grow_population()
 
 	const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
 	const metternich::culture *culture = population_unit->get_culture();
+	const metternich::religion *religion = population_unit->get_religion();
 	const phenotype *phenotype = population_unit->get_phenotype();
 	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
 
-	this->create_population_unit(population_type, culture, phenotype);
+	this->create_population_unit(population_type, culture, religion, phenotype);
 	this->assign_worker(this->population_units.back().get());
 
 	this->get_owner()->get_game_data()->change_population_growth(-defines::get()->get_population_growth_threshold());

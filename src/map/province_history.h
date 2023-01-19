@@ -9,6 +9,7 @@ namespace metternich {
 class country;
 class culture;
 class province;
+class religion;
 
 class province_history final : public data_entry_history
 {
@@ -16,6 +17,7 @@ class province_history final : public data_entry_history
 
 	Q_PROPERTY(metternich::country* owner MEMBER owner)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
+	Q_PROPERTY(metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 
@@ -34,6 +36,11 @@ public:
 	const metternich::culture *get_culture() const
 	{
 		return this->culture;
+	}
+
+	const metternich::religion *get_religion() const
+	{
+		return this->religion;
 	}
 
 	int get_population() const
@@ -142,6 +149,7 @@ private:
 	const metternich::province *province = nullptr;
 	country *owner = nullptr;
 	metternich::culture *culture = nullptr;
+	metternich::religion *religion = nullptr;
 	population_group_map<int> population_groups;
 	population_group_map<int> lower_bound_population_groups;
 	centesimal_int literacy_rate;

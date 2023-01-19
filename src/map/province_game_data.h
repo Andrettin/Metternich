@@ -1,6 +1,7 @@
 #pragma once
 
 #include "country/culture_container.h"
+#include "country/religion_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "map/terrain_type_container.h"
@@ -21,6 +22,7 @@ class phenotype;
 class population_type;
 class population_unit;
 class province;
+class religion;
 class tile;
 
 class province_game_data final : public QObject
@@ -29,12 +31,14 @@ class province_game_data final : public QObject
 
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst NOTIFY owner_changed)
 	Q_PROPERTY(metternich::culture* culture READ get_culture_unconst NOTIFY culture_changed)
+	Q_PROPERTY(metternich::religion* religion READ get_religion_unconst NOTIFY religion_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
+	Q_PROPERTY(QVariantList population_religion_counts READ get_population_religion_counts_qvariant_list NOTIFY population_religion_counts_changed)
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 
@@ -88,6 +92,22 @@ private:
 public:
 	void set_culture(const metternich::culture *culture);
 	void calculate_culture();
+
+	const metternich::religion *get_religion() const
+	{
+		return this->religion;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::religion *get_religion_unconst() const
+	{
+		return const_cast<metternich::religion *>(this->get_religion());
+	}
+
+public:
+	void set_religion(const metternich::religion *religion);
+	void calculate_religion();
 
 	const std::string &get_current_cultural_name() const;
 
@@ -161,7 +181,7 @@ public:
 
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
-	void create_population_unit(const population_type *type, const metternich::culture *culture, const phenotype *phenotype);
+	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype);
 	void clear_population_units();
 
 	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
@@ -189,6 +209,14 @@ public:
 
 	QVariantList get_population_culture_counts_qvariant_list() const;
 	void change_population_culture_count(const metternich::culture *culture, const int change);
+
+	const religion_map<int> &get_population_religion_counts() const
+	{
+		return this->population_religion_counts;
+	}
+
+	QVariantList get_population_religion_counts_qvariant_list() const;
+	void change_population_religion_count(const metternich::religion *religion, const int change);
 
 	const phenotype_map<int> &get_population_phenotype_counts() const
 	{
@@ -257,10 +285,12 @@ public:
 signals:
 	void owner_changed();
 	void culture_changed();
+	void religion_changed();
 	void territory_changed();
 	void population_units_changed();
 	void population_type_counts_changed();
 	void population_culture_counts_changed();
+	void population_religion_counts_changed();
 	void population_phenotype_counts_changed();
 	void population_changed();
 
@@ -268,6 +298,7 @@ private:
 	const metternich::province *province = nullptr;
 	const country *owner = nullptr;
 	const metternich::culture *culture = nullptr;
+	const metternich::religion *religion = nullptr;
 	QRect territory_rect;
 	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<const metternich::province *> border_provinces;
@@ -281,6 +312,7 @@ private:
 	std::vector<qunique_ptr<population_unit>> population_units;
 	population_type_map<int> population_type_counts;
 	culture_map<int> population_culture_counts;
+	religion_map<int> population_religion_counts;
 	phenotype_map<int> population_phenotype_counts;
 	int population = 0;
 	int free_food_consumption = 0;

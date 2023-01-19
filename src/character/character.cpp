@@ -7,6 +7,7 @@
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "country/culture.h"
+#include "country/religion.h"
 #include "map/province.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
@@ -91,6 +92,11 @@ void character::check() const
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
+
+	if (this->get_religion() == nullptr) {
+		throw std::runtime_error("Character \"" + this->get_identifier() + "\" has no religion.");
+	}
+
 	assert_throw(this->get_phenotype() != nullptr);
 	assert_throw(this->get_home_province() != nullptr);
 

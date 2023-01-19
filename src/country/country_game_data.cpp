@@ -10,6 +10,7 @@
 #include "country/diplomacy_state.h"
 #include "country/landed_title.h"
 #include "country/landed_title_game_data.h"
+#include "country/religion.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
@@ -168,6 +169,19 @@ void country_game_data::do_ai_turn()
 	}
 }
 
+void country_game_data::set_religion(const metternich::religion *religion)
+{
+	if (religion == this->get_religion()) {
+		return;
+	}
+
+	this->religion = religion;
+
+	if (game::get()->is_running()) {
+		emit religion_changed();
+	}
+}
+
 void country_game_data::set_overlord(const metternich::country *overlord)
 {
 	if (overlord == this->get_overlord()) {
@@ -317,6 +331,9 @@ void country_game_data::add_province(const province *province)
 	for (const auto &[culture, count] : province_game_data->get_population_culture_counts()) {
 		this->change_population_culture_count(culture, count);
 	}
+	for (const auto &[religion, count] : province_game_data->get_population_religion_counts()) {
+		this->change_population_religion_count(religion, count);
+	}
 	for (const auto &[phenotype, count] : province_game_data->get_population_phenotype_counts()) {
 		this->change_population_phenotype_count(phenotype, count);
 	}
@@ -386,6 +403,9 @@ void country_game_data::remove_province(const province *province)
 	}
 	for (const auto &[culture, count] : province_game_data->get_population_culture_counts()) {
 		this->change_population_culture_count(culture, -count);
+	}
+	for (const auto &[religion, count] : province_game_data->get_population_religion_counts()) {
+		this->change_population_religion_count(religion, -count);
 	}
 	for (const auto &[phenotype, count] : province_game_data->get_population_phenotype_counts()) {
 		this->change_population_phenotype_count(phenotype, -count);
@@ -1001,6 +1021,15 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image
 					}
 					break;
 				}
+				case diplomatic_map_mode::religious: {
+					const metternich::religion *religion = tile->get_province()->get_game_data()->get_religion();
+					if (religion != nullptr) {
+						color = &tile->get_province()->get_game_data()->get_religion()->get_color();
+					} else {
+						color = &empty_color;
+					}
+					break;
+				}
 			}
 
 			image.setPixelColor(relative_tile_pos, *color);
@@ -1137,6 +1166,30 @@ void country_game_data::change_population_culture_count(const culture *culture, 
 
 	if (game::get()->is_running()) {
 		emit population_culture_counts_changed();
+	}
+}
+
+QVariantList country_game_data::get_population_religion_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_population_religion_counts());
+}
+
+void country_game_data::change_population_religion_count(const metternich::religion *religion, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->population_religion_counts[religion] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->population_religion_counts.erase(religion);
+	}
+
+	if (game::get()->is_running()) {
+		emit population_religion_counts_changed();
 	}
 }
 

@@ -3,6 +3,7 @@
 #include "population/population_unit.h"
 
 #include "country/culture.h"
+#include "country/religion.h"
 #include "economy/commodity.h"
 #include "economy/employment_type.h"
 #include "map/province.h"
@@ -13,11 +14,12 @@
 
 namespace metternich {
 
-population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::phenotype *phenotype, const metternich::province *province)
-	: type(type), culture(culture), phenotype(phenotype), province(province)
+population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *province)
+	: type(type), culture(culture), religion(religion), phenotype(phenotype), province(province)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
+	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
 	assert_throw(this->get_province() != nullptr);
 
@@ -62,6 +64,21 @@ void population_unit::set_culture(const metternich::culture *culture)
 	}
 
 	emit culture_changed();
+}
+
+void population_unit::set_religion(const metternich::religion *religion)
+{
+	if (religion == this->get_religion()) {
+		return;
+	}
+
+	this->get_province()->get_game_data()->change_population_religion_count(this->get_religion(), -1);
+
+	this->religion = religion;
+
+	this->get_province()->get_game_data()->change_population_religion_count(this->get_religion(), 1);
+
+	emit religion_changed();
 }
 
 void population_unit::set_phenotype(const metternich::phenotype *phenotype)

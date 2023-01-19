@@ -10,6 +10,7 @@ class improvement;
 class phenotype;
 class population_type;
 class province;
+class religion;
 class tile;
 
 class civilian_unit final : public QObject
@@ -24,7 +25,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
 
 public:
-	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const province *home_province, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::phenotype *phenotype);
+	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const province *home_province, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
 
 	void do_turn();
 	void do_ai_turn();
@@ -96,6 +97,11 @@ public:
 	const metternich::culture *get_culture() const
 	{
 		return this->culture;
+	}
+
+	const metternich::religion *get_religion() const
+	{
+		return this->religion;
 	}
 
 	const metternich::phenotype *get_phenotype() const
@@ -174,6 +180,7 @@ private:
 	const province *home_province = nullptr;
 	const metternich::population_type *population_type = nullptr;
 	const metternich::culture *culture = nullptr;
+	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	QPoint original_tile_pos = QPoint(-1, -1); //the tile position before moving

@@ -10,6 +10,7 @@ class icon;
 class phenotype;
 class population_type;
 class province;
+class religion;
 
 class population_unit final : public QObject
 {
@@ -17,6 +18,7 @@ class population_unit final : public QObject
 
 	Q_PROPERTY(metternich::population_type* type READ get_type_unconst NOTIFY type_changed)
 	Q_PROPERTY(metternich::culture* culture READ get_culture_unconst NOTIFY culture_changed)
+	Q_PROPERTY(metternich::religion* religion READ get_religion_unconst NOTIFY religion_changed)
 	Q_PROPERTY(metternich::phenotype* phenotype READ get_phenotype_unconst NOTIFY phenotype_changed)
 	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
 	Q_PROPERTY(metternich::province* province READ get_province_unconst NOTIFY province_changed)
@@ -24,7 +26,7 @@ class population_unit final : public QObject
 public:
 	static constexpr int base_score = 1;
 
-	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::phenotype *phenotype, const metternich::province *province);
+	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *province);
 
 	const population_type *get_type() const
 	{
@@ -55,6 +57,21 @@ private:
 
 public:
 	void set_culture(const metternich::culture *culture);
+
+	const religion *get_religion() const
+	{
+		return this->religion;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	religion *get_religion_unconst() const
+	{
+		return const_cast<metternich::religion *>(this->get_religion());
+	}
+
+public:
+	void set_religion(const metternich::religion *religion);
 
 	const phenotype *get_phenotype() const
 	{
@@ -131,6 +148,7 @@ public:
 signals:
 	void type_changed();
 	void culture_changed();
+	void religion_changed();
 	void phenotype_changed();
 	void icon_changed();
 	void province_changed();
@@ -138,6 +156,7 @@ signals:
 private:
 	const population_type *type = nullptr;
 	const metternich::culture *culture = nullptr;
+	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::province *province = nullptr;
 	const metternich::employment_type *employment_type = nullptr;

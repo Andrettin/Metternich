@@ -199,6 +199,12 @@ void game::apply_history(const metternich::scenario *scenario)
 			const country_history *country_history = country->get_history();
 			country_game_data *country_game_data = country->get_game_data();
 
+			if (country_history->get_religion() != nullptr) {
+				country_game_data->set_religion(country_history->get_religion());
+			} else {
+				country_game_data->set_religion(country->get_default_religion());
+			}
+
 			if (country_history->get_ruler() != nullptr) {
 				if (country_history->get_ruler()->get_game_data()->get_employer() != nullptr) {
 					throw std::runtime_error("Cannot set \"" + country_history->get_ruler()->get_identifier() + "\" as the ruler of \"" + country->get_identifier() + "\", as it is already employed by another country.");
@@ -325,6 +331,16 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(culture != nullptr);
 
+			const religion *religion = historical_civilian_unit->get_religion();
+			if (religion == nullptr) {
+				if (home_province->get_game_data()->get_religion() != nullptr) {
+					religion = home_province->get_game_data()->get_religion();
+				} else {
+					religion = owner->get_game_data()->get_religion();
+				}
+			}
+			assert_throw(religion != nullptr);
+
 			const population_type *population_type = historical_civilian_unit->get_population_type();
 			if (population_type == nullptr) {
 				population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
@@ -337,7 +353,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(phenotype != nullptr);
 
-			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, home_province, population_type, culture, phenotype);
+			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, home_province, population_type, culture, religion, phenotype);
 			civilian_unit->set_tile_pos(tile_pos);
 
 			owner->get_game_data()->add_civilian_unit(std::move(civilian_unit));
@@ -346,6 +362,7 @@ void game::apply_history(const metternich::scenario *scenario)
 		for (const province *province : map::get()->get_provinces()) {
 			province_game_data *province_game_data = province->get_game_data();
 			province_game_data->calculate_culture();
+			province_game_data->calculate_religion();
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to apply history."));
@@ -393,21 +410,31 @@ void game::apply_population_history()
 		const population_group_map<int> population_groups_copy = population_groups;
 		for (const auto &[group_key, population] : population_groups_copy) {
 			if (group_key.type != nullptr) {
-				population_groups[population_group_key(group_key.type, group_key.culture, nullptr)];
-				population_groups[population_group_key(group_key.type, nullptr, group_key.phenotype)];
-				population_groups[population_group_key(group_key.type, nullptr, nullptr)];
+				population_groups[population_group_key(group_key.type, group_key.culture, nullptr, nullptr)];
+				population_groups[population_group_key(group_key.type, nullptr, group_key.religion, nullptr)];
+				population_groups[population_group_key(group_key.type, nullptr, nullptr, group_key.phenotype)];
+				population_groups[population_group_key(group_key.type, nullptr, nullptr, nullptr)];
 			}
 
 			if (group_key.culture != nullptr) {
-				population_groups[population_group_key(group_key.type, group_key.culture, nullptr)];
-				population_groups[population_group_key(nullptr, group_key.culture, group_key.phenotype)];
-				population_groups[population_group_key(nullptr, group_key.culture, nullptr)];
+				population_groups[population_group_key(group_key.type, group_key.culture, nullptr, nullptr)];
+				population_groups[population_group_key(nullptr, group_key.culture, group_key.religion, nullptr)];
+				population_groups[population_group_key(nullptr, group_key.culture, nullptr, group_key.phenotype)];
+				population_groups[population_group_key(nullptr, group_key.culture, nullptr, nullptr)];
+			}
+
+			if (group_key.religion != nullptr) {
+				population_groups[population_group_key(group_key.type, nullptr, group_key.religion, nullptr)];
+				population_groups[population_group_key(nullptr, group_key.culture, group_key.religion, nullptr)];
+				population_groups[population_group_key(nullptr, nullptr, group_key.religion, group_key.phenotype)];
+				population_groups[population_group_key(nullptr, nullptr, group_key.religion, nullptr)];
 			}
 
 			if (group_key.phenotype != nullptr) {
-				population_groups[population_group_key(group_key.type, nullptr, group_key.phenotype)];
-				population_groups[population_group_key(nullptr, group_key.culture, group_key.phenotype)];
-				population_groups[population_group_key(nullptr, nullptr, group_key.phenotype)];
+				population_groups[population_group_key(group_key.type, nullptr, nullptr, group_key.phenotype)];
+				population_groups[population_group_key(nullptr, group_key.culture, nullptr, group_key.phenotype)];
+				population_groups[population_group_key(nullptr, nullptr, group_key.religion, group_key.phenotype)];
+				population_groups[population_group_key(nullptr, nullptr, nullptr, group_key.phenotype)];
 			}
 		}
 
@@ -424,6 +451,8 @@ void game::apply_population_history()
 
 				if (group_key.phenotype != nullptr) {
 					group_key_copy.phenotype = nullptr;
+				} else if (group_key.religion != nullptr) {
+					group_key_copy.religion = nullptr;
 				} else if (group_key.culture != nullptr) {
 					group_key_copy.culture = nullptr;
 				} else if (group_key.type != nullptr) {
@@ -467,6 +496,19 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 	}
 	assert_throw(culture != nullptr);
 
+	const religion *province_religion = province_history->get_religion();
+
+	const religion *religion = group_key.religion;
+	if (religion == nullptr) {
+		if (province_religion == nullptr) {
+			log::log_error("Province \"" + province->get_identifier() + "\" has no religion.");
+			return 0;
+		}
+
+		religion = province_religion;
+	}
+	assert_throw(religion != nullptr);
+
 	const phenotype *phenotype = group_key.phenotype;
 	if (phenotype == nullptr) {
 		phenotype = culture->get_default_phenotype();
@@ -493,7 +535,7 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 				const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
 
 				for (int i = 0; i < literate_population_unit_count; ++i) {
-					province_game_data->create_population_unit(literate_population_type, culture, phenotype);
+					province_game_data->create_population_unit(literate_population_type, culture, religion, phenotype);
 				}
 			}
 
@@ -504,7 +546,7 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 	assert_throw(population_type != nullptr);
 
 	for (int i = 0; i < population_unit_count; ++i) {
-		province_game_data->create_population_unit(population_type, culture, phenotype);
+		province_game_data->create_population_unit(population_type, culture, religion, phenotype);
 	}
 
 	int64_t remaining_population = population % defines::get()->get_population_per_unit();

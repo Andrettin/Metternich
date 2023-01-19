@@ -17,6 +17,7 @@ class culture;
 class icon;
 class phenotype;
 class province;
+class religion;
 class trait;
 
 class character final : public named_data_entry, public data_type<character>
@@ -27,6 +28,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(QString full_name READ get_full_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_type* type MEMBER type NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
+	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
 	Q_PROPERTY(metternich::icon* portrait READ get_portrait_unconst NOTIFY changed)
 	Q_PROPERTY(metternich::province* home_province MEMBER home_province NOTIFY changed)
@@ -89,6 +91,11 @@ public:
 	const metternich::culture *get_culture() const
 	{
 		return this->culture;
+	}
+
+	const metternich::religion *get_religion() const
+	{
+		return this->religion;
 	}
 
 	const metternich::phenotype *get_phenotype() const
@@ -164,6 +171,7 @@ private:
 	std::string surname;
 	character_type *type = nullptr;
 	metternich::culture *culture = nullptr;
+	metternich::religion *religion = nullptr;
 	metternich::phenotype *phenotype = nullptr;
 	province *home_province = nullptr;
 	archimedes::gender gender;

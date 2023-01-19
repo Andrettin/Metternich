@@ -5,13 +5,14 @@ namespace metternich {
 class culture;
 class phenotype;
 class population_type;
+class religion;
 
 struct population_group_key final
 {
 	population_group_key() = default;
 
-	explicit population_group_key(const population_type *type, const metternich::culture *culture, const metternich::phenotype *phenotype)
-		: type(type), culture(culture), phenotype(phenotype)
+	explicit population_group_key(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
+		: type(type), culture(culture), religion(religion), phenotype(phenotype)
 	{
 	}
 
@@ -32,6 +33,10 @@ private:
 		}
 
 		if (this->culture != nullptr) {
+			++count;
+		}
+
+		if (this->religion != nullptr) {
 			++count;
 		}
 
@@ -61,6 +66,12 @@ public:
 			}
 		}
 
+		if (this->religion != other_group_key.religion) {
+			if (this->religion != nullptr) {
+				return false;
+			}
+		}
+
 		if (this->phenotype != other_group_key.phenotype) {
 			if (this->phenotype != nullptr) {
 				return false;
@@ -75,6 +86,7 @@ public:
 
 	const population_type *type = nullptr;
 	const metternich::culture *culture = nullptr;
+	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 };
 
