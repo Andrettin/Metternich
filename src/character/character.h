@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
 
 namespace archimedes {
@@ -35,12 +36,14 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(QDateTime birth_date MEMBER birth_date READ get_birth_date NOTIFY changed)
 	Q_PROPERTY(QDateTime death_date MEMBER death_date READ get_death_date NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
+	Q_PROPERTY(archimedes::centesimal_int level_multiplier READ get_level_multiplier WRITE set_level_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
 	static constexpr const char class_identifier[] = "character";
 	static constexpr const char property_class_identifier[] = "metternich::character*";
 	static constexpr const char database_folder[] = "characters";
+	static constexpr int default_max_level = 6; //the maximum level in normal circumstances
 
 	explicit character(const std::string &identifier);
 	~character();
@@ -136,6 +139,16 @@ public:
 	int get_level() const
 	{
 		return this->level;
+	}
+
+	centesimal_int get_level_multiplier() const
+	{
+		return centesimal_int(this->get_level()) / character::default_max_level;
+	}
+
+	void set_level_multiplier(const centesimal_int &level_multiplier)
+	{
+		this->level = (level_multiplier * character::default_max_level).to_int();
 	}
 
 	const std::vector<const trait *> &get_traits() const
