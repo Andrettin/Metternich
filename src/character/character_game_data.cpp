@@ -168,7 +168,7 @@ int character_game_data::get_attribute_value(const attribute attribute) const
 {
 	const int value = this->get_unclamped_attribute_value(attribute);
 
-	if (value >= 0) {
+	if (value > 0) {
 		return value;
 	}
 
