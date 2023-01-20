@@ -969,6 +969,7 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 
 	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::terrain, {});
 	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::cultural, {});
+	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::religious, {});
 
 	emit diplomatic_map_image_changed();
 }

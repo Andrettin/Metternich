@@ -358,12 +358,6 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			owner->get_game_data()->add_civilian_unit(std::move(civilian_unit));
 		}
-
-		for (const province *province : map::get()->get_provinces()) {
-			province_game_data *province_game_data = province->get_game_data();
-			province_game_data->calculate_culture();
-			province_game_data->calculate_religion();
-		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to apply history."));
 	}
@@ -557,6 +551,12 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 
 void game::on_setup_finished()
 {
+	for (const province *province : map::get()->get_provinces()) {
+		province_game_data *province_game_data = province->get_game_data();
+		province_game_data->calculate_culture();
+		province_game_data->calculate_religion();
+	}
+
 	this->calculate_great_power_ranks();
 	this->create_diplomatic_map_image();
 

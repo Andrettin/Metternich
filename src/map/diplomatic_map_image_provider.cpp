@@ -50,6 +50,8 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 			image = &country_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::terrain);
 		} else if (mode_identifier == "cultural") {
 			image = &country_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::cultural);
+		} else if (mode_identifier == "religious") {
+			image = &country_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::religious);
 		} else {
 			image = &country_game_data->get_diplomatic_map_image();
 		}
