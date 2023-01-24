@@ -27,6 +27,16 @@ void trait::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const character>>();
 		database::process_gsml_data(this->modifier, scope);
+	} else if (tag == "character_type_modifiers") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const character_type *character_type = character_type::get(child_tag);
+
+			auto modifier = std::make_unique<metternich::modifier<const character>>();
+			database::process_gsml_data(modifier, child_scope);
+
+			this->character_type_modifiers[character_type] = std::move(modifier);
+		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -51,6 +61,22 @@ QString trait::get_modifier_string() const
 	}
 
 	return QString::fromStdString(this->get_modifier()->get_string());
+}
+
+QString trait::get_modifier_string(metternich::character_type *character_type) const
+{
+	QString str = this->get_modifier_string();
+
+	const metternich::modifier<const character> *character_type_modifier = this->get_character_type_modifier(character_type);
+	if (character_type_modifier != nullptr) {
+		if (!str.isEmpty()) {
+			str += "\n";
+		}
+
+		str += QString::fromStdString(character_type_modifier->get_string());
+	}
+
+	return str;
 }
 
 }

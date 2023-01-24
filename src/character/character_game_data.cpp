@@ -99,6 +99,11 @@ void character_game_data::add_trait(const trait *trait)
 		trait->get_modifier()->apply(this->character);
 	}
 
+	const modifier<const metternich::character> *character_type_modifier = trait->get_character_type_modifier(this->character->get_type());
+	if (character_type_modifier != nullptr) {
+		character_type_modifier->apply(this->character);
+	}
+
 	this->sort_traits();
 
 	if (game::get()->is_running()) {
