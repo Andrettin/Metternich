@@ -5,8 +5,12 @@
 
 namespace metternich {
 
+class country;
 class icon;
 enum class attribute;
+
+template <typename scope_type>
+class modifier;
 
 class character_type final : public named_data_entry, public data_type<character_type>
 {
@@ -24,6 +28,7 @@ public:
 
 	explicit character_type(const std::string &identifier);
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	const icon *get_portrait() const
@@ -43,12 +48,18 @@ public:
 
 	QString get_primary_attribute_name_qstring() const;
 
+	const modifier<const country> *get_country_modifier() const
+	{
+		return this->country_modifier.get();
+	}
+
 signals:
 	void changed();
 
 private:
 	icon *portrait = nullptr;
 	attribute primary_attribute;
+	std::unique_ptr<modifier<const country>> country_modifier;
 };
 
 }

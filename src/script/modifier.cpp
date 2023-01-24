@@ -39,7 +39,7 @@ void modifier<scope_type>::remove(scope_type *scope, const int multiplier) const
 }
 
 template <typename scope_type>
-std::string modifier<scope_type>::get_string(const size_t indent) const
+std::string modifier<scope_type>::get_string(const int multiplier, const size_t indent) const
 {
 	std::string str;
 	for (size_t i = 0; i < this->modifier_effects.size(); ++i) {
@@ -51,7 +51,7 @@ std::string modifier<scope_type>::get_string(const size_t indent) const
 			str += std::string(indent, '\t');
 		}
 
-		str += this->modifier_effects[i]->get_string();
+		str += this->modifier_effects[i]->get_string(multiplier);
 	}
 	return str;
 }
@@ -63,5 +63,6 @@ void modifier<scope_type>::add_modifier_effect(std::unique_ptr<modifier_effect<s
 }
 
 template class modifier<const character>;
+template class modifier<const country>;
 
 }

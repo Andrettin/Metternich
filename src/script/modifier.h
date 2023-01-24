@@ -8,6 +8,7 @@ namespace archimedes {
 namespace metternich {
 
 class character;
+class country;
 
 template <typename scope_type>
 class modifier_effect;
@@ -29,7 +30,7 @@ public:
 
 	void apply(scope_type *scope, const int multiplier = 1) const;
 	void remove(scope_type *scope, const int multiplier = 1) const;
-	std::string get_string(const size_t indent = 0) const;
+	std::string get_string(const int multiplier = 1, const size_t indent = 0) const;
 
 private:
 	void add_modifier_effect(std::unique_ptr<modifier_effect<scope_type>> &&modifier_effect);
@@ -39,5 +40,6 @@ private:
 };
 
 extern template class modifier<const character>;
+extern template class modifier<const country>;
 
 }

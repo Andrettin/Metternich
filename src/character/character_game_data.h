@@ -22,6 +22,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList landed_titles READ get_landed_titles_qvariant_list NOTIFY landed_titles_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY landed_titles_changed)
+	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string NOTIFY traits_changed)
 
 public:
 	explicit character_game_data(const metternich::character *character);
@@ -102,6 +103,8 @@ public:
 	}
 
 	bool is_ruler() const;
+
+	QString get_country_modifier_string() const;
 
 signals:
 	void employer_changed();

@@ -245,4 +245,13 @@ bool character_game_data::is_ruler() const
 	return this->get_employer() != nullptr && this->get_employer()->get_game_data()->get_ruler() == this->character;
 }
 
+QString character_game_data::get_country_modifier_string() const
+{
+	if (this->character->get_type()->get_country_modifier() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->character->get_type()->get_country_modifier()->get_string(this->get_primary_attribute_value()));
+}
+
 }

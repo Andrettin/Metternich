@@ -26,14 +26,14 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const character *scope, const int change) const override
+	virtual void apply(const character *scope, const int multiplier) const override
 	{
-		scope->get_game_data()->change_attribute_value(this->attribute, this->quantity * change);
+		scope->get_game_data()->change_attribute_value(this->attribute, this->quantity * multiplier);
 	}
 
-	virtual std::string get_string() const override
+	virtual std::string get_string(const int multiplier) const override
 	{
-		return get_attribute_name(this->attribute) + ": " + number::to_signed_string(this->quantity);
+		return get_attribute_name(this->attribute) + ": " + number::to_signed_string(this->quantity * multiplier);
 	}
 
 private:
