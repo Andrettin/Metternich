@@ -7,6 +7,7 @@ namespace archimedes {
 namespace metternich {
 
 class character;
+class country;
 
 template <typename scope_type>
 class modifier_effect
@@ -22,5 +23,6 @@ public:
 };
 
 extern template class modifier_effect<const character>;
+extern template class modifier_effect<const country>;
 
 }
