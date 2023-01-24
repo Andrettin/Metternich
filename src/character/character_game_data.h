@@ -15,6 +15,7 @@ class character_game_data final : public QObject
 
 	Q_PROPERTY(metternich::country* employer READ get_employer_unconst NOTIFY employer_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
+	Q_PROPERTY(int primary_attribute_value READ get_primary_attribute_value NOTIFY attributes_changed)
 	Q_PROPERTY(int skill READ get_skill NOTIFY attributes_changed)
 	Q_PROPERTY(int prowess READ get_prowess NOTIFY attributes_changed)
 	Q_PROPERTY(int vitality READ get_vitality NOTIFY attributes_changed)
