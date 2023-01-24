@@ -6,11 +6,9 @@ namespace metternich {
 
 enum class attribute {
 	none,
-	diplomacy,
-	martial,
-	stewardship,
-	intrigue,
-	learning
+	skill,
+	prowess,
+	vitality
 };
 
 inline std::string get_attribute_name(const attribute attribute)
@@ -18,16 +16,12 @@ inline std::string get_attribute_name(const attribute attribute)
 	switch (attribute) {
 		case attribute::none:
 			return "None";
-		case attribute::diplomacy:
-			return "Diplomacy";
-		case attribute::martial:
-			return "Martial";
-		case attribute::stewardship:
-			return "Stewardship";
-		case attribute::intrigue:
-			return "Intrigue";
-		case attribute::learning:
-			return "Learning";
+		case attribute::skill:
+			return "Skill";
+		case attribute::prowess:
+			return "Prowess";
+		case attribute::vitality:
+			return "Vitality";
 		default:
 			break;
 	}

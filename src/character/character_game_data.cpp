@@ -215,29 +215,19 @@ int character_game_data::get_primary_attribute_value() const
 	return this->get_attribute_value(this->character->get_type()->get_primary_attribute());
 }
 
-int character_game_data::get_diplomacy() const
+int character_game_data::get_skill() const
 {
-	return this->get_attribute_value(attribute::diplomacy);
+	return this->get_attribute_value(attribute::skill);
 }
 
-int character_game_data::get_martial() const
+int character_game_data::get_prowess() const
 {
-	return this->get_attribute_value(attribute::martial);
+	return this->get_attribute_value(attribute::prowess);
 }
 
-int character_game_data::get_stewardship() const
+int character_game_data::get_vitality() const
 {
-	return this->get_attribute_value(attribute::stewardship);
-}
-
-int character_game_data::get_intrigue() const
-{
-	return this->get_attribute_value(attribute::intrigue);
-}
-
-int character_game_data::get_learning() const
-{
-	return this->get_attribute_value(attribute::learning);
+	return this->get_attribute_value(attribute::vitality);
 }
 
 QVariantList character_game_data::get_landed_titles_qvariant_list() const
