@@ -99,6 +99,8 @@ void character_game_data::add_trait(const trait *trait)
 		trait->get_modifier()->apply(this->character);
 	}
 
+	this->sort_traits();
+
 	if (game::get()->is_running()) {
 		emit traits_changed();
 	}
@@ -151,6 +153,17 @@ void character_game_data::generate_expertise_traits()
 
 		i += trait->get_level();
 	}
+}
+
+void character_game_data::sort_traits()
+{
+	std::sort(this->traits.begin(), this->traits.end(), [](const trait *lhs, const trait *rhs) {
+		if (lhs->get_type() != rhs->get_type()) {
+			return lhs->get_type() < rhs->get_type();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
 }
 
 int character_game_data::get_total_trait_level() const

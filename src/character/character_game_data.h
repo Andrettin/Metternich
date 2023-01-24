@@ -58,6 +58,7 @@ public:
 	void add_trait(const trait *trait);
 	const trait *generate_trait(const trait_type trait_type, const int max_level);
 	void generate_expertise_traits();
+	void sort_traits();
 	int get_total_trait_level() const;
 
 	int get_unclamped_attribute_value(const attribute attribute) const
