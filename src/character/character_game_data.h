@@ -107,6 +107,8 @@ public:
 
 	QString get_country_modifier_string() const;
 	QString get_province_modifier_string() const;
+	void apply_country_modifier(const country *country, const int multiplier);
+	void apply_province_modifier(const province *province, const int multiplier);
 
 signals:
 	void employer_changed();

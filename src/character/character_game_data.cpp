@@ -93,6 +93,11 @@ void character_game_data::add_trait(const trait *trait)
 		throw std::runtime_error("Tried to add trait \"" + trait->get_identifier() + "\" to character \"" + this->character->get_identifier() + "\", for which the trait's conditions are not fulfilled.");
 	}
 
+	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the trait change can affect them
+	if (this->is_ruler()) {
+		this->apply_country_modifier(this->get_employer(), -1);
+	}
+
 	this->traits.push_back(trait);
 
 	if (trait->get_modifier() != nullptr) {
@@ -102,6 +107,11 @@ void character_game_data::add_trait(const trait *trait)
 	const modifier<const metternich::character> *character_type_modifier = trait->get_character_type_modifier(this->character->get_type());
 	if (character_type_modifier != nullptr) {
 		character_type_modifier->apply(this->character);
+	}
+
+	//reapply modifiers that this character is applying on other scopes
+	if (this->is_ruler()) {
+		this->apply_country_modifier(this->get_employer(), 1);
 	}
 
 	this->sort_traits();
@@ -261,6 +271,20 @@ QString character_game_data::get_province_modifier_string() const
 	}
 
 	return QString::fromStdString(this->character->get_type()->get_province_modifier()->get_string(this->get_primary_attribute_value()));
+}
+
+void character_game_data::apply_country_modifier(const country *country, const int multiplier)
+{
+	if (this->character->get_type()->get_country_modifier() != nullptr) {
+		this->character->get_type()->get_country_modifier()->apply(country, this->get_primary_attribute_value() * multiplier);
+	}
+}
+
+void character_game_data::apply_province_modifier(const province *province, const int multiplier)
+{
+	if (this->character->get_type()->get_province_modifier() != nullptr) {
+		this->character->get_type()->get_province_modifier()->apply(province, this->get_primary_attribute_value() * multiplier);
+	}
 }
 
 }

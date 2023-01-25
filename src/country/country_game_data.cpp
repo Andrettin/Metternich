@@ -1358,10 +1358,18 @@ void country_game_data::set_ruler(const character *ruler)
 		return;
 	}
 
+	if (this->get_ruler() != nullptr) {
+		this->get_ruler()->get_game_data()->apply_country_modifier(this->country, -1);
+	}
+
 	this->ruler = ruler;
 
 	assert_throw(this->country->get_title() != nullptr);
 	this->country->get_title()->get_game_data()->set_holder(this->ruler);
+
+	if (this->get_ruler() != nullptr) {
+		this->get_ruler()->get_game_data()->apply_country_modifier(this->country, 1);
+	}
 
 	if (game::get()->is_running()) {
 		emit ruler_changed();
