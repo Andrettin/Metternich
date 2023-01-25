@@ -506,14 +506,24 @@ public:
 	void check_events(const event_trigger trigger);
 	void check_random_events(const event_trigger trigger, const read_only_context &ctx);
 
-	int get_morale_loss_reduction() const
+	int get_land_morale_loss_reduction() const
 	{
-		return this->morale_loss_reduction;
+		return this->land_morale_loss_reduction;
 	}
 
-	void change_morale_loss_reduction(const int change)
+	void change_land_morale_loss_reduction(const int change)
 	{
-		this->morale_loss_reduction += change;
+		this->land_morale_loss_reduction += change;
+	}
+
+	int get_naval_morale_loss_reduction() const
+	{
+		return this->naval_morale_loss_reduction;
+	}
+
+	void change_naval_morale_loss_reduction(const int change)
+	{
+		this->naval_morale_loss_reduction += change;
 	}
 
 signals:
@@ -575,7 +585,8 @@ private:
 	std::vector<const character *> characters;
 	const character *ruler = nullptr;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
-	int morale_loss_reduction = 0;
+	int land_morale_loss_reduction = 0;
+	int naval_morale_loss_reduction = 0;
 };
 
 }
