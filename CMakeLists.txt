@@ -383,6 +383,7 @@ source_group(script\\effect FILES ${script_effect_HDRS})
 set(script_modifier_effect_HDRS
 	src/script/modifier_effect/attribute_modifier_effect.h
 	src/script/modifier_effect/modifier_effect.h
+	src/script/modifier_effect/morale_loss_reduction_modifier_effect.h
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})
 
