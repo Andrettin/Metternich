@@ -1352,6 +1352,28 @@ void country_game_data::clear_characters()
 	emit characters_changed();
 }
 
+void country_game_data::sort_characters()
+{
+	std::sort(this->characters.begin(), this->characters.end(), [](const character *lhs, const character *rhs) {
+		const character_game_data *lhs_game_data = lhs->get_game_data();
+		const character_game_data *rhs_game_data = rhs->get_game_data();
+
+		if (lhs_game_data->is_ruler() != rhs_game_data->is_ruler()) {
+			return lhs_game_data->is_ruler();
+		}
+
+		if (lhs_game_data->get_primary_attribute_value() != rhs_game_data->get_primary_attribute_value()) {
+			return lhs_game_data->get_primary_attribute_value() > rhs_game_data->get_primary_attribute_value();
+		}
+
+		if (lhs->get_birth_date() != rhs->get_birth_date()) {
+			return lhs->get_birth_date() < rhs->get_birth_date();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+}
+
 void country_game_data::set_ruler(const character *ruler)
 {
 	if (ruler == this->get_ruler()) {
@@ -1370,6 +1392,8 @@ void country_game_data::set_ruler(const character *ruler)
 	if (this->get_ruler() != nullptr) {
 		this->get_ruler()->get_game_data()->apply_country_modifier(this->country, 1);
 	}
+
+	this->sort_characters();
 
 	if (game::get()->is_running()) {
 		emit ruler_changed();

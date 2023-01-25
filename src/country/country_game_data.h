@@ -463,6 +463,9 @@ public:
 	void add_character(const character *character)
 	{
 		this->characters.push_back(character);
+
+		this->sort_characters();
+
 		emit characters_changed();
 	}
 
@@ -474,10 +477,13 @@ public:
 			this->set_ruler(nullptr);
 		}
 
+		this->sort_characters();
+
 		emit characters_changed();
 	}
 
 	void clear_characters();
+	void sort_characters();
 
 	const character *get_ruler() const
 	{
