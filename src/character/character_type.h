@@ -7,6 +7,7 @@ namespace metternich {
 
 class country;
 class icon;
+class province;
 enum class attribute;
 
 template <typename scope_type>
@@ -53,6 +54,11 @@ public:
 		return this->country_modifier.get();
 	}
 
+	const modifier<const province> *get_province_modifier() const
+	{
+		return this->province_modifier.get();
+	}
+
 signals:
 	void changed();
 
@@ -60,6 +66,7 @@ private:
 	icon *portrait = nullptr;
 	attribute primary_attribute;
 	std::unique_ptr<modifier<const country>> country_modifier;
+	std::unique_ptr<modifier<const province>> province_modifier;
 };
 
 }

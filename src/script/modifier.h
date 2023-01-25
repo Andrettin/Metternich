@@ -41,5 +41,6 @@ private:
 
 extern template class modifier<const character>;
 extern template class modifier<const country>;
+extern template class modifier<const province>;
 
 }

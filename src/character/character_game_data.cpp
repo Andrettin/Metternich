@@ -254,4 +254,13 @@ QString character_game_data::get_country_modifier_string() const
 	return QString::fromStdString(this->character->get_type()->get_country_modifier()->get_string(this->get_primary_attribute_value()));
 }
 
+QString character_game_data::get_province_modifier_string() const
+{
+	if (this->character->get_type()->get_province_modifier() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->character->get_type()->get_province_modifier()->get_string(this->get_primary_attribute_value()));
+}
+
 }

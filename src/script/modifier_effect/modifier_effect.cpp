@@ -24,5 +24,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 template class modifier_effect<const character>;
 template class modifier_effect<const country>;
+template class modifier_effect<const province>;
 
 }
