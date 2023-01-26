@@ -211,7 +211,6 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 
 				country_game_data->add_character(country_history->get_ruler());
-				country_history->get_ruler()->get_game_data()->set_employer(country);
 				country_game_data->set_ruler(country_history->get_ruler());
 			}
 

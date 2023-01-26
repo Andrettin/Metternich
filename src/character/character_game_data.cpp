@@ -13,6 +13,7 @@
 #include "game/game.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
+#include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -52,6 +53,8 @@ void character_game_data::set_employer(const metternich::country *employer)
 	if (employer == this->get_employer()) {
 		return;
 	}
+
+	assert_throw(this->get_office() == nullptr);
 
 	this->employer = employer;
 
@@ -253,6 +256,19 @@ QVariantList character_game_data::get_landed_titles_qvariant_list() const
 bool character_game_data::is_ruler() const
 {
 	return this->get_employer() != nullptr && this->get_employer()->get_game_data()->get_ruler() == this->character;
+}
+
+void character_game_data::set_office(const metternich::office *office)
+{
+	if (office == this->get_office()) {
+		return;
+	}
+
+	this->office = office;
+
+	if (game::get()->is_running()) {
+		emit office_changed();
+	}
 }
 
 QString character_game_data::get_country_modifier_string() const

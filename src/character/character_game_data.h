@@ -5,6 +5,7 @@ namespace metternich {
 class character;
 class country;
 class landed_title;
+class office;
 class trait;
 enum class attribute;
 enum class trait_type;
@@ -22,6 +23,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList landed_titles READ get_landed_titles_qvariant_list NOTIFY landed_titles_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY landed_titles_changed)
+	Q_PROPERTY(metternich::office* office READ get_office_unconst NOTIFY office_changed)
 	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string NOTIFY traits_changed)
 	Q_PROPERTY(QString province_modifier_string READ get_province_modifier_string NOTIFY traits_changed)
 
@@ -105,6 +107,21 @@ public:
 
 	bool is_ruler() const;
 
+	const metternich::office *get_office() const
+	{
+		return this->office;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::office *get_office_unconst() const
+	{
+		return const_cast<metternich::office *>(this->get_office());
+	}
+
+public:
+	void set_office(const metternich::office *office);
+
 	QString get_country_modifier_string() const;
 	QString get_province_modifier_string() const;
 	void apply_country_modifier(const country *country, const int multiplier);
@@ -116,6 +133,7 @@ signals:
 	void traits_changed();
 	void attributes_changed();
 	void landed_titles_changed();
+	void office_changed();
 
 private:
 	const metternich::character *character = nullptr;
@@ -123,6 +141,7 @@ private:
 	std::vector<const trait *> traits;
 	std::map<attribute, int> attribute_values;
 	std::vector<const landed_title *> landed_titles;
+	const metternich::office *office = nullptr;
 };
 
 }

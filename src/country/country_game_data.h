@@ -1,5 +1,6 @@
 #pragma once
 
+#include "character/office_container.h"
 #include "country/country_container.h"
 #include "country/culture_container.h"
 #include "country/religion_container.h"
@@ -63,7 +64,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
-	Q_PROPERTY(metternich::character *ruler READ get_ruler_unconst NOTIFY ruler_changed)
+	Q_PROPERTY(metternich::character* ruler READ get_ruler_unconst NOTIFY ruler_changed)
 
 public:
 	explicit country_game_data(metternich::country *country);
@@ -459,29 +460,8 @@ public:
 
 	QVariantList get_characters_qvariant_list() const;
 	void check_characters(const QDateTime &date);
-
-	void add_character(const character *character)
-	{
-		this->characters.push_back(character);
-
-		this->sort_characters();
-
-		emit characters_changed();
-	}
-
-	void remove_character(const character *character)
-	{
-		std::erase(this->characters, character);
-
-		if (character == this->get_ruler()) {
-			this->set_ruler(nullptr);
-		}
-
-		this->sort_characters();
-
-		emit characters_changed();
-	}
-
+	void add_character(const character *character);
+	void remove_character(const character *character);
 	void clear_characters();
 	void sort_characters();
 
@@ -499,6 +479,19 @@ private:
 
 public:
 	void set_ruler(const character *ruler);
+
+	const character *get_office_character(const office *office) const
+	{
+		const auto find_iterator = this->office_characters.find(office);
+
+		if (find_iterator != this->office_characters.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	void set_office_character(const office *office, const character *character);
 
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
@@ -547,6 +540,7 @@ signals:
 	void stored_commodities_changed();
 	void characters_changed();
 	void ruler_changed();
+	void office_characters_changed();
 
 private:
 	metternich::country *country = nullptr;
@@ -584,6 +578,7 @@ private:
 	technology_set technologies;
 	std::vector<const character *> characters;
 	const character *ruler = nullptr;
+	office_map<const character *> office_characters;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	int land_morale_loss_reduction = 0;
 	int naval_morale_loss_reduction = 0;

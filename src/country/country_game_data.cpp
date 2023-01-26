@@ -4,6 +4,8 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/office.h"
+#include "character/office_type.h"
 #include "country/country.h"
 #include "country/country_type.h"
 #include "country/culture.h"
@@ -1315,12 +1317,10 @@ void country_game_data::check_characters(const QDateTime &date)
 
 		if (game::get()->get_date() >= character->get_end_date()) {
 			this->remove_character(character);
-			character->get_game_data()->set_employer(nullptr);
 		} else if (home_province_owner != this->country) {
 			//if we lost their home province, move the character to the province's new owner
 			this->remove_character(character);
 			home_province_owner->get_game_data()->add_character(character);
-			character->get_game_data()->set_employer(home_province_owner);
 		} else {
 			++i;
 		}
@@ -1334,21 +1334,50 @@ void country_game_data::check_characters(const QDateTime &date)
 
 			if (date >= character->get_start_date() && date < character->get_end_date()) {
 				this->add_character(character);
-				character->get_game_data()->set_employer(this->country);
 			}
 		}
 	}
 }
 
-void country_game_data::clear_characters()
+void country_game_data::add_character(const character *character)
 {
-	this->set_ruler(nullptr);
+	this->characters.push_back(character);
 
-	for (const character *character : this->get_characters()) {
-		character->get_game_data()->set_employer(nullptr);
+	character->get_game_data()->set_employer(this->country);
+
+	this->sort_characters();
+
+	emit characters_changed();
+}
+
+void country_game_data::remove_character(const character *character)
+{
+	std::erase(this->characters, character);
+
+	if (character == this->get_ruler()) {
+		this->set_ruler(nullptr);
 	}
 
-	this->characters.clear();
+	if (character->get_game_data()->get_office() != nullptr) {
+		this->set_office_character(character->get_game_data()->get_office(), nullptr);
+	}
+
+	character->get_game_data()->set_employer(nullptr);
+
+	this->sort_characters();
+
+	emit characters_changed();
+}
+
+void country_game_data::clear_characters()
+{
+	const std::vector<const character *> characters = this->get_characters();
+	for (const character *character : characters) {
+		this->remove_character(character);
+	}
+
+	assert_throw(this->get_characters().empty());
+
 	emit characters_changed();
 }
 
@@ -1360,6 +1389,18 @@ void country_game_data::sort_characters()
 
 		if (lhs_game_data->is_ruler() != rhs_game_data->is_ruler()) {
 			return lhs_game_data->is_ruler();
+		}
+
+		if (lhs_game_data->get_office() != rhs_game_data->get_office()) {
+			if (lhs_game_data->get_office() == nullptr || rhs_game_data->get_office() == nullptr) {
+				return lhs_game_data->get_office() != nullptr;
+			}
+
+			if (lhs_game_data->get_office()->get_type() != rhs_game_data->get_office()->get_type()) {
+				return lhs_game_data->get_office()->get_type() < rhs_game_data->get_office()->get_type();
+			}
+
+			return lhs_game_data->get_office()->get_identifier() < rhs_game_data->get_office()->get_identifier();
 		}
 
 		if (lhs_game_data->get_primary_attribute_value() != rhs_game_data->get_primary_attribute_value()) {
@@ -1397,6 +1438,33 @@ void country_game_data::set_ruler(const character *ruler)
 
 	if (game::get()->is_running()) {
 		emit ruler_changed();
+	}
+}
+
+void country_game_data::set_office_character(const office *office, const character *character)
+{
+	const metternich::character *old_character = this->get_office_character(office);
+
+	if (character == old_character) {
+		return;
+	}
+
+	if (old_character != nullptr) {
+		old_character->get_game_data()->apply_country_modifier(this->country, -1);
+		old_character->get_game_data()->set_office(nullptr);
+	}
+
+	this->office_characters[office] = character;
+
+	if (character != nullptr) {
+		character->get_game_data()->apply_country_modifier(this->country, 1);
+		character->get_game_data()->set_office(office);
+	}
+
+	this->sort_characters();
+
+	if (game::get()->is_running()) {
+		emit office_characters_changed();
 	}
 }
 
