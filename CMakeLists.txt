@@ -20,6 +20,9 @@ set(character_SRCS
 	src/character/character_game_data.cpp
 	src/character/character_type.cpp
 	src/character/character_type_container.cpp
+	src/character/office.cpp
+	src/character/office_container.cpp
+	src/character/office_type.cpp
 	src/character/trait.cpp
 	src/character/trait_type.cpp
 )
@@ -240,6 +243,9 @@ set(character_HDRS
 	src/character/character_game_data.h
 	src/character/character_type.h
 	src/character/character_type_container.h
+	src/character/office.h
+	src/character/office_container.h
+	src/character/office_type.h
 	src/character/trait.h
 	src/character/trait_type.h
 )

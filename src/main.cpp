@@ -3,6 +3,9 @@
 #include "character/attribute.h"
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/office.h"
+#include "character/office_type.h"
+#include "character/trait_type.h"
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
@@ -95,8 +98,10 @@ int main(int argc, char **argv)
 		enum_converter<landed_title_tier>();
 		enum_converter<military_unit_domain>();
 		enum_converter<moisture_type>();
+		enum_converter<office_type>();
 		enum_converter<site_type>();
 		enum_converter<temperature_type>();
+		enum_converter<trait_type>();
 
 		qmlRegisterAnonymousType<building_slot>("", 1);
 		qmlRegisterAnonymousType<building_type>("", 1);
@@ -112,6 +117,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<landed_title>("", 1);
 		qmlRegisterAnonymousType<landed_title_game_data>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
+		qmlRegisterAnonymousType<office>("", 1);
 		qmlRegisterAnonymousType<population_type>("", 1);
 		qmlRegisterAnonymousType<preferences>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);
