@@ -10,6 +10,8 @@
 #include "script/condition/character_type_condition.h"
 #include "script/condition/core_condition.h"
 #include "script/condition/country_type_condition.h"
+#include "script/condition/has_country_office_condition.h"
+#include "script/condition/has_province_office_condition.h"
 #include "script/condition/location_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
@@ -28,6 +30,10 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	if constexpr (std::is_same_v<scope_type, character>) {
 		if (key == "character_type") {
 			return std::make_unique<character_type_condition>(value, condition_operator);
+		} else if (key == "has_country_office") {
+			return std::make_unique<has_country_office_condition>(value, condition_operator);
+		} else if (key == "has_province_office") {
+			return std::make_unique<has_province_office_condition>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
 		}
