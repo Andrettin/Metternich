@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/office.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
@@ -28,6 +29,7 @@
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
+#include "script/condition/condition.h"
 #include "time/era.h"
 #include "unit/civilian_unit.h"
 #include "unit/historical_civilian_unit.h"
@@ -212,6 +214,19 @@ void game::apply_history(const metternich::scenario *scenario)
 
 				country_game_data->add_character(country_history->get_ruler());
 				country_game_data->set_ruler(country_history->get_ruler());
+			}
+
+			for (const auto &[office, character] : country_history->get_office_characters()) {
+				if (character->get_game_data()->get_employer() != nullptr) {
+					throw std::runtime_error("Cannot set \"" + character->get_identifier() + "\" as an office holder for \"" + country->get_identifier() + "\", as it is already employed by another country.");
+				}
+
+				if (office->get_character_conditions() != nullptr && !office->get_character_conditions()->check(character, read_only_context::from_scope(character))) {
+					throw std::runtime_error("Cannot set \"" + character->get_identifier() + "\" as the holder for the \"" + office->get_identifier()  + "\" office for \"" + country->get_identifier() + "\", as it does not fulfill the conditions.");
+				}
+
+				country_game_data->add_character(character);
+				country_game_data->set_office_character(office, character);
 			}
 
 			for (const technology *technology : country_history->get_technologies()) {

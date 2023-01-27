@@ -2,6 +2,8 @@
 
 #include "country/country_history.h"
 
+#include "character/character.h"
+#include "character/office.h"
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/diplomacy_state.h"
@@ -9,6 +11,18 @@
 #include "util/map_util.h"
 
 namespace metternich {
+
+void country_history::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (office::try_get(key) != nullptr) {
+		this->office_characters[office::get(key)] = character::get(value);
+	} else {
+		data_entry_history::process_gsml_property(property);
+	}
+}
 
 void country_history::process_gsml_scope(const gsml_data &scope)
 {
