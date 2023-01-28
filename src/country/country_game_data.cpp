@@ -1345,6 +1345,16 @@ void country_game_data::check_characters(const QDateTime &date)
 			}
 		}
 	}
+
+	//check if the offices of characters are still valid, and if not remove the character from that office
+	const office_map<const character *> office_characters = this->office_characters;
+	const read_only_context ctx = read_only_context::from_scope(this->country);
+	for (const auto &[office, character] : office_characters) {
+		const condition<metternich::country> *country_conditions = office->get_country_conditions();
+		if (country_conditions != nullptr && !country_conditions->check(this->country, ctx)) {
+			this->set_office_character(office, nullptr);
+		}
+	}
 }
 
 void country_game_data::add_character(const character *character)
@@ -1468,7 +1478,11 @@ void country_game_data::set_office_character(const office *office, const charact
 		old_character->get_game_data()->set_office(nullptr);
 	}
 
-	this->office_characters[office] = character;
+	if (character != nullptr) {
+		this->office_characters[office] = character;
+	} else {
+		this->office_characters.erase(office);
+	}
 
 	if (character != nullptr) {
 		character->get_game_data()->apply_country_modifier(this->country, 1);
