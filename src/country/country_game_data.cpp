@@ -1441,6 +1441,12 @@ void country_game_data::set_ruler(const character *ruler)
 	}
 }
 
+QObject *country_game_data::get_office_character(metternich::office *office_param) const
+{
+	const office *office = office_param;
+	return const_cast<metternich::character *>(this->get_office_character(office));
+}
+
 void country_game_data::set_office_character(const office *office, const character *character)
 {
 	const metternich::character *old_character = this->get_office_character(office);

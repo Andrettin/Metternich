@@ -491,6 +491,8 @@ public:
 		return nullptr;
 	}
 
+	Q_INVOKABLE QObject *get_office_character(metternich::office *office) const;
+
 	void set_office_character(const office *office, const character *character);
 
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
