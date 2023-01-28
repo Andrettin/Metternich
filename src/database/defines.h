@@ -8,6 +8,7 @@ namespace metternich {
 
 class building_class;
 class icon;
+class office;
 class population_class;
 class terrain_type;
 enum class attribute;
@@ -32,6 +33,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
 	Q_PROPERTY(int population_per_unit MEMBER population_per_unit READ get_population_per_unit)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
+	Q_PROPERTY(metternich::office* head_of_government_office MEMBER head_of_government_office NOTIFY changed)
 	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color NOTIFY changed)
 	Q_PROPERTY(QColor country_border_color MEMBER country_border_color READ get_country_border_color)
 	Q_PROPERTY(QColor selected_country_color MEMBER selected_country_color READ get_selected_country_color)
@@ -127,6 +129,11 @@ public:
 	int get_population_growth_threshold() const
 	{
 		return this->population_growth_threshold;
+	}
+
+	const office *get_head_of_government_office() const
+	{
+		return this->head_of_government_office;
 	}
 
 	const QColor &get_minor_nation_color() const
@@ -245,6 +252,7 @@ private:
 	population_class *default_literate_population_class = nullptr;
 	int population_per_unit = 10000;
 	int population_growth_threshold = 100;
+	office *head_of_government_office = nullptr;
 	QColor minor_nation_color;
 	QColor country_border_color;
 	QColor selected_country_color;
