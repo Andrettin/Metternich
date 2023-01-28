@@ -1474,6 +1474,41 @@ void country_game_data::set_office_character(const office *office, const charact
 	}
 }
 
+std::vector<const office *> country_game_data::get_offices() const
+{
+	std::vector<const office *> offices;
+
+	const read_only_context ctx = read_only_context::from_scope(this->country);
+
+	for (const office *office : office::get_all()) {
+		if (office->get_type() != office_type::country) {
+			continue;
+		}
+
+		if (office == defines::get()->get_head_of_government_office()) {
+			continue;
+		}
+
+		const condition<metternich::country> *country_conditions = office->get_country_conditions();
+		if (country_conditions != nullptr && !country_conditions->check(this->country, ctx)) {
+			continue;
+		}
+
+		offices.push_back(office);
+	}
+
+	std::sort(offices.begin(), offices.end(), [](const office *lhs, const office *rhs) {
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+
+	return offices;
+}
+
+QVariantList country_game_data::get_offices_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_offices());
+}
+
 void country_game_data::add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit)
 {
 	this->civilian_units.push_back(std::move(civilian_unit));

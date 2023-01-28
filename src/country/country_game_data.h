@@ -65,6 +65,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
 	Q_PROPERTY(metternich::character* ruler READ get_ruler_unconst NOTIFY ruler_changed)
+	Q_PROPERTY(QVariantList offices READ get_offices_qvariant_list NOTIFY offices_changed)
 
 public:
 	explicit country_game_data(metternich::country *country);
@@ -495,6 +496,9 @@ public:
 
 	void set_office_character(const office *office, const character *character);
 
+	std::vector<const office *> get_offices() const;
+	QVariantList get_offices_qvariant_list() const;
+
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
 
@@ -543,6 +547,7 @@ signals:
 	void characters_changed();
 	void ruler_changed();
 	void office_characters_changed();
+	void offices_changed();
 
 private:
 	metternich::country *country = nullptr;
