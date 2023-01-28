@@ -18,7 +18,6 @@ class office final : public named_data_entry, public data_type<office>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::office_type type MEMBER type READ get_type NOTIFY changed)
-	Q_PROPERTY(int limit MEMBER limit READ get_limit NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "office";
@@ -34,11 +33,6 @@ public:
 	office_type get_type() const
 	{
 		return this->type;
-	}
-
-	int get_limit() const
-	{
-		return this->limit;
 	}
 
 	const condition<country> *get_country_conditions() const
@@ -61,7 +55,6 @@ signals:
 
 private:
 	office_type type;
-	int limit = 1;
 	std::unique_ptr<const condition<country>> country_conditions;
 	std::unique_ptr<const condition<province>> province_conditions;
 	std::unique_ptr<const condition<character>> character_conditions;
