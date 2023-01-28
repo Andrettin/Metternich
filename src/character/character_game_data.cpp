@@ -127,6 +127,7 @@ void character_game_data::add_trait(const trait *trait)
 const trait *character_game_data::generate_trait(const trait_type trait_type, const int max_level)
 {
 	std::vector<const trait *> potential_traits;
+	int best_level = 0;
 
 	const read_only_context ctx = read_only_context::from_scope(this->character);
 
@@ -145,6 +146,11 @@ const trait *character_game_data::generate_trait(const trait_type trait_type, co
 
 		if (trait->get_level() > max_level) {
 			continue;
+		}
+
+		if (trait->get_level() > best_level) {
+			potential_traits.clear();
+			best_level = trait->get_level();
 		}
 
 		potential_traits.push_back(trait);
@@ -178,6 +184,10 @@ void character_game_data::sort_traits()
 	std::sort(this->traits.begin(), this->traits.end(), [](const trait *lhs, const trait *rhs) {
 		if (lhs->get_type() != rhs->get_type()) {
 			return lhs->get_type() < rhs->get_type();
+		}
+
+		if (lhs->get_level() != rhs->get_level()) {
+			return lhs->get_level() > rhs->get_level();
 		}
 
 		return lhs->get_identifier() < rhs->get_identifier();
