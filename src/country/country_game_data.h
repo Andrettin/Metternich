@@ -39,6 +39,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
 	Q_PROPERTY(QString vassalage_type_name READ get_vassalage_type_name_qstring NOTIFY vassalage_type_name_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
+	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
 	Q_PROPERTY(bool anarchy READ is_under_anarchy NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QPoint territory_rect_center READ get_territory_rect_center NOTIFY provinces_changed)
@@ -151,6 +152,11 @@ public:
 	}
 
 	bool is_under_anarchy() const;
+
+	bool is_coastal() const
+	{
+		return this->coastal_province_count > 0;
+	}
 
 	const QRect &get_territory_rect() const
 	{
@@ -554,6 +560,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;
+	int coastal_province_count = 0;
 	QRect territory_rect;
 	std::vector<QRect> contiguous_territory_rects;
 	QRect main_contiguous_territory_rect;

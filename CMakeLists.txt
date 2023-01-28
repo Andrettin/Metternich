@@ -367,6 +367,7 @@ source_group(script FILES ${script_HDRS})
 set(script_condition_HDRS
 	src/script/condition/and_condition.h
 	src/script/condition/character_type_condition.h
+	src/script/condition/coastal_condition.h
 	src/script/condition/condition.h
 	src/script/condition/core_condition.h
 	src/script/condition/country_type_condition.h

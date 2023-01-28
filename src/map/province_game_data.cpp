@@ -341,6 +341,15 @@ void province_game_data::calculate_territory_rect_center()
 	this->territory_rect_center = QPoint(sum.x() / tile_count, sum.y() / tile_count);
 }
 
+void province_game_data::add_border_province(const metternich::province *province)
+{
+	this->border_provinces.push_back(province);
+
+	if (province->is_sea() || province->is_bay()) {
+		this->coastal = true;
+	}
+}
+
 void province_game_data::add_tile(const QPoint &tile_pos)
 {
 	this->tiles.push_back(tile_pos);

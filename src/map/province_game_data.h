@@ -33,6 +33,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(metternich::culture* culture READ get_culture_unconst NOTIFY culture_changed)
 	Q_PROPERTY(metternich::religion* religion READ get_religion_unconst NOTIFY religion_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
+	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
@@ -116,6 +117,11 @@ public:
 		return QString::fromStdString(this->get_current_cultural_name());
 	}
 
+	bool is_coastal() const
+	{
+		return this->coastal;
+	}
+
 	const QRect &get_territory_rect() const
 	{
 		return this->territory_rect;
@@ -133,10 +139,7 @@ public:
 		return this->border_provinces;
 	}
 
-	void add_border_province(const metternich::province *province)
-	{
-		this->border_provinces.push_back(province);
-	}
+	void add_border_province(const metternich::province *province);
 
 	const std::vector<QPoint> &get_tiles() const
 	{
@@ -299,6 +302,7 @@ private:
 	const country *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
+	bool coastal = false;
 	QRect territory_rect;
 	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<const metternich::province *> border_provinces;

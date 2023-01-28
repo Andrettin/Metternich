@@ -2,12 +2,15 @@
 
 #include "script/condition/condition.h"
 
+#include "country/country_game_data.h"
 #include "database/database.h"
 #include "database/gsml_operator.h"
 #include "database/named_data_entry.h"
+#include "map/province_game_data.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/character_type_condition.h"
+#include "script/condition/coastal_condition.h"
 #include "script/condition/core_condition.h"
 #include "script/condition/country_type_condition.h"
 #include "script/condition/has_country_office_condition.h"
@@ -47,6 +50,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	} else if constexpr (std::is_same_v<scope_type, province>) {
 		if (key == "core") {
 			return std::make_unique<core_condition>(value, condition_operator);
+		}
+	}
+	
+	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province>) {
+		if (key == "coastal") {
+			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

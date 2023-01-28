@@ -327,6 +327,10 @@ void country_game_data::add_province(const province *province)
 	this->change_score(province_game_data->get_score());
 	this->change_population(province_game_data->get_population());
 
+	if (province_game_data->is_coastal()) {
+		++this->coastal_province_count;
+	}
+
 	for (const auto &[population_type, count] : province_game_data->get_population_type_counts()) {
 		this->change_population_type_count(population_type, count);
 	}
@@ -399,6 +403,10 @@ void country_game_data::remove_province(const province *province)
 
 	this->change_score(-province_game_data->get_score());
 	this->change_population(-province_game_data->get_population());
+
+	if (province_game_data->is_coastal()) {
+		--this->coastal_province_count;
+	}
 
 	for (const auto &[population_type, count] : province_game_data->get_population_type_counts()) {
 		this->change_population_type_count(population_type, -count);
