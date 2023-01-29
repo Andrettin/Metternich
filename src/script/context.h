@@ -65,6 +65,8 @@ public:
 	{
 		this->source_country = ctx.source_country;
 		this->current_country = ctx.current_country;
+		this->source_character = ctx.source_character;
+		this->current_character = ctx.current_character;
 	}
 };
 
