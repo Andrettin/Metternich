@@ -20,6 +20,7 @@
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
 #include "script/condition/trait_condition.h"
+#include "script/condition/war_condition.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -50,6 +51,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	} else if constexpr (std::is_same_v<scope_type, province>) {
 		if (key == "core") {
 			return std::make_unique<core_condition>(value, condition_operator);
+		}
+	}
+	
+	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country>) {
+		if (key == "war") {
+			return std::make_unique<war_condition<scope_type>>(value, condition_operator);
 		}
 	}
 	

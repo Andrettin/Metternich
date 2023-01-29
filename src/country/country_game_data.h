@@ -255,6 +255,8 @@ public:
 	void change_diplomacy_state_count(const diplomacy_state state, const int change);
 	Q_INVOKABLE QString get_diplomacy_state_diplomatic_map_suffix(metternich::country *other_country) const;
 
+	bool at_war() const;
+
 	QVariantList get_consulates_qvariant_list() const;
 
 	const consulate *get_consulate(const metternich::country *other_country) const

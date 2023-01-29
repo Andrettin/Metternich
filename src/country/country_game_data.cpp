@@ -805,6 +805,11 @@ QString country_game_data::get_diplomacy_state_diplomatic_map_suffix(metternich:
 	return QString::fromStdString(enum_converter<diplomacy_state>::to_string(this->get_diplomacy_state(other_country)));
 }
 
+bool country_game_data::at_war() const
+{
+	return this->diplomacy_state_counts.contains(diplomacy_state::war);
+}
+
 QVariantList country_game_data::get_consulates_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->consulates);
