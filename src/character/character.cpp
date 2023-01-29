@@ -4,6 +4,7 @@
 
 #include "character/character_game_data.h"
 #include "character/character_type.h"
+#include "character/dynasty.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "country/culture.h"
@@ -45,6 +46,14 @@ void character::initialize()
 
 	if (this->get_phenotype() == nullptr && this->get_culture() != nullptr) {
 		this->phenotype = this->get_culture()->get_default_phenotype();
+	}
+
+	if (this->get_surname().empty() && this->get_dynasty() != nullptr) {
+		if (!this->get_dynasty()->get_prefix().empty()) {
+			this->surname = this->get_dynasty()->get_prefix() + " ";
+		}
+
+		this->surname += this->get_dynasty()->get_name();
 	}
 
 	bool date_changed = true;

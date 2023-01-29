@@ -3,6 +3,7 @@
 #include "character/attribute.h"
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/dynasty.h"
 #include "character/office.h"
 #include "character/office_type.h"
 #include "character/trait_type.h"
@@ -111,6 +112,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<country>("", 1);
 		qmlRegisterAnonymousType<country_game_data>("", 1);
 		qmlRegisterAnonymousType<defines>("", 1);
+		qmlRegisterAnonymousType<dynasty>("", 1);
 		qmlRegisterAnonymousType<era>("", 1);
 		qmlRegisterAnonymousType<game>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);

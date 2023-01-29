@@ -14,6 +14,7 @@ namespace metternich {
 class character_game_data;
 class character_type;
 class culture;
+class dynasty;
 class icon;
 class phenotype;
 class province;
@@ -24,6 +25,7 @@ class character final : public named_data_entry, public data_type<character>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::dynasty* dynasty MEMBER dynasty NOTIFY changed)
 	Q_PROPERTY(QString surname READ get_surname_qstring NOTIFY changed)
 	Q_PROPERTY(QString full_name READ get_full_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_type* type MEMBER type NOTIFY changed)
@@ -59,6 +61,11 @@ public:
 	character_game_data *get_game_data() const
 	{
 		return this->game_data.get();
+	}
+
+	const dynasty *get_dynasty() const
+	{
+		return this->dynasty;
 	}
 
 	const std::string &get_surname() const
@@ -168,6 +175,7 @@ signals:
 	void game_data_changed() const;
 
 private:
+	metternich::dynasty *dynasty = nullptr;
 	std::string surname;
 	character_type *type = nullptr;
 	metternich::culture *culture = nullptr;
