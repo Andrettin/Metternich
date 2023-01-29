@@ -35,6 +35,8 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::icon* portrait READ get_portrait_unconst NOTIFY changed)
 	Q_PROPERTY(metternich::province* home_province MEMBER home_province NOTIFY changed)
 	Q_PROPERTY(archimedes::gender gender MEMBER gender NOTIFY changed)
+	Q_PROPERTY(metternich::character* father MEMBER father NOTIFY changed)
+	Q_PROPERTY(metternich::character* mother MEMBER mother NOTIFY changed)
 	Q_PROPERTY(QDateTime start_date MEMBER start_date READ get_start_date NOTIFY changed)
 	Q_PROPERTY(QDateTime end_date MEMBER end_date READ get_end_date NOTIFY changed)
 	Q_PROPERTY(QDateTime birth_date MEMBER birth_date READ get_birth_date NOTIFY changed)
@@ -130,6 +132,16 @@ public:
 		return this->gender;
 	}
 
+	const character *get_father() const
+	{
+		return this->father;
+	}
+
+	const character *get_mother() const
+	{
+		return this->mother;
+	}
+
 	const QDateTime &get_start_date() const
 	{
 		return this->start_date;
@@ -183,6 +195,8 @@ private:
 	metternich::phenotype *phenotype = nullptr;
 	province *home_province = nullptr;
 	archimedes::gender gender;
+	character *father = nullptr;
+	character *mother = nullptr;
 	QDateTime start_date;
 	QDateTime end_date;
 	QDateTime birth_date;

@@ -113,6 +113,14 @@ void character::check() const
 		throw std::runtime_error("Character \"" + this->get_identifier() + "\" has no gender.");
 	}
 
+	if (this->get_father() != nullptr && this->get_father()->get_gender() != gender::male) {
+		throw std::runtime_error("The father of character \"" + this->get_identifier() + "\" is not male.");
+	}
+
+	if (this->get_mother() != nullptr && this->get_mother()->get_gender() != gender::female) {
+		throw std::runtime_error("The mother of character \"" + this->get_identifier() + "\" is not female.");
+	}
+
 	assert_throw(this->get_start_date().isValid());
 	assert_throw(this->get_end_date().isValid());
 	assert_throw(this->get_birth_date().isValid());
