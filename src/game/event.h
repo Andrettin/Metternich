@@ -5,17 +5,11 @@
 
 namespace metternich {
 
-class country;
-class event_option;
 enum class event_trigger;
+struct context;
+struct read_only_context;
 
-template <typename scope_type>
-class condition;
-
-template <typename scope_type>
-class factor;
-
-class event final : public named_data_entry, public data_type<event>
+class event : public named_data_entry
 {
 	Q_OBJECT
 
@@ -24,63 +18,12 @@ class event final : public named_data_entry, public data_type<event>
 	Q_PROPERTY(bool random READ is_random WRITE set_random)
 
 public:
-	static constexpr const char class_identifier[] = "event";
-	static constexpr const char property_class_identifier[] = "metternich::event*";
-	static constexpr const char database_folder[] = "events";
 	static constexpr int default_random_weight = 100;
+	static constexpr const char option_default_name[] = "OK";
 
-	static const std::vector<const event *> &get_trigger_events(const event_trigger trigger)
-	{
-		static std::vector<const event *> empty_list;
-
-		const auto find_iterator = event::trigger_events.find(trigger);
-		if (find_iterator != event::trigger_events.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_list;
-	}
-
-	static const std::vector<const event *> &get_trigger_random_events(const event_trigger trigger)
-	{
-		static std::vector<const event *> empty_list;
-
-		const auto find_iterator = event::trigger_random_events.find(trigger);
-		if (find_iterator != event::trigger_random_events.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_list;
-	}
-
-	static void add_trigger_none_random_weight(const event_trigger trigger, const int weight)
-	{
-		std::vector<const event *> &events = event::trigger_random_events[trigger];
-
-		for (int i = 0; i < weight; ++i) {
-			events.push_back(nullptr);
-		}
-	}
-
-	static void clear()
-	{
-		data_type::clear();
-		event::trigger_events.clear();
-		event::trigger_random_events.clear();
-	}
-
-private:
-	static inline std::map<event_trigger, std::vector<const event *>> trigger_events;
-	static inline std::map<event_trigger, std::vector<const event *>> trigger_random_events;
-
-public:
 	explicit event(const std::string &identifier);
-	~event();
 
 	virtual void process_gsml_property(const gsml_property &property) override;
-	virtual void process_gsml_scope(const gsml_data &scope) override;
-	void initialize() override;
-	void check() const override;
 
 	const std::string &get_description() const
 	{
@@ -102,10 +45,7 @@ public:
 		return this->trigger;
 	}
 
-	bool is_random() const
-	{
-		return this->get_random_weight_factor() != nullptr;
-	}
+	virtual bool is_random() const = 0;
 
 	void set_random(const bool random)
 	{
@@ -120,24 +60,14 @@ public:
 		}
 	}
 
-	void set_random_weight(const int weight);
+	virtual void set_random_weight(const int weight) = 0;
 
-	const factor<country> *get_random_weight_factor() const
-	{
-		return this->random_weight_factor.get();
-	}
+	void create_instance() const;
 
-	const std::vector<std::unique_ptr<event_option>> &get_options() const
-	{
-		return this->options;
-	}
-
-	const condition<country> *get_conditions() const
-	{
-		return this->conditions.get();
-	}
-
-	void fire(const country *country) const;
+	virtual int get_option_count() const = 0;
+	virtual const std::string &get_option_name(const int option_index) const = 0;
+	virtual std::string get_option_tooltip(const int option_index, const read_only_context &ctx) const = 0;
+	virtual void do_option_effects(const int option_index, context &ctx) const = 0;
 
 signals:
 	void changed();
@@ -145,9 +75,6 @@ signals:
 private:
 	std::string description;
 	event_trigger trigger;
-	std::unique_ptr<factor<country>> random_weight_factor;
-	std::unique_ptr<const condition<country>> conditions;
-	std::vector<std::unique_ptr<event_option>> options;
 };
 
 }

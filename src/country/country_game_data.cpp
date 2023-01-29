@@ -17,7 +17,7 @@
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
-#include "game/event.h"
+#include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "map/diplomatic_map_mode.h"
@@ -1552,7 +1552,7 @@ void country_game_data::check_events(const event_trigger trigger)
 
 	const read_only_context ctx = read_only_context::from_scope(this->country);
 
-	for (const metternich::event *event : event::get_trigger_events(trigger)) {
+	for (const country_event *event : country_event::get_trigger_events(trigger)) {
 		if (event->get_conditions() != nullptr && !event->get_conditions()->check(this->country, ctx)) {
 			continue;
 		}
@@ -1565,9 +1565,9 @@ void country_game_data::check_events(const event_trigger trigger)
 
 void country_game_data::check_random_events(const event_trigger trigger, const read_only_context &ctx)
 {
-	std::vector<const metternich::event *> random_events;
+	std::vector<const country_event *> random_events;
 
-	for (const metternich::event *event : event::get_trigger_random_events(trigger)) {
+	for (const country_event *event : country_event::get_trigger_random_events(trigger)) {
 		if (event == nullptr) {
 			random_events.push_back(event);
 			continue;
@@ -1581,7 +1581,7 @@ void country_game_data::check_random_events(const event_trigger trigger, const r
 	}
 
 	while (!random_events.empty()) {
-		const metternich::event *event = vector::get_random(random_events);
+		const country_event *event = vector::get_random(random_events);
 
 		if (event == nullptr) {
 			//a null event represents no event happening for the player for this check

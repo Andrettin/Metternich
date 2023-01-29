@@ -16,13 +16,13 @@ event_instance::event_instance(const metternich::event *event, const QString &na
 	read_only_context ctx;
 	ctx.current_country = game::get()->get_player_country();
 
-	if (!event->get_options().empty()) {
-		for (const std::unique_ptr<event_option> &option : event->get_options()) {
-			this->options.push_back(QString::fromStdString(option->get_name()));
-			this->option_tooltips.push_back(QString::fromStdString(option->get_tooltip(ctx)));
+	if (event->get_option_count() > 0) {
+		for (int i = 0; i < event->get_option_count(); ++i) {
+			this->options.push_back(QString::fromStdString(event->get_option_name(i)));
+			this->option_tooltips.push_back(QString::fromStdString(event->get_option_tooltip(i, ctx)));
 		}
 	} else {
-		this->options.push_back(QString::fromStdString(event_option::default_name));
+		this->options.push_back(QString::fromStdString(event::option_default_name));
 	}
 }
 
@@ -33,8 +33,8 @@ void event_instance::choose_option(const int option_index)
 	context ctx;
 	ctx.current_country = country;
 
-	if (!this->event->get_options().empty()) {
-		this->event->get_options().at(option_index)->do_effects(country, ctx);
+	if (this->event->get_option_count() > 0) {
+		this->event->do_option_effects(option_index, ctx);
 	}
 
 	engine_interface::get()->remove_event_instance(this);

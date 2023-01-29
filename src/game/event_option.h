@@ -14,11 +14,10 @@ struct read_only_context;
 template <typename scope_type>
 class effect_list;
 
+template <typename scope_type> 
 class event_option final
 {
 public:
-	static constexpr const char default_name[] = "OK";
-
 	explicit event_option();
 	~event_option();
 
@@ -39,13 +38,15 @@ public:
 	}
 
 	std::string get_effects_string(const read_only_context &ctx) const;
-	void do_effects(const country *country, context &ctx) const;
+	void do_effects(const scope_type *scope, context &ctx) const;
 
 private:
 	std::string name;
 	std::string tooltip;
 	int ai_weight = 1;
-	std::unique_ptr<effect_list<const country>> effects;
+	std::unique_ptr<effect_list<const scope_type>> effects;
 };
+
+extern template class event_option<country>;
 
 }

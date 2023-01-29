@@ -77,6 +77,7 @@ set(game_SRCS
 	src/game/event_trigger.cpp
 	src/game/game.cpp
 	src/game/scenario.cpp
+	src/game/scoped_event_base.cpp
 )
 source_group(game FILES ${game_SRCS})
 set_source_files_properties(${game_SRCS} PROPERTIES UNITY_GROUP "game")
@@ -291,12 +292,14 @@ set(economy_HDRS
 source_group(economy FILES ${economy_HDRS})
 
 set(game_HDRS
+	src/game/country_event.h
 	src/game/event.h
 	src/game/event_instance.h
 	src/game/event_option.h
 	src/game/event_trigger.h
 	src/game/game.h
 	src/game/scenario.h
+	src/game/scoped_event_base.h
 )
 source_group(game FILES ${game_HDRS})
 
