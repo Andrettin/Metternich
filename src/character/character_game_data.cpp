@@ -151,6 +151,8 @@ const trait *character_game_data::generate_trait(const trait_type trait_type, co
 		if (trait->get_level() > best_level) {
 			potential_traits.clear();
 			best_level = trait->get_level();
+		} else if (trait->get_level() < best_level) {
+			continue;
 		}
 
 		potential_traits.push_back(trait);
