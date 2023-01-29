@@ -7,10 +7,16 @@
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/diplomacy_state.h"
+#include "country/landed_title_tier.h"
 #include "technology/technology.h"
 #include "util/map_util.h"
 
 namespace metternich {
+
+country_history::country_history(const metternich::country *country)
+	: country(country), tier(landed_title_tier::none)
+{
+}
 
 void country_history::process_gsml_property(const gsml_property &property)
 {
