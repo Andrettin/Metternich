@@ -10,12 +10,9 @@
 
 namespace metternich {
 
-event_instance::event_instance(const metternich::event *event, const QString &name, const QString &description)
-	: event(event), name(name), description(description)
+event_instance::event_instance(const metternich::event *event, const QString &name, const QString &description, const context &ctx)
+	: event(event), name(name), description(description), ctx(ctx)
 {
-	read_only_context ctx;
-	ctx.current_country = game::get()->get_player_country();
-
 	if (event->get_option_count() > 0) {
 		for (int i = 0; i < event->get_option_count(); ++i) {
 			this->options.push_back(QString::fromStdString(event->get_option_name(i)));
@@ -28,13 +25,8 @@ event_instance::event_instance(const metternich::event *event, const QString &na
 
 void event_instance::choose_option(const int option_index)
 {
-	const country *country = game::get()->get_player_country();
-
-	context ctx;
-	ctx.current_country = country;
-
 	if (this->event->get_option_count() > 0) {
-		this->event->do_option_effects(option_index, ctx);
+		this->event->do_option_effects(option_index, this->ctx);
 	}
 
 	engine_interface::get()->remove_event_instance(this);

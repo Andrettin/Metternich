@@ -29,9 +29,9 @@ void event::process_gsml_property(const gsml_property &property)
 	}
 }
 
-void event::create_instance() const
+void event::create_instance(const context &ctx) const
 {
-	auto event_instance = make_qunique<metternich::event_instance>(this, this->get_name_qstring(), this->get_description_qstring());
+	auto event_instance = make_qunique<metternich::event_instance>(this, this->get_name_qstring(), this->get_description_qstring(), ctx);
 	engine_interface::get()->add_event_instance(std::move(event_instance));
 }
 

@@ -6,8 +6,8 @@ namespace archimedes {
 
 namespace metternich {
 
+class character;
 class country;
-class country_event;
 enum class event_trigger;
 struct context;
 struct read_only_context;
@@ -25,17 +25,15 @@ template <typename scope_type>
 class scoped_event_base
 {
 public:
-	using event_type = std::conditional_t<std::is_same_v<scope_type, country>, country_event, void>;
-
 	static void clear()
 	{
 		scoped_event_base::trigger_events.clear();
 		scoped_event_base::trigger_random_events.clear();
 	}
 
-	static const std::vector<const event_type *> &get_trigger_events(const event_trigger trigger)
+	static const std::vector<const scoped_event_base *> &get_trigger_events(const event_trigger trigger)
 	{
-		static std::vector<const event_type *> empty_list;
+		static std::vector<const scoped_event_base *> empty_list;
 
 		const auto find_iterator = scoped_event_base::trigger_events.find(trigger);
 		if (find_iterator != scoped_event_base::trigger_events.end()) {
@@ -45,9 +43,9 @@ public:
 		return empty_list;
 	}
 
-	static const std::vector<const event_type *> &get_trigger_random_events(const event_trigger trigger)
+	static const std::vector<const scoped_event_base *> &get_trigger_random_events(const event_trigger trigger)
 	{
-		static std::vector<const event_type *> empty_list;
+		static std::vector<const scoped_event_base *> empty_list;
 
 		const auto find_iterator = scoped_event_base::trigger_random_events.find(trigger);
 		if (find_iterator != scoped_event_base::trigger_random_events.end()) {
@@ -59,7 +57,7 @@ public:
 
 	static void add_trigger_none_random_weight(const event_trigger trigger, const int weight)
 	{
-		std::vector<const event_type *> &events = scoped_event_base::trigger_random_events[trigger];
+		std::vector<const scoped_event_base *> &events = scoped_event_base::trigger_random_events[trigger];
 
 		for (int i = 0; i < weight; ++i) {
 			events.push_back(nullptr);
@@ -68,9 +66,12 @@ public:
 
 	static bool is_player_scope(const scope_type *scope);
 
+	static void check_events_for_scope(const scope_type *scope, const event_trigger trigger);
+	static void check_random_events_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx);
+
 private:
-	static inline std::map<event_trigger, std::vector<const event_type *>> trigger_events;
-	static inline std::map<event_trigger, std::vector<const event_type *>> trigger_random_events;
+	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_events;
+	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_random_events;
 
 public:
 	scoped_event_base();
@@ -113,12 +114,16 @@ public:
 	std::string get_option_tooltip(const int option_index, const read_only_context &ctx) const;
 	void do_option_effects(const int option_index, context &ctx) const;
 
+	void fire(const scope_type *scope, const context &ctx) const;
+	virtual void create_instance(const context &ctx) const = 0;
+
 private:
 	std::unique_ptr<factor<scope_type>> random_weight_factor;
 	std::unique_ptr<const condition<scope_type>> conditions;
 	std::vector<std::unique_ptr<event_option<scope_type>>> options;
 };
 
+extern template class scoped_event_base<character>;
 extern template class scoped_event_base<country>;
 
 }

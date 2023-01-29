@@ -5,16 +5,16 @@
 
 namespace metternich {
 
-class country;
+class character;
 
-class country_event final : public event, public data_type<country_event>, public scoped_event_base<country>
+class character_event final : public event, public data_type<character_event>, public scoped_event_base<character>
 {
 	Q_OBJECT
 
 public:
-	static constexpr const char class_identifier[] = "country_event";
-	static constexpr const char property_class_identifier[] = "metternich::country_event*";
-	static constexpr const char database_folder[] = "events/country";
+	static constexpr const char class_identifier[] = "character_event";
+	static constexpr const char property_class_identifier[] = "metternich::character_event*";
+	static constexpr const char database_folder[] = "events/character";
 
 	static void clear()
 	{
@@ -22,7 +22,7 @@ public:
 		scoped_event_base::clear();
 	}
 
-	explicit country_event(const std::string &identifier) : event(identifier)
+	explicit character_event(const std::string &identifier) : event(identifier)
 	{
 	}
 

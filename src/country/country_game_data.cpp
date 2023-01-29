@@ -71,9 +71,13 @@ void country_game_data::do_turn()
 		civilian_unit->do_turn();
 	}
 
-	this->check_characters(game::get()->get_next_date());
-
 	this->do_events();
+
+	for (const character *character : this->get_characters()) {
+		character->get_game_data()->do_turn();
+	}
+
+	this->check_characters(game::get()->get_next_date());
 }
 
 void country_game_data::do_population_growth()
@@ -148,10 +152,10 @@ void country_game_data::do_events()
 	const bool is_last_turn_of_year = (game::get()->get_date().date().month() + defines::get()->get_months_per_turn()) > 12;
 
 	if (is_last_turn_of_year) {
-		this->check_events(event_trigger::yearly_pulse);
+		country_event::check_events_for_scope(this->country, event_trigger::yearly_pulse);
 	}
 
-	this->check_events(event_trigger::quarterly_pulse);
+	country_event::check_events_for_scope(this->country, event_trigger::quarterly_pulse);
 }
 
 void country_game_data::do_ai_turn()
@@ -1543,57 +1547,6 @@ void country_game_data::remove_civilian_unit(metternich::civilian_unit *civilian
 			this->civilian_units.erase(this->civilian_units.begin() + i);
 			return;
 		}
-	}
-}
-
-void country_game_data::check_events(const event_trigger trigger)
-{
-	assert_throw(trigger != event_trigger::none);
-
-	const read_only_context ctx = read_only_context::from_scope(this->country);
-
-	for (const country_event *event : country_event::get_trigger_events(trigger)) {
-		if (event->get_conditions() != nullptr && !event->get_conditions()->check(this->country, ctx)) {
-			continue;
-		}
-
-		event->fire(this->country);
-	}
-
-	this->check_random_events(trigger, ctx);
-}
-
-void country_game_data::check_random_events(const event_trigger trigger, const read_only_context &ctx)
-{
-	std::vector<const country_event *> random_events;
-
-	for (const country_event *event : country_event::get_trigger_random_events(trigger)) {
-		if (event == nullptr) {
-			random_events.push_back(event);
-			continue;
-		}
-
-		const int weight = event->get_random_weight_factor()->calculate(this->country);
-
-		for (int i = 0; i < weight; ++i) {
-			random_events.push_back(event);
-		}
-	}
-
-	while (!random_events.empty()) {
-		const country_event *event = vector::get_random(random_events);
-
-		if (event == nullptr) {
-			//a null event represents no event happening for the player for this check
-			break;
-		}
-
-		if (event->get_conditions() == nullptr || event->get_conditions()->check(this->country, ctx)) {
-			event->fire(this->country);
-			break;
-		}
-
-		std::erase(random_events, event);
 	}
 }
 

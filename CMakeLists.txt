@@ -292,6 +292,7 @@ set(economy_HDRS
 source_group(economy FILES ${economy_HDRS})
 
 set(game_HDRS
+	src/game/character_event.h
 	src/game/country_event.h
 	src/game/event.h
 	src/game/event_instance.h

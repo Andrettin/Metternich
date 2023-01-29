@@ -5,6 +5,7 @@
 #include "country/diplomacy_state.h"
 #include "database/database.h"
 #include "database/preferences.h"
+#include "game/character_event.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "map/direction.h"
@@ -84,6 +85,7 @@ void defines::process_gsml_scope(const gsml_data &scope)
 void defines::initialize()
 {
 	for (const auto &[event_trigger, random_weight] : defines::get()->get_event_trigger_none_random_weights()) {
+		character_event::add_trigger_none_random_weight(event_trigger, random_weight);
 		country_event::add_trigger_none_random_weight(event_trigger, random_weight);
 	}
 

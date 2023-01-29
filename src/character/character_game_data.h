@@ -32,6 +32,9 @@ public:
 
 	void on_game_started();
 
+	void do_turn();
+	void do_events();
+
 	const metternich::country *get_employer() const
 	{
 		return this->employer;

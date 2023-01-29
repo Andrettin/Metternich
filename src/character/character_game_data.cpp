@@ -10,6 +10,9 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/landed_title.h"
+#include "database/defines.h"
+#include "game/character_event.h"
+#include "game/event_trigger.h"
 #include "game/game.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
@@ -46,6 +49,22 @@ void character_game_data::on_game_started()
 	}
 
 	this->generate_expertise_traits();
+}
+
+void character_game_data::do_turn()
+{
+	this->do_events();
+}
+
+void character_game_data::do_events()
+{
+	const bool is_last_turn_of_year = (game::get()->get_date().date().month() + defines::get()->get_months_per_turn()) > 12;
+
+	if (is_last_turn_of_year) {
+		character_event::check_events_for_scope(this->character, event_trigger::yearly_pulse);
+	}
+
+	character_event::check_events_for_scope(this->character, event_trigger::quarterly_pulse);
 }
 
 void character_game_data::set_employer(const metternich::country *employer)

@@ -86,6 +86,7 @@ void effect_list<scope_type>::add_effect(std::unique_ptr<effect<scope_type>> &&e
 	this->effects.push_back(std::move(effect));
 }
 
+template class effect_list<const character>;
 template class effect_list<const country>;
 
 }

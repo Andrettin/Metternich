@@ -7,6 +7,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class character;
 class country;
 class population_unit;
 class province;
@@ -34,6 +35,7 @@ private:
 	std::vector<std::unique_ptr<factor_modifier<scope_type>>> modifiers; //modifiers for the factor
 };
 
+extern template class factor<character>;
 extern template class factor<country>;
 extern template class factor<population_unit>;
 extern template class factor<province>;

@@ -508,9 +508,6 @@ public:
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
 
-	void check_events(const event_trigger trigger);
-	void check_random_events(const event_trigger trigger, const read_only_context &ctx);
-
 	int get_land_morale_loss_reduction() const
 	{
 		return this->land_morale_loss_reduction;

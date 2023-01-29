@@ -102,6 +102,7 @@ void event_option<scope_type>::do_effects(const scope_type *scope, context &ctx)
 	}
 }
 
+template class event_option<character>;
 template class event_option<country>;
 
 }

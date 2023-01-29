@@ -7,6 +7,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class character;
 class country;
 struct context;
 struct read_only_context;
@@ -47,6 +48,7 @@ private:
 	std::unique_ptr<effect_list<const scope_type>> effects;
 };
 
+extern template class event_option<character>;
 extern template class event_option<country>;
 
 }

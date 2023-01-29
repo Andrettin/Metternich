@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "script/context.h"
 
 namespace metternich {
 
@@ -17,7 +18,7 @@ class event_instance final : public QObject
 	Q_PROPERTY(QStringList option_tooltips READ get_option_tooltips CONSTANT)
 
 public:
-	explicit event_instance(const metternich::event *event, const QString &name, const QString &description);
+	explicit event_instance(const metternich::event *event, const QString &name, const QString &description, const context &ctx);
 
 	const QString &get_name() const
 	{
@@ -47,6 +48,7 @@ private:
 	QString description;
 	QStringList options;
 	QStringList option_tooltips;
+	context ctx;
 };
 
 }
