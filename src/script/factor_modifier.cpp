@@ -63,6 +63,7 @@ bool factor_modifier<scope_type>::check_conditions(const scope_type *scope) cons
 	return this->conditions->check(scope, read_only_context::from_scope(scope));
 }
 
+template class factor_modifier<character>;
 template class factor_modifier<country>;
 template class factor_modifier<population_unit>;
 template class factor_modifier<province>;

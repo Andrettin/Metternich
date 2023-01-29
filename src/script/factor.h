@@ -12,7 +12,7 @@ class country;
 class population_unit;
 class province;
 
-template <typename T>
+template <typename scope_type>
 class factor_modifier;
 
 //a scripted factor, i.e. a random chance, weight or score

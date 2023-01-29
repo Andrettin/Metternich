@@ -9,6 +9,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class character;
 class country;
 class population_unit;
 class province;
@@ -46,6 +47,7 @@ private:
 	std::unique_ptr<and_condition<scope_type>> conditions; //conditions for whether the modifier is to be applied
 };
 
+extern template class factor_modifier<character>;
 extern template class factor_modifier<country>;
 extern template class factor_modifier<population_unit>;
 extern template class factor_modifier<province>;
