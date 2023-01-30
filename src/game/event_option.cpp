@@ -77,7 +77,9 @@ std::string event_option<scope_type>::get_tooltip(const read_only_context &ctx) 
 	if constexpr (std::is_same_v<scope_type, character>) {
 		assert_throw(ctx.current_character != nullptr);
 
-		str = ctx.current_character->get_full_name() + ": " + str;
+		if (!str.empty()) {
+			str = ctx.current_character->get_full_name() + ": " + str;
+		}
 	}
 
 	return str;
