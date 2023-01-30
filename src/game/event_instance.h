@@ -14,7 +14,7 @@ class event_instance final : public QObject
 
 	Q_PROPERTY(QString name READ get_name CONSTANT)
 	Q_PROPERTY(QString description READ get_description CONSTANT)
-	Q_PROPERTY(QStringList options READ get_options CONSTANT)
+	Q_PROPERTY(QStringList option_names READ get_option_names CONSTANT)
 	Q_PROPERTY(QStringList option_tooltips READ get_option_tooltips CONSTANT)
 
 public:
@@ -30,9 +30,9 @@ public:
 		return this->description;
 	}
 
-	const QStringList &get_options() const
+	const QStringList &get_option_names() const
 	{
-		return this->options;
+		return this->option_names;
 	}
 
 	const QStringList &get_option_tooltips() const
@@ -40,13 +40,14 @@ public:
 		return this->option_tooltips;
 	}
 
-	Q_INVOKABLE void choose_option(const int option_index);
+	Q_INVOKABLE void choose_option(const int displayed_option_index);
 
 private:
 	const metternich::event *event = nullptr;
 	QString name;
 	QString description;
-	QStringList options;
+	std::vector<int> option_indexes;
+	QStringList option_names;
 	QStringList option_tooltips;
 	context ctx;
 };

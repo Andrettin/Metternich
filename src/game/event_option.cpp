@@ -8,6 +8,7 @@
 #include "database/gsml_property.h"
 #include "game/event.h"
 #include "script/context.h"
+#include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
@@ -46,7 +47,10 @@ void event_option<scope_type>::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "effects") {
+	if (tag == "conditions") {
+		this->conditions = std::make_unique<and_condition<scope_type>>();
+		database::process_gsml_data(this->conditions, scope);
+	} else if (tag == "effects") {
 		this->effects = std::make_unique<effect_list<const scope_type>>();
 		database::process_gsml_data(this->effects, scope);
 	} else {
@@ -57,6 +61,10 @@ void event_option<scope_type>::process_gsml_scope(const gsml_data &scope)
 template <typename scope_type>
 void event_option<scope_type>::check() const
 {
+	if (this->get_conditions() != nullptr) {
+		this->get_conditions()->check_validity();
+	}
+
 	if (this->effects != nullptr) {
 		this->effects->check();
 	}

@@ -64,12 +64,17 @@ public:
 		return scoped_event_base::get_option_count();
 	}
 
-	const std::string &get_option_name(const int option_index) const
+	virtual bool is_option_available(const int option_index, const read_only_context &ctx) const override
+	{
+		return scoped_event_base::is_option_available(option_index, ctx);
+	}
+
+	virtual const std::string &get_option_name(const int option_index) const override
 	{
 		return scoped_event_base::get_option_name(option_index);
 	}
 
-	std::string get_option_tooltip(const int option_index, const read_only_context &ctx) const
+	virtual std::string get_option_tooltip(const int option_index, const read_only_context &ctx) const override
 	{
 		return scoped_event_base::get_option_tooltip(option_index, ctx);
 	}

@@ -17,6 +17,16 @@
 namespace metternich {
 
 template <typename scope_type>
+const scope_type *scoped_event_base<scope_type>::get_scope_from_context(const read_only_context &ctx)
+{
+	if constexpr (std::is_same_v<scope_type, character>) {
+		return ctx.current_character;
+	} else if constexpr (std::is_same_v<scope_type, country>) {
+		return ctx.current_country;
+	}
+}
+
+template <typename scope_type>
 bool scoped_event_base<scope_type>::is_player_scope(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, character>) {
@@ -148,6 +158,20 @@ void scoped_event_base<scope_type>::set_random_weight(const int weight)
 }
 
 template <typename scope_type>
+bool scoped_event_base<scope_type>::is_option_available(const int option_index, const read_only_context &ctx) const
+{
+	const condition<scope_type> *conditions = this->get_options().at(option_index)->get_conditions();
+
+	if (conditions == nullptr) {
+		return true;
+	}
+
+	const scope_type *scope = scoped_event_base::get_scope_from_context(ctx);
+
+	return conditions->check(scope, ctx);
+}
+
+template <typename scope_type>
 const std::string &scoped_event_base<scope_type>::get_option_name(const int option_index) const
 {
 	return this->get_options().at(option_index)->get_name();
@@ -162,14 +186,7 @@ std::string scoped_event_base<scope_type>::get_option_tooltip(const int option_i
 template <typename scope_type>
 void scoped_event_base<scope_type>::do_option_effects(const int option_index, context &ctx) const
 {
-	const scope_type *scope = nullptr;
-
-	if constexpr (std::is_same_v<scope_type, character>) {
-		scope = ctx.current_character;
-	} else if constexpr (std::is_same_v<scope_type, country>) {
-		scope = ctx.current_country;
-	}
-
+	const scope_type *scope = scoped_event_base::get_scope_from_context(ctx);
 	this->get_options().at(option_index)->do_effects(scope, ctx);
 }
 

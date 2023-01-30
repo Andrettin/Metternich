@@ -13,6 +13,9 @@ struct context;
 struct read_only_context;
 
 template <typename scope_type>
+class condition;
+
+template <typename scope_type>
 class effect_list;
 
 template <typename scope_type> 
@@ -38,6 +41,11 @@ public:
 		return this->ai_weight;
 	}
 
+	const condition<scope_type> *get_conditions() const
+	{
+		return this->conditions.get();
+	}
+
 	std::string get_effects_string(const read_only_context &ctx) const;
 	void do_effects(const scope_type *scope, context &ctx) const;
 
@@ -45,6 +53,7 @@ private:
 	std::string name;
 	std::string tooltip;
 	int ai_weight = 1;
+	std::unique_ptr<condition<scope_type>> conditions;
 	std::unique_ptr<effect_list<const scope_type>> effects;
 };
 

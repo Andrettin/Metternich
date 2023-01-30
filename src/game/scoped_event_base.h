@@ -64,6 +64,7 @@ public:
 		}
 	}
 
+	static const scope_type *get_scope_from_context(const read_only_context &ctx);
 	static bool is_player_scope(const scope_type *scope);
 
 	static void check_events_for_scope(const scope_type *scope, const event_trigger trigger);
@@ -110,6 +111,7 @@ public:
 		return static_cast<int>(this->get_options().size());
 	}
 
+	bool is_option_available(const int option_index, const read_only_context &ctx) const;
 	const std::string &get_option_name(const int option_index) const;
 	std::string get_option_tooltip(const int option_index, const read_only_context &ctx) const;
 	void do_option_effects(const int option_index, context &ctx) const;
