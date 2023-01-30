@@ -393,6 +393,7 @@ source_group(script\\condition FILES ${script_condition_HDRS})
 set(script_effect_HDRS
 	src/script/effect/effect.h
 	src/script/effect/effect_list.h
+	src/script/effect/traits_effect.h
 	src/script/effect/wealth_effect.h
 )
 source_group(script\\effect FILES ${script_effect_HDRS})

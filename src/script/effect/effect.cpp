@@ -7,6 +7,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "database/database.h"
+#include "script/effect/traits_effect.h"
 #include "script/effect/wealth_effect.h"
 
 namespace metternich {
@@ -17,6 +18,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	const std::string &key = property.get_key();
 	const gsml_operator effect_operator = property.get_operator();
 	const std::string &value = property.get_value();
+
+	if constexpr (std::is_same_v<scope_type, const character>) {
+		if (key == "traits") {
+			return std::make_unique<traits_effect>(value, effect_operator);
+		}
+	}
 
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
 		if (key == "wealth") {

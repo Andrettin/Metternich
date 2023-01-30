@@ -116,7 +116,7 @@ void character_game_data::add_trait(const trait *trait)
 	}
 
 	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the trait change can affect them
-	if (this->is_ruler()) {
+	if (this->is_ruler() || this->get_office() != nullptr) {
 		this->apply_country_modifier(this->get_employer(), -1);
 	}
 
@@ -132,7 +132,37 @@ void character_game_data::add_trait(const trait *trait)
 	}
 
 	//reapply modifiers that this character is applying on other scopes
-	if (this->is_ruler()) {
+	if (this->is_ruler() || this->get_office() != nullptr) {
+		this->apply_country_modifier(this->get_employer(), 1);
+	}
+
+	this->sort_traits();
+
+	if (game::get()->is_running()) {
+		emit traits_changed();
+	}
+}
+
+void character_game_data::remove_trait(const trait *trait)
+{
+	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the trait change can affect them
+	if (this->is_ruler() || this->get_office() != nullptr) {
+		this->apply_country_modifier(this->get_employer(), -1);
+	}
+
+	std::erase(this->traits, trait);
+
+	if (trait->get_modifier() != nullptr) {
+		trait->get_modifier()->remove(this->character);
+	}
+
+	const modifier<const metternich::character> *character_type_modifier = trait->get_character_type_modifier(this->character->get_type());
+	if (character_type_modifier != nullptr) {
+		character_type_modifier->remove(this->character);
+	}
+
+	//reapply modifiers that this character is applying on other scopes
+	if (this->is_ruler() || this->get_office() != nullptr) {
 		this->apply_country_modifier(this->get_employer(), 1);
 	}
 
