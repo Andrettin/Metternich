@@ -2,6 +2,7 @@
 
 #include "game/event_option.h"
 
+#include "character/character.h"
 #include "database/database.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
@@ -9,6 +10,7 @@
 #include "script/context.h"
 #include "script/effect/effect_list.h"
 #include "util/assert_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -63,15 +65,22 @@ void event_option<scope_type>::check() const
 template <typename scope_type>
 std::string event_option<scope_type>::get_tooltip(const read_only_context &ctx) const
 {
+	std::string str;
+
 	if (!this->tooltip.empty()) {
-		return this->tooltip;
+		str += this->tooltip;
+	} else if (this->effects != nullptr) {
+		str += this->get_effects_string(ctx);
+		string::replace(str, "\n", ", ");
 	}
 
-	if (this->effects != nullptr) {
-		return this->get_effects_string(ctx);
+	if constexpr (std::is_same_v<scope_type, character>) {
+		assert_throw(ctx.current_character != nullptr);
+
+		str = ctx.current_character->get_full_name() + ": " + str;
 	}
 
-	return std::string();
+	return str;
 }
 
 template <typename scope_type>
