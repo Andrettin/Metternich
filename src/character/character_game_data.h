@@ -26,6 +26,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(metternich::office* office READ get_office_unconst NOTIFY office_changed)
 	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string NOTIFY traits_changed)
 	Q_PROPERTY(QString province_modifier_string READ get_province_modifier_string NOTIFY traits_changed)
+	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 
 public:
 	explicit character_game_data(const metternich::character *character);
@@ -130,6 +131,27 @@ public:
 	void apply_country_modifier(const country *country, const int multiplier);
 	void apply_province_modifier(const province *province, const int multiplier);
 
+	int get_wealth() const
+	{
+		return this->wealth;
+	}
+
+	void set_wealth(const int wealth)
+	{
+		if (wealth == this->get_wealth()) {
+			return;
+		}
+
+		this->wealth = wealth;
+
+		emit wealth_changed();
+	}
+
+	void change_wealth(const int change)
+	{
+		this->set_wealth(this->get_wealth() + change);
+	}
+
 signals:
 	void employer_changed();
 	void age_changed();
@@ -137,6 +159,7 @@ signals:
 	void attributes_changed();
 	void landed_titles_changed();
 	void office_changed();
+	void wealth_changed();
 
 private:
 	const metternich::character *character = nullptr;
@@ -145,6 +168,7 @@ private:
 	std::map<attribute, int> attribute_values;
 	std::vector<const landed_title *> landed_titles;
 	const metternich::office *office = nullptr;
+	int wealth = 0;
 };
 
 }

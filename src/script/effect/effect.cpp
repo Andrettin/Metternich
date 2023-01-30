@@ -2,6 +2,10 @@
 
 #include "script/effect/effect.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "database/database.h"
 #include "script/effect/wealth_effect.h"
 
@@ -14,9 +18,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	const gsml_operator effect_operator = property.get_operator();
 	const std::string &value = property.get_value();
 
-	if constexpr (std::is_same_v<scope_type, const country>) {
+	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
 		if (key == "wealth") {
-			return std::make_unique<wealth_effect>(value, effect_operator);
+			return std::make_unique<wealth_effect<scope_type>>(value, effect_operator);
 		}
 	}
 
