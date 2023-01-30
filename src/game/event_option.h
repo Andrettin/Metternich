@@ -9,6 +9,7 @@ namespace metternich {
 
 class character;
 class country;
+class trait;
 struct context;
 struct read_only_context;
 
@@ -52,6 +53,7 @@ public:
 private:
 	std::string name;
 	std::string tooltip;
+	const trait *tooltip_info_trait = nullptr;
 	int ai_weight = 1;
 	std::unique_ptr<condition<scope_type>> conditions;
 	std::unique_ptr<effect_list<const scope_type>> effects;
