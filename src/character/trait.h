@@ -1,6 +1,5 @@
 #pragma once
 
-#include "character/character_type_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
@@ -62,18 +61,7 @@ public:
 		return this->modifier.get();
 	}
 
-	const metternich::modifier<const character> *get_character_type_modifier(const character_type *character_type) const
-	{
-		const auto find_iterator = this->character_type_modifiers.find(character_type);
-		if (find_iterator != this->character_type_modifiers.end()) {
-			return find_iterator->second.get();
-		}
-
-		return nullptr;
-	}
-
 	QString get_modifier_string() const;
-	Q_INVOKABLE QString get_modifier_string(metternich::character_type *character_type) const;
 
 signals:
 	void changed();
@@ -84,7 +72,6 @@ private:
 	int level = 0;
 	std::unique_ptr<const condition<character>> conditions;
 	std::unique_ptr<metternich::modifier<const character>> modifier;
-	character_type_map<std::unique_ptr<metternich::modifier<const character>>> character_type_modifiers;
 };
 
 }
