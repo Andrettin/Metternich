@@ -392,6 +392,7 @@ set(script_condition_HDRS
 	src/script/condition/not_condition.h
 	src/script/condition/numerical_condition.h
 	src/script/condition/or_condition.h
+	src/script/condition/prestige_condition.h
 	src/script/condition/religion_condition.h
 	src/script/condition/religious_group_condition.h
 	src/script/condition/scope_condition.h
