@@ -69,10 +69,10 @@ public:
 		return this->check_internal(scope, ctx);
 	}
 
-	virtual std::string get_assignment_string(const size_t indent, const bool links_allowed) const override
+	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		std::string str = "None of:\n";
-		str += condition<scope_type>::get_conditions_string(this->conditions, indent + 1, links_allowed);
+		str += condition<scope_type>::get_conditions_string(this->conditions, indent + 1);
 		return str;
 	}
 

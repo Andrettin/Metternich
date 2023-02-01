@@ -28,10 +28,9 @@ public:
 		return scope->get_type() == this->character_type;
 	}
 
-	virtual std::string get_assignment_string(const size_t indent, const bool links_allowed) const override
+	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
-		Q_UNUSED(links_allowed);
 
 		return this->character_type->get_name() + " character type";
 	}

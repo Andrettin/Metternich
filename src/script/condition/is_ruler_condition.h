@@ -31,10 +31,9 @@ public:
 		return this->value == character_game_data->is_ruler();
 	}
 
-	virtual std::string get_assignment_string(const size_t indent, const bool links_allowed) const override
+	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
-		Q_UNUSED(links_allowed);
 
 		if (this->value) {
 			return "Ruler";

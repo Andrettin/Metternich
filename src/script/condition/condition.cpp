@@ -151,11 +151,11 @@ bool condition<scope_type>::check(const scope_type *scope, const read_only_conte
 }
 
 template <typename scope_type>
-std::string condition<scope_type>::get_string(const size_t indent, const bool links_allowed) const
+std::string condition<scope_type>::get_string(const size_t indent) const
 {
 	switch (this->condition_operator) {
 		case gsml_operator::assignment:
-			return this->get_assignment_string(indent, links_allowed);
+			return this->get_assignment_string(indent);
 		case gsml_operator::equality:
 			return this->get_equality_string();
 		case gsml_operator::inequality:

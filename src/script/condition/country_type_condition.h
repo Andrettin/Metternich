@@ -28,10 +28,9 @@ public:
 		return scope->get_type() == this->country_type;
 	}
 
-	virtual std::string get_assignment_string(const size_t indent, const bool links_allowed) const override
+	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
-		Q_UNUSED(links_allowed);
 
 		return get_country_type_name(this->country_type) + " country type";
 	}

@@ -35,10 +35,9 @@ public:
 		return this->value == has_office;
 	}
 
-	virtual std::string get_assignment_string(const size_t indent, const bool links_allowed) const override
+	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
-		Q_UNUSED(links_allowed);
 
 		if (this->value) {
 			return "Country office";

@@ -66,24 +66,24 @@ public:
 		return this->check_internal(scope, ctx);
 	}
 
-	virtual std::string get_assignment_string(const size_t indent, const bool links_allowed) const override
+	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		if (this->conditions.empty()) {
 			return std::string();
 		}
 
 		if (this->conditions.size() == 1) {
-			return this->conditions.front()->get_string(indent, links_allowed);
+			return this->conditions.front()->get_string(indent);
 		}
 
 		std::string str = "All of:\n";
-		str += this->get_conditions_string(indent + 1, links_allowed);
+		str += this->get_conditions_string(indent + 1);
 		return str;
 	}
 
-	std::string get_conditions_string(const size_t indent, const bool links_allowed) const
+	std::string get_conditions_string(const size_t indent) const
 	{
-		return condition<scope_type>::get_conditions_string(this->conditions, indent, links_allowed);
+		return condition<scope_type>::get_conditions_string(this->conditions, indent);
 	}
 
 	void add_condition(std::unique_ptr<const condition<scope_type>> &&condition)

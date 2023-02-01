@@ -37,10 +37,9 @@ public:
 		return this->value == country->get_game_data()->at_war();
 	}
 
-	virtual std::string get_assignment_string(const size_t indent, const bool links_allowed) const override
+	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
-		Q_UNUSED(links_allowed);
 
 		if (this->value) {
 			return "At war";

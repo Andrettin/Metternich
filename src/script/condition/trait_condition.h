@@ -29,10 +29,9 @@ public:
 		return scope->get_game_data()->has_trait(this->trait);
 	}
 
-	virtual std::string get_assignment_string(const size_t indent, const bool links_allowed) const override
+	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
-		Q_UNUSED(links_allowed);
 
 		return this->trait->get_name() + " trait";
 	}

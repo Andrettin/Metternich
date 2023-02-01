@@ -20,7 +20,7 @@ public:
 	static std::unique_ptr<const condition> from_gsml_property(const gsml_property &property);
 	static std::unique_ptr<const condition> from_gsml_scope(const gsml_data &scope);
 
-	static std::string get_conditions_string(const std::vector<std::unique_ptr<const condition<scope_type>>> &conditions, const size_t indent, const bool links_allowed)
+	static std::string get_conditions_string(const std::vector<std::unique_ptr<const condition<scope_type>>> &conditions, const size_t indent)
 	{
 		std::string conditions_string;
 		bool first = true;
@@ -29,7 +29,7 @@ public:
 				continue;
 			}
 
-			const std::string condition_string = condition->get_string(indent, links_allowed);
+			const std::string condition_string = condition->get_string(indent);
 			if (condition_string.empty()) {
 				continue;
 			}
@@ -51,13 +51,9 @@ public:
 
 	//get the string for the object of a condition, e.g. the unit type for a unit type condition
 	template <typename T>
-	static std::string get_object_string(const T *object, const bool links_allowed, const std::string &name_string = "")
+	static std::string get_object_string(const T *object, const std::string &name_string = "")
 	{
-		if (links_allowed) {
-			return object->get_link_string(name_string, true);
-		} else {
-			return condition<scope_type>::get_object_highlighted_name(object, name_string);
-		}
+		return condition<scope_type>::get_object_highlighted_name(object, name_string);
 	}
 
 	static std::string get_object_highlighted_name(const named_data_entry *object, const std::string &name_string);
@@ -116,8 +112,8 @@ public:
 		return this->check_equality(scope) || this->check_greater_than(scope);
 	}
 
-	std::string get_string(const size_t indent, const bool links_allowed) const;
-	virtual std::string get_assignment_string(const size_t indent, const bool links_allowed) const = 0;
+	std::string get_string(const size_t indent) const;
+	virtual std::string get_assignment_string(const size_t indent) const = 0;
 
 	virtual std::string get_equality_string() const
 	{

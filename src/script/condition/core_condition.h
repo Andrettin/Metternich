@@ -29,11 +29,11 @@ public:
 		return vector::contains(scope->get_core_countries(), this->country);
 	}
 
-	virtual std::string get_assignment_string(const size_t indent, const bool links_allowed) const override
+	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
 
-		return condition<province>::get_object_string(this->country, links_allowed) + " core";
+		return condition<province>::get_object_string(this->country) + " core";
 	}
 
 private:
