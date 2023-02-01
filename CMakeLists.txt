@@ -274,6 +274,7 @@ set(country_HDRS
 	src/country/landed_title_tier.h
 	src/country/religion.h
 	src/country/religion_container.h
+	src/country/religious_group.h
 )
 source_group(country FILES ${country_HDRS})
 
@@ -391,6 +392,8 @@ set(script_condition_HDRS
 	src/script/condition/not_condition.h
 	src/script/condition/numerical_condition.h
 	src/script/condition/or_condition.h
+	src/script/condition/religion_condition.h
+	src/script/condition/religious_group_condition.h
 	src/script/condition/scope_condition.h
 	src/script/condition/scope_condition_base.h
 	src/script/condition/trait_condition.h
