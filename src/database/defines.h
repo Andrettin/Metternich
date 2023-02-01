@@ -21,7 +21,7 @@ class defines final : public defines_base, public singleton<defines>
 
 	Q_PROPERTY(QSize tile_size MEMBER tile_size READ get_tile_size NOTIFY changed)
 	Q_PROPERTY(QSize scaled_tile_size READ get_scaled_tile_size NOTIFY scaled_tile_size_changed)
-	Q_PROPERTY(int months_per_turn MEMBER months_per_turn READ get_months_per_turn)
+	Q_PROPERTY(int months_per_turn MEMBER months_per_turn READ get_months_per_turn NOTIFY changed)
 	Q_PROPERTY(QDateTime default_start_date MEMBER default_start_date READ get_default_start_date)
 	Q_PROPERTY(metternich::terrain_type* default_base_terrain MEMBER default_base_terrain)
 	Q_PROPERTY(metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain)

@@ -16,8 +16,10 @@
 #include "game/game.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
+#include "script/scripted_character_modifier.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/map_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -53,6 +55,7 @@ void character_game_data::on_game_started()
 
 void character_game_data::do_turn()
 {
+	this->decrement_scripted_modifiers();
 	this->do_events();
 }
 
@@ -115,25 +118,10 @@ void character_game_data::add_trait(const trait *trait)
 		throw std::runtime_error("Tried to add trait \"" + trait->get_identifier() + "\" to character \"" + this->character->get_identifier() + "\", for which the trait's conditions are not fulfilled.");
 	}
 
-	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the trait change can affect them
-	if (this->is_ruler() || this->get_office() != nullptr) {
-		this->apply_country_modifier(this->get_employer(), -1);
-	}
-
 	this->traits.push_back(trait);
 
 	if (trait->get_modifier() != nullptr) {
-		trait->get_modifier()->apply(this->character);
-	}
-
-	const modifier<const metternich::character> *character_type_modifier = trait->get_character_type_modifier(this->character->get_type());
-	if (character_type_modifier != nullptr) {
-		character_type_modifier->apply(this->character);
-	}
-
-	//reapply modifiers that this character is applying on other scopes
-	if (this->is_ruler() || this->get_office() != nullptr) {
-		this->apply_country_modifier(this->get_employer(), 1);
+		this->apply_modifier(trait->get_modifier());
 	}
 
 	this->sort_traits();
@@ -153,17 +141,7 @@ void character_game_data::remove_trait(const trait *trait)
 	std::erase(this->traits, trait);
 
 	if (trait->get_modifier() != nullptr) {
-		trait->get_modifier()->remove(this->character);
-	}
-
-	const modifier<const metternich::character> *character_type_modifier = trait->get_character_type_modifier(this->character->get_type());
-	if (character_type_modifier != nullptr) {
-		character_type_modifier->remove(this->character);
-	}
-
-	//reapply modifiers that this character is applying on other scopes
-	if (this->is_ruler() || this->get_office() != nullptr) {
-		this->apply_country_modifier(this->get_employer(), 1);
+		this->remove_modifier(trait->get_modifier());
 	}
 
 	this->sort_traits();
@@ -254,6 +232,60 @@ int character_game_data::get_total_trait_level() const
 	}
 
 	return level;
+}
+
+QVariantList character_game_data::get_scripted_modifiers_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
+}
+
+bool character_game_data::has_scripted_modifier(const scripted_character_modifier *modifier) const
+{
+	return this->get_scripted_modifiers().contains(modifier);
+}
+
+void character_game_data::add_scripted_modifier(const scripted_character_modifier *modifier, const int duration)
+{
+	const read_only_context ctx = read_only_context::from_scope(this->character);
+
+	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
+
+	if (modifier->get_modifier() != nullptr) {
+		this->apply_modifier(modifier->get_modifier());
+	}
+
+	if (game::get()->is_running()) {
+		emit scripted_modifiers_changed();
+	}
+}
+
+void character_game_data::remove_scripted_modifier(const scripted_character_modifier *modifier)
+{
+	this->scripted_modifiers.erase(modifier);
+
+	if (modifier->get_modifier() != nullptr) {
+		this->remove_modifier(modifier->get_modifier());
+	}
+
+	if (game::get()->is_running()) {
+		emit scripted_modifiers_changed();
+	}
+}
+
+void character_game_data::decrement_scripted_modifiers()
+{
+	std::vector<const scripted_character_modifier *> modifiers_to_remove;
+	for (auto &[modifier, duration] : this->scripted_modifiers) {
+		--duration;
+
+		if (duration == 0) {
+			modifiers_to_remove.push_back(modifier);
+		}
+	}
+
+	for (const scripted_character_modifier *modifier : modifiers_to_remove) {
+		this->remove_scripted_modifier(modifier);
+	}
 }
 
 int character_game_data::get_attribute_value(const attribute attribute) const
@@ -368,6 +400,23 @@ QString character_game_data::get_province_modifier_string() const
 	}
 
 	return QString::fromStdString(this->character->get_type()->get_province_modifier()->get_string(this->get_primary_attribute_value()));
+}
+
+void character_game_data::apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier)
+{
+	assert_throw(modifier != nullptr);
+
+	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the modifier change can affect them
+	if (this->is_ruler() || this->get_office() != nullptr) {
+		this->apply_country_modifier(this->get_employer(), -1);
+	}
+
+	modifier->apply(this->character, multiplier);
+
+	//reapply modifiers that this character is applying on other scopes
+	if (this->is_ruler() || this->get_office() != nullptr) {
+		this->apply_country_modifier(this->get_employer(), 1);
+	}
 }
 
 void character_game_data::apply_country_modifier(const country *country, const int multiplier)

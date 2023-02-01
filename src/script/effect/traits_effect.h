@@ -43,7 +43,7 @@ public:
 	}
 
 private:
-	const metternich::trait *trait = nullptr;;
+	const metternich::trait *trait = nullptr;
 };
 
 }

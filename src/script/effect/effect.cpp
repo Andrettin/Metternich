@@ -7,8 +7,10 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "database/database.h"
+#include "script/effect/scripted_modifiers_effect.h"
 #include "script/effect/traits_effect.h"
 #include "script/effect/wealth_effect.h"
+#include "util/assert_util.h"
 
 namespace metternich {
 
@@ -20,7 +22,10 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	const std::string &value = property.get_value();
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (key == "traits") {
+		if (key == "scripted_modifiers") {
+			assert_throw(effect_operator == gsml_operator::subtraction);
+			return std::make_unique<scripted_modifiers_effect<const character>>(value, effect_operator);
+		} else if (key == "traits") {
 			return std::make_unique<traits_effect>(value, effect_operator);
 		}
 	}
@@ -40,6 +45,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	const std::string &effect_identifier = scope.get_tag();
 	const gsml_operator effect_operator = scope.get_operator();
 	std::unique_ptr<effect> effect;
+
+	if constexpr (std::is_same_v<scope_type, const character>) {
+		if (effect_identifier == "scripted_modifiers") {
+			effect = std::make_unique<scripted_modifiers_effect<scope_type>>(effect_operator);
+		}
+	}
 
 	if (effect == nullptr) {
 		throw std::runtime_error("Invalid scope effect: \"" + effect_identifier + "\".");

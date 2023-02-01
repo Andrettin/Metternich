@@ -145,6 +145,8 @@ set(script_SRCS
 	src/script/factor.cpp
 	src/script/factor_modifier.cpp
 	src/script/modifier.cpp
+	src/script/scripted_modifier_container.cpp
+	src/script/scripted_scoped_modifier.cpp
 )
 source_group(script FILES ${script_SRCS})
 set_source_files_properties(${script_SRCS} PROPERTIES UNITY_GROUP "script")
@@ -367,6 +369,10 @@ set(script_HDRS
 	src/script/factor.h
 	src/script/factor_modifier.h
 	src/script/modifier.h
+	src/script/scripted_character_modifier.h
+	src/script/scripted_modifier.h
+	src/script/scripted_modifier_container.h
+	src/script/scripted_scoped_modifier.h
 )
 source_group(script FILES ${script_HDRS})
 
@@ -393,6 +399,7 @@ source_group(script\\condition FILES ${script_condition_HDRS})
 set(script_effect_HDRS
 	src/script/effect/effect.h
 	src/script/effect/effect_list.h
+	src/script/effect/scripted_modifiers_effect.h
 	src/script/effect/traits_effect.h
 	src/script/effect/wealth_effect.h
 )

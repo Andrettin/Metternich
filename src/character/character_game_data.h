@@ -1,14 +1,21 @@
 #pragma once
 
+#include "script/scripted_modifier_container.h"
+
 namespace metternich {
 
 class character;
 class country;
 class landed_title;
 class office;
+class province;
+class scripted_character_modifier;
 class trait;
 enum class attribute;
 enum class trait_type;
+
+template <typename scope_type>
+class modifier;
 
 class character_game_data final : public QObject
 {
@@ -25,6 +32,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int prowess READ get_prowess NOTIFY attributes_changed)
 	Q_PROPERTY(int vitality READ get_vitality NOTIFY attributes_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
+	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(QVariantList landed_titles READ get_landed_titles_qvariant_list NOTIFY landed_titles_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY landed_titles_changed)
 	Q_PROPERTY(metternich::office* office READ get_office_unconst NOTIFY office_changed)
@@ -63,7 +71,6 @@ public:
 	}
 
 	QVariantList get_traits_qvariant_list() const;
-
 	bool has_trait(const trait *trait) const;
 	void add_trait(const trait *trait);
 	void remove_trait(const trait *trait);
@@ -71,6 +78,17 @@ public:
 	void generate_expertise_traits();
 	void sort_traits();
 	int get_total_trait_level() const;
+
+	const scripted_character_modifier_map<int> &get_scripted_modifiers() const
+	{
+		return this->scripted_modifiers;
+	}
+
+	QVariantList get_scripted_modifiers_qvariant_list() const;
+	bool has_scripted_modifier(const scripted_character_modifier *modifier) const;
+	void add_scripted_modifier(const scripted_character_modifier *modifier, const int duration);
+	void remove_scripted_modifier(const scripted_character_modifier *modifier);
+	void decrement_scripted_modifiers();
 
 	int get_unclamped_attribute_value(const attribute attribute) const
 	{
@@ -137,6 +155,14 @@ public:
 
 	QString get_country_modifier_string() const;
 	QString get_province_modifier_string() const;
+
+	void apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier = 1);
+
+	void remove_modifier(const modifier<const metternich::character> *modifier)
+	{
+		this->apply_modifier(modifier, -1);
+	}
+
 	void apply_country_modifier(const country *country, const int multiplier);
 	void apply_province_modifier(const province *province, const int multiplier);
 
@@ -165,6 +191,7 @@ signals:
 	void employer_changed();
 	void age_changed();
 	void traits_changed();
+	void scripted_modifiers_changed();
 	void attributes_changed();
 	void landed_titles_changed();
 	void office_changed();
@@ -174,6 +201,7 @@ private:
 	const metternich::character *character = nullptr;
 	const metternich::country *employer = nullptr;
 	std::vector<const trait *> traits;
+	scripted_character_modifier_map<int> scripted_modifiers;
 	std::map<attribute, int> attribute_values;
 	std::vector<const landed_title *> landed_titles;
 	const metternich::office *office = nullptr;
