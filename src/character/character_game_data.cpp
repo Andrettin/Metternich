@@ -294,9 +294,29 @@ int character_game_data::get_primary_attribute_value() const
 	return this->get_attribute_value(this->character->get_type()->get_primary_attribute());
 }
 
-int character_game_data::get_skill() const
+int character_game_data::get_diplomacy() const
 {
-	return this->get_attribute_value(attribute::skill);
+	return this->get_attribute_value(attribute::diplomacy);
+}
+
+int character_game_data::get_martial() const
+{
+	return this->get_attribute_value(attribute::martial);
+}
+
+int character_game_data::get_stewardship() const
+{
+	return this->get_attribute_value(attribute::stewardship);
+}
+
+int character_game_data::get_intrigue() const
+{
+	return this->get_attribute_value(attribute::intrigue);
+}
+
+int character_game_data::get_learning() const
+{
+	return this->get_attribute_value(attribute::learning);
 }
 
 int character_game_data::get_prowess() const

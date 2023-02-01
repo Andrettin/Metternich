@@ -17,7 +17,11 @@ class character_game_data final : public QObject
 	Q_PROPERTY(metternich::country* employer READ get_employer_unconst NOTIFY employer_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(int primary_attribute_value READ get_primary_attribute_value NOTIFY attributes_changed)
-	Q_PROPERTY(int skill READ get_skill NOTIFY attributes_changed)
+	Q_PROPERTY(int diplomacy READ get_diplomacy NOTIFY attributes_changed)
+	Q_PROPERTY(int martial READ get_martial NOTIFY attributes_changed)
+	Q_PROPERTY(int stewardship READ get_stewardship NOTIFY attributes_changed)
+	Q_PROPERTY(int intrigue READ get_intrigue NOTIFY attributes_changed)
+	Q_PROPERTY(int learning READ get_learning NOTIFY attributes_changed)
 	Q_PROPERTY(int prowess READ get_prowess NOTIFY attributes_changed)
 	Q_PROPERTY(int vitality READ get_vitality NOTIFY attributes_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
@@ -87,7 +91,11 @@ public:
 	}
 
 	int get_primary_attribute_value() const;
-	int get_skill() const;
+	int get_diplomacy() const;
+	int get_martial() const;
+	int get_stewardship() const;
+	int get_intrigue() const;
+	int get_learning() const;
 	int get_prowess() const;
 	int get_vitality() const;
 
