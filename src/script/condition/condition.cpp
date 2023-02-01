@@ -20,6 +20,8 @@
 #include "script/condition/location_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
+#include "script/condition/religion_condition.h"
+#include "script/condition/religious_group_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
 #include "util/string_util.h"
@@ -67,6 +69,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		if (key == "coastal") {
 			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
 		}
+	}
+
+	if (key == "religion") {
+		return std::make_unique<religion_condition<scope_type>>(value, condition_operator);
+	} else if (key == "religious_group") {
+		return std::make_unique<religious_group_condition<scope_type>>(value, condition_operator);
 	}
 
 	throw std::runtime_error("Invalid condition property: \"" + key + "\".");
