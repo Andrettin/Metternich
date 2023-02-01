@@ -60,6 +60,8 @@ boost::asio::awaitable<void> icon_image_provider::load_image(const std::string &
 			image::set_outline_color(image, selected_color);
 		} else if (state == "grayscale") {
 			image::apply_grayscale(image);
+		} else if (state == "green") {
+			image::apply_greenscale(image);
 		} else if (state != "small") {
 			assert_throw(false);
 		}
