@@ -39,6 +39,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string NOTIFY traits_changed)
 	Q_PROPERTY(QString province_modifier_string READ get_province_modifier_string NOTIFY traits_changed)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
+	Q_PROPERTY(int prestige READ get_prestige NOTIFY prestige_changed)
 
 public:
 	explicit character_game_data(const metternich::character *character);
@@ -187,6 +188,27 @@ public:
 		this->set_wealth(this->get_wealth() + change);
 	}
 
+	int get_prestige() const
+	{
+		return this->prestige;
+	}
+
+	void set_prestige(const int prestige)
+	{
+		if (prestige == this->get_prestige()) {
+			return;
+		}
+
+		this->prestige = prestige;
+
+		emit prestige_changed();
+	}
+
+	void change_prestige(const int change)
+	{
+		this->set_prestige(this->get_prestige() + change);
+	}
+
 signals:
 	void employer_changed();
 	void age_changed();
@@ -196,6 +218,7 @@ signals:
 	void landed_titles_changed();
 	void office_changed();
 	void wealth_changed();
+	void prestige_changed();
 
 private:
 	const metternich::character *character = nullptr;
@@ -206,6 +229,7 @@ private:
 	std::vector<const landed_title *> landed_titles;
 	const metternich::office *office = nullptr;
 	int wealth = 0;
+	int prestige = 0;
 };
 
 }
