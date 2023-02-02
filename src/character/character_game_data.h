@@ -1,6 +1,7 @@
 #pragma once
 
 #include "script/scripted_modifier_container.h"
+#include "util/fractional_int.h"
 
 namespace metternich {
 
@@ -39,7 +40,8 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string NOTIFY traits_changed)
 	Q_PROPERTY(QString province_modifier_string READ get_province_modifier_string NOTIFY traits_changed)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
-	Q_PROPERTY(int prestige READ get_prestige NOTIFY prestige_changed)
+	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
+	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
 
 public:
 	explicit character_game_data(const metternich::character *character);
@@ -188,12 +190,17 @@ public:
 		this->set_wealth(this->get_wealth() + change);
 	}
 
-	int get_prestige() const
+	const centesimal_int &get_prestige() const
 	{
 		return this->prestige;
 	}
 
-	void set_prestige(const int prestige)
+	int get_prestige_int() const
+	{
+		return this->prestige.to_int();
+	}
+
+	void set_prestige(const centesimal_int &prestige)
 	{
 		if (prestige == this->get_prestige()) {
 			return;
@@ -204,9 +211,35 @@ public:
 		emit prestige_changed();
 	}
 
-	void change_prestige(const int change)
+	void change_prestige(const centesimal_int &change)
 	{
 		this->set_prestige(this->get_prestige() + change);
+	}
+
+	const centesimal_int &get_piety() const
+	{
+		return this->piety;
+	}
+
+	int get_piety_int() const
+	{
+		return this->get_piety().to_int();
+	}
+
+	void set_piety(const centesimal_int &piety)
+	{
+		if (piety == this->get_piety()) {
+			return;
+		}
+
+		this->piety = piety;
+
+		emit piety_changed();
+	}
+
+	void change_piety(const centesimal_int &change)
+	{
+		this->set_piety(this->get_piety() + change);
 	}
 
 signals:
@@ -219,6 +252,7 @@ signals:
 	void office_changed();
 	void wealth_changed();
 	void prestige_changed();
+	void piety_changed();
 
 private:
 	const metternich::character *character = nullptr;
@@ -229,7 +263,8 @@ private:
 	std::vector<const landed_title *> landed_titles;
 	const metternich::office *office = nullptr;
 	int wealth = 0;
-	int prestige = 0;
+	centesimal_int prestige;
+	centesimal_int piety;
 };
 
 }

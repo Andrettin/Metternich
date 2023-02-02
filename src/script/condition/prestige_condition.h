@@ -22,7 +22,7 @@ public:
 
 	virtual int get_scope_value(const character *scope) const override
 	{
-		return scope->get_game_data()->get_prestige();
+		return scope->get_game_data()->get_prestige_int();
 	}
 
 	virtual const char *get_value_name() const override
