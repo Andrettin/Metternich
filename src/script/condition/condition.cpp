@@ -24,6 +24,7 @@
 #include "script/condition/prestige_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
+#include "script/condition/scripted_modifier_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
 #include "util/string_util.h"
@@ -52,6 +53,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<piety_condition>(value, condition_operator);
 		} else if (key == "prestige") {
 			return std::make_unique<prestige_condition>(value, condition_operator);
+		} else if (key == "scripted_modifier") {
+			return std::make_unique<scripted_modifier_condition<character>>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
 		}
