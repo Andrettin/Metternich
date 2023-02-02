@@ -55,6 +55,14 @@ void character_game_data::on_game_started()
 
 void character_game_data::do_turn()
 {
+	if (this->get_seasonal_prestige() != 0) {
+		this->change_prestige(this->get_seasonal_prestige());
+	}
+
+	if (this->get_seasonal_piety() != 0) {
+		this->change_piety(this->get_seasonal_piety());
+	}
+
 	this->decrement_scripted_modifiers();
 	this->do_events();
 }
