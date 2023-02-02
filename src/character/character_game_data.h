@@ -242,6 +242,26 @@ public:
 		this->set_piety(this->get_piety() + change);
 	}
 
+	const centesimal_int &get_seasonal_prestige() const
+	{
+		return this->seasonal_prestige;
+	}
+
+	void change_seasonal_prestige(const centesimal_int &change)
+	{
+		this->seasonal_prestige += change;
+	}
+
+	const centesimal_int &get_seasonal_piety() const
+	{
+		return this->seasonal_piety;
+	}
+
+	void change_seasonal_piety(const centesimal_int &change)
+	{
+		this->seasonal_piety += change;
+	}
+
 signals:
 	void employer_changed();
 	void age_changed();
@@ -265,6 +285,8 @@ private:
 	int wealth = 0;
 	centesimal_int prestige;
 	centesimal_int piety;
+	centesimal_int seasonal_prestige;
+	centesimal_int seasonal_piety;
 };
 
 }
