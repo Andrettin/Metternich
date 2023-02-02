@@ -7,28 +7,28 @@
 
 namespace metternich {
 
-class land_morale_loss_reduction_modifier_effect final : public modifier_effect<const country>
+class land_morale_resistance_modifier_effect final : public modifier_effect<const country>
 {
 public:
-	explicit land_morale_loss_reduction_modifier_effect(const std::string &value)
+	explicit land_morale_resistance_modifier_effect(const std::string &value)
 	{
 		this->quantity = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "land_morale_loss_reduction";
+		static const std::string identifier = "land_morale_resistance";
 		return identifier;
 	}
 
 	virtual void apply(const country *scope, const int multiplier) const override
 	{
-		scope->get_game_data()->change_land_morale_loss_reduction(this->quantity * multiplier);
+		scope->get_game_data()->change_land_morale_resistance(this->quantity * multiplier);
 	}
 
 	virtual std::string get_string(const int multiplier) const override
 	{
-		return "Land Morale Loss Reduction: " + number::to_signed_string(this->quantity * multiplier) + "%";
+		return "Land Morale Resistance: " + number::to_signed_string(this->quantity * multiplier) + "%";
 	}
 
 private:

@@ -4,8 +4,8 @@
 #include "character/character.h"
 #include "database/gsml_property.h"
 #include "script/modifier_effect/attribute_modifier_effect.h"
-#include "script/modifier_effect/land_morale_loss_reduction_modifier_effect.h"
-#include "script/modifier_effect/naval_morale_loss_reduction_modifier_effect.h"
+#include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
+#include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 
 namespace metternich {
 
@@ -20,10 +20,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<attribute_modifier_effect>(enum_converter<attribute>::to_enum(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
-		if (key == "land_morale_loss_reduction") {
-			return std::make_unique<land_morale_loss_reduction_modifier_effect>(value);
-		} else if (key == "naval_morale_loss_reduction") {
-			return std::make_unique<naval_morale_loss_reduction_modifier_effect>(value);
+		if (key == "land_morale_resistance") {
+			return std::make_unique<land_morale_resistance_modifier_effect>(value);
+		} else if (key == "naval_morale_resistance") {
+			return std::make_unique<naval_morale_resistance_modifier_effect>(value);
 		}
 	}
 

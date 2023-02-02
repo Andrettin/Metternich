@@ -7,28 +7,28 @@
 
 namespace metternich {
 
-class naval_morale_loss_reduction_modifier_effect final : public modifier_effect<const country>
+class naval_morale_resistance_modifier_effect final : public modifier_effect<const country>
 {
 public:
-	explicit naval_morale_loss_reduction_modifier_effect(const std::string &value)
+	explicit naval_morale_resistance_modifier_effect(const std::string &value)
 	{
 		this->quantity = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "naval_morale_loss_reduction";
+		static const std::string identifier = "naval_morale_resistance";
 		return identifier;
 	}
 
 	virtual void apply(const country *scope, const int multiplier) const override
 	{
-		scope->get_game_data()->change_naval_morale_loss_reduction(this->quantity * multiplier);
+		scope->get_game_data()->change_naval_morale_resistance(this->quantity * multiplier);
 	}
 
 	virtual std::string get_string(const int multiplier) const override
 	{
-		return "Naval Morale Loss Reduction: " + number::to_signed_string(this->quantity * multiplier) + "%";
+		return "Naval Morale Resistance: " + number::to_signed_string(this->quantity * multiplier) + "%";
 	}
 
 private:

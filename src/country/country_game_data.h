@@ -510,24 +510,24 @@ public:
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
 
-	int get_land_morale_loss_reduction() const
+	int get_land_morale_resistance() const
 	{
-		return this->land_morale_loss_reduction;
+		return this->land_morale_resistance;
 	}
 
-	void change_land_morale_loss_reduction(const int change)
+	void change_land_morale_resistance(const int change)
 	{
-		this->land_morale_loss_reduction += change;
+		this->land_morale_resistance += change;
 	}
 
-	int get_naval_morale_loss_reduction() const
+	int get_naval_morale_resistance() const
 	{
-		return this->naval_morale_loss_reduction;
+		return this->naval_morale_resistance;
 	}
 
-	void change_naval_morale_loss_reduction(const int change)
+	void change_naval_morale_resistance(const int change)
 	{
-		this->naval_morale_loss_reduction += change;
+		this->naval_morale_resistance += change;
 	}
 
 signals:
@@ -593,8 +593,8 @@ private:
 	const character *ruler = nullptr;
 	office_map<const character *> office_characters;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
-	int land_morale_loss_reduction = 0;
-	int naval_morale_loss_reduction = 0;
+	int land_morale_resistance = 0;
+	int naval_morale_resistance = 0;
 };
 
 }
