@@ -100,6 +100,11 @@ public:
 		return false;
 	}
 
+	gsml_operator get_operator() const
+	{
+		return this->effect_operator;
+	}
+
 private:
 	gsml_operator effect_operator;
 };

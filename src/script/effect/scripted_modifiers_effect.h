@@ -40,6 +40,34 @@ public:
 			this->modifier = scripted_modifier_type::get(value);
 		} else if (key == "duration") {
 			this->duration = std::stoi(value);
+		} else if (key == "days") {
+			const int value_int = std::stoi(value);
+			this->duration = value_int / 30 / defines::get()->get_months_per_turn();
+
+			if (value_int > 0) {
+				this->duration = std::max(1, duration);
+			}
+		} else if (key == "months") {
+			const int value_int = std::stoi(value);
+			this->duration = value_int / defines::get()->get_months_per_turn();
+
+			if (value_int > 0) {
+				this->duration = std::max(1, duration);
+			}
+		} else if (key == "years") {
+			const int value_int = std::stoi(value);
+			this->duration = value_int * 12 / defines::get()->get_months_per_turn();
+
+			if (value_int > 0) {
+				this->duration = std::max(1, duration);
+			}
+		}
+	}
+
+	virtual void check() const override
+	{
+		if (this->get_operator() == gsml_operator::addition && this->duration == 0) {
+			throw std::runtime_error("Add scripted modifier effect has no duration.");
 		}
 	}
 
