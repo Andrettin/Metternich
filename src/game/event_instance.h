@@ -12,6 +12,7 @@ class event_instance final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::event* event READ get_event_unconst CONSTANT)
 	Q_PROPERTY(QString name READ get_name CONSTANT)
 	Q_PROPERTY(QString description READ get_description CONSTANT)
 	Q_PROPERTY(QStringList option_names READ get_option_names CONSTANT)
@@ -20,6 +21,14 @@ class event_instance final : public QObject
 public:
 	explicit event_instance(const metternich::event *event, const QString &name, const QString &description, const context &ctx);
 
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::event *get_event_unconst() const
+	{
+		return const_cast<metternich::event *>(this->event);
+	}
+
+public:
 	const QString &get_name() const
 	{
 		return this->name;

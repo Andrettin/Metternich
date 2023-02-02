@@ -41,6 +41,7 @@ public:
 
 	virtual void check() const override
 	{
+		event::check();
 		scoped_event_base::check();
 	}
 
