@@ -62,6 +62,8 @@ boost::asio::awaitable<void> icon_image_provider::load_image(const std::string &
 			image::apply_grayscale(image);
 		} else if (state == "green") {
 			image::apply_greenscale(image);
+		} else if (state == "red") {
+			image::apply_redscale(image);
 		} else if (state != "small") {
 			assert_throw(false);
 		}
