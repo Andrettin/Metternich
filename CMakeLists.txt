@@ -385,6 +385,7 @@ set(script_condition_HDRS
 	src/script/condition/condition.h
 	src/script/condition/core_condition.h
 	src/script/condition/country_type_condition.h
+	src/script/condition/gender_condition.h
 	src/script/condition/has_country_office_condition.h
 	src/script/condition/has_province_office_condition.h
 	src/script/condition/is_ruler_condition.h

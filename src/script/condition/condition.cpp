@@ -14,6 +14,7 @@
 #include "script/condition/coastal_condition.h"
 #include "script/condition/core_condition.h"
 #include "script/condition/country_type_condition.h"
+#include "script/condition/gender_condition.h"
 #include "script/condition/has_country_office_condition.h"
 #include "script/condition/has_province_office_condition.h"
 #include "script/condition/is_ruler_condition.h"
@@ -43,6 +44,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<age_condition>(value, condition_operator);
 		} else if (key == "character_type") {
 			return std::make_unique<character_type_condition>(value, condition_operator);
+		} else if (key == "gender") {
+			return std::make_unique<gender_condition>(value, condition_operator);
 		} else if (key == "has_country_office") {
 			return std::make_unique<has_country_office_condition>(value, condition_operator);
 		} else if (key == "has_province_office") {
