@@ -7,28 +7,28 @@
 
 namespace metternich {
 
-class seasonal_piety_modifier_effect final : public modifier_effect<const character>
+class quarterly_prestige_modifier_effect final : public modifier_effect<const character>
 {
 public:
-	explicit seasonal_piety_modifier_effect(const std::string &value)
+	explicit quarterly_prestige_modifier_effect(const std::string &value)
 	{
 		this->quantity = centesimal_int(value);
 	}
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "seasonal_piety";
+		static const std::string identifier = "quarterly_prestige";
 		return identifier;
 	}
 
 	virtual void apply(const character *scope, const int multiplier) const override
 	{
-		scope->get_game_data()->change_seasonal_piety(this->quantity * multiplier);
+		scope->get_game_data()->change_quarterly_prestige(this->quantity * multiplier);
 	}
 
 	virtual std::string get_string(const int multiplier) const override
 	{
-		return "Seasonal Piety: " + (this->quantity * multiplier).to_signed_string();
+		return "Quarterly Prestige: " + (this->quantity * multiplier).to_signed_string();
 	}
 
 private:

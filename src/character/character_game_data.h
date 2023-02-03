@@ -250,24 +250,24 @@ public:
 		this->set_piety(this->get_piety() + change);
 	}
 
-	const centesimal_int &get_seasonal_prestige() const
+	const centesimal_int &get_quarterly_prestige() const
 	{
-		return this->seasonal_prestige;
+		return this->quarterly_prestige;
 	}
 
-	void change_seasonal_prestige(const centesimal_int &change)
+	void change_quarterly_prestige(const centesimal_int &change)
 	{
-		this->seasonal_prestige += change;
+		this->quarterly_prestige += change;
 	}
 
-	const centesimal_int &get_seasonal_piety() const
+	const centesimal_int &get_quarterly_piety() const
 	{
-		return this->seasonal_piety;
+		return this->quarterly_piety;
 	}
 
-	void change_seasonal_piety(const centesimal_int &change)
+	void change_quarterly_piety(const centesimal_int &change)
 	{
-		this->seasonal_piety += change;
+		this->quarterly_piety += change;
 	}
 
 signals:
@@ -294,8 +294,8 @@ private:
 	int wealth = 0;
 	centesimal_int prestige;
 	centesimal_int piety;
-	centesimal_int seasonal_prestige;
-	centesimal_int seasonal_piety;
+	centesimal_int quarterly_prestige;
+	centesimal_int quarterly_piety;
 };
 
 }
