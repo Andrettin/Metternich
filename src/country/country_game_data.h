@@ -489,6 +489,11 @@ private:
 public:
 	void set_ruler(const character *ruler);
 
+	const office_map<const character *> &get_office_characters() const
+	{
+		return this->office_characters;
+	}
+
 	const character *get_office_character(const office *office) const
 	{
 		const auto find_iterator = this->office_characters.find(office);
