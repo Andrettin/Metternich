@@ -7,7 +7,8 @@
 
 namespace metternich {
 
-class quarterly_prestige_modifier_effect final : public modifier_effect<const character>
+template <typename scope_type>
+class quarterly_prestige_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
 	explicit quarterly_prestige_modifier_effect(const std::string &value)
@@ -21,7 +22,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const character *scope, const int multiplier) const override
+	virtual void apply(const scope_type *scope, const int multiplier) const override
 	{
 		scope->get_game_data()->change_quarterly_prestige(this->quantity * multiplier);
 	}

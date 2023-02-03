@@ -18,11 +18,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	const std::string &value = property.get_value();
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (key == "quarterly_piety") {
-			return std::make_unique<quarterly_piety_modifier_effect>(value);
-		} else if (key == "quarterly_prestige") {
-			return std::make_unique<quarterly_prestige_modifier_effect>(value);
-		} else if (enum_converter<attribute>::has_value(key)) {
+		if (enum_converter<attribute>::has_value(key)) {
 			return std::make_unique<attribute_modifier_effect>(enum_converter<attribute>::to_enum(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
@@ -30,6 +26,14 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<land_morale_resistance_modifier_effect>(value);
 		} else if (key == "naval_morale_resistance") {
 			return std::make_unique<naval_morale_resistance_modifier_effect>(value);
+		}
+	}
+	
+	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
+		if (key == "quarterly_piety") {
+			return std::make_unique<quarterly_piety_modifier_effect<scope_type>>(value);
+		} else if (key == "quarterly_prestige") {
+			return std::make_unique<quarterly_prestige_modifier_effect<scope_type>>(value);
 		}
 	}
 

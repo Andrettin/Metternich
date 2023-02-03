@@ -255,20 +255,14 @@ public:
 		return this->quarterly_prestige;
 	}
 
-	void change_quarterly_prestige(const centesimal_int &change)
-	{
-		this->quarterly_prestige += change;
-	}
+	void change_quarterly_prestige(const centesimal_int &change);
 
 	const centesimal_int &get_quarterly_piety() const
 	{
 		return this->quarterly_piety;
 	}
 
-	void change_quarterly_piety(const centesimal_int &change)
-	{
-		this->quarterly_piety += change;
-	}
+	void change_quarterly_piety(const centesimal_int &change);
 
 signals:
 	void titled_name_changed();

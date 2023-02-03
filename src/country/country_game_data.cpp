@@ -59,6 +59,14 @@ country_game_data::~country_game_data()
 
 void country_game_data::do_turn()
 {
+	if (this->get_quarterly_prestige() != 0) {
+		this->change_prestige(this->get_quarterly_prestige());
+	}
+
+	if (this->get_quarterly_piety() != 0) {
+		this->change_piety(this->get_quarterly_piety());
+	}
+
 	this->do_migration();
 
 	for (const province *province : this->get_provinces()) {
@@ -1449,7 +1457,7 @@ void country_game_data::set_ruler(const character *ruler)
 	}
 
 	if (this->get_ruler() != nullptr) {
-		this->get_ruler()->get_game_data()->apply_country_modifier(this->country, -1);
+		this->apply_ruler_effects(-1);
 	}
 
 	this->ruler = ruler;
@@ -1458,7 +1466,7 @@ void country_game_data::set_ruler(const character *ruler)
 	this->country->get_title()->get_game_data()->set_holder(this->ruler);
 
 	if (this->get_ruler() != nullptr) {
-		this->get_ruler()->get_game_data()->apply_country_modifier(this->country, 1);
+		this->apply_ruler_effects(1);
 	}
 
 	this->sort_characters();
@@ -1466,6 +1474,17 @@ void country_game_data::set_ruler(const character *ruler)
 	if (game::get()->is_running()) {
 		emit ruler_changed();
 	}
+}
+
+void country_game_data::apply_ruler_effects(const int multiplier)
+{
+	assert_throw(this->get_ruler() != nullptr);
+
+	character_game_data *ruler_game_data = this->get_ruler()->get_game_data();
+
+	ruler_game_data->apply_country_modifier(this->country, multiplier);
+	this->change_quarterly_prestige(ruler_game_data->get_quarterly_prestige() * multiplier);
+	this->change_quarterly_piety(ruler_game_data->get_quarterly_piety() * multiplier);
 }
 
 QObject *country_game_data::get_office_character(metternich::office *office_param) const

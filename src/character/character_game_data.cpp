@@ -459,4 +459,22 @@ void character_game_data::apply_province_modifier(const province *province, cons
 	}
 }
 
+void character_game_data::change_quarterly_prestige(const centesimal_int &change)
+{
+	this->quarterly_prestige += change;
+
+	if (this->is_ruler()) {
+		this->get_employer()->get_game_data()->change_quarterly_prestige(change);
+	}
+}
+
+void character_game_data::change_quarterly_piety(const centesimal_int &change)
+{
+	this->quarterly_piety += change;
+
+	if (this->is_ruler()) {
+		this->get_employer()->get_game_data()->change_quarterly_piety(change);
+	}
+}
+
 }
