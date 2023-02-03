@@ -22,6 +22,7 @@ class character_game_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY titled_name_changed)
 	Q_PROPERTY(metternich::country* employer READ get_employer_unconst NOTIFY employer_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(int primary_attribute_value READ get_primary_attribute_value NOTIFY attributes_changed)
@@ -50,6 +51,13 @@ public:
 
 	void do_turn();
 	void do_events();
+
+	std::string get_titled_name() const;
+
+	QString get_titled_name_qstring() const
+	{
+		return QString::fromStdString(this->get_titled_name());
+	}
 
 	const metternich::country *get_employer() const
 	{
@@ -263,6 +271,7 @@ public:
 	}
 
 signals:
+	void titled_name_changed();
 	void employer_changed();
 	void age_changed();
 	void traits_changed();

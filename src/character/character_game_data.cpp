@@ -5,11 +5,13 @@
 #include "character/attribute.h"
 #include "character/character.h"
 #include "character/character_type.h"
+#include "character/office.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/landed_title.h"
+#include "country/landed_title_game_data.h"
 #include "database/defines.h"
 #include "game/character_event.h"
 #include "game/event_trigger.h"
@@ -27,6 +29,8 @@ namespace metternich {
 
 character_game_data::character_game_data(const metternich::character *character) : character(character)
 {
+	connect(this, &character_game_data::landed_titles_changed, this, &character_game_data::titled_name_changed);
+	connect(this, &character_game_data::office_changed, this, &character_game_data::titled_name_changed);
 	connect(game::get(), &game::turn_changed, this, &character_game_data::age_changed);
 }
 
@@ -76,6 +80,20 @@ void character_game_data::do_events()
 	}
 
 	character_event::check_events_for_scope(this->character, event_trigger::quarterly_pulse);
+}
+
+std::string character_game_data::get_titled_name() const
+{
+	if (!this->is_ruler() && this->get_office() == nullptr) {
+		return this->character->get_full_name();
+	}
+
+	if (this->is_ruler()) {
+		//FIXME: for republics, the format should be similar to that of offices
+		return this->get_employer()->get_title()->get_game_data()->get_ruler_title_name() + " " + this->character->get_name();
+	} else {
+		return this->get_office()->get_name() + " " + this->character->get_surname();
+	}
 }
 
 void character_game_data::set_employer(const metternich::country *employer)
