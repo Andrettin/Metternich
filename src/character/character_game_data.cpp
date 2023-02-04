@@ -21,6 +21,7 @@
 #include "script/scripted_character_modifier.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -141,7 +142,8 @@ void character_game_data::add_trait(const trait *trait)
 	const read_only_context ctx = read_only_context::from_scope(this->character);
 
 	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, ctx)) {
-		throw std::runtime_error("Tried to add trait \"" + trait->get_identifier() + "\" to character \"" + this->character->get_identifier() + "\", for which the trait's conditions are not fulfilled.");
+		log::log_error("Tried to add trait \"" + trait->get_identifier() + "\" to character \"" + this->character->get_identifier() + "\", for which the trait's conditions are not fulfilled.");
+		return;
 	}
 
 	this->traits.push_back(trait);
