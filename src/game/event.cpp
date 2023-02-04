@@ -4,6 +4,7 @@
 
 #include "engine_interface.h"
 #include "game/event_instance.h"
+#include "game/event_random_group.h"
 #include "game/event_trigger.h"
 
 namespace metternich {
@@ -26,6 +27,15 @@ void event::process_gsml_property(const gsml_property &property)
 		this->set_random_weight(std::stoi(value));
 	} else {
 		data_entry::process_gsml_property(property);
+	}
+}
+
+void event::initialize()
+{
+	if (this->get_random_group() != nullptr) {
+		if (!this->is_random()) {
+			this->set_random(true);
+		}
 	}
 }
 

@@ -68,7 +68,8 @@ public:
 	static bool is_player_scope(const scope_type *scope);
 
 	static void check_events_for_scope(const scope_type *scope, const event_trigger trigger);
-	static void check_random_events_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx);
+	static void check_random_events_for_scope(const scope_type *scope, const read_only_context &ctx, const std::vector<const scoped_event_base *> &potential_events);
+	static void check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx);
 
 private:
 	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_events;
@@ -83,6 +84,7 @@ public:
 	void check() const;
 
 	virtual event_trigger get_trigger() const = 0;
+	virtual event_random_group *get_random_group() const = 0;
 
 	bool is_random() const
 	{

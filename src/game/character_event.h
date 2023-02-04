@@ -50,6 +50,11 @@ public:
 		return event::get_trigger();
 	}
 
+	virtual event_random_group *get_random_group() const
+	{
+		return event::get_random_group();
+	}
+
 	virtual bool is_random() const override
 	{
 		return scoped_event_base::is_random();

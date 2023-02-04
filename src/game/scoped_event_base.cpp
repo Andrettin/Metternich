@@ -7,6 +7,7 @@
 #include "database/database.h"
 #include "database/gsml_data.h"
 #include "game/event_option.h"
+#include "game/event_random_group.h"
 #include "game/game.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
@@ -51,15 +52,16 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 		event->fire(scope, context::from_scope(scope));
 	}
 
-	scoped_event_base::check_random_events_for_scope(scope, trigger, ctx);
+	scoped_event_base::check_random_events_for_scope(scope, ctx, scoped_event_base::get_trigger_random_events(trigger));
+	scoped_event_base::check_random_event_groups_for_scope(scope, trigger, ctx);
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx)
+void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_type *scope, const read_only_context &ctx, const std::vector<const scoped_event_base *> &potential_events)
 {
 	std::vector<const scoped_event_base *> random_events;
 
-	for (const scoped_event_base *event : scoped_event_base::get_trigger_random_events(trigger)) {
+	for (const scoped_event_base *event : potential_events) {
 		if (event == nullptr) {
 			random_events.push_back(event);
 			continue;
@@ -86,6 +88,19 @@ void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_ty
 		}
 
 		std::erase(random_events, event);
+	}
+}
+
+template <typename scope_type>
+void scoped_event_base<scope_type>::check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx)
+{
+	for (const event_random_group *random_group : event_random_group::get_all_of_trigger(trigger)) {
+		const std::vector<const scoped_event_base *> &potential_events = random_group->get_events<scope_type>();
+		if (potential_events.empty()) {
+			continue;
+		}
+
+		scoped_event_base::check_random_events_for_scope(scope, ctx, potential_events);
 	}
 }
 
@@ -126,7 +141,9 @@ bool scoped_event_base<scope_type>::process_gsml_scope(const gsml_data &scope)
 template <typename scope_type>
 void scoped_event_base<scope_type>::initialize()
 {
-	if (this->get_trigger() != event_trigger::none) {
+	if (this->get_random_group() != nullptr) {
+		this->get_random_group()->add_event(this);
+	} else if (this->get_trigger() != event_trigger::none) {
 		if (this->is_random()) {
 			scoped_event_base::trigger_random_events[this->get_trigger()].push_back(this);
 		} else {

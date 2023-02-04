@@ -5,6 +5,7 @@
 
 namespace metternich {
 
+class event_random_group;
 class icon;
 enum class event_trigger;
 struct context;
@@ -17,6 +18,7 @@ class event : public named_data_entry
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::event_trigger trigger MEMBER trigger READ get_trigger)
+	Q_PROPERTY(metternich::event_random_group* random_group MEMBER random_group)
 	Q_PROPERTY(bool random READ is_random WRITE set_random)
 
 public:
@@ -26,6 +28,7 @@ public:
 	explicit event(const std::string &identifier);
 
 	virtual void process_gsml_property(const gsml_property &property) override;
+	virtual void initialize() override;
 
 	const std::string &get_description() const
 	{
@@ -45,6 +48,11 @@ public:
 	event_trigger get_trigger() const
 	{
 		return this->trigger;
+	}
+
+	event_random_group *get_random_group() const
+	{
+		return this->random_group;
 	}
 
 	virtual bool is_random() const = 0;
@@ -79,6 +87,7 @@ private:
 	std::string description;
 	icon *portrait = nullptr;
 	event_trigger trigger;
+	event_random_group *random_group = nullptr;
 };
 
 }

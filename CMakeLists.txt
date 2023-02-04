@@ -74,6 +74,7 @@ set(game_SRCS
 	src/game/event.cpp
 	src/game/event_instance.cpp
 	src/game/event_option.cpp
+	src/game/event_random_group.cpp
 	src/game/event_trigger.cpp
 	src/game/game.cpp
 	src/game/scenario.cpp
@@ -301,6 +302,7 @@ set(game_HDRS
 	src/game/event.h
 	src/game/event_instance.h
 	src/game/event_option.h
+	src/game/event_random_group.h
 	src/game/event_trigger.h
 	src/game/game.h
 	src/game/scenario.h
