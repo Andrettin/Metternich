@@ -38,7 +38,7 @@ public:
 		return this->get_scope_value(scope) > this->value;
 	}
 
-	virtual const char *get_value_name() const = 0;
+	virtual std::string get_value_name() const = 0;
 
 	virtual std::string get_assignment_string(const size_t indent) const override
 	{

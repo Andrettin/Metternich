@@ -25,7 +25,7 @@ public:
 		return scope->get_game_data()->get_age();
 	}
 
-	virtual const char *get_value_name() const override
+	virtual std::string get_value_name() const override
 	{
 		return "years old";
 	}

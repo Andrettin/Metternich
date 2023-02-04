@@ -24,7 +24,7 @@ public:
 		return scope->get_game_data()->get_prestige_int();
 	}
 
-	virtual const char *get_value_name() const override
+	virtual std::string get_value_name() const override
 	{
 		return "Prestige";
 	}
