@@ -415,6 +415,7 @@ set(script_effect_HDRS
 	src/script/effect/effect.h
 	src/script/effect/effect_list.h
 	src/script/effect/scripted_modifiers_effect.h
+	src/script/effect/tooltip_effect.h
 	src/script/effect/traits_effect.h
 	src/script/effect/wealth_effect.h
 )

@@ -8,6 +8,7 @@
 #include "country/country_game_data.h"
 #include "database/database.h"
 #include "script/effect/scripted_modifiers_effect.h"
+#include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
 #include "script/effect/wealth_effect.h"
 #include "util/assert_util.h"
@@ -36,6 +37,10 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		}
 	}
 
+	if (key == "tooltip") {
+		return std::make_unique<tooltip_effect<scope_type>>(value, effect_operator);
+	}
+
 	throw std::runtime_error("Invalid property effect: \"" + key + "\".");
 }
 
@@ -50,6 +55,10 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		if (effect_identifier == "scripted_modifiers") {
 			effect = std::make_unique<scripted_modifiers_effect<scope_type>>(effect_operator);
 		}
+	}
+
+	if (effect_identifier == "tooltip") {
+		effect = std::make_unique<tooltip_effect<scope_type>>(effect_operator);
 	}
 
 	if (effect == nullptr) {
