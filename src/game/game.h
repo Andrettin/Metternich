@@ -2,13 +2,22 @@
 
 #include "util/singleton.h"
 
+namespace archimedes {
+	class gsml_data;
+	class gsml_property;
+}
+
 namespace metternich {
 
+class character;
 class country;
 class era;
 class province;
 class scenario;
 struct population_group_key;
+
+template <typename scope_type>
+class delayed_effect_instance;
 
 class game final : public QObject, public singleton<game>
 {
@@ -25,6 +34,12 @@ public:
 	static QDateTime normalize_date(const QDateTime &date);
 
 	game();
+	~game();
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	bool is_running() const
 	{
@@ -115,6 +130,31 @@ public:
 
 	void create_diplomatic_map_image();
 
+	void process_delayed_effects();
+
+private:
+	template <typename scope_type>
+	void process_delayed_effects(std::vector<std::unique_ptr<delayed_effect_instance<scope_type>>> &delayed_effects)
+	{
+		for (size_t i = 0; i < delayed_effects.size();) {
+			const std::unique_ptr<delayed_effect_instance<scope_type>> &delayed_effect = delayed_effects[i];
+			delayed_effect->decrement_remaining_turns();
+
+			if (delayed_effect->get_remaining_turns() <= 0) {
+				delayed_effect->do_effects();
+				delayed_effects.erase(delayed_effects.begin() + i);
+			} else {
+				++i;
+			}
+		}
+	}
+
+public:
+	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const character>> &&delayed_effect);
+	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const country>> &&delayed_effect);
+
+	void clear_delayed_effects();
+
 signals:
 	void running_changed();
 	void setup_finished();
@@ -130,6 +170,8 @@ private:
 	std::vector<const country *> countries; //the countries currently in the game, i.e. those with at least 1 province
 	std::vector<const country *> great_powers;
 	country *player_country = nullptr;
+	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;
+	std::vector<std::unique_ptr<delayed_effect_instance<const country>>> country_delayed_effects;
 };
 
 }

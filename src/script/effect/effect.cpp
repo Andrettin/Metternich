@@ -7,6 +7,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "database/database.h"
+#include "script/effect/delayed_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
@@ -54,6 +55,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		if (effect_identifier == "scripted_modifiers") {
 			effect = std::make_unique<scripted_modifiers_effect<scope_type>>(effect_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
+		if (effect_identifier == "delayed") {
+			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
 		}
 	}
 

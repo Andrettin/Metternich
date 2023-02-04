@@ -163,6 +163,7 @@ source_group(script\\condition FILES ${script_condition_SRCS})
 set_source_files_properties(${script_condition_SRCS} PROPERTIES UNITY_GROUP "script_condition")
 
 set(script_effect_SRCS
+	src/script/effect/delayed_effect_instance.cpp
 	src/script/effect/effect.cpp
 	src/script/effect/effect_list.cpp
 )
@@ -414,6 +415,8 @@ set(script_condition_HDRS
 source_group(script\\condition FILES ${script_condition_HDRS})
 
 set(script_effect_HDRS
+	src/script/effect/delayed_effect.h
+	src/script/effect/delayed_effect_instance.h
 	src/script/effect/effect.h
 	src/script/effect/effect_list.h
 	src/script/effect/scripted_modifiers_effect.h

@@ -20,9 +20,9 @@ namespace metternich {
 template <typename scope_type>
 const scope_type *scoped_event_base<scope_type>::get_scope_from_context(const read_only_context &ctx)
 {
-	if constexpr (std::is_same_v<scope_type, character>) {
+	if constexpr (std::is_same_v<scope_type, const character>) {
 		return ctx.current_character;
-	} else if constexpr (std::is_same_v<scope_type, country>) {
+	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		return ctx.current_country;
 	}
 }
@@ -30,9 +30,9 @@ const scope_type *scoped_event_base<scope_type>::get_scope_from_context(const re
 template <typename scope_type>
 bool scoped_event_base<scope_type>::is_player_scope(const scope_type *scope)
 {
-	if constexpr (std::is_same_v<scope_type, character>) {
+	if constexpr (std::is_same_v<scope_type, const character>) {
 		return scope == game::get()->get_player_country()->get_game_data()->get_ruler();
-	} else if constexpr (std::is_same_v<scope_type, country>) {
+	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		return scope == game::get()->get_player_country();
 	}
 }
@@ -120,11 +120,11 @@ bool scoped_event_base<scope_type>::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "random_weight_factor") {
-		this->random_weight_factor = std::make_unique<factor<scope_type>>();
+		this->random_weight_factor = std::make_unique<factor<std::remove_const_t<scope_type>>>();
 		database::process_gsml_data(this->random_weight_factor, scope);
 		return true;
 	} else if (tag == "conditions") {
-		auto conditions = std::make_unique<and_condition<scope_type>>();
+		auto conditions = std::make_unique<and_condition<std::remove_const_t<scope_type>>>();
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
 		return true;
@@ -168,7 +168,7 @@ template <typename scope_type>
 void scoped_event_base<scope_type>::set_random_weight(const int weight)
 {
 	if (weight != 0) {
-		this->random_weight_factor = std::make_unique<factor<scope_type>>(weight);
+		this->random_weight_factor = std::make_unique<factor<std::remove_const_t<scope_type>>>(weight);
 	} else {
 		this->random_weight_factor.reset();
 	}
@@ -177,7 +177,7 @@ void scoped_event_base<scope_type>::set_random_weight(const int weight)
 template <typename scope_type>
 bool scoped_event_base<scope_type>::is_option_available(const int option_index, const read_only_context &ctx) const
 {
-	const condition<scope_type> *conditions = this->get_options().at(option_index)->get_conditions();
+	const condition<std::remove_const_t<scope_type>> *conditions = this->get_options().at(option_index)->get_conditions();
 
 	if (conditions == nullptr) {
 		return true;
@@ -218,7 +218,7 @@ void scoped_event_base<scope_type>::fire(const scope_type *scope, const context 
 	}
 }
 
-template class scoped_event_base<character>;
-template class scoped_event_base<country>;
+template class scoped_event_base<const character>;
+template class scoped_event_base<const country>;
 
 }

@@ -58,19 +58,19 @@ public:
 	template <typename scope_type>
 	const std::vector<const scoped_event_base<scope_type> *> &get_events() const
 	{
-		if constexpr (std::is_same_v<scope_type, character>) {
+		if constexpr (std::is_same_v<scope_type, const character>) {
 			return this->character_events;
-		} else if constexpr (std::is_same_v<scope_type, country>) {
+		} else if constexpr (std::is_same_v<scope_type, const country>) {
 			return this->country_events;
 		}
 	}
 
-	void add_event(const scoped_event_base<character> *event)
+	void add_event(const scoped_event_base<const character> *event)
 	{
 		this->character_events.push_back(event);
 	}
 
-	void add_event(const scoped_event_base<country> *event)
+	void add_event(const scoped_event_base<const country> *event)
 	{
 		this->country_events.push_back(event);
 	}
@@ -78,8 +78,8 @@ public:
 private:
 	event_trigger trigger;
 	int none_weight = 0;
-	std::vector<const scoped_event_base<character> *> character_events;
-	std::vector<const scoped_event_base<country> *> country_events;
+	std::vector<const scoped_event_base<const character> *> character_events;
+	std::vector<const scoped_event_base<const country> *> country_events;
 };
 
 }

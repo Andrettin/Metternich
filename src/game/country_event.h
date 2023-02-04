@@ -7,7 +7,7 @@ namespace metternich {
 
 class country;
 
-class country_event final : public event, public data_type<country_event>, public scoped_event_base<country>
+class country_event final : public event, public data_type<country_event>, public scoped_event_base<const country>
 {
 	Q_OBJECT
 
@@ -43,6 +43,16 @@ public:
 	{
 		event::check();
 		scoped_event_base::check();
+	}
+
+	virtual const std::string &get_identifier() const override
+	{
+		return event::get_identifier();
+	}
+
+	virtual const std::string &get_name() const override
+	{
+		return event::get_name();
 	}
 
 	virtual event_trigger get_trigger() const override

@@ -83,6 +83,9 @@ public:
 	void initialize();
 	void check() const;
 
+	virtual const std::string &get_identifier() const = 0;
+	virtual const std::string &get_name() const = 0;
+
 	virtual event_trigger get_trigger() const = 0;
 	virtual event_random_group *get_random_group() const = 0;
 
@@ -93,12 +96,12 @@ public:
 
 	void set_random_weight(const int weight);
 
-	const factor<scope_type> *get_random_weight_factor() const
+	const factor<std::remove_const_t<scope_type>> *get_random_weight_factor() const
 	{
 		return this->random_weight_factor.get();
 	}
 
-	const condition<scope_type> *get_conditions() const
+	const condition<std::remove_const_t<scope_type>> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -122,12 +125,12 @@ public:
 	virtual void create_instance(const context &ctx) const = 0;
 
 private:
-	std::unique_ptr<factor<scope_type>> random_weight_factor;
-	std::unique_ptr<const condition<scope_type>> conditions;
+	std::unique_ptr<factor<std::remove_const_t<scope_type>>> random_weight_factor;
+	std::unique_ptr<const condition<std::remove_const_t<scope_type>>> conditions;
 	std::vector<std::unique_ptr<event_option<scope_type>>> options;
 };
 
-extern template class scoped_event_base<character>;
-extern template class scoped_event_base<country>;
+extern template class scoped_event_base<const character>;
+extern template class scoped_event_base<const country>;
 
 }

@@ -51,10 +51,10 @@ void event_option<scope_type>::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "conditions") {
-		this->conditions = std::make_unique<and_condition<scope_type>>();
+		this->conditions = std::make_unique<and_condition<std::remove_const_t<scope_type>>>();
 		database::process_gsml_data(this->conditions, scope);
 	} else if (tag == "effects") {
-		this->effects = std::make_unique<effect_list<const scope_type>>();
+		this->effects = std::make_unique<effect_list<scope_type>>();
 		database::process_gsml_data(this->effects, scope);
 	} else {
 		throw std::runtime_error("Invalid event option scope: \"" + tag + "\".");
@@ -85,7 +85,7 @@ std::string event_option<scope_type>::get_tooltip(const read_only_context &ctx) 
 		string::replace(str, "\n", ", ");
 	}
 
-	if constexpr (std::is_same_v<scope_type, character>) {
+	if constexpr (std::is_same_v<scope_type, const character>) {
 		assert_throw(ctx.current_character != nullptr);
 
 		if (!str.empty()) {
@@ -106,10 +106,12 @@ std::string event_option<scope_type>::get_effects_string(const read_only_context
 	if (this->effects != nullptr) {
 		const scope_type *scope = nullptr;
 
-		if constexpr (std::is_same_v<scope_type, character>) {
+		if constexpr (std::is_same_v<scope_type, const character>) {
 			scope = ctx.current_character;
-		} else if constexpr (std::is_same_v<scope_type, country>) {
+		} else if constexpr (std::is_same_v<scope_type, const country>) {
 			scope = ctx.current_country;
+		} else {
+			assert_throw(false);
 		}
 
 		assert_throw(scope != nullptr);
@@ -121,14 +123,14 @@ std::string event_option<scope_type>::get_effects_string(const read_only_context
 }
 
 template <typename scope_type>
-void event_option<scope_type>::do_effects(const scope_type *scope, context &ctx) const
+void event_option<scope_type>::do_effects(scope_type *scope, context &ctx) const
 {
 	if (this->effects != nullptr) {
 		this->effects->do_effects(scope, ctx);
 	}
 }
 
-template class event_option<character>;
-template class event_option<country>;
+template class event_option<const character>;
+template class event_option<const country>;
 
 }

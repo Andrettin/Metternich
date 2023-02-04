@@ -42,24 +42,24 @@ public:
 		return this->ai_weight;
 	}
 
-	const condition<scope_type> *get_conditions() const
+	const condition<std::remove_const_t<scope_type>> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
 
 	std::string get_effects_string(const read_only_context &ctx) const;
-	void do_effects(const scope_type *scope, context &ctx) const;
+	void do_effects(scope_type *scope, context &ctx) const;
 
 private:
 	std::string name;
 	std::string tooltip;
 	const trait *tooltip_info_trait = nullptr;
 	int ai_weight = 1;
-	std::unique_ptr<condition<scope_type>> conditions;
-	std::unique_ptr<effect_list<const scope_type>> effects;
+	std::unique_ptr<condition<std::remove_const_t<scope_type>>> conditions;
+	std::unique_ptr<effect_list<scope_type>> effects;
 };
 
-extern template class event_option<character>;
-extern template class event_option<country>;
+extern template class event_option<const character>;
+extern template class event_option<const country>;
 
 }

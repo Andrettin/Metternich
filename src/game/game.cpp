@@ -14,6 +14,8 @@
 #include "country/landed_title_game_data.h"
 #include "country/landed_title_tier.h"
 #include "database/defines.h"
+#include "database/gsml_data.h"
+#include "database/gsml_property.h"
 #include "database/preferences.h"
 #include "game/scenario.h"
 #include "infrastructure/building_class.h"
@@ -32,6 +34,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "script/condition/condition.h"
+#include "script/effect/delayed_effect_instance.h"
 #include "time/era.h"
 #include "unit/civilian_unit.h"
 #include "unit/historical_civilian_unit.h"
@@ -70,6 +73,61 @@ QDateTime game::normalize_date(const QDateTime &date)
 
 game::game()
 {
+}
+
+game::~game()
+{
+}
+
+void game::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+
+	throw std::runtime_error("Invalid game data property: \"" + key + "\".");
+}
+
+void game::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "character_delayed_effects") {
+		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
+			auto delayed_effect = std::make_unique<delayed_effect_instance<const character>>();
+			database::process_gsml_data(delayed_effect, delayed_effect_data);
+			this->add_delayed_effect(std::move(delayed_effect));
+		});
+	} else if (tag == "country_delayed_effects") {
+		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
+			auto delayed_effect = std::make_unique<delayed_effect_instance<const country>>();
+			database::process_gsml_data(delayed_effect, delayed_effect_data);
+			this->add_delayed_effect(std::move(delayed_effect));
+		});
+	} else {
+		throw std::runtime_error("Invalid game data scope: \"" + scope.get_tag() + "\".");
+	}
+}
+
+gsml_data game::to_gsml_data() const
+{
+	gsml_data data;
+
+	if (!this->character_delayed_effects.empty()) {
+		gsml_data delayed_effects_data("character_delayed_effects");
+		for (const auto &delayed_effect : this->character_delayed_effects) {
+			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
+		}
+		data.add_child(std::move(delayed_effects_data));
+	}
+
+	if (!this->country_delayed_effects.empty()) {
+		gsml_data delayed_effects_data("country_delayed_effects");
+		for (const auto &delayed_effect : this->country_delayed_effects) {
+			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
+		}
+		data.add_child(std::move(delayed_effects_data));
+	}
+
+	return data;
 }
 
 void game::create_random_map(const QSize &map_size, metternich::era *era)
@@ -152,6 +210,8 @@ void game::stop()
 void game::clear()
 {
 	try {
+		this->clear_delayed_effects();
+
 		for (const province *province : province::get_all()) {
 			province_game_data *province_game_data = province->get_game_data();
 			province_game_data->reset_non_map_data();
@@ -599,6 +659,8 @@ void game::on_setup_finished()
 
 void game::do_turn()
 {
+	this->process_delayed_effects();
+
 	for (const country *country : this->get_countries()) {
 		if (country == this->get_player_country()) {
 			continue;
@@ -727,6 +789,28 @@ void game::create_diplomatic_map_image()
 			co_await std::move(awaitable);
 		}
 	});
+}
+
+void game::process_delayed_effects()
+{
+	this->process_delayed_effects(this->character_delayed_effects);
+	this->process_delayed_effects(this->country_delayed_effects);
+}
+
+void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const character>> &&delayed_effect)
+{
+	this->character_delayed_effects.push_back(std::move(delayed_effect));
+}
+
+void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const country>> &&delayed_effect)
+{
+	this->country_delayed_effects.push_back(std::move(delayed_effect));
+}
+
+void game::clear_delayed_effects()
+{
+	this->character_delayed_effects.clear();
+	this->country_delayed_effects.clear();
 }
 
 }
