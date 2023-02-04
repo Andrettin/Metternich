@@ -1372,6 +1372,8 @@ void country_game_data::check_characters(const QDateTime &date)
 			this->set_office_character(office, nullptr);
 		}
 	}
+
+	this->fill_empty_offices();
 }
 
 void country_game_data::add_character(const character *character)
@@ -1557,6 +1559,43 @@ std::vector<const office *> country_game_data::get_offices() const
 QVariantList country_game_data::get_offices_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_offices());
+}
+
+void country_game_data::fill_empty_offices()
+{
+	const std::vector<const office *> offices = this->get_offices();
+
+	for (const office *office : offices) {
+		if (this->get_office_character(office) != nullptr) {
+			continue;
+		}
+
+		int best_skill = 0;
+		std::vector<const character *> potential_characters;
+
+		for (const character *character : this->get_characters()) {
+			const int skill = character->get_game_data()->get_primary_attribute_value();
+
+			if (skill < best_skill) {
+				continue;
+			}
+
+			if (office->get_character_conditions() != nullptr && !office->get_character_conditions()->check(character, read_only_context::from_scope(character))) {
+				continue;
+			}
+
+			if (skill > best_skill) {
+				best_skill = skill;
+				potential_characters.clear();
+			}
+
+			potential_characters.push_back(character);
+		}
+
+		if (!potential_characters.empty()) {
+			this->set_office_character(office, vector::get_random(potential_characters));
+		}
+	}
 }
 
 void country_game_data::add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit)

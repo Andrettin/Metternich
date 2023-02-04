@@ -567,6 +567,7 @@ public:
 
 	std::vector<const office *> get_offices() const;
 	QVariantList get_offices_qvariant_list() const;
+	void fill_empty_offices();
 
 	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
