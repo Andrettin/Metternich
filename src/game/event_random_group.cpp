@@ -14,6 +14,18 @@ event_random_group::event_random_group(const std::string &identifier)
 {
 }
 
+void event_random_group::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "delay_days") {
+		this->delay = std::stoi(value) / 30 / defines::get()->get_months_per_turn();
+	} else {
+		data_entry::process_gsml_property(property);
+	}
+}
+
 void event_random_group::initialize()
 {
 	event_random_group::groups_by_trigger[this->get_trigger()].push_back(this);

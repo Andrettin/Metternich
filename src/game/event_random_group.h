@@ -18,6 +18,7 @@ class event_random_group final : public named_data_entry, public data_type<event
 
 	Q_PROPERTY(metternich::event_trigger trigger MEMBER trigger READ get_trigger)
 	Q_PROPERTY(int none_weight MEMBER none_weight READ get_none_weight)
+	Q_PROPERTY(int delay MEMBER delay READ get_delay)
 
 public:
 	static const std::vector<event_random_group *> &get_all_of_trigger(const event_trigger trigger)
@@ -42,6 +43,7 @@ public:
 
 	explicit event_random_group(const std::string &identifier);
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -53,6 +55,11 @@ public:
 	int get_none_weight() const
 	{
 		return this->none_weight;
+	}
+
+	int get_delay() const
+	{
+		return this->delay;
 	}
 
 	template <typename scope_type>
@@ -78,6 +85,7 @@ public:
 private:
 	event_trigger trigger;
 	int none_weight = 0;
+	int delay = 0;
 	std::vector<const scoped_event_base<const character> *> character_events;
 	std::vector<const scoped_event_base<const country> *> country_events;
 };

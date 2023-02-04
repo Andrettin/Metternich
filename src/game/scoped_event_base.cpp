@@ -11,6 +11,7 @@
 #include "game/game.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
+#include "script/effect/delayed_effect_instance.h"
 #include "script/factor.h"
 #include "util/assert_util.h"
 #include "util/vector_random_util.h"
@@ -52,12 +53,12 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 		event->fire(scope, context::from_scope(scope));
 	}
 
-	scoped_event_base::check_random_events_for_scope(scope, ctx, scoped_event_base::get_trigger_random_events(trigger));
+	scoped_event_base::check_random_events_for_scope(scope, ctx, scoped_event_base::get_trigger_random_events(trigger), 0);
 	scoped_event_base::check_random_event_groups_for_scope(scope, trigger, ctx);
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_type *scope, const read_only_context &ctx, const std::vector<const scoped_event_base *> &potential_events)
+void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_type *scope, const read_only_context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay)
 {
 	std::vector<const scoped_event_base *> random_events;
 
@@ -83,7 +84,14 @@ void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_ty
 		}
 
 		if (event->get_conditions() == nullptr || event->get_conditions()->check(scope, ctx)) {
-			event->fire(scope, context::from_scope(scope));
+			const context event_ctx = context::from_scope(scope);
+
+			if (delay > 0) {
+				auto delayed_effect = std::make_unique<delayed_effect_instance<scope_type>>(event, scope, event_ctx, delay);
+				game::get()->add_delayed_effect(std::move(delayed_effect));
+			} else {
+				event->fire(scope, event_ctx);
+			}
 			break;
 		}
 
@@ -100,7 +108,7 @@ void scoped_event_base<scope_type>::check_random_event_groups_for_scope(const sc
 			continue;
 		}
 
-		scoped_event_base::check_random_events_for_scope(scope, ctx, potential_events);
+		scoped_event_base::check_random_events_for_scope(scope, ctx, potential_events, random_group->get_delay());
 	}
 }
 
