@@ -12,6 +12,7 @@
 #include "script/condition/and_condition.h"
 #include "script/condition/any_advisor_condition.h"
 #include "script/condition/attribute_condition.h"
+#include "script/condition/can_have_trait_condition.h"
 #include "script/condition/character_type_condition.h"
 #include "script/condition/coastal_condition.h"
 #include "script/condition/core_condition.h"
@@ -45,6 +46,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	if constexpr (std::is_same_v<scope_type, character>) {
 		if (key == "age") {
 			return std::make_unique<age_condition>(value, condition_operator);
+		} else if (key == "can_have_trait") {
+			return std::make_unique<can_have_trait_condition>(value, condition_operator);
 		} else if (key == "character_type") {
 			return std::make_unique<character_type_condition>(value, condition_operator);
 		} else if (key == "gender") {
