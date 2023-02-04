@@ -16,6 +16,7 @@
 #include "script/condition/character_type_condition.h"
 #include "script/condition/coastal_condition.h"
 #include "script/condition/core_condition.h"
+#include "script/condition/country_condition.h"
 #include "script/condition/country_type_condition.h"
 #include "script/condition/gender_condition.h"
 #include "script/condition/has_country_office_condition.h"
@@ -32,6 +33,7 @@
 #include "script/condition/scripted_modifier_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
+#include "script/condition/year_condition.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -66,7 +68,9 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<attribute_condition>(enum_converter<attribute>::to_enum(key), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, country>) {
-		if (key == "country_type") {
+		if (key == "country") {
+			return std::make_unique<country_condition>(value, condition_operator);
+		} else if (key == "country_type") {
 			return std::make_unique<country_type_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, province>) {
@@ -97,6 +101,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		return std::make_unique<religious_group_condition<scope_type>>(value, condition_operator);
 	} else if (key == "scripted_condition") {
 		return std::make_unique<scripted_condition_condition<scope_type>>(value, condition_operator);
+	} else if (key == "year") {
+		return std::make_unique<year_condition<scope_type>>(value, condition_operator);
 	}
 
 	throw std::runtime_error("Invalid condition property: \"" + key + "\".");

@@ -391,6 +391,7 @@ set(script_condition_HDRS
 	src/script/condition/coastal_condition.h
 	src/script/condition/condition.h
 	src/script/condition/core_condition.h
+	src/script/condition/country_condition.h
 	src/script/condition/country_type_condition.h
 	src/script/condition/gender_condition.h
 	src/script/condition/has_country_office_condition.h
@@ -411,6 +412,7 @@ set(script_condition_HDRS
 	src/script/condition/scripted_condition_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
+	src/script/condition/year_condition.h
 )
 source_group(script\\condition FILES ${script_condition_HDRS})
 
