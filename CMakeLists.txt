@@ -156,6 +156,7 @@ set(script_condition_SRCS
 	src/script/condition/condition.cpp
 	src/script/condition/not_condition.cpp
 	src/script/condition/or_condition.cpp
+	src/script/condition/scripted_condition.cpp
 )
 source_group(script\\condition FILES ${script_condition_SRCS})
 set_source_files_properties(${script_condition_SRCS} PROPERTIES UNITY_GROUP "script_condition")
@@ -401,6 +402,8 @@ set(script_condition_HDRS
 	src/script/condition/scripted_modifier_condition.h
 	src/script/condition/scope_condition.h
 	src/script/condition/scope_condition_base.h
+	src/script/condition/scripted_condition.h
+	src/script/condition/scripted_condition_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
 )

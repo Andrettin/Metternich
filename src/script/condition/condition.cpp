@@ -26,6 +26,7 @@
 #include "script/condition/prestige_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
+#include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
@@ -88,6 +89,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		return std::make_unique<religion_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religious_group") {
 		return std::make_unique<religious_group_condition<scope_type>>(value, condition_operator);
+	} else if (key == "scripted_condition") {
+		return std::make_unique<scripted_condition_condition<scope_type>>(value, condition_operator);
 	}
 
 	throw std::runtime_error("Invalid condition property: \"" + key + "\".");
