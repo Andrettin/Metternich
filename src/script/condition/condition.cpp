@@ -18,6 +18,7 @@
 #include "script/condition/commodity_condition.h"
 #include "script/condition/core_condition.h"
 #include "script/condition/country_condition.h"
+#include "script/condition/country_exists_condition.h"
 #include "script/condition/country_type_condition.h"
 #include "script/condition/gender_condition.h"
 #include "script/condition/has_country_office_condition.h"
@@ -101,7 +102,9 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		}
 	}
 
-	if (key == "religion") {
+	if (key == "country_exists") {
+		return std::make_unique<country_exists_condition<scope_type>>(value, condition_operator);
+	} else if (key == "religion") {
 		return std::make_unique<religion_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religious_group") {
 		return std::make_unique<religious_group_condition<scope_type>>(value, condition_operator);
