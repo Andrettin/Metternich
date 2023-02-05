@@ -43,11 +43,9 @@ bool scoped_event_base<scope_type>::is_player_scope(const scope_type *scope)
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger)
+void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx)
 {
 	assert_throw(trigger != event_trigger::none);
-
-	const read_only_context ctx = read_only_context::from_scope(scope);
 
 	for (const scoped_event_base *event : scoped_event_base::get_trigger_events(trigger)) {
 		if (!event->can_fire(scope, ctx)) {
@@ -63,6 +61,12 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 	if (trigger == event_trigger::quarterly_pulse) {
 		scoped_event_base::check_mtth_events_for_scope(scope);
 	}
+}
+
+template <typename scope_type>
+void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger)
+{
+	scoped_event_base<scope_type>::check_events_for_scope(scope, trigger, read_only_context::from_scope(scope));
 }
 
 template <typename scope_type>

@@ -1336,18 +1336,22 @@ QVariantList country_game_data::get_characters_qvariant_list() const
 
 void country_game_data::check_characters(const QDateTime &date)
 {
-	for (size_t i = 0; i < this->get_characters().size();) {
-		const character *character = this->get_characters().at(0);
+	const std::vector<const character *> characters = this->get_characters();
+	for (const character *character : characters) {
 		const metternich::country *home_province_owner = character->get_home_province()->get_game_data()->get_owner();
 
 		if (game::get()->get_date() >= character->get_end_date()) {
+			if (character->get_game_data()->is_ruler()) {
+				read_only_context ctx = read_only_context::from_scope(this->country);
+				ctx.current_character = character;
+				country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
+			}
+
 			this->remove_character(character);
 		} else if (home_province_owner != this->country) {
 			//if we lost their home province, move the character to the province's new owner
 			this->remove_character(character);
 			home_province_owner->get_game_data()->add_character(character);
-		} else {
-			++i;
 		}
 	}
 
