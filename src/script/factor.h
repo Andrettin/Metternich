@@ -1,5 +1,7 @@
 #pragma once
 
+#include "util/fractional_int.h"
+
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;
@@ -28,10 +30,15 @@ public:
 	void process_gsml_scope(const gsml_data &scope);
 	void check() const;
 
-	int calculate(const scope_type *scope) const;
+	void set_base_value(centesimal_int &&value)
+	{
+		this->base_value = std::move(value);
+	}
+
+	centesimal_int calculate(const scope_type *scope) const;
 
 private:
-	int base_value = 0; //the base value for the factor
+	centesimal_int base_value; //the base value for the factor
 	std::vector<std::unique_ptr<factor_modifier<scope_type>>> modifiers; //modifiers for the factor
 };
 

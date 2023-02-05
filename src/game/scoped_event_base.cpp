@@ -68,7 +68,7 @@ void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_ty
 			continue;
 		}
 
-		const int weight = event->get_random_weight_factor()->calculate(scope);
+		const int weight = event->get_random_weight_factor()->calculate(scope).to_int();
 
 		for (int i = 0; i < weight; ++i) {
 			random_events.push_back(event);

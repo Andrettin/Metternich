@@ -16,7 +16,7 @@ factor<scope_type>::factor()
 }
 
 template <typename scope_type>
-factor<scope_type>::factor(const int base_value) : base_value(base_value)
+factor<scope_type>::factor(const int base_value) : base_value(centesimal_int(base_value))
 {
 }
 
@@ -34,7 +34,7 @@ void factor<scope_type>::process_gsml_property(const gsml_property &property)
 
 	if (key == "base_value") {
 		if (gsml_operator == gsml_operator::assignment) {
-			this->base_value = std::stoi(value);
+			this->base_value = centesimal_int(value);
 		} else {
 			throw std::runtime_error("Invalid operator for property \"" + key + "\".");
 		}
@@ -70,14 +70,14 @@ void factor<scope_type>::check() const
 }
 
 template <typename scope_type>
-int factor<scope_type>::calculate(const scope_type *scope) const
+centesimal_int factor<scope_type>::calculate(const scope_type *scope) const
 {
-	int value = this->base_value;
+	centesimal_int value = this->base_value;
 
 	if (scope != nullptr) {
 		for (const std::unique_ptr<factor_modifier<scope_type>> &modifier : this->modifiers) {
 			if (modifier->check_conditions(scope)) {
-				value = (value * modifier->get_factor()).to_int();
+				value *= modifier->get_factor();
 			}
 		}
 	}
