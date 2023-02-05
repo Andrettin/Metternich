@@ -3,14 +3,19 @@
 #include "population/population_unit.h"
 
 #include "country/culture.h"
+#include "country/ideology.h"
 #include "country/religion.h"
 #include "economy/commodity.h"
 #include "economy/employment_type.h"
+#include "game/game.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "population/population_type.h"
+#include "script/condition/condition.h"
+#include "script/factor.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
+#include "util/vector_random_util.h"
 
 namespace metternich {
 
@@ -126,6 +131,27 @@ bool population_unit::produces_food() const
 	return false;
 }
 
+void population_unit::choose_ideology()
+{
+	std::vector<const metternich::ideology *> potential_ideologies;
+
+	for (const metternich::ideology *ideology : ideology::get_all()) {
+		if (ideology->get_conditions() != nullptr && !ideology->get_conditions()->check(this, read_only_context::from_scope(this))) {
+			continue;
+		}
+
+		const int weight = ideology->get_weight_factor()->calculate(this).to_int();
+
+		for (int i = 0; i < weight; ++i) {
+			potential_ideologies.push_back(ideology);
+		}
+	}
+
+	if (!potential_ideologies.empty()) {
+		this->set_ideology(vector::get_random(potential_ideologies));
+	}
+}
+
 void population_unit::set_consciousness(const centesimal_int &consciousness)
 {
 	if (consciousness == this->get_consciousness()) {
@@ -142,7 +168,12 @@ void population_unit::set_consciousness(const centesimal_int &consciousness)
 
 	this->consciousness = consciousness;
 
-	this->get_province()->get_game_data()->change_total_consciousness(consciousness - old_consciousness);
+	const centesimal_int change = consciousness - old_consciousness;
+	this->get_province()->get_game_data()->change_total_consciousness(change);
+
+	if (game::get()->is_running() && change.to_int() > 0) {
+		this->choose_ideology();
+	}
 }
 
 void population_unit::set_militancy(const centesimal_int &militancy)
@@ -161,7 +192,12 @@ void population_unit::set_militancy(const centesimal_int &militancy)
 
 	this->militancy = militancy;
 
-	this->get_province()->get_game_data()->change_total_militancy(militancy - old_militancy);
+	const centesimal_int change = militancy - old_militancy;
+	this->get_province()->get_game_data()->change_total_militancy(change);
+
+	if (game::get()->is_running() && change.to_int() > 0) {
+		this->choose_ideology();
+	}
 }
 
 void population_unit::migrate_to(const metternich::province *province)

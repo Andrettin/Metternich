@@ -156,6 +156,8 @@ public:
 		this->ideology = ideology;
 	}
 
+	void choose_ideology();
+
 	const centesimal_int &get_consciousness() const
 	{
 		return this->consciousness;
