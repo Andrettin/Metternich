@@ -46,11 +46,11 @@ public:
 		} else if (key == "delay") {
 			this->delay = std::stoi(value);
 		} else if (key == "delay_days") {
-			this->delay = std::stoi(value) / 30 / defines::get()->get_months_per_turn();
+			this->delay = defines::get()->days_to_turns(std::stoi(value)).to_int();
 		} else if (key == "random_delay") {
 			this->random_delay = std::stoi(value);
 		} else if (key == "random_delay_days") {
-			this->random_delay = std::stoi(value) / 30 / defines::get()->get_months_per_turn();
+			this->random_delay = defines::get()->days_to_turns(std::stoi(value)).to_int();
 		} else {
 			effect<scope_type>::process_gsml_property(property);
 		}

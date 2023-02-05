@@ -2,6 +2,7 @@
 
 #include "database/defines_base.h"
 #include "map/terrain_adjacency.h"
+#include "util/fractional_int.h"
 #include "util/singleton.h"
 
 namespace metternich {
@@ -74,6 +75,21 @@ public:
 	int get_months_per_turn() const
 	{
 		return this->months_per_turn;
+	}
+
+	centesimal_int days_to_turns(const int days) const
+	{
+		return centesimal_int(days) / 30 / this->get_months_per_turn();
+	}
+
+	centesimal_int months_to_turns(const int months) const
+	{
+		return centesimal_int(months) / this->get_months_per_turn();
+	}
+
+	centesimal_int years_to_turns(const int years) const
+	{
+		return this->months_to_turns(years * 12);
 	}
 
 	const QDateTime &get_default_start_date() const

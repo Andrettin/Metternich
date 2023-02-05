@@ -42,21 +42,21 @@ public:
 			this->duration = std::stoi(value);
 		} else if (key == "days") {
 			const int value_int = std::stoi(value);
-			this->duration = value_int / 30 / defines::get()->get_months_per_turn();
+			this->duration = defines::get()->days_to_turns(value_int).to_int();
 
 			if (value_int > 0) {
 				this->duration = std::max(1, duration);
 			}
 		} else if (key == "months") {
 			const int value_int = std::stoi(value);
-			this->duration = value_int / defines::get()->get_months_per_turn();
+			this->duration = defines::get()->months_to_turns(value_int).to_int();
 
 			if (value_int > 0) {
 				this->duration = std::max(1, duration);
 			}
 		} else if (key == "years") {
 			const int value_int = std::stoi(value);
-			this->duration = value_int * 12 / defines::get()->get_months_per_turn();
+			this->duration = defines::get()->years_to_turns(value_int).to_int();
 
 			if (value_int > 0) {
 				this->duration = std::max(1, duration);

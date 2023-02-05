@@ -20,7 +20,7 @@ void event_random_group::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "delay_days") {
-		this->delay = std::stoi(value) / 30 / defines::get()->get_months_per_turn();
+		this->delay = defines::get()->days_to_turns(std::stoi(value)).to_int();
 	} else {
 		data_entry::process_gsml_property(property);
 	}
