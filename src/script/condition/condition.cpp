@@ -25,6 +25,7 @@
 #include "script/condition/gender_condition.h"
 #include "script/condition/has_country_office_condition.h"
 #include "script/condition/has_province_office_condition.h"
+#include "script/condition/ideology_condition.h"
 #include "script/condition/is_ruler_condition.h"
 #include "script/condition/location_condition.h"
 #include "script/condition/not_condition.h"
@@ -84,6 +85,10 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<technology_condition>(value, condition_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+		if (key == "ideology") {
+			return std::make_unique<ideology_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, province>) {
 		if (key == "core") {
