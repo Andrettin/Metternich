@@ -398,6 +398,7 @@ set(script_condition_HDRS
 	src/script/condition/country_exists_condition.h
 	src/script/condition/country_type_condition.h
 	src/script/condition/culture_condition.h
+	src/script/condition/current_character_condition.h
 	src/script/condition/gender_condition.h
 	src/script/condition/has_country_office_condition.h
 	src/script/condition/has_province_office_condition.h
@@ -406,6 +407,7 @@ set(script_condition_HDRS
 	src/script/condition/not_condition.h
 	src/script/condition/numerical_condition.h
 	src/script/condition/or_condition.h
+	src/script/condition/owns_province_condition.h
 	src/script/condition/piety_condition.h
 	src/script/condition/prestige_condition.h
 	src/script/condition/religion_condition.h

@@ -21,6 +21,7 @@
 #include "script/condition/country_exists_condition.h"
 #include "script/condition/country_type_condition.h"
 #include "script/condition/culture_condition.h"
+#include "script/condition/current_character_condition.h"
 #include "script/condition/gender_condition.h"
 #include "script/condition/has_country_office_condition.h"
 #include "script/condition/has_province_office_condition.h"
@@ -28,6 +29,7 @@
 #include "script/condition/location_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
+#include "script/condition/owns_province_condition.h"
 #include "script/condition/piety_condition.h"
 #include "script/condition/prestige_condition.h"
 #include "script/condition/religion_condition.h"
@@ -76,6 +78,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<country_condition>(value, condition_operator);
 		} else if (key == "country_type") {
 			return std::make_unique<country_type_condition>(value, condition_operator);
+		} else if (key == "owns_province") {
+			return std::make_unique<owns_province_condition>(value, condition_operator);
 		} else if (key == "technology") {
 			return std::make_unique<technology_condition>(value, condition_operator);
 		} else if (commodity::try_get(key) != nullptr) {
@@ -107,6 +111,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		return std::make_unique<country_exists_condition<scope_type>>(value, condition_operator);
 	} else if (key == "culture") {
 		return std::make_unique<culture_condition<scope_type>>(value, condition_operator);
+	} else if (key == "current_character") {
+		return std::make_unique<current_character_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religion") {
 		return std::make_unique<religion_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religious_group") {
