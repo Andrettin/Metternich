@@ -487,6 +487,8 @@ void province_game_data::add_population_unit(qunique_ptr<population_unit> &&popu
 	this->change_population_religion_count(population_unit->get_religion(), 1);
 	this->change_population_phenotype_count(population_unit->get_phenotype(), 1);
 	this->change_population(defines::get()->get_population_per_unit());
+	this->change_total_consciousness(population_unit->get_consciousness());
+	this->change_total_militancy(population_unit->get_militancy());
 
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->add_population_unit(population_unit.get());
@@ -519,6 +521,8 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 			this->change_population_religion_count(population_unit->get_religion(), -1);
 			this->change_population_phenotype_count(population_unit->get_phenotype(), -1);
 			this->change_population(-defines::get()->get_population_per_unit());
+			this->change_total_consciousness(-population_unit->get_consciousness());
+			this->change_total_militancy(-population_unit->get_militancy());
 
 			if (game::get()->is_running()) {
 				emit population_units_changed();
@@ -550,6 +554,8 @@ void province_game_data::clear_population_units()
 	this->population_phenotype_counts.clear();
 	this->population = 0;
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
+	this->total_consciousness = centesimal_int(0);
+	this->total_militancy = centesimal_int(0);
 	this->civilian_units.clear();
 }
 
@@ -980,6 +986,42 @@ bool province_game_data::has_employment_for_worker(const population_unit *popula
 	}
 
 	return false;
+}
+
+int province_game_data::get_consciousness() const
+{
+	return (this->get_total_consciousness() / this->get_population_unit_count()).to_int();
+}
+
+void province_game_data::set_total_consciousness(const centesimal_int &consciousness)
+{
+	if (consciousness == this->get_total_consciousness()) {
+		return;
+	}
+
+	this->total_consciousness = consciousness;
+
+	if (game::get()->is_running()) {
+		emit consciousness_changed();
+	}
+}
+
+int province_game_data::get_militancy() const
+{
+	return (this->get_total_militancy() / this->get_population_unit_count()).to_int();
+}
+
+void province_game_data::set_total_militancy(const centesimal_int &militancy)
+{
+	if (militancy == this->get_total_militancy()) {
+		return;
+	}
+
+	this->total_militancy = militancy;
+
+	if (game::get()->is_running()) {
+		emit militancy_changed();
+	}
 }
 
 void province_game_data::change_score(const int change)
