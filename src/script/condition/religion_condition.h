@@ -44,7 +44,7 @@ public:
 	}
 
 private:
-	metternich::religion *religion = nullptr;
+	const metternich::religion *religion = nullptr;
 };
 
 }

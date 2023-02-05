@@ -50,7 +50,7 @@ public:
 	}
 
 private:
-	metternich::religious_group *religious_group = nullptr;
+	const metternich::religious_group *religious_group = nullptr;
 };
 
 }
