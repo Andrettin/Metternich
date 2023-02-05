@@ -22,6 +22,9 @@ template <typename scope_type>
 class factor;
 
 template <typename scope_type>
+class mean_time_to_happen;
+
+template <typename scope_type>
 class scoped_event_base
 {
 public:
@@ -70,10 +73,12 @@ public:
 	static void check_events_for_scope(const scope_type *scope, const event_trigger trigger);
 	static void check_random_events_for_scope(const scope_type *scope, const read_only_context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay);
 	static void check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx);
+	static void check_mtth_events_for_scope(const scope_type *scope);
 
 private:
 	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_events;
 	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_random_events;
+	static inline std::vector<const scoped_event_base *> mtth_events;
 
 public:
 	scoped_event_base();
@@ -101,6 +106,11 @@ public:
 		return this->random_weight_factor.get();
 	}
 
+	const metternich::mean_time_to_happen<std::remove_const_t<scope_type>> *get_mean_time_to_happen() const
+	{
+		return this->mean_time_to_happen.get();
+	}
+
 	const condition<std::remove_const_t<scope_type>> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -126,6 +136,7 @@ public:
 
 private:
 	std::unique_ptr<factor<std::remove_const_t<scope_type>>> random_weight_factor;
+	std::unique_ptr<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>> mean_time_to_happen;
 	std::unique_ptr<const condition<std::remove_const_t<scope_type>>> conditions;
 	std::vector<std::unique_ptr<event_option<scope_type>>> options;
 };

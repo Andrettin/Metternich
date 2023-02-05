@@ -8,12 +8,16 @@
 #include "database/gsml_data.h"
 #include "game/event_option.h"
 #include "game/event_random_group.h"
+#include "game/event_trigger.h"
 #include "game/game.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/delayed_effect_instance.h"
 #include "script/factor.h"
+#include "script/mean_time_to_happen.h"
 #include "util/assert_util.h"
+#include "util/fractional_int.h"
+#include "util/random.h"
 #include "util/vector_random_util.h"
 
 namespace metternich {
@@ -55,6 +59,10 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 
 	scoped_event_base::check_random_events_for_scope(scope, ctx, scoped_event_base::get_trigger_random_events(trigger), 0);
 	scoped_event_base::check_random_event_groups_for_scope(scope, trigger, ctx);
+
+	if (trigger == event_trigger::quarterly_pulse) {
+		scoped_event_base::check_mtth_events_for_scope(scope);
+	}
 }
 
 template <typename scope_type>
@@ -113,6 +121,32 @@ void scoped_event_base<scope_type>::check_random_event_groups_for_scope(const sc
 }
 
 template <typename scope_type>
+void scoped_event_base<scope_type>::check_mtth_events_for_scope(const scope_type *scope)
+{
+	const read_only_context ctx = read_only_context::from_scope(scope);
+
+	for (const scoped_event_base *event : scoped_event_base::mtth_events) {
+		if (event->get_conditions() != nullptr && !event->get_conditions()->check(scope, ctx)) {
+			continue;
+		}
+
+		const centesimal_int mtth = event->get_mean_time_to_happen()->calculate(scope);
+		bool should_fire = false;
+
+		if (mtth <= 1) {
+			should_fire = true;
+		} else {
+			const int fire_chance = (1 / mtth).get_value();
+			should_fire = random::get()->generate(100) < fire_chance;
+		}
+
+		if (should_fire) {
+			event->fire(scope, context::from_scope(scope));
+		}
+	}
+}
+
+template <typename scope_type>
 scoped_event_base<scope_type>::scoped_event_base()
 {
 }
@@ -130,6 +164,10 @@ bool scoped_event_base<scope_type>::process_gsml_scope(const gsml_data &scope)
 	if (tag == "random_weight_factor") {
 		this->random_weight_factor = std::make_unique<factor<std::remove_const_t<scope_type>>>();
 		database::process_gsml_data(this->random_weight_factor, scope);
+		return true;
+	} else if (tag == "mean_time_to_happen") {
+		this->mean_time_to_happen = std::make_unique<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>>();
+		database::process_gsml_data(this->mean_time_to_happen, scope);
 		return true;
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<std::remove_const_t<scope_type>>>();
@@ -157,12 +195,30 @@ void scoped_event_base<scope_type>::initialize()
 		} else {
 			scoped_event_base::trigger_events[this->get_trigger()].push_back(this);
 		}
+	} else if (this->get_mean_time_to_happen() != nullptr) {
+		scoped_event_base::mtth_events.push_back(this);
 	}
 }
 
 template <typename scope_type>
 void scoped_event_base<scope_type>::check() const
 {
+	if (this->get_random_weight_factor() != nullptr) {
+		this->get_random_weight_factor()->check();
+	}
+
+	if (this->get_mean_time_to_happen() != nullptr) {
+		this->get_mean_time_to_happen()->check();
+
+		if (this->get_trigger() != event_trigger::none) {
+			throw std::runtime_error("Event \"" + this->get_identifier() + "\" has both a mean time to happen and a trigger.");
+		}
+
+		if (this->get_random_group() != nullptr) {
+			throw std::runtime_error("Event \"" + this->get_identifier() + "\" has both a mean time to happen and a random group.");
+		}
+	}
+
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
 	}

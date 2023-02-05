@@ -145,6 +145,7 @@ set(script_SRCS
 	src/script/context.cpp
 	src/script/factor.cpp
 	src/script/factor_modifier.cpp
+	src/script/mean_time_to_happen.cpp
 	src/script/modifier.cpp
 	src/script/scripted_modifier_container.cpp
 	src/script/scripted_scoped_modifier.cpp
@@ -373,6 +374,7 @@ set(script_HDRS
 	src/script/context.h
 	src/script/factor.h
 	src/script/factor_modifier.h
+	src/script/mean_time_to_happen.h
 	src/script/modifier.h
 	src/script/scripted_character_modifier.h
 	src/script/scripted_modifier.h
