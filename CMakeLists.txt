@@ -389,6 +389,7 @@ set(script_condition_HDRS
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/character_type_condition.h
 	src/script/condition/coastal_condition.h
+	src/script/condition/commodity_condition.h
 	src/script/condition/condition.h
 	src/script/condition/core_condition.h
 	src/script/condition/country_condition.h
@@ -417,6 +418,7 @@ set(script_condition_HDRS
 source_group(script\\condition FILES ${script_condition_HDRS})
 
 set(script_effect_HDRS
+	src/script/effect/commodity_effect.h
 	src/script/effect/delayed_effect.h
 	src/script/effect/delayed_effect_instance.h
 	src/script/effect/effect.h
