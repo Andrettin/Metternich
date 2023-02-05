@@ -412,22 +412,22 @@ void character_game_data::set_office(const metternich::office *office)
 	}
 }
 
-QString character_game_data::get_country_modifier_string() const
+QString character_game_data::get_country_modifier_string(const unsigned indent) const
 {
 	if (this->character->get_type()->get_country_modifier() == nullptr) {
 		return QString();
 	}
 
-	return QString::fromStdString(this->character->get_type()->get_country_modifier()->get_string(this->get_primary_attribute_value()));
+	return QString::fromStdString(this->character->get_type()->get_country_modifier()->get_string(this->get_primary_attribute_value(), indent));
 }
 
-QString character_game_data::get_province_modifier_string() const
+QString character_game_data::get_province_modifier_string(const unsigned indent) const
 {
 	if (this->character->get_type()->get_province_modifier() == nullptr) {
 		return QString();
 	}
 
-	return QString::fromStdString(this->character->get_type()->get_province_modifier()->get_string(this->get_primary_attribute_value()));
+	return QString::fromStdString(this->character->get_type()->get_province_modifier()->get_string(this->get_primary_attribute_value(), indent));
 }
 
 void character_game_data::apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier)

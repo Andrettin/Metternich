@@ -38,8 +38,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList landed_titles READ get_landed_titles_qvariant_list NOTIFY landed_titles_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY landed_titles_changed)
 	Q_PROPERTY(metternich::office* office READ get_office_unconst NOTIFY office_changed)
-	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string NOTIFY traits_changed)
-	Q_PROPERTY(QString province_modifier_string READ get_province_modifier_string NOTIFY traits_changed)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
 	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
@@ -164,8 +162,8 @@ private:
 public:
 	void set_office(const metternich::office *office);
 
-	QString get_country_modifier_string() const;
-	QString get_province_modifier_string() const;
+	Q_INVOKABLE QString get_country_modifier_string(const unsigned indent) const;
+	Q_INVOKABLE QString get_province_modifier_string(const unsigned indent) const;
 
 	void apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier = 1);
 
