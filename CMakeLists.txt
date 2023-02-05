@@ -413,6 +413,7 @@ set(script_condition_HDRS
 	src/script/condition/scope_condition_base.h
 	src/script/condition/scripted_condition.h
 	src/script/condition/scripted_condition_condition.h
+	src/script/condition/technology_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
 	src/script/condition/year_condition.h

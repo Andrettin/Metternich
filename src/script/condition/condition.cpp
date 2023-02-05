@@ -32,6 +32,7 @@
 #include "script/condition/religious_group_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
+#include "script/condition/technology_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
 #include "script/condition/year_condition.h"
@@ -73,6 +74,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<country_condition>(value, condition_operator);
 		} else if (key == "country_type") {
 			return std::make_unique<country_type_condition>(value, condition_operator);
+		} else if (key == "technology") {
+			return std::make_unique<technology_condition>(value, condition_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		}
