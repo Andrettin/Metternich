@@ -277,8 +277,23 @@ void scoped_event_base<scope_type>::fire(const scope_type *scope, const context 
 	if (scoped_event_base::is_player_scope(scope)) {
 		this->create_instance(ctx);
 	} else {
-		//the event doesn't need to be displayed for AIs; instead, it should be processed immediately
-		return;
+		//the event doesn't need to be displayed for AIs; instead, it is processed immediately
+		//pick a random option out of the available ones
+		std::vector<const event_option<scope_type> *> options;
+
+		for (const std::unique_ptr<event_option<scope_type>> &option : this->get_options()) {
+			if (option->get_conditions() != nullptr && !option->get_conditions()->check(scope, ctx)) {
+				continue;
+			}
+
+			options.push_back(option.get());
+		}
+
+		if (!options.empty()) {
+			const event_option<scope_type> *option = vector::get_random(options);
+			context option_ctx = ctx;
+			option->do_effects(scope, option_ctx);
+		}
 	}
 }
 
