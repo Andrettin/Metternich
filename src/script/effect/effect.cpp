@@ -9,6 +9,8 @@
 #include "database/database.h"
 #include "script/effect/commodity_effect.h"
 #include "script/effect/delayed_effect.h"
+#include "script/effect/piety_effect.h"
+#include "script/effect/prestige_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
@@ -38,7 +40,11 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	}
 
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
-		if (key == "wealth") {
+		if (key == "piety") {
+			return std::make_unique<piety_effect<scope_type>>(value, effect_operator);
+		} else if (key == "prestige") {
+			return std::make_unique<prestige_effect<scope_type>>(value, effect_operator);
+		} else if (key == "wealth") {
 			return std::make_unique<wealth_effect<scope_type>>(value, effect_operator);
 		}
 	}

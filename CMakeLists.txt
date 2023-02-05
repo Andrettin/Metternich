@@ -426,6 +426,8 @@ set(script_effect_HDRS
 	src/script/effect/delayed_effect_instance.h
 	src/script/effect/effect.h
 	src/script/effect/effect_list.h
+	src/script/effect/piety_effect.h
+	src/script/effect/prestige_effect.h
 	src/script/effect/scripted_modifiers_effect.h
 	src/script/effect/tooltip_effect.h
 	src/script/effect/traits_effect.h
