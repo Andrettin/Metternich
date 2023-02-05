@@ -48,6 +48,10 @@ void ideology::initialize()
 void ideology::check() const
 {
 	assert_throw(this->get_color().isValid());
+
+	if (this->get_weight_factor() == nullptr) {
+		throw std::runtime_error("Ideology \"" + this->get_identifier() + "\" does not have a weight factor.");
+	}
 }
 
 }
