@@ -5,7 +5,7 @@
 namespace metternich {
 
 template <typename scope_type>
-class wealth_effect final : public effect<const scope_type>
+class wealth_effect final : public effect<scope_type>
 {
 public:
 	explicit wealth_effect(const std::string &value, const gsml_operator effect_operator)

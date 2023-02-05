@@ -344,6 +344,11 @@ public:
 
 	void change_score(const int change);
 
+	const std::vector<population_unit *> &get_population_units() const
+	{
+		return this->population_units;
+	}
+
 	void add_population_unit(population_unit *population_unit)
 	{
 		this->population_units.push_back(population_unit);

@@ -7,8 +7,11 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "database/database.h"
+#include "script/effect/any_population_unit_effect.h"
 #include "script/effect/commodity_effect.h"
+#include "script/effect/consciousness_effect.h"
 #include "script/effect/delayed_effect.h"
+#include "script/effect/militancy_effect.h"
 #include "script/effect/piety_effect.h"
 #include "script/effect/prestige_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
@@ -36,6 +39,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+		if (key == "consciousness") {
+			return std::make_unique<consciousness_effect>(value, effect_operator);
+		} else if (key == "militancy") {
+			return std::make_unique<militancy_effect>(value, effect_operator);
 		}
 	}
 
@@ -72,6 +81,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
 		if (effect_identifier == "delayed") {
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province>) {
+		if (effect_identifier == "any_population_unit") {
+			effect = std::make_unique<any_population_unit_effect<scope_type>>(effect_operator);
 		}
 	}
 

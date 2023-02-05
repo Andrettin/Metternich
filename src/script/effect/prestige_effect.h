@@ -6,7 +6,7 @@
 namespace metternich {
 
 template <typename scope_type>
-class prestige_effect final : public effect<const scope_type>
+class prestige_effect final : public effect<scope_type>
 {
 public:
 	explicit prestige_effect(const std::string &value, const gsml_operator effect_operator)
