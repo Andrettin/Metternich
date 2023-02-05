@@ -50,7 +50,7 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 	const read_only_context ctx = read_only_context::from_scope(scope);
 
 	for (const scoped_event_base *event : scoped_event_base::get_trigger_events(trigger)) {
-		if (event->get_conditions() != nullptr && !event->get_conditions()->check(scope, ctx)) {
+		if (!event->can_fire(scope, ctx)) {
 			continue;
 		}
 
@@ -91,7 +91,7 @@ void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_ty
 			break;
 		}
 
-		if (event->get_conditions() == nullptr || event->get_conditions()->check(scope, ctx)) {
+		if (event->can_fire(scope, ctx)) {
 			const context event_ctx = context::from_scope(scope);
 
 			if (delay > 0) {
@@ -126,7 +126,7 @@ void scoped_event_base<scope_type>::check_mtth_events_for_scope(const scope_type
 	const read_only_context ctx = read_only_context::from_scope(scope);
 
 	for (const scoped_event_base *event : scoped_event_base::mtth_events) {
-		if (event->get_conditions() != nullptr && !event->get_conditions()->check(scope, ctx)) {
+		if (!event->can_fire(scope, ctx)) {
 			continue;
 		}
 
@@ -239,6 +239,20 @@ void scoped_event_base<scope_type>::set_random_weight(const int weight)
 }
 
 template <typename scope_type>
+bool scoped_event_base<scope_type>::can_fire(const scope_type *scope, const read_only_context &ctx) const
+{
+	if (this->fires_only_once() && scoped_event_base::fired_events.contains(this)) {
+		return false;
+	}
+
+	if (this->get_conditions() != nullptr && !this->get_conditions()->check(scope, ctx)) {
+		return false;
+	}
+
+	return true;
+}
+
+template <typename scope_type>
 bool scoped_event_base<scope_type>::is_option_available(const int option_index, const read_only_context &ctx) const
 {
 	const condition<std::remove_const_t<scope_type>> *conditions = this->get_options().at(option_index)->get_conditions();
@@ -274,6 +288,11 @@ void scoped_event_base<scope_type>::do_option_effects(const int option_index, co
 template <typename scope_type>
 void scoped_event_base<scope_type>::fire(const scope_type *scope, const context &ctx) const
 {
+	if (this->fires_only_once()) {
+		assert_throw(!scoped_event_base::fired_events.contains(this));
+		scoped_event_base::fired_events.insert(this);
+	}
+
 	if (scoped_event_base::is_player_scope(scope)) {
 		this->create_instance(ctx);
 	} else {

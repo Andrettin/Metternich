@@ -79,6 +79,7 @@ private:
 	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_events;
 	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_random_events;
 	static inline std::vector<const scoped_event_base *> mtth_events;
+	static inline std::set<const scoped_event_base *> fired_events;
 
 public:
 	scoped_event_base();
@@ -111,10 +112,14 @@ public:
 		return this->mean_time_to_happen.get();
 	}
 
+	virtual bool fires_only_once() const = 0;
+
 	const condition<std::remove_const_t<scope_type>> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
+
+	bool can_fire(const scope_type *scope, const read_only_context &ctx) const;
 
 	const std::vector<std::unique_ptr<event_option<scope_type>>> &get_options() const
 	{

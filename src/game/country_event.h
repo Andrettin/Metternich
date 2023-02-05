@@ -75,6 +75,11 @@ public:
 		scoped_event_base::set_random_weight(weight);
 	}
 
+	virtual bool fires_only_once() const override
+	{
+		return event::fires_only_once();
+	}
+
 	virtual int get_option_count() const override
 	{
 		return scoped_event_base::get_option_count();
