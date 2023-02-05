@@ -7,6 +7,7 @@ namespace metternich {
 class culture;
 class employment_type;
 class icon;
+class ideology;
 class phenotype;
 class population_type;
 class province;
@@ -145,6 +146,16 @@ public:
 
 	bool produces_food() const;
 
+	const metternich::ideology *get_ideology() const
+	{
+		return this->ideology;
+	}
+
+	void set_ideology(const metternich::ideology *ideology)
+	{
+		this->ideology = ideology;
+	}
+
 	const centesimal_int &get_consciousness() const
 	{
 		return this->consciousness;
@@ -186,6 +197,7 @@ private:
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::province *province = nullptr;
 	const metternich::employment_type *employment_type = nullptr;
+	const metternich::ideology *ideology = nullptr;
 	centesimal_int consciousness;
 	centesimal_int militancy;
 };
