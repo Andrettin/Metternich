@@ -27,7 +27,7 @@ public:
 
 	virtual std::string get_value_name() const override
 	{
-		return "Years Old";
+		return "years old";
 	}
 };
 

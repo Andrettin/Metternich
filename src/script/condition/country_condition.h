@@ -35,7 +35,7 @@ public:
 	}
 
 private:
-	const metternich::country *country = nullptr;;
+	const metternich::country *country = nullptr;
 };
 
 }

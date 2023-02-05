@@ -29,7 +29,7 @@ public:
 
 	virtual std::string get_value_name() const override
 	{
-		return "is the Current Year";
+		return "is the current year";
 	}
 };
 

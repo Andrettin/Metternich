@@ -50,7 +50,7 @@ public:
 
 private:
 	metternich::terrain_type *terrain_type = nullptr;
-	bool river = false;;
+	bool river = false;
 	QColor color;
 	bool hidden = false;
 };
