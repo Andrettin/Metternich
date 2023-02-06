@@ -16,6 +16,7 @@
 #include "script/condition/character_type_condition.h"
 #include "script/condition/coastal_condition.h"
 #include "script/condition/commodity_condition.h"
+#include "script/condition/consciousness_condition.h"
 #include "script/condition/core_condition.h"
 #include "script/condition/country_condition.h"
 #include "script/condition/country_exists_condition.h"
@@ -28,10 +29,12 @@
 #include "script/condition/ideology_condition.h"
 #include "script/condition/is_ruler_condition.h"
 #include "script/condition/location_condition.h"
+#include "script/condition/militancy_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
 #include "script/condition/owns_province_condition.h"
 #include "script/condition/piety_condition.h"
+#include "script/condition/population_type_condition.h"
 #include "script/condition/prestige_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
@@ -87,8 +90,14 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
-		if (key == "ideology") {
+		if (key == "consciousness") {
+			return std::make_unique<consciousness_condition>(value, condition_operator);
+		} else if (key == "ideology") {
 			return std::make_unique<ideology_condition>(value, condition_operator);
+		} else if (key == "militancy") {
+			return std::make_unique<militancy_condition>(value, condition_operator);
+		} else if (key == "population_type") {
+			return std::make_unique<population_type_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, province>) {
 		if (key == "core") {

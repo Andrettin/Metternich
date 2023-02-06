@@ -395,6 +395,7 @@ set(script_condition_HDRS
 	src/script/condition/coastal_condition.h
 	src/script/condition/commodity_condition.h
 	src/script/condition/condition.h
+	src/script/condition/consciousness_condition.h
 	src/script/condition/core_condition.h
 	src/script/condition/country_condition.h
 	src/script/condition/country_exists_condition.h
@@ -407,11 +408,13 @@ set(script_condition_HDRS
 	src/script/condition/ideology_condition.h
 	src/script/condition/is_ruler_condition.h
 	src/script/condition/location_condition.h
+	src/script/condition/militancy_condition.h
 	src/script/condition/not_condition.h
 	src/script/condition/numerical_condition.h
 	src/script/condition/or_condition.h
 	src/script/condition/owns_province_condition.h
 	src/script/condition/piety_condition.h
+	src/script/condition/population_type_condition.h
 	src/script/condition/prestige_condition.h
 	src/script/condition/religion_condition.h
 	src/script/condition/religious_group_condition.h
