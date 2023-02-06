@@ -1,6 +1,7 @@
 #pragma once
 
 #include "country/culture_container.h"
+#include "country/ideology_container.h"
 #include "country/religion_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_slot_type_container.h"
@@ -42,6 +43,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
 	Q_PROPERTY(QVariantList population_religion_counts READ get_population_religion_counts_qvariant_list NOTIFY population_religion_counts_changed)
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
+	Q_PROPERTY(QVariantList population_ideology_counts READ get_population_ideology_counts_qvariant_list NOTIFY population_ideology_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(int consciousness READ get_consciousness NOTIFY consciousness_changed)
 	Q_PROPERTY(int militancy READ get_militancy NOTIFY militancy_changed)
@@ -232,6 +234,14 @@ public:
 	QVariantList get_population_phenotype_counts_qvariant_list() const;
 	void change_population_phenotype_count(const phenotype *phenotype, const int change);
 
+	const ideology_map<int> &get_population_ideology_counts() const
+	{
+		return this->population_ideology_counts;
+	}
+
+	QVariantList get_population_ideology_counts_qvariant_list() const;
+	void change_population_ideology_count(const ideology *ideology, const int change);
+
 	int get_population() const
 	{
 		return this->population;
@@ -326,6 +336,7 @@ signals:
 	void population_culture_counts_changed();
 	void population_religion_counts_changed();
 	void population_phenotype_counts_changed();
+	void population_ideology_counts_changed();
 	void population_changed();
 	void consciousness_changed();
 	void militancy_changed();
@@ -351,6 +362,7 @@ private:
 	culture_map<int> population_culture_counts;
 	religion_map<int> population_religion_counts;
 	phenotype_map<int> population_phenotype_counts;
+	ideology_map<int> population_ideology_counts;
 	int population = 0;
 	int free_food_consumption = 0;
 	centesimal_int total_consciousness;

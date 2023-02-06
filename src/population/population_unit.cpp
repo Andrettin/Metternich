@@ -131,6 +131,23 @@ bool population_unit::produces_food() const
 	return false;
 }
 
+void population_unit::set_ideology(const metternich::ideology *ideology)
+{
+	if (ideology == this->get_ideology()) {
+		return;
+	}
+
+	if (this->get_ideology() != nullptr) {
+		this->get_province()->get_game_data()->change_population_ideology_count(this->get_ideology(), -1);
+	}
+
+	this->ideology = ideology;
+
+	if (this->get_ideology() != nullptr) {
+		this->get_province()->get_game_data()->change_population_ideology_count(this->get_ideology(), 1);
+	}
+}
+
 void population_unit::choose_ideology()
 {
 	std::vector<const metternich::ideology *> potential_ideologies;

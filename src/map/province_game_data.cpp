@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
+#include "country/ideology.h"
 #include "country/religion.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -486,6 +487,9 @@ void province_game_data::add_population_unit(qunique_ptr<population_unit> &&popu
 	this->change_population_culture_count(population_unit->get_culture(), 1);
 	this->change_population_religion_count(population_unit->get_religion(), 1);
 	this->change_population_phenotype_count(population_unit->get_phenotype(), 1);
+	if (population_unit->get_ideology() != nullptr) {
+		this->change_population_ideology_count(population_unit->get_ideology(), 1);
+	}
 	this->change_population(defines::get()->get_population_per_unit());
 	this->change_total_consciousness(population_unit->get_consciousness());
 	this->change_total_militancy(population_unit->get_militancy());
@@ -520,6 +524,9 @@ qunique_ptr<population_unit> province_game_data::pop_population_unit(population_
 			this->change_population_culture_count(population_unit->get_culture(), -1);
 			this->change_population_religion_count(population_unit->get_religion(), -1);
 			this->change_population_phenotype_count(population_unit->get_phenotype(), -1);
+			if (population_unit->get_ideology() != nullptr) {
+				this->change_population_ideology_count(population_unit->get_ideology(), -1);
+			}
 			this->change_population(-defines::get()->get_population_per_unit());
 			this->change_total_consciousness(-population_unit->get_consciousness());
 			this->change_total_militancy(-population_unit->get_militancy());
@@ -552,6 +559,7 @@ void province_game_data::clear_population_units()
 	this->population_culture_counts.clear();
 	this->population_religion_counts.clear();
 	this->population_phenotype_counts.clear();
+	this->population_ideology_counts.clear();
 	this->population = 0;
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
 	this->total_consciousness = centesimal_int(0);
@@ -673,6 +681,36 @@ void province_game_data::change_population_phenotype_count(const phenotype *phen
 
 	if (game::get()->is_running()) {
 		emit population_phenotype_counts_changed();
+	}
+}
+
+QVariantList province_game_data::get_population_ideology_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_population_ideology_counts());
+}
+
+void province_game_data::change_population_ideology_count(const ideology *ideology, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	assert_throw(ideology != nullptr);
+
+	const int count = (this->population_ideology_counts[ideology] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->population_ideology_counts.erase(ideology);
+	}
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_population_ideology_count(ideology, change);
+	}
+
+	if (game::get()->is_running()) {
+		emit population_ideology_counts_changed();
 	}
 }
 

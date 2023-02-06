@@ -355,6 +355,9 @@ void country_game_data::add_province(const province *province)
 	for (const auto &[phenotype, count] : province_game_data->get_population_phenotype_counts()) {
 		this->change_population_phenotype_count(phenotype, count);
 	}
+	for (const auto &[ideology, count] : province_game_data->get_population_ideology_counts()) {
+		this->change_population_ideology_count(ideology, count);
+	}
 
 	for (const qunique_ptr<population_unit> &population_unit : province_game_data->get_population_units()) {
 		this->add_population_unit(population_unit.get());
@@ -431,6 +434,9 @@ void country_game_data::remove_province(const province *province)
 	}
 	for (const auto &[phenotype, count] : province_game_data->get_population_phenotype_counts()) {
 		this->change_population_phenotype_count(phenotype, -count);
+	}
+	for (const auto &[ideology, count] : province_game_data->get_population_ideology_counts()) {
+		this->change_population_ideology_count(ideology, -count);
 	}
 
 	for (const qunique_ptr<population_unit> &population_unit : province_game_data->get_population_units()) {
@@ -1242,6 +1248,30 @@ void country_game_data::change_population_phenotype_count(const phenotype *pheno
 
 	if (game::get()->is_running()) {
 		emit population_phenotype_counts_changed();
+	}
+}
+
+QVariantList country_game_data::get_population_ideology_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_population_ideology_counts());
+}
+
+void country_game_data::change_population_ideology_count(const ideology *ideology, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->population_ideology_counts[ideology] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->population_ideology_counts.erase(ideology);
+	}
+
+	if (game::get()->is_running()) {
+		emit population_ideology_counts_changed();
 	}
 }
 

@@ -3,6 +3,7 @@
 #include "character/office_container.h"
 #include "country/country_container.h"
 #include "country/culture_container.h"
+#include "country/ideology_container.h"
 #include "country/religion_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
@@ -60,6 +61,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
 	Q_PROPERTY(QVariantList population_religion_counts READ get_population_religion_counts_qvariant_list NOTIFY population_religion_counts_changed)
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
+	Q_PROPERTY(QVariantList population_ideology_counts READ get_population_ideology_counts_qvariant_list NOTIFY population_ideology_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
@@ -391,6 +393,14 @@ public:
 	QVariantList get_population_phenotype_counts_qvariant_list() const;
 	void change_population_phenotype_count(const phenotype *phenotype, const int change);
 
+	const ideology_map<int> &get_population_ideology_counts() const
+	{
+		return this->population_ideology_counts;
+	}
+
+	QVariantList get_population_ideology_counts_qvariant_list() const;
+	void change_population_ideology_count(const ideology *ideology, const int change);
+
 	int get_population() const
 	{
 		return this->population;
@@ -632,6 +642,7 @@ signals:
 	void population_culture_counts_changed();
 	void population_religion_counts_changed();
 	void population_phenotype_counts_changed();
+	void population_ideology_counts_changed();
 	void population_changed();
 	void population_growth_changed();
 	void wealth_changed();
@@ -673,6 +684,7 @@ private:
 	culture_map<int> population_culture_counts;
 	religion_map<int> population_religion_counts;
 	phenotype_map<int> population_phenotype_counts;
+	ideology_map<int> population_ideology_counts;
 	int population = 0;
 	int population_growth = 0; //population growth counter
 	int wealth = 0;

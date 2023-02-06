@@ -44,6 +44,7 @@ set(country_SRCS
 	src/country/culture_container.cpp
 	src/country/diplomacy_state.cpp
 	src/country/ideology.cpp
+	src/country/ideology_container.cpp
 	src/country/landed_title.cpp
 	src/country/landed_title_game_data.cpp
 	src/country/landed_title_tier.cpp
@@ -275,6 +276,7 @@ set(country_HDRS
 	src/country/culture_container.h
 	src/country/diplomacy_state.h
 	src/country/ideology.h
+	src/country/ideology_container.h
 	src/country/landed_title.h
 	src/country/landed_title_game_data.h
 	src/country/landed_title_tier.h

@@ -151,10 +151,7 @@ public:
 		return this->ideology;
 	}
 
-	void set_ideology(const metternich::ideology *ideology)
-	{
-		this->ideology = ideology;
-	}
+	void set_ideology(const metternich::ideology *ideology);
 
 	void choose_ideology();
 
