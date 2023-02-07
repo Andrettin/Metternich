@@ -3,6 +3,7 @@
 #include "technology/technology.h"
 
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -24,6 +25,11 @@ void technology::process_gsml_scope(const gsml_data &scope)
 void technology::check() const
 {
 	assert_throw(this->get_icon() != nullptr);
+}
+
+QVariantList technology::get_prerequisites_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_prerequisites());
 }
 
 bool technology::requires_technology(const technology *technology) const

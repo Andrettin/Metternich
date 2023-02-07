@@ -1378,12 +1378,48 @@ QVariantList country_game_data::get_available_technologies_qvariant_list() const
 {
 	std::vector<technology *> available_technologies = technology::get_all();
 	std::erase_if(available_technologies, [this](const technology *technology) {
-		return this->has_technology(technology);
+		if (this->has_technology(technology)) {
+			return true;
+		}
+
+		for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
+			if (!this->has_technology(prerequisite)) {
+				return true;
+			}
+		}
+
+		return false;
 	});
 
 	std::sort(available_technologies.begin(), available_technologies.end(), technology_compare());
 
 	return container::to_qvariant_list(available_technologies);
+}
+
+QVariantList country_game_data::get_future_technologies_qvariant_list() const
+{
+	std::vector<technology *> future_technologies = technology::get_all();
+	std::erase_if(future_technologies, [this](const technology *technology) {
+		if (this->has_technology(technology)) {
+			return true;
+		}
+
+		bool has_all_prerequisites = true;
+		for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
+			if (!this->has_technology(prerequisite)) {
+				has_all_prerequisites = false;
+			}
+		}
+		if (has_all_prerequisites) {
+			return true;
+		}
+
+		return false;
+	});
+
+	std::sort(future_technologies.begin(), future_technologies.end(), technology_compare());
+
+	return container::to_qvariant_list(future_technologies);
 }
 
 QVariantList country_game_data::get_characters_qvariant_list() const
