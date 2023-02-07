@@ -5,12 +5,14 @@
 #include "infrastructure/building_class_container.h"
 #include "population/population_class_container.h"
 #include "unit/civilian_unit_class_container.h"
+#include "util/qunique_ptr.h"
 
 namespace metternich {
 
 class building_type;
 class civilian_unit_type;
 class cultural_group;
+class culture_history;
 class phenotype;
 class population_type;
 
@@ -23,12 +25,19 @@ class culture_base : public named_data_entry
 	Q_PROPERTY(metternich::phenotype* default_phenotype MEMBER default_phenotype)
 
 public:
-	explicit culture_base(const std::string &identifier) : named_data_entry(identifier)
-	{
-	}
+	explicit culture_base(const std::string &identifier);
+	~culture_base();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
+	virtual data_entry_history *get_history_base() override;
+
+	culture_history *get_history() const
+	{
+		return this->history.get();
+	}
+
+	virtual void reset_history() override;
 
 protected:
 	const cultural_group *get_group() const
@@ -37,6 +46,8 @@ protected:
 	}
 
 public:
+	bool is_part_of_group(const cultural_group *group) const;
+
 	phenotype *get_default_phenotype() const;
 
 	const building_type *get_building_class_type(const building_class *building_class) const;
@@ -84,6 +95,7 @@ private:
 	building_class_map<const building_type *> building_class_types;
 	population_class_map<const population_type *> population_class_types;
 	civilian_unit_class_map<const civilian_unit_type *> civilian_class_unit_types;
+	qunique_ptr<culture_history> history;
 };
 
 }

@@ -8,7 +8,9 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
+#include "country/cultural_group.h"
 #include "country/culture.h"
+#include "country/culture_history.h"
 #include "country/diplomacy_state.h"
 #include "country/landed_title.h"
 #include "country/landed_title_game_data.h"
@@ -316,6 +318,38 @@ void game::apply_history(const metternich::scenario *scenario)
 
 				country_game_data->set_consulate(other_country, consulate);
 				other_country->get_game_data()->set_consulate(country, consulate);
+			}
+		}
+
+		for (const culture *culture : culture::get_all()) {
+			const culture_history *culture_history = culture->get_history();
+
+			for (const country *country : this->get_countries()) {
+				if (country->get_culture() != culture) {
+					continue;
+				}
+
+				country_game_data *country_game_data = country->get_game_data();
+
+				for (const technology *technology : culture_history->get_technologies()) {
+					country_game_data->add_technology(technology);
+				}
+			}
+		}
+
+		for (const cultural_group *cultural_group : cultural_group::get_all()) {
+			const culture_history *culture_history = cultural_group->get_history();
+
+			for (const country *country : this->get_countries()) {
+				if (!country->get_culture()->is_part_of_group(cultural_group)) {
+					continue;
+				}
+
+				country_game_data *country_game_data = country->get_game_data();
+
+				for (const technology *technology : culture_history->get_technologies()) {
+					country_game_data->add_technology(technology);
+				}
 			}
 		}
 

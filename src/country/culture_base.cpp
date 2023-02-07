@@ -3,6 +3,7 @@
 #include "country/culture_base.h"
 
 #include "country/cultural_group.h"
+#include "country/culture_history.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_type.h"
 #include "population/population_class.h"
@@ -12,6 +13,14 @@
 #include "util/assert_util.h"
 
 namespace metternich {
+
+culture_base::culture_base(const std::string &identifier) : named_data_entry(identifier)
+{
+}
+
+culture_base::~culture_base()
+{
+}
 
 void culture_base::process_gsml_scope(const gsml_data &scope)
 {
@@ -64,6 +73,15 @@ void culture_base::check() const
 	}
 }
 
+data_entry_history *culture_base::get_history_base()
+{
+	return this->history.get();
+}
+
+void culture_base::reset_history()
+{
+	this->history = make_qunique<culture_history>();
+}
 
 phenotype *culture_base::get_default_phenotype() const
 {
@@ -72,6 +90,25 @@ phenotype *culture_base::get_default_phenotype() const
 	}
 
 	return this->get_group()->get_default_phenotype();
+}
+
+
+bool culture_base::is_part_of_group(const cultural_group *group) const
+{
+	if (this->get_group() == nullptr) {
+		return false;
+	}
+
+	if (this->get_group() == group) {
+		return true;
+	}
+
+	//not the same group, and has a rank lesser than or equal to that of our group, so it can't be an upper group of ours
+	if (group->get_rank() <= this->get_group()->get_rank()) {
+		return false;
+	}
+
+	return this->get_group()->is_part_of_group(group);
 }
 
 const building_type *culture_base::get_building_class_type(const building_class *building_class) const

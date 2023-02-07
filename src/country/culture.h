@@ -21,6 +21,7 @@ public:
 	static constexpr const char class_identifier[] = "culture";
 	static constexpr const char property_class_identifier[] = "metternich::culture*";
 	static constexpr const char database_folder[] = "cultures";
+	static constexpr bool history_enabled = true;
 
 	explicit culture(const std::string &identifier);
 	~culture();

@@ -274,6 +274,7 @@ set(country_HDRS
 	src/country/culture.h
 	src/country/culture_base.h
 	src/country/culture_container.h
+	src/country/culture_history.h
 	src/country/diplomacy_state.h
 	src/country/ideology.h
 	src/country/ideology_container.h

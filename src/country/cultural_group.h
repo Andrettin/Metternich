@@ -17,6 +17,7 @@ public:
 	static constexpr const char class_identifier[] = "cultural_group";
 	static constexpr const char property_class_identifier[] = "metternich::cultural_group*";
 	static constexpr const char database_folder[] = "cultural_groups";
+	static constexpr bool history_enabled = true;
 
 	explicit cultural_group(const std::string &identifier);
 
