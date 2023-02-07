@@ -2,10 +2,13 @@
 
 #include "script/condition/condition.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "country/country_game_data.h"
 #include "database/database.h"
 #include "database/gsml_operator.h"
 #include "database/named_data_entry.h"
+#include "map/province.h"
 #include "map/province_game_data.h"
 #include "population/population_unit.h"
 #include "script/condition/age_condition.h"
@@ -84,8 +87,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<country_type_condition>(value, condition_operator);
 		} else if (key == "owns_province") {
 			return std::make_unique<owns_province_condition>(value, condition_operator);
-		} else if (key == "technology") {
-			return std::make_unique<technology_condition>(value, condition_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		}
@@ -133,6 +134,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		return std::make_unique<religious_group_condition<scope_type>>(value, condition_operator);
 	} else if (key == "scripted_condition") {
 		return std::make_unique<scripted_condition_condition<scope_type>>(value, condition_operator);
+	} else if (key == "technology") {
+		return std::make_unique<technology_condition<scope_type>>(value, condition_operator);
 	} else if (key == "year") {
 		return std::make_unique<year_condition<scope_type>>(value, condition_operator);
 	}
@@ -181,6 +184,25 @@ std::string condition<scope_type>::get_object_highlighted_name(const named_data_
 		return string::highlight(name_string);
 	} else {
 		return string::highlight(object->get_name());
+	}
+}
+
+template <typename scope_type>
+const country *condition<scope_type>::get_scope_country(const scope_type *scope)
+{
+	if constexpr (std::is_same_v<scope_type, character>) {
+		return scope->get_game_data()->get_employer();
+	} else if constexpr (std::is_same_v<scope_type, country>) {
+		return scope;
+	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+		const province *province = scope->get_province();
+		if (province != nullptr) {
+			return province->get_game_data()->get_owner();
+		}
+
+		return nullptr;
+	} else if constexpr (std::is_same_v<scope_type, province>) {
+		return scope->get_game_data()->get_owner();
 	}
 }
 

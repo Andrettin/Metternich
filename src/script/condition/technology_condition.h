@@ -7,11 +7,12 @@
 
 namespace metternich {
 
-class technology_condition final : public condition<country>
+template <typename scope_type>
+class technology_condition final : public condition<scope_type>
 {
 public:
 	explicit technology_condition(const std::string &value, const gsml_operator condition_operator)
-		: condition<country>(condition_operator)
+		: condition<scope_type>(condition_operator)
 	{
 		this->technology = technology::get(value);
 	}
@@ -22,11 +23,17 @@ public:
 		return class_identifier;
 	}
 
-	virtual bool check_assignment(const country *scope, const read_only_context &ctx) const override
+	virtual bool check_assignment(const scope_type *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->has_technology(this->technology);
+		const country *country = condition<scope_type>::get_scope_country(scope);
+
+		if (country == nullptr) {
+			return false;
+		}
+
+		return country->get_game_data()->has_technology(this->technology);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
