@@ -68,6 +68,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
 	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
+	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
+	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
 	Q_PROPERTY(metternich::character* ruler READ get_ruler_unconst NOTIFY ruler_changed)
@@ -522,15 +524,16 @@ public:
 
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
+	QVariantList get_technologies_qvariant_list() const;
+
 	bool has_technology(const technology *technology) const
 	{
 		return this->technologies.contains(technology);
 	}
 
-	void add_technology(const technology *technology)
-	{
-		this->technologies.insert(technology);
-	}
+	void add_technology(const technology *technology);
+
+	QVariantList get_available_technologies_qvariant_list() const;
 
 	const std::vector<const character *> &get_characters() const
 	{
@@ -649,6 +652,7 @@ signals:
 	void prestige_changed();
 	void piety_changed();
 	void stored_commodities_changed();
+	void technologies_changed();
 	void characters_changed();
 	void ruler_changed();
 	void office_characters_changed();

@@ -32,6 +32,7 @@
 #include "population/population_unit.h"
 #include "script/condition/condition.h"
 #include "script/factor.h"
+#include "technology/technology.h"
 #include "unit/civilian_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -1357,6 +1358,32 @@ bool country_game_data::can_declare_war_on(const metternich::country *other_coun
 	}
 
 	return true;
+}
+
+QVariantList country_game_data::get_technologies_qvariant_list() const
+{
+	return container::to_qvariant_list(this->technologies);
+}
+
+void country_game_data::add_technology(const technology *technology)
+{
+	this->technologies.insert(technology);
+
+	if (game::get()->is_running()) {
+		emit technologies_changed();
+	}
+}
+
+QVariantList country_game_data::get_available_technologies_qvariant_list() const
+{
+	std::vector<technology *> available_technologies = technology::get_all();
+	std::erase_if(available_technologies, [this](const technology *technology) {
+		return this->has_technology(technology);
+	});
+
+	std::sort(available_technologies.begin(), available_technologies.end(), technology_compare());
+
+	return container::to_qvariant_list(available_technologies);
 }
 
 QVariantList country_game_data::get_characters_qvariant_list() const

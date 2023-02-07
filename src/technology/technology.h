@@ -11,7 +11,7 @@ class technology final : public named_data_entry, public data_type<technology>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::icon* icon MEMBER icon)
+	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "technology";
@@ -34,6 +34,12 @@ public:
 	{
 		return this->prerequisites;
 	}
+
+	bool requires_technology(const technology *technology) const;
+	int get_total_prerequisite_depth() const;
+
+signals:
+	void changed();
 
 private:
 	metternich::icon *icon = nullptr;

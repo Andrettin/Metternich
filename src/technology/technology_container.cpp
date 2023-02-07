@@ -8,6 +8,21 @@ namespace metternich {
 
 bool technology_compare::operator()(const technology *lhs, const technology *rhs) const
 {
+	const int lhs_prerequisite_depth = lhs->get_total_prerequisite_depth();
+	const int rhs_prerequisite_depth = rhs->get_total_prerequisite_depth();
+
+	if (lhs_prerequisite_depth != rhs_prerequisite_depth) {
+		return lhs_prerequisite_depth < rhs_prerequisite_depth;
+	}
+
+	if (lhs != rhs) {
+		if (lhs->requires_technology(rhs)) {
+			return true;
+		} else if (rhs->requires_technology(lhs)) {
+			return false;
+		}
+	}
+
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 

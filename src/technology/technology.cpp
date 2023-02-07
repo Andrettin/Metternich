@@ -26,4 +26,28 @@ void technology::check() const
 	assert_throw(this->get_icon() != nullptr);
 }
 
+bool technology::requires_technology(const technology *technology) const
+{
+	assert_throw(this != technology);
+
+	for (const metternich::technology *prerequisite : this->get_prerequisites()) {
+		if (prerequisite == technology || prerequisite->requires_technology(technology)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+int technology::get_total_prerequisite_depth() const
+{
+	int depth = 0;
+
+	for (const technology *prerequisite : this->get_prerequisites()) {
+		depth = std::max(depth, prerequisite->get_total_prerequisite_depth() + 1);
+	}
+
+	return depth;
+}
+
 }
