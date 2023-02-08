@@ -7,9 +7,12 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "database/database.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
 #include "script/effect/any_population_unit_effect.h"
 #include "script/effect/commodity_effect.h"
 #include "script/effect/consciousness_effect.h"
+#include "script/effect/country_effect.h"
 #include "script/effect/delayed_effect.h"
 #include "script/effect/if_effect.h"
 #include "script/effect/militancy_effect.h"
@@ -91,7 +94,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		}
 	}
 
-	if (effect_identifier == "if") {
+	if (effect_identifier == "country") {
+		effect = std::make_unique<country_effect<scope_type>>(effect_operator);
+	} else if (effect_identifier == "if") {
 		effect = std::make_unique<if_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "tooltip") {
 		effect = std::make_unique<tooltip_effect<scope_type>>(effect_operator);
@@ -104,6 +109,25 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	database::process_gsml_data(effect, scope);
 
 	return effect;
+}
+
+template <typename scope_type>
+const country *effect<scope_type>::get_scope_country(const scope_type *scope)
+{
+	if constexpr (std::is_same_v<scope_type, const character>) {
+		return scope->get_game_data()->get_employer();
+	} else if constexpr (std::is_same_v<scope_type, const country>) {
+		return scope;
+	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+		const province *province = scope->get_province();
+		if (province != nullptr) {
+			return province->get_game_data()->get_owner();
+		}
+
+		return nullptr;
+	} else if constexpr (std::is_same_v<scope_type, const province>) {
+		return scope->get_game_data()->get_owner();
+	}
 }
 
 template <typename scope_type>

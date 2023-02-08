@@ -23,6 +23,8 @@ public:
 	static std::unique_ptr<effect> from_gsml_property(const gsml_property &property);
 	static std::unique_ptr<effect> from_gsml_scope(const gsml_data &scope);
 
+	static const country *get_scope_country(const scope_type *scope);
+
 	explicit effect(const gsml_operator effect_operator);
 
 	virtual ~effect()
