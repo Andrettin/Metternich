@@ -139,6 +139,11 @@ bool character_game_data::has_trait(const trait *trait) const
 
 void character_game_data::add_trait(const trait *trait)
 {
+	if (vector::contains(this->get_traits(), trait)) {
+		log::log_error("Tried to add trait \"" + trait->get_identifier() + "\" to character \"" + this->character->get_identifier() + "\", but they already have the trait.");
+		return;
+	}
+
 	const read_only_context ctx = read_only_context::from_scope(this->character);
 
 	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, ctx)) {
