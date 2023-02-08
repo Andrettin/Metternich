@@ -97,13 +97,8 @@ std::string event_option<scope_type>::get_effects_string(const read_only_context
 	if (this->effects != nullptr) {
 		const scope_type *scope = nullptr;
 
-		std::string str;
-		size_t indent = 0;
-
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			scope = ctx.current_character;
-			str += ctx.current_character->get_full_name() + ":\n";
-			indent += 1;
 		} else if constexpr (std::is_same_v<scope_type, const country>) {
 			scope = ctx.current_country;
 		} else {
@@ -112,8 +107,7 @@ std::string event_option<scope_type>::get_effects_string(const read_only_context
 
 		assert_throw(scope != nullptr);
 
-		str += this->effects->get_effects_string(scope, ctx, indent);
-		return str;
+		return this->effects->get_effects_string(scope, ctx);
 	}
 
 	return std::string();
