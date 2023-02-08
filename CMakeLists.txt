@@ -392,6 +392,8 @@ set(script_condition_HDRS
 	src/script/condition/age_condition.h
 	src/script/condition/and_condition.h
 	src/script/condition/any_advisor_condition.h
+	src/script/condition/any_character_condition.h
+	src/script/condition/any_landed_character_condition.h
 	src/script/condition/attribute_condition.h
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/character_type_condition.h
