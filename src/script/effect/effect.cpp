@@ -11,6 +11,7 @@
 #include "script/effect/commodity_effect.h"
 #include "script/effect/consciousness_effect.h"
 #include "script/effect/delayed_effect.h"
+#include "script/effect/if_effect.h"
 #include "script/effect/militancy_effect.h"
 #include "script/effect/piety_effect.h"
 #include "script/effect/prestige_effect.h"
@@ -90,7 +91,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		}
 	}
 
-	if (effect_identifier == "tooltip") {
+	if (effect_identifier == "if") {
+		effect = std::make_unique<if_effect<scope_type>>(effect_operator);
+	} else if (effect_identifier == "tooltip") {
 		effect = std::make_unique<tooltip_effect<scope_type>>(effect_operator);
 	}
 
