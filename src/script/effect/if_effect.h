@@ -3,6 +3,7 @@
 #include "script/condition/and_condition.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -47,10 +48,16 @@ public:
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
-		std::string str = "If:\n";
-		str += this->conditions.get_conditions_string(indent + 1);
-		str += "\n" + std::string(indent, '\t') + "Then:\n";
-		return str + this->effects.get_effects_string(scope, ctx, indent + 1, prefix);
+		if (!this->conditions.check(scope, ctx)) {
+			return std::string();
+		}
+
+		std::string str = this->effects.get_effects_string(scope, ctx, indent, prefix);
+		if (indent != 0) {
+			//remove indentation for the first line, as it will already have been applied to this
+			string::remove_start(str, '\t');
+		}
+		return str;
 	}
 
 private:
