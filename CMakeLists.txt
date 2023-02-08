@@ -429,6 +429,7 @@ set(script_condition_HDRS
 	src/script/condition/technology_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
+	src/script/condition/wealth_condition.h
 	src/script/condition/year_condition.h
 )
 source_group(script\\condition FILES ${script_condition_HDRS})

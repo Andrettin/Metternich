@@ -46,6 +46,7 @@
 #include "script/condition/technology_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
+#include "script/condition/wealth_condition.h"
 #include "script/condition/year_condition.h"
 #include "util/string_util.h"
 
@@ -113,6 +114,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<prestige_condition<scope_type>>(value, condition_operator);
 		} else if (key == "war") {
 			return std::make_unique<war_condition<scope_type>>(value, condition_operator);
+		} else if (key == "wealth") {
+			return std::make_unique<wealth_condition<scope_type>>(value, condition_operator);
 		}
 	}
 	
