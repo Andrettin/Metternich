@@ -21,6 +21,12 @@ public:
 
 	virtual int get_scope_value(const scope_type *scope) const override
 	{
+		if constexpr (std::is_same_v<scope_type, character>) {
+			if (scope->get_game_data()->is_ruler()) {
+				return scope->get_game_data()->get_employer()->get_game_data()->get_piety_int();
+			}
+		}
+
 		return scope->get_game_data()->get_piety_int();
 	}
 
