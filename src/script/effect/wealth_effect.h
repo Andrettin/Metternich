@@ -22,16 +22,38 @@ public:
 
 	virtual void do_assignment_effect(const scope_type *scope) const override
 	{
+		if constexpr (std::is_same_v<scope_type, const character>) {
+			if (scope->get_game_data()->is_ruler()) {
+				//wealth changes for rulers affect their countries instead
+				scope->get_game_data()->get_employer()->get_game_data()->set_wealth(this->quantity);
+				return;
+			}
+		}
+
 		scope->get_game_data()->set_wealth(this->quantity);
 	}
 
 	virtual void do_addition_effect(const scope_type *scope) const override
 	{
+		if constexpr (std::is_same_v<scope_type, const character>) {
+			if (scope->get_game_data()->is_ruler()) {
+				scope->get_game_data()->get_employer()->get_game_data()->change_wealth(this->quantity);
+				return;
+			}
+		}
+
 		scope->get_game_data()->change_wealth(this->quantity);
 	}
 
 	virtual void do_subtraction_effect(const scope_type *scope) const override
 	{
+		if constexpr (std::is_same_v<scope_type, const character>) {
+			if (scope->get_game_data()->is_ruler()) {
+				scope->get_game_data()->get_employer()->get_game_data()->change_wealth(-this->quantity);
+				return;
+			}
+		}
+
 		scope->get_game_data()->change_wealth(-this->quantity);
 	}
 
