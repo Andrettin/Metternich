@@ -32,7 +32,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
-	Q_PROPERTY(metternich::icon* portrait READ get_portrait_unconst NOTIFY changed)
+	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::province* home_province MEMBER home_province NOTIFY changed)
 	Q_PROPERTY(archimedes::gender gender MEMBER gender NOTIFY changed)
 	Q_PROPERTY(metternich::character* father MEMBER father NOTIFY changed)
@@ -112,16 +112,11 @@ public:
 		return this->phenotype;
 	}
 
-	const icon *get_portrait() const;
-
-private:
-	//for the Qt property (pointers there can't be const)
-	icon *get_portrait_unconst() const
+	const icon *get_portrait() const
 	{
-		return const_cast<icon *>(this->get_portrait());
+		return this->portrait;
 	}
 
-public:
 	const province *get_home_province() const
 	{
 		return this->home_province;
@@ -193,6 +188,7 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	metternich::phenotype *phenotype = nullptr;
+	icon *portrait = nullptr;
 	province *home_province = nullptr;
 	archimedes::gender gender;
 	character *father = nullptr;

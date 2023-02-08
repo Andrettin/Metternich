@@ -56,6 +56,8 @@ void character_game_data::on_game_started()
 	}
 
 	this->generate_expertise_traits();
+
+	this->check_portrait();
 }
 
 void character_game_data::do_turn()
@@ -94,6 +96,60 @@ std::string character_game_data::get_titled_name() const
 		return this->get_employer()->get_title()->get_game_data()->get_ruler_title_name() + " " + this->character->get_name();
 	} else {
 		return this->get_office()->get_name() + " " + this->character->get_surname();
+	}
+}
+
+bool character_game_data::is_current_portrait_valid() const
+{
+	if (this->get_portrait() == nullptr) {
+		return false;
+	}
+
+	if (this->get_portrait() == this->character->get_portrait()) {
+		//this is the character's explicitly-defined portrait
+		return true;
+	}
+
+	const character_type *character_type = this->character->get_type();
+	const condition<metternich::character> *portrait_conditions = character_type->get_portrait_conditions(this->get_portrait());
+	if (portrait_conditions == nullptr && character_type->get_portrait() != this->get_portrait()) {
+		//portrait not available for the character type
+		return false;
+	}
+
+	if (portrait_conditions != nullptr) {
+		return portrait_conditions->check(this->character, read_only_context::from_scope(this->character));
+	}
+
+	return true;
+}
+
+void character_game_data::check_portrait()
+{
+	if (this->is_current_portrait_valid()) {
+		return;
+	}
+
+	const icon_map<std::unique_ptr<const condition<metternich::character>>> &conditional_portraits = this->character->get_type()->get_conditional_portraits();
+
+	if (!conditional_portraits.empty()) {
+		std::vector<const icon *> potential_portraits;
+		const read_only_context ctx = read_only_context::from_scope(this->character);
+
+		for (const auto &[portrait, conditions] : conditional_portraits) {
+			if (!conditions->check(this->character, ctx)) {
+				continue;
+			}
+
+			potential_portraits.push_back(portrait);
+		}
+
+		//there must always be an available conditional portrait if conditional portraits are defined
+		assert_throw(!potential_portraits.empty());
+
+		this->portrait = vector::get_random(potential_portraits);
+	} else {
+		this->portrait = this->character->get_type()->get_portrait();
 	}
 }
 

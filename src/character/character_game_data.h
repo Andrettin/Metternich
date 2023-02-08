@@ -7,6 +7,7 @@ namespace metternich {
 
 class character;
 class country;
+class icon;
 class landed_title;
 class office;
 class province;
@@ -23,6 +24,7 @@ class character_game_data final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY titled_name_changed)
+	Q_PROPERTY(metternich::icon* portrait READ get_portrait_unconst NOTIFY portrait_changed)
 	Q_PROPERTY(metternich::country* employer READ get_employer_unconst NOTIFY employer_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(int primary_attribute_value READ get_primary_attribute_value NOTIFY attributes_changed)
@@ -56,6 +58,22 @@ public:
 	{
 		return QString::fromStdString(this->get_titled_name());
 	}
+
+	const icon *get_portrait() const
+	{
+		return this->portrait;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	icon *get_portrait_unconst() const
+	{
+		return const_cast<icon *>(this->get_portrait());
+	}
+
+public:
+	bool is_current_portrait_valid() const;
+	void check_portrait();
 
 	const metternich::country *get_employer() const
 	{
@@ -264,6 +282,7 @@ public:
 
 signals:
 	void titled_name_changed();
+	void portrait_changed();
 	void employer_changed();
 	void age_changed();
 	void traits_changed();
@@ -277,6 +296,7 @@ signals:
 
 private:
 	const metternich::character *character = nullptr;
+	const icon *portrait = nullptr;
 	const metternich::country *employer = nullptr;
 	std::vector<const trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;

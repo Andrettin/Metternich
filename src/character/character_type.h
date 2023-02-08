@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "ui/icon_container.h"
 
 namespace metternich {
 
@@ -9,6 +10,9 @@ class country;
 class icon;
 class province;
 enum class attribute;
+
+template <typename scope_type>
+class condition;
 
 template <typename scope_type>
 class modifier;
@@ -35,6 +39,21 @@ public:
 	const icon *get_portrait() const
 	{
 		return this->portrait;
+	}
+
+	const icon_map<std::unique_ptr<const condition<character>>> &get_conditional_portraits() const
+	{
+		return this->conditional_portraits;
+	}
+
+	const condition<character> *get_portrait_conditions(const icon *portrait) const
+	{
+		const auto find_iterator = this->conditional_portraits.find(portrait);
+		if (find_iterator != this->conditional_portraits.end()) {
+			return find_iterator->second.get();
+		}
+
+		return nullptr;
 	}
 
 	attribute get_primary_attribute() const
@@ -64,6 +83,7 @@ signals:
 
 private:
 	icon *portrait = nullptr;
+	icon_map<std::unique_ptr<const condition<character>>> conditional_portraits;
 	attribute primary_attribute;
 	std::unique_ptr<modifier<const country>> country_modifier;
 	std::unique_ptr<modifier<const province>> province_modifier;
