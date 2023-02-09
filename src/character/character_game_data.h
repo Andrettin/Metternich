@@ -40,6 +40,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList landed_titles READ get_landed_titles_qvariant_list NOTIFY landed_titles_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY landed_titles_changed)
 	Q_PROPERTY(metternich::office* office READ get_office_unconst NOTIFY office_changed)
+	Q_PROPERTY(int loyalty READ get_loyalty_int NOTIFY loyalty_changed)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
 	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
@@ -193,6 +194,34 @@ public:
 	void apply_country_modifier(const country *country, const int multiplier);
 	void apply_province_modifier(const province *province, const int multiplier);
 
+	const centesimal_int &get_loyalty() const;
+
+	const centesimal_int &get_unclamped_loyalty() const
+	{
+		return this->loyalty;
+	}
+
+	int get_loyalty_int() const
+	{
+		return this->get_loyalty().to_int();
+	}
+
+	void set_loyalty(const centesimal_int &loyalty)
+	{
+		if (loyalty == this->get_unclamped_loyalty()) {
+			return;
+		}
+
+		this->loyalty = loyalty;
+
+		emit loyalty_changed();
+	}
+
+	void change_loyalty(const centesimal_int &change)
+	{
+		this->set_loyalty(this->get_unclamped_loyalty() + change);
+	}
+
 	int get_wealth() const
 	{
 		return this->wealth;
@@ -290,6 +319,7 @@ signals:
 	void attributes_changed();
 	void landed_titles_changed();
 	void office_changed();
+	void loyalty_changed();
 	void wealth_changed();
 	void prestige_changed();
 	void piety_changed();
@@ -303,6 +333,7 @@ private:
 	std::map<attribute, int> attribute_values;
 	std::vector<const landed_title *> landed_titles;
 	const metternich::office *office = nullptr;
+	centesimal_int loyalty;
 	int wealth = 0;
 	centesimal_int prestige;
 	centesimal_int piety;

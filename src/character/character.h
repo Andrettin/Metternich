@@ -50,6 +50,9 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::character*";
 	static constexpr const char database_folder[] = "characters";
 	static constexpr int default_max_level = 6; //the maximum level in normal circumstances
+	static constexpr int base_loyalty = 50;
+	static constexpr centesimal_int min_loyalty = centesimal_int(0);
+	static constexpr centesimal_int max_loyalty = centesimal_int(100);
 
 	explicit character(const std::string &identifier);
 	~character();

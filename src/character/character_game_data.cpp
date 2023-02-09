@@ -28,7 +28,8 @@
 
 namespace metternich {
 
-character_game_data::character_game_data(const metternich::character *character) : character(character)
+character_game_data::character_game_data(const metternich::character *character)
+	: character(character), loyalty(character::base_loyalty)
 {
 	connect(this, &character_game_data::landed_titles_changed, this, &character_game_data::titled_name_changed);
 	connect(this, &character_game_data::office_changed, this, &character_game_data::titled_name_changed);
@@ -520,6 +521,19 @@ void character_game_data::apply_province_modifier(const province *province, cons
 	if (this->character->get_type()->get_province_modifier() != nullptr) {
 		this->character->get_type()->get_province_modifier()->apply(province, this->get_primary_attribute_value() * multiplier);
 	}
+}
+
+const centesimal_int &character_game_data::get_loyalty() const
+{
+	if (this->is_ruler() || this->get_unclamped_loyalty() > character::max_loyalty) {
+		return character::max_loyalty;
+	}
+
+	if (this->get_unclamped_loyalty() < character::min_loyalty) {
+		return character::min_loyalty;
+	}
+
+	return this->get_unclamped_loyalty();
 }
 
 void character_game_data::change_quarterly_prestige(const centesimal_int &change)
