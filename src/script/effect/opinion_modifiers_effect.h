@@ -6,6 +6,7 @@
 #include "script/effect/effect.h"
 #include "script/opinion_modifier.h"
 #include "util/assert_util.h"
+#include "util/number_util.h"
 
 namespace metternich {
 
@@ -122,7 +123,7 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return "Gain the " + this->modifier->get_name() + " opinion modifier towards " + this->get_target_name(ctx) + " for " + std::to_string(this->duration * defines::get()->get_months_per_turn()) + " months";
+		return number::to_signed_string(this->modifier->get_value()) + " Opinion towards " + this->get_target_name(ctx) + " for " + std::to_string(this->duration * defines::get()->get_months_per_turn()) + " months";
 	}
 
 	virtual std::string get_subtraction_string(const scope_type *scope, const read_only_context &ctx) const override
