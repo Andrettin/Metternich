@@ -151,6 +151,7 @@ set(script_SRCS
 	src/script/mean_time_to_happen.cpp
 	src/script/modifier.cpp
 	src/script/opinion_modifier.cpp
+	src/script/opinion_modifier_container.cpp
 	src/script/scripted_modifier_container.cpp
 	src/script/scripted_scoped_modifier.cpp
 )
@@ -385,6 +386,7 @@ set(script_HDRS
 	src/script/mean_time_to_happen.h
 	src/script/modifier.h
 	src/script/opinion_modifier.h
+	src/script/opinion_modifier_container.h
 	src/script/scripted_character_modifier.h
 	src/script/scripted_modifier.h
 	src/script/scripted_modifier_container.h
