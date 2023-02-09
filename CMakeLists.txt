@@ -467,6 +467,7 @@ source_group(script\\effect FILES ${script_effect_HDRS})
 set(script_modifier_effect_HDRS
 	src/script/modifier_effect/attribute_modifier_effect.h
 	src/script/modifier_effect/land_morale_resistance_modifier_effect.h
+	src/script/modifier_effect/loyalty_modifier_effect.h
 	src/script/modifier_effect/modifier_effect.h
 	src/script/modifier_effect/naval_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/quarterly_piety_modifier_effect.h
