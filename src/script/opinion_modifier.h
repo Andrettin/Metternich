@@ -15,7 +15,7 @@ class opinion_modifier final : public named_data_entry, public data_type<opinion
 public:
 	static constexpr const char class_identifier[] = "opinion_modifier";
 	static constexpr const char property_class_identifier[] = "metternich::opinion_modifier*";
-	static constexpr const char database_folder[] = "opinion_modifier";
+	static constexpr const char database_folder[] = "opinion_modifiers";
 
 	explicit opinion_modifier(const std::string &identifier) : named_data_entry(identifier)
 	{
