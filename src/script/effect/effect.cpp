@@ -19,6 +19,7 @@
 #include "script/effect/delayed_effect.h"
 #include "script/effect/if_effect.h"
 #include "script/effect/militancy_effect.h"
+#include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/piety_effect.h"
 #include "script/effect/prestige_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
@@ -80,7 +81,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	std::unique_ptr<effect> effect;
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (effect_identifier == "scripted_modifiers") {
+		if (effect_identifier == "opinion_modifiers") {
+			effect = std::make_unique<opinion_modifiers_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "scripted_modifiers") {
 			effect = std::make_unique<scripted_modifiers_effect<scope_type>>(effect_operator);
 		}
 	}
@@ -164,10 +167,10 @@ void effect<scope_type>::do_effect(scope_type *scope, context &ctx) const
 			this->do_assignment_effect(scope, ctx);
 			break;
 		case gsml_operator::addition:
-			this->do_addition_effect(scope);
+			this->do_addition_effect(scope, ctx);
 			break;
 		case gsml_operator::subtraction:
-			this->do_subtraction_effect(scope);
+			this->do_subtraction_effect(scope, ctx);
 			break;
 		default:
 			throw std::runtime_error("Invalid effect operator: \"" + std::to_string(static_cast<int>(this->effect_operator)) + "\".");
@@ -181,9 +184,9 @@ std::string effect<scope_type>::get_string(const scope_type *scope, const read_o
 		case gsml_operator::assignment:
 			return this->get_assignment_string(scope, ctx, indent, prefix);
 		case gsml_operator::addition:
-			return this->get_addition_string();
+			return this->get_addition_string(scope, ctx);
 		case gsml_operator::subtraction:
-			return this->get_subtraction_string();
+			return this->get_subtraction_string(scope, ctx);
 		default:
 			throw std::runtime_error("Invalid effect operator: \"" + std::to_string(static_cast<int>(this->effect_operator)) + "\".");
 	}

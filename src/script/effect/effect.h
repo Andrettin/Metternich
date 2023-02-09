@@ -63,11 +63,25 @@ public:
 		throw std::runtime_error("The addition operator is not supported for \"" + this->get_class_identifier() + "\" effects.");
 	}
 
+	virtual void do_addition_effect(scope_type *scope, context &ctx) const
+	{
+		Q_UNUSED(ctx);
+
+		this->do_addition_effect(scope);
+	}
+
 	virtual void do_subtraction_effect(scope_type *scope) const
 	{
 		Q_UNUSED(scope)
 
 		throw std::runtime_error("The subtraction operator is not supported for \"" + this->get_class_identifier() + "\" effects.");
+	}
+
+	virtual void do_subtraction_effect(scope_type *scope, context &ctx) const
+	{
+		Q_UNUSED(ctx);
+
+		this->do_subtraction_effect(scope);
 	}
 
 	std::string get_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const;
@@ -92,9 +106,25 @@ public:
 		throw std::runtime_error("The addition operator is not supported for \"" + this->get_class_identifier() + "\" effects.");
 	}
 
+	virtual std::string get_addition_string(const scope_type *scope, const read_only_context &ctx) const
+	{
+		Q_UNUSED(scope);
+		Q_UNUSED(ctx);
+
+		return this->get_addition_string();
+	}
+
 	virtual std::string get_subtraction_string() const
 	{
 		throw std::runtime_error("The subtraction operator is not supported for \"" + this->get_class_identifier() + "\" effects.");
+	}
+
+	virtual std::string get_subtraction_string(const scope_type *scope, const read_only_context &ctx) const
+	{
+		Q_UNUSED(scope);
+		Q_UNUSED(ctx);
+
+		return this->get_subtraction_string();
 	}
 
 	virtual bool is_hidden() const

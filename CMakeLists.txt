@@ -457,6 +457,7 @@ set(script_effect_HDRS
 	src/script/effect/effect_list.h
 	src/script/effect/if_effect.h
 	src/script/effect/militancy_effect.h
+	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/piety_effect.h
 	src/script/effect/prestige_effect.h
 	src/script/effect/scope_effect.h
