@@ -461,6 +461,16 @@ bool character_game_data::is_ruler() const
 	return this->get_employer() != nullptr && this->get_employer()->get_game_data()->get_ruler() == this->character;
 }
 
+bool character_game_data::is_ruler_of(const metternich::character *other) const
+{
+	return this->get_employer() == other->get_game_data()->get_employer() && this->is_ruler();
+}
+
+bool character_game_data::is_ruled_by(const metternich::character *other) const
+{
+	return other->get_game_data()->is_ruler_of(this->character);
+}
+
 void character_game_data::set_office(const metternich::office *office)
 {
 	if (office == this->get_office()) {

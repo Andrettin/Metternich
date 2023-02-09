@@ -165,6 +165,8 @@ public:
 	}
 
 	bool is_ruler() const;
+	bool is_ruler_of(const metternich::character *other) const;
+	bool is_ruled_by(const metternich::character *other) const;
 
 	const metternich::office *get_office() const
 	{
