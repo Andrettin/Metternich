@@ -17,6 +17,7 @@ include_directories(
 set(character_SRCS
 	src/character/attribute.cpp
 	src/character/character.cpp
+	src/character/character_container.cpp
 	src/character/character_game_data.cpp
 	src/character/character_type.cpp
 	src/character/character_type_container.cpp
@@ -250,6 +251,7 @@ set(metternich_SRCS
 set(character_HDRS
 	src/character/attribute.h
 	src/character/character.h
+	src/character/character_container.h
 	src/character/character_game_data.h
 	src/character/character_type.h
 	src/character/character_type_container.h
