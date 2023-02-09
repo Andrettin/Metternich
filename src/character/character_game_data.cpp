@@ -377,6 +377,30 @@ void character_game_data::decrement_scripted_modifiers()
 	for (const scripted_character_modifier *modifier : modifiers_to_remove) {
 		this->remove_scripted_modifier(modifier);
 	}
+
+	//decrement opinion modifiers as well
+	character_map<std::vector<const opinion_modifier *>> opinion_modifiers_to_remove;
+
+	for (auto &[character, opinion_modifier_map] : this->opinion_modifiers) {
+		for (auto &[modifier, duration] : opinion_modifier_map) {
+			if (duration == -1) {
+				//eternal
+				continue;
+			}
+
+			--duration;
+
+			if (duration == 0) {
+				opinion_modifiers_to_remove[character].push_back(modifier);
+			}
+		}
+	}
+
+	for (const auto &[character, opinion_modifiers] : opinion_modifiers_to_remove) {
+		for (const opinion_modifier *modifier : opinion_modifiers) {
+			this->remove_opinion_modifier(character, modifier);
+		}
+	}
 }
 
 int character_game_data::get_attribute_value(const attribute attribute) const
@@ -569,7 +593,7 @@ int character_game_data::get_opinion_of(const metternich::character *other) cons
 {
 	int opinion = 0;
 
-	for (const opinion_modifier *modifier : this->get_opinion_modifiers_for(other)) {
+	for (const auto &[modifier, duration] : this->get_opinion_modifiers_for(other)) {
 		opinion += modifier->get_value();
 	}
 
@@ -578,9 +602,9 @@ int character_game_data::get_opinion_of(const metternich::character *other) cons
 	return opinion;
 }
 
-void character_game_data::add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier)
+void character_game_data::add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier, const int duration)
 {
-	this->opinion_modifiers[other].push_back(modifier);
+	this->opinion_modifiers[other][modifier] = std::max(this->opinion_modifiers[other][modifier], duration); ;
 
 	if (this->is_ruled_by(other)) {
 		this->change_loyalty(character::opinion_to_loyalty(modifier->get_value()));
@@ -589,8 +613,8 @@ void character_game_data::add_opinion_modifier(const metternich::character *othe
 
 void character_game_data::remove_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier)
 {
-	std::vector<const opinion_modifier *> &opinion_modifiers = this->opinion_modifiers[other];
-	std::erase(opinion_modifiers, modifier);
+	opinion_modifier_map<int> &opinion_modifiers = this->opinion_modifiers[other];
+	opinion_modifiers.erase(modifier);
 
 	if (opinion_modifiers.empty()) {
 		this->opinion_modifiers.erase(other);
@@ -605,7 +629,7 @@ void character_game_data::apply_opinion_to_loyalty(const int multiplier)
 {
 	const metternich::character *ruler = this->get_employer()->get_game_data()->get_ruler();
 
-	for (const opinion_modifier *modifier : this->get_opinion_modifiers_for(ruler)) {
+	for (const auto &[modifier, duration] : this->get_opinion_modifiers_for(ruler)) {
 		this->change_loyalty(character::opinion_to_loyalty(modifier->get_value()) * multiplier);
 	}
 }

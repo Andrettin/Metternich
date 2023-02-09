@@ -1,6 +1,7 @@
 #pragma once
 
 #include "character/character_container.h"
+#include "script/opinion_modifier_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/fractional_int.h"
 
@@ -315,19 +316,19 @@ public:
 
 	int get_opinion_of(const metternich::character *other) const;
 
-	const std::vector<const opinion_modifier *> &get_opinion_modifiers_for(const metternich::character *other) const
+	const opinion_modifier_map<int> &get_opinion_modifiers_for(const metternich::character *other) const
 	{
-		static const std::vector<const opinion_modifier *> empty_vector;
+		static const opinion_modifier_map<int> empty_map;
 
 		const auto find_iterator = this->opinion_modifiers.find(other);
 		if (find_iterator != this->opinion_modifiers.end()) {
 			return find_iterator->second;
 		}
 
-		return empty_vector;
+		return empty_map;
 	}
 
-	void add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier);
+	void add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier, const int duration);
 	void remove_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier);
 	void apply_opinion_to_loyalty(const int multiplier);
 
@@ -361,7 +362,7 @@ private:
 	centesimal_int piety;
 	centesimal_int quarterly_prestige;
 	centesimal_int quarterly_piety;
-	character_map<std::vector<const opinion_modifier *>> opinion_modifiers;
+	character_map<opinion_modifier_map<int>> opinion_modifiers;
 };
 
 }
