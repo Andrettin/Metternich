@@ -58,7 +58,7 @@ public:
 
 	static centesimal_int opinion_to_loyalty(const int opinion)
 	{
-		return centesimal_int(opinion - character::min_opinion) * 100 / (character::max_opinion - character::min_opinion);
+		return centesimal_int(opinion) * 100 / (character::max_opinion - character::min_opinion);
 	}
 
 	explicit character(const std::string &identifier);
