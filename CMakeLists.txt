@@ -395,7 +395,8 @@ set(script_condition_HDRS
 	src/script/condition/and_condition.h
 	src/script/condition/any_advisor_condition.h
 	src/script/condition/any_character_condition.h
-	src/script/condition/any_landed_character_condition.h
+	src/script/condition/any_character_or_vassal_condition.h
+	src/script/condition/any_vassal_character_condition.h
 	src/script/condition/attribute_condition.h
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/character_type_condition.h
@@ -439,7 +440,10 @@ set(script_condition_HDRS
 source_group(script\\condition FILES ${script_condition_HDRS})
 
 set(script_effect_HDRS
+	src/script/effect/any_character_effect.h
+	src/script/effect/any_character_or_vassal_effect.h
 	src/script/effect/any_population_unit_effect.h
+	src/script/effect/any_vassal_character_effect.h
 	src/script/effect/commodity_effect.h
 	src/script/effect/consciousness_effect.h
 	src/script/effect/country_effect.h

@@ -9,7 +9,10 @@
 #include "database/database.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "script/effect/any_character_effect.h"
+#include "script/effect/any_character_or_vassal_effect.h"
 #include "script/effect/any_population_unit_effect.h"
+#include "script/effect/any_vassal_character_effect.h"
 #include "script/effect/commodity_effect.h"
 #include "script/effect/consciousness_effect.h"
 #include "script/effect/country_effect.h"
@@ -83,7 +86,13 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	}
 
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
-		if (effect_identifier == "delayed") {
+		if (effect_identifier == "any_character") {
+			effect = std::make_unique<any_character_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "any_character_or_vassal") {
+			effect = std::make_unique<any_character_or_vassal_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "any_vassal_character") {
+			effect = std::make_unique<any_vassal_character_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "delayed") {
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
 		}
 	}

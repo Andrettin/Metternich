@@ -8,18 +8,19 @@
 
 namespace metternich {
 
+//scope including both landed characters in the country and rulers of vassal countries
 template <typename upper_scope_type>
-class any_landed_character_condition final : public scope_condition_base<upper_scope_type, character>
+class any_vassal_character_condition final : public scope_condition_base<upper_scope_type, character>
 {
 public:
-	explicit any_landed_character_condition(const gsml_operator condition_operator)
+	explicit any_vassal_character_condition(const gsml_operator condition_operator)
 		: scope_condition_base<upper_scope_type, character>(condition_operator)
 	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "any_landed_character";
+		static const std::string class_identifier = "any_vassal_character";
 		return class_identifier;
 	}
 
@@ -39,14 +40,12 @@ public:
 			return false;
 		}
 
-		const std::vector<const character *> &characters = country->get_game_data()->get_characters();
-
-		for (const character *character : characters) {
-			if (character->get_game_data()->get_landed_titles().empty()) {
+		for (const metternich::country *vassal_country : country->get_game_data()->get_vassals()) {
+			if (vassal_country->get_game_data()->get_ruler() == nullptr) {
 				continue;
 			}
 
-			if (this->check_scope(character, ctx)) {
+			if (this->check_scope(vassal_country->get_game_data()->get_ruler(), ctx)) {
 				return true;
 			}
 		}
@@ -56,7 +55,7 @@ public:
 
 	virtual std::string get_scope_name() const override
 	{
-		return "Any landed character";
+		return "Any vassal character";
 	}
 };
 
