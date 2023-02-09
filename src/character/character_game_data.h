@@ -1,5 +1,6 @@
 #pragma once
 
+#include "character/character_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/fractional_int.h"
 
@@ -10,6 +11,7 @@ class country;
 class icon;
 class landed_title;
 class office;
+class opinion_modifier;
 class province;
 class scripted_character_modifier;
 class trait;
@@ -311,6 +313,24 @@ public:
 
 	void change_quarterly_piety(const centesimal_int &change);
 
+	int get_opinion_of(const metternich::character *other) const;
+
+	const std::vector<const opinion_modifier *> &get_opinion_modifiers_for(const metternich::character *other) const
+	{
+		static const std::vector<const opinion_modifier *> empty_vector;
+
+		const auto find_iterator = this->opinion_modifiers.find(other);
+		if (find_iterator != this->opinion_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return empty_vector;
+	}
+
+	void add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier);
+	void remove_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier);
+	void apply_opinion_to_loyalty(const int multiplier);
+
 signals:
 	void titled_name_changed();
 	void portrait_changed();
@@ -341,6 +361,7 @@ private:
 	centesimal_int piety;
 	centesimal_int quarterly_prestige;
 	centesimal_int quarterly_piety;
+	character_map<std::vector<const opinion_modifier *>> opinion_modifiers;
 };
 
 }

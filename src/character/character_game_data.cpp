@@ -18,6 +18,7 @@
 #include "game/game.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
+#include "script/opinion_modifier.h"
 #include "script/scripted_character_modifier.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -561,6 +562,51 @@ void character_game_data::change_quarterly_piety(const centesimal_int &change)
 
 	if (this->is_ruler()) {
 		this->get_employer()->get_game_data()->change_quarterly_piety(change);
+	}
+}
+
+int character_game_data::get_opinion_of(const metternich::character *other) const
+{
+	int opinion = 0;
+
+	for (const opinion_modifier *modifier : this->get_opinion_modifiers_for(other)) {
+		opinion += modifier->get_value();
+	}
+
+	opinion = std::clamp(opinion, character::min_opinion, character::max_opinion);
+
+	return opinion;
+}
+
+void character_game_data::add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier)
+{
+	this->opinion_modifiers[other].push_back(modifier);
+
+	if (this->is_ruled_by(other)) {
+		this->change_loyalty(character::opinion_to_loyalty(modifier->get_value()));
+	}
+}
+
+void character_game_data::remove_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier)
+{
+	std::vector<const opinion_modifier *> &opinion_modifiers = this->opinion_modifiers[other];
+	std::erase(opinion_modifiers, modifier);
+
+	if (opinion_modifiers.empty()) {
+		this->opinion_modifiers.erase(other);
+	}
+
+	if (this->is_ruled_by(other)) {
+		this->change_loyalty(-character::opinion_to_loyalty(modifier->get_value()));
+	}
+}
+
+void character_game_data::apply_opinion_to_loyalty(const int multiplier)
+{
+	const metternich::character *ruler = this->get_employer()->get_game_data()->get_ruler();
+
+	for (const opinion_modifier *modifier : this->get_opinion_modifiers_for(ruler)) {
+		this->change_loyalty(character::opinion_to_loyalty(modifier->get_value()) * multiplier);
 	}
 }
 

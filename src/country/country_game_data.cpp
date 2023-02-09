@@ -1584,6 +1584,14 @@ void country_game_data::apply_ruler_effects(const int multiplier)
 	ruler_game_data->apply_country_modifier(this->country, multiplier);
 	this->change_quarterly_prestige(ruler_game_data->get_quarterly_prestige() * multiplier);
 	this->change_quarterly_piety(ruler_game_data->get_quarterly_piety() * multiplier);
+
+	for (const character *character : this->get_characters()) {
+		if (character == this->get_ruler()) {
+			continue;
+		}
+
+		character->get_game_data()->apply_opinion_to_loyalty(multiplier);
+	}
 }
 
 QObject *country_game_data::get_office_character(metternich::office *office_param) const
