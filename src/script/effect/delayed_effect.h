@@ -7,6 +7,7 @@
 #include "script/effect/delayed_effect_instance.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
+#include "script/effect/scripted_effect.h"
 #include "util/assert_util.h"
 #include "util/random.h"
 
@@ -35,6 +36,17 @@ public:
 		const std::string &value = property.get_value();
 
 		if (key == "scripted_effect") {
+			if constexpr (std::is_same_v<scope_type, const character>) {
+				this->scripted_effect = character_scripted_effect::get(value);
+			} else if constexpr (std::is_same_v<scope_type, const country>) {
+				this->scripted_effect = country_scripted_effect::get(value);
+			} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+				this->scripted_effect = population_unit_scripted_effect::get(value);
+			} else if constexpr (std::is_same_v<scope_type, const province>) {
+				this->scripted_effect = province_scripted_effect::get(value);
+			} else {
+				assert_throw(false);
+			}
 		} else if (key == "event") {
 			if constexpr (std::is_same_v<scope_type, const character>) {
 				this->event = character_event::get(value);
@@ -106,6 +118,7 @@ public:
 		const size_t new_indent = str.empty() ? indent : (indent + 1);
 
 		if (this->scripted_effect != nullptr) {
+			str += this->scripted_effect->get_effects().get_effects_string(scope, ctx, new_indent, prefix);
 		} else {
 			if (!str.empty()) {
 				str += std::string(new_indent, '\t');

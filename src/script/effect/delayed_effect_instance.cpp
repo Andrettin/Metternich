@@ -9,6 +9,7 @@
 #include "database/gsml_property.h"
 #include "game/character_event.h"
 #include "game/country_event.h"
+#include "script/effect/scripted_effect.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -40,6 +41,17 @@ void delayed_effect_instance<scope_type>::process_gsml_property(const gsml_prope
 	const std::string &value = property.get_value();
 
 	if (key == "scripted_effect") {
+		if constexpr (std::is_same_v<scope_type, const character>) {
+			this->scripted_effect = character_scripted_effect::get(value);
+		} else if constexpr (std::is_same_v<scope_type, const country>) {
+			this->scripted_effect = country_scripted_effect::get(value);
+		} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+			this->scripted_effect = population_unit_scripted_effect::get(value);
+		} else if constexpr (std::is_same_v<scope_type, const province>) {
+			this->scripted_effect = province_scripted_effect::get(value);
+		} else {
+			assert_throw(false);
+		}
 	} else if (key == "event") {
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			this->event = character_event::get(value);
@@ -76,6 +88,7 @@ gsml_data delayed_effect_instance<scope_type>::to_gsml_data() const
 	gsml_data data;
 
 	if (this->scripted_effect != nullptr) {
+		data.add_property("scripted_effect", this->scripted_effect->get_identifier());
 	} else {
 		data.add_property("event", this->event->get_identifier());
 	}
@@ -93,6 +106,7 @@ template <typename scope_type>
 void delayed_effect_instance<scope_type>::do_effects()
 {
 	if (this->scripted_effect != nullptr) {
+		this->scripted_effect->get_effects().do_effects(scope, this->context);
 	} else {
 		metternich::context event_ctx;
 		event_ctx.source_character = this->context.current_character;
