@@ -17,6 +17,7 @@
 #include "script/effect/consciousness_effect.h"
 #include "script/effect/country_effect.h"
 #include "script/effect/delayed_effect.h"
+#include "script/effect/event_effect.h"
 #include "script/effect/if_effect.h"
 #include "script/effect/militancy_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
@@ -58,7 +59,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	}
 
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
-		if (key == "piety") {
+		if (key == "event") {
+			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
+		} else if (key == "piety") {
 			return std::make_unique<piety_effect<scope_type>>(value, effect_operator);
 		} else if (key == "prestige") {
 			return std::make_unique<prestige_effect<scope_type>>(value, effect_operator);
