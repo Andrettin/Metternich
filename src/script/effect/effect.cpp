@@ -23,6 +23,7 @@
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/piety_effect.h"
 #include "script/effect/prestige_effect.h"
+#include "script/effect/random_list_effect.h"
 #include "script/effect/scripted_effect_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
 #include "script/effect/tooltip_effect.h"
@@ -116,6 +117,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		effect = std::make_unique<country_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "if") {
 		effect = std::make_unique<if_effect<scope_type>>(effect_operator);
+	} else if (effect_identifier == "random_list") {
+		effect = std::make_unique<random_list_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "tooltip") {
 		effect = std::make_unique<tooltip_effect<scope_type>>(effect_operator);
 	}

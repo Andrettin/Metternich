@@ -137,6 +137,11 @@ public:
 	std::string get_option_tooltip(const int option_index, const read_only_context &ctx) const;
 	void do_option_effects(const int option_index, context &ctx) const;
 
+	bool has_fired() const
+	{
+		return scoped_event_base::fired_events.contains(this);
+	}
+
 	void fire(const scope_type *scope, const context &ctx) const;
 	virtual void create_instance(const context &ctx) const = 0;
 

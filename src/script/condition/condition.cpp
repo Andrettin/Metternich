@@ -29,6 +29,7 @@
 #include "script/condition/country_type_condition.h"
 #include "script/condition/culture_condition.h"
 #include "script/condition/current_character_condition.h"
+#include "script/condition/event_condition.h"
 #include "script/condition/gender_condition.h"
 #include "script/condition/has_country_office_condition.h"
 #include "script/condition/has_province_office_condition.h"
@@ -134,6 +135,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		return std::make_unique<culture_condition<scope_type>>(value, condition_operator);
 	} else if (key == "current_character") {
 		return std::make_unique<current_character_condition<scope_type>>(value, condition_operator);
+	} else if (key == "event") {
+		return std::make_unique<event_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religion") {
 		return std::make_unique<religion_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religious_group") {

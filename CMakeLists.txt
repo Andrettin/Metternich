@@ -414,6 +414,7 @@ set(script_condition_HDRS
 	src/script/condition/country_type_condition.h
 	src/script/condition/culture_condition.h
 	src/script/condition/current_character_condition.h
+	src/script/condition/event_condition.h
 	src/script/condition/gender_condition.h
 	src/script/condition/has_country_office_condition.h
 	src/script/condition/has_province_office_condition.h
@@ -461,6 +462,7 @@ set(script_effect_HDRS
 	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/piety_effect.h
 	src/script/effect/prestige_effect.h
+	src/script/effect/random_list_effect.h
 	src/script/effect/scope_effect.h
 	src/script/effect/scope_effect_base.h
 	src/script/effect/scripted_effect.h

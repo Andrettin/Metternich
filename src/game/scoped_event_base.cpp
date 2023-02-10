@@ -245,7 +245,7 @@ void scoped_event_base<scope_type>::set_random_weight(const int weight)
 template <typename scope_type>
 bool scoped_event_base<scope_type>::can_fire(const scope_type *scope, const read_only_context &ctx) const
 {
-	if (this->fires_only_once() && scoped_event_base::fired_events.contains(this)) {
+	if (this->fires_only_once() && this->has_fired()) {
 		return false;
 	}
 
@@ -293,9 +293,10 @@ template <typename scope_type>
 void scoped_event_base<scope_type>::fire(const scope_type *scope, const context &ctx) const
 {
 	if (this->fires_only_once()) {
-		assert_throw(!scoped_event_base::fired_events.contains(this));
-		scoped_event_base::fired_events.insert(this);
+		assert_throw(!this->has_fired());
 	}
+
+	scoped_event_base::fired_events.insert(this);
 
 	if (scoped_event_base::is_player_scope(scope)) {
 		this->create_instance(ctx);
