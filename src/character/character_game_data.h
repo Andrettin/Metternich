@@ -106,6 +106,7 @@ public:
 	void add_trait(const trait *trait);
 	void remove_trait(const trait *trait);
 	const trait *generate_trait(const trait_type trait_type, const int max_level);
+	void generate_missing_traits();
 	void generate_expertise_traits();
 	void sort_traits();
 	int get_total_trait_level() const;

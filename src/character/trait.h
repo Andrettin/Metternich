@@ -56,6 +56,11 @@ public:
 		return this->conditions.get();
 	}
 
+	const condition<character> *get_generation_conditions() const
+	{
+		return this->generation_conditions.get();
+	}
+
 	const metternich::modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -71,6 +76,7 @@ private:
 	metternich::icon *icon = nullptr;
 	int level = 0;
 	std::unique_ptr<const condition<character>> conditions;
+	std::unique_ptr<const condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 };
 

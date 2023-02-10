@@ -262,6 +262,10 @@ const trait *character_game_data::generate_trait(const trait_type trait_type, co
 			continue;
 		}
 
+		if (trait->get_generation_conditions() != nullptr && !trait->get_generation_conditions()->check(this->character, ctx)) {
+			continue;
+		}
+
 		if (trait->get_level() > max_level) {
 			continue;
 		}
