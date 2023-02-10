@@ -22,6 +22,7 @@
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/piety_effect.h"
 #include "script/effect/prestige_effect.h"
+#include "script/effect/scripted_effect_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
@@ -66,7 +67,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		}
 	}
 
-	if (key == "tooltip") {
+	if (key == "scripted_effect") {
+		return std::make_unique<scripted_effect_effect<scope_type>>(value, effect_operator);
+	} else if (key == "tooltip") {
 		return std::make_unique<tooltip_effect<scope_type>>(value, effect_operator);
 	}
 
