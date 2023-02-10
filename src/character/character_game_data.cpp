@@ -43,20 +43,7 @@ void character_game_data::on_game_started()
 		this->add_trait(trait);
 	}
 
-	std::set<trait_type> trait_types;
-
-	for (const trait *trait : this->get_traits()) {
-		trait_types.insert(trait->get_type());
-	}
-
-	static const std::vector<trait_type> required_trait_types = { trait_type::background, trait_type::personality };
-
-	for (const trait_type trait_type : required_trait_types) {
-		if (!trait_types.contains(trait_type)) {
-			this->generate_trait(trait_type, 1);
-		}
-	}
-
+	this->generate_missing_traits();
 	this->generate_expertise_traits();
 
 	this->check_portrait();
@@ -287,6 +274,23 @@ const trait *character_game_data::generate_trait(const trait_type trait_type, co
 	const trait *trait = vector::get_random(potential_traits);
 	this->add_trait(trait);
 	return trait;
+}
+
+void character_game_data::generate_missing_traits()
+{
+	std::set<trait_type> trait_types;
+
+	for (const trait *trait : this->get_traits()) {
+		trait_types.insert(trait->get_type());
+	}
+
+	static const std::vector<trait_type> required_trait_types = { trait_type::background, trait_type::personality, trait_type::weapon, trait_type::armor };
+
+	for (const trait_type trait_type : required_trait_types) {
+		if (!trait_types.contains(trait_type)) {
+			this->generate_trait(trait_type, 1);
+		}
+	}
 }
 
 void character_game_data::generate_expertise_traits()

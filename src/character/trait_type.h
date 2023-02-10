@@ -8,7 +8,10 @@ enum class trait_type {
 	none,
 	expertise,
 	background,
-	personality
+	personality,
+	weapon,
+	armor,
+	trinket
 };
 
 }
