@@ -1374,6 +1374,15 @@ void country_game_data::add_technology(const technology *technology)
 	}
 }
 
+void country_game_data::add_technology_with_prerequisites(const technology *technology)
+{
+	this->add_technology(technology);
+
+	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
+		this->add_technology_with_prerequisites(prerequisite);
+	}
+}
+
 QVariantList country_game_data::get_available_technologies_qvariant_list() const
 {
 	std::vector<technology *> available_technologies = technology::get_all();

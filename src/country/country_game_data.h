@@ -533,6 +533,7 @@ public:
 	}
 
 	void add_technology(const technology *technology);
+	void add_technology_with_prerequisites(const technology *technology);
 
 	QVariantList get_available_technologies_qvariant_list() const;
 	QVariantList get_future_technologies_qvariant_list() const;

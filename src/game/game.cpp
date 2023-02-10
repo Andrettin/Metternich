@@ -299,7 +299,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			for (const technology *technology : country_history->get_technologies()) {
-				country_game_data->add_technology(technology);
+				country_game_data->add_technology_with_prerequisites(technology);
 			}
 
 			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
@@ -332,7 +332,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data *country_game_data = country->get_game_data();
 
 				for (const technology *technology : culture_history->get_technologies()) {
-					country_game_data->add_technology(technology);
+					country_game_data->add_technology_with_prerequisites(technology);
 				}
 			}
 		}
@@ -348,7 +348,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data *country_game_data = country->get_game_data();
 
 				for (const technology *technology : culture_history->get_technologies()) {
-					country_game_data->add_technology(technology);
+					country_game_data->add_technology_with_prerequisites(technology);
 				}
 			}
 		}
