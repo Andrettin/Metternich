@@ -13,8 +13,6 @@ class event;
 struct context;
 struct read_only_context;
 
-static constexpr const char no_effect_string[] = "No effect";
-
 //a scripted effect
 template <typename scope_type>
 class effect

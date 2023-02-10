@@ -19,6 +19,8 @@ template <typename scope_type>
 class effect_list final
 {
 public:
+	static constexpr const char no_effect_string[] = "No effect";
+
 	effect_list();
 	~effect_list();
 

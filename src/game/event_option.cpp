@@ -84,7 +84,7 @@ std::string event_option<scope_type>::get_tooltip(const read_only_context &ctx) 
 
 	if (!this->tooltip.empty()) {
 		str += this->tooltip;
-	} else if (this->effects != nullptr) {
+	} else {
 		str += this->get_effects_string(ctx);
 	}
 
@@ -113,10 +113,16 @@ std::string event_option<scope_type>::get_effects_string(const read_only_context
 
 		assert_throw(scope != nullptr);
 
-		return this->effects->get_effects_string(scope, ctx);
+		std::string str = this->effects->get_effects_string(scope, ctx);
+
+		if (str.empty()) {
+			return effect_list<scope_type>::no_effect_string;
+		}
+
+		return str;
 	}
 
-	return std::string();
+	return effect_list<scope_type>::no_effect_string;
 }
 
 template <typename scope_type>
