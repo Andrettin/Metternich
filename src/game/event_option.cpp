@@ -2,6 +2,7 @@
 
 #include "game/event_option.h"
 
+#include "character/attribute.h"
 #include "character/character.h"
 #include "character/trait.h"
 #include "database/database.h"
@@ -17,7 +18,8 @@
 namespace metternich {
 
 template <typename scope_type>
-event_option<scope_type>::event_option() : name(event::option_default_name)
+event_option<scope_type>::event_option()
+	: name(event::option_default_name), tooltip_info_attribute(attribute::none)
 {
 }
 
@@ -36,6 +38,8 @@ void event_option<scope_type>::process_gsml_property(const gsml_property &proper
 		this->name = value;
 	} else if (key == "tooltip") {
 		this->tooltip = value;
+	} else if (key == "tooltip_info_attribute") {
+		this->tooltip_info_attribute = enum_converter<attribute>::to_enum(value);
 	} else if (key == "tooltip_info_trait") {
 		this->tooltip_info_trait = trait::get(value);
 	} else if (key == "ai_weight") {
@@ -84,7 +88,9 @@ std::string event_option<scope_type>::get_tooltip(const read_only_context &ctx) 
 		str += this->get_effects_string(ctx);
 	}
 
-	if (this->tooltip_info_trait != nullptr) {
+	if (this->tooltip_info_attribute != attribute::none) {
+		str = "(This option is available due to high " + get_attribute_name(this->tooltip_info_attribute) + ")\n" + str;
+	} else if (this->tooltip_info_trait != nullptr) {
 		str = "(This option is available due to the " + this->tooltip_info_trait->get_name() + " trait)\n" + str;
 	}
 
