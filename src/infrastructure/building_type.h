@@ -23,7 +23,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::employment_type* employment_type MEMBER employment_type NOTIFY changed)
 	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
-	Q_PROPERTY(int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
+	Q_PROPERTY(centesimal_int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "building_type";
@@ -72,14 +72,14 @@ public:
 
 	const commodity *get_output_commodity() const;
 
-	int get_output_multiplier() const
+	const centesimal_int &get_output_multiplier() const
 	{
 		return this->output_multiplier;
 	}
 
 	int get_score() const
 	{
-		return building_type::base_score * std::max(1, this->get_employment_capacity() * this->get_output_multiplier());
+		return (building_type::base_score * centesimal_int::max(centesimal_int(1), (this->get_employment_capacity() * this->get_output_multiplier()))).to_int();
 	}
 
 signals:
@@ -92,7 +92,7 @@ private:
 	metternich::icon *icon = nullptr;
 	metternich::employment_type *employment_type = nullptr;
 	int employment_capacity = 0;
-	int output_multiplier = 0;
+	centesimal_int output_multiplier;
 };
 
 }
