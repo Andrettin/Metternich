@@ -1,5 +1,12 @@
 #pragma once
 
+namespace archimedes {
+	template <int N>
+	class fractional_int;
+
+	using centesimal_int = fractional_int<2>;
+}
+
 namespace metternich {
 
 class building_slot_type;
@@ -76,6 +83,7 @@ public:
 	}
 
 	int get_employment_capacity() const;
+	centesimal_int get_output_multiplier() const;
 
 signals:
 	void building_changed();

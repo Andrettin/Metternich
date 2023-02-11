@@ -191,6 +191,7 @@ public:
 	}
 
 	int get_employment_capacity() const;
+	centesimal_int get_output_multiplier() const;
 
 private:
 	const terrain_type *terrain = nullptr;

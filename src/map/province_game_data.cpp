@@ -108,7 +108,7 @@ void province_game_data::do_production()
 			output += employee->get_employment_output(employment_type);
 		}
 
-		const centesimal_int output_multiplier = improvement->get_output_multiplier() + (centesimal_int(owner_game_data->get_commodity_production_modifier(output_commodity)) / 100);
+		const centesimal_int output_multiplier = tile->get_output_multiplier();
 
 		output_per_commodity[output_commodity] += output * output_multiplier;
 	}
@@ -131,7 +131,7 @@ void province_game_data::do_production()
 			output += employee->get_employment_output(employment_type);
 		}
 
-		const centesimal_int output_multiplier = building_type->get_output_multiplier() + (centesimal_int(owner_game_data->get_commodity_production_modifier(output_commodity)) / 100);
+		const centesimal_int output_multiplier = building_slot->get_output_multiplier();
 
 		output_per_commodity[output_commodity] += output * output_multiplier;
 	}

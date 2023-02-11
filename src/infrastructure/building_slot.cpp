@@ -2,12 +2,15 @@
 
 #include "infrastructure/building_slot.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "util/assert_util.h"
+#include "util/fractional_int.h"
 
 namespace metternich {
 
@@ -54,6 +57,17 @@ int building_slot::get_employment_capacity() const
 	}
 
 	return 0;
+}
+
+centesimal_int building_slot::get_output_multiplier() const
+{
+	if (this->get_building() != nullptr && this->get_building()->get_output_commodity() != nullptr) {
+		centesimal_int output_multiplier = this->get_building()->get_output_multiplier();
+		output_multiplier += centesimal_int(this->get_province()->get_game_data()->get_owner()->get_game_data()->get_commodity_production_modifier(this->get_building()->get_output_commodity())) / 100;
+		return output_multiplier;
+	}
+
+	return centesimal_int(0);
 }
 
 }
