@@ -5,6 +5,7 @@
 #include "economy/employment_type.h"
 #include "economy/resource.h"
 #include "map/terrain_type.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 
@@ -29,6 +30,15 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void improvement::initialize()
+{
+	if (this->required_technology != nullptr) {
+		this->required_technology->add_enabled_improvement(this);
+	}
+
+	data_entry::initialize();
 }
 
 void improvement::check() const

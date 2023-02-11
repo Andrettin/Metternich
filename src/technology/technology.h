@@ -7,6 +7,7 @@ namespace metternich {
 
 class country;
 class icon;
+class improvement;
 
 template <typename scope_type>
 class modifier;
@@ -17,6 +18,7 @@ class technology final : public named_data_entry, public data_type<technology>
 
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 
 public:
@@ -45,6 +47,18 @@ public:
 	bool requires_technology(const technology *technology) const;
 	int get_total_prerequisite_depth() const;
 
+	const std::vector<const improvement *> get_enabled_improvements() const
+	{
+		return this->enabled_improvements;
+	}
+
+	QVariantList get_enabled_improvements_qvariant_list() const;
+
+	void add_enabled_improvement(const improvement *improvement)
+	{
+		this->enabled_improvements.push_back(improvement);
+	}
+
 	const metternich::modifier<const country> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -58,6 +72,7 @@ signals:
 private:
 	metternich::icon *icon = nullptr;
 	std::vector<const technology *> prerequisites;
+	std::vector<const improvement *> enabled_improvements;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
 };
 

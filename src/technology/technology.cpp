@@ -2,6 +2,7 @@
 
 #include "technology/technology.h"
 
+#include "infrastructure/improvement.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -67,6 +68,11 @@ int technology::get_total_prerequisite_depth() const
 	}
 
 	return depth;
+}
+
+QVariantList technology::get_enabled_improvements_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_enabled_improvements());
 }
 
 QString technology::get_modifier_string() const
