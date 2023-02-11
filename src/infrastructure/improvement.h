@@ -21,7 +21,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(metternich::employment_type* employment_type MEMBER employment_type NOTIFY changed)
 	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
-	Q_PROPERTY(centesimal_int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
+	Q_PROPERTY(archimedes::centesimal_int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
 	Q_PROPERTY(metternich::improvement* required_improvement MEMBER required_improvement NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)

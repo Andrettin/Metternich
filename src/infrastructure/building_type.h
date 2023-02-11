@@ -23,7 +23,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::employment_type* employment_type MEMBER employment_type NOTIFY changed)
 	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
-	Q_PROPERTY(centesimal_int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
+	Q_PROPERTY(archimedes::centesimal_int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "building_type";
