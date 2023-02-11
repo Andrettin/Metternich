@@ -14,6 +14,7 @@
 #include "script/effect/any_population_unit_effect.h"
 #include "script/effect/any_vassal_character_effect.h"
 #include "script/effect/commodity_effect.h"
+#include "script/effect/commodity_percent_effect.h"
 #include "script/effect/consciousness_effect.h"
 #include "script/effect/country_effect.h"
 #include "script/effect/delayed_effect.h"
@@ -48,8 +49,13 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<traits_effect>(value, effect_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
+		static const std::string percent_suffix = "_percent";
+
 		if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);
+		} else if (key.ends_with(percent_suffix) && commodity::try_get(key.substr(0, key.size() - percent_suffix.size())) != nullptr) {
+			const commodity *commodity = commodity::get(key.substr(0, key.size() - percent_suffix.size()));
+			return std::make_unique<commodity_percent_effect>(commodity, value, effect_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		if (key == "consciousness") {

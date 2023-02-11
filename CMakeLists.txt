@@ -450,6 +450,7 @@ set(script_effect_HDRS
 	src/script/effect/any_population_unit_effect.h
 	src/script/effect/any_vassal_character_effect.h
 	src/script/effect/commodity_effect.h
+	src/script/effect/commodity_percent_effect.h
 	src/script/effect/consciousness_effect.h
 	src/script/effect/country_effect.h
 	src/script/effect/delayed_effect.h
