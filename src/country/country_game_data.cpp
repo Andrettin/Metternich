@@ -1368,6 +1368,10 @@ QVariantList country_game_data::get_technologies_qvariant_list() const
 
 void country_game_data::add_technology(const technology *technology)
 {
+	if (this->has_technology(technology)) {
+		return;
+	}
+
 	this->technologies.insert(technology);
 
 	if (technology->get_modifier() != nullptr) {

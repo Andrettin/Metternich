@@ -376,6 +376,11 @@ void game::apply_history(const metternich::scenario *scenario)
 
 				tile->set_improvement(site_history->get_improvement());
 
+				//add prerequisites for the tile's improvement to its owner's researched technologies
+				if (tile->get_improvement()->get_required_technology() != nullptr) {
+					tile->get_owner()->get_game_data()->add_technology_with_prerequisites(tile->get_improvement()->get_required_technology());
+				}
+
 				if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
 					tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
 				}
