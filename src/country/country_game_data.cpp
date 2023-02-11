@@ -32,6 +32,7 @@
 #include "population/population_unit.h"
 #include "script/condition/condition.h"
 #include "script/factor.h"
+#include "script/modifier.h"
 #include "technology/technology.h"
 #include "unit/civilian_unit.h"
 #include "util/assert_util.h"
@@ -1368,6 +1369,10 @@ QVariantList country_game_data::get_technologies_qvariant_list() const
 void country_game_data::add_technology(const technology *technology)
 {
 	this->technologies.insert(technology);
+
+	if (technology->get_modifier() != nullptr) {
+		technology->get_modifier()->apply(this->country, 1);
+	}
 
 	if (game::get()->is_running()) {
 		emit technologies_changed();

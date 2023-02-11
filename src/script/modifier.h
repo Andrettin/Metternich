@@ -9,6 +9,7 @@ namespace metternich {
 
 class character;
 class country;
+class province;
 
 template <typename scope_type>
 class modifier_effect;
