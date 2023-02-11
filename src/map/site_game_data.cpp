@@ -54,4 +54,34 @@ const improvement *site_game_data::get_improvement() const
 	return nullptr;
 }
 
+int site_game_data::get_employee_count() const
+{
+	const tile *tile = this->get_tile();
+	if (tile != nullptr) {
+		return tile->get_employee_count();
+	}
+
+	return 0;
+}
+
+int site_game_data::get_employment_capacity() const
+{
+	const tile *tile = this->get_tile();
+	if (tile != nullptr) {
+		return tile->get_employment_capacity();
+	}
+
+	return 0;
+}
+
+int site_game_data::get_production_modifier() const
+{
+	const tile *tile = this->get_tile();
+	if (tile != nullptr) {
+		return (tile->get_output_multiplier() * 100).to_int() - 100;
+	}
+
+	return 0;
+}
+
 }

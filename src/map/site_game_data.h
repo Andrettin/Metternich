@@ -16,6 +16,9 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(metternich::province* province READ get_province_unconst NOTIFY tile_pos_changed)
 	Q_PROPERTY(metternich::improvement* improvement READ get_improvement_unconst NOTIFY improvement_changed)
+	Q_PROPERTY(int employee_count READ get_employee_count NOTIFY improvement_changed)
+	Q_PROPERTY(int employment_capacity READ get_employment_capacity NOTIFY improvement_changed)
+	Q_PROPERTY(int production_modifier READ get_production_modifier NOTIFY improvement_changed)
 
 public:
 	explicit site_game_data(const site *site) : site(site)
@@ -73,6 +76,9 @@ private:
 	}
 
 public:
+	int get_employee_count() const;
+	int get_employment_capacity() const;
+	int get_production_modifier() const;
 
 signals:
 	void tile_pos_changed();
