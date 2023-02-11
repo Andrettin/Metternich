@@ -23,7 +23,7 @@ public:
 
 	virtual void apply(const country *scope, const int multiplier) const override
 	{
-		scope->get_game_data()->change_naval_morale_resistance(this->quantity * multiplier);
+		scope->get_game_data()->change_naval_morale_resistance_modifier(this->quantity * multiplier);
 	}
 
 	virtual std::string get_string(const int multiplier) const override

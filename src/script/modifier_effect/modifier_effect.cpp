@@ -4,6 +4,7 @@
 #include "character/character.h"
 #include "database/gsml_property.h"
 #include "script/modifier_effect/attribute_modifier_effect.h"
+#include "script/modifier_effect/commodity_production_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/loyalty_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
@@ -25,10 +26,15 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<attribute_modifier_effect>(enum_converter<attribute>::to_enum(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
+		static const std::string production_suffix = "_production";
+
 		if (key == "land_morale_resistance") {
 			return std::make_unique<land_morale_resistance_modifier_effect>(value);
 		} else if (key == "naval_morale_resistance") {
 			return std::make_unique<naval_morale_resistance_modifier_effect>(value);
+		} else if (key.ends_with(production_suffix) && commodity::try_get(key.substr(0, key.size() - production_suffix.size())) != nullptr) {
+			const commodity *commodity = commodity::get(key.substr(0, key.size() - production_suffix.size()));
+			return std::make_unique<commodity_production_modifier_effect>(commodity, value);
 		}
 	}
 	

@@ -120,8 +120,9 @@ void province_game_data::do_production()
 	}
 
 	if (this->get_owner() != nullptr) {
+		country_game_data *owner_game_data = this->get_owner()->get_game_data();
 		for (const auto &[commodity, output] : output_per_commodity) {
-			this->get_owner()->get_game_data()->change_stored_commodity(commodity, output.to_int());
+			owner_game_data->change_stored_commodity(commodity, (output * (100 + owner_game_data->get_commodity_production_modifier(commodity)) / 100).to_int());
 		}
 	}
 }

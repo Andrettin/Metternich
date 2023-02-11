@@ -613,24 +613,53 @@ public:
 		this->quarterly_piety += change;
 	}
 
-	int get_land_morale_resistance() const
+	int get_land_morale_resistance_modifier() const
 	{
-		return this->land_morale_resistance;
+		return this->land_morale_resistance_modifier;
 	}
 
-	void change_land_morale_resistance(const int change)
+	void change_land_morale_resistance_modifier(const int change)
 	{
-		this->land_morale_resistance += change;
+		this->land_morale_resistance_modifier += change;
 	}
 
-	int get_naval_morale_resistance() const
+	int get_naval_morale_resistance_modifier() const
 	{
-		return this->naval_morale_resistance;
+		return this->naval_morale_resistance_modifier;
 	}
 
-	void change_naval_morale_resistance(const int change)
+	void change_naval_morale_resistance_modifier(const int change)
 	{
-		this->naval_morale_resistance += change;
+		this->naval_morale_resistance_modifier += change;
+	}
+
+	int get_commodity_production_modifier(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_production_modifiers.find(commodity);
+
+		if (find_iterator != this->commodity_production_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_commodity_production_modifier(const commodity *commodity, const int value)
+	{
+		if (value == this->get_commodity_production_modifier(commodity)) {
+			return;
+		}
+
+		if (value <= 0) {
+			this->commodity_production_modifiers.erase(commodity);
+		} else {
+			this->commodity_production_modifiers[commodity] = value;
+		}
+	}
+
+	void change_commodity_production_modifier(const commodity *commodity, const int value)
+	{
+		this->set_commodity_production_modifier(commodity, this->get_commodity_production_modifier(commodity) + value);
 	}
 
 signals:
@@ -705,8 +734,9 @@ private:
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	centesimal_int quarterly_prestige;
 	centesimal_int quarterly_piety;
-	int land_morale_resistance = 0;
-	int naval_morale_resistance = 0;
+	int land_morale_resistance_modifier = 0;
+	int naval_morale_resistance_modifier = 0;
+	commodity_map<int> commodity_production_modifiers;
 };
 
 }
