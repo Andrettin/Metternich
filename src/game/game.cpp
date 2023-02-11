@@ -377,7 +377,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				tile->set_improvement(site_history->get_improvement());
 
 				//add prerequisites for the tile's improvement to its owner's researched technologies
-				if (tile->get_improvement()->get_required_technology() != nullptr) {
+				if (tile->get_improvement()->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
 					tile->get_owner()->get_game_data()->add_technology_with_prerequisites(tile->get_improvement()->get_required_technology());
 				}
 
@@ -395,6 +395,10 @@ void game::apply_history(const metternich::scenario *scenario)
 					const building_type *slot_building = tile_province_game_data->get_slot_building(building_slot_type);
 					if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
 						tile_province_game_data->set_slot_building(building_slot_type, building);
+
+						if (building->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
+							tile->get_owner()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
+						}
 					}
 				}
 			}

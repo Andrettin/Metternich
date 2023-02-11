@@ -7,6 +7,7 @@
 #include "economy/employment_type.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -27,6 +28,10 @@ void building_type::initialize()
 		this->cultural_group->set_building_class_type(this->get_building_class(), this);
 	} else {
 		this->building_class->set_default_building_type(this);
+	}
+
+	if (this->required_technology != nullptr) {
+		this->required_technology->add_enabled_building(this);
 	}
 
 	data_entry::initialize();

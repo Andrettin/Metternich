@@ -5,7 +5,9 @@
 
 namespace metternich {
 
+class building_type;
 class country;
+class culture;
 class icon;
 class improvement;
 
@@ -18,6 +20,7 @@ class technology final : public named_data_entry, public data_type<technology>
 
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 
@@ -47,6 +50,19 @@ public:
 	bool requires_technology(const technology *technology) const;
 	int get_total_prerequisite_depth() const;
 
+	const std::vector<const building_type *> get_enabled_buildings() const
+	{
+		return this->enabled_buildings;
+	}
+
+	QVariantList get_enabled_buildings_qvariant_list() const;
+	Q_INVOKABLE QVariantList get_enabled_buildings_for_culture(metternich::culture *culture) const;
+
+	void add_enabled_building(const building_type *building)
+	{
+		this->enabled_buildings.push_back(building);
+	}
+
 	const std::vector<const improvement *> get_enabled_improvements() const
 	{
 		return this->enabled_improvements;
@@ -72,6 +88,7 @@ signals:
 private:
 	metternich::icon *icon = nullptr;
 	std::vector<const technology *> prerequisites;
+	std::vector<const building_type *> enabled_buildings;
 	std::vector<const improvement *> enabled_improvements;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
 };

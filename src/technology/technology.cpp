@@ -2,6 +2,8 @@
 
 #include "technology/technology.h"
 
+#include "country/culture.h"
+#include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -68,6 +70,26 @@ int technology::get_total_prerequisite_depth() const
 	}
 
 	return depth;
+}
+
+QVariantList technology::get_enabled_buildings_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_enabled_buildings());
+}
+
+QVariantList technology::get_enabled_buildings_for_culture(culture *culture) const
+{
+	std::vector<const building_type *> buildings;
+
+	for (const building_type *building : this->get_enabled_buildings()) {
+		if (building != culture->get_building_class_type(building->get_building_class())) {
+			continue;
+		}
+
+		buildings.push_back(building);
+	}
+
+	return container::to_qvariant_list(buildings);
 }
 
 QVariantList technology::get_enabled_improvements_qvariant_list() const
