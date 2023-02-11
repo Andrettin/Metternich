@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "util/fractional_int.h"
 
 namespace metternich {
 
