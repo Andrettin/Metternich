@@ -81,7 +81,12 @@ void province_game_data::do_turn()
 
 void province_game_data::do_production()
 {
+	if (this->get_owner() == nullptr) {
+		return;
+	}
+
 	commodity_map<centesimal_int> output_per_commodity;
+	country_game_data *owner_game_data = this->get_owner()->get_game_data();
 
 	for (const QPoint &tile_pos : this->resource_tiles) {
 		const tile *tile = map::get()->get_tile(tile_pos);
@@ -96,10 +101,16 @@ void province_game_data::do_production()
 		}
 
 		const employment_type *employment_type = improvement->get_employment_type();
+		const commodity *output_commodity = employment_type->get_output_commodity();
+		centesimal_int output;
 
 		for (const population_unit *employee : tile->get_employees()) {
-			output_per_commodity[employment_type->get_output_commodity()] += employee->get_employment_output(employment_type) * improvement->get_output_multiplier();
+			output += employee->get_employment_output(employment_type);
 		}
+
+		const centesimal_int output_multiplier = improvement->get_output_multiplier() + (centesimal_int(owner_game_data->get_commodity_production_modifier(output_commodity)) / 100);
+
+		output_per_commodity[output_commodity] += output * output_multiplier;
 	}
 
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
@@ -113,17 +124,20 @@ void province_game_data::do_production()
 		}
 
 		const employment_type *employment_type = building_type->get_employment_type();
+		const commodity *output_commodity = employment_type->get_output_commodity();
+		centesimal_int output;
 
 		for (const population_unit *employee : building_slot->get_employees()) {
-			output_per_commodity[employment_type->get_output_commodity()] += employee->get_employment_output(employment_type) * building_type->get_output_multiplier();
+			output += employee->get_employment_output(employment_type);
 		}
+
+		const centesimal_int output_multiplier = building_type->get_output_multiplier() + (centesimal_int(owner_game_data->get_commodity_production_modifier(output_commodity)) / 100);
+
+		output_per_commodity[output_commodity] += output * output_multiplier;
 	}
 
-	if (this->get_owner() != nullptr) {
-		country_game_data *owner_game_data = this->get_owner()->get_game_data();
-		for (const auto &[commodity, output] : output_per_commodity) {
-			owner_game_data->change_stored_commodity(commodity, (output * (100 + owner_game_data->get_commodity_production_modifier(commodity)) / 100).to_int());
-		}
+	for (const auto &[commodity, output] : output_per_commodity) {
+		owner_game_data->change_stored_commodity(commodity, output.to_int());
 	}
 }
 
