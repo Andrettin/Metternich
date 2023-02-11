@@ -28,37 +28,48 @@ public:
 		assert_throw(this->commodity != nullptr);
 	}
 
-	virtual void do_assignment_effect(const country *scope) const override
+	int get_quantity(const country *scope) const
 	{
 		const int stored_commodity = scope->get_game_data()->get_stored_commodity(this->commodity);
-		scope->get_game_data()->set_stored_commodity(this->commodity, stored_commodity * this->percent / 100);
+		return stored_commodity * this->percent / 100;
+	}
+
+	virtual void do_assignment_effect(const country *scope) const override
+	{
+		scope->get_game_data()->set_stored_commodity(this->commodity, this->get_quantity(scope));
 	}
 
 	virtual void do_addition_effect(const country *scope) const override
 	{
-		const int stored_commodity = scope->get_game_data()->get_stored_commodity(this->commodity);
-		scope->get_game_data()->change_stored_commodity(this->commodity, stored_commodity * this->percent / 100);
+		scope->get_game_data()->change_stored_commodity(this->commodity, this->get_quantity(scope));
 	}
 
 	virtual void do_subtraction_effect(const country *scope) const override
 	{
-		const int stored_commodity = scope->get_game_data()->get_stored_commodity(this->commodity);
-		scope->get_game_data()->change_stored_commodity(this->commodity, stored_commodity * this->percent / 100 * -1);
+		scope->get_game_data()->change_stored_commodity(this->commodity, this->get_quantity(scope) * -1);
 	}
 
-	virtual std::string get_assignment_string() const override
+	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
-		return "Set " + this->commodity->get_name() + " to " + std::to_string(this->percent) + "%";
+		Q_UNUSED(ctx);
+		Q_UNUSED(indent);
+		Q_UNUSED(prefix);
+
+		return "Set " + this->commodity->get_name() + " to " + std::to_string(this->get_quantity(scope));
 	}
 
-	virtual std::string get_addition_string() const override
+	virtual std::string get_addition_string(const country *scope, const read_only_context &ctx) const override
 	{
-		return "Gain " + std::to_string(this->percent) + "% " + this->commodity->get_name();
+		Q_UNUSED(ctx);
+
+		return "Gain " + std::to_string(this->get_quantity(scope)) + " " + this->commodity->get_name();
 	}
 
-	virtual std::string get_subtraction_string() const override
+	virtual std::string get_subtraction_string(const country *scope, const read_only_context &ctx) const override
 	{
-		return "Lose " + std::to_string(this->percent) + "% " + this->commodity->get_name();
+		Q_UNUSED(ctx);
+
+		return "Lose " + std::to_string(this->get_quantity(scope)) + " " + this->commodity->get_name();
 	}
 
 private:
