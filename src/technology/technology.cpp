@@ -118,6 +118,19 @@ QVariantList technology::get_enabled_military_units_for_culture(culture *culture
 	return container::to_qvariant_list(military_units);
 }
 
+void technology::add_enabled_military_unit(const military_unit_type *military_unit)
+{
+	this->enabled_military_units.push_back(military_unit);
+
+	std::sort(this->enabled_military_units.begin(), this->enabled_military_units.end(), [](const military_unit_type *lhs, const military_unit_type *rhs) {
+		if (lhs->get_category() != rhs->get_category()) {
+			return lhs->get_category() < rhs->get_category();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+}
+
 QString technology::get_modifier_string() const
 {
 	if (this->get_modifier() == nullptr) {

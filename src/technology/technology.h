@@ -84,11 +84,7 @@ public:
 
 	QVariantList get_enabled_military_units_qvariant_list() const;
 	Q_INVOKABLE QVariantList get_enabled_military_units_for_culture(metternich::culture *culture) const;
-
-	void add_enabled_military_unit(const military_unit_type *military_unit)
-	{
-		this->enabled_military_units.push_back(military_unit);
-	}
+	void add_enabled_military_unit(const military_unit_type *military_unit);
 
 	const metternich::modifier<const country> *get_modifier() const
 	{
