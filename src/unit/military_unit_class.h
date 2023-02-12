@@ -24,6 +24,8 @@ public:
 public:
 	explicit military_unit_class(const std::string &identifier);
 
+	virtual void check() const override;
+
 	military_unit_domain get_domain() const
 	{
 		return this->domain;
