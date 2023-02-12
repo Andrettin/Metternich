@@ -19,6 +19,13 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(int melee MEMBER melee READ get_melee NOTIFY changed)
+	Q_PROPERTY(int firepower MEMBER firepower READ get_firepower NOTIFY changed)
+	Q_PROPERTY(int range MEMBER range READ get_range NOTIFY changed)
+	Q_PROPERTY(int defense MEMBER defense READ get_defense NOTIFY changed)
+	Q_PROPERTY(int movement MEMBER movement READ get_movement NOTIFY changed)
+	Q_PROPERTY(bool entrench MEMBER entrench READ can_entrench NOTIFY changed)
+	Q_PROPERTY(int entrench_bonus MEMBER entrench_bonus READ get_entrench_bonus NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
@@ -54,9 +61,49 @@ public:
 		return this->icon;
 	}
 
+	int get_melee() const
+	{
+		return this->melee;
+	}
+
+	int get_firepower() const
+	{
+		return this->firepower;
+	}
+
+	int get_range() const
+	{
+		return this->range;
+	}
+
+	int get_defense() const
+	{
+		return this->defense;
+	}
+
+	int get_movement() const
+	{
+		return this->movement;
+	}
+
+	bool can_entrench() const
+	{
+		return this->entrench;
+	}
+
+	int get_entrench_bonus() const
+	{
+		return this->entrench_bonus;
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
+	}
+
+	int get_score() const
+	{
+		return this->get_melee() + this->get_firepower() + this->get_range() + this->get_defense() + this->get_movement();
 	}
 
 signals:
@@ -67,6 +114,13 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *icon = nullptr;
+	int melee = 0;
+	int firepower = 0;
+	int range = 0;
+	int defense = 0;
+	int movement = 0;
+	bool entrench = false;
+	int entrench_bonus = 1; //the entrenchment bonus to defense
 	technology *required_technology = nullptr;
 };
 
