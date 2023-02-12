@@ -214,6 +214,7 @@ set(unit_SRCS
 	src/unit/military_unit_class_container.cpp
 	src/unit/military_unit_domain.cpp
 	src/unit/military_unit_category.cpp
+	src/unit/military_unit_type.cpp
 )
 source_group(unit FILES ${unit_SRCS})
 set_source_files_properties(${unit_SRCS} PROPERTIES UNITY_GROUP "unit")
@@ -519,6 +520,7 @@ set(unit_HDRS
 	src/unit/military_unit_class_container.h
 	src/unit/military_unit_domain.h
 	src/unit/military_unit_category.h
+	src/unit/military_unit_type.h
 )
 source_group(unit FILES ${unit_HDRS})
 

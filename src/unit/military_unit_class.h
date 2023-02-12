@@ -36,6 +36,13 @@ public:
 		return this->category;
 	}
 
+	const military_unit_type *get_default_unit_type() const
+	{
+		return this->default_unit_type;
+	}
+
+	void set_default_unit_type(const military_unit_type *unit_type);
+
 	const std::vector<const military_unit_type *> &get_unit_types() const
 	{
 		return this->unit_types;
@@ -49,6 +56,7 @@ public:
 private:
 	military_unit_domain domain;
 	military_unit_category category;
+	const military_unit_type *default_unit_type = nullptr;
 	std::vector<const military_unit_type *> unit_types;
 };
 

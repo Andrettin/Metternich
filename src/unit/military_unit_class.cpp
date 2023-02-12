@@ -20,4 +20,11 @@ void military_unit_class::check() const
 	assert_throw(this->get_category() != military_unit_category::none);
 }
 
+void military_unit_class::set_default_unit_type(const military_unit_type *unit_type)
+{
+	assert_throw(this->get_default_unit_type() == nullptr);
+
+	this->default_unit_type = unit_type;
+}
+
 }

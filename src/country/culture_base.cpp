@@ -10,6 +10,8 @@
 #include "population/population_type.h"
 #include "unit/civilian_unit_class.h"
 #include "unit/civilian_unit_type.h"
+#include "unit/military_unit_class.h"
+#include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -53,6 +55,15 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			const civilian_unit_type *unit_type = civilian_unit_type::get(value);
 			this->set_civilian_class_unit_type(unit_class, unit_type);
 		});
+	} else if (tag == "military_class_unit_types") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const military_unit_class *unit_class = military_unit_class::get(key);
+			const military_unit_type *unit_type = military_unit_type::get(value);
+			this->set_military_class_unit_type(unit_class, unit_type);
+		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -69,6 +80,10 @@ void culture_base::check() const
 	}
 
 	for (const auto &[unit_class, unit_type] : this->civilian_class_unit_types) {
+		assert_throw(unit_type->get_unit_class() == unit_class);
+	}
+
+	for (const auto &[unit_class, unit_type] : this->military_class_unit_types) {
 		assert_throw(unit_type->get_unit_class() == unit_class);
 	}
 }
@@ -150,6 +165,21 @@ const civilian_unit_type *culture_base::get_civilian_class_unit_type(const civil
 
 	if (this->get_group() != nullptr) {
 		return this->get_group()->get_civilian_class_unit_type(unit_class);
+	}
+
+	return unit_class->get_default_unit_type();
+
+}
+
+const military_unit_type *culture_base::get_military_class_unit_type(const military_unit_class *unit_class) const
+{
+	const auto find_iterator = this->military_class_unit_types.find(unit_class);
+	if (find_iterator != this->military_class_unit_types.end()) {
+		return find_iterator->second;
+	}
+
+	if (this->get_group() != nullptr) {
+		return this->get_group()->get_military_class_unit_type(unit_class);
 	}
 
 	return unit_class->get_default_unit_type();

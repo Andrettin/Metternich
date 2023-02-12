@@ -5,6 +5,7 @@
 #include "infrastructure/building_class_container.h"
 #include "population/population_class_container.h"
 #include "unit/civilian_unit_class_container.h"
+#include "unit/military_unit_class_container.h"
 #include "util/qunique_ptr.h"
 
 namespace metternich {
@@ -13,6 +14,7 @@ class building_type;
 class civilian_unit_type;
 class cultural_group;
 class culture_history;
+class military_unit_type;
 class phenotype;
 class population_type;
 
@@ -86,6 +88,18 @@ public:
 		this->civilian_class_unit_types[unit_class] = unit_type;
 	}
 
+	const military_unit_type *get_military_class_unit_type(const military_unit_class *unit_class) const;
+
+	void set_military_class_unit_type(const military_unit_class *unit_class, const military_unit_type *unit_type)
+	{
+		if (unit_type == nullptr) {
+			this->military_class_unit_types.erase(unit_class);
+			return;
+		}
+
+		this->military_class_unit_types[unit_class] = unit_type;
+	}
+
 signals:
 	void changed();
 
@@ -95,6 +109,7 @@ private:
 	building_class_map<const building_type *> building_class_types;
 	population_class_map<const population_type *> population_class_types;
 	civilian_unit_class_map<const civilian_unit_type *> civilian_class_unit_types;
+	military_unit_class_map<const military_unit_type *> military_class_unit_types;
 	qunique_ptr<culture_history> history;
 };
 
