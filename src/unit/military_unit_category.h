@@ -15,6 +15,7 @@ enum class military_unit_category {
 	light_artillery,
 	heavy_artillery,
 	combat_engineers,
+	general,
 	light_warship,
 	heavy_warship
 };

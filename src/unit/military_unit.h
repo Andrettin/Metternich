@@ -2,6 +2,7 @@
 
 namespace metternich {
 
+class character;
 class country;
 class culture;
 class icon;
@@ -23,7 +24,9 @@ class military_unit final : public QObject
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
 
 public:
+	explicit military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
 	explicit military_unit(const military_unit_type *type, const country *owner, const metternich::province *home_province, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
+	explicit military_unit(const military_unit_type *type, const character *character);
 
 	void do_turn();
 	void do_ai_turn();
@@ -101,6 +104,11 @@ public:
 		return this->phenotype;
 	}
 
+	const metternich::character *get_character() const
+	{
+		return this->character;
+	}
+
 	const metternich::province *get_province() const
 	{
 		return this->province;
@@ -144,6 +152,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
+	const metternich::character *character = nullptr;
 	const metternich::province *province = nullptr; //the province the unit is in
 	const metternich::province *original_province = nullptr; //the province before moving
 };

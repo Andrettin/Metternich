@@ -20,6 +20,7 @@ const std::map<std::string, metternich::military_unit_category> enum_converter<m
 	{ "light_artillery", metternich::military_unit_category::light_artillery },
 	{ "heavy_artillery", metternich::military_unit_category::heavy_artillery },
 	{ "combat_engineers", metternich::military_unit_category::combat_engineers },
+	{ "general", metternich::military_unit_category::general },
 	{ "light_warship", metternich::military_unit_category::light_warship },
 	{ "heavy_warship", metternich::military_unit_category::heavy_warship }
 };

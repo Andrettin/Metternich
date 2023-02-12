@@ -1335,8 +1335,15 @@ void country_game_data::decrease_population()
 	}
 
 	//disband military unit, if possible
-	if (!this->military_units.empty()) {
-		this->military_units.back()->disband(false);
+	for (auto it = this->military_units.rbegin(); it != this->military_units.rend(); ++it) {
+		military_unit *military_unit = it->get();
+
+		if (military_unit->get_character() != nullptr) {
+			//character military units do not cost food, so disbanding them does nothing to help with starvation
+			continue;
+		}
+
+		military_unit->disband(false);
 		this->change_population_growth(defines::get()->get_population_growth_threshold());
 		return;
 	}
