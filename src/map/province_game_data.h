@@ -20,6 +20,7 @@ class country;
 class culture;
 class icon;
 class improvement;
+class military_unit;
 class phenotype;
 class population_type;
 class population_unit;
@@ -267,7 +268,7 @@ public:
 
 	int get_food_consumption() const
 	{
-		return this->get_population_unit_count() + static_cast<int>(this->civilian_units.size());
+		return this->get_population_unit_count() + static_cast<int>(this->home_civilian_units.size()) + static_cast<int>(this->home_military_units.size());
 	}
 
 	int get_free_food_consumption() const
@@ -314,15 +315,29 @@ public:
 
 	void change_score(const int change);
 
-	void add_civilian_unit(civilian_unit *civilian_unit)
+	void add_home_civilian_unit(civilian_unit *civilian_unit)
 	{
-		this->civilian_units.push_back(civilian_unit);
+		this->home_civilian_units.push_back(civilian_unit);
 	}
 
-	void remove_civilian_unit(civilian_unit *civilian_unit)
+	void remove_home_civilian_unit(civilian_unit *civilian_unit)
 	{
-		std::erase(this->civilian_units, civilian_unit);
+		std::erase(this->home_civilian_units, civilian_unit);
 	}
+
+	void add_home_military_unit(military_unit *military_unit)
+	{
+		this->home_military_units.push_back(military_unit);
+	}
+
+	void remove_home_military_unit(military_unit *military_unit)
+	{
+		std::erase(this->home_military_units, military_unit);
+	}
+
+	void add_military_unit(military_unit *military_unit);
+	void remove_military_unit(military_unit *military_unit);
+	void clear_military_units();
 
 	province_game_data &operator =(const province_game_data &other) = delete;
 
@@ -340,6 +355,7 @@ signals:
 	void population_changed();
 	void consciousness_changed();
 	void militancy_changed();
+	void military_units_changed();
 
 private:
 	const metternich::province *province = nullptr;
@@ -368,7 +384,9 @@ private:
 	centesimal_int total_consciousness;
 	centesimal_int total_militancy;
 	int score = 0;
-	std::vector<civilian_unit *> civilian_units;
+	std::vector<civilian_unit *> home_civilian_units;
+	std::vector<military_unit *> home_military_units;
+	std::vector<military_unit *> military_units;
 };
 
 }

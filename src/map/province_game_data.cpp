@@ -31,7 +31,6 @@
 #include "script/condition/and_condition.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
-#include "unit/civilian_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/image_util.h"
@@ -70,6 +69,7 @@ void province_game_data::reset_non_map_data()
 	this->clear_population_units();
 	this->clear_buildings();
 	this->score = province::base_score;
+	this->clear_military_units();
 }
 
 void province_game_data::do_turn()
@@ -579,7 +579,8 @@ void province_game_data::clear_population_units()
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
 	this->total_consciousness = centesimal_int(0);
 	this->total_militancy = centesimal_int(0);
-	this->civilian_units.clear();
+	this->home_civilian_units.clear();
+	this->home_military_units.clear();
 }
 
 QVariantList province_game_data::get_population_type_counts_qvariant_list() const
@@ -1096,6 +1097,29 @@ void province_game_data::change_score(const int change)
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score(change);
 	}
+}
+
+void province_game_data::add_military_unit(military_unit *military_unit)
+{
+	this->military_units.push_back(military_unit);
+
+	if (game::get()->is_running()) {
+		emit military_units_changed();
+	}
+}
+
+void province_game_data::remove_military_unit(military_unit *military_unit)
+{
+	std::erase(this->military_units, military_unit);
+
+	if (game::get()->is_running()) {
+		emit military_units_changed();
+	}
+}
+
+void province_game_data::clear_military_units()
+{
+	this->military_units.clear();
 }
 
 }

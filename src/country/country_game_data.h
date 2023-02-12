@@ -22,6 +22,7 @@ class consulate;
 class country;
 class culture;
 class event;
+class military_unit;
 class population_unit;
 class province;
 class religion;
@@ -590,8 +591,11 @@ public:
 	QVariantList get_offices_qvariant_list() const;
 	void fill_empty_offices();
 
-	void add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit);
-	void remove_civilian_unit(metternich::civilian_unit *civilian_unit);
+	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
+	void remove_civilian_unit(civilian_unit *civilian_unit);
+
+	void add_military_unit(qunique_ptr<military_unit> &&civilian_unit);
+	void remove_military_unit(military_unit *civilian_unit);
 
 	const centesimal_int &get_quarterly_prestige() const
 	{
@@ -732,6 +736,7 @@ private:
 	const character *ruler = nullptr;
 	office_map<const character *> office_characters;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
+	std::vector<qunique_ptr<military_unit>> military_units;
 	centesimal_int quarterly_prestige;
 	centesimal_int quarterly_piety;
 	int land_morale_resistance_modifier = 0;

@@ -35,6 +35,7 @@
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "unit/civilian_unit.h"
+#include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/image_util.h"
@@ -79,6 +80,10 @@ void country_game_data::do_turn()
 
 	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 		civilian_unit->do_turn();
+	}
+
+	for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
+		military_unit->do_turn();
 	}
 
 	this->do_events();
@@ -172,6 +177,10 @@ void country_game_data::do_ai_turn()
 {
 	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 		civilian_unit->do_ai_turn();
+	}
+
+	for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
+		military_unit->do_ai_turn();
 	}
 
 	for (size_t i = 0; i < this->civilian_units.size();) {
@@ -1305,6 +1314,7 @@ void country_game_data::set_population_growth(const int growth)
 
 void country_game_data::decrease_population()
 {
+	//disband civilian unit, if possible
 	civilian_unit *best_civilian_unit = nullptr;
 
 	for (auto it = this->civilian_units.rbegin(); it != this->civilian_units.rend(); ++it) {
@@ -1320,6 +1330,12 @@ void country_game_data::decrease_population()
 
 	if (best_civilian_unit != nullptr) {
 		best_civilian_unit->disband(false);
+		return;
+	}
+
+	//disband military unit, if possible
+	if (!this->military_units.empty()) {
+		this->military_units.back()->disband(false);
 		return;
 	}
 
@@ -1721,16 +1737,31 @@ void country_game_data::fill_empty_offices()
 	}
 }
 
-void country_game_data::add_civilian_unit(qunique_ptr<metternich::civilian_unit> &&civilian_unit)
+void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
 	this->civilian_units.push_back(std::move(civilian_unit));
 }
 
-void country_game_data::remove_civilian_unit(metternich::civilian_unit *civilian_unit)
+void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 {
 	for (size_t i = 0; i < this->civilian_units.size(); ++i) {
 		if (this->civilian_units[i].get() == civilian_unit) {
 			this->civilian_units.erase(this->civilian_units.begin() + i);
+			return;
+		}
+	}
+}
+
+void country_game_data::add_military_unit(qunique_ptr<military_unit> &&military_unit)
+{
+	this->military_units.push_back(std::move(military_unit));
+}
+
+void country_game_data::remove_military_unit(military_unit *military_unit)
+{
+	for (size_t i = 0; i < this->military_units.size(); ++i) {
+		if (this->military_units[i].get() == military_unit) {
+			this->military_units.erase(this->military_units.begin() + i);
 			return;
 		}
 	}
