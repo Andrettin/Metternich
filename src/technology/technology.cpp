@@ -6,6 +6,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "script/modifier.h"
+#include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/vector_util.h"
@@ -95,6 +96,26 @@ QVariantList technology::get_enabled_buildings_for_culture(culture *culture) con
 QVariantList technology::get_enabled_improvements_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_enabled_improvements());
+}
+
+QVariantList technology::get_enabled_military_units_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_enabled_military_units());
+}
+
+QVariantList technology::get_enabled_military_units_for_culture(culture *culture) const
+{
+	std::vector<const military_unit_type *> military_units;
+
+	for (const military_unit_type *military_unit : this->get_enabled_military_units()) {
+		if (military_unit != culture->get_military_class_unit_type(military_unit->get_unit_class())) {
+			continue;
+		}
+
+		military_units.push_back(military_unit);
+	}
+
+	return container::to_qvariant_list(military_units);
 }
 
 QString technology::get_modifier_string() const

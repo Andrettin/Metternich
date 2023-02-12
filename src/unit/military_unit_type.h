@@ -9,15 +9,17 @@ class military_unit_class;
 class cultural_group;
 class culture;
 class icon;
+class technology;
 
 class military_unit_type final : public named_data_entry, public data_type<military_unit_type>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::military_unit_class* unit_class MEMBER unit_class)
-	Q_PROPERTY(metternich::culture* culture MEMBER culture)
-	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group)
-	Q_PROPERTY(metternich::icon* icon MEMBER icon)
+	Q_PROPERTY(metternich::military_unit_class* unit_class MEMBER unit_class NOTIFY changed)
+	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
+	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
+	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "military_unit_type";
@@ -52,11 +54,20 @@ public:
 		return this->icon;
 	}
 
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
+signals:
+	void changed();
+
 private:
 	military_unit_class *unit_class = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *icon = nullptr;
+	technology *required_technology = nullptr;
 };
 
 }
