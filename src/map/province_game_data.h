@@ -357,6 +357,9 @@ public:
 	Q_INVOKABLE int get_military_unit_category_count(const QString &category_identifier) const;
 	void change_military_unit_category_count(const military_unit_category category, const int change);
 
+	Q_INVOKABLE QObject *get_military_unit_category_icon(const metternich::military_unit_category category) const;
+	Q_INVOKABLE QString get_military_unit_category_name(const metternich::military_unit_category category) const;
+
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:

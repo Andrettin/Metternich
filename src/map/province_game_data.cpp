@@ -1159,4 +1159,56 @@ void province_game_data::change_military_unit_category_count(const military_unit
 	}
 }
 
+QObject *province_game_data::get_military_unit_category_icon(const military_unit_category category) const
+{
+	icon_map<int> icon_counts;
+
+	for (const military_unit *military_unit : this->military_units) {
+		if (military_unit->get_category() != category) {
+			continue;
+		}
+
+		++icon_counts[military_unit->get_icon()];
+	}
+
+	const icon *best_icon = nullptr;
+	int best_icon_count = 0;
+	for (const auto &[icon, count] : icon_counts) {
+		if (count > best_icon_count) {
+			best_icon = icon;
+			best_icon_count = count;
+		}
+	}
+
+	assert_throw(best_icon != nullptr);
+
+	return const_cast<icon *>(best_icon);
+}
+
+QString province_game_data::get_military_unit_category_name(const military_unit_category category) const
+{
+	std::map<QString, int> name_counts;
+
+	for (const military_unit *military_unit : this->military_units) {
+		if (military_unit->get_category() != category) {
+			continue;
+		}
+
+		++name_counts[military_unit->get_type()->get_name_qstring()];
+	}
+
+	QString best_name;
+	int best_name_count = 0;
+	for (const auto &[name, count] : name_counts) {
+		if (count > best_name_count) {
+			best_name = name;
+			best_name_count = count;
+		}
+	}
+
+	assert_throw(!best_name.isEmpty());
+
+	return best_name;
+}
+
 }
