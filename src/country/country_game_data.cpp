@@ -1330,12 +1330,14 @@ void country_game_data::decrease_population()
 
 	if (best_civilian_unit != nullptr) {
 		best_civilian_unit->disband(false);
+		this->change_population_growth(defines::get()->get_population_growth_threshold());
 		return;
 	}
 
 	//disband military unit, if possible
 	if (!this->military_units.empty()) {
 		this->military_units.back()->disband(false);
+		this->change_population_growth(defines::get()->get_population_growth_threshold());
 		return;
 	}
 
