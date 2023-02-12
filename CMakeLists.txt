@@ -211,6 +211,7 @@ set(unit_SRCS
 	src/unit/civilian_unit_type.cpp
 	src/unit/historical_civilian_unit.cpp
 	src/unit/military_unit_class.cpp
+	src/unit/military_unit_class_container.cpp
 	src/unit/military_unit_domain.cpp
 	src/unit/military_unit_category.cpp
 )
@@ -515,6 +516,7 @@ set(unit_HDRS
 	src/unit/historical_civilian_unit.h
 	src/unit/historical_civilian_unit_history.h
 	src/unit/military_unit_class.h
+	src/unit/military_unit_class_container.h
 	src/unit/military_unit_domain.h
 	src/unit/military_unit_category.h
 )
