@@ -12,9 +12,9 @@ class civilian_unit_class final : public named_data_entry, public data_type<civi
 	Q_OBJECT
 
 public:
-	static constexpr const char *class_identifier = "civilian_unit_class";
+	static constexpr const char class_identifier[] = "civilian_unit_class";
 	static constexpr const char property_class_identifier[] = "metternich::civilian_unit_class*";
-	static constexpr const char *database_folder = "civilian_unit_classes";
+	static constexpr const char database_folder[] = "civilian_unit_classes";
 
 public:
 	explicit civilian_unit_class(const std::string &identifier) : named_data_entry(identifier)

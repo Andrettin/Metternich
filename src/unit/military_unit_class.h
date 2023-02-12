@@ -15,9 +15,9 @@ class military_unit_class final : public named_data_entry, public data_type<mili
 	Q_PROPERTY(metternich::military_unit_domain domain MEMBER domain READ get_domain)
 
 public:
-	static constexpr const char *class_identifier = "military_unit_class";
+	static constexpr const char class_identifier[] = "military_unit_class";
 	static constexpr const char property_class_identifier[] = "metternich::military_unit_class*";
-	static constexpr const char *database_folder = "unit_classes";
+	static constexpr const char database_folder[] = "unit_classes";
 
 public:
 	explicit military_unit_class(const std::string &identifier);
