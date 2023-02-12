@@ -42,6 +42,9 @@
 #include "unit/civilian_unit.h"
 #include "unit/historical_civilian_unit.h"
 #include "unit/historical_civilian_unit_history.h"
+#include "unit/historical_military_unit.h"
+#include "unit/historical_military_unit_history.h"
+#include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
@@ -481,6 +484,80 @@ void game::apply_history(const metternich::scenario *scenario)
 			civilian_unit->set_tile_pos(tile_pos);
 
 			owner->get_game_data()->add_civilian_unit(std::move(civilian_unit));
+		}
+
+		for (const historical_military_unit *historical_military_unit : historical_military_unit::get_all()) {
+			const historical_military_unit_history *historical_military_unit_history = historical_military_unit->get_history();
+
+			if (!historical_military_unit_history->is_active()) {
+				continue;
+			}
+
+			const province *province = historical_military_unit_history->get_province();
+
+			assert_throw(province != nullptr);
+
+			if (!province->get_game_data()->is_on_map()) {
+				continue;
+			}
+
+			const country *owner = historical_military_unit->get_owner();
+
+			if (owner == nullptr) {
+				owner = province->get_game_data()->get_owner();
+			}
+
+			assert_throw(owner != nullptr);
+			assert_throw(owner->get_game_data()->is_alive());
+
+			const metternich::province *home_province = historical_military_unit->get_home_province();
+			if (home_province == nullptr) {
+				if (province->get_game_data()->get_owner() == owner) {
+					home_province = province;
+				} else if (!owner->get_game_data()->is_under_anarchy()) {
+					home_province = owner->get_capital_province();
+				} else {
+					continue;
+				}
+			}
+			assert_throw(home_province != nullptr);
+
+			const culture *culture = historical_military_unit->get_culture();
+			if (culture == nullptr) {
+				if (home_province->get_game_data()->get_culture() != nullptr) {
+					culture = home_province->get_game_data()->get_culture();
+				} else {
+					culture = owner->get_culture();
+				}
+			}
+			assert_throw(culture != nullptr);
+
+			const religion *religion = historical_military_unit->get_religion();
+			if (religion == nullptr) {
+				if (home_province->get_game_data()->get_religion() != nullptr) {
+					religion = home_province->get_game_data()->get_religion();
+				} else {
+					religion = owner->get_game_data()->get_religion();
+				}
+			}
+			assert_throw(religion != nullptr);
+
+			const population_type *population_type = historical_military_unit->get_population_type();
+			if (population_type == nullptr) {
+				population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
+			}
+			assert_throw(population_type != nullptr);
+
+			const phenotype *phenotype = historical_military_unit->get_phenotype();
+			if (phenotype == nullptr) {
+				phenotype = culture->get_default_phenotype();
+			}
+			assert_throw(phenotype != nullptr);
+
+			auto military_unit = make_qunique<metternich::military_unit>(historical_military_unit->get_type(), owner, home_province, population_type, culture, religion, phenotype);
+			military_unit->set_province(province);
+
+			owner->get_game_data()->add_military_unit(std::move(military_unit));
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to apply history."));

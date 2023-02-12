@@ -92,7 +92,7 @@ void military_unit::set_province(const metternich::province *province)
 
 	this->province = province;
 
-	if (this->original_province == nullptr) {
+	if (this->get_province() != nullptr && this->original_province == nullptr) {
 		//if the unit is moving, it will be added to the province when it finishes, otherwise add it now
 		this->get_province()->get_game_data()->add_military_unit(this);
 	}
