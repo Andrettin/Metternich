@@ -50,6 +50,31 @@ void military_unit::do_ai_turn()
 	//FIXME: implement logic for upgrading military units, and for moving them to places in order to do combat or defend against attacks
 }
 
+void military_unit::set_type(const military_unit_type *type)
+{
+	if (type == this->get_type()) {
+		return;
+	}
+
+	const bool different_category = this->get_category() != type->get_category();
+	if (this->get_province() != nullptr && different_category) {
+		this->get_province()->get_game_data()->change_military_unit_category_count(this->get_category(), -1);
+	}
+
+	this->type = type;
+
+	if (this->get_province() != nullptr && different_category) {
+		this->get_province()->get_game_data()->change_military_unit_category_count(this->get_category(), 1);
+	}
+
+	emit type_changed();
+}
+
+military_unit_category military_unit::get_category() const
+{
+	return this->get_type()->get_category();
+}
+
 const icon *military_unit::get_icon() const
 {
 	return this->get_type()->get_icon();
@@ -66,6 +91,11 @@ void military_unit::set_province(const metternich::province *province)
 	}
 
 	this->province = province;
+
+	if (this->original_province == nullptr) {
+		//if the unit is moving, it will be added to the province when it finishes, otherwise add it now
+		this->get_province()->get_game_data()->add_military_unit(this);
+	}
 
 	emit province_changed();
 }

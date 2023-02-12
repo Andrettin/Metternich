@@ -40,4 +40,9 @@ void military_unit_type::check() const
 	assert_throw(this->get_icon() != nullptr);
 }
 
+military_unit_category military_unit_type::get_category() const
+{
+	return this->get_unit_class()->get_category();
+}
+
 }

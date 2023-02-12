@@ -10,6 +10,7 @@ class phenotype;
 class population_type;
 class province;
 class religion;
+enum class military_unit_category;
 
 class military_unit final : public QObject
 {
@@ -40,15 +41,9 @@ private:
 	}
 
 public:
-	void set_type(const military_unit_type *type)
-	{
-		if (type == this->get_type()) {
-			return;
-		}
+	void set_type(const military_unit_type *type);
 
-		this->type = type;
-		emit type_changed();
-	}
+	military_unit_category get_category() const;
 
 	const icon *get_icon() const;
 

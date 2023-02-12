@@ -31,6 +31,10 @@
 #include "script/condition/and_condition.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
+#include "unit/military_unit.h"
+#include "unit/military_unit_class.h"
+#include "unit/military_unit_category.h"
+#include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/image_util.h"
@@ -1103,6 +1107,8 @@ void province_game_data::add_military_unit(military_unit *military_unit)
 {
 	this->military_units.push_back(military_unit);
 
+	this->change_military_unit_category_count(military_unit->get_category(), 1);
+
 	if (game::get()->is_running()) {
 		emit military_units_changed();
 	}
@@ -1112,6 +1118,8 @@ void province_game_data::remove_military_unit(military_unit *military_unit)
 {
 	std::erase(this->military_units, military_unit);
 
+	this->change_military_unit_category_count(military_unit->get_category(), -1);
+
 	if (game::get()->is_running()) {
 		emit military_units_changed();
 	}
@@ -1120,6 +1128,35 @@ void province_game_data::remove_military_unit(military_unit *military_unit)
 void province_game_data::clear_military_units()
 {
 	this->military_units.clear();
+}
+
+QVariantList province_game_data::get_military_unit_category_counts_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->military_unit_category_counts);
+}
+
+int province_game_data::get_military_unit_category_count(const QString &category_identifier) const
+{
+	return this->get_military_unit_category_count(enum_converter<military_unit_category>::to_enum(category_identifier.toStdString()));
+}
+
+void province_game_data::change_military_unit_category_count(const military_unit_category category, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->military_unit_category_counts[category] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->military_unit_category_counts.erase(category);
+	}
+
+	if (game::get()->is_running()) {
+		emit military_unit_category_counts_changed();
+	}
 }
 
 }

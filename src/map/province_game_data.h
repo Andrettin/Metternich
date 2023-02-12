@@ -27,6 +27,7 @@ class population_unit;
 class province;
 class religion;
 class tile;
+enum class military_unit_category;
 
 class province_game_data final : public QObject
 {
@@ -48,6 +49,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(int consciousness READ get_consciousness NOTIFY consciousness_changed)
 	Q_PROPERTY(int militancy READ get_militancy NOTIFY militancy_changed)
+	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 
 public:
 	static constexpr int base_free_food_consumption = 1;
@@ -339,6 +341,22 @@ public:
 	void remove_military_unit(military_unit *military_unit);
 	void clear_military_units();
 
+	QVariantList get_military_unit_category_counts_qvariant_list() const;
+
+	int get_military_unit_category_count(const military_unit_category category) const
+	{
+		const auto find_iterator = this->military_unit_category_counts.find(category);
+
+		if (find_iterator != this->military_unit_category_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	Q_INVOKABLE int get_military_unit_category_count(const QString &category_identifier) const;
+	void change_military_unit_category_count(const military_unit_category category, const int change);
+
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
@@ -356,6 +374,7 @@ signals:
 	void consciousness_changed();
 	void militancy_changed();
 	void military_units_changed();
+	void military_unit_category_counts_changed();
 
 private:
 	const metternich::province *province = nullptr;
@@ -387,6 +406,7 @@ private:
 	std::vector<civilian_unit *> home_civilian_units;
 	std::vector<military_unit *> home_military_units;
 	std::vector<military_unit *> military_units;
+	std::map<military_unit_category, int> military_unit_category_counts;
 };
 
 }
