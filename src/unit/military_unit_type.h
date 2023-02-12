@@ -24,6 +24,8 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(int melee MEMBER melee READ get_melee NOTIFY changed)
 	Q_PROPERTY(int range MEMBER range READ get_range NOTIFY changed)
 	Q_PROPERTY(int defense MEMBER defense READ get_defense NOTIFY changed)
+	Q_PROPERTY(int resistance MEMBER resistance READ get_resistance NOTIFY changed)
+	Q_PROPERTY(int hit_points MEMBER hit_points READ get_hit_points NOTIFY changed)
 	Q_PROPERTY(int movement MEMBER movement READ get_movement NOTIFY changed)
 	Q_PROPERTY(bool entrench MEMBER entrench READ can_entrench NOTIFY changed)
 	Q_PROPERTY(int entrench_bonus MEMBER entrench_bonus READ get_entrench_bonus NOTIFY changed)
@@ -84,6 +86,16 @@ public:
 		return this->defense;
 	}
 
+	int get_resistance() const
+	{
+		return this->resistance;
+	}
+
+	int get_hit_points() const
+	{
+		return this->hit_points;
+	}
+
 	int get_movement() const
 	{
 		return this->movement;
@@ -106,7 +118,7 @@ public:
 
 	int get_score() const
 	{
-		return this->get_firepower() + this->get_melee() + this->get_range() + this->get_defense() + this->get_movement();
+		return this->get_firepower() + this->get_melee() + this->get_range() + this->get_defense() + this->get_resistance() / 4 + this->get_hit_points() + this->get_movement();
 	}
 
 signals:
@@ -121,6 +133,8 @@ private:
 	int melee = 0;
 	int range = 0;
 	int defense = 0;
+	int resistance = 0; //resistance to damage, in percent
+	int hit_points = 25;
 	int movement = 0;
 	bool entrench = false;
 	int entrench_bonus = 1; //the entrenchment bonus to defense
