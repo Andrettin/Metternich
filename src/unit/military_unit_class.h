@@ -19,7 +19,7 @@ class military_unit_class final : public named_data_entry, public data_type<mili
 public:
 	static constexpr const char class_identifier[] = "military_unit_class";
 	static constexpr const char property_class_identifier[] = "metternich::military_unit_class*";
-	static constexpr const char database_folder[] = "unit_classes";
+	static constexpr const char database_folder[] = "military_unit_classes";
 
 public:
 	explicit military_unit_class(const std::string &identifier);
