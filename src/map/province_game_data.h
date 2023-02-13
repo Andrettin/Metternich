@@ -343,7 +343,7 @@ public:
 
 	QVariantList get_military_unit_category_counts_qvariant_list() const;
 
-	int get_military_unit_category_count(const military_unit_category category) const
+	Q_INVOKABLE int get_military_unit_category_count(const metternich::military_unit_category category) const
 	{
 		const auto find_iterator = this->military_unit_category_counts.find(category);
 
@@ -354,7 +354,6 @@ public:
 		return 0;
 	}
 
-	Q_INVOKABLE int get_military_unit_category_count(const QString &category_identifier) const;
 	void change_military_unit_category_count(const military_unit_category category, const int change);
 
 	Q_INVOKABLE QObject *get_military_unit_category_icon(const metternich::military_unit_category category) const;

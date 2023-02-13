@@ -1135,11 +1135,6 @@ QVariantList province_game_data::get_military_unit_category_counts_qvariant_list
 	return archimedes::map::to_qvariant_list(this->military_unit_category_counts);
 }
 
-int province_game_data::get_military_unit_category_count(const QString &category_identifier) const
-{
-	return this->get_military_unit_category_count(enum_converter<military_unit_category>::to_enum(category_identifier.toStdString()));
-}
-
 void province_game_data::change_military_unit_category_count(const military_unit_category category, const int change)
 {
 	if (change == 0) {
