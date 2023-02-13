@@ -28,7 +28,6 @@
 #include "script/condition/country_exists_condition.h"
 #include "script/condition/country_type_condition.h"
 #include "script/condition/culture_condition.h"
-#include "script/condition/current_character_condition.h"
 #include "script/condition/event_condition.h"
 #include "script/condition/gender_condition.h"
 #include "script/condition/has_country_office_condition.h"
@@ -45,6 +44,7 @@
 #include "script/condition/prestige_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
+#include "script/condition/root_character_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
 #include "script/condition/technology_condition.h"
@@ -133,14 +133,14 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		return std::make_unique<country_exists_condition<scope_type>>(value, condition_operator);
 	} else if (key == "culture") {
 		return std::make_unique<culture_condition<scope_type>>(value, condition_operator);
-	} else if (key == "current_character") {
-		return std::make_unique<current_character_condition<scope_type>>(value, condition_operator);
 	} else if (key == "event") {
 		return std::make_unique<event_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religion") {
 		return std::make_unique<religion_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religious_group") {
 		return std::make_unique<religious_group_condition<scope_type>>(value, condition_operator);
+	} else if (key == "root_character") {
+		return std::make_unique<root_character_condition<scope_type>>(value, condition_operator);
 	} else if (key == "scripted_condition") {
 		return std::make_unique<scripted_condition_condition<scope_type>>(value, condition_operator);
 	} else if (key == "technology") {

@@ -26,9 +26,9 @@ template <typename scope_type>
 const scope_type *scoped_event_base<scope_type>::get_scope_from_context(const read_only_context &ctx)
 {
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		return ctx.current_character;
+		return std::get<const character *>(ctx.root_scope);
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
-		return ctx.current_country;
+		return std::get<const country *>(ctx.root_scope);
 	}
 }
 
@@ -52,7 +52,7 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 			continue;
 		}
 
-		event->fire(scope, context::from_scope(scope));
+		event->fire(scope, context(scope));
 	}
 
 	scoped_event_base::check_random_events_for_scope(scope, ctx, scoped_event_base::get_trigger_random_events(trigger), 0);
@@ -66,7 +66,7 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 template <typename scope_type>
 void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger)
 {
-	scoped_event_base<scope_type>::check_events_for_scope(scope, trigger, read_only_context::from_scope(scope));
+	scoped_event_base<scope_type>::check_events_for_scope(scope, trigger, read_only_context(scope));
 }
 
 template <typename scope_type>
@@ -96,7 +96,7 @@ void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_ty
 		}
 
 		if (event->can_fire(scope, ctx)) {
-			const context event_ctx = context::from_scope(scope);
+			const context event_ctx(scope);
 
 			if (delay > 0) {
 				auto delayed_effect = std::make_unique<delayed_effect_instance<scope_type>>(event, scope, event_ctx, delay);
@@ -127,7 +127,7 @@ void scoped_event_base<scope_type>::check_random_event_groups_for_scope(const sc
 template <typename scope_type>
 void scoped_event_base<scope_type>::check_mtth_events_for_scope(const scope_type *scope)
 {
-	const read_only_context ctx = read_only_context::from_scope(scope);
+	const read_only_context ctx(scope);
 
 	for (const scoped_event_base *event : scoped_event_base::mtth_events) {
 		if (!event->can_fire(scope, ctx)) {
@@ -145,7 +145,7 @@ void scoped_event_base<scope_type>::check_mtth_events_for_scope(const scope_type
 		}
 
 		if (should_fire) {
-			event->fire(scope, context::from_scope(scope));
+			event->fire(scope, context(scope));
 		}
 	}
 }

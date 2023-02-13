@@ -107,7 +107,7 @@ bool character_game_data::is_current_portrait_valid() const
 	}
 
 	if (portrait_conditions != nullptr) {
-		return portrait_conditions->check(this->character, read_only_context::from_scope(this->character));
+		return portrait_conditions->check(this->character, read_only_context(this->character));
 	}
 
 	return true;
@@ -123,7 +123,7 @@ void character_game_data::check_portrait()
 
 	if (!conditional_portraits.empty()) {
 		std::vector<const icon *> potential_portraits;
-		const read_only_context ctx = read_only_context::from_scope(this->character);
+		const read_only_context ctx(this->character);
 
 		for (const auto &[portrait, conditions] : conditional_portraits) {
 			if (!conditions->check(this->character, ctx)) {
@@ -189,7 +189,7 @@ void character_game_data::add_trait(const trait *trait)
 		return;
 	}
 
-	const read_only_context ctx = read_only_context::from_scope(this->character);
+	const read_only_context ctx(this->character);
 
 	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, ctx)) {
 		log::log_error("Tried to add trait \"" + trait->get_identifier() + "\" to character \"" + this->character->get_identifier() + "\", for which the trait's conditions are not fulfilled.");
@@ -234,7 +234,7 @@ const trait *character_game_data::generate_trait(const trait_type trait_type, co
 	std::vector<const trait *> potential_traits;
 	int best_level = 0;
 
-	const read_only_context ctx = read_only_context::from_scope(this->character);
+	const read_only_context ctx(this->character);
 
 	for (const trait *trait : trait::get_all()) {
 		if (trait->get_type() != trait_type) {
@@ -345,7 +345,7 @@ bool character_game_data::has_scripted_modifier(const scripted_character_modifie
 
 void character_game_data::add_scripted_modifier(const scripted_character_modifier *modifier, const int duration)
 {
-	const read_only_context ctx = read_only_context::from_scope(this->character);
+	const read_only_context ctx(this->character);
 
 	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
 

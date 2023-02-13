@@ -108,18 +108,8 @@ void delayed_effect_instance<scope_type>::do_effects()
 	if (this->scripted_effect != nullptr) {
 		this->scripted_effect->get_effects().do_effects(scope, this->context);
 	} else {
-		metternich::context event_ctx;
-		event_ctx.source_character = this->context.current_character;
-		event_ctx.source_country = this->context.current_country;
-
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			event_ctx.current_character = this->get_scope();
-			event_ctx.current_country = this->get_scope()->get_game_data()->get_employer();
-		} else if constexpr (std::is_same_v<scope_type, const country>) {
-			event_ctx.current_country = this->get_scope();
-		} else {
-			assert_throw(false);
-		}
+		metternich::context event_ctx(this->get_scope());
+		event_ctx.source_scope = this->context.root_scope;
 
 		this->event->fire(this->get_scope(), event_ctx);
 	}

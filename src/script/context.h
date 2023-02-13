@@ -16,14 +16,22 @@ class province;
 template <bool read_only>
 struct context_base
 {
+	using scope_variant_type = std::variant<std::monostate, const character *, const country *, std::conditional_t<read_only, const population_unit *, population_unit *>, const province *>;
+
+	context_base()
+	{
+	}
+
+	explicit context_base(const scope_variant_type &root_scope) : root_scope(root_scope)
+	{
+	}
+
 	void process_gsml_property(const gsml_property &property);
 	void process_gsml_scope(const gsml_data &scope);
 	gsml_data to_gsml_data(const std::string &tag) const;
 
-	const country *source_country = nullptr;
-	const country *current_country = nullptr;
-	const character *source_character = nullptr;
-	const character *current_character = nullptr;
+	scope_variant_type root_scope = std::monostate();
+	scope_variant_type source_scope = std::monostate();
 };
 
 extern template struct context_base<false>;
@@ -31,42 +39,40 @@ extern template struct context_base<true>;
 
 struct context final : context_base<false>
 {
-	static context from_scope(const country *country)
+	context()
 	{
-		context ctx;
-		ctx.current_country = country;
-		return ctx;
 	}
 
-	static context from_scope(const character *character);
-	static context from_scope(const population_unit *population_unit);
-	static context from_scope(const province *province);
+	explicit context(const scope_variant_type &root_scope) : context_base(root_scope)
+	{
+	}
 };
 
 struct read_only_context final : context_base<true>
 {
 public:
-	static read_only_context from_scope(const country *country)
+	static scope_variant_type scope_from_mutable(const context_base<false>::scope_variant_type &mutable_scope)
 	{
-		read_only_context ctx;
-		ctx.current_country = country;
-		return ctx;
-	}
+		scope_variant_type scope;
 
-	static read_only_context from_scope(const character *character);
-	static read_only_context from_scope(const population_unit *population_unit);
-	static read_only_context from_scope(const province *province);
+		std::visit([&scope](auto &&arg) {
+			scope = arg;
+		}, mutable_scope);
+
+		return scope;
+	}
 
 	read_only_context()
 	{
 	}
 
-	read_only_context(const context &ctx)
+	explicit read_only_context(const scope_variant_type &root_scope) : context_base(root_scope)
 	{
-		this->source_country = ctx.source_country;
-		this->current_country = ctx.current_country;
-		this->source_character = ctx.source_character;
-		this->current_character = ctx.current_character;
+	}
+
+	read_only_context(const context &ctx) : read_only_context(read_only_context::scope_from_mutable(ctx.root_scope))
+	{
+		this->source_scope = read_only_context::scope_from_mutable(ctx.source_scope);
 	}
 };
 

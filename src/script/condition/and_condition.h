@@ -58,7 +58,7 @@ public:
 
 	bool check(const scope_type *scope) const
 	{
-		return this->check(scope, read_only_context::from_scope(scope));
+		return this->check(scope, read_only_context(scope));
 	}
 
 	virtual bool check_assignment(const scope_type *scope, const read_only_context &ctx) const override

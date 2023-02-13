@@ -153,7 +153,7 @@ void population_unit::choose_ideology()
 	std::vector<const metternich::ideology *> potential_ideologies;
 
 	for (const metternich::ideology *ideology : ideology::get_all()) {
-		if (ideology->get_conditions() != nullptr && !ideology->get_conditions()->check(this, read_only_context::from_scope(this))) {
+		if (ideology->get_conditions() != nullptr && !ideology->get_conditions()->check(this, read_only_context(this))) {
 			continue;
 		}
 

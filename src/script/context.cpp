@@ -3,12 +3,11 @@
 #include "script/context.h"
 
 #include "character/character.h"
-#include "character/character_game_data.h"
 #include "country/country.h"
 #include "database/gsml_data.h"
 #include "map/province.h"
-#include "map/province_game_data.h"
 #include "population/population_unit.h"
+#include "util/assert_util.h"
 
 namespace metternich {
 
@@ -18,14 +17,18 @@ void context_base<read_only>::process_gsml_property(const gsml_property &propert
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if (key == "source_country") {
-		this->source_country = country::get(value);
-	} else if (key == "current_country") {
-		this->current_country = country::get(value);
+	if (key == "root_character") {
+		this->root_scope = character::get(value);
+	} else if (key == "root_country") {
+		this->root_scope = country::get(value);
+	} else if (key == "root_province") {
+		this->root_scope = province::get(value);
 	} else if (key == "source_character") {
-		this->source_character = character::get(value);
-	} else if (key == "current_character") {
-		this->current_character = character::get(value);
+		this->source_scope = character::get(value);
+	} else if (key == "source_country") {
+		this->source_scope = country::get(value);
+	} else if (key == "source_province") {
+		this->source_scope = province::get(value);
 	} else {
 		throw std::runtime_error("Invalid context property: \"" + key + "\".");
 	}
@@ -42,67 +45,27 @@ gsml_data context_base<read_only>::to_gsml_data(const std::string &tag) const
 {
 	gsml_data data(tag);
 
-	if (this->source_country != nullptr) {
-		data.add_property("source_country", this->source_country->get_identifier());
+	if (std::holds_alternative<const character *>(this->root_scope)) {
+		data.add_property("root_character", std::get<const character *>(this->root_scope)->get_identifier());
+	} else if (std::holds_alternative<const country *>(this->root_scope)) {
+		data.add_property("root_country", std::get<const country *>(this->root_scope)->get_identifier());
+	} else if (std::holds_alternative<const province *>(this->root_scope)) {
+		data.add_property("root_province", std::get<const province *>(this->root_scope)->get_identifier());
+	} else {
+		assert_throw(false);
 	}
 
-	if (this->current_country != nullptr) {
-		data.add_property("current_country", this->current_country->get_identifier());
-	}
-
-	if (this->source_character != nullptr) {
-		data.add_property("source_character", this->source_character->get_identifier());
-	}
-
-	if (this->current_character != nullptr) {
-		data.add_property("current_character", this->current_character->get_identifier());
+	if (std::holds_alternative<const character *>(this->source_scope)) {
+		data.add_property("source_character", std::get<const character *>(this->source_scope)->get_identifier());
+	} else if (std::holds_alternative<const country *>(this->source_scope)) {
+		data.add_property("source_country", std::get<const country *>(this->source_scope)->get_identifier());
+	} else if (std::holds_alternative<const province *>(this->source_scope)) {
+		data.add_property("source_province", std::get<const province *>(this->source_scope)->get_identifier());
+	} else {
+		assert_throw(false);
 	}
 
 	return data;
-}
-
-context context::from_scope(const character *character)
-{
-	context ctx;
-	ctx.current_character = character;
-	ctx.current_country = character->get_game_data()->get_employer();
-	return ctx;
-}
-
-context context::from_scope(const population_unit *population_unit)
-{
-	context ctx;
-	ctx.current_country = population_unit->get_province()->get_game_data()->get_owner();
-	return ctx;
-}
-
-context context::from_scope(const province *province)
-{
-	context ctx;
-	ctx.current_country = province->get_game_data()->get_owner();
-	return ctx;
-}
-
-read_only_context read_only_context::from_scope(const character *character)
-{
-	context ctx;
-	ctx.current_character = character;
-	ctx.current_country = character->get_game_data()->get_employer();
-	return ctx;
-}
-
-read_only_context read_only_context::from_scope(const population_unit *population_unit)
-{
-	read_only_context ctx;
-	ctx.current_country = population_unit->get_province()->get_game_data()->get_owner();
-	return ctx;
-}
-
-read_only_context read_only_context::from_scope(const province *province)
-{
-	read_only_context ctx;
-	ctx.current_country = province->get_game_data()->get_owner();
-	return ctx;
 }
 
 template struct context_base<false>;

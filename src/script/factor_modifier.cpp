@@ -60,7 +60,7 @@ void factor_modifier<scope_type>::check_validity() const
 template <typename scope_type>
 bool factor_modifier<scope_type>::check_conditions(const scope_type *scope) const
 {
-	return this->conditions->check(scope, read_only_context::from_scope(scope));
+	return this->conditions->check(scope, read_only_context(scope));
 }
 
 template class factor_modifier<character>;

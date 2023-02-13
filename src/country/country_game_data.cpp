@@ -1478,8 +1478,8 @@ void country_game_data::check_characters(const QDateTime &date)
 
 		if (game::get()->get_date() >= character->get_end_date()) {
 			if (character->get_game_data()->is_ruler()) {
-				read_only_context ctx = read_only_context::from_scope(this->country);
-				ctx.current_character = character;
+				read_only_context ctx(this->country);
+				ctx.source_scope = character;
 				country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
 			}
 
@@ -1505,7 +1505,7 @@ void country_game_data::check_characters(const QDateTime &date)
 
 	//check if the offices of characters are still valid, and if not remove the character from that office
 	const office_map<const character *> office_characters = this->office_characters;
-	const read_only_context ctx = read_only_context::from_scope(this->country);
+	const read_only_context ctx(this->country);
 	for (const auto &[office, character] : office_characters) {
 		const condition<metternich::country> *country_conditions = office->get_country_conditions();
 		if (country_conditions != nullptr && !country_conditions->check(this->country, ctx)) {
@@ -1678,7 +1678,7 @@ std::vector<const office *> country_game_data::get_offices() const
 {
 	std::vector<const office *> offices;
 
-	const read_only_context ctx = read_only_context::from_scope(this->country);
+	const read_only_context ctx(this->country);
 
 	for (const office *office : office::get_all()) {
 		if (office->get_type() != office_type::country) {
@@ -1728,7 +1728,7 @@ void country_game_data::fill_empty_offices()
 				continue;
 			}
 
-			if (office->get_character_conditions() != nullptr && !office->get_character_conditions()->check(character, read_only_context::from_scope(character))) {
+			if (office->get_character_conditions() != nullptr && !office->get_character_conditions()->check(character, read_only_context(character))) {
 				continue;
 			}
 

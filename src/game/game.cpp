@@ -293,7 +293,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					throw std::runtime_error("Cannot set \"" + character->get_identifier() + "\" as an office holder for \"" + country->get_identifier() + "\", as it is already employed by another country.");
 				}
 
-				if (office->get_character_conditions() != nullptr && !office->get_character_conditions()->check(character, read_only_context::from_scope(character))) {
+				if (office->get_character_conditions() != nullptr && !office->get_character_conditions()->check(character, read_only_context(character))) {
 					throw std::runtime_error("Cannot set \"" + character->get_identifier() + "\" as the holder for the \"" + office->get_identifier()  + "\" office for \"" + country->get_identifier() + "\", as it does not fulfill the conditions.");
 				}
 

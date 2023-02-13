@@ -104,9 +104,9 @@ std::string event_option<scope_type>::get_effects_string(const read_only_context
 		const scope_type *scope = nullptr;
 
 		if constexpr (std::is_same_v<scope_type, const character>) {
-			scope = ctx.current_character;
+			scope = std::get<const character *>(ctx.root_scope);
 		} else if constexpr (std::is_same_v<scope_type, const country>) {
-			scope = ctx.current_country;
+			scope = std::get<const country *>(ctx.root_scope);
 		} else {
 			assert_throw(false);
 		}

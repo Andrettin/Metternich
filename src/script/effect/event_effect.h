@@ -37,18 +37,8 @@ public:
 
 	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
 	{
-		context event_ctx;
-		event_ctx.source_character = ctx.current_character;
-		event_ctx.source_country = ctx.current_country;
-
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			event_ctx.current_character = scope;
-			event_ctx.current_country = scope->get_game_data()->get_employer();
-		} else if constexpr (std::is_same_v<scope_type, const country>) {
-			event_ctx.current_country = scope;
-		} else {
-			assert_throw(false);
-		}
+		context event_ctx(scope);
+		event_ctx.source_scope = ctx.root_scope;
 
 		this->event->fire(scope, event_ctx);
 	}

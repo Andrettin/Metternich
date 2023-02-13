@@ -85,9 +85,9 @@ public:
 		switch (this->target) {
 			case target_type::root:
 				if constexpr (std::is_same_v<scope_type, const character>) {
-					return ctx.current_character;
+					return std::get<const character *>(ctx.root_scope);
 				} else if constexpr (std::is_same_v<scope_type, const country>) {
-					return ctx.current_country;
+					return std::get<const country *>(ctx.root_scope);
 				}
 				break;
 			default:

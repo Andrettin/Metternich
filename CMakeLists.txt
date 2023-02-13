@@ -418,7 +418,6 @@ set(script_condition_HDRS
 	src/script/condition/country_exists_condition.h
 	src/script/condition/country_type_condition.h
 	src/script/condition/culture_condition.h
-	src/script/condition/current_character_condition.h
 	src/script/condition/event_condition.h
 	src/script/condition/gender_condition.h
 	src/script/condition/has_country_office_condition.h
@@ -436,6 +435,7 @@ set(script_condition_HDRS
 	src/script/condition/prestige_condition.h
 	src/script/condition/religion_condition.h
 	src/script/condition/religious_group_condition.h
+	src/script/condition/root_character_condition.h
 	src/script/condition/scripted_modifier_condition.h
 	src/script/condition/scope_condition.h
 	src/script/condition/scope_condition_base.h
