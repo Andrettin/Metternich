@@ -18,6 +18,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
+	Q_PROPERTY(bool ruins MEMBER ruins READ is_ruins NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(metternich::employment_type* employment_type MEMBER employment_type NOTIFY changed)
 	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
@@ -44,6 +45,11 @@ public:
 	const metternich::resource *get_resource() const
 	{
 		return this->resource;
+	}
+
+	bool is_ruins() const
+	{
+		return this->ruins;
 	}
 
 	const std::filesystem::path &get_image_filepath() const
@@ -107,6 +113,10 @@ public:
 
 	int get_score() const
 	{
+		if (this->is_ruins()) {
+			return 0;
+		}
+
 		return (improvement::base_score * centesimal_int::max(centesimal_int(1), (this->get_employment_capacity() * this->get_output_multiplier()))).to_int();
 	}
 
@@ -115,6 +125,7 @@ signals:
 
 private:
 	metternich::resource *resource = nullptr; //the resource for which this improvement can be built
+	bool ruins = false; //if true, this improvement can be explored by troops, yielding some bonus (or malus)
 	std::filesystem::path image_filepath;
 	std::map<const terrain_type *, std::filesystem::path> terrain_image_filepaths;
 	metternich::employment_type *employment_type = nullptr;
