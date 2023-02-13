@@ -47,6 +47,7 @@
 #include "script/condition/root_character_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
+#include "script/condition/source_character_condition.h"
 #include "script/condition/technology_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
@@ -143,6 +144,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		return std::make_unique<root_character_condition<scope_type>>(value, condition_operator);
 	} else if (key == "scripted_condition") {
 		return std::make_unique<scripted_condition_condition<scope_type>>(value, condition_operator);
+	} else if (key == "source_character") {
+		return std::make_unique<source_character_condition<scope_type>>(value, condition_operator);
 	} else if (key == "technology") {
 		return std::make_unique<technology_condition<scope_type>>(value, condition_operator);
 	} else if (key == "year") {
