@@ -366,15 +366,19 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const site_history *site_history = site->get_history();
 
-			if (site_history->get_improvement() != nullptr && site_history->get_improvement()->get_resource() != nullptr) {
-				assert_throw(site->get_type() == site_type::resource);
+			if (site_history->get_improvement() != nullptr) {
+				assert_throw(site_history->get_improvement()->get_resource() != nullptr || site_history->get_improvement()->is_ruins());
 
-				if (tile->get_resource() == nullptr) {
-					throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as it has no resource.");
-				}
+				if (site_history->get_improvement()->get_resource() != nullptr) {
+					assert_throw(site->get_type() == site_type::resource);
 
-				if (tile->get_resource() != site_history->get_improvement()->get_resource()) {
-					throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as its resource is different than that of the improvement.");
+					if (tile->get_resource() == nullptr) {
+						throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as it has no resource.");
+					}
+
+					if (tile->get_resource() != site_history->get_improvement()->get_resource()) {
+						throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as its resource is different than that of the improvement.");
+					}
 				}
 
 				tile->set_improvement(site_history->get_improvement());

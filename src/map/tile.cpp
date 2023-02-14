@@ -54,7 +54,7 @@ void tile::set_improvement(const metternich::improvement *improvement)
 	this->improvement = improvement;
 
 	if (improvement != nullptr) {
-		assert_throw(this->get_resource() == improvement->get_resource());
+		assert_throw(this->get_resource() == improvement->get_resource() || improvement->is_ruins());
 
 		if (improvement->get_variation_count() > 1) {
 			this->improvement_variation = random::get()->generate(improvement->get_variation_count());
