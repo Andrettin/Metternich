@@ -1154,6 +1154,19 @@ void province_game_data::change_military_unit_category_count(const military_unit
 	}
 }
 
+int province_game_data::get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::country *country) const
+{
+	int count = 0;
+
+	for (const military_unit *military_unit : this->get_military_units()) {
+		if (military_unit->get_category() == category && military_unit->get_owner() == country) {
+			++count;
+		}
+	}
+
+	return count;
+}
+
 QObject *province_game_data::get_military_unit_category_icon(const military_unit_category category) const
 {
 	icon_map<int> icon_counts;

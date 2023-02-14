@@ -361,6 +361,8 @@ public:
 
 	void change_military_unit_category_count(const military_unit_category category, const int change);
 
+	Q_INVOKABLE int get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::country *country) const;
+
 	Q_INVOKABLE QObject *get_military_unit_category_icon(const metternich::military_unit_category category) const;
 	Q_INVOKABLE QString get_military_unit_category_name(const metternich::military_unit_category category) const;
 
