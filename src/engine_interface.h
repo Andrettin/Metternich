@@ -84,10 +84,13 @@ public:
 	Q_INVOKABLE void clear_selected_military_units()
 	{
 		this->selected_military_units.clear();
+		emit selected_military_units_changed();
 	}
 
 	Q_INVOKABLE int get_selected_military_unit_category_count(const metternich::military_unit_category category);
 	Q_INVOKABLE void change_selected_military_unit_category_count(const metternich::military_unit_category category, const int change, metternich::province *province);
+
+	Q_INVOKABLE void move_selected_military_units_to(const QPoint &tile_pos);
 
 	engine_interface &operator =(const engine_interface &other) = delete;
 

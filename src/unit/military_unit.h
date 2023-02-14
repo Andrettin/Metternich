@@ -11,6 +11,7 @@ class phenotype;
 class population_type;
 class province;
 class religion;
+class site;
 enum class military_unit_category;
 
 class military_unit final : public QObject
@@ -22,6 +23,7 @@ class military_unit final : public QObject
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst CONSTANT)
 	Q_PROPERTY(metternich::province* home_province READ get_home_province_unconst CONSTANT)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
+	Q_PROPERTY(metternich::site* site READ get_site_unconst NOTIFY site_changed)
 
 public:
 	explicit military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
@@ -116,9 +118,14 @@ public:
 
 	void set_province(const metternich::province *province);
 
+	const metternich::province *get_original_province() const
+	{
+		return this->original_province;
+	}
+
 	void set_original_province(const metternich::province *province)
 	{
-		if (province == this->original_province) {
+		if (province == this->get_original_province()) {
 			return;
 		}
 
@@ -126,14 +133,30 @@ public:
 		emit original_province_changed();
 	}
 
-	Q_INVOKABLE bool can_move_to(metternich::province *province) const;
-	Q_INVOKABLE void move_to(metternich::province *province);
-	Q_INVOKABLE void cancel_move();
+	bool can_move_to(const metternich::province *province) const;
+	void move_to(const metternich::province *province);
+	void cancel_move();
 
 	bool is_moving() const
 	{
-		return this->original_province != nullptr;
+		return this->get_original_province() != nullptr;
 	}
+
+	const metternich::site *get_site() const
+	{
+		return this->site;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::site *get_site_unconst() const
+	{
+		return const_cast<metternich::site *>(this->get_site());
+	}
+
+public:
+	void set_site(const metternich::site *site);
+	void visit_site(const metternich::site *site);
 
 	void disband(const bool restore_population_unit);
 	Q_INVOKABLE void disband();
@@ -143,6 +166,7 @@ signals:
 	void icon_changed();
 	void province_changed();
 	void original_province_changed();
+	void site_changed();
 
 private:
 	const military_unit_type *type = nullptr;
@@ -155,6 +179,7 @@ private:
 	const metternich::character *character = nullptr;
 	const metternich::province *province = nullptr; //the province the unit is in
 	const metternich::province *original_province = nullptr; //the province before moving
+	const metternich::site *site = nullptr; //the site the unit is visiting
 };
 
 }

@@ -11,8 +11,12 @@
 #include "map/map_template.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
+#include "map/tile.h"
 #include "time/era.h"
 #include "unit/military_unit.h"
+#include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
 #include "util/vector_util.h"
@@ -159,6 +163,34 @@ void engine_interface::change_selected_military_unit_category_count(const metter
 			}
 		}
 	}
+}
+
+void engine_interface::move_selected_military_units_to(const QPoint &tile_pos)
+{
+	assert_throw(!this->get_selected_military_units().empty());
+
+	const tile *tile = map::get()->get_tile(tile_pos);
+
+	if (tile->get_province() != nullptr) {
+		if (tile->get_province() == this->get_selected_military_units().front()->get_province()) {
+			const site *site = tile->get_site();
+			assert_throw(site != nullptr);
+
+			for (military_unit *military_unit : this->get_selected_military_units()) {
+				military_unit->visit_site(site);
+			}
+		} else {
+			for (military_unit *military_unit : this->get_selected_military_units()) {
+				if (!military_unit->can_move_to(tile->get_province())) {
+					continue;
+				}
+
+				military_unit->move_to(tile->get_province());
+			}
+		}
+	}
+
+	this->clear_selected_military_units();
 }
 
 }

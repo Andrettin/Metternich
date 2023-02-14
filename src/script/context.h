@@ -11,12 +11,13 @@ class character;
 class country;
 class population_unit;
 class province;
+class site;
 
 //script context for e.g. events
 template <bool read_only>
 struct context_base
 {
-	using scope_variant_type = std::variant<std::monostate, const character *, const country *, std::conditional_t<read_only, const population_unit *, population_unit *>, const province *>;
+	using scope_variant_type = std::variant<std::monostate, const character *, const country *, std::conditional_t<read_only, const population_unit *, population_unit *>, const province *, const site *>;
 
 	context_base()
 	{

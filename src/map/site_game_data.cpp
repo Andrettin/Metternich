@@ -2,13 +2,36 @@
 
 #include "map/site_game_data.h"
 
+#include "game/country_event.h"
+#include "game/event_trigger.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/tile.h"
+#include "script/context.h"
+#include "unit/military_unit.h"
 
 namespace metternich {
+
+void site_game_data::do_turn()
+{
+	if (!this->get_visiting_military_units().empty()) {
+		const country *country = this->get_visiting_military_units().front()->get_owner();
+		read_only_context ctx(country);
+		ctx.source_scope = this->site;
+		country_event::check_events_for_scope(country, event_trigger::ruins_explored, ctx);
+
+		//make the visiting units go back
+		std::vector<military_unit *> visiting_military_units = this->get_visiting_military_units();
+
+		for (military_unit *military_unit : visiting_military_units) {
+			military_unit->set_province(military_unit->get_original_province());
+			military_unit->set_original_province(nullptr);
+			military_unit->set_site(nullptr);
+		}
+	}
+}
 
 tile *site_game_data::get_tile() const
 {

@@ -4,6 +4,7 @@ namespace metternich {
 
 class culture;
 class improvement;
+class military_unit;
 class province;
 class site;
 class tile;
@@ -24,6 +25,8 @@ public:
 	explicit site_game_data(const site *site) : site(site)
 	{
 	}
+
+	void do_turn();
 
 	const QPoint &get_tile_pos() const
 	{
@@ -80,6 +83,21 @@ public:
 	int get_employment_capacity() const;
 	int get_production_modifier() const;
 
+	const std::vector<military_unit *> &get_visiting_military_units() const
+	{
+		return this->visiting_military_units;
+	}
+
+	void add_visiting_military_unit(military_unit *military_unit)
+	{
+		this->visiting_military_units.push_back(military_unit);
+	}
+
+	void remove_visiting_military_unit(const military_unit *military_unit)
+	{
+		std::erase(this->visiting_military_units, military_unit);
+	}
+
 signals:
 	void tile_pos_changed();
 	void culture_changed();
@@ -88,6 +106,7 @@ signals:
 private:
 	const metternich::site *site = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
+	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site
 };
 
 }

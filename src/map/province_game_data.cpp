@@ -81,6 +81,11 @@ void province_game_data::do_turn()
 	this->assign_workers();
 	this->do_production();
 	this->do_cultural_change();
+
+	for (const QPoint &tile_pos : this->get_resource_tiles()) {
+		const site *site = map::get()->get_tile(tile_pos)->get_site();
+		site->get_game_data()->do_turn();
+	}
 }
 
 void province_game_data::do_production()

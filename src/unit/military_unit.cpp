@@ -8,8 +8,11 @@
 #include "country/country_game_data.h"
 #include "country/culture.h"
 #include "country/religion.h"
+#include "infrastructure/improvement.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "unit/military_unit_type.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
@@ -50,7 +53,7 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 
 void military_unit::do_turn()
 {
-	if (this->is_moving()) {
+	if (this->is_moving() && this->get_site() == nullptr) {
 		this->set_original_province(nullptr);
 
 		if (this->get_province() != nullptr) {
@@ -110,7 +113,7 @@ void military_unit::set_province(const metternich::province *province)
 
 	this->province = province;
 
-	if (this->get_province() != nullptr && this->original_province == nullptr) {
+	if (this->get_province() != nullptr && this->get_original_province() == nullptr) {
 		//if the unit is moving, it will be added to the province when it finishes, otherwise add it now
 		this->get_province()->get_game_data()->add_military_unit(this);
 	}
@@ -118,7 +121,7 @@ void military_unit::set_province(const metternich::province *province)
 	emit province_changed();
 }
 
-bool military_unit::can_move_to(metternich::province *province) const
+bool military_unit::can_move_to(const metternich::province *province) const
 {
 	const country *province_owner = province->get_game_data()->get_owner();
 	if (province_owner == this->get_owner()) {
@@ -132,7 +135,7 @@ bool military_unit::can_move_to(metternich::province *province) const
 	return false;
 }
 
-void military_unit::move_to(metternich::province *province)
+void military_unit::move_to(const metternich::province *province)
 {
 	this->set_original_province(this->get_province());
 	this->set_province(province);
@@ -140,10 +143,44 @@ void military_unit::move_to(metternich::province *province)
 
 void military_unit::cancel_move()
 {
-	assert_throw(this->original_province != nullptr);
+	assert_throw(this->get_original_province() != nullptr);
 
-	this->set_province(this->original_province);
+	this->set_province(this->get_original_province());
 	this->set_original_province(nullptr);
+}
+
+void military_unit::set_site(const metternich::site *site)
+{
+	if (site == this->get_site()) {
+		return;
+	}
+
+	if (this->get_site() != nullptr) {
+		this->get_site()->get_game_data()->remove_visiting_military_unit(this);
+	}
+
+	this->site = site;
+
+	if (this->get_site() != nullptr) {
+		this->get_site()->get_game_data()->add_visiting_military_unit(this);
+	}
+
+	emit site_changed();
+}
+
+void military_unit::visit_site(const metternich::site *site)
+{
+	assert_throw(site != nullptr);
+	assert_throw(site->get_game_data()->get_improvement() != nullptr);
+	assert_throw(site->get_game_data()->get_improvement()->is_ruins());
+
+	assert_throw(this->get_site() == nullptr);
+	assert_throw(this->get_original_province() == nullptr);
+	assert_throw(this->get_province() != nullptr);
+
+	this->set_original_province(this->get_province());
+	this->set_province(nullptr);
+	this->set_site(site);
 }
 
 void military_unit::disband(const bool restore_population_unit)
