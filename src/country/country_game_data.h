@@ -119,6 +119,13 @@ public:
 
 	bool is_vassal_of(const metternich::country *country) const;
 	bool is_any_vassal_of(const metternich::country *country) const;
+
+	Q_INVOKABLE bool is_any_vassal_of(metternich::country *country)
+	{
+		const metternich::country *country_const = country;
+		return this->is_any_vassal_of(country_const);
+	}
+
 	bool is_overlord_of(const metternich::country *country) const;
 	bool is_any_overlord_of(const metternich::country *country) const;
 
