@@ -4,6 +4,7 @@
 
 #include "game/country_event.h"
 #include "game/event_trigger.h"
+#include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -11,12 +12,16 @@
 #include "map/tile.h"
 #include "script/context.h"
 #include "unit/military_unit.h"
+#include "util/assert_util.h"
 
 namespace metternich {
 
 void site_game_data::do_turn()
 {
 	if (!this->get_visiting_military_units().empty()) {
+		assert_throw(this->get_improvement() != nullptr);
+		assert_throw(this->get_improvement()->is_ruins());
+
 		const country *country = this->get_visiting_military_units().front()->get_owner();
 		read_only_context ctx(country);
 		ctx.source_scope = this->site;
@@ -31,6 +36,8 @@ void site_game_data::do_turn()
 			military_unit->set_site(nullptr);
 			military_unit->set_province(province);
 		}
+
+		map::get()->set_tile_improvement(this->get_tile_pos(), nullptr);
 	}
 }
 
