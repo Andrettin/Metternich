@@ -26,9 +26,10 @@ void site_game_data::do_turn()
 		std::vector<military_unit *> visiting_military_units = this->get_visiting_military_units();
 
 		for (military_unit *military_unit : visiting_military_units) {
-			military_unit->set_province(military_unit->get_original_province());
+			const province *province = military_unit->get_original_province();
 			military_unit->set_original_province(nullptr);
 			military_unit->set_site(nullptr);
+			military_unit->set_province(province);
 		}
 	}
 }
