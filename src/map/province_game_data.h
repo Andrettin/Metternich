@@ -337,6 +337,11 @@ public:
 		std::erase(this->home_military_units, military_unit);
 	}
 
+	const std::vector<military_unit *> &get_military_units() const
+	{
+		return this->military_units;
+	}
+
 	void add_military_unit(military_unit *military_unit);
 	void remove_military_unit(military_unit *military_unit);
 	void clear_military_units();

@@ -9,7 +9,10 @@ class defines;
 class event_instance;
 class game;
 class map;
+class military_unit;
 class preferences;
+class province;
+enum class military_unit_category;
 
 //interface for the engine, to be used in the context of QML
 class engine_interface final : public QObject, public singleton<engine_interface>
@@ -22,6 +25,7 @@ class engine_interface final : public QObject, public singleton<engine_interface
 	Q_PROPERTY(metternich::game* game READ get_game CONSTANT)
 	Q_PROPERTY(metternich::map* map READ get_map CONSTANT)
 	Q_PROPERTY(metternich::preferences* preferences READ get_preferences CONSTANT)
+	Q_PROPERTY(QVariantList selected_military_units READ get_selected_military_units_qvariant_list NOTIFY selected_military_units_changed)
 
 public:
 	engine_interface();
@@ -58,6 +62,33 @@ public:
 	void add_event_instance(qunique_ptr<event_instance> &&event_instance);
 	void remove_event_instance(event_instance *event_instance);
 
+	const std::vector<military_unit *> &get_selected_military_units() const
+	{
+		return this->selected_military_units;
+	}
+
+	QVariantList get_selected_military_units_qvariant_list() const;
+
+	void add_selected_military_unit(military_unit *military_unit)
+	{
+		this->selected_military_units.push_back(military_unit);
+		emit selected_military_units_changed();
+	}
+
+	void remove_selected_military_unit(const military_unit *military_unit)
+	{
+		std::erase(this->selected_military_units, military_unit);
+		emit selected_military_units_changed();
+	}
+
+	Q_INVOKABLE void clear_selected_military_units()
+	{
+		this->selected_military_units.clear();
+	}
+
+	Q_INVOKABLE int get_selected_military_unit_category_count(const metternich::military_unit_category category);
+	Q_INVOKABLE void change_selected_military_unit_category_count(const metternich::military_unit_category category, const int change, metternich::province *province);
+
 	engine_interface &operator =(const engine_interface &other) = delete;
 
 signals:
@@ -65,10 +96,12 @@ signals:
 	void scale_factor_changed();
 	void event_fired(QObject *event_instance);
 	void event_closed(QObject *event_instance);
+	void selected_military_units_changed();
 
 private:
 	bool running = false;
 	std::vector<qunique_ptr<event_instance>> event_instances;
+	std::vector<military_unit *> selected_military_units;
 };
 
 }
