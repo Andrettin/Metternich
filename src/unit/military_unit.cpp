@@ -66,7 +66,7 @@ military_unit::military_unit(const military_unit_type *type, const country *owne
 military_unit::military_unit(const military_unit_type *type, const metternich::character *character)
 	: military_unit(type, character->get_game_data()->get_employer(), character->get_culture(), character->get_religion(), character->get_phenotype())
 {
-	assert_throw(this->get_character() != nullptr);
+	this->character = character;
 
 	//character military units do not have any province set as their home province, since they don't consume food
 }
@@ -206,6 +206,10 @@ void military_unit::visit_site(const metternich::site *site)
 void military_unit::disband(const bool restore_population_unit)
 {
 	assert_throw(this->get_province() != nullptr);
+
+	if (this->get_character() != nullptr) {
+		this->get_character()->get_game_data()->set_military_unit(nullptr);
+	}
 
 	if (!this->is_moving()) {
 		this->get_province()->get_game_data()->remove_military_unit(this);
