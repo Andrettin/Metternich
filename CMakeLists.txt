@@ -449,6 +449,7 @@ set(script_condition_HDRS
 	src/script/condition/source_site_scope_condition.h
 	src/script/condition/technology_condition.h
 	src/script/condition/trait_condition.h
+	src/script/condition/visiting_commander_condition.h
 	src/script/condition/war_condition.h
 	src/script/condition/wealth_condition.h
 	src/script/condition/year_condition.h

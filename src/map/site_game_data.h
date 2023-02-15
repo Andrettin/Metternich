@@ -103,6 +103,8 @@ public:
 		std::erase(this->visiting_military_units, military_unit);
 	}
 
+	const character *get_visiting_commander() const;
+
 signals:
 	void tile_pos_changed();
 	void culture_changed();

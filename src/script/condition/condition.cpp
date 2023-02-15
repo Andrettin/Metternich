@@ -54,6 +54,7 @@
 #include "script/condition/source_site_scope_condition.h"
 #include "script/condition/technology_condition.h"
 #include "script/condition/trait_condition.h"
+#include "script/condition/visiting_commander_condition.h"
 #include "script/condition/war_condition.h"
 #include "script/condition/wealth_condition.h"
 #include "script/condition/year_condition.h"
@@ -187,6 +188,10 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		if (tag == "location") {
 			condition = std::make_unique<location_condition<scope_type>>(condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, site>) {
+		if (tag == "visiting_commander") {
+			condition = std::make_unique<visiting_commander_condition>(condition_operator);
 		}
 	}
 	
