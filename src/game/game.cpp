@@ -223,6 +223,10 @@ void game::clear()
 			province_game_data->reset_non_map_data();
 		}
 
+		for (const site *site : site::get_all()) {
+			site->get_game_data()->reset_non_map_data();
+		}
+
 		//clear data related to the game (i.e. the data determined by history), but not that related only to the map
 		//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
 		for (country *country : country::get_all()) {

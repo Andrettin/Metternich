@@ -16,6 +16,11 @@
 
 namespace metternich {
 
+void site_game_data::reset_non_map_data()
+{
+	this->visiting_military_units.clear();
+}
+
 void site_game_data::do_turn()
 {
 	if (!this->get_visiting_military_units().empty()) {

@@ -26,6 +26,8 @@ public:
 	{
 	}
 
+	void reset_non_map_data();
+
 	void do_turn();
 
 	const QPoint &get_tile_pos() const
