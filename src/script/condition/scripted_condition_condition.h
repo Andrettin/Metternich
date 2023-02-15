@@ -19,6 +19,8 @@ public:
 			return population_unit_scripted_condition::get(identifier);
 		} else if constexpr (std::is_same_v<scope_type, province>) {
 			return province_scripted_condition::get(identifier);
+		} else if constexpr (std::is_same_v<scope_type, site>) {
+			return site_scripted_condition::get(identifier);
 		}
 	}
 

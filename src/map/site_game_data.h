@@ -6,6 +6,7 @@ class culture;
 class improvement;
 class military_unit;
 class province;
+class religion;
 class site;
 class tile;
 
@@ -70,6 +71,8 @@ public:
 	{
 		return QString::fromStdString(this->get_current_cultural_name());
 	}
+
+	const religion *get_religion() const;
 
 	const improvement *get_improvement() const;
 

@@ -9,6 +9,7 @@ class character;
 class country;
 class population_unit;
 class province;
+class site;
 
 template <typename scope_type>
 class and_condition;
@@ -150,9 +151,39 @@ public:
 	}
 };
 
+class site_scripted_condition final : public data_entry, public data_type<site_scripted_condition>, public scripted_condition_base<site>
+{
+	Q_OBJECT
+
+public:
+	static constexpr const char class_identifier[] = "site_scripted_condition";
+	static constexpr const char property_class_identifier[] = "metternich::site_scripted_condition*";
+	static constexpr const char database_folder[] = "scripted_conditions/site";
+
+	explicit site_scripted_condition(const std::string &identifier) : data_entry(identifier)
+	{
+	}
+
+	virtual void process_gsml_property(const gsml_property &property) override
+	{
+		scripted_condition_base::process_gsml_property(property);
+	}
+
+	virtual void process_gsml_scope(const gsml_data &scope) override
+	{
+		scripted_condition_base::process_gsml_scope(scope);
+	}
+
+	virtual void check() const override
+	{
+		scripted_condition_base::check();
+	}
+};
+
 extern template class scripted_condition_base<character>;
 extern template class scripted_condition_base<country>;
 extern template class scripted_condition_base<population_unit>;
 extern template class scripted_condition_base<province>;
+extern template class scripted_condition_base<site>;
 
 }

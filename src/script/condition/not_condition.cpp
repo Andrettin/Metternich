@@ -29,5 +29,6 @@ template class not_condition<character>;
 template class not_condition<country>;
 template class not_condition<population_unit>;
 template class not_condition<province>;
+template class not_condition<site>;
 
 }

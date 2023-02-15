@@ -22,5 +22,6 @@ template class or_condition<character>;
 template class or_condition<country>;
 template class or_condition<population_unit>;
 template class or_condition<province>;
+template class or_condition<site>;
 
 }

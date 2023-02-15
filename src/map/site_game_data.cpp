@@ -80,6 +80,16 @@ const std::string &site_game_data::get_current_cultural_name() const
 	return this->site->get_cultural_name(this->get_culture());
 }
 
+const religion *site_game_data::get_religion() const
+{
+	const province *province = this->get_province();
+	if (province != nullptr) {
+		return province->get_game_data()->get_religion();
+	}
+
+	return nullptr;
+}
+
 const improvement *site_game_data::get_improvement() const
 {
 	const tile *tile = this->get_tile();

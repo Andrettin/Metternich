@@ -39,5 +39,6 @@ template class scripted_condition_base<character>;
 template class scripted_condition_base<country>;
 template class scripted_condition_base<population_unit>;
 template class scripted_condition_base<province>;
+template class scripted_condition_base<site>;
 
 }

@@ -8,6 +8,7 @@ class character;
 class country;
 class population_unit;
 class province;
+class site;
 
 template <typename scope_type>
 class and_condition final : public condition<scope_type>
@@ -99,5 +100,6 @@ extern template class and_condition<character>;
 extern template class and_condition<country>;
 extern template class and_condition<population_unit>;
 extern template class and_condition<province>;
+extern template class and_condition<site>;
 
 }
