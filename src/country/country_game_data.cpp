@@ -175,6 +175,10 @@ void country_game_data::do_events()
 
 void country_game_data::do_ai_turn()
 {
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->do_ai_turn();
+	}
+
 	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 		civilian_unit->do_ai_turn();
 	}

@@ -179,6 +179,29 @@ void province_game_data::do_cultural_change()
 	}
 }
 
+void province_game_data::do_ai_turn()
+{
+	//visit ruins (if any) with military units of this province's owner
+	if (this->get_owner() != nullptr && this->has_country_military_unit(this->get_owner())) {
+		for (const site *site : this->sites) {
+			site_game_data *site_game_data = site->get_game_data();
+			if (site_game_data->get_improvement() == nullptr || !site_game_data->get_improvement()->is_ruins()) {
+				continue;
+			}
+
+			const std::vector<military_unit *> military_units = this->get_military_units();
+			for (military_unit *military_unit : military_units) {
+				if (military_unit->get_owner() != this->get_owner()) {
+					continue;
+				}
+
+				military_unit->visit_site(site);
+			}
+			break;
+		}
+	}
+}
+
 void province_game_data::set_owner(const country *country)
 {
 	if (country == this->get_owner()) {
@@ -1160,6 +1183,17 @@ void province_game_data::change_military_unit_category_count(const military_unit
 	if (game::get()->is_running()) {
 		emit military_unit_category_counts_changed();
 	}
+}
+
+bool province_game_data::has_country_military_unit(const country *country) const
+{
+	for (const military_unit *military_unit : this->get_military_units()) {
+		if (military_unit->get_owner() == country) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 int province_game_data::get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::country *country) const

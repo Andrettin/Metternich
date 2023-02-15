@@ -63,6 +63,7 @@ public:
 	void do_turn();
 	void do_production();
 	void do_cultural_change();
+	void do_ai_turn();
 
 	bool is_on_map() const
 	{
@@ -361,6 +362,7 @@ public:
 
 	void change_military_unit_category_count(const military_unit_category category, const int change);
 
+	bool has_country_military_unit(const country *country) const;
 	Q_INVOKABLE int get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::country *country) const;
 
 	Q_INVOKABLE QObject *get_military_unit_category_icon(const metternich::military_unit_category category) const;
