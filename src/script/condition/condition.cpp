@@ -46,6 +46,7 @@
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
 #include "script/condition/root_character_condition.h"
+#include "script/condition/ruler_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
 #include "script/condition/source_character_condition.h"
@@ -179,6 +180,16 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		condition = std::make_unique<not_condition<scope_type>>(condition_operator);
 	}
 
+	if constexpr (std::is_same_v<scope_type, country>) {
+		if (tag == "ruler") {
+			condition = std::make_unique<ruler_condition>(condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+		if (tag == "location") {
+			condition = std::make_unique<location_condition<scope_type>>(condition_operator);
+		}
+	}
+	
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country>) {
 		if (tag == "any_advisor") {
 			condition = std::make_unique<any_advisor_condition<scope_type>>(condition_operator);
@@ -188,10 +199,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 			condition = std::make_unique<any_character_or_vassal_condition<scope_type>>(condition_operator);
 		} else if (tag == "any_vassal_character") {
 			condition = std::make_unique<any_vassal_character_condition<scope_type>>(condition_operator);
-		}
-	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
-		if (tag == "location") {
-			condition = std::make_unique<location_condition<scope_type>>(condition_operator);
 		}
 	}
 
