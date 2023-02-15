@@ -5,12 +5,13 @@
 #include "character/attribute.h"
 #include "script/condition/and_condition.h"
 #include "ui/icon.h"
+#include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 
 namespace metternich {
 
 character_type::character_type(const std::string &identifier)
-	: named_data_entry(identifier), primary_attribute(attribute::none)
+	: named_data_entry(identifier), primary_attribute(attribute::none), military_unit_category(military_unit_category::none)
 {
 }
 

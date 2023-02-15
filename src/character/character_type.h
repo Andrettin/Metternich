@@ -10,6 +10,7 @@ class country;
 class icon;
 class province;
 enum class attribute;
+enum class military_unit_category;
 
 template <typename scope_type>
 class condition;
@@ -25,6 +26,7 @@ class character_type final : public named_data_entry, public data_type<character
 	Q_PROPERTY(metternich::attribute primary_attribute MEMBER primary_attribute NOTIFY changed)
 	Q_PROPERTY(int primary_attribute_index READ get_primary_attribute_index CONSTANT)
 	Q_PROPERTY(QString primary_attribute_name READ get_primary_attribute_name_qstring CONSTANT)
+	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category)
 
 public:
 	static constexpr const char class_identifier[] = "character_type";
@@ -68,6 +70,11 @@ public:
 
 	QString get_primary_attribute_name_qstring() const;
 
+	metternich::military_unit_category get_military_unit_category() const
+	{
+		return this->military_unit_category;
+	}
+
 	const modifier<const country> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
@@ -85,6 +92,7 @@ private:
 	icon *portrait = nullptr;
 	icon_map<std::unique_ptr<const condition<character>>> conditional_portraits;
 	attribute primary_attribute;
+	metternich::military_unit_category military_unit_category;
 	std::unique_ptr<modifier<const country>> country_modifier;
 	std::unique_ptr<modifier<const province>> province_modifier;
 };
