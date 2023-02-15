@@ -397,6 +397,7 @@ private:
 	std::vector<QPoint> tiles;
 	std::vector<QPoint> border_tiles;
 	std::vector<QPoint> resource_tiles;
+	std::vector<const site *> sites;
 	resource_map<int> resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
 	std::vector<qunique_ptr<building_slot>> building_slots;

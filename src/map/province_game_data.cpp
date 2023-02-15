@@ -82,8 +82,7 @@ void province_game_data::do_turn()
 	this->do_production();
 	this->do_cultural_change();
 
-	for (const QPoint &tile_pos : this->get_resource_tiles()) {
-		const site *site = map::get()->get_tile(tile_pos)->get_site();
+	for (const site *site : this->sites) {
 		site->get_game_data()->do_turn();
 	}
 }
@@ -388,6 +387,10 @@ void province_game_data::add_tile(const QPoint &tile_pos)
 
 	if (tile->get_terrain() != nullptr) {
 		++this->tile_terrain_counts[tile->get_terrain()];
+	}
+
+	if (tile->get_site() != nullptr) {
+		this->sites.push_back(tile->get_site());
 	}
 }
 
