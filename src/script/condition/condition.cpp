@@ -33,6 +33,7 @@
 #include "script/condition/has_country_office_condition.h"
 #include "script/condition/has_province_office_condition.h"
 #include "script/condition/ideology_condition.h"
+#include "script/condition/improvement_condition.h"
 #include "script/condition/is_ruler_condition.h"
 #include "script/condition/location_condition.h"
 #include "script/condition/militancy_condition.h"
@@ -109,6 +110,10 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	} else if constexpr (std::is_same_v<scope_type, province>) {
 		if (key == "core") {
 			return std::make_unique<core_condition>(value, condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, site>) {
+		if (key == "improvement") {
+			return std::make_unique<improvement_condition>(value, condition_operator);
 		}
 	}
 	

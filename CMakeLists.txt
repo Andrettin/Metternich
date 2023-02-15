@@ -423,6 +423,7 @@ set(script_condition_HDRS
 	src/script/condition/has_country_office_condition.h
 	src/script/condition/has_province_office_condition.h
 	src/script/condition/ideology_condition.h
+	src/script/condition/improvement_condition.h
 	src/script/condition/is_ruler_condition.h
 	src/script/condition/location_condition.h
 	src/script/condition/militancy_condition.h
