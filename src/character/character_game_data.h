@@ -11,6 +11,7 @@ class character;
 class country;
 class icon;
 class landed_title;
+class military_unit;
 class office;
 class opinion_modifier;
 class province;
@@ -187,6 +188,29 @@ private:
 public:
 	void set_office(const metternich::office *office);
 
+	metternich::military_unit *get_military_unit() const
+	{
+		return this->military_unit;
+	}
+	
+	void set_military_unit(metternich::military_unit *military_unit)
+	{
+		if (military_unit == this->get_military_unit()) {
+			return;
+		}
+
+		this->military_unit = military_unit;
+	}
+
+	bool is_deployed() const
+	{
+		return this->get_military_unit() != nullptr;
+	}
+
+	bool can_be_deployed() const;
+	void deploy_to_province(const province *province);
+	void undeploy();
+
 	Q_INVOKABLE QString get_country_modifier_string(const unsigned indent) const;
 	Q_INVOKABLE QString get_province_modifier_string(const unsigned indent) const;
 
@@ -357,6 +381,7 @@ private:
 	std::map<attribute, int> attribute_values;
 	std::vector<const landed_title *> landed_titles;
 	const metternich::office *office = nullptr;
+	metternich::military_unit *military_unit = nullptr;
 	centesimal_int loyalty;
 	int wealth = 0;
 	centesimal_int prestige;

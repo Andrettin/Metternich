@@ -23,12 +23,14 @@ class country;
 class culture;
 class event;
 class military_unit;
+class military_unit_type;
 class population_unit;
 class province;
 class religion;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
 enum class event_trigger;
+enum class military_unit_category;
 struct read_only_context;
 
 class country_game_data final : public QObject
@@ -603,6 +605,8 @@ public:
 
 	void add_military_unit(qunique_ptr<military_unit> &&civilian_unit);
 	void remove_military_unit(military_unit *civilian_unit);
+
+	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category) const;
 
 	const centesimal_int &get_quarterly_prestige() const
 	{

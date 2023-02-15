@@ -36,6 +36,8 @@
 #include "technology/technology.h"
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
+#include "unit/military_unit_class.h"
+#include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/image_util.h"
@@ -1539,11 +1541,13 @@ void country_game_data::remove_character(const character *character)
 		this->set_ruler(nullptr);
 	}
 
-	if (character->get_game_data()->get_office() != nullptr) {
-		this->set_office_character(character->get_game_data()->get_office(), nullptr);
+	character_game_data *character_game_data = character->get_game_data();
+
+	if (character_game_data->get_office() != nullptr) {
+		this->set_office_character(character_game_data->get_office(), nullptr);
 	}
 
-	character->get_game_data()->set_employer(nullptr);
+	character_game_data->set_employer(nullptr);
 
 	this->sort_characters();
 
@@ -1778,6 +1782,36 @@ void country_game_data::remove_military_unit(military_unit *military_unit)
 			return;
 		}
 	}
+}
+
+const military_unit_type *country_game_data::get_best_military_unit_category_type(const military_unit_category category) const
+{
+	const military_unit_type *best_type = nullptr;
+	int best_score = 0;
+
+	for (const military_unit_class *military_unit_class : military_unit_class::get_all()) {
+		if (military_unit_class->get_category() != category) {
+			continue;
+		}
+
+		const military_unit_type *type = this->country->get_culture()->get_military_class_unit_type(military_unit_class);
+
+		if (type == nullptr) {
+			continue;
+		}
+
+		if (type->get_required_technology() != nullptr && !this->has_technology(type->get_required_technology())) {
+			continue;
+		}
+
+		const int score = type->get_score();
+
+		if (score > best_score) {
+			best_type = type;
+		}
+	}
+
+	return best_type;
 }
 
 }

@@ -20,6 +20,8 @@
 #include "script/modifier.h"
 #include "script/opinion_modifier.h"
 #include "script/scripted_character_modifier.h"
+#include "unit/military_unit.h"
+#include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
@@ -515,6 +517,36 @@ void character_game_data::set_office(const metternich::office *office)
 	if (game::get()->is_running()) {
 		emit office_changed();
 	}
+}
+
+bool character_game_data::can_be_deployed() const
+{
+	return this->character->get_type()->get_military_unit_category() != military_unit_category::none;
+}
+
+void character_game_data::deploy_to_province(const province *province)
+{
+	assert_throw(this->get_employer() != nullptr);
+	assert_throw(!this->is_deployed());
+	assert_throw(this->can_be_deployed());
+
+	const military_unit_type *military_unit_type = this->get_employer()->get_game_data()->get_best_military_unit_category_type(this->character->get_type()->get_military_unit_category());
+
+	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->character);
+
+	assert_throw(military_unit->can_move_to(province));
+
+	military_unit->set_province(province);
+	this->military_unit = military_unit.get();
+
+	this->get_employer()->get_game_data()->add_military_unit(std::move(military_unit));
+}
+
+void character_game_data::undeploy()
+{
+	assert_throw(this->is_deployed());
+
+	this->military_unit->disband(false);
 }
 
 QString character_game_data::get_country_modifier_string(const unsigned indent) const
