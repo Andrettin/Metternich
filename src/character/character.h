@@ -12,6 +12,7 @@ namespace archimedes {
 namespace metternich {
 
 class character_game_data;
+class character_history;
 class character_type;
 class culture;
 class dynasty;
@@ -49,6 +50,8 @@ public:
 	static constexpr const char class_identifier[] = "character";
 	static constexpr const char property_class_identifier[] = "metternich::character*";
 	static constexpr const char database_folder[] = "characters";
+	static constexpr bool history_enabled = true;
+
 	static constexpr int default_max_level = 6; //the maximum level in normal circumstances
 	static constexpr int base_loyalty = 50;
 	static constexpr centesimal_int min_loyalty = centesimal_int(0);
@@ -67,6 +70,14 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
+	virtual data_entry_history *get_history_base() override;
+
+	character_history *get_history() const
+	{
+		return this->history.get();
+	}
+
+	virtual void reset_history() override;
 
 	void reset_game_data();
 
@@ -209,6 +220,7 @@ private:
 	QDateTime death_date;
 	int level = 1;
 	std::vector<const trait *> traits;
+	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;
 };
 

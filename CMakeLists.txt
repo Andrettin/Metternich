@@ -260,6 +260,7 @@ set(character_HDRS
 	src/character/character.h
 	src/character/character_container.h
 	src/character/character_game_data.h
+	src/character/character_history.h
 	src/character/character_type.h
 	src/character/character_type_container.h
 	src/character/dynasty.h

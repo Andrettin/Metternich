@@ -3,6 +3,7 @@
 #include "character/character.h"
 
 #include "character/character_game_data.h"
+#include "character/character_history.h"
 #include "character/character_type.h"
 #include "character/dynasty.h"
 #include "character/trait.h"
@@ -142,6 +143,16 @@ void character::check() const
 
 		trait_types.insert(trait->get_type());
 	}
+}
+
+data_entry_history *character::get_history_base()
+{
+	return this->history.get();
+}
+
+void character::reset_history()
+{
+	this->history = make_qunique<character_history>(this);
 }
 
 void character::reset_game_data()

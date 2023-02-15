@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/character_history.h"
 #include "character/office.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
@@ -416,6 +417,29 @@ void game::apply_history(const metternich::scenario *scenario)
 		}
 
 		this->apply_population_history();
+
+		for (const character *character : character::get_all()) {
+			character_game_data *character_game_data = character->get_game_data();
+			const character_history *character_history = character->get_history();
+
+			if (scenario->get_start_date() >= character->get_start_date() && scenario->get_start_date() < character->get_end_date()) {
+				if (character_history->get_country() != nullptr && character_history->get_country() != character_game_data->get_employer()) {
+					if (character_game_data->get_employer() != nullptr) {
+						assert_throw(!character_game_data->is_ruler());
+						character_game_data->get_employer()->get_game_data()->remove_character(character);
+					}
+
+					if (character_history->get_country() != nullptr) {
+						character_history->get_country()->get_game_data()->add_character(character);
+					}
+				}
+
+				if (character_history->get_deployment_province() != nullptr) {
+					assert_throw(character_game_data->get_employer() != nullptr);
+					character_game_data->deploy_to_province(character_history->get_deployment_province());
+				}
+			}
+		}
 
 		for (const historical_civilian_unit *historical_civilian_unit : historical_civilian_unit::get_all()) {
 			const historical_civilian_unit_history *historical_civilian_unit_history = historical_civilian_unit->get_history();
