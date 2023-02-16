@@ -29,6 +29,7 @@
 #include "script/effect/random_list_effect.h"
 #include "script/effect/scripted_effect_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
+#include "script/effect/source_site_effect.h"
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
 #include "script/effect/wealth_effect.h"
@@ -127,6 +128,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		effect = std::make_unique<if_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "random_list") {
 		effect = std::make_unique<random_list_effect<scope_type>>(effect_operator);
+	} else if (effect_identifier == "source_site") {
+		effect = std::make_unique<source_site_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "tooltip") {
 		effect = std::make_unique<tooltip_effect<scope_type>>(effect_operator);
 	}

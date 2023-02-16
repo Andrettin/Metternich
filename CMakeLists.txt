@@ -481,6 +481,7 @@ set(script_effect_HDRS
 	src/script/effect/scripted_effect.h
 	src/script/effect/scripted_effect_effect.h
 	src/script/effect/scripted_modifiers_effect.h
+	src/script/effect/source_site_effect.h
 	src/script/effect/tooltip_effect.h
 	src/script/effect/traits_effect.h
 	src/script/effect/wealth_effect.h
