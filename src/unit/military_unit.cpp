@@ -232,7 +232,13 @@ void military_unit::disband(const bool restore_population_unit)
 	}
 
 	if (!this->is_moving()) {
-		this->get_province()->get_game_data()->remove_military_unit(this);
+		assert_throw(this->get_province() != nullptr || this->get_site() != nullptr);
+
+		if (this->get_site() != nullptr) {
+			this->get_site()->get_game_data()->remove_visiting_military_unit(this);
+		} else {
+			this->get_province()->get_game_data()->remove_military_unit(this);
+		}
 	}
 
 	if (this->get_home_province() != nullptr) {
