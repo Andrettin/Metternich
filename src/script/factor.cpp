@@ -89,5 +89,6 @@ template class factor<character>;
 template class factor<country>;
 template class factor<population_unit>;
 template class factor<province>;
+template class factor<site>;
 
 }

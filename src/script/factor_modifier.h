@@ -13,6 +13,7 @@ class character;
 class country;
 class population_unit;
 class province;
+class site;
 
 template <typename scope_type>
 class and_condition;
@@ -51,5 +52,6 @@ extern template class factor_modifier<character>;
 extern template class factor_modifier<country>;
 extern template class factor_modifier<population_unit>;
 extern template class factor_modifier<province>;
+extern template class factor_modifier<site>;
 
 }

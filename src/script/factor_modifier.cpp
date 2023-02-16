@@ -67,5 +67,6 @@ template class factor_modifier<character>;
 template class factor_modifier<country>;
 template class factor_modifier<population_unit>;
 template class factor_modifier<province>;
+template class factor_modifier<site>;
 
 }

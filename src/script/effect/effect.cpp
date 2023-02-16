@@ -9,6 +9,8 @@
 #include "database/database.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "script/effect/any_character_effect.h"
 #include "script/effect/any_character_or_vassal_effect.h"
 #include "script/effect/any_population_unit_effect.h"
@@ -154,6 +156,13 @@ const country *effect<scope_type>::get_scope_country(const scope_type *scope)
 		return nullptr;
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
 		return scope->get_game_data()->get_owner();
+	} else if constexpr (std::is_same_v<scope_type, const site>) {
+		const province *province = scope->get_game_data()->get_province();
+		if (province != nullptr) {
+			return province->get_game_data()->get_owner();
+		}
+
+		return nullptr;
 	}
 }
 
@@ -207,6 +216,10 @@ std::string effect<scope_type>::get_string(const scope_type *scope, const read_o
 	}
 }
 
+template class effect<const character>;
 template class effect<const country>;
+template class effect<population_unit>;
+template class effect<const province>;
+template class effect<const site>;
 
 }
