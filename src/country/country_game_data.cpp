@@ -1484,7 +1484,7 @@ void country_game_data::check_characters(const QDateTime &date)
 
 		if (game::get()->get_date() >= character->get_end_date()) {
 			if (character->get_game_data()->is_ruler()) {
-				read_only_context ctx(this->country);
+				context ctx(this->country);
 				ctx.source_scope = character;
 				country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
 			}

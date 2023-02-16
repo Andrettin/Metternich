@@ -17,7 +17,10 @@ class site;
 template <bool read_only>
 struct context_base
 {
-	using scope_variant_type = std::variant<std::monostate, const character *, const country *, std::conditional_t<read_only, const population_unit *, population_unit *>, const province *, const site *>;
+	using population_unit_type = std::conditional_t<read_only, const population_unit, population_unit>;
+	using population_unit_ptr = population_unit_type *;
+	using scope_variant_type = std::variant<std::monostate, const character *, const country *, population_unit_ptr, const province *, const site *>;
+
 
 	context_base()
 	{
@@ -31,8 +34,45 @@ struct context_base
 	void process_gsml_scope(const gsml_data &scope);
 	gsml_data to_gsml_data(const std::string &tag) const;
 
+	template <typename scope_type>
+	std::map<std::string, scope_type *> &get_saved_scopes()
+	{
+		if constexpr (std::is_same_v<scope_type, const character>) {
+			return this->saved_character_scopes;
+		} else if constexpr (std::is_same_v<scope_type, const country>) {
+			return this->saved_country_scopes;
+		} else if constexpr (std::is_same_v<scope_type, population_unit_type>) {
+			return this->saved_population_unit_scopes;
+		} else if constexpr (std::is_same_v<scope_type, const province>) {
+			return this->saved_province_scopes;
+		} else if constexpr (std::is_same_v<scope_type, const site>) {
+			return this->saved_site_scopes;
+		}
+	}
+
+	template <typename scope_type>
+	const std::map<std::string, scope_type *> &get_saved_scopes() const
+	{
+		if constexpr (std::is_same_v<scope_type, const character>) {
+			return this->saved_character_scopes;
+		} else if constexpr (std::is_same_v<scope_type, const country>) {
+			return this->saved_country_scopes;
+		} else if constexpr (std::is_same_v<scope_type, population_unit_type>) {
+			return this->saved_population_unit_scopes;
+		} else if constexpr (std::is_same_v<scope_type, const province>) {
+			return this->saved_province_scopes;
+		} else if constexpr (std::is_same_v<scope_type, const site>) {
+			return this->saved_site_scopes;
+		}
+	}
+
 	scope_variant_type root_scope = std::monostate();
 	scope_variant_type source_scope = std::monostate();
+	std::map<std::string, const character *> saved_character_scopes;
+	std::map<std::string, const country *> saved_country_scopes;
+	std::map<std::string, population_unit_ptr> saved_population_unit_scopes;
+	std::map<std::string, const province *> saved_province_scopes;
+	std::map<std::string, const site *> saved_site_scopes;
 };
 
 extern template struct context_base<false>;
@@ -74,6 +114,15 @@ public:
 	read_only_context(const context &ctx) : read_only_context(read_only_context::scope_from_mutable(ctx.root_scope))
 	{
 		this->source_scope = read_only_context::scope_from_mutable(ctx.source_scope);
+
+		this->saved_character_scopes = ctx.saved_character_scopes;
+		this->saved_country_scopes = ctx.saved_country_scopes;
+		this->saved_province_scopes = ctx.saved_province_scopes;
+		this->saved_site_scopes = ctx.saved_site_scopes;
+
+		for (const auto &[str, population_unit] : ctx.saved_population_unit_scopes) {
+			this->saved_population_unit_scopes[str] = population_unit;
+		}
 	}
 };
 

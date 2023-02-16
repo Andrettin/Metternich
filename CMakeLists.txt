@@ -439,6 +439,7 @@ set(script_condition_HDRS
 	src/script/condition/religious_group_condition.h
 	src/script/condition/root_character_condition.h
 	src/script/condition/ruler_condition.h
+	src/script/condition/saved_scope_condition.h
 	src/script/condition/scripted_modifier_condition.h
 	src/script/condition/scope_condition.h
 	src/script/condition/scope_condition_base.h
@@ -476,6 +477,7 @@ set(script_effect_HDRS
 	src/script/effect/piety_effect.h
 	src/script/effect/prestige_effect.h
 	src/script/effect/random_list_effect.h
+	src/script/effect/save_scope_as_effect.h
 	src/script/effect/scope_effect.h
 	src/script/effect/scope_effect_base.h
 	src/script/effect/scripted_effect.h

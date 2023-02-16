@@ -70,10 +70,10 @@ public:
 	static const scope_type *get_scope_from_context(const read_only_context &ctx);
 	static bool is_player_scope(const scope_type *scope);
 
-	static void check_events_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx);
+	static void check_events_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx);
 	static void check_events_for_scope(const scope_type *scope, const event_trigger trigger);
-	static void check_random_events_for_scope(const scope_type *scope, const read_only_context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay);
-	static void check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx);
+	static void check_random_events_for_scope(const scope_type *scope, const context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay);
+	static void check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx);
 	static void check_mtth_events_for_scope(const scope_type *scope);
 
 private:

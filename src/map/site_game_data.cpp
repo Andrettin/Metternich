@@ -28,7 +28,7 @@ void site_game_data::do_turn()
 		assert_throw(this->get_improvement()->is_ruins());
 
 		const country *country = this->get_visiting_military_units().front()->get_owner();
-		read_only_context ctx(country);
+		context ctx(country);
 		ctx.source_scope = this->site;
 		country_event::check_events_for_scope(country, event_trigger::ruins_explored, ctx);
 

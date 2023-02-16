@@ -47,6 +47,7 @@
 #include "script/condition/religious_group_condition.h"
 #include "script/condition/root_character_condition.h"
 #include "script/condition/ruler_condition.h"
+#include "script/condition/saved_scope_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
 #include "script/condition/source_character_condition.h"
@@ -207,7 +208,15 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		}
 	}
 
-	if (tag == "source_site") {
+	if (tag == "saved_character_scope") {
+		condition = std::make_unique<saved_scope_condition<scope_type, character>>(condition_operator);
+	} else if (tag == "saved_country_scope") {
+		condition = std::make_unique<saved_scope_condition<scope_type, country>>(condition_operator);
+	} else if (tag == "saved_province_scope") {
+		condition = std::make_unique<saved_scope_condition<scope_type, province>>(condition_operator);
+	} else if (tag == "saved_site_scope") {
+		condition = std::make_unique<saved_scope_condition<scope_type, site>>(condition_operator);
+	} else if (tag == "source_site") {
 		condition = std::make_unique<source_site_scope_condition<scope_type>>(condition_operator);
 	}
 

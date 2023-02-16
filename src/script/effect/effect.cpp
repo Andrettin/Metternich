@@ -27,6 +27,7 @@
 #include "script/effect/piety_effect.h"
 #include "script/effect/prestige_effect.h"
 #include "script/effect/random_list_effect.h"
+#include "script/effect/save_scope_as_effect.h"
 #include "script/effect/scripted_effect_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
 #include "script/effect/source_site_effect.h"
@@ -80,7 +81,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		}
 	}
 
-	if (key == "scripted_effect") {
+	if (key == "save_scope_as") {
+		return std::make_unique<save_scope_as_effect<scope_type>>(value, effect_operator);
+	} else if (key == "scripted_effect") {
 		return std::make_unique<scripted_effect_effect<scope_type>>(value, effect_operator);
 	} else if (key == "tooltip") {
 		return std::make_unique<tooltip_effect<scope_type>>(value, effect_operator);

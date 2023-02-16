@@ -43,7 +43,7 @@ bool scoped_event_base<scope_type>::is_player_scope(const scope_type *scope)
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx)
+void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx)
 {
 	assert_throw(trigger != event_trigger::none);
 
@@ -52,7 +52,7 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 			continue;
 		}
 
-		event->fire(scope, context(scope));
+		event->fire(scope, ctx);
 	}
 
 	scoped_event_base::check_random_events_for_scope(scope, ctx, scoped_event_base::get_trigger_random_events(trigger), 0);
@@ -66,11 +66,11 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 template <typename scope_type>
 void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger)
 {
-	scoped_event_base<scope_type>::check_events_for_scope(scope, trigger, read_only_context(scope));
+	scoped_event_base<scope_type>::check_events_for_scope(scope, trigger, context(scope));
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_type *scope, const read_only_context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay)
+void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_type *scope, const context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay)
 {
 	std::vector<const scoped_event_base *> random_events;
 
@@ -96,13 +96,11 @@ void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_ty
 		}
 
 		if (event->can_fire(scope, ctx)) {
-			const context event_ctx(scope);
-
 			if (delay > 0) {
-				auto delayed_effect = std::make_unique<delayed_effect_instance<scope_type>>(event, scope, event_ctx, delay);
+				auto delayed_effect = std::make_unique<delayed_effect_instance<scope_type>>(event, scope, ctx, delay);
 				game::get()->add_delayed_effect(std::move(delayed_effect));
 			} else {
-				event->fire(scope, event_ctx);
+				event->fire(scope, ctx);
 			}
 			break;
 		}
@@ -112,7 +110,7 @@ void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_ty
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const read_only_context &ctx)
+void scoped_event_base<scope_type>::check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx)
 {
 	for (const event_random_group *random_group : event_random_group::get_all_of_trigger(trigger)) {
 		const std::vector<const scoped_event_base *> &potential_events = random_group->get_events<scope_type>();

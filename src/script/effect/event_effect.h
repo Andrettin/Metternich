@@ -37,7 +37,8 @@ public:
 
 	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
 	{
-		context event_ctx(scope);
+		context event_ctx = ctx;
+		event_ctx.root_scope = scope;
 		event_ctx.source_scope = ctx.root_scope;
 
 		this->event->fire(scope, event_ctx);
