@@ -15,6 +15,7 @@
 #include "script/effect/any_character_or_vassal_effect.h"
 #include "script/effect/any_population_unit_effect.h"
 #include "script/effect/any_vassal_character_effect.h"
+#include "script/effect/battle_effect.h"
 #include "script/effect/commodity_effect.h"
 #include "script/effect/commodity_percent_effect.h"
 #include "script/effect/consciousness_effect.h"
@@ -104,6 +105,10 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<opinion_modifiers_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "scripted_modifiers") {
 			effect = std::make_unique<scripted_modifiers_effect<scope_type>>(effect_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, const country>) {
+		if (effect_identifier == "battle") {
+			effect = std::make_unique<battle_effect<scope_type>>(effect_operator);
 		}
 	}
 
