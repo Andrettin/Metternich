@@ -407,6 +407,7 @@ set(script_condition_HDRS
 	src/script/condition/any_character_condition.h
 	src/script/condition/any_character_or_vassal_condition.h
 	src/script/condition/any_vassal_character_condition.h
+	src/script/condition/attacking_commander_condition.h
 	src/script/condition/attribute_condition.h
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/character_type_condition.h
@@ -450,7 +451,6 @@ set(script_condition_HDRS
 	src/script/condition/source_site_scope_condition.h
 	src/script/condition/technology_condition.h
 	src/script/condition/trait_condition.h
-	src/script/condition/visiting_commander_condition.h
 	src/script/condition/war_condition.h
 	src/script/condition/wealth_condition.h
 	src/script/condition/year_condition.h

@@ -131,13 +131,4 @@ int site_game_data::get_production_modifier() const
 	return 0;
 }
 
-const character *site_game_data::get_visiting_commander() const
-{
-	if (this->get_visiting_military_units().empty()) {
-		return nullptr;
-	}
-
-	return military_unit::get_army_commander(this->get_visiting_military_units());
-}
-
 }

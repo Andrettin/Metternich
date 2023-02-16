@@ -17,6 +17,7 @@
 #include "script/condition/any_character_condition.h"
 #include "script/condition/any_character_or_vassal_condition.h"
 #include "script/condition/any_vassal_character_condition.h"
+#include "script/condition/attacking_commander_condition.h"
 #include "script/condition/attribute_condition.h"
 #include "script/condition/can_have_trait_condition.h"
 #include "script/condition/character_type_condition.h"
@@ -55,7 +56,6 @@
 #include "script/condition/source_site_scope_condition.h"
 #include "script/condition/technology_condition.h"
 #include "script/condition/trait_condition.h"
-#include "script/condition/visiting_commander_condition.h"
 #include "script/condition/war_condition.h"
 #include "script/condition/wealth_condition.h"
 #include "script/condition/year_condition.h"
@@ -190,10 +190,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		if (tag == "location") {
 			condition = std::make_unique<location_condition<scope_type>>(condition_operator);
 		}
-	} else if constexpr (std::is_same_v<scope_type, site>) {
-		if (tag == "visiting_commander") {
-			condition = std::make_unique<visiting_commander_condition>(condition_operator);
-		}
 	}
 	
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country>) {
@@ -208,7 +204,9 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		}
 	}
 
-	if (tag == "saved_character_scope") {
+	if (tag == "attacking_commander") {
+		condition = std::make_unique<attacking_commander_condition<scope_type>>(condition_operator);
+	} else if (tag == "saved_character_scope") {
 		condition = std::make_unique<saved_scope_condition<scope_type, character>>(condition_operator);
 	} else if (tag == "saved_country_scope") {
 		condition = std::make_unique<saved_scope_condition<scope_type, country>>(condition_operator);

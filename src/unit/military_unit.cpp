@@ -39,6 +39,26 @@ const character *military_unit::get_army_commander(const std::vector<military_un
 	return best_character;
 }
 
+const character *military_unit::get_army_commander(const std::vector<const military_unit *> &military_units)
+{
+	const metternich::character *best_character = nullptr;
+	int best_skill = 0;
+
+	for (const military_unit *military_unit : military_units) {
+		if (military_unit->get_character() == nullptr) {
+			continue;
+		}
+
+		const int skill = military_unit->get_character()->get_game_data()->get_primary_attribute_value();
+		if (skill > best_skill) {
+			best_character = military_unit->get_character();
+			best_skill = skill;
+		}
+	}
+
+	return best_character;
+}
+
 military_unit::military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
 	: type(type), owner(owner), population_type(population_type), culture(culture), religion(religion), phenotype(phenotype)
 {
