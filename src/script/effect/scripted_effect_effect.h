@@ -41,7 +41,7 @@ public:
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
-		return this->scripted_effect->get_effects().get_effects_string(scope, ctx, indent, prefix);
+		return this->scripted_effect->get_effects().get_effects_string(scope, ctx, indent, prefix, false);
 	}
 
 private:

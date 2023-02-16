@@ -47,7 +47,7 @@ void effect_list<scope_type>::do_effects(scope_type *scope, context &ctx) const
 }
 
 template <typename scope_type>
-std::string effect_list<scope_type>::get_effects_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const
+std::string effect_list<scope_type>::get_effects_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix, const bool indent_first_line) const
 {
 	std::string effects_string;
 	bool first = true;
@@ -61,13 +61,15 @@ std::string effect_list<scope_type>::get_effects_string(const scope_type *scope,
 			continue;
 		}
 
+		const bool indented_line = !first || indent_first_line;
+
 		if (first) {
 			first = false;
 		} else {
 			effects_string += "\n";
 		}
 
-		if (indent > 0) {
+		if (indent > 0 && indented_line) {
 			effects_string += std::string(indent, '\t');
 		}
 

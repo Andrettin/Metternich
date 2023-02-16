@@ -28,7 +28,7 @@ public:
 	void process_gsml_scope(const gsml_data &scope);
 	void check() const;
 	void do_effects(scope_type *scope, context &ctx) const;
-	std::string get_effects_string(const scope_type *scope, const read_only_context &ctx, const size_t indent = 0, const std::string &prefix = "") const;
+	std::string get_effects_string(const scope_type *scope, const read_only_context &ctx, const size_t indent = 0, const std::string &prefix = "", const bool indent_first_line = true) const;
 	void add_effect(std::unique_ptr<effect<scope_type>> &&effect);
 
 private:

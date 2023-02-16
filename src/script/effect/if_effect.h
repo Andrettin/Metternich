@@ -52,12 +52,7 @@ public:
 			return std::string();
 		}
 
-		std::string str = this->effects.get_effects_string(scope, ctx, indent, prefix);
-		if (indent != 0) {
-			//remove indentation for the first line, as it will already have been applied to this
-			string::remove_start(str, '\t');
-		}
-		return str;
+		return this->effects.get_effects_string(scope, ctx, indent, prefix, false);
 	}
 
 private:
