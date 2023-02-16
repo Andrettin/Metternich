@@ -70,10 +70,20 @@ int military_unit::get_army_score(const std::vector<military_unit *> &military_u
 	return score;
 }
 
-military_unit::military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
-	: type(type), owner(owner), population_type(population_type), culture(culture), religion(religion), phenotype(phenotype)
+military_unit::military_unit(const military_unit_type *type) : type(type)
 {
 	assert_throw(this->get_type() != nullptr);
+}
+
+military_unit::military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
+	: military_unit(type)
+{
+	this->owner = owner;
+	this->population_type = population_type;
+	this->culture = culture;
+	this->religion = religion;
+	this->phenotype = phenotype;
+
 	assert_throw(this->get_owner() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
@@ -236,18 +246,16 @@ void military_unit::visit_site(const metternich::site *site)
 
 void military_unit::disband(const bool restore_population_unit)
 {
-	assert_throw(this->get_province() != nullptr);
-
 	if (this->get_character() != nullptr) {
 		this->get_character()->get_game_data()->set_military_unit(nullptr);
 	}
 
-	if (!this->is_moving()) {
-		assert_throw(this->get_province() != nullptr || this->get_site() != nullptr);
-
+	if (this->is_moving()) {
 		if (this->get_site() != nullptr) {
 			this->get_site()->get_game_data()->remove_visiting_military_unit(this);
-		} else {
+		}
+	} else {
+		if (this->get_province() != nullptr) {
 			this->get_province()->get_game_data()->remove_military_unit(this);
 		}
 	}
@@ -256,11 +264,18 @@ void military_unit::disband(const bool restore_population_unit)
 		this->get_home_province()->get_game_data()->remove_home_military_unit(this);
 
 		if (restore_population_unit) {
+			assert_throw(this->get_population_type() != nullptr);
+			assert_throw(this->get_culture() != nullptr);
+			assert_throw(this->get_religion() != nullptr);
+			assert_throw(this->get_phenotype() != nullptr);
+
 			this->get_home_province()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
 		}
 	}
 
-	this->get_owner()->get_game_data()->remove_military_unit(this);
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->remove_military_unit(this);
+	}
 }
 
 void military_unit::disband()

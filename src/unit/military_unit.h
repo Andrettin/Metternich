@@ -30,6 +30,7 @@ public:
 	static const character *get_army_commander(const std::vector<const military_unit *> &military_units);
 	static int get_army_score(const std::vector<military_unit *> &military_units);
 
+	explicit military_unit(const military_unit_type *type);
 	explicit military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
 	explicit military_unit(const military_unit_type *type, const country *owner, const metternich::province *home_province, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
 	explicit military_unit(const military_unit_type *type, const character *character);
