@@ -30,6 +30,7 @@ void site_game_data::do_turn()
 		const country *country = this->get_visiting_military_units().front()->get_owner();
 		context ctx(country);
 		ctx.source_scope = this->site;
+		ctx.attacking_military_units = this->get_visiting_military_units();
 		country_event::check_events_for_scope(country, event_trigger::ruins_explored, ctx);
 
 		//make the visiting units go back

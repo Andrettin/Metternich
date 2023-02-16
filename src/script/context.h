@@ -9,6 +9,7 @@ namespace metternich {
 
 class character;
 class country;
+class military_unit;
 class population_unit;
 class province;
 class site;
@@ -21,6 +22,7 @@ struct context_base
 	using population_unit_ptr = population_unit_type *;
 	using scope_variant_type = std::variant<std::monostate, const character *, const country *, population_unit_ptr, const province *, const site *>;
 
+	using military_unit_ptr = std::conditional_t<read_only, const military_unit *, military_unit *>;
 
 	context_base()
 	{
@@ -73,6 +75,8 @@ struct context_base
 	std::map<std::string, population_unit_ptr> saved_population_unit_scopes;
 	std::map<std::string, const province *> saved_province_scopes;
 	std::map<std::string, const site *> saved_site_scopes;
+	std::vector<military_unit_ptr> attacking_military_units;
+	std::vector<military_unit_ptr> defending_military_units;
 };
 
 extern template struct context_base<false>;
@@ -122,6 +126,14 @@ public:
 
 		for (const auto &[str, population_unit] : ctx.saved_population_unit_scopes) {
 			this->saved_population_unit_scopes[str] = population_unit;
+		}
+
+		for (const military_unit *military_unit : ctx.attacking_military_units) {
+			this->attacking_military_units.push_back(military_unit);
+		}
+
+		for (const military_unit *military_unit : ctx.defending_military_units) {
+			this->defending_military_units.push_back(military_unit);
 		}
 	}
 };
