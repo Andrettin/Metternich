@@ -12,6 +12,7 @@ namespace metternich {
 class character;
 class country;
 class era;
+class military_unit;
 class province;
 class scenario;
 struct population_group_key;
@@ -154,6 +155,8 @@ public:
 	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const country>> &&delayed_effect);
 
 	void clear_delayed_effects();
+
+	bool do_battle(const std::vector<military_unit *> &attacker_units, const std::vector<military_unit *> &defender_units);
 
 signals:
 	void running_changed();

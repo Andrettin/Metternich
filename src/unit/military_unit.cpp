@@ -59,6 +59,17 @@ const character *military_unit::get_army_commander(const std::vector<const milit
 	return best_character;
 }
 
+int military_unit::get_army_score(const std::vector<military_unit *> &military_units)
+{
+	int score = 0;
+
+	for (const military_unit *military_unit : military_units) {
+		score += military_unit->get_type()->get_score();
+	}
+
+	return score;
+}
+
 military_unit::military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
 	: type(type), owner(owner), population_type(population_type), culture(culture), religion(religion), phenotype(phenotype)
 {

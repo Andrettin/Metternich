@@ -970,4 +970,30 @@ void game::clear_delayed_effects()
 	this->country_delayed_effects.clear();
 }
 
+bool game::do_battle(const std::vector<military_unit *> &attacker_units, const std::vector<military_unit *> &defender_units)
+{
+	//this function returns true if the attackers won, or false otherwise
+
+	const int attacker_score = military_unit::get_army_score(attacker_units);
+	const int defender_score = military_unit::get_army_score(defender_units);
+
+	if (attacker_score > defender_score) {
+		//destroy the defender units
+		for (military_unit *military_unit : defender_units) {
+			military_unit->disband(false);
+		}
+
+		return true;
+	}
+
+	if (attacker_score < defender_score) {
+		//destroy the attacker units
+		for (military_unit *military_unit : attacker_units) {
+			military_unit->disband(false);
+		}
+	}
+
+	return false;
+}
+
 }
