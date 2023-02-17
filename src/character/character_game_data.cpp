@@ -286,7 +286,7 @@ void character_game_data::generate_missing_traits()
 		trait_types.insert(trait->get_type());
 	}
 
-	static const std::vector<trait_type> required_trait_types = { trait_type::background, trait_type::personality, trait_type::weapon, trait_type::armor };
+	static const std::vector<trait_type> required_trait_types = { trait_type::background, trait_type::personality };
 
 	for (const trait_type trait_type : required_trait_types) {
 		if (!trait_types.contains(trait_type)) {
