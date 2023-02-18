@@ -37,12 +37,12 @@ character_game_data::character_game_data(const metternich::character *character)
 	connect(this, &character_game_data::landed_titles_changed, this, &character_game_data::titled_name_changed);
 	connect(this, &character_game_data::office_changed, this, &character_game_data::titled_name_changed);
 	connect(game::get(), &game::turn_changed, this, &character_game_data::age_changed);
+
+	this->set_attribute_value(attribute::vitality, character::base_vitality);
 }
 
 void character_game_data::on_game_started()
 {
-	this->set_attribute_value(attribute::vitality, character::base_vitality);
-
 	for (const trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);
 	}
@@ -437,14 +437,24 @@ void character_game_data::set_attribute_value(const attribute attribute, const i
 		return;
 	}
 
+	const int old_value = this->get_attribute_value(attribute); //not the unclamped value, note
+
 	if (value == 0) {
 		this->attribute_values.erase(attribute);
 	} else {
 		this->attribute_values[attribute] = value;
 	}
 
-	if (game::get()->is_running()) {
-		emit attributes_changed();
+	const int new_value = this->get_attribute_value(attribute);
+
+	if (new_value != old_value) {
+		if (attribute == attribute::vitality && this->get_military_unit() != nullptr) {
+			this->get_military_unit()->change_max_hit_points((new_value - old_value) * military_unit::vitality_hit_point_bonus);
+		}
+
+		if (game::get()->is_running()) {
+			emit attributes_changed();
+		}
 	}
 }
 

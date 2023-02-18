@@ -27,6 +27,10 @@ class military_unit final : public QObject
 	Q_PROPERTY(metternich::site* site READ get_site_unconst NOTIFY site_changed)
 
 public:
+	static constexpr int hit_point_recovery_per_turn = 10;
+	static constexpr int morale_recovery_per_turn = 20;
+	static constexpr int vitality_hit_point_bonus = 5;
+
 	static const character *get_army_commander(const std::vector<military_unit *> &military_units);
 	static const character *get_army_commander(const std::vector<const military_unit *> &military_units);
 	static int get_army_score(const std::vector<military_unit *> &military_units);
@@ -165,6 +169,79 @@ public:
 	void set_site(const metternich::site *site);
 	void visit_site(const metternich::site *site);
 
+	int get_hit_points() const
+	{
+		return this->hit_points;
+	}
+
+	void set_hit_points(const int hit_points)
+	{
+		if (hit_points == this->get_hit_points()) {
+			return;
+		}
+
+		this->hit_points = hit_points;
+
+		if (this->get_morale() > this->get_hit_points()) {
+			this->set_morale(this->get_hit_points());
+		}
+
+		if (this->get_hit_points() <= 0) {
+			this->disband(false);
+		}
+	}
+
+	void change_hit_points(const int change)
+	{
+		this->set_hit_points(this->get_hit_points() + change);
+	}
+
+	int get_max_hit_points() const
+	{
+		return this->max_hit_points;
+	}
+
+	void set_max_hit_points(const int max_hit_points)
+	{
+		if (max_hit_points == this->get_max_hit_points()) {
+			return;
+		}
+
+		this->max_hit_points = max_hit_points;
+
+		if (this->get_hit_points() > this->get_max_hit_points()) {
+			this->set_hit_points(this->get_max_hit_points());
+		}
+	}
+
+	void change_max_hit_points(const int change)
+	{
+		this->set_max_hit_points(this->get_max_hit_points() + change);
+	}
+
+	int get_morale() const
+	{
+		return this->morale;
+	}
+
+	void set_morale(const int morale)
+	{
+		if (morale == this->get_morale()) {
+			return;
+		}
+
+		this->morale = morale;
+	}
+
+	void change_morale(const int change)
+	{
+		this->set_morale(this->get_morale() + change);
+	}
+
+	int get_morale_resistance() const;
+
+	void receive_damage(const int damage);
+
 	void disband(const bool restore_population_unit);
 	Q_INVOKABLE void disband();
 
@@ -187,6 +264,9 @@ private:
 	const metternich::province *province = nullptr; //the province the unit is in
 	const metternich::province *original_province = nullptr; //the province before moving
 	const metternich::site *site = nullptr; //the site the unit is visiting
+	int hit_points = 0;
+	int max_hit_points = 0;
+	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat
 };
 
 }
