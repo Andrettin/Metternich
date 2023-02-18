@@ -53,6 +53,7 @@ public:
 	static constexpr bool history_enabled = true;
 
 	static constexpr int default_max_level = 6; //the maximum level in normal circumstances
+	static constexpr int base_vitality = 5;
 	static constexpr int base_loyalty = 50;
 	static constexpr centesimal_int min_loyalty = centesimal_int(0);
 	static constexpr centesimal_int max_loyalty = centesimal_int(100);

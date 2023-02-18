@@ -6,6 +6,7 @@
 
 namespace metternich {
 
+class character;
 class country;
 class icon;
 class province;
