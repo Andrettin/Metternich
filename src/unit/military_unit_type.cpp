@@ -43,4 +43,9 @@ military_unit_category military_unit_type::get_category() const
 	return this->get_unit_class()->get_category();
 }
 
+military_unit_domain military_unit_type::get_domain() const
+{
+	return this->get_unit_class()->get_domain();
+}
+
 }

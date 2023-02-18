@@ -13,6 +13,7 @@ class province;
 class religion;
 class site;
 enum class military_unit_category;
+enum class military_unit_domain;
 
 class military_unit final : public QObject
 {
@@ -54,6 +55,7 @@ public:
 	void set_type(const military_unit_type *type);
 
 	military_unit_category get_category() const;
+	military_unit_domain get_domain() const;
 
 	const icon *get_icon() const;
 

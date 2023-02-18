@@ -157,6 +157,11 @@ military_unit_category military_unit::get_category() const
 	return this->get_type()->get_category();
 }
 
+military_unit_domain military_unit::get_domain() const
+{
+	return this->get_type()->get_domain();
+}
+
 const icon *military_unit::get_icon() const
 {
 	return this->get_type()->get_icon();

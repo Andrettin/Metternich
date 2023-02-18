@@ -11,6 +11,7 @@ class culture;
 class icon;
 class technology;
 enum class military_unit_category;
+enum class military_unit_domain;
 
 class military_unit_type final : public named_data_entry, public data_type<military_unit_type>
 {
@@ -50,6 +51,7 @@ public:
 	}
 
 	military_unit_category get_category() const;
+	military_unit_domain get_domain() const;
 
 	const metternich::culture *get_culture() const
 	{
