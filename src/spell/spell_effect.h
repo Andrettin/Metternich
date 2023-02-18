@@ -21,7 +21,7 @@ public:
 
 	virtual const std::string &get_identifier() const = 0;
 	virtual void apply(military_unit *caster, military_unit *target) const = 0;
-	virtual std::string get_string() const = 0;
+	virtual std::string get_string(const military_unit *caster) const = 0;
 };
 
 }
