@@ -37,12 +37,12 @@ character_game_data::character_game_data(const metternich::character *character)
 	connect(this, &character_game_data::landed_titles_changed, this, &character_game_data::titled_name_changed);
 	connect(this, &character_game_data::office_changed, this, &character_game_data::titled_name_changed);
 	connect(game::get(), &game::turn_changed, this, &character_game_data::age_changed);
-
-	this->set_attribute_value(attribute::vitality, character::base_vitality);
 }
 
 void character_game_data::on_game_started()
 {
+	this->set_attribute_value(attribute::vitality, character::base_vitality);
+
 	for (const trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);
 	}
