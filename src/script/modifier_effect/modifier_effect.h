@@ -16,7 +16,9 @@ class modifier_effect
 public:
 	static std::unique_ptr<modifier_effect> from_gsml_property(const gsml_property &property);
 
-	virtual ~modifier_effect() {}
+	virtual ~modifier_effect()
+	{
+	}
 
 	virtual const std::string &get_identifier() const = 0;
 	virtual void apply(scope_type *scope, const int multiplier) const = 0;

@@ -182,6 +182,14 @@ set(script_modifier_effect_SRCS
 source_group(script\\modifier_effect FILES ${script_modifier_effect_SRCS})
 set_source_files_properties(${script_modifier_effect_SRCS} PROPERTIES UNITY_GROUP "script_modifier_effect")
 
+set(spell_SRCS
+	src/spell/spell.cpp
+	src/spell/spell_effect.cpp
+	src/spell/spell_target.cpp
+)
+source_group(spell FILES ${spell_SRCS})
+set_source_files_properties(${spell_SRCS} PROPERTIES UNITY_GROUP "spell")
+
 set(technology_SRCS
 	src/technology/technology.cpp
 	src/technology/technology_container.cpp
@@ -247,6 +255,7 @@ set(metternich_SRCS
 	${script_condition_SRCS}
 	${script_effect_SRCS}
 	${script_modifier_effect_SRCS}
+	${spell_SRCS}
 	${technology_SRCS}
 	${time_SRCS}
 	${ui_SRCS}
@@ -504,6 +513,14 @@ set(script_modifier_effect_HDRS
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})
 
+set(spell_HDRS
+	src/spell/damage_spell_effect.h
+	src/spell/spell.h
+	src/spell/spell_effect.h
+	src/spell/spell_target.h
+)
+source_group(spell FILES ${spell_HDRS})
+
 set(technology_HDRS
 	src/technology/technology.h
 	src/technology/technology_container.h
@@ -567,6 +584,7 @@ set(metternich_HDRS
 	${script_condition_HDRS}
 	${script_effect_HDRS}
 	${script_modifier_effect_HDRS}
+	${spell_HDRS}
 	${technology_HDRS}
 	${time_HDRS}
 	${ui_HDRS}
