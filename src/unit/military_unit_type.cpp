@@ -44,11 +44,19 @@ void military_unit_type::check() const
 
 military_unit_category military_unit_type::get_category() const
 {
+	if (this->get_unit_class() == nullptr) {
+		return military_unit_category::none;
+	}
+
 	return this->get_unit_class()->get_category();
 }
 
 military_unit_domain military_unit_type::get_domain() const
 {
+	if (this->get_unit_class() == nullptr) {
+		return military_unit_domain::none;
+	}
+
 	return this->get_unit_class()->get_domain();
 }
 
