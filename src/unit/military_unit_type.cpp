@@ -5,7 +5,9 @@
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "technology/technology.h"
+#include "unit/military_unit_category.h"
 #include "unit/military_unit_class.h"
+#include "unit/military_unit_domain.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -16,14 +18,16 @@ void military_unit_type::initialize()
 
 	this->unit_class->add_unit_type(this);
 
-	if (this->culture != nullptr) {
-		this->culture->set_military_class_unit_type(this->get_unit_class(), this);
-	} else if (this->cultural_group != nullptr) {
-		assert_throw(this->cultural_group->get_military_class_unit_type(this->get_unit_class()) == nullptr);
+	if (!this->get_unit_class()->is_animal()) {
+		if (this->culture != nullptr) {
+			this->culture->set_military_class_unit_type(this->get_unit_class(), this);
+		} else if (this->cultural_group != nullptr) {
+			assert_throw(this->cultural_group->get_military_class_unit_type(this->get_unit_class()) == nullptr);
 
-		this->cultural_group->set_military_class_unit_type(this->get_unit_class(), this);
-	} else {
-		this->unit_class->set_default_unit_type(this);
+			this->cultural_group->set_military_class_unit_type(this->get_unit_class(), this);
+		} else {
+			this->unit_class->set_default_unit_type(this);
+		}
 	}
 
 	if (this->required_technology != nullptr) {

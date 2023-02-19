@@ -20,6 +20,16 @@ void military_unit_class::check() const
 	assert_throw(this->get_category() != military_unit_category::none);
 }
 
+bool military_unit_class::is_animal() const
+{
+	switch (this->get_category()) {
+		case military_unit_category::predators:
+			return true;
+		default:
+			return false;
+	}
+}
+
 void military_unit_class::set_default_unit_type(const military_unit_type *unit_type)
 {
 	assert_throw(this->get_default_unit_type() == nullptr);

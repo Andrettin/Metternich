@@ -36,6 +36,8 @@ public:
 		return this->category;
 	}
 
+	bool is_animal() const;
+
 	const military_unit_type *get_default_unit_type() const
 	{
 		return this->default_unit_type;

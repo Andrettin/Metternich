@@ -11,6 +11,7 @@ const std::string enum_converter<metternich::military_unit_category>::property_c
 
 template <>
 const std::map<std::string, metternich::military_unit_category> enum_converter<metternich::military_unit_category>::string_to_enum_map = {
+	{ "predators", metternich::military_unit_category::predators },
 	{ "militia", metternich::military_unit_category::militia },
 	{ "light_infantry", metternich::military_unit_category::light_infantry },
 	{ "regular_infantry", metternich::military_unit_category::regular_infantry },
