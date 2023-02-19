@@ -150,7 +150,9 @@ void country_game_data::do_population_growth()
 	if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
 		const bool plural = starvation_count > 1;
 
-		engine_interface::get()->add_notification("Starvation", std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", starvation_count, (plural ? "units" : "unit"), (plural ? "have" : "has")));
+		const character *interior_minister = this->get_office_character(defines::get()->get_interior_minister_office());
+
+		engine_interface::get()->add_notification("Starvation", interior_minister, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", starvation_count, (plural ? "units" : "unit"), (plural ? "have" : "has")));
 	}
 }
 
