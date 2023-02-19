@@ -280,6 +280,25 @@ void military_unit::visit_site(const metternich::site *site)
 	this->set_site(site);
 }
 
+void military_unit::set_hit_points(const int hit_points)
+{
+	if (hit_points == this->get_hit_points()) {
+		return;
+	}
+
+	this->hit_points = hit_points;
+
+	assert_throw(this->get_hit_points() <= this->get_max_hit_points());
+
+	if (this->get_morale() > this->get_hit_points()) {
+		this->set_morale(this->get_hit_points());
+	}
+
+	if (this->get_hit_points() <= 0) {
+		this->disband(false);
+	}
+}
+
 int military_unit::get_morale_resistance() const
 {
 	int morale_resistance = 0;
@@ -310,6 +329,17 @@ void military_unit::receive_damage(const int damage)
 
 	const int morale_damage = damage * (100 - this->get_morale_resistance()) / 100;
 	this->change_morale(-morale_damage);
+}
+
+void military_unit::heal(const int healing)
+{
+	const int missing_hit_points = this->get_max_hit_points() - this->get_hit_points();
+
+	if (missing_hit_points == 0) {
+		return;
+	}
+
+	this->change_hit_points(std::min(healing, missing_hit_points));
 }
 
 void military_unit::disband(const bool restore_population_unit)

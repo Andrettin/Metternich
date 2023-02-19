@@ -174,22 +174,7 @@ public:
 		return this->hit_points;
 	}
 
-	void set_hit_points(const int hit_points)
-	{
-		if (hit_points == this->get_hit_points()) {
-			return;
-		}
-
-		this->hit_points = hit_points;
-
-		if (this->get_morale() > this->get_hit_points()) {
-			this->set_morale(this->get_hit_points());
-		}
-
-		if (this->get_hit_points() <= 0) {
-			this->disband(false);
-		}
-	}
+	void set_hit_points(const int hit_points);
 
 	void change_hit_points(const int change)
 	{
@@ -241,6 +226,7 @@ public:
 	int get_morale_resistance() const;
 
 	void receive_damage(const int damage);
+	void heal(const int healing);
 
 	void disband(const bool restore_population_unit);
 	Q_INVOKABLE void disband();
