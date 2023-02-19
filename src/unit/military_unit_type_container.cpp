@@ -13,17 +13,12 @@ bool military_unit_type_compare::operator()(const military_unit_type *lhs, const
 		return lhs == nullptr;
 	}
 
-	const military_unit_class *lhs_class = lhs->get_unit_class();
-	const military_unit_class *rhs_class = rhs->get_unit_class();
+	if (lhs->get_domain() != rhs->get_domain()) {
+		return lhs->get_domain() < rhs->get_domain();
+	}
 
-	if (lhs_class != rhs_class) {
-		if (lhs_class->get_domain() != rhs_class->get_domain()) {
-			return lhs_class->get_domain() < rhs_class->get_domain();
-		}
-
-		if (lhs_class->get_category() != rhs_class->get_category()) {
-			return lhs_class->get_category() < rhs_class->get_category();
-		}
+	if (lhs->get_category() != rhs->get_category()) {
+		return lhs->get_category() < rhs->get_category();
 	}
 
 	return lhs->get_identifier() < rhs->get_identifier();
