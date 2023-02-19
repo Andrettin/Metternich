@@ -1159,6 +1159,7 @@ void province_game_data::remove_military_unit(military_unit *military_unit)
 void province_game_data::clear_military_units()
 {
 	this->military_units.clear();
+	this->military_unit_category_counts.clear();
 }
 
 QVariantList province_game_data::get_military_unit_category_counts_qvariant_list() const
