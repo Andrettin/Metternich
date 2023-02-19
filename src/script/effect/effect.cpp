@@ -22,6 +22,7 @@
 #include "script/effect/country_effect.h"
 #include "script/effect/delayed_effect.h"
 #include "script/effect/event_effect.h"
+#include "script/effect/hidden_effect.h"
 #include "script/effect/if_effect.h"
 #include "script/effect/militancy_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
@@ -132,6 +133,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 
 	if (effect_identifier == "country") {
 		effect = std::make_unique<country_effect<scope_type>>(effect_operator);
+	} else if (effect_identifier == "hidden") {
+		effect = std::make_unique<hidden_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "if") {
 		effect = std::make_unique<if_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "random_list") {

@@ -482,6 +482,7 @@ set(script_effect_HDRS
 	src/script/effect/effect.h
 	src/script/effect/effect_list.h
 	src/script/effect/event_effect.h
+	src/script/effect/hidden_effect.h
 	src/script/effect/if_effect.h
 	src/script/effect/militancy_effect.h
 	src/script/effect/opinion_modifiers_effect.h
