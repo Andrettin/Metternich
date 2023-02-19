@@ -59,6 +59,16 @@ public:
 	Q_INVOKABLE QVariantList get_scenarios() const;
 	Q_INVOKABLE QVariantList get_eras() const;
 
+	void add_notification(const QString &title, const QString &text)
+	{
+		emit notification_added(title, text);
+	}
+
+	void add_notification(const std::string &title, const std::string &text)
+	{
+		this->add_notification(QString::fromStdString(title), QString::fromStdString(text));
+	}
+
 	void add_event_instance(qunique_ptr<event_instance> &&event_instance);
 	void remove_event_instance(event_instance *event_instance);
 
@@ -97,6 +107,7 @@ public:
 signals:
 	void running_changed();
 	void scale_factor_changed();
+	void notification_added(const QString &title, const QString &text);
 	void event_fired(QObject *event_instance);
 	void event_closed(QObject *event_instance);
 	void selected_military_units_changed();
