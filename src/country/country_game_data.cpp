@@ -17,6 +17,7 @@
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
+#include "engine_interface.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -133,14 +134,23 @@ void country_game_data::do_population_growth()
 		this->get_random_population_weighted_province()->get_game_data()->grow_population();
 	}
 
+	int starvation_count = 0;
+
 	while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
 		//starvation
 		this->decrease_population();
+		++starvation_count;
 
 		if (this->population_units.empty()) {
 			this->set_population_growth(0);
-			return;
+			break;
 		}
+	}
+
+	if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
+		const bool plural = starvation_count > 1;
+
+		engine_interface::get()->add_notification("Starvation", std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", starvation_count, (plural ? "units" : "unit"), (plural ? "have" : "has")));
 	}
 }
 
