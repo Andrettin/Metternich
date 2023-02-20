@@ -519,6 +519,7 @@ set(spell_HDRS
 	src/spell/damage_spell_effect.h
 	src/spell/healing_spell_effect.h
 	src/spell/spell.h
+	src/spell/spell_container.h
 	src/spell/spell_effect.h
 	src/spell/spell_target.h
 )
