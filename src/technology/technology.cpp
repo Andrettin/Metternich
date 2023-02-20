@@ -108,6 +108,8 @@ QVariantList technology::get_enabled_military_units_for_culture(culture *culture
 	std::vector<const military_unit_type *> military_units;
 
 	for (const military_unit_type *military_unit : this->get_enabled_military_units()) {
+		assert_throw(military_unit->get_unit_class() != nullptr);
+
 		if (military_unit != culture->get_military_class_unit_type(military_unit->get_unit_class())) {
 			continue;
 		}

@@ -31,6 +31,7 @@ void military_unit_type::initialize()
 	}
 
 	if (this->required_technology != nullptr) {
+		assert_throw(this->get_unit_class() != nullptr);
 		this->required_technology->add_enabled_military_unit(this);
 	}
 
@@ -39,6 +40,7 @@ void military_unit_type::initialize()
 
 void military_unit_type::check() const
 {
+	assert_throw(this->get_domain() != military_unit_domain::none);
 	assert_throw(this->get_icon() != nullptr);
 }
 
