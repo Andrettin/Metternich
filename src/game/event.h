@@ -15,8 +15,9 @@ class event : public named_data_entry
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
+	Q_PROPERTY(bool circular_portrait MEMBER circular_portrait READ has_circular_portrait NOTIFY changed)
+	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::event_trigger trigger MEMBER trigger READ get_trigger)
 	Q_PROPERTY(metternich::event_random_group* random_group MEMBER random_group)
 	Q_PROPERTY(bool random READ is_random WRITE set_random)
@@ -30,6 +31,11 @@ public:
 
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void initialize() override;
+
+	bool has_circular_portrait() const
+	{
+		return this->circular_portrait;
+	}
 
 	const std::string &get_description() const
 	{
@@ -90,8 +96,9 @@ signals:
 	void changed();
 
 private:
-	std::string description;
 	icon *portrait = nullptr;
+	bool circular_portrait = false;
+	std::string description;
 	event_trigger trigger;
 	event_random_group *random_group = nullptr;
 	bool only_once = false;
