@@ -3,6 +3,7 @@
 #include "character/character_container.h"
 #include "script/opinion_modifier_container.h"
 #include "script/scripted_modifier_container.h"
+#include "spell/spell_container.h"
 #include "util/fractional_int.h"
 
 namespace metternich {
@@ -16,6 +17,7 @@ class office;
 class opinion_modifier;
 class province;
 class scripted_character_modifier;
+class spell;
 class trait;
 enum class attribute;
 enum class trait_type;
@@ -48,6 +50,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
 	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
+	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 
 public:
 	explicit character_game_data(const metternich::character *character);
@@ -325,6 +328,32 @@ public:
 		this->set_piety(this->get_piety() + change);
 	}
 
+	const spell_set &get_spells() const
+	{
+		return this->spells;
+	}
+
+	QVariantList get_spells_qvariant_list() const;
+
+	bool has_spell(const spell *spell) const
+	{
+		return this->get_spells().contains(spell);
+	}
+
+	void add_spell(const spell *spell)
+	{
+		this->spells.insert(spell);
+		emit spells_changed();
+	}
+
+	void remove_spell(const spell *spell)
+	{
+		this->spells.erase(spell);
+		emit spells_changed();
+	}
+
+	bool can_learn_spell(const spell *spell) const;
+
 	const centesimal_int &get_quarterly_prestige() const
 	{
 		return this->quarterly_prestige;
@@ -371,6 +400,7 @@ signals:
 	void wealth_changed();
 	void prestige_changed();
 	void piety_changed();
+	void spells_changed();
 
 private:
 	const metternich::character *character = nullptr;
@@ -386,6 +416,7 @@ private:
 	int wealth = 0;
 	centesimal_int prestige;
 	centesimal_int piety;
+	spell_set spells;
 	centesimal_int quarterly_prestige;
 	centesimal_int quarterly_piety;
 	character_map<opinion_modifier_map<int>> opinion_modifiers;

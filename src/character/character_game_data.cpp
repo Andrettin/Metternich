@@ -20,6 +20,7 @@
 #include "script/modifier.h"
 #include "script/opinion_modifier.h"
 #include "script/scripted_character_modifier.h"
+#include "spell/spell.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
@@ -621,6 +622,24 @@ const centesimal_int &character_game_data::get_loyalty() const
 	}
 
 	return this->get_unclamped_loyalty();
+}
+
+QVariantList character_game_data::get_spells_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_spells());
+}
+
+bool character_game_data::can_learn_spell(const spell *spell) const
+{
+	if (!vector::contains(spell->get_character_types(), this->character->get_type())) {
+		return false;
+	}
+
+	if (this->has_spell(spell)) {
+		return false;
+	}
+
+	return true;
 }
 
 void character_game_data::change_quarterly_prestige(const centesimal_int &change)

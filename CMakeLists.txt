@@ -184,6 +184,7 @@ set_source_files_properties(${script_modifier_effect_SRCS} PROPERTIES UNITY_GROU
 
 set(spell_SRCS
 	src/spell/spell.cpp
+	src/spell/spell_container.cpp
 	src/spell/spell_effect.cpp
 	src/spell/spell_target.cpp
 )
