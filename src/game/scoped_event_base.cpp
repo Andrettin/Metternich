@@ -200,6 +200,11 @@ void scoped_event_base<scope_type>::initialize()
 	} else if (this->get_mean_time_to_happen() != nullptr) {
 		scoped_event_base::mtth_events.push_back(this);
 	}
+
+	if (this->get_option_count() == 0) {
+		//add an empty option
+		this->options.push_back(std::make_unique<event_option<scope_type>>());
+	}
 }
 
 template <typename scope_type>
