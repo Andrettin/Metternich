@@ -16,6 +16,15 @@
 
 namespace metternich {
 
+bool character::skill_compare(const character *lhs, const character *rhs)
+{
+	if (lhs->get_game_data()->get_primary_attribute_value() != rhs->get_game_data()->get_primary_attribute_value()) {
+		return lhs->get_game_data()->get_primary_attribute_value() > rhs->get_game_data()->get_primary_attribute_value();
+	}
+
+	return lhs->get_identifier() < rhs->get_identifier();
+}
+
 character::character(const std::string &identifier) : named_data_entry(identifier), gender(gender::none)
 {
 	this->reset_game_data();

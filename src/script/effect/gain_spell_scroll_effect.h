@@ -28,15 +28,6 @@ public:
 		return class_identifier;
 	}
 
-	static bool character_compare(const character *lhs, const character *rhs)
-	{
-		if (lhs->get_game_data()->get_primary_attribute_value() != rhs->get_game_data()->get_primary_attribute_value()) {
-			return lhs->get_game_data()->get_primary_attribute_value() > rhs->get_game_data()->get_primary_attribute_value();
-		}
-
-		return lhs->get_identifier() < rhs->get_identifier();
-	}
-
 	const character *get_best_character(const country *scope, const read_only_context &ctx) const
 	{
 		//get a suitable character from the ones participating in the adventure (if any)
@@ -73,7 +64,7 @@ public:
 		}
 
 		if (!potential_characters.empty()) {
-			std::sort(potential_characters.begin(), potential_characters.end(), gain_spell_scroll_effect::character_compare);
+			std::sort(potential_characters.begin(), potential_characters.end(), character::skill_compare);
 			return potential_characters.front();
 		}
 
@@ -89,7 +80,7 @@ public:
 		}
 
 		if (!potential_characters.empty()) {
-			std::sort(potential_characters.begin(), potential_characters.end(), gain_spell_scroll_effect::character_compare);
+			std::sort(potential_characters.begin(), potential_characters.end(), character::skill_compare);
 			return potential_characters.front();
 		}
 
@@ -123,7 +114,7 @@ public:
 
 
 private:
-	const metternich::spell *spell = nullptr;;
+	const metternich::spell *spell = nullptr;
 };
 
 }

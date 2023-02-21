@@ -65,6 +65,8 @@ public:
 		return centesimal_int(opinion) * 100 / (character::max_opinion - character::min_opinion);
 	}
 
+	static bool skill_compare(const character *lhs, const character *rhs);
+
 	explicit character(const std::string &identifier);
 	~character();
 
