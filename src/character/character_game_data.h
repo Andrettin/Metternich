@@ -107,6 +107,7 @@ public:
 	}
 
 	QVariantList get_traits_qvariant_list() const;
+	bool can_have_trait(const trait *trait) const;
 	bool has_trait(const trait *trait) const;
 	void add_trait(const trait *trait);
 	void remove_trait(const trait *trait);

@@ -182,6 +182,15 @@ QVariantList character_game_data::get_traits_qvariant_list() const
 	return container::to_qvariant_list(this->get_traits());
 }
 
+bool character_game_data::can_have_trait(const trait *trait) const
+{
+	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, read_only_context(this->character))) {
+		return false;
+	}
+
+	return true;
+}
+
 bool character_game_data::has_trait(const trait *trait) const
 {
 	return vector::contains(this->get_traits(), trait);
