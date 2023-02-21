@@ -64,6 +64,7 @@ void modifier<scope_type>::add_modifier_effect(std::unique_ptr<modifier_effect<s
 
 template class modifier<const character>;
 template class modifier<const country>;
+template class modifier<military_unit>;
 template class modifier<const province>;
 
 }

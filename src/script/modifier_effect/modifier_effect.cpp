@@ -5,8 +5,10 @@
 #include "database/gsml_property.h"
 #include "script/modifier_effect/attribute_modifier_effect.h"
 #include "script/modifier_effect/commodity_production_modifier_effect.h"
+#include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/loyalty_modifier_effect.h"
+#include "script/modifier_effect/melee_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/quarterly_piety_modifier_effect.h"
 #include "script/modifier_effect/quarterly_prestige_modifier_effect.h"
@@ -36,6 +38,12 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - production_suffix.size()));
 			return std::make_unique<commodity_production_modifier_effect>(commodity, value);
 		}
+	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
+		if (key == "defense") {
+			return std::make_unique<defense_modifier_effect>(value);
+		} else if (key == "melee") {
+			return std::make_unique<melee_modifier_effect>(value);
+		}
 	}
 	
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
@@ -51,6 +59,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 template class modifier_effect<const character>;
 template class modifier_effect<const country>;
+template class modifier_effect<military_unit>;
 template class modifier_effect<const province>;
 
 }

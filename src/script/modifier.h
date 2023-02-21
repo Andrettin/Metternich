@@ -9,6 +9,7 @@ namespace metternich {
 
 class character;
 class country;
+class military_unit;
 class province;
 
 template <typename scope_type>
@@ -42,6 +43,7 @@ private:
 
 extern template class modifier<const character>;
 extern template class modifier<const country>;
+extern template class modifier<military_unit>;
 extern template class modifier<const province>;
 
 }
