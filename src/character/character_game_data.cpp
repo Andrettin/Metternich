@@ -596,7 +596,19 @@ void character_game_data::set_office(const metternich::office *office)
 
 bool character_game_data::is_deployable() const
 {
-	return this->character->get_type()->get_military_unit_category() != military_unit_category::none;
+	const character_type *character_type = this->character->get_type();
+
+	if (character_type->get_military_unit_category() == military_unit_category::none) {
+		return false;
+	}
+
+	if (!character_type->is_commander() && this->get_spells().empty()) {
+		//non-commanders must know at least one spell in order to be deployable
+		//the presumption being that non-commander character types which nevertheless have a military unit category will be support units, such as clerics and mages
+		return false;
+	}
+
+	return true;
 }
 
 void character_game_data::deploy_to_province(const province *province)
