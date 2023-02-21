@@ -45,10 +45,22 @@ void trait::check() const
 	assert_throw(this->get_type() != trait_type::none);
 	assert_throw(this->get_icon() != nullptr);
 
-	if (this->get_type() == trait_type::expertise && this->get_level() == 0) {
-		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is an expertise trait, but has no level.");
-	} else if (this->get_type() != trait_type::expertise && this->get_level() > 0) {
-		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is not an expertise trait, but has a level.");
+	if ((this->get_type() == trait_type::expertise || this->is_item()) && this->get_level() == 0) {
+		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is an expertise or item trait, but has no level.");
+	} else if (this->get_type() != trait_type::expertise && !this->is_item() && this->get_level() > 0) {
+		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is not an expertise or item trait, but has a level.");
+	}
+}
+
+bool trait::is_item() const
+{
+	switch (this->get_type()) {
+		case trait_type::weapon:
+		case trait_type::armor:
+		case trait_type::trinket:
+			return true;
+		default:
+			return false;
 	}
 }
 

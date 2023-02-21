@@ -107,6 +107,7 @@ public:
 	}
 
 	QVariantList get_traits_qvariant_list() const;
+	std::vector<const trait *> get_traits_of_type(const trait_type trait_type) const;
 	bool can_have_trait(const trait *trait) const;
 	bool has_trait(const trait *trait) const;
 	void add_trait(const trait *trait);
@@ -115,7 +116,8 @@ public:
 	void generate_missing_traits();
 	void generate_expertise_traits();
 	void sort_traits();
-	int get_total_trait_level() const;
+	int get_total_expertise_trait_level() const;
+	void gain_item(const trait *item);
 
 	const scripted_character_modifier_map<int> &get_scripted_modifiers() const
 	{

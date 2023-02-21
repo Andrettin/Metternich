@@ -22,6 +22,7 @@
 #include "script/effect/country_effect.h"
 #include "script/effect/delayed_effect.h"
 #include "script/effect/event_effect.h"
+#include "script/effect/gain_item_effect.h"
 #include "script/effect/gain_spell_scroll_effect.h"
 #include "script/effect/hidden_effect.h"
 #include "script/effect/if_effect.h"
@@ -58,7 +59,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		static const std::string percent_suffix = "_percent";
 
-		if (key == "gain_spell_scroll") {
+		if (key == "gain_item") {
+			return std::make_unique<gain_item_effect>(value, effect_operator);
+		} else if (key == "gain_spell_scroll") {
 			return std::make_unique<gain_spell_scroll_effect>(value, effect_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);

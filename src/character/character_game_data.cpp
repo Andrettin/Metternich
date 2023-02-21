@@ -182,10 +182,35 @@ QVariantList character_game_data::get_traits_qvariant_list() const
 	return container::to_qvariant_list(this->get_traits());
 }
 
+std::vector<const trait *> character_game_data::get_traits_of_type(const trait_type trait_type) const
+{
+	std::vector<const trait *> traits;
+
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_type() != trait_type) {
+			continue;
+		}
+
+		traits.push_back(trait);
+	}
+
+	return traits;
+}
+
 bool character_game_data::can_have_trait(const trait *trait) const
 {
 	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, read_only_context(this->character))) {
 		return false;
+	}
+
+	if (trait->is_item()) {
+		const std::vector<const metternich::trait *> current_items = this->get_traits_of_type(trait->get_type());
+
+		assert_throw(current_items.size() <= 1);
+		if (!current_items.empty() && current_items.front()->get_level() >= trait->get_level()) {
+			//cannot receive an item trait if we already have an item trait of the same type with a greater or equal level
+			return false;
+		}
 	}
 
 	return true;
@@ -313,7 +338,7 @@ void character_game_data::generate_missing_traits()
 
 void character_game_data::generate_expertise_traits()
 {
-	const int initial_trait_level = this->get_total_trait_level();
+	const int initial_trait_level = this->get_total_expertise_trait_level();
 
 	for (int i = initial_trait_level; i < this->character->get_level();) {
 		const trait *trait = this->generate_trait(trait_type::expertise, this->character->get_level() - i);
@@ -340,15 +365,39 @@ void character_game_data::sort_traits()
 	});
 }
 
-int character_game_data::get_total_trait_level() const
+int character_game_data::get_total_expertise_trait_level() const
 {
 	int level = 0;
 
 	for (const trait *trait : this->get_traits()) {
+		if (trait->get_type() != trait_type::expertise) {
+			continue;
+		}
+
 		level += trait->get_level();
 	}
 
 	return level;
+}
+
+void character_game_data::gain_item(const trait *item)
+{
+	assert_throw(item != nullptr);
+	assert_throw(item->is_item());
+
+	//remove items of the same type but of a lower level, and grant to other characters
+	const std::vector<const trait *> old_items = this->get_traits_of_type(item->get_type());
+
+	for (const trait *old_item : old_items) {
+		this->remove_trait(old_item);
+	}
+
+	this->add_trait(item);
+
+	for (const trait *old_item : old_items) {
+		//give the item to the country, which will reassign it to an appropriate character
+		this->get_employer()->get_game_data()->gain_item(old_item);
+	}
 }
 
 QVariantList character_game_data::get_scripted_modifiers_qvariant_list() const

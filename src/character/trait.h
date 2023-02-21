@@ -43,6 +43,8 @@ public:
 		return this->type;
 	}
 
+	bool is_item() const;
+
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;

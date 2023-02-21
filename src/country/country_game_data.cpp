@@ -1826,4 +1826,19 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 	return best_type;
 }
 
+void country_game_data::gain_item(const trait *item)
+{
+	std::vector<const character *> potential_characters;
+
+	for (const character *character : this->get_characters()) {
+		if (character->get_game_data()->can_have_trait(item)) {
+			potential_characters.push_back(character);
+		}
+	}
+
+	if (!potential_characters.empty()) {
+		vector::get_random(potential_characters)->get_game_data()->gain_item(item);
+	}
+}
+
 }

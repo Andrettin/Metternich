@@ -27,6 +27,7 @@ class military_unit_type;
 class population_unit;
 class province;
 class religion;
+class trait;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
 enum class event_trigger;
@@ -676,6 +677,8 @@ public:
 	{
 		this->set_commodity_production_modifier(commodity, this->get_commodity_production_modifier(commodity) + value);
 	}
+
+	void gain_item(const trait *item);
 
 signals:
 	void religion_changed();
