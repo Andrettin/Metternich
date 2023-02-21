@@ -31,6 +31,10 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		database::process_gsml_data(modifier, scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "military_unit_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
+		database::process_gsml_data(modifier, scope);
+		this->military_unit_modifier = std::move(modifier);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -55,6 +59,15 @@ QString trait::get_modifier_string() const
 	}
 
 	return QString::fromStdString(this->get_modifier()->get_string());
+}
+
+QString trait::get_military_unit_modifier_string() const
+{
+	if (this->get_military_unit_modifier() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->get_military_unit_modifier()->get_string());
 }
 
 }

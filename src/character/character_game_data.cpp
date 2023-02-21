@@ -207,6 +207,10 @@ void character_game_data::add_trait(const trait *trait)
 		this->apply_modifier(trait->get_modifier());
 	}
 
+	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
+		this->apply_military_unit_modifier(this->get_military_unit(), 1);
+	}
+
 	this->sort_traits();
 
 	if (game::get()->is_running()) {
@@ -608,6 +612,15 @@ void character_game_data::apply_province_modifier(const province *province, cons
 {
 	if (this->character->get_type()->get_province_modifier() != nullptr) {
 		this->character->get_type()->get_province_modifier()->apply(province, this->get_primary_attribute_value() * multiplier);
+	}
+}
+
+void character_game_data::apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier)
+{
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_military_unit_modifier() != nullptr) {
+			trait->get_military_unit_modifier()->apply(military_unit, multiplier);
+		}
 	}
 }
 

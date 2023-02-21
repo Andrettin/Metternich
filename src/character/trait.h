@@ -8,6 +8,7 @@ namespace metternich {
 class character;
 class character_type;
 class icon;
+class military_unit;
 enum class attribute;
 enum class trait_type;
 
@@ -25,6 +26,7 @@ class trait final : public named_data_entry, public data_type<trait>
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
+	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "trait";
@@ -68,6 +70,13 @@ public:
 
 	QString get_modifier_string() const;
 
+	const metternich::modifier<military_unit> *get_military_unit_modifier() const
+	{
+		return this->military_unit_modifier.get();
+	}
+
+	QString get_military_unit_modifier_string() const;
+
 signals:
 	void changed();
 
@@ -78,6 +87,7 @@ private:
 	std::unique_ptr<const condition<character>> conditions;
 	std::unique_ptr<const condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
+	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
 };
 
 }

@@ -122,6 +122,8 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	this->set_hit_points(this->get_max_hit_points());
 	this->set_morale(this->get_hit_points());
 
+	character->get_game_data()->apply_military_unit_modifier(this, 1);
+
 	//character military units do not have any province set as their home province, since they don't consume food
 }
 

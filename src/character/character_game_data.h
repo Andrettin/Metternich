@@ -226,6 +226,7 @@ public:
 
 	void apply_country_modifier(const country *country, const int multiplier);
 	void apply_province_modifier(const province *province, const int multiplier);
+	void apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
 
 	const centesimal_int &get_loyalty() const;
 
