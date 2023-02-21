@@ -51,6 +51,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
 	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
+	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
 
 public:
 	explicit character_game_data(const metternich::character *character);
@@ -205,12 +206,13 @@ public:
 		this->military_unit = military_unit;
 	}
 
+	bool is_deployable() const;
+
 	bool is_deployed() const
 	{
 		return this->get_military_unit() != nullptr;
 	}
 
-	bool can_be_deployed() const;
 	void deploy_to_province(const province *province);
 	void undeploy();
 

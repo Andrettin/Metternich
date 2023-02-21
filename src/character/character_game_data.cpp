@@ -536,7 +536,7 @@ void character_game_data::set_office(const metternich::office *office)
 	}
 }
 
-bool character_game_data::can_be_deployed() const
+bool character_game_data::is_deployable() const
 {
 	return this->character->get_type()->get_military_unit_category() != military_unit_category::none;
 }
@@ -545,7 +545,7 @@ void character_game_data::deploy_to_province(const province *province)
 {
 	assert_throw(this->get_employer() != nullptr);
 	assert_throw(!this->is_deployed());
-	assert_throw(this->can_be_deployed());
+	assert_throw(this->is_deployable());
 
 	const military_unit_type *military_unit_type = this->get_employer()->get_game_data()->get_best_military_unit_category_type(this->character->get_type()->get_military_unit_category());
 
