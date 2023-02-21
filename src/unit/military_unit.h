@@ -225,11 +225,51 @@ public:
 
 	int get_morale_resistance() const;
 
+	int get_melee() const
+	{
+		return this->melee;
+	}
+
+	void set_melee(const int melee)
+	{
+		if (melee == this->get_melee()) {
+			return;
+		}
+
+		this->melee = melee;
+	}
+
+	void change_melee(const int change)
+	{
+		this->set_melee(this->get_melee() + change);
+	}
+
+	int get_defense() const
+	{
+		return this->defense;
+	}
+
+	void set_defense(const int defense)
+	{
+		if (defense == this->get_defense()) {
+			return;
+		}
+
+		this->defense = defense;
+	}
+
+	void change_defense(const int change)
+	{
+		this->set_defense(this->get_defense() + change);
+	}
+
 	void receive_damage(const int damage);
 	void heal(const int healing);
 
 	void disband(const bool restore_population_unit);
 	Q_INVOKABLE void disband();
+
+	int get_score() const;
 
 signals:
 	void type_changed();
@@ -253,6 +293,8 @@ private:
 	int hit_points = 0;
 	int max_hit_points = 0;
 	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat
+	int melee = 0;
+	int defense = 0;
 };
 
 }

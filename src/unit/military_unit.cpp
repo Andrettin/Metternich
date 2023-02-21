@@ -65,7 +65,7 @@ int military_unit::get_army_score(const std::vector<military_unit *> &military_u
 	int score = 0;
 
 	for (const military_unit *military_unit : military_units) {
-		score += military_unit->get_type()->get_score();
+		score += military_unit->get_score();
 	}
 
 	return score;
@@ -78,6 +78,9 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	this->max_hit_points = type->get_hit_points();
 	this->set_hit_points(this->get_max_hit_points());
 	this->set_morale(this->get_hit_points());
+
+	this->melee = type->get_melee();
+	this->defense = type->get_defense();
 }
 
 military_unit::military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
@@ -178,6 +181,14 @@ void military_unit::set_type(const military_unit_type *type)
 
 	if (type->get_hit_points() != old_type->get_hit_points()) {
 		this->change_max_hit_points(type->get_hit_points() - old_type->get_hit_points());
+	}
+
+	if (type->get_melee() != old_type->get_melee()) {
+		this->change_melee(type->get_melee() - old_type->get_melee());
+	}
+
+	if (type->get_defense() != old_type->get_defense()) {
+		this->change_defense(type->get_defense() - old_type->get_defense());
 	}
 
 	emit type_changed();
@@ -379,6 +390,11 @@ void military_unit::disband(const bool restore_population_unit)
 void military_unit::disband()
 {
 	this->disband(true);
+}
+
+int military_unit::get_score() const
+{
+	return this->get_type()->get_firepower() + this->get_melee() + this->get_type()->get_range() + this->get_defense() + this->get_type()->get_resistance() / 4 + this->get_hit_points() + this->get_type()->get_movement();
 }
 
 }
