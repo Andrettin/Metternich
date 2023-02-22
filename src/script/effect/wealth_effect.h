@@ -59,17 +59,17 @@ public:
 
 	virtual std::string get_assignment_string() const override
 	{
-		return "Set Wealth to " + std::to_string(this->quantity);
+		return "Set " + string::highlight("Wealth") + " to " + std::to_string(this->quantity);
 	}
 
 	virtual std::string get_addition_string() const override
 	{
-		return "Gain " + std::to_string(this->quantity) + " Wealth";
+		return "Gain " + std::to_string(this->quantity) + " " + string::highlight("Wealth");
 	}
 
 	virtual std::string get_subtraction_string() const override
 	{
-		return "Lose " + std::to_string(this->quantity) + " Wealth";
+		return "Lose " + std::to_string(this->quantity) + " " + string::highlight("Wealth");
 	}
 
 private:

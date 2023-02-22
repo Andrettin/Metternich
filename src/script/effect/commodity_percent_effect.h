@@ -5,6 +5,7 @@
 #include "economy/commodity.h"
 #include "script/effect/effect.h"
 #include "util/assert_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -55,21 +56,21 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return "Set " + this->commodity->get_name() + " to " + std::to_string(this->get_quantity(scope));
+		return "Set " + string::highlight(this->commodity->get_name()) + " to " + std::to_string(this->get_quantity(scope));
 	}
 
 	virtual std::string get_addition_string(const country *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		return "Gain " + std::to_string(this->get_quantity(scope)) + " " + this->commodity->get_name();
+		return "Gain " + std::to_string(this->get_quantity(scope)) + " " + string::highlight(this->commodity->get_name());
 	}
 
 	virtual std::string get_subtraction_string(const country *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		return "Lose " + std::to_string(this->get_quantity(scope)) + " " + this->commodity->get_name();
+		return "Lose " + std::to_string(this->get_quantity(scope)) + " " + string::highlight(this->commodity->get_name());
 	}
 
 private:

@@ -38,17 +38,17 @@ public:
 
 	virtual std::string get_assignment_string() const override
 	{
-		return "Set Militancy to " + this->quantity.to_string();
+		return "Set " + string::highlight("Militancy") + " to " + this->quantity.to_string();
 	}
 
 	virtual std::string get_addition_string() const override
 	{
-		return "Gain " + this->quantity.to_string() + " Militancy";
+		return "Gain " + this->quantity.to_string() + " " + string::highlight("Militancy");
 	}
 
 	virtual std::string get_subtraction_string() const override
 	{
-		return "Lose " + this->quantity.to_string() + " Militancy";
+		return "Lose " + this->quantity.to_string() + " " + string::highlight("Militancy");
 	}
 
 private:

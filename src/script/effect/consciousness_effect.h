@@ -3,6 +3,7 @@
 #include "population/population_unit.h"
 #include "script/effect/effect.h"
 #include "util/fractional_int.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -38,17 +39,17 @@ public:
 
 	virtual std::string get_assignment_string() const override
 	{
-		return "Set Consciousness to " + this->quantity.to_string();
+		return "Set " + string::highlight("Consciousness") + " to " + this->quantity.to_string();
 	}
 
 	virtual std::string get_addition_string() const override
 	{
-		return "Gain " + this->quantity.to_string() + " Consciousness";
+		return "Gain " + this->quantity.to_string() + " " + string::highlight("Consciousness");
 	}
 
 	virtual std::string get_subtraction_string() const override
 	{
-		return "Lose " + this->quantity.to_string() + " Consciousness";
+		return "Lose " + this->quantity.to_string() + " " + string::highlight("Consciousness");
 	}
 
 private:

@@ -4,6 +4,7 @@
 #include "country/country_game_data.h"
 #include "economy/commodity.h"
 #include "script/effect/effect.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -39,17 +40,17 @@ public:
 
 	virtual std::string get_assignment_string() const override
 	{
-		return "Set " + this->commodity->get_name()  + " to " + std::to_string(this->quantity);
+		return "Set " + string::highlight(this->commodity->get_name())  + " to " + std::to_string(this->quantity);
 	}
 
 	virtual std::string get_addition_string() const override
 	{
-		return "Gain " + std::to_string(this->quantity) + " " + this->commodity->get_name();
+		return "Gain " + std::to_string(this->quantity) + " " + string::highlight(this->commodity->get_name());
 	}
 
 	virtual std::string get_subtraction_string() const override
 	{
-		return "Lose " + std::to_string(this->quantity) + " " + this->commodity->get_name();
+		return "Lose " + std::to_string(this->quantity) + " " + string::highlight(this->commodity->get_name());
 	}
 
 private:
