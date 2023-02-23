@@ -39,6 +39,7 @@ void building_type::initialize()
 
 void building_type::check() const
 {
+	assert_throw(this->get_portrait() != nullptr);
 	assert_throw(this->get_icon() != nullptr);
 
 	if (this->get_employment_type() != nullptr) {

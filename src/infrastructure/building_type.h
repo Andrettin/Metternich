@@ -21,6 +21,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::building_class* building_class MEMBER building_class NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
+	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::employment_type* employment_type MEMBER employment_type NOTIFY changed)
 	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
@@ -55,6 +56,11 @@ public:
 	const metternich::cultural_group *get_cultural_group() const
 	{
 		return this->cultural_group;
+	}
+
+	const metternich::icon *get_portrait() const
+	{
+		return this->portrait;
 	}
 
 	const metternich::icon *get_icon() const
@@ -96,6 +102,7 @@ private:
 	building_class *building_class = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
+	metternich::icon *portrait = nullptr;
 	metternich::icon *icon = nullptr;
 	metternich::employment_type *employment_type = nullptr;
 	int employment_capacity = 0;
