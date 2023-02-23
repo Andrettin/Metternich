@@ -95,7 +95,7 @@ public:
 			return;
 		}
 
-		character->get_game_data()->add_spell(this->spell);
+		character->get_game_data()->learn_spell(this->spell);
 	}
 
 	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

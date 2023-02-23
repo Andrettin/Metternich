@@ -50,6 +50,10 @@ void trait::check() const
 	} else if (this->get_type() != trait_type::expertise && !this->is_item() && this->get_level() > 0) {
 		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is not an expertise or item trait, but has a level.");
 	}
+
+	if (this->get_spell() != nullptr && !this->is_item()) {
+		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is not an item trait, but grants a spell.");
+	}
 }
 
 bool trait::is_item() const

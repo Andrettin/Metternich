@@ -9,6 +9,7 @@ class character;
 class character_type;
 class icon;
 class military_unit;
+class spell;
 enum class attribute;
 enum class trait_type;
 
@@ -27,6 +28,7 @@ class trait final : public named_data_entry, public data_type<trait>
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
+	Q_PROPERTY(metternich::spell* spell MEMBER spell NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "trait";
@@ -79,6 +81,11 @@ public:
 
 	QString get_military_unit_modifier_string() const;
 
+	const metternich::spell *get_spell() const
+	{
+		return this->spell;
+	}
+
 signals:
 	void changed();
 
@@ -90,6 +97,7 @@ private:
 	std::unique_ptr<const condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
+	metternich::spell *spell = nullptr;
 };
 
 }

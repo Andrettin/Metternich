@@ -358,7 +358,31 @@ public:
 		emit spells_changed();
 	}
 
+	bool has_item_spell(const spell *spell) const
+	{
+		return this->item_spells.contains(spell);
+	}
+
+	void add_item_spell(const spell *spell)
+	{
+		this->item_spells.insert(spell);
+		this->add_spell(spell);
+	}
+
+	void remove_item_spell(const spell *spell)
+	{
+		this->item_spells.erase(spell);
+		this->remove_spell(spell);
+	}
+
 	bool can_learn_spell(const spell *spell) const;
+
+	bool has_learned_spell(const spell *spell) const
+	{
+		return this->has_spell(spell) && !this->has_item_spell(spell);
+	}
+
+	void learn_spell(const spell *spell);
 
 	const centesimal_int &get_quarterly_prestige() const
 	{
@@ -423,6 +447,7 @@ private:
 	centesimal_int prestige;
 	centesimal_int piety;
 	spell_set spells;
+	spell_set item_spells;
 	centesimal_int quarterly_prestige;
 	centesimal_int quarterly_piety;
 	character_map<opinion_modifier_map<int>> opinion_modifiers;

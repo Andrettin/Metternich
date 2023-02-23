@@ -213,6 +213,10 @@ bool character_game_data::can_have_trait(const trait *trait) const
 		}
 	}
 
+	if (trait->get_spell() != nullptr && this->has_spell(trait->get_spell())) {
+		return false;
+	}
+
 	return true;
 }
 
@@ -245,6 +249,11 @@ void character_game_data::add_trait(const trait *trait)
 		this->apply_military_unit_modifier(this->get_military_unit(), 1);
 	}
 
+	if (trait->get_spell() != nullptr) {
+		assert_throw(!this->has_spell(trait->get_spell()));
+		this->add_item_spell(trait->get_spell());
+	}
+
 	this->sort_traits();
 
 	if (game::get()->is_running()) {
@@ -263,6 +272,15 @@ void character_game_data::remove_trait(const trait *trait)
 
 	if (trait->get_modifier() != nullptr) {
 		this->remove_modifier(trait->get_modifier());
+	}
+
+	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
+		this->apply_military_unit_modifier(this->get_military_unit(), -1);
+	}
+
+	if (trait->get_spell() != nullptr) {
+		assert_throw(this->has_item_spell(trait->get_spell()));
+		this->remove_item_spell(trait->get_spell());
 	}
 
 	this->sort_traits();
@@ -718,11 +736,30 @@ bool character_game_data::can_learn_spell(const spell *spell) const
 		return false;
 	}
 
-	if (this->has_spell(spell)) {
+	if (this->has_learned_spell(spell)) {
 		return false;
 	}
 
 	return true;
+}
+
+void character_game_data::learn_spell(const spell *spell)
+{
+	if (this->has_item_spell(spell)) {
+		this->remove_item_spell(spell);
+
+		const std::vector<const trait *> traits = this->get_traits();
+		for (const trait *trait : traits) {
+			if (trait->get_spell() == spell) {
+				//if we are learning a spell that otherwise would be granted to us by an item, give the item to someone else instead
+				assert_throw(trait->is_item());
+				this->remove_trait(trait);
+				this->get_employer()->get_game_data()->gain_item(trait);
+			}
+		}
+	}
+
+	this->add_spell(spell);
 }
 
 void character_game_data::change_quarterly_prestige(const centesimal_int &change)
