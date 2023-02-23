@@ -18,6 +18,7 @@ class building_slot final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::building_slot_type* type READ get_type_unconst CONSTANT)
 	Q_PROPERTY(metternich::building_type* building READ get_building_unconst NOTIFY building_changed)
 	Q_PROPERTY(metternich::province* province READ get_province_unconst CONSTANT)
 
@@ -29,6 +30,14 @@ public:
 		return this->type;
 	}
 
+private:
+	//for the Qt property (pointers there can't be const)
+	building_slot_type *get_type_unconst() const
+	{
+		return const_cast<building_slot_type *>(this->get_type());
+	}
+
+public:
 	const building_type *get_building() const
 	{
 		return this->building;
