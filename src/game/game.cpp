@@ -438,6 +438,8 @@ void game::apply_history(const metternich::scenario *scenario)
 					assert_throw(character_game_data->get_employer() != nullptr);
 					character_game_data->deploy_to_province(character_history->get_deployment_province());
 				}
+			} else if (scenario->get_start_date() >= character->get_end_date()) {
+				character_game_data->set_dead(true);
 			}
 		}
 

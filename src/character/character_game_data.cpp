@@ -177,6 +177,19 @@ int character_game_data::get_age() const
 	return age;
 }
 
+void character_game_data::set_dead(const bool dead)
+{
+	if (dead == this->is_dead()) {
+		return;
+	}
+
+	this->dead = dead;
+
+	if (game::get()->is_running()) {
+		emit dead_changed();
+	}
+}
+
 QVariantList character_game_data::get_traits_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_traits());

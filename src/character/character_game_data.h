@@ -33,6 +33,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(metternich::icon* portrait READ get_portrait_unconst NOTIFY portrait_changed)
 	Q_PROPERTY(metternich::country* employer READ get_employer_unconst NOTIFY employer_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
+	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
 	Q_PROPERTY(int primary_attribute_value READ get_primary_attribute_value NOTIFY attributes_changed)
 	Q_PROPERTY(int diplomacy READ get_diplomacy NOTIFY attributes_changed)
 	Q_PROPERTY(int martial READ get_martial NOTIFY attributes_changed)
@@ -100,6 +101,13 @@ public:
 	void set_employer(const metternich::country *employer);
 
 	int get_age() const;
+
+	bool is_dead() const
+	{
+		return this->dead;
+	}
+
+	void set_dead(const bool dead);
 
 	const std::vector<const trait *> &get_traits() const
 	{
@@ -421,6 +429,7 @@ signals:
 	void portrait_changed();
 	void employer_changed();
 	void age_changed();
+	void dead_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void attributes_changed();
@@ -436,6 +445,7 @@ private:
 	const metternich::character *character = nullptr;
 	const icon *portrait = nullptr;
 	const metternich::country *employer = nullptr;
+	bool dead = false;
 	std::vector<const trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	std::map<attribute, int> attribute_values;

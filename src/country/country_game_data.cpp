@@ -1502,6 +1502,7 @@ void country_game_data::check_characters(const QDateTime &date)
 			}
 
 			this->remove_character(character);
+			character->get_game_data()->set_dead(true);
 		} else if (home_province_owner != this->country) {
 			//if we lost their home province, move the character to the province's new owner
 			this->remove_character(character);
