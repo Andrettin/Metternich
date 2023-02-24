@@ -21,11 +21,6 @@ public:
 		return class_identifier;
 	}
 
-	virtual std::string get_scope_name() const override
-	{
-		return "Source Site";
-	}
-
 	virtual const site *get_scope(const upper_scope_type *upper_scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(upper_scope);

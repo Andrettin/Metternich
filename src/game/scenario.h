@@ -9,7 +9,6 @@ namespace archimedes {
 
 namespace metternich {
 
-class country;
 class map_template;
 
 class scenario final : public named_data_entry, public data_type<scenario>

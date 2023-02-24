@@ -40,7 +40,18 @@ public:
 		this->effects.do_effects(scope, ctx);
 	}
 
-	virtual std::string get_scope_name() const = 0;
+	virtual std::string get_scope_name() const
+	{
+		return std::string();
+	}
+
+	virtual std::string get_scope_name(const upper_scope_type *upper_scope, const read_only_context &ctx) const
+	{
+		Q_UNUSED(upper_scope);
+		Q_UNUSED(ctx);
+
+		return this->get_scope_name();
+	}
 
 	virtual std::string get_conditions_string(const size_t indent) const
 	{
@@ -59,7 +70,13 @@ public:
 
 	virtual std::string get_assignment_string(const upper_scope_type *upper_scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override final
 	{
-		std::string str = this->get_scope_name() + ":";
+		const std::string scope_name = this->get_scope_name(upper_scope, ctx);
+
+		if (scope_name.empty()) {
+			return std::string();
+		}
+
+		std::string str = scope_name + ":";
 
 		const std::string conditions_str = this->get_conditions_string(indent + 2);
 		if (!conditions_str.empty()) {

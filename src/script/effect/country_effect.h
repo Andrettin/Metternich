@@ -20,11 +20,6 @@ public:
 		static const std::string class_identifier = "country";
 		return class_identifier;
 	}
-
-	virtual std::string get_scope_name() const override
-	{
-		return "Country";
-	}
 	
 	virtual const country *get_scope(const upper_scope_type *upper_scope) const override
 	{

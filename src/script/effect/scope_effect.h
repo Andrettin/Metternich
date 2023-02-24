@@ -13,6 +13,21 @@ public:
 	{
 	}
 
+	virtual std::string get_scope_name(const upper_scope_type *upper_scope, const read_only_context &ctx) const override final
+	{
+		const scope_type *scope = this->get_scope(upper_scope, ctx);
+
+		if (scope == nullptr) {
+			return std::string();
+		}
+
+		if constexpr (std::is_same_v<scope_type, const character>) {
+			return scope->get_full_name();
+		} else {
+			return scope->get_name();
+		}
+	}
+
 	virtual scope_type *get_scope(const upper_scope_type *upper_scope) const
 	{
 		Q_UNUSED(upper_scope);
