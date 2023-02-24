@@ -3,6 +3,7 @@
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/condition.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -32,7 +33,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return this->population_type->get_name() + " population type";
+		return string::highlight(this->population_type->get_name());
 	}
 
 private:
