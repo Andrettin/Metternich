@@ -27,6 +27,7 @@
 #include "script/condition/core_condition.h"
 #include "script/condition/country_condition.h"
 #include "script/condition/country_exists_condition.h"
+#include "script/condition/country_scope_condition.h"
 #include "script/condition/country_type_condition.h"
 #include "script/condition/culture_condition.h"
 #include "script/condition/event_condition.h"
@@ -209,6 +210,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 
 	if (tag == "attacking_commander") {
 		condition = std::make_unique<attacking_commander_condition<scope_type>>(condition_operator);
+	} else if (tag == "country") {
+		condition = std::make_unique<country_scope_condition<scope_type>>(condition_operator);
 	} else if (tag == "saved_character_scope") {
 		condition = std::make_unique<saved_scope_condition<scope_type, character>>(condition_operator);
 	} else if (tag == "saved_country_scope") {
