@@ -95,56 +95,8 @@ void province_game_data::do_production()
 		return;
 	}
 
-	commodity_map<centesimal_int> output_per_commodity;
+	const commodity_map<centesimal_int> output_per_commodity = this->get_commodity_outputs();
 	country_game_data *owner_game_data = this->get_owner()->get_game_data();
-
-	for (const QPoint &tile_pos : this->resource_tiles) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-		const improvement *improvement = tile->get_improvement();
-
-		if (improvement == nullptr) {
-			continue;
-		}
-
-		if (improvement->get_employment_type() == nullptr) {
-			continue;
-		}
-
-		const employment_type *employment_type = improvement->get_employment_type();
-		const commodity *output_commodity = employment_type->get_output_commodity();
-		centesimal_int output;
-
-		for (const population_unit *employee : tile->get_employees()) {
-			output += employee->get_employment_output(employment_type);
-		}
-
-		const centesimal_int output_multiplier = tile->get_output_multiplier();
-
-		output_per_commodity[output_commodity] += output * output_multiplier;
-	}
-
-	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		const building_type *building_type = building_slot->get_building();
-		if (building_type == nullptr) {
-			continue;
-		}
-
-		if (building_type->get_employment_type() == nullptr) {
-			continue;
-		}
-
-		const employment_type *employment_type = building_type->get_employment_type();
-		const commodity *output_commodity = employment_type->get_output_commodity();
-		centesimal_int output;
-
-		for (const population_unit *employee : building_slot->get_employees()) {
-			output += employee->get_employment_output(employment_type);
-		}
-
-		const centesimal_int output_multiplier = building_slot->get_output_multiplier();
-
-		output_per_commodity[output_commodity] += output * output_multiplier;
-	}
 
 	for (const auto &[commodity, output] : output_per_commodity) {
 		owner_game_data->change_stored_commodity(commodity, output.to_int());
@@ -450,6 +402,66 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 	}
 
 	emit territory_changed();
+}
+
+commodity_map<centesimal_int> province_game_data::get_commodity_outputs() const
+{
+	commodity_map<centesimal_int> output_per_commodity;
+
+	for (const QPoint &tile_pos : this->resource_tiles) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+		const improvement *improvement = tile->get_improvement();
+
+		if (improvement == nullptr) {
+			continue;
+		}
+
+		if (improvement->get_employment_type() == nullptr) {
+			continue;
+		}
+
+		const employment_type *employment_type = improvement->get_employment_type();
+		const commodity *output_commodity = employment_type->get_output_commodity();
+		centesimal_int output;
+
+		for (const population_unit *employee : tile->get_employees()) {
+			output += employee->get_employment_output(employment_type);
+		}
+
+		const centesimal_int output_multiplier = tile->get_output_multiplier();
+
+		output_per_commodity[output_commodity] += output * output_multiplier;
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		const building_type *building_type = building_slot->get_building();
+		if (building_type == nullptr) {
+			continue;
+		}
+
+		if (building_type->get_employment_type() == nullptr) {
+			continue;
+		}
+
+		const employment_type *employment_type = building_type->get_employment_type();
+		const commodity *output_commodity = employment_type->get_output_commodity();
+		centesimal_int output;
+
+		for (const population_unit *employee : building_slot->get_employees()) {
+			output += employee->get_employment_output(employment_type);
+		}
+
+		const centesimal_int output_multiplier = building_slot->get_output_multiplier();
+
+		output_per_commodity[output_commodity] += output * output_multiplier;
+	}
+
+	return output_per_commodity;
+}
+
+bool province_game_data::produces_commodity(const commodity *commodity) const
+{
+	return this->get_commodity_outputs().contains(commodity);
 }
 
 void province_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)

@@ -3,6 +3,7 @@
 #include "country/culture_container.h"
 #include "country/ideology_container.h"
 #include "country/religion_container.h"
+#include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "map/terrain_type_container.h"
@@ -16,6 +17,7 @@ namespace metternich {
 class building_slot;
 class building_type;
 class civilian_unit;
+class commodity;
 class country;
 class culture;
 class icon;
@@ -179,6 +181,9 @@ public:
 	{
 		return this->tile_terrain_counts;
 	}
+
+	commodity_map<centesimal_int> get_commodity_outputs() const;
+	bool produces_commodity(const commodity *commodity) const;
 
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
 
