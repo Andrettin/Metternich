@@ -22,6 +22,7 @@
 #include "script/condition/can_have_trait_condition.h"
 #include "script/condition/character_type_condition.h"
 #include "script/condition/coastal_condition.h"
+#include "script/condition/colony_condition.h"
 #include "script/condition/commodity_condition.h"
 #include "script/condition/consciousness_condition.h"
 #include "script/condition/core_condition.h"
@@ -137,6 +138,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province>) {
 		if (key == "coastal") {
 			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
+		} else if (key == "colony") {
+			return std::make_unique<colony_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

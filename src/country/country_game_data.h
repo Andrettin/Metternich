@@ -134,6 +134,7 @@ public:
 
 	bool is_true_great_power() const;
 	bool is_secondary_power() const;
+	bool is_colony() const;
 
 	std::string get_type_name() const;
 

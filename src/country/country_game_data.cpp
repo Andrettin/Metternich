@@ -313,6 +313,15 @@ bool country_game_data::is_secondary_power() const
 	return this->get_rank() >= country::max_great_powers;
 }
 
+bool country_game_data::is_colony() const
+{
+	if (this->get_overlord() == nullptr) {
+		return false;
+	}
+
+	return this->get_diplomacy_state(this->get_overlord()) == diplomacy_state::colony;
+}
+
 std::string country_game_data::get_type_name() const
 {
 	switch (this->country->get_type()) {
