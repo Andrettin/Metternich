@@ -78,14 +78,31 @@ public:
 
 		std::string str = scope_name + ":";
 
-		const std::string conditions_str = this->get_conditions_string(indent + 2);
-		if (!conditions_str.empty()) {
-			str += "\n" + std::string(indent + 1, '\t') + "Conditions:\n" + conditions_str;
+		const scope_type *scope = this->get_effects_string_scope(upper_scope, ctx);
+		size_t scope_indent = indent + 1;
+		if constexpr (std::is_same_v<scope_type, const country>) {
+			if (std::holds_alternative<const upper_scope_type *>(ctx.root_scope) && std::get<const upper_scope_type *>(ctx.root_scope) == upper_scope && scope == effect<upper_scope_type>::get_scope_country(upper_scope) && indent == 0) {
+				scope_indent = indent;
+				str.clear();
+			}
 		}
 
-		const std::string effects_str = this->effects.get_effects_string(this->get_effects_string_scope(upper_scope, ctx), ctx, indent + 1, prefix);
+		const std::string conditions_str = this->get_conditions_string(scope_indent + 1);
+		if (!conditions_str.empty()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::string(scope_indent, '\t') + "Conditions:\n" + conditions_str;
+		}
+
+		const std::string effects_str = this->effects.get_effects_string(scope, ctx, scope_indent, prefix);
 		if (!effects_str.empty()) {
-			str += "\n" + effects_str;
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += effects_str;
 		}
 
 		return str;

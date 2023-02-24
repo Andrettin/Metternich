@@ -15,7 +15,7 @@ public:
 
 	virtual std::string get_scope_name(const upper_scope_type *upper_scope, const read_only_context &ctx) const override final
 	{
-		const scope_type *scope = this->get_scope(upper_scope, ctx);
+		const scope_type *scope = this->get_effects_string_scope(upper_scope, ctx);
 
 		if (scope == nullptr) {
 			return std::string();
