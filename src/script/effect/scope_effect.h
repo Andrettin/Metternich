@@ -21,11 +21,7 @@ public:
 			return std::string();
 		}
 
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			return scope->get_full_name();
-		} else {
-			return scope->get_name();
-		}
+		return scope->get_scope_name();
 	}
 
 	virtual scope_type *get_scope(const upper_scope_type *upper_scope) const

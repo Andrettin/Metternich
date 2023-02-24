@@ -89,6 +89,11 @@ public:
 		return this->game_data.get();
 	}
 
+	virtual std::string get_scope_name() const override
+	{
+		return this->get_full_name();
+	}
+
 	const dynasty *get_dynasty() const
 	{
 		return this->dynasty;
