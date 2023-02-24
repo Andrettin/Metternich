@@ -7,6 +7,7 @@ namespace metternich {
 
 class character;
 class country;
+class province;
 enum class event_trigger;
 
 template <typename scope_type>
@@ -69,6 +70,8 @@ public:
 			return this->character_events;
 		} else if constexpr (std::is_same_v<scope_type, const country>) {
 			return this->country_events;
+		} else if constexpr (std::is_same_v<scope_type, const province>) {
+			return this->province_events;
 		}
 	}
 
@@ -82,12 +85,18 @@ public:
 		this->country_events.push_back(event);
 	}
 
+	void add_event(const scoped_event_base<const province> *event)
+	{
+		this->province_events.push_back(event);
+	}
+
 private:
 	event_trigger trigger;
 	int none_weight = 0;
 	int delay = 0;
 	std::vector<const scoped_event_base<const character> *> character_events;
 	std::vector<const scoped_event_base<const country> *> country_events;
+	std::vector<const scoped_event_base<const province> *> province_events;
 };
 
 }

@@ -2,9 +2,6 @@
 
 #include "script/context.h"
 
-class CPlayer;
-class CUnit;
-
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;
@@ -65,5 +62,6 @@ private:
 
 extern template class delayed_effect_instance<const character>;
 extern template class delayed_effect_instance<const country>;
+extern template class delayed_effect_instance<const province>;
 
 }

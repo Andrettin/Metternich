@@ -153,6 +153,7 @@ private:
 public:
 	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const character>> &&delayed_effect);
 	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const country>> &&delayed_effect);
+	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const province>> &&delayed_effect);
 
 	void clear_delayed_effects();
 
@@ -175,6 +176,7 @@ private:
 	country *player_country = nullptr;
 	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const country>>> country_delayed_effects;
+	std::vector<std::unique_ptr<delayed_effect_instance<const province>>> province_delayed_effects;
 };
 
 }

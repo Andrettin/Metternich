@@ -333,6 +333,7 @@ set(game_HDRS
 	src/game/event_random_group.h
 	src/game/event_trigger.h
 	src/game/game.h
+	src/game/province_event.h
 	src/game/scenario.h
 	src/game/scoped_event_base.h
 )

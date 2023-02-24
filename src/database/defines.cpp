@@ -8,6 +8,7 @@
 #include "game/character_event.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
+#include "game/province_event.h"
 #include "map/direction.h"
 #include "map/terrain_adjacency_type.h"
 #include "map/tile_image_provider.h"
@@ -87,6 +88,7 @@ void defines::initialize()
 	for (const auto &[event_trigger, random_weight] : defines::get()->get_event_trigger_none_random_weights()) {
 		character_event::add_trigger_none_random_weight(event_trigger, random_weight);
 		country_event::add_trigger_none_random_weight(event_trigger, random_weight);
+		province_event::add_trigger_none_random_weight(event_trigger, random_weight);
 	}
 
 	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {

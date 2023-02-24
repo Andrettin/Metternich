@@ -13,7 +13,9 @@
 #include "economy/commodity_container.h"
 #include "economy/employment_type.h"
 #include "economy/resource.h"
+#include "game/event_trigger.h"
 #include "game/game.h"
+#include "game/province_event.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_slot_type.h"
@@ -177,6 +179,17 @@ void province_game_data::do_cultural_change()
 			population_unit->set_culture(new_culture);
 		}
 	}
+}
+
+void province_game_data::do_events()
+{
+	const bool is_last_turn_of_year = (game::get()->get_date().date().month() + defines::get()->get_months_per_turn()) > 12;
+
+	if (is_last_turn_of_year) {
+		province_event::check_events_for_scope(this->province, event_trigger::yearly_pulse);
+	}
+
+	province_event::check_events_for_scope(this->province, event_trigger::quarterly_pulse);
 }
 
 void province_game_data::do_ai_turn()

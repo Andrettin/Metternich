@@ -34,6 +34,7 @@ void event_random_group::initialize()
 		for (int i = 0; i < this->get_none_weight(); ++i) {
 			this->character_events.push_back(nullptr);
 			this->country_events.push_back(nullptr);
+			this->province_events.push_back(nullptr);
 		}
 	}
 

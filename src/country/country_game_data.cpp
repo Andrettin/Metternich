@@ -178,6 +178,10 @@ void country_game_data::do_migration()
 
 void country_game_data::do_events()
 {
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->do_events();
+	}
+
 	const bool is_last_turn_of_year = (game::get()->get_date().date().month() + defines::get()->get_months_per_turn()) > 12;
 
 	if (is_last_turn_of_year) {

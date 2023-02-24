@@ -4,6 +4,7 @@
 #include "game/character_event.h"
 #include "game/country_event.h"
 #include "game/game.h"
+#include "game/province_event.h"
 #include "script/effect/delayed_effect_instance.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
@@ -52,6 +53,8 @@ public:
 				this->event = character_event::get(value);
 			} else if constexpr (std::is_same_v<scope_type, const country>) {
 				this->event = country_event::get(value);
+			} else if constexpr (std::is_same_v<scope_type, const province>) {
+				this->event = province_event::get(value);
 			} else {
 				assert_throw(false);
 			}

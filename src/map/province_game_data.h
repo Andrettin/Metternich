@@ -63,6 +63,7 @@ public:
 	void do_turn();
 	void do_production();
 	void do_cultural_change();
+	void do_events();
 	void do_ai_turn();
 
 	bool is_on_map() const

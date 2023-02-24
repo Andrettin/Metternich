@@ -109,6 +109,12 @@ void game::process_gsml_scope(const gsml_data &scope)
 			database::process_gsml_data(delayed_effect, delayed_effect_data);
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
+	} else if (tag == "province_delayed_effects") {
+		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
+			auto delayed_effect = std::make_unique<delayed_effect_instance<const province>>();
+			database::process_gsml_data(delayed_effect, delayed_effect_data);
+			this->add_delayed_effect(std::move(delayed_effect));
+		});
 	} else {
 		throw std::runtime_error("Invalid game data scope: \"" + scope.get_tag() + "\".");
 	}
@@ -129,6 +135,14 @@ gsml_data game::to_gsml_data() const
 	if (!this->country_delayed_effects.empty()) {
 		gsml_data delayed_effects_data("country_delayed_effects");
 		for (const auto &delayed_effect : this->country_delayed_effects) {
+			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
+		}
+		data.add_child(std::move(delayed_effects_data));
+	}
+
+	if (!this->province_delayed_effects.empty()) {
+		gsml_data delayed_effects_data("province_delayed_effects");
+		for (const auto &delayed_effect : this->province_delayed_effects) {
 			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
 		}
 		data.add_child(std::move(delayed_effects_data));
@@ -954,6 +968,7 @@ void game::process_delayed_effects()
 {
 	this->process_delayed_effects(this->character_delayed_effects);
 	this->process_delayed_effects(this->country_delayed_effects);
+	this->process_delayed_effects(this->province_delayed_effects);
 }
 
 void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const character>> &&delayed_effect)
@@ -966,10 +981,16 @@ void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const coun
 	this->country_delayed_effects.push_back(std::move(delayed_effect));
 }
 
+void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const province>> &&delayed_effect)
+{
+	this->province_delayed_effects.push_back(std::move(delayed_effect));
+}
+
 void game::clear_delayed_effects()
 {
 	this->character_delayed_effects.clear();
 	this->country_delayed_effects.clear();
+	this->province_delayed_effects.clear();
 }
 
 bool game::do_battle(const std::vector<military_unit *> &attacker_units, const std::vector<military_unit *> &defender_units)
