@@ -6,6 +6,7 @@
 #include "game/event_instance.h"
 #include "game/event_random_group.h"
 #include "game/event_trigger.h"
+#include "script/text_processor.h"
 
 namespace metternich {
 
@@ -41,7 +42,12 @@ void event::initialize()
 
 void event::create_instance(const context &ctx) const
 {
-	auto event_instance = make_qunique<metternich::event_instance>(this, this->get_name_qstring(), this->get_description_qstring(), ctx);
+	const text_processor text_processor(ctx);
+
+	const std::string name = text_processor.process_text(this->get_name(), true);
+	const std::string description = text_processor.process_text(this->get_description(), true);
+
+	auto event_instance = make_qunique<metternich::event_instance>(this, QString::fromStdString(name), QString::fromStdString(description), ctx);
 	engine_interface::get()->add_event_instance(std::move(event_instance));
 }
 

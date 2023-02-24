@@ -154,6 +154,7 @@ set(script_SRCS
 	src/script/opinion_modifier_container.cpp
 	src/script/scripted_modifier_container.cpp
 	src/script/scripted_scoped_modifier.cpp
+	src/script/text_processor.cpp
 )
 source_group(script FILES ${script_SRCS})
 set_source_files_properties(${script_SRCS} PROPERTIES UNITY_GROUP "script")
@@ -409,6 +410,7 @@ set(script_HDRS
 	src/script/scripted_modifier.h
 	src/script/scripted_modifier_container.h
 	src/script/scripted_scoped_modifier.h
+	src/script/text_processor.h
 )
 source_group(script FILES ${script_HDRS})
 
