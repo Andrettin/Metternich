@@ -1,15 +1,15 @@
 #pragma once
 
-#include "population/population_unit.h"
 #include "script/condition/numerical_condition.h"
 
 namespace metternich {
 
-class militancy_condition final : public numerical_condition<population_unit>
+template <typename scope_type>
+class militancy_condition final : public numerical_condition<scope_type>
 {
 public:
 	explicit militancy_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<population_unit>(value, condition_operator)
+		: numerical_condition<scope_type>(value, condition_operator)
 	{
 	}
 
@@ -19,9 +19,13 @@ public:
 		return class_identifier;
 	}
 
-	virtual int get_scope_value(const population_unit *scope) const override
+	virtual int get_scope_value(const scope_type *scope) const override
 	{
-		return scope->get_militancy().to_int();
+		if constexpr (std::is_same_v<scope_type, population_unit>) {
+			return scope->get_militancy().to_int();
+		} else {
+			return scope->get_game_data()->get_militancy().to_int();
+		}
 	}
 
 	virtual std::string get_value_name() const override

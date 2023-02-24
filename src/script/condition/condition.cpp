@@ -105,12 +105,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
-		if (key == "consciousness") {
-			return std::make_unique<consciousness_condition>(value, condition_operator);
-		} else if (key == "ideology") {
+		if (key == "ideology") {
 			return std::make_unique<ideology_condition>(value, condition_operator);
-		} else if (key == "militancy") {
-			return std::make_unique<militancy_condition>(value, condition_operator);
 		} else if (key == "population_type") {
 			return std::make_unique<population_type_condition>(value, condition_operator);
 		}
@@ -141,6 +137,14 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province>) {
 		if (key == "coastal") {
 			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, population_unit> || std::is_same_v<scope_type, province>) {
+		if (key == "consciousness") {
+			return std::make_unique<consciousness_condition<scope_type>>(value, condition_operator);
+		} else if (key == "militancy") {
+			return std::make_unique<militancy_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

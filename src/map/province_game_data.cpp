@@ -1102,13 +1102,13 @@ bool province_game_data::has_employment_for_worker(const population_unit *popula
 	return false;
 }
 
-int province_game_data::get_consciousness() const
+centesimal_int province_game_data::get_consciousness() const
 {
 	if (this->get_population_unit_count() == 0) {
-		return 0;
+		return centesimal_int(0);
 	}
 
-	return (this->get_total_consciousness() / this->get_population_unit_count()).to_int();
+	return this->get_total_consciousness() / this->get_population_unit_count();
 }
 
 void province_game_data::set_total_consciousness(const centesimal_int &consciousness)
@@ -1124,13 +1124,13 @@ void province_game_data::set_total_consciousness(const centesimal_int &conscious
 	}
 }
 
-int province_game_data::get_militancy() const
+centesimal_int province_game_data::get_militancy() const
 {
 	if (this->get_population_unit_count() == 0) {
-		return 0;
+		return centesimal_int(0);
 	}
 
-	return (this->get_total_militancy() / this->get_population_unit_count()).to_int();
+	return this->get_total_militancy() / this->get_population_unit_count();
 }
 
 void province_game_data::set_total_militancy(const centesimal_int &militancy)
