@@ -3,6 +3,7 @@
 #include "database/database.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/scope_effect_base.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -52,9 +53,17 @@ public:
 		}
 	}
 
-	virtual std::string get_scope_name() const override
+	virtual std::string get_scope_name(const upper_scope_type *upper_scope, const read_only_context &ctx) const override
 	{
-		return "Any population unit";
+		std::string str = "Any population unit";
+
+		if constexpr (std::is_same_v<upper_scope_type, const province>) {
+			if (ctx.is_root_scope(upper_scope)) {
+				str += " in " + string::highlight(upper_scope->get_scope_name());
+			}
+		}
+
+		return str;
 	}
 
 	virtual std::string get_conditions_string(const size_t indent) const override

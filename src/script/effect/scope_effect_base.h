@@ -81,7 +81,7 @@ public:
 		const scope_type *scope = this->get_effects_string_scope(upper_scope, ctx);
 		size_t scope_indent = indent + 1;
 		if constexpr (std::is_same_v<scope_type, const country>) {
-			if (std::holds_alternative<const upper_scope_type *>(ctx.root_scope) && std::get<const upper_scope_type *>(ctx.root_scope) == upper_scope && scope == effect<upper_scope_type>::get_scope_country(upper_scope) && indent == 0) {
+			if (ctx.is_root_scope(upper_scope) && scope == effect<upper_scope_type>::get_scope_country(upper_scope) && indent == 0) {
 				scope_indent = indent;
 				str.clear();
 			}

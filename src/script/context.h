@@ -91,6 +91,12 @@ struct context final : context_base<false>
 	explicit context(const scope_variant_type &root_scope) : context_base(root_scope)
 	{
 	}
+
+	template <typename scope_type>
+	bool is_root_scope(scope_type *scope) const
+	{
+		return std::holds_alternative<scope_type *>(this->root_scope) && std::get<scope_type *>(this->root_scope) == scope;
+	}
 };
 
 struct read_only_context final : context_base<true>
@@ -135,6 +141,12 @@ public:
 		for (const military_unit *military_unit : ctx.defending_military_units) {
 			this->defending_military_units.push_back(military_unit);
 		}
+	}
+
+	template <typename scope_type>
+	bool is_root_scope(const scope_type *scope) const
+	{
+		return std::holds_alternative<const scope_type *>(this->root_scope) && std::get<const scope_type *>(this->root_scope) == scope;
 	}
 };
 
