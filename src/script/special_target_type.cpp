@@ -13,6 +13,7 @@ template <>
 const std::map<std::string, metternich::special_target_type> enum_converter<metternich::special_target_type>::string_to_enum_map = {
 	{ "root", metternich::special_target_type::root },
 	{ "source", metternich::special_target_type::source },
+	{ "previous", metternich::special_target_type::previous }
 };
 
 template <>

@@ -57,7 +57,7 @@ public:
 				continue;
 			}
 
-			this->do_scope_effect(character, ctx);
+			this->do_scope_effect(character, upper_scope, ctx);
 		}
 	}
 

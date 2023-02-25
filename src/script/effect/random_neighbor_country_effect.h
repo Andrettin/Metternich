@@ -49,7 +49,7 @@ public:
 		}
 
 		if (!potential_countries.empty()) {
-			this->do_scope_effect(vector::get_random(potential_countries), ctx);
+			this->do_scope_effect(vector::get_random(potential_countries), upper_scope, ctx);
 		}
 	}
 

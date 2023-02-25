@@ -83,6 +83,11 @@ struct context_base
 					return std::get<scope_type *>(this->source_scope);
 				}
 				break;
+			case special_target_type::previous:
+				if (std::holds_alternative<scope_type *>(this->previous_scope)) {
+					return std::get<scope_type *>(this->previous_scope);
+				}
+				break;
 			default:
 				break;
 		}
@@ -92,6 +97,7 @@ struct context_base
 
 	scope_variant_type root_scope = std::monostate();
 	scope_variant_type source_scope = std::monostate();
+	scope_variant_type previous_scope = std::monostate();
 	std::map<std::string, const character *> saved_character_scopes;
 	std::map<std::string, const country *> saved_country_scopes;
 	std::map<std::string, population_unit_ptr> saved_population_unit_scopes;
@@ -146,6 +152,7 @@ public:
 	read_only_context(const context &ctx) : read_only_context(read_only_context::scope_from_mutable(ctx.root_scope))
 	{
 		this->source_scope = read_only_context::scope_from_mutable(ctx.source_scope);
+		this->previous_scope = read_only_context::scope_from_mutable(ctx.previous_scope);
 
 		this->saved_character_scopes = ctx.saved_character_scopes;
 		this->saved_country_scopes = ctx.saved_country_scopes;

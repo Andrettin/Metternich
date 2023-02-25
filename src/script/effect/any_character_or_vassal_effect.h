@@ -59,7 +59,7 @@ public:
 				continue;
 			}
 
-			this->do_scope_effect(vassal_country->get_game_data()->get_ruler(), ctx);
+			this->do_scope_effect(vassal_country->get_game_data()->get_ruler(), upper_scope, ctx);
 		}
 
 		const std::vector<const character *> &characters = country->get_game_data()->get_characters();
@@ -73,7 +73,7 @@ public:
 				continue;
 			}
 
-			this->do_scope_effect(character, ctx);
+			this->do_scope_effect(character, upper_scope, ctx);
 		}
 	}
 

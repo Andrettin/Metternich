@@ -7,6 +7,7 @@ namespace metternich {
 enum class special_target_type {
 	root,
 	source,
+	previous
 };
 
 }

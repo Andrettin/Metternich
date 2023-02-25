@@ -31,11 +31,13 @@ public:
 		this->effects.check();
 	}
 
-	void do_scope_effect(scope_type *scope, context &ctx) const
+	void do_scope_effect(scope_type *scope, upper_scope_type *upper_scope, context &ctx) const
 	{
 		if (scope == nullptr) {
 			return;
 		}
+
+		ctx.previous_scope = upper_scope;
 
 		this->effects.do_effects(scope, ctx);
 	}
@@ -96,7 +98,10 @@ public:
 			str += std::string(scope_indent, '\t') + "Conditions:\n" + conditions_str;
 		}
 
-		const std::string effects_str = this->effects.get_effects_string(scope, ctx, scope_indent, prefix);
+		read_only_context lower_ctx = ctx;
+		lower_ctx.previous_scope = upper_scope;
+
+		const std::string effects_str = this->effects.get_effects_string(scope, lower_ctx, scope_indent, prefix);
 		if (!effects_str.empty()) {
 			if (!str.empty()) {
 				str += "\n";

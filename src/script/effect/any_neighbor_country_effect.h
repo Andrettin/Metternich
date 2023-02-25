@@ -42,7 +42,7 @@ public:
 				continue;
 			}
 
-			this->do_scope_effect(neighbor_country, ctx);
+			this->do_scope_effect(neighbor_country, upper_scope, ctx);
 		}
 	}
 

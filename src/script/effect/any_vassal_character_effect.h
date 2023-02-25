@@ -59,7 +59,7 @@ public:
 				continue;
 			}
 
-			this->do_scope_effect(vassal_country->get_game_data()->get_ruler(), ctx);
+			this->do_scope_effect(vassal_country->get_game_data()->get_ruler(), upper_scope, ctx);
 		}
 	}
 

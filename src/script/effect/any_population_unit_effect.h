@@ -49,7 +49,7 @@ public:
 				continue;
 			}
 
-			this->do_scope_effect(population_unit_ptr, ctx);
+			this->do_scope_effect(population_unit_ptr, upper_scope, ctx);
 		}
 	}
 
