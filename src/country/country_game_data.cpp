@@ -417,13 +417,22 @@ void country_game_data::add_province(const province *province)
 		this->change_tile_terrain_count(terrain, count);
 	}
 
-	for (const metternich::province *border_province : province_game_data->get_border_provinces()) {
-		const metternich::province_game_data *border_province_game_data = border_province->get_game_data();
-		if (border_province_game_data->get_owner() != this->country) {
+	if (province_game_data->is_country_border_province()) {
+		this->border_provinces.push_back(province);
+	}
+
+	for (const metternich::province *neighbor_province : province_game_data->get_neighbor_provinces()) {
+		const metternich::province_game_data *neighbor_province_game_data = neighbor_province->get_game_data();
+		if (neighbor_province_game_data->get_owner() != this->country) {
 			continue;
 		}
 
-		for (const QPoint &tile_pos : border_province_game_data->get_border_tiles()) {
+		//province ceased to be a country border province, remove it from the list
+		if (vector::contains(this->get_border_provinces(), neighbor_province) && !neighbor_province_game_data->is_country_border_province()) {
+			std::erase(this->border_provinces, neighbor_province);
+		}
+
+		for (const QPoint &tile_pos : neighbor_province_game_data->get_border_tiles()) {
 			if (!map->is_tile_on_country_border(tile_pos)) {
 				std::erase(this->border_tiles, tile_pos);
 			}
@@ -501,13 +510,20 @@ void country_game_data::remove_province(const province *province)
 		std::erase(this->border_tiles, tile_pos);
 	}
 
-	for (const metternich::province *border_province : province_game_data->get_border_provinces()) {
-		const metternich::province_game_data *border_province_game_data = border_province->get_game_data();
-		if (border_province_game_data->get_owner() != this->country) {
+	std::erase(this->border_provinces, province);
+
+	for (const metternich::province *neighbor_province : province_game_data->get_neighbor_provinces()) {
+		const metternich::province_game_data *neighbor_province_game_data = neighbor_province->get_game_data();
+		if (neighbor_province_game_data->get_owner() != this->country) {
 			continue;
 		}
 
-		for (const QPoint &tile_pos : border_province_game_data->get_border_tiles()) {
+		//province has become a country border province, add it to the list
+		if (neighbor_province_game_data->is_country_border_province() && !vector::contains(this->get_border_provinces(), neighbor_province)) {
+			this->border_provinces.push_back(neighbor_province);
+		}
+
+		for (const QPoint &tile_pos : neighbor_province_game_data->get_border_tiles()) {
 			if (map->is_tile_on_country_border(tile_pos) && !vector::contains(this->get_border_tiles(), tile_pos)) {
 				this->border_tiles.push_back(tile_pos);
 			}
@@ -913,6 +929,32 @@ QVariantList country_game_data::get_colonies_qvariant_list() const
 	}
 
 	return container::to_qvariant_list(colonies);
+}
+
+std::vector<const metternich::country *> country_game_data::get_neighbor_countries() const
+{
+	std::vector<const metternich::country *> neighbor_countries;
+
+	for (const province *province : this->get_border_provinces()) {
+		for (const metternich::province *neighbor_province : province->get_game_data()->get_neighbor_provinces()) {
+			const metternich::province_game_data *neighbor_province_game_data = neighbor_province->get_game_data();
+			if (neighbor_province_game_data->get_owner() == this->country) {
+				continue;
+			}
+
+			if (neighbor_province_game_data->get_owner() == nullptr) {
+				continue;
+			}
+
+			if (vector::contains(neighbor_countries, neighbor_province_game_data->get_owner())) {
+				continue;
+			}
+
+			neighbor_countries.push_back(neighbor_province_game_data->get_owner());
+		}
+	}
+
+	return neighbor_countries;
 }
 
 const QColor &country_game_data::get_diplomatic_map_color() const

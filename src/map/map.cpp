@@ -99,8 +99,8 @@ void map::initialize()
 				if (tile_province != adjacent_province) {
 					if (!is_border_tile) {
 						province_game_data *tile_province_game_data = tile_province->get_game_data();
-						if (adjacent_province != nullptr && !vector::contains(tile_province_game_data->get_border_provinces(), adjacent_province)) {
-							tile_province_game_data->add_border_province(adjacent_province);
+						if (adjacent_province != nullptr && !vector::contains(tile_province_game_data->get_neighbor_provinces(), adjacent_province)) {
+							tile_province_game_data->add_neighbor_province(adjacent_province);
 						}
 
 						is_border_tile = true;

@@ -13,6 +13,7 @@
 #include "map/site_game_data.h"
 #include "script/effect/any_character_effect.h"
 #include "script/effect/any_character_or_vassal_effect.h"
+#include "script/effect/any_neighbor_country_effect.h"
 #include "script/effect/any_population_unit_effect.h"
 #include "script/effect/any_vassal_character_effect.h"
 #include "script/effect/battle_effect.h"
@@ -31,6 +32,7 @@
 #include "script/effect/piety_effect.h"
 #include "script/effect/prestige_effect.h"
 #include "script/effect/random_list_effect.h"
+#include "script/effect/random_neighbor_country_effect.h"
 #include "script/effect/save_scope_as_effect.h"
 #include "script/effect/scripted_effect_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
@@ -114,8 +116,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<scripted_modifiers_effect<scope_type>>(effect_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
-		if (effect_identifier == "battle") {
+		if (effect_identifier == "any_neighbor_country") {
+			effect = std::make_unique<any_neighbor_country_effect>(effect_operator);
+		} else if (effect_identifier == "battle") {
 			effect = std::make_unique<battle_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "random_neighbor_country") {
+			effect = std::make_unique<random_neighbor_country_effect>(effect_operator);
 		}
 	}
 

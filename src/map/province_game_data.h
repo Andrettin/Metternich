@@ -146,12 +146,13 @@ public:
 
 	void calculate_territory_rect_center();
 
-	const std::vector<const metternich::province *> &get_border_provinces() const
+	const std::vector<const metternich::province *> &get_neighbor_provinces() const
 	{
-		return this->border_provinces;
+		return this->neighbor_provinces;
 	}
 
-	void add_border_province(const metternich::province *province);
+	void add_neighbor_province(const metternich::province *province);
+	bool is_country_border_province() const;
 
 	const std::vector<QPoint> &get_tiles() const
 	{
@@ -411,7 +412,7 @@ private:
 	bool coastal = false;
 	QRect territory_rect;
 	QPoint territory_rect_center = QPoint(-1, -1);
-	std::vector<const metternich::province *> border_provinces;
+	std::vector<const metternich::province *> neighbor_provinces;
 	std::vector<QPoint> tiles;
 	std::vector<QPoint> border_tiles;
 	std::vector<QPoint> resource_tiles;

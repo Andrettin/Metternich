@@ -353,13 +353,25 @@ void province_game_data::calculate_territory_rect_center()
 	this->territory_rect_center = QPoint(sum.x() / tile_count, sum.y() / tile_count);
 }
 
-void province_game_data::add_border_province(const metternich::province *province)
+void province_game_data::add_neighbor_province(const metternich::province *province)
 {
-	this->border_provinces.push_back(province);
+	this->neighbor_provinces.push_back(province);
 
 	if (province->is_sea() || province->is_bay()) {
 		this->coastal = true;
 	}
+}
+
+bool province_game_data::is_country_border_province() const
+{
+	for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
+		const province_game_data *neighbor_province_game_data = neighbor_province->get_game_data();
+		if (neighbor_province_game_data->get_owner() != this->get_owner()) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void province_game_data::add_tile(const QPoint &tile_pos)

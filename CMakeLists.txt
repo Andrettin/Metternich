@@ -420,6 +420,7 @@ set(script_condition_HDRS
 	src/script/condition/any_advisor_condition.h
 	src/script/condition/any_character_condition.h
 	src/script/condition/any_character_or_vassal_condition.h
+	src/script/condition/any_neighbor_country_condition.h
 	src/script/condition/any_vassal_character_condition.h
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/attribute_condition.h
@@ -478,6 +479,7 @@ set(script_effect_HDRS
 	src/script/effect/any_character_effect.h
 	src/script/effect/any_character_or_vassal_effect.h
 	src/script/effect/any_population_unit_effect.h
+	src/script/effect/any_neighbor_country_effect.h
 	src/script/effect/any_vassal_character_effect.h
 	src/script/effect/battle_effect.h
 	src/script/effect/commodity_effect.h
@@ -498,6 +500,7 @@ set(script_effect_HDRS
 	src/script/effect/piety_effect.h
 	src/script/effect/prestige_effect.h
 	src/script/effect/random_list_effect.h
+	src/script/effect/random_neighbor_country_effect.h
 	src/script/effect/save_scope_as_effect.h
 	src/script/effect/scope_effect.h
 	src/script/effect/scope_effect_base.h

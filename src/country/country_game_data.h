@@ -164,6 +164,11 @@ public:
 		return static_cast<int>(this->get_provinces().size());
 	}
 
+	const std::vector<const province *> &get_border_provinces() const
+	{
+		return this->border_provinces;
+	}
+
 	const province *get_random_population_weighted_province() const;
 
 	bool is_alive() const
@@ -295,6 +300,8 @@ public:
 	std::vector<const metternich::country *> get_vassals() const;
 	QVariantList get_vassals_qvariant_list() const;
 	QVariantList get_colonies_qvariant_list() const;
+
+	std::vector<const metternich::country *> get_neighbor_countries() const;
 
 	const QColor &get_diplomatic_map_color() const;
 
@@ -714,6 +721,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;
+	std::vector<const province *> border_provinces;
 	int coastal_province_count = 0;
 	QRect territory_rect;
 	std::vector<QRect> contiguous_territory_rects;
