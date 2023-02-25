@@ -32,7 +32,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return get_country_type_name(this->country_type) + " country type";
+		return string::highlight(get_country_type_name(this->country_type)) + " country type";
 	}
 
 private:
