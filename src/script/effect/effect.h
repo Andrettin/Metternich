@@ -1,5 +1,7 @@
 #pragma once
 
+#include "script/target_variant.h"
+
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;
@@ -22,6 +24,9 @@ public:
 	static std::unique_ptr<effect> from_gsml_scope(const gsml_data &scope);
 
 	static const country *get_scope_country(const scope_type *scope);
+
+	static scope_type *get_target_scope(const target_variant<scope_type> &target, const context &ctx);
+	static const scope_type *get_target_scope(const target_variant<scope_type> &target, const read_only_context &ctx);
 
 	explicit effect(const gsml_operator effect_operator);
 

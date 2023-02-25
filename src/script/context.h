@@ -13,6 +13,7 @@ class military_unit;
 class population_unit;
 class province;
 class site;
+enum class special_target_type;
 
 //script context for e.g. events
 template <bool read_only>
@@ -66,6 +67,27 @@ struct context_base
 		} else if constexpr (std::is_same_v<scope_type, const site>) {
 			return this->saved_site_scopes;
 		}
+	}
+
+	template <typename scope_type>
+	scope_type *get_special_target_scope(const special_target_type special_target_type) const
+	{
+		switch (special_target_type) {
+			case special_target_type::root:
+				if (std::holds_alternative<scope_type *>(this->root_scope)) {
+					return std::get<scope_type *>(this->root_scope);
+				}
+				break;
+			case special_target_type::source:
+				if (std::holds_alternative<scope_type *>(this->source_scope)) {
+					return std::get<scope_type *>(this->source_scope);
+				}
+				break;
+			default:
+				break;
+		}
+
+		return nullptr;
 	}
 
 	scope_variant_type root_scope = std::monostate();

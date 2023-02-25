@@ -193,6 +193,30 @@ const country *effect<scope_type>::get_scope_country(const scope_type *scope)
 }
 
 template <typename scope_type>
+scope_type *effect<scope_type>::get_target_scope(const target_variant<scope_type> &target, const context &ctx)
+{
+	if (std::holds_alternative<scope_type *>(target)) {
+		return std::get<scope_type *>(target);
+	} else if (std::holds_alternative<special_target_type>(target)) {
+		return ctx.get_special_target_scope<scope_type>(std::get<special_target_type>(target));
+	}
+
+	return nullptr;
+}
+
+template <typename scope_type>
+const scope_type *effect<scope_type>::get_target_scope(const target_variant<scope_type> &target, const read_only_context &ctx)
+{
+	if (std::holds_alternative<scope_type *>(target)) {
+		return std::get<scope_type *>(target);
+	} else if (std::holds_alternative<special_target_type>(target)) {
+		return ctx.get_special_target_scope<const scope_type>(std::get<special_target_type>(target));
+	}
+
+	return nullptr;
+}
+
+template <typename scope_type>
 effect<scope_type>::effect(const gsml_operator effect_operator) : effect_operator(effect_operator)
 {
 }

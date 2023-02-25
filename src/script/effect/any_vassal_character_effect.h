@@ -34,7 +34,7 @@ public:
 		}
 	}
 
-	virtual void do_assignment_effect(const upper_scope_type *upper_scope, context &ctx) const override
+	virtual void do_assignment_effect(upper_scope_type *upper_scope, context &ctx) const override
 	{
 		const country *country = nullptr;
 

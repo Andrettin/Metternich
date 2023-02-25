@@ -35,7 +35,7 @@ public:
 		}
 	}
 
-	virtual void do_assignment_effect(const upper_scope_type *upper_scope, context &ctx) const override
+	virtual void do_assignment_effect(upper_scope_type *upper_scope, context &ctx) const override
 	{
 		for (const auto &population_unit : upper_scope->get_game_data()->get_population_units()) {
 			metternich::population_unit *population_unit_ptr = nullptr;

@@ -5,20 +5,17 @@
 #include "database/defines.h"
 #include "script/effect/effect.h"
 #include "script/opinion_modifier.h"
+#include "script/special_target_type.h"
+#include "script/target_variant.h"
 #include "util/assert_util.h"
 #include "util/number_util.h"
 
 namespace metternich {
 
 template <typename scope_type>
-class opinion_modifiers_effect final : public effect<const character>
+class opinion_modifiers_effect final : public effect<scope_type>
 {
 public:
-	enum class target_type {
-		none,
-		root
-	};
-
 	explicit opinion_modifiers_effect(const gsml_operator effect_operator)
 		: effect<scope_type>(effect_operator)
 	{
@@ -38,10 +35,10 @@ public:
 		if (key == "modifier") {
 			this->modifier = opinion_modifier::get(value);
 		} else if (key == "target") {
-			if (value == "root") {
-				this->target = target_type::root;
+			if (enum_converter<special_target_type>::has_value(value)) {
+				this->target = enum_converter<special_target_type>::to_enum(value);
 			} else {
-				assert_throw(false);
+				this->target = std::remove_const_t<scope_type>::get(value);
 			}
 		} else if (key == "duration") {
 			this->duration = std::stoi(value);
@@ -71,7 +68,7 @@ public:
 
 	virtual void check() const override
 	{
-		if (this->target == target_type::none) {
+		if (std::holds_alternative<std::monostate>(this->target)) {
 			throw std::runtime_error("Opinion modifier effect has no target.");
 		}
 
@@ -80,33 +77,15 @@ public:
 		}
 	}
 
-	const scope_type *get_target_scope(const read_only_context &ctx) const
+	scope_type *get_target_scope(const context &ctx) const
 	{
-		switch (this->target) {
-			case target_type::root:
-				if constexpr (std::is_same_v<scope_type, const character>) {
-					return std::get<const character *>(ctx.root_scope);
-				} else if constexpr (std::is_same_v<scope_type, const country>) {
-					return std::get<const country *>(ctx.root_scope);
-				}
-				break;
-			default:
-				break;
-		}
-
-		assert_throw(false);
-		return nullptr;
+		return effect<scope_type>::get_target_scope(this->target, ctx);
 	}
 
 	std::string get_target_name(const read_only_context &ctx) const
 	{
-		const scope_type *target_scope = this->get_target_scope(ctx);
-
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			return target_scope->get_full_name();
-		} else {
-			return target_scope->get_name();
-		}
+		const scope_type *target_scope = effect<scope_type>::get_target_scope(this->target, ctx);
+		return target_scope->get_scope_name();
 	}
 
 	virtual void do_addition_effect(const scope_type *scope, context &ctx) const override
@@ -135,7 +114,7 @@ public:
 
 private:
 	const opinion_modifier *modifier = nullptr;
-	target_type target = target_type::none;
+	target_variant<scope_type> target;
 	int duration = 0;
 };
 
