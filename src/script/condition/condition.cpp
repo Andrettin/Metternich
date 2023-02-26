@@ -59,6 +59,7 @@
 #include "script/condition/source_site_condition.h"
 #include "script/condition/source_site_scope_condition.h"
 #include "script/condition/technology_condition.h"
+#include "script/condition/tooltip_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
 #include "script/condition/wealth_condition.h"
@@ -232,6 +233,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		condition = std::make_unique<saved_scope_condition<scope_type, site>>(condition_operator);
 	} else if (tag == "source_site") {
 		condition = std::make_unique<source_site_scope_condition<scope_type>>(condition_operator);
+	} else if (tag == "tooltip") {
+		condition = std::make_unique<tooltip_condition<scope_type>>(condition_operator);
 	}
 
 	if (condition == nullptr) {
