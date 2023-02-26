@@ -3,6 +3,7 @@
 #include "character/attribute.h"
 #include "character/character.h"
 #include "database/gsml_property.h"
+#include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/attribute_modifier_effect.h"
 #include "script/modifier_effect/commodity_production_modifier_effect.h"
 #include "script/modifier_effect/defense_modifier_effect.h"
@@ -30,7 +31,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		static const std::string production_suffix = "_production";
 
-		if (key == "land_morale_resistance") {
+		if (key == "air_morale_resistance") {
+			return std::make_unique<air_morale_resistance_modifier_effect>(value);
+		} else if (key == "land_morale_resistance") {
 			return std::make_unique<land_morale_resistance_modifier_effect>(value);
 		} else if (key == "naval_morale_resistance") {
 			return std::make_unique<naval_morale_resistance_modifier_effect>(value);

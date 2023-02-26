@@ -704,6 +704,16 @@ public:
 		this->naval_morale_resistance_modifier += change;
 	}
 
+	int get_air_morale_resistance_modifier() const
+	{
+		return this->air_morale_resistance_modifier;
+	}
+
+	void change_air_morale_resistance_modifier(const int change)
+	{
+		this->air_morale_resistance_modifier += change;
+	}
+
 	int get_commodity_production_modifier(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_production_modifiers.find(commodity);
@@ -815,6 +825,7 @@ private:
 	centesimal_int quarterly_piety;
 	int land_morale_resistance_modifier = 0;
 	int naval_morale_resistance_modifier = 0;
+	int air_morale_resistance_modifier = 0;
 	commodity_map<int> commodity_production_modifiers;
 };
 

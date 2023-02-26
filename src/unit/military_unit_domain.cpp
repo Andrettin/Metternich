@@ -13,7 +13,8 @@ template <>
 const std::map<std::string, metternich::military_unit_domain> enum_converter<metternich::military_unit_domain>::string_to_enum_map = {
 	{ "none", metternich::military_unit_domain::none },
 	{ "land", metternich::military_unit_domain::land },
-	{ "water", metternich::military_unit_domain::water }
+	{ "water", metternich::military_unit_domain::water },
+	{ "air", metternich::military_unit_domain::air }
 };
 
 template <>

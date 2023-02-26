@@ -7,7 +7,8 @@ namespace metternich {
 enum class military_unit_domain {
 	none,
 	land,
-	water
+	water,
+	air
 };
 
 }

@@ -326,6 +326,9 @@ int military_unit::get_morale_resistance() const
 			case military_unit_domain::water:
 				morale_resistance += owner_game_data->get_naval_morale_resistance_modifier();
 				break;
+			case military_unit_domain::air:
+				morale_resistance += owner_game_data->get_air_morale_resistance_modifier();
+				break;
 			default:
 				break;
 		}
