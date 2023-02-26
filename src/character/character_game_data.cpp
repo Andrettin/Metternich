@@ -795,7 +795,7 @@ void character_game_data::change_quarterly_piety(const centesimal_int &change)
 
 int character_game_data::get_opinion_of(const metternich::character *other) const
 {
-	int opinion = 0;
+	int opinion = this->get_base_opinion(other);
 
 	for (const auto &[modifier, duration] : this->get_opinion_modifiers_for(other)) {
 		opinion += modifier->get_value();
@@ -808,7 +808,7 @@ int character_game_data::get_opinion_of(const metternich::character *other) cons
 
 void character_game_data::add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier, const int duration)
 {
-	this->opinion_modifiers[other][modifier] = std::max(this->opinion_modifiers[other][modifier], duration); ;
+	this->opinion_modifiers[other][modifier] = std::max(this->opinion_modifiers[other][modifier], duration);
 
 	if (this->is_ruled_by(other)) {
 		this->change_loyalty(character::opinion_to_loyalty(modifier->get_value()));
