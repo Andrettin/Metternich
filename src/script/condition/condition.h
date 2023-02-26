@@ -12,6 +12,7 @@ namespace archimedes {
 namespace metternich {
 
 class country;
+class province;
 struct read_only_context;
 
 template <typename scope_type>
@@ -60,6 +61,7 @@ public:
 	static std::string get_object_highlighted_name(const named_data_entry *object, const std::string &name_string);
 
 	static const country *get_scope_country(const scope_type *scope);
+	static const province *get_scope_province(const scope_type *scope);
 
 	explicit condition(const gsml_operator condition_operator);
 

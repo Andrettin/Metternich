@@ -201,10 +201,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		} else if (tag == "ruler") {
 			condition = std::make_unique<ruler_condition>(condition_operator);
 		}
-	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
-		if (tag == "location") {
-			condition = std::make_unique<location_condition<scope_type>>(condition_operator);
-		}
 	}
 	
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country>) {
@@ -216,6 +212,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 			condition = std::make_unique<any_character_or_vassal_condition<scope_type>>(condition_operator);
 		} else if (tag == "any_vassal_character") {
 			condition = std::make_unique<any_vassal_character_condition<scope_type>>(condition_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, population_unit> || std::is_same_v<scope_type, site>) {
+		if (tag == "location") {
+			condition = std::make_unique<location_condition<scope_type>>(condition_operator);
 		}
 	}
 
@@ -283,6 +285,18 @@ const country *condition<scope_type>::get_scope_country(const scope_type *scope)
 		}
 
 		return nullptr;
+	}
+}
+
+template <typename scope_type>
+const province *condition<scope_type>::get_scope_province(const scope_type *scope)
+{
+	if constexpr (std::is_same_v<scope_type, population_unit>) {
+		return scope->get_province();
+	} else if constexpr (std::is_same_v<scope_type, province>) {
+		return scope;
+	} else if constexpr (std::is_same_v<scope_type, site>) {
+		return scope->get_game_data()->get_province();
 	}
 }
 

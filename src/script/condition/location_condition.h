@@ -25,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return upper_scope->get_province();
+		return condition<upper_scope_type>::get_scope_province(upper_scope);
 	}
 
 	virtual std::string get_scope_name() const override
