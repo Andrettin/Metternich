@@ -35,6 +35,7 @@
 #include "script/condition/event_condition.h"
 #include "script/condition/gender_condition.h"
 #include "script/condition/has_country_office_condition.h"
+#include "script/condition/has_population_culture_condition.h"
 #include "script/condition/has_province_office_condition.h"
 #include "script/condition/ideology_condition.h"
 #include "script/condition/improvement_condition.h"
@@ -59,6 +60,7 @@
 #include "script/condition/source_site_condition.h"
 #include "script/condition/source_site_scope_condition.h"
 #include "script/condition/technology_condition.h"
+#include "script/condition/terrain_condition.h"
 #include "script/condition/tooltip_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
@@ -122,6 +124,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (key == "improvement") {
 			return std::make_unique<improvement_condition>(value, condition_operator);
+		} else if (key == "terrain") {
+			return std::make_unique<terrain_condition>(value, condition_operator);
 		}
 	}
 	
@@ -142,6 +146,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
 		} else if (key == "colony") {
 			return std::make_unique<colony_condition<scope_type>>(value, condition_operator);
+		} else if (key == "has_population_culture") {
+			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

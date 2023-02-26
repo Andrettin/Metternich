@@ -445,6 +445,7 @@ set(script_condition_HDRS
 	src/script/condition/event_condition.h
 	src/script/condition/gender_condition.h
 	src/script/condition/has_country_office_condition.h
+	src/script/condition/has_population_culture_condition.h
 	src/script/condition/has_province_office_condition.h
 	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h
@@ -473,6 +474,7 @@ set(script_condition_HDRS
 	src/script/condition/source_site_condition.h
 	src/script/condition/source_site_scope_condition.h
 	src/script/condition/technology_condition.h
+	src/script/condition/terrain_condition.h
 	src/script/condition/tooltip_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
