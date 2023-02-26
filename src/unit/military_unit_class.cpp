@@ -23,7 +23,10 @@ void military_unit_class::check() const
 bool military_unit_class::is_animal() const
 {
 	switch (this->get_category()) {
-		case military_unit_category::predators:
+		case military_unit_category::beasts:
+		case military_unit_category::colossal_beasts:
+		case military_unit_category::flying_beasts:
+		case military_unit_category::colossal_flying_beasts:
 			return true;
 		default:
 			return false;

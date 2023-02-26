@@ -6,7 +6,10 @@ namespace metternich {
 
 enum class military_unit_category {
 	none,
-	predators,
+	beasts,
+	colossal_beasts,
+	flying_beasts,
+	colossal_flying_beasts,
 	militia,
 	light_infantry,
 	regular_infantry,
