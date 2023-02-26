@@ -35,6 +35,8 @@ public:
 
 		if (key == "attacker") {
 			this->attacker = string::to_bool(property.get_value());
+		} else if (key == "victorious_enemies_attack_province") {
+			this->victorious_enemies_attack_province = string::to_bool(property.get_value());
 		} else {
 			effect<scope_type>::process_gsml_property(property);
 		}
@@ -94,6 +96,10 @@ public:
 			if (this->defeat_effects != nullptr) {
 				this->defeat_effects->do_effects(scope, ctx);
 			}
+
+			if (this->victorious_enemies_attack_province) {
+				//FIXME: make it so the enemies attack the province where the battle is taking place
+			}
 		}
 	}
 
@@ -124,6 +130,7 @@ public:
 
 private:
 	bool attacker = false;
+	bool victorious_enemies_attack_province = false;
 	military_unit_type_map<int> enemies;
 	std::unique_ptr<effect_list<scope_type>> victory_effects;
 	std::unique_ptr<effect_list<scope_type>> defeat_effects;
