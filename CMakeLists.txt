@@ -485,6 +485,7 @@ set(script_effect_HDRS
 	src/script/effect/any_neighbor_country_effect.h
 	src/script/effect/any_vassal_character_effect.h
 	src/script/effect/battle_effect.h
+	src/script/effect/change_opinion_effect.h
 	src/script/effect/commodity_effect.h
 	src/script/effect/commodity_percent_effect.h
 	src/script/effect/consciousness_effect.h
