@@ -144,8 +144,9 @@ void scoped_event_base<scope_type>::check_mtth_events_for_scope(const scope_type
 		if (mtth <= 1) {
 			should_fire = true;
 		} else {
-			const int fire_chance = (1 / mtth).get_value();
-			should_fire = random::get()->generate(100) < fire_chance;
+			const int fire_chance = (decimillesimal_int(1) / mtth).get_value();
+			assert_throw(fire_chance > 0);
+			should_fire = random::get()->generate(10000) < fire_chance;
 		}
 
 		if (should_fire) {
