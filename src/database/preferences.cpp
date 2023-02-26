@@ -24,6 +24,10 @@ preferences::preferences()
 	this->game_rules = make_qunique<metternich::game_rules>();
 }
 
+preferences::~preferences()
+{
+}
+
 void preferences::load()
 {
 	this->load_file();

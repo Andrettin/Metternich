@@ -25,6 +25,7 @@ public:
 	static std::filesystem::path get_path();
 
 	preferences();
+	~preferences();
 
 	void load();
 	void load_file();
