@@ -233,13 +233,36 @@ void military_unit::set_province(const metternich::province *province)
 
 bool military_unit::can_move_to(const metternich::province *province) const
 {
-	const country *province_owner = province->get_game_data()->get_owner();
-	if (province_owner == this->get_owner()) {
-		return true;
+	switch (this->get_domain()) {
+		case military_unit_domain::land:
+			if (province->is_water_zone()) {
+				return false;
+			}
+			break;
+		case military_unit_domain::water:
+			if (!province->is_water_zone()) {
+				return false;
+			}
+			break;
+		case military_unit_domain::air:
+			//air units can move both on land and water
+			break;
+		default:
+			assert_throw(false);
 	}
 
-	if (province_owner != nullptr) {
-		return province_owner->get_game_data()->is_any_vassal_of(this->get_owner());
+	if (province->is_water_zone()) {
+		//water zones can be freely moved to, if there is a path to them, as they are never owned by countries
+		return true;
+	} else {
+		const country *province_owner = province->get_game_data()->get_owner();
+		if (province_owner == this->get_owner()) {
+			return true;
+		}
+
+		if (province_owner != nullptr) {
+			return province_owner->get_game_data()->is_any_vassal_of(this->get_owner());
+		}
 	}
 
 	return false;
