@@ -216,6 +216,10 @@ void game::start()
 		for (const country *country : this->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
 			country_game_data->check_characters(this->get_date());
+
+			for (population_unit *population_unit : country_game_data->get_population_units()) {
+				population_unit->choose_ideology();
+			}
 		}
 
 		this->set_running(true);
@@ -825,10 +829,6 @@ void game::on_setup_finished()
 	for (const country *country : this->get_countries()) {
 		for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
 			map::get()->calculate_tile_country_border_directions(border_tile_pos);
-		}
-
-		for (population_unit *population_unit : country->get_game_data()->get_population_units()) {
-			population_unit->choose_ideology();
 		}
 
 		emit country->game_data_changed();
