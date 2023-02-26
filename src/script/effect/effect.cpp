@@ -110,9 +110,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	std::unique_ptr<effect> effect;
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (effect_identifier == "opinion_modifiers") {
-			effect = std::make_unique<opinion_modifiers_effect<scope_type>>(effect_operator);
-		} else if (effect_identifier == "scripted_modifiers") {
+		if (effect_identifier == "scripted_modifiers") {
 			effect = std::make_unique<scripted_modifiers_effect<scope_type>>(effect_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
@@ -134,6 +132,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<any_vassal_character_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "delayed") {
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "opinion_modifiers") {
+			effect = std::make_unique<opinion_modifiers_effect<scope_type>>(effect_operator);
 		}
 	}
 

@@ -10,6 +10,7 @@
 #include "map/terrain_type_container.h"
 #include "population/phenotype_container.h"
 #include "population/population_type_container.h"
+#include "script/opinion_modifier_container.h"
 #include "technology/technology_container.h"
 #include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
@@ -24,6 +25,7 @@ class culture;
 class event;
 class military_unit;
 class military_unit_type;
+class opinion_modifier;
 class population_unit;
 class province;
 class religion;
@@ -296,6 +298,51 @@ public:
 	}
 
 	void set_consulate(const metternich::country *other_country, const consulate *consulate);
+
+	int get_opinion_of(const metternich::country *other) const;
+
+	int get_base_opinion(const metternich::country *other) const
+	{
+		const auto find_iterator = this->base_opinions.find(other);
+		if (find_iterator != this->base_opinions.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_base_opinion(const metternich::country *other, const int opinion)
+	{
+		if (opinion == this->get_base_opinion(other)) {
+			return;
+		}
+
+		if (opinion == 0) {
+			this->base_opinions.erase(other);
+		} else {
+			this->base_opinions[other] = opinion;
+		}
+	}
+
+	void change_base_opinion(const metternich::country *other, const int change)
+	{
+		this->set_base_opinion(other, this->get_base_opinion(other) + change);
+	}
+
+	const opinion_modifier_map<int> &get_opinion_modifiers_for(const metternich::country *other) const
+	{
+		static const opinion_modifier_map<int> empty_map;
+
+		const auto find_iterator = this->opinion_modifiers.find(other);
+		if (find_iterator != this->opinion_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return empty_map;
+	}
+
+	void add_opinion_modifier(const metternich::country *other, const opinion_modifier *modifier, const int duration);
+	void remove_opinion_modifier(const metternich::country *other, const opinion_modifier *modifier);
 
 	std::vector<const metternich::country *> get_vassals() const;
 	QVariantList get_vassals_qvariant_list() const;
@@ -688,6 +735,8 @@ public:
 
 	void gain_item(const trait *item);
 
+	void decrement_scripted_modifiers();
+
 signals:
 	void religion_changed();
 	void overlord_changed();
@@ -735,6 +784,8 @@ private:
 	country_map<diplomacy_state> diplomacy_states;
 	std::map<diplomacy_state, int> diplomacy_state_counts;
 	country_map<const consulate *> consulates;
+	country_map<int> base_opinions;
+	country_map<opinion_modifier_map<int>> opinion_modifiers;
 	QImage diplomatic_map_image;
 	QImage selected_diplomatic_map_image;
 	std::map<diplomatic_map_mode, QImage> diplomatic_map_mode_images;

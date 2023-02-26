@@ -34,6 +34,7 @@
 #include "script/condition/condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
+#include "script/opinion_modifier.h"
 #include "technology/technology.h"
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
@@ -88,6 +89,8 @@ void country_game_data::do_turn()
 	for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
 		military_unit->do_turn();
 	}
+
+	this->decrement_scripted_modifiers();
 
 	this->do_events();
 
@@ -897,6 +900,34 @@ void country_game_data::set_consulate(const metternich::country *other_country, 
 
 	if (game::get()->is_running()) {
 		emit consulates_changed();
+	}
+}
+
+int country_game_data::get_opinion_of(const metternich::country *other) const
+{
+	int opinion = this->get_base_opinion(other);
+
+	for (const auto &[modifier, duration] : this->get_opinion_modifiers_for(other)) {
+		opinion += modifier->get_value();
+	}
+
+	opinion = std::clamp(opinion, character::min_opinion, character::max_opinion);
+
+	return opinion;
+}
+
+void country_game_data::add_opinion_modifier(const metternich::country *other, const opinion_modifier *modifier, const int duration)
+{
+	this->opinion_modifiers[other][modifier] = std::max(this->opinion_modifiers[other][modifier], duration);
+}
+
+void country_game_data::remove_opinion_modifier(const metternich::country *other, const opinion_modifier *modifier)
+{
+	opinion_modifier_map<int> &opinion_modifiers = this->opinion_modifiers[other];
+	opinion_modifiers.erase(modifier);
+
+	if (opinion_modifiers.empty()) {
+		this->opinion_modifiers.erase(other);
 	}
 }
 
@@ -1894,6 +1925,33 @@ void country_game_data::gain_item(const trait *item)
 
 	if (!potential_characters.empty()) {
 		vector::get_random(potential_characters)->get_game_data()->gain_item(item);
+	}
+}
+
+void country_game_data::decrement_scripted_modifiers()
+{
+	//decrement opinion modifiers
+	country_map<std::vector<const opinion_modifier *>> opinion_modifiers_to_remove;
+
+	for (auto &[country, opinion_modifier_map] : this->opinion_modifiers) {
+		for (auto &[modifier, duration] : opinion_modifier_map) {
+			if (duration == -1) {
+				//eternal
+				continue;
+			}
+
+			--duration;
+
+			if (duration == 0) {
+				opinion_modifiers_to_remove[country].push_back(modifier);
+			}
+		}
+	}
+
+	for (const auto &[country, opinion_modifiers] : opinion_modifiers_to_remove) {
+		for (const opinion_modifier *modifier : opinion_modifiers) {
+			this->remove_opinion_modifier(country, modifier);
+		}
 	}
 }
 
