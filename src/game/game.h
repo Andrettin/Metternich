@@ -1,5 +1,6 @@
 #pragma once
 
+#include "util/qunique_ptr.h"
 #include "util/singleton.h"
 
 namespace archimedes {
@@ -12,6 +13,7 @@ namespace metternich {
 class character;
 class country;
 class era;
+class game_rules;
 class military_unit;
 class province;
 class scenario;
@@ -41,6 +43,11 @@ public:
 	void process_gsml_scope(const gsml_data &scope);
 
 	gsml_data to_gsml_data() const;
+
+	const game_rules *get_rules() const
+	{
+		return this->rules.get();
+	}
 
 	bool is_running() const
 	{
@@ -167,6 +174,7 @@ signals:
 	void player_country_changed();
 
 private:
+	qunique_ptr<game_rules> rules;
 	bool running = false;
 	const metternich::scenario *scenario = nullptr;
 	QDateTime date; //the current date in the game

@@ -6,6 +6,7 @@
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_parser.h"
+#include "game/game_rules.h"
 #include "util/exception_util.h"
 #include "util/log_util.h"
 #include "util/string_conversion_util.h"
@@ -16,6 +17,11 @@ namespace metternich {
 std::filesystem::path preferences::get_path()
 {
 	return database::get_user_data_path() / "preferences.txt";
+}
+
+preferences::preferences()
+{
+	this->game_rules = make_qunique<metternich::game_rules>();
 }
 
 void preferences::load()
@@ -51,6 +57,8 @@ void preferences::save() const
 	gsml_data data(preferences_path.filename().stem().string());
 
 	data.add_property("scale_factor", this->get_scale_factor().to_string());
+
+	data.add_child("game_rules", this->get_game_rules()->to_gsml_data());
 
 	try {
 		data.print_to_file(preferences_path);

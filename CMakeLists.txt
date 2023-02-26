@@ -80,6 +80,7 @@ set(game_SRCS
 	src/game/event_random_group.cpp
 	src/game/event_trigger.cpp
 	src/game/game.cpp
+	src/game/game_rules.cpp
 	src/game/scenario.cpp
 	src/game/scoped_event_base.cpp
 )
@@ -335,6 +336,7 @@ set(game_HDRS
 	src/game/event_random_group.h
 	src/game/event_trigger.h
 	src/game/game.h
+	src/game/game_rules.h
 	src/game/province_event.h
 	src/game/scenario.h
 	src/game/scoped_event_base.h

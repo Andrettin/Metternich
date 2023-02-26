@@ -20,6 +20,7 @@
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "database/preferences.h"
+#include "game/game_rules.h"
 #include "game/scenario.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_type.h"
@@ -97,7 +98,11 @@ void game::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "character_delayed_effects") {
+	if (tag == "rules") {
+		auto rules = make_qunique<game_rules>();
+		database::process_gsml_data(rules, scope);
+		this->rules = std::move(rules);
+	} else if (tag == "character_delayed_effects") {
 		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const character>>();
 			database::process_gsml_data(delayed_effect, delayed_effect_data);
@@ -123,6 +128,8 @@ void game::process_gsml_scope(const gsml_data &scope)
 gsml_data game::to_gsml_data() const
 {
 	gsml_data data;
+
+	data.add_child("rules", this->get_rules()->to_gsml_data());
 
 	if (!this->character_delayed_effects.empty()) {
 		gsml_data delayed_effects_data("character_delayed_effects");
@@ -155,6 +162,7 @@ void game::create_random_map(const QSize &map_size, metternich::era *era)
 {
 	try {
 		this->clear();
+		this->rules = preferences::get()->get_game_rules()->duplicate();
 
 		map_generator map_generator(map_size, era);
 		map_generator.generate();
@@ -174,6 +182,7 @@ void game::setup_scenario(metternich::scenario *scenario)
 		const metternich::scenario *old_scenario = this->scenario;
 
 		this->clear();
+		this->rules = preferences::get()->get_game_rules()->duplicate();
 		this->scenario = scenario;
 
 		if (old_scenario == nullptr || old_scenario->get_map_template() != scenario->get_map_template()) {
@@ -263,6 +272,8 @@ void game::clear()
 
 		this->date = game::normalize_date(defines::get()->get_default_start_date());
 		this->turn = 1;
+
+		this->rules.reset();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to clear the game."));
 	}
