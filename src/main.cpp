@@ -24,6 +24,7 @@
 #include "game/event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "game/game_rules.h"
 #include "game/scenario.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
@@ -118,6 +119,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<era>("", 1);
 		qmlRegisterAnonymousType<event>("", 1);
 		qmlRegisterAnonymousType<game>("", 1);
+		qmlRegisterAnonymousType<game_rules>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);
 		qmlRegisterAnonymousType<landed_title>("", 1);
 		qmlRegisterAnonymousType<landed_title_game_data>("", 1);
