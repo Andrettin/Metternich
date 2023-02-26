@@ -22,9 +22,9 @@ const std::set<std::string> site::history_database_dependencies = {
 	province::class_identifier
 };
 
-void site::load_history_database(const QDateTime &start_date, const timeline *current_timeline)
+void site::load_history_database(const QDateTime &start_date, const timeline *current_timeline, const QObject *game_rules)
 {
-	data_type::load_history_database(start_date, current_timeline);
+	data_type::load_history_database(start_date, current_timeline, game_rules);
 
 	for (const site *site : site::get_all()) {
 		const tile *tile = site->get_game_data()->get_tile();

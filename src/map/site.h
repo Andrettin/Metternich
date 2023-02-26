@@ -40,7 +40,7 @@ public:
 
 	static const std::set<std::string> history_database_dependencies;
 
-	static void load_history_database(const QDateTime &start_date, const timeline *current_timeline);
+	static void load_history_database(const QDateTime &start_date, const timeline *current_timeline, const QObject *game_rules);
 
 public:
 	explicit site(const std::string &identifier);

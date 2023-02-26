@@ -284,7 +284,7 @@ void game::apply_history(const metternich::scenario *scenario)
 	try {
 		this->date = game::normalize_date(scenario->get_start_date());
 
-		database::get()->load_history(scenario->get_start_date(), scenario->get_timeline());
+		database::get()->load_history(scenario->get_start_date(), scenario->get_timeline(), this->get_rules());
 
 		for (const province *province : map::get()->get_provinces()) {
 			const province_history *province_history = province->get_history();
