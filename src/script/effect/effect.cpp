@@ -28,6 +28,7 @@
 #include "script/effect/gain_spell_scroll_effect.h"
 #include "script/effect/hidden_effect.h"
 #include "script/effect/if_effect.h"
+#include "script/effect/location_effect.h"
 #include "script/effect/militancy_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/piety_effect.h"
@@ -152,6 +153,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		}
 	}
 
+	if constexpr (std::is_same_v<scope_type, population_unit> || std::is_same_v<scope_type, const site>) {
+		if (effect_identifier == "location") {
+			effect = std::make_unique<location_effect<scope_type>>(effect_operator);
+		}
+	}
+
 	if (effect_identifier == "country") {
 		effect = std::make_unique<country_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "hidden") {
@@ -197,6 +204,21 @@ const country *effect<scope_type>::get_scope_country(const scope_type *scope)
 			return province->get_game_data()->get_owner();
 		}
 
+		return nullptr;
+	}
+}
+
+template <typename scope_type>
+const province *effect<scope_type>::get_scope_province(const scope_type *scope)
+{
+	if constexpr (std::is_same_v<scope_type, population_unit>) {
+		return scope->get_province();
+	} else if constexpr (std::is_same_v<scope_type, const province>) {
+		return scope;
+	} else if constexpr (std::is_same_v<scope_type, const site>) {
+		return scope->get_game_data()->get_province();
+	} else {
+		assert_throw(false);
 		return nullptr;
 	}
 }

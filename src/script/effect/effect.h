@@ -12,6 +12,7 @@ namespace metternich {
 
 class country;
 class event;
+class province;
 struct context;
 struct read_only_context;
 
@@ -24,6 +25,7 @@ public:
 	static std::unique_ptr<effect> from_gsml_scope(const gsml_data &scope);
 
 	static const country *get_scope_country(const scope_type *scope);
+	static const province *get_scope_province(const scope_type *scope);
 
 	static scope_type *get_target_scope(const target_variant<scope_type> &target, const context &ctx);
 	static const scope_type *get_target_scope(const target_variant<scope_type> &target, const read_only_context &ctx);

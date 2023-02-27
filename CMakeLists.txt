@@ -505,6 +505,7 @@ set(script_effect_HDRS
 	src/script/effect/gain_spell_scroll_effect.h
 	src/script/effect/hidden_effect.h
 	src/script/effect/if_effect.h
+	src/script/effect/location_effect.h
 	src/script/effect/militancy_effect.h
 	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/piety_effect.h
