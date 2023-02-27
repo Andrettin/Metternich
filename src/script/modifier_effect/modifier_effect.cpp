@@ -11,6 +11,7 @@
 #include "script/modifier_effect/loyalty_modifier_effect.h"
 #include "script/modifier_effect/melee_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
+#include "script/modifier_effect/production_modifier_effect.h"
 #include "script/modifier_effect/quarterly_piety_modifier_effect.h"
 #include "script/modifier_effect/quarterly_prestige_modifier_effect.h"
 
@@ -29,17 +30,12 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<attribute_modifier_effect>(enum_converter<attribute>::to_enum(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
-		static const std::string production_suffix = "_production";
-
 		if (key == "air_morale_resistance") {
 			return std::make_unique<air_morale_resistance_modifier_effect>(value);
 		} else if (key == "land_morale_resistance") {
 			return std::make_unique<land_morale_resistance_modifier_effect>(value);
 		} else if (key == "naval_morale_resistance") {
 			return std::make_unique<naval_morale_resistance_modifier_effect>(value);
-		} else if (key.ends_with(production_suffix) && commodity::try_get(key.substr(0, key.size() - production_suffix.size())) != nullptr) {
-			const commodity *commodity = commodity::get(key.substr(0, key.size() - production_suffix.size()));
-			return std::make_unique<commodity_production_modifier_effect>(commodity, value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
 		if (key == "defense") {
@@ -54,6 +50,17 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<quarterly_piety_modifier_effect<scope_type>>(value);
 		} else if (key == "quarterly_prestige") {
 			return std::make_unique<quarterly_prestige_modifier_effect<scope_type>>(value);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province>) {
+		static const std::string production_suffix = "_production";
+
+		if (key == "production_modifier") {
+			return std::make_unique<production_modifier_effect<scope_type>>(value);
+		} else if (key.ends_with(production_suffix) && commodity::try_get(key.substr(0, key.size() - production_suffix.size())) != nullptr) {
+			const commodity *commodity = commodity::get(key.substr(0, key.size() - production_suffix.size()));
+			return std::make_unique<commodity_production_modifier_effect<scope_type>>(commodity, value);
 		}
 	}
 
