@@ -53,10 +53,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	const std::string &value = property.get_value();
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (key == "scripted_modifiers") {
-			assert_throw(effect_operator == gsml_operator::subtraction);
-			return std::make_unique<scripted_modifiers_effect<const character>>(value, effect_operator);
-		} else if (key == "traits") {
+		if (key == "traits") {
 			return std::make_unique<traits_effect>(value, effect_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
@@ -92,6 +89,13 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		}
 	}
 
+	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const province>) {
+		if (key == "scripted_modifiers") {
+			assert_throw(effect_operator == gsml_operator::subtraction);
+			return std::make_unique<scripted_modifiers_effect<scope_type>>(value, effect_operator);
+		}
+	}
+
 	if (key == "save_scope_as") {
 		return std::make_unique<save_scope_as_effect<scope_type>>(value, effect_operator);
 	} else if (key == "scripted_effect") {
@@ -110,11 +114,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	const gsml_operator effect_operator = scope.get_operator();
 	std::unique_ptr<effect> effect;
 
-	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (effect_identifier == "scripted_modifiers") {
-			effect = std::make_unique<scripted_modifiers_effect<scope_type>>(effect_operator);
-		}
-	} else if constexpr (std::is_same_v<scope_type, const country>) {
+	if constexpr (std::is_same_v<scope_type, const country>) {
 		if (effect_identifier == "any_neighbor_country") {
 			effect = std::make_unique<any_neighbor_country_effect>(effect_operator);
 		} else if (effect_identifier == "battle") {
@@ -137,6 +137,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "opinion_modifiers") {
 			effect = std::make_unique<opinion_modifiers_effect<scope_type>>(effect_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const province>) {
+		if (effect_identifier == "scripted_modifiers") {
+			effect = std::make_unique<scripted_modifiers_effect<scope_type>>(effect_operator);
 		}
 	}
 

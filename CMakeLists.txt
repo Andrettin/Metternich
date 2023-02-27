@@ -412,6 +412,7 @@ set(script_HDRS
 	src/script/scripted_character_modifier.h
 	src/script/scripted_modifier.h
 	src/script/scripted_modifier_container.h
+	src/script/scripted_province_modifier.h
 	src/script/scripted_scoped_modifier.h
 	src/script/special_target_type.h
 	src/script/target_variant.h

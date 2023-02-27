@@ -31,6 +31,8 @@
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
+#include "script/modifier.h"
+#include "script/scripted_province_modifier.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
 #include "unit/military_unit.h"
@@ -87,6 +89,8 @@ void province_game_data::do_turn()
 	for (const site *site : this->sites) {
 		site->get_game_data()->do_turn();
 	}
+
+	this->decrement_scripted_modifiers();
 }
 
 void province_game_data::do_production()
@@ -566,6 +570,68 @@ void province_game_data::on_building_gained(const building_type *building, const
 	assert_throw(building != nullptr);
 
 	this->change_score(building->get_score() * multiplier);
+}
+
+
+QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
+}
+
+bool province_game_data::has_scripted_modifier(const scripted_province_modifier *modifier) const
+{
+	return this->get_scripted_modifiers().contains(modifier);
+}
+
+void province_game_data::add_scripted_modifier(const scripted_province_modifier *modifier, const int duration)
+{
+	const read_only_context ctx(this->province);
+
+	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
+
+	if (modifier->get_modifier() != nullptr) {
+		this->apply_modifier(modifier->get_modifier());
+	}
+
+	if (game::get()->is_running()) {
+		emit scripted_modifiers_changed();
+	}
+}
+
+void province_game_data::remove_scripted_modifier(const scripted_province_modifier *modifier)
+{
+	this->scripted_modifiers.erase(modifier);
+
+	if (modifier->get_modifier() != nullptr) {
+		this->remove_modifier(modifier->get_modifier());
+	}
+
+	if (game::get()->is_running()) {
+		emit scripted_modifiers_changed();
+	}
+}
+
+void province_game_data::decrement_scripted_modifiers()
+{
+	std::vector<const scripted_province_modifier *> modifiers_to_remove;
+	for (auto &[modifier, duration] : this->scripted_modifiers) {
+		--duration;
+
+		if (duration == 0) {
+			modifiers_to_remove.push_back(modifier);
+		}
+	}
+
+	for (const scripted_province_modifier *modifier : modifiers_to_remove) {
+		this->remove_scripted_modifier(modifier);
+	}
+}
+
+void province_game_data::apply_modifier(const modifier<const metternich::province> *modifier, const int multiplier)
+{
+	assert_throw(modifier != nullptr);
+
+	modifier->apply(this->province, multiplier);
 }
 
 void province_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)

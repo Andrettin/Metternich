@@ -25,7 +25,7 @@ bool scripted_scoped_modifier<scope_type>::process_gsml_scope(const gsml_data &s
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "modifier") {
-		this->modifier = std::make_unique<metternich::modifier<const character>>();
+		this->modifier = std::make_unique<metternich::modifier<const scope_type>>();
 		database::process_gsml_data(this->modifier, scope);
 		return true;
 	} else {
@@ -50,5 +50,7 @@ QString scripted_scoped_modifier<scope_type>::get_modifier_string() const
 }
 
 template class scripted_scoped_modifier<character>;
+template class scripted_scoped_modifier<country>;
+template class scripted_scoped_modifier<province>;
 
 }

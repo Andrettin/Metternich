@@ -7,6 +7,8 @@ namespace archimedes {
 namespace metternich {
 
 class character;
+class country;
+class province;
 
 template <typename scope_type>
 class modifier;
@@ -21,7 +23,7 @@ public:
 	bool process_gsml_scope(const gsml_data &scope);
 	void check() const;
 
-	const modifier<const character> *get_modifier() const
+	const modifier<const scope_type> *get_modifier() const
 	{
 		return this->modifier.get();
 	}
@@ -33,5 +35,7 @@ private:
 };
 
 extern template class scripted_scoped_modifier<character>;
+extern template class scripted_scoped_modifier<country>;
+extern template class scripted_scoped_modifier<province>;
 
 }

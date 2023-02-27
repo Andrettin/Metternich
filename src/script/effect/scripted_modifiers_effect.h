@@ -3,16 +3,19 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "database/defines.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
 #include "script/effect/effect.h"
 #include "script/scripted_character_modifier.h"
+#include "script/scripted_province_modifier.h"
 
 namespace metternich {
 
 template <typename scope_type>
-class scripted_modifiers_effect final : public effect<const character>
+class scripted_modifiers_effect final : public effect<scope_type>
 {
 public:
-	using scripted_modifier_type = std::conditional_t<std::is_same_v<scope_type, const character>, scripted_character_modifier, void>;
+	using scripted_modifier_type = std::conditional_t<std::is_same_v<scope_type, const character>, scripted_character_modifier, std::conditional_t<std::is_same_v<scope_type, const province>, scripted_province_modifier, void>>;
 
 	explicit scripted_modifiers_effect(const gsml_operator effect_operator)
 		: effect<scope_type>(effect_operator)

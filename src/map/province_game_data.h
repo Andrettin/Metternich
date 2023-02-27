@@ -9,6 +9,7 @@
 #include "map/terrain_type_container.h"
 #include "population/phenotype_container.h"
 #include "population/population_type_container.h"
+#include "script/scripted_modifier_container.h"
 #include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
 
@@ -28,8 +29,12 @@ class population_type;
 class population_unit;
 class province;
 class religion;
+class scripted_province_modifier;
 class tile;
 enum class military_unit_category;
+
+template <typename scope_type>
+class modifier;
 
 class province_game_data final : public QObject
 {
@@ -42,6 +47,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
+	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
@@ -197,6 +203,24 @@ public:
 	void remove_capitol();
 
 	void on_building_gained(const building_type *building, const int multiplier);
+
+	const scripted_province_modifier_map<int> &get_scripted_modifiers() const
+	{
+		return this->scripted_modifiers;
+	}
+
+	QVariantList get_scripted_modifiers_qvariant_list() const;
+	bool has_scripted_modifier(const scripted_province_modifier *modifier) const;
+	void add_scripted_modifier(const scripted_province_modifier *modifier, const int duration);
+	void remove_scripted_modifier(const scripted_province_modifier *modifier);
+	void decrement_scripted_modifiers();
+
+	void apply_modifier(const modifier<const metternich::province> *modifier, const int multiplier = 1);
+
+	void remove_modifier(const modifier<const metternich::province> *modifier)
+	{
+		this->apply_modifier(modifier, -1);
+	}
 
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
@@ -392,6 +416,7 @@ signals:
 	void culture_changed();
 	void religion_changed();
 	void territory_changed();
+	void scripted_modifiers_changed();
 	void population_units_changed();
 	void population_type_counts_changed();
 	void population_culture_counts_changed();
@@ -421,6 +446,7 @@ private:
 	terrain_type_map<int> tile_terrain_counts;
 	std::vector<qunique_ptr<building_slot>> building_slots;
 	building_slot_type_map<building_slot *> building_slot_map;
+	scripted_province_modifier_map<int> scripted_modifiers;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	population_type_map<int> population_type_counts;
 	culture_map<int> population_culture_counts;
