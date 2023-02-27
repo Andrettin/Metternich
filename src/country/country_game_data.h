@@ -714,6 +714,25 @@ public:
 		this->air_morale_resistance_modifier += change;
 	}
 
+	int get_production_modifier() const
+	{
+		return this->production_modifier;
+	}
+
+	void set_production_modifier(const int value)
+	{
+		if (value == this->get_production_modifier()) {
+			return;
+		}
+
+		this->production_modifier = value;
+	}
+
+	void change_production_modifier(const int value)
+	{
+		this->set_production_modifier(this->get_production_modifier() + value);
+	}
+
 	int get_commodity_production_modifier(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_production_modifiers.find(commodity);
@@ -731,7 +750,7 @@ public:
 			return;
 		}
 
-		if (value <= 0) {
+		if (value == 0) {
 			this->commodity_production_modifiers.erase(commodity);
 		} else {
 			this->commodity_production_modifiers[commodity] = value;
@@ -826,6 +845,7 @@ private:
 	int land_morale_resistance_modifier = 0;
 	int naval_morale_resistance_modifier = 0;
 	int air_morale_resistance_modifier = 0;
+	int production_modifier = 0;
 	commodity_map<int> commodity_production_modifiers;
 };
 

@@ -78,6 +78,8 @@ void province_game_data::reset_non_map_data()
 	this->clear_buildings();
 	this->score = province::base_score;
 	this->clear_military_units();
+	this->production_modifier = 0;
+	this->commodity_production_modifiers.clear();
 }
 
 void province_game_data::do_turn()

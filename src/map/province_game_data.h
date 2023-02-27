@@ -409,6 +409,54 @@ public:
 	Q_INVOKABLE QObject *get_military_unit_category_icon(const metternich::military_unit_category category) const;
 	Q_INVOKABLE QString get_military_unit_category_name(const metternich::military_unit_category category) const;
 
+	int get_production_modifier() const
+	{
+		return this->production_modifier;
+	}
+
+	void set_production_modifier(const int value)
+	{
+		if (value == this->get_production_modifier()) {
+			return;
+		}
+
+		this->production_modifier = value;
+	}
+
+	void change_production_modifier(const int value)
+	{
+		this->set_production_modifier(this->get_production_modifier() + value);
+	}
+
+	int get_commodity_production_modifier(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_production_modifiers.find(commodity);
+
+		if (find_iterator != this->commodity_production_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_commodity_production_modifier(const commodity *commodity, const int value)
+	{
+		if (value == this->get_commodity_production_modifier(commodity)) {
+			return;
+		}
+
+		if (value == 0) {
+			this->commodity_production_modifiers.erase(commodity);
+		} else {
+			this->commodity_production_modifiers[commodity] = value;
+		}
+	}
+
+	void change_commodity_production_modifier(const commodity *commodity, const int value)
+	{
+		this->set_commodity_production_modifier(commodity, this->get_commodity_production_modifier(commodity) + value);
+	}
+
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
@@ -462,6 +510,8 @@ private:
 	std::vector<military_unit *> home_military_units;
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;
+	int production_modifier = 0;
+	commodity_map<int> commodity_production_modifiers;
 };
 
 }
