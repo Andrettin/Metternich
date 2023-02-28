@@ -25,6 +25,7 @@
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/vector_random_util.h"
@@ -590,6 +591,25 @@ int character_game_data::get_prowess() const
 int character_game_data::get_vitality() const
 {
 	return this->get_attribute_value(attribute::vitality);
+}
+
+void character_game_data::set_spouse(const metternich::character *spouse)
+{
+	if (spouse == this->get_spouse()) {
+		return;
+	}
+
+	this->spouse = spouse;
+
+	if (spouse != nullptr) {
+		if (spouse->get_game_data()->get_spouse() != this->character) {
+			spouse->get_game_data()->set_spouse(this->character);
+		}
+	}
+
+	if (game::get()->is_running()) {
+		emit spouse_changed();
+	}
 }
 
 QVariantList character_game_data::get_landed_titles_qvariant_list() const

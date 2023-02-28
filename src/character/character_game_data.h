@@ -44,6 +44,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int vitality READ get_vitality NOTIFY attributes_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
+	Q_PROPERTY(metternich::character* spouse READ get_spouse_unconst NOTIFY spouse_changed)
 	Q_PROPERTY(QVariantList landed_titles READ get_landed_titles_qvariant_list NOTIFY landed_titles_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY landed_titles_changed)
 	Q_PROPERTY(metternich::office* office READ get_office_unconst NOTIFY office_changed)
@@ -164,6 +165,21 @@ public:
 	int get_learning() const;
 	int get_prowess() const;
 	int get_vitality() const;
+
+	const metternich::character *get_spouse() const
+	{
+		return this->spouse;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::character *get_spouse_unconst() const
+	{
+		return const_cast<metternich::character *>(this->get_spouse());
+	}
+
+public:
+	void set_spouse(const metternich::character *spouse);
 
 	const std::vector<const landed_title *> &get_landed_titles() const
 	{
@@ -461,6 +477,7 @@ signals:
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void attributes_changed();
+	void spouse_changed();
 	void landed_titles_changed();
 	void office_changed();
 	void loyalty_changed();
@@ -477,6 +494,7 @@ private:
 	std::vector<const trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	std::map<attribute, int> attribute_values;
+	const metternich::character *spouse = nullptr;
 	std::vector<const landed_title *> landed_titles;
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;

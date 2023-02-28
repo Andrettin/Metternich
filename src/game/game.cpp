@@ -463,6 +463,11 @@ void game::apply_history(const metternich::scenario *scenario)
 					}
 				}
 
+				if (character_history->get_spouse() != nullptr) {
+					assert_throw(!character_game_data->is_dead());
+					character_game_data->set_spouse(character_history->get_spouse());
+				}
+
 				if (character_history->get_deployment_province() != nullptr) {
 					assert_throw(character_game_data->get_employer() != nullptr);
 					character_game_data->deploy_to_province(character_history->get_deployment_province());

@@ -13,6 +13,7 @@ class character_history final : public data_entry_history
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country* country MEMBER country)
+	Q_PROPERTY(metternich::character* spouse MEMBER spouse)
 	Q_PROPERTY(metternich::province* deployment_province MEMBER deployment_province)
 
 public:
@@ -25,6 +26,11 @@ public:
 		return this->country;
 	}
 
+	const metternich::character *get_spouse() const
+	{
+		return this->spouse;
+	}
+
 	const metternich::province *get_deployment_province() const
 	{
 		return this->deployment_province;
@@ -33,6 +39,7 @@ public:
 private:
 	const metternich::character *character = nullptr;
 	metternich::country *country = nullptr;
+	metternich::character *spouse = nullptr;
 	metternich::province *deployment_province = nullptr;
 };
 
