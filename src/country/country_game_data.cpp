@@ -1587,12 +1587,11 @@ void country_game_data::check_characters(const QDateTime &date)
 				country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
 			}
 
-			this->remove_character(character);
+			character->get_game_data()->set_employer(nullptr);
 			character->get_game_data()->set_dead(true);
 		} else if (home_province_owner != this->country) {
 			//if we lost their home province, move the character to the province's new owner
-			this->remove_character(character);
-			home_province_owner->get_game_data()->add_character(character);
+			character->get_game_data()->set_employer(home_province_owner);
 		}
 	}
 
@@ -1603,7 +1602,7 @@ void country_game_data::check_characters(const QDateTime &date)
 			}
 
 			if (date >= character->get_start_date() && date < character->get_end_date()) {
-				this->add_character(character);
+				character->get_game_data()->set_employer(this->country);
 			}
 		}
 	}
@@ -1625,8 +1624,6 @@ void country_game_data::add_character(const character *character)
 {
 	this->characters.push_back(character);
 
-	character->get_game_data()->set_employer(this->country);
-
 	this->sort_characters();
 
 	emit characters_changed();
@@ -1646,8 +1643,6 @@ void country_game_data::remove_character(const character *character)
 		this->set_office_character(character_game_data->get_office(), nullptr);
 	}
 
-	character_game_data->set_employer(nullptr);
-
 	this->sort_characters();
 
 	emit characters_changed();
@@ -1657,7 +1652,7 @@ void country_game_data::clear_characters()
 {
 	const std::vector<const character *> characters = this->get_characters();
 	for (const character *character : characters) {
-		this->remove_character(character);
+		character->get_game_data()->set_employer(nullptr);
 	}
 
 	assert_throw(this->get_characters().empty());

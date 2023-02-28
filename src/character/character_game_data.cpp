@@ -154,9 +154,17 @@ void character_game_data::set_employer(const metternich::country *employer)
 		return;
 	}
 
+	if (this->get_employer() != nullptr) {
+		this->get_employer()->get_game_data()->remove_character(this->character);
+	}
+
 	assert_throw(this->get_office() == nullptr);
 
 	this->employer = employer;
+
+	if (this->get_employer() != nullptr) {
+		this->get_employer()->get_game_data()->add_character(this->character);
+	}
 
 	if (game::get()->is_running()) {
 		emit employer_changed();
