@@ -1578,20 +1578,33 @@ void country_game_data::check_characters(const QDateTime &date)
 {
 	const std::vector<const character *> characters = this->get_characters();
 	for (const character *character : characters) {
+		character_game_data *character_game_data = character->get_game_data();
 		const metternich::country *home_province_owner = character->get_home_province()->get_game_data()->get_owner();
 
 		if (game::get()->get_date() >= character->get_end_date()) {
-			if (character->get_game_data()->is_ruler()) {
+			if (character_game_data->is_ruler()) {
 				context ctx(this->country);
 				ctx.source_scope = character;
 				country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
 			}
 
-			character->get_game_data()->set_employer(nullptr);
-			character->get_game_data()->set_dead(true);
-		} else if (home_province_owner != this->country) {
-			//if we lost their home province, move the character to the province's new owner
-			character->get_game_data()->set_employer(home_province_owner);
+			character_game_data->set_employer(nullptr);
+			character_game_data->set_dead(true);
+			continue;
+		}
+		
+		if (home_province_owner != this->country) {
+			//if we lost their home province, they are not the ruler, and are not accompanying their spouse, move the character to the province's owner
+			if (!character_game_data->is_ruler() && !character_game_data->is_subordinate_spouse()) {
+				character_game_data->set_employer(home_province_owner);
+				continue;
+			}
+		}
+		
+		if (!character_game_data->is_ruler() && character_game_data->is_subordinate_spouse() && character_game_data->get_spouse()->get_game_data()->get_employer() != this->country) {
+			//if the character is a subordinate spouse, and their spouse is employed by a different country, move them there
+			character_game_data->set_employer(character_game_data->get_spouse()->get_game_data()->get_employer());
+			continue;
 		}
 	}
 

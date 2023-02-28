@@ -179,7 +179,15 @@ private:
 	}
 
 public:
-	void set_spouse(const metternich::character *spouse);
+	void set_spouse(const metternich::character *spouse, const bool matrilineal = false);
+
+	bool is_married() const
+	{
+		return this->get_spouse() != nullptr;
+	}
+
+	bool is_married_matrilineally() const;
+	bool is_subordinate_spouse() const;
 
 	const std::vector<const landed_title *> &get_landed_titles() const
 	{
@@ -495,6 +503,7 @@ private:
 	scripted_character_modifier_map<int> scripted_modifiers;
 	std::map<attribute, int> attribute_values;
 	const metternich::character *spouse = nullptr;
+	bool matrilineal_marriage = false;
 	std::vector<const landed_title *> landed_titles;
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;

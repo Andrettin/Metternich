@@ -164,6 +164,11 @@ void character_game_data::set_employer(const metternich::country *employer)
 
 	if (this->get_employer() != nullptr) {
 		this->get_employer()->get_game_data()->add_character(this->character);
+
+		//move any subordinate spouse to the new country as well
+		if (this->is_married() && !this->is_subordinate_spouse() && !this->get_spouse()->get_game_data()->is_ruler()) {
+			this->get_spouse()->get_game_data()->set_employer(employer);
+		}
 	}
 
 	if (game::get()->is_running()) {
@@ -601,22 +606,59 @@ int character_game_data::get_vitality() const
 	return this->get_attribute_value(attribute::vitality);
 }
 
-void character_game_data::set_spouse(const metternich::character *spouse)
+void character_game_data::set_spouse(const metternich::character *spouse, const bool matrilineal)
 {
 	if (spouse == this->get_spouse()) {
 		return;
 	}
 
+	if (this->get_spouse() != nullptr) {
+		this->matrilineal_marriage = false;
+	}
+
 	this->spouse = spouse;
+	this->matrilineal_marriage = matrilineal;
 
 	if (spouse != nullptr) {
-		if (spouse->get_game_data()->get_spouse() != this->character) {
-			spouse->get_game_data()->set_spouse(this->character);
+		character_game_data *spouse_game_data = spouse->get_game_data();
+		if (spouse_game_data->get_spouse() != this->character) {
+			spouse_game_data->set_spouse(this->character, matrilineal);
+		}
+
+		if (this->is_subordinate_spouse() && !this->is_ruler() && spouse_game_data->get_employer() != nullptr) {
+			this->set_employer(spouse_game_data->get_employer());
 		}
 	}
 
 	if (game::get()->is_running()) {
 		emit spouse_changed();
+	}
+}
+
+bool character_game_data::is_married_matrilineally() const
+{
+	if (this->matrilineal_marriage) {
+		assert_throw(this->is_married());
+		return true;
+	}
+
+	return false;
+}
+
+bool character_game_data::is_subordinate_spouse() const
+{
+	if (!this->is_married()) {
+		return false;
+	}
+
+	switch (this->character->get_gender()) {
+		case gender::male:
+			return this->is_married_matrilineally();
+		case gender::female:
+			return !this->is_married_matrilineally();
+		default:
+			assert_throw(false);
+			return false;
 	}
 }
 
