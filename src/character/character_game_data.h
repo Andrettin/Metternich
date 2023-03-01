@@ -110,6 +110,7 @@ public:
 	}
 
 	void set_dead(const bool dead);
+	void die();
 
 	const std::vector<const trait *> &get_traits() const
 	{

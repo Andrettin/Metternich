@@ -1587,8 +1587,7 @@ void country_game_data::check_characters(const QDateTime &date)
 				country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
 			}
 
-			character_game_data->set_employer(nullptr);
-			character_game_data->set_dead(true);
+			character_game_data->die();
 			continue;
 		}
 		

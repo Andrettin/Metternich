@@ -238,6 +238,13 @@ void character_game_data::set_dead(const bool dead)
 	}
 }
 
+void character_game_data::die()
+{
+	this->set_spouse(nullptr);
+	this->set_employer(nullptr);
+	this->set_dead(true);
+}
+
 QVariantList character_game_data::get_traits_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_traits());
@@ -646,12 +653,20 @@ void character_game_data::set_spouse(const metternich::character *spouse, const 
 		return;
 	}
 
-	if (this->get_spouse() != nullptr) {
+	const metternich::character *old_spouse = this->get_spouse();
+
+	if (old_spouse != nullptr) {
 		this->matrilineal_marriage = false;
 	}
 
 	this->spouse = spouse;
 	this->matrilineal_marriage = matrilineal;
+
+	if (old_spouse != nullptr) {
+		if (old_spouse->get_game_data()->get_spouse() == this->character) {
+			old_spouse->get_game_data()->set_spouse(nullptr);
+		}
+	}
 
 	if (spouse != nullptr) {
 		character_game_data *spouse_game_data = spouse->get_game_data();
