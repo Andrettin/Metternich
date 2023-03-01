@@ -100,6 +100,7 @@ private:
 
 public:
 	void set_employer(const metternich::country *employer);
+	void check_employer();
 
 	int get_age() const;
 

@@ -16,6 +16,8 @@
 #include "game/character_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
 #include "script/opinion_modifier.h"
@@ -166,13 +168,45 @@ void character_game_data::set_employer(const metternich::country *employer)
 		this->get_employer()->get_game_data()->add_character(this->character);
 
 		//move any subordinate spouse to the new country as well
-		if (this->is_married() && !this->is_subordinate_spouse() && !this->get_spouse()->get_game_data()->is_ruler()) {
-			this->get_spouse()->get_game_data()->set_employer(employer);
+		if (this->is_married()) {
+			this->get_spouse()->get_game_data()->check_employer();
 		}
 	}
 
 	if (game::get()->is_running()) {
 		emit employer_changed();
+	}
+}
+
+void character_game_data::check_employer()
+{
+	//check whether the character should change their employer
+
+	if (this->is_ruler()) {
+		//rulers don't change their employer (maybe should be done only for monarchies?)
+		return;
+	}
+
+	if (this->is_married()) {
+		const character_game_data *spouse_game_data = this->get_spouse()->get_game_data();
+
+		if (this->is_subordinate_spouse() || (spouse_game_data->is_ruler() && !this->is_ruler())) {
+			const country *spouse_employer = spouse_game_data->get_employer();
+			if (spouse_employer != nullptr) {
+				if (spouse_employer != this->get_employer()) {
+					//if the character is a subordinate spouse, and their spouse is employed by a different country, move them there
+					this->set_employer(spouse_employer);
+				}
+				return;
+			}
+		}
+	}
+
+	const metternich::country *home_province_owner = this->character->get_home_province()->get_game_data()->get_owner();
+
+	if (home_province_owner != this->get_employer()) {
+		//move the character to its home province's country, if it has nothing keeping it at a different country
+		this->set_employer(home_province_owner);
 	}
 }
 
@@ -625,9 +659,7 @@ void character_game_data::set_spouse(const metternich::character *spouse, const 
 			spouse_game_data->set_spouse(this->character, matrilineal);
 		}
 
-		if (this->is_subordinate_spouse() && !this->is_ruler() && spouse_game_data->get_employer() != nullptr) {
-			this->set_employer(spouse_game_data->get_employer());
-		}
+		this->check_employer();
 	}
 
 	if (game::get()->is_running()) {
