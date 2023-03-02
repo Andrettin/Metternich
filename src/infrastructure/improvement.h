@@ -8,9 +8,11 @@ namespace metternich {
 
 class commodity;
 class employment_type;
+class population_unit;
 class resource;
 class technology;
 class terrain_type;
+class tile;
 
 //tile improvement
 class improvement final : public named_data_entry, public data_type<improvement>
@@ -119,6 +121,9 @@ public:
 
 		return (improvement::base_score * centesimal_int::max(centesimal_int(1), (this->get_employment_capacity() * this->get_output_multiplier()))).to_int();
 	}
+
+	bool is_buildable_on_tile(const tile *tile) const;
+	bool can_employ_worker(const population_unit *population_unit) const;
 
 signals:
 	void changed();

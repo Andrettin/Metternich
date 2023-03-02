@@ -489,6 +489,86 @@ void province_game_data::on_improvement_gained(const improvement *improvement, c
 	this->change_score(improvement->get_score() * multiplier);
 }
 
+void province_game_data::setup_resource_improvements()
+{
+	//setup resource improvements on game start, to minimize unemployment
+
+	std::vector<QPoint> resource_tiles = this->get_resource_tiles();
+
+	std::sort(resource_tiles.begin(), resource_tiles.end(), [](const QPoint &lhs, const QPoint &rhs) {
+		const tile *lhs_tile = map::get()->get_tile(lhs);
+		const tile *rhs_tile = map::get()->get_tile(rhs);
+
+		if (lhs_tile->get_resource()->get_commodity()->is_food() != rhs_tile->get_resource()->get_commodity()->is_food()) {
+			//give priority to food-producing tiles
+			return lhs_tile->get_resource()->get_commodity()->is_food();
+		}
+
+		if (lhs.y() != rhs.y()) {
+			return lhs.y() < rhs.y();
+		}
+
+		return lhs.x() < rhs.x();
+	});
+
+	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
+		if (population_unit->is_employed()) {
+			continue;
+		}
+
+		for (const QPoint &tile_pos : resource_tiles) {
+			tile *tile = map::get()->get_tile(tile_pos);
+
+			if (this->can_tile_employ_worker(population_unit.get(), tile)) {
+				const bool assigned = this->try_assign_worker_to_tile(population_unit.get(), tile);
+				assert_throw(assigned);
+				break;
+			}
+
+			const improvement *buildable_improvement = nullptr;
+
+			for (const improvement *improvement : improvement::get_all()) {
+				if (improvement->get_resource() == nullptr) {
+					continue;
+				}
+
+				if (improvement->get_required_technology() != nullptr) {
+					if (this->get_owner() == nullptr) {
+						continue;
+					}
+
+					if (!this->get_owner()->get_game_data()->has_technology(improvement->get_required_technology())) {
+						continue;
+					}
+				}
+
+				if (!improvement->is_buildable_on_tile(tile)) {
+					continue;
+				}
+
+				if (!improvement->can_employ_worker(population_unit.get())) {
+					continue;
+				}
+
+				buildable_improvement = improvement;
+				break;
+			}
+
+			if (buildable_improvement == nullptr) {
+				continue;
+			}
+
+			map::get()->set_tile_improvement(tile_pos, buildable_improvement);
+			const bool assigned = this->try_assign_worker_to_tile(population_unit.get(), tile);
+			if (assigned) {
+				//the assignment will not necessarily work, as the improvement could have the same capacity as the old one
+				//nevertheless, we will upgrade it anyway, since this improvement could be an in-between step to another improvement with greater capacity
+				break;
+			}
+		}
+	}
+}
+
 QVariantList province_game_data::get_building_slots_qvariant_list() const
 {
 	return container::to_qvariant_list(this->building_slots);
@@ -1127,15 +1207,11 @@ bool province_game_data::can_tile_employ_worker(const population_unit *populatio
 		return false;
 	}
 
-	if (tile->get_improvement()->get_employment_type() == nullptr) {
-		return false;
-	}
-
 	if (tile->get_employee_count() >= tile->get_employment_capacity()) {
 		return false;
 	}
 
-	if (!vector::contains(tile->get_improvement()->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
+	if (!tile->get_improvement()->can_employ_worker(population_unit)) {
 		return false;
 	}
 

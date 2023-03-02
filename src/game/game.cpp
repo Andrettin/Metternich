@@ -211,6 +211,7 @@ void game::start()
 		for (const province *province : map::get()->get_provinces()) {
 			province_game_data *province_game_data = province->get_game_data();
 			province_game_data->assign_workers();
+			province_game_data->setup_resource_improvements();
 		}
 
 		for (const country *country : this->get_countries()) {

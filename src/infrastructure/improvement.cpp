@@ -5,6 +5,9 @@
 #include "economy/employment_type.h"
 #include "economy/resource.h"
 #include "map/terrain_type.h"
+#include "map/tile.h"
+#include "population/population_type.h"
+#include "population/population_unit.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
@@ -78,6 +81,51 @@ const commodity *improvement::get_output_commodity() const
 	}
 
 	return nullptr;
+}
+
+bool improvement::is_buildable_on_tile(const tile *tile) const
+{
+	if (this->get_resource() != nullptr && this->get_resource() != tile->get_resource()) {
+		return false;
+	}
+
+	if (this->get_required_improvement() != nullptr && tile->get_improvement() != this->get_required_improvement()) {
+		return false;
+	}
+
+	if (tile->get_improvement() != nullptr) {
+		if (this == tile->get_improvement()) {
+			return false;
+		}
+
+		if (this->get_employment_capacity() < tile->get_improvement()->get_employment_capacity()) {
+			return false;
+		}
+
+		if (this->get_output_multiplier() < tile->get_improvement()->get_output_multiplier()) {
+			return false;
+		}
+
+		if (this->get_employment_capacity() == tile->get_improvement()->get_employment_capacity() && this->get_output_multiplier() == tile->get_improvement()->get_output_multiplier()) {
+			//the improvement must be better in some way
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool improvement::can_employ_worker(const population_unit *population_unit) const
+{
+	if (this->get_employment_type() == nullptr) {
+		return false;
+	}
+
+	if (!vector::contains(this->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
+		return false;
+	}
+
+	return true;
 }
 
 }

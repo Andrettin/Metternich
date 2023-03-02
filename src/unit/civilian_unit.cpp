@@ -175,35 +175,7 @@ bool civilian_unit::can_build_improvement_on_tile(const improvement *improvement
 	}
 
 	const tile *tile = map::get()->get_tile(tile_pos);
-
-	if (improvement->get_resource() != nullptr && improvement->get_resource() != tile->get_resource()) {
-		return false;
-	}
-
-	if (improvement->get_required_improvement() != nullptr && tile->get_improvement() != improvement->get_required_improvement()) {
-		return false;
-	}
-
-	if (tile->get_improvement() != nullptr) {
-		if (improvement == tile->get_improvement()) {
-			return false;
-		}
-
-		if (improvement->get_employment_capacity() < tile->get_improvement()->get_employment_capacity()) {
-			return false;
-		}
-
-		if (improvement->get_output_multiplier() < tile->get_improvement()->get_output_multiplier()) {
-			return false;
-		}
-
-		if (improvement->get_employment_capacity() == tile->get_improvement()->get_employment_capacity() && improvement->get_output_multiplier() == tile->get_improvement()->get_output_multiplier()) {
-			//the improvement must be better in some way
-			return false;
-		}
-	}
-
-	return true;
+	return improvement->is_buildable_on_tile(tile);
 }
 
 void civilian_unit::build_improvement(const improvement *improvement)

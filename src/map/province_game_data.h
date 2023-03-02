@@ -193,6 +193,7 @@ public:
 	bool produces_commodity(const commodity *commodity) const;
 
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
+	void setup_resource_improvements();
 
 	QVariantList get_building_slots_qvariant_list() const;
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
