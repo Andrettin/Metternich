@@ -74,8 +74,13 @@ centesimal_int building_slot::get_output_multiplier() const
 	centesimal_int output_multiplier = this->get_building()->get_output_multiplier();
 
 	const province_game_data *province_game_data = this->get_province()->get_game_data();
-	const country_game_data *owner_game_data = province_game_data->get_owner()->get_game_data();
-	const int production_modifier = province_game_data->get_production_modifier() + owner_game_data->get_production_modifier() + province_game_data->get_commodity_production_modifier(output_commodity) + owner_game_data->get_commodity_production_modifier(output_commodity);
+	int production_modifier = province_game_data->get_production_modifier() + province_game_data->get_commodity_production_modifier(output_commodity);
+
+	if (province_game_data->get_owner() != nullptr) {
+		const country_game_data *owner_game_data = province_game_data->get_owner()->get_game_data();
+		production_modifier += owner_game_data->get_production_modifier() + owner_game_data->get_commodity_production_modifier(output_commodity);
+	}
+
 	output_multiplier += centesimal_int(production_modifier) / 100;
 
 	return output_multiplier;

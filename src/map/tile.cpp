@@ -86,13 +86,29 @@ int tile::get_employment_capacity() const
 
 centesimal_int tile::get_output_multiplier() const
 {
-	if (this->get_improvement() != nullptr && this->get_improvement()->get_output_commodity() != nullptr) {
-		centesimal_int output_multiplier = this->get_improvement()->get_output_multiplier();
-		output_multiplier += centesimal_int(this->get_owner()->get_game_data()->get_commodity_production_modifier(this->get_improvement()->get_output_commodity())) / 100;
-		return output_multiplier;
+	if (this->get_improvement() == nullptr) {
+		return centesimal_int(0);
 	}
 
-	return centesimal_int(0);
+	const commodity *output_commodity = this->get_improvement()->get_output_commodity();
+
+	if (output_commodity == nullptr) {
+		return centesimal_int(0);
+	}
+
+	centesimal_int output_multiplier = this->get_improvement()->get_output_multiplier();
+
+	const province_game_data *province_game_data = this->get_province()->get_game_data();
+	int production_modifier = province_game_data->get_production_modifier() + province_game_data->get_commodity_production_modifier(output_commodity);
+
+	if (this->get_owner() != nullptr) {
+		const country_game_data *owner_game_data = this->get_owner()->get_game_data();
+		production_modifier += owner_game_data->get_production_modifier() + owner_game_data->get_commodity_production_modifier(output_commodity);
+	}
+
+	output_multiplier += centesimal_int(production_modifier) / 100;
+
+	return output_multiplier;
 }
 
 }
