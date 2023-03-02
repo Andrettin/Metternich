@@ -202,6 +202,10 @@ void character_game_data::check_employer()
 		}
 	}
 
+	if ((this->get_office() != nullptr || this->is_deployed()) && this->get_loyalty_int() >= 50) {
+		return;
+	}
+
 	const metternich::country *home_province_owner = this->character->get_home_province()->get_game_data()->get_owner();
 
 	if (home_province_owner != this->get_employer()) {
