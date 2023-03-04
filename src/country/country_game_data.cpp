@@ -1466,6 +1466,12 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 		return;
 	}
 
+	if (commodity->is_convertible_to_wealth()) {
+		assert_throw(value > 0);
+		this->change_wealth(commodity->get_wealth_value() * value);
+		return;
+	}
+
 	if (value <= 0) {
 		this->stored_commodities.erase(commodity);
 	} else {

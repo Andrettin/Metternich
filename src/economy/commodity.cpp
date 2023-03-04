@@ -15,6 +15,7 @@ commodity::commodity(const std::string &identifier)
 void commodity::check() const
 {
 	assert_throw(this->get_icon() != nullptr);
+	assert_throw(this->get_wealth_value() >= 0);
 }
 
 bool commodity::is_food() const

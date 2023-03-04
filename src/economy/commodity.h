@@ -14,6 +14,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::food_type food_type MEMBER food_type READ get_food_type NOTIFY changed)
+	Q_PROPERTY(int wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "commodity";
@@ -36,12 +37,23 @@ public:
 		return this->food_type;
 	}
 
+	int get_wealth_value() const
+	{
+		return this->wealth_value;
+	}
+
+	bool is_convertible_to_wealth() const
+	{
+		return this->get_wealth_value() != 0;
+	}
+
 signals:
 	void changed();
 
 private:
 	metternich::icon *icon = nullptr;
 	metternich::food_type food_type;
+	int wealth_value = 0;
 };
 
 }
