@@ -53,6 +53,8 @@ private:
 public:
 	void set_building(const building_type *building);
 
+	bool can_have_building(const building_type *building) const;
+
 	const metternich::province *get_province() const
 	{
 		return this->province;

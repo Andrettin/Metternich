@@ -12,6 +12,7 @@ class cultural_group;
 class culture;
 class employment_type;
 class icon;
+class population_unit;
 class technology;
 
 class building_type final : public named_data_entry, public data_type<building_type>
@@ -26,6 +27,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::employment_type* employment_type MEMBER employment_type NOTIFY changed)
 	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
+	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
@@ -85,6 +87,11 @@ public:
 		return this->output_multiplier;
 	}
 
+	const building_type *get_required_building() const
+	{
+		return this->required_building;
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -94,6 +101,8 @@ public:
 	{
 		return (building_type::base_score * centesimal_int::max(centesimal_int(1), (this->get_employment_capacity() * this->get_output_multiplier()))).to_int();
 	}
+
+	bool can_employ_worker(const population_unit *population_unit) const;
 
 signals:
 	void changed();
@@ -107,6 +116,7 @@ private:
 	metternich::employment_type *employment_type = nullptr;
 	int employment_capacity = 0;
 	centesimal_int output_multiplier;
+	building_type *required_building = nullptr;
 	technology *required_technology = nullptr;
 };
 

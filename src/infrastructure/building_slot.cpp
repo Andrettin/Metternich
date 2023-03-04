@@ -50,6 +50,34 @@ void building_slot::set_building(const building_type *building)
 	}
 }
 
+bool building_slot::can_have_building(const building_type *building) const
+{
+	if (building->get_required_building() != nullptr && this->get_building() != building->get_required_building()) {
+		return false;
+	}
+
+	if (this->get_building() != nullptr) {
+		if (building == this->get_building()) {
+			return false;
+		}
+
+		if (building->get_employment_capacity() < this->get_building()->get_employment_capacity()) {
+			return false;
+		}
+
+		if (building->get_output_multiplier() < this->get_building()->get_output_multiplier()) {
+			return false;
+		}
+
+		if (building->get_employment_capacity() == this->get_building()->get_employment_capacity() && building->get_output_multiplier() == this->get_building()->get_output_multiplier()) {
+			//the building must be better in some way
+			return false;
+		}
+	}
+
+	return true;
+}
+
 int building_slot::get_employment_capacity() const
 {
 	if (this->get_building() != nullptr) {

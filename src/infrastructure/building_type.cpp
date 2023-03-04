@@ -7,8 +7,11 @@
 #include "economy/employment_type.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
+#include "population/population_type.h"
+#include "population/population_unit.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -56,6 +59,19 @@ const commodity *building_type::get_output_commodity() const
 	}
 
 	return nullptr;
+}
+
+bool building_type::can_employ_worker(const population_unit *population_unit) const
+{
+	if (this->get_employment_type() == nullptr) {
+		return false;
+	}
+
+	if (!vector::contains(this->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
+		return false;
+	}
+
+	return true;
 }
 
 }

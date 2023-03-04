@@ -566,6 +566,67 @@ void province_game_data::setup_resource_improvements()
 				break;
 			}
 		}
+
+		if (population_unit->is_employed()) {
+			continue;
+		}
+
+		//if no suitable resource to employ the worker was found, see if any food-producing building can be constructed or upgraded, so that the worker can find sustenance in a different manner
+
+		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+			if (this->can_building_employ_worker(population_unit.get(), building_slot.get())) {
+				const bool assigned = this->try_assign_worker_to_building(population_unit.get(), building_slot.get());
+				assert_throw(assigned);
+				break;
+			}
+
+			const building_type *buildable_building = nullptr;
+
+			for (const building_type *building_type : building_slot->get_type()->get_building_types()) {
+				if (building_type->get_employment_type() == nullptr) {
+					continue;
+				}
+
+				if (building_type->get_output_commodity() == nullptr) {
+					continue;
+				}
+
+				if (!building_type->get_output_commodity()->is_food()) {
+					continue;
+				}
+
+				if (building_type->get_required_technology() != nullptr) {
+					if (this->get_owner() == nullptr) {
+						continue;
+					}
+
+					if (!this->get_owner()->get_game_data()->has_technology(building_type->get_required_technology())) {
+						continue;
+					}
+				}
+
+				if (!building_slot->can_have_building(building_type)) {
+					continue;
+				}
+
+				if (!building_type->can_employ_worker(population_unit.get())) {
+					continue;
+				}
+
+				buildable_building = building_type;
+				break;
+			}
+
+			if (buildable_building == nullptr) {
+				continue;
+			}
+
+			building_slot->set_building(buildable_building);
+			const bool assigned = this->try_assign_worker_to_building(population_unit.get(), building_slot.get());
+			if (assigned) {
+				break;
+			}
+		}
 	}
 }
 
@@ -1224,15 +1285,11 @@ bool province_game_data::can_building_employ_worker(const population_unit *popul
 		return false;
 	}
 
-	if (building_slot->get_building()->get_employment_type() == nullptr) {
-		return false;
-	}
-
 	if (building_slot->get_employee_count() >= building_slot->get_employment_capacity()) {
 		return false;
 	}
 
-	if (!vector::contains(building_slot->get_building()->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
+	if (!building_slot->get_building()->can_employ_worker(population_unit)) {
 		return false;
 	}
 
