@@ -14,6 +14,7 @@
 #include "script/modifier_effect/production_modifier_effect.h"
 #include "script/modifier_effect/quarterly_piety_modifier_effect.h"
 #include "script/modifier_effect/quarterly_prestige_modifier_effect.h"
+#include "script/modifier_effect/storage_capacity_modifier_effect.h"
 
 namespace metternich {
 
@@ -36,6 +37,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<land_morale_resistance_modifier_effect>(value);
 		} else if (key == "naval_morale_resistance") {
 			return std::make_unique<naval_morale_resistance_modifier_effect>(value);
+		} else if (key == "storage_capacity") {
+			return std::make_unique<storage_capacity_modifier_effect>(value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
 		if (key == "defense") {

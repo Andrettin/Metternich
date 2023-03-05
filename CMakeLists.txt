@@ -538,6 +538,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/production_modifier_effect.h
 	src/script/modifier_effect/quarterly_piety_modifier_effect.h
 	src/script/modifier_effect/quarterly_prestige_modifier_effect.h
+	src/script/modifier_effect/storage_capacity_modifier_effect.h
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})
 
