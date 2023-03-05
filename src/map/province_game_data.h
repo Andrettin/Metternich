@@ -462,6 +462,8 @@ public:
 		this->set_commodity_production_modifier(commodity, this->get_commodity_production_modifier(commodity) + value);
 	}
 
+	void apply_country_modifier(const country *country, const int multiplier);
+
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:

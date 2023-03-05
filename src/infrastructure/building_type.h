@@ -8,12 +8,17 @@
 namespace metternich {
 
 class building_class;
+class country;
 class cultural_group;
 class culture;
 class employment_type;
 class icon;
 class population_unit;
+class province;
 class technology;
+
+template <typename scope_type>
+class modifier;
 
 class building_type final : public named_data_entry, public data_type<building_type>
 {
@@ -38,10 +43,10 @@ public:
 public:
 	static constexpr int base_score = 10;
 
-	explicit building_type(const std::string &identifier) : named_data_entry(identifier)
-	{
-	}
+	explicit building_type(const std::string &identifier);
+	~building_type();
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -104,6 +109,16 @@ public:
 
 	bool can_employ_worker(const population_unit *population_unit) const;
 
+	const modifier<const province> *get_province_modifier() const
+	{
+		return this->province_modifier.get();
+	}
+
+	const modifier<const country> *get_country_modifier() const
+	{
+		return this->country_modifier.get();
+	}
+
 signals:
 	void changed();
 
@@ -118,6 +133,8 @@ private:
 	centesimal_int output_multiplier;
 	building_type *required_building = nullptr;
 	technology *required_technology = nullptr;
+	std::unique_ptr<modifier<const province>> province_modifier;
+	std::unique_ptr<modifier<const country>> country_modifier;
 };
 
 }

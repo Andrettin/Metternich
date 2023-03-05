@@ -9,11 +9,35 @@
 #include "infrastructure/building_slot_type.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
+
+building_type::building_type(const std::string &identifier) : named_data_entry(identifier)
+{
+}
+
+building_type::~building_type()
+{
+}
+
+void building_type::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "province_modifier") {
+		this->province_modifier = std::make_unique<modifier<const province>>();
+		database::process_gsml_data(this->province_modifier, scope);
+	} else if (tag == "country_modifier") {
+		this->country_modifier = std::make_unique<modifier<const country>>();
+		database::process_gsml_data(this->country_modifier, scope);
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
+}
 
 void building_type::initialize()
 {

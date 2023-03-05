@@ -11,6 +11,7 @@ namespace metternich {
 
 class building_slot_type;
 class building_type;
+class country;
 class population_unit;
 class province;
 
@@ -68,6 +69,8 @@ private:
 	}
 
 public:
+	const country *get_country() const;
+
 	const std::vector<population_unit *> &get_employees() const
 	{
 		return this->employees;
@@ -95,6 +98,8 @@ public:
 
 	int get_employment_capacity() const;
 	centesimal_int get_output_multiplier() const;
+
+	void apply_country_modifier(const country *country, const int multiplier);
 
 signals:
 	void building_changed();

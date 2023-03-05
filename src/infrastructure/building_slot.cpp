@@ -9,6 +9,7 @@
 #include "infrastructure/building_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/fractional_int.h"
 
@@ -35,12 +36,28 @@ void building_slot::set_building(const building_type *building)
 
 	if (this->get_building() != nullptr) {
 		province_game_data->on_building_gained(this->get_building(), -1);
+
+		if (this->get_building()->get_province_modifier() != nullptr) {
+			this->get_building()->get_province_modifier()->apply(this->get_province(), -1);
+		}
+
+		if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr) {
+			this->get_building()->get_country_modifier()->apply(this->get_country(), -1);
+		}
 	}
 
 	this->building = building;
 
 	if (this->get_building() != nullptr) {
 		province_game_data->on_building_gained(this->get_building(), 1);
+
+		if (this->get_building()->get_province_modifier() != nullptr) {
+			this->get_building()->get_province_modifier()->apply(this->get_province(), 1);
+		}
+
+		if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr) {
+			this->get_building()->get_country_modifier()->apply(this->get_country(), 1);
+		}
 	}
 
 	if (game::get()->is_running()) {
@@ -78,6 +95,11 @@ bool building_slot::can_have_building(const building_type *building) const
 	return true;
 }
 
+const country *building_slot::get_country() const
+{
+	return this->get_province()->get_game_data()->get_owner();
+}
+
 int building_slot::get_employment_capacity() const
 {
 	if (this->get_building() != nullptr) {
@@ -112,6 +134,13 @@ centesimal_int building_slot::get_output_multiplier() const
 	output_multiplier += centesimal_int(production_modifier) / 100;
 
 	return output_multiplier;
+}
+
+void building_slot::apply_country_modifier(const country *country, const int multiplier)
+{
+	if (this->get_building() != nullptr && this->get_building()->get_country_modifier() != nullptr) {
+		this->get_building()->get_country_modifier()->apply(country, multiplier);
+	}
 }
 
 }

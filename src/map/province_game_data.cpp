@@ -184,17 +184,21 @@ void province_game_data::set_owner(const country *country)
 
 	const metternich::country *old_owner = this->owner;
 	if (old_owner != nullptr) {
-		old_owner->get_game_data()->remove_province(this->province);
-
 		if (this->is_capital()) {
 			this->remove_capitol();
 		}
+
+		old_owner->get_game_data()->remove_province(this->province);
+
+		//remove the country modifier after removing the capitol, to ensure its effects won't be removed twice
+		this->apply_country_modifier(old_owner, -1);
 	}
 
 	this->owner = country;
 
 	if (this->owner != nullptr) {
 		this->owner->get_game_data()->add_province(this->province);
+		this->apply_country_modifier(this->owner, 1);
 
 		if (this->get_population_unit_count() == 0) {
 			this->calculate_culture();
@@ -1537,6 +1541,17 @@ QString province_game_data::get_military_unit_category_name(const military_unit_
 	assert_throw(!best_name.isEmpty());
 
 	return best_name;
+}
+
+void province_game_data::apply_country_modifier(const country *country, const int multiplier)
+{
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		if (building_slot->get_building() == nullptr) {
+			continue;
+		}
+
+		building_slot->apply_country_modifier(country, multiplier);
+	}
 }
 
 }
