@@ -127,7 +127,7 @@ void map::initialize()
 	this->provinces = container::to_vector(provinces);
 
 	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->calculate_territory_rect_center();
+		province->get_game_data()->on_map_created();
 	}
 
 	this->initialize_diplomatic_map();

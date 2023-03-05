@@ -30,6 +30,7 @@ class population_unit;
 class province;
 class religion;
 class scripted_province_modifier;
+class site;
 class tile;
 enum class military_unit_category;
 
@@ -67,6 +68,8 @@ public:
 	~province_game_data();
 
 	void reset_non_map_data();
+
+	void on_map_created();
 
 	void do_turn();
 	void do_production();
@@ -195,6 +198,7 @@ public:
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
 	void setup_resource_improvements();
 
+	void initialize_building_slots();
 	QVariantList get_building_slots_qvariant_list() const;
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
 	void set_slot_building(const building_slot_type *slot_type, const building_type *building);

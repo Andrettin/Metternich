@@ -55,15 +55,6 @@ namespace metternich {
 province_game_data::province_game_data(const metternich::province *province)
 	: province(province), free_food_consumption(province_game_data::base_free_food_consumption)
 {
-	//initialize building slots, placing them in random order
-	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
-	vector::shuffle(building_slot_types);
-
-	for (const building_slot_type *building_slot_type : building_slot_types) {
-		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->province));
-		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
-	}
-
 	this->reset_non_map_data();
 }
 
@@ -80,6 +71,12 @@ void province_game_data::reset_non_map_data()
 	this->clear_military_units();
 	this->production_modifier = 0;
 	this->commodity_production_modifiers.clear();
+}
+
+void province_game_data::on_map_created()
+{
+	this->calculate_territory_rect_center();
+	this->initialize_building_slots();
 }
 
 void province_game_data::do_turn()
@@ -627,6 +624,28 @@ void province_game_data::setup_resource_improvements()
 				break;
 			}
 		}
+	}
+}
+
+void province_game_data::initialize_building_slots()
+{
+	//initialize building slots, placing them in random order
+	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
+	vector::shuffle(building_slot_types);
+
+	const site *settlement = this->province->get_capital_settlement();
+
+	for (const building_slot_type *building_slot_type : building_slot_types) {
+		if (building_slot_type->is_coastal() && (settlement == nullptr || !map::get()->is_tile_coastal(settlement->get_game_data()->get_tile_pos()))) {
+			continue;
+		}
+
+		if (building_slot_type->is_near_water() && (settlement == nullptr || !map::get()->is_tile_near_water(settlement->get_game_data()->get_tile_pos()))) {
+			continue;
+		}
+
+		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->province));
+		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
 	}
 }
 
