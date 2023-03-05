@@ -514,8 +514,15 @@ void province_game_data::setup_resource_improvements()
 		return lhs.x() < rhs.x();
 	});
 
+	//population types for which the possibilities have already been exhausted
+	population_type_set checked_population_types;
+
 	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
 		if (population_unit->is_employed()) {
+			continue;
+		}
+
+		if (checked_population_types.contains(population_unit->get_type())) {
 			continue;
 		}
 
@@ -630,6 +637,13 @@ void province_game_data::setup_resource_improvements()
 				break;
 			}
 		}
+
+		if (population_unit->is_employed()) {
+			continue;
+		}
+
+
+		checked_population_types.insert(population_unit->get_type());
 	}
 }
 
