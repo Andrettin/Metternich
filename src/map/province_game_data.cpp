@@ -102,7 +102,13 @@ void province_game_data::do_production()
 	country_game_data *owner_game_data = this->get_owner()->get_game_data();
 
 	for (const auto &[commodity, output] : output_per_commodity) {
-		owner_game_data->change_stored_commodity(commodity, output.to_int());
+		const int output_int = output.to_int();
+
+		if (output_int == 0) {
+			continue;
+		}
+
+		owner_game_data->change_stored_commodity(commodity, output_int);
 	}
 }
 

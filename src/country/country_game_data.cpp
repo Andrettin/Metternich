@@ -108,10 +108,14 @@ void country_game_data::do_population_growth()
 		return;
 	}
 
+	//this is a copy because we may need to erase elements from the map in the subsequent code
+	const commodity_map<int> stored_commodities = this->get_stored_commodities();
+
 	int stored_food = 0;
-	for (const auto &[commodity, quantity] : this->get_stored_commodities()) {
+	for (const auto &[commodity, quantity] : stored_commodities) {
 		if (commodity->is_food()) {
 			stored_food += quantity;
+			this->set_stored_commodity(commodity, 0);
 		}
 	}
 
@@ -124,14 +128,6 @@ void country_game_data::do_population_growth()
 	const int net_food = stored_food - food_consumption;
 
 	this->change_population_growth(net_food);
-
-	for (auto &[commodity, quantity] : this->stored_commodities) {
-		if (!commodity->is_food()) {
-			continue;
-		}
-
-		quantity = 0;
-	}
 
 	while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
 		this->get_random_population_weighted_province()->get_game_data()->grow_population();
