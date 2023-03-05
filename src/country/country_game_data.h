@@ -74,6 +74,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
 	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
+	Q_PROPERTY(int storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
@@ -589,6 +590,27 @@ public:
 		this->set_stored_commodity(commodity, this->get_stored_commodity(commodity) + value);
 	}
 
+	int get_storage_capacity() const
+	{
+		return this->storage_capacity;
+	}
+
+	void set_storage_capacity(const int capacity)
+	{
+		if (capacity == this->get_storage_capacity()) {
+			return;
+		}
+
+		this->storage_capacity = capacity;
+
+		emit storage_capacity_changed();
+	}
+
+	void change_storage_capacity(const int change)
+	{
+		this->set_storage_capacity(this->get_storage_capacity() + change);
+	}
+
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
 	QVariantList get_technologies_qvariant_list() const;
@@ -788,6 +810,7 @@ signals:
 	void prestige_changed();
 	void piety_changed();
 	void stored_commodities_changed();
+	void storage_capacity_changed();
 	void technologies_changed();
 	void characters_changed();
 	void ruler_changed();
@@ -834,6 +857,7 @@ private:
 	centesimal_int prestige;
 	centesimal_int piety;
 	commodity_map<int> stored_commodities;
+	int storage_capacity = 0;
 	technology_set technologies;
 	std::vector<const character *> characters;
 	const character *ruler = nullptr;

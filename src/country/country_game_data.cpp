@@ -1468,6 +1468,10 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 		return;
 	}
 
+	if (value > this->get_storage_capacity()) {
+		this->set_stored_commodity(commodity, this->get_storage_capacity());
+	}
+
 	if (value <= 0) {
 		this->stored_commodities.erase(commodity);
 	} else {
