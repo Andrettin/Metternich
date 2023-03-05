@@ -32,6 +32,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::employment_type* employment_type MEMBER employment_type NOTIFY changed)
 	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
+	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
@@ -92,6 +93,11 @@ public:
 		return this->output_multiplier;
 	}
 
+	bool is_warehouse() const
+	{
+		return this->warehouse;
+	}
+
 	const building_type *get_required_building() const
 	{
 		return this->required_building;
@@ -131,6 +137,7 @@ private:
 	metternich::employment_type *employment_type = nullptr;
 	int employment_capacity = 0;
 	centesimal_int output_multiplier;
+	bool warehouse = false;
 	building_type *required_building = nullptr;
 	technology *required_technology = nullptr;
 	std::unique_ptr<modifier<const province>> province_modifier;

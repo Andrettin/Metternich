@@ -721,6 +721,55 @@ void province_game_data::add_capitol()
 	const building_class *capitol_building_class = defines::get()->get_capitol_building_class();
 	const building_type *capitol_building_type = this->get_culture()->get_building_class_type(capitol_building_class);
 	this->set_slot_building(capitol_building_class->get_slot_type(), capitol_building_type);
+
+	//the capital gets a free warehouse if it doesn't have one
+	bool has_warehouse = false;
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		const building_type *building_type = building_slot->get_building();
+		if (building_type == nullptr) {
+			continue;
+		}
+
+		if (building_type->is_warehouse()) {
+			has_warehouse = true;
+			break;
+		}
+	}
+
+	if (!has_warehouse) {
+		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+			const building_type *buildable_warehouse = nullptr;
+
+			for (const building_type *building_type : building_slot->get_type()->get_building_types()) {
+				if (!building_type->is_warehouse()) {
+					continue;
+				}
+
+				if (building_type != this->get_culture()->get_building_class_type(building_type->get_building_class())) {
+					continue;
+				}
+
+				if (building_type->get_required_technology() != nullptr) {
+					//only a basic warehouse is free
+					continue;
+				}
+
+				if (!building_slot->can_have_building(building_type)) {
+					continue;
+				}
+
+				buildable_warehouse = building_type;
+				break;
+			}
+
+			if (buildable_warehouse == nullptr) {
+				continue;
+			}
+
+			building_slot->set_building(buildable_warehouse);
+			break;
+		}
+	}
 }
 
 void province_game_data::remove_capitol()
