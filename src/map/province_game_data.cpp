@@ -67,6 +67,7 @@ void province_game_data::reset_non_map_data()
 	this->set_owner(nullptr);
 	this->clear_population_units();
 	this->clear_buildings();
+	this->remove_capital_building_slots();
 	this->score = province::base_score;
 	this->clear_military_units();
 	this->production_modifier = 0;
@@ -186,6 +187,7 @@ void province_game_data::set_owner(const country *country)
 	if (old_owner != nullptr) {
 		if (this->is_capital()) {
 			this->remove_capitol();
+			this->remove_capital_building_slots();
 		}
 
 		old_owner->get_game_data()->remove_province(this->province);
@@ -206,6 +208,7 @@ void province_game_data::set_owner(const country *country)
 		}
 
 		if (this->is_capital()) {
+			this->add_capital_building_slots();
 			this->add_capitol();
 		}
 	}
@@ -660,6 +663,10 @@ void province_game_data::initialize_building_slots()
 	const site *settlement = this->province->get_capital_settlement();
 
 	for (const building_slot_type *building_slot_type : building_slot_types) {
+		if (building_slot_type->is_capital()) {
+			continue;
+		}
+
 		if (building_slot_type->is_coastal() && (settlement == nullptr || !map::get()->is_tile_coastal(settlement->get_game_data()->get_tile_pos()))) {
 			continue;
 		}
@@ -670,6 +677,42 @@ void province_game_data::initialize_building_slots()
 
 		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->province));
 		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
+	}
+}
+
+void province_game_data::add_capital_building_slots()
+{
+	assert_throw(this->is_capital());
+
+	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
+	vector::shuffle(building_slot_types);
+
+	for (const building_slot_type *building_slot_type : building_slot_types) {
+		if (!building_slot_type->is_capital()) {
+			continue;
+		}
+
+		auto building_slot = make_qunique<metternich::building_slot>(building_slot_type, this->province);
+		this->building_slot_map[building_slot_type] = building_slot.get();
+
+		//insert the building slot at a random position
+		const size_t slot_index = random::get()->generate(this->building_slots.size());
+		this->building_slots.insert(this->building_slots.begin() + slot_index, std::move(building_slot));
+	}
+}
+
+void province_game_data::remove_capital_building_slots()
+{
+	for (size_t i = 0; i < this->building_slots.size();) {
+		const qunique_ptr<building_slot> &building_slot = this->building_slots.at(i);
+
+		if (!building_slot->get_type()->is_capital()) {
+			++i;
+			continue;
+		}
+
+		this->building_slot_map.erase(building_slot->get_type());
+		this->building_slots.erase(this->building_slots.begin() + i);
 	}
 }
 
