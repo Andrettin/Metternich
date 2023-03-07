@@ -481,7 +481,36 @@ commodity_map<centesimal_int> province_game_data::get_commodity_outputs() const
 
 		const centesimal_int output_multiplier = building_slot->get_output_multiplier();
 
-		output_per_commodity[output_commodity] += output * output_multiplier;
+		output *= output_multiplier;
+
+		commodity_map<centesimal_int> inputs;
+
+		for (const auto &[input_commodity, input_multiplier] : employment_type->get_input_commodities()) {
+			inputs[input_commodity] = input_multiplier * output / employment_type->get_output_multiplier();
+		}
+
+		int input_fulfilled_percent = 100;
+
+		for (auto &[input_commodity, input_value] : inputs) {
+			const int input_value_int = input_value.to_int();
+			const int available_input = this->get_owner()->get_game_data()->get_stored_commodity(input_commodity);
+
+			if (input_value_int < available_input) {
+				input_fulfilled_percent = std::min(input_fulfilled_percent, input_value_int * 100 / available_input);
+				input_value = centesimal_int(available_input);
+			}
+		}
+
+		if (input_fulfilled_percent < 100) {
+			output *= input_fulfilled_percent;
+			output /= 100;
+		}
+
+		output_per_commodity[output_commodity] += output;
+
+		for (const auto &[input_commodity, input_value] : inputs) {
+			output_per_commodity[output_commodity] -= input_value;
+		}
 	}
 
 	return output_per_commodity;
@@ -489,7 +518,14 @@ commodity_map<centesimal_int> province_game_data::get_commodity_outputs() const
 
 bool province_game_data::produces_commodity(const commodity *commodity) const
 {
-	return this->get_commodity_outputs().contains(commodity);
+	const commodity_map<centesimal_int> output_per_commodity = this->get_commodity_outputs();
+	const auto find_iterator = output_per_commodity.find(commodity);
+
+	if (find_iterator != output_per_commodity.end() && find_iterator->second > 0) {
+		return true;
+	}
+
+	return false;
 }
 
 void province_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
