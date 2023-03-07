@@ -198,10 +198,10 @@ public:
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
 	void setup_resource_improvements();
 
+	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
 	void add_capital_building_slots();
 	void remove_capital_building_slots();
-	QVariantList get_building_slots_qvariant_list() const;
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
 	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
 	void clear_buildings();

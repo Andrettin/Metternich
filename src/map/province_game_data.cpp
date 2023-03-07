@@ -646,6 +646,11 @@ void province_game_data::setup_resource_improvements()
 	}
 }
 
+QVariantList province_game_data::get_building_slots_qvariant_list() const
+{
+	return container::to_qvariant_list(this->building_slots);
+}
+
 void province_game_data::initialize_building_slots()
 {
 	//initialize building slots, placing them in random order
@@ -706,11 +711,6 @@ void province_game_data::remove_capital_building_slots()
 		this->building_slot_map.erase(building_slot->get_type());
 		this->building_slots.erase(this->building_slots.begin() + i);
 	}
-}
-
-QVariantList province_game_data::get_building_slots_qvariant_list() const
-{
-	return container::to_qvariant_list(this->building_slots);
 }
 
 const building_type *province_game_data::get_slot_building(const building_slot_type *slot_type) const
