@@ -172,7 +172,7 @@ commodity_map<centesimal_int> building_slot::get_base_commodity_outputs() const
 	output_per_commodity[output_commodity] += output;
 
 	for (const auto &[input_commodity, input_value] : inputs) {
-		output_per_commodity[output_commodity] -= input_value;
+		output_per_commodity[input_commodity] -= input_value;
 	}
 
 	return output_per_commodity;
