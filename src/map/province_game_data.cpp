@@ -462,54 +462,10 @@ commodity_map<centesimal_int> province_game_data::get_commodity_outputs() const
 	}
 
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		const building_type *building_type = building_slot->get_building();
-		if (building_type == nullptr) {
-			continue;
-		}
+		const commodity_map<centesimal_int> building_output_per_commodity = building_slot->get_commodity_outputs();
 
-		if (building_type->get_employment_type() == nullptr) {
-			continue;
-		}
-
-		const employment_type *employment_type = building_type->get_employment_type();
-		const commodity *output_commodity = employment_type->get_output_commodity();
-		centesimal_int output;
-
-		for (const population_unit *employee : building_slot->get_employees()) {
-			output += employee->get_employment_output(employment_type);
-		}
-
-		const centesimal_int output_multiplier = building_slot->get_output_multiplier();
-
-		output *= output_multiplier;
-
-		commodity_map<centesimal_int> inputs;
-
-		for (const auto &[input_commodity, input_multiplier] : employment_type->get_input_commodities()) {
-			inputs[input_commodity] = input_multiplier * output / employment_type->get_output_multiplier();
-		}
-
-		int input_fulfilled_percent = 100;
-
-		for (auto &[input_commodity, input_value] : inputs) {
-			const int input_value_int = input_value.to_int();
-			const int available_input = this->get_owner()->get_game_data()->get_stored_commodity(input_commodity);
-
-			if (input_value_int < available_input) {
-				input_fulfilled_percent = std::min(input_fulfilled_percent, input_value_int * 100 / available_input);
-				input_value = centesimal_int(available_input);
-			}
-		}
-
-		if (input_fulfilled_percent < 100) {
-			output *= input_fulfilled_percent;
-			output /= 100;
-		}
-
-		output_per_commodity[output_commodity] += output;
-
-		for (const auto &[input_commodity, input_value] : inputs) {
-			output_per_commodity[output_commodity] -= input_value;
+		for (const auto &[commodity, output] : building_output_per_commodity) {
+			output_per_commodity[commodity] += output;
 		}
 	}
 
@@ -1461,6 +1417,13 @@ bool province_game_data::can_building_employ_worker(const population_unit *popul
 	}
 
 	if (!building_slot->get_building()->can_employ_worker(population_unit)) {
+		return false;
+	}
+
+	const commodity_map<centesimal_int> building_base_output_per_commodity = building_slot->get_base_commodity_outputs();
+	const commodity_map<centesimal_int> building_output_per_commodity = building_slot->get_commodity_outputs();
+	if (building_output_per_commodity != building_base_output_per_commodity) {
+		//input requirements are already not completely fulfilled at the moment, so the employment of the worker would not result in any additional production
 		return false;
 	}
 

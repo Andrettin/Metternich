@@ -1,5 +1,7 @@
 #pragma once
 
+#include "economy/commodity_container.h"
+
 namespace archimedes {
 	template <int N>
 	class fractional_int;
@@ -98,6 +100,9 @@ public:
 
 	int get_employment_capacity() const;
 	centesimal_int get_output_multiplier() const;
+
+	commodity_map<centesimal_int> get_base_commodity_outputs() const;
+	commodity_map<centesimal_int> get_commodity_outputs() const;
 
 	void apply_country_modifier(const country *country, const int multiplier);
 
