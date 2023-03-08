@@ -156,7 +156,7 @@ commodity_map<centesimal_int> building_slot::get_commodity_outputs() const
 			continue;
 		}
 
-		const int input_value_int = output_value_int * -1;
+		const int input_value_int = std::abs(output_value_int);
 
 		const int available_input = owner ? owner->get_game_data()->get_stored_commodity(commodity) : 0;
 
