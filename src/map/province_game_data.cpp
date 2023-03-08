@@ -745,6 +745,7 @@ void province_game_data::clear_buildings()
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
 		building_slot->clear_employees();
 		building_slot->set_building(nullptr);
+		building_slot->calculate_base_commodity_outputs();
 	}
 }
 
@@ -1408,7 +1409,9 @@ bool province_game_data::can_tile_employ_worker(const population_unit *populatio
 
 bool province_game_data::can_building_employ_worker(const population_unit *population_unit, const building_slot *building_slot) const
 {
-	if (building_slot->get_building() == nullptr) {
+	const building_type *building = building_slot->get_building();
+
+	if (building == nullptr) {
 		return false;
 	}
 
@@ -1416,7 +1419,7 @@ bool province_game_data::can_building_employ_worker(const population_unit *popul
 		return false;
 	}
 
-	if (!building_slot->get_building()->can_employ_worker(population_unit)) {
+	if (!building->can_employ_worker(population_unit)) {
 		return false;
 	}
 
@@ -1632,6 +1635,13 @@ QString province_game_data::get_military_unit_category_name(const military_unit_
 	assert_throw(!best_name.isEmpty());
 
 	return best_name;
+}
+
+void province_game_data::calculate_base_commodity_outputs()
+{
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		building_slot->calculate_base_commodity_outputs();
+	}
 }
 
 void province_game_data::apply_country_modifier(const country *country, const int multiplier)

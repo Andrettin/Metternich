@@ -748,6 +748,8 @@ public:
 		}
 
 		this->production_modifier = value;
+
+		this->calculate_base_commodity_outputs();
 	}
 
 	void change_production_modifier(const int value)
@@ -777,12 +779,16 @@ public:
 		} else {
 			this->commodity_production_modifiers[commodity] = value;
 		}
+
+		this->calculate_base_commodity_outputs();
 	}
 
 	void change_commodity_production_modifier(const commodity *commodity, const int value)
 	{
 		this->set_commodity_production_modifier(commodity, this->get_commodity_production_modifier(commodity) + value);
 	}
+
+	void calculate_base_commodity_outputs();
 
 	void gain_item(const trait *item);
 

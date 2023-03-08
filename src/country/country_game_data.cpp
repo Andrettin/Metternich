@@ -1914,6 +1914,13 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 	return best_type;
 }
 
+void country_game_data::calculate_base_commodity_outputs()
+{
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->calculate_base_commodity_outputs();
+	}
+}
+
 void country_game_data::gain_item(const trait *item)
 {
 	std::vector<const character *> potential_characters;

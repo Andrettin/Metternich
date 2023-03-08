@@ -64,6 +64,7 @@ void building_slot::set_building(const building_type *building)
 
 	if (game::get()->is_running()) {
 		province_game_data->reassign_workers();
+		this->calculate_base_commodity_outputs();
 
 		emit building_changed();
 	}
@@ -138,46 +139,6 @@ centesimal_int building_slot::get_output_multiplier() const
 	return output_multiplier;
 }
 
-commodity_map<centesimal_int> building_slot::get_base_commodity_outputs() const
-{
-	commodity_map<centesimal_int> output_per_commodity;
-
-	const building_type *building_type = this->get_building();
-	if (building_type == nullptr) {
-		return output_per_commodity;
-	}
-
-	if (building_type->get_employment_type() == nullptr) {
-		return output_per_commodity;
-	}
-
-	const employment_type *employment_type = building_type->get_employment_type();
-	const commodity *output_commodity = employment_type->get_output_commodity();
-	centesimal_int output;
-
-	for (const population_unit *employee : this->get_employees()) {
-		output += employee->get_employment_output(employment_type);
-	}
-
-	const centesimal_int output_multiplier = this->get_output_multiplier();
-
-	output *= output_multiplier;
-
-	commodity_map<centesimal_int> inputs;
-
-	for (const auto &[input_commodity, input_multiplier] : employment_type->get_input_commodities()) {
-		inputs[input_commodity] = input_multiplier * output / employment_type->get_output_multiplier();
-	}
-
-	output_per_commodity[output_commodity] += output;
-
-	for (const auto &[input_commodity, input_value] : inputs) {
-		output_per_commodity[input_commodity] -= input_value;
-	}
-
-	return output_per_commodity;
-}
-
 commodity_map<centesimal_int> building_slot::get_commodity_outputs() const
 {
 	commodity_map<centesimal_int> output_per_commodity = this->get_base_commodity_outputs();
@@ -212,6 +173,44 @@ commodity_map<centesimal_int> building_slot::get_commodity_outputs() const
 	}
 
 	return output_per_commodity;
+}
+
+void building_slot::calculate_base_commodity_outputs()
+{
+	this->base_commodity_outputs.clear();
+
+	const building_type *building_type = this->get_building();
+	if (building_type == nullptr) {
+		return;
+	}
+
+	const employment_type *employment_type = building_type->get_employment_type();
+	if (employment_type == nullptr) {
+		return;
+	}
+
+	const commodity *output_commodity = employment_type->get_output_commodity();
+	centesimal_int output;
+
+	for (const population_unit *employee : this->get_employees()) {
+		output += employee->get_employment_output(employment_type);
+	}
+
+	const centesimal_int output_multiplier = this->get_output_multiplier();
+
+	output *= output_multiplier;
+
+	commodity_map<centesimal_int> inputs;
+
+	for (const auto &[input_commodity, input_multiplier] : employment_type->get_input_commodities()) {
+		inputs[input_commodity] = input_multiplier * output / employment_type->get_output_multiplier();
+	}
+
+	this->base_commodity_outputs[output_commodity] += output;
+
+	for (const auto &[input_commodity, input_value] : inputs) {
+		this->base_commodity_outputs[input_commodity] -= input_value;
+	}
 }
 
 void building_slot::apply_country_modifier(const country *country, const int multiplier)

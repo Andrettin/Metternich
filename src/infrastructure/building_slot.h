@@ -86,11 +86,15 @@ public:
 	void add_employee(population_unit *population_unit)
 	{
 		this->employees.push_back(population_unit);
+
+		this->calculate_base_commodity_outputs();
 	}
 
 	void remove_employee(population_unit *population_unit)
 	{
 		std::erase(this->employees, population_unit);
+
+		this->calculate_base_commodity_outputs();
 	}
 
 	int get_employee_count() const
@@ -101,8 +105,14 @@ public:
 	int get_employment_capacity() const;
 	centesimal_int get_output_multiplier() const;
 
-	commodity_map<centesimal_int> get_base_commodity_outputs() const;
+	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
+	{
+		return this->base_commodity_outputs;
+	}
+
 	commodity_map<centesimal_int> get_commodity_outputs() const;
+
+	void calculate_base_commodity_outputs();
 
 	void apply_country_modifier(const country *country, const int multiplier);
 
@@ -114,6 +124,7 @@ private:
 	const building_type *building = nullptr;
 	const metternich::province *province = nullptr;
 	std::vector<population_unit *> employees;
+	commodity_map<centesimal_int> base_commodity_outputs;
 };
 
 }

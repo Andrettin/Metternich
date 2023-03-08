@@ -212,6 +212,7 @@ void game::start()
 			province_game_data *province_game_data = province->get_game_data();
 			province_game_data->assign_workers();
 			province_game_data->setup_resource_improvements();
+			province_game_data->calculate_base_commodity_outputs();
 		}
 
 		for (const country *country : this->get_countries()) {
