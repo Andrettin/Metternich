@@ -1423,11 +1423,28 @@ bool province_game_data::can_building_employ_worker(const population_unit *popul
 		return false;
 	}
 
-	const commodity_map<centesimal_int> building_base_output_per_commodity = building_slot->get_base_commodity_outputs();
-	const commodity_map<centesimal_int> building_output_per_commodity = building_slot->get_commodity_outputs();
-	if (building_output_per_commodity != building_base_output_per_commodity) {
-		//input requirements are already not completely fulfilled at the moment, so the employment of the worker would not result in any additional production
-		return false;
+	if (!building->get_employment_type()->get_input_commodities().empty()) {
+		const commodity_map<centesimal_int> building_base_output_per_commodity = building_slot->get_base_commodity_outputs();
+		const commodity_map<centesimal_int> building_output_per_commodity = building_slot->get_commodity_outputs();
+		if (building_output_per_commodity != building_base_output_per_commodity) {
+			//input requirements are already not completely fulfilled at the moment, so the employment of the worker would not result in any additional production
+			return false;
+		}
+
+		const commodity_map<centesimal_int> country_output_per_commodity = this->get_owner() ? this->get_owner()->get_game_data()->get_commodity_outputs() : country_output_per_commodity;
+
+		for (const auto &[input_commodity, input_multiplier] : building->get_employment_type()->get_input_commodities()) {
+			int available_input = this->get_owner()->get_game_data()->get_stored_commodity(input_commodity);
+
+			const auto find_iterator = country_output_per_commodity.find(input_commodity);
+			if (find_iterator != country_output_per_commodity.end() && find_iterator->second < 0) {
+				available_input += find_iterator->second.to_int();
+			}
+
+			if (available_input <= 0) {
+				return false;
+			}
+		}
 	}
 
 	return true;
