@@ -1914,6 +1914,20 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 	return best_type;
 }
 
+commodity_map<centesimal_int> country_game_data::get_commodity_outputs() const
+{
+	commodity_map<centesimal_int> output_per_commodity;
+
+	for (const province *province : this->get_provinces()) {
+		const commodity_map<centesimal_int> province_commodity_outputs = province->get_game_data()->get_commodity_outputs();
+		for (const auto &[commodity, output] : province_commodity_outputs) {
+			output_per_commodity[commodity] += output;
+		}
+	}
+
+	return output_per_commodity;
+}
+
 void country_game_data::calculate_base_commodity_outputs()
 {
 	for (const province *province : this->get_provinces()) {

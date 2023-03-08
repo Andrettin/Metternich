@@ -788,6 +788,7 @@ public:
 		this->set_commodity_production_modifier(commodity, this->get_commodity_production_modifier(commodity) + value);
 	}
 
+	commodity_map<centesimal_int> get_commodity_outputs() const;
 	void calculate_base_commodity_outputs();
 
 	void gain_item(const trait *item);
