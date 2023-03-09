@@ -82,6 +82,51 @@ void province_game_data::on_map_created()
 
 void province_game_data::do_turn()
 {
+	//unassign workers who are employed but not producing anything because of a lack of input commodities
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		const building_type *building = building_slot->get_building();
+
+		if (building == nullptr) {
+			continue;
+		}
+
+		const employment_type *employment_type = building->get_employment_type();
+		if (employment_type == nullptr) {
+			continue;
+		}
+
+		if (employment_type->get_input_commodities().empty()) {
+			continue;
+		}
+
+		const commodity_map<centesimal_int> building_base_output_per_commodity = building_slot->get_base_commodity_outputs();
+		const commodity_map<centesimal_int> building_output_per_commodity = building_slot->get_commodity_outputs();
+
+		const commodity *output_commodity = employment_type->get_output_commodity();
+		const centesimal_int &base_output_value = building_base_output_per_commodity.find(output_commodity)->second;
+		const centesimal_int &output_value = building_output_per_commodity.find(output_commodity)->second;
+
+		if (base_output_value == output_value) {
+			continue;
+		}
+
+		centesimal_int missing_output = base_output_value - output_value;
+		
+		const std::vector<population_unit *> employees = building_slot->get_employees();
+		for (population_unit *employee : employees) {
+			const centesimal_int employee_output = employee->get_employment_output(employment_type) * building_slot->get_output_multiplier();
+
+			if (employee_output <= missing_output) {
+				this->unassign_worker(employee);
+				missing_output -= employee_output;
+
+				if (missing_output == 0) {
+					break;
+				}
+			}
+		}
+	}
+
 	this->assign_workers();
 	this->do_production();
 	this->do_cultural_change();
@@ -1431,10 +1476,10 @@ bool province_game_data::can_building_employ_worker(const population_unit *popul
 			return false;
 		}
 
-		const commodity_map<centesimal_int> country_output_per_commodity = this->get_owner() ? this->get_owner()->get_game_data()->get_commodity_outputs() : country_output_per_commodity;
+		const commodity_map<centesimal_int> country_output_per_commodity = this->get_owner() ? this->get_owner()->get_game_data()->get_commodity_outputs() : commodity_map<centesimal_int>();
 
 		for (const auto &[input_commodity, input_multiplier] : building->get_employment_type()->get_input_commodities()) {
-			int available_input = this->get_owner()->get_game_data()->get_stored_commodity(input_commodity);
+			int available_input = this->get_owner() ? this->get_owner()->get_game_data()->get_stored_commodity(input_commodity) : 0;
 
 			const auto find_iterator = country_output_per_commodity.find(input_commodity);
 			if (find_iterator != country_output_per_commodity.end() && find_iterator->second < 0) {
