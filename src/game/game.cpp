@@ -23,6 +23,7 @@
 #include "game/game_rules.h"
 #include "game/scenario.h"
 #include "infrastructure/building_class.h"
+#include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
@@ -440,12 +441,32 @@ void game::apply_history(const metternich::scenario *scenario)
 				province_game_data *tile_province_game_data = tile_province->get_game_data();
 
 				for (const auto &[building_slot_type, building] : site_history->get_buildings()) {
-					const building_type *slot_building = tile_province_game_data->get_slot_building(building_slot_type);
-					if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
-						tile_province_game_data->set_slot_building(building_slot_type, building);
+					const building_slot *building_slot = tile_province_game_data->get_building_slot(building_slot_type);
 
-						if (building->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
-							tile->get_owner()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
+					province_game_data *building_province_game_data = nullptr;
+
+					if (building_slot != nullptr && building_slot->is_available()) {
+						building_province_game_data = tile_province_game_data;
+					} else if (!tile_province_game_data->is_capital() && tile_province_game_data->get_owner() != nullptr && !tile_province_game_data->get_owner()->get_game_data()->is_under_anarchy()) {
+						//place the building in the capital if the building slot is not available for the province
+						province_game_data *capital_province_game_data = tile_province_game_data->get_owner()->get_capital_province()->get_game_data();
+						const metternich::building_slot *capital_building_slot = capital_province_game_data->get_building_slot(building_slot_type);
+
+						if (capital_building_slot != nullptr && capital_building_slot->is_available()) {
+							building_province_game_data = capital_province_game_data;
+						}
+					}
+
+					if (building_province_game_data == nullptr) {
+						continue;
+					}
+
+					const building_type *slot_building = building_province_game_data->get_slot_building(building_slot_type);
+					if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
+						building_province_game_data->set_slot_building(building_slot_type, building);
+
+						if (building->get_required_technology() != nullptr && building_province_game_data->get_owner() != nullptr) {
+							building_province_game_data->get_owner()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
 						}
 					}
 				}
