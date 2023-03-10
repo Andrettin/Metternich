@@ -202,6 +202,18 @@ public:
 	void initialize_building_slots();
 	void add_capital_building_slots();
 	void remove_capital_building_slots();
+
+	const building_slot *get_building_slot(const building_slot_type *slot_type) const
+	{
+		const auto find_iterator = this->building_slot_map.find(slot_type);
+
+		if (find_iterator != this->building_slot_map.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
 	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
 	void clear_buildings();
@@ -468,6 +480,7 @@ public:
 		this->set_commodity_production_modifier(commodity, this->get_commodity_production_modifier(commodity) + value);
 	}
 
+	bool can_produce_commodity(const commodity *commodity) const;
 	void calculate_base_commodity_outputs();
 
 	void apply_country_modifier(const country *country, const int multiplier);

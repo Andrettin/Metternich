@@ -24,6 +24,7 @@ class building_slot final : public QObject
 	Q_PROPERTY(metternich::building_slot_type* type READ get_type_unconst CONSTANT)
 	Q_PROPERTY(metternich::building_type* building READ get_building_unconst NOTIFY building_changed)
 	Q_PROPERTY(metternich::province* province READ get_province_unconst CONSTANT)
+	Q_PROPERTY(bool available READ is_available NOTIFY available_changed)
 
 public:
 	explicit building_slot(const building_slot_type *type, const metternich::province *province);
@@ -73,6 +74,8 @@ private:
 public:
 	const country *get_country() const;
 
+	bool is_available() const;
+
 	const std::vector<population_unit *> &get_employees() const
 	{
 		return this->employees;
@@ -118,6 +121,7 @@ public:
 
 signals:
 	void building_changed();
+	void available_changed();
 
 private:
 	const building_slot_type *type = nullptr;

@@ -1699,6 +1699,44 @@ QString province_game_data::get_military_unit_category_name(const military_unit_
 	return best_name;
 }
 
+bool province_game_data::can_produce_commodity(const commodity *commodity) const
+{
+	for (const QPoint &tile_pos : this->resource_tiles) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+		const metternich::commodity *tile_resource_commodity = tile->get_resource()->get_commodity();
+
+		if (tile_resource_commodity == commodity) {
+			return true;
+		}
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		for (const building_type *building_type : building_slot->get_type()->get_building_types()) {
+			if (building_type->get_output_commodity() != commodity) {
+				continue;
+			}
+
+			if (building_type->get_required_building() != nullptr) {
+				continue;
+			}
+
+			bool can_produce_inputs = true;
+			for (const auto &[input_commodity, input_multiplier] : building_type->get_employment_type()->get_input_commodities()) {
+				if (!this->can_produce_commodity(input_commodity)) {
+					can_produce_inputs = false;
+					break;
+				}
+			}
+
+			if (can_produce_inputs) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 void province_game_data::calculate_base_commodity_outputs()
 {
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {

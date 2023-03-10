@@ -4,9 +4,11 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/culture.h"
 #include "economy/employment_type.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
+#include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -101,6 +103,34 @@ bool building_slot::can_have_building(const building_type *building) const
 const country *building_slot::get_country() const
 {
 	return this->get_province()->get_game_data()->get_owner();
+}
+
+bool building_slot::is_available() const
+{
+	if (this->get_building() != nullptr) {
+		return true;
+	}
+
+	for (const building_type *building : this->get_type()->get_building_types()) {
+		if (building->get_required_building() != nullptr) {
+			continue;
+		}
+
+		if (!this->get_province()->get_game_data()->is_capital()) {
+			const employment_type *employment_type = building->get_employment_type();
+			if (employment_type != nullptr) {
+				for (const auto &[input_commodity, input_multiplier] : employment_type->get_input_commodities()) {
+					if (!this->get_province()->get_game_data()->can_produce_commodity(input_commodity)) {
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
+	return false;
 }
 
 int building_slot::get_employment_capacity() const
