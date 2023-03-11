@@ -143,7 +143,12 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				const metternich::tile *upper_tile = map::get()->get_tile(upper_tile_pos);
 
 				if (upper_tile->get_settlement() != nullptr && upper_tile->get_province() != nullptr) {
-					return upper_tile->get_province()->get_game_data()->get_current_cultural_name_qstring();
+					const province_game_data *upper_tile_province_game_data = upper_tile->get_province()->get_game_data();
+					if (upper_tile_province_game_data->is_capital()) {
+						return upper_tile->get_settlement()->get_game_data()->get_current_cultural_name_qstring();
+					} else {
+						return upper_tile_province_game_data->get_current_cultural_name_qstring();
+					}
 				}
 
 				return QString();
