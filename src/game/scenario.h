@@ -9,6 +9,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class country;
 class map_template;
 
 class scenario final : public named_data_entry, public data_type<scenario>
@@ -21,6 +22,7 @@ class scenario final : public named_data_entry, public data_type<scenario>
 	Q_PROPERTY(metternich::map_template* map_template MEMBER map_template NOTIFY changed)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
+	Q_PROPERTY(QVariantList default_countries READ get_default_countries_qvariant_list NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "scenario";
@@ -33,6 +35,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -71,6 +74,8 @@ public:
 		return QString::fromStdString(this->get_description());
 	}
 
+	QVariantList get_default_countries_qvariant_list() const;
+
 signals:
 	void changed();
 
@@ -79,8 +84,10 @@ private:
 	calendar *start_date_calendar = nullptr; //the calendar for the start date
 	archimedes::timeline *timeline = nullptr; //the timeline in which the scenario is set
 	metternich::map_template *map_template = nullptr;
+	metternich::country *default_country = nullptr;
 	bool hidden = false;
 	std::string description;
+	std::vector<const country *> default_countries;
 };
 
 }
