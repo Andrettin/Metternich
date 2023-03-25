@@ -85,7 +85,13 @@ void preferences::process_gsml_property(const gsml_property &property)
 void preferences::process_gsml_scope(const gsml_data &scope)
 {
 	try {
-		database::get()->process_gsml_scope_for_object(this, scope);
+		const std::string &tag = scope.get_tag();
+
+		if (tag == "game_rules") {
+			database::process_gsml_data(this->game_rules, scope);
+		} else {
+			database::get()->process_gsml_scope_for_object(this, scope);
+		}
 	} catch (const std::runtime_error &exception) {
 		exception::report(exception);
 	}
