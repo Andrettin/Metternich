@@ -25,7 +25,6 @@
 #include "script/condition/coastal_condition.h"
 #include "script/condition/colony_condition.h"
 #include "script/condition/commodity_condition.h"
-#include "script/condition/consciousness_condition.h"
 #include "script/condition/core_condition.h"
 #include "script/condition/country_condition.h"
 #include "script/condition/country_exists_condition.h"
@@ -41,7 +40,6 @@
 #include "script/condition/improvement_condition.h"
 #include "script/condition/is_ruler_condition.h"
 #include "script/condition/location_condition.h"
-#include "script/condition/militancy_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
 #include "script/condition/owns_province_condition.h"
@@ -148,14 +146,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<colony_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_culture") {
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
-		}
-	}
-
-	if constexpr (std::is_same_v<scope_type, population_unit> || std::is_same_v<scope_type, province>) {
-		if (key == "consciousness") {
-			return std::make_unique<consciousness_condition<scope_type>>(value, condition_operator);
-		} else if (key == "militancy") {
-			return std::make_unique<militancy_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

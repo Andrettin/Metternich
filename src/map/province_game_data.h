@@ -56,8 +56,6 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
 	Q_PROPERTY(QVariantList population_ideology_counts READ get_population_ideology_counts_qvariant_list NOTIFY population_ideology_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
-	Q_PROPERTY(int consciousness READ get_consciousness_int NOTIFY consciousness_changed)
-	Q_PROPERTY(int militancy READ get_militancy_int NOTIFY militancy_changed)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 
 public:
@@ -333,44 +331,6 @@ public:
 	bool can_building_employ_worker(const population_unit *population_unit, const building_slot *building_slot) const;
 	bool has_employment_for_worker(const population_unit *population_unit) const;
 
-	centesimal_int get_consciousness() const;
-
-	int get_consciousness_int() const
-	{
-		return this->get_consciousness().to_int();
-	}
-
-	const centesimal_int &get_total_consciousness() const
-	{
-		return this->total_consciousness;
-	}
-
-	void set_total_consciousness(const centesimal_int &consciousness);
-
-	void change_total_consciousness(const centesimal_int &change)
-	{
-		this->set_total_consciousness(this->get_total_consciousness() + change);
-	}
-
-	centesimal_int get_militancy() const;
-
-	int get_militancy_int() const
-	{
-		return this->get_militancy().to_int();
-	}
-
-	const centesimal_int &get_total_militancy() const
-	{
-		return this->total_militancy;
-	}
-
-	void set_total_militancy(const centesimal_int &militancy);
-
-	void change_total_militancy(const centesimal_int &change)
-	{
-		this->set_total_militancy(this->get_total_militancy() + change);
-	}
-
 	int get_score() const
 	{
 		return this->score;
@@ -500,8 +460,6 @@ signals:
 	void population_phenotype_counts_changed();
 	void population_ideology_counts_changed();
 	void population_changed();
-	void consciousness_changed();
-	void militancy_changed();
 	void military_units_changed();
 	void military_unit_category_counts_changed();
 
@@ -531,8 +489,6 @@ private:
 	ideology_map<int> population_ideology_counts;
 	int population = 0;
 	int free_food_consumption = 0;
-	centesimal_int total_consciousness;
-	centesimal_int total_militancy;
 	int score = 0;
 	std::vector<civilian_unit *> home_civilian_units;
 	std::vector<military_unit *> home_military_units;
