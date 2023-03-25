@@ -26,8 +26,6 @@ class population_unit final : public QObject
 
 public:
 	static constexpr int base_score = 1;
-	static constexpr int max_consciousness = 10;
-	static constexpr int max_militancy = 10;
 
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *province);
 
@@ -155,30 +153,6 @@ public:
 
 	void choose_ideology();
 
-	const centesimal_int &get_consciousness() const
-	{
-		return this->consciousness;
-	}
-
-	void set_consciousness(const centesimal_int &consciousness);
-
-	void change_consciousness(const centesimal_int &change)
-	{
-		this->set_consciousness(this->get_consciousness() + change);
-	}
-
-	const centesimal_int &get_militancy() const
-	{
-		return this->militancy;
-	}
-
-	void set_militancy(const centesimal_int &militancy);
-
-	void change_militancy(const centesimal_int &change)
-	{
-		this->set_militancy(this->get_militancy() + change);
-	}
-
 	void migrate_to(const metternich::province *province);
 
 signals:
@@ -197,8 +171,6 @@ private:
 	const metternich::province *province = nullptr;
 	const metternich::employment_type *employment_type = nullptr;
 	const metternich::ideology *ideology = nullptr;
-	centesimal_int consciousness;
-	centesimal_int militancy;
 };
 
 }
