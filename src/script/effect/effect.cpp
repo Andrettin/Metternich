@@ -11,6 +11,7 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "population/population_unit.h"
 #include "script/effect/any_character_effect.h"
 #include "script/effect/any_character_or_vassal_effect.h"
 #include "script/effect/any_neighbor_country_effect.h"
