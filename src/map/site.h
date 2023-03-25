@@ -9,7 +9,6 @@ namespace metternich {
 
 class cultural_group;
 class culture;
-class landed_title;
 class province;
 class resource;
 class site_game_data;
@@ -97,13 +96,6 @@ public:
 		return this->resource;
 	}
 
-	const landed_title *get_title() const
-	{
-		return this->title;
-	}
-
-	void create_title();
-
 	const metternich::province *get_province() const
 	{
 		return this->province;
@@ -121,7 +113,6 @@ private:
 	site_type type;
 	metternich::terrain_type *terrain_type = nullptr;
 	metternich::resource *resource = nullptr;
-	landed_title *title = nullptr;
 	metternich::province *province = nullptr;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;

@@ -13,13 +13,11 @@ class country;
 class religion;
 class technology;
 enum class diplomacy_state;
-enum class landed_title_tier;
 
 class country_history final : public data_entry_history
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::landed_title_tier tier MEMBER tier)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(metternich::character* ruler MEMBER ruler)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
@@ -30,11 +28,6 @@ public:
 
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
-
-	landed_title_tier get_tier() const
-	{
-		return this->tier;
-	}
 
 	const religion *get_religion() const
 	{
@@ -83,7 +76,6 @@ public:
 
 private:
 	const metternich::country *country = nullptr;
-	landed_title_tier tier;
 	metternich::religion *religion = nullptr;
 	character *ruler = nullptr;
 	office_map<const character *> office_characters;

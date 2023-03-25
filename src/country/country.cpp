@@ -5,7 +5,6 @@
 #include "country/country_game_data.h"
 #include "country/country_history.h"
 #include "country/country_type.h"
-#include "country/landed_title.h"
 #include "database/defines.h"
 #include "map/province.h"
 #include "time/era.h"
@@ -29,13 +28,7 @@ void country::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "title") {
-		if (this->get_title() == nullptr) {
-			this->create_title();
-		}
-
-		database::process_gsml_data(this->title, scope);
-	} else if (tag == "eras") {
+	if (tag == "eras") {
 		for (const std::string &value : values) {
 			this->eras.push_back(era::get(value));
 		}
@@ -65,10 +58,6 @@ void country::check() const
 
 	if (this->get_default_religion() == nullptr) {
 		throw std::runtime_error("Country \"" + this->get_identifier() + "\" has no default religion.");
-	}
-
-	if (this->get_title() == nullptr) {
-		log::log_error("Country \"" + this->get_identifier() + "\" has no landed title.");
 	}
 
 	assert_throw(this->get_capital_province() != nullptr);
@@ -111,12 +100,6 @@ const QColor &country::get_color() const
 	}
 
 	return this->color;
-}
-
-void country::create_title()
-{
-	this->title = landed_title::add(this->get_identifier(), this->get_module());
-	this->title->set_country(this);
 }
 
 bool country::can_declare_war() const

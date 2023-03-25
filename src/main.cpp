@@ -13,9 +13,6 @@
 #include "country/country_type.h"
 #include "country/cultural_group_rank.h"
 #include "country/diplomacy_state.h"
-#include "country/landed_title.h"
-#include "country/landed_title_game_data.h"
-#include "country/landed_title_tier.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -99,7 +96,6 @@ int main(int argc, char **argv)
 		enum_converter<food_type>();
 		enum_converter<forestation_type>();
 		enum_converter<gender>();
-		enum_converter<landed_title_tier>();
 		enum_converter<military_unit_domain>();
 		enum_converter<moisture_type>();
 		enum_converter<office_type>();
@@ -121,8 +117,6 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<game>("", 1);
 		qmlRegisterAnonymousType<game_rules>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);
-		qmlRegisterAnonymousType<landed_title>("", 1);
-		qmlRegisterAnonymousType<landed_title_game_data>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<office>("", 1);
 		qmlRegisterAnonymousType<population_type>("", 1);

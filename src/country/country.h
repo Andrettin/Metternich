@@ -10,7 +10,6 @@ class country_game_data;
 class country_history;
 class culture;
 class era;
-class landed_title;
 class province;
 class religion;
 enum class country_type;
@@ -26,7 +25,6 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* default_religion MEMBER default_religion NOTIFY changed)
 	Q_PROPERTY(metternich::province* capital_province MEMBER capital_province NOTIFY changed)
-	Q_PROPERTY(metternich::landed_title* title READ get_title_unconst NOTIFY changed)
 	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
@@ -85,21 +83,6 @@ public:
 		return this->capital_province;
 	}
 
-	const landed_title *get_title() const
-	{
-		return this->title;
-	}
-
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::landed_title *get_title_unconst() const
-	{
-		return const_cast<metternich::landed_title *>(this->get_title());
-	}
-
-public:
-	void create_title();
-
 	const std::vector<const era *> &get_eras() const
 	{
 		return this->eras;
@@ -122,7 +105,6 @@ private:
 	metternich::culture *culture = nullptr;
 	religion *default_religion = nullptr;
 	province *capital_province = nullptr;
-	landed_title *title = nullptr;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	std::vector<province *> core_provinces;
 	qunique_ptr<country_history> history;

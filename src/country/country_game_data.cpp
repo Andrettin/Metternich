@@ -10,8 +10,6 @@
 #include "country/country_type.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
-#include "country/landed_title.h"
-#include "country/landed_title_game_data.h"
 #include "country/religion.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -1711,9 +1709,6 @@ void country_game_data::set_ruler(const character *ruler)
 	}
 
 	this->ruler = ruler;
-
-	assert_throw(this->country->get_title() != nullptr);
-	this->country->get_title()->get_game_data()->set_holder(this->ruler);
 
 	if (this->get_ruler() != nullptr) {
 		this->apply_ruler_effects(1);

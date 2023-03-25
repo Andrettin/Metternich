@@ -11,7 +11,6 @@ namespace metternich {
 class character;
 class country;
 class icon;
-class landed_title;
 class military_unit;
 class office;
 class opinion_modifier;
@@ -45,8 +44,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::character* spouse READ get_spouse_unconst NOTIFY spouse_changed)
-	Q_PROPERTY(QVariantList landed_titles READ get_landed_titles_qvariant_list NOTIFY landed_titles_changed)
-	Q_PROPERTY(bool ruler READ is_ruler NOTIFY landed_titles_changed)
+	Q_PROPERTY(bool ruler READ is_ruler)
 	Q_PROPERTY(metternich::office* office READ get_office_unconst NOTIFY office_changed)
 	Q_PROPERTY(int loyalty READ get_loyalty_int NOTIFY loyalty_changed)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
@@ -190,25 +188,6 @@ public:
 
 	bool is_married_matrilineally() const;
 	bool is_subordinate_spouse() const;
-
-	const std::vector<const landed_title *> &get_landed_titles() const
-	{
-		return this->landed_titles;
-	}
-
-	QVariantList get_landed_titles_qvariant_list() const;
-
-	void add_landed_title(const landed_title *landed_title)
-	{
-		this->landed_titles.push_back(landed_title);
-		emit landed_titles_changed();
-	}
-
-	void remove_landed_title(const landed_title *landed_title)
-	{
-		std::erase(this->landed_titles, landed_title);
-		emit landed_titles_changed();
-	}
 
 	bool is_ruler() const;
 	bool is_ruler_of(const metternich::character *other) const;
@@ -488,7 +467,6 @@ signals:
 	void scripted_modifiers_changed();
 	void attributes_changed();
 	void spouse_changed();
-	void landed_titles_changed();
 	void office_changed();
 	void loyalty_changed();
 	void wealth_changed();
@@ -506,7 +484,6 @@ private:
 	std::map<attribute, int> attribute_values;
 	const metternich::character *spouse = nullptr;
 	bool matrilineal_marriage = false;
-	std::vector<const landed_title *> landed_titles;
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;
 	centesimal_int loyalty;

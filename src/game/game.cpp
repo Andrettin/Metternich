@@ -13,9 +13,6 @@
 #include "country/culture.h"
 #include "country/culture_history.h"
 #include "country/diplomacy_state.h"
-#include "country/landed_title.h"
-#include "country/landed_title_game_data.h"
-#include "country/landed_title_tier.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
@@ -268,10 +265,6 @@ void game::clear()
 			character->reset_game_data();
 		}
 
-		for (landed_title *landed_title : landed_title::get_all()) {
-			landed_title->reset_game_data();
-		}
-
 		map::get()->clear_tile_game_data();
 
 		this->scenario = nullptr;
@@ -305,10 +298,6 @@ void game::apply_history(const metternich::scenario *scenario)
 		for (const country *country : this->get_countries()) {
 			const country_history *country_history = country->get_history();
 			country_game_data *country_game_data = country->get_game_data();
-
-			if (country_history->get_tier() != landed_title_tier::none) {
-				country->get_title()->get_game_data()->set_tier(country_history->get_tier());
-			}
 
 			if (country_history->get_religion() != nullptr) {
 				country_game_data->set_religion(country_history->get_religion());

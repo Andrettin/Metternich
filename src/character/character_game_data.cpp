@@ -10,8 +10,6 @@
 #include "character/trait_type.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
-#include "country/landed_title.h"
-#include "country/landed_title_game_data.h"
 #include "database/defines.h"
 #include "game/character_event.h"
 #include "game/event_trigger.h"
@@ -38,7 +36,6 @@ namespace metternich {
 character_game_data::character_game_data(const metternich::character *character)
 	: character(character), loyalty(character::base_loyalty)
 {
-	connect(this, &character_game_data::landed_titles_changed, this, &character_game_data::titled_name_changed);
 	connect(this, &character_game_data::office_changed, this, &character_game_data::titled_name_changed);
 	connect(game::get(), &game::turn_changed, this, &character_game_data::age_changed);
 }
@@ -88,12 +85,7 @@ std::string character_game_data::get_titled_name() const
 		return this->character->get_full_name();
 	}
 
-	if (this->is_ruler()) {
-		//FIXME: for republics, the format should be similar to that of offices
-		return this->get_employer()->get_title()->get_game_data()->get_ruler_title_name() + " " + this->character->get_name();
-	} else {
-		return this->get_office()->get_name() + " " + this->character->get_surname();
-	}
+	return this->get_office()->get_name() + " " + this->character->get_surname();
 }
 
 bool character_game_data::is_current_portrait_valid() const
@@ -711,11 +703,6 @@ bool character_game_data::is_subordinate_spouse() const
 			assert_throw(false);
 			return false;
 	}
-}
-
-QVariantList character_game_data::get_landed_titles_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_landed_titles());
 }
 
 bool character_game_data::is_ruler() const
