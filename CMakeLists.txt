@@ -436,6 +436,7 @@ set(script_condition_HDRS
 	src/script/condition/colony_condition.h
 	src/script/condition/commodity_condition.h
 	src/script/condition/condition.h
+	src/script/condition/consciousness_condition.h
 	src/script/condition/core_condition.h
 	src/script/condition/country_condition.h
 	src/script/condition/country_exists_condition.h
@@ -451,6 +452,7 @@ set(script_condition_HDRS
 	src/script/condition/improvement_condition.h
 	src/script/condition/is_ruler_condition.h
 	src/script/condition/location_condition.h
+	src/script/condition/militancy_condition.h
 	src/script/condition/not_condition.h
 	src/script/condition/numerical_condition.h
 	src/script/condition/or_condition.h
@@ -492,6 +494,7 @@ set(script_effect_HDRS
 	src/script/effect/change_opinion_effect.h
 	src/script/effect/commodity_effect.h
 	src/script/effect/commodity_percent_effect.h
+	src/script/effect/consciousness_effect.h
 	src/script/effect/country_effect.h
 	src/script/effect/delayed_effect.h
 	src/script/effect/delayed_effect_instance.h
@@ -503,6 +506,7 @@ set(script_effect_HDRS
 	src/script/effect/hidden_effect.h
 	src/script/effect/if_effect.h
 	src/script/effect/location_effect.h
+	src/script/effect/militancy_effect.h
 	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/piety_effect.h
 	src/script/effect/prestige_effect.h

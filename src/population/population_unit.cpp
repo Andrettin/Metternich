@@ -169,6 +169,54 @@ void population_unit::choose_ideology()
 	}
 }
 
+void population_unit::set_consciousness(const centesimal_int &consciousness)
+{
+	if (consciousness == this->get_consciousness()) {
+		return;
+	} else if (consciousness < 0) {
+		this->set_consciousness(centesimal_int(0));
+		return;
+	} else if (consciousness > population_unit::max_consciousness) {
+		this->set_consciousness(centesimal_int(population_unit::max_consciousness));
+		return;
+	}
+
+	const centesimal_int old_consciousness = this->get_consciousness();
+
+	this->consciousness = consciousness;
+
+	const centesimal_int change = consciousness - old_consciousness;
+	this->get_province()->get_game_data()->change_total_consciousness(change);
+
+	if (game::get()->is_running() && change.to_int() > 0) {
+		this->choose_ideology();
+	}
+}
+
+void population_unit::set_militancy(const centesimal_int &militancy)
+{
+	if (militancy == this->get_militancy()) {
+		return;
+	} else if (militancy < 0) {
+		this->set_militancy(centesimal_int(0));
+		return;
+	} else if (militancy > population_unit::max_militancy) {
+		this->set_militancy(centesimal_int(population_unit::max_militancy));
+		return;
+	}
+
+	const centesimal_int old_militancy = this->get_militancy();
+
+	this->militancy = militancy;
+
+	const centesimal_int change = militancy - old_militancy;
+	this->get_province()->get_game_data()->change_total_militancy(change);
+
+	if (game::get()->is_running() && change.to_int() > 0) {
+		this->choose_ideology();
+	}
+}
+
 void population_unit::migrate_to(const metternich::province *province)
 {
 	qunique_ptr<population_unit> unique_ptr = this->get_province()->get_game_data()->pop_population_unit(this);
