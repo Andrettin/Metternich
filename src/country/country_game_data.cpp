@@ -4,8 +4,6 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "character/office.h"
-#include "character/office_type.h"
 #include "country/country.h"
 #include "country/country_type.h"
 #include "country/culture.h"
@@ -34,6 +32,7 @@
 #include "script/modifier.h"
 #include "script/opinion_modifier.h"
 #include "technology/technology.h"
+#include "ui/icon.h"
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_class.h"
@@ -147,9 +146,9 @@ void country_game_data::do_population_growth()
 	if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
 		const bool plural = starvation_count > 1;
 
-		const character *interior_minister = this->get_office_character(defines::get()->get_interior_minister_office());
+		const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
-		engine_interface::get()->add_notification("Starvation", interior_minister, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", starvation_count, (plural ? "units" : "unit"), (plural ? "have" : "has")));
+		engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", starvation_count, (plural ? "units" : "unit"), (plural ? "have" : "has")));
 	}
 }
 
@@ -1586,12 +1585,6 @@ void country_game_data::check_characters(const QDateTime &date)
 		character_game_data *character_game_data = character->get_game_data();
 
 		if (game::get()->get_date() >= character->get_end_date()) {
-			if (character_game_data->is_ruler()) {
-				context ctx(this->country);
-				ctx.source_scope = character;
-				country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
-			}
-
 			character_game_data->die();
 			continue;
 		}
@@ -1610,18 +1603,6 @@ void country_game_data::check_characters(const QDateTime &date)
 			}
 		}
 	}
-
-	//check if the offices of characters are still valid, and if not remove the character from that office
-	const office_map<const character *> office_characters = this->office_characters;
-	const read_only_context ctx(this->country);
-	for (const auto &[office, character] : office_characters) {
-		const condition<metternich::country> *country_conditions = office->get_country_conditions();
-		if (country_conditions != nullptr && !country_conditions->check(this->country, ctx)) {
-			this->set_office_character(office, nullptr);
-		}
-	}
-
-	this->fill_empty_offices();
 }
 
 void country_game_data::add_character(const character *character)
@@ -1636,16 +1617,6 @@ void country_game_data::add_character(const character *character)
 void country_game_data::remove_character(const character *character)
 {
 	std::erase(this->characters, character);
-
-	if (character == this->get_ruler()) {
-		this->set_ruler(nullptr);
-	}
-
-	character_game_data *character_game_data = character->get_game_data();
-
-	if (character_game_data->get_office() != nullptr) {
-		this->set_office_character(character_game_data->get_office(), nullptr);
-	}
 
 	this->sort_characters();
 
@@ -1670,22 +1641,6 @@ void country_game_data::sort_characters()
 		const character_game_data *lhs_game_data = lhs->get_game_data();
 		const character_game_data *rhs_game_data = rhs->get_game_data();
 
-		if (lhs_game_data->is_ruler() != rhs_game_data->is_ruler()) {
-			return lhs_game_data->is_ruler();
-		}
-
-		if (lhs_game_data->get_office() != rhs_game_data->get_office()) {
-			if (lhs_game_data->get_office() == nullptr || rhs_game_data->get_office() == nullptr) {
-				return lhs_game_data->get_office() != nullptr;
-			}
-
-			if (lhs_game_data->get_office()->get_type() != rhs_game_data->get_office()->get_type()) {
-				return lhs_game_data->get_office()->get_type() < rhs_game_data->get_office()->get_type();
-			}
-
-			return lhs_game_data->get_office()->get_identifier() < rhs_game_data->get_office()->get_identifier();
-		}
-
 		if (lhs_game_data->get_primary_attribute_value() != rhs_game_data->get_primary_attribute_value()) {
 			return lhs_game_data->get_primary_attribute_value() > rhs_game_data->get_primary_attribute_value();
 		}
@@ -1696,157 +1651,6 @@ void country_game_data::sort_characters()
 
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
-}
-
-void country_game_data::set_ruler(const character *ruler)
-{
-	if (ruler == this->get_ruler()) {
-		return;
-	}
-
-	if (this->get_ruler() != nullptr) {
-		this->apply_ruler_effects(-1);
-	}
-
-	this->ruler = ruler;
-
-	if (this->get_ruler() != nullptr) {
-		this->apply_ruler_effects(1);
-	}
-
-	this->sort_characters();
-
-	if (game::get()->is_running()) {
-		emit ruler_changed();
-	}
-}
-
-void country_game_data::apply_ruler_effects(const int multiplier)
-{
-	assert_throw(this->get_ruler() != nullptr);
-
-	character_game_data *ruler_game_data = this->get_ruler()->get_game_data();
-
-	ruler_game_data->apply_country_modifier(this->country, multiplier);
-	this->change_quarterly_prestige(ruler_game_data->get_quarterly_prestige() * multiplier);
-	this->change_quarterly_piety(ruler_game_data->get_quarterly_piety() * multiplier);
-
-	for (const character *character : this->get_characters()) {
-		if (character == this->get_ruler()) {
-			continue;
-		}
-
-		character->get_game_data()->apply_opinion_to_loyalty(multiplier);
-	}
-}
-
-QObject *country_game_data::get_office_character(metternich::office *office_param) const
-{
-	const office *office = office_param;
-	return const_cast<metternich::character *>(this->get_office_character(office));
-}
-
-void country_game_data::set_office_character(const office *office, const character *character)
-{
-	const metternich::character *old_character = this->get_office_character(office);
-
-	if (character == old_character) {
-		return;
-	}
-
-	if (old_character != nullptr) {
-		old_character->get_game_data()->apply_country_modifier(this->country, -1);
-		old_character->get_game_data()->set_office(nullptr);
-	}
-
-	if (character != nullptr) {
-		this->office_characters[office] = character;
-	} else {
-		this->office_characters.erase(office);
-	}
-
-	if (character != nullptr) {
-		character->get_game_data()->apply_country_modifier(this->country, 1);
-		character->get_game_data()->set_office(office);
-	}
-
-	this->sort_characters();
-
-	if (game::get()->is_running()) {
-		emit office_characters_changed();
-	}
-}
-
-std::vector<const office *> country_game_data::get_offices() const
-{
-	std::vector<const office *> offices;
-
-	const read_only_context ctx(this->country);
-
-	for (const office *office : office::get_all()) {
-		if (office->get_type() != office_type::country) {
-			continue;
-		}
-
-		if (office == defines::get()->get_head_of_government_office()) {
-			continue;
-		}
-
-		const condition<metternich::country> *country_conditions = office->get_country_conditions();
-		if (country_conditions != nullptr && !country_conditions->check(this->country, ctx)) {
-			continue;
-		}
-
-		offices.push_back(office);
-	}
-
-	std::sort(offices.begin(), offices.end(), [](const office *lhs, const office *rhs) {
-		return lhs->get_identifier() < rhs->get_identifier();
-	});
-
-	return offices;
-}
-
-QVariantList country_game_data::get_offices_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_offices());
-}
-
-void country_game_data::fill_empty_offices()
-{
-	const std::vector<const office *> offices = this->get_offices();
-
-	for (const office *office : offices) {
-		if (this->get_office_character(office) != nullptr) {
-			continue;
-		}
-
-		int best_skill = 0;
-		std::vector<const character *> potential_characters;
-
-		for (const character *character : this->get_characters()) {
-			const int skill = character->get_game_data()->get_primary_attribute_value();
-
-			if (skill < best_skill) {
-				continue;
-			}
-
-			if (office->get_character_conditions() != nullptr && !office->get_character_conditions()->check(character, read_only_context(character))) {
-				continue;
-			}
-
-			if (skill > best_skill) {
-				best_skill = skill;
-				potential_characters.clear();
-			}
-
-			potential_characters.push_back(character);
-		}
-
-		if (!potential_characters.empty()) {
-			this->set_office_character(office, vector::get_random(potential_characters));
-		}
-	}
 }
 
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)

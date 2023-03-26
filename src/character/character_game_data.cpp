@@ -5,7 +5,6 @@
 #include "character/attribute.h"
 #include "character/character.h"
 #include "character/character_type.h"
-#include "character/office.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "country/country.h"
@@ -36,7 +35,6 @@ namespace metternich {
 character_game_data::character_game_data(const metternich::character *character)
 	: character(character), loyalty(character::base_loyalty)
 {
-	connect(this, &character_game_data::office_changed, this, &character_game_data::titled_name_changed);
 	connect(game::get(), &game::turn_changed, this, &character_game_data::age_changed);
 }
 
@@ -77,15 +75,6 @@ void character_game_data::do_events()
 	}
 
 	character_event::check_events_for_scope(this->character, event_trigger::quarterly_pulse);
-}
-
-std::string character_game_data::get_titled_name() const
-{
-	if (!this->is_ruler() && this->get_office() == nullptr) {
-		return this->character->get_full_name();
-	}
-
-	return this->get_office()->get_name() + " " + this->character->get_surname();
 }
 
 bool character_game_data::is_current_portrait_valid() const
@@ -152,8 +141,6 @@ void character_game_data::set_employer(const metternich::country *employer)
 		this->get_employer()->get_game_data()->remove_character(this->character);
 	}
 
-	assert_throw(this->get_office() == nullptr);
-
 	this->employer = employer;
 
 	if (this->get_employer() != nullptr) {
@@ -174,15 +161,10 @@ void character_game_data::check_employer()
 {
 	//check whether the character should change their employer
 
-	if (this->is_ruler()) {
-		//rulers don't change their employer (maybe should be done only for monarchies?)
-		return;
-	}
-
 	if (this->is_married()) {
 		const character_game_data *spouse_game_data = this->get_spouse()->get_game_data();
 
-		if (this->is_subordinate_spouse() || (spouse_game_data->is_ruler() && !this->is_ruler())) {
+		if (this->is_subordinate_spouse()) {
 			const country *spouse_employer = spouse_game_data->get_employer();
 			if (spouse_employer != nullptr) {
 				if (spouse_employer != this->get_employer()) {
@@ -194,7 +176,7 @@ void character_game_data::check_employer()
 		}
 	}
 
-	if ((this->get_office() != nullptr || this->is_deployed()) && this->get_loyalty_int() >= 50) {
+	if (this->is_deployed() && this->get_loyalty_int() >= 50) {
 		return;
 	}
 
@@ -328,10 +310,6 @@ void character_game_data::add_trait(const trait *trait)
 void character_game_data::remove_trait(const trait *trait)
 {
 	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the trait change can affect them
-	if (this->is_ruler() || this->get_office() != nullptr) {
-		this->apply_country_modifier(this->get_employer(), -1);
-	}
-
 	std::erase(this->traits, trait);
 
 	if (trait->get_modifier() != nullptr) {
@@ -705,34 +683,6 @@ bool character_game_data::is_subordinate_spouse() const
 	}
 }
 
-bool character_game_data::is_ruler() const
-{
-	return this->get_employer() != nullptr && this->get_employer()->get_game_data()->get_ruler() == this->character;
-}
-
-bool character_game_data::is_ruler_of(const metternich::character *other) const
-{
-	return this->get_employer() == other->get_game_data()->get_employer() && this->is_ruler();
-}
-
-bool character_game_data::is_ruled_by(const metternich::character *other) const
-{
-	return other->get_game_data()->is_ruler_of(this->character);
-}
-
-void character_game_data::set_office(const metternich::office *office)
-{
-	if (office == this->get_office()) {
-		return;
-	}
-
-	this->office = office;
-
-	if (game::get()->is_running()) {
-		emit office_changed();
-	}
-}
-
 bool character_game_data::is_deployable() const
 {
 	const character_type *character_type = this->character->get_type();
@@ -797,17 +747,7 @@ void character_game_data::apply_modifier(const modifier<const metternich::charac
 {
 	assert_throw(modifier != nullptr);
 
-	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the modifier change can affect them
-	if (this->is_ruler() || this->get_office() != nullptr) {
-		this->apply_country_modifier(this->get_employer(), -1);
-	}
-
 	modifier->apply(this->character, multiplier);
-
-	//reapply modifiers that this character is applying on other scopes
-	if (this->is_ruler() || this->get_office() != nullptr) {
-		this->apply_country_modifier(this->get_employer(), 1);
-	}
 }
 
 void character_game_data::apply_country_modifier(const country *country, const int multiplier)
@@ -835,7 +775,7 @@ void character_game_data::apply_military_unit_modifier(metternich::military_unit
 
 const centesimal_int &character_game_data::get_loyalty() const
 {
-	if (this->is_ruler() || this->get_unclamped_loyalty() > character::max_loyalty) {
+	if (this->get_unclamped_loyalty() > character::max_loyalty) {
 		return character::max_loyalty;
 	}
 
@@ -886,19 +826,11 @@ void character_game_data::learn_spell(const spell *spell)
 void character_game_data::change_quarterly_prestige(const centesimal_int &change)
 {
 	this->quarterly_prestige += change;
-
-	if (this->is_ruler()) {
-		this->get_employer()->get_game_data()->change_quarterly_prestige(change);
-	}
 }
 
 void character_game_data::change_quarterly_piety(const centesimal_int &change)
 {
 	this->quarterly_piety += change;
-
-	if (this->is_ruler()) {
-		this->get_employer()->get_game_data()->change_quarterly_piety(change);
-	}
 }
 
 int character_game_data::get_opinion_of(const metternich::character *other) const
@@ -917,10 +849,6 @@ int character_game_data::get_opinion_of(const metternich::character *other) cons
 void character_game_data::add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier, const int duration)
 {
 	this->opinion_modifiers[other][modifier] = std::max(this->opinion_modifiers[other][modifier], duration);
-
-	if (this->is_ruled_by(other)) {
-		this->change_loyalty(character::opinion_to_loyalty(modifier->get_value()));
-	}
 }
 
 void character_game_data::remove_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier)
@@ -930,19 +858,6 @@ void character_game_data::remove_opinion_modifier(const metternich::character *o
 
 	if (opinion_modifiers.empty()) {
 		this->opinion_modifiers.erase(other);
-	}
-
-	if (this->is_ruled_by(other)) {
-		this->change_loyalty(-character::opinion_to_loyalty(modifier->get_value()));
-	}
-}
-
-void character_game_data::apply_opinion_to_loyalty(const int multiplier)
-{
-	const metternich::character *ruler = this->get_employer()->get_game_data()->get_ruler();
-
-	for (const auto &[modifier, duration] : this->get_opinion_modifiers_for(ruler)) {
-		this->change_loyalty(character::opinion_to_loyalty(modifier->get_value()) * multiplier);
 	}
 }
 

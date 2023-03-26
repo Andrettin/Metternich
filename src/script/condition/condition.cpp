@@ -13,11 +13,8 @@
 #include "population/population_unit.h"
 #include "script/condition/age_condition.h"
 #include "script/condition/and_condition.h"
-#include "script/condition/any_advisor_condition.h"
 #include "script/condition/any_character_condition.h"
-#include "script/condition/any_character_or_vassal_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
-#include "script/condition/any_vassal_character_condition.h"
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/attribute_condition.h"
 #include "script/condition/can_have_trait_condition.h"
@@ -33,12 +30,9 @@
 #include "script/condition/culture_condition.h"
 #include "script/condition/event_condition.h"
 #include "script/condition/gender_condition.h"
-#include "script/condition/has_country_office_condition.h"
 #include "script/condition/has_population_culture_condition.h"
-#include "script/condition/has_province_office_condition.h"
 #include "script/condition/ideology_condition.h"
 #include "script/condition/improvement_condition.h"
-#include "script/condition/is_ruler_condition.h"
 #include "script/condition/location_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
@@ -50,7 +44,6 @@
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
 #include "script/condition/root_character_condition.h"
-#include "script/condition/ruler_condition.h"
 #include "script/condition/saved_scope_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
@@ -84,12 +77,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<character_type_condition>(value, condition_operator);
 		} else if (key == "gender") {
 			return std::make_unique<gender_condition>(value, condition_operator);
-		} else if (key == "has_country_office") {
-			return std::make_unique<has_country_office_condition>(value, condition_operator);
-		} else if (key == "has_province_office") {
-			return std::make_unique<has_province_office_condition>(value, condition_operator);
-		} else if (key == "is_ruler") {
-			return std::make_unique<is_ruler_condition>(value, condition_operator);
 		} else if (key == "scripted_modifier") {
 			return std::make_unique<scripted_modifier_condition<character>>(value, condition_operator);
 		} else if (key == "trait") {
@@ -194,20 +181,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 	if constexpr (std::is_same_v<scope_type, country>) {
 		if (tag == "any_neighbor_country") {
 			condition = std::make_unique<any_neighbor_country_condition>(condition_operator);
-		} else if (tag == "ruler") {
-			condition = std::make_unique<ruler_condition>(condition_operator);
 		}
 	}
 	
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country>) {
-		if (tag == "any_advisor") {
-			condition = std::make_unique<any_advisor_condition<scope_type>>(condition_operator);
-		} else if (tag == "any_character") {
+		if (tag == "any_character") {
 			condition = std::make_unique<any_character_condition<scope_type>>(condition_operator);
-		} else if (tag == "any_character_or_vassal") {
-			condition = std::make_unique<any_character_or_vassal_condition<scope_type>>(condition_operator);
-		} else if (tag == "any_vassal_character") {
-			condition = std::make_unique<any_vassal_character_condition<scope_type>>(condition_operator);
 		}
 	}
 

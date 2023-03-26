@@ -22,9 +22,6 @@ set(character_SRCS
 	src/character/character_type.cpp
 	src/character/character_type_container.cpp
 	src/character/dynasty.cpp
-	src/character/office.cpp
-	src/character/office_container.cpp
-	src/character/office_type.cpp
 	src/character/trait.cpp
 	src/character/trait_type.cpp
 )
@@ -275,9 +272,6 @@ set(character_HDRS
 	src/character/character_type.h
 	src/character/character_type_container.h
 	src/character/dynasty.h
-	src/character/office.h
-	src/character/office_container.h
-	src/character/office_type.h
 	src/character/trait.h
 	src/character/trait_type.h
 )
@@ -417,11 +411,8 @@ source_group(script FILES ${script_HDRS})
 set(script_condition_HDRS
 	src/script/condition/age_condition.h
 	src/script/condition/and_condition.h
-	src/script/condition/any_advisor_condition.h
 	src/script/condition/any_character_condition.h
-	src/script/condition/any_character_or_vassal_condition.h
 	src/script/condition/any_neighbor_country_condition.h
-	src/script/condition/any_vassal_character_condition.h
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/attribute_condition.h
 	src/script/condition/can_have_trait_condition.h
@@ -438,12 +429,9 @@ set(script_condition_HDRS
 	src/script/condition/culture_condition.h
 	src/script/condition/event_condition.h
 	src/script/condition/gender_condition.h
-	src/script/condition/has_country_office_condition.h
 	src/script/condition/has_population_culture_condition.h
-	src/script/condition/has_province_office_condition.h
 	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h
-	src/script/condition/is_ruler_condition.h
 	src/script/condition/location_condition.h
 	src/script/condition/not_condition.h
 	src/script/condition/numerical_condition.h
@@ -456,7 +444,6 @@ set(script_condition_HDRS
 	src/script/condition/religion_condition.h
 	src/script/condition/religious_group_condition.h
 	src/script/condition/root_character_condition.h
-	src/script/condition/ruler_condition.h
 	src/script/condition/saved_scope_condition.h
 	src/script/condition/scripted_modifier_condition.h
 	src/script/condition/scope_condition.h
@@ -478,10 +465,8 @@ source_group(script\\condition FILES ${script_condition_HDRS})
 
 set(script_effect_HDRS
 	src/script/effect/any_character_effect.h
-	src/script/effect/any_character_or_vassal_effect.h
 	src/script/effect/any_population_unit_effect.h
 	src/script/effect/any_neighbor_country_effect.h
-	src/script/effect/any_vassal_character_effect.h
 	src/script/effect/battle_effect.h
 	src/script/effect/change_opinion_effect.h
 	src/script/effect/commodity_effect.h

@@ -12,7 +12,6 @@ class character;
 class country;
 class icon;
 class military_unit;
-class office;
 class opinion_modifier;
 class province;
 class scripted_character_modifier;
@@ -28,7 +27,6 @@ class character_game_data final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY titled_name_changed)
 	Q_PROPERTY(metternich::icon* portrait READ get_portrait_unconst NOTIFY portrait_changed)
 	Q_PROPERTY(metternich::country* employer READ get_employer_unconst NOTIFY employer_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
@@ -44,8 +42,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::character* spouse READ get_spouse_unconst NOTIFY spouse_changed)
-	Q_PROPERTY(bool ruler READ is_ruler)
-	Q_PROPERTY(metternich::office* office READ get_office_unconst NOTIFY office_changed)
 	Q_PROPERTY(int loyalty READ get_loyalty_int NOTIFY loyalty_changed)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
@@ -60,13 +56,6 @@ public:
 
 	void do_turn();
 	void do_events();
-
-	std::string get_titled_name() const;
-
-	QString get_titled_name_qstring() const
-	{
-		return QString::fromStdString(this->get_titled_name());
-	}
 
 	const icon *get_portrait() const
 	{
@@ -188,25 +177,6 @@ public:
 
 	bool is_married_matrilineally() const;
 	bool is_subordinate_spouse() const;
-
-	bool is_ruler() const;
-	bool is_ruler_of(const metternich::character *other) const;
-	bool is_ruled_by(const metternich::character *other) const;
-
-	const metternich::office *get_office() const
-	{
-		return this->office;
-	}
-
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::office *get_office_unconst() const
-	{
-		return const_cast<metternich::office *>(this->get_office());
-	}
-
-public:
-	void set_office(const metternich::office *office);
 
 	metternich::military_unit *get_military_unit() const
 	{
@@ -455,10 +425,8 @@ public:
 
 	void add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier, const int duration);
 	void remove_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier);
-	void apply_opinion_to_loyalty(const int multiplier);
 
 signals:
-	void titled_name_changed();
 	void portrait_changed();
 	void employer_changed();
 	void age_changed();
@@ -467,7 +435,6 @@ signals:
 	void scripted_modifiers_changed();
 	void attributes_changed();
 	void spouse_changed();
-	void office_changed();
 	void loyalty_changed();
 	void wealth_changed();
 	void prestige_changed();
@@ -484,7 +451,6 @@ private:
 	std::map<attribute, int> attribute_values;
 	const metternich::character *spouse = nullptr;
 	bool matrilineal_marriage = false;
-	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;
 	centesimal_int loyalty;
 	int wealth = 0;

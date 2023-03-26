@@ -29,24 +29,11 @@ public:
 	virtual void do_addition_effect(const scope_type *scope) const override
 	{
 		scope->get_game_data()->change_prestige(this->quantity);
-
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			if (scope->get_game_data()->is_ruler()) {
-				//prestige changes for rulers should also affect their countries
-				scope->get_game_data()->get_employer()->get_game_data()->change_prestige(this->quantity);
-			}
-		}
 	}
 
 	virtual void do_subtraction_effect(const scope_type *scope) const override
 	{
 		scope->get_game_data()->change_prestige(-this->quantity);
-
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			if (scope->get_game_data()->is_ruler()) {
-				scope->get_game_data()->get_employer()->get_game_data()->change_prestige(-this->quantity);
-			}
-		}
 	}
 
 	virtual std::string get_assignment_string() const override

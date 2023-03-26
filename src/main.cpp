@@ -4,8 +4,6 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/dynasty.h"
-#include "character/office.h"
-#include "character/office_type.h"
 #include "character/trait_type.h"
 #include "country/consulate.h"
 #include "country/country.h"
@@ -98,7 +96,6 @@ int main(int argc, char **argv)
 		enum_converter<gender>();
 		enum_converter<military_unit_domain>();
 		enum_converter<moisture_type>();
-		enum_converter<office_type>();
 		enum_converter<site_type>();
 		enum_converter<temperature_type>();
 		enum_converter<trait_type>();
@@ -118,7 +115,6 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<game_rules>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
-		qmlRegisterAnonymousType<office>("", 1);
 		qmlRegisterAnonymousType<population_type>("", 1);
 		qmlRegisterAnonymousType<preferences>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);

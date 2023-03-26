@@ -1,6 +1,5 @@
 #pragma once
 
-#include "character/office_container.h"
 #include "country/country_container.h"
 #include "country/culture_container.h"
 #include "country/ideology_container.h"
@@ -80,8 +79,6 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
-	Q_PROPERTY(metternich::character* ruler READ get_ruler_unconst NOTIFY ruler_changed)
-	Q_PROPERTY(QVariantList offices READ get_offices_qvariant_list NOTIFY offices_changed)
 
 public:
 	explicit country_game_data(metternich::country *country);
@@ -638,46 +635,6 @@ public:
 	void clear_characters();
 	void sort_characters();
 
-	const character *get_ruler() const
-	{
-		return this->ruler;
-	}
-
-private:
-	//for the Qt property (pointers there can't be const)
-	character *get_ruler_unconst() const
-	{
-		return const_cast<character *>(this->get_ruler());
-	}
-
-public:
-	void set_ruler(const character *ruler);
-	void apply_ruler_effects(const int multiplier);
-
-	const office_map<const character *> &get_office_characters() const
-	{
-		return this->office_characters;
-	}
-
-	const character *get_office_character(const office *office) const
-	{
-		const auto find_iterator = this->office_characters.find(office);
-
-		if (find_iterator != this->office_characters.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	Q_INVOKABLE QObject *get_office_character(metternich::office *office) const;
-
-	void set_office_character(const office *office, const character *character);
-
-	std::vector<const office *> get_offices() const;
-	QVariantList get_offices_qvariant_list() const;
-	void fill_empty_offices();
-
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
 
@@ -820,9 +777,6 @@ signals:
 	void storage_capacity_changed();
 	void technologies_changed();
 	void characters_changed();
-	void ruler_changed();
-	void office_characters_changed();
-	void offices_changed();
 
 private:
 	metternich::country *country = nullptr;
@@ -867,8 +821,6 @@ private:
 	int storage_capacity = 0;
 	technology_set technologies;
 	std::vector<const character *> characters;
-	const character *ruler = nullptr;
-	office_map<const character *> office_characters;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	centesimal_int quarterly_prestige;

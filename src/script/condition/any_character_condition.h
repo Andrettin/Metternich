@@ -27,11 +27,7 @@ public:
 	{
 		const country *country = nullptr;
 
-		if constexpr (std::is_same_v<upper_scope_type, character>) {
-			if (upper_scope->get_game_data()->is_ruler()) {
-				country = upper_scope->get_game_data()->get_employer();
-			}
-		} else {
+		if constexpr (!std::is_same_v<upper_scope_type, character>) {
 			country = upper_scope;
 		}
 

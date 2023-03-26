@@ -31,8 +31,7 @@ public:
 	const character *get_best_character(const country *scope, const read_only_context &ctx) const
 	{
 		//get a suitable character from the ones participating in the adventure (if any)
-		//otherwise, see if the ruler can learn the spell
-		//if that fails as well, try any of the country's characters
+		//otherwise, try any of the country's characters
 		std::vector<const character *> potential_characters;
 
 		for (const military_unit *military_unit : ctx.attacking_military_units) {
@@ -66,11 +65,6 @@ public:
 		if (!potential_characters.empty()) {
 			std::sort(potential_characters.begin(), potential_characters.end(), character::skill_compare);
 			return potential_characters.front();
-		}
-
-		const character *ruler = scope->get_game_data()->get_ruler();
-		if (ruler != nullptr && ruler->get_game_data()->can_learn_spell(this->spell)) {
-			return ruler;
 		}
 
 		for (const character *character : scope->get_game_data()->get_characters()) {

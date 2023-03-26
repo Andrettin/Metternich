@@ -5,7 +5,6 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
-#include "character/office.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
@@ -305,33 +304,6 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->set_religion(country->get_default_religion());
 			}
 
-			const character *ruler = country_history->get_ruler();
-			if (ruler != nullptr) {
-				character_game_data *ruler_game_data = ruler->get_game_data();
-
-				if (ruler_game_data->get_employer() != nullptr && ruler_game_data->get_employer() != country) {
-					throw std::runtime_error("Cannot set \"" + ruler->get_identifier() + "\" as the ruler of \"" + country->get_identifier() + "\", as it is already employed by another country.");
-				}
-
-				ruler_game_data->set_employer(country);
-				country_game_data->set_ruler(ruler);
-			}
-
-			for (const auto &[office, character] : country_history->get_office_characters()) {
-				character_game_data *character_game_data = character->get_game_data();
-
-				if (character_game_data->get_employer() != nullptr && character_game_data->get_employer() != country) {
-					throw std::runtime_error("Cannot set \"" + character->get_identifier() + "\" as an office holder for \"" + country->get_identifier() + "\", as it is already employed by another country.");
-				}
-
-				if (office->get_character_conditions() != nullptr && !office->get_character_conditions()->check(character, read_only_context(character))) {
-					throw std::runtime_error("Cannot set \"" + character->get_identifier() + "\" as the holder for the \"" + office->get_identifier()  + "\" office for \"" + country->get_identifier() + "\", as it does not fulfill the conditions.");
-				}
-
-				character_game_data->set_employer(country);
-				country_game_data->set_office_character(office, character);
-			}
-
 			for (const technology *technology : country_history->get_technologies()) {
 				country_game_data->add_technology_with_prerequisites(technology);
 			}
@@ -470,11 +442,6 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			if (scenario->get_start_date() >= character->get_start_date() && scenario->get_start_date() < character->get_end_date()) {
 				if (character_history->get_country() != nullptr && character_history->get_country() != character_game_data->get_employer()) {
-					if (character_game_data->get_employer() != nullptr) {
-						assert_throw(!character_game_data->is_ruler());
-						assert_throw(character_game_data->get_office() == nullptr);
-					}
-
 					character_game_data->set_employer(character_history->get_country());
 				}
 
