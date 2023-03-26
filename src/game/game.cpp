@@ -207,8 +207,6 @@ void game::start()
 
 		for (const province *province : map::get()->get_provinces()) {
 			province_game_data *province_game_data = province->get_game_data();
-			province_game_data->assign_workers();
-			province_game_data->setup_resource_improvements();
 			province_game_data->calculate_base_commodity_outputs();
 		}
 
@@ -216,7 +214,7 @@ void game::start()
 			country_game_data *country_game_data = country->get_game_data();
 			country_game_data->check_characters(this->get_date());
 
-			for (population_unit *population_unit : country_game_data->get_population_units()) {
+			for (const qunique_ptr<population_unit> &population_unit : country_game_data->get_population_units()) {
 				population_unit->choose_ideology();
 			}
 		}
@@ -288,6 +286,9 @@ void game::apply_history(const metternich::scenario *scenario)
 		for (const province *province : map::get()->get_provinces()) {
 			const province_history *province_history = province->get_history();
 			province_game_data *province_game_data = province->get_game_data();
+
+			province_game_data->set_culture(province_history->get_culture());
+			province_game_data->set_religion(province_history->get_religion());
 
 			const country *owner = province_history->get_owner();
 
@@ -534,7 +535,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(phenotype != nullptr);
 
-			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, home_province, population_type, culture, religion, phenotype);
+			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, population_type, culture, religion, phenotype);
 			civilian_unit->set_tile_pos(tile_pos);
 
 			owner->get_game_data()->add_civilian_unit(std::move(civilian_unit));
@@ -608,7 +609,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(phenotype != nullptr);
 
-			auto military_unit = make_qunique<metternich::military_unit>(historical_military_unit->get_type(), owner, home_province, population_type, culture, religion, phenotype);
+			auto military_unit = make_qunique<metternich::military_unit>(historical_military_unit->get_type(), owner, population_type, culture, religion, phenotype);
 			military_unit->set_province(province);
 
 			owner->get_game_data()->add_military_unit(std::move(military_unit));
@@ -731,6 +732,13 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 
 	province_history *province_history = province->get_history();
 	province_game_data *province_game_data = province->get_game_data();
+	const country *country = province_game_data->get_owner();
+
+	if (country == nullptr) {
+		return 0;
+	}
+
+	country_game_data *country_game_data = country->get_game_data();
 
 	const culture *province_culture = province_history->get_culture();
 
@@ -784,7 +792,7 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 				const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
 
 				for (int i = 0; i < literate_population_unit_count; ++i) {
-					province_game_data->create_population_unit(literate_population_type, culture, religion, phenotype);
+					country_game_data->create_population_unit(literate_population_type, culture, religion, phenotype);
 				}
 			}
 
@@ -795,7 +803,7 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 	assert_throw(population_type != nullptr);
 
 	for (int i = 0; i < population_unit_count; ++i) {
-		province_game_data->create_population_unit(population_type, culture, religion, phenotype);
+		country_game_data->create_population_unit(population_type, culture, religion, phenotype);
 	}
 
 	int64_t remaining_population = population % defines::get()->get_population_per_unit();
@@ -806,12 +814,6 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 
 void game::on_setup_finished()
 {
-	for (const province *province : map::get()->get_provinces()) {
-		province_game_data *province_game_data = province->get_game_data();
-		province_game_data->calculate_culture();
-		province_game_data->calculate_religion();
-	}
-
 	this->calculate_great_power_ranks();
 	this->create_diplomatic_map_image();
 

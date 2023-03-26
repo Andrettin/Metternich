@@ -3,6 +3,7 @@
 #include "map/map_generator.h"
 
 #include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/culture.h"
 #include "database/defines.h"
 #include "economy/resource.h"
@@ -83,8 +84,10 @@ void map_generator::generate()
 		const religion *religion = country->get_default_religion();
 		const population_type *population_type = culture->get_population_class_type(population_class);
 
+		country_game_data *country_game_data = country->get_game_data();
+
 		for (int i = 0; i < population_unit_count; ++i) {
-			province_game_data->create_population_unit(population_type, culture, religion, culture->get_default_phenotype());
+			country_game_data->create_population_unit(population_type, culture, religion, culture->get_default_phenotype());
 		}
 	}
 }

@@ -22,7 +22,6 @@ class military_unit final : public QObject
 	Q_PROPERTY(metternich::military_unit_type* type READ get_type_unconst NOTIFY type_changed)
 	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst CONSTANT)
-	Q_PROPERTY(metternich::province* home_province READ get_home_province_unconst CONSTANT)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
 	Q_PROPERTY(metternich::site* site READ get_site_unconst NOTIFY site_changed)
 
@@ -37,7 +36,7 @@ public:
 
 	explicit military_unit(const military_unit_type *type);
 	explicit military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
-	explicit military_unit(const military_unit_type *type, const country *owner, const metternich::province *home_province, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
+	explicit military_unit(const military_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
 	explicit military_unit(const military_unit_type *type, const character *character);
 
 	void do_turn();
@@ -81,19 +80,6 @@ private:
 	country *get_owner_unconst() const
 	{
 		return const_cast<country *>(this->get_owner());
-	}
-
-public:
-	const metternich::province *get_home_province() const
-	{
-		return this->home_province;
-	}
-
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::province *get_home_province_unconst() const
-	{
-		return const_cast<metternich::province *>(this->get_home_province());
 	}
 
 public:
@@ -281,7 +267,6 @@ signals:
 private:
 	const military_unit_type *type = nullptr;
 	const country *owner = nullptr;
-	const province *home_province = nullptr;
 	const metternich::population_type *population_type = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;

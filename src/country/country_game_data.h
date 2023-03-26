@@ -62,6 +62,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
 	Q_PROPERTY(int rank READ get_rank NOTIFY rank_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
+	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
 	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
 	Q_PROPERTY(QVariantList population_religion_counts READ get_population_religion_counts_qvariant_list NOTIFY population_religion_counts_changed)
@@ -86,7 +87,7 @@ public:
 
 	void do_turn();
 	void do_population_growth();
-	void do_migration();
+	void do_cultural_change();
 	void do_events();
 	void do_ai_turn();
 
@@ -168,8 +169,6 @@ public:
 	{
 		return this->border_provinces;
 	}
-
-	const province *get_random_population_weighted_province() const;
 
 	bool is_alive() const
 	{
@@ -413,19 +412,18 @@ public:
 
 	void change_score(const int change);
 
-	const std::vector<population_unit *> &get_population_units() const
+	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
+	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
+	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype);
+
+	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
 	{
 		return this->population_units;
 	}
 
-	void add_population_unit(population_unit *population_unit)
+	int get_population_unit_count() const
 	{
-		this->population_units.push_back(population_unit);
-	}
-
-	void remove_population_unit(population_unit *population_unit)
-	{
-		std::erase(this->population_units, population_unit);
+		return static_cast<int>(this->population_units.size());
 	}
 
 	const population_type_map<int> &get_population_type_counts() const
@@ -487,7 +485,16 @@ public:
 		this->set_population_growth(this->get_population_growth() + change);
 	}
 
+	void grow_population();
 	void decrease_population();
+	population_unit *choose_starvation_population_unit();
+
+	Q_INVOKABLE QObject *get_population_type_small_icon(metternich::population_type *type) const;
+
+	int get_food_consumption() const
+	{
+		return this->get_population_unit_count() + static_cast<int>(this->civilian_units.size()) + static_cast<int>(this->military_units.size());
+	}
 
 	int get_wealth() const
 	{
@@ -763,6 +770,7 @@ signals:
 	void diplomatic_map_image_changed();
 	void rank_changed();
 	void score_changed();
+	void population_units_changed();
 	void population_type_counts_changed();
 	void population_culture_counts_changed();
 	void population_religion_counts_changed();
@@ -806,7 +814,7 @@ private:
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;
-	std::vector<population_unit *> population_units;
+	std::vector<qunique_ptr<population_unit>> population_units;
 	population_type_map<int> population_type_counts;
 	culture_map<int> population_culture_counts;
 	religion_map<int> population_religion_counts;

@@ -89,6 +89,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<country_condition>(value, condition_operator);
 		} else if (key == "country_type") {
 			return std::make_unique<country_type_condition>(value, condition_operator);
+		} else if (key == "has_population_culture") {
+			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
 		} else if (key == "owns_province") {
 			return std::make_unique<owns_province_condition>(value, condition_operator);
 		} else if (commodity::try_get(key) != nullptr) {
@@ -131,8 +133,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
 		} else if (key == "colony") {
 			return std::make_unique<colony_condition<scope_type>>(value, condition_operator);
-		} else if (key == "has_population_culture") {
-			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
 		}
 	}
 
@@ -190,7 +190,7 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, population_unit> || std::is_same_v<scope_type, site>) {
+	if constexpr (std::is_same_v<scope_type, site>) {
 		if (tag == "location") {
 			condition = std::make_unique<location_condition<scope_type>>(condition_operator);
 		}
@@ -245,12 +245,7 @@ const country *condition<scope_type>::get_scope_country(const scope_type *scope)
 	} else if constexpr (std::is_same_v<scope_type, country>) {
 		return scope;
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
-		const province *province = scope->get_province();
-		if (province != nullptr) {
-			return province->get_game_data()->get_owner();
-		}
-
-		return nullptr;
+		return scope->get_country();
 	} else if constexpr (std::is_same_v<scope_type, province>) {
 		return scope->get_game_data()->get_owner();
 	} else if constexpr (std::is_same_v<scope_type, site>) {
@@ -266,9 +261,7 @@ const country *condition<scope_type>::get_scope_country(const scope_type *scope)
 template <typename scope_type>
 const province *condition<scope_type>::get_scope_province(const scope_type *scope)
 {
-	if constexpr (std::is_same_v<scope_type, population_unit>) {
-		return scope->get_province();
-	} else if constexpr (std::is_same_v<scope_type, province>) {
+	if constexpr (std::is_same_v<scope_type, province>) {
 		return scope;
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		return scope->get_game_data()->get_province();

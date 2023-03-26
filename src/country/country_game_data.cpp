@@ -33,6 +33,7 @@
 #include "script/opinion_modifier.h"
 #include "technology/technology.h"
 #include "ui/icon.h"
+#include "ui/icon_container.h"
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_class.h"
@@ -70,8 +71,6 @@ void country_game_data::do_turn()
 	if (this->get_quarterly_piety() != 0) {
 		this->change_piety(this->get_quarterly_piety());
 	}
-
-	this->do_migration();
 
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->do_turn();
@@ -116,10 +115,10 @@ void country_game_data::do_population_growth()
 		}
 	}
 
-	int food_consumption = 0;
+	int food_consumption = this->get_food_consumption();
 
 	for (const province *province : this->get_provinces()) {
-		food_consumption += province->get_game_data()->get_food_consumption() - province->get_game_data()->get_free_food_consumption();
+		food_consumption -= province->get_game_data()->get_free_food_consumption();
 	}
 
 	const int net_food = stored_food - food_consumption;
@@ -127,7 +126,7 @@ void country_game_data::do_population_growth()
 	this->change_population_growth(net_food);
 
 	while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
-		this->get_random_population_weighted_province()->get_game_data()->grow_population();
+		this->grow_population();
 	}
 
 	int starvation_count = 0;
@@ -152,22 +151,28 @@ void country_game_data::do_population_growth()
 	}
 }
 
-void country_game_data::do_migration()
+void country_game_data::do_cultural_change()
 {
-	const std::vector<population_unit *> population_units = this->population_units;
+	static constexpr int cultural_derivation_chance = 1;
 
-	for (population_unit *population_unit : population_units) {
-		if (population_unit->is_employed()) {
-			continue;
+	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
+		const metternich::culture *current_culture = population_unit->get_culture();
+
+		std::vector<const metternich::culture *> potential_cultures;
+
+		const read_only_context ctx(population_unit.get());
+
+		for (const metternich::culture *culture : current_culture->get_derived_cultures()) {
+			if (culture->get_derivation_conditions() != nullptr && !culture->get_derivation_conditions()->check(population_unit.get(), ctx)) {
+				continue;
+			}
+
+			potential_cultures.push_back(culture);
 		}
 
-		for (const province *province : this->get_provinces()) {
-			province_game_data *province_game_data = province->get_game_data();
-
-			if (province_game_data->has_employment_for_worker(population_unit)) {
-				population_unit->migrate_to(province);
-				break;
-			}
+		if (!potential_cultures.empty() && random::get()->generate(100) < cultural_derivation_chance) {
+			const metternich::culture *new_culture = vector::get_random(potential_cultures);
+			population_unit->set_culture(new_culture);
 		}
 	}
 }
@@ -375,30 +380,9 @@ void country_game_data::add_province(const province *province)
 	const province_game_data *province_game_data = province->get_game_data();
 
 	this->change_score(province_game_data->get_score());
-	this->change_population(province_game_data->get_population());
 
 	if (province_game_data->is_coastal()) {
 		++this->coastal_province_count;
-	}
-
-	for (const auto &[population_type, count] : province_game_data->get_population_type_counts()) {
-		this->change_population_type_count(population_type, count);
-	}
-	for (const auto &[culture, count] : province_game_data->get_population_culture_counts()) {
-		this->change_population_culture_count(culture, count);
-	}
-	for (const auto &[religion, count] : province_game_data->get_population_religion_counts()) {
-		this->change_population_religion_count(religion, count);
-	}
-	for (const auto &[phenotype, count] : province_game_data->get_population_phenotype_counts()) {
-		this->change_population_phenotype_count(phenotype, count);
-	}
-	for (const auto &[ideology, count] : province_game_data->get_population_ideology_counts()) {
-		this->change_population_ideology_count(ideology, count);
-	}
-
-	for (const qunique_ptr<population_unit> &population_unit : province_game_data->get_population_units()) {
-		this->add_population_unit(population_unit.get());
 	}
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
@@ -464,30 +448,9 @@ void country_game_data::remove_province(const province *province)
 	const province_game_data *province_game_data = province->get_game_data();
 
 	this->change_score(-province_game_data->get_score());
-	this->change_population(-province_game_data->get_population());
 
 	if (province_game_data->is_coastal()) {
 		--this->coastal_province_count;
-	}
-
-	for (const auto &[population_type, count] : province_game_data->get_population_type_counts()) {
-		this->change_population_type_count(population_type, -count);
-	}
-	for (const auto &[culture, count] : province_game_data->get_population_culture_counts()) {
-		this->change_population_culture_count(culture, -count);
-	}
-	for (const auto &[religion, count] : province_game_data->get_population_religion_counts()) {
-		this->change_population_religion_count(religion, -count);
-	}
-	for (const auto &[phenotype, count] : province_game_data->get_population_phenotype_counts()) {
-		this->change_population_phenotype_count(phenotype, -count);
-	}
-	for (const auto &[ideology, count] : province_game_data->get_population_ideology_counts()) {
-		this->change_population_ideology_count(ideology, -count);
-	}
-
-	for (const qunique_ptr<population_unit> &population_unit : province_game_data->get_population_units()) {
-		this->remove_population_unit(population_unit.get());
 	}
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
@@ -539,15 +502,6 @@ void country_game_data::remove_province(const province *province)
 	if (game::get()->is_running()) {
 		emit provinces_changed();
 	}
-}
-
-const province *country_game_data::get_random_population_weighted_province() const
-{
-	if (this->population_units.empty()) {
-		return nullptr;
-	}
-
-	return vector::get_random(this->population_units)->get_province();
 }
 
 bool country_game_data::is_under_anarchy() const
@@ -1263,6 +1217,61 @@ void country_game_data::change_score(const int change)
 	emit score_changed();
 }
 
+void country_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
+{
+	this->change_population_type_count(population_unit->get_type(), 1);
+	this->change_population_culture_count(population_unit->get_culture(), 1);
+	this->change_population_religion_count(population_unit->get_religion(), 1);
+	this->change_population_phenotype_count(population_unit->get_phenotype(), 1);
+	if (population_unit->get_ideology() != nullptr) {
+		this->change_population_ideology_count(population_unit->get_ideology(), 1);
+	}
+	this->change_population(defines::get()->get_population_per_unit());
+
+	this->population_units.push_back(std::move(population_unit));
+
+	if (game::get()->is_running()) {
+		emit population_units_changed();
+	}
+}
+
+qunique_ptr<population_unit> country_game_data::pop_population_unit(population_unit *population_unit)
+{
+	for (size_t i = 0; i < this->population_units.size();) {
+		if (this->population_units[i].get() == population_unit) {
+			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
+			this->population_units.erase(this->population_units.begin() + i);
+
+			this->change_population_type_count(population_unit->get_type(), -1);
+			this->change_population_culture_count(population_unit->get_culture(), -1);
+			this->change_population_religion_count(population_unit->get_religion(), -1);
+			this->change_population_phenotype_count(population_unit->get_phenotype(), -1);
+			if (population_unit->get_ideology() != nullptr) {
+				this->change_population_ideology_count(population_unit->get_ideology(), -1);
+			}
+			this->change_population(-defines::get()->get_population_per_unit());
+
+			if (game::get()->is_running()) {
+				emit population_units_changed();
+			}
+
+			return population_unit_unique_ptr;
+		} else {
+			++i;
+		}
+	}
+
+	assert_throw(false);
+
+	return nullptr;
+}
+
+void country_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype)
+{
+	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, this->country);
+	this->add_population_unit(std::move(population_unit));
+}
+
 QVariantList country_game_data::get_population_type_counts_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_population_type_counts());
@@ -1385,6 +1394,10 @@ void country_game_data::change_population_ideology_count(const ideology *ideolog
 
 void country_game_data::change_population(const int change)
 {
+	if (change == 0) {
+		return;
+	}
+
 	this->population += change;
 
 	if (game::get()->is_running()) {
@@ -1407,6 +1420,23 @@ void country_game_data::set_population_growth(const int growth)
 	if (game::get()->is_running()) {
 		emit population_growth_changed();
 	}
+}
+
+void country_game_data::grow_population()
+{
+	if (this->population_units.empty()) {
+		throw std::runtime_error("Tried to grow population in a province which has no pre-existing population.");
+	}
+
+	const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
+	const metternich::culture *culture = population_unit->get_culture();
+	const metternich::religion *religion = population_unit->get_religion();
+	const phenotype *phenotype = population_unit->get_phenotype();
+	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
+
+	this->create_population_unit(population_type, culture, religion, phenotype);
+
+	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
 
 void country_game_data::decrease_population()
@@ -1445,7 +1475,54 @@ void country_game_data::decrease_population()
 		return;
 	}
 
-	this->get_random_population_weighted_province()->get_game_data()->decrease_population();
+	//disband population unit
+	assert_throw(!this->population_units.empty());
+	this->change_population_growth(defines::get()->get_population_growth_threshold());
+	this->pop_population_unit(this->choose_starvation_population_unit());
+}
+
+population_unit *country_game_data::choose_starvation_population_unit()
+{
+	population_unit *best_population_unit = nullptr;
+
+	for (auto it = this->population_units.rbegin(); it != this->population_units.rend(); ++it) {
+		population_unit *population_unit = it->get();
+
+		if (
+			best_population_unit == nullptr
+			|| (best_population_unit->produces_food() && !population_unit->produces_food())
+			|| (best_population_unit->produces_food() == population_unit->produces_food() && best_population_unit->get_employment_output() < population_unit->get_employment_output())
+		) {
+			best_population_unit = population_unit;
+		}
+	}
+
+	assert_throw(best_population_unit != nullptr);
+	return best_population_unit;
+}
+
+QObject *country_game_data::get_population_type_small_icon(population_type *type) const
+{
+	icon_map<int> icon_counts;
+
+	for (const auto &population_unit : this->population_units) {
+		if (population_unit->get_type() != type) {
+			continue;
+		}
+
+		++icon_counts[population_unit->get_small_icon()];
+	}
+
+	const icon *best_icon = nullptr;
+	int best_icon_count = 0;
+	for (const auto &[icon, count] : icon_counts) {
+		if (count > best_icon_count) {
+			best_icon = icon;
+			best_icon_count = count;
+		}
+	}
+
+	return const_cast<icon *>(best_icon);
 }
 
 QVariantList country_game_data::get_stored_commodities_qvariant_list() const

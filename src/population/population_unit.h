@@ -4,13 +4,13 @@
 
 namespace metternich {
 
+class country;
 class culture;
 class employment_type;
 class icon;
 class ideology;
 class phenotype;
 class population_type;
-class province;
 class religion;
 
 class population_unit final : public QObject
@@ -22,12 +22,12 @@ class population_unit final : public QObject
 	Q_PROPERTY(metternich::religion* religion READ get_religion_unconst NOTIFY religion_changed)
 	Q_PROPERTY(metternich::phenotype* phenotype READ get_phenotype_unconst NOTIFY phenotype_changed)
 	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
-	Q_PROPERTY(metternich::province* province READ get_province_unconst NOTIFY province_changed)
+	Q_PROPERTY(metternich::country* country READ get_country_unconst NOTIFY country_changed)
 
 public:
 	static constexpr int base_score = 1;
 
-	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *province);
+	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::country *country);
 
 	const population_type *get_type() const
 	{
@@ -101,20 +101,20 @@ private:
 public:
 	const icon *get_small_icon() const;
 
-	const metternich::province *get_province() const
+	const metternich::country *get_country() const
 	{
-		return this->province;
+		return this->country;
 	}
 
 private:
 	//for the Qt property (pointers there can't be const)
-	metternich::province *get_province_unconst() const
+	metternich::country *get_country_unconst() const
 	{
-		return const_cast<metternich::province *>(this->get_province());
+		return const_cast<metternich::country *>(this->get_country());
 	}
 
 public:
-	void set_province(const metternich::province *province);
+	void set_country(const metternich::country *country);
 
 	bool is_employed() const
 	{
@@ -153,7 +153,7 @@ public:
 
 	void choose_ideology();
 
-	void migrate_to(const metternich::province *province);
+	void migrate_to(const metternich::country *country);
 
 signals:
 	void type_changed();
@@ -161,14 +161,14 @@ signals:
 	void religion_changed();
 	void phenotype_changed();
 	void icon_changed();
-	void province_changed();
+	void country_changed();
 
 private:
 	const population_type *type = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
-	const metternich::province *province = nullptr;
+	const metternich::country *country = nullptr;
 	const metternich::employment_type *employment_type = nullptr;
 	const metternich::ideology *ideology = nullptr;
 };

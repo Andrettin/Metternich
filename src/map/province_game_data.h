@@ -1,14 +1,11 @@
 #pragma once
 
 #include "country/culture_container.h"
-#include "country/ideology_container.h"
 #include "country/religion_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "map/terrain_type_container.h"
-#include "population/phenotype_container.h"
-#include "population/population_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
@@ -25,8 +22,6 @@ class icon;
 class improvement;
 class military_unit;
 class phenotype;
-class population_type;
-class population_unit;
 class province;
 class religion;
 class scripted_province_modifier;
@@ -49,13 +44,6 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
-	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
-	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
-	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
-	Q_PROPERTY(QVariantList population_religion_counts READ get_population_religion_counts_qvariant_list NOTIFY population_religion_counts_changed)
-	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
-	Q_PROPERTY(QVariantList population_ideology_counts READ get_population_ideology_counts_qvariant_list NOTIFY population_ideology_counts_changed)
-	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 
 public:
@@ -71,7 +59,6 @@ public:
 
 	void do_turn();
 	void do_production();
-	void do_cultural_change();
 	void do_events();
 	void do_ai_turn();
 
@@ -111,7 +98,6 @@ private:
 
 public:
 	void set_culture(const metternich::culture *culture);
-	void calculate_culture();
 
 	const metternich::religion *get_religion() const
 	{
@@ -127,7 +113,6 @@ private:
 
 public:
 	void set_religion(const metternich::religion *religion);
-	void calculate_religion();
 
 	const std::string &get_current_cultural_name() const;
 
@@ -194,7 +179,6 @@ public:
 	bool produces_commodity(const commodity *commodity) const;
 
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
-	void setup_resource_improvements();
 
 	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
@@ -239,97 +223,10 @@ public:
 		this->apply_modifier(modifier, -1);
 	}
 
-	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
-	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
-	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype);
-	void clear_population_units();
-
-	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
-	{
-		return this->population_units;
-	}
-
-	int get_population_unit_count() const
-	{
-		return static_cast<int>(this->population_units.size());
-	}
-
-	const population_type_map<int> &get_population_type_counts() const
-	{
-		return this->population_type_counts;
-	}
-
-	QVariantList get_population_type_counts_qvariant_list() const;
-	void change_population_type_count(const population_type *type, const int change);
-
-	const culture_map<int> &get_population_culture_counts() const
-	{
-		return this->population_culture_counts;
-	}
-
-	QVariantList get_population_culture_counts_qvariant_list() const;
-	void change_population_culture_count(const metternich::culture *culture, const int change);
-
-	const religion_map<int> &get_population_religion_counts() const
-	{
-		return this->population_religion_counts;
-	}
-
-	QVariantList get_population_religion_counts_qvariant_list() const;
-	void change_population_religion_count(const metternich::religion *religion, const int change);
-
-	const phenotype_map<int> &get_population_phenotype_counts() const
-	{
-		return this->population_phenotype_counts;
-	}
-
-	QVariantList get_population_phenotype_counts_qvariant_list() const;
-	void change_population_phenotype_count(const phenotype *phenotype, const int change);
-
-	const ideology_map<int> &get_population_ideology_counts() const
-	{
-		return this->population_ideology_counts;
-	}
-
-	QVariantList get_population_ideology_counts_qvariant_list() const;
-	void change_population_ideology_count(const ideology *ideology, const int change);
-
-	int get_population() const
-	{
-		return this->population;
-	}
-
-	void change_population(const int change);
-
-	void grow_population();
-	void decrease_population();
-	population_unit *choose_starvation_population_unit();
-
-	Q_INVOKABLE QObject *get_population_type_small_icon(metternich::population_type *type) const;
-
-	void assign_workers();
-	void reassign_workers();
-	void assign_worker(population_unit *population_unit);
-	bool try_assign_worker_to_tile(population_unit *population_unit, tile *tile);
-	void assign_worker_to_tile(population_unit *population_unit, tile *tile);
-	bool try_assign_worker_to_building(population_unit *population_unit, building_slot *building_slot);
-	void assign_worker_to_building(population_unit *population_unit, building_slot *building_slot);
-
-	void unassign_worker(population_unit *population_unit);
-
-	int get_food_consumption() const
-	{
-		return this->get_population_unit_count() + static_cast<int>(this->home_civilian_units.size()) + static_cast<int>(this->home_military_units.size());
-	}
-
 	int get_free_food_consumption() const
 	{
 		return this->free_food_consumption;
 	}
-
-	bool can_tile_employ_worker(const population_unit *population_unit, const tile *tile) const;
-	bool can_building_employ_worker(const population_unit *population_unit, const building_slot *building_slot) const;
-	bool has_employment_for_worker(const population_unit *population_unit) const;
 
 	int get_score() const
 	{
@@ -337,26 +234,6 @@ public:
 	}
 
 	void change_score(const int change);
-
-	void add_home_civilian_unit(civilian_unit *civilian_unit)
-	{
-		this->home_civilian_units.push_back(civilian_unit);
-	}
-
-	void remove_home_civilian_unit(civilian_unit *civilian_unit)
-	{
-		std::erase(this->home_civilian_units, civilian_unit);
-	}
-
-	void add_home_military_unit(military_unit *military_unit)
-	{
-		this->home_military_units.push_back(military_unit);
-	}
-
-	void remove_home_military_unit(military_unit *military_unit)
-	{
-		std::erase(this->home_military_units, military_unit);
-	}
 
 	const std::vector<military_unit *> &get_military_units() const
 	{
@@ -453,13 +330,6 @@ signals:
 	void religion_changed();
 	void territory_changed();
 	void scripted_modifiers_changed();
-	void population_units_changed();
-	void population_type_counts_changed();
-	void population_culture_counts_changed();
-	void population_religion_counts_changed();
-	void population_phenotype_counts_changed();
-	void population_ideology_counts_changed();
-	void population_changed();
 	void military_units_changed();
 	void military_unit_category_counts_changed();
 
@@ -481,17 +351,8 @@ private:
 	std::vector<qunique_ptr<building_slot>> building_slots;
 	building_slot_type_map<building_slot *> building_slot_map;
 	scripted_province_modifier_map<int> scripted_modifiers;
-	std::vector<qunique_ptr<population_unit>> population_units;
-	population_type_map<int> population_type_counts;
-	culture_map<int> population_culture_counts;
-	religion_map<int> population_religion_counts;
-	phenotype_map<int> population_phenotype_counts;
-	ideology_map<int> population_ideology_counts;
-	int population = 0;
 	int free_food_consumption = 0;
 	int score = 0;
-	std::vector<civilian_unit *> home_civilian_units;
-	std::vector<military_unit *> home_military_units;
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;
 	int production_modifier = 0;

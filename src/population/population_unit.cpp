@@ -2,14 +2,14 @@
 
 #include "population/population_unit.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/culture.h"
 #include "country/ideology.h"
 #include "country/religion.h"
 #include "economy/commodity.h"
 #include "economy/employment_type.h"
 #include "game/game.h"
-#include "map/province.h"
-#include "map/province_game_data.h"
 #include "population/population_type.h"
 #include "script/condition/condition.h"
 #include "script/factor.h"
@@ -19,14 +19,14 @@
 
 namespace metternich {
 
-population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *province)
-	: type(type), culture(culture), religion(religion), phenotype(phenotype), province(province)
+population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::country *country)
+	: type(type), culture(culture), religion(religion), phenotype(phenotype), country(country)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
-	assert_throw(this->get_province() != nullptr);
+	assert_throw(this->get_country() != nullptr);
 
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
 }
@@ -42,11 +42,11 @@ void population_unit::set_type(const population_type *type)
 		return;
 	}
 
-	this->get_province()->get_game_data()->change_population_type_count(this->get_type(), -1);
+	this->get_country()->get_game_data()->change_population_type_count(this->get_type(), -1);
 
 	this->type = type;
 
-	this->get_province()->get_game_data()->change_population_type_count(this->get_type(), 1);
+	this->get_country()->get_game_data()->change_population_type_count(this->get_type(), 1);
 
 	emit type_changed();
 }
@@ -57,11 +57,11 @@ void population_unit::set_culture(const metternich::culture *culture)
 		return;
 	}
 
-	this->get_province()->get_game_data()->change_population_culture_count(this->get_culture(), -1);
+	this->get_country()->get_game_data()->change_population_culture_count(this->get_culture(), -1);
 
 	this->culture = culture;
 
-	this->get_province()->get_game_data()->change_population_culture_count(this->get_culture(), 1);
+	this->get_country()->get_game_data()->change_population_culture_count(this->get_culture(), 1);
 
 	const population_type *culture_population_type = culture->get_population_class_type(this->get_type()->get_population_class());
 	if (culture_population_type != this->get_type()) {
@@ -77,11 +77,11 @@ void population_unit::set_religion(const metternich::religion *religion)
 		return;
 	}
 
-	this->get_province()->get_game_data()->change_population_religion_count(this->get_religion(), -1);
+	this->get_country()->get_game_data()->change_population_religion_count(this->get_religion(), -1);
 
 	this->religion = religion;
 
-	this->get_province()->get_game_data()->change_population_religion_count(this->get_religion(), 1);
+	this->get_country()->get_game_data()->change_population_religion_count(this->get_religion(), 1);
 
 	emit religion_changed();
 }
@@ -92,11 +92,11 @@ void population_unit::set_phenotype(const metternich::phenotype *phenotype)
 		return;
 	}
 
-	this->get_province()->get_game_data()->change_population_phenotype_count(this->get_phenotype(), -1);
+	this->get_country()->get_game_data()->change_population_phenotype_count(this->get_phenotype(), -1);
 
 	this->phenotype = phenotype;
 
-	this->get_province()->get_game_data()->change_population_phenotype_count(this->get_phenotype(), 1);
+	this->get_country()->get_game_data()->change_population_phenotype_count(this->get_phenotype(), 1);
 
 	emit phenotype_changed();
 }
@@ -106,15 +106,15 @@ const icon *population_unit::get_small_icon() const
 	return this->get_type()->get_phenotype_small_icon(this->get_phenotype());
 }
 
-void population_unit::set_province(const metternich::province *province)
+void population_unit::set_country(const metternich::country *country)
 {
-	if (province == this->get_province()) {
+	if (country == this->get_country()) {
 		return;
 	}
 
-	this->province = province;
+	this->country = country;
 
-	emit province_changed();
+	emit country_changed();
 }
 
 centesimal_int population_unit::get_employment_output(const metternich::employment_type *employment_type) const
@@ -138,13 +138,13 @@ void population_unit::set_ideology(const metternich::ideology *ideology)
 	}
 
 	if (this->get_ideology() != nullptr) {
-		this->get_province()->get_game_data()->change_population_ideology_count(this->get_ideology(), -1);
+		this->get_country()->get_game_data()->change_population_ideology_count(this->get_ideology(), -1);
 	}
 
 	this->ideology = ideology;
 
 	if (this->get_ideology() != nullptr) {
-		this->get_province()->get_game_data()->change_population_ideology_count(this->get_ideology(), 1);
+		this->get_country()->get_game_data()->change_population_ideology_count(this->get_ideology(), 1);
 	}
 }
 
@@ -169,16 +169,14 @@ void population_unit::choose_ideology()
 	}
 }
 
-void population_unit::migrate_to(const metternich::province *province)
+void population_unit::migrate_to(const metternich::country *country)
 {
-	qunique_ptr<population_unit> unique_ptr = this->get_province()->get_game_data()->pop_population_unit(this);
+	qunique_ptr<population_unit> unique_ptr = this->get_country()->get_game_data()->pop_population_unit(this);
 
 	assert_throw(unique_ptr != nullptr);
 
-	province->get_game_data()->add_population_unit(std::move(unique_ptr));
-	this->set_province(province);
-
-	province->get_game_data()->assign_worker(this);
+	country->get_game_data()->add_population_unit(std::move(unique_ptr));
+	this->set_country(country);
 }
 
 }

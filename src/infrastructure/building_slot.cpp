@@ -65,7 +65,6 @@ void building_slot::set_building(const building_type *building)
 	}
 
 	if (game::get()->is_running()) {
-		province_game_data->reassign_workers();
 		this->calculate_base_commodity_outputs();
 
 		emit building_changed();

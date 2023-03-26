@@ -453,10 +453,6 @@ void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improv
 		tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
 	}
 
-	if (game::get()->is_running()) {
-		tile->get_province()->get_game_data()->reassign_workers();
-	}
-
 	emit tile_improvement_changed(tile_pos);
 
 	if (tile->get_site() != nullptr) {

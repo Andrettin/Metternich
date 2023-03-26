@@ -100,16 +100,12 @@ military_unit::military_unit(const military_unit_type *type, const country *owne
 	connect(this, &military_unit::type_changed, this, &military_unit::icon_changed);
 }
 
-military_unit::military_unit(const military_unit_type *type, const country *owner, const metternich::province *home_province, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
+military_unit::military_unit(const military_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
 	: military_unit(type, owner, culture, religion, phenotype)
 {
-	this->home_province = home_province;
 	this->population_type = population_type;
 
-	assert_throw(this->get_home_province() != nullptr);
 	assert_throw(this->get_population_type() != nullptr);
-
-	this->get_home_province()->get_game_data()->add_home_military_unit(this);
 }
 
 military_unit::military_unit(const military_unit_type *type, const metternich::character *character)
@@ -397,8 +393,8 @@ void military_unit::disband(const bool restore_population_unit)
 		}
 	}
 
-	if (this->get_home_province() != nullptr) {
-		this->get_home_province()->get_game_data()->remove_home_military_unit(this);
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->remove_military_unit(this);
 
 		if (restore_population_unit) {
 			assert_throw(this->get_population_type() != nullptr);
@@ -406,12 +402,8 @@ void military_unit::disband(const bool restore_population_unit)
 			assert_throw(this->get_religion() != nullptr);
 			assert_throw(this->get_phenotype() != nullptr);
 
-			this->get_home_province()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
+			this->get_owner()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
 		}
-	}
-
-	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->remove_military_unit(this);
 	}
 }
 
