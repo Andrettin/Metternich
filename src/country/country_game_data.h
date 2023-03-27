@@ -625,6 +625,18 @@ public:
 
 	QVariantList get_commodity_outputs_qvariant_list() const;
 
+	int get_commodity_output(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_outputs.find(commodity);
+
+		if (find_iterator != this->commodity_outputs.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	Q_INVOKABLE int get_commodity_output(const QString &commodity_identifier) const;
 	void change_commodity_output(const commodity *commodity, const int change);
 
 	bool can_declare_war_on(const metternich::country *other_country) const;
