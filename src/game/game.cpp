@@ -284,15 +284,19 @@ void game::apply_history(const metternich::scenario *scenario)
 		database::get()->load_history(scenario->get_start_date(), scenario->get_timeline(), this->get_rules());
 
 		for (const province *province : map::get()->get_provinces()) {
-			const province_history *province_history = province->get_history();
-			province_game_data *province_game_data = province->get_game_data();
+			try {
+				const province_history *province_history = province->get_history();
+				province_game_data *province_game_data = province->get_game_data();
 
-			province_game_data->set_culture(province_history->get_culture());
-			province_game_data->set_religion(province_history->get_religion());
+				province_game_data->set_culture(province_history->get_culture());
+				province_game_data->set_religion(province_history->get_religion());
 
-			const country *owner = province_history->get_owner();
+				const country *owner = province_history->get_owner();
 
-			province_game_data->set_owner(owner);
+				province_game_data->set_owner(owner);
+			} catch (...) {
+				std::throw_with_nested(std::runtime_error("Failed to apply history for province \"" + province->get_identifier() + "\"."));
+			}
 		}
 
 		for (const country *country : this->get_countries()) {
@@ -615,7 +619,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			owner->get_game_data()->add_military_unit(std::move(military_unit));
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Failed to apply history."));
+		std::throw_with_nested(std::runtime_error("Failed to apply history for scenario \"" + scenario->get_identifier() + "\"."));
 	}
 }
 
