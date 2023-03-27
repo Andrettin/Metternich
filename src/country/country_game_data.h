@@ -75,6 +75,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(int storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
+	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
@@ -86,6 +87,7 @@ public:
 	~country_game_data();
 
 	void do_turn();
+	void do_production();
 	void do_population_growth();
 	void do_cultural_change();
 	void do_events();
@@ -615,6 +617,15 @@ public:
 		this->set_storage_capacity(this->get_storage_capacity() + change);
 	}
 
+	const commodity_map<int> &get_commodity_outputs() const
+	{
+		return this->commodity_outputs;
+	}
+
+	QVariantList get_commodity_outputs_qvariant_list() const;
+
+	void change_commodity_output(const commodity *commodity, const int change);
+
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
 	QVariantList get_technologies_qvariant_list() const;
@@ -712,8 +723,6 @@ public:
 		}
 
 		this->production_modifier = value;
-
-		this->calculate_base_commodity_outputs();
 	}
 
 	void change_production_modifier(const int value)
@@ -743,17 +752,12 @@ public:
 		} else {
 			this->commodity_production_modifiers[commodity] = value;
 		}
-
-		this->calculate_base_commodity_outputs();
 	}
 
 	void change_commodity_production_modifier(const commodity *commodity, const int value)
 	{
 		this->set_commodity_production_modifier(commodity, this->get_commodity_production_modifier(commodity) + value);
 	}
-
-	commodity_map<centesimal_int> get_commodity_outputs() const;
-	void calculate_base_commodity_outputs();
 
 	void gain_item(const trait *item);
 
@@ -785,6 +789,7 @@ signals:
 	void storage_capacity_changed();
 	void technologies_changed();
 	void characters_changed();
+	void commodity_outputs_changed();
 
 private:
 	metternich::country *country = nullptr;
@@ -827,6 +832,7 @@ private:
 	centesimal_int piety;
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;
+	commodity_map<int> commodity_outputs;
 	technology_set technologies;
 	std::vector<const character *> characters;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;

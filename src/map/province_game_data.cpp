@@ -79,33 +79,11 @@ void province_game_data::on_map_created()
 
 void province_game_data::do_turn()
 {
-	this->do_production();
-
 	for (const site *site : this->sites) {
 		site->get_game_data()->do_turn();
 	}
 
 	this->decrement_scripted_modifiers();
-}
-
-void province_game_data::do_production()
-{
-	if (this->get_owner() == nullptr) {
-		return;
-	}
-
-	const commodity_map<centesimal_int> output_per_commodity = this->get_commodity_outputs();
-	country_game_data *owner_game_data = this->get_owner()->get_game_data();
-
-	for (const auto &[commodity, output] : output_per_commodity) {
-		const int output_int = output.to_int();
-
-		if (output_int == 0) {
-			continue;
-		}
-
-		owner_game_data->change_stored_commodity(commodity, output_int);
-	}
 }
 
 void province_game_data::do_events()
@@ -393,6 +371,12 @@ void province_game_data::on_improvement_gained(const improvement *improvement, c
 	assert_throw(improvement != nullptr);
 
 	this->change_score(improvement->get_score() * multiplier);
+
+	if (this->get_owner() != nullptr) {
+		if (improvement->get_output_commodity() != nullptr) {
+			this->get_owner()->get_game_data()->change_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier() * multiplier);
+		}
+	}
 }
 
 QVariantList province_game_data::get_building_slots_qvariant_list() const
@@ -830,13 +814,6 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 	}
 
 	return false;
-}
-
-void province_game_data::calculate_base_commodity_outputs()
-{
-	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		building_slot->calculate_base_commodity_outputs();
-	}
 }
 
 void province_game_data::apply_country_modifier(const country *country, const int multiplier)

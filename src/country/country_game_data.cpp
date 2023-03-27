@@ -17,6 +17,7 @@
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "infrastructure/improvement.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -77,6 +78,7 @@ void country_game_data::do_turn()
 		province->get_game_data()->do_turn();
 	}
 
+	this->do_production();
 	this->do_population_growth();
 
 	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
@@ -96,6 +98,14 @@ void country_game_data::do_turn()
 	}
 
 	this->check_characters(game::get()->get_next_date());
+}
+
+
+void country_game_data::do_production()
+{
+	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+		this->change_stored_commodity(commodity, output);
+	}
 }
 
 void country_game_data::do_population_growth()
@@ -394,6 +404,15 @@ void country_game_data::add_province(const province *province)
 		}
 	}
 
+	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+		const improvement *improvement = tile->get_improvement();
+
+		if (improvement != nullptr && improvement->get_output_commodity() != nullptr) {
+			this->change_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier());
+		}
+	}
+
 	for (const auto &[terrain, count] : province_game_data->get_tile_terrain_counts()) {
 		this->change_tile_terrain_count(terrain, count);
 	}
@@ -459,6 +478,15 @@ void country_game_data::remove_province(const province *province)
 
 		if (this->get_overlord() != nullptr) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, -count);
+		}
+	}
+
+	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+		const improvement *improvement = tile->get_improvement();
+
+		if (improvement != nullptr && improvement->get_output_commodity() != nullptr) {
+			this->change_commodity_output(improvement->get_output_commodity(), -improvement->get_output_multiplier());
 		}
 	}
 
@@ -1295,6 +1323,10 @@ void country_game_data::change_population_type_count(const population_type *type
 	if (game::get()->is_running()) {
 		emit population_type_counts_changed();
 	}
+
+	if (type->get_output_commodity() != nullptr) {
+		this->change_commodity_output(type->get_output_commodity(), type->get_output_value() * change);
+	}
 }
 
 QVariantList country_game_data::get_population_culture_counts_qvariant_list() const
@@ -1558,6 +1590,30 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 	}
 }
 
+QVariantList country_game_data::get_commodity_outputs_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
+}
+
+void country_game_data::change_commodity_output(const commodity *commodity, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->commodity_outputs[commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->commodity_outputs.erase(commodity);
+	}
+
+	if (game::get()->is_running()) {
+		emit commodity_outputs_changed();
+	}
+}
+
 bool country_game_data::can_declare_war_on(const metternich::country *other_country) const
 {
 	if (!this->country->can_declare_war()) {
@@ -1788,27 +1844,6 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 	}
 
 	return best_type;
-}
-
-commodity_map<centesimal_int> country_game_data::get_commodity_outputs() const
-{
-	commodity_map<centesimal_int> output_per_commodity;
-
-	for (const province *province : this->get_provinces()) {
-		const commodity_map<centesimal_int> province_commodity_outputs = province->get_game_data()->get_commodity_outputs();
-		for (const auto &[commodity, output] : province_commodity_outputs) {
-			output_per_commodity[commodity] += output;
-		}
-	}
-
-	return output_per_commodity;
-}
-
-void country_game_data::calculate_base_commodity_outputs()
-{
-	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->calculate_base_commodity_outputs();
-	}
 }
 
 void country_game_data::gain_item(const trait *item)

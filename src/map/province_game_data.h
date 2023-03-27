@@ -58,7 +58,6 @@ public:
 	void on_map_created();
 
 	void do_turn();
-	void do_production();
 	void do_events();
 	void do_ai_turn();
 
@@ -277,8 +276,6 @@ public:
 		}
 
 		this->production_modifier = value;
-
-		this->calculate_base_commodity_outputs();
 	}
 
 	void change_production_modifier(const int value)
@@ -308,8 +305,6 @@ public:
 		} else {
 			this->commodity_production_modifiers[commodity] = value;
 		}
-
-		this->calculate_base_commodity_outputs();
 	}
 
 	void change_commodity_production_modifier(const commodity *commodity, const int value)
@@ -318,7 +313,6 @@ public:
 	}
 
 	bool can_produce_commodity(const commodity *commodity) const;
-	void calculate_base_commodity_outputs();
 
 	void apply_country_modifier(const country *country, const int multiplier);
 
