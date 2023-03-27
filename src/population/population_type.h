@@ -24,6 +24,8 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(bool literate MEMBER literate READ is_literate NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::icon* small_icon MEMBER small_icon NOTIFY changed)
+	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
+	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "population_type";
@@ -94,16 +96,14 @@ public:
 		return this->get_small_icon();
 	}
 
-	const centesimal_int &get_production_multiplier(const commodity *commodity) const
+	const commodity *get_output_commodity() const
 	{
-		static const centesimal_int default_multiplier(1);
+		return this->output_commodity;
+	}
 
-		const auto find_iterator = this->production_multipliers.find(commodity);
-		if (find_iterator != this->production_multipliers.end()) {
-			return find_iterator->second;
-		}
-
-		return default_multiplier;
+	int get_output_value() const
+	{
+		return this->output_value;
 	}
 
 signals:
@@ -119,7 +119,8 @@ private:
 	metternich::icon *small_icon = nullptr;
 	std::map<const phenotype *, const metternich::icon *> phenotype_icons;
 	std::map<const phenotype *, const metternich::icon *> phenotype_small_icons;
-	commodity_map<centesimal_int> production_multipliers;
+	commodity *output_commodity = nullptr;
+	int output_value = 1;
 };
 
 }

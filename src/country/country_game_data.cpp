@@ -26,6 +26,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/phenotype.h"
+#include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/condition.h"
 #include "script/factor.h"
@@ -1490,8 +1491,7 @@ population_unit *country_game_data::choose_starvation_population_unit()
 
 		if (
 			best_population_unit == nullptr
-			|| (best_population_unit->produces_food() && !population_unit->produces_food())
-			|| (best_population_unit->produces_food() == population_unit->produces_food() && best_population_unit->get_employment_output() < population_unit->get_employment_output())
+			|| best_population_unit->get_type()->get_output_value() < population_unit->get_type()->get_output_value()
 		) {
 			best_population_unit = population_unit;
 		}

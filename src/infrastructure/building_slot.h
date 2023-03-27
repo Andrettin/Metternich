@@ -76,37 +76,7 @@ public:
 
 	bool is_available() const;
 
-	const std::vector<population_unit *> &get_employees() const
-	{
-		return this->employees;
-	}
-
-	void clear_employees()
-	{
-		this->employees.clear();
-	}
-
-	void add_employee(population_unit *population_unit)
-	{
-		this->employees.push_back(population_unit);
-
-		this->calculate_base_commodity_outputs();
-	}
-
-	void remove_employee(population_unit *population_unit)
-	{
-		std::erase(this->employees, population_unit);
-
-		this->calculate_base_commodity_outputs();
-	}
-
-	int get_employee_count() const
-	{
-		return static_cast<int>(this->get_employees().size());
-	}
-
-	int get_employment_capacity() const;
-	centesimal_int get_output_multiplier() const;
+	int get_capacity() const;
 
 	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
 	{
@@ -127,7 +97,6 @@ private:
 	const building_slot_type *type = nullptr;
 	const building_type *building = nullptr;
 	const metternich::province *province = nullptr;
-	std::vector<population_unit *> employees;
 	commodity_map<centesimal_int> base_commodity_outputs;
 };
 

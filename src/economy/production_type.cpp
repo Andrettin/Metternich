@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "economy/employment_type.h"
+#include "economy/production_type.h"
 
 #include "economy/commodity.h"
 #include "population/population_class.h"
@@ -8,10 +8,9 @@
 
 namespace metternich {
 
-void employment_type::process_gsml_scope(const gsml_data &scope)
+void production_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
-	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "input_commodities") {
 		scope.for_each_property([&](const gsml_property &property) {
@@ -19,22 +18,20 @@ void employment_type::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			const commodity *commodity = commodity::get(key);
-			const centesimal_int multiplier(value);
+			const int value_int = std::stoi(value);
 
-			this->input_commodities[commodity] = multiplier;
+			this->input_commodities[commodity] = value_int;
 		});
-	} else if (tag == "employees") {
-		for (const std::string &value : values) {
-			this->employees.push_back(population_class::get(value));
-		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
 }
 
-void employment_type::check() const
+void production_type::check() const
 {
+	assert_throw(!this->get_input_commodities().empty());
 	assert_throw(this->get_output_commodity() != nullptr);
+	assert_throw(this->get_output_value() > 0);
 }
 
 }

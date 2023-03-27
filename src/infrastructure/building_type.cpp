@@ -4,7 +4,7 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
-#include "economy/employment_type.h"
+#include "economy/production_type.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "population/population_type.h"
@@ -69,33 +69,19 @@ void building_type::check() const
 	assert_throw(this->get_portrait() != nullptr);
 	assert_throw(this->get_icon() != nullptr);
 
-	if (this->get_employment_type() != nullptr) {
+	if (this->get_production_type() != nullptr) {
 		assert_throw(this->get_output_commodity() != nullptr);
-		assert_throw(this->get_output_multiplier() > 0);
-		assert_throw(this->get_employment_capacity() > 0);
+		assert_throw(this->get_base_capacity() > 0);
 	}
 }
 
 const commodity *building_type::get_output_commodity() const
 {
-	if (this->get_employment_type() != nullptr) {
-		return this->get_employment_type()->get_output_commodity();
+	if (this->get_production_type() != nullptr) {
+		return this->get_production_type()->get_output_commodity();
 	}
 
 	return nullptr;
-}
-
-bool building_type::can_employ_worker(const population_unit *population_unit) const
-{
-	if (this->get_employment_type() == nullptr) {
-		return false;
-	}
-
-	if (!vector::contains(this->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
-		return false;
-	}
-
-	return true;
 }
 
 }

@@ -11,9 +11,9 @@ class building_class;
 class country;
 class cultural_group;
 class culture;
-class employment_type;
 class icon;
 class population_unit;
+class production_type;
 class province;
 class technology;
 
@@ -29,9 +29,8 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
-	Q_PROPERTY(metternich::employment_type* employment_type MEMBER employment_type NOTIFY changed)
-	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
-	Q_PROPERTY(archimedes::centesimal_int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
+	Q_PROPERTY(metternich::production_type* production_type MEMBER production_type NOTIFY changed)
+	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
 	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -76,22 +75,17 @@ public:
 		return this->icon;
 	}
 
-	const metternich::employment_type *get_employment_type() const
+	const metternich::production_type *get_production_type() const
 	{
-		return this->employment_type;
+		return this->production_type;
 	}
 
-	int get_employment_capacity() const
+	int get_base_capacity() const
 	{
-		return this->employment_capacity;
+		return this->base_capacity;
 	}
 
 	const commodity *get_output_commodity() const;
-
-	const centesimal_int &get_output_multiplier() const
-	{
-		return this->output_multiplier;
-	}
 
 	bool is_warehouse() const
 	{
@@ -110,10 +104,8 @@ public:
 
 	int get_score() const
 	{
-		return (building_type::base_score * centesimal_int::max(centesimal_int(1), (this->get_employment_capacity() * this->get_output_multiplier()))).to_int();
+		return (building_type::base_score * std::max(1, this->get_base_capacity()));
 	}
-
-	bool can_employ_worker(const population_unit *population_unit) const;
 
 	const modifier<const province> *get_province_modifier() const
 	{
@@ -134,9 +126,8 @@ private:
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *portrait = nullptr;
 	metternich::icon *icon = nullptr;
-	metternich::employment_type *employment_type = nullptr;
-	int employment_capacity = 0;
-	centesimal_int output_multiplier;
+	metternich::production_type *production_type = nullptr;
+	int base_capacity = 0;
 	bool warehouse = false;
 	building_type *required_building = nullptr;
 	technology *required_technology = nullptr;

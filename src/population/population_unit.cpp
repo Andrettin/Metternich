@@ -8,7 +8,6 @@
 #include "country/ideology.h"
 #include "country/religion.h"
 #include "economy/commodity.h"
-#include "economy/employment_type.h"
 #include "game/game.h"
 #include "population/population_type.h"
 #include "script/condition/condition.h"
@@ -115,20 +114,6 @@ void population_unit::set_country(const metternich::country *country)
 	this->country = country;
 
 	emit country_changed();
-}
-
-centesimal_int population_unit::get_employment_output(const metternich::employment_type *employment_type) const
-{
-	return employment_type->get_output_multiplier() * this->get_type()->get_production_multiplier(employment_type->get_output_commodity());
-}
-
-bool population_unit::produces_food() const
-{
-	if (this->get_employment_type() != nullptr) {
-		return this->get_employment_type()->get_output_commodity()->is_food();
-	}
-
-	return false;
 }
 
 void population_unit::set_ideology(const metternich::ideology *ideology)

@@ -10,7 +10,7 @@
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/commodity_container.h"
-#include "economy/employment_type.h"
+#include "economy/production_type.h"
 #include "economy/resource.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -492,7 +492,6 @@ void province_game_data::set_slot_building(const building_slot_type *slot_type, 
 void province_game_data::clear_buildings()
 {
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		building_slot->clear_employees();
 		building_slot->set_building(nullptr);
 		building_slot->calculate_base_commodity_outputs();
 	}
@@ -817,7 +816,7 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 			}
 
 			bool can_produce_inputs = true;
-			for (const auto &[input_commodity, input_multiplier] : building_type->get_employment_type()->get_input_commodities()) {
+			for (const auto &[input_commodity, input_multiplier] : building_type->get_production_type()->get_input_commodities()) {
 				if (!this->can_produce_commodity(input_commodity)) {
 					can_produce_inputs = false;
 					break;

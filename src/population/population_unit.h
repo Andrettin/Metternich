@@ -6,7 +6,6 @@ namespace metternich {
 
 class country;
 class culture;
-class employment_type;
 class icon;
 class ideology;
 class phenotype;
@@ -116,34 +115,6 @@ private:
 public:
 	void set_country(const metternich::country *country);
 
-	bool is_employed() const
-	{
-		return this->get_employment_type() != nullptr;
-	}
-
-	const metternich::employment_type *get_employment_type() const
-	{
-		return this->employment_type;
-	}
-
-	void set_employment_type(const metternich::employment_type *employment_type)
-	{
-		this->employment_type = employment_type;
-	}
-
-	centesimal_int get_employment_output(const employment_type *employment_type) const;
-
-	centesimal_int get_employment_output() const
-	{
-		if (this->get_employment_type() != nullptr) {
-			return this->get_employment_output(this->get_employment_type());
-		}
-
-		return centesimal_int(0);
-	}
-
-	bool produces_food() const;
-
 	const metternich::ideology *get_ideology() const
 	{
 		return this->ideology;
@@ -169,7 +140,6 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::country *country = nullptr;
-	const metternich::employment_type *employment_type = nullptr;
 	const metternich::ideology *ideology = nullptr;
 };
 

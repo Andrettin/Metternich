@@ -2,7 +2,6 @@
 
 #include "infrastructure/improvement.h"
 
-#include "economy/employment_type.h"
 #include "economy/resource.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"

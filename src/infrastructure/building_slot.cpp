@@ -5,7 +5,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
-#include "economy/employment_type.h"
+#include "economy/production_type.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
@@ -82,15 +82,11 @@ bool building_slot::can_have_building(const building_type *building) const
 			return false;
 		}
 
-		if (building->get_employment_capacity() < this->get_building()->get_employment_capacity()) {
+		if (building->get_base_capacity() < this->get_building()->get_base_capacity()) {
 			return false;
 		}
 
-		if (building->get_output_multiplier() < this->get_building()->get_output_multiplier()) {
-			return false;
-		}
-
-		if (building->get_employment_capacity() == this->get_building()->get_employment_capacity() && building->get_output_multiplier() == this->get_building()->get_output_multiplier()) {
+		if (building->get_base_capacity() == this->get_building()->get_base_capacity()) {
 			//the building must be better in some way
 			return false;
 		}
@@ -116,9 +112,9 @@ bool building_slot::is_available() const
 		}
 
 		if (!this->get_province()->get_game_data()->is_capital()) {
-			const employment_type *employment_type = building->get_employment_type();
-			if (employment_type != nullptr) {
-				for (const auto &[input_commodity, input_multiplier] : employment_type->get_input_commodities()) {
+			const production_type *production_type = building->get_production_type();
+			if (production_type != nullptr) {
+				for (const auto &[input_commodity, input_multiplier] : production_type->get_input_commodities()) {
 					if (!this->get_province()->get_game_data()->can_produce_commodity(input_commodity)) {
 						return false;
 					}
@@ -132,40 +128,13 @@ bool building_slot::is_available() const
 	return false;
 }
 
-int building_slot::get_employment_capacity() const
+int building_slot::get_capacity() const
 {
 	if (this->get_building() != nullptr) {
-		return this->get_building()->get_employment_capacity();
+		return this->get_building()->get_base_capacity();
 	}
 
 	return 0;
-}
-
-centesimal_int building_slot::get_output_multiplier() const
-{
-	if (this->get_building() == nullptr) {
-		return centesimal_int(0);
-	}
-
-	const commodity *output_commodity = this->get_building()->get_output_commodity();
-
-	if (output_commodity == nullptr) {
-		return centesimal_int(0);
-	}
-
-	centesimal_int output_multiplier = this->get_building()->get_output_multiplier();
-
-	const province_game_data *province_game_data = this->get_province()->get_game_data();
-	int production_modifier = province_game_data->get_production_modifier() + province_game_data->get_commodity_production_modifier(output_commodity);
-
-	if (province_game_data->get_owner() != nullptr) {
-		const country_game_data *owner_game_data = province_game_data->get_owner()->get_game_data();
-		production_modifier += owner_game_data->get_production_modifier() + owner_game_data->get_commodity_production_modifier(output_commodity);
-	}
-
-	output_multiplier += centesimal_int(production_modifier) / 100;
-
-	return output_multiplier;
 }
 
 commodity_map<centesimal_int> building_slot::get_commodity_outputs() const
@@ -213,26 +182,24 @@ void building_slot::calculate_base_commodity_outputs()
 		return;
 	}
 
-	const employment_type *employment_type = building_type->get_employment_type();
-	if (employment_type == nullptr) {
+	const production_type *production_type = building_type->get_production_type();
+	if (production_type == nullptr) {
 		return;
 	}
 
-	const commodity *output_commodity = employment_type->get_output_commodity();
+	const commodity *output_commodity = production_type->get_output_commodity();
 	centesimal_int output;
 
+	/*
 	for (const population_unit *employee : this->get_employees()) {
-		output += employee->get_employment_output(employment_type);
+		output += employee->get_employment_output(production_type);
 	}
-
-	const centesimal_int output_multiplier = this->get_output_multiplier();
-
-	output *= output_multiplier;
+	*/
 
 	commodity_map<centesimal_int> inputs;
 
-	for (const auto &[input_commodity, input_multiplier] : employment_type->get_input_commodities()) {
-		inputs[input_commodity] = input_multiplier * output / employment_type->get_output_multiplier();
+	for (const auto &[input_commodity, input_multiplier] : production_type->get_input_commodities()) {
+		inputs[input_commodity] = input_multiplier * output / production_type->get_output_value();
 	}
 
 	this->base_commodity_outputs[output_commodity] += output;
