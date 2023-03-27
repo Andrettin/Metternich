@@ -354,21 +354,15 @@ commodity_map<centesimal_int> province_game_data::get_commodity_outputs() const
 			continue;
 		}
 
-		if (improvement->get_employment_type() == nullptr) {
+		const commodity *output_commodity = improvement->get_output_commodity();
+
+		if (output_commodity == nullptr) {
 			continue;
 		}
 
-		const employment_type *employment_type = improvement->get_employment_type();
-		const commodity *output_commodity = employment_type->get_output_commodity();
-		centesimal_int output;
+		const int output = tile->get_output_multiplier();
 
-		for (const population_unit *employee : tile->get_employees()) {
-			output += employee->get_employment_output(employment_type);
-		}
-
-		const centesimal_int output_multiplier = tile->get_output_multiplier();
-
-		output_per_commodity[output_commodity] += output * output_multiplier;
+		output_per_commodity[output_commodity] += output;
 	}
 
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {

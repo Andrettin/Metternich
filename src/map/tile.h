@@ -9,7 +9,6 @@ namespace metternich {
 class civilian_unit;
 class country;
 class improvement;
-class population_unit;
 class province;
 class resource;
 class site;
@@ -165,33 +164,7 @@ public:
 		this->civilian_unit = civilian_unit;
 	}
 
-	const std::vector<population_unit *> &get_employees() const
-	{
-		return this->employees;
-	}
-
-	void clear_employees()
-	{
-		this->employees.clear();
-	}
-
-	void add_employee(population_unit *population_unit)
-	{
-		this->employees.push_back(population_unit);
-	}
-
-	void remove_employee(population_unit *population_unit)
-	{
-		std::erase(this->employees, population_unit);
-	}
-
-	int get_employee_count() const
-	{
-		return static_cast<int>(this->get_employees().size());
-	}
-
-	int get_employment_capacity() const;
-	centesimal_int get_output_multiplier() const;
+	int get_output_multiplier() const;
 
 private:
 	const terrain_type *terrain = nullptr;
@@ -207,7 +180,6 @@ private:
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 	std::vector<direction> country_border_directions;
 	metternich::civilian_unit *civilian_unit = nullptr;
-	std::vector<population_unit *> employees;
 };
 
 }

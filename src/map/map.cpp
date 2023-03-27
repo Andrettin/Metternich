@@ -166,7 +166,6 @@ void map::clear_tile_game_data()
 				tile.set_civilian_unit(nullptr);
 			}
 
-			tile.clear_employees();
 			tile.clear_country_border_directions();
 		}
 	} catch (...) {

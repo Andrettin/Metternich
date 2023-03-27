@@ -75,28 +75,19 @@ void tile::add_river_direction(const direction direction)
 	this->river_directions.push_back(direction);
 }
 
-int tile::get_employment_capacity() const
-{
-	if (this->get_improvement() != nullptr) {
-		return this->get_improvement()->get_employment_capacity();
-	}
-
-	return 0;
-}
-
-centesimal_int tile::get_output_multiplier() const
+int tile::get_output_multiplier() const
 {
 	if (this->get_improvement() == nullptr) {
-		return centesimal_int(0);
+		return 0;
 	}
 
 	const commodity *output_commodity = this->get_improvement()->get_output_commodity();
 
 	if (output_commodity == nullptr) {
-		return centesimal_int(0);
+		return 0;
 	}
 
-	centesimal_int output_multiplier = this->get_improvement()->get_output_multiplier();
+	int output_multiplier = this->get_improvement()->get_output_multiplier();
 
 	const province_game_data *province_game_data = this->get_province()->get_game_data();
 	int production_modifier = province_game_data->get_production_modifier() + province_game_data->get_commodity_production_modifier(output_commodity);
@@ -106,7 +97,8 @@ centesimal_int tile::get_output_multiplier() const
 		production_modifier += owner_game_data->get_production_modifier() + owner_game_data->get_commodity_production_modifier(output_commodity);
 	}
 
-	output_multiplier += centesimal_int(production_modifier) / 100;
+	output_multiplier *= 100 + production_modifier;
+	output_multiplier /= 100;
 
 	return output_multiplier;
 }

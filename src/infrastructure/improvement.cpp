@@ -52,12 +52,6 @@ void improvement::check() const
 		assert_throw(this->get_output_multiplier() > 0);
 	}
 
-	if (this->get_employment_type() != nullptr) {
-		assert_throw(this->get_resource() != nullptr);
-		assert_throw(this->get_employment_type()->get_output_commodity() == this->get_resource()->get_commodity());
-		assert_throw(this->get_employment_capacity() > 0);
-	}
-
 	assert_log(!this->get_image_filepath().empty());
 
 	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
@@ -98,31 +92,14 @@ bool improvement::is_buildable_on_tile(const tile *tile) const
 			return false;
 		}
 
-		if (this->get_employment_capacity() < tile->get_improvement()->get_employment_capacity()) {
-			return false;
-		}
-
 		if (this->get_output_multiplier() < tile->get_improvement()->get_output_multiplier()) {
 			return false;
 		}
 
-		if (this->get_employment_capacity() == tile->get_improvement()->get_employment_capacity() && this->get_output_multiplier() == tile->get_improvement()->get_output_multiplier()) {
+		if (this->get_output_multiplier() == tile->get_improvement()->get_output_multiplier()) {
 			//the improvement must be better in some way
 			return false;
 		}
-	}
-
-	return true;
-}
-
-bool improvement::can_employ_worker(const population_unit *population_unit) const
-{
-	if (this->get_employment_type() == nullptr) {
-		return false;
-	}
-
-	if (!vector::contains(this->get_employment_type()->get_employees(), population_unit->get_type()->get_population_class())) {
-		return false;
 	}
 
 	return true;
