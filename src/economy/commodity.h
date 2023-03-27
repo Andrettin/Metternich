@@ -16,6 +16,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(metternich::food_type food_type MEMBER food_type READ get_food_type NOTIFY changed)
 	Q_PROPERTY(int wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
 	Q_PROPERTY(bool abstract MEMBER abstract READ is_abstract NOTIFY changed)
+	Q_PROPERTY(bool storable MEMBER storable READ is_storable NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "commodity";
@@ -53,6 +54,11 @@ public:
 		return this->abstract;
 	}
 
+	bool is_storable() const
+	{
+		return this->storable;
+	}
+
 signals:
 	void changed();
 
@@ -61,6 +67,7 @@ private:
 	metternich::food_type food_type;
 	int wealth_value = 0;
 	bool abstract = false;
+	bool storable = true;
 };
 
 }

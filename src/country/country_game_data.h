@@ -590,7 +590,6 @@ public:
 	}
 
 	Q_INVOKABLE int get_stored_commodity(const QString &commodity_identifier) const;
-
 	void set_stored_commodity(const commodity *commodity, const int value);
 
 	void change_stored_commodity(const commodity *commodity, const int value)

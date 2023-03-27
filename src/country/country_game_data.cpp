@@ -104,6 +104,11 @@ void country_game_data::do_turn()
 void country_game_data::do_production()
 {
 	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+		if (!commodity->is_storable()) {
+			assert_throw(output >= 0);
+			continue;
+		}
+
 		this->change_stored_commodity(commodity, output);
 	}
 }
