@@ -63,8 +63,10 @@ country_game_data::country_game_data(metternich::country *country) : country(cou
 {
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 
+	this->initialize_building_slots();
+
 	if (country->is_defined()) {
-		this->initialize_building_slots();
+		this->initialize_free_buildings();
 	}
 }
 
@@ -1586,6 +1588,11 @@ void country_game_data::initialize_building_slots()
 		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
 	}
 
+	assert_throw(this->country->get_culture() != nullptr);
+}
+
+void country_game_data::initialize_free_buildings()
+{
 	assert_throw(this->country->get_culture() != nullptr);
 
 	//add a free warehouse
