@@ -15,7 +15,6 @@ class building_slot_type;
 class building_type;
 class country;
 class population_unit;
-class province;
 
 class building_slot final : public QObject
 {
@@ -23,11 +22,10 @@ class building_slot final : public QObject
 
 	Q_PROPERTY(metternich::building_slot_type* type READ get_type_unconst CONSTANT)
 	Q_PROPERTY(metternich::building_type* building READ get_building_unconst NOTIFY building_changed)
-	Q_PROPERTY(metternich::province* province READ get_province_unconst CONSTANT)
-	Q_PROPERTY(bool available READ is_available NOTIFY available_changed)
+	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
 
 public:
-	explicit building_slot(const building_slot_type *type, const metternich::province *province);
+	explicit building_slot(const building_slot_type *type, const metternich::country *country);
 
 	const building_slot_type *get_type() const
 	{
@@ -59,23 +57,19 @@ public:
 
 	bool can_have_building(const building_type *building) const;
 
-	const metternich::province *get_province() const
+	const metternich::country *get_country() const
 	{
-		return this->province;
+		return this->country;
 	}
 
 private:
 	//for the Qt property (pointers there can't be const)
-	metternich::province *get_province_unconst() const
+	metternich::country *get_country_unconst() const
 	{
-		return const_cast<metternich::province *>(this->get_province());
+		return const_cast<metternich::country *>(this->get_country());
 	}
 
 public:
-	const country *get_country() const;
-
-	bool is_available() const;
-
 	int get_capacity() const;
 
 	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
@@ -87,16 +81,15 @@ public:
 
 	void calculate_base_commodity_outputs();
 
-	void apply_country_modifier(const country *country, const int multiplier);
+	void apply_country_modifier(const metternich::country *country, const int multiplier);
 
 signals:
 	void building_changed();
-	void available_changed();
 
 private:
 	const building_slot_type *type = nullptr;
 	const building_type *building = nullptr;
-	const metternich::province *province = nullptr;
+	const metternich::country *country = nullptr;
 	commodity_map<centesimal_int> base_commodity_outputs;
 };
 

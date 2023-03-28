@@ -15,10 +15,6 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/province_event.h"
-#include "infrastructure/building_class.h"
-#include "infrastructure/building_slot.h"
-#include "infrastructure/building_slot_type.h"
-#include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -63,8 +59,6 @@ void province_game_data::reset_non_map_data()
 {
 	this->set_owner(nullptr);
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
-	this->clear_buildings();
-	this->remove_capital_building_slots();
 	this->score = province::base_score;
 	this->clear_military_units();
 	this->production_modifier = 0;
@@ -74,7 +68,6 @@ void province_game_data::reset_non_map_data()
 void province_game_data::on_map_created()
 {
 	this->calculate_territory_rect_center();
-	this->initialize_building_slots();
 }
 
 void province_game_data::do_turn()
@@ -128,27 +121,13 @@ void province_game_data::set_owner(const country *country)
 
 	const metternich::country *old_owner = this->owner;
 	if (old_owner != nullptr) {
-		if (this->is_capital()) {
-			this->remove_capitol();
-			this->remove_capital_building_slots();
-		}
-
 		old_owner->get_game_data()->remove_province(this->province);
-
-		//remove the country modifier after removing the capitol, to ensure its effects won't be removed twice
-		this->apply_country_modifier(old_owner, -1);
 	}
 
 	this->owner = country;
 
 	if (this->owner != nullptr) {
 		this->owner->get_game_data()->add_province(this->province);
-		this->apply_country_modifier(this->owner, 1);
-
-		if (this->is_capital()) {
-			this->add_capital_building_slots();
-			this->add_capitol();
-		}
 	}
 
 	if (game::get()->is_running()) {
@@ -178,23 +157,6 @@ void province_game_data::set_culture(const metternich::culture *culture)
 	}
 
 	this->culture = culture;
-
-	if (culture != nullptr) {
-		//update buildings for the new culture
-		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-			const building_type *building = building_slot->get_building();
-
-			if (building == nullptr) {
-				continue;
-			}
-
-			const building_type *new_building = culture->get_building_class_type(building->get_building_class());
-
-			if (new_building != building) {
-				building_slot->set_building(building);
-			}
-		}
-	}
 
 	if (game::get()->is_running()) {
 		if (this->get_owner() != nullptr) {
@@ -320,47 +282,15 @@ void province_game_data::add_border_tile(const QPoint &tile_pos)
 	emit territory_changed();
 }
 
-commodity_map<centesimal_int> province_game_data::get_commodity_outputs() const
+bool province_game_data::produces_commodity(const commodity *commodity) const
 {
-	commodity_map<centesimal_int> output_per_commodity;
-
-	for (const QPoint &tile_pos : this->resource_tiles) {
+	for (const QPoint &tile_pos : this->get_resource_tiles()) {
 		const tile *tile = map::get()->get_tile(tile_pos);
 		const improvement *improvement = tile->get_improvement();
 
-		if (improvement == nullptr) {
-			continue;
+		if (improvement != nullptr && improvement->get_output_commodity() == commodity) {
+			return true;
 		}
-
-		const commodity *output_commodity = improvement->get_output_commodity();
-
-		if (output_commodity == nullptr) {
-			continue;
-		}
-
-		const int output = tile->get_output_multiplier();
-
-		output_per_commodity[output_commodity] += output;
-	}
-
-	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		const commodity_map<centesimal_int> building_output_per_commodity = building_slot->get_commodity_outputs();
-
-		for (const auto &[commodity, output] : building_output_per_commodity) {
-			output_per_commodity[commodity] += output;
-		}
-	}
-
-	return output_per_commodity;
-}
-
-bool province_game_data::produces_commodity(const commodity *commodity) const
-{
-	const commodity_map<centesimal_int> output_per_commodity = this->get_commodity_outputs();
-	const auto find_iterator = output_per_commodity.find(commodity);
-
-	if (find_iterator != output_per_commodity.end() && find_iterator->second > 0) {
-		return true;
 	}
 
 	return false;
@@ -378,203 +308,6 @@ void province_game_data::on_improvement_gained(const improvement *improvement, c
 		}
 	}
 }
-
-QVariantList province_game_data::get_building_slots_qvariant_list() const
-{
-	return container::to_qvariant_list(this->building_slots);
-}
-
-void province_game_data::initialize_building_slots()
-{
-	//initialize building slots, placing them in random order
-	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
-	vector::shuffle(building_slot_types);
-
-	const site *settlement = this->province->get_capital_settlement();
-
-	for (const building_slot_type *building_slot_type : building_slot_types) {
-		if (building_slot_type->is_capital()) {
-			continue;
-		}
-
-		if (building_slot_type->is_coastal() && (settlement == nullptr || !map::get()->is_tile_coastal(settlement->get_game_data()->get_tile_pos()))) {
-			continue;
-		}
-
-		if (building_slot_type->is_near_water() && (settlement == nullptr || !map::get()->is_tile_near_water(settlement->get_game_data()->get_tile_pos()))) {
-			continue;
-		}
-
-		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->province));
-		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
-	}
-}
-
-void province_game_data::add_capital_building_slots()
-{
-	assert_throw(this->is_capital());
-
-	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
-	vector::shuffle(building_slot_types);
-
-	for (const building_slot_type *building_slot_type : building_slot_types) {
-		if (!building_slot_type->is_capital()) {
-			continue;
-		}
-
-		auto building_slot = make_qunique<metternich::building_slot>(building_slot_type, this->province);
-		this->building_slot_map[building_slot_type] = building_slot.get();
-
-		//insert the building slot at a random position
-		const size_t slot_index = random::get()->generate(this->building_slots.size());
-		this->building_slots.insert(this->building_slots.begin() + slot_index, std::move(building_slot));
-	}
-}
-
-void province_game_data::remove_capital_building_slots()
-{
-	for (size_t i = 0; i < this->building_slots.size();) {
-		const qunique_ptr<building_slot> &building_slot = this->building_slots.at(i);
-
-		if (!building_slot->get_type()->is_capital()) {
-			++i;
-			continue;
-		}
-
-		this->building_slot_map.erase(building_slot->get_type());
-		this->building_slots.erase(this->building_slots.begin() + i);
-	}
-}
-
-const building_type *province_game_data::get_slot_building(const building_slot_type *slot_type) const
-{
-	const auto find_iterator = this->building_slot_map.find(slot_type);
-	if (find_iterator != this->building_slot_map.end()) {
-		return find_iterator->second->get_building();
-	}
-
-	assert_throw(false);
-
-	return nullptr;
-}
-
-void province_game_data::set_slot_building(const building_slot_type *slot_type, const building_type *building)
-{
-	if (building != nullptr) {
-		assert_throw(building->get_building_class()->get_slot_type() == slot_type);
-	}
-
-	const auto find_iterator = this->building_slot_map.find(slot_type);
-	if (find_iterator != this->building_slot_map.end()) {
-		find_iterator->second->set_building(building);
-		return;
-	}
-
-	assert_throw(false);
-}
-
-void province_game_data::clear_buildings()
-{
-	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		building_slot->set_building(nullptr);
-		building_slot->calculate_base_commodity_outputs();
-	}
-}
-
-void province_game_data::add_capitol()
-{
-	assert_throw(this->is_capital());
-	assert_throw(this->get_culture() != nullptr);
-
-	const building_class *capitol_building_class = defines::get()->get_capitol_building_class();
-	const building_type *capitol_building_type = this->get_culture()->get_building_class_type(capitol_building_class);
-	this->set_slot_building(capitol_building_class->get_slot_type(), capitol_building_type);
-
-	//the capital gets a free warehouse if it doesn't have one
-	bool has_warehouse = false;
-	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		const building_type *building_type = building_slot->get_building();
-		if (building_type == nullptr) {
-			continue;
-		}
-
-		if (building_type->is_warehouse()) {
-			has_warehouse = true;
-			break;
-		}
-	}
-
-	if (!has_warehouse) {
-		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-			const building_type *buildable_warehouse = nullptr;
-
-			for (const building_type *building_type : building_slot->get_type()->get_building_types()) {
-				if (!building_type->is_warehouse()) {
-					continue;
-				}
-
-				if (building_type != this->get_culture()->get_building_class_type(building_type->get_building_class())) {
-					continue;
-				}
-
-				if (building_type->get_required_technology() != nullptr) {
-					//only a basic warehouse is free
-					continue;
-				}
-
-				if (!building_slot->can_have_building(building_type)) {
-					continue;
-				}
-
-				buildable_warehouse = building_type;
-				break;
-			}
-
-			if (buildable_warehouse == nullptr) {
-				continue;
-			}
-
-			building_slot->set_building(buildable_warehouse);
-			break;
-		}
-	}
-}
-
-void province_game_data::remove_capitol()
-{
-	const building_class *capitol_building_class = defines::get()->get_capitol_building_class();
-	const building_slot_type *capitol_slot_type = capitol_building_class->get_slot_type();
-
-	const building_type *current_slot_building = this->get_slot_building(capitol_slot_type);
-	if (current_slot_building == nullptr || current_slot_building->get_building_class() != capitol_building_class) {
-		return;
-	}
-
-	//remove the capitol and replace it with the next-best building
-	const building_type *best_building_type = nullptr;
-
-	if (this->get_culture() != nullptr) {
-		for (const building_type *building_type : capitol_slot_type->get_building_types()) {
-			if (this->get_culture()->get_building_class_type(building_type->get_building_class()) != building_type) {
-				continue;
-			}
-
-			if (best_building_type == nullptr || best_building_type->get_score() < building_type->get_score()) {
-				best_building_type = building_type;
-			}
-		}
-	}
-
-	this->set_slot_building(capitol_slot_type, best_building_type);
-}
-
-void province_game_data::on_building_gained(const building_type *building, const int multiplier)
-{
-	assert_throw(building != nullptr);
-
-	this->change_score(building->get_score() * multiplier);
-}
-
 
 QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const
 {
@@ -789,42 +522,7 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 		}
 	}
 
-	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		for (const building_type *building_type : building_slot->get_type()->get_building_types()) {
-			if (building_type->get_output_commodity() != commodity) {
-				continue;
-			}
-
-			if (building_type->get_required_building() != nullptr) {
-				continue;
-			}
-
-			bool can_produce_inputs = true;
-			for (const auto &[input_commodity, input_multiplier] : building_type->get_production_type()->get_input_commodities()) {
-				if (!this->can_produce_commodity(input_commodity)) {
-					can_produce_inputs = false;
-					break;
-				}
-			}
-
-			if (can_produce_inputs) {
-				return true;
-			}
-		}
-	}
-
 	return false;
-}
-
-void province_game_data::apply_country_modifier(const country *country, const int multiplier)
-{
-	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		if (building_slot->get_building() == nullptr) {
-			continue;
-		}
-
-		building_slot->apply_country_modifier(country, multiplier);
-	}
 }
 
 }

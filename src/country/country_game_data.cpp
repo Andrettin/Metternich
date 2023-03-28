@@ -17,6 +17,10 @@
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "infrastructure/building_class.h"
+#include "infrastructure/building_slot.h"
+#include "infrastructure/building_slot_type.h"
+#include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -58,6 +62,10 @@ namespace metternich {
 country_game_data::country_game_data(metternich::country *country) : country(country)
 {
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
+
+	if (country->is_defined()) {
+		this->initialize_building_slots();
+	}
 }
 
 country_game_data::~country_game_data()
@@ -1560,6 +1568,101 @@ QObject *country_game_data::get_population_type_small_icon(population_type *type
 	}
 
 	return const_cast<icon *>(best_icon);
+}
+
+QVariantList country_game_data::get_building_slots_qvariant_list() const
+{
+	return container::to_qvariant_list(this->building_slots);
+}
+
+void country_game_data::initialize_building_slots()
+{
+	//initialize building slots, placing them in random order
+	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
+	vector::shuffle(building_slot_types);
+
+	for (const building_slot_type *building_slot_type : building_slot_types) {
+		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->country));
+		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
+	}
+
+	assert_throw(this->country->get_culture() != nullptr);
+
+	//add a free warehouse
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		const building_type *buildable_warehouse = nullptr;
+
+		for (const building_type *building_type : building_slot->get_type()->get_building_types()) {
+			if (!building_type->is_warehouse()) {
+				continue;
+			}
+
+			if (building_type != this->country->get_culture()->get_building_class_type(building_type->get_building_class())) {
+				continue;
+			}
+
+			if (building_type->get_required_technology() != nullptr) {
+				//only a basic warehouse is free
+				continue;
+			}
+
+			if (!building_slot->can_have_building(building_type)) {
+				continue;
+			}
+
+			buildable_warehouse = building_type;
+			break;
+		}
+
+		if (buildable_warehouse == nullptr) {
+			continue;
+		}
+
+		building_slot->set_building(buildable_warehouse);
+		break;
+	}
+}
+
+const building_type *country_game_data::get_slot_building(const building_slot_type *slot_type) const
+{
+	const auto find_iterator = this->building_slot_map.find(slot_type);
+	if (find_iterator != this->building_slot_map.end()) {
+		return find_iterator->second->get_building();
+	}
+
+	assert_throw(false);
+
+	return nullptr;
+}
+
+void country_game_data::set_slot_building(const building_slot_type *slot_type, const building_type *building)
+{
+	if (building != nullptr) {
+		assert_throw(building->get_building_class()->get_slot_type() == slot_type);
+	}
+
+	const auto find_iterator = this->building_slot_map.find(slot_type);
+	if (find_iterator != this->building_slot_map.end()) {
+		find_iterator->second->set_building(building);
+		return;
+	}
+
+	assert_throw(false);
+}
+
+void country_game_data::clear_buildings()
+{
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		building_slot->set_building(nullptr);
+		building_slot->calculate_base_commodity_outputs();
+	}
+}
+
+void country_game_data::on_building_gained(const building_type *building, const int multiplier)
+{
+	assert_throw(building != nullptr);
+
+	this->change_score(building->get_score() * multiplier);
 }
 
 QVariantList country_game_data::get_stored_commodities_qvariant_list() const

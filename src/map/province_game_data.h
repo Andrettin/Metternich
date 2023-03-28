@@ -4,7 +4,6 @@
 #include "country/religion_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
-#include "infrastructure/building_slot_type_container.h"
 #include "map/terrain_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/fractional_int.h"
@@ -12,8 +11,6 @@
 
 namespace metternich {
 
-class building_slot;
-class building_type;
 class civilian_unit;
 class commodity;
 class country;
@@ -42,7 +39,6 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
-	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 
@@ -174,35 +170,9 @@ public:
 		return this->tile_terrain_counts;
 	}
 
-	commodity_map<centesimal_int> get_commodity_outputs() const;
 	bool produces_commodity(const commodity *commodity) const;
 
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
-
-	QVariantList get_building_slots_qvariant_list() const;
-	void initialize_building_slots();
-	void add_capital_building_slots();
-	void remove_capital_building_slots();
-
-	const building_slot *get_building_slot(const building_slot_type *slot_type) const
-	{
-		const auto find_iterator = this->building_slot_map.find(slot_type);
-
-		if (find_iterator != this->building_slot_map.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	const building_type *get_slot_building(const building_slot_type *slot_type) const;
-	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
-	void clear_buildings();
-
-	void add_capitol();
-	void remove_capitol();
-
-	void on_building_gained(const building_type *building, const int multiplier);
 
 	const scripted_province_modifier_map<int> &get_scripted_modifiers() const
 	{
@@ -314,8 +284,6 @@ public:
 
 	bool can_produce_commodity(const commodity *commodity) const;
 
-	void apply_country_modifier(const country *country, const int multiplier);
-
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
@@ -342,8 +310,6 @@ private:
 	std::vector<const site *> sites;
 	resource_map<int> resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
-	std::vector<qunique_ptr<building_slot>> building_slots;
-	building_slot_type_map<building_slot *> building_slot_map;
 	scripted_province_modifier_map<int> scripted_modifiers;
 	int free_food_consumption = 0;
 	int score = 0;

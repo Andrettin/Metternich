@@ -6,6 +6,7 @@
 #include "country/religion_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
+#include "infrastructure/building_slot_type_container.h"
 #include "map/terrain_type_container.h"
 #include "population/phenotype_container.h"
 #include "population/population_type_container.h"
@@ -16,6 +17,8 @@
 
 namespace metternich {
 
+class building_slot;
+class building_type;
 class character;
 class civilian_unit;
 class consulate;
@@ -70,6 +73,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_ideology_counts READ get_population_ideology_counts_qvariant_list NOTIFY population_ideology_counts_changed)
 	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
+	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
 	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
@@ -498,6 +502,26 @@ public:
 		return this->get_population_unit_count() + static_cast<int>(this->civilian_units.size()) + static_cast<int>(this->military_units.size());
 	}
 
+	QVariantList get_building_slots_qvariant_list() const;
+	void initialize_building_slots();
+
+	const building_slot *get_building_slot(const building_slot_type *slot_type) const
+	{
+		const auto find_iterator = this->building_slot_map.find(slot_type);
+
+		if (find_iterator != this->building_slot_map.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	const building_type *get_slot_building(const building_slot_type *slot_type) const;
+	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
+	void clear_buildings();
+
+	void on_building_gained(const building_type *building, const int multiplier);
+
 	int get_wealth() const
 	{
 		return this->wealth;
@@ -840,6 +864,8 @@ private:
 	ideology_map<int> population_ideology_counts;
 	int population = 0;
 	int population_growth = 0; //population growth counter
+	std::vector<qunique_ptr<building_slot>> building_slots;
+	building_slot_type_map<building_slot *> building_slot_map;
 	int wealth = 0;
 	centesimal_int prestige;
 	centesimal_int piety;

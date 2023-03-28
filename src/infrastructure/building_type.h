@@ -14,7 +14,6 @@ class culture;
 class icon;
 class population_unit;
 class production_type;
-class province;
 class technology;
 
 template <typename scope_type>
@@ -107,11 +106,6 @@ public:
 		return (building_type::base_score * std::max(1, this->get_base_capacity()));
 	}
 
-	const modifier<const province> *get_province_modifier() const
-	{
-		return this->province_modifier.get();
-	}
-
 	const modifier<const country> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
@@ -131,7 +125,6 @@ private:
 	bool warehouse = false;
 	building_type *required_building = nullptr;
 	technology *required_technology = nullptr;
-	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const country>> country_modifier;
 };
 

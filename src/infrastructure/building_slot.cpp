@@ -10,8 +10,6 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
-#include "map/province.h"
-#include "map/province_game_data.h"
 #include "population/population_unit.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -19,11 +17,11 @@
 
 namespace metternich {
 
-building_slot::building_slot(const building_slot_type *type, const metternich::province *province)
-	: type(type), province(province)
+building_slot::building_slot(const building_slot_type *type, const metternich::country *country)
+	: type(type), country(country)
 {
 	assert_throw(this->get_type() != nullptr);
-	assert_throw(this->get_province() != nullptr);
+	assert_throw(this->get_country() != nullptr);
 }
 
 void building_slot::set_building(const building_type *building)
@@ -36,14 +34,10 @@ void building_slot::set_building(const building_type *building)
 		assert_throw(building->get_building_class()->get_slot_type() == this->get_type());
 	}
 
-	province_game_data *province_game_data = this->get_province()->get_game_data();
+	country_game_data *country_game_data = this->get_country()->get_game_data();
 
 	if (this->get_building() != nullptr) {
-		province_game_data->on_building_gained(this->get_building(), -1);
-
-		if (this->get_building()->get_province_modifier() != nullptr) {
-			this->get_building()->get_province_modifier()->apply(this->get_province(), -1);
-		}
+		country_game_data->on_building_gained(this->get_building(), -1);
 
 		if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr) {
 			this->get_building()->get_country_modifier()->apply(this->get_country(), -1);
@@ -53,11 +47,7 @@ void building_slot::set_building(const building_type *building)
 	this->building = building;
 
 	if (this->get_building() != nullptr) {
-		province_game_data->on_building_gained(this->get_building(), 1);
-
-		if (this->get_building()->get_province_modifier() != nullptr) {
-			this->get_building()->get_province_modifier()->apply(this->get_province(), 1);
-		}
+		country_game_data->on_building_gained(this->get_building(), 1);
 
 		if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr) {
 			this->get_building()->get_country_modifier()->apply(this->get_country(), 1);
@@ -95,39 +85,6 @@ bool building_slot::can_have_building(const building_type *building) const
 	return true;
 }
 
-const country *building_slot::get_country() const
-{
-	return this->get_province()->get_game_data()->get_owner();
-}
-
-bool building_slot::is_available() const
-{
-	if (this->get_building() != nullptr) {
-		return true;
-	}
-
-	for (const building_type *building : this->get_type()->get_building_types()) {
-		if (building->get_required_building() != nullptr) {
-			continue;
-		}
-
-		if (!this->get_province()->get_game_data()->is_capital()) {
-			const production_type *production_type = building->get_production_type();
-			if (production_type != nullptr) {
-				for (const auto &[input_commodity, input_multiplier] : production_type->get_input_commodities()) {
-					if (!this->get_province()->get_game_data()->can_produce_commodity(input_commodity)) {
-						return false;
-					}
-				}
-			}
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
 int building_slot::get_capacity() const
 {
 	if (this->get_building() != nullptr) {
@@ -143,7 +100,7 @@ commodity_map<centesimal_int> building_slot::get_commodity_outputs() const
 
 	int input_fulfilled_percent = 100;
 
-	const country *owner = this->get_province()->get_game_data()->get_owner();
+	const metternich::country *country = this->get_country();
 
 	//check if inputs are fulfilled, and to which proportion
 	for (const auto &[commodity, output_value] : output_per_commodity) {
@@ -156,7 +113,7 @@ commodity_map<centesimal_int> building_slot::get_commodity_outputs() const
 
 		const int input_value_int = std::abs(output_value_int);
 
-		const int available_input = owner ? owner->get_game_data()->get_stored_commodity(commodity) : 0;
+		const int available_input = country->get_game_data()->get_stored_commodity(commodity);
 
 		if (input_value_int < available_input) {
 			input_fulfilled_percent = std::min(input_fulfilled_percent, available_input * 100 / input_value_int);
@@ -209,7 +166,7 @@ void building_slot::calculate_base_commodity_outputs()
 	}
 }
 
-void building_slot::apply_country_modifier(const country *country, const int multiplier)
+void building_slot::apply_country_modifier(const metternich::country *country, const int multiplier)
 {
 	if (this->get_building() != nullptr && this->get_building()->get_country_modifier() != nullptr) {
 		this->get_building()->get_country_modifier()->apply(country, multiplier);
