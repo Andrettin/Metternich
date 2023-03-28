@@ -28,7 +28,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
-	Q_PROPERTY(metternich::production_type* production_type MEMBER production_type NOTIFY changed)
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
 	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
@@ -74,17 +73,15 @@ public:
 		return this->icon;
 	}
 
-	const metternich::production_type *get_production_type() const
+	const std::vector<const production_type *> &get_production_types() const
 	{
-		return this->production_type;
+		return this->production_types;
 	}
 
 	int get_base_capacity() const
 	{
 		return this->base_capacity;
 	}
-
-	const commodity *get_output_commodity() const;
 
 	bool is_warehouse() const
 	{
@@ -120,7 +117,7 @@ private:
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *portrait = nullptr;
 	metternich::icon *icon = nullptr;
-	metternich::production_type *production_type = nullptr;
+	std::vector<const production_type *> production_types;
 	int base_capacity = 0;
 	bool warehouse = false;
 	building_type *required_building = nullptr;

@@ -12,6 +12,7 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
+#include "economy/production_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
 #include "game/country_event.h"
@@ -64,10 +65,6 @@ country_game_data::country_game_data(metternich::country *country) : country(cou
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 
 	this->initialize_building_slots();
-
-	if (country->is_defined()) {
-		this->initialize_free_buildings();
-	}
 }
 
 country_game_data::~country_game_data()
@@ -113,6 +110,10 @@ void country_game_data::do_turn()
 
 void country_game_data::do_production()
 {
+	this->assign_production();
+
+	std::vector<const commodity *> storage_consumption_commodities;
+
 	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
 		if (!commodity->is_storable()) {
 			assert_throw(output >= 0);
@@ -120,6 +121,25 @@ void country_game_data::do_production()
 		}
 
 		this->change_stored_commodity(commodity, output);
+
+		if (output < 0) {
+			storage_consumption_commodities.push_back(commodity);
+		}
+	}
+
+	//decrease consumption of commodities for which we no longer have enough in storage
+	for (const commodity *commodity : storage_consumption_commodities) {
+		const int output = this->get_commodity_output(commodity);
+
+		if (output >= 0) {
+			continue;
+		}
+
+		const int input = std::abs(output);
+
+		while (input > this->get_stored_commodity(commodity)) {
+			this->decrease_commodity_consumption(commodity);
+		}
 	}
 }
 
@@ -1587,8 +1607,6 @@ void country_game_data::initialize_building_slots()
 		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->country));
 		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
 	}
-
-	assert_throw(this->country->get_culture() != nullptr);
 }
 
 void country_game_data::initialize_free_buildings()
@@ -1661,7 +1679,6 @@ void country_game_data::clear_buildings()
 {
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
 		building_slot->set_building(nullptr);
-		building_slot->calculate_base_commodity_outputs();
 	}
 }
 
@@ -1688,6 +1705,8 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 		return;
 	}
 
+	assert_throw(value >= 0);
+
 	if (commodity->is_convertible_to_wealth()) {
 		assert_throw(value > 0);
 		this->change_wealth(commodity->get_wealth_value() * value);
@@ -1707,6 +1726,19 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 
 	if (game::get()->is_running()) {
 		emit stored_commodities_changed();
+	}
+}
+
+void country_game_data::set_storage_capacity(const int capacity)
+{
+	if (capacity == this->get_storage_capacity()) {
+		return;
+	}
+
+	this->storage_capacity = capacity;
+
+	if (game::get()->is_running()) {
+		emit storage_capacity_changed();
 	}
 }
 
@@ -1737,6 +1769,65 @@ void country_game_data::change_commodity_output(const commodity *commodity, cons
 	if (game::get()->is_running()) {
 		emit commodity_outputs_changed();
 	}
+
+	if (count < 0 && !commodity->is_storable()) {
+		//decrease consumption of non-storable commodities immediately if the output goes below zero, since for those commodities consumption cannot be fulfilled by storage
+		while (this->get_commodity_output(commodity) < 0) {
+			this->decrease_commodity_consumption(commodity);
+		}
+	}
+}
+
+void country_game_data::assign_production()
+{
+	bool changed = true;
+
+	while (changed) {
+		changed = false;
+
+		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+			const building_type *building_type = building_slot->get_building();
+
+			if (building_type == nullptr) {
+				continue;
+			}
+
+			for (const production_type *production_type : building_type->get_production_types()) {
+				if (!building_slot->can_increase_production(production_type)) {
+					continue;
+				}
+
+				building_slot->increase_production(production_type);
+				changed = true;
+			}
+		}
+	}
+}
+
+void country_game_data::decrease_commodity_consumption(const commodity *commodity)
+{
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		const building_type *building_type = building_slot->get_building();
+
+		if (building_type == nullptr) {
+			continue;
+		}
+
+		for (const production_type *production_type : building_type->get_production_types()) {
+			if (!production_type->get_input_commodities().contains(commodity)) {
+				continue;
+			}
+
+			if (!building_slot->can_decrease_production(production_type)) {
+				continue;
+			}
+
+			building_slot->decrease_production(production_type);
+			return;
+		}
+	}
+
+	assert_throw(false);
 }
 
 bool country_game_data::can_declare_war_on(const metternich::country *other_country) const

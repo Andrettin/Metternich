@@ -27,8 +27,13 @@ building_type::~building_type()
 void building_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "country_modifier") {
+	if (tag == "production_types") {
+		for (const std::string &value : values) {
+			this->production_types.push_back(production_type::get(value));
+		}
+	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
 		database::process_gsml_data(this->country_modifier, scope);
 	} else {
@@ -66,19 +71,9 @@ void building_type::check() const
 	assert_throw(this->get_portrait() != nullptr);
 	assert_throw(this->get_icon() != nullptr);
 
-	if (this->get_production_type() != nullptr) {
-		assert_throw(this->get_output_commodity() != nullptr);
+	if (!this->get_production_types().empty()) {
 		assert_throw(this->get_base_capacity() > 0);
 	}
-}
-
-const commodity *building_type::get_output_commodity() const
-{
-	if (this->get_production_type() != nullptr) {
-		return this->get_production_type()->get_output_commodity();
-	}
-
-	return nullptr;
 }
 
 }

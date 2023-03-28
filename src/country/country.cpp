@@ -81,6 +81,10 @@ void country::reset_history()
 void country::reset_game_data()
 {
 	this->game_data = make_qunique<country_game_data>(this);
+
+	if (this->is_defined()) {
+		this->get_game_data()->initialize_free_buildings();
+	}
 }
 
 bool country::is_great_power() const

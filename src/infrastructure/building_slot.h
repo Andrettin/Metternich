@@ -14,7 +14,7 @@ namespace metternich {
 class building_slot_type;
 class building_type;
 class country;
-class population_unit;
+class production_type;
 
 class building_slot final : public QObject
 {
@@ -72,14 +72,16 @@ private:
 public:
 	int get_capacity() const;
 
-	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
+	int get_employed_capacity() const
 	{
-		return this->base_commodity_outputs;
+		return this->employed_capacity;
 	}
 
-	commodity_map<centesimal_int> get_commodity_outputs() const;
+	bool can_increase_production(const production_type *production_type) const;
+	void increase_production(const production_type *production_type);
 
-	void calculate_base_commodity_outputs();
+	bool can_decrease_production(const production_type *production_type) const;
+	void decrease_production(const production_type *production_type);
 
 	void apply_country_modifier(const metternich::country *country, const int multiplier);
 
@@ -90,7 +92,8 @@ private:
 	const building_slot_type *type = nullptr;
 	const building_type *building = nullptr;
 	const metternich::country *country = nullptr;
-	commodity_map<centesimal_int> base_commodity_outputs;
+	int employed_capacity = 0;
+	std::map<const production_type *, int> production_type_employed_capacities;
 };
 
 }

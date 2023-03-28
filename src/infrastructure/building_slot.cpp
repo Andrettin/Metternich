@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
+#include "economy/commodity.h"
 #include "economy/production_type.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
@@ -14,6 +15,7 @@
 #include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/fractional_int.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -36,11 +38,13 @@ void building_slot::set_building(const building_type *building)
 
 	country_game_data *country_game_data = this->get_country()->get_game_data();
 
-	if (this->get_building() != nullptr) {
-		country_game_data->on_building_gained(this->get_building(), -1);
+	const building_type *old_building = this->get_building();
 
-		if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr) {
-			this->get_building()->get_country_modifier()->apply(this->get_country(), -1);
+	if (old_building != nullptr) {
+		country_game_data->on_building_gained(old_building, -1);
+
+		if (old_building->get_country_modifier() != nullptr && this->get_country() != nullptr) {
+			old_building->get_country_modifier()->apply(this->get_country(), -1);
 		}
 	}
 
@@ -54,9 +58,22 @@ void building_slot::set_building(const building_type *building)
 		}
 	}
 
-	if (game::get()->is_running()) {
-		this->calculate_base_commodity_outputs();
+	//clear production for production types which are no longer valid
+	if (old_building != nullptr && !old_building->get_production_types().empty()) {
+		if (building == nullptr || building->get_production_types() != old_building->get_production_types()) {
+			for (const production_type *production_type : old_building->get_production_types()) {
+				if (building != nullptr && vector::contains(building->get_production_types(), production_type)) {
+					continue;
+				}
 
+				while (this->production_type_employed_capacities.contains(production_type)) {
+					this->decrease_production(production_type);
+				}
+			}
+		}
+	}
+
+	if (game::get()->is_running()) {
 		emit building_changed();
 	}
 }
@@ -94,76 +111,91 @@ int building_slot::get_capacity() const
 	return 0;
 }
 
-commodity_map<centesimal_int> building_slot::get_commodity_outputs() const
+bool building_slot::can_increase_production(const production_type *production_type) const
 {
-	commodity_map<centesimal_int> output_per_commodity = this->get_base_commodity_outputs();
+	assert_throw(this->get_building() != nullptr);
+	assert_throw(vector::contains(this->get_building()->get_production_types(), production_type));
 
-	int input_fulfilled_percent = 100;
+	if (this->get_employed_capacity() >= this->get_capacity()) {
+		return false;
+	}
 
-	const metternich::country *country = this->get_country();
+	const country_game_data *country_game_data = this->get_country()->get_game_data();
 
-	//check if inputs are fulfilled, and to which proportion
-	for (const auto &[commodity, output_value] : output_per_commodity) {
-		const int output_value_int = output_value.to_int();
-
-		if (output_value_int >= 0) {
-			//must be an input
-			continue;
-		}
-
-		const int input_value_int = std::abs(output_value_int);
-
-		const int available_input = country->get_game_data()->get_stored_commodity(commodity);
-
-		if (input_value_int < available_input) {
-			input_fulfilled_percent = std::min(input_fulfilled_percent, available_input * 100 / input_value_int);
+	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
+		if (input_commodity->is_storable()) {
+			if (country_game_data->get_stored_commodity(input_commodity) < input_value) {
+				return false;
+			}
+		} else {
+			//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
+			if (country_game_data->get_commodity_output(input_commodity) < input_value) {
+				return false;
+			}
 		}
 	}
 
-	if (input_fulfilled_percent < 100) {
-		for (auto &[commodity, output_value] : output_per_commodity) {
-			output_value *= input_fulfilled_percent;
-			output_value /= 100;
-		}
-	}
-
-	return output_per_commodity;
+	return true;
 }
 
-void building_slot::calculate_base_commodity_outputs()
+void building_slot::increase_production(const production_type *production_type)
 {
-	this->base_commodity_outputs.clear();
+	assert_throw(this->can_increase_production(production_type));
 
-	const building_type *building_type = this->get_building();
-	if (building_type == nullptr) {
-		return;
+	++this->employed_capacity;
+	++this->production_type_employed_capacities[production_type];
+
+	country_game_data *country_game_data = this->get_country()->get_game_data();
+
+	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
+		if (input_commodity->is_storable()) {
+			country_game_data->change_stored_commodity(input_commodity, -input_value);
+		}
+		country_game_data->change_commodity_output(input_commodity, -input_value);
 	}
 
-	const production_type *production_type = building_type->get_production_type();
-	if (production_type == nullptr) {
-		return;
+	country_game_data->change_commodity_output(production_type->get_output_commodity(), production_type->get_output_value());
+}
+
+bool building_slot::can_decrease_production(const production_type *production_type) const
+{
+	assert_throw(this->get_building() != nullptr);
+	assert_throw(vector::contains(this->get_building()->get_production_types(), production_type));
+
+	if (this->get_employed_capacity() == 0) {
+		return false;
 	}
 
-	const commodity *output_commodity = production_type->get_output_commodity();
-	centesimal_int output;
-
-	/*
-	for (const population_unit *employee : this->get_employees()) {
-		output += employee->get_employment_output(production_type);
-	}
-	*/
-
-	commodity_map<centesimal_int> inputs;
-
-	for (const auto &[input_commodity, input_multiplier] : production_type->get_input_commodities()) {
-		inputs[input_commodity] = input_multiplier * output / production_type->get_output_value();
+	if (!this->production_type_employed_capacities.contains(production_type)) {
+		return false;
 	}
 
-	this->base_commodity_outputs[output_commodity] += output;
+	return true;
+}
 
-	for (const auto &[input_commodity, input_value] : inputs) {
-		this->base_commodity_outputs[input_commodity] -= input_value;
+void building_slot::decrease_production(const production_type *production_type)
+{
+	assert_throw(this->can_decrease_production(production_type));
+
+	--this->employed_capacity;
+
+	const int remaining_production_type_employed_capacity = --this->production_type_employed_capacities[production_type];
+	assert_throw(remaining_production_type_employed_capacity >= 0);
+
+	if (remaining_production_type_employed_capacity == 0) {
+		this->production_type_employed_capacities.erase(production_type);
 	}
+
+	country_game_data *country_game_data = this->get_country()->get_game_data();
+
+	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
+		if (input_commodity->is_storable()) {
+			country_game_data->change_stored_commodity(input_commodity, input_value);
+		}
+		country_game_data->change_commodity_output(input_commodity, input_value);
+	}
+
+	country_game_data->change_commodity_output(production_type->get_output_commodity(), -production_type->get_output_value());
 }
 
 void building_slot::apply_country_modifier(const metternich::country *country, const int multiplier)

@@ -627,16 +627,7 @@ public:
 		return this->storage_capacity;
 	}
 
-	void set_storage_capacity(const int capacity)
-	{
-		if (capacity == this->get_storage_capacity()) {
-			return;
-		}
-
-		this->storage_capacity = capacity;
-
-		emit storage_capacity_changed();
-	}
+	void set_storage_capacity(const int capacity);
 
 	void change_storage_capacity(const int change)
 	{
@@ -663,6 +654,9 @@ public:
 
 	Q_INVOKABLE int get_commodity_output(const QString &commodity_identifier) const;
 	void change_commodity_output(const commodity *commodity, const int change);
+
+	void assign_production();
+	void decrease_commodity_consumption(const commodity *commodity);
 
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
