@@ -30,6 +30,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
 	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
+	Q_PROPERTY(bool expandable MEMBER expandable READ is_expandable NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
@@ -88,6 +89,11 @@ public:
 		return this->warehouse;
 	}
 
+	bool is_expandable() const
+	{
+		return this->expandable;
+	}
+
 	const building_type *get_required_building() const
 	{
 		return this->required_building;
@@ -120,6 +126,7 @@ private:
 	std::vector<const production_type *> production_types;
 	int base_capacity = 0;
 	bool warehouse = false;
+	bool expandable = false;
 	building_type *required_building = nullptr;
 	technology *required_technology = nullptr;
 	std::unique_ptr<modifier<const country>> country_modifier;
