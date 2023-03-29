@@ -129,7 +129,7 @@ bool building_slot::can_increase_production(const production_type *production_ty
 			}
 		} else {
 			//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
-			if (country_game_data->get_commodity_output(input_commodity) < input_value) {
+			if (country_game_data->get_net_commodity_output(input_commodity) < input_value) {
 				return false;
 			}
 		}
@@ -151,7 +151,7 @@ void building_slot::increase_production(const production_type *production_type)
 		if (input_commodity->is_storable()) {
 			country_game_data->change_stored_commodity(input_commodity, -input_value);
 		}
-		country_game_data->change_commodity_output(input_commodity, -input_value);
+		country_game_data->change_commodity_input(input_commodity, input_value);
 	}
 
 	country_game_data->change_commodity_output(production_type->get_output_commodity(), production_type->get_output_value());
@@ -192,7 +192,7 @@ void building_slot::decrease_production(const production_type *production_type)
 		if (input_commodity->is_storable()) {
 			country_game_data->change_stored_commodity(input_commodity, input_value);
 		}
-		country_game_data->change_commodity_output(input_commodity, input_value);
+		country_game_data->change_commodity_input(input_commodity, -input_value);
 	}
 
 	country_game_data->change_commodity_output(production_type->get_output_commodity(), -production_type->get_output_value());

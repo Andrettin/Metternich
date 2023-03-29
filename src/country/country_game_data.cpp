@@ -112,8 +112,6 @@ void country_game_data::do_production()
 {
 	this->assign_production();
 
-	std::vector<const commodity *> storage_consumption_commodities;
-
 	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
 		if (!commodity->is_storable()) {
 			assert_throw(output >= 0);
@@ -121,25 +119,29 @@ void country_game_data::do_production()
 		}
 
 		this->change_stored_commodity(commodity, output);
-
-		if (output < 0) {
-			storage_consumption_commodities.push_back(commodity);
-		}
 	}
 
-	//decrease consumption of commodities for which we no longer have enough in storage
-	for (const commodity *commodity : storage_consumption_commodities) {
-		const int output = this->get_commodity_output(commodity);
+	const std::vector<const commodity *> input_commodities = archimedes::map::get_keys(this->get_commodity_inputs());
 
-		if (output >= 0) {
+	//decrease consumption of commodities for which we no longer have enough in storage
+	for (const commodity *commodity : input_commodities) {
+		if (!commodity->is_storable()) {
 			continue;
 		}
 
-		const int input = std::abs(output);
-
-		while (input > this->get_stored_commodity(commodity)) {
+		while (this->get_commodity_input(commodity) > this->get_stored_commodity(commodity)) {
 			this->decrease_commodity_consumption(commodity);
 		}
+	}
+
+	//reduce inputs from the storage for the next turn (for production this turn it had already been subtracted)
+	for (const auto &[commodity, input] : this->get_commodity_inputs()) {
+		if (!commodity->is_storable()) {
+			assert_throw(input <= this->get_commodity_output(commodity));
+			continue;
+		}
+
+		this->change_stored_commodity(commodity, -input);
 	}
 }
 
@@ -1742,6 +1744,30 @@ void country_game_data::set_storage_capacity(const int capacity)
 	}
 }
 
+int country_game_data::get_commodity_input(const QString &commodity_identifier) const
+{
+	return this->get_commodity_input(commodity::get(commodity_identifier.toStdString()));
+}
+
+void country_game_data::change_commodity_input(const commodity *commodity, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->commodity_inputs[commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->commodity_inputs.erase(commodity);
+	}
+
+	if (game::get()->is_running()) {
+		emit commodity_inputs_changed();
+	}
+}
+
 QVariantList country_game_data::get_commodity_outputs_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
@@ -1771,8 +1797,8 @@ void country_game_data::change_commodity_output(const commodity *commodity, cons
 	}
 
 	if (count < 0 && !commodity->is_storable()) {
-		//decrease consumption of non-storable commodities immediately if the output goes below zero, since for those commodities consumption cannot be fulfilled by storage
-		while (this->get_commodity_output(commodity) < 0) {
+		//decrease consumption of non-storable commodities immediately if the net output goes below zero, since for those commodities consumption cannot be fulfilled by storage
+		while (this->get_net_commodity_output(commodity) < 0) {
 			this->decrease_commodity_consumption(commodity);
 		}
 	}

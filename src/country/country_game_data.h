@@ -634,6 +634,25 @@ public:
 		this->set_storage_capacity(this->get_storage_capacity() + change);
 	}
 
+	const commodity_map<int> &get_commodity_inputs() const
+	{
+		return this->commodity_inputs;
+	}
+
+	int get_commodity_input(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_inputs.find(commodity);
+
+		if (find_iterator != this->commodity_inputs.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	Q_INVOKABLE int get_commodity_input(const QString &commodity_identifier) const;
+	void change_commodity_input(const commodity *commodity, const int change);
+
 	const commodity_map<int> &get_commodity_outputs() const
 	{
 		return this->commodity_outputs;
@@ -654,6 +673,11 @@ public:
 
 	Q_INVOKABLE int get_commodity_output(const QString &commodity_identifier) const;
 	void change_commodity_output(const commodity *commodity, const int change);
+
+	int get_net_commodity_output(const commodity *commodity) const
+	{
+		return this->get_commodity_output(commodity) - this->get_commodity_input(commodity);
+	}
 
 	void assign_production();
 	void decrease_commodity_consumption(const commodity *commodity);
@@ -821,6 +845,7 @@ signals:
 	void storage_capacity_changed();
 	void technologies_changed();
 	void characters_changed();
+	void commodity_inputs_changed();
 	void commodity_outputs_changed();
 
 private:
@@ -866,6 +891,7 @@ private:
 	centesimal_int piety;
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;
+	commodity_map<int> commodity_inputs;
 	commodity_map<int> commodity_outputs;
 	technology_set technologies;
 	std::vector<const character *> characters;
