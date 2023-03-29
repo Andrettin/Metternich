@@ -110,38 +110,46 @@ void country_game_data::do_turn()
 
 void country_game_data::do_production()
 {
-	this->assign_production();
+	try {
+		this->assign_production();
 
-	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
-		if (!commodity->is_storable()) {
-			assert_throw(output >= 0);
-			continue;
+		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+			if (!commodity->is_storable()) {
+				assert_throw(output >= 0);
+				continue;
+			}
+
+			this->change_stored_commodity(commodity, output);
 		}
 
-		this->change_stored_commodity(commodity, output);
-	}
+		const std::vector<const commodity *> input_commodities = archimedes::map::get_keys(this->get_commodity_inputs());
 
-	const std::vector<const commodity *> input_commodities = archimedes::map::get_keys(this->get_commodity_inputs());
+		//decrease consumption of commodities for which we no longer have enough in storage
+		for (const commodity *commodity : input_commodities) {
+			if (!commodity->is_storable()) {
+				continue;
+			}
 
-	//decrease consumption of commodities for which we no longer have enough in storage
-	for (const commodity *commodity : input_commodities) {
-		if (!commodity->is_storable()) {
-			continue;
+			while (this->get_commodity_input(commodity) > this->get_stored_commodity(commodity)) {
+				this->decrease_commodity_consumption(commodity);
+			}
 		}
 
-		while (this->get_commodity_input(commodity) > this->get_stored_commodity(commodity)) {
-			this->decrease_commodity_consumption(commodity);
-		}
-	}
+		//reduce inputs from the storage for the next turn (for production this turn it had already been subtracted)
+		for (const auto &[commodity, input] : this->get_commodity_inputs()) {
+			try {
+				if (!commodity->is_storable()) {
+					assert_throw(input <= this->get_commodity_output(commodity));
+					continue;
+				}
 
-	//reduce inputs from the storage for the next turn (for production this turn it had already been subtracted)
-	for (const auto &[commodity, input] : this->get_commodity_inputs()) {
-		if (!commodity->is_storable()) {
-			assert_throw(input <= this->get_commodity_output(commodity));
-			continue;
+				this->change_stored_commodity(commodity, -input);
+			} catch (...) {
+				std::throw_with_nested(std::runtime_error("Error processing input storage reduction for commodity \"" + commodity->get_identifier()  + "\"."));
+			}
 		}
-
-		this->change_stored_commodity(commodity, -input);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Error doing production for country \"" + this->country->get_identifier() + "\"."));
 	}
 }
 
