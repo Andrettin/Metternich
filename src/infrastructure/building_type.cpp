@@ -12,6 +12,7 @@
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -74,6 +75,11 @@ void building_type::check() const
 	if (!this->get_production_types().empty()) {
 		assert_throw(this->get_base_capacity() > 0);
 	}
+}
+
+QVariantList building_type::get_production_types_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_production_types());
 }
 
 }

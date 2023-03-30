@@ -28,6 +28,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
 	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
 	Q_PROPERTY(bool expandable MEMBER expandable READ is_expandable NOTIFY changed)
@@ -78,6 +79,8 @@ public:
 	{
 		return this->production_types;
 	}
+
+	QVariantList get_production_types_qvariant_list() const;
 
 	int get_base_capacity() const
 	{

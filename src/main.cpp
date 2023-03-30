@@ -15,6 +15,7 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/food_type.h"
+#include "economy/production_type.h"
 #include "engine_interface.h"
 #include "game/event.h"
 #include "game/event_trigger.h"
@@ -117,6 +118,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<population_type>("", 1);
 		qmlRegisterAnonymousType<preferences>("", 1);
+		qmlRegisterAnonymousType<production_type>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);
 		qmlRegisterAnonymousType<province_game_data>("", 1);
 		qmlRegisterAnonymousType<scenario>("", 1);

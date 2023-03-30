@@ -77,11 +77,53 @@ public:
 		return this->employed_capacity;
 	}
 
+	int get_production_type_employed_capacity(const production_type *production_type) const
+	{
+		const auto find_iterator = this->production_type_employed_capacities.find(production_type);
+		if (find_iterator != this->production_type_employed_capacities.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	Q_INVOKABLE int get_production_type_employed_capacity(metternich::production_type *production_type) const
+	{
+		const metternich::production_type *const_production_type = production_type;
+		return this->get_production_type_employed_capacity(const_production_type);
+	}
+
 	bool can_increase_production(const production_type *production_type) const;
+
+	Q_INVOKABLE bool can_increase_production(metternich::production_type *production_type) const
+	{
+		const metternich::production_type *const_production_type = production_type;
+		return this->can_increase_production(const_production_type);
+	}
+
 	void increase_production(const production_type *production_type);
 
+	Q_INVOKABLE void increase_production(metternich::production_type *production_type)
+	{
+		const metternich::production_type *const_production_type = production_type;
+		this->increase_production(const_production_type);
+	}
+
 	bool can_decrease_production(const production_type *production_type) const;
+
+	Q_INVOKABLE bool can_decrease_production(metternich::production_type *production_type) const
+	{
+		const metternich::production_type *const_production_type = production_type;
+		return this->can_decrease_production(const_production_type);
+	}
+
 	void decrease_production(const production_type *production_type);
+
+	Q_INVOKABLE void decrease_production(metternich::production_type *production_type)
+	{
+		const metternich::production_type *const_production_type = production_type;
+		this->decrease_production(const_production_type);
+	}
 
 	void apply_country_modifier(const metternich::country *country, const int multiplier);
 

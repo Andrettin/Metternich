@@ -66,7 +66,7 @@ void building_slot::set_building(const building_type *building)
 					continue;
 				}
 
-				while (this->production_type_employed_capacities.contains(production_type)) {
+				while (this->get_production_type_employed_capacity(production_type) > 0) {
 					this->decrease_production(production_type);
 				}
 			}
@@ -166,7 +166,7 @@ bool building_slot::can_decrease_production(const production_type *production_ty
 		return false;
 	}
 
-	if (!this->production_type_employed_capacities.contains(production_type)) {
+	if (this->get_production_type_employed_capacity(production_type) == 0) {
 		return false;
 	}
 
