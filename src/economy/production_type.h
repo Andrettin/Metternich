@@ -13,6 +13,7 @@ class production_type final : public named_data_entry, public data_type<producti
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QVariantList input_commodities READ get_input_commodities_qvariant_list NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 
@@ -32,6 +33,8 @@ public:
 	{
 		return this->input_commodities;
 	}
+
+	QVariantList get_input_commodities_qvariant_list() const;
 
 	const commodity *get_output_commodity() const
 	{

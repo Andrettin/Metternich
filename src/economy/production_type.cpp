@@ -5,6 +5,7 @@
 #include "economy/commodity.h"
 #include "population/population_class.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 
 namespace metternich {
 
@@ -32,6 +33,11 @@ void production_type::check() const
 	assert_throw(!this->get_input_commodities().empty());
 	assert_throw(this->get_output_commodity() != nullptr);
 	assert_throw(this->get_output_value() > 0);
+}
+
+QVariantList production_type::get_input_commodities_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_input_commodities());
 }
 
 }

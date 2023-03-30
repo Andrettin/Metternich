@@ -23,6 +23,7 @@ class building_slot final : public QObject
 	Q_PROPERTY(metternich::building_slot_type* type READ get_type_unconst CONSTANT)
 	Q_PROPERTY(metternich::building_type* building READ get_building_unconst NOTIFY building_changed)
 	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
+	Q_PROPERTY(int capacity READ get_capacity NOTIFY building_changed)
 
 public:
 	explicit building_slot(const building_slot_type *type, const metternich::country *country);
@@ -129,6 +130,7 @@ public:
 
 signals:
 	void building_changed();
+	void employed_capacity_changed();
 
 private:
 	const building_slot_type *type = nullptr;
