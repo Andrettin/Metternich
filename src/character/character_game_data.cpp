@@ -2,7 +2,6 @@
 
 #include "character/character_game_data.h"
 
-#include "character/attribute.h"
 #include "character/character.h"
 #include "character/character_type.h"
 #include "character/trait.h"
@@ -40,14 +39,11 @@ character_game_data::character_game_data(const metternich::character *character)
 
 void character_game_data::on_game_started()
 {
-	this->set_attribute_value(attribute::vitality, character::base_vitality);
-
 	for (const trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);
 	}
 
 	this->generate_missing_traits();
-	this->generate_expertise_traits();
 
 	this->check_portrait();
 }
@@ -396,20 +392,6 @@ void character_game_data::generate_missing_traits()
 	}
 }
 
-void character_game_data::generate_expertise_traits()
-{
-	const int initial_trait_level = this->get_total_expertise_trait_level();
-
-	for (int i = initial_trait_level; i < this->character->get_level();) {
-		const trait *trait = this->generate_trait(trait_type::expertise, this->character->get_level() - i);
-		if (trait == nullptr) {
-			return;
-		}
-
-		i += trait->get_level();
-	}
-}
-
 void character_game_data::sort_traits()
 {
 	std::sort(this->traits.begin(), this->traits.end(), [](const trait *lhs, const trait *rhs) {
@@ -538,89 +520,6 @@ void character_game_data::decrement_scripted_modifiers()
 	}
 }
 
-int character_game_data::get_attribute_value(const attribute attribute) const
-{
-	const int value = this->get_unclamped_attribute_value(attribute);
-
-	if (value > 0) {
-		return value;
-	}
-
-	if (attribute == this->character->get_type()->get_primary_attribute()) {
-		//the primary attribute must always be at least 1, so that the character isn't completely useless
-		return 1;
-	}
-
-	return 0;
-}
-
-void character_game_data::set_attribute_value(const attribute attribute, const int value)
-{
-	if (value == this->get_unclamped_attribute_value(attribute)) {
-		return;
-	}
-
-	const int old_value = this->get_attribute_value(attribute); //not the unclamped value, note
-
-	if (value == 0) {
-		this->attribute_values.erase(attribute);
-	} else {
-		this->attribute_values[attribute] = value;
-	}
-
-	const int new_value = this->get_attribute_value(attribute);
-
-	if (new_value != old_value) {
-		if (attribute == attribute::vitality && this->get_military_unit() != nullptr) {
-			this->get_military_unit()->change_max_hit_points((new_value - old_value) * military_unit::vitality_hit_point_bonus);
-		}
-
-		if (game::get()->is_running()) {
-			emit attributes_changed();
-		}
-	}
-}
-
-int character_game_data::get_primary_attribute_value() const
-{
-	return this->get_attribute_value(this->character->get_type()->get_primary_attribute());
-}
-
-int character_game_data::get_diplomacy() const
-{
-	return this->get_attribute_value(attribute::diplomacy);
-}
-
-int character_game_data::get_martial() const
-{
-	return this->get_attribute_value(attribute::martial);
-}
-
-int character_game_data::get_stewardship() const
-{
-	return this->get_attribute_value(attribute::stewardship);
-}
-
-int character_game_data::get_intrigue() const
-{
-	return this->get_attribute_value(attribute::intrigue);
-}
-
-int character_game_data::get_learning() const
-{
-	return this->get_attribute_value(attribute::learning);
-}
-
-int character_game_data::get_prowess() const
-{
-	return this->get_attribute_value(attribute::prowess);
-}
-
-int character_game_data::get_vitality() const
-{
-	return this->get_attribute_value(attribute::vitality);
-}
-
 void character_game_data::set_spouse(const metternich::character *spouse, const bool matrilineal)
 {
 	if (spouse == this->get_spouse()) {
@@ -731,7 +630,7 @@ QString character_game_data::get_country_modifier_string(const unsigned indent) 
 		return QString();
 	}
 
-	return QString::fromStdString(this->character->get_type()->get_country_modifier()->get_string(this->get_primary_attribute_value(), indent));
+	return QString::fromStdString(this->character->get_type()->get_country_modifier()->get_string(this->character->get_skill(), indent));
 }
 
 QString character_game_data::get_province_modifier_string(const unsigned indent) const
@@ -740,7 +639,7 @@ QString character_game_data::get_province_modifier_string(const unsigned indent)
 		return QString();
 	}
 
-	return QString::fromStdString(this->character->get_type()->get_province_modifier()->get_string(this->get_primary_attribute_value(), indent));
+	return QString::fromStdString(this->character->get_type()->get_province_modifier()->get_string(this->character->get_skill(), indent));
 }
 
 void character_game_data::apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier)
@@ -753,14 +652,14 @@ void character_game_data::apply_modifier(const modifier<const metternich::charac
 void character_game_data::apply_country_modifier(const country *country, const int multiplier)
 {
 	if (this->character->get_type()->get_country_modifier() != nullptr) {
-		this->character->get_type()->get_country_modifier()->apply(country, this->get_primary_attribute_value() * multiplier);
+		this->character->get_type()->get_country_modifier()->apply(country, this->character->get_skill() * multiplier);
 	}
 }
 
 void character_game_data::apply_province_modifier(const province *province, const int multiplier)
 {
 	if (this->character->get_type()->get_province_modifier() != nullptr) {
-		this->character->get_type()->get_province_modifier()->apply(province, this->get_primary_attribute_value() * multiplier);
+		this->character->get_type()->get_province_modifier()->apply(province, this->character->get_skill() * multiplier);
 	}
 }
 

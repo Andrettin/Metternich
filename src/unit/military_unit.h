@@ -28,7 +28,6 @@ class military_unit final : public QObject
 public:
 	static constexpr int hit_point_recovery_per_turn = 10;
 	static constexpr int morale_recovery_per_turn = 20;
-	static constexpr int vitality_hit_point_bonus = 5;
 
 	static const character *get_army_commander(const std::vector<military_unit *> &military_units);
 	static const character *get_army_commander(const std::vector<const military_unit *> &military_units);

@@ -10,7 +10,6 @@ class character_type;
 class icon;
 class military_unit;
 class spell;
-enum class attribute;
 enum class trait_type;
 
 template <typename scope_type>

@@ -18,8 +18,8 @@ namespace metternich {
 
 bool character::skill_compare(const character *lhs, const character *rhs)
 {
-	if (lhs->get_game_data()->get_primary_attribute_value() != rhs->get_game_data()->get_primary_attribute_value()) {
-		return lhs->get_game_data()->get_primary_attribute_value() > rhs->get_game_data()->get_primary_attribute_value();
+	if (lhs->get_skill() != rhs->get_skill()) {
+		return lhs->get_skill() > rhs->get_skill();
 	}
 
 	return lhs->get_identifier() < rhs->get_identifier();

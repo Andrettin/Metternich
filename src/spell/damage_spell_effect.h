@@ -1,6 +1,5 @@
 #pragma once
 
-#include "character/attribute.h"
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "database/gsml_data.h"
@@ -32,30 +31,11 @@ public:
 		return identifier;
 	}
 
-	virtual void process_gsml_scope(const gsml_data &scope) override
-	{
-		const std::string &tag = scope.get_tag();
-
-		if (tag == "scaled") {
-			const attribute attribute = enum_converter<metternich::attribute>::to_enum(scope.get_property_value("attribute"));
-			const int value = std::stoi(scope.get_property_value("value"));
-			this->scaled_values[attribute] += value;
-		} else {
-			spell_effect::process_gsml_scope(scope);
-		}
-	}
-
 	int get_damage(const military_unit *caster) const
 	{
-		int damage = this->value;
+		Q_UNUSED(caster);
 
-		assert_throw(caster->get_character() != nullptr);
-
-		for (const auto &[attribute, scaled_value] : this->scaled_values) {
-			damage += scaled_value * caster->get_character()->get_game_data()->get_attribute_value(attribute);
-		}
-
-		return damage;
+		return this->value;
 	}
 
 	virtual void apply(military_unit *caster, military_unit *target) const override
@@ -70,7 +50,6 @@ public:
 
 private:
 	int value = 0;
-	std::map<attribute, int> scaled_values;
 };
 
 }

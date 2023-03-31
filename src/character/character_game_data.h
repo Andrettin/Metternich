@@ -17,7 +17,6 @@ class province;
 class scripted_character_modifier;
 class spell;
 class trait;
-enum class attribute;
 enum class trait_type;
 
 template <typename scope_type>
@@ -31,14 +30,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(metternich::country* employer READ get_employer_unconst NOTIFY employer_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
-	Q_PROPERTY(int primary_attribute_value READ get_primary_attribute_value NOTIFY attributes_changed)
-	Q_PROPERTY(int diplomacy READ get_diplomacy NOTIFY attributes_changed)
-	Q_PROPERTY(int martial READ get_martial NOTIFY attributes_changed)
-	Q_PROPERTY(int stewardship READ get_stewardship NOTIFY attributes_changed)
-	Q_PROPERTY(int intrigue READ get_intrigue NOTIFY attributes_changed)
-	Q_PROPERTY(int learning READ get_learning NOTIFY attributes_changed)
-	Q_PROPERTY(int prowess READ get_prowess NOTIFY attributes_changed)
-	Q_PROPERTY(int vitality READ get_vitality NOTIFY attributes_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::character* spouse READ get_spouse_unconst NOTIFY spouse_changed)
@@ -112,7 +103,6 @@ public:
 	void remove_trait(const trait *trait);
 	const trait *generate_trait(const trait_type trait_type, const int max_level);
 	void generate_missing_traits();
-	void generate_expertise_traits();
 	void sort_traits();
 	int get_total_expertise_trait_level() const;
 	void gain_item(const trait *item);
@@ -127,33 +117,6 @@ public:
 	void add_scripted_modifier(const scripted_character_modifier *modifier, const int duration);
 	void remove_scripted_modifier(const scripted_character_modifier *modifier);
 	void decrement_scripted_modifiers();
-
-	int get_unclamped_attribute_value(const attribute attribute) const
-	{
-		const auto find_iterator = this->attribute_values.find(attribute);
-		if (find_iterator != this->attribute_values.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	int get_attribute_value(const attribute attribute) const;
-	void set_attribute_value(const attribute attribute, const int value);
-
-	void change_attribute_value(const attribute attribute, const int change)
-	{
-		this->set_attribute_value(attribute, this->get_unclamped_attribute_value(attribute) + change);
-	}
-
-	int get_primary_attribute_value() const;
-	int get_diplomacy() const;
-	int get_martial() const;
-	int get_stewardship() const;
-	int get_intrigue() const;
-	int get_learning() const;
-	int get_prowess() const;
-	int get_vitality() const;
 
 	const metternich::character *get_spouse() const
 	{
@@ -433,7 +396,6 @@ signals:
 	void dead_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
-	void attributes_changed();
 	void spouse_changed();
 	void loyalty_changed();
 	void wealth_changed();
@@ -448,7 +410,6 @@ private:
 	bool dead = false;
 	std::vector<const trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
-	std::map<attribute, int> attribute_values;
 	const metternich::character *spouse = nullptr;
 	bool matrilineal_marriage = false;
 	metternich::military_unit *military_unit = nullptr;

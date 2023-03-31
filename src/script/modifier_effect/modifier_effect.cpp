@@ -1,10 +1,8 @@
 #include "script/modifier_effect/modifier_effect.h"
 
-#include "character/attribute.h"
 #include "character/character.h"
 #include "database/gsml_property.h"
 #include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
-#include "script/modifier_effect/attribute_modifier_effect.h"
 #include "script/modifier_effect/commodity_production_modifier_effect.h"
 #include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
@@ -27,8 +25,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		if (key == "loyalty") {
 			return std::make_unique<loyalty_modifier_effect>(value);
-		} else if (enum_converter<attribute>::has_value(key)) {
-			return std::make_unique<attribute_modifier_effect>(enum_converter<attribute>::to_enum(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		if (key == "air_morale_resistance") {

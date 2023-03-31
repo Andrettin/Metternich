@@ -42,8 +42,8 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(QDateTime end_date MEMBER end_date READ get_end_date NOTIFY changed)
 	Q_PROPERTY(QDateTime birth_date MEMBER birth_date READ get_birth_date NOTIFY changed)
 	Q_PROPERTY(QDateTime death_date MEMBER death_date READ get_death_date NOTIFY changed)
-	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
-	Q_PROPERTY(archimedes::centesimal_int level_multiplier READ get_level_multiplier WRITE set_level_multiplier NOTIFY changed)
+	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
+	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
@@ -52,8 +52,7 @@ public:
 	static constexpr const char database_folder[] = "characters";
 	static constexpr bool history_enabled = true;
 
-	static constexpr int default_max_level = 6; //the maximum level in normal circumstances
-	static constexpr int base_vitality = 5;
+	static constexpr int max_skill = 6;
 	static constexpr int base_loyalty = 50;
 	static constexpr centesimal_int min_loyalty = centesimal_int(0);
 	static constexpr centesimal_int max_loyalty = centesimal_int(100);
@@ -186,19 +185,19 @@ public:
 		return this->death_date;
 	}
 
-	int get_level() const
+	int get_skill() const
 	{
-		return this->level;
+		return this->skill;
 	}
 
-	centesimal_int get_level_multiplier() const
+	centesimal_int get_skill_multiplier() const
 	{
-		return centesimal_int(this->get_level()) / character::default_max_level;
+		return centesimal_int(this->get_skill()) / character::max_skill;
 	}
 
-	void set_level_multiplier(const centesimal_int &level_multiplier)
+	void set_skill_multiplier(const centesimal_int &skill_multiplier)
 	{
-		this->level = (level_multiplier * character::default_max_level).to_int();
+		this->skill = (skill_multiplier * character::max_skill).to_int();
 	}
 
 	const std::vector<const trait *> &get_traits() const
@@ -226,7 +225,7 @@ private:
 	QDateTime end_date;
 	QDateTime birth_date;
 	QDateTime death_date;
-	int level = 1;
+	int skill = 1;
 	std::vector<const trait *> traits;
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;

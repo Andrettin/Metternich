@@ -2021,11 +2021,8 @@ void country_game_data::clear_characters()
 void country_game_data::sort_characters()
 {
 	std::sort(this->characters.begin(), this->characters.end(), [](const character *lhs, const character *rhs) {
-		const character_game_data *lhs_game_data = lhs->get_game_data();
-		const character_game_data *rhs_game_data = rhs->get_game_data();
-
-		if (lhs_game_data->get_primary_attribute_value() != rhs_game_data->get_primary_attribute_value()) {
-			return lhs_game_data->get_primary_attribute_value() > rhs_game_data->get_primary_attribute_value();
+		if (lhs->get_skill() != rhs->get_skill()) {
+			return lhs->get_skill() > rhs->get_skill();
 		}
 
 		if (lhs->get_birth_date() != rhs->get_birth_date()) {

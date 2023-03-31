@@ -22,42 +22,28 @@ namespace metternich {
 
 const character *military_unit::get_army_commander(const std::vector<military_unit *> &military_units)
 {
-	const metternich::character *best_character = nullptr;
-	int best_skill = 0;
-
 	for (const military_unit *military_unit : military_units) {
 		if (military_unit->get_character() == nullptr) {
 			continue;
 		}
 
-		const int skill = military_unit->get_character()->get_game_data()->get_primary_attribute_value();
-		if (skill > best_skill) {
-			best_character = military_unit->get_character();
-			best_skill = skill;
-		}
+		return military_unit->get_character();
 	}
 
-	return best_character;
+	return nullptr;
 }
 
 const character *military_unit::get_army_commander(const std::vector<const military_unit *> &military_units)
 {
-	const metternich::character *best_character = nullptr;
-	int best_skill = 0;
-
 	for (const military_unit *military_unit : military_units) {
 		if (military_unit->get_character() == nullptr) {
 			continue;
 		}
 
-		const int skill = military_unit->get_character()->get_game_data()->get_primary_attribute_value();
-		if (skill > best_skill) {
-			best_character = military_unit->get_character();
-			best_skill = skill;
-		}
+		return military_unit->get_character();
 	}
 
-	return best_character;
+	return nullptr;
 }
 
 int military_unit::get_army_score(const std::vector<military_unit *> &military_units)
@@ -112,11 +98,6 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	: military_unit(type, character->get_game_data()->get_employer(), character->get_culture(), character->get_religion(), character->get_phenotype())
 {
 	this->character = character;
-
-	//set the hit points here separately, since it could be different after the character is set, as vitality increases unit HP
-	this->max_hit_points += (character->get_game_data()->get_vitality() - character::base_vitality) * military_unit::vitality_hit_point_bonus;
-	this->set_hit_points(this->get_max_hit_points());
-	this->set_morale(this->get_hit_points());
 
 	character->get_game_data()->apply_military_unit_modifier(this, 1);
 

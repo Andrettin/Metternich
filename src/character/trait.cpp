@@ -2,7 +2,6 @@
 
 #include "character/trait.h"
 
-#include "character/attribute.h"
 #include "character/trait_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"

@@ -2,7 +2,6 @@
 
 #include "character/character_type.h"
 
-#include "character/attribute.h"
 #include "script/condition/and_condition.h"
 #include "ui/icon.h"
 #include "unit/military_unit_category.h"
@@ -11,7 +10,7 @@
 namespace metternich {
 
 character_type::character_type(const std::string &identifier)
-	: named_data_entry(identifier), primary_attribute(attribute::none), military_unit_category(military_unit_category::none)
+	: named_data_entry(identifier), military_unit_category(military_unit_category::none)
 {
 }
 
@@ -40,16 +39,10 @@ void character_type::process_gsml_scope(const gsml_data &scope)
 void character_type::check() const
 {
 	assert_throw(this->get_portrait() != nullptr);
-	assert_throw(this->get_primary_attribute() != attribute::none);
 
 	for (const auto &[portrait, conditions] : this->get_conditional_portraits()) {
 		conditions->check_validity();
 	}
-}
-
-QString character_type::get_primary_attribute_name_qstring() const
-{
-	return QString::fromStdString(get_attribute_name(this->get_primary_attribute()));
 }
 
 }

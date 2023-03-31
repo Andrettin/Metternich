@@ -15,7 +15,6 @@ include_directories(
 )
 
 set(character_SRCS
-	src/character/attribute.cpp
 	src/character/character.cpp
 	src/character/character_container.cpp
 	src/character/character_game_data.cpp
@@ -264,7 +263,6 @@ set(metternich_SRCS
 )
 
 set(character_HDRS
-	src/character/attribute.h
 	src/character/character.h
 	src/character/character_container.h
 	src/character/character_game_data.h
@@ -414,7 +412,6 @@ set(script_condition_HDRS
 	src/script/condition/any_character_condition.h
 	src/script/condition/any_neighbor_country_condition.h
 	src/script/condition/attacking_commander_condition.h
-	src/script/condition/attribute_condition.h
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/character_type_condition.h
 	src/script/condition/coastal_condition.h
@@ -502,7 +499,6 @@ source_group(script\\effect FILES ${script_effect_HDRS})
 
 set(script_modifier_effect_HDRS
 	src/script/modifier_effect/air_morale_resistance_modifier_effect.h
-	src/script/modifier_effect/attribute_modifier_effect.h
 	src/script/modifier_effect/commodity_production_modifier_effect.h
 	src/script/modifier_effect/defense_modifier_effect.h
 	src/script/modifier_effect/land_morale_resistance_modifier_effect.h

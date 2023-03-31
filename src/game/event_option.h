@@ -11,7 +11,6 @@ class character;
 class country;
 class province;
 class trait;
-enum class attribute;
 struct context;
 struct read_only_context;
 
@@ -55,7 +54,6 @@ public:
 private:
 	std::string name;
 	std::string tooltip;
-	attribute tooltip_info_attribute;
 	const trait *tooltip_info_trait = nullptr;
 	int ai_weight = 1;
 	std::unique_ptr<condition<std::remove_const_t<scope_type>>> conditions;

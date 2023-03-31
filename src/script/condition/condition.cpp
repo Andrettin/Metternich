@@ -16,7 +16,6 @@
 #include "script/condition/any_character_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
 #include "script/condition/attacking_commander_condition.h"
-#include "script/condition/attribute_condition.h"
 #include "script/condition/can_have_trait_condition.h"
 #include "script/condition/character_type_condition.h"
 #include "script/condition/coastal_condition.h"
@@ -81,8 +80,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<scripted_modifier_condition<character>>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
-		} else if (enum_converter<attribute>::has_value(key)) {
-			return std::make_unique<attribute_condition>(enum_converter<attribute>::to_enum(key), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, country>) {
 		if (key == "country") {
