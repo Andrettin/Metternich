@@ -53,16 +53,8 @@ public:
 	static constexpr bool history_enabled = true;
 
 	static constexpr int max_skill = 6;
-	static constexpr int base_loyalty = 50;
-	static constexpr centesimal_int min_loyalty = centesimal_int(0);
-	static constexpr centesimal_int max_loyalty = centesimal_int(100);
 	static constexpr int min_opinion = -200;
 	static constexpr int max_opinion = 200;
-
-	static centesimal_int opinion_to_loyalty(const int opinion)
-	{
-		return centesimal_int(opinion) * 100 / (character::max_opinion - character::min_opinion);
-	}
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 

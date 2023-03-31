@@ -33,7 +33,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::character* spouse READ get_spouse_unconst NOTIFY spouse_changed)
-	Q_PROPERTY(int loyalty READ get_loyalty_int NOTIFY loyalty_changed)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
 	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
@@ -178,34 +177,6 @@ public:
 	void apply_country_modifier(const country *country, const int multiplier);
 	void apply_province_modifier(const province *province, const int multiplier);
 	void apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
-
-	const centesimal_int &get_loyalty() const;
-
-	const centesimal_int &get_unclamped_loyalty() const
-	{
-		return this->loyalty;
-	}
-
-	int get_loyalty_int() const
-	{
-		return this->get_loyalty().to_int();
-	}
-
-	void set_loyalty(const centesimal_int &loyalty)
-	{
-		if (loyalty == this->get_unclamped_loyalty()) {
-			return;
-		}
-
-		this->loyalty = loyalty;
-
-		emit loyalty_changed();
-	}
-
-	void change_loyalty(const centesimal_int &change)
-	{
-		this->set_loyalty(this->get_unclamped_loyalty() + change);
-	}
 
 	int get_wealth() const
 	{
@@ -397,7 +368,6 @@ signals:
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void spouse_changed();
-	void loyalty_changed();
 	void wealth_changed();
 	void prestige_changed();
 	void piety_changed();
@@ -413,7 +383,6 @@ private:
 	const metternich::character *spouse = nullptr;
 	bool matrilineal_marriage = false;
 	metternich::military_unit *military_unit = nullptr;
-	centesimal_int loyalty;
 	int wealth = 0;
 	centesimal_int prestige;
 	centesimal_int piety;

@@ -32,7 +32,7 @@
 namespace metternich {
 
 character_game_data::character_game_data(const metternich::character *character)
-	: character(character), loyalty(character::base_loyalty)
+	: character(character)
 {
 	connect(game::get(), &game::turn_changed, this, &character_game_data::age_changed);
 }
@@ -172,7 +172,7 @@ void character_game_data::check_employer()
 		}
 	}
 
-	if (this->is_deployed() && this->get_loyalty_int() >= 50) {
+	if (this->is_deployed()) {
 		return;
 	}
 
@@ -670,19 +670,6 @@ void character_game_data::apply_military_unit_modifier(metternich::military_unit
 			trait->get_military_unit_modifier()->apply(military_unit, multiplier);
 		}
 	}
-}
-
-const centesimal_int &character_game_data::get_loyalty() const
-{
-	if (this->get_unclamped_loyalty() > character::max_loyalty) {
-		return character::max_loyalty;
-	}
-
-	if (this->get_unclamped_loyalty() < character::min_loyalty) {
-		return character::min_loyalty;
-	}
-
-	return this->get_unclamped_loyalty();
 }
 
 QVariantList character_game_data::get_spells_qvariant_list() const

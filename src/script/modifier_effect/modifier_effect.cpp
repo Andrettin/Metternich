@@ -6,7 +6,6 @@
 #include "script/modifier_effect/commodity_production_modifier_effect.h"
 #include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
-#include "script/modifier_effect/loyalty_modifier_effect.h"
 #include "script/modifier_effect/melee_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/production_modifier_effect.h"
@@ -22,11 +21,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (key == "loyalty") {
-			return std::make_unique<loyalty_modifier_effect>(value);
-		}
-	} else if constexpr (std::is_same_v<scope_type, const country>) {
+	if constexpr (std::is_same_v<scope_type, const country>) {
 		if (key == "air_morale_resistance") {
 			return std::make_unique<air_morale_resistance_modifier_effect>(value);
 		} else if (key == "land_morale_resistance") {
