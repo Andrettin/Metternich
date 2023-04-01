@@ -113,6 +113,10 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<any_population_unit_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "battle") {
 			effect = std::make_unique<battle_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "change_opinion") {
+			effect = std::make_unique<change_opinion_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "opinion_modifiers") {
+			effect = std::make_unique<opinion_modifiers_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "random_neighbor_country") {
 			effect = std::make_unique<random_neighbor_country_effect>(effect_operator);
 		}
@@ -121,12 +125,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
 		if (effect_identifier == "any_character") {
 			effect = std::make_unique<any_character_effect<scope_type>>(effect_operator);
-		} else if (effect_identifier == "change_opinion") {
-			effect = std::make_unique<change_opinion_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "delayed") {
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
-		} else if (effect_identifier == "opinion_modifiers") {
-			effect = std::make_unique<opinion_modifiers_effect<scope_type>>(effect_operator);
 		}
 	}
 

@@ -16,7 +16,6 @@
 #include "map/province_game_data.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
-#include "script/opinion_modifier.h"
 #include "script/scripted_character_modifier.h"
 #include "spell/spell.h"
 #include "unit/military_unit.h"
@@ -494,30 +493,6 @@ void character_game_data::decrement_scripted_modifiers()
 	for (const scripted_character_modifier *modifier : modifiers_to_remove) {
 		this->remove_scripted_modifier(modifier);
 	}
-
-	//decrement opinion modifiers as well
-	character_map<std::vector<const opinion_modifier *>> opinion_modifiers_to_remove;
-
-	for (auto &[character, opinion_modifier_map] : this->opinion_modifiers) {
-		for (auto &[modifier, duration] : opinion_modifier_map) {
-			if (duration == -1) {
-				//eternal
-				continue;
-			}
-
-			--duration;
-
-			if (duration == 0) {
-				opinion_modifiers_to_remove[character].push_back(modifier);
-			}
-		}
-	}
-
-	for (const auto &[character, opinion_modifiers] : opinion_modifiers_to_remove) {
-		for (const opinion_modifier *modifier : opinion_modifiers) {
-			this->remove_opinion_modifier(character, modifier);
-		}
-	}
 }
 
 void character_game_data::set_spouse(const metternich::character *spouse, const bool matrilineal)
@@ -717,34 +692,6 @@ void character_game_data::change_quarterly_prestige(const centesimal_int &change
 void character_game_data::change_quarterly_piety(const centesimal_int &change)
 {
 	this->quarterly_piety += change;
-}
-
-int character_game_data::get_opinion_of(const metternich::character *other) const
-{
-	int opinion = this->get_base_opinion(other);
-
-	for (const auto &[modifier, duration] : this->get_opinion_modifiers_for(other)) {
-		opinion += modifier->get_value();
-	}
-
-	opinion = std::clamp(opinion, character::min_opinion, character::max_opinion);
-
-	return opinion;
-}
-
-void character_game_data::add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier, const int duration)
-{
-	this->opinion_modifiers[other][modifier] = std::max(this->opinion_modifiers[other][modifier], duration);
-}
-
-void character_game_data::remove_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier)
-{
-	opinion_modifier_map<int> &opinion_modifiers = this->opinion_modifiers[other];
-	opinion_modifiers.erase(modifier);
-
-	if (opinion_modifiers.empty()) {
-		this->opinion_modifiers.erase(other);
-	}
 }
 
 }

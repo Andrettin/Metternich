@@ -1,7 +1,6 @@
 #pragma once
 
 #include "character/character_container.h"
-#include "script/opinion_modifier_container.h"
 #include "script/scripted_modifier_container.h"
 #include "spell/spell_container.h"
 #include "util/fractional_int.h"
@@ -12,7 +11,6 @@ class character;
 class country;
 class icon;
 class military_unit;
-class opinion_modifier;
 class province;
 class scripted_character_modifier;
 class spell;
@@ -315,51 +313,6 @@ public:
 
 	void change_quarterly_piety(const centesimal_int &change);
 
-	int get_opinion_of(const metternich::character *other) const;
-
-	int get_base_opinion(const metternich::character *other) const
-	{
-		const auto find_iterator = this->base_opinions.find(other);
-		if (find_iterator != this->base_opinions.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void set_base_opinion(const metternich::character *other, const int opinion)
-	{
-		if (opinion == this->get_base_opinion(other)) {
-			return;
-		}
-
-		if (opinion == 0) {
-			this->base_opinions.erase(other);
-		} else {
-			this->base_opinions[other] = opinion;
-		}
-	}
-
-	void change_base_opinion(const metternich::character *other, const int change)
-	{
-		this->set_base_opinion(other, this->get_base_opinion(other) + change);
-	}
-
-	const opinion_modifier_map<int> &get_opinion_modifiers_for(const metternich::character *other) const
-	{
-		static const opinion_modifier_map<int> empty_map;
-
-		const auto find_iterator = this->opinion_modifiers.find(other);
-		if (find_iterator != this->opinion_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_map;
-	}
-
-	void add_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier, const int duration);
-	void remove_opinion_modifier(const metternich::character *other, const opinion_modifier *modifier);
-
 signals:
 	void portrait_changed();
 	void employer_changed();
@@ -390,8 +343,6 @@ private:
 	spell_set item_spells;
 	centesimal_int quarterly_prestige;
 	centesimal_int quarterly_piety;
-	character_map<int> base_opinions;
-	character_map<opinion_modifier_map<int>> opinion_modifiers;
 };
 
 }
