@@ -30,7 +30,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
-	Q_PROPERTY(metternich::character* spouse READ get_spouse_unconst NOTIFY spouse_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
 
@@ -111,29 +110,6 @@ public:
 	void add_scripted_modifier(const scripted_character_modifier *modifier, const int duration);
 	void remove_scripted_modifier(const scripted_character_modifier *modifier);
 	void decrement_scripted_modifiers();
-
-	const metternich::character *get_spouse() const
-	{
-		return this->spouse;
-	}
-
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::character *get_spouse_unconst() const
-	{
-		return const_cast<metternich::character *>(this->get_spouse());
-	}
-
-public:
-	void set_spouse(const metternich::character *spouse, const bool matrilineal = false);
-
-	bool is_married() const
-	{
-		return this->get_spouse() != nullptr;
-	}
-
-	bool is_married_matrilineally() const;
-	bool is_subordinate_spouse() const;
 
 	metternich::military_unit *get_military_unit() const
 	{
@@ -230,7 +206,6 @@ signals:
 	void dead_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
-	void spouse_changed();
 	void spells_changed();
 
 private:
@@ -240,8 +215,6 @@ private:
 	bool dead = false;
 	std::vector<const trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
-	const metternich::character *spouse = nullptr;
-	bool matrilineal_marriage = false;
 	metternich::military_unit *military_unit = nullptr;
 	spell_set spells;
 	spell_set item_spells;

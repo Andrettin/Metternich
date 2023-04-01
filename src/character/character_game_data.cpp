@@ -132,11 +132,6 @@ void character_game_data::set_employer(const metternich::country *employer)
 
 	if (this->get_employer() != nullptr) {
 		this->get_employer()->get_game_data()->add_character(this->character);
-
-		//move any subordinate spouse to the new country as well
-		if (this->is_married()) {
-			this->get_spouse()->get_game_data()->check_employer();
-		}
 	}
 
 	if (game::get()->is_running()) {
@@ -147,21 +142,6 @@ void character_game_data::set_employer(const metternich::country *employer)
 void character_game_data::check_employer()
 {
 	//check whether the character should change their employer
-
-	if (this->is_married()) {
-		const character_game_data *spouse_game_data = this->get_spouse()->get_game_data();
-
-		if (this->is_subordinate_spouse()) {
-			const country *spouse_employer = spouse_game_data->get_employer();
-			if (spouse_employer != nullptr) {
-				if (spouse_employer != this->get_employer()) {
-					//if the character is a subordinate spouse, and their spouse is employed by a different country, move them there
-					this->set_employer(spouse_employer);
-				}
-				return;
-			}
-		}
-	}
 
 	if (this->is_deployed()) {
 		return;
@@ -205,7 +185,6 @@ void character_game_data::set_dead(const bool dead)
 
 void character_game_data::die()
 {
-	this->set_spouse(nullptr);
 	this->set_employer(nullptr);
 	this->set_dead(true);
 }
@@ -484,68 +463,6 @@ void character_game_data::decrement_scripted_modifiers()
 
 	for (const scripted_character_modifier *modifier : modifiers_to_remove) {
 		this->remove_scripted_modifier(modifier);
-	}
-}
-
-void character_game_data::set_spouse(const metternich::character *spouse, const bool matrilineal)
-{
-	if (spouse == this->get_spouse()) {
-		return;
-	}
-
-	const metternich::character *old_spouse = this->get_spouse();
-
-	if (old_spouse != nullptr) {
-		this->matrilineal_marriage = false;
-	}
-
-	this->spouse = spouse;
-	this->matrilineal_marriage = matrilineal;
-
-	if (old_spouse != nullptr) {
-		if (old_spouse->get_game_data()->get_spouse() == this->character) {
-			old_spouse->get_game_data()->set_spouse(nullptr);
-		}
-	}
-
-	if (spouse != nullptr) {
-		character_game_data *spouse_game_data = spouse->get_game_data();
-		if (spouse_game_data->get_spouse() != this->character) {
-			spouse_game_data->set_spouse(this->character, matrilineal);
-		}
-
-		this->check_employer();
-	}
-
-	if (game::get()->is_running()) {
-		emit spouse_changed();
-	}
-}
-
-bool character_game_data::is_married_matrilineally() const
-{
-	if (this->matrilineal_marriage) {
-		assert_throw(this->is_married());
-		return true;
-	}
-
-	return false;
-}
-
-bool character_game_data::is_subordinate_spouse() const
-{
-	if (!this->is_married()) {
-		return false;
-	}
-
-	switch (this->character->get_gender()) {
-		case gender::male:
-			return this->is_married_matrilineally();
-		case gender::female:
-			return !this->is_married_matrilineally();
-		default:
-			assert_throw(false);
-			return false;
 	}
 }
 
