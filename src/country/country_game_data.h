@@ -75,8 +75,6 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
-	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
-	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(int storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
@@ -544,58 +542,6 @@ public:
 		this->set_wealth(this->get_wealth() + change);
 	}
 
-	const centesimal_int &get_prestige() const
-	{
-		return this->prestige;
-	}
-
-	int get_prestige_int() const
-	{
-		return this->prestige.to_int();
-	}
-
-	void set_prestige(const centesimal_int &prestige)
-	{
-		if (prestige == this->get_prestige()) {
-			return;
-		}
-
-		this->prestige = prestige;
-
-		emit prestige_changed();
-	}
-
-	void change_prestige(const centesimal_int &change)
-	{
-		this->set_prestige(this->get_prestige() + change);
-	}
-
-	const centesimal_int &get_piety() const
-	{
-		return this->piety;
-	}
-
-	int get_piety_int() const
-	{
-		return this->get_piety().to_int();
-	}
-
-	void set_piety(const centesimal_int &piety)
-	{
-		if (piety == this->get_piety()) {
-			return;
-		}
-
-		this->piety = piety;
-
-		emit piety_changed();
-	}
-
-	void change_piety(const centesimal_int &change)
-	{
-		this->set_piety(this->get_piety() + change);
-	}
-
 	const commodity_map<int> &get_stored_commodities() const
 	{
 		return this->stored_commodities;
@@ -717,26 +663,6 @@ public:
 
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category) const;
 
-	const centesimal_int &get_quarterly_prestige() const
-	{
-		return this->quarterly_prestige;
-	}
-
-	void change_quarterly_prestige(const centesimal_int &change)
-	{
-		this->quarterly_prestige += change;
-	}
-
-	const centesimal_int &get_quarterly_piety() const
-	{
-		return this->quarterly_piety;
-	}
-
-	void change_quarterly_piety(const centesimal_int &change)
-	{
-		this->quarterly_piety += change;
-	}
-
 	int get_land_morale_resistance_modifier() const
 	{
 		return this->land_morale_resistance_modifier;
@@ -839,8 +765,6 @@ signals:
 	void population_changed();
 	void population_growth_changed();
 	void wealth_changed();
-	void prestige_changed();
-	void piety_changed();
 	void stored_commodities_changed();
 	void storage_capacity_changed();
 	void technologies_changed();
@@ -887,8 +811,6 @@ private:
 	std::vector<qunique_ptr<building_slot>> building_slots;
 	building_slot_type_map<building_slot *> building_slot_map;
 	int wealth = 0;
-	centesimal_int prestige;
-	centesimal_int piety;
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;
 	commodity_map<int> commodity_inputs;
@@ -897,8 +819,6 @@ private:
 	std::vector<const character *> characters;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
-	centesimal_int quarterly_prestige;
-	centesimal_int quarterly_piety;
 	int land_morale_resistance_modifier = 0;
 	int naval_morale_resistance_modifier = 0;
 	int air_morale_resistance_modifier = 0;

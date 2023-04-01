@@ -73,14 +73,6 @@ country_game_data::~country_game_data()
 
 void country_game_data::do_turn()
 {
-	if (this->get_quarterly_prestige() != 0) {
-		this->change_prestige(this->get_quarterly_prestige());
-	}
-
-	if (this->get_quarterly_piety() != 0) {
-		this->change_piety(this->get_quarterly_piety());
-	}
-
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->do_turn();
 	}

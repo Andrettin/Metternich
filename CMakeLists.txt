@@ -434,9 +434,7 @@ set(script_condition_HDRS
 	src/script/condition/numerical_condition.h
 	src/script/condition/or_condition.h
 	src/script/condition/owns_province_condition.h
-	src/script/condition/piety_condition.h
 	src/script/condition/population_type_condition.h
-	src/script/condition/prestige_condition.h
 	src/script/condition/produces_commodity_condition.h
 	src/script/condition/religion_condition.h
 	src/script/condition/religious_group_condition.h
@@ -480,8 +478,6 @@ set(script_effect_HDRS
 	src/script/effect/if_effect.h
 	src/script/effect/location_effect.h
 	src/script/effect/opinion_modifiers_effect.h
-	src/script/effect/piety_effect.h
-	src/script/effect/prestige_effect.h
 	src/script/effect/random_list_effect.h
 	src/script/effect/random_neighbor_country_effect.h
 	src/script/effect/save_scope_as_effect.h
@@ -506,8 +502,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/modifier_effect.h
 	src/script/modifier_effect/naval_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/production_modifier_effect.h
-	src/script/modifier_effect/quarterly_piety_modifier_effect.h
-	src/script/modifier_effect/quarterly_prestige_modifier_effect.h
 	src/script/modifier_effect/storage_capacity_modifier_effect.h
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})

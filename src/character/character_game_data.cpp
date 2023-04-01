@@ -49,14 +49,6 @@ void character_game_data::on_game_started()
 
 void character_game_data::do_turn()
 {
-	if (this->get_quarterly_prestige() != 0) {
-		this->change_prestige(this->get_quarterly_prestige());
-	}
-
-	if (this->get_quarterly_piety() != 0) {
-		this->change_piety(this->get_quarterly_piety());
-	}
-
 	this->decrement_scripted_modifiers();
 	this->do_events();
 }
@@ -682,16 +674,6 @@ void character_game_data::learn_spell(const spell *spell)
 	}
 
 	this->add_spell(spell);
-}
-
-void character_game_data::change_quarterly_prestige(const centesimal_int &change)
-{
-	this->quarterly_prestige += change;
-}
-
-void character_game_data::change_quarterly_piety(const centesimal_int &change)
-{
-	this->quarterly_piety += change;
 }
 
 }

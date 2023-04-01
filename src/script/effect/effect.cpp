@@ -28,8 +28,6 @@
 #include "script/effect/if_effect.h"
 #include "script/effect/location_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
-#include "script/effect/piety_effect.h"
-#include "script/effect/prestige_effect.h"
 #include "script/effect/random_list_effect.h"
 #include "script/effect/random_neighbor_country_effect.h"
 #include "script/effect/save_scope_as_effect.h"
@@ -61,6 +59,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<gain_item_effect>(value, effect_operator);
 		} else if (key == "gain_spell_scroll") {
 			return std::make_unique<gain_spell_scroll_effect>(value, effect_operator);
+		} else if (key == "wealth") {
+			return std::make_unique<wealth_effect<scope_type>>(value, effect_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);
 		} else if (key.ends_with(percent_suffix) && commodity::try_get(key.substr(0, key.size() - percent_suffix.size())) != nullptr) {
@@ -72,12 +72,6 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
 		if (key == "event") {
 			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
-		} else if (key == "piety") {
-			return std::make_unique<piety_effect<scope_type>>(value, effect_operator);
-		} else if (key == "prestige") {
-			return std::make_unique<prestige_effect<scope_type>>(value, effect_operator);
-		} else if (key == "wealth") {
-			return std::make_unique<wealth_effect<scope_type>>(value, effect_operator);
 		}
 	}
 

@@ -31,9 +31,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::character* spouse READ get_spouse_unconst NOTIFY spouse_changed)
-	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
-	Q_PROPERTY(int prestige READ get_prestige_int NOTIFY prestige_changed)
-	Q_PROPERTY(int piety READ get_piety_int NOTIFY piety_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
 
@@ -176,79 +173,6 @@ public:
 	void apply_province_modifier(const province *province, const int multiplier);
 	void apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
 
-	int get_wealth() const
-	{
-		return this->wealth;
-	}
-
-	void set_wealth(const int wealth)
-	{
-		if (wealth == this->get_wealth()) {
-			return;
-		}
-
-		this->wealth = wealth;
-
-		emit wealth_changed();
-	}
-
-	void change_wealth(const int change)
-	{
-		this->set_wealth(this->get_wealth() + change);
-	}
-
-	const centesimal_int &get_prestige() const
-	{
-		return this->prestige;
-	}
-
-	int get_prestige_int() const
-	{
-		return this->prestige.to_int();
-	}
-
-	void set_prestige(const centesimal_int &prestige)
-	{
-		if (prestige == this->get_prestige()) {
-			return;
-		}
-
-		this->prestige = prestige;
-
-		emit prestige_changed();
-	}
-
-	void change_prestige(const centesimal_int &change)
-	{
-		this->set_prestige(this->get_prestige() + change);
-	}
-
-	const centesimal_int &get_piety() const
-	{
-		return this->piety;
-	}
-
-	int get_piety_int() const
-	{
-		return this->get_piety().to_int();
-	}
-
-	void set_piety(const centesimal_int &piety)
-	{
-		if (piety == this->get_piety()) {
-			return;
-		}
-
-		this->piety = piety;
-
-		emit piety_changed();
-	}
-
-	void change_piety(const centesimal_int &change)
-	{
-		this->set_piety(this->get_piety() + change);
-	}
-
 	const spell_set &get_spells() const
 	{
 		return this->spells;
@@ -299,20 +223,6 @@ public:
 
 	void learn_spell(const spell *spell);
 
-	const centesimal_int &get_quarterly_prestige() const
-	{
-		return this->quarterly_prestige;
-	}
-
-	void change_quarterly_prestige(const centesimal_int &change);
-
-	const centesimal_int &get_quarterly_piety() const
-	{
-		return this->quarterly_piety;
-	}
-
-	void change_quarterly_piety(const centesimal_int &change);
-
 signals:
 	void portrait_changed();
 	void employer_changed();
@@ -321,9 +231,6 @@ signals:
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void spouse_changed();
-	void wealth_changed();
-	void prestige_changed();
-	void piety_changed();
 	void spells_changed();
 
 private:
@@ -336,13 +243,8 @@ private:
 	const metternich::character *spouse = nullptr;
 	bool matrilineal_marriage = false;
 	metternich::military_unit *military_unit = nullptr;
-	int wealth = 0;
-	centesimal_int prestige;
-	centesimal_int piety;
 	spell_set spells;
 	spell_set item_spells;
-	centesimal_int quarterly_prestige;
-	centesimal_int quarterly_piety;
 };
 
 }

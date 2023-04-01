@@ -36,9 +36,7 @@
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
 #include "script/condition/owns_province_condition.h"
-#include "script/condition/piety_condition.h"
 #include "script/condition/population_type_condition.h"
-#include "script/condition/prestige_condition.h"
 #include "script/condition/produces_commodity_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
@@ -90,6 +88,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
 		} else if (key == "owns_province") {
 			return std::make_unique<owns_province_condition>(value, condition_operator);
+		} else if (key == "wealth") {
+			return std::make_unique<wealth_condition<scope_type>>(value, condition_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		}
@@ -114,14 +114,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	}
 	
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country>) {
-		if (key == "piety") {
-			return std::make_unique<piety_condition<scope_type>>(value, condition_operator);
-		} else if (key == "prestige") {
-			return std::make_unique<prestige_condition<scope_type>>(value, condition_operator);
-		} else if (key == "war") {
+		if (key == "war") {
 			return std::make_unique<war_condition<scope_type>>(value, condition_operator);
-		} else if (key == "wealth") {
-			return std::make_unique<wealth_condition<scope_type>>(value, condition_operator);
 		}
 	}
 	
