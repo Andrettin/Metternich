@@ -1964,17 +1964,17 @@ void country_game_data::check_characters(const QDateTime &date)
 			continue;
 		}
 		
-		character_game_data->check_employer();
+		character_game_data->check_country();
 	}
 
 	for (const province *province : this->get_provinces()) {
 		for (const character *character : province->get_characters()) {
-			if (character->get_game_data()->get_employer() != nullptr) {
+			if (character->get_game_data()->get_country() != nullptr) {
 				continue;
 			}
 
 			if (date >= character->get_start_date() && date < character->get_end_date()) {
-				character->get_game_data()->set_employer(this->country);
+				character->get_game_data()->set_country(this->country);
 			}
 		}
 	}
@@ -2002,7 +2002,7 @@ void country_game_data::clear_characters()
 {
 	const std::vector<const character *> characters = this->get_characters();
 	for (const character *character : characters) {
-		character->get_game_data()->set_employer(nullptr);
+		character->get_game_data()->set_country(nullptr);
 	}
 
 	assert_throw(this->get_characters().empty());

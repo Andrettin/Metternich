@@ -95,7 +95,7 @@ military_unit::military_unit(const military_unit_type *type, const country *owne
 }
 
 military_unit::military_unit(const military_unit_type *type, const metternich::character *character)
-	: military_unit(type, character->get_game_data()->get_employer(), character->get_culture(), character->get_religion(), character->get_phenotype())
+	: military_unit(type, character->get_game_data()->get_country(), character->get_culture(), character->get_religion(), character->get_phenotype())
 {
 	this->character = character;
 

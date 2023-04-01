@@ -118,30 +118,30 @@ void character_game_data::check_portrait()
 	}
 }
 
-void character_game_data::set_employer(const metternich::country *employer)
+void character_game_data::set_country(const metternich::country *country)
 {
-	if (employer == this->get_employer()) {
+	if (country == this->get_country()) {
 		return;
 	}
 
-	if (this->get_employer() != nullptr) {
-		this->get_employer()->get_game_data()->remove_character(this->character);
+	if (this->get_country() != nullptr) {
+		this->get_country()->get_game_data()->remove_character(this->character);
 	}
 
-	this->employer = employer;
+	this->country = country;
 
-	if (this->get_employer() != nullptr) {
-		this->get_employer()->get_game_data()->add_character(this->character);
+	if (this->get_country() != nullptr) {
+		this->get_country()->get_game_data()->add_character(this->character);
 	}
 
 	if (game::get()->is_running()) {
-		emit employer_changed();
+		emit country_changed();
 	}
 }
 
-void character_game_data::check_employer()
+void character_game_data::check_country()
 {
-	//check whether the character should change their employer
+	//check whether the character should change their country
 
 	if (this->is_deployed()) {
 		return;
@@ -149,9 +149,9 @@ void character_game_data::check_employer()
 
 	const metternich::country *home_province_owner = this->character->get_home_province()->get_game_data()->get_owner();
 
-	if (home_province_owner != this->get_employer()) {
+	if (home_province_owner != this->get_country()) {
 		//move the character to its home province's country, if it has nothing keeping it at a different country
-		this->set_employer(home_province_owner);
+		this->set_country(home_province_owner);
 	}
 }
 
@@ -185,7 +185,7 @@ void character_game_data::set_dead(const bool dead)
 
 void character_game_data::die()
 {
-	this->set_employer(nullptr);
+	this->set_country(nullptr);
 	this->set_dead(true);
 }
 
@@ -408,7 +408,7 @@ void character_game_data::gain_item(const trait *item)
 
 	for (const trait *old_item : old_items) {
 		//give the item to the country, which will reassign it to an appropriate character
-		this->get_employer()->get_game_data()->gain_item(old_item);
+		this->get_country()->get_game_data()->gain_item(old_item);
 	}
 }
 
@@ -485,11 +485,11 @@ bool character_game_data::is_deployable() const
 
 void character_game_data::deploy_to_province(const province *province)
 {
-	assert_throw(this->get_employer() != nullptr);
+	assert_throw(this->get_country() != nullptr);
 	assert_throw(!this->is_deployed());
 	assert_throw(this->is_deployable());
 
-	const military_unit_type *military_unit_type = this->get_employer()->get_game_data()->get_best_military_unit_category_type(this->character->get_type()->get_military_unit_category());
+	const military_unit_type *military_unit_type = this->get_country()->get_game_data()->get_best_military_unit_category_type(this->character->get_type()->get_military_unit_category());
 
 	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->character);
 
@@ -498,7 +498,7 @@ void character_game_data::deploy_to_province(const province *province)
 	military_unit->set_province(province);
 	this->military_unit = military_unit.get();
 
-	this->get_employer()->get_game_data()->add_military_unit(std::move(military_unit));
+	this->get_country()->get_game_data()->add_military_unit(std::move(military_unit));
 }
 
 void character_game_data::undeploy()
@@ -533,7 +533,7 @@ void character_game_data::apply_modifier(const modifier<const metternich::charac
 	modifier->apply(this->character, multiplier);
 }
 
-void character_game_data::apply_country_modifier(const country *country, const int multiplier)
+void character_game_data::apply_country_modifier(const metternich::country *country, const int multiplier)
 {
 	if (this->character->get_type()->get_country_modifier() != nullptr) {
 		this->character->get_type()->get_country_modifier()->apply(country, this->character->get_skill() * multiplier);
@@ -585,7 +585,7 @@ void character_game_data::learn_spell(const spell *spell)
 				//if we are learning a spell that otherwise would be granted to us by an item, give the item to someone else instead
 				assert_throw(trait->is_item());
 				this->remove_trait(trait);
-				this->get_employer()->get_game_data()->gain_item(trait);
+				this->get_country()->get_game_data()->gain_item(trait);
 			}
 		}
 	}

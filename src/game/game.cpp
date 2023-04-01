@@ -426,12 +426,12 @@ void game::apply_history(const metternich::scenario *scenario)
 			const character_history *character_history = character->get_history();
 
 			if (scenario->get_start_date() >= character->get_start_date() && scenario->get_start_date() < character->get_end_date()) {
-				if (character_history->get_country() != nullptr && character_history->get_country() != character_game_data->get_employer()) {
-					character_game_data->set_employer(character_history->get_country());
+				if (character_history->get_country() != nullptr && character_history->get_country() != character_game_data->get_country()) {
+					character_game_data->set_country(character_history->get_country());
 				}
 
 				if (character_history->get_deployment_province() != nullptr) {
-					assert_throw(character_game_data->get_employer() != nullptr);
+					assert_throw(character_game_data->get_country() != nullptr);
 					character_game_data->deploy_to_province(character_history->get_deployment_province());
 				}
 			} else if (scenario->get_start_date() >= character->get_end_date()) {

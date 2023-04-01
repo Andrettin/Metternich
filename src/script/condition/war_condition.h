@@ -29,7 +29,7 @@ public:
 
 		const country *country = nullptr;
 		if constexpr (std::is_same_v<scope_type, character>) {
-			country = scope->get_game_data()->get_employer();
+			country = scope->get_game_data()->get_country();
 		} else {
 			country = scope;
 		}

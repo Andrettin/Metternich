@@ -25,7 +25,7 @@ class character_game_data final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::icon* portrait READ get_portrait_unconst NOTIFY portrait_changed)
-	Q_PROPERTY(metternich::country* employer READ get_employer_unconst NOTIFY employer_changed)
+	Q_PROPERTY(metternich::country* country READ get_country_unconst NOTIFY country_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
@@ -57,21 +57,21 @@ public:
 	bool is_current_portrait_valid() const;
 	void check_portrait();
 
-	const metternich::country *get_employer() const
+	const metternich::country *get_country() const
 	{
-		return this->employer;
+		return this->country;
 	}
 
 private:
 	//for the Qt property (pointers there can't be const)
-	metternich::country *get_employer_unconst() const
+	metternich::country *get_country_unconst() const
 	{
-		return const_cast<metternich::country *>(this->get_employer());
+		return const_cast<metternich::country *>(this->get_country());
 	}
 
 public:
-	void set_employer(const metternich::country *employer);
-	void check_employer();
+	void set_country(const metternich::country *country);
+	void check_country();
 
 	int get_age() const;
 
@@ -145,7 +145,7 @@ public:
 		this->apply_modifier(modifier, -1);
 	}
 
-	void apply_country_modifier(const country *country, const int multiplier);
+	void apply_country_modifier(const metternich::country *country, const int multiplier);
 	void apply_province_modifier(const province *province, const int multiplier);
 	void apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
 
@@ -201,7 +201,7 @@ public:
 
 signals:
 	void portrait_changed();
-	void employer_changed();
+	void country_changed();
 	void age_changed();
 	void dead_changed();
 	void traits_changed();
@@ -211,7 +211,7 @@ signals:
 private:
 	const metternich::character *character = nullptr;
 	const icon *portrait = nullptr;
-	const metternich::country *employer = nullptr;
+	const metternich::country *country = nullptr;
 	bool dead = false;
 	std::vector<const trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;

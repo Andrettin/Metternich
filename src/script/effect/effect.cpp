@@ -163,7 +163,7 @@ template <typename scope_type>
 const country *effect<scope_type>::get_scope_country(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		return scope->get_game_data()->get_employer();
+		return scope->get_game_data()->get_country();
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		return scope;
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {

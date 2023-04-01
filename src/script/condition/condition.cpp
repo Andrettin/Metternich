@@ -228,9 +228,9 @@ template <typename scope_type>
 const country *condition<scope_type>::get_scope_country(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, character>) {
-		const country *employer = scope->get_game_data()->get_employer();
-		if (employer != nullptr) {
-			return employer;
+		const country *country = scope->get_game_data()->get_country();
+		if (country != nullptr) {
+			return country;
 		}
 		return condition<province>::get_scope_country(scope->get_home_province());
 	} else if constexpr (std::is_same_v<scope_type, country>) {
