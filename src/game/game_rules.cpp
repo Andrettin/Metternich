@@ -22,6 +22,7 @@ gsml_data game_rules::to_gsml_data() const
 {
 	gsml_data data;
 
+	data.add_property("advisors_enabled", string::from_bool(this->are_advisors_enabled()));
 	data.add_property("myths_enabled", string::from_bool(this->are_myths_enabled()));
 
 	return data;
