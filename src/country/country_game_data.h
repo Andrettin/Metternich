@@ -83,8 +83,11 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
+	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
 
 public:
+	static constexpr int base_advisor_cost = 80;
+
 	explicit country_game_data(metternich::country *country);
 	~country_game_data();
 
@@ -653,6 +656,15 @@ public:
 	void add_advisor(const character *advisor);
 	void remove_advisor(const character *advisor);
 	void clear_advisors();
+
+	int get_advisor_cost() const
+	{
+		if (this->get_advisors().empty()) {
+			return country_game_data::base_advisor_cost / 2;
+		}
+
+		return country_game_data::base_advisor_cost * static_cast<int>(this->get_advisors().size() + 1);
+	}
 
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
