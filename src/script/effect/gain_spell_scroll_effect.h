@@ -67,12 +67,6 @@ public:
 			return potential_characters.front();
 		}
 
-		for (const character *character : scope->get_game_data()->get_characters()) {
-			if (character->get_game_data()->can_learn_spell(this->spell)) {
-				potential_characters.push_back(character);
-			}
-		}
-
 		if (!potential_characters.empty()) {
 			std::sort(potential_characters.begin(), potential_characters.end(), character::skill_compare);
 			return potential_characters.front();

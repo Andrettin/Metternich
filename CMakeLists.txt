@@ -409,7 +409,6 @@ source_group(script FILES ${script_HDRS})
 set(script_condition_HDRS
 	src/script/condition/age_condition.h
 	src/script/condition/and_condition.h
-	src/script/condition/any_character_condition.h
 	src/script/condition/any_neighbor_country_condition.h
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/can_have_trait_condition.h
@@ -459,7 +458,6 @@ set(script_condition_HDRS
 source_group(script\\condition FILES ${script_condition_HDRS})
 
 set(script_effect_HDRS
-	src/script/effect/any_character_effect.h
 	src/script/effect/any_population_unit_effect.h
 	src/script/effect/any_neighbor_country_effect.h
 	src/script/effect/battle_effect.h

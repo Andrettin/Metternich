@@ -14,6 +14,7 @@ namespace metternich {
 class character_game_data;
 class character_history;
 class character_type;
+class country;
 class culture;
 class dynasty;
 class icon;
@@ -21,6 +22,12 @@ class phenotype;
 class province;
 class religion;
 class trait;
+
+template <typename scope_type>
+class condition;
+
+template <typename scope_type>
+class modifier;
 
 class character final : public named_data_entry, public data_type<character>
 {
@@ -44,6 +51,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(QDateTime death_date MEMBER death_date READ get_death_date NOTIFY changed)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
+	Q_PROPERTY(QString advisor_modifier_string READ get_advisor_modifier_string CONSTANT)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
@@ -197,6 +205,15 @@ public:
 		return this->traits;
 	}
 
+	const condition<country> *get_conditions() const
+	{
+		return this->conditions.get();
+	}
+
+	QString get_advisor_modifier_string() const;
+
+	void apply_advisor_modifier(const country *country, const int multiplier) const;
+
 signals:
 	void changed();
 	void game_data_changed() const;
@@ -219,6 +236,8 @@ private:
 	QDateTime death_date;
 	int skill = 1;
 	std::vector<const trait *> traits;
+	std::unique_ptr<const condition<country>> conditions;
+	std::unique_ptr<const modifier<const country>> advisor_modifier;
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;
 };

@@ -38,9 +38,6 @@ public:
 
 	void on_game_started();
 
-	void do_turn();
-	void do_events();
-
 	const icon *get_portrait() const
 	{
 		return this->portrait;
@@ -71,7 +68,6 @@ private:
 
 public:
 	void set_country(const metternich::country *country);
-	void check_country();
 
 	int get_age() const;
 

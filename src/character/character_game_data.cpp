@@ -47,23 +47,6 @@ void character_game_data::on_game_started()
 	this->check_portrait();
 }
 
-void character_game_data::do_turn()
-{
-	this->decrement_scripted_modifiers();
-	this->do_events();
-}
-
-void character_game_data::do_events()
-{
-	const bool is_last_turn_of_year = (game::get()->get_date().date().month() + defines::get()->get_months_per_turn()) > 12;
-
-	if (is_last_turn_of_year) {
-		character_event::check_events_for_scope(this->character, event_trigger::yearly_pulse);
-	}
-
-	character_event::check_events_for_scope(this->character, event_trigger::quarterly_pulse);
-}
-
 bool character_game_data::is_current_portrait_valid() const
 {
 	if (this->get_portrait() == nullptr) {
@@ -124,34 +107,10 @@ void character_game_data::set_country(const metternich::country *country)
 		return;
 	}
 
-	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->remove_character(this->character);
-	}
-
 	this->country = country;
-
-	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->add_character(this->character);
-	}
 
 	if (game::get()->is_running()) {
 		emit country_changed();
-	}
-}
-
-void character_game_data::check_country()
-{
-	//check whether the character should change their country
-
-	if (this->is_deployed()) {
-		return;
-	}
-
-	const metternich::country *home_province_owner = this->character->get_home_province()->get_game_data()->get_owner();
-
-	if (home_province_owner != this->get_country()) {
-		//move the character to its home province's country, if it has nothing keeping it at a different country
-		this->set_country(home_province_owner);
 	}
 }
 
@@ -405,11 +364,6 @@ void character_game_data::gain_item(const trait *item)
 	}
 
 	this->add_trait(item);
-
-	for (const trait *old_item : old_items) {
-		//give the item to the country, which will reassign it to an appropriate character
-		this->get_country()->get_game_data()->gain_item(old_item);
-	}
 }
 
 QVariantList character_game_data::get_scripted_modifiers_qvariant_list() const
@@ -582,10 +536,9 @@ void character_game_data::learn_spell(const spell *spell)
 		const std::vector<const trait *> traits = this->get_traits();
 		for (const trait *trait : traits) {
 			if (trait->get_spell() == spell) {
-				//if we are learning a spell that otherwise would be granted to us by an item, give the item to someone else instead
+				//if we are learning a spell that otherwise would be granted to us by an item, remote the item
 				assert_throw(trait->is_item());
 				this->remove_trait(trait);
-				this->get_country()->get_game_data()->gain_item(trait);
 			}
 		}
 	}

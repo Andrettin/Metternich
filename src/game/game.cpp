@@ -207,7 +207,6 @@ void game::start()
 
 		for (const country *country : this->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
-			country_game_data->check_characters(this->get_date());
 
 			for (const qunique_ptr<population_unit> &population_unit : country_game_data->get_population_units()) {
 				population_unit->choose_ideology();
@@ -306,6 +305,12 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			for (const technology *technology : country_history->get_technologies()) {
 				country_game_data->add_technology_with_prerequisites(technology);
+			}
+
+			if (this->get_rules()->are_advisors_enabled()) {
+				for (const character *advisor : country_history->get_advisors()) {
+					country_game_data->add_advisor(advisor);
+				}
 			}
 
 			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
@@ -426,16 +431,13 @@ void game::apply_history(const metternich::scenario *scenario)
 			const character_history *character_history = character->get_history();
 
 			if (scenario->get_start_date() >= character->get_start_date() && scenario->get_start_date() < character->get_end_date()) {
-				if (character_history->get_country() != nullptr && character_history->get_country() != character_game_data->get_country()) {
-					character_game_data->set_country(character_history->get_country());
-				}
-
 				if (character_history->get_deployment_province() != nullptr) {
+					assert_throw(character_history->get_country() != nullptr);
+					character_game_data->set_country(character_history->get_country());
+
 					assert_throw(character_game_data->get_country() != nullptr);
 					character_game_data->deploy_to_province(character_history->get_deployment_province());
 				}
-			} else if (scenario->get_start_date() >= character->get_end_date()) {
-				character_game_data->set_dead(true);
 			}
 		}
 
@@ -880,7 +882,7 @@ void game::remove_country(country *country)
 		std::erase(this->great_powers, country);
 	}
 
-	country->get_game_data()->clear_characters();
+	country->get_game_data()->clear_advisors();
 
 	for (const metternich::country *other_country : this->get_countries()) {
 		country_game_data *other_country_game_data = other_country->get_game_data();

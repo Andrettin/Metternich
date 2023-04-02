@@ -5,7 +5,6 @@
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/diplomacy_state.h"
-#include "technology/technology.h"
 #include "util/map_util.h"
 
 namespace metternich {

@@ -12,7 +12,6 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "population/population_unit.h"
-#include "script/effect/any_character_effect.h"
 #include "script/effect/any_neighbor_country_effect.h"
 #include "script/effect/any_population_unit_effect.h"
 #include "script/effect/battle_effect.h"
@@ -117,9 +116,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	}
 
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
-		if (effect_identifier == "any_character") {
-			effect = std::make_unique<any_character_effect<scope_type>>(effect_operator);
-		} else if (effect_identifier == "delayed") {
+		if (effect_identifier == "delayed") {
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
 		}
 	}

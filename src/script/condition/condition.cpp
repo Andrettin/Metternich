@@ -13,7 +13,6 @@
 #include "population/population_unit.h"
 #include "script/condition/age_condition.h"
 #include "script/condition/and_condition.h"
-#include "script/condition/any_character_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/can_have_trait_condition.h"
@@ -175,12 +174,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		}
 	}
 	
-	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country>) {
-		if (tag == "any_character") {
-			condition = std::make_unique<any_character_condition<scope_type>>(condition_operator);
-		}
-	}
-
 	if constexpr (std::is_same_v<scope_type, site>) {
 		if (tag == "location") {
 			condition = std::make_unique<location_condition<scope_type>>(condition_operator);

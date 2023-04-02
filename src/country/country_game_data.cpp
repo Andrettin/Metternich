@@ -18,6 +18,7 @@
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "game/game_rules.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_slot_type.h"
@@ -92,11 +93,9 @@ void country_game_data::do_turn()
 
 	this->do_events();
 
-	for (const character *character : this->get_characters()) {
-		character->get_game_data()->do_turn();
+	if (game::get()->get_rules()->are_advisors_enabled()) {
+		this->check_advisors();
 	}
-
-	this->check_characters(game::get()->get_next_date());
 }
 
 
@@ -1948,81 +1947,48 @@ QVariantList country_game_data::get_future_technologies_qvariant_list() const
 	return container::to_qvariant_list(future_technologies);
 }
 
-QVariantList country_game_data::get_characters_qvariant_list() const
+QVariantList country_game_data::get_advisors_qvariant_list() const
 {
-	return container::to_qvariant_list(this->get_characters());
+	return container::to_qvariant_list(this->get_advisors());
 }
 
-void country_game_data::check_characters(const QDateTime &date)
+void country_game_data::check_advisors()
 {
-	const std::vector<const character *> characters = this->get_characters();
-	for (const character *character : characters) {
-		character_game_data *character_game_data = character->get_game_data();
+	//FIXME: remove obsolete advisors
+}
 
-		if (game::get()->get_date() >= character->get_end_date()) {
-			character_game_data->die();
-			continue;
-		}
-		
-		character_game_data->check_country();
+void country_game_data::add_advisor(const character *advisor)
+{
+	assert_throw(game::get()->get_rules()->are_advisors_enabled());
+
+	this->advisors.push_back(advisor);
+	advisor->get_game_data()->set_country(this->country);
+	advisor->apply_advisor_modifier(this->country, 1);
+
+	emit advisors_changed();
+}
+
+void country_game_data::remove_advisor(const character *advisor)
+{
+	assert_throw(advisor->get_game_data()->get_country() == this->country);
+
+	std::erase(this->advisors, advisor);
+	advisor->get_game_data()->set_country(nullptr);
+	advisor->apply_advisor_modifier(this->country, -1);
+
+	emit advisors_changed();
+}
+
+void country_game_data::clear_advisors()
+{
+	const std::vector<const character *> advisors = this->get_advisors();
+	for (const character *advisor : advisors) {
+		advisor->get_game_data()->set_country(nullptr);
 	}
 
-	for (const province *province : this->get_provinces()) {
-		for (const character *character : province->get_characters()) {
-			if (character->get_game_data()->get_country() != nullptr) {
-				continue;
-			}
+	assert_throw(this->get_advisors().empty());
 
-			if (date >= character->get_start_date() && date < character->get_end_date()) {
-				character->get_game_data()->set_country(this->country);
-			}
-		}
-	}
-}
-
-void country_game_data::add_character(const character *character)
-{
-	this->characters.push_back(character);
-
-	this->sort_characters();
-
-	emit characters_changed();
-}
-
-void country_game_data::remove_character(const character *character)
-{
-	std::erase(this->characters, character);
-
-	this->sort_characters();
-
-	emit characters_changed();
-}
-
-void country_game_data::clear_characters()
-{
-	const std::vector<const character *> characters = this->get_characters();
-	for (const character *character : characters) {
-		character->get_game_data()->set_country(nullptr);
-	}
-
-	assert_throw(this->get_characters().empty());
-
-	emit characters_changed();
-}
-
-void country_game_data::sort_characters()
-{
-	std::sort(this->characters.begin(), this->characters.end(), [](const character *lhs, const character *rhs) {
-		if (lhs->get_skill() != rhs->get_skill()) {
-			return lhs->get_skill() > rhs->get_skill();
-		}
-
-		if (lhs->get_birth_date() != rhs->get_birth_date()) {
-			return lhs->get_birth_date() < rhs->get_birth_date();
-		}
-
-		return lhs->get_identifier() < rhs->get_identifier();
-	});
+	emit advisors_changed();
 }
 
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
@@ -2083,21 +2049,6 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 	}
 
 	return best_type;
-}
-
-void country_game_data::gain_item(const trait *item)
-{
-	std::vector<const character *> potential_characters;
-
-	for (const character *character : this->get_characters()) {
-		if (character->get_game_data()->can_have_trait(item)) {
-			potential_characters.push_back(character);
-		}
-	}
-
-	if (!potential_characters.empty()) {
-		vector::get_random(potential_characters)->get_game_data()->gain_item(item);
-	}
 }
 
 void country_game_data::decrement_scripted_modifiers()

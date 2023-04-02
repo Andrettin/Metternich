@@ -82,7 +82,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
-	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
+	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 
 public:
 	explicit country_game_data(metternich::country *country);
@@ -643,17 +643,16 @@ public:
 	QVariantList get_available_technologies_qvariant_list() const;
 	QVariantList get_future_technologies_qvariant_list() const;
 
-	const std::vector<const character *> &get_characters() const
+	const std::vector<const character *> &get_advisors() const
 	{
-		return this->characters;
+		return this->advisors;
 	}
 
-	QVariantList get_characters_qvariant_list() const;
-	void check_characters(const QDateTime &date);
-	void add_character(const character *character);
-	void remove_character(const character *character);
-	void clear_characters();
-	void sort_characters();
+	QVariantList get_advisors_qvariant_list() const;
+	void check_advisors();
+	void add_advisor(const character *advisor);
+	void remove_advisor(const character *advisor);
+	void clear_advisors();
 
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
@@ -741,8 +740,6 @@ public:
 		this->set_commodity_production_modifier(commodity, this->get_commodity_production_modifier(commodity) + value);
 	}
 
-	void gain_item(const trait *item);
-
 	void decrement_scripted_modifiers();
 
 signals:
@@ -768,7 +765,7 @@ signals:
 	void stored_commodities_changed();
 	void storage_capacity_changed();
 	void technologies_changed();
-	void characters_changed();
+	void advisors_changed();
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
 
@@ -816,7 +813,7 @@ private:
 	commodity_map<int> commodity_inputs;
 	commodity_map<int> commodity_outputs;
 	technology_set technologies;
-	std::vector<const character *> characters;
+	std::vector<const character *> advisors;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	int land_morale_resistance_modifier = 0;
