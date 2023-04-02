@@ -32,6 +32,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(QVariantList great_powers READ get_great_powers_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(metternich::country* player_country READ get_player_country_unconst WRITE set_player_country NOTIFY player_country_changed)
+	Q_PROPERTY(metternich::game_rules* rules READ get_rules_unconst CONSTANT)
 
 public:
 	static QDateTime normalize_date(const QDateTime &date);
@@ -49,6 +50,14 @@ public:
 		return this->rules.get();
 	}
 
+private:
+	//for the Qt property (pointers there can't be const)
+	game_rules *get_rules_unconst() const
+	{
+		return const_cast<game_rules *>(this->get_rules());
+	}
+
+public:
 	bool is_running() const
 	{
 		return this->running;
