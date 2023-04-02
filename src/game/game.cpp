@@ -813,30 +813,39 @@ void game::on_setup_finished()
 
 void game::do_turn()
 {
-	this->process_delayed_effects();
+	try {
+		this->process_delayed_effects();
 
-	for (const country *country : this->get_countries()) {
-		if (country == this->get_player_country()) {
-			continue;
+		for (const country *country : this->get_countries()) {
+			if (country == this->get_player_country()) {
+				continue;
+			}
+
+			country->get_game_data()->do_ai_turn();
 		}
 
-		country->get_game_data()->do_ai_turn();
+		for (const country *country : this->get_countries()) {
+			country->get_game_data()->do_turn();
+		}
+
+		this->calculate_great_power_ranks();
+
+		this->increment_turn();
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Failed to process turn."));
 	}
-
-	for (const country *country : this->get_countries()) {
-		country->get_game_data()->do_turn();
-	}
-
-	this->calculate_great_power_ranks();
-
-	this->increment_turn();
 }
 
 void game::do_turn_async()
 {
 	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
-		this->do_turn();
-		co_return;
+		try {
+			this->do_turn();
+			co_return;
+		} catch (const std::exception &exception) {
+			exception::report(exception);
+			std::terminate();
+		}
 	});
 }
 

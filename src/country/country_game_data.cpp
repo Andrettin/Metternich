@@ -146,55 +146,59 @@ void country_game_data::do_production()
 
 void country_game_data::do_population_growth()
 {
-	if (this->population_units.empty()) {
-		this->set_population_growth(0);
-		return;
-	}
-
-	//this is a copy because we may need to erase elements from the map in the subsequent code
-	const commodity_map<int> stored_commodities = this->get_stored_commodities();
-
-	int stored_food = 0;
-	for (const auto &[commodity, quantity] : stored_commodities) {
-		if (commodity->is_food()) {
-			stored_food += quantity;
-			this->set_stored_commodity(commodity, 0);
-		}
-	}
-
-	int food_consumption = this->get_food_consumption();
-
-	for (const province *province : this->get_provinces()) {
-		food_consumption -= province->get_game_data()->get_free_food_consumption();
-	}
-
-	const int net_food = stored_food - food_consumption;
-
-	this->change_population_growth(net_food);
-
-	while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
-		this->grow_population();
-	}
-
-	int starvation_count = 0;
-
-	while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
-		//starvation
-		this->decrease_population();
-		++starvation_count;
-
+	try {
 		if (this->population_units.empty()) {
 			this->set_population_growth(0);
-			break;
+			return;
 		}
-	}
 
-	if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
-		const bool plural = starvation_count > 1;
+		//this is a copy because we may need to erase elements from the map in the subsequent code
+		const commodity_map<int> stored_commodities = this->get_stored_commodities();
 
-		const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+		int stored_food = 0;
+		for (const auto &[commodity, quantity] : stored_commodities) {
+			if (commodity->is_food()) {
+				stored_food += quantity;
+				this->set_stored_commodity(commodity, 0);
+			}
+		}
 
-		engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", starvation_count, (plural ? "units" : "unit"), (plural ? "have" : "has")));
+		int food_consumption = this->get_food_consumption();
+
+		for (const province *province : this->get_provinces()) {
+			food_consumption -= province->get_game_data()->get_free_food_consumption();
+		}
+
+		const int net_food = stored_food - food_consumption;
+
+		this->change_population_growth(net_food);
+
+		while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
+			this->grow_population();
+		}
+
+		int starvation_count = 0;
+
+		while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
+			//starvation
+			this->decrease_population();
+			++starvation_count;
+
+			if (this->population_units.empty()) {
+				this->set_population_growth(0);
+				break;
+			}
+		}
+
+		if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
+			const bool plural = starvation_count > 1;
+
+			const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+			engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", starvation_count, (plural ? "units" : "unit"), (plural ? "have" : "has")));
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Error doing population growth for country \"" + this->country->get_identifier() + "\"."));
 	}
 }
 
