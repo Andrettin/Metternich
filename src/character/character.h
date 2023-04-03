@@ -214,6 +214,11 @@ public:
 
 	void apply_advisor_modifier(const country *country, const int multiplier) const;
 
+	bool is_advisor() const
+	{
+		return this->advisor_modifier != nullptr;
+	}
+
 signals:
 	void changed();
 	void game_data_changed() const;
