@@ -8,6 +8,7 @@
 namespace metternich {
 
 class building_class;
+class commodity;
 class icon;
 class population_class;
 class terrain_type;
@@ -32,6 +33,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
 	Q_PROPERTY(int population_per_unit MEMBER population_per_unit READ get_population_per_unit)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
+	Q_PROPERTY(metternich::commodity* advisor_commodity MEMBER advisor_commodity NOTIFY changed)
 	Q_PROPERTY(metternich::icon* interior_minister_portrait MEMBER interior_minister_portrait NOTIFY changed)
 	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color NOTIFY changed)
 	Q_PROPERTY(QColor country_border_color MEMBER country_border_color READ get_country_border_color)
@@ -145,6 +147,11 @@ public:
 		return this->population_growth_threshold;
 	}
 
+	const commodity *get_advisor_commodity() const
+	{
+		return this->advisor_commodity;
+	}
+
 	const icon *get_interior_minister_portrait() const
 	{
 		return this->interior_minister_portrait;
@@ -254,6 +261,7 @@ private:
 	population_class *default_literate_population_class = nullptr;
 	int population_per_unit = 10000;
 	int population_growth_threshold = 100;
+	commodity *advisor_commodity = nullptr;
 	icon *interior_minister_portrait = nullptr;
 	QColor minor_nation_color;
 	QColor country_border_color;

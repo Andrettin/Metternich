@@ -1967,6 +1967,30 @@ QVariantList country_game_data::get_advisors_qvariant_list() const
 void country_game_data::check_advisors()
 {
 	//FIXME: remove obsolete advisors
+
+	if (this->get_next_advisor() != nullptr) {
+		if (this->get_next_advisor()->get_game_data()->get_country() != nullptr) {
+			if (this->country == game::get()->get_player_country()) {
+				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor we were aiming to recruit, {}, has unfortunately already swore allegiance to {}.", this->get_next_advisor()->get_full_name(), this->get_next_advisor()->get_game_data()->get_country()->get_name()));
+			}
+
+			this->set_next_advisor(nullptr);
+		} else {
+			if (this->get_stored_commodity(defines::get()->get_advisor_commodity()) >= this->get_advisor_cost()) {
+				this->add_advisor(this->get_next_advisor());
+
+				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification("Advisor Recruited", interior_minister_portrait, std::format("Your Excellency, {} has joined our nation as an advisor!", this->get_next_advisor()->get_full_name()));
+
+				this->set_next_advisor(nullptr);
+			}
+		}
+	} else {
+		this->choose_next_advisor();
+	}
 }
 
 void country_game_data::add_advisor(const character *advisor)
@@ -2001,6 +2025,38 @@ void country_game_data::clear_advisors()
 	assert_throw(this->get_advisors().empty());
 
 	emit advisors_changed();
+}
+
+void country_game_data::choose_next_advisor()
+{
+	std::vector<const character *> potential_advisors;
+
+	for (const character *character : character::get_all()) {
+		if (!character->is_advisor()) {
+			continue;
+		}
+
+		const character_game_data *character_game_data = character->get_game_data();
+		if (character_game_data->get_country() != nullptr) {
+			continue;
+		}
+
+		if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->country, read_only_context(this->country))) {
+			continue;
+		}
+
+		potential_advisors.push_back(character);
+	}
+
+	if (potential_advisors.empty()) {
+		return;
+	}
+
+	if (this->is_ai()) {
+		this->set_next_advisor(vector::get_random(potential_advisors));
+	} else {
+		emit engine_interface::get()->next_advisor_choosable(container::to_qvariant_list(potential_advisors));
+	}
 }
 
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)

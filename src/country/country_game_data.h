@@ -84,6 +84,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
+	Q_PROPERTY(metternich::character* next_advisor READ get_next_advisor_unconst WRITE set_next_advisor NOTIFY next_advisor_changed)
 
 public:
 	static constexpr int base_advisor_cost = 80;
@@ -668,6 +669,31 @@ public:
 		return country_game_data::base_advisor_cost * static_cast<int>(this->get_advisors().size() + 1);
 	}
 
+	const character *get_next_advisor() const
+	{
+		return this->next_advisor;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	character *get_next_advisor_unconst() const
+	{
+		return const_cast<character *>(this->get_next_advisor());
+	}
+
+public:
+	void set_next_advisor(const character *advisor)
+	{
+		if (advisor == this->get_next_advisor()) {
+			return;
+		}
+
+		this->next_advisor = advisor;
+		emit next_advisor_changed();
+	}
+
+	void choose_next_advisor();
+
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
 
@@ -780,6 +806,7 @@ signals:
 	void storage_capacity_changed();
 	void technologies_changed();
 	void advisors_changed();
+	void next_advisor_changed();
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
 
@@ -828,6 +855,7 @@ private:
 	commodity_map<int> commodity_outputs;
 	technology_set technologies;
 	std::vector<const character *> advisors;
+	const character *next_advisor = nullptr;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	int land_morale_resistance_modifier = 0;

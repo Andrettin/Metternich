@@ -110,6 +110,7 @@ signals:
 	void notification_added(const QString &title, QObject *portrait_object, const QString &text);
 	void event_fired(QObject *event_instance);
 	void event_closed(QObject *event_instance);
+	void next_advisor_choosable(const QVariantList &potential_advisors);
 	void selected_military_units_changed();
 
 private:
