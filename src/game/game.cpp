@@ -817,11 +817,9 @@ void game::do_turn()
 		this->process_delayed_effects();
 
 		for (const country *country : this->get_countries()) {
-			if (country == this->get_player_country()) {
-				continue;
+			if (country->get_game_data()->is_ai()) {
+				country->get_game_data()->do_ai_turn();
 			}
-
-			country->get_game_data()->do_ai_turn();
 		}
 
 		for (const country *country : this->get_countries()) {

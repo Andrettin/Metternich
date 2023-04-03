@@ -98,6 +98,8 @@ public:
 	void do_events();
 	void do_ai_turn();
 
+	bool is_ai() const;
+
 	const metternich::religion *get_religion() const
 	{
 		return this->religion;

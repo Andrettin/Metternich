@@ -102,7 +102,10 @@ void country_game_data::do_turn()
 void country_game_data::do_production()
 {
 	try {
-		this->assign_production();
+		//FIXME: add preference for production being automatically assigned for person players
+		if (this->is_ai()) {
+			this->assign_production();
+		}
 
 		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
 			if (!commodity->is_storable()) {
@@ -266,6 +269,11 @@ void country_game_data::do_ai_turn()
 			civilian_unit->disband();
 		}
 	}
+}
+
+bool country_game_data::is_ai() const
+{
+	return this->country != game::get()->get_player_country();
 }
 
 void country_game_data::set_religion(const metternich::religion *religion)
