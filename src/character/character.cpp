@@ -49,7 +49,7 @@ void character::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<country>>();
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
-	} else if (tag == "modifier") {
+	} else if (tag == "advisor_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
 		this->advisor_modifier = std::move(modifier);
