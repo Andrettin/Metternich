@@ -85,6 +85,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
 	Q_PROPERTY(metternich::character* next_advisor READ get_next_advisor_unconst WRITE set_next_advisor NOTIFY next_advisor_changed)
+	Q_PROPERTY(int output_modifier READ get_output_modifier NOTIFY output_modifier_changed)
 
 public:
 	static constexpr int base_advisor_cost = 80;
@@ -755,6 +756,12 @@ public:
 		return 0;
 	}
 
+	Q_INVOKABLE int get_commodity_output_modifier(metternich::commodity *commodity) const
+	{
+		const metternich::commodity *const_commodity = commodity;
+		return this->get_commodity_output_modifier(const_commodity);
+	}
+
 	void set_commodity_output_modifier(const commodity *commodity, const int value);
 
 	void change_commodity_output_modifier(const commodity *commodity, const int value)
@@ -791,6 +798,7 @@ signals:
 	void next_advisor_changed();
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
+	void output_modifier_changed();
 
 private:
 	metternich::country *country = nullptr;

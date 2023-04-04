@@ -2138,6 +2138,10 @@ void country_game_data::set_output_modifier(const int value)
 			this->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
 		}
 	}
+
+	if (game::get()->is_running()) {
+		emit output_modifier_changed();
+	}
 }
 
 void country_game_data::set_commodity_output_modifier(const commodity *commodity, const int value)
