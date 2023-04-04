@@ -737,14 +737,7 @@ public:
 		return this->production_modifier;
 	}
 
-	void set_production_modifier(const int value)
-	{
-		if (value == this->get_production_modifier()) {
-			return;
-		}
-
-		this->production_modifier = value;
-	}
+	void set_production_modifier(const int value);
 
 	void change_production_modifier(const int value)
 	{
