@@ -762,18 +762,7 @@ public:
 		return 0;
 	}
 
-	void set_commodity_production_modifier(const commodity *commodity, const int value)
-	{
-		if (value == this->get_commodity_production_modifier(commodity)) {
-			return;
-		}
-
-		if (value == 0) {
-			this->commodity_production_modifiers.erase(commodity);
-		} else {
-			this->commodity_production_modifiers[commodity] = value;
-		}
-	}
+	void set_commodity_production_modifier(const commodity *commodity, const int value);
 
 	void change_commodity_production_modifier(const commodity *commodity, const int value)
 	{

@@ -138,12 +138,58 @@ QVariantList building_slot::get_available_production_types_qvariant_list() const
 	return container::to_qvariant_list(this->get_available_production_types());
 }
 
+int building_slot::get_production_type_output(const production_type *production_type) const
+{
+	int output = this->get_production_type_employed_capacity(production_type);
+
+	if (output == 0) {
+		return 0;
+	}
+
+	const country_game_data *country_game_data = this->get_country()->get_game_data();
+	const int production_modifier = country_game_data->get_production_modifier() + country_game_data->get_commodity_production_modifier(production_type->get_output_commodity());
+	if (production_modifier != 0) {
+		output *= 100 + production_modifier;
+		output /= 100;
+
+		output = std::max(output, 0);
+	}
+
+	return output;
+}
+
+void building_slot::change_production(const production_type *production_type, const int multiplier, const bool change_input_storage)
+{
+	const int old_output = this->get_production_type_output(production_type);
+
+	const int change = production_type->get_output_value() * multiplier;
+	this->employed_capacity += change;
+
+	const int changed_production_type_employed_capacity = (this->production_type_employed_capacities[production_type] += change);
+	assert_throw(changed_production_type_employed_capacity >= 0);
+	if (changed_production_type_employed_capacity == 0) {
+		this->production_type_employed_capacities.erase(production_type);
+	}
+
+	country_game_data *country_game_data = this->get_country()->get_game_data();
+
+	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
+		if (input_commodity->is_storable() && change_input_storage) {
+			country_game_data->change_stored_commodity(input_commodity, -input_value * multiplier);
+		}
+		country_game_data->change_commodity_input(input_commodity, input_value * multiplier);
+	}
+
+	const int new_output = this->get_production_type_output(production_type);
+	country_game_data->change_commodity_output(production_type->get_output_commodity(), new_output - old_output);
+}
+
 bool building_slot::can_increase_production(const production_type *production_type) const
 {
 	assert_throw(this->get_building() != nullptr);
 	assert_throw(vector::contains(this->get_building()->get_production_types(), production_type));
 
-	if (this->get_employed_capacity() >= this->get_capacity()) {
+	if ((this->get_employed_capacity() + production_type->get_output_value()) > this->get_capacity()) {
 		return false;
 	}
 
@@ -170,19 +216,7 @@ void building_slot::increase_production(const production_type *production_type)
 	try {
 		assert_throw(this->can_increase_production(production_type));
 
-		++this->employed_capacity;
-		++this->production_type_employed_capacities[production_type];
-
-		country_game_data *country_game_data = this->get_country()->get_game_data();
-
-		for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
-			if (input_commodity->is_storable()) {
-				country_game_data->change_stored_commodity(input_commodity, -input_value);
-			}
-			country_game_data->change_commodity_input(input_commodity, input_value);
-		}
-
-		country_game_data->change_commodity_output(production_type->get_output_commodity(), production_type->get_output_value());
+		this->change_production(production_type, 1);
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error increasing production of \"" + production_type->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\"."));
 	}
@@ -209,25 +243,7 @@ void building_slot::decrease_production(const production_type *production_type, 
 	try {
 		assert_throw(this->can_decrease_production(production_type));
 
-		--this->employed_capacity;
-
-		const int remaining_production_type_employed_capacity = --this->production_type_employed_capacities[production_type];
-		assert_throw(remaining_production_type_employed_capacity >= 0);
-
-		if (remaining_production_type_employed_capacity == 0) {
-			this->production_type_employed_capacities.erase(production_type);
-		}
-
-		country_game_data *country_game_data = this->get_country()->get_game_data();
-
-		for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
-			if (input_commodity->is_storable() && restore_inputs) {
-				country_game_data->change_stored_commodity(input_commodity, input_value);
-			}
-			country_game_data->change_commodity_input(input_commodity, -input_value);
-		}
-
-		country_game_data->change_commodity_output(production_type->get_output_commodity(), -production_type->get_output_value());
+		this->change_production(production_type, -1, restore_inputs);
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error decreasing production of \"" + production_type->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\"."));
 	}

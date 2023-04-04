@@ -98,6 +98,16 @@ public:
 		return this->get_production_type_employed_capacity(const_production_type);
 	}
 
+	int get_production_type_output(const production_type *production_type) const;
+
+	Q_INVOKABLE int get_production_type_output(metternich::production_type *production_type) const
+	{
+		const metternich::production_type *const_production_type = production_type;
+		return this->get_production_type_output(const_production_type);
+	}
+
+	void change_production(const production_type *production_type, const int change, const bool change_input_storage = true);
+
 	bool can_increase_production(const production_type *production_type) const;
 
 	Q_INVOKABLE bool can_increase_production(metternich::production_type *production_type) const
