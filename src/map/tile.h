@@ -164,7 +164,7 @@ public:
 		this->civilian_unit = civilian_unit;
 	}
 
-	int get_output_multiplier() const;
+	int get_output_value() const;
 
 private:
 	const terrain_type *terrain = nullptr;

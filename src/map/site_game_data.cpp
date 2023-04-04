@@ -105,7 +105,7 @@ int site_game_data::get_output() const
 {
 	const tile *tile = this->get_tile();
 	if (tile != nullptr) {
-		return tile->get_output_multiplier();
+		return tile->get_output_value();
 	}
 
 	return 0;
