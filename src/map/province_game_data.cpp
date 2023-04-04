@@ -61,8 +61,8 @@ void province_game_data::reset_non_map_data()
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
 	this->score = province::base_score;
 	this->clear_military_units();
-	this->production_modifier = 0;
-	this->commodity_production_modifiers.clear();
+	this->output_modifier = 0;
+	this->commodity_output_modifiers.clear();
 }
 
 void province_game_data::on_map_created()

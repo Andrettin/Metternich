@@ -2119,9 +2119,9 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 	return best_type;
 }
 
-void country_game_data::set_production_modifier(const int value)
+void country_game_data::set_output_modifier(const int value)
 {
-	if (value == this->get_production_modifier()) {
+	if (value == this->get_output_modifier()) {
 		return;
 	}
 
@@ -2131,7 +2131,7 @@ void country_game_data::set_production_modifier(const int value)
 		}
 	}
 
-	this->production_modifier = value;
+	this->output_modifier = value;
 
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
 		for (const production_type *production_type : building_slot->get_available_production_types()) {
@@ -2140,9 +2140,9 @@ void country_game_data::set_production_modifier(const int value)
 	}
 }
 
-void country_game_data::set_commodity_production_modifier(const commodity *commodity, const int value)
+void country_game_data::set_commodity_output_modifier(const commodity *commodity, const int value)
 {
-	if (value == this->get_commodity_production_modifier(commodity)) {
+	if (value == this->get_commodity_output_modifier(commodity)) {
 		return;
 	}
 
@@ -2157,9 +2157,9 @@ void country_game_data::set_commodity_production_modifier(const commodity *commo
 	}
 
 	if (value == 0) {
-		this->commodity_production_modifiers.erase(commodity);
+		this->commodity_output_modifiers.erase(commodity);
 	} else {
-		this->commodity_production_modifiers[commodity] = value;
+		this->commodity_output_modifiers[commodity] = value;
 	}
 
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {

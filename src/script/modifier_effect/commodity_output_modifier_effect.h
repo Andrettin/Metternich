@@ -11,10 +11,10 @@
 namespace metternich {
 
 template <typename scope_type>
-class commodity_production_modifier_effect final : public modifier_effect<scope_type>
+class commodity_output_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
-	explicit commodity_production_modifier_effect(const metternich::commodity *commodity, const std::string &value)
+	explicit commodity_output_modifier_effect(const metternich::commodity *commodity, const std::string &value)
 		: commodity(commodity)
 	{
 		this->quantity = std::stoi(value);
@@ -22,13 +22,13 @@ public:
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "commodity_production_modifier";
+		static const std::string identifier = "commodity_output_modifier";
 		return identifier;
 	}
 
 	virtual void apply(const scope_type *scope, const int multiplier) const override
 	{
-		scope->get_game_data()->change_commodity_production_modifier(this->commodity, this->quantity * multiplier);
+		scope->get_game_data()->change_commodity_output_modifier(this->commodity, this->quantity * multiplier);
 	}
 
 	virtual std::string get_string(const int multiplier) const override

@@ -732,34 +732,34 @@ public:
 		this->air_morale_resistance_modifier += change;
 	}
 
-	int get_production_modifier() const
+	int get_output_modifier() const
 	{
-		return this->production_modifier;
+		return this->output_modifier;
 	}
 
-	void set_production_modifier(const int value);
+	void set_output_modifier(const int value);
 
-	void change_production_modifier(const int value)
+	void change_output_modifier(const int value)
 	{
-		this->set_production_modifier(this->get_production_modifier() + value);
+		this->set_output_modifier(this->get_output_modifier() + value);
 	}
 
-	int get_commodity_production_modifier(const commodity *commodity) const
+	int get_commodity_output_modifier(const commodity *commodity) const
 	{
-		const auto find_iterator = this->commodity_production_modifiers.find(commodity);
+		const auto find_iterator = this->commodity_output_modifiers.find(commodity);
 
-		if (find_iterator != this->commodity_production_modifiers.end()) {
+		if (find_iterator != this->commodity_output_modifiers.end()) {
 			return find_iterator->second;
 		}
 
 		return 0;
 	}
 
-	void set_commodity_production_modifier(const commodity *commodity, const int value);
+	void set_commodity_output_modifier(const commodity *commodity, const int value);
 
-	void change_commodity_production_modifier(const commodity *commodity, const int value)
+	void change_commodity_output_modifier(const commodity *commodity, const int value)
 	{
-		this->set_commodity_production_modifier(commodity, this->get_commodity_production_modifier(commodity) + value);
+		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + value);
 	}
 
 	void decrement_scripted_modifiers();
@@ -843,8 +843,8 @@ private:
 	int land_morale_resistance_modifier = 0;
 	int naval_morale_resistance_modifier = 0;
 	int air_morale_resistance_modifier = 0;
-	int production_modifier = 0;
-	commodity_map<int> commodity_production_modifiers;
+	int output_modifier = 0;
+	commodity_map<int> commodity_output_modifiers;
 };
 
 }

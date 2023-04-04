@@ -3,12 +3,12 @@
 #include "character/character.h"
 #include "database/gsml_property.h"
 #include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
-#include "script/modifier_effect/commodity_production_modifier_effect.h"
+#include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/melee_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
-#include "script/modifier_effect/production_modifier_effect.h"
+#include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 
 namespace metternich {
@@ -38,13 +38,13 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	}
 	
 	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province>) {
-		static const std::string production_suffix = "_production";
+		static const std::string production_suffix = "_output_modifier";
 
-		if (key == "production_modifier") {
-			return std::make_unique<production_modifier_effect<scope_type>>(value);
+		if (key == "output_modifier") {
+			return std::make_unique<output_modifier_effect<scope_type>>(value);
 		} else if (key.ends_with(production_suffix) && commodity::try_get(key.substr(0, key.size() - production_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - production_suffix.size()));
-			return std::make_unique<commodity_production_modifier_effect<scope_type>>(commodity, value);
+			return std::make_unique<commodity_output_modifier_effect<scope_type>>(commodity, value);
 		}
 	}
 
