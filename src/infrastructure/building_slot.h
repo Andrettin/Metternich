@@ -122,12 +122,12 @@ public:
 		return this->can_decrease_production(const_production_type);
 	}
 
-	void decrease_production(const production_type *production_type);
+	void decrease_production(const production_type *production_type, const bool restore_inputs);
 
 	Q_INVOKABLE void decrease_production(metternich::production_type *production_type)
 	{
 		const metternich::production_type *const_production_type = production_type;
-		this->decrease_production(const_production_type);
+		this->decrease_production(const_production_type, true);
 	}
 
 	void apply_country_modifier(const metternich::country *country, const int multiplier);

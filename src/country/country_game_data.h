@@ -632,7 +632,7 @@ public:
 	}
 
 	void assign_production();
-	void decrease_commodity_consumption(const commodity *commodity);
+	void decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs = true);
 
 	bool can_declare_war_on(const metternich::country *other_country) const;
 

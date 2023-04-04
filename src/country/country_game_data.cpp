@@ -125,7 +125,7 @@ void country_game_data::do_production()
 			}
 
 			while (this->get_commodity_input(commodity) > this->get_stored_commodity(commodity)) {
-				this->decrease_commodity_consumption(commodity);
+				this->decrease_commodity_consumption(commodity, false);
 			}
 		}
 
@@ -1841,7 +1841,7 @@ void country_game_data::assign_production()
 	}
 }
 
-void country_game_data::decrease_commodity_consumption(const commodity *commodity)
+void country_game_data::decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs)
 {
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
 		const building_type *building_type = building_slot->get_building();
@@ -1859,7 +1859,7 @@ void country_game_data::decrease_commodity_consumption(const commodity *commodit
 				continue;
 			}
 
-			building_slot->decrease_production(production_type);
+			building_slot->decrease_production(production_type, restore_inputs);
 			return;
 		}
 	}

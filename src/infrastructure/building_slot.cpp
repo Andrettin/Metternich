@@ -70,7 +70,7 @@ void building_slot::set_building(const building_type *building)
 				}
 
 				while (this->get_production_type_employed_capacity(production_type) > 0) {
-					this->decrease_production(production_type);
+					this->decrease_production(production_type, true);
 				}
 			}
 		}
@@ -204,7 +204,7 @@ bool building_slot::can_decrease_production(const production_type *production_ty
 	return true;
 }
 
-void building_slot::decrease_production(const production_type *production_type)
+void building_slot::decrease_production(const production_type *production_type, const bool restore_inputs)
 {
 	try {
 		assert_throw(this->can_decrease_production(production_type));
@@ -221,7 +221,7 @@ void building_slot::decrease_production(const production_type *production_type)
 		country_game_data *country_game_data = this->get_country()->get_game_data();
 
 		for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
-			if (input_commodity->is_storable()) {
+			if (input_commodity->is_storable() && restore_inputs) {
 				country_game_data->change_stored_commodity(input_commodity, input_value);
 			}
 			country_game_data->change_commodity_input(input_commodity, -input_value);
