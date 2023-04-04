@@ -1755,6 +1755,11 @@ void country_game_data::set_storage_capacity(const int capacity)
 	}
 }
 
+QVariantList country_game_data::get_commodity_inputs_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_commodity_inputs());
+}
+
 int country_game_data::get_commodity_input(const QString &commodity_identifier) const
 {
 	return this->get_commodity_input(commodity::get(commodity_identifier.toStdString()));
