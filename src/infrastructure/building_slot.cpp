@@ -5,15 +5,18 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
+#include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
 #include "game/game.h"
+#include "game/game_rules.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "population/population_unit.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/fractional_int.h"
 #include "util/vector_util.h"
 
@@ -109,6 +112,30 @@ int building_slot::get_capacity() const
 	}
 
 	return 0;
+}
+
+std::vector<const production_type *> building_slot::get_available_production_types() const
+{
+	if (this->get_building() == nullptr) {
+		return {};
+	}
+
+	std::vector<const production_type *> production_types;
+
+	for (const production_type *production_type : this->get_building()->get_production_types()) {
+		if (production_type->get_output_commodity() == defines::get()->get_advisor_commodity() && !game::get()->get_rules()->are_advisors_enabled()) {
+			continue;
+		}
+
+		production_types.push_back(production_type);
+	}
+
+	return production_types;
+}
+
+QVariantList building_slot::get_available_production_types_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_available_production_types());
 }
 
 bool building_slot::can_increase_production(const production_type *production_type) const

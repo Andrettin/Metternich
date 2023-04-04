@@ -1829,7 +1829,7 @@ void country_game_data::assign_production()
 				continue;
 			}
 
-			for (const production_type *production_type : building_type->get_production_types()) {
+			for (const production_type *production_type : building_slot->get_available_production_types()) {
 				if (!building_slot->can_increase_production(production_type)) {
 					continue;
 				}
@@ -1850,7 +1850,7 @@ void country_game_data::decrease_commodity_consumption(const commodity *commodit
 			continue;
 		}
 
-		for (const production_type *production_type : building_type->get_production_types()) {
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
 			if (!production_type->get_input_commodities().contains(commodity)) {
 				continue;
 			}

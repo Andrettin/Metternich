@@ -24,6 +24,7 @@ class building_slot final : public QObject
 	Q_PROPERTY(metternich::building_type* building READ get_building_unconst NOTIFY building_changed)
 	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
 	Q_PROPERTY(int capacity READ get_capacity NOTIFY building_changed)
+	Q_PROPERTY(QVariantList available_production_types READ get_available_production_types_qvariant_list NOTIFY building_changed)
 
 public:
 	explicit building_slot(const building_slot_type *type, const metternich::country *country);
@@ -77,6 +78,9 @@ public:
 	{
 		return this->employed_capacity;
 	}
+
+	std::vector<const production_type *> get_available_production_types() const;
+	QVariantList get_available_production_types_qvariant_list() const;
 
 	int get_production_type_employed_capacity(const production_type *production_type) const
 	{
