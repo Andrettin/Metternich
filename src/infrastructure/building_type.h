@@ -34,6 +34,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool expandable MEMBER expandable READ is_expandable NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "building_type";
@@ -116,6 +117,8 @@ public:
 	{
 		return this->country_modifier.get();
 	}
+
+	QString get_country_modifier_string() const;
 
 signals:
 	void changed();

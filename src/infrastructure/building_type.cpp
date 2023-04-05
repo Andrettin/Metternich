@@ -82,4 +82,13 @@ QVariantList building_type::get_production_types_qvariant_list() const
 	return container::to_qvariant_list(this->get_production_types());
 }
 
+QString building_type::get_country_modifier_string() const
+{
+	if (this->get_country_modifier() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->get_country_modifier()->get_string());
+}
+
 }
