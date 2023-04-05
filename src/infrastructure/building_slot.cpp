@@ -14,6 +14,7 @@
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "population/population_unit.h"
+#include "script/condition/condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -103,6 +104,23 @@ bool building_slot::can_have_building(const building_type *building) const
 	}
 
 	return true;
+}
+
+bool building_slot::is_available() const
+{
+	if (this->get_building() != nullptr) {
+		return true;
+	}
+
+	for (const building_type *building : this->get_type()->get_building_types()) {
+		if (building->get_required_building() != nullptr) {
+			continue;
+		}
+
+		return true;
+	}
+
+	return false;
 }
 
 int building_slot::get_capacity() const

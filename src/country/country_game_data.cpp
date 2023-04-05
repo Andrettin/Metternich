@@ -1607,7 +1607,17 @@ QObject *country_game_data::get_population_type_small_icon(population_type *type
 
 QVariantList country_game_data::get_building_slots_qvariant_list() const
 {
-	return container::to_qvariant_list(this->building_slots);
+	std::vector<const building_slot *> available_building_slots;
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		if (!building_slot->is_available()) {
+			continue;
+		}
+
+		available_building_slots.push_back(building_slot.get());
+	}
+
+	return container::to_qvariant_list(available_building_slots);
 }
 
 void country_game_data::initialize_building_slots()

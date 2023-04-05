@@ -72,6 +72,8 @@ private:
 	}
 
 public:
+	bool is_available() const;
+
 	int get_capacity() const;
 
 	int get_employed_capacity() const
