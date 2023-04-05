@@ -101,8 +101,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	} else if constexpr (std::is_same_v<scope_type, province>) {
 		if (key == "core") {
 			return std::make_unique<core_condition>(value, condition_operator);
-		} else if (key == "produces_commodity") {
-			return std::make_unique<produces_commodity_condition<scope_type>>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (key == "improvement") {
@@ -123,6 +121,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
 		} else if (key == "colony") {
 			return std::make_unique<colony_condition<scope_type>>(value, condition_operator);
+		} else if (key == "produces_commodity") {
+			return std::make_unique<produces_commodity_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

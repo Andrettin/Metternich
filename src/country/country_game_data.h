@@ -638,6 +638,8 @@ public:
 	void assign_production();
 	void decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs = true);
 
+	bool produces_commodity(const commodity *commodity) const;
+
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
 	QVariantList get_technologies_qvariant_list() const;

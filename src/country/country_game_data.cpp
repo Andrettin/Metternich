@@ -1872,6 +1872,29 @@ void country_game_data::decrease_commodity_consumption(const commodity *commodit
 	assert_throw(false);
 }
 
+bool country_game_data::produces_commodity(const commodity *commodity) const
+{
+	if (this->get_commodity_output(commodity) > 0) {
+		return true;
+	}
+
+	for (const province *province : this->get_provinces()) {
+		if (province->get_game_data()->produces_commodity(commodity)) {
+			return true;
+		}
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
+			if (production_type->get_output_commodity() == commodity && building_slot->get_production_type_output(production_type) > 0) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 bool country_game_data::can_declare_war_on(const metternich::country *other_country) const
 {
 	if (!this->country->can_declare_war()) {
