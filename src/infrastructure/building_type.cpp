@@ -9,6 +9,7 @@
 #include "infrastructure/building_slot_type.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
@@ -34,6 +35,10 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->production_types.push_back(production_type::get(value));
 		}
+	} else if (tag == "conditions") {
+		auto conditions = std::make_unique<and_condition<country>>();
+		database::process_gsml_data(conditions, scope);
+		this->conditions = std::move(conditions);
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
 		database::process_gsml_data(this->country_modifier, scope);
@@ -80,6 +85,17 @@ void building_type::check() const
 QVariantList building_type::get_production_types_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_production_types());
+}
+
+int building_type::get_score() const
+{
+	int score = building_type::base_score * std::max(1, this->get_base_capacity());
+
+	if (this->get_country_modifier() != nullptr) {
+		score += this->get_country_modifier()->get_score();
+	}
+
+	return score;
 }
 
 QString building_type::get_country_modifier_string() const

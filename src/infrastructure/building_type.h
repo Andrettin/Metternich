@@ -17,6 +17,9 @@ class production_type;
 class technology;
 
 template <typename scope_type>
+class condition;
+
+template <typename scope_type>
 class modifier;
 
 class building_type final : public named_data_entry, public data_type<building_type>
@@ -108,9 +111,11 @@ public:
 		return this->required_technology;
 	}
 
-	int get_score() const
+	int get_score() const;
+
+	const condition<country> *get_conditions() const
 	{
-		return (building_type::base_score * std::max(1, this->get_base_capacity()));
+		return this->conditions.get();
 	}
 
 	const modifier<const country> *get_country_modifier() const
@@ -135,6 +140,7 @@ private:
 	bool expandable = false;
 	building_type *required_building = nullptr;
 	technology *required_technology = nullptr;
+	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<modifier<const country>> country_modifier;
 };
 

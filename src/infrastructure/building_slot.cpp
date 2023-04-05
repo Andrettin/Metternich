@@ -97,7 +97,11 @@ bool building_slot::can_have_building(const building_type *building) const
 			return false;
 		}
 
-		if (building->get_base_capacity() == this->get_building()->get_base_capacity()) {
+		if (building->get_score() < this->get_building()->get_score()) {
+			return false;
+		}
+
+		if (building->get_base_capacity() == this->get_building()->get_base_capacity() && building->get_score() == this->get_building()->get_score()) {
 			//the building must be better in some way
 			return false;
 		}
@@ -114,6 +118,10 @@ bool building_slot::is_available() const
 
 	for (const building_type *building : this->get_type()->get_building_types()) {
 		if (building->get_required_building() != nullptr) {
+			continue;
+		}
+
+		if (building->get_conditions() != nullptr && !building->get_conditions()->check(this->get_country(), read_only_context(this->get_country()))) {
 			continue;
 		}
 
