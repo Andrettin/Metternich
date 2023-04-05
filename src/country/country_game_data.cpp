@@ -93,7 +93,7 @@ void country_game_data::do_turn()
 
 	this->do_events();
 
-	if (game::get()->get_rules()->are_advisors_enabled()) {
+	if (game::get()->get_rules()->are_advisors_enabled() && this->can_have_advisors()) {
 		this->check_advisors();
 	}
 }
@@ -2024,6 +2024,7 @@ void country_game_data::check_advisors()
 void country_game_data::add_advisor(const character *advisor)
 {
 	assert_throw(game::get()->get_rules()->are_advisors_enabled());
+	assert_throw(this->can_have_advisors());
 
 	this->advisors.push_back(advisor);
 	advisor->get_game_data()->set_country(this->country);
@@ -2085,6 +2086,12 @@ void country_game_data::choose_next_advisor()
 	} else {
 		emit engine_interface::get()->next_advisor_choosable(container::to_qvariant_list(potential_advisors));
 	}
+}
+
+bool country_game_data::can_have_advisors() const
+{
+	//only great powers can have advisors
+	return this->country->get_type() == country_type::great_power;
 }
 
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)

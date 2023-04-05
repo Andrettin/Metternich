@@ -307,7 +307,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->add_technology_with_prerequisites(technology);
 			}
 
-			if (this->get_rules()->are_advisors_enabled()) {
+			if (this->get_rules()->are_advisors_enabled() && country_game_data->can_have_advisors()) {
 				for (const character *advisor : country_history->get_advisors()) {
 					country_game_data->add_advisor(advisor);
 				}
