@@ -30,6 +30,11 @@ public:
 		return "Melee: " + number::to_signed_string(this->quantity * multiplier);
 	}
 
+	virtual int get_score() const override
+	{
+		return this->quantity;
+	}
+
 private:
 	int quantity = 0;
 };

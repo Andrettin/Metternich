@@ -36,6 +36,11 @@ public:
 		return this->commodity->get_name() + " Production: " + number::to_signed_string(this->quantity * multiplier) + "%";
 	}
 
+	virtual int get_score() const override
+	{
+		return this->quantity;
+	}
+
 private:
 	const metternich::commodity *commodity = nullptr;
 	int quantity = 0;

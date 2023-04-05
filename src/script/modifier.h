@@ -33,6 +33,7 @@ public:
 	void apply(scope_type *scope, const int multiplier = 1) const;
 	void remove(scope_type *scope, const int multiplier = 1) const;
 	std::string get_string(const int multiplier = 1, const size_t indent = 0) const;
+	int get_score() const;
 
 private:
 	void add_modifier_effect(std::unique_ptr<modifier_effect<scope_type>> &&modifier_effect);

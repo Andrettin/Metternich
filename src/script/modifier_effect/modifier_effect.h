@@ -24,6 +24,7 @@ public:
 	virtual const std::string &get_identifier() const = 0;
 	virtual void apply(scope_type *scope, const int multiplier) const = 0;
 	virtual std::string get_string(const int multiplier) const = 0;
+	virtual int get_score() const = 0;
 };
 
 extern template class modifier_effect<const character>;
