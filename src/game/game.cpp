@@ -405,11 +405,16 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			if (tile_province != nullptr) {
 				const province_game_data *tile_province_game_data = tile_province->get_game_data();
+				const country *owner = tile_province_game_data->get_owner();
 
-				if (tile_province_game_data->get_owner() != nullptr) {
-					country_game_data *owner_game_data = tile_province_game_data->get_owner()->get_game_data();
+				if (owner != nullptr) {
+					country_game_data *owner_game_data = owner->get_game_data();
 
 					for (const auto &[building_slot_type, building] : site_history->get_buildings()) {
+						if (building->get_conditions() != nullptr && !building->get_conditions()->check(owner, read_only_context(owner))) {
+							continue;
+						}
+
 						const building_type *slot_building = owner_game_data->get_slot_building(building_slot_type);
 
 						if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
