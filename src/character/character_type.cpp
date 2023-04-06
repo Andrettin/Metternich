@@ -28,9 +28,6 @@ void character_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
 		database::process_gsml_data(this->country_modifier, scope);
-	} else if (tag == "province_modifier") {
-		this->province_modifier = std::make_unique<modifier<const province>>();
-		database::process_gsml_data(this->province_modifier, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

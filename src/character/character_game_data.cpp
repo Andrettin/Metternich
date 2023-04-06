@@ -13,7 +13,6 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "map/province.h"
-#include "map/province_game_data.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
 #include "script/scripted_character_modifier.h"
@@ -471,15 +470,6 @@ QString character_game_data::get_country_modifier_string(const unsigned indent) 
 	return QString::fromStdString(this->character->get_type()->get_country_modifier()->get_string(this->character->get_skill(), indent));
 }
 
-QString character_game_data::get_province_modifier_string(const unsigned indent) const
-{
-	if (this->character->get_type()->get_province_modifier() == nullptr) {
-		return QString();
-	}
-
-	return QString::fromStdString(this->character->get_type()->get_province_modifier()->get_string(this->character->get_skill(), indent));
-}
-
 void character_game_data::apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier)
 {
 	assert_throw(modifier != nullptr);
@@ -491,13 +481,6 @@ void character_game_data::apply_country_modifier(const metternich::country *coun
 {
 	if (this->character->get_type()->get_country_modifier() != nullptr) {
 		this->character->get_type()->get_country_modifier()->apply(country, this->character->get_skill() * multiplier);
-	}
-}
-
-void character_game_data::apply_province_modifier(const province *province, const int multiplier)
-{
-	if (this->character->get_type()->get_province_modifier() != nullptr) {
-		this->character->get_type()->get_province_modifier()->apply(province, this->character->get_skill() * multiplier);
 	}
 }
 

@@ -9,7 +9,6 @@ namespace metternich {
 class character;
 class country;
 class icon;
-class province;
 enum class military_unit_category;
 
 template <typename scope_type>
@@ -71,11 +70,6 @@ public:
 		return this->country_modifier.get();
 	}
 
-	const modifier<const province> *get_province_modifier() const
-	{
-		return this->province_modifier.get();
-	}
-
 signals:
 	void changed();
 
@@ -85,7 +79,6 @@ private:
 	metternich::military_unit_category military_unit_category;
 	bool commander = false;
 	std::unique_ptr<modifier<const country>> country_modifier;
-	std::unique_ptr<modifier<const province>> province_modifier;
 };
 
 }
