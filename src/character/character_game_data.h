@@ -131,8 +131,6 @@ public:
 	void deploy_to_province(const province *province);
 	void undeploy();
 
-	Q_INVOKABLE QString get_country_modifier_string(const unsigned indent) const;
-
 	void apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier = 1);
 
 	void remove_modifier(const modifier<const metternich::character> *modifier)
@@ -140,7 +138,6 @@ public:
 		this->apply_modifier(modifier, -1);
 	}
 
-	void apply_country_modifier(const metternich::country *country, const int multiplier);
 	void apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
 
 	const spell_set &get_spells() const

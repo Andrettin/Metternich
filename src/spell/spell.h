@@ -6,9 +6,9 @@
 
 namespace metternich {
 
-class character_type;
 class icon;
 class spell_effect;
+enum class military_unit_category;
 enum class spell_target;
 
 class spell final : public named_data_entry, public data_type<spell>
@@ -51,12 +51,12 @@ public:
 		return this->range;
 	}
 
-	const std::vector<const character_type *> get_character_types() const
+	const std::vector<military_unit_category> get_military_unit_categories() const
 	{
-		return this->character_types;
+		return this->military_unit_categories;
 	}
 
-	bool is_available_for_character_type(const character_type *character_type) const;
+	bool is_available_for_military_unit_category(const military_unit_category military_unit_category) const;
 
 signals:
 	void changed();
@@ -66,7 +66,7 @@ private:
 	metternich::icon *icon = nullptr;
 	int mana_cost = 0;
 	int range = 0;
-	std::vector<const character_type *> character_types;
+	std::vector<military_unit_category> military_unit_categories;
 	std::vector<qunique_ptr<spell_effect>> effects;
 };
 

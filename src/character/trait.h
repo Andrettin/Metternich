@@ -6,7 +6,6 @@
 namespace metternich {
 
 class character;
-class character_type;
 class icon;
 class military_unit;
 class spell;

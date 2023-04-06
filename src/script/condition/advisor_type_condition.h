@@ -1,23 +1,23 @@
 #pragma once
 
+#include "character/advisor_type.h"
 #include "character/character.h"
-#include "character/character_type.h"
 #include "script/condition/condition.h"
 
 namespace metternich {
 
-class character_type_condition final : public condition<character>
+class advisor_type_condition final : public condition<character>
 {
 public:
-	explicit character_type_condition(const std::string &value, const gsml_operator condition_operator)
+	explicit advisor_type_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<character>(condition_operator)
 	{
-		this->character_type = character_type::get(value);
+		this->advisor_type = advisor_type::get(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "character_type";
+		static const std::string class_identifier = "advisor_type";
 		return class_identifier;
 	}
 
@@ -25,18 +25,18 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_type() == this->character_type;
+		return scope->get_advisor_type() == this->advisor_type;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
 
-		return this->character_type->get_name() + " character type";
+		return this->advisor_type->get_name() + " advisor type";
 	}
 
 private:
-	const metternich::character_type *character_type = nullptr;
+	const metternich::advisor_type *advisor_type = nullptr;
 };
 
 }

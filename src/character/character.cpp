@@ -2,9 +2,9 @@
 
 #include "character/character.h"
 
+#include "character/advisor_type.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
-#include "character/character_type.h"
 #include "character/dynasty.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
@@ -13,6 +13,7 @@
 #include "map/province.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
+#include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
 
@@ -27,7 +28,7 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
-character::character(const std::string &identifier) : named_data_entry(identifier), gender(gender::none)
+character::character(const std::string &identifier) : named_data_entry(identifier), military_unit_category(military_unit_category::none), gender(gender::none)
 {
 	this->reset_game_data();
 }
@@ -119,7 +120,10 @@ void character::initialize()
 
 void character::check() const
 {
-	assert_throw(this->get_type() != nullptr);
+	if (this->is_advisor() && this->get_military_unit_category() != military_unit_category::none) {
+		throw std::runtime_error("Character \"" + this->get_identifier() + "\" is both an advisor and has a military unit category.");
+	}
+
 	assert_throw(this->get_culture() != nullptr);
 
 	if (this->get_religion() == nullptr) {
@@ -200,18 +204,28 @@ std::string character::get_full_name() const
 
 QString character::get_advisor_modifier_string() const
 {
-	if (this->advisor_modifier == nullptr) {
-		return QString();
+	assert_throw(this->is_advisor());
+
+	if (this->advisor_modifier != nullptr) {
+		return QString::fromStdString(this->advisor_modifier->get_string());
 	}
 
-	return QString::fromStdString(this->advisor_modifier->get_string());
+	if (this->get_advisor_type()->get_modifier() != nullptr) {
+		return QString::fromStdString(this->get_advisor_type()->get_modifier()->get_string(this->get_skill()));
+	}
+
+	return QString();
 }
 
 void character::apply_advisor_modifier(const country *country, const int multiplier) const
 {
-	assert_throw(this->advisor_modifier != nullptr);
+	assert_throw(this->is_advisor());
 
-	this->advisor_modifier->apply(country, multiplier);
+	if (this->advisor_modifier != nullptr) {
+		this->advisor_modifier->apply(country, multiplier);
+	} else if (this->get_advisor_type()->get_modifier() != nullptr) {
+		this->get_advisor_type()->get_modifier()->apply(country, this->get_skill() * multiplier);
+	}
 }
 
 }

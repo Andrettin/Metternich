@@ -11,12 +11,12 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "population/population_unit.h"
+#include "script/condition/advisor_type_condition.h"
 #include "script/condition/age_condition.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/can_have_trait_condition.h"
-#include "script/condition/character_type_condition.h"
 #include "script/condition/coastal_condition.h"
 #include "script/condition/colony_condition.h"
 #include "script/condition/commodity_condition.h"
@@ -66,12 +66,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	const std::string &value = property.get_value();
 
 	if constexpr (std::is_same_v<scope_type, character>) {
-		if (key == "age") {
+		if (key == "advisor_type") {
+			return std::make_unique<advisor_type_condition>(value, condition_operator);
+		} else if (key == "age") {
 			return std::make_unique<age_condition>(value, condition_operator);
 		} else if (key == "can_have_trait") {
 			return std::make_unique<can_have_trait_condition>(value, condition_operator);
-		} else if (key == "character_type") {
-			return std::make_unique<character_type_condition>(value, condition_operator);
 		} else if (key == "gender") {
 			return std::make_unique<gender_condition>(value, condition_operator);
 		} else if (key == "scripted_modifier") {

@@ -17,20 +17,18 @@ class condition;
 template <typename scope_type>
 class modifier;
 
-class character_type final : public named_data_entry, public data_type<character_type>
+class advisor_type final : public named_data_entry, public data_type<advisor_type>
 {
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
-	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category)
-	Q_PROPERTY(bool commander MEMBER commander READ is_commander)
 
 public:
-	static constexpr const char class_identifier[] = "character_type";
-	static constexpr const char property_class_identifier[] = "metternich::character_type*";
-	static constexpr const char database_folder[] = "character_types";
+	static constexpr const char class_identifier[] = "advisor_type";
+	static constexpr const char property_class_identifier[] = "metternich::advisor_type*";
+	static constexpr const char database_folder[] = "advisor_types";
 
-	explicit character_type(const std::string &identifier);
+	explicit advisor_type(const std::string &identifier);
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
@@ -55,19 +53,9 @@ public:
 		return nullptr;
 	}
 
-	metternich::military_unit_category get_military_unit_category() const
+	const modifier<const country> *get_modifier() const
 	{
-		return this->military_unit_category;
-	}
-
-	bool is_commander() const
-	{
-		return this->commander;
-	}
-
-	const modifier<const country> *get_country_modifier() const
-	{
-		return this->country_modifier.get();
+		return this->modifier.get();
 	}
 
 signals:
@@ -76,9 +64,7 @@ signals:
 private:
 	icon *portrait = nullptr;
 	icon_map<std::unique_ptr<const condition<character>>> conditional_portraits;
-	metternich::military_unit_category military_unit_category;
-	bool commander = false;
-	std::unique_ptr<modifier<const country>> country_modifier;
+	std::unique_ptr<modifier<const country>> modifier;
 };
 
 }

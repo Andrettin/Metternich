@@ -2,8 +2,8 @@
 
 #include "character/character_game_data.h"
 
+#include "character/advisor_type.h"
 #include "character/character.h"
-#include "character/character_type.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "country/country.h"
@@ -57,9 +57,9 @@ bool character_game_data::is_current_portrait_valid() const
 		return true;
 	}
 
-	const character_type *character_type = this->character->get_type();
-	const condition<metternich::character> *portrait_conditions = character_type->get_portrait_conditions(this->get_portrait());
-	if (portrait_conditions == nullptr && character_type->get_portrait() != this->get_portrait()) {
+	const advisor_type *advisor_type = this->character->get_advisor_type();
+	const condition<metternich::character> *portrait_conditions = advisor_type->get_portrait_conditions(this->get_portrait());
+	if (portrait_conditions == nullptr && advisor_type->get_portrait() != this->get_portrait()) {
 		//portrait not available for the character type
 		return false;
 	}
@@ -77,26 +77,28 @@ void character_game_data::check_portrait()
 		return;
 	}
 
-	const icon_map<std::unique_ptr<const condition<metternich::character>>> &conditional_portraits = this->character->get_type()->get_conditional_portraits();
+	if (this->character->get_advisor_type() != nullptr) {
+		const icon_map<std::unique_ptr<const condition<metternich::character>>> &conditional_portraits = this->character->get_advisor_type()->get_conditional_portraits();
 
-	if (!conditional_portraits.empty()) {
-		std::vector<const icon *> potential_portraits;
-		const read_only_context ctx(this->character);
+		if (!conditional_portraits.empty()) {
+			std::vector<const icon *> potential_portraits;
+			const read_only_context ctx(this->character);
 
-		for (const auto &[portrait, conditions] : conditional_portraits) {
-			if (!conditions->check(this->character, ctx)) {
-				continue;
+			for (const auto &[portrait, conditions] : conditional_portraits) {
+				if (!conditions->check(this->character, ctx)) {
+					continue;
+				}
+
+				potential_portraits.push_back(portrait);
 			}
 
-			potential_portraits.push_back(portrait);
+			//there must always be an available conditional portrait if conditional portraits are defined
+			assert_throw(!potential_portraits.empty());
+
+			this->portrait = vector::get_random(potential_portraits);
+		} else {
+			this->portrait = this->character->get_advisor_type()->get_portrait();
 		}
-
-		//there must always be an available conditional portrait if conditional portraits are defined
-		assert_throw(!potential_portraits.empty());
-
-		this->portrait = vector::get_random(potential_portraits);
-	} else {
-		this->portrait = this->character->get_type()->get_portrait();
 	}
 }
 
@@ -421,15 +423,7 @@ void character_game_data::decrement_scripted_modifiers()
 
 bool character_game_data::is_deployable() const
 {
-	const character_type *character_type = this->character->get_type();
-
-	if (character_type->get_military_unit_category() == military_unit_category::none) {
-		return false;
-	}
-
-	if (!character_type->is_commander() && this->get_spells().empty()) {
-		//non-commanders must know at least one spell in order to be deployable
-		//the presumption being that non-commander character types which nevertheless have a military unit category will be support units, such as clerics and mages
+	if (this->character->get_military_unit_category() == military_unit_category::none) {
 		return false;
 	}
 
@@ -442,7 +436,7 @@ void character_game_data::deploy_to_province(const province *province)
 	assert_throw(!this->is_deployed());
 	assert_throw(this->is_deployable());
 
-	const military_unit_type *military_unit_type = this->get_country()->get_game_data()->get_best_military_unit_category_type(this->character->get_type()->get_military_unit_category());
+	const military_unit_type *military_unit_type = this->get_country()->get_game_data()->get_best_military_unit_category_type(this->character->get_military_unit_category());
 
 	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->character);
 
@@ -461,27 +455,11 @@ void character_game_data::undeploy()
 	this->military_unit->disband(false);
 }
 
-QString character_game_data::get_country_modifier_string(const unsigned indent) const
-{
-	if (this->character->get_type()->get_country_modifier() == nullptr) {
-		return QString();
-	}
-
-	return QString::fromStdString(this->character->get_type()->get_country_modifier()->get_string(this->character->get_skill(), indent));
-}
-
 void character_game_data::apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier)
 {
 	assert_throw(modifier != nullptr);
 
 	modifier->apply(this->character, multiplier);
-}
-
-void character_game_data::apply_country_modifier(const metternich::country *country, const int multiplier)
-{
-	if (this->character->get_type()->get_country_modifier() != nullptr) {
-		this->character->get_type()->get_country_modifier()->apply(country, this->character->get_skill() * multiplier);
-	}
 }
 
 void character_game_data::apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier)
@@ -500,7 +478,7 @@ QVariantList character_game_data::get_spells_qvariant_list() const
 
 bool character_game_data::can_learn_spell(const spell *spell) const
 {
-	if (!vector::contains(spell->get_character_types(), this->character->get_type())) {
+	if (!spell->is_available_for_military_unit_category(this->character->get_military_unit_category())) {
 		return false;
 	}
 

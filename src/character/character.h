@@ -11,9 +11,9 @@ namespace archimedes {
 
 namespace metternich {
 
+class advisor_type;
 class character_game_data;
 class character_history;
-class character_type;
 class country;
 class culture;
 class dynasty;
@@ -22,6 +22,7 @@ class phenotype;
 class province;
 class religion;
 class trait;
+enum class military_unit_category;
 
 template <typename scope_type>
 class condition;
@@ -36,7 +37,8 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::dynasty* dynasty MEMBER dynasty NOTIFY changed)
 	Q_PROPERTY(QString surname READ get_surname_qstring NOTIFY changed)
 	Q_PROPERTY(QString full_name READ get_full_name_qstring NOTIFY changed)
-	Q_PROPERTY(metternich::character_type* type MEMBER type NOTIFY changed)
+	Q_PROPERTY(metternich::advisor_type* advisor_type MEMBER advisor_type NOTIFY changed)
+	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
@@ -120,9 +122,14 @@ public:
 		return QString::fromStdString(this->get_full_name());
 	}
 
-	const character_type *get_type() const
+	const metternich::advisor_type *get_advisor_type() const
 	{
-		return this->type;
+		return this->advisor_type;
+	}
+
+	metternich::military_unit_category get_military_unit_category() const
+	{
+		return this->military_unit_category;
 	}
 
 	const metternich::culture *get_culture() const
@@ -216,7 +223,7 @@ public:
 
 	bool is_advisor() const
 	{
-		return this->advisor_modifier != nullptr;
+		return this->get_advisor_type() != nullptr || this->advisor_modifier != nullptr;
 	}
 
 signals:
@@ -226,7 +233,8 @@ signals:
 private:
 	metternich::dynasty *dynasty = nullptr;
 	std::string surname;
-	character_type *type = nullptr;
+	metternich::advisor_type *advisor_type = nullptr;
+	metternich::military_unit_category military_unit_category;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	metternich::phenotype *phenotype = nullptr;
