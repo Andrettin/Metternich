@@ -74,27 +74,31 @@ country_game_data::~country_game_data()
 
 void country_game_data::do_turn()
 {
-	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->do_turn();
-	}
+	try {
+		for (const province *province : this->get_provinces()) {
+			province->get_game_data()->do_turn();
+		}
 
-	this->do_production();
-	this->do_population_growth();
+		this->do_production();
+		this->do_population_growth();
 
-	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
-		civilian_unit->do_turn();
-	}
+		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
+			civilian_unit->do_turn();
+		}
 
-	for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
-		military_unit->do_turn();
-	}
+		for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
+			military_unit->do_turn();
+		}
 
-	this->decrement_scripted_modifiers();
+		this->decrement_scripted_modifiers();
 
-	this->do_events();
+		this->do_events();
 
-	if (game::get()->get_rules()->are_advisors_enabled() && this->can_have_advisors()) {
-		this->check_advisors();
+		if (game::get()->get_rules()->are_advisors_enabled() && this->can_have_advisors()) {
+			this->check_advisors();
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Failed to process turn for country \"" + this->country->get_identifier() + "\"."));
 	}
 }
 
@@ -1728,7 +1732,9 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 		return;
 	}
 
-	assert_throw(value >= 0);
+	if (value < 0) {
+		throw std::runtime_error("Tried to set the storage of commodity \"" + commodity->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\" to a negative number.");
+	}
 
 	if (commodity->is_convertible_to_wealth()) {
 		assert_throw(value > 0);

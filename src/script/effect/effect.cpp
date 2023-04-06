@@ -234,18 +234,22 @@ void effect<scope_type>::process_gsml_scope(const gsml_data &scope)
 template <typename scope_type>
 void effect<scope_type>::do_effect(scope_type *scope, context &ctx) const
 {
-	switch (this->effect_operator) {
-		case gsml_operator::assignment:
-			this->do_assignment_effect(scope, ctx);
-			break;
-		case gsml_operator::addition:
-			this->do_addition_effect(scope, ctx);
-			break;
-		case gsml_operator::subtraction:
-			this->do_subtraction_effect(scope, ctx);
-			break;
-		default:
-			throw std::runtime_error("Invalid effect operator: \"" + std::to_string(static_cast<int>(this->effect_operator)) + "\".");
+	try {
+		switch (this->effect_operator) {
+			case gsml_operator::assignment:
+				this->do_assignment_effect(scope, ctx);
+				break;
+			case gsml_operator::addition:
+				this->do_addition_effect(scope, ctx);
+				break;
+			case gsml_operator::subtraction:
+				this->do_subtraction_effect(scope, ctx);
+				break;
+			default:
+				throw std::runtime_error("Invalid effect operator: \"" + std::to_string(static_cast<int>(this->effect_operator)) + "\".");
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Failed to do \"" + this->get_class_identifier() + "\" effect."));
 	}
 }
 
