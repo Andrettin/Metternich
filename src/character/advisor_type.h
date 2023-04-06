@@ -9,7 +9,7 @@ namespace metternich {
 class character;
 class country;
 class icon;
-enum class military_unit_category;
+enum class advisor_category;
 
 template <typename scope_type>
 class condition;
@@ -21,6 +21,7 @@ class advisor_type final : public named_data_entry, public data_type<advisor_typ
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::advisor_category category MEMBER category NOTIFY changed)
 	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
 
 public:
@@ -32,6 +33,11 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
+
+	advisor_category get_category() const
+	{
+		return this->category;
+	}
 
 	const icon *get_portrait() const
 	{
@@ -62,6 +68,7 @@ signals:
 	void changed();
 
 private:
+	advisor_category category;
 	icon *portrait = nullptr;
 	icon_map<std::unique_ptr<const condition<character>>> conditional_portraits;
 	std::unique_ptr<modifier<const country>> modifier;

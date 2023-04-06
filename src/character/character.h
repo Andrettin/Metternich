@@ -223,7 +223,7 @@ public:
 
 	bool is_advisor() const
 	{
-		return this->get_advisor_type() != nullptr || this->advisor_modifier != nullptr;
+		return this->get_advisor_type() != nullptr;
 	}
 
 signals:

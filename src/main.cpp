@@ -1,5 +1,6 @@
 #include "metternich.h"
 
+#include "character/advisor_category.h"
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/dynasty.h"
@@ -85,6 +86,7 @@ int main(int argc, char **argv)
 
 		QQmlApplicationEngine engine;
 
+		enum_converter<advisor_category>();
 		enum_converter<country_type>();
 		enum_converter<cultural_group_rank>();
 		enum_converter<diplomacy_state>();

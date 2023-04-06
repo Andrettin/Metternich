@@ -2,6 +2,8 @@
 
 #include "country/country_game_data.h"
 
+#include "character/advisor_category.h"
+#include "character/advisor_type.h"
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "country/country.h"
@@ -2076,7 +2078,7 @@ void country_game_data::clear_advisors()
 
 void country_game_data::choose_next_advisor()
 {
-	std::vector<const character *> potential_advisors;
+	std::map<advisor_category, std::vector<const character *>> potential_advisors_per_category;
 
 	for (const character *character : character::get_all()) {
 		if (!character->is_advisor()) {
@@ -2092,16 +2094,26 @@ void country_game_data::choose_next_advisor()
 			continue;
 		}
 
-		potential_advisors.push_back(character);
+		potential_advisors_per_category[character->get_advisor_type()->get_category()].push_back(character);
 	}
 
-	if (potential_advisors.empty()) {
+	if (potential_advisors_per_category.empty()) {
 		return;
 	}
 
+	std::map<advisor_category, const character *> potential_advisor_map;
+	const std::vector<advisor_category> potential_categories = archimedes::map::get_keys(potential_advisors_per_category);
+
+	for (const advisor_category category : potential_categories) {
+		potential_advisor_map[category] = vector::get_random(potential_advisors_per_category[category]);
+	}
+
+
 	if (this->is_ai()) {
-		this->set_next_advisor(vector::get_random(potential_advisors));
+		const advisor_category chosen_category = vector::get_random(potential_categories);
+		this->set_next_advisor(potential_advisor_map[chosen_category]);
 	} else {
+		const std::vector<const character *> potential_advisors = archimedes::map::get_values(potential_advisor_map);
 		emit engine_interface::get()->next_advisor_choosable(container::to_qvariant_list(potential_advisors));
 	}
 }

@@ -124,6 +124,10 @@ void character::check() const
 		throw std::runtime_error("Character \"" + this->get_identifier() + "\" is both an advisor and has a military unit category.");
 	}
 
+	if (this->advisor_modifier != nullptr && !this->is_advisor()) {
+		throw std::runtime_error("Character \"" + this->get_identifier() + "\" has an advisor modifier, but is not an advisor.");
+	}
+
 	assert_throw(this->get_culture() != nullptr);
 
 	if (this->get_religion() == nullptr) {

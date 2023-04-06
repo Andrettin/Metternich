@@ -15,6 +15,7 @@ include_directories(
 )
 
 set(character_SRCS
+	src/character/advisor_category.cpp
 	src/character/advisor_type.cpp
 	src/character/advisor_type_container.cpp
 	src/character/character.cpp
@@ -263,6 +264,7 @@ set(metternich_SRCS
 )
 
 set(character_HDRS
+	src/character/advisor_category.h
 	src/character/advisor_type.h
 	src/character/advisor_type_container.h
 	src/character/character.h
