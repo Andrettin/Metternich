@@ -16,7 +16,8 @@
 
 namespace metternich {
 
-technology::technology(const std::string &identifier) : named_data_entry(identifier)
+technology::technology(const std::string &identifier)
+	: named_data_entry(identifier), category(technology_category::none)
 {
 }
 
