@@ -48,8 +48,8 @@ void technology::check() const
 	assert_throw(this->get_category() != technology_category::none);
 	assert_throw(this->get_portrait() != nullptr);
 
-	if (this->get_cost() == 0) {
-		throw std::runtime_error(std::format("Technology \"{}\" has no cost.", this->get_identifier()));
+	if (this->get_cost() == 0 && !this->is_discovery()) {
+		throw std::runtime_error(std::format("Technology \"{}\" has no cost, and is not a discovery.", this->get_identifier()));
 	}
 }
 
