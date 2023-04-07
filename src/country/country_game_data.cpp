@@ -82,6 +82,7 @@ void country_game_data::do_turn()
 		}
 
 		this->do_production();
+		this->do_research();
 		this->do_population_growth();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
@@ -150,6 +151,29 @@ void country_game_data::do_production()
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error doing production for country \"" + this->country->get_identifier() + "\"."));
+	}
+}
+
+void country_game_data::do_research()
+{
+	try {
+		if (this->get_current_research() == nullptr) {
+			return;
+		}
+
+		if (this->get_stored_commodity(defines::get()->get_research_commodity()) >= this->get_current_research()->get_cost()) {
+			this->add_technology(this->get_current_research());
+
+			if (this->country == game::get()->get_player_country()) {
+				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification("Technology Researched", interior_minister_portrait, std::format("Your Excellency, our scholars have made a breakthrough in the research of the {} technology!", this->get_current_research()->get_name()));
+			}
+
+			this->set_current_research(nullptr);
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Error doing research for country \"" + this->country->get_identifier() + "\"."));
 	}
 }
 
@@ -2003,6 +2027,19 @@ QVariantList country_game_data::get_future_technologies_qvariant_list() const
 	std::sort(future_technologies.begin(), future_technologies.end(), technology_compare());
 
 	return container::to_qvariant_list(future_technologies);
+}
+
+void country_game_data::set_current_research(const technology *technology)
+{
+	if (technology == this->get_current_research()) {
+		return;
+	}
+
+	this->current_research = technology;
+
+	this->set_stored_commodity(defines::get()->get_research_commodity(), 0);
+
+	emit current_research_changed();
 }
 
 QVariantList country_game_data::get_advisors_qvariant_list() const
