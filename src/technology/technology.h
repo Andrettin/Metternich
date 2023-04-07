@@ -11,6 +11,7 @@ class culture;
 class icon;
 class improvement;
 class military_unit_type;
+enum class technology_category;
 
 template <typename scope_type>
 class modifier;
@@ -19,7 +20,9 @@ class technology final : public named_data_entry, public data_type<technology>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(metternich::technology_category category MEMBER category NOTIFY changed)
+	Q_PROPERTY(int category_index READ get_category_index NOTIFY changed)
+	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
@@ -37,9 +40,19 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
-	const metternich::icon *get_icon() const
+	technology_category get_category() const
 	{
-		return this->icon;
+		return this->category;
+	}
+
+	int get_category_index() const
+	{
+		return static_cast<int>(this->get_category());
+	}
+
+	const icon *get_portrait() const
+	{
+		return this->portrait;
 	}
 
 	const std::vector<const technology *> get_prerequisites() const
@@ -97,7 +110,8 @@ signals:
 	void changed();
 
 private:
-	metternich::icon *icon = nullptr;
+	technology_category category;
+	icon *portrait = nullptr;
 	std::vector<const technology *> prerequisites;
 	std::vector<const building_type *> enabled_buildings;
 	std::vector<const improvement *> enabled_improvements;

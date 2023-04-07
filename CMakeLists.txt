@@ -190,6 +190,7 @@ set_source_files_properties(${spell_SRCS} PROPERTIES UNITY_GROUP "spell")
 
 set(technology_SRCS
 	src/technology/technology.cpp
+	src/technology/technology_category.cpp
 	src/technology/technology_container.cpp
 )
 source_group(technology FILES ${technology_SRCS})
@@ -519,6 +520,7 @@ source_group(spell FILES ${spell_HDRS})
 
 set(technology_HDRS
 	src/technology/technology.h
+	src/technology/technology_category.h
 	src/technology/technology_container.h
 )
 source_group(technology FILES ${technology_HDRS})

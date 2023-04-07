@@ -2,10 +2,13 @@
 
 #include "technology/technology.h"
 
+#include "character/character.h"
 #include "country/culture.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
+#include "script/condition/condition.h"
 #include "script/modifier.h"
+#include "technology/technology_category.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -41,7 +44,8 @@ void technology::process_gsml_scope(const gsml_data &scope)
 
 void technology::check() const
 {
-	assert_throw(this->get_icon() != nullptr);
+	assert_throw(this->get_category() != technology_category::none);
+	assert_throw(this->get_portrait() != nullptr);
 }
 
 QVariantList technology::get_prerequisites_qvariant_list() const
