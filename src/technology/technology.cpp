@@ -47,6 +47,10 @@ void technology::check() const
 {
 	assert_throw(this->get_category() != technology_category::none);
 	assert_throw(this->get_portrait() != nullptr);
+
+	if (this->get_cost() == 0) {
+		throw std::runtime_error(std::format("Technology \"{}\" has no cost.", this->get_identifier()));
+	}
 }
 
 QVariantList technology::get_prerequisites_qvariant_list() const

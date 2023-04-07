@@ -23,6 +23,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(metternich::technology_category category MEMBER category NOTIFY changed)
 	Q_PROPERTY(int category_index READ get_category_index NOTIFY changed)
 	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
+	Q_PROPERTY(int cost MEMBER cost READ get_cost NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
@@ -53,6 +54,11 @@ public:
 	const icon *get_portrait() const
 	{
 		return this->portrait;
+	}
+
+	int get_cost() const
+	{
+		return this->cost;
 	}
 
 	const std::vector<const technology *> get_prerequisites() const
@@ -112,6 +118,7 @@ signals:
 private:
 	technology_category category;
 	icon *portrait = nullptr;
+	int cost = 0;
 	std::vector<const technology *> prerequisites;
 	std::vector<const building_type *> enabled_buildings;
 	std::vector<const improvement *> enabled_improvements;
