@@ -2165,7 +2165,17 @@ void country_game_data::choose_next_advisor()
 			continue;
 		}
 
-		potential_advisors_per_category[character->get_advisor_type()->get_category()].push_back(character);
+		int weight = 1;
+
+		if (character->get_home_province()->get_game_data()->get_owner() == this->country) {
+			weight += 4;
+		}
+
+		std::vector<const metternich::character *> &category_advisors = potential_advisors_per_category[character->get_advisor_type()->get_category()];
+
+		for (int i = 0; i < weight; ++i) {
+			category_advisors.push_back(character);
+		}
 	}
 
 	if (potential_advisors_per_category.empty()) {
