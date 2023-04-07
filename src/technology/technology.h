@@ -39,6 +39,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::technology*";
 	static constexpr const char database_folder[] = "technologies";
 
+	static constexpr int base_cost = 80;
+
 	explicit technology(const std::string &identifier);
 	~technology();
 
@@ -62,7 +64,11 @@ public:
 
 	int get_cost() const
 	{
-		return this->cost;
+		if (this->cost > 0) {
+			return this->cost;
+		}
+
+		return (this->get_total_prerequisite_depth() + 1) * technology::base_cost;
 	}
 
 	bool is_discovery() const
