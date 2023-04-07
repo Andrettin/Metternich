@@ -3,6 +3,7 @@
 #include "character/character.h"
 #include "database/gsml_property.h"
 #include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
+#include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
@@ -20,6 +21,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	const std::string &value = property.get_value();
 
 	if constexpr (std::is_same_v<scope_type, const country>) {
+		static const std::string research_modifier_suffix = "_research_modifier";
+
 		if (key == "air_morale_resistance") {
 			return std::make_unique<air_morale_resistance_modifier_effect>(value);
 		} else if (key == "land_morale_resistance") {
@@ -28,6 +31,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<naval_morale_resistance_modifier_effect>(value);
 		} else if (key == "storage_capacity") {
 			return std::make_unique<storage_capacity_modifier_effect>(value);
+		} else if (key.ends_with(research_modifier_suffix) && enum_converter<technology_category>::has_value(key.substr(0, key.size() - research_modifier_suffix.size()))) {
+			const technology_category category = enum_converter<technology_category>::to_enum(key.substr(0, key.size() - research_modifier_suffix.size()));
+			return std::make_unique<category_research_modifier_effect<scope_type>>(category, value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
 		if (key == "defense") {
@@ -38,12 +44,12 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	}
 	
 	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province>) {
-		static const std::string production_suffix = "_output_modifier";
+		static const std::string output_modifier_suffix = "_output_modifier";
 
 		if (key == "output_modifier") {
 			return std::make_unique<output_modifier_effect<scope_type>>(value);
-		} else if (key.ends_with(production_suffix) && commodity::try_get(key.substr(0, key.size() - production_suffix.size())) != nullptr) {
-			const commodity *commodity = commodity::get(key.substr(0, key.size() - production_suffix.size()));
+		} else if (key.ends_with(output_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - output_modifier_suffix.size())) != nullptr) {
+			const commodity *commodity = commodity::get(key.substr(0, key.size() - output_modifier_suffix.size()));
 			return std::make_unique<commodity_output_modifier_effect<scope_type>>(commodity, value);
 		}
 	}

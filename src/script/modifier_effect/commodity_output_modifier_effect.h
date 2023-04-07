@@ -7,6 +7,7 @@
 #include "map/province_game_data.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "util/number_util.h"
+#include "util/number_util.h"
 
 namespace metternich {
 
@@ -33,7 +34,7 @@ public:
 
 	virtual std::string get_string(const int multiplier) const override
 	{
-		return this->commodity->get_name() + " Production: " + number::to_signed_string(this->quantity * multiplier) + "%";
+		return this->commodity->get_name() + " Output: " + number::to_signed_string(this->quantity * multiplier) + "%";
 	}
 
 	virtual int get_score() const override

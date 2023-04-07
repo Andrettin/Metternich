@@ -105,7 +105,6 @@ void country_game_data::do_turn()
 	}
 }
 
-
 void country_game_data::do_production()
 {
 	try {
@@ -120,7 +119,14 @@ void country_game_data::do_production()
 				continue;
 			}
 
-			this->change_stored_commodity(commodity, output);
+			int final_output = output;
+
+			if (commodity == defines::get()->get_research_commodity() && this->get_current_research() != nullptr) {
+				final_output *= 100 + this->get_category_research_modifier(this->get_current_research()->get_category());
+				final_output /= 100;
+			}
+
+			this->change_stored_commodity(commodity, final_output);
 		}
 
 		const std::vector<const commodity *> input_commodities = archimedes::map::get_keys(this->get_commodity_inputs());
@@ -2276,6 +2282,19 @@ void country_game_data::set_commodity_output_modifier(const commodity *commodity
 
 			this->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
 		}
+	}
+}
+
+void country_game_data::set_category_research_modifier(const technology_category category, const int value)
+{
+	if (value == this->get_category_research_modifier(category)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->category_research_modifiers.erase(category);
+	} else {
+		this->category_research_modifiers[category] = value;
 	}
 }
 

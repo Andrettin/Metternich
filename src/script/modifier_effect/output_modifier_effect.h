@@ -27,7 +27,7 @@ public:
 
 	virtual std::string get_string(const int multiplier) const override
 	{
-		return "Production: " + number::to_signed_string(this->quantity * multiplier) + "%";
+		return "Output: " + number::to_signed_string(this->quantity * multiplier) + "%";
 	}
 
 	virtual int get_score() const override

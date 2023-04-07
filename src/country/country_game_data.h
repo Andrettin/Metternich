@@ -36,6 +36,7 @@ enum class diplomacy_state;
 enum class diplomatic_map_mode;
 enum class event_trigger;
 enum class military_unit_category;
+enum class technology_category;
 struct read_only_context;
 
 class country_game_data final : public QObject
@@ -792,6 +793,24 @@ public:
 		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + value);
 	}
 
+	Q_INVOKABLE int get_category_research_modifier(metternich::technology_category category) const
+	{
+		const auto find_iterator = this->category_research_modifiers.find(category);
+
+		if (find_iterator != this->category_research_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_category_research_modifier(const technology_category category, const int value);
+
+	void change_category_research_modifier(const technology_category category, const int value)
+	{
+		this->set_category_research_modifier(category, this->get_category_research_modifier(category) + value);
+	}
+
 	void decrement_scripted_modifiers();
 
 signals:
@@ -878,6 +897,7 @@ private:
 	int air_morale_resistance_modifier = 0;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
+	std::map<technology_category, int> category_research_modifiers;
 };
 
 }
