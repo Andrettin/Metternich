@@ -13,6 +13,7 @@
 #include "map/province.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
+#include "technology/technology.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
@@ -112,6 +113,16 @@ void character::initialize()
 				this->death_date = this->get_birth_date().addYears(60);
 				date_changed = true;
 			}
+		}
+	}
+
+	if (this->is_advisor()) {
+		if (this->required_technology != nullptr) {
+			this->required_technology->add_enabled_advisor(this);
+		}
+
+		if (this->obsolescence_technology != nullptr) {
+			this->obsolescence_technology->add_retired_advisor(this);
 		}
 	}
 

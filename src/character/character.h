@@ -21,6 +21,7 @@ class icon;
 class phenotype;
 class province;
 class religion;
+class technology;
 class trait;
 enum class military_unit_category;
 
@@ -53,6 +54,8 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(QDateTime death_date MEMBER death_date READ get_death_date NOTIFY changed)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
 	Q_PROPERTY(QString advisor_modifier_string READ get_advisor_modifier_string CONSTANT)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
@@ -212,6 +215,16 @@ public:
 		return this->traits;
 	}
 
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
+	const technology *get_obsolescence_technology() const
+	{
+		return this->obsolescence_technology;
+	}
+
 	const condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -249,6 +262,8 @@ private:
 	QDateTime death_date;
 	int skill = 1;
 	std::vector<const trait *> traits;
+	technology *required_technology = nullptr;
+	technology *obsolescence_technology = nullptr;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<const modifier<const country>> advisor_modifier;
 	qunique_ptr<character_history> history;

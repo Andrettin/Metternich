@@ -142,6 +142,64 @@ void technology::add_enabled_military_unit(const military_unit_type *military_un
 	});
 }
 
+QVariantList technology::get_enabled_advisors_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_enabled_advisors());
+}
+
+QVariantList technology::get_enabled_advisors_for_country(country *country) const
+{
+	std::vector<const character *> advisors;
+
+	for (const character *advisor : this->get_enabled_advisors()) {
+		if (advisor->get_conditions() != nullptr && !advisor->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		advisors.push_back(advisor);
+	}
+
+	return container::to_qvariant_list(advisors);
+}
+
+void technology::add_enabled_advisor(const character *advisor)
+{
+	this->enabled_advisors.push_back(advisor);
+
+	std::sort(this->enabled_advisors.begin(), this->enabled_advisors.end(), [](const character *lhs, const character *rhs) {
+		return lhs->get_full_name() < rhs->get_full_name();
+	});
+}
+
+QVariantList technology::get_retired_advisors_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_retired_advisors());
+}
+
+QVariantList technology::get_retired_advisors_for_country(country *country) const
+{
+	std::vector<const character *> advisors;
+
+	for (const character *advisor : this->get_retired_advisors()) {
+		if (advisor->get_conditions() != nullptr && !advisor->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		advisors.push_back(advisor);
+	}
+
+	return container::to_qvariant_list(advisors);
+}
+
+void technology::add_retired_advisor(const character *advisor)
+{
+	this->retired_advisors.push_back(advisor);
+
+	std::sort(this->retired_advisors.begin(), this->retired_advisors.end(), [](const character *lhs, const character *rhs) {
+		return lhs->get_full_name() < rhs->get_full_name();
+	});
+}
+
 QString technology::get_modifier_string() const
 {
 	if (this->get_modifier() == nullptr) {

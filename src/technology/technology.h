@@ -6,6 +6,7 @@
 namespace metternich {
 
 class building_type;
+class character;
 class country;
 class culture;
 class icon;
@@ -28,6 +29,8 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList enabled_advisors READ get_enabled_advisors_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList retired_advisors READ get_retired_advisors_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 
 public:
@@ -105,6 +108,24 @@ public:
 	Q_INVOKABLE QVariantList get_enabled_military_units_for_culture(metternich::culture *culture) const;
 	void add_enabled_military_unit(const military_unit_type *military_unit);
 
+	const std::vector<const character *> get_enabled_advisors() const
+	{
+		return this->enabled_advisors;
+	}
+
+	QVariantList get_enabled_advisors_qvariant_list() const;
+	Q_INVOKABLE QVariantList get_enabled_advisors_for_country(metternich::country *country) const;
+	void add_enabled_advisor(const character *advisor);
+
+	const std::vector<const character *> get_retired_advisors() const
+	{
+		return this->retired_advisors;
+	}
+
+	QVariantList get_retired_advisors_qvariant_list() const;
+	Q_INVOKABLE QVariantList get_retired_advisors_for_country(metternich::country *country) const;
+	void add_retired_advisor(const character *advisor);
+
 	const metternich::modifier<const country> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -123,6 +144,8 @@ private:
 	std::vector<const building_type *> enabled_buildings;
 	std::vector<const improvement *> enabled_improvements;
 	std::vector<const military_unit_type *> enabled_military_units;
+	std::vector<const character *> enabled_advisors;
+	std::vector<const character *> retired_advisors;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
 };
 

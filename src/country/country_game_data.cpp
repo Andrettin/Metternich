@@ -2055,7 +2055,19 @@ QVariantList country_game_data::get_advisors_qvariant_list() const
 
 void country_game_data::check_advisors()
 {
-	//FIXME: remove obsolete advisors
+	//remove obsolete advisors
+	const std::vector<const character *> advisors = this->get_advisors();
+	for (const character *advisor : advisors) {
+		if (advisor->get_obsolescence_technology() != nullptr && this->has_technology(advisor->get_obsolescence_technology())) {
+			if (this->country == game::get()->get_player_country()) {
+				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification("Advisor Retired", interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the advisor {} has decided to retire.", this->get_next_advisor()->get_full_name()));
+			}
+
+			this->remove_advisor(advisor);
+		}
+	}
 
 	if (this->get_next_advisor() != nullptr) {
 		if (this->get_next_advisor()->get_game_data()->get_country() != nullptr) {
@@ -2063,6 +2075,14 @@ void country_game_data::check_advisors()
 				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor {} has unfortunately decided to join {}, and is no longer available for recruitment.", this->get_next_advisor()->get_full_name(), this->get_next_advisor()->get_game_data()->get_country()->get_name()));
+			}
+
+			this->set_next_advisor(nullptr);
+		} else if (this->get_next_advisor()->get_obsolescence_technology() != nullptr && this->has_technology(this->get_next_advisor()->get_obsolescence_technology())) {
+			if (this->country == game::get()->get_player_country()) {
+				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor {} is no longer available for recruitment.", this->get_next_advisor()->get_full_name()));
 			}
 
 			this->set_next_advisor(nullptr);
@@ -2130,6 +2150,14 @@ void country_game_data::choose_next_advisor()
 
 		const character_game_data *character_game_data = character->get_game_data();
 		if (character_game_data->get_country() != nullptr) {
+			continue;
+		}
+
+		if (character->get_required_technology() != nullptr && !this->has_technology(character->get_required_technology())) {
+			continue;
+		}
+
+		if (character->get_obsolescence_technology() != nullptr && this->has_technology(character->get_obsolescence_technology())) {
 			continue;
 		}
 
