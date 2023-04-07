@@ -163,6 +163,12 @@ void country_game_data::do_production()
 void country_game_data::do_research()
 {
 	try {
+		if (this->is_ai()) {
+			if (this->get_current_research() == nullptr) {
+				this->choose_current_research();
+			}
+		}
+
 		if (this->get_current_research() == nullptr) {
 			return;
 		}
@@ -2062,6 +2068,18 @@ void country_game_data::set_current_research(const technology *technology)
 	this->set_stored_commodity(defines::get()->get_research_commodity(), 0);
 
 	emit current_research_changed();
+}
+
+void country_game_data::choose_current_research()
+{
+	const std::vector<const technology *> potential_technologies = this->get_available_technologies();
+
+	if (potential_technologies.empty()) {
+		return;
+	}
+
+	const technology *chosen_technology = vector::get_random(potential_technologies);
+	this->set_current_research(chosen_technology);
 }
 
 QVariantList country_game_data::get_advisors_qvariant_list() const

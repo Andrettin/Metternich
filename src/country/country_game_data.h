@@ -673,6 +673,7 @@ private:
 
 public:
 	void set_current_research(const technology *technology);
+	void choose_current_research();
 
 	const std::vector<const character *> &get_advisors() const
 	{
