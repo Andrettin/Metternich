@@ -192,7 +192,7 @@ void country_game_data::do_research()
 void country_game_data::do_population_growth()
 {
 	try {
-		if (this->population_units.empty()) {
+		if (this->get_food_consumption() == 0) {
 			this->set_population_growth(0);
 			return;
 		}
@@ -224,12 +224,12 @@ void country_game_data::do_population_growth()
 
 		int starvation_count = 0;
 
-		while (this->get_population_growth() <= -defines::get()->get_population_growth_threshold()) {
+		while (this->get_population_growth() < 0) {
 			//starvation
 			this->decrease_population();
 			++starvation_count;
 
-			if (this->population_units.empty()) {
+			if (this->get_food_consumption() == 0) {
 				this->set_population_growth(0);
 				break;
 			}
@@ -1564,6 +1564,13 @@ void country_game_data::grow_population()
 
 void country_game_data::decrease_population()
 {
+	//disband population unit, if possible
+	if (!this->population_units.empty()) {
+		this->change_population_growth(1);
+		this->pop_population_unit(this->choose_starvation_population_unit());
+		return;
+	}
+
 	//disband civilian unit, if possible
 	civilian_unit *best_civilian_unit = nullptr;
 
@@ -1580,7 +1587,7 @@ void country_game_data::decrease_population()
 
 	if (best_civilian_unit != nullptr) {
 		best_civilian_unit->disband(false);
-		this->change_population_growth(defines::get()->get_population_growth_threshold());
+		this->change_population_growth(1);
 		return;
 	}
 
@@ -1594,14 +1601,11 @@ void country_game_data::decrease_population()
 		}
 
 		military_unit->disband(false);
-		this->change_population_growth(defines::get()->get_population_growth_threshold());
+		this->change_population_growth(1);
 		return;
 	}
 
-	//disband population unit
-	assert_throw(!this->population_units.empty());
-	this->change_population_growth(defines::get()->get_population_growth_threshold());
-	this->pop_population_unit(this->choose_starvation_population_unit());
+	assert_throw(false);
 }
 
 population_unit *country_game_data::choose_starvation_population_unit()
