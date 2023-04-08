@@ -146,7 +146,10 @@ void country_game_data::do_production()
 		for (const auto &[commodity, input] : this->get_commodity_inputs()) {
 			try {
 				if (!commodity->is_storable()) {
-					assert_throw(input <= this->get_commodity_output(commodity));
+					const int output = this->get_commodity_output(commodity);
+					if (input > output) {
+						throw std::runtime_error(std::format("Input for non-storable commodity \"{}\" ({}) is greater than its output ({}).", commodity->get_identifier(), input, output));
+					}
 					continue;
 				}
 
@@ -1870,7 +1873,7 @@ void country_game_data::change_commodity_output(const commodity *commodity, cons
 		emit commodity_outputs_changed();
 	}
 
-	if (count < 0 && !commodity->is_storable()) {
+	if (change < 0 && !commodity->is_storable()) {
 		//decrease consumption of non-storable commodities immediately if the net output goes below zero, since for those commodities consumption cannot be fulfilled by storage
 		while (this->get_net_commodity_output(commodity) < 0) {
 			this->decrease_commodity_consumption(commodity);
