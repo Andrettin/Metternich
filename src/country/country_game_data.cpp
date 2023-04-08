@@ -243,7 +243,7 @@ void country_game_data::do_population_growth()
 
 			const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
-			engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", starvation_count, (plural ? "units" : "unit"), (plural ? "have" : "has")));
+			engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error doing population growth for country \"" + this->country->get_identifier() + "\"."));
