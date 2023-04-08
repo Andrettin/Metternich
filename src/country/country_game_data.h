@@ -842,6 +842,7 @@ signals:
 	void current_research_changed();
 	void advisors_changed();
 	void next_advisor_changed();
+	void advisor_recruited(QObject *advisor);
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
 	void output_modifier_changed();

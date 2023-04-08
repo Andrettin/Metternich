@@ -2145,11 +2145,7 @@ void country_game_data::check_advisors()
 			if (this->get_stored_commodity(defines::get()->get_advisor_commodity()) >= this->get_advisor_cost()) {
 				this->add_advisor(this->get_next_advisor());
 
-				if (this->country == game::get()->get_player_country()) {
-					const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
-
-					engine_interface::get()->add_notification("Advisor Recruited", interior_minister_portrait, std::format("Your Excellency, {} has joined our nation as an advisor!", this->get_next_advisor()->get_full_name()));
-				}
+				emit advisor_recruited(const_cast<character *>(this->get_next_advisor()));
 
 				this->set_next_advisor(nullptr);
 			}
