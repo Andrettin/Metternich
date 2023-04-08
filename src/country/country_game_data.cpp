@@ -225,23 +225,25 @@ void country_game_data::do_population_growth()
 			this->grow_population();
 		}
 
-		if (this->get_population_growth() < 0) {
-			//starvation
-			const int starvation_count = std::abs(this->get_population_growth());
+		int starvation_count = 0;
 
-			this->decrease_population(starvation_count);
+		while (this->get_population_growth() < 0) {
+			//starvation
+			this->decrease_population();
+			++starvation_count;
 
 			if (this->get_food_consumption() == 0) {
 				this->set_population_growth(0);
+				break;
 			}
+		}
 
-			if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
-				const bool plural = starvation_count > 1;
+		if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
+			const bool plural = starvation_count > 1;
 
-				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+			const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
-				engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
-			}
+			engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", starvation_count, (plural ? "units" : "unit"), (plural ? "have" : "has")));
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error doing population growth for country \"" + this->country->get_identifier() + "\"."));
@@ -1355,32 +1357,27 @@ void country_game_data::add_population_unit(qunique_ptr<population_unit> &&popul
 	}
 }
 
-qunique_ptr<population_unit> country_game_data::pop_population_unit(const size_t index)
-{
-	qunique_ptr<population_unit> population_unit = std::move(this->population_units[index]);
-	this->population_units.erase(this->population_units.begin() + index);
-
-	this->change_population_type_count(population_unit->get_type(), -1);
-	this->change_population_culture_count(population_unit->get_culture(), -1);
-	this->change_population_religion_count(population_unit->get_religion(), -1);
-	this->change_population_phenotype_count(population_unit->get_phenotype(), -1);
-	if (population_unit->get_ideology() != nullptr) {
-		this->change_population_ideology_count(population_unit->get_ideology(), -1);
-	}
-	this->change_population(-defines::get()->get_population_per_unit());
-
-	if (game::get()->is_running()) {
-		emit population_units_changed();
-	}
-
-	return population_unit;
-}
-
 qunique_ptr<population_unit> country_game_data::pop_population_unit(population_unit *population_unit)
 {
 	for (size_t i = 0; i < this->population_units.size();) {
 		if (this->population_units[i].get() == population_unit) {
-			return this->pop_population_unit(i);
+			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
+			this->population_units.erase(this->population_units.begin() + i);
+
+			this->change_population_type_count(population_unit->get_type(), -1);
+			this->change_population_culture_count(population_unit->get_culture(), -1);
+			this->change_population_religion_count(population_unit->get_religion(), -1);
+			this->change_population_phenotype_count(population_unit->get_phenotype(), -1);
+			if (population_unit->get_ideology() != nullptr) {
+				this->change_population_ideology_count(population_unit->get_ideology(), -1);
+			}
+			this->change_population(-defines::get()->get_population_per_unit());
+
+			if (game::get()->is_running()) {
+				emit population_units_changed();
+			}
+
+			return population_unit_unique_ptr;
 		} else {
 			++i;
 		}
@@ -1568,89 +1565,69 @@ void country_game_data::grow_population()
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
 
-void country_game_data::decrease_population(int count)
+void country_game_data::decrease_population()
 {
-	assert_throw(count > 0);
-
 	//disband population unit, if possible
 	if (!this->population_units.empty()) {
-		std::vector<size_t> population_unit_indexes;
+		this->change_population_growth(1);
+		this->pop_population_unit(this->choose_starvation_population_unit());
+		return;
+	}
 
-		for (auto it = this->population_units.rbegin(); it != this->population_units.rend(); ++it) {
-			const size_t index = std::distance(this->population_units.begin(), it.base()) - 1;
-			population_unit_indexes.push_back(index);
-		}
+	//disband civilian unit, if possible
+	civilian_unit *best_civilian_unit = nullptr;
 
-		std::sort(population_unit_indexes.begin(), population_unit_indexes.end(), [this](const size_t lhs_index, const size_t rhs_index) {
-			const population_unit *lhs = this->population_units[lhs_index].get();
-			const population_unit *rhs = this->population_units[rhs_index].get();
+	for (auto it = this->civilian_units.rbegin(); it != this->civilian_units.rend(); ++it) {
+		civilian_unit *civilian_unit = it->get();
 
-			return lhs->get_type()->get_output_value() < rhs->get_type()->get_output_value();
-		});
-
-		for (const size_t index : population_unit_indexes) {
-			this->pop_population_unit(index);
-			this->change_population_growth(1);
-			--count;
-
-			if (count == 0) {
-				return;
-			}
+		if (
+			best_civilian_unit == nullptr
+			|| (best_civilian_unit->is_busy() && !civilian_unit->is_busy())
+		) {
+			best_civilian_unit = civilian_unit;
 		}
 	}
 
-	//disband civilian units, if possible
-	if (!this->civilian_units.empty()) {
-		std::vector<civilian_unit *> civilian_units;
-
-		for (auto it = this->civilian_units.rbegin(); it != this->civilian_units.rend(); ++it) {
-			civilian_unit *civilian_unit = it->get();
-			civilian_units.push_back(civilian_unit);
-		}
-
-		std::sort(civilian_units.begin(), civilian_units.end(), [](const civilian_unit *lhs, const civilian_unit *rhs) {
-			return lhs->is_busy() < rhs->is_busy();
-		});
-
-		for (civilian_unit *civilian_unit : civilian_units) {
-			civilian_unit->disband(false);
-			this->change_population_growth(1);
-			--count;
-
-			if (count == 0) {
-				return;
-			}
-		}
+	if (best_civilian_unit != nullptr) {
+		best_civilian_unit->disband(false);
+		this->change_population_growth(1);
+		return;
 	}
 
-	//disband military units, if possible
-	if (!this->military_units.empty()) {
-		std::vector<military_unit *> military_units;
+	//disband military unit, if possible
+	for (auto it = this->military_units.rbegin(); it != this->military_units.rend(); ++it) {
+		military_unit *military_unit = it->get();
 
-		for (auto it = this->military_units.rbegin(); it != this->military_units.rend(); ++it) {
-			military_unit *military_unit = it->get();
-
-			if (military_unit->get_character() != nullptr) {
-				//character military units do not cost food, so disbanding them does nothing to help with starvation
-				continue;
-			}
-
-			military_units.push_back(military_unit);
+		if (military_unit->get_character() != nullptr) {
+			//character military units do not cost food, so disbanding them does nothing to help with starvation
+			continue;
 		}
 
-		for (military_unit *military_unit : military_units) {
-			military_unit->disband(false);
-			this->change_population_growth(1);
-			--count;
-
-			if (count == 0) {
-				return;
-			}
-		}
+		military_unit->disband(false);
+		this->change_population_growth(1);
+		return;
 	}
 
-	//should not reach this piece of code, as it means the count is still greater than 0
 	assert_throw(false);
+}
+
+population_unit *country_game_data::choose_starvation_population_unit()
+{
+	population_unit *best_population_unit = nullptr;
+
+	for (auto it = this->population_units.rbegin(); it != this->population_units.rend(); ++it) {
+		population_unit *population_unit = it->get();
+
+		if (
+			best_population_unit == nullptr
+			|| best_population_unit->get_type()->get_output_value() < population_unit->get_type()->get_output_value()
+		) {
+			best_population_unit = population_unit;
+		}
+	}
+
+	assert_throw(best_population_unit != nullptr);
+	return best_population_unit;
 }
 
 QObject *country_game_data::get_population_type_small_icon(population_type *type) const

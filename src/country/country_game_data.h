@@ -428,7 +428,6 @@ public:
 	void change_score(const int change);
 
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
-	qunique_ptr<population_unit> pop_population_unit(const size_t index);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
 	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype);
 
@@ -502,7 +501,8 @@ public:
 	}
 
 	void grow_population();
-	void decrease_population(int count);
+	void decrease_population();
+	population_unit *choose_starvation_population_unit();
 
 	Q_INVOKABLE QObject *get_population_type_small_icon(metternich::population_type *type) const;
 
