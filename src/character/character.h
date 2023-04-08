@@ -38,6 +38,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::dynasty* dynasty MEMBER dynasty NOTIFY changed)
 	Q_PROPERTY(QString surname READ get_surname_qstring NOTIFY changed)
 	Q_PROPERTY(QString full_name READ get_full_name_qstring NOTIFY changed)
+	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::advisor_type* advisor_type MEMBER advisor_type NOTIFY changed)
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
@@ -123,6 +124,21 @@ public:
 	QString get_full_name_qstring() const
 	{
 		return QString::fromStdString(this->get_full_name());
+	}
+
+	const std::string &get_description() const
+	{
+		return this->description;
+	}
+
+	Q_INVOKABLE void set_description(const std::string &description)
+	{
+		this->description = description;
+	}
+
+	QString get_description_qstring() const
+	{
+		return QString::fromStdString(this->get_description());
 	}
 
 	const metternich::advisor_type *get_advisor_type() const
@@ -246,6 +262,7 @@ signals:
 private:
 	metternich::dynasty *dynasty = nullptr;
 	std::string surname;
+	std::string description;
 	metternich::advisor_type *advisor_type = nullptr;
 	metternich::military_unit_category military_unit_category;
 	metternich::culture *culture = nullptr;
