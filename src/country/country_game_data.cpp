@@ -2178,7 +2178,7 @@ void country_game_data::clear_advisors()
 {
 	const std::vector<const character *> advisors = this->get_advisors();
 	for (const character *advisor : advisors) {
-		advisor->get_game_data()->set_country(nullptr);
+		this->remove_advisor(advisor);
 	}
 
 	assert_throw(this->get_advisors().empty());
