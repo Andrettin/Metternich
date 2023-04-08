@@ -28,6 +28,8 @@ building_slot::building_slot(const building_slot_type *type, const metternich::c
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_country() != nullptr);
+
+	connect(this, &building_slot::building_changed, this, &building_slot::capacity_changed);
 }
 
 void building_slot::set_building(const building_type *building)
@@ -48,11 +50,13 @@ void building_slot::set_building(const building_type *building)
 		country_game_data->on_building_gained(old_building, -1);
 
 		if (old_building->get_country_modifier() != nullptr && this->get_country() != nullptr) {
-			old_building->get_country_modifier()->apply(this->get_country(), -1);
+			old_building->get_country_modifier()->apply(this->get_country(), -this->get_level());
 		}
 	}
 
 	this->building = building;
+	this->level = building ? 1 : 0;
+	this->set_expanding(false);
 
 	if (this->get_building() != nullptr) {
 		country_game_data->on_building_gained(this->get_building(), 1);
@@ -73,6 +77,15 @@ void building_slot::set_building(const building_type *building)
 				while (this->get_production_type_employed_capacity(production_type) > 0) {
 					this->decrease_production(production_type, true);
 				}
+			}
+		}
+	}
+
+	//clear production that is over capacity
+	if (building != nullptr && this->get_employed_capacity() > this->get_capacity()) {
+		for (const production_type *production_type : building->get_production_types()) {
+			while (this->get_employed_capacity() > this->get_capacity() && this->get_production_type_employed_capacity(production_type) > 0) {
+				this->decrease_production(production_type, true);
 			}
 		}
 	}
@@ -131,10 +144,41 @@ bool building_slot::is_available() const
 	return false;
 }
 
+bool building_slot::can_expand() const
+{
+	if (this->get_building() == nullptr) {
+		return false;
+	}
+
+	if (!this->get_building()->is_expandable()) {
+		return false;
+	}
+
+	if (this->get_building()->get_max_level() != 0 && this->get_level() >= this->get_building()->get_max_level()) {
+		return false;
+	}
+
+	return true;
+}
+
+void building_slot::expand()
+{
+	assert_throw(this->is_expanding());
+
+	this->level += 1;
+	emit capacity_changed();
+
+	if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr) {
+		this->get_building()->get_country_modifier()->apply(this->get_country(), 1);
+	}
+
+	this->set_expanding(false);
+}
+
 int building_slot::get_capacity() const
 {
 	if (this->get_building() != nullptr) {
-		return this->get_building()->get_base_capacity();
+		return this->get_building()->get_base_capacity() * this->get_level();
 	}
 
 	return 0;
@@ -272,13 +316,6 @@ void building_slot::decrease_production(const production_type *production_type, 
 		this->change_production(production_type, -1, restore_inputs);
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error decreasing production of \"" + production_type->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\"."));
-	}
-}
-
-void building_slot::apply_country_modifier(const metternich::country *country, const int multiplier)
-{
-	if (this->get_building() != nullptr && this->get_building()->get_country_modifier() != nullptr) {
-		this->get_building()->get_country_modifier()->apply(country, multiplier);
 	}
 }
 

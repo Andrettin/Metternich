@@ -101,6 +101,7 @@ public:
 	void do_research();
 	void do_population_growth();
 	void do_cultural_change();
+	void do_construction();
 	void do_events();
 	void do_ai_turn();
 

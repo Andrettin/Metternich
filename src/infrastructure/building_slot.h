@@ -23,7 +23,8 @@ class building_slot final : public QObject
 	Q_PROPERTY(metternich::building_slot_type* type READ get_type_unconst CONSTANT)
 	Q_PROPERTY(metternich::building_type* building READ get_building_unconst NOTIFY building_changed)
 	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
-	Q_PROPERTY(int capacity READ get_capacity NOTIFY building_changed)
+	Q_PROPERTY(bool expanding READ is_expanding WRITE set_expanding NOTIFY expanding_changed)
+	Q_PROPERTY(int capacity READ get_capacity NOTIFY capacity_changed)
 	Q_PROPERTY(QVariantList available_production_types READ get_available_production_types_qvariant_list NOTIFY building_changed)
 
 public:
@@ -73,6 +74,29 @@ private:
 
 public:
 	bool is_available() const;
+
+	int get_level() const
+	{
+		return this->level;
+	}
+
+	bool is_expanding() const
+	{
+		return this->expanding;
+	}
+
+	void set_expanding(const bool expanding)
+	{
+		if (expanding == this->is_expanding()) {
+			return;
+		}
+
+		this->expanding = expanding;
+		emit expanding_changed();
+	}
+
+	Q_INVOKABLE bool can_expand() const;
+	void expand();
 
 	int get_capacity() const;
 
@@ -142,18 +166,20 @@ public:
 		this->decrease_production(const_production_type, true);
 	}
 
-	void apply_country_modifier(const metternich::country *country, const int multiplier);
-
 signals:
 	void building_changed();
+	void expanding_changed();
+	void capacity_changed();
 	void employed_capacity_changed();
 
 private:
 	const building_slot_type *type = nullptr;
 	const building_type *building = nullptr;
 	const metternich::country *country = nullptr;
+	int level = 0;
 	int employed_capacity = 0;
 	std::map<const production_type *, int> production_type_employed_capacities;
+	bool expanding = false;
 };
 
 }

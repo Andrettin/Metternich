@@ -84,6 +84,7 @@ void country_game_data::do_turn()
 		this->do_production();
 		this->do_research();
 		this->do_population_growth();
+		this->do_construction();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 			civilian_unit->do_turn();
@@ -273,6 +274,19 @@ void country_game_data::do_cultural_change()
 			const metternich::culture *new_culture = vector::get_random(potential_cultures);
 			population_unit->set_culture(new_culture);
 		}
+	}
+}
+
+void country_game_data::do_construction()
+{
+	try {
+		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+			if (building_slot->is_expanding()) {
+				building_slot->expand();
+			}
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Error doing construction for country \"" + this->country->get_identifier() + "\"."));
 	}
 }
 
