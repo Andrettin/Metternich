@@ -180,11 +180,7 @@ void country_game_data::do_research()
 		if (this->get_stored_commodity(defines::get()->get_research_commodity()) >= this->get_current_research()->get_cost()) {
 			this->add_technology(this->get_current_research());
 
-			if (this->country == game::get()->get_player_country()) {
-				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
-
-				engine_interface::get()->add_notification("Technology Researched", interior_minister_portrait, std::format("Your Excellency, our scholars have made a breakthrough in the research of the {} technology!", this->get_current_research()->get_name()));
-			}
+			emit technology_researched(const_cast<technology *>(this->get_current_research()));
 
 			this->set_current_research(nullptr);
 		}

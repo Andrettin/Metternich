@@ -840,6 +840,7 @@ signals:
 	void storage_capacity_changed();
 	void technologies_changed();
 	void current_research_changed();
+	void technology_researched(QObject *technology);
 	void advisors_changed();
 	void next_advisor_changed();
 	void advisor_recruited(QObject *advisor);
