@@ -440,13 +440,29 @@ void game::apply_history(const metternich::scenario *scenario)
 			character_game_data *character_game_data = character->get_game_data();
 			const character_history *character_history = character->get_history();
 
+			const country *country = character_history->get_country();
+
 			if (scenario->get_start_date() >= character->get_start_date() && scenario->get_start_date() < character->get_end_date()) {
 				if (character_history->get_deployment_province() != nullptr) {
-					assert_throw(character_history->get_country() != nullptr);
-					character_game_data->set_country(character_history->get_country());
+					assert_throw(country != nullptr);
+					character_game_data->set_country(country);
 
 					assert_throw(character_game_data->get_country() != nullptr);
 					character_game_data->deploy_to_province(character_history->get_deployment_province());
+				}
+			}
+
+			country_game_data *country_game_data = country ? country->get_game_data() : nullptr;
+
+			if (character->is_advisor() && country != nullptr && this->get_rules()->are_advisors_enabled() && country_game_data->can_have_advisors()) {
+				const technology *obsolescence_technology = character->get_obsolescence_technology();
+
+				if (obsolescence_technology == nullptr || !country_game_data->has_technology(obsolescence_technology)) {
+					if (character->get_required_technology() != nullptr) {
+						country_game_data->add_technology_with_prerequisites(character->get_required_technology());
+					}
+
+					country_game_data->add_advisor(character);
 				}
 			}
 		}
