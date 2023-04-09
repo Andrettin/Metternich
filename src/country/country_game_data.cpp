@@ -183,6 +183,7 @@ void country_game_data::do_research()
 			emit technology_researched(const_cast<technology *>(this->get_current_research()));
 
 			this->set_current_research(nullptr);
+			this->set_stored_commodity(defines::get()->get_research_commodity(), 0);
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error doing research for country \"" + this->country->get_identifier() + "\"."));
@@ -2144,6 +2145,7 @@ void country_game_data::check_advisors()
 				emit advisor_recruited(const_cast<character *>(this->get_next_advisor()));
 
 				this->set_next_advisor(nullptr);
+				this->set_stored_commodity(defines::get()->get_advisor_commodity(), 0);
 			}
 		}
 	} else {
