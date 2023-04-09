@@ -457,12 +457,14 @@ void game::apply_history(const metternich::scenario *scenario)
 			if (character->is_advisor() && country != nullptr && this->get_rules()->are_advisors_enabled() && country_game_data->can_have_advisors()) {
 				const technology *obsolescence_technology = character->get_obsolescence_technology();
 
-				if (obsolescence_technology == nullptr || !country_game_data->has_technology(obsolescence_technology)) {
-					if (character->get_required_technology() != nullptr) {
-						country_game_data->add_technology_with_prerequisites(character->get_required_technology());
-					}
-
+				if (obsolescence_technology != nullptr && country_game_data->has_technology(obsolescence_technology)) {
+					character_game_data->set_dead(true);
+				} else {
 					country_game_data->add_advisor(character);
+				}
+
+				if (character->get_required_technology() != nullptr) {
+					country_game_data->add_technology_with_prerequisites(character->get_required_technology());
 				}
 			}
 		}

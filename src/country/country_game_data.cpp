@@ -2118,6 +2118,7 @@ void country_game_data::check_advisors()
 			}
 
 			this->remove_advisor(advisor);
+			advisor->get_game_data()->set_dead(true);
 		}
 	}
 
@@ -2199,6 +2200,10 @@ void country_game_data::choose_next_advisor()
 
 		const character_game_data *character_game_data = character->get_game_data();
 		if (character_game_data->get_country() != nullptr) {
+			continue;
+		}
+
+		if (character_game_data->is_dead()) {
 			continue;
 		}
 
