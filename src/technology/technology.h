@@ -39,7 +39,7 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::technology*";
 	static constexpr const char database_folder[] = "technologies";
 
-	static constexpr int base_cost = 80;
+	static constexpr int base_cost = 10;
 
 	explicit technology(const std::string &identifier);
 	~technology();
