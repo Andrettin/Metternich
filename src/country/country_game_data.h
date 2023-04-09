@@ -92,6 +92,7 @@ class country_game_data final : public QObject
 
 public:
 	static constexpr int base_advisor_cost = 80;
+	static constexpr int base_deployment_limit = 10;
 
 	explicit country_game_data(metternich::country *country);
 	~country_game_data();
@@ -730,6 +731,16 @@ public:
 
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category) const;
 
+	int get_deployment_limit() const
+	{
+		return this->deployment_limit;
+	}
+
+	void change_deployment_limit(const int change)
+	{
+		this->deployment_limit += change;
+	}
+
 	int get_land_morale_resistance_modifier() const
 	{
 		return this->land_morale_resistance_modifier;
@@ -897,6 +908,7 @@ private:
 	const character *next_advisor = nullptr;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
+	int deployment_limit = country_game_data::base_deployment_limit;
 	int land_morale_resistance_modifier = 0;
 	int naval_morale_resistance_modifier = 0;
 	int air_morale_resistance_modifier = 0;

@@ -6,6 +6,7 @@
 #include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/defense_modifier_effect.h"
+#include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/melee_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
@@ -25,6 +26,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 		if (key == "air_morale_resistance") {
 			return std::make_unique<air_morale_resistance_modifier_effect>(value);
+		} else if (key == "deployment_limit") {
+			return std::make_unique<deployment_limit_modifier_effect>(value);
 		} else if (key == "land_morale_resistance") {
 			return std::make_unique<land_morale_resistance_modifier_effect>(value);
 		} else if (key == "naval_morale_resistance") {
