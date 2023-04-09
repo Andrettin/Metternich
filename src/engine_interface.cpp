@@ -14,6 +14,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
+#include "technology/technology.h"
 #include "time/era.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
@@ -89,6 +90,11 @@ QVariantList engine_interface::get_scenarios() const
 QVariantList engine_interface::get_eras() const
 {
 	return container::to_qvariant_list(era::get_all());
+}
+
+QVariantList engine_interface::get_technologies() const
+{
+	return container::to_qvariant_list(technology::get_all());
 }
 
 void engine_interface::add_event_instance(qunique_ptr<event_instance> &&event_instance)

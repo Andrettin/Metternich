@@ -40,6 +40,7 @@
 #include "map/tile_image_provider.h"
 #include "population/population_type.h"
 #include "script/scripted_character_modifier.h"
+#include "technology/technology.h"
 #include "time/era.h"
 #include "ui/icon_image_provider.h"
 #include "ui/interface_image_provider.h"
@@ -125,6 +126,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<scripted_character_modifier>("", 1);
 		qmlRegisterAnonymousType<site>("", 1);
 		qmlRegisterAnonymousType<site_game_data>("", 1);
+		qmlRegisterAnonymousType<technology>("", 1);
 
 		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
 		qmlRegisterType<MaskedMouseArea>("MaskedMouseArea", 1, 0, "MaskedMouseArea");

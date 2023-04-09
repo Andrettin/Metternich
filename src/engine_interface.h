@@ -58,6 +58,7 @@ public:
 	Q_INVOKABLE QObject *get_map_template(const QString &identifier) const;
 	Q_INVOKABLE QVariantList get_scenarios() const;
 	Q_INVOKABLE QVariantList get_eras() const;
+	Q_INVOKABLE QVariantList get_technologies() const;
 
 	void add_notification(const QString &title, const QObject *portrait_object, const QString &text)
 	{
