@@ -44,6 +44,7 @@
 #include "unit/historical_military_unit.h"
 #include "unit/historical_military_unit_history.h"
 #include "unit/military_unit.h"
+#include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
@@ -442,7 +443,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const country *country = character_history->get_country();
 
-			if (scenario->get_start_date() >= character->get_start_date() && scenario->get_start_date() < character->get_end_date()) {
+			if (character->get_military_unit_category() != military_unit_category::none && scenario->get_start_date() < character->get_end_date()) {
 				if (character_history->get_deployment_province() != nullptr) {
 					assert_throw(country != nullptr);
 					character_game_data->set_country(country);
