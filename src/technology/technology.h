@@ -21,6 +21,7 @@ class technology final : public named_data_entry, public data_type<technology>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::technology_category category MEMBER category NOTIFY changed)
 	Q_PROPERTY(int category_index READ get_category_index NOTIFY changed)
 	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
@@ -46,6 +47,21 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
+
+	const std::string &get_description() const
+	{
+		return this->description;
+	}
+
+	Q_INVOKABLE void set_description(const std::string &description)
+	{
+		this->description = description;
+	}
+
+	QString get_description_qstring() const
+	{
+		return QString::fromStdString(this->get_description());
+	}
 
 	technology_category get_category() const
 	{
@@ -182,6 +198,7 @@ signals:
 	void changed();
 
 private:
+	std::string description;
 	technology_category category;
 	icon *portrait = nullptr;
 	int cost = 0;
