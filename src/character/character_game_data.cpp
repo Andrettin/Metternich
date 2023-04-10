@@ -78,10 +78,10 @@ void character_game_data::check_portrait()
 	}
 
 	if (this->character->get_advisor_type() != nullptr) {
-		const icon_map<std::unique_ptr<const condition<metternich::character>>> &conditional_portraits = this->character->get_advisor_type()->get_conditional_portraits();
+		const portrait_map<std::unique_ptr<const condition<metternich::character>>> &conditional_portraits = this->character->get_advisor_type()->get_conditional_portraits();
 
 		if (!conditional_portraits.empty()) {
-			std::vector<const icon *> potential_portraits;
+			std::vector<const metternich::portrait *> potential_portraits;
 			const read_only_context ctx(this->character);
 
 			for (const auto &[portrait, conditions] : conditional_portraits) {

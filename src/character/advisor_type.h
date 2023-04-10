@@ -2,13 +2,13 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
-#include "ui/icon_container.h"
+#include "ui/portrait_container.h"
 
 namespace metternich {
 
 class character;
 class country;
-class icon;
+class portrait;
 enum class advisor_category;
 
 template <typename scope_type>
@@ -22,7 +22,7 @@ class advisor_type final : public named_data_entry, public data_type<advisor_typ
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::advisor_category category MEMBER category NOTIFY changed)
-	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
+	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "advisor_type";
@@ -39,17 +39,17 @@ public:
 		return this->category;
 	}
 
-	const icon *get_portrait() const
+	const metternich::portrait *get_portrait() const
 	{
 		return this->portrait;
 	}
 
-	const icon_map<std::unique_ptr<const condition<character>>> &get_conditional_portraits() const
+	const portrait_map<std::unique_ptr<const condition<character>>> &get_conditional_portraits() const
 	{
 		return this->conditional_portraits;
 	}
 
-	const condition<character> *get_portrait_conditions(const icon *portrait) const
+	const condition<character> *get_portrait_conditions(const metternich::portrait *portrait) const
 	{
 		const auto find_iterator = this->conditional_portraits.find(portrait);
 		if (find_iterator != this->conditional_portraits.end()) {
@@ -69,8 +69,8 @@ signals:
 
 private:
 	advisor_category category;
-	icon *portrait = nullptr;
-	icon_map<std::unique_ptr<const condition<character>>> conditional_portraits;
+	metternich::portrait *portrait = nullptr;
+	portrait_map<std::unique_ptr<const condition<character>>> conditional_portraits;
 	std::unique_ptr<modifier<const country>> modifier;
 };
 

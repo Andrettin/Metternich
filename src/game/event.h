@@ -6,7 +6,7 @@
 namespace metternich {
 
 class event_random_group;
-class icon;
+class portrait;
 enum class event_trigger;
 struct context;
 struct read_only_context;
@@ -15,7 +15,7 @@ class event : public named_data_entry
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
+	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(bool circular_portrait MEMBER circular_portrait READ has_circular_portrait NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::event_trigger trigger MEMBER trigger READ get_trigger)
@@ -96,7 +96,7 @@ signals:
 	void changed();
 
 private:
-	icon *portrait = nullptr;
+	metternich::portrait *portrait = nullptr;
 	bool circular_portrait = false;
 	std::string description;
 	event_trigger trigger;

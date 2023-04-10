@@ -44,6 +44,7 @@
 #include "technology/technology.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
+#include "ui/portrait.h"
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_class.h"
@@ -239,7 +240,7 @@ void country_game_data::do_population_growth()
 		if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
 			const bool plural = starvation_count > 1;
 
-			const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
 			engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
 		}
@@ -2121,7 +2122,7 @@ void country_game_data::check_advisors()
 	for (const character *advisor : advisors) {
 		if (advisor->get_obsolescence_technology() != nullptr && this->has_technology(advisor->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
-				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification("Advisor Retired", interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the advisor {} has decided to retire.", this->get_next_advisor()->get_full_name()));
 			}
@@ -2134,7 +2135,7 @@ void country_game_data::check_advisors()
 	if (this->get_next_advisor() != nullptr) {
 		if (this->get_next_advisor()->get_game_data()->get_country() != nullptr) {
 			if (this->country == game::get()->get_player_country()) {
-				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor {} has unfortunately decided to join {}, and is no longer available for recruitment.", this->get_next_advisor()->get_full_name(), this->get_next_advisor()->get_game_data()->get_country()->get_name()));
 			}
@@ -2142,7 +2143,7 @@ void country_game_data::check_advisors()
 			this->set_next_advisor(nullptr);
 		} else if (this->get_next_advisor()->get_obsolescence_technology() != nullptr && this->has_technology(this->get_next_advisor()->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
-				const icon *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor {} is no longer available for recruitment.", this->get_next_advisor()->get_full_name()));
 			}

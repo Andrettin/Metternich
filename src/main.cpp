@@ -44,6 +44,7 @@
 #include "time/era.h"
 #include "ui/icon_image_provider.h"
 #include "ui/interface_image_provider.h"
+#include "ui/portrait_image_provider.h"
 #include "unit/military_unit_domain.h"
 #include "util/empty_image_provider.h"
 #include "util/event_loop.h"
@@ -137,6 +138,7 @@ int main(int argc, char **argv)
 		engine.addImageProvider("empty", new empty_image_provider);
 		engine.addImageProvider("icon", new icon_image_provider);
 		engine.addImageProvider("interface", new interface_image_provider);
+		engine.addImageProvider("portrait", new portrait_image_provider);
 		engine.addImageProvider("tile", new tile_image_provider);
 
 		const QString root_path = path::to_qstring(database::get()->get_root_path());

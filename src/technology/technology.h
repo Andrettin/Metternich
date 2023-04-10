@@ -10,9 +10,9 @@ class character;
 class commodity;
 class country;
 class culture;
-class icon;
 class improvement;
 class military_unit_type;
+class portrait;
 class production_type;
 enum class technology_category;
 
@@ -26,7 +26,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::technology_category category MEMBER category NOTIFY changed)
 	Q_PROPERTY(int category_index READ get_category_index NOTIFY changed)
-	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
+	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(int cost MEMBER cost READ get_cost NOTIFY changed)
 	Q_PROPERTY(bool discovery MEMBER discovery READ is_discovery NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
@@ -75,7 +75,7 @@ public:
 		return static_cast<int>(this->get_category());
 	}
 
-	const icon *get_portrait() const
+	const metternich::portrait *get_portrait() const
 	{
 		return this->portrait;
 	}
@@ -222,7 +222,7 @@ signals:
 private:
 	std::string description;
 	technology_category category;
-	icon *portrait = nullptr;
+	metternich::portrait *portrait = nullptr;
 	int cost = 0;
 	bool discovery = false;
 	std::vector<const technology *> prerequisites;

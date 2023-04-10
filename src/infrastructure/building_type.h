@@ -11,8 +11,8 @@ class building_class;
 class country;
 class cultural_group;
 class culture;
-class icon;
 class population_unit;
+class portrait;
 class production_type;
 class technology;
 
@@ -29,7 +29,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::building_class* building_class MEMBER building_class NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
-	Q_PROPERTY(metternich::icon* portrait MEMBER portrait NOTIFY changed)
+	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
@@ -70,7 +70,7 @@ public:
 		return this->cultural_group;
 	}
 
-	const metternich::icon *get_portrait() const
+	const metternich::portrait *get_portrait() const
 	{
 		return this->portrait;
 	}
@@ -138,7 +138,7 @@ private:
 	building_class *building_class = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
-	metternich::icon *portrait = nullptr;
+	metternich::portrait *portrait = nullptr;
 	metternich::icon *icon = nullptr;
 	std::vector<const production_type *> production_types;
 	int base_capacity = 0;

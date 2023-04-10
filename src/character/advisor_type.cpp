@@ -4,7 +4,7 @@
 
 #include "character/advisor_category.h"
 #include "script/condition/and_condition.h"
-#include "ui/icon.h"
+#include "ui/portrait.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -20,7 +20,7 @@ void advisor_type::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "conditional_portraits") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
-			const icon *portrait = icon::get(child_scope.get_tag());
+			const metternich::portrait *portrait = portrait::get(child_scope.get_tag());
 			auto conditions = std::make_unique<and_condition<character>>();
 			database::process_gsml_data(conditions, child_scope);
 			this->conditional_portraits[portrait] = std::move(conditions);

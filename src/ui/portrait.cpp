@@ -1,16 +1,16 @@
 #include "metternich.h"
 
-#include "ui/icon.h"
+#include "ui/portrait.h"
 
-#include "ui/icon_image_provider.h"
+#include "ui/portrait_image_provider.h"
 #include "util/event_loop.h"
 
 namespace metternich {
 
-void icon::initialize()
+void portrait::initialize()
 {
 	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
-		co_await icon_image_provider::get()->load_image(this->get_identifier());
+		co_await portrait_image_provider::get()->load_image(this->get_identifier());
 	});
 
 	data_entry::initialize();

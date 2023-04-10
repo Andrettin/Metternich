@@ -9,8 +9,8 @@ namespace metternich {
 
 class character;
 class country;
-class icon;
 class military_unit;
+class portrait;
 class province;
 class scripted_character_modifier;
 class spell;
@@ -24,7 +24,7 @@ class character_game_data final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::icon* portrait READ get_portrait_unconst NOTIFY portrait_changed)
+	Q_PROPERTY(metternich::portrait* portrait READ get_portrait_unconst NOTIFY portrait_changed)
 	Q_PROPERTY(metternich::country* country READ get_country_unconst NOTIFY country_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
@@ -38,16 +38,16 @@ public:
 
 	void on_game_started();
 
-	const icon *get_portrait() const
+	const metternich::portrait *get_portrait() const
 	{
 		return this->portrait;
 	}
 
 private:
 	//for the Qt property (pointers there can't be const)
-	icon *get_portrait_unconst() const
+	metternich::portrait *get_portrait_unconst() const
 	{
-		return const_cast<icon *>(this->get_portrait());
+		return const_cast<metternich::portrait *>(this->get_portrait());
 	}
 
 public:
@@ -201,7 +201,7 @@ signals:
 
 private:
 	const metternich::character *character = nullptr;
-	const icon *portrait = nullptr;
+	const metternich::portrait *portrait = nullptr;
 	const metternich::country *country = nullptr;
 	bool dead = false;
 	std::vector<const trait *> traits;
