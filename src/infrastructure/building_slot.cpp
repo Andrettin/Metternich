@@ -197,6 +197,10 @@ std::vector<const production_type *> building_slot::get_available_production_typ
 			continue;
 		}
 
+		if (production_type->get_required_technology() != nullptr && !this->country->get_game_data()->has_technology(production_type->get_required_technology())) {
+			continue;
+		}
+
 		production_types.push_back(production_type);
 	}
 
