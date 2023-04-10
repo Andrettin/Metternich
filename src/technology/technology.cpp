@@ -3,6 +3,7 @@
 #include "technology/technology.h"
 
 #include "character/character.h"
+#include "country/country.h"
 #include "country/culture.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
@@ -87,7 +88,7 @@ QVariantList technology::get_enabled_buildings_qvariant_list() const
 	return container::to_qvariant_list(this->get_enabled_buildings());
 }
 
-QVariantList technology::get_enabled_buildings_for_culture(culture *culture) const
+std::vector<const building_type *> technology::get_enabled_buildings_for_culture(const culture *culture) const
 {
 	std::vector<const building_type *> buildings;
 
@@ -99,7 +100,7 @@ QVariantList technology::get_enabled_buildings_for_culture(culture *culture) con
 		buildings.push_back(building);
 	}
 
-	return container::to_qvariant_list(buildings);
+	return buildings;
 }
 
 QVariantList technology::get_enabled_improvements_qvariant_list() const
@@ -112,7 +113,7 @@ QVariantList technology::get_enabled_military_units_qvariant_list() const
 	return container::to_qvariant_list(this->get_enabled_military_units());
 }
 
-QVariantList technology::get_enabled_military_units_for_culture(culture *culture) const
+std::vector<const military_unit_type *> technology::get_enabled_military_units_for_culture(const culture *culture) const
 {
 	std::vector<const military_unit_type *> military_units;
 
@@ -126,7 +127,7 @@ QVariantList technology::get_enabled_military_units_for_culture(culture *culture
 		military_units.push_back(military_unit);
 	}
 
-	return container::to_qvariant_list(military_units);
+	return military_units;
 }
 
 void technology::add_enabled_military_unit(const military_unit_type *military_unit)
@@ -147,7 +148,7 @@ QVariantList technology::get_enabled_advisors_qvariant_list() const
 	return container::to_qvariant_list(this->get_enabled_advisors());
 }
 
-QVariantList technology::get_enabled_advisors_for_country(country *country) const
+std::vector<const character *> technology::get_enabled_advisors_for_country(const country *country) const
 {
 	std::vector<const character *> advisors;
 
@@ -159,7 +160,7 @@ QVariantList technology::get_enabled_advisors_for_country(country *country) cons
 		advisors.push_back(advisor);
 	}
 
-	return container::to_qvariant_list(advisors);
+	return advisors;
 }
 
 void technology::add_enabled_advisor(const character *advisor)
@@ -176,7 +177,7 @@ QVariantList technology::get_retired_advisors_qvariant_list() const
 	return container::to_qvariant_list(this->get_retired_advisors());
 }
 
-QVariantList technology::get_retired_advisors_for_country(country *country) const
+std::vector<const character *> technology::get_retired_advisors_for_country(const country *country) const
 {
 	std::vector<const character *> advisors;
 
@@ -188,7 +189,7 @@ QVariantList technology::get_retired_advisors_for_country(country *country) cons
 		advisors.push_back(advisor);
 	}
 
-	return container::to_qvariant_list(advisors);
+	return advisors;
 }
 
 void technology::add_retired_advisor(const character *advisor)
@@ -200,13 +201,78 @@ void technology::add_retired_advisor(const character *advisor)
 	});
 }
 
-QString technology::get_modifier_string() const
+std::string technology::get_modifier_string() const
 {
 	if (this->get_modifier() == nullptr) {
-		return QString();
+		return std::string();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string());
+	return this->get_modifier()->get_string();
+}
+
+QString technology::get_effects_string(metternich::country *country) const
+{
+	std::string str = this->get_modifier_string();
+
+	const std::vector<const building_type *> buildings = get_enabled_buildings_for_culture(country->get_culture());
+
+	if (!buildings.empty()) {
+		for (const building_type *building : buildings) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} building", building->get_name());
+		}
+	}
+
+	if (!this->get_enabled_improvements().empty()) {
+		for (const improvement *improvement : this->get_enabled_improvements()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} improvement", improvement->get_name());
+		}
+	}
+
+	const std::vector<const military_unit_type *> military_units = get_enabled_military_units_for_culture(country->get_culture());
+
+	if (!military_units.empty()) {
+		for (const military_unit_type *military_unit : military_units) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} regiment", military_unit->get_name());
+		}
+	}
+
+	const std::vector<const character *> enabled_advisors = get_enabled_advisors_for_country(country);
+
+	if (!enabled_advisors.empty()) {
+		for (const character *advisor : enabled_advisors) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} advisor", advisor->get_full_name());
+		}
+	}
+
+	const std::vector<const character *> retired_advisors = get_retired_advisors_for_country(country);
+
+	if (!retired_advisors.empty()) {
+		for (const character *advisor : retired_advisors) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Retires {} advisor", advisor->get_full_name());
+		}
+	}
+
+	return QString::fromStdString(str);
 }
 
 }

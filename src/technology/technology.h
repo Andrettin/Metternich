@@ -32,7 +32,6 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_advisors READ get_enabled_advisors_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList retired_advisors READ get_retired_advisors_qvariant_list NOTIFY changed)
-	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 	Q_PROPERTY(QObject* tree_parent READ get_tree_parent CONSTANT)
 
 public:
@@ -87,20 +86,20 @@ public:
 	bool requires_technology(const technology *technology) const;
 	int get_total_prerequisite_depth() const;
 
-	const std::vector<const building_type *> get_enabled_buildings() const
+	const std::vector<const building_type *> &get_enabled_buildings() const
 	{
 		return this->enabled_buildings;
 	}
 
 	QVariantList get_enabled_buildings_qvariant_list() const;
-	Q_INVOKABLE QVariantList get_enabled_buildings_for_culture(metternich::culture *culture) const;
+	std::vector<const building_type *> get_enabled_buildings_for_culture(const culture *culture) const;
 
 	void add_enabled_building(const building_type *building)
 	{
 		this->enabled_buildings.push_back(building);
 	}
 
-	const std::vector<const improvement *> get_enabled_improvements() const
+	const std::vector<const improvement *> &get_enabled_improvements() const
 	{
 		return this->enabled_improvements;
 	}
@@ -112,31 +111,31 @@ public:
 		this->enabled_improvements.push_back(improvement);
 	}
 
-	const std::vector<const military_unit_type *> get_enabled_military_units() const
+	const std::vector<const military_unit_type *> &get_enabled_military_units() const
 	{
 		return this->enabled_military_units;
 	}
 
 	QVariantList get_enabled_military_units_qvariant_list() const;
-	Q_INVOKABLE QVariantList get_enabled_military_units_for_culture(metternich::culture *culture) const;
+	std::vector<const military_unit_type *> get_enabled_military_units_for_culture(const culture *culture) const;
 	void add_enabled_military_unit(const military_unit_type *military_unit);
 
-	const std::vector<const character *> get_enabled_advisors() const
+	const std::vector<const character *> &get_enabled_advisors() const
 	{
 		return this->enabled_advisors;
 	}
 
 	QVariantList get_enabled_advisors_qvariant_list() const;
-	Q_INVOKABLE QVariantList get_enabled_advisors_for_country(metternich::country *country) const;
+	std::vector<const character *> get_enabled_advisors_for_country(const country *country) const;
 	void add_enabled_advisor(const character *advisor);
 
-	const std::vector<const character *> get_retired_advisors() const
+	const std::vector<const character *> &get_retired_advisors() const
 	{
 		return this->retired_advisors;
 	}
 
 	QVariantList get_retired_advisors_qvariant_list() const;
-	Q_INVOKABLE QVariantList get_retired_advisors_for_country(metternich::country *country) const;
+	std::vector<const character *> get_retired_advisors_for_country(const country *country) const;
 	void add_retired_advisor(const character *advisor);
 
 	const metternich::modifier<const country> *get_modifier() const
@@ -144,7 +143,8 @@ public:
 		return this->modifier.get();
 	}
 
-	QString get_modifier_string() const;
+	std::string get_modifier_string() const;
+	Q_INVOKABLE QString get_effects_string(metternich::country *country) const;
 
 	virtual named_data_entry *get_tree_parent() const override
 	{
