@@ -654,6 +654,12 @@ public:
 		return this->technologies.contains(technology);
 	}
 
+	Q_INVOKABLE bool has_technology(metternich::technology *technology) const
+	{
+		const metternich::technology *const_technology = technology;
+		return this->has_technology(const_technology);
+	}
+
 	void add_technology(const technology *technology);
 	void add_technology_with_prerequisites(const technology *technology);
 
