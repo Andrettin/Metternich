@@ -2016,23 +2016,7 @@ std::vector<const technology *> country_game_data::get_available_technologies() 
 	std::vector<const technology *> available_technologies;
 
 	for (const technology *technology : technology::get_all()) {
-		if (technology->is_discovery()) {
-			continue;
-		}
-
-		if (this->has_technology(technology)) {
-			continue;
-		}
-
-		bool has_prerequisites = true;
-		for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
-			if (!this->has_technology(prerequisite)) {
-				has_prerequisites = false;
-				break;
-			}
-		}
-
-		if (!has_prerequisites) {
+		if (!this->is_technology_available(technology)) {
 			continue;
 		}
 
@@ -2047,6 +2031,31 @@ std::vector<const technology *> country_game_data::get_available_technologies() 
 QVariantList country_game_data::get_available_technologies_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_available_technologies());
+}
+
+bool country_game_data::is_technology_available(const technology *technology) const
+{
+	if (technology->is_discovery()) {
+		return false;
+	}
+
+	if (this->has_technology(technology)) {
+		return false;
+	}
+
+	bool has_prerequisites = true;
+	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
+		if (!this->has_technology(prerequisite)) {
+			has_prerequisites = false;
+			break;
+		}
+	}
+
+	if (!has_prerequisites) {
+		return false;
+	}
+
+	return true;
 }
 
 QVariantList country_game_data::get_future_technologies_qvariant_list() const

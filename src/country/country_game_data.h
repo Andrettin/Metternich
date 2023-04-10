@@ -665,6 +665,14 @@ public:
 
 	std::vector<const technology *> get_available_technologies() const;
 	QVariantList get_available_technologies_qvariant_list() const;
+	bool is_technology_available(const technology *technology) const;
+
+	Q_INVOKABLE bool is_technology_available(metternich::technology *technology) const
+	{
+		const metternich::technology *const_technology = technology;
+		return this->is_technology_available(const_technology);
+	}
+
 	QVariantList get_future_technologies_qvariant_list() const;
 
 	const technology *get_current_research() const
