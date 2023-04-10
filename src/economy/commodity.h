@@ -6,6 +6,7 @@
 namespace metternich {
 
 class icon;
+class technology;
 enum class food_type;
 
 class commodity final : public named_data_entry, public data_type<commodity>
@@ -17,6 +18,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(int wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
 	Q_PROPERTY(bool abstract MEMBER abstract READ is_abstract NOTIFY changed)
 	Q_PROPERTY(bool storable MEMBER storable READ is_storable NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "commodity";
@@ -25,6 +27,7 @@ public:
 
 	explicit commodity(const std::string &identifier);
 
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const metternich::icon *get_icon() const
@@ -59,6 +62,11 @@ public:
 		return this->storable;
 	}
 
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
 signals:
 	void changed();
 
@@ -68,6 +76,7 @@ private:
 	int wealth_value = 0;
 	bool abstract = false;
 	bool storable = true;
+	technology *required_technology = nullptr;
 };
 
 }

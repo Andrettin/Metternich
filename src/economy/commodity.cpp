@@ -3,6 +3,7 @@
 #include "economy/commodity.h"
 
 #include "economy/food_type.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -10,6 +11,15 @@ namespace metternich {
 commodity::commodity(const std::string &identifier)
 	: named_data_entry(identifier), food_type(food_type::none)
 {
+}
+
+void commodity::initialize()
+{
+	if (this->required_technology != nullptr) {
+		this->required_technology->add_enabled_commodity(this);
+	}
+
+	data_entry::initialize();
 }
 
 void commodity::check() const

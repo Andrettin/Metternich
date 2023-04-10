@@ -7,11 +7,13 @@ namespace metternich {
 
 class building_type;
 class character;
+class commodity;
 class country;
 class culture;
 class icon;
 class improvement;
 class military_unit_type;
+class production_type;
 enum class technology_category;
 
 template <typename scope_type>
@@ -102,6 +104,16 @@ public:
 	bool requires_technology(const technology *technology) const;
 	int get_total_prerequisite_depth() const;
 
+	const std::vector<const commodity *> &get_enabled_commodities() const
+	{
+		return this->enabled_commodities;
+	}
+
+	void add_enabled_commodity(const commodity *commodity)
+	{
+		this->enabled_commodities.push_back(commodity);
+	}
+
 	const std::vector<const building_type *> &get_enabled_buildings() const
 	{
 		return this->enabled_buildings;
@@ -113,6 +125,16 @@ public:
 	void add_enabled_building(const building_type *building)
 	{
 		this->enabled_buildings.push_back(building);
+	}
+
+	const std::vector<const production_type *> &get_enabled_production_types() const
+	{
+		return this->enabled_production_types;
+	}
+
+	void add_enabled_production_type(const production_type *production_type)
+	{
+		this->enabled_production_types.push_back(production_type);
 	}
 
 	const std::vector<const improvement *> &get_enabled_improvements() const
@@ -204,7 +226,9 @@ private:
 	int cost = 0;
 	bool discovery = false;
 	std::vector<const technology *> prerequisites;
+	std::vector<const commodity *> enabled_commodities;
 	std::vector<const building_type *> enabled_buildings;
+	std::vector<const production_type *> enabled_production_types;
 	std::vector<const improvement *> enabled_improvements;
 	std::vector<const military_unit_type *> enabled_military_units;
 	std::vector<const character *> enabled_advisors;

@@ -7,7 +7,7 @@
 namespace metternich {
 
 class commodity;
-class population_class;
+class technology;
 
 class production_type final : public named_data_entry, public data_type<production_type>
 {
@@ -16,6 +16,7 @@ class production_type final : public named_data_entry, public data_type<producti
 	Q_PROPERTY(QVariantList input_commodities READ get_input_commodities_qvariant_list NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "production_type";
@@ -27,6 +28,7 @@ public:
 	}
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const commodity_map<int> &get_input_commodities() const
@@ -46,6 +48,11 @@ public:
 		return this->output_value;
 	}
 
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
 signals:
 	void changed();
 
@@ -53,6 +60,7 @@ private:
 	commodity_map<int> input_commodities;
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
+	technology *required_technology = nullptr;
 };
 
 }

@@ -3,7 +3,7 @@
 #include "economy/production_type.h"
 
 #include "economy/commodity.h"
-#include "population/population_class.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
 
@@ -26,6 +26,15 @@ void production_type::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void production_type::initialize()
+{
+	if (this->required_technology != nullptr) {
+		this->required_technology->add_enabled_production_type(this);
+	}
+
+	data_entry::initialize();
 }
 
 void production_type::check() const
