@@ -821,6 +821,30 @@ public:
 		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + value);
 	}
 
+	int get_commodity_throughput_modifier(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_throughput_modifiers.find(commodity);
+
+		if (find_iterator != this->commodity_throughput_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	Q_INVOKABLE int get_commodity_throughput_modifier(metternich::commodity *commodity) const
+	{
+		const metternich::commodity *const_commodity = commodity;
+		return this->get_commodity_throughput_modifier(const_commodity);
+	}
+
+	void set_commodity_throughput_modifier(const commodity *commodity, const int value);
+
+	void change_commodity_throughput_modifier(const commodity *commodity, const int value)
+	{
+		this->set_commodity_throughput_modifier(commodity, this->get_commodity_throughput_modifier(commodity) + value);
+	}
+
 	Q_INVOKABLE int get_category_research_modifier(metternich::technology_category category) const
 	{
 		const auto find_iterator = this->category_research_modifiers.find(category);
@@ -928,6 +952,7 @@ private:
 	int air_morale_resistance_modifier = 0;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
+	commodity_map<int> commodity_throughput_modifiers;
 	std::map<technology_category, int> category_research_modifiers;
 };
 

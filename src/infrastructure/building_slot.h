@@ -124,6 +124,9 @@ public:
 		return this->get_production_type_employed_capacity(const_production_type);
 	}
 
+	commodity_map<int> get_production_type_inputs(const production_type *production_type) const;
+	Q_INVOKABLE QVariantList get_production_type_inputs(metternich::production_type *production_type) const;
+
 	int get_production_type_output(const production_type *production_type) const;
 
 	Q_INVOKABLE int get_production_type_output(metternich::production_type *production_type) const

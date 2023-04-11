@@ -2387,6 +2387,51 @@ void country_game_data::set_commodity_output_modifier(const commodity *commodity
 	}
 }
 
+void country_game_data::set_commodity_throughput_modifier(const commodity *commodity, const int value)
+{
+	if (value == this->get_commodity_throughput_modifier(commodity)) {
+		return;
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
+			if (production_type->get_output_commodity() != commodity) {
+				continue;
+			}
+
+			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
+			for (const auto &[input_commodity, input_value] : inputs) {
+				if (input_commodity->is_storable()) {
+					this->change_stored_commodity(input_commodity, input_value);
+				}
+				this->change_commodity_input(input_commodity, -input_value);
+			}
+		}
+	}
+
+	if (value == 0) {
+		this->commodity_throughput_modifiers.erase(commodity);
+	} else {
+		this->commodity_throughput_modifiers[commodity] = value;
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
+			if (production_type->get_output_commodity() != commodity) {
+				continue;
+			}
+
+			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
+			for (const auto &[input_commodity, input_value] : inputs) {
+				if (input_commodity->is_storable()) {
+					this->change_stored_commodity(input_commodity, -input_value);
+				}
+				this->change_commodity_input(input_commodity, input_value);
+			}
+		}
+	}
+}
+
 void country_game_data::set_category_research_modifier(const technology_category category, const int value)
 {
 	if (value == this->get_category_research_modifier(category)) {

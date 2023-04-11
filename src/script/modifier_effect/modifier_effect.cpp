@@ -5,6 +5,7 @@
 #include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
+#include "script/modifier_effect/commodity_throughput_modifier_effect.h"
 #include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
@@ -23,6 +24,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 	if constexpr (std::is_same_v<scope_type, const country>) {
 		static const std::string research_modifier_suffix = "_research_modifier";
+		static const std::string throughput_modifier_suffix = "_throughput_modifier";
 
 		if (key == "air_morale_resistance") {
 			return std::make_unique<air_morale_resistance_modifier_effect>(value);
@@ -34,6 +36,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<naval_morale_resistance_modifier_effect>(value);
 		} else if (key == "storage_capacity") {
 			return std::make_unique<storage_capacity_modifier_effect>(value);
+		} else if (key.ends_with(throughput_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - throughput_modifier_suffix.size())) != nullptr) {
+			const commodity *commodity = commodity::get(key.substr(0, key.size() - throughput_modifier_suffix.size()));
+			return std::make_unique<commodity_throughput_modifier_effect<scope_type>>(commodity, value);
 		} else if (key.ends_with(research_modifier_suffix) && enum_converter<technology_category>::has_value(key.substr(0, key.size() - research_modifier_suffix.size()))) {
 			const technology_category category = enum_converter<technology_category>::to_enum(key.substr(0, key.size() - research_modifier_suffix.size()));
 			return std::make_unique<category_research_modifier_effect<scope_type>>(category, value);

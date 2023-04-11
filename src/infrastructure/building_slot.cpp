@@ -19,6 +19,7 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/fractional_int.h"
+#include "util/map_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -212,6 +213,55 @@ QVariantList building_slot::get_available_production_types_qvariant_list() const
 	return container::to_qvariant_list(this->get_available_production_types());
 }
 
+commodity_map<int> building_slot::get_production_type_inputs(const production_type *production_type) const
+{
+	commodity_map<int> inputs;
+
+	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
+		//ensure each input commodity for the production type is in the map
+		inputs[input_commodity] = 0;
+	}
+
+	const int employed_capacity = this->get_production_type_employed_capacity(production_type);
+
+	if (employed_capacity == 0) {
+		return inputs;
+	}
+
+	const country_game_data *country_game_data = this->get_country()->get_game_data();
+
+	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
+		int total_input = input_value * employed_capacity;
+
+		if (input_commodity->is_labor()) {
+			const int throughput_modifier = country_game_data->get_commodity_throughput_modifier(production_type->get_output_commodity());
+
+			if (throughput_modifier != 0) {
+				assert_throw(throughput_modifier > -100);
+
+				const centesimal_int modified_input = centesimal_int(total_input) * 100 / (100 + throughput_modifier);
+
+				total_input = modified_input.to_int();
+				if (modified_input.get_fractional_value()) {
+					total_input += 1;
+				}
+
+				total_input = std::max(total_input, 1);
+			}
+		}
+
+		inputs[input_commodity] = total_input;
+	}
+
+	return inputs;
+}
+
+QVariantList building_slot::get_production_type_inputs(metternich::production_type *production_type) const
+{
+	const metternich::production_type *const_production_type = production_type;
+	return archimedes::map::to_qvariant_list(this->get_production_type_inputs(const_production_type));
+}
+
 int building_slot::get_production_type_output(const production_type *production_type) const
 {
 	int output = this->get_production_type_employed_capacity(production_type);
@@ -235,6 +285,7 @@ int building_slot::get_production_type_output(const production_type *production_
 void building_slot::change_production(const production_type *production_type, const int multiplier, const bool change_input_storage)
 {
 	const int old_output = this->get_production_type_output(production_type);
+	const commodity_map<int> old_inputs = this->get_production_type_inputs(production_type);
 
 	const int change = production_type->get_output_value() * multiplier;
 	this->employed_capacity += change;
@@ -247,15 +298,21 @@ void building_slot::change_production(const production_type *production_type, co
 
 	country_game_data *country_game_data = this->get_country()->get_game_data();
 
+	const commodity_map<int> new_inputs = this->get_production_type_inputs(production_type);
 	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
+		const int old_input = old_inputs.find(input_commodity)->second;
+		const int new_input = new_inputs.find(input_commodity)->second;
+		const int input_change = new_input - old_input;
+
 		if (input_commodity->is_storable() && change_input_storage) {
-			country_game_data->change_stored_commodity(input_commodity, -input_value * multiplier);
+			country_game_data->change_stored_commodity(input_commodity, -input_change);
 		}
-		country_game_data->change_commodity_input(input_commodity, input_value * multiplier);
+		country_game_data->change_commodity_input(input_commodity, input_change);
 	}
 
 	const int new_output = this->get_production_type_output(production_type);
 	country_game_data->change_commodity_output(production_type->get_output_commodity(), new_output - old_output);
+
 }
 
 bool building_slot::can_increase_production(const production_type *production_type) const
