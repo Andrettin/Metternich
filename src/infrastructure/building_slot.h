@@ -25,6 +25,7 @@ class building_slot final : public QObject
 	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
 	Q_PROPERTY(bool expanding READ is_expanding WRITE set_expanding NOTIFY expanding_changed)
 	Q_PROPERTY(int capacity READ get_capacity NOTIFY capacity_changed)
+	Q_PROPERTY(int employed_capacity READ get_employed_capacity NOTIFY employed_capacity_changed)
 	Q_PROPERTY(QVariantList available_production_types READ get_available_production_types_qvariant_list NOTIFY building_changed)
 
 public:
