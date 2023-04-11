@@ -12,6 +12,7 @@
 #include "script/condition/condition.h"
 #include "script/modifier.h"
 #include "technology/technology_category.h"
+#include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -266,7 +267,7 @@ QString technology::get_effects_string(metternich::country *country) const
 				str += "\n";
 			}
 
-			str += std::format("Enables {} regiment", military_unit->get_name());
+			str += std::format("Enables {} {}", military_unit->get_name(), military_unit->get_domain() == military_unit_domain::water ? "ship" : "regiment");
 		}
 	}
 
