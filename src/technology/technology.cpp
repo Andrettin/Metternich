@@ -55,7 +55,7 @@ void technology::initialize()
 		this->period = technological_period::get_by_year(this->get_year());
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void technology::check() const
