@@ -22,7 +22,7 @@ public:
 	static const technological_period *get_by_year(const int year)
 	{
 		auto find_iterator = technological_period::periods_by_year.upper_bound(year);
-		if (find_iterator != technological_period::periods_by_year.begin() && find_iterator != technological_period::periods_by_year.end()) {
+		if (find_iterator != technological_period::periods_by_year.begin()) {
 			--find_iterator;
 			return find_iterator->second;
 		}

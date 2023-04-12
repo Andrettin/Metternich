@@ -17,6 +17,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/log_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -66,8 +67,12 @@ void technology::check() const
 		throw std::runtime_error(std::format("Technology \"{}\" has no cost, and is not a discovery.", this->get_identifier()));
 	}
 
-	if (this->get_period() != nullptr && this->get_period()->get_index() != this->get_total_prerequisite_depth()) {
-		throw std::runtime_error(std::format("The period for technology \"{}\" ({}-{}, index {}) does not match its total prerequisite depth ({}).", this->get_identifier(), this->get_period()->get_start_year(), this->get_period()->get_end_year(), this->get_period()->get_index(), this->get_total_prerequisite_depth()));
+	if (this->get_period() != nullptr) {
+		if (this->get_period()->get_index() != this->get_total_prerequisite_depth()) {
+			log::log_error(std::format("The period for technology \"{}\" ({}-{}, index {}) does not match its total prerequisite depth ({}).", this->get_identifier(), this->get_period()->get_start_year(), this->get_period()->get_end_year(), this->get_period()->get_index(), this->get_total_prerequisite_depth()));
+		}
+	} else {
+		log::log_error(std::format("Technology \"{}\" has no period.", this->get_identifier()));
 	}
 }
 
