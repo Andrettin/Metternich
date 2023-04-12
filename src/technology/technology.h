@@ -14,6 +14,7 @@ class improvement;
 class military_unit_type;
 class portrait;
 class production_type;
+class technological_period;
 enum class technology_category;
 
 template <typename scope_type>
@@ -29,6 +30,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(int cost MEMBER cost READ get_cost NOTIFY changed)
 	Q_PROPERTY(bool discovery MEMBER discovery READ is_discovery NOTIFY changed)
+	Q_PROPERTY(int year MEMBER year READ get_year NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
@@ -48,6 +50,7 @@ public:
 	~technology();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const std::string &get_description() const
@@ -92,6 +95,16 @@ public:
 	bool is_discovery() const
 	{
 		return this->discovery;
+	}
+
+	int get_year() const
+	{
+		return this->year;
+	}
+
+	const technological_period *get_period() const
+	{
+		return this->period;
 	}
 
 	const std::vector<const technology *> get_prerequisites() const
@@ -225,6 +238,8 @@ private:
 	metternich::portrait *portrait = nullptr;
 	int cost = 0;
 	bool discovery = false;
+	int year = 0; //the historical year that this technology was discovered
+	const technological_period *period = nullptr;
 	std::vector<const technology *> prerequisites;
 	std::vector<const commodity *> enabled_commodities;
 	std::vector<const building_type *> enabled_buildings;

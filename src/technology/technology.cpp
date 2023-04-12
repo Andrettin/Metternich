@@ -11,6 +11,7 @@
 #include "infrastructure/improvement.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
+#include "technology/technological_period.h"
 #include "technology/technology_category.h"
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
@@ -47,6 +48,15 @@ void technology::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void technology::initialize()
+{
+	if (this->get_year() != 0) {
+		this->period = technological_period::get_by_year(this->get_year());
+	}
+
+	data_entry::initialize();
+}
+
 void technology::check() const
 {
 	assert_throw(this->get_category() != technology_category::none);
@@ -54,6 +64,10 @@ void technology::check() const
 
 	if (this->get_cost() == 0 && !this->is_discovery()) {
 		throw std::runtime_error(std::format("Technology \"{}\" has no cost, and is not a discovery.", this->get_identifier()));
+	}
+
+	if (this->get_period() != nullptr && this->get_period()->get_index() != this->get_total_prerequisite_depth()) {
+		throw std::runtime_error(std::format("The period for technology \"{}\" ({}-{}, index {}) does not match its total prerequisite depth ({}).", this->get_identifier(), this->get_period()->get_start_year(), this->get_period()->get_end_year(), this->get_period()->get_index(), this->get_total_prerequisite_depth()));
 	}
 }
 
