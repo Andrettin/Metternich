@@ -16,7 +16,8 @@ const std::map<std::string, metternich::technology_category> enum_converter<mett
 	{ "industry", metternich::technology_category::industry },
 	{ "army", metternich::technology_category::army },
 	{ "navy", metternich::technology_category::navy },
-	{ "finance", metternich::technology_category::finance }
+	{ "finance", metternich::technology_category::finance },
+	{ "culture", metternich::technology_category::culture }
 };
 
 template <>

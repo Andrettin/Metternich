@@ -10,7 +10,8 @@ enum class technology_category {
 	industry,
 	army,
 	navy,
-	finance
+	finance,
+	culture
 };
 
 
@@ -29,6 +30,8 @@ inline std::string get_technology_category_name(const technology_category catego
 			return "Navy";
 		case technology_category::finance:
 			return "Finance";
+		case technology_category::culture:
+			return "Culture";
 		default:
 			break;
 	}
