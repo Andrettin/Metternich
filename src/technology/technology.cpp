@@ -21,6 +21,19 @@
 #include "util/vector_util.h"
 
 namespace metternich {
+	
+void technology::initialize_all()
+{
+	data_type::initialize_all();
+
+	technology::sort_instances([](const technology *lhs, const technology *rhs) {
+		if (lhs->get_category() != rhs->get_category()) {
+			return lhs->get_category() < rhs->get_category();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+}
 
 technology::technology(const std::string &identifier)
 	: named_data_entry(identifier), category(technology_category::none)

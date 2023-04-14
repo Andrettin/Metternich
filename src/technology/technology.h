@@ -46,6 +46,8 @@ public:
 
 	static constexpr int base_cost = 10;
 
+	static void initialize_all();
+
 	explicit technology(const std::string &identifier);
 	~technology();
 
