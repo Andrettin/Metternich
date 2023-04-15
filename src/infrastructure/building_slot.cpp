@@ -56,7 +56,19 @@ void building_slot::set_building(const building_type *building)
 	}
 
 	this->building = building;
-	this->level = building ? 1 : 0;
+
+	if (building != nullptr) {
+		if (building->is_expandable()) {
+			this->level = std::max(this->get_level(), 1);
+			if (building->get_max_level() != 0) {
+				this->level = std::min(this->get_level(), building->get_max_level());
+			}
+		} else {
+			this->level = 1;
+		}
+	} else {
+		this->level = 0;
+	}
 	this->set_expanding(false);
 
 	if (this->get_building() != nullptr) {
