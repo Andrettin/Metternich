@@ -279,6 +279,11 @@ void country_game_data::do_construction()
 {
 	try {
 		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+			if (building_slot->get_under_construction_building() != nullptr) {
+				building_slot->set_building(building_slot->get_under_construction_building());
+				building_slot->set_under_construction_building(nullptr);
+			}
+
 			if (building_slot->is_expanding()) {
 				building_slot->expand();
 			}

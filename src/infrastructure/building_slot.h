@@ -22,6 +22,7 @@ class building_slot final : public QObject
 
 	Q_PROPERTY(metternich::building_slot_type* type READ get_type_unconst CONSTANT)
 	Q_PROPERTY(metternich::building_type* building READ get_building_unconst NOTIFY building_changed)
+	Q_PROPERTY(metternich::building_type* under_construction_building READ get_under_construction_building_unconst WRITE set_under_construction_building NOTIFY under_construction_building_changed)
 	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
 	Q_PROPERTY(bool expanding READ is_expanding WRITE set_expanding NOTIFY expanding_changed)
 	Q_PROPERTY(int capacity READ get_capacity NOTIFY capacity_changed)
@@ -59,7 +60,23 @@ private:
 public:
 	void set_building(const building_type *building);
 
+	const building_type *get_under_construction_building() const
+	{
+		return this->under_construction_building;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	building_type *get_under_construction_building_unconst() const
+	{
+		return const_cast<building_type *>(this->get_under_construction_building());
+	}
+
+public:
+	void set_under_construction_building(const building_type *building);
+
 	bool can_have_building(const building_type *building) const;
+	Q_INVOKABLE metternich::building_type *get_buildable_building() const;
 
 	const metternich::country *get_country() const
 	{
@@ -172,6 +189,7 @@ public:
 
 signals:
 	void building_changed();
+	void under_construction_building_changed();
 	void expanding_changed();
 	void capacity_changed();
 	void employed_capacity_changed();
@@ -179,6 +197,7 @@ signals:
 private:
 	const building_slot_type *type = nullptr;
 	const building_type *building = nullptr;
+	const building_type *under_construction_building = nullptr;
 	const metternich::country *country = nullptr;
 	int level = 0;
 	int employed_capacity = 0;

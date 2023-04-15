@@ -108,6 +108,19 @@ void building_slot::set_building(const building_type *building)
 	}
 }
 
+void building_slot::set_under_construction_building(const building_type *building)
+{
+	if (building == this->get_under_construction_building()) {
+		return;
+	}
+
+	this->under_construction_building = building;
+
+	if (game::get()->is_running()) {
+		emit under_construction_building_changed();
+	}
+}
+
 bool building_slot::can_have_building(const building_type *building) const
 {
 	if (building->get_required_building() != nullptr && this->get_building() != building->get_required_building()) {
@@ -134,6 +147,23 @@ bool building_slot::can_have_building(const building_type *building) const
 	}
 
 	return true;
+}
+
+building_type *building_slot::get_buildable_building() const
+{
+	for (const building_type *building : this->get_type()->get_building_types()) {
+		if (building->get_required_technology() != nullptr && !this->get_country()->get_game_data()->has_technology(building->get_required_technology())) {
+			continue;
+		}
+
+		if (!this->can_have_building(building)) {
+			continue;
+		}
+
+		return const_cast<building_type *>(building);
+	}
+
+	return nullptr;
 }
 
 bool building_slot::is_available() const
