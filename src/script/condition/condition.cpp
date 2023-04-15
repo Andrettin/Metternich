@@ -11,6 +11,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "population/population_unit.h"
+#include "script/condition/advisor_condition.h"
 #include "script/condition/advisor_type_condition.h"
 #include "script/condition/age_condition.h"
 #include "script/condition/and_condition.h"
@@ -80,7 +81,9 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<trait_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, country>) {
-		if (key == "country") {
+		if (key == "advisor") {
+			return std::make_unique<advisor_condition>(value, condition_operator);
+		} else if (key == "country") {
 			return std::make_unique<country_condition>(value, condition_operator);
 		} else if (key == "country_type") {
 			return std::make_unique<country_type_condition>(value, condition_operator);

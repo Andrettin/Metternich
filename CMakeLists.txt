@@ -415,6 +415,7 @@ set(script_HDRS
 source_group(script FILES ${script_HDRS})
 
 set(script_condition_HDRS
+	src/script/condition/advisor_condition.h
 	src/script/condition/advisor_type_condition.h
 	src/script/condition/age_condition.h
 	src/script/condition/and_condition.h
