@@ -179,7 +179,7 @@ void building_slot::expand()
 int building_slot::get_capacity() const
 {
 	if (this->get_building() != nullptr) {
-		return this->get_building()->get_base_capacity() * this->get_level();
+		return this->get_building()->get_base_capacity() + this->get_building()->get_capacity_increment() * (this->get_level() - 1);
 	}
 
 	return 0;

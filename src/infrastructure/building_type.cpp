@@ -80,6 +80,14 @@ void building_type::check() const
 	if (!this->get_production_types().empty()) {
 		assert_throw(this->get_base_capacity() > 0);
 	}
+
+	if (this->is_expandable() && this->get_base_capacity() > 0 && this->get_capacity_increment() == 0) {
+		throw std::runtime_error(std::format("Building type \"{}\" is expandable and has a base capacity, but has no capacity increment.", this->get_identifier()));
+	}
+
+	if (this->get_max_level() > 1 && !this->is_expandable()) {
+		throw std::runtime_error(std::format("Building type \"{}\" has a maximum level greater than 1, but is not expandable.", this->get_identifier()));
+	}
 }
 
 QVariantList building_type::get_production_types_qvariant_list() const
