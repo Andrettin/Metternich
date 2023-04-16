@@ -7,6 +7,7 @@
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
+#include "game/game.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -25,6 +26,7 @@ namespace metternich {
 map_grid_model::map_grid_model()
 {
 	connect(map::get(), &map::tile_terrain_changed, this, &map_grid_model::on_tile_terrain_changed);
+	connect(map::get(), &map::tile_exploration_changed, this, &map_grid_model::on_tile_exploration_changed);
 	connect(map::get(), &map::tile_improvement_changed, this, &map_grid_model::on_tile_improvement_changed);
 	connect(map::get(), &map::tile_civilian_unit_changed, this, &map_grid_model::on_tile_civilian_unit_changed);
 }
@@ -119,9 +121,17 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 					overlay_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
 				}
 
+				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
+					overlay_image_sources.push_back(map_grid_model::build_image_source(defines::get()->get_unexplored_terrain(), 0));
+				}
+
 				return overlay_image_sources;
 			}
 			case role::site:
+				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
+					return QVariant::fromValue(nullptr);
+				}
+
 				return QVariant::fromValue(const_cast<site *>(tile->get_site()));
 			case role::province:
 				return QVariant::fromValue(const_cast<province *>(tile->get_province()));
@@ -132,11 +142,19 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 			case role::improvement:
 				return QVariant::fromValue(const_cast<improvement *>(tile->get_improvement()));
 			case role::civilian_unit:
+				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
+					return QVariant::fromValue(nullptr);
+				}
+
 				return QVariant::fromValue(tile->get_civilian_unit());
 			case role::upper_label: {
 				const QPoint upper_tile_pos = tile_pos - QPoint(0, 1);
 
 				if (!map::get()->contains(upper_tile_pos)) {
+					return QString();
+				}
+
+				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(upper_tile_pos)) {
 					return QString();
 				}
 
@@ -171,6 +189,17 @@ void map_grid_model::on_tile_terrain_changed(const QPoint &tile_pos)
 		static_cast<int>(role::underlay_image_sources),
 		static_cast<int>(role::overlay_image_sources),
 		static_cast<int>(role::terrain)
+	});
+}
+
+void map_grid_model::on_tile_exploration_changed(const QPoint &tile_pos)
+{
+	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
+	emit dataChanged(index, index, {
+		static_cast<int>(role::overlay_image_sources),
+		static_cast<int>(role::site),
+		static_cast<int>(role::civilian_unit),
+		static_cast<int>(role::upper_label)
 	});
 }
 

@@ -40,6 +40,7 @@ set(country_SRCS
 	src/country/culture.cpp
 	src/country/culture_base.cpp
 	src/country/culture_container.cpp
+	src/country/culture_history.cpp
 	src/country/diplomacy_state.cpp
 	src/country/ideology.cpp
 	src/country/ideology_container.cpp

@@ -495,6 +495,8 @@ QVariantList country_game_data::get_provinces_qvariant_list() const
 
 void country_game_data::add_province(const province *province)
 {
+	this->explore_province(province);
+
 	this->provinces.push_back(province);
 
 	map *map = map::get();
@@ -1119,12 +1121,12 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 
 	co_await thread_pool::get()->co_spawn_awaitable([this, tile_pixel_size, &scaled_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() -> boost::asio::awaitable<void> {
 		scaled_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-	});
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
 
-	scaled_selected_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-	});
+		scaled_selected_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
 	});
 
 	this->diplomatic_map_image = std::move(scaled_diplomatic_map_image);
@@ -1158,8 +1160,8 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 					return false;
 				}
 
-			is_border_pixel = true;
-			return true;
+				is_border_pixel = true;
+				return true;
 			});
 
 			if (is_border_pixel) {
@@ -2473,6 +2475,78 @@ void country_game_data::decrement_scripted_modifiers()
 	for (const auto &[country, opinion_modifiers] : opinion_modifiers_to_remove) {
 		for (const opinion_modifier *modifier : opinion_modifiers) {
 			this->remove_opinion_modifier(country, modifier);
+		}
+	}
+}
+
+bool country_game_data::is_tile_explored(const QPoint &tile_pos) const
+{
+	const tile *tile = map::get()->get_tile(tile_pos);
+
+	if (tile->get_province() != nullptr && this->explored_provinces.contains(tile->get_province())) {
+		return true;
+	}
+
+	if (this->explored_tiles.contains(tile_pos)) {
+		return true;
+	}
+
+	return false;
+}
+
+void country_game_data::explore_tile(const QPoint &tile_pos)
+{
+	this->explored_tiles.insert(tile_pos);
+
+	if (this->country == game::get()->get_player_country()) {
+		map::get()->update_minimap_rect(QRect(tile_pos, QSize(1, 1)));
+		game::get()->set_exploration_changed();
+		emit map::get()->tile_exploration_changed(tile_pos);
+	}
+
+	const tile *tile = map::get()->get_tile(tile_pos);
+
+	if (tile->get_province() != nullptr) {
+		//add the tile's province to the explored provinces if all of its tiles have been explored
+		const province_game_data *province_game_data = tile->get_province()->get_game_data();
+		if (this->explored_tiles.size() >= province_game_data->get_tiles().size()) {
+			for (const QPoint &province_tile_pos : province_game_data->get_tiles()) {
+				if (!this->explored_tiles.contains(province_tile_pos)) {
+					return;
+				}
+			}
+
+			//add the province to the explored provinces and remove its tiles from the explored tiles, as they no longer need to be taken into account separately
+			this->explore_province(tile->get_province());
+		}
+	}
+}
+
+void country_game_data::explore_province(const province *province)
+{
+	if (this->explored_provinces.contains(province)) {
+		return;
+	}
+
+	const province_game_data *province_game_data = province->get_game_data();
+	assert_throw(province_game_data->is_on_map());
+
+	if (!this->explored_tiles.empty()) {
+		for (const QPoint &tile_pos : province_game_data->get_tiles()) {
+			if (this->explored_tiles.contains(tile_pos)) {
+				this->explored_tiles.erase(tile_pos);
+			}
+		}
+	}
+
+	this->explored_provinces.insert(province);
+
+	if (this->country == game::get()->get_player_country()) {
+		map::get()->update_minimap_rect(province_game_data->get_territory_rect());
+		game::get()->set_exploration_changed();
+
+		for (const QPoint &tile_pos : province_game_data->get_tiles()) {
+			emit map::get()->tile_exploration_changed(tile_pos);
 		}
 	}
 }

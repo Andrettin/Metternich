@@ -147,6 +147,19 @@ public:
 
 	void create_diplomatic_map_image();
 
+	const QImage &get_exploration_diplomatic_map_image() const
+	{
+		return this->exploration_diplomatic_map_image;
+	}
+
+	[[nodiscard]]
+	boost::asio::awaitable<void> create_exploration_diplomatic_map_image();
+
+	void set_exploration_changed()
+	{
+		this->exploration_changed = true;
+	}
+
 	void process_delayed_effects();
 
 private:
@@ -191,6 +204,8 @@ private:
 	std::vector<const country *> countries; //the countries currently in the game, i.e. those with at least 1 province
 	std::vector<const country *> great_powers;
 	country *player_country = nullptr;
+	QImage exploration_diplomatic_map_image;
+	bool exploration_changed = false;
 	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const country>>> country_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const province>>> province_delayed_effects;

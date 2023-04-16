@@ -14,6 +14,7 @@
 #include "unit/civilian_unit_type.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
+#include "util/point_util.h"
 
 namespace metternich {
 
@@ -40,7 +41,20 @@ void civilian_unit::do_turn()
 		this->set_task_completion_turns(this->task_completion_turns - 1);
 
 		if (this->task_completion_turns == 0) {
-			if (this->improvement_under_construction != nullptr) {
+			if (this->exploring) {
+				//set the adjacent tiles to explored for the owner player
+				point::for_each_adjacent(this->get_tile_pos(), [this](const QPoint &adjacent_pos) {
+					if (!map::get()->contains(adjacent_pos)) {
+						return;
+					}
+
+					if (!this->get_owner()->get_game_data()->is_tile_explored(adjacent_pos)) {
+						this->get_owner()->get_game_data()->explore_tile(adjacent_pos);
+					}
+				});
+
+				this->exploring = false;
+			} else if (this->improvement_under_construction != nullptr) {
 				map::get()->set_tile_improvement(this->get_tile_pos(), this->improvement_under_construction);
 				this->improvement_under_construction = nullptr;
 			}
@@ -133,6 +147,12 @@ void civilian_unit::move_to(const QPoint &tile_pos)
 	this->set_original_tile_pos(this->get_tile_pos());
 	this->set_tile_pos(tile_pos);
 
+	if (this->get_type()->is_explorer() && this->can_explore_tile(tile_pos)) {
+		this->exploring = true;
+		this->set_task_completion_turns(civilian_unit::exploration_turns);
+		return;
+	}
+
 	const improvement *buildable_improvement = this->get_buildable_resource_improvement_for_tile(tile_pos);
 	if (buildable_improvement != nullptr) {
 		this->build_improvement(buildable_improvement);
@@ -179,14 +199,15 @@ void civilian_unit::build_improvement(const improvement *improvement)
 {
 	this->improvement_under_construction = improvement;
 
-	//FIXME: set the task completion turns depending on the work to be done
-	this->set_task_completion_turns(2);
+	//FIXME: set the task completion turns as a field for each improvement?
+	this->set_task_completion_turns(civilian_unit::improvement_construction_turns);
 }
 
 void civilian_unit::cancel_work()
 {
 	this->set_task_completion_turns(0);
 	this->improvement_under_construction = nullptr;
+	this->exploring = false;
 }
 
 const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(const QPoint &tile_pos) const
@@ -210,6 +231,36 @@ const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(co
 	}
 
 	return nullptr;
+}
+
+bool civilian_unit::can_explore_tile(const QPoint &tile_pos) const
+{
+	if (!this->get_type()->is_explorer()) {
+		return false;
+	}
+
+
+	if (!this->get_owner()->get_game_data()->is_tile_explored(tile_pos)) {
+		//can only explore already-explored tiles which border non-explored ones
+		return false;
+	}
+
+	bool adjacent_unexplored = false;
+
+	point::for_each_adjacent_until(tile_pos, [this, &adjacent_unexplored](const QPoint &adjacent_pos) {
+		if (!map::get()->contains(adjacent_pos)) {
+			return false;
+		}
+
+		if (!this->get_owner()->get_game_data()->is_tile_explored(adjacent_pos)) {
+			adjacent_unexplored = true;
+			return true;
+		}
+
+		return false;
+	});
+
+	return adjacent_unexplored;
 }
 
 void civilian_unit::disband(const bool restore_population_unit)

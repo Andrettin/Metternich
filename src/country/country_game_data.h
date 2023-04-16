@@ -7,12 +7,14 @@
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_slot_type_container.h"
+#include "map/province_container.h"
 #include "map/terrain_type_container.h"
 #include "population/phenotype_container.h"
 #include "population/population_type_container.h"
 #include "script/opinion_modifier_container.h"
 #include "technology/technology_container.h"
 #include "util/fractional_int.h"
+#include "util/point_container.h"
 #include "util/qunique_ptr.h"
 
 namespace metternich {
@@ -865,6 +867,16 @@ public:
 
 	void decrement_scripted_modifiers();
 
+	Q_INVOKABLE bool is_tile_explored(const QPoint &tile_pos) const;
+
+	bool is_province_fully_explored(const province *province) const
+	{
+		return this->explored_provinces.contains(province);
+	}
+
+	void explore_tile(const QPoint &tile_pos);
+	void explore_province(const province *province);
+
 signals:
 	void religion_changed();
 	void overlord_changed();
@@ -954,6 +966,8 @@ private:
 	commodity_map<int> commodity_output_modifiers;
 	commodity_map<int> commodity_throughput_modifiers;
 	std::map<technology_category, int> category_research_modifiers;
+	province_set explored_provinces;
+	point_set explored_tiles; //used for tiles in partially-explored provinces
 };
 
 }

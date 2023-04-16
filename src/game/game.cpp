@@ -49,10 +49,13 @@
 #include "util/container_util.h"
 #include "util/exception_util.h"
 #include "util/event_loop.h"
+#include "util/image_util.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
 #include "util/size_util.h"
 #include "util/thread_pool.h"
+
+#include "xbrz.h"
 
 namespace metternich {
 
@@ -205,6 +208,7 @@ void game::start()
 		}
 
 		map::get()->create_minimap_image();
+		co_await this->create_exploration_diplomatic_map_image();
 
 		for (const country *country : this->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
@@ -266,6 +270,8 @@ void game::clear()
 		this->turn = 1;
 
 		this->rules.reset();
+		this->exploration_diplomatic_map_image = QImage();
+		this->exploration_changed = false;
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to clear the game."));
 	}
@@ -346,11 +352,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					continue;
 				}
 
-				country_game_data *country_game_data = country->get_game_data();
-
-				for (const technology *technology : culture_history->get_technologies()) {
-					country_game_data->add_technology_with_prerequisites(technology);
-				}
+				culture_history->apply_to_country(country);
 			}
 		}
 
@@ -362,11 +364,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					continue;
 				}
 
-				country_game_data *country_game_data = country->get_game_data();
-
-				for (const technology *technology : culture_history->get_technologies()) {
-					country_game_data->add_technology_with_prerequisites(technology);
-				}
+				culture_history->apply_to_country(country);
 			}
 		}
 
@@ -855,6 +853,13 @@ void game::do_turn()
 			country->get_game_data()->do_turn();
 		}
 
+		if (this->exploration_changed) {
+			thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+				co_await this->create_exploration_diplomatic_map_image();
+			});
+			this->exploration_changed = false;
+		}
+
 		this->calculate_great_power_ranks();
 
 		this->increment_turn();
@@ -979,6 +984,44 @@ void game::create_diplomatic_map_image()
 			co_await std::move(awaitable);
 		}
 	});
+}
+
+boost::asio::awaitable<void> game::create_exploration_diplomatic_map_image()
+{
+	const map *map = map::get();
+
+	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
+
+	this->exploration_diplomatic_map_image = QImage(map->get_size(), QImage::Format_RGBA8888);
+	this->exploration_diplomatic_map_image.fill(Qt::transparent);
+
+	const QColor &color = defines::get()->get_unexplored_terrain()->get_color();
+
+	const country_game_data *country_game_data = this->get_player_country()->get_game_data();
+
+	for (int x = 0; x < map->get_width(); ++x) {
+		for (int y = 0; y < map->get_height(); ++y) {
+			const QPoint tile_pos = QPoint(x, y);
+
+			if (country_game_data->is_tile_explored(tile_pos)) {
+				continue;
+			}
+
+			this->exploration_diplomatic_map_image.setPixelColor(tile_pos, color);
+		}
+	}
+
+	QImage scaled_exploration_diplomatic_map_image;
+
+	const centesimal_int final_scale_factor = tile_pixel_size * preferences::get()->get_scale_factor();
+
+	co_await thread_pool::get()->co_spawn_awaitable([this, final_scale_factor, &scaled_exploration_diplomatic_map_image]() -> boost::asio::awaitable<void> {
+		scaled_exploration_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->exploration_diplomatic_map_image, final_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	this->exploration_diplomatic_map_image = std::move(scaled_exploration_diplomatic_map_image);
 }
 
 void game::process_delayed_effects()

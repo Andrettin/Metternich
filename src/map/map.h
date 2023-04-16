@@ -87,6 +87,7 @@ public:
 	bool is_tile_coastal(const QPoint &tile_pos) const;
 
 	bool is_tile_on_country_border(const QPoint &tile_pos) const;
+	bool is_tile_on_province_border_with(const QPoint &tile_pos, const province *other_province) const;
 	void calculate_tile_country_border_directions(const QPoint &tile_pos);
 
 	const std::vector<const province *> &get_provinces() const
@@ -127,6 +128,7 @@ public:
 signals:
 	void size_changed();
 	void tile_terrain_changed(const QPoint &tile_pos);
+	void tile_exploration_changed(const QPoint &tile_pos);
 	void tile_improvement_changed(const QPoint &tile_pos);
 	void tile_civilian_unit_changed(const QPoint &tile_pos);
 	void provinces_changed();

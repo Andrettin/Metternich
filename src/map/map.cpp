@@ -532,6 +532,29 @@ bool map::is_tile_on_country_border(const QPoint &tile_pos) const
 	return result;
 }
 
+bool map::is_tile_on_province_border_with(const QPoint &tile_pos, const province *other_province) const
+{
+	bool result = false;
+
+	point::for_each_adjacent_until(tile_pos, [this, other_province, &result](const QPoint &adjacent_pos) {
+		if (!this->contains(adjacent_pos)) {
+			return false;
+		}
+
+		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+		const province *adjacent_province = adjacent_tile->get_province();
+
+		if (adjacent_province == other_province) {
+			result = true;
+			return true;
+		}
+
+		return false;
+	});
+
+	return result;
+}
+
 void map::calculate_tile_country_border_directions(const QPoint &tile_pos)
 {
 	tile *tile = this->get_tile(tile_pos);
@@ -687,19 +710,22 @@ void map::update_minimap_rect(const QRect &tile_rect)
 	for (int x = start_x; x < this->get_width(); ++x) {
 		for (int y = start_y; y < this->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
-			const tile *tile = this->get_tile(tile_pos);
-			const terrain_type *terrain = tile->get_terrain();
 
-			if (terrain->is_water()) {
-				this->minimap_image.setPixelColor(tile_pos, defines::get()->get_minimap_ocean_color());
-				continue;
-			}
+			if (game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
+				const tile *tile = this->get_tile(tile_pos);
+				const terrain_type *terrain = tile->get_terrain();
 
-			const country *country = tile->get_owner();
+				if (terrain->is_water()) {
+					this->minimap_image.setPixelColor(tile_pos, defines::get()->get_minimap_ocean_color());
+					continue;
+				}
 
-			if (country != nullptr) {
-				this->minimap_image.setPixelColor(tile_pos, country->get_game_data()->get_diplomatic_map_color());
-				continue;
+				const country *country = tile->get_owner();
+
+				if (country != nullptr) {
+					this->minimap_image.setPixelColor(tile_pos, country->get_game_data()->get_diplomatic_map_color());
+					continue;
+				}
 			}
 
 			this->minimap_image.setPixelColor(tile_pos, defines::get()->get_unexplored_terrain()->get_color());

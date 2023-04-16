@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/diplomacy_state.h"
+#include "game/game.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "util/assert_util.h"
@@ -27,6 +28,8 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 		image = &map::get()->get_ocean_diplomatic_map_image();
 	} else if (identifier == "minimap") {
 		image = &map::get()->get_minimap_image();
+	} else if (identifier == "exploration") {
+		image = &game::get()->get_exploration_diplomatic_map_image();
 	} else {
 		const country *country = country::get(identifier);
 		const country_game_data *country_game_data = country->get_game_data();
