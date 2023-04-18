@@ -68,6 +68,14 @@ void province_game_data::reset_non_map_data()
 void province_game_data::on_map_created()
 {
 	this->calculate_territory_rect_center();
+
+	if (this->province->get_capital_settlement() != nullptr && this->province->get_capital_settlement()->get_game_data()->get_province() == this->province) {
+		this->center_tile_pos = this->province->get_capital_settlement()->get_game_data()->get_tile_pos();
+	} else {
+		this->center_tile_pos = this->territory_rect_center;
+	}
+
+	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
 }
 
 void province_game_data::do_turn()

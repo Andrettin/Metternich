@@ -39,6 +39,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
+	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 
@@ -140,6 +141,11 @@ public:
 
 	void add_neighbor_province(const metternich::province *province);
 	bool is_country_border_province() const;
+
+	const QPoint &get_center_tile_pos() const
+	{
+		return this->center_tile_pos;
+	}
 
 	const std::vector<QPoint> &get_tiles() const
 	{
@@ -304,6 +310,7 @@ private:
 	QRect territory_rect;
 	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<const metternich::province *> neighbor_provinces;
+	QPoint center_tile_pos = QPoint(-1, -1);
 	std::vector<QPoint> tiles;
 	std::vector<QPoint> border_tiles;
 	std::vector<QPoint> resource_tiles;
