@@ -243,7 +243,10 @@ bool military_unit::can_move_to(const metternich::province *province) const
 			break;
 		case military_unit_domain::water:
 			if (!province->is_water_zone()) {
-				return false;
+				//ships can only move from water to land provinces, but not between land provinces
+				if (!this->get_province()->is_water_zone()) {
+					return false;
+				}
 			}
 			break;
 		case military_unit_domain::air:
