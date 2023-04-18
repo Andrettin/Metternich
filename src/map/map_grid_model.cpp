@@ -18,6 +18,7 @@
 #include "map/tile.h"
 #include "ui/icon.h"
 #include "unit/civilian_unit.h"
+#include "util/assert_util.h"
 #include "util/exception_util.h"
 #include "util/point_util.h"
 
@@ -159,10 +160,12 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 
 				const metternich::tile *upper_tile = map::get()->get_tile(upper_tile_pos);
+				const province *upper_tile_province = upper_tile->get_province();
 
-				if (upper_tile->get_settlement() != nullptr && upper_tile->get_province() != nullptr) {
-					const province_game_data *upper_tile_province_game_data = upper_tile->get_province()->get_game_data();
+				if (upper_tile_province != nullptr && upper_tile_province->get_game_data()->get_center_tile_pos() == upper_tile_pos) {
+					const province_game_data *upper_tile_province_game_data = upper_tile_province->get_game_data();
 					if (upper_tile_province_game_data->is_capital()) {
+						assert_throw(upper_tile->get_settlement() != nullptr);
 						return upper_tile->get_settlement()->get_game_data()->get_current_cultural_name_qstring();
 					} else {
 						return upper_tile_province_game_data->get_current_cultural_name_qstring();
