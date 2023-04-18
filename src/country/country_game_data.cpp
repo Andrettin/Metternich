@@ -757,7 +757,7 @@ void country_game_data::calculate_text_rect()
 	const map *map = map::get();
 
 	if (map->get_tile(center_pos)->get_owner() != this->country) {
-		center_pos = this->country->get_capital_province()->get_capital_settlement()->get_game_data()->get_tile_pos();
+		center_pos = this->country->get_capital_province()->get_game_data()->get_center_tile_pos();
 
 		if (map->get_tile(center_pos)->get_owner() != this->country) {
 			return;
