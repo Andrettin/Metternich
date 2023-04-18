@@ -24,6 +24,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_PROPERTY(bool sea MEMBER sea READ is_sea NOTIFY changed)
 	Q_PROPERTY(bool bay MEMBER bay READ is_bay NOTIFY changed)
 	Q_PROPERTY(bool lake MEMBER lake READ is_lake NOTIFY changed)
+	Q_PROPERTY(bool water_zone READ is_water_zone NOTIFY changed)
 	Q_PROPERTY(metternich::site* capital_settlement MEMBER capital_settlement NOTIFY changed)
 	Q_PROPERTY(std::vector<metternich::region *> regions READ get_regions NOTIFY changed)
 	Q_PROPERTY(metternich::province_game_data* game_data READ get_game_data NOTIFY changed)
