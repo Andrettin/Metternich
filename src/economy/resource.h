@@ -17,7 +17,7 @@ class resource final : public named_data_entry, public data_type<resource>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::commodity* commodity MEMBER commodity NOTIFY changed)
-	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(metternich::icon* icon MEMBER icon READ get_icon_unconst NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* discovery_technology MEMBER discovery_technology NOTIFY changed)
 	Q_PROPERTY(bool coastal MEMBER coastal READ is_coastal NOTIFY changed)
@@ -42,6 +42,14 @@ public:
 
 	const metternich::icon *get_icon() const;
 
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::icon *get_icon_unconst() const
+	{
+		return const_cast<metternich::icon *>(this->get_icon());
+	}
+
+public:
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
