@@ -22,6 +22,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(metternich::civilian_unit_type* type READ get_type_unconst NOTIFY type_changed)
 	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst CONSTANT)
+	Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_tile_pos_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
 	Q_PROPERTY(QVariantList improvable_resource_tiles READ get_improvable_resource_tiles_qvariant_list NOTIFY improvable_resources_changed)
@@ -138,10 +139,13 @@ public:
 		return this->is_moving() || this->is_working();
 	}
 
+	Q_INVOKABLE bool can_build_on_tile() const;
+	Q_INVOKABLE void build_on_tile();
+
 	bool can_build_improvement(const improvement *improvement) const;
 	bool can_build_improvement_on_tile(const improvement *improvement, const QPoint &tile_pos) const;
 	void build_improvement(const improvement *improvement);
-	void cancel_work();
+	Q_INVOKABLE void cancel_work();
 
 	const improvement *get_buildable_resource_improvement_for_tile(const QPoint &tile_pos) const;
 

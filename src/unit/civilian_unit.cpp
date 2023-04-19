@@ -159,9 +159,8 @@ void civilian_unit::move_to(const QPoint &tile_pos)
 		return;
 	}
 
-	const improvement *buildable_improvement = this->get_buildable_resource_improvement_for_tile(tile_pos);
-	if (buildable_improvement != nullptr) {
-		this->build_improvement(buildable_improvement);
+	if (this->can_build_on_tile()) {
+		this->build_on_tile();
 	}
 }
 
@@ -180,6 +179,18 @@ void civilian_unit::cancel_move()
 
 	this->set_tile_pos(this->original_tile_pos);
 	this->set_original_tile_pos(QPoint(-1, -1));
+}
+
+bool civilian_unit::can_build_on_tile() const
+{
+	return this->get_buildable_resource_improvement_for_tile(this->get_tile_pos()) != nullptr;
+}
+
+void civilian_unit::build_on_tile()
+{
+	const improvement *buildable_improvement = this->get_buildable_resource_improvement_for_tile(this->get_tile_pos());
+	assert_throw(buildable_improvement != nullptr);
+	this->build_improvement(buildable_improvement);
 }
 
 bool civilian_unit::can_build_improvement(const improvement *improvement) const
