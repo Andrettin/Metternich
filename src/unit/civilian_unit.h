@@ -1,5 +1,7 @@
 #pragma once
 
+#include "economy/resource_container.h"
+
 namespace metternich {
 
 class civilian_unit_type;
@@ -22,6 +24,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst CONSTANT)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_tile_pos_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
+	Q_PROPERTY(QVariantList improvable_resource_tiles READ get_improvable_resource_tiles_qvariant_list NOTIFY improvable_resources_changed)
 
 public:
 	static constexpr int improvement_construction_turns = 2;
@@ -142,6 +145,9 @@ public:
 
 	const improvement *get_buildable_resource_improvement_for_tile(const QPoint &tile_pos) const;
 
+	resource_map<std::vector<QPoint>> get_improvable_resource_tiles() const;
+	QVariantList get_improvable_resource_tiles_qvariant_list() const;
+
 	bool can_explore_tile(const QPoint &tile_pos) const;
 
 	void set_task_completion_turns(const int turns)
@@ -162,6 +168,7 @@ signals:
 	void icon_changed();
 	void tile_pos_changed();
 	void original_tile_pos_changed();
+	void improvable_resources_changed();
 	void task_completion_turns_changed();
 
 private:

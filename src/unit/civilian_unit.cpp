@@ -6,6 +6,7 @@
 #include "country/country_game_data.h"
 #include "country/culture.h"
 #include "country/religion.h"
+#include "economy/resource.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -14,6 +15,7 @@
 #include "unit/civilian_unit_type.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 #include "util/point_util.h"
 
 namespace metternich {
@@ -29,6 +31,10 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owne
 	assert_throw(this->get_phenotype() != nullptr);
 
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
+
+	connect(this->get_owner()->get_game_data(), &country_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
+	connect(this->get_owner()->get_game_data(), &country_game_data::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
+	connect(this->get_owner()->get_game_data(), &country_game_data::technologies_changed, this, &civilian_unit::improvable_resources_changed);
 }
 
 void civilian_unit::do_turn()
@@ -231,6 +237,33 @@ const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(co
 	}
 
 	return nullptr;
+}
+
+resource_map<std::vector<QPoint>> civilian_unit::get_improvable_resource_tiles() const
+{
+	resource_map<std::vector<QPoint>> resource_tiles;
+
+	for (const province *province : this->get_owner()->get_game_data()->get_provinces()) {
+		for (const QPoint &tile_pos : province->get_game_data()->get_resource_tiles()) {
+			const tile *tile = map::get()->get_tile(tile_pos);
+
+			if (tile->get_resource() == nullptr) {
+				continue;
+			}
+
+			const improvement *improvement = this->get_buildable_resource_improvement_for_tile(tile_pos);
+			if (improvement != nullptr) {
+				resource_tiles[tile->get_resource()].push_back(tile_pos);
+			}
+		}
+	}
+
+	return resource_tiles;
+}
+
+QVariantList civilian_unit::get_improvable_resource_tiles_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_improvable_resource_tiles());
 }
 
 bool civilian_unit::can_explore_tile(const QPoint &tile_pos) const
