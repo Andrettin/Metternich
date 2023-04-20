@@ -216,6 +216,9 @@ void game::start()
 			for (const qunique_ptr<population_unit> &population_unit : country_game_data->get_population_units()) {
 				population_unit->choose_ideology();
 			}
+
+			//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
+			country_game_data->check_journal_entries(true);
 		}
 
 		this->set_running(true);
