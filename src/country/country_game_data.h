@@ -93,6 +93,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
 	Q_PROPERTY(metternich::character* next_advisor READ get_next_advisor_unconst WRITE set_next_advisor NOTIFY next_advisor_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier NOTIFY output_modifier_changed)
+	Q_PROPERTY(int throughput_modifier READ get_throughput_modifier NOTIFY throughput_modifier_changed)
 	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList inactive_journal_entries READ get_inactive_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList finished_journal_entries READ get_finished_journal_entries_qvariant_list NOTIFY journal_entries_changed)
@@ -828,6 +829,18 @@ public:
 		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + value);
 	}
 
+	int get_throughput_modifier() const
+	{
+		return this->throughput_modifier;
+	}
+
+	void set_throughput_modifier(const int value);
+
+	void change_throughput_modifier(const int value)
+	{
+		this->set_throughput_modifier(this->get_throughput_modifier() + value);
+	}
+
 	int get_commodity_throughput_modifier(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_throughput_modifiers.find(commodity);
@@ -942,6 +955,7 @@ signals:
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
 	void output_modifier_changed();
+	void throughput_modifier_changed();
 	void journal_entries_changed();
 
 private:
@@ -999,6 +1013,7 @@ private:
 	int air_morale_resistance_modifier = 0;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
+	int throughput_modifier = 0;
 	commodity_map<int> commodity_throughput_modifiers;
 	std::map<technology_category, int> category_research_modifiers;
 	province_set explored_provinces;

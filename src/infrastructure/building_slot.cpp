@@ -276,7 +276,7 @@ commodity_map<int> building_slot::get_production_type_inputs(const production_ty
 		int total_input = input_value * employed_capacity;
 
 		if (input_commodity->is_labor()) {
-			const int throughput_modifier = country_game_data->get_commodity_throughput_modifier(production_type->get_output_commodity());
+			const int throughput_modifier = country_game_data->get_throughput_modifier() + country_game_data->get_commodity_throughput_modifier(production_type->get_output_commodity());
 
 			if (throughput_modifier != 0) {
 				assert_throw(throughput_modifier > -100);

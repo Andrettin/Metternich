@@ -518,6 +518,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/naval_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/storage_capacity_modifier_effect.h
+	src/script/modifier_effect/throughput_modifier_effect.h
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})
 

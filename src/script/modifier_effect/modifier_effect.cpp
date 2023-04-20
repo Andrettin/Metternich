@@ -13,6 +13,7 @@
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
+#include "script/modifier_effect/throughput_modifier_effect.h"
 
 namespace metternich {
 
@@ -36,6 +37,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<naval_morale_resistance_modifier_effect>(value);
 		} else if (key == "storage_capacity") {
 			return std::make_unique<storage_capacity_modifier_effect>(value);
+		} else if (key == "throughput_modifier") {
+			return std::make_unique<throughput_modifier_effect<scope_type>>(value);
 		} else if (key.ends_with(throughput_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - throughput_modifier_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - throughput_modifier_suffix.size()));
 			return std::make_unique<commodity_throughput_modifier_effect<scope_type>>(commodity, value);

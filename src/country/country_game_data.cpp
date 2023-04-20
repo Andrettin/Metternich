@@ -2398,6 +2398,43 @@ void country_game_data::set_commodity_output_modifier(const commodity *commodity
 	}
 }
 
+void country_game_data::set_throughput_modifier(const int value)
+{
+	if (value == this->get_throughput_modifier()) {
+		return;
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
+			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
+			for (const auto &[input_commodity, input_value] : inputs) {
+				if (input_commodity->is_storable()) {
+					this->change_stored_commodity(input_commodity, input_value);
+				}
+				this->change_commodity_input(input_commodity, -input_value);
+			}
+		}
+	}
+
+	this->throughput_modifier = value;
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
+			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
+			for (const auto &[input_commodity, input_value] : inputs) {
+				if (input_commodity->is_storable()) {
+					this->change_stored_commodity(input_commodity, -input_value);
+				}
+				this->change_commodity_input(input_commodity, input_value);
+			}
+		}
+	}
+
+	if (game::get()->is_running()) {
+		emit throughput_modifier_changed();
+	}
+}
+
 void country_game_data::set_commodity_throughput_modifier(const commodity *commodity, const int value)
 {
 	if (value == this->get_commodity_throughput_modifier(commodity)) {
