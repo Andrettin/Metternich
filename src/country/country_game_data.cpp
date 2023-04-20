@@ -10,6 +10,7 @@
 #include "country/country_type.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
+#include "country/journal_entry.h"
 #include "country/religion.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -38,6 +39,7 @@
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/condition.h"
+#include "script/effect/effect_list.h"
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "script/opinion_modifier.h"
@@ -97,6 +99,7 @@ void country_game_data::do_turn()
 
 		this->decrement_scripted_modifiers();
 
+		this->check_journal_entries();
 		this->do_events();
 
 		if (game::get()->get_rules()->are_advisors_enabled() && this->can_have_advisors()) {
@@ -2549,6 +2552,148 @@ void country_game_data::explore_province(const province *province)
 			emit map::get()->tile_exploration_changed(tile_pos);
 		}
 	}
+}
+
+QVariantList country_game_data::get_active_journal_entries_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_active_journal_entries());
+}
+
+QVariantList country_game_data::get_inactive_journal_entries_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_inactive_journal_entries());
+}
+
+QVariantList country_game_data::get_finished_journal_entries_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_finished_journal_entries());
+}
+
+void country_game_data::check_journal_entries(const bool ignore_effects)
+{
+	const read_only_context ctx(this->country);
+
+	bool changed = false;
+
+	//check if any journal entry has become potentially available
+	if (this->check_potential_journal_entries(ctx)) {
+		changed = true;
+	}
+
+	if (this->check_inactive_journal_entries(ctx)) {
+		changed = true;
+	}
+
+	if (this->check_active_journal_entries(ctx, ignore_effects)) {
+		changed = true;
+	}
+
+	if (changed) {
+		emit journal_entries_changed();
+	}
+}
+
+bool country_game_data::check_potential_journal_entries(const read_only_context &ctx)
+{
+	bool changed = false;
+
+	for (const journal_entry *journal_entry : journal_entry::get_all()) {
+		if (vector::contains(this->get_active_journal_entries(), journal_entry)) {
+			continue;
+		}
+
+		if (vector::contains(this->get_inactive_journal_entries(), journal_entry)) {
+			continue;
+		}
+
+		if (vector::contains(this->get_finished_journal_entries(), journal_entry)) {
+			continue;
+		}
+
+		if (journal_entry->get_preconditions() != nullptr && !journal_entry->get_preconditions()->check(this->country, ctx)) {
+			continue;
+		}
+
+		this->inactive_journal_entries.push_back(journal_entry);
+		changed = true;
+	}
+
+	return changed;
+}
+
+bool country_game_data::check_inactive_journal_entries(const read_only_context &ctx)
+{
+	bool changed = false;
+
+	const std::vector<const journal_entry *> inactive_entries = this->get_inactive_journal_entries();
+
+	for (const journal_entry *journal_entry : inactive_entries) {
+		if (journal_entry->get_preconditions() != nullptr && !journal_entry->get_preconditions()->check(this->country, ctx)) {
+			std::erase(this->inactive_journal_entries, journal_entry);
+			changed = true;
+			continue;
+		}
+
+		if (journal_entry->get_conditions() != nullptr && !journal_entry->get_conditions()->check(this->country, ctx)) {
+			continue;
+		}
+
+		std::erase(this->inactive_journal_entries, journal_entry);
+		this->active_journal_entries.push_back(journal_entry);
+		changed = true;
+	}
+
+	return changed;
+}
+
+bool country_game_data::check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects)
+{
+	bool changed = false;
+
+	const std::vector<const journal_entry *> active_entries = this->get_active_journal_entries();
+
+	for (const journal_entry *journal_entry : active_entries) {
+		if (journal_entry->get_preconditions() != nullptr && !journal_entry->get_preconditions()->check(this->country, ctx)) {
+			std::erase(this->active_journal_entries, journal_entry);
+			changed = true;
+			continue;
+		}
+
+		if (journal_entry->get_conditions() != nullptr && !journal_entry->get_conditions()->check(this->country, ctx)) {
+			std::erase(this->active_journal_entries, journal_entry);
+			this->inactive_journal_entries.push_back(journal_entry);
+			changed = true;
+			continue;
+		}
+
+		if (journal_entry->get_completion_conditions() != nullptr && journal_entry->get_completion_conditions()->check(this->country, ctx)) {
+			std::erase(this->active_journal_entries, journal_entry);
+			this->finished_journal_entries.push_back(journal_entry);
+			if (journal_entry->get_completion_effects() != nullptr && !ignore_effects) {
+				context effects_ctx(this->country);
+				journal_entry->get_completion_effects()->do_effects(this->country, effects_ctx);
+
+				if (this->country == game::get()->get_player_country()) {
+					engine_interface::get()->add_notification(journal_entry->get_name(), journal_entry->get_portrait(), std::format("{}{}{}", journal_entry->get_description(), (!journal_entry->get_description().empty() ? "\n\n" : ""), journal_entry->get_completion_effects()->get_effects_string(this->country, ctx)));
+				}
+			}
+			changed = true;
+		} else if (journal_entry->get_failure_conditions() != nullptr && journal_entry->get_failure_conditions()->check(this->country, ctx)) {
+			std::erase(this->active_journal_entries, journal_entry);
+			this->finished_journal_entries.push_back(journal_entry);
+			if (journal_entry->get_failure_effects() != nullptr && !ignore_effects) {
+				context effects_ctx(this->country);
+				journal_entry->get_failure_effects()->do_effects(this->country, effects_ctx);
+
+				if (this->country == game::get()->get_player_country()) {
+					engine_interface::get()->add_notification(journal_entry->get_name(), journal_entry->get_portrait(), std::format("{}{}{}", journal_entry->get_description(), (!journal_entry->get_description().empty() ? "\n\n" : ""), journal_entry->get_failure_effects()->get_effects_string(this->country, ctx)));
+				}
+			}
+			changed = true;
+		}
+	}
+
+	return changed;
 }
 
 }

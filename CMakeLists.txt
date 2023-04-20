@@ -44,6 +44,7 @@ set(country_SRCS
 	src/country/diplomacy_state.cpp
 	src/country/ideology.cpp
 	src/country/ideology_container.cpp
+	src/country/journal_entry.cpp
 	src/country/religion.cpp
 	src/country/religion_container.cpp
 )
@@ -300,6 +301,7 @@ set(country_HDRS
 	src/country/diplomacy_state.h
 	src/country/ideology.h
 	src/country/ideology_container.h
+	src/country/journal_entry.h
 	src/country/religion.h
 	src/country/religion_container.h
 	src/country/religious_group.h

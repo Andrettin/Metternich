@@ -27,6 +27,7 @@ class consulate;
 class country;
 class culture;
 class event;
+class journal_entry;
 class military_unit;
 class military_unit_type;
 class opinion_modifier;
@@ -91,6 +92,9 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
 	Q_PROPERTY(metternich::character* next_advisor READ get_next_advisor_unconst WRITE set_next_advisor NOTIFY next_advisor_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier NOTIFY output_modifier_changed)
+	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
+	Q_PROPERTY(QVariantList inactive_journal_entries READ get_inactive_journal_entries_qvariant_list NOTIFY journal_entries_changed)
+	Q_PROPERTY(QVariantList finished_journal_entries READ get_finished_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 
 public:
 	static constexpr int base_advisor_cost = 80;
@@ -877,6 +881,31 @@ public:
 	void explore_tile(const QPoint &tile_pos);
 	void explore_province(const province *province);
 
+	const std::vector<const journal_entry *> &get_active_journal_entries() const
+	{
+		return this->active_journal_entries;
+	}
+
+	QVariantList get_active_journal_entries_qvariant_list() const;
+
+	const std::vector<const journal_entry *> &get_inactive_journal_entries() const
+	{
+		return this->inactive_journal_entries;
+	}
+
+	QVariantList get_inactive_journal_entries_qvariant_list() const;
+
+	const std::vector<const journal_entry *> &get_finished_journal_entries() const
+	{
+		return this->finished_journal_entries;
+	}
+
+	QVariantList get_finished_journal_entries_qvariant_list() const;
+	void check_journal_entries(const bool ignore_effects = false);
+	bool check_potential_journal_entries(const read_only_context &ctx);
+	bool check_inactive_journal_entries(const read_only_context &ctx);
+	bool check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects);
+
 signals:
 	void religion_changed();
 	void overlord_changed();
@@ -908,6 +937,7 @@ signals:
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
 	void output_modifier_changed();
+	void journal_entries_changed();
 
 private:
 	metternich::country *country = nullptr;
@@ -968,6 +998,9 @@ private:
 	std::map<technology_category, int> category_research_modifiers;
 	province_set explored_provinces;
 	point_set explored_tiles; //used for tiles in partially-explored provinces
+	std::vector<const journal_entry *> active_journal_entries;
+	std::vector<const journal_entry *> inactive_journal_entries;
+	std::vector<const journal_entry *> finished_journal_entries;
 };
 
 }
