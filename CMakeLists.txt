@@ -435,6 +435,8 @@ set(script_condition_HDRS
 	src/script/condition/country_scope_condition.h
 	src/script/condition/country_type_condition.h
 	src/script/condition/culture_condition.h
+	src/script/condition/discovered_province_condition.h
+	src/script/condition/discovered_region_condition.h
 	src/script/condition/event_condition.h
 	src/script/condition/game_rule_condition.h
 	src/script/condition/gender_condition.h

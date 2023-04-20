@@ -31,6 +31,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/region.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
@@ -2492,6 +2493,53 @@ bool country_game_data::is_tile_explored(const QPoint &tile_pos) const
 
 	if (this->explored_tiles.contains(tile_pos)) {
 		return true;
+	}
+
+	return false;
+}
+
+bool country_game_data::is_province_discovered(const province *province) const
+{
+	//get whether the province has been at least partially explored
+	const province_game_data *province_game_data = province->get_game_data();
+	if (!province_game_data->is_on_map()) {
+		return false;
+	}
+
+	if (this->is_province_explored(province)) {
+		return true;
+	}
+
+	if (!this->explored_tiles.empty()) {
+		for (const QPoint &tile_pos : province_game_data->get_tiles()) {
+			if (this->explored_tiles.contains(tile_pos)) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+bool country_game_data::is_region_discovered(const region *region) const
+{
+	for (const province *province : region->get_provinces()) {
+		const province_game_data *province_game_data = province->get_game_data();
+		if (!province_game_data->is_on_map()) {
+			continue;
+		}
+
+		if (this->is_province_explored(province)) {
+			return true;
+		}
+	}
+
+	//go through the explored tiles instead of each province's tiles, as this is likely faster
+	for (const QPoint &tile_pos : this->explored_tiles) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+		if (tile->get_province() != nullptr && vector::contains(region->get_provinces(), tile->get_province())) {
+			return true;
+		}
 	}
 
 	return false;

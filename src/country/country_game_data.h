@@ -33,6 +33,7 @@ class military_unit_type;
 class opinion_modifier;
 class population_unit;
 class province;
+class region;
 class religion;
 class trait;
 enum class diplomacy_state;
@@ -872,11 +873,15 @@ public:
 	void decrement_scripted_modifiers();
 
 	Q_INVOKABLE bool is_tile_explored(const QPoint &tile_pos) const;
+	bool is_province_discovered(const province *province) const;
 
-	bool is_province_fully_explored(const province *province) const
+	bool is_province_explored(const province *province) const
 	{
+		//get whether the province has been fully explored
 		return this->explored_provinces.contains(province);
 	}
+
+	bool is_region_discovered(const region *region) const;
 
 	void explore_tile(const QPoint &tile_pos);
 	void explore_province(const province *province);

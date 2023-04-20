@@ -131,7 +131,7 @@ void military_unit::do_turn()
 			//when ships move to a water zone, explore all adjacent water zones and coasts as well
 			if (this->get_province()->is_water_zone()) {
 				for (const metternich::province *neighbor_province : this->get_province()->get_game_data()->get_neighbor_provinces()) {
-					if (this->get_owner()->get_game_data()->is_province_fully_explored(neighbor_province)) {
+					if (this->get_owner()->get_game_data()->is_province_explored(neighbor_province)) {
 						continue;
 					}
 
