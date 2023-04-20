@@ -57,20 +57,28 @@ public:
 		return this->completion_conditions.get();
 	}
 
+	Q_INVOKABLE QString get_completion_conditions_string() const;
+
 	const condition<country> *get_failure_conditions() const
 	{
 		return this->failure_conditions.get();
 	}
+
+	Q_INVOKABLE QString get_failure_conditions_string() const;
 
 	const effect_list<const country> *get_completion_effects() const
 	{
 		return this->completion_effects.get();
 	}
 
+	Q_INVOKABLE QString get_completion_effects_string(metternich::country *country) const;
+
 	const effect_list<const country> *get_failure_effects() const
 	{
 		return this->failure_effects.get();
 	}
+
+	Q_INVOKABLE QString get_failure_effects_string(metternich::country *country) const;
 
 signals:
 	void changed();

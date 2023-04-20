@@ -79,4 +79,40 @@ void journal_entry::check() const
 	}
 }
 
+QString journal_entry::get_completion_conditions_string() const
+{
+	if (this->get_completion_conditions() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->get_completion_conditions()->get_string(0));
+}
+
+QString journal_entry::get_failure_conditions_string() const
+{
+	if (this->get_failure_conditions() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->get_failure_conditions()->get_string(0));
+}
+
+QString journal_entry::get_completion_effects_string(metternich::country *country) const
+{
+	if (this->get_completion_effects() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->get_completion_effects()->get_effects_string(country, read_only_context(country)));
+}
+
+QString journal_entry::get_failure_effects_string(metternich::country *country) const
+{
+	if (this->get_failure_effects() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->get_failure_effects()->get_effects_string(country, read_only_context(country)));
+}
+
 }
