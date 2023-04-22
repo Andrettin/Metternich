@@ -8,6 +8,7 @@
 #include "map/province_game_data.h"
 #include "map/province_history.h"
 #include "map/region.h"
+#include "map/site.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/vector_util.h"
@@ -40,6 +41,17 @@ void province::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void province::initialize()
+{
+	if (this->get_capital_settlement() != nullptr) {
+		assert_throw(this->get_capital_settlement()->get_province() == nullptr || this->get_capital_settlement()->get_province() == this);
+
+		this->capital_settlement->set_province(this);
+	}
+
+	named_data_entry::initialize();
 }
 
 void province::check() const

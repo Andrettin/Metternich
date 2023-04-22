@@ -100,6 +100,7 @@ public:
 	}
 
 	QPoint get_geocoordinate_pos(const geocoordinate &geocoordinate) const;
+	geocoordinate get_pos_geocoordinate(const QPoint &pos) const;
 
 	const std::filesystem::path &get_terrain_image_filepath() const
 	{

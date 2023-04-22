@@ -18,16 +18,22 @@
 #include "util/geoshape_util.h"
 #include "util/path_util.h"
 #include "util/point_util.h"
+#include "util/rect_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
 
 //map templates must be initialized after sites, as sites add themselves to the world site list in their initialization function, and during map template initialization the sites are then added to the map template's site position map
-const std::set<std::string> map_template::database_dependencies = { site::class_identifier };
+//map templates must also be initialized after provinces, as they set their settlements to have them as their provinces, which is needed for site position initialization
+const std::set<std::string> map_template::database_dependencies = { site::class_identifier, province::class_identifier };
 
 void map_template::initialize()
 {
 	const QRect map_rect(QPoint(0, 0), this->get_size());
+
+	assert_throw(!this->get_province_image_filepath().empty());
+
+	const QImage province_image(path::to_qstring(this->get_province_image_filepath()));
 
 	for (const site *site : this->get_world()->get_sites()) {
 		assert_throw(site->get_geocoordinate().is_valid());
@@ -40,11 +46,53 @@ void map_template::initialize()
 			continue;
 		}
 
-		const QPoint tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate()) + site->get_pos_offset();
+		QPoint tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate()) + site->get_pos_offset();
 
 		if (!map_rect.contains(tile_pos)) {
 			continue;
 		}
+
+		//if the site is not placed in its province, nudge its position to be in the nearest point in its province
+		if (site->get_province() != nullptr && province::try_get_by_color(province_image.pixelColor(tile_pos)) != site->get_province()) {
+			bool found_pos = false;
+			bool checked_on_map = true;
+			int64_t best_distance = std::numeric_limits<int64_t>::max();
+
+			QRect rect(tile_pos, QSize(1, 1));
+
+			while (checked_on_map) {
+				checked_on_map = false;
+				rect.setTopLeft(rect.topLeft() - QPoint(1, 1));
+				rect.setBottomRight(rect.bottomRight() + QPoint(1, 1));
+
+				rect::for_each_edge_point(rect, [&](const QPoint &checked_pos) {
+					if (!map_rect.contains(checked_pos)) {
+						return;
+					}
+
+					checked_on_map = true;
+
+					const province *checked_province = province::try_get_by_color(province_image.pixelColor(checked_pos));
+					if (checked_province != site->get_province()) {
+						return;
+					}
+
+					const geocoordinate checked_pos_geocoordinate = this->get_pos_geocoordinate(checked_pos);
+					const int64_t distance = number::distance_between(checked_pos_geocoordinate.get_longitude().get_value(), checked_pos_geocoordinate.get_latitude().get_value(), site->get_geocoordinate().get_longitude().get_value(), site->get_geocoordinate().get_latitude().get_value());
+					if (distance < best_distance) {
+						best_distance = distance;
+						tile_pos = checked_pos;
+						found_pos = true;
+					}
+				});
+			}
+
+			if (!found_pos) {
+				throw std::runtime_error(std::format("No position found for site \"{}\" in province \"{}\".", site->get_identifier(), site->get_province()->get_identifier()));
+			}
+		}
+
+		assert_throw(map_rect.contains(tile_pos));
 
 		if (this->sites_by_position.contains(tile_pos)) {
 			throw std::runtime_error("Both the sites of \"" + this->sites_by_position.find(tile_pos)->second->get_identifier() + "\" and \"" + site->get_identifier() + "\" occupy the " + point::to_string(tile_pos) + " position in map template \"" + this->get_identifier() + "\".");
@@ -59,6 +107,11 @@ void map_template::initialize()
 QPoint map_template::get_geocoordinate_pos(const geocoordinate &geocoordinate) const
 {
 	return this->map_projection->geocoordinate_to_point(geocoordinate, this->get_georectangle(), this->get_size(), this->geocoordinate_x_offset);
+}
+
+geocoordinate map_template::get_pos_geocoordinate(const QPoint &pos) const
+{
+	return this->map_projection->point_to_geocoordinate(pos, this->get_georectangle(), this->get_size(), this->geocoordinate_x_offset);
 }
 
 void map_template::set_terrain_image_filepath(const std::filesystem::path &filepath)

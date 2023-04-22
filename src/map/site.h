@@ -101,6 +101,11 @@ public:
 		return this->province;
 	}
 
+	void set_province(metternich::province *province)
+	{
+		this->province = province;
+	}
+
 	const std::string &get_cultural_name(const culture *culture) const;
 
 signals:
