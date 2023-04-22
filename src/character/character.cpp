@@ -126,7 +126,7 @@ void character::initialize()
 		}
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void character::check() const

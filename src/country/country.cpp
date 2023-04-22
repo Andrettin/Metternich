@@ -47,7 +47,7 @@ void country::initialize()
 		province->add_core_country(this);
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void country::check() const

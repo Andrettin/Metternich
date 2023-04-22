@@ -53,7 +53,7 @@ void map_template::initialize()
 		this->sites_by_position[tile_pos] = site;
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 QPoint map_template::get_geocoordinate_pos(const geocoordinate &geocoordinate) const

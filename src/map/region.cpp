@@ -62,7 +62,7 @@ void region::initialize()
 		}
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 data_entry_history *region::get_history_base()

@@ -19,7 +19,7 @@ void commodity::initialize()
 		this->required_technology->add_enabled_commodity(this);
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void commodity::check() const

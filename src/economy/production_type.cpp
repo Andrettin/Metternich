@@ -34,7 +34,7 @@ void production_type::initialize()
 		this->required_technology->add_enabled_production_type(this);
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void production_type::check() const

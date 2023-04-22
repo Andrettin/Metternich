@@ -27,7 +27,7 @@ void civilian_unit_type::initialize()
 		this->unit_class->set_default_unit_type(this);
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void civilian_unit_type::check() const

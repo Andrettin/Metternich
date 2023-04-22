@@ -81,7 +81,7 @@ void site::initialize()
 		this->province->add_site(this);
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void site::check() const

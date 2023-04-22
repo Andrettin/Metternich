@@ -35,7 +35,7 @@ void military_unit_type::initialize()
 		this->required_technology->add_enabled_military_unit(this);
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void military_unit_type::check() const

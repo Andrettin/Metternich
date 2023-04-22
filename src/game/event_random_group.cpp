@@ -38,7 +38,7 @@ void event_random_group::initialize()
 		}
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void event_random_group::check() const

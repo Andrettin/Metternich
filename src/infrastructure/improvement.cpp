@@ -40,7 +40,7 @@ void improvement::initialize()
 		this->required_technology->add_enabled_improvement(this);
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void improvement::check() const

@@ -69,7 +69,7 @@ void building_type::initialize()
 		this->required_technology->add_enabled_building(this);
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void building_type::check() const

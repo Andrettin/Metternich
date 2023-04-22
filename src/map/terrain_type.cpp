@@ -130,7 +130,7 @@ void terrain_type::initialize()
 		co_await tile_image_provider::get()->load_image("terrain/" + this->get_identifier());
 	});
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void terrain_type::check() const

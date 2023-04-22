@@ -63,7 +63,7 @@ void population_type::initialize()
 		this->population_class->set_default_population_type(this);
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void population_type::check() const

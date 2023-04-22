@@ -15,7 +15,7 @@ void phenotype::initialize()
 		this->color = random::get()->generate_color();
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void phenotype::check() const
