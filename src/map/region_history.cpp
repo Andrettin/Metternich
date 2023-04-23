@@ -36,6 +36,10 @@ void region_history::distribute_population()
 {
 	if (this->get_literacy_rate() != 0) {
 		for (const province *province : this->region->get_provinces()) {
+			if (province->is_water_zone()) {
+				continue;
+			}
+
 			province_history *province_history = province->get_history();
 
 			if (province_history->get_literacy_rate() == 0) {
@@ -54,6 +58,10 @@ void region_history::distribute_population()
 
 		//subtract the predefined population of provinces in the region from that of the region
 		for (const province *province : this->region->get_provinces()) {
+			if (province->is_water_zone()) {
+				continue;
+			}
+
 			const province_history *province_history = province->get_history();
 			const int province_group_population = std::max(province_history->get_group_population(group_key), province_history->get_lower_bound_group_population(group_key));
 
@@ -74,6 +82,10 @@ void region_history::distribute_population()
 		const int64_t population_per_province = remaining_population / unpopulated_province_count;
 
 		for (const province *province : this->region->get_provinces()) {
+			if (province->is_water_zone()) {
+				continue;
+			}
+
 			province_history *province_history = province->get_history();
 
 			if (province_history->get_group_population(group_key) == 0) {
