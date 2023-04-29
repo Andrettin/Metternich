@@ -413,8 +413,11 @@ bool country_game_data::is_any_overlord_of(const metternich::country *country) c
 		return true;
 	}
 
-	if (this->get_overlord() != nullptr) {
-		return this->get_overlord()->get_game_data()->is_any_overlord_of(country);
+	const std::vector<const metternich::country *> vassals = this->get_vassals();
+	for (const metternich::country *vassal : this->get_vassals()) {
+		if (vassal->get_game_data()->is_any_overlord_of(country)) {
+			return true;
+		}
 	}
 
 	return false;
