@@ -458,12 +458,19 @@ void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discov
 	tile->set_resource_discovered(discovered);
 
 	if (discovered && resource->get_discovery_technology() != nullptr && tile->get_owner() != nullptr) {
-		country_game_data *country_game_data = tile->get_owner()->get_game_data();
-		if (!country_game_data->has_technology(resource->get_discovery_technology())) {
-			country_game_data->add_technology(resource->get_discovery_technology());
+		for (const country *country : game::get()->get_countries()) {
+			country_game_data *country_game_data = country->get_game_data();
 
-			if (game::get()->is_running()) {
-				emit country_game_data->technology_researched(const_cast<technology *>(resource->get_discovery_technology()));
+			if (!country_game_data->is_tile_explored(tile_pos)) {
+				continue;
+			}
+
+			if (!country_game_data->has_technology(resource->get_discovery_technology())) {
+				country_game_data->add_technology(resource->get_discovery_technology());
+
+				if (game::get()->is_running()) {
+					emit country_game_data->technology_researched(const_cast<technology *>(resource->get_discovery_technology()));
+				}
 			}
 		}
 	}

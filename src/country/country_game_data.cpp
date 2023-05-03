@@ -529,15 +529,7 @@ void country_game_data::add_province(const province *province)
 		const improvement *improvement = tile->get_improvement();
 
 		if (resource != nullptr) {
-			if (tile->is_resource_discovered()) {
-				if (resource->get_discovery_technology() != nullptr && !this->has_technology(resource->get_discovery_technology())) {
-					this->add_technology(resource->get_discovery_technology());
-
-					if (game::get()->is_running()) {
-						emit technology_researched(const_cast<technology *>(resource->get_discovery_technology()));
-					}
-				}
-			} else {
+			if (!tile->is_resource_discovered()) {
 				assert_throw(resource->get_required_technology() != nullptr);
 
 				if (this->has_technology(resource->get_required_technology())) {
@@ -2639,6 +2631,17 @@ void country_game_data::explore_tile(const QPoint &tile_pos)
 	}
 
 	const tile *tile = map::get()->get_tile(tile_pos);
+	const resource *tile_resource = tile->get_resource();
+
+	if (tile_resource != nullptr && tile->is_resource_discovered() && tile_resource->get_discovery_technology() != nullptr) {
+		if (!this->has_technology(tile_resource->get_discovery_technology())) {
+			this->add_technology(tile_resource->get_discovery_technology());
+
+			if (game::get()->is_running()) {
+				emit technology_researched(const_cast<technology *>(tile_resource->get_discovery_technology()));
+			}
+		}
+	}
 
 	if (tile->get_province() != nullptr) {
 		//add the tile's province to the explored provinces if all of its tiles have been explored
@@ -2681,6 +2684,21 @@ void country_game_data::explore_province(const province *province)
 
 		for (const QPoint &tile_pos : province_game_data->get_tiles()) {
 			emit map::get()->tile_exploration_changed(tile_pos);
+		}
+	}
+
+	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+		const resource *tile_resource = tile->get_resource();
+
+		if (tile_resource != nullptr && tile->is_resource_discovered() && tile_resource->get_discovery_technology() != nullptr) {
+			if (!this->has_technology(tile_resource->get_discovery_technology())) {
+				this->add_technology(tile_resource->get_discovery_technology());
+
+				if (game::get()->is_running()) {
+					emit technology_researched(const_cast<technology *>(tile_resource->get_discovery_technology()));
+				}
+			}
 		}
 	}
 }
