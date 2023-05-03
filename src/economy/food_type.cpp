@@ -12,7 +12,7 @@ const std::string enum_converter<metternich::food_type>::property_class_identifi
 template <>
 const std::map<std::string, metternich::food_type> enum_converter<metternich::food_type>::string_to_enum_map = {
 	{ "none", metternich::food_type::none },
-	{ "grain", metternich::food_type::grain },
+	{ "starch", metternich::food_type::starch },
 	{ "meat", metternich::food_type::meat },
 	{ "fruit", metternich::food_type::fruit }
 };

@@ -6,7 +6,7 @@ namespace metternich {
 
 enum class food_type {
 	none,
-	grain,
+	starch,
 	meat,
 	fruit
 };
