@@ -186,7 +186,6 @@ void country_game_data::do_research()
 			this->change_stored_commodity(defines::get()->get_research_commodity(), -this->get_current_research()->get_cost());
 
 			this->add_technology(this->get_current_research());
-
 			emit technology_researched(const_cast<technology *>(this->get_current_research()));
 
 			this->set_current_research(nullptr);
@@ -529,11 +528,21 @@ void country_game_data::add_province(const province *province)
 		const resource *resource = tile->get_resource();
 		const improvement *improvement = tile->get_improvement();
 
-		if (resource != nullptr && !tile->is_resource_discovered()) {
-			assert_throw(resource->get_required_technology() != nullptr);
+		if (resource != nullptr) {
+			if (tile->is_resource_discovered()) {
+				if (resource->get_discovery_technology() != nullptr && !this->has_technology(resource->get_discovery_technology())) {
+					this->add_technology(resource->get_discovery_technology());
 
-			if (this->has_technology(resource->get_required_technology())) {
-				map::get()->set_tile_resource_discovered(tile_pos, true);
+					if (game::get()->is_running()) {
+						emit technology_researched(const_cast<technology *>(resource->get_discovery_technology()));
+					}
+				}
+			} else {
+				assert_throw(resource->get_required_technology() != nullptr);
+
+				if (this->has_technology(resource->get_required_technology())) {
+					map::get()->set_tile_resource_discovered(tile_pos, true);
+				}
 			}
 		}
 

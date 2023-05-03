@@ -20,6 +20,7 @@
 #include "map/terrain_adjacency_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
@@ -158,6 +159,10 @@ void map::clear_tile_game_data()
 
 	try {
 		for (tile &tile : *this->tiles) {
+			if (tile.is_resource_discovered() && tile.get_resource()->get_required_technology() != nullptr) {
+				tile.set_resource_discovered(false);
+			}
+
 			if (tile.get_improvement() != nullptr) {
 				tile.set_improvement(nullptr);
 			}
@@ -443,7 +448,25 @@ void map::set_tile_resource(const QPoint &tile_pos, const resource *resource)
 void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered)
 {
 	tile *tile = this->get_tile(tile_pos);
+
+	if (discovered == tile->is_resource_discovered()) {
+		return;
+	}
+
+	const resource *resource = tile->get_resource();
+	assert_throw(resource != nullptr);
 	tile->set_resource_discovered(discovered);
+
+	if (discovered && resource->get_discovery_technology() != nullptr && tile->get_owner() != nullptr) {
+		country_game_data *country_game_data = tile->get_owner()->get_game_data();
+		if (!country_game_data->has_technology(resource->get_discovery_technology())) {
+			country_game_data->add_technology(resource->get_discovery_technology());
+
+			if (game::get()->is_running()) {
+				emit country_game_data->technology_researched(const_cast<technology *>(resource->get_discovery_technology()));
+			}
+		}
+	}
 
 	emit tile_resource_changed(tile_pos);
 }
