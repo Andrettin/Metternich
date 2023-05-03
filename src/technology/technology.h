@@ -14,6 +14,7 @@ class improvement;
 class military_unit_type;
 class portrait;
 class production_type;
+class resource;
 class technological_period;
 enum class technology_category;
 
@@ -127,6 +128,16 @@ public:
 	void add_enabled_commodity(const commodity *commodity)
 	{
 		this->enabled_commodities.push_back(commodity);
+	}
+
+	const std::vector<const resource *> &get_enabled_resources() const
+	{
+		return this->enabled_resources;
+	}
+
+	void add_enabled_resource(const resource *resource)
+	{
+		this->enabled_resources.push_back(resource);
 	}
 
 	const std::vector<const building_type *> &get_enabled_buildings() const
@@ -244,6 +255,7 @@ private:
 	const technological_period *period = nullptr;
 	std::vector<const technology *> prerequisites;
 	std::vector<const commodity *> enabled_commodities;
+	std::vector<const resource *> enabled_resources;
 	std::vector<const building_type *> enabled_buildings;
 	std::vector<const production_type *> enabled_production_types;
 	std::vector<const improvement *> enabled_improvements;

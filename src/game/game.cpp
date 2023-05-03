@@ -394,6 +394,8 @@ void game::apply_history(const metternich::scenario *scenario)
 					if (tile->get_resource() != site_history->get_improvement()->get_resource()) {
 						throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as its resource is different than that of the improvement.");
 					}
+
+					tile->set_resource_discovered(true);
 				}
 
 				tile->set_improvement(site_history->get_improvement());
@@ -406,6 +408,11 @@ void game::apply_history(const metternich::scenario *scenario)
 				if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
 					tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
 				}
+			}
+
+			if (site_history->is_resource_discovered()) {
+				assert_throw(site->get_type() == site_type::resource);
+				tile->set_resource_discovered(true);
 			}
 
 			const province *tile_province = tile->get_province();

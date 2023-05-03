@@ -70,9 +70,16 @@ public:
 		return this->resource;
 	}
 
-	void set_resource(const metternich::resource *resource)
+	void set_resource(const metternich::resource *resource);
+
+	bool is_resource_discovered() const
 	{
-		this->resource = resource;
+		return this->resource_discovered;
+	}
+
+	void set_resource_discovered(const bool discovered)
+	{
+		this->resource_discovered = discovered;
 	}
 
 	const metternich::improvement *get_improvement() const
@@ -173,6 +180,7 @@ private:
 	const metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
 	const metternich::resource *resource = nullptr;
+	bool resource_discovered = false;
 	const metternich::improvement *improvement = nullptr;
 	int8_t improvement_variation = 0;
 	std::vector<direction> river_directions;

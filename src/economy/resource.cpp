@@ -4,6 +4,7 @@
 
 #include "economy/commodity.h"
 #include "map/terrain_type.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -20,6 +21,15 @@ void resource::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void resource::initialize()
+{
+	if (this->required_technology != nullptr) {
+		this->required_technology->add_enabled_resource(this);
+	}
+
+	named_data_entry::initialize();
 }
 
 void resource::check() const

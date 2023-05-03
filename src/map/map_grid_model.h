@@ -70,6 +70,7 @@ public:
 
 	void on_tile_terrain_changed(const QPoint &tile_pos);
 	void on_tile_exploration_changed(const QPoint &tile_pos);
+	void on_tile_resource_changed(const QPoint &tile_pos);
 	void on_tile_improvement_changed(const QPoint &tile_pos);
 	void on_tile_civilian_unit_changed(const QPoint &tile_pos);
 };

@@ -14,6 +14,7 @@ class site_history final : public data_entry_history
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::improvement* improvement MEMBER improvement)
+	Q_PROPERTY(bool resource_discovered MEMBER resource_discovered READ is_resource_discovered)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
 
 public:
@@ -23,6 +24,11 @@ public:
 
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+
+	bool is_resource_discovered() const
+	{
+		return this->resource_discovered;
+	}
 
 	const metternich::improvement *get_improvement() const
 	{
@@ -84,6 +90,7 @@ public:
 
 private:
 	const metternich::site *site = nullptr;
+	bool resource_discovered = false;
 	metternich::improvement *improvement = nullptr;
 	building_slot_type_map<const building_type *> buildings;
 	population_group_map<int> population_groups;

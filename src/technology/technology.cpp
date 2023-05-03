@@ -7,6 +7,7 @@
 #include "country/culture.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
+#include "economy/resource.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "script/condition/condition.h"
@@ -256,6 +257,16 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} commodity", commodity->get_name());
+		}
+	}
+
+	if (!this->get_enabled_resources().empty()) {
+		for (const resource *resource : this->get_enabled_resources()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} resource", resource->get_name());
 		}
 	}
 

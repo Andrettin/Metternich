@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "economy/resource.h"
 #include "infrastructure/improvement.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -47,6 +48,21 @@ const metternich::site *tile::get_settlement() const
 	}
 
 	return nullptr;
+}
+
+void tile::set_resource(const metternich::resource *resource)
+{
+	if (resource == this->get_resource()) {
+		return;
+	}
+
+	this->resource = resource;
+
+	if (resource == nullptr || resource->get_required_technology() != nullptr) {
+		this->set_resource_discovered(false);
+	} else {
+		this->set_resource_discovered(true);
+	}
 }
 
 void tile::set_improvement(const metternich::improvement *improvement)
