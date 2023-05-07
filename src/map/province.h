@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "map/province_container.h"
 #include "util/color_container.h"
 #include "util/qunique_ptr.h"
 
@@ -15,6 +16,7 @@ class province_game_data;
 class province_history;
 class region;
 class site;
+class terrain_feature;
 
 class province final : public named_data_entry, public data_type<province>
 {
@@ -156,6 +158,11 @@ public:
 
 	bool has_core_country_of_culture(const culture *culture) const;
 
+	const province_map<const terrain_feature *> &get_border_rivers() const
+	{
+		return this->border_rivers;
+	}
+
 	const std::vector<const site *> &get_sites() const
 	{
 		return this->sites;
@@ -189,6 +196,7 @@ private:
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	std::vector<region *> regions; //regions where this province is located
 	std::vector<const country *> core_countries;
+	province_map<const terrain_feature *> border_rivers;
 	std::vector<const site *> sites; //sites located in this province, used for map generation
 	std::vector<const character *> characters; //characters who have this province as their home
 	qunique_ptr<province_history> history;

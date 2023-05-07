@@ -9,6 +9,7 @@
 #include "map/province_history.h"
 #include "map/region.h"
 #include "map/site.h"
+#include "map/terrain_feature.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/vector_util.h"
@@ -38,6 +39,13 @@ void province::process_gsml_scope(const gsml_data &scope)
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
 		});
+	} else if (tag == "border_rivers") {
+		scope.for_each_property([&](const gsml_property &property) {
+			province *border_province = province::get(property.get_key());
+			const terrain_feature *border_river = terrain_feature::get(property.get_value());
+			this->border_rivers[border_province] = border_river;
+			border_province->border_rivers[this] = border_river;
+		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -60,6 +68,12 @@ void province::check() const
 		log::log_error("Province \"" + this->get_identifier() + "\" has no capital settlement.");
 	} else if (this->get_capital_settlement() != nullptr && this->is_water_zone()) {
 		throw std::runtime_error("Water zone \"" + this->get_identifier() + "\" has a capital settlement.");
+	}
+
+	for (const auto &[border_province, border_river] : this->border_rivers) {
+		if (!border_river->is_river()) {
+			throw std::runtime_error(std::format("Province \"{}\" has the terrain feature \"{}\" set as a border river, but the latter is not a river.", this->get_identifier(), border_river->get_identifier()));
+		}
 	}
 }
 

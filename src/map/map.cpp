@@ -108,10 +108,19 @@ void map::initialize()
 					}
 
 					if (tile_province != nullptr && adjacent_province != nullptr && tile_province->is_water_zone() == adjacent_province->is_water_zone()) {
-						tile->add_border_direction(offset_to_direction(adjacent_pos - tile_pos));
+						const direction border_direction = offset_to_direction(adjacent_pos - tile_pos);
+						tile->add_border_direction(border_direction);
+
+						if (tile_province->get_border_rivers().contains(adjacent_province)) {
+							this->add_tile_river_direction(tile_pos, border_direction);
+						}
 					}
 				}
 			});
+
+			if (is_border_tile && tile->has_river()) {
+				this->update_tile_terrain_tile(tile_pos);
+			}
 
 			tile_province->get_game_data()->add_tile(tile_pos);
 
