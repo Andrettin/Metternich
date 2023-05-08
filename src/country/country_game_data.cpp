@@ -2820,7 +2820,7 @@ bool country_game_data::check_active_journal_entries(const read_only_context &ct
 			continue;
 		}
 
-		if (journal_entry->get_completion_conditions() != nullptr && journal_entry->get_completion_conditions()->check(this->country, ctx)) {
+		if (journal_entry->check_completion_conditions(this->country)) {
 			std::erase(this->active_journal_entries, journal_entry);
 			this->finished_journal_entries.push_back(journal_entry);
 			if (journal_entry->get_completion_effects() != nullptr && !ignore_effects) {

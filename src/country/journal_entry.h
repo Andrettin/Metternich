@@ -5,6 +5,7 @@
 
 namespace metternich {
 
+class building_type;
 class country;
 class portrait;
 
@@ -52,11 +53,7 @@ public:
 		return this->conditions.get();
 	}
 
-	const condition<country> *get_completion_conditions() const
-	{
-		return this->completion_conditions.get();
-	}
-
+	bool check_completion_conditions(const country *country) const;
 	Q_INVOKABLE QString get_completion_conditions_string() const;
 
 	const condition<country> *get_failure_conditions() const
@@ -92,6 +89,7 @@ private:
 	std::unique_ptr<const condition<country>> failure_conditions;
 	std::unique_ptr<const effect_list<const country>> completion_effects;
 	std::unique_ptr<const effect_list<const country>> failure_effects;
+	std::vector<const building_type *> built_buildings;
 };
 
 }

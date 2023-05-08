@@ -2,8 +2,12 @@
 
 #include "country/journal_entry.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
+#include "infrastructure/building_type.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -18,6 +22,7 @@ journal_entry::~journal_entry()
 void journal_entry::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "preconditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
@@ -43,6 +48,10 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 		auto effects = std::make_unique<effect_list<const country>>();
 		database::process_gsml_data(effects, scope);
 		this->failure_effects = std::move(effects);
+	} else if (tag == "built_buildings") {
+		for (const std::string &value : values) {
+			this->built_buildings.push_back(building_type::get(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -62,8 +71,8 @@ void journal_entry::check() const
 		this->get_conditions()->check_validity();
 	}
 
-	if (this->get_completion_conditions() != nullptr) {
-		this->get_completion_conditions()->check_validity();
+	if (this->completion_conditions != nullptr) {
+		this->completion_conditions->check_validity();
 	}
 
 	if (this->get_failure_conditions() != nullptr) {
@@ -79,13 +88,47 @@ void journal_entry::check() const
 	}
 }
 
-QString journal_entry::get_completion_conditions_string() const
+bool journal_entry::check_completion_conditions(const country *country) const
 {
-	if (this->get_completion_conditions() == nullptr) {
-		return QString();
+	if (this->completion_conditions == nullptr && this->built_buildings.empty()) {
+		//no completion conditions at all, so the entry can't be completed normally
+		return false;
 	}
 
-	return QString::fromStdString(this->get_completion_conditions()->get_string(0));
+	const read_only_context ctx(country);
+
+	if (this->completion_conditions != nullptr && !this->completion_conditions->check(country, ctx)) {
+		return false;
+	}
+
+	const country_game_data *country_game_data = country->get_game_data();
+
+	for (const building_type *building : this->built_buildings) {
+		if (!country_game_data->has_building(building)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+QString journal_entry::get_completion_conditions_string() const
+{
+	std::string str;
+
+	if (this->completion_conditions != nullptr) {
+		str = this->completion_conditions->get_string(0);
+	}
+
+	for (const building_type *building : this->built_buildings) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("Build {} {}", string::get_indefinite_article(building->get_name()), building->get_name());
+	}
+
+	return QString::fromStdString(str);
 }
 
 QString journal_entry::get_failure_conditions_string() const
