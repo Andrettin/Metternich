@@ -1784,6 +1784,11 @@ void country_game_data::set_slot_building(const building_slot_type *slot_type, c
 	assert_throw(false);
 }
 
+bool country_game_data::has_building(const building_type *building) const
+{
+	return this->get_slot_building(building->get_building_class()->get_slot_type()) == building;
+}
+
 void country_game_data::clear_buildings()
 {
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
