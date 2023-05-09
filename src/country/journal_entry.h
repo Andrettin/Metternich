@@ -8,6 +8,8 @@ namespace metternich {
 class building_type;
 class country;
 class portrait;
+class province;
+class site;
 
 template <typename scope_type>
 class condition;
@@ -20,7 +22,7 @@ class journal_entry final : public named_data_entry, public data_type<journal_en
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
-	Q_PROPERTY(std::string description MEMBER description NOTIFY changed)
+	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "journal_entry";
@@ -41,6 +43,16 @@ public:
 	const std::string &get_description() const
 	{
 		return this->description;
+	}
+
+	Q_INVOKABLE void set_description(const std::string &description)
+	{
+		this->description = description;
+	}
+
+	QString get_description_qstring() const
+	{
+		return QString::fromStdString(this->get_description());
 	}
 
 	const condition<country> *get_preconditions() const
@@ -89,6 +101,8 @@ private:
 	std::unique_ptr<const condition<country>> failure_conditions;
 	std::unique_ptr<const effect_list<const country>> completion_effects;
 	std::unique_ptr<const effect_list<const country>> failure_effects;
+	std::vector<const province *> owned_provinces;
+	std::vector<const site *> owned_sites;
 	std::vector<const building_type *> built_buildings;
 };
 

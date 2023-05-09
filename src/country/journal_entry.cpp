@@ -5,6 +5,10 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "infrastructure/building_type.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "util/string_util.h"
@@ -48,6 +52,14 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 		auto effects = std::make_unique<effect_list<const country>>();
 		database::process_gsml_data(effects, scope);
 		this->failure_effects = std::move(effects);
+	} else if (tag == "owned_provinces") {
+		for (const std::string &value : values) {
+			this->owned_provinces.push_back(province::get(value));
+		}
+	} else if (tag == "owned_sites") {
+		for (const std::string &value : values) {
+			this->owned_sites.push_back(site::get(value));
+		}
 	} else if (tag == "built_buildings") {
 		for (const std::string &value : values) {
 			this->built_buildings.push_back(building_type::get(value));
@@ -90,7 +102,7 @@ void journal_entry::check() const
 
 bool journal_entry::check_completion_conditions(const country *country) const
 {
-	if (this->completion_conditions == nullptr && this->built_buildings.empty()) {
+	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->built_buildings.empty()) {
 		//no completion conditions at all, so the entry can't be completed normally
 		return false;
 	}
@@ -102,6 +114,26 @@ bool journal_entry::check_completion_conditions(const country *country) const
 	}
 
 	const country_game_data *country_game_data = country->get_game_data();
+
+	for (const province *province : this->owned_provinces) {
+		if (province->get_game_data()->get_owner() != country) {
+			return false;
+		}
+	}
+
+	for (const site *site : this->owned_sites) {
+		if (!site->get_game_data()->is_on_map()) {
+			return false;
+		}
+
+		if (site->get_game_data()->get_province() == nullptr) {
+			return false;
+		}
+
+		if (site->get_game_data()->get_province()->get_game_data()->get_owner() != country) {
+			return false;
+		}
+	}
 
 	for (const building_type *building : this->built_buildings) {
 		if (!country_game_data->has_building(building)) {
@@ -118,6 +150,22 @@ QString journal_entry::get_completion_conditions_string() const
 
 	if (this->completion_conditions != nullptr) {
 		str = this->completion_conditions->get_string(0);
+	}
+
+	for (const province *province : this->owned_provinces) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("Own {}", province->get_game_data()->get_current_cultural_name());
+	}
+
+	for (const site *site : this->owned_sites) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("Own {}", site->get_game_data()->get_current_cultural_name());
 	}
 
 	for (const building_type *building : this->built_buildings) {
