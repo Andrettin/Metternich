@@ -958,6 +958,7 @@ signals:
 	void output_modifier_changed();
 	void throughput_modifier_changed();
 	void journal_entries_changed();
+	void journal_entry_completed(QObject *journal_entry);
 
 private:
 	metternich::country *country = nullptr;

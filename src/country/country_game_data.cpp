@@ -2827,8 +2827,8 @@ bool country_game_data::check_active_journal_entries(const read_only_context &ct
 				context effects_ctx(this->country);
 				journal_entry->get_completion_effects()->do_effects(this->country, effects_ctx);
 
-				if (this->country == game::get()->get_player_country()) {
-					engine_interface::get()->add_notification(journal_entry->get_name(), journal_entry->get_portrait(), std::format("{}{}{}", journal_entry->get_description(), (!journal_entry->get_description().empty() ? "\n\n" : ""), journal_entry->get_completion_effects()->get_effects_string(this->country, ctx)));
+				if (game::get()->is_running()) {
+					emit journal_entry_completed(const_cast<metternich::journal_entry *>(journal_entry));
 				}
 			}
 			changed = true;
