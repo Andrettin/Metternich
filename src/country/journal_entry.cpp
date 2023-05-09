@@ -11,6 +11,7 @@
 #include "map/site_game_data.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
+#include "script/modifier.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -52,6 +53,14 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 		auto effects = std::make_unique<effect_list<const country>>();
 		database::process_gsml_data(effects, scope);
 		this->failure_effects = std::move(effects);
+	} else if (tag == "active_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		database::process_gsml_data(modifier, scope);
+		this->active_modifier = std::move(modifier);
+	} else if (tag == "completion_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		database::process_gsml_data(modifier, scope);
+		this->completion_modifier = std::move(modifier);
 	} else if (tag == "owned_provinces") {
 		for (const std::string &value : values) {
 			this->owned_provinces.push_back(province::get(value));
@@ -190,11 +199,25 @@ QString journal_entry::get_failure_conditions_string() const
 
 QString journal_entry::get_completion_effects_string(metternich::country *country) const
 {
-	if (this->get_completion_effects() == nullptr) {
-		return QString();
+	std::string str;
+
+	if (this->get_completion_effects() != nullptr) {
+		str = this->get_completion_effects()->get_effects_string(country, read_only_context(country));
 	}
 
-	return QString::fromStdString(this->get_completion_effects()->get_effects_string(country, read_only_context(country)));
+	if (this->get_completion_modifier() != nullptr) {
+		std::string modifier_str = this->get_completion_modifier()->get_string();
+
+		if (!modifier_str.empty()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::move(modifier_str);
+		}
+	}
+
+	return QString::fromStdString(str);
 }
 
 QString journal_entry::get_failure_effects_string(metternich::country *country) const

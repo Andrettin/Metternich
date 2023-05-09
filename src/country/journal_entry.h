@@ -17,6 +17,9 @@ class condition;
 template <typename scope_type>
 class effect_list;
 
+template <typename scope_type>
+class modifier;
+
 class journal_entry final : public named_data_entry, public data_type<journal_entry>
 {
 	Q_OBJECT
@@ -89,6 +92,16 @@ public:
 
 	Q_INVOKABLE QString get_failure_effects_string(metternich::country *country) const;
 
+	const modifier<const country> *get_active_modifier() const
+	{
+		return this->active_modifier.get();
+	}
+
+	const modifier<const country> *get_completion_modifier() const
+	{
+		return this->completion_modifier.get();
+	}
+
 signals:
 	void changed();
 
@@ -101,6 +114,8 @@ private:
 	std::unique_ptr<const condition<country>> failure_conditions;
 	std::unique_ptr<const effect_list<const country>> completion_effects;
 	std::unique_ptr<const effect_list<const country>> failure_effects;
+	std::unique_ptr<const modifier<const country>> active_modifier;
+	std::unique_ptr<const modifier<const country>> completion_modifier;
 	std::vector<const province *> owned_provinces;
 	std::vector<const site *> owned_sites;
 	std::vector<const building_type *> built_buildings;
