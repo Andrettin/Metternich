@@ -1,7 +1,9 @@
 #include "script/modifier_effect/modifier_effect.h"
 
 #include "character/character.h"
+#include "database/gsml_data.h"
 #include "database/gsml_property.h"
+#include "script/modifier_effect/ai_building_desire_modifier_effect.h"
 #include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
@@ -65,7 +67,41 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		}
 	}
 
-	throw std::runtime_error("Invalid modifier effect: \"" + key + "\".");
+	throw std::runtime_error("Invalid property modifier effect: \"" + key + "\".");
+}
+
+
+template <typename scope_type>
+std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	std::unique_ptr<modifier_effect> modifier_effect;
+
+	if constexpr (std::is_same_v<scope_type, const country>) {
+		if (tag == "ai_building_desire") {
+			modifier_effect = std::make_unique<ai_building_desire_modifier_effect>();
+		}
+	}
+
+	if (modifier_effect == nullptr) {
+		throw std::runtime_error("Invalid scope modifier effect: \"" + tag + "\".");
+	}
+
+	database::process_gsml_data(modifier_effect, scope);
+
+	return modifier_effect;
+}
+
+template <typename scope_type>
+void modifier_effect<scope_type>::process_gsml_property(const gsml_property &property)
+{
+	throw std::runtime_error(std::format("Invalid property for \"{}\" effect: \"{}\".", this->get_identifier(), property.get_key()));
+}
+
+template <typename scope_type>
+void modifier_effect<scope_type>::process_gsml_scope(const gsml_data &scope)
+{
+	throw std::runtime_error(std::format("Invalid scope for \"{}\" effect: \"{}\".", this->get_identifier(), scope.get_tag()));
 }
 
 template class modifier_effect<const character>;

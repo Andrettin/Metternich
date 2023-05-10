@@ -6,6 +6,7 @@
 #include "country/religion_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
+#include "infrastructure/building_type_container.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "map/province_container.h"
 #include "map/terrain_type_container.h"
@@ -525,7 +526,7 @@ public:
 	void initialize_building_slots();
 	void initialize_free_buildings();
 
-	const building_slot *get_building_slot(const building_slot_type *slot_type) const
+	building_slot *get_building_slot(const building_slot_type *slot_type) const
 	{
 		const auto find_iterator = this->building_slot_map.find(slot_type);
 
@@ -926,6 +927,35 @@ public:
 	bool check_inactive_journal_entries(const read_only_context &ctx);
 	bool check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects);
 
+	int get_ai_building_desire_modifier(const building_type *building) const
+	{
+		const auto find_iterator = this->ai_building_desire_modifiers.find(building);
+
+		if (find_iterator != this->ai_building_desire_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_ai_building_desire_modifier(const building_type *building, const int value)
+	{
+		if (value == this->get_ai_building_desire_modifier(building)) {
+			return;
+		}
+
+		if (value == 0) {
+			this->ai_building_desire_modifiers.erase(building);
+		} else {
+			this->ai_building_desire_modifiers[building] = value;
+		}
+	}
+
+	void change_ai_building_desire_modifier(const building_type *building, const int value)
+	{
+		this->set_ai_building_desire_modifier(building, this->get_ai_building_desire_modifier(building) + value);
+	}
+
 signals:
 	void religion_changed();
 	void overlord_changed();
@@ -1024,6 +1054,7 @@ private:
 	std::vector<const journal_entry *> active_journal_entries;
 	std::vector<const journal_entry *> inactive_journal_entries;
 	std::vector<const journal_entry *> finished_journal_entries;
+	building_type_map<int> ai_building_desire_modifiers;
 };
 
 }

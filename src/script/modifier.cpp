@@ -23,6 +23,13 @@ void modifier<scope_type>::process_gsml_property(const gsml_property &property)
 }
 
 template <typename scope_type>
+void modifier<scope_type>::process_gsml_scope(const gsml_data &scope)
+{
+	std::unique_ptr<modifier_effect<scope_type>> effect = modifier_effect<scope_type>::from_gsml_scope(scope);
+	this->add_modifier_effect(std::move(effect));
+}
+
+template <typename scope_type>
 void modifier<scope_type>::apply(scope_type *scope, const int multiplier) const
 {
 	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {
@@ -43,7 +50,11 @@ std::string modifier<scope_type>::get_string(const int multiplier, const size_t 
 {
 	std::string str;
 	for (size_t i = 0; i < this->modifier_effects.size(); ++i) {
-		if (i > 0) {
+		if (this->modifier_effects[i]->is_hidden()) {
+			continue;
+		}
+
+		if (!str.empty()) {
 			str += "\n";
 		}
 

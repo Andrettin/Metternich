@@ -11,6 +11,7 @@ class building_class;
 class country;
 class cultural_group;
 class culture;
+class icon;
 class population_unit;
 class portrait;
 class production_type;
