@@ -2759,12 +2759,29 @@ QVariantList country_game_data::get_active_journal_entries_qvariant_list() const
 	return container::to_qvariant_list(this->get_active_journal_entries());
 }
 
+void country_game_data::add_active_journal_entry(const journal_entry *journal_entry)
+{
+	this->active_journal_entries.push_back(journal_entry);
+
+	if (journal_entry->get_active_modifier() != nullptr) {
+		journal_entry->get_active_modifier()->apply(this->country);
+	}
+
+	for (const building_type *building : journal_entry->get_built_buildings_with_requirements()) {
+		this->change_ai_building_desire_modifier(building, journal_entry::ai_building_desire_modifier);
+	}
+}
+
 void country_game_data::remove_active_journal_entry(const journal_entry *journal_entry)
 {
 	std::erase(this->active_journal_entries, journal_entry);
 
 	if (journal_entry->get_active_modifier() != nullptr) {
 		journal_entry->get_active_modifier()->remove(this->country);
+	}
+
+	for (const building_type *building : journal_entry->get_built_buildings_with_requirements()) {
+		this->change_ai_building_desire_modifier(building, -journal_entry::ai_building_desire_modifier);
 	}
 }
 
@@ -2849,10 +2866,7 @@ bool country_game_data::check_inactive_journal_entries(const read_only_context &
 
 		std::erase(this->inactive_journal_entries, journal_entry);
 
-		this->active_journal_entries.push_back(journal_entry);
-		if (journal_entry->get_active_modifier() != nullptr) {
-			journal_entry->get_active_modifier()->apply(this->country);
-		}
+		this->add_active_journal_entry(journal_entry);
 
 		changed = true;
 	}

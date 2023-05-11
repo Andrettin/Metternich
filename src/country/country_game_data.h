@@ -907,6 +907,7 @@ public:
 	}
 
 	QVariantList get_active_journal_entries_qvariant_list() const;
+	void add_active_journal_entry(const journal_entry *journal_entry);
 	void remove_active_journal_entry(const journal_entry *journal_entry);
 
 	const std::vector<const journal_entry *> &get_inactive_journal_entries() const

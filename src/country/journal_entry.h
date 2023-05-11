@@ -31,6 +31,7 @@ public:
 	static constexpr const char class_identifier[] = "journal_entry";
 	static constexpr const char property_class_identifier[] = "metternich::journal_entry*";
 	static constexpr const char database_folder[] = "journal_entries";
+	static constexpr int ai_building_desire_modifier = 100;
 
 	explicit journal_entry(const std::string &identifier);
 	~journal_entry();
@@ -101,6 +102,13 @@ public:
 	{
 		return this->completion_modifier.get();
 	}
+
+	const std::vector<const building_type *> &get_built_buildings() const
+	{
+		return this->built_buildings;
+	}
+
+	std::vector<const building_type *> get_built_buildings_with_requirements() const;
 
 signals:
 	void changed();

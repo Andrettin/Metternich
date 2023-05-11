@@ -111,7 +111,7 @@ void journal_entry::check() const
 
 bool journal_entry::check_completion_conditions(const country *country) const
 {
-	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->built_buildings.empty()) {
+	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty()) {
 		//no completion conditions at all, so the entry can't be completed normally
 		return false;
 	}
@@ -144,7 +144,7 @@ bool journal_entry::check_completion_conditions(const country *country) const
 		}
 	}
 
-	for (const building_type *building : this->built_buildings) {
+	for (const building_type *building : this->get_built_buildings()) {
 		if (!country_game_data->has_building(building)) {
 			return false;
 		}
@@ -177,7 +177,7 @@ QString journal_entry::get_completion_conditions_string() const
 		str += std::format("Own {}", site->get_game_data()->get_current_cultural_name());
 	}
 
-	for (const building_type *building : this->built_buildings) {
+	for (const building_type *building : this->get_built_buildings()) {
 		if (!str.empty()) {
 			str += "\n";
 		}
@@ -227,6 +227,21 @@ QString journal_entry::get_failure_effects_string(metternich::country *country) 
 	}
 
 	return QString::fromStdString(this->get_failure_effects()->get_effects_string(country, read_only_context(country)));
+}
+
+std::vector<const building_type *> journal_entry::get_built_buildings_with_requirements() const
+{
+	std::vector<const building_type *> buildings = this->get_built_buildings();
+
+	for (size_t i = 0; i < buildings.size(); ++i) {
+		const building_type *building = buildings[i];
+
+		if (building->get_required_building() != nullptr) {
+			buildings.push_back(building->get_required_building());
+		}
+	}
+
+	return buildings;
 }
 
 }
