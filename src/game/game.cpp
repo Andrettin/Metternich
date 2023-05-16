@@ -375,11 +375,42 @@ void game::apply_history(const metternich::scenario *scenario)
 			const site_game_data *site_game_data = site->get_game_data();
 			tile *tile = site_game_data->get_tile();
 
-			if (tile == nullptr) {
-				continue;
+			const province *site_province = site->get_province();
+			if (site_province == nullptr && tile != nullptr) {
+				site_province = tile->get_province();
 			}
 
 			const site_history *site_history = site->get_history();
+
+			//apply site buildings to its province's owner
+			if (site_province != nullptr) {
+				const province_game_data *site_province_game_data = site_province->get_game_data();
+				const country *owner = site_province_game_data->get_owner();
+
+				if (owner != nullptr) {
+					country_game_data *owner_game_data = owner->get_game_data();
+
+					for (const auto &[building_slot_type, building] : site_history->get_buildings()) {
+						if (building->get_conditions() != nullptr && !building->get_conditions()->check(owner, read_only_context(owner))) {
+							continue;
+						}
+
+						const building_type *slot_building = owner_game_data->get_slot_building(building_slot_type);
+
+						if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
+							owner_game_data->set_slot_building(building_slot_type, building);
+
+							if (building->get_required_technology() != nullptr) {
+								owner_game_data->add_technology_with_prerequisites(building->get_required_technology());
+							}
+						}
+					}
+				}
+			}
+
+			if (tile == nullptr) {
+				continue;
+			}
 
 			if (site_history->get_improvement() != nullptr) {
 				assert_throw(site_history->get_improvement()->get_resource() != nullptr || site_history->get_improvement()->is_ruins());
@@ -413,33 +444,6 @@ void game::apply_history(const metternich::scenario *scenario)
 			if (site_history->is_resource_discovered()) {
 				assert_throw(site->get_type() == site_type::resource);
 				map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
-			}
-
-			const province *tile_province = tile->get_province();
-
-			if (tile_province != nullptr) {
-				const province_game_data *tile_province_game_data = tile_province->get_game_data();
-				const country *owner = tile_province_game_data->get_owner();
-
-				if (owner != nullptr) {
-					country_game_data *owner_game_data = owner->get_game_data();
-
-					for (const auto &[building_slot_type, building] : site_history->get_buildings()) {
-						if (building->get_conditions() != nullptr && !building->get_conditions()->check(owner, read_only_context(owner))) {
-							continue;
-						}
-
-						const building_type *slot_building = owner_game_data->get_slot_building(building_slot_type);
-
-						if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
-							owner_game_data->set_slot_building(building_slot_type, building);
-
-							if (building->get_required_technology() != nullptr) {
-								owner_game_data->add_technology_with_prerequisites(building->get_required_technology());
-							}
-						}
-					}
-				}
 			}
 		}
 
