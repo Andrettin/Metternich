@@ -16,6 +16,7 @@
 #include "util/assert_util.h"
 #include "util/exception_util.h"
 #include "util/geoshape_util.h"
+#include "util/log_util.h"
 #include "util/path_util.h"
 #include "util/point_util.h"
 #include "util/rect_util.h"
@@ -88,7 +89,8 @@ void map_template::initialize()
 			}
 
 			if (!found_pos) {
-				throw std::runtime_error(std::format("No position found for site \"{}\" in province \"{}\".", site->get_identifier(), site->get_province()->get_identifier()));
+				log::log_error(std::format("No position found for site \"{}\" in province \"{}\".", site->get_identifier(), site->get_province()->get_identifier()));
+				continue;
 			}
 		}
 
