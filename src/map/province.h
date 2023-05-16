@@ -67,7 +67,7 @@ public:
 	}
 
 private:
-	static inline color_map<province *> provinces_by_color;
+	static inline std::unordered_map<QColor, province *> provinces_by_color;
 
 public:
 	explicit province(const std::string &identifier);
