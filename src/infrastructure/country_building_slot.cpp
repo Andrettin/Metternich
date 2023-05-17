@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/culture.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
@@ -38,7 +39,7 @@ void country_building_slot::set_building(const building_type *building)
 
 	const building_type *old_building = this->get_building();
 
-	if (old_building != nullptr) {
+	if (old_building != nullptr && !old_building->is_provincial()) {
 		country_game_data->on_building_gained(old_building, -1);
 
 		if (old_building->get_country_modifier() != nullptr && this->get_country() != nullptr) {
@@ -62,7 +63,7 @@ void country_building_slot::set_building(const building_type *building)
 	}
 	this->set_expanding(false);
 
-	if (this->get_building() != nullptr) {
+	if (this->get_building() != nullptr && !this->get_building()->is_provincial()) {
 		country_game_data->on_building_gained(this->get_building(), 1);
 
 		if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr) {
@@ -93,6 +94,15 @@ void country_building_slot::set_building(const building_type *building)
 			}
 		}
 	}
+}
+
+bool country_building_slot::can_have_building(const building_type *building) const
+{
+	if (building != this->get_country()->get_culture()->get_building_class_type(building->get_building_class())) {
+		return false;
+	}
+
+	return building_slot::can_have_building(building);
 }
 
 bool country_building_slot::can_expand() const

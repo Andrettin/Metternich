@@ -383,27 +383,45 @@ void game::apply_history(const metternich::scenario *scenario)
 			const site_history *site_history = site->get_history();
 
 			//apply site buildings to its province's owner
-			if (site_province != nullptr) {
-				const province_game_data *site_province_game_data = site_province->get_game_data();
+			if (site_province != nullptr && site_province->get_game_data()->is_on_map()) {
+				province_game_data *site_province_game_data = site_province->get_game_data();
 				const country *owner = site_province_game_data->get_owner();
 
-				if (owner != nullptr) {
-					country_game_data *owner_game_data = owner->get_game_data();
+				country_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
 
-					for (const auto &[building_slot_type, building] : site_history->get_buildings()) {
-						if (building->get_conditions() != nullptr && !building->get_conditions()->check(owner, read_only_context(owner))) {
+				for (const auto &[building_slot_type, building] : site_history->get_buildings()) {
+					if (building->get_conditions() != nullptr) {
+						if (owner == nullptr) {
 							continue;
 						}
 
-						const building_type *slot_building = owner_game_data->get_slot_building(building_slot_type);
-
-						if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
-							owner_game_data->set_slot_building(building_slot_type, building);
-
-							if (building->get_required_technology() != nullptr) {
-								owner_game_data->add_technology_with_prerequisites(building->get_required_technology());
-							}
+						if (!building->get_conditions()->check(owner, read_only_context(owner))) {
+							continue;
 						}
+					}
+
+					const building_type *slot_building = nullptr;
+
+					if (building->is_provincial()) {
+						slot_building = site_province_game_data->get_slot_building(building_slot_type);
+					} else {
+						if (owner == nullptr) {
+							continue;
+						}
+
+						slot_building = owner_game_data->get_slot_building(building_slot_type);
+					}
+
+					if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
+						if (building->is_provincial()) {
+							site_province_game_data->set_slot_building(building_slot_type, building);
+						} else {
+							owner_game_data->set_slot_building(building_slot_type, building);
+						}
+					}
+
+					if (building->get_required_technology() != nullptr && owner_game_data != nullptr) {
+						owner_game_data->add_technology_with_prerequisites(building->get_required_technology());
 					}
 				}
 			}

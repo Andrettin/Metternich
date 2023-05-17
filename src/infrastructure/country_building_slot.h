@@ -4,6 +4,8 @@
 
 namespace metternich {
 
+class production_type;
+
 class country_building_slot final : public building_slot
 {
 	Q_OBJECT
@@ -17,6 +19,8 @@ public:
 	explicit country_building_slot(const building_slot_type *type, const metternich::country *country);
 
 	void set_building(const building_type *building);
+
+	virtual bool can_have_building(const building_type *building) const override;
 
 	virtual const metternich::country *get_country() const override
 	{

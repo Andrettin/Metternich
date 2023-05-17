@@ -32,6 +32,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
 	Q_PROPERTY(int capacity_increment MEMBER capacity_increment READ get_capacity_increment NOTIFY changed)
@@ -80,6 +81,11 @@ public:
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	bool is_provincial() const
+	{
+		return this->provincial;
 	}
 
 	const std::vector<const production_type *> &get_production_types() const
@@ -147,6 +153,7 @@ private:
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::portrait *portrait = nullptr;
 	metternich::icon *icon = nullptr;
+	bool provincial = false;
 	std::vector<const production_type *> production_types;
 	int base_capacity = 0;
 	int capacity_increment = 0;

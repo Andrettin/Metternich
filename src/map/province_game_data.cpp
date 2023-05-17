@@ -15,7 +15,11 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/province_event.h"
+#include "infrastructure/building_class.h"
+#include "infrastructure/building_slot_type.h"
+#include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/provincial_building_slot.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -49,6 +53,8 @@ province_game_data::province_game_data(const metternich::province *province)
 	: province(province), free_food_consumption(province_game_data::base_free_food_consumption)
 {
 	this->reset_non_map_data();
+
+	this->initialize_building_slots();
 }
 
 province_game_data::~province_game_data()
@@ -57,6 +63,7 @@ province_game_data::~province_game_data()
 
 void province_game_data::reset_non_map_data()
 {
+	this->clear_buildings();
 	this->set_owner(nullptr);
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
 	this->score = province::base_score;
@@ -315,6 +322,79 @@ void province_game_data::on_improvement_gained(const improvement *improvement, c
 			this->get_owner()->get_game_data()->change_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier() * multiplier);
 		}
 	}
+}
+
+QVariantList province_game_data::get_building_slots_qvariant_list() const
+{
+	std::vector<const provincial_building_slot *> available_building_slots;
+
+	for (const qunique_ptr<provincial_building_slot> &building_slot : this->building_slots) {
+		if (!building_slot->is_available()) {
+			continue;
+		}
+
+		available_building_slots.push_back(building_slot.get());
+	}
+
+	return container::to_qvariant_list(available_building_slots);
+}
+
+void province_game_data::initialize_building_slots()
+{
+	//initialize building slots, placing them in random order
+	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
+	vector::shuffle(building_slot_types);
+
+	for (const building_slot_type *building_slot_type : building_slot_types) {
+		this->building_slots.push_back(make_qunique<provincial_building_slot>(building_slot_type, this->province));
+		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
+	}
+}
+
+const building_type *province_game_data::get_slot_building(const building_slot_type *slot_type) const
+{
+	const auto find_iterator = this->building_slot_map.find(slot_type);
+	if (find_iterator != this->building_slot_map.end()) {
+		return find_iterator->second->get_building();
+	}
+
+	assert_throw(false);
+
+	return nullptr;
+}
+
+void province_game_data::set_slot_building(const building_slot_type *slot_type, const building_type *building)
+{
+	if (building != nullptr) {
+		assert_throw(building->get_building_class()->get_slot_type() == slot_type);
+	}
+
+	const auto find_iterator = this->building_slot_map.find(slot_type);
+	if (find_iterator != this->building_slot_map.end()) {
+		find_iterator->second->set_building(building);
+		return;
+	}
+
+	assert_throw(false);
+}
+
+bool province_game_data::has_building(const building_type *building) const
+{
+	return this->get_slot_building(building->get_building_class()->get_slot_type()) == building;
+}
+
+void province_game_data::clear_buildings()
+{
+	for (const qunique_ptr<provincial_building_slot> &building_slot : this->building_slots) {
+		building_slot->set_building(nullptr);
+	}
+}
+
+void province_game_data::on_building_gained(const building_type *building, const int multiplier)
+{
+	assert_throw(building != nullptr);
+
+	this->change_score(building->get_score() * multiplier);
 }
 
 QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const

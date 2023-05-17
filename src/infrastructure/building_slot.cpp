@@ -56,8 +56,14 @@ bool building_slot::can_have_building(const building_type *building) const
 		return false;
 	}
 
-	if (building->get_conditions() != nullptr && !building->get_conditions()->check(this->get_country(), read_only_context(this->get_country()))) {
-		return false;
+	if (building->get_conditions() != nullptr) {
+		if (this->get_country() == nullptr) {
+			return false;
+		}
+
+		if (!building->get_conditions()->check(this->get_country(), read_only_context(this->get_country()))) {
+			return false;
+		}
 	}
 
 	if (this->get_building() != nullptr) {
@@ -85,8 +91,14 @@ bool building_slot::can_have_building(const building_type *building) const
 building_type *building_slot::get_buildable_building() const
 {
 	for (const building_type *building : this->get_type()->get_building_types()) {
-		if (building->get_required_technology() != nullptr && !this->get_country()->get_game_data()->has_technology(building->get_required_technology())) {
-			continue;
+		if (building->get_required_technology() != nullptr) {
+			if (this->get_country() == nullptr) {
+				continue;
+			}
+
+			if (!this->get_country()->get_game_data()->has_technology(building->get_required_technology())) {
+				continue;
+			}
 		}
 
 		if (!this->can_have_building(building)) {
