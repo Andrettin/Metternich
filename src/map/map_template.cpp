@@ -56,15 +56,16 @@ void map_template::initialize()
 		//if the site is not placed in its province, nudge its position to be in the nearest point in its province
 		if (site->get_province() != nullptr && province::try_get_by_color(province_image.pixelColor(tile_pos)) != site->get_province()) {
 			bool found_pos = false;
-			bool checked_on_map = true;
 			int64_t best_distance = std::numeric_limits<int64_t>::max();
 
 			QRect rect(tile_pos, QSize(1, 1));
 
-			while (checked_on_map) {
-				checked_on_map = false;
+			static constexpr int max_range = 2;
+			for (int i = 0; i < max_range; ++i) {
 				rect.setTopLeft(rect.topLeft() - QPoint(1, 1));
 				rect.setBottomRight(rect.bottomRight() + QPoint(1, 1));
+
+				bool checked_on_map = false;
 
 				rect::for_each_edge_point(rect, [&](const QPoint &checked_pos) {
 					if (!map_rect.contains(checked_pos)) {
@@ -86,6 +87,10 @@ void map_template::initialize()
 						found_pos = true;
 					}
 				});
+
+				if (!checked_on_map) {
+					break;
+				}
 			}
 
 			if (!found_pos) {
