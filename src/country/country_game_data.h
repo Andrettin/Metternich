@@ -20,12 +20,12 @@
 
 namespace metternich {
 
-class building_slot;
 class building_type;
 class character;
 class civilian_unit;
 class consulate;
 class country;
+class country_building_slot;
 class culture;
 class event;
 class journal_entry;
@@ -526,7 +526,7 @@ public:
 	void initialize_building_slots();
 	void initialize_free_buildings();
 
-	building_slot *get_building_slot(const building_slot_type *slot_type) const
+	country_building_slot *get_building_slot(const building_slot_type *slot_type) const
 	{
 		const auto find_iterator = this->building_slot_map.find(slot_type);
 
@@ -1028,8 +1028,8 @@ private:
 	ideology_map<int> population_ideology_counts;
 	int population = 0;
 	int population_growth = 0; //population growth counter
-	std::vector<qunique_ptr<building_slot>> building_slots;
-	building_slot_type_map<building_slot *> building_slot_map;
+	std::vector<qunique_ptr<country_building_slot>> building_slots;
+	building_slot_type_map<country_building_slot *> building_slot_map;
 	int wealth = 0;
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;

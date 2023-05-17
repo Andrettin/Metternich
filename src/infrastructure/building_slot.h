@@ -2,35 +2,23 @@
 
 #include "economy/commodity_container.h"
 
-namespace archimedes {
-	template <int N>
-	class fractional_int;
-
-	using centesimal_int = fractional_int<2>;
-}
-
 namespace metternich {
 
 class building_slot_type;
 class building_type;
 class country;
-class production_type;
 
-class building_slot final : public QObject
+class building_slot : public QObject
 {
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::building_slot_type* type READ get_type_unconst CONSTANT)
 	Q_PROPERTY(metternich::building_type* building READ get_building_unconst NOTIFY building_changed)
 	Q_PROPERTY(metternich::building_type* under_construction_building READ get_under_construction_building_unconst WRITE set_under_construction_building NOTIFY under_construction_building_changed)
-	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
-	Q_PROPERTY(bool expanding READ is_expanding WRITE set_expanding NOTIFY expanding_changed)
-	Q_PROPERTY(int capacity READ get_capacity NOTIFY capacity_changed)
-	Q_PROPERTY(int employed_capacity READ get_employed_capacity NOTIFY employed_capacity_changed)
-	Q_PROPERTY(QVariantList available_production_types READ get_available_production_types_qvariant_list NOTIFY building_changed)
+	Q_PROPERTY(metternich::country *country READ get_country_unconst CONSTANT)
 
 public:
-	explicit building_slot(const building_slot_type *type, const metternich::country *country);
+	explicit building_slot(const building_slot_type *type);
 
 	const building_slot_type *get_type() const
 	{
@@ -57,9 +45,10 @@ private:
 		return const_cast<building_type *>(this->get_building());
 	}
 
-public:
+protected:
 	void set_building(const building_type *building);
 
+public:
 	const building_type *get_under_construction_building() const
 	{
 		return this->under_construction_building;
@@ -75,13 +64,10 @@ private:
 public:
 	void set_under_construction_building(const building_type *building);
 
-	bool can_have_building(const building_type *building) const;
+	virtual bool can_have_building(const building_type *building) const;
 	Q_INVOKABLE metternich::building_type *get_buildable_building() const;
 
-	const metternich::country *get_country() const
-	{
-		return this->country;
-	}
+	virtual const metternich::country *get_country() const = 0;
 
 private:
 	//for the Qt property (pointers there can't be const)
@@ -93,116 +79,14 @@ private:
 public:
 	bool is_available() const;
 
-	int get_level() const
-	{
-		return this->level;
-	}
-
-	bool is_expanding() const
-	{
-		return this->expanding;
-	}
-
-	void set_expanding(const bool expanding)
-	{
-		if (expanding == this->is_expanding()) {
-			return;
-		}
-
-		this->expanding = expanding;
-		emit expanding_changed();
-	}
-
-	Q_INVOKABLE bool can_expand() const;
-	void expand();
-
-	int get_capacity() const;
-
-	int get_employed_capacity() const
-	{
-		return this->employed_capacity;
-	}
-
-	std::vector<const production_type *> get_available_production_types() const;
-	QVariantList get_available_production_types_qvariant_list() const;
-
-	int get_production_type_employed_capacity(const production_type *production_type) const
-	{
-		const auto find_iterator = this->production_type_employed_capacities.find(production_type);
-		if (find_iterator != this->production_type_employed_capacities.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	Q_INVOKABLE int get_production_type_employed_capacity(metternich::production_type *production_type) const
-	{
-		const metternich::production_type *const_production_type = production_type;
-		return this->get_production_type_employed_capacity(const_production_type);
-	}
-
-	commodity_map<int> get_production_type_inputs(const production_type *production_type) const;
-	Q_INVOKABLE QVariantList get_production_type_inputs(metternich::production_type *production_type) const;
-
-	int get_production_type_output(const production_type *production_type) const;
-
-	Q_INVOKABLE int get_production_type_output(metternich::production_type *production_type) const
-	{
-		const metternich::production_type *const_production_type = production_type;
-		return this->get_production_type_output(const_production_type);
-	}
-
-	void change_production(const production_type *production_type, const int change, const bool change_input_storage = true);
-
-	bool can_increase_production(const production_type *production_type) const;
-
-	Q_INVOKABLE bool can_increase_production(metternich::production_type *production_type) const
-	{
-		const metternich::production_type *const_production_type = production_type;
-		return this->can_increase_production(const_production_type);
-	}
-
-	void increase_production(const production_type *production_type);
-
-	Q_INVOKABLE void increase_production(metternich::production_type *production_type)
-	{
-		const metternich::production_type *const_production_type = production_type;
-		this->increase_production(const_production_type);
-	}
-
-	bool can_decrease_production(const production_type *production_type) const;
-
-	Q_INVOKABLE bool can_decrease_production(metternich::production_type *production_type) const
-	{
-		const metternich::production_type *const_production_type = production_type;
-		return this->can_decrease_production(const_production_type);
-	}
-
-	void decrease_production(const production_type *production_type, const bool restore_inputs);
-
-	Q_INVOKABLE void decrease_production(metternich::production_type *production_type)
-	{
-		const metternich::production_type *const_production_type = production_type;
-		this->decrease_production(const_production_type, true);
-	}
-
 signals:
 	void building_changed();
 	void under_construction_building_changed();
-	void expanding_changed();
-	void capacity_changed();
-	void employed_capacity_changed();
 
 private:
 	const building_slot_type *type = nullptr;
 	const building_type *building = nullptr;
 	const building_type *under_construction_building = nullptr;
-	const metternich::country *country = nullptr;
-	int level = 0;
-	int employed_capacity = 0;
-	std::map<const production_type *, int> production_type_employed_capacities;
-	bool expanding = false;
 };
 
 }

@@ -90,6 +90,7 @@ set(infrastructure_SRCS
 	src/infrastructure/building_slot_type_container.cpp
 	src/infrastructure/building_type.cpp
 	src/infrastructure/building_type_container.cpp
+	src/infrastructure/country_building_slot.cpp
 	src/infrastructure/improvement.cpp
 )
 source_group(infrastructure FILES ${infrastructure_SRCS})
@@ -348,6 +349,7 @@ set(infrastructure_HDRS
 	src/infrastructure/building_slot_type_container.h
 	src/infrastructure/building_type.h
 	src/infrastructure/building_type_container.h
+	src/infrastructure/country_building_slot.h
 	src/infrastructure/improvement.h
 )
 source_group(infrastructure FILES ${infrastructure_HDRS})
