@@ -88,6 +88,10 @@ void map_template::initialize()
 					}
 				});
 
+				if (found_pos) {
+					break;
+				}
+
 				if (!checked_on_map) {
 					break;
 				}
