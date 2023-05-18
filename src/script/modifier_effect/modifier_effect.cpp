@@ -5,6 +5,7 @@
 #include "database/gsml_property.h"
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
 #include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
+#include "script/modifier_effect/building_capacity_modifier_effect.h"
 #include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/commodity_throughput_modifier_effect.h"
@@ -26,6 +27,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	const std::string &value = property.get_value();
 
 	if constexpr (std::is_same_v<scope_type, const country>) {
+		static const std::string building_capacity_modifier_suffix = "_capacity_modifier";
 		static const std::string research_modifier_suffix = "_research_modifier";
 		static const std::string throughput_modifier_suffix = "_throughput_modifier";
 
@@ -41,6 +43,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<storage_capacity_modifier_effect>(value);
 		} else if (key == "throughput_modifier") {
 			return std::make_unique<throughput_modifier_effect<scope_type>>(value);
+		} else if (key.ends_with(building_capacity_modifier_suffix) && building_slot_type::try_get(key.substr(0, key.size() - building_capacity_modifier_suffix.size())) != nullptr) {
+			const building_slot_type *building_slot_type = building_slot_type::get(key.substr(0, key.size() - building_capacity_modifier_suffix.size()));
+			return std::make_unique<building_capacity_modifier_effect>(building_slot_type, value);
 		} else if (key.ends_with(throughput_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - throughput_modifier_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - throughput_modifier_suffix.size()));
 			return std::make_unique<commodity_throughput_modifier_effect<scope_type>>(commodity, value);

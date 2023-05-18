@@ -513,6 +513,7 @@ source_group(script\\effect FILES ${script_effect_HDRS})
 set(script_modifier_effect_HDRS
 	src/script/modifier_effect/ai_building_desire_modifier_effect.h
 	src/script/modifier_effect/air_morale_resistance_modifier_effect.h
+	src/script/modifier_effect/building_capacity_modifier_effect.h
 	src/script/modifier_effect/category_research_modifier_effect.h
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h
