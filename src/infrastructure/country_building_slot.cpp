@@ -26,6 +26,11 @@ country_building_slot::country_building_slot(const building_slot_type *type, con
 
 	connect(this, &building_slot::building_changed, this, &country_building_slot::capacity_changed);
 	connect(this, &building_slot::building_changed, this, &country_building_slot::available_production_types_changed);
+
+	const country_game_data *country_game_data = this->get_country()->get_game_data();
+
+	connect(country_game_data, &country_game_data::provincial_building_counts_changed, this, &country_building_slot::country_modifier_changed);
+	connect(country_game_data, &country_game_data::provinces_changed, this, &country_building_slot::country_modifier_changed);
 }
 
 
@@ -338,6 +343,25 @@ void country_building_slot::decrease_production(const production_type *productio
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error decreasing production of \"" + production_type->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\"."));
 	}
+}
+
+QString country_building_slot::get_country_modifier_string() const
+{
+	if (this->get_building() == nullptr) {
+		return QString();
+	}
+
+	if (this->get_building()->get_country_modifier() == nullptr) {
+		return QString();
+	}
+
+	centesimal_int multiplier(1);
+	if (this->get_building()->is_provincial()) {
+		const country_game_data *country_game_data = this->get_country()->get_game_data();
+		multiplier = centesimal_int(country_game_data->get_provincial_building_count(this->get_building())) / country_game_data->get_province_count();
+	}
+
+	return QString::fromStdString(this->get_building()->get_country_modifier()->get_string(multiplier));
 }
 
 }

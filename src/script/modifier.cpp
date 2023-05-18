@@ -30,23 +30,27 @@ void modifier<scope_type>::process_gsml_scope(const gsml_data &scope)
 }
 
 template <typename scope_type>
-void modifier<scope_type>::apply(scope_type *scope, const int multiplier) const
+void modifier<scope_type>::apply(scope_type *scope, const centesimal_int &multiplier) const
 {
 	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {
-		modifier_effect->apply(scope, 1 * multiplier);
+		modifier_effect->apply(scope, multiplier);
 	}
+}
+
+template <typename scope_type>
+void modifier<scope_type>::apply(scope_type *scope, const int multiplier) const
+{
+	this->apply(scope, centesimal_int(multiplier));
 }
 
 template <typename scope_type>
 void modifier<scope_type>::remove(scope_type *scope, const int multiplier) const
 {
-	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {
-		modifier_effect->apply(scope, -1 * multiplier);
-	}
+	this->apply(scope, centesimal_int(-multiplier));
 }
 
 template <typename scope_type>
-std::string modifier<scope_type>::get_string(const int multiplier, const size_t indent) const
+std::string modifier<scope_type>::get_string(const centesimal_int &multiplier, const size_t indent) const
 {
 	std::string str;
 	for (size_t i = 0; i < this->modifier_effects.size(); ++i) {
@@ -65,6 +69,12 @@ std::string modifier<scope_type>::get_string(const int multiplier, const size_t 
 		str += this->modifier_effects[i]->get_string(multiplier);
 	}
 	return str;
+}
+
+template <typename scope_type>
+std::string modifier<scope_type>::get_string(const int multiplier, const size_t indent) const
+{
+	return this->get_string(centesimal_int(multiplier), indent);
 }
 
 template <typename scope_type>

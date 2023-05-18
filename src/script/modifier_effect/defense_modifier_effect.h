@@ -20,14 +20,14 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(military_unit *scope, const int multiplier) const override
+	virtual void apply(military_unit *scope, const centesimal_int &multiplier) const override
 	{
-		scope->change_defense(this->quantity * multiplier);
+		scope->change_defense((this->quantity * multiplier).to_int());
 	}
 
-	virtual std::string get_string(const int multiplier) const override
+	virtual std::string get_string(const centesimal_int &multiplier) const override
 	{
-		return "Defense: " + number::to_signed_string(this->quantity * multiplier);
+		return std::format("Defense: {}", number::to_signed_string((this->quantity * multiplier).to_int()));
 	}
 
 	virtual int get_score() const override

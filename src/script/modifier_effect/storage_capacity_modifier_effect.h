@@ -21,14 +21,14 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const country *scope, const int multiplier) const override
+	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_storage_capacity(this->quantity * multiplier);
+		scope->get_game_data()->change_storage_capacity((this->quantity * multiplier).to_int());
 	}
 
-	virtual std::string get_string(const int multiplier) const override
+	virtual std::string get_string(const centesimal_int &multiplier) const override
 	{
-		return "Storage Capacity: " + number::to_signed_string(this->quantity * multiplier);
+		return std::format("Storage Capacity: {}", number::to_signed_string((this->quantity * multiplier).to_int()));
 	}
 
 	virtual int get_score() const override

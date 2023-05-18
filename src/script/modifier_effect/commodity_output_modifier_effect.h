@@ -27,14 +27,14 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const scope_type *scope, const int multiplier) const override
+	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_commodity_output_modifier(this->commodity, this->quantity * multiplier);
+		scope->get_game_data()->change_commodity_output_modifier(this->commodity, (this->quantity * multiplier).to_int());
 	}
 
-	virtual std::string get_string(const int multiplier) const override
+	virtual std::string get_string(const centesimal_int &multiplier) const override
 	{
-		return this->commodity->get_name() + " Output: " + number::to_signed_string(this->quantity * multiplier) + "%";
+		return std::format("{} Output: {}%", this->commodity->get_name(), number::to_signed_string((this->quantity * multiplier).to_int()));
 	}
 
 	virtual int get_score() const override

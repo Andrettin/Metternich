@@ -31,14 +31,14 @@ public:
 		}
 	}
 
-	virtual void apply(const country *scope, const int multiplier) const override
+	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_ai_building_desire_modifier(this->building, this->value * multiplier);
+		scope->get_game_data()->change_ai_building_desire_modifier(this->building, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_string(const int multiplier) const override
+	virtual std::string get_string(const centesimal_int &multiplier) const override
 	{
-		return std::format("AI {} Building Desire: {}", this->building->get_name(), number::to_signed_string(this->value * multiplier));
+		return std::format("AI {} Building Desire: {}", this->building->get_name(), number::to_signed_string((this->value * multiplier).to_int()));
 	}
 
 	virtual int get_score() const override

@@ -14,6 +14,7 @@ class country_building_slot final : public building_slot
 	Q_PROPERTY(int capacity READ get_capacity NOTIFY capacity_changed)
 	Q_PROPERTY(int employed_capacity READ get_employed_capacity NOTIFY employed_capacity_changed)
 	Q_PROPERTY(QVariantList available_production_types READ get_available_production_types_qvariant_list NOTIFY available_production_types_changed)
+	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string NOTIFY country_modifier_changed)
 
 public:
 	explicit country_building_slot(const building_slot_type *type, const metternich::country *country);
@@ -121,11 +122,14 @@ public:
 		this->decrease_production(const_production_type, true);
 	}
 
+	QString get_country_modifier_string() const;
+
 signals:
 	void expanding_changed();
 	void capacity_changed();
 	void employed_capacity_changed();
 	void available_production_types_changed();
+	void country_modifier_changed();
 
 private:
 	const metternich::country *country = nullptr;

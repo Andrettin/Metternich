@@ -551,7 +551,20 @@ void country_game_data::add_province(const province *province)
 {
 	this->explore_province(province);
 
+	for (const auto &[building, count] : this->provincial_building_counts) {
+		if (building->get_country_modifier() != nullptr) {
+			building->get_country_modifier()->apply(this->country, centesimal_int(-count) / this->get_province_count());
+		}
+	}
+
 	this->provinces.push_back(province);
+
+	for (const auto &[building, count] : this->provincial_building_counts) {
+		if (building->get_country_modifier() != nullptr) {
+			//reapply the provincial building's country modifier with the updated province count
+			building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_province_count());
+		}
+	}
 
 	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
@@ -647,7 +660,20 @@ void country_game_data::add_province(const province *province)
 
 void country_game_data::remove_province(const province *province)
 {
+	for (const auto &[building, count] : this->provincial_building_counts) {
+		if (building->get_country_modifier() != nullptr) {
+			building->get_country_modifier()->apply(this->country, centesimal_int(-count) / this->get_province_count());
+		}
+	}
+
 	std::erase(this->provinces, province);
+
+	for (const auto &[building, count] : this->provincial_building_counts) {
+		if (building->get_country_modifier() != nullptr) {
+			//reapply the provincial building's country modifier with the updated province count
+			building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_province_count());
+		}
+	}
 
 	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
@@ -1913,6 +1939,16 @@ void country_game_data::change_provincial_building_count(const building_type *bu
 		if (country_building_slot->can_have_building(building)) {
 			country_building_slot->set_building(building);
 		}
+	}
+
+	if (building->get_country_modifier() != nullptr) {
+		//reapply the provincial building's country modifier with the updated count
+		building->get_country_modifier()->apply(this->country, centesimal_int(-old_count) / this->get_province_count());
+		building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_province_count());
+	}
+
+	if (game::get()->is_running()) {
+		emit provincial_building_counts_changed();
 	}
 }
 

@@ -3,6 +3,11 @@
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;
+
+	template <int N>
+	class fractional_int;
+
+	using centesimal_int = fractional_int<2>;
 }
 
 namespace metternich {
@@ -26,8 +31,8 @@ public:
 	virtual const std::string &get_identifier() const = 0;
 	virtual void process_gsml_property(const gsml_property &property);
 	virtual void process_gsml_scope(const gsml_data &scope);
-	virtual void apply(scope_type *scope, const int multiplier) const = 0;
-	virtual std::string get_string(const int multiplier) const = 0;
+	virtual void apply(scope_type *scope, const centesimal_int &multiplier) const = 0;
+	virtual std::string get_string(const centesimal_int &multiplier) const = 0;
 	virtual int get_score() const = 0;
 
 	virtual bool is_hidden() const

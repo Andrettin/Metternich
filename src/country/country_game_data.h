@@ -555,6 +555,12 @@ public:
 		return 0;
 	}
 
+	Q_INVOKABLE int get_provincial_building_count(metternich::building_type *building) const
+	{
+		const metternich::building_type *const_building = building;
+		return this->get_provincial_building_count(const_building);
+	}
+
 	void change_provincial_building_count(const building_type *building, const int change);
 
 	int get_wealth() const
@@ -989,6 +995,7 @@ signals:
 	void population_ideology_counts_changed();
 	void population_changed();
 	void population_growth_changed();
+	void provincial_building_counts_changed();
 	void wealth_changed();
 	void stored_commodities_changed();
 	void storage_capacity_changed();
