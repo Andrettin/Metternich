@@ -65,11 +65,7 @@ public:
 	void set_under_construction_building(const building_type *building);
 
 	virtual bool can_have_building(const building_type *building) const;
-
-	virtual bool can_build_building(const building_type *building) const
-	{
-		return this->can_have_building(building);
-	}
+	virtual bool can_build_building(const building_type *building) const;
 
 	Q_INVOKABLE metternich::building_type *get_buildable_building() const;
 

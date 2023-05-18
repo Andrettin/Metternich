@@ -52,10 +52,6 @@ void building_slot::set_under_construction_building(const building_type *buildin
 
 bool building_slot::can_have_building(const building_type *building) const
 {
-	if (building->get_required_building() != nullptr && this->get_building() != building->get_required_building()) {
-		return false;
-	}
-
 	if (building->get_conditions() != nullptr) {
 		if (this->get_country() == nullptr) {
 			return false;
@@ -86,6 +82,15 @@ bool building_slot::can_have_building(const building_type *building) const
 	}
 
 	return true;
+}
+
+bool building_slot::can_build_building(const building_type *building) const
+{
+	if (building->get_required_building() != nullptr && this->get_building() != building->get_required_building()) {
+		return false;
+	}
+
+	return this->can_have_building(building);
 }
 
 building_type *building_slot::get_buildable_building() const

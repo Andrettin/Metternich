@@ -80,7 +80,7 @@ void building_type::check() const
 	assert_throw(this->get_portrait() != nullptr);
 	assert_throw(this->get_icon() != nullptr);
 
-	if (!this->get_production_types().empty()) {
+	if (!this->get_production_types().empty() && !this->is_provincial()) {
 		assert_throw(this->get_base_capacity() > 0);
 	}
 
