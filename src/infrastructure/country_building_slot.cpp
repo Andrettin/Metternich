@@ -104,15 +104,6 @@ void country_building_slot::set_building(const building_type *building)
 			}
 		}
 	}
-
-	//clear production that is over capacity
-	if (building != nullptr && this->get_employed_capacity() > this->get_capacity()) {
-		for (const production_type *production_type : building->get_production_types()) {
-			while (this->get_employed_capacity() > this->get_capacity() && this->get_production_type_employed_capacity(production_type) > 0) {
-				this->decrease_production(production_type, true);
-			}
-		}
-	}
 }
 
 bool country_building_slot::can_have_building(const building_type *building) const
@@ -182,6 +173,17 @@ void country_building_slot::change_capacity(const int change)
 	}
 
 	this->capacity += change;
+
+	if (change < 0) {
+		//clear production that is over capacity
+		if (this->get_building() != nullptr && this->get_employed_capacity() > this->get_capacity()) {
+			for (const production_type *production_type : this->get_building()->get_production_types()) {
+				while (this->get_employed_capacity() > this->get_capacity() && this->get_production_type_employed_capacity(production_type) > 0) {
+					this->decrease_production(production_type, true);
+				}
+			}
+		}
+	}
 
 	if (game::get()->is_running()) {
 		emit capacity_changed();
