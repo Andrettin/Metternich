@@ -360,17 +360,30 @@ QString country_building_slot::get_country_modifier_string() const
 		return QString();
 	}
 
-	if (this->get_building()->get_country_modifier() == nullptr) {
-		return QString();
+	std::string str;
+
+	const country_game_data *country_game_data = this->get_country()->get_game_data();
+
+	if (this->get_building()->get_country_modifier() != nullptr) {
+		centesimal_int multiplier(1);
+		if (this->get_building()->is_provincial()) {
+			multiplier = centesimal_int(country_game_data->get_provincial_building_count(this->get_building())) / country_game_data->get_province_count();
+		}
+
+		str = this->get_building()->get_country_modifier()->get_string(multiplier);
 	}
 
-	centesimal_int multiplier(1);
-	if (this->get_building()->is_provincial()) {
-		const country_game_data *country_game_data = this->get_country()->get_game_data();
-		multiplier = centesimal_int(country_game_data->get_provincial_building_count(this->get_building())) / country_game_data->get_province_count();
+	if (this->get_building()->get_stackable_country_modifier() != nullptr) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		assert_throw(this->get_building()->is_provincial());
+		const int multiplier = country_game_data->get_provincial_building_count(this->get_building());
+		str += this->get_building()->get_stackable_country_modifier()->get_string(multiplier);
 	}
 
-	return QString::fromStdString(this->get_building()->get_country_modifier()->get_string(multiplier));
+	return QString::fromStdString(str);
 }
 
 }

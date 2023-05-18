@@ -1945,6 +1945,10 @@ void country_game_data::change_provincial_building_count(const building_type *bu
 		building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_province_count());
 	}
 
+	if (building->get_stackable_country_modifier() != nullptr) {
+		building->get_stackable_country_modifier()->apply(this->country, change);
+	}
+
 	if (game::get()->is_running()) {
 		emit provincial_building_counts_changed();
 	}

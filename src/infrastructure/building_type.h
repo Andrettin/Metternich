@@ -145,6 +145,11 @@ public:
 		return this->country_modifier.get();
 	}
 
+	const modifier<const country> *get_stackable_country_modifier() const
+	{
+		return this->stackable_country_modifier.get();
+	}
+
 	QString get_country_modifier_string() const;
 
 signals:
@@ -167,6 +172,7 @@ private:
 	technology *required_technology = nullptr;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<modifier<const country>> country_modifier;
+	std::unique_ptr<modifier<const country>> stackable_country_modifier;
 };
 
 }
