@@ -184,6 +184,11 @@ public:
 
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
 
+	const std::vector<qunique_ptr<provincial_building_slot>> &get_building_slots() const
+	{
+		return this->building_slots;
+	}
+
 	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
 

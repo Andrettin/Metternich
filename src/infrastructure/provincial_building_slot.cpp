@@ -39,17 +39,6 @@ void provincial_building_slot::set_building(const building_type *building)
 
 	if (this->get_building() != nullptr) {
 		province_game_data->on_building_gained(this->get_building(), 1);
-
-		if (this->get_country() != nullptr) {
-			country_game_data *country_game_data = this->get_country()->get_game_data();
-			country_building_slot *country_building_slot = country_game_data->get_building_slot(this->get_building()->get_building_class()->get_slot_type());
-
-			assert_throw(country_building_slot != nullptr);
-
-			if (country_building_slot->can_have_building(this->get_building())) {
-				country_building_slot->set_building(this->get_building());
-			}
-		}
 	}
 }
 

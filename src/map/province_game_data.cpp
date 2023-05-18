@@ -393,8 +393,14 @@ void province_game_data::clear_buildings()
 void province_game_data::on_building_gained(const building_type *building, const int multiplier)
 {
 	assert_throw(building != nullptr);
+	assert_throw(multiplier != 0);
 
 	this->change_score(building->get_score() * multiplier);
+
+	if (this->get_owner() != nullptr) {
+		country_game_data *country_game_data = this->get_owner()->get_game_data();
+		country_game_data->change_provincial_building_count(building, multiplier);
+	}
 }
 
 QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const

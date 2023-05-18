@@ -27,6 +27,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/country_building_slot.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/provincial_building_slot.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -593,6 +594,14 @@ void country_game_data::add_province(const province *province)
 		this->change_tile_terrain_count(terrain, count);
 	}
 
+	for (const qunique_ptr<provincial_building_slot> &building_slot : province_game_data->get_building_slots()) {
+		const building_type *building = building_slot->get_building();
+		if (building != nullptr) {
+			assert_throw(building->is_provincial());
+			this->change_provincial_building_count(building, 1);
+		}
+	}
+
 	if (province_game_data->is_country_border_province()) {
 		this->border_provinces.push_back(province);
 	}
@@ -668,6 +677,14 @@ void country_game_data::remove_province(const province *province)
 
 	for (const auto &[terrain, count] : province_game_data->get_tile_terrain_counts()) {
 		this->change_tile_terrain_count(terrain, -count);
+	}
+
+	for (const qunique_ptr<provincial_building_slot> &building_slot : province_game_data->get_building_slots()) {
+		const building_type *building = building_slot->get_building();
+		if (building != nullptr) {
+			assert_throw(building->is_provincial());
+			this->change_provincial_building_count(building, -1);
+		}
 	}
 
 	for (const QPoint &tile_pos : province_game_data->get_border_tiles()) {
@@ -1847,6 +1864,56 @@ void country_game_data::on_building_gained(const building_type *building, const 
 	assert_throw(building != nullptr);
 
 	this->change_score(building->get_score() * multiplier);
+}
+
+void country_game_data::change_provincial_building_count(const building_type *building, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int old_count = this->get_provincial_building_count(building);
+
+	const int count = (this->provincial_building_counts[building] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->provincial_building_counts.erase(building);
+	}
+
+	country_building_slot *country_building_slot = this->get_building_slot(building->get_slot_type());
+
+	assert_throw(country_building_slot != nullptr);
+
+	if (count == 0) {
+		//lost last provincial building
+		if (country_building_slot->get_building() == building) {
+			//get the best provincial building to replace the one that was lost (if any), and set it to the building slot
+
+			const building_type *best_building = nullptr;
+			int best_score = 0;
+
+			for (const auto &[provincial_building, building_count] : this->provincial_building_counts) {
+				if (provincial_building->get_slot_type() != country_building_slot->get_type()) {
+					continue;
+				}
+
+				const int score = provincial_building->get_score();
+				if (score > best_score) {
+					best_building = provincial_building;
+					best_score = score;
+				}
+			}
+
+			country_building_slot->set_building(best_building);
+		}
+	} else if (count > 0 && old_count == 0) {
+		//gained first provincial building
+		if (country_building_slot->can_have_building(building)) {
+			country_building_slot->set_building(building);
+		}
+	}
 }
 
 QVariantList country_game_data::get_stored_commodities_qvariant_list() const

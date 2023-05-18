@@ -544,6 +544,19 @@ public:
 
 	void on_building_gained(const building_type *building, const int multiplier);
 
+	int get_provincial_building_count(const building_type *building) const
+	{
+		const auto find_iterator = this->provincial_building_counts.find(building);
+
+		if (find_iterator != this->provincial_building_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_provincial_building_count(const building_type *building, const int change);
+
 	int get_wealth() const
 	{
 		return this->wealth;
@@ -1030,6 +1043,7 @@ private:
 	int population_growth = 0; //population growth counter
 	std::vector<qunique_ptr<country_building_slot>> building_slots;
 	building_slot_type_map<country_building_slot *> building_slot_map;
+	building_type_map<int> provincial_building_counts;
 	int wealth = 0;
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;
