@@ -27,7 +27,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	const std::string &value = property.get_value();
 
 	if constexpr (std::is_same_v<scope_type, const country>) {
-		static const std::string building_capacity_modifier_suffix = "_capacity_modifier";
+		static const std::string building_capacity_modifier_suffix = "_capacity";
 		static const std::string research_modifier_suffix = "_research_modifier";
 		static const std::string throughput_modifier_suffix = "_throughput_modifier";
 
