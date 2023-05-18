@@ -31,7 +31,24 @@ public:
 
 	int get_level() const
 	{
-		return this->level;
+		return (this->get_building() ? 1 : 0) + this->get_expansion_count();
+	}
+
+	void set_level(const int level)
+	{
+		this->set_expansion_count(std::max(0, level - 1));
+	}
+
+	int get_expansion_count() const
+	{
+		return this->expansion_count;
+	}
+
+	void change_expansion_count(const int change);
+
+	void set_expansion_count(const int expansion_count)
+	{
+		this->change_expansion_count(expansion_count - this->get_expansion_count());
 	}
 
 	bool is_expanding() const
@@ -52,7 +69,12 @@ public:
 	Q_INVOKABLE bool can_expand() const;
 	void expand();
 
-	int get_capacity() const;
+	int get_capacity() const
+	{
+		return this->capacity;
+	}
+
+	void change_capacity(const int change);
 
 	int get_employed_capacity() const
 	{
@@ -134,7 +156,8 @@ signals:
 
 private:
 	const metternich::country *country = nullptr;
-	int level = 0;
+	int expansion_count = 0;
+	int capacity = 0;
 	int employed_capacity = 0;
 	std::map<const production_type *, int> production_type_employed_capacities;
 	bool expanding = false;

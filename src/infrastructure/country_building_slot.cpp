@@ -24,7 +24,6 @@ country_building_slot::country_building_slot(const building_slot_type *type, con
 {
 	assert_throw(this->get_country() != nullptr);
 
-	connect(this, &building_slot::building_changed, this, &country_building_slot::capacity_changed);
 	connect(this, &building_slot::building_changed, this, &country_building_slot::available_production_types_changed);
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
@@ -54,26 +53,41 @@ void country_building_slot::set_building(const building_type *building)
 
 	building_slot::set_building(building);
 
-	if (building != nullptr) {
-		if (building->is_expandable()) {
-			this->level = std::max(this->get_level(), 1);
-			if (building->get_max_level() != 0) {
-				this->level = std::min(this->get_level(), building->get_max_level());
-			}
-		} else {
-			this->level = 1;
-		}
-	} else {
-		this->level = 0;
-	}
 	this->set_expanding(false);
 
 	if (this->get_building() != nullptr && !this->get_building()->is_provincial()) {
 		country_game_data->on_building_gained(this->get_building(), 1);
 
 		if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr) {
-			this->get_building()->get_country_modifier()->apply(this->get_country(), 1);
+			this->get_building()->get_country_modifier()->apply(this->get_country(), this->get_level());
 		}
+	}
+
+	const int old_base_capacity = old_building ? old_building->get_base_capacity() : 0;
+	const int new_base_capacity = this->get_building() ? this->get_building()->get_base_capacity() : 0;
+	int capacity_change = new_base_capacity - old_base_capacity;
+
+	if (this->get_expansion_count() > 0) {
+		const int old_expanded_capacity = old_building ? (old_building->get_capacity_increment() * this->get_expansion_count()) : 0;
+		const int new_expanded_capacity = this->get_building() ? (this->get_building()->get_capacity_increment() * this->get_expansion_count()) : 0;
+		capacity_change += new_expanded_capacity - old_expanded_capacity;
+	}
+
+	if (capacity_change != 0) {
+		this->change_capacity(capacity_change);
+	}
+
+	if (building != nullptr) {
+		if (building->is_expandable()) {
+			this->set_level(std::max(this->get_level(), 1));
+			if (building->get_max_level() != 0) {
+				this->set_level(std::min(this->get_level(), building->get_max_level()));
+			}
+		} else {
+			this->set_level(1);
+		}
+	} else {
+		this->set_level(0);
 	}
 
 	//clear production for production types which are no longer valid
@@ -119,6 +133,21 @@ bool country_building_slot::can_build_building(const building_type *building) co
 	return building_slot::can_build_building(building);
 }
 
+void country_building_slot::change_expansion_count(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->expansion_count += change;
+
+	this->change_capacity(this->get_building()->get_capacity_increment() * change);
+
+	if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr && !this->get_building()->is_provincial()) {
+		this->get_building()->get_country_modifier()->apply(this->get_country(), change);
+	}
+}
+
 bool country_building_slot::can_expand() const
 {
 	if (this->get_building() == nullptr) {
@@ -139,24 +168,24 @@ bool country_building_slot::can_expand() const
 void country_building_slot::expand()
 {
 	assert_throw(this->is_expanding());
+	assert_throw(this->get_building() != nullptr);
 
-	this->level += 1;
-	emit capacity_changed();
-
-	if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr) {
-		this->get_building()->get_country_modifier()->apply(this->get_country(), 1);
-	}
+	this->change_expansion_count(1);
 
 	this->set_expanding(false);
 }
 
-int country_building_slot::get_capacity() const
+void country_building_slot::change_capacity(const int change)
 {
-	if (this->get_building() != nullptr) {
-		return this->get_building()->get_base_capacity() + this->get_building()->get_capacity_increment() * (this->get_level() - 1);
+	if (change == 0) {
+		return;
 	}
 
-	return 0;
+	this->capacity += change;
+
+	if (game::get()->is_running()) {
+		emit capacity_changed();
+	}
 }
 
 std::vector<const production_type *> country_building_slot::get_available_production_types() const
