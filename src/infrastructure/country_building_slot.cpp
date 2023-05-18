@@ -110,6 +110,15 @@ bool country_building_slot::can_have_building(const building_type *building) con
 	return building_slot::can_have_building(building);
 }
 
+bool country_building_slot::can_build_building(const building_type *building) const
+{
+	if (building->is_provincial()) {
+		return false;
+	}
+
+	return building_slot::can_build_building(building);
+}
+
 bool country_building_slot::can_expand() const
 {
 	if (this->get_building() == nullptr) {

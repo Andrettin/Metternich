@@ -22,6 +22,7 @@ public:
 	void set_building(const building_type *building);
 
 	virtual bool can_have_building(const building_type *building) const override;
+	virtual bool can_build_building(const building_type *building) const override;
 
 	virtual const metternich::country *get_country() const override
 	{

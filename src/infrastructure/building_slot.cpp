@@ -101,7 +101,7 @@ building_type *building_slot::get_buildable_building() const
 			}
 		}
 
-		if (!this->can_have_building(building)) {
+		if (!this->can_build_building(building)) {
 			continue;
 		}
 
