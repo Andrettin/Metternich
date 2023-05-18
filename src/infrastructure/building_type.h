@@ -8,6 +8,7 @@
 namespace metternich {
 
 class building_class;
+class building_slot_type;
 class country;
 class cultural_group;
 class culture;
@@ -62,6 +63,8 @@ public:
 	{
 		return this->building_class;
 	}
+
+	const building_slot_type *get_slot_type() const;
 
 	const metternich::culture *get_culture() const
 	{

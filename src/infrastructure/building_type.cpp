@@ -90,6 +90,11 @@ void building_type::check() const
 	}
 }
 
+const building_slot_type *building_type::get_slot_type() const
+{
+	return this->get_building_class()->get_slot_type();
+}
+
 QVariantList building_type::get_production_types_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_production_types());

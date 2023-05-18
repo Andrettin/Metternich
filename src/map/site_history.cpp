@@ -18,7 +18,7 @@ void site_history::process_gsml_property(const gsml_property &property)
 
 	if (key == "buildings") {
 		const building_type *building = building_type::get(value);
-		const building_slot_type *slot_type = building->get_building_class()->get_slot_type();
+		const building_slot_type *slot_type = building->get_slot_type();
 
 		switch (property.get_operator()) {
 			case gsml_operator::addition:

@@ -354,7 +354,7 @@ void country_game_data::do_ai_turn()
 	});
 
 	for (const building_type *ai_desired_building : ai_desired_buildings) {
-		country_building_slot *building_slot = this->get_building_slot(ai_desired_building->get_building_class()->get_slot_type());
+		country_building_slot *building_slot = this->get_building_slot(ai_desired_building->get_slot_type());
 		assert_throw(building_slot != nullptr);
 
 		building_slot->set_under_construction_building(ai_desired_building);
@@ -1818,7 +1818,7 @@ const building_type *country_game_data::get_slot_building(const building_slot_ty
 void country_game_data::set_slot_building(const building_slot_type *slot_type, const building_type *building)
 {
 	if (building != nullptr) {
-		assert_throw(building->get_building_class()->get_slot_type() == slot_type);
+		assert_throw(building->get_slot_type() == slot_type);
 	}
 
 	const auto find_iterator = this->building_slot_map.find(slot_type);
@@ -1832,7 +1832,7 @@ void country_game_data::set_slot_building(const building_slot_type *slot_type, c
 
 bool country_game_data::has_building(const building_type *building) const
 {
-	return this->get_slot_building(building->get_building_class()->get_slot_type()) == building;
+	return this->get_slot_building(building->get_slot_type()) == building;
 }
 
 void country_game_data::clear_buildings()

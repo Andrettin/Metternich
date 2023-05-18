@@ -366,7 +366,7 @@ const building_type *province_game_data::get_slot_building(const building_slot_t
 void province_game_data::set_slot_building(const building_slot_type *slot_type, const building_type *building)
 {
 	if (building != nullptr) {
-		assert_throw(building->get_building_class()->get_slot_type() == slot_type);
+		assert_throw(building->get_slot_type() == slot_type);
 	}
 
 	const auto find_iterator = this->building_slot_map.find(slot_type);
@@ -380,7 +380,7 @@ void province_game_data::set_slot_building(const building_slot_type *slot_type, 
 
 bool province_game_data::has_building(const building_type *building) const
 {
-	return this->get_slot_building(building->get_building_class()->get_slot_type()) == building;
+	return this->get_slot_building(building->get_slot_type()) == building;
 }
 
 void province_game_data::clear_buildings()

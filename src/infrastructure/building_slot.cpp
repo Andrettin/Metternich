@@ -27,7 +27,7 @@ void building_slot::set_building(const building_type *building)
 	}
 
 	if (building != nullptr) {
-		assert_throw(building->get_building_class()->get_slot_type() == this->get_type());
+		assert_throw(building->get_slot_type() == this->get_type());
 	}
 
 	this->building = building;
