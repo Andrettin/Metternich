@@ -81,6 +81,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
+	Q_PROPERTY(int wealth_income READ get_wealth_income NOTIFY wealth_income_changed)
+	Q_PROPERTY(int credit_limit READ get_credit_limit NOTIFY credit_limit_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(int storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
 	Q_PROPERTY(QVariantList commodity_inputs READ get_commodity_inputs_qvariant_list NOTIFY commodity_inputs_changed)
@@ -584,6 +586,53 @@ public:
 		this->set_wealth(this->get_wealth() + change);
 	}
 
+	int get_wealth_income() const
+	{
+		return this->wealth_income;
+	}
+
+	void set_wealth_income(const int income)
+	{
+		if (income == this->get_wealth_income()) {
+			return;
+		}
+
+		this->wealth_income = income;
+
+		emit wealth_income_changed();
+	}
+
+	void change_wealth_income(const int change)
+	{
+		this->set_wealth_income(this->get_wealth_income() + change);
+	}
+
+	int get_credit_limit() const
+	{
+		return this->credit_limit;
+	}
+
+	void set_credit_limit(const int credit_limit)
+	{
+		if (credit_limit == this->get_credit_limit()) {
+			return;
+		}
+
+		this->credit_limit = credit_limit;
+
+		emit credit_limit_changed();
+	}
+
+	void change_credit_limit(const int change)
+	{
+		this->set_credit_limit(this->get_credit_limit() + change);
+	}
+
+	int get_wealth_with_credit() const
+	{
+		return this->get_wealth() + this->get_credit_limit();
+	}
+
 	const commodity_map<int> &get_stored_commodities() const
 	{
 		return this->stored_commodities;
@@ -670,6 +719,7 @@ public:
 	}
 
 	void assign_production();
+	void decrease_wealth_consumption(const bool restore_inputs = true);
 	void decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs = true);
 
 	bool produces_commodity(const commodity *commodity) const;
@@ -997,6 +1047,8 @@ signals:
 	void population_growth_changed();
 	void provincial_building_counts_changed();
 	void wealth_changed();
+	void wealth_income_changed();
+	void credit_limit_changed();
 	void stored_commodities_changed();
 	void storage_capacity_changed();
 	void technologies_changed();
@@ -1052,6 +1104,8 @@ private:
 	building_slot_type_map<country_building_slot *> building_slot_map;
 	building_type_map<int> provincial_building_counts;
 	int wealth = 0;
+	int wealth_income = 0;
+	int credit_limit = 0;
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;
 	commodity_map<int> commodity_inputs;

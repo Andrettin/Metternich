@@ -14,6 +14,7 @@ class production_type final : public named_data_entry, public data_type<producti
 	Q_OBJECT
 
 	Q_PROPERTY(QVariantList input_commodities READ get_input_commodities_qvariant_list NOTIFY changed)
+	Q_PROPERTY(int input_wealth MEMBER input_wealth READ get_input_wealth NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -38,6 +39,11 @@ public:
 
 	QVariantList get_input_commodities_qvariant_list() const;
 
+	int get_input_wealth() const
+	{
+		return this->input_wealth;
+	}
+
 	const commodity *get_output_commodity() const
 	{
 		return this->output_commodity;
@@ -58,6 +64,7 @@ signals:
 
 private:
 	commodity_map<int> input_commodities;
+	int input_wealth = 0;
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
 	technology *required_technology = nullptr;

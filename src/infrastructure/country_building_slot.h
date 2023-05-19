@@ -102,6 +102,13 @@ public:
 
 	commodity_map<int> get_production_type_inputs(const production_type *production_type) const;
 	Q_INVOKABLE QVariantList get_production_type_inputs(metternich::production_type *production_type) const;
+	int get_production_type_input_wealth(const production_type *production_type) const;
+
+	Q_INVOKABLE int get_production_type_input_wealth(metternich::production_type *production_type) const
+	{
+		const metternich::production_type *const_production_type = production_type;
+		return this->get_production_type_input_wealth(const_production_type);
+	}
 
 	int get_production_type_output(const production_type *production_type) const;
 

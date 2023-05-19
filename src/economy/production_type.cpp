@@ -39,7 +39,7 @@ void production_type::initialize()
 
 void production_type::check() const
 {
-	assert_throw(!this->get_input_commodities().empty());
+	assert_throw(!this->get_input_commodities().empty() || this->get_input_wealth() != 0);
 	assert_throw(this->get_output_commodity() != nullptr);
 	assert_throw(this->get_output_value() > 0);
 }

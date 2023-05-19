@@ -134,9 +134,13 @@ void country_game_data::do_production()
 			this->change_stored_commodity(commodity, final_output);
 		}
 
+		//decrease consumption of commodities for which we no longer have enough in storage
+		while (this->get_wealth_income() < 0 && (this->get_wealth_income() * -1) > this->get_wealth_with_credit()) {
+			this->decrease_wealth_consumption(false);
+		}
+
 		const std::vector<const commodity *> input_commodities = archimedes::map::get_keys(this->get_commodity_inputs());
 
-		//decrease consumption of commodities for which we no longer have enough in storage
 		for (const commodity *commodity : input_commodities) {
 			if (!commodity->is_storable()) {
 				continue;
@@ -148,6 +152,10 @@ void country_game_data::do_production()
 		}
 
 		//reduce inputs from the storage for the next turn (for production this turn it had already been subtracted)
+		if (this->get_wealth_income() != 0) {
+			this->change_wealth(this->get_wealth_income());
+		}
+
 		for (const auto &[commodity, input] : this->get_commodity_inputs()) {
 			try {
 				if (!commodity->is_storable()) {
@@ -2098,6 +2106,32 @@ void country_game_data::assign_production()
 			}
 		}
 	}
+}
+
+void country_game_data::decrease_wealth_consumption(const bool restore_inputs)
+{
+	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
+		const building_type *building_type = building_slot->get_building();
+
+		if (building_type == nullptr) {
+			continue;
+		}
+
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
+			if (production_type->get_input_wealth() == 0) {
+				continue;
+			}
+
+			if (!building_slot->can_decrease_production(production_type)) {
+				continue;
+			}
+
+			building_slot->decrease_production(production_type, restore_inputs);
+			return;
+		}
+	}
+
+	assert_throw(false);
 }
 
 void country_game_data::decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs)

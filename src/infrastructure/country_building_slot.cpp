@@ -267,6 +267,21 @@ QVariantList country_building_slot::get_production_type_inputs(metternich::produ
 	return archimedes::map::to_qvariant_list(this->get_production_type_inputs(const_production_type));
 }
 
+int country_building_slot::get_production_type_input_wealth(const production_type *production_type) const
+{
+	if (production_type->get_input_wealth() == 0) {
+		return 0;
+	}
+
+	const int employed_capacity = this->get_production_type_employed_capacity(production_type);
+
+	if (employed_capacity == 0) {
+		return 0;
+	}
+
+	return production_type->get_input_wealth() * employed_capacity;
+}
+
 int country_building_slot::get_production_type_output(const production_type *production_type) const
 {
 	int output = this->get_production_type_employed_capacity(production_type);
@@ -291,6 +306,7 @@ void country_building_slot::change_production(const production_type *production_
 {
 	const int old_output = this->get_production_type_output(production_type);
 	const commodity_map<int> old_inputs = this->get_production_type_inputs(production_type);
+	const int old_input_wealth = this->get_production_type_input_wealth(production_type);
 
 	const int change = production_type->get_output_value() * multiplier;
 	this->employed_capacity += change;
@@ -314,6 +330,13 @@ void country_building_slot::change_production(const production_type *production_
 		}
 		country_game_data->change_commodity_input(input_commodity, input_change);
 	}
+
+	const int new_input_wealth = this->get_production_type_input_wealth(production_type);
+	const int input_wealth_change = new_input_wealth - old_input_wealth;
+	if (change_input_storage) {
+		country_game_data->change_wealth(-input_wealth_change);
+	}
+	country_game_data->change_wealth_income(-input_wealth_change);
 
 	const int new_output = this->get_production_type_output(production_type);
 	country_game_data->change_commodity_output(production_type->get_output_commodity(), new_output - old_output);
@@ -342,6 +365,10 @@ bool country_building_slot::can_increase_production(const production_type *produ
 				return false;
 			}
 		}
+	}
+
+	if (production_type->get_input_wealth() != 0 && country_game_data->get_wealth_with_credit() < production_type->get_input_wealth()) {
+		return false;
 	}
 
 	return true;
