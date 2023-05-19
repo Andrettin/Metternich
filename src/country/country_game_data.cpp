@@ -189,8 +189,8 @@ void country_game_data::do_research()
 			return;
 		}
 
-		if (this->get_stored_commodity(defines::get()->get_research_commodity()) >= this->get_current_research()->get_cost()) {
-			this->change_stored_commodity(defines::get()->get_research_commodity(), -this->get_current_research()->get_cost());
+		if (this->get_stored_commodity(defines::get()->get_research_commodity()) >= (this->get_current_research()->get_cost() * this->get_research_cost_modifier() / 100)) {
+			this->change_stored_commodity(defines::get()->get_research_commodity(), -(this->get_current_research()->get_cost() * this->get_research_cost_modifier() / 100));
 
 			this->add_technology(this->get_current_research());
 			emit technology_researched(const_cast<technology *>(this->get_current_research()));
