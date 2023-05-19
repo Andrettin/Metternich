@@ -39,6 +39,10 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<country>>();
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
+	} else if (tag == "province_conditions") {
+		auto conditions = std::make_unique<and_condition<province>>();
+		database::process_gsml_data(conditions, scope);
+		this->province_conditions = std::move(conditions);
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
 		database::process_gsml_data(this->country_modifier, scope);
@@ -80,6 +84,14 @@ void building_type::check() const
 	assert_throw(this->get_portrait() != nullptr);
 	assert_throw(this->get_icon() != nullptr);
 
+	if (this->get_conditions() != nullptr) {
+		this->get_conditions()->check_validity();
+	}
+
+	if (this->get_province_conditions() != nullptr) {
+		this->get_province_conditions()->check_validity();
+	}
+
 	if (!this->get_production_types().empty() && !this->is_provincial()) {
 		assert_throw(this->get_base_capacity() > 0);
 	}
@@ -94,6 +106,10 @@ void building_type::check() const
 
 	if (this->get_stackable_country_modifier() != nullptr && !this->is_provincial()) {
 		throw std::runtime_error(std::format("Building type \"{}\" has a stackable country modifier, but is not a provincial building.", this->get_identifier()));
+	}
+
+	if (this->get_province_conditions() != nullptr && !this->is_provincial()) {
+		throw std::runtime_error(std::format("Building type \"{}\" has province conditions, but is not a provincial building.", this->get_identifier()));
 	}
 }
 

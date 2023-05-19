@@ -10,6 +10,7 @@
 #include "infrastructure/country_building_slot.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "script/condition/condition.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -46,6 +47,12 @@ bool provincial_building_slot::can_have_building(const building_type *building) 
 {
 	if (!building->is_provincial()) {
 		return false;
+	}
+
+	if (building->get_province_conditions() != nullptr) {
+		if (!building->get_province_conditions()->check(this->get_province(), read_only_context(this->get_province()))) {
+			return false;
+		}
 	}
 
 	return building_slot::can_have_building(building);

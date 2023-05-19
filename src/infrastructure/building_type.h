@@ -16,6 +16,7 @@ class icon;
 class population_unit;
 class portrait;
 class production_type;
+class province;
 class technology;
 
 template <typename scope_type>
@@ -140,6 +141,11 @@ public:
 		return this->conditions.get();
 	}
 
+	const condition<province> *get_province_conditions() const
+	{
+		return this->province_conditions.get();
+	}
+
 	const modifier<const country> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
@@ -171,6 +177,7 @@ private:
 	building_type *required_building = nullptr;
 	technology *required_technology = nullptr;
 	std::unique_ptr<const condition<country>> conditions;
+	std::unique_ptr<const condition<province>> province_conditions;
 	std::unique_ptr<modifier<const country>> country_modifier;
 	std::unique_ptr<modifier<const country>> stackable_country_modifier;
 };

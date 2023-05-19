@@ -145,6 +145,8 @@ void province_game_data::set_owner(const country *country)
 		this->owner->get_game_data()->add_province(this->province);
 	}
 
+	this->check_building_conditions();
+
 	if (game::get()->is_running()) {
 		for (const QPoint &tile_pos : this->get_border_tiles()) {
 			map::get()->calculate_tile_country_border_directions(tile_pos);
@@ -387,6 +389,46 @@ void province_game_data::clear_buildings()
 {
 	for (const qunique_ptr<provincial_building_slot> &building_slot : this->building_slots) {
 		building_slot->set_building(nullptr);
+	}
+}
+
+void province_game_data::check_building_conditions()
+{
+	for (const qunique_ptr<provincial_building_slot> &building_slot : this->building_slots) {
+		const building_type *building = building_slot->get_building();
+
+		if (building == nullptr) {
+			continue;
+		}
+
+		//if the building fails its conditions, try to replace it with one of its required building, if valid
+		while (building != nullptr) {
+			if (building->get_conditions() != nullptr) {
+				if (this->get_owner() == nullptr) {
+					building = building->get_required_building();
+					continue;
+				}
+
+				if (!building->get_conditions()->check(this->get_owner(), read_only_context(this->get_owner()))) {
+					building = building->get_required_building();
+					continue;
+				}
+			}
+
+			if (building->get_province_conditions() != nullptr) {
+				if (!building->get_province_conditions()->check(this->province, read_only_context(this->province))) {
+					building = building->get_required_building();
+					continue;
+				}
+			}
+
+			//checks successful
+			break;
+		}
+
+		if (building != building_slot->get_building()) {
+			building_slot->set_building(building);
+		}
 	}
 }
 

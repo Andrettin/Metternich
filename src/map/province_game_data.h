@@ -207,6 +207,7 @@ public:
 	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
 	bool has_building(const building_type *building) const;
 	void clear_buildings();
+	void check_building_conditions();
 
 	void on_building_gained(const building_type *building, const int multiplier);
 
