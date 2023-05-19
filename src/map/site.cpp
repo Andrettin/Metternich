@@ -28,18 +28,17 @@ void site::load_history_database(const QDateTime &start_date, const timeline *cu
 	for (const site *site : site::get_all()) {
 		const tile *tile = site->get_game_data()->get_tile();
 
-		if (tile == nullptr) {
-			continue;
+		const metternich::province *site_province = site->get_province();
+		if (site_province == nullptr && tile != nullptr) {
+			site_province = tile->get_province();
 		}
 
-		const metternich::province *tile_province = tile->get_province();
-
-		if (tile_province == nullptr) {
+		if (site_province == nullptr) {
 			continue;
 		}
 
 		for (const auto &[group_key, population] : site->get_history()->get_population_groups()) {
-			tile_province->get_history()->change_lower_bound_group_population(group_key, population);
+			site_province->get_history()->change_lower_bound_group_population(group_key, population);
 		}
 	}
 }
