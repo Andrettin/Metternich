@@ -429,6 +429,7 @@ set(script_condition_HDRS
 	src/script/condition/any_neighbor_country_condition.h
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/can_have_trait_condition.h
+	src/script/condition/capital_condition.h
 	src/script/condition/coastal_condition.h
 	src/script/condition/colony_condition.h
 	src/script/condition/commodity_condition.h
