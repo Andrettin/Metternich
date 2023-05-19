@@ -10,7 +10,7 @@
 #include "infrastructure/country_building_slot.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
-#include "script/condition/condition.h"
+#include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 
 namespace metternich {

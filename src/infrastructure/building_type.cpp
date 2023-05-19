@@ -10,6 +10,7 @@
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
+#include "script/condition/capital_condition.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
@@ -74,6 +75,14 @@ void building_type::initialize()
 
 	if (this->required_technology != nullptr) {
 		this->required_technology->add_enabled_building(this);
+	}
+
+	if (this->is_capital_only()) {
+		if (this->get_province_conditions() == nullptr) {
+			this->province_conditions = std::make_unique<and_condition<province>>();
+		}
+
+		this->province_conditions->add_condition(std::make_unique<capital_condition>(true));
 	}
 
 	named_data_entry::initialize();

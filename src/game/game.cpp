@@ -35,7 +35,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/population_unit.h"
-#include "script/condition/condition.h"
+#include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
 #include "time/era.h"
 #include "unit/civilian_unit.h"

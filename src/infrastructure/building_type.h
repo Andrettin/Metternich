@@ -20,6 +20,9 @@ class province;
 class technology;
 
 template <typename scope_type>
+class and_condition;
+
+template <typename scope_type>
 class condition;
 
 template <typename scope_type>
@@ -39,6 +42,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
 	Q_PROPERTY(int capacity_increment MEMBER capacity_increment READ get_capacity_increment NOTIFY changed)
 	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
+	Q_PROPERTY(bool capital_only MEMBER capital_only READ is_capital_only NOTIFY changed)
 	Q_PROPERTY(bool expandable MEMBER expandable READ is_expandable NOTIFY changed)
 	Q_PROPERTY(int max_level MEMBER max_level READ get_max_level NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
@@ -114,6 +118,11 @@ public:
 		return this->warehouse;
 	}
 
+	bool is_capital_only() const
+	{
+		return this->capital_only;
+	}
+
 	bool is_expandable() const
 	{
 		return this->expandable;
@@ -141,7 +150,7 @@ public:
 		return this->conditions.get();
 	}
 
-	const condition<province> *get_province_conditions() const
+	const and_condition<province> *get_province_conditions() const
 	{
 		return this->province_conditions.get();
 	}
@@ -172,12 +181,13 @@ private:
 	int base_capacity = 0;
 	int capacity_increment = 0;
 	bool warehouse = false;
+	bool capital_only = false;
 	bool expandable = false;
 	int max_level = 0;
 	building_type *required_building = nullptr;
 	technology *required_technology = nullptr;
 	std::unique_ptr<const condition<country>> conditions;
-	std::unique_ptr<const condition<province>> province_conditions;
+	std::unique_ptr<and_condition<province>> province_conditions;
 	std::unique_ptr<modifier<const country>> country_modifier;
 	std::unique_ptr<modifier<const country>> stackable_country_modifier;
 };

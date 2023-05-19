@@ -10,10 +10,14 @@ namespace metternich {
 class capital_condition final : public condition<province>
 {
 public:
-	explicit capital_condition(const std::string &value, const gsml_operator condition_operator)
-		: condition<province>(condition_operator)
+	explicit capital_condition(const bool value, const gsml_operator condition_operator = gsml_operator::assignment)
+		: condition<province>(condition_operator), value(value)
 	{
-		this->value = string::to_bool(value);
+	}
+
+	explicit capital_condition(const std::string &value, const gsml_operator condition_operator)
+		: capital_condition(string::to_bool(value), condition_operator)
+	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
