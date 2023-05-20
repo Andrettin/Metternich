@@ -136,6 +136,8 @@ int building_type::get_score() const
 {
 	int score = building_type::base_score * std::max(1, this->get_base_capacity());
 
+	score += this->get_fort_level() * 10;
+
 	if (this->get_country_modifier() != nullptr) {
 		score += this->get_country_modifier()->get_score() / (this->is_provincial() ? 10 : 1);
 	}

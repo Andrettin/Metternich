@@ -71,11 +71,15 @@ bool building_slot::can_have_building(const building_type *building) const
 			return false;
 		}
 
+		if (building->get_fort_level() < this->get_building()->get_fort_level()) {
+			return false;
+		}
+
 		if (building->get_score() < this->get_building()->get_score()) {
 			return false;
 		}
 
-		if (building->get_base_capacity() == this->get_building()->get_base_capacity() && building->get_score() == this->get_building()->get_score()) {
+		if (building->get_score() == this->get_building()->get_score()) {
 			//the building must be better in some way
 			return false;
 		}

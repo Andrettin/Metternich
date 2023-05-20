@@ -45,6 +45,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool capital_only MEMBER capital_only READ is_capital_only NOTIFY changed)
 	Q_PROPERTY(bool expandable MEMBER expandable READ is_expandable NOTIFY changed)
 	Q_PROPERTY(int max_level MEMBER max_level READ get_max_level NOTIFY changed)
+	Q_PROPERTY(int fort_level MEMBER fort_level READ get_fort_level NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string CONSTANT)
@@ -133,6 +134,11 @@ public:
 		return this->max_level;
 	}
 
+	int get_fort_level() const
+	{
+		return this->fort_level;
+	}
+
 	const building_type *get_required_building() const
 	{
 		return this->required_building;
@@ -184,6 +190,7 @@ private:
 	bool capital_only = false;
 	bool expandable = false;
 	int max_level = 0;
+	int fort_level = 0;
 	building_type *required_building = nullptr;
 	technology *required_technology = nullptr;
 	std::unique_ptr<const condition<country>> conditions;
