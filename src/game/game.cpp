@@ -448,24 +448,41 @@ void game::apply_history(const metternich::scenario *scenario)
 				continue;
 			}
 
-			if (site_history->get_improvement() != nullptr) {
-				assert_throw(site_history->get_improvement()->get_resource() != nullptr || site_history->get_improvement()->is_ruins());
+			const improvement *site_improvement = site_history->get_improvement();
+			if (site_improvement == nullptr && site_history->is_developed() && site->get_type() == site_type::resource) {
+				//if the site is marked as developed, but has no specific improvement set for it, pick the most basic improvement for its resource
+				for (const improvement *improvement : improvement::get_all()) {
+					if (improvement->get_resource() != site->get_resource()) {
+						continue;
+					}
 
-				if (site_history->get_improvement()->get_resource() != nullptr) {
+					if (improvement->get_required_improvement() != nullptr) {
+						continue;
+					}
+
+					site_improvement = improvement;
+					break;
+				}
+			}
+
+			if (site_improvement != nullptr) {
+				assert_throw(site_improvement->get_resource() != nullptr || site_improvement->is_ruins());
+
+				if (site_improvement->get_resource() != nullptr) {
 					assert_throw(site->get_type() == site_type::resource);
 
 					if (tile->get_resource() == nullptr) {
 						throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as it has no resource.");
 					}
 
-					if (tile->get_resource() != site_history->get_improvement()->get_resource()) {
+					if (tile->get_resource() != site_improvement->get_resource()) {
 						throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as its resource is different than that of the improvement.");
 					}
 
 					map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 				}
 
-				tile->set_improvement(site_history->get_improvement());
+				tile->set_improvement(site_improvement);
 
 				//add prerequisites for the tile's improvement to its owner's researched technologies
 				if (tile->get_improvement()->get_required_technology() != nullptr && tile->get_owner() != nullptr) {

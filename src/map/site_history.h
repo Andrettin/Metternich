@@ -15,6 +15,7 @@ class site_history final : public data_entry_history
 
 	Q_PROPERTY(metternich::improvement* improvement MEMBER improvement)
 	Q_PROPERTY(bool resource_discovered MEMBER resource_discovered READ is_resource_discovered)
+	Q_PROPERTY(bool developed MEMBER developed)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
 
 public:
@@ -28,6 +29,11 @@ public:
 	bool is_resource_discovered() const
 	{
 		return this->resource_discovered;
+	}
+
+	bool is_developed() const
+	{
+		return this->developed || this->get_improvement() != nullptr || !this->get_buildings().empty() || !this->get_population_groups().empty();
 	}
 
 	const metternich::improvement *get_improvement() const
@@ -91,6 +97,7 @@ public:
 private:
 	const metternich::site *site = nullptr;
 	bool resource_discovered = false;
+	bool developed = false;
 	metternich::improvement *improvement = nullptr;
 	building_slot_type_map<const building_type *> buildings;
 	population_group_map<int> population_groups;
