@@ -32,84 +32,86 @@ void map_template::initialize()
 {
 	const QRect map_rect(QPoint(0, 0), this->get_size());
 
-	assert_throw(!this->get_province_image_filepath().empty());
+	if (!this->get_province_image_filepath().empty()) {
+		const QImage province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
 
-	const QImage province_image(path::to_qstring(this->get_province_image_filepath()));
+		for (const site *site : this->get_world()->get_sites()) {
+			assert_throw(site->get_geocoordinate().is_valid());
 
-	for (const site *site : this->get_world()->get_sites()) {
-		assert_throw(site->get_geocoordinate().is_valid());
-
-		if (site->get_geocoordinate().is_null()) {
-			continue;
-		}
-
-		if (!this->get_georectangle().contains(site->get_geocoordinate())) {
-			continue;
-		}
-
-		QPoint tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate()) + site->get_pos_offset();
-
-		if (!map_rect.contains(tile_pos)) {
-			continue;
-		}
-
-		//if the site is not placed in its province, nudge its position to be in the nearest point in its province
-		if (site->get_province() != nullptr && province::try_get_by_color(province_image.pixelColor(tile_pos)) != site->get_province()) {
-			bool found_pos = false;
-			int64_t best_distance = std::numeric_limits<int64_t>::max();
-
-			QRect rect(tile_pos, QSize(1, 1));
-
-			static constexpr int max_range = 2;
-			for (int i = 0; i < max_range; ++i) {
-				rect.setTopLeft(rect.topLeft() - QPoint(1, 1));
-				rect.setBottomRight(rect.bottomRight() + QPoint(1, 1));
-
-				bool checked_on_map = false;
-
-				rect::for_each_edge_point(rect, [&](const QPoint &checked_pos) {
-					if (!map_rect.contains(checked_pos)) {
-						return;
-					}
-
-					checked_on_map = true;
-
-					const province *checked_province = province::try_get_by_color(province_image.pixelColor(checked_pos));
-					if (checked_province != site->get_province()) {
-						return;
-					}
-
-					const geocoordinate checked_pos_geocoordinate = this->get_pos_geocoordinate(checked_pos);
-					const int64_t distance = number::distance_between(checked_pos_geocoordinate.get_longitude().get_value(), checked_pos_geocoordinate.get_latitude().get_value(), site->get_geocoordinate().get_longitude().get_value(), site->get_geocoordinate().get_latitude().get_value());
-					if (distance < best_distance) {
-						best_distance = distance;
-						tile_pos = checked_pos;
-						found_pos = true;
-					}
-				});
-
-				if (found_pos) {
-					break;
-				}
-
-				if (!checked_on_map) {
-					break;
-				}
-			}
-
-			if (!found_pos) {
-				log::log_error(std::format("No position found for site \"{}\" in province \"{}\".", site->get_identifier(), site->get_province()->get_identifier()));
+			if (site->get_geocoordinate().is_null()) {
 				continue;
 			}
+
+			if (!this->get_georectangle().contains(site->get_geocoordinate())) {
+				continue;
+			}
+
+			QPoint tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate()) + site->get_pos_offset();
+
+			if (!map_rect.contains(tile_pos)) {
+				continue;
+			}
+
+			//if the site is not placed in its province, nudge its position to be in the nearest point in its province
+			if (site->get_province() != nullptr && !province_image.isNull() && province::try_get_by_color(province_image.pixelColor(tile_pos)) != site->get_province()) {
+				bool found_pos = false;
+				int64_t best_distance = std::numeric_limits<int64_t>::max();
+
+				QRect rect(tile_pos, QSize(1, 1));
+
+				static constexpr int max_range = 2;
+				for (int i = 0; i < max_range; ++i) {
+					rect.setTopLeft(rect.topLeft() - QPoint(1, 1));
+					rect.setBottomRight(rect.bottomRight() + QPoint(1, 1));
+
+					bool checked_on_map = false;
+
+					rect::for_each_edge_point(rect, [&](const QPoint &checked_pos) {
+						if (!map_rect.contains(checked_pos)) {
+							return;
+						}
+
+						checked_on_map = true;
+
+						const province *checked_province = province::try_get_by_color(province_image.pixelColor(checked_pos));
+						if (checked_province != site->get_province()) {
+							return;
+						}
+
+						const geocoordinate checked_pos_geocoordinate = this->get_pos_geocoordinate(checked_pos);
+						const int64_t distance = number::distance_between(checked_pos_geocoordinate.get_longitude().get_value(), checked_pos_geocoordinate.get_latitude().get_value(), site->get_geocoordinate().get_longitude().get_value(), site->get_geocoordinate().get_latitude().get_value());
+						if (distance < best_distance) {
+							best_distance = distance;
+							tile_pos = checked_pos;
+							found_pos = true;
+						}
+					});
+
+					if (found_pos) {
+						break;
+					}
+
+					if (!checked_on_map) {
+						break;
+					}
+				}
+
+				if (!found_pos) {
+					log::log_error(std::format("No position found for site \"{}\" in province \"{}\".", site->get_identifier(), site->get_province()->get_identifier()));
+					continue;
+				}
+			}
+
+			assert_throw(map_rect.contains(tile_pos));
+
+			if (this->sites_by_position.contains(tile_pos)) {
+				throw std::runtime_error("Both the sites of \"" + this->sites_by_position.find(tile_pos)->second->get_identifier() + "\" and \"" + site->get_identifier() + "\" occupy the " + point::to_string(tile_pos) + " position in map template \"" + this->get_identifier() + "\".");
+			}
+
+			this->sites_by_position[tile_pos] = site;
 		}
-
-		assert_throw(map_rect.contains(tile_pos));
-
-		if (this->sites_by_position.contains(tile_pos)) {
-			throw std::runtime_error("Both the sites of \"" + this->sites_by_position.find(tile_pos)->second->get_identifier() + "\" and \"" + site->get_identifier() + "\" occupy the " + point::to_string(tile_pos) + " position in map template \"" + this->get_identifier() + "\".");
-		}
-
-		this->sites_by_position[tile_pos] = site;
+	} else {
+		log::log_error(std::format("Map template \"{}\" has no province image filepath.", this->get_identifier()));
 	}
 
 	named_data_entry::initialize();
