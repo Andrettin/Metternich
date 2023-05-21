@@ -117,6 +117,12 @@ void map_template::initialize()
 	named_data_entry::initialize();
 }
 
+void map_template::check() const
+{
+	assert_throw(this->map_projection != nullptr);
+	this->map_projection->validate_area(this->get_georectangle(), this->get_size());
+}
+
 QPoint map_template::get_geocoordinate_pos(const geocoordinate &geocoordinate) const
 {
 	return this->map_projection->geocoordinate_to_point(geocoordinate, this->get_georectangle(), this->get_size(), this->geocoordinate_x_offset);

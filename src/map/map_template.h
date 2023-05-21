@@ -43,6 +43,7 @@ public:
 	}
 
 	virtual void initialize() override;
+	virtual void check() const override;
 
 	const QSize &get_size() const
 	{
