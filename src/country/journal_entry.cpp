@@ -73,6 +73,18 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->built_buildings.push_back(building_type::get(value));
 		}
+	} else if (tag == "built_provincial_buildings") {
+		scope.for_each_element([&](const gsml_property &property) {
+			const province *province = province::get(property.get_key());
+			const building_type *building = building_type::get(property.get_value());
+			this->built_provincial_buildings[province].push_back(building);
+		}, [&](const gsml_data &child_scope) {
+			const province *province = province::get(child_scope.get_tag());
+
+			for (const std::string &value : child_scope.get_values()) {
+				this->built_provincial_buildings[province].push_back(building_type::get(value));
+			}
+		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -111,7 +123,7 @@ void journal_entry::check() const
 
 bool journal_entry::check_completion_conditions(const country *country) const
 {
-	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty()) {
+	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_provincial_buildings().empty()) {
 		//no completion conditions at all, so the entry can't be completed normally
 		return false;
 	}
@@ -150,6 +162,14 @@ bool journal_entry::check_completion_conditions(const country *country) const
 		}
 	}
 
+	for (const auto &[province, buildings] : this->get_built_provincial_buildings()) {
+		for (const building_type *building : buildings) {
+			if (!province->get_game_data()->has_building(building)) {
+				return false;
+			}
+		}
+	}
+
 	return true;
 }
 
@@ -183,6 +203,16 @@ QString journal_entry::get_completion_conditions_string() const
 		}
 
 		str += std::format("Build {} {}", string::get_indefinite_article(building->get_name()), building->get_name());
+	}
+
+	for (const auto &[province, buildings] : this->get_built_provincial_buildings()) {
+		for (const building_type *building : buildings) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Build {} {} in {}", string::get_indefinite_article(building->get_name()), building->get_name(), province->get_game_data()->get_current_cultural_name());
+		}
 	}
 
 	return QString::fromStdString(str);
@@ -242,6 +272,23 @@ std::vector<const building_type *> journal_entry::get_built_buildings_with_requi
 	}
 
 	return buildings;
+}
+
+province_map<std::vector<const building_type *>> journal_entry::get_built_provincial_buildings_with_requirements() const
+{
+	province_map<std::vector<const building_type *>> provincial_buildings = this->get_built_provincial_buildings();
+
+	for (auto &[province, buildings] : provincial_buildings) {
+		for (size_t i = 0; i < buildings.size(); ++i) {
+			const building_type *building = buildings[i];
+
+			if (building->get_required_building() != nullptr) {
+				buildings.push_back(building->get_required_building());
+			}
+		}
+	}
+
+	return provincial_buildings;
 }
 
 }

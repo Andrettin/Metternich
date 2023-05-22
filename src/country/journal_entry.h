@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "map/province_container.h"
 
 namespace metternich {
 
@@ -110,6 +111,13 @@ public:
 
 	std::vector<const building_type *> get_built_buildings_with_requirements() const;
 
+	const province_map<std::vector<const building_type *>> &get_built_provincial_buildings() const
+	{
+		return this->built_provincial_buildings;
+	}
+
+	province_map<std::vector<const building_type *>> get_built_provincial_buildings_with_requirements() const;
+
 signals:
 	void changed();
 
@@ -127,6 +135,7 @@ private:
 	std::vector<const province *> owned_provinces;
 	std::vector<const site *> owned_sites;
 	std::vector<const building_type *> built_buildings;
+	province_map<std::vector<const building_type *>> built_provincial_buildings;
 };
 
 }

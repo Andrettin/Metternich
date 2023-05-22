@@ -1086,6 +1086,36 @@ bool country_game_data::at_war() const
 	return this->diplomacy_state_counts.contains(diplomacy_state::war);
 }
 
+std::optional<diplomacy_state> country_game_data::get_offered_diplomacy_state(const metternich::country *other_country) const
+{
+	const auto find_iterator = this->offered_diplomacy_states.find(other_country);
+
+	if (find_iterator != this->offered_diplomacy_states.end()) {
+		return find_iterator->second;
+	}
+
+	return std::nullopt;
+}
+
+void country_game_data::set_offered_diplomacy_state(const metternich::country *other_country, const std::optional<diplomacy_state> &state)
+{
+	const diplomacy_state old_state = this->get_diplomacy_state(other_country);
+
+	if (state == old_state) {
+		return;
+	}
+
+	if (state.has_value()) {
+		this->offered_diplomacy_states[other_country] = state.value();
+	} else {
+		this->offered_diplomacy_states.erase(other_country);
+	}
+
+	if (game::get()->is_running()) {
+		emit offered_diplomacy_states_changed();
+	}
+}
+
 QVariantList country_game_data::get_consulates_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->consulates);
@@ -2909,6 +2939,12 @@ void country_game_data::add_active_journal_entry(const journal_entry *journal_en
 	for (const building_type *building : journal_entry->get_built_buildings_with_requirements()) {
 		this->change_ai_building_desire_modifier(building, journal_entry::ai_building_desire_modifier);
 	}
+
+	for (const auto &[province, buildings] : journal_entry->get_built_provincial_buildings_with_requirements()) {
+		for (const building_type *building : buildings) {
+			this->change_ai_provincial_building_desire_modifier(province, building, journal_entry::ai_building_desire_modifier);
+		}
+	}
 }
 
 void country_game_data::remove_active_journal_entry(const journal_entry *journal_entry)
@@ -2921,6 +2957,12 @@ void country_game_data::remove_active_journal_entry(const journal_entry *journal
 
 	for (const building_type *building : journal_entry->get_built_buildings_with_requirements()) {
 		this->change_ai_building_desire_modifier(building, -journal_entry::ai_building_desire_modifier);
+	}
+
+	for (const auto &[province, buildings] : journal_entry->get_built_provincial_buildings_with_requirements()) {
+		for (const building_type *building : buildings) {
+			this->change_ai_provincial_building_desire_modifier(province, building, -journal_entry::ai_building_desire_modifier);
+		}
 	}
 }
 

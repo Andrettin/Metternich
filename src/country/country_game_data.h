@@ -1032,6 +1032,43 @@ public:
 		this->set_ai_building_desire_modifier(building, this->get_ai_building_desire_modifier(building) + value);
 	}
 
+	int get_ai_provincial_building_desire_modifier(const province *province, const building_type *building) const
+	{
+		const auto find_iterator = this->ai_provincial_building_desire_modifiers.find(province);
+
+		if (find_iterator != this->ai_provincial_building_desire_modifiers.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(building);
+
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+
+		return 0;
+	}
+
+	void set_ai_provincial_building_desire_modifier(const province *province, const building_type *building, const int value)
+	{
+		if (value == this->get_ai_provincial_building_desire_modifier(province, building)) {
+			return;
+		}
+
+		if (value == 0) {
+			this->ai_provincial_building_desire_modifiers[province].erase(building);
+
+			if (this->ai_provincial_building_desire_modifiers[province].empty()) {
+				this->ai_provincial_building_desire_modifiers.erase(province);
+			}
+		} else {
+			this->ai_provincial_building_desire_modifiers[province][building] = value;
+		}
+	}
+
+	void change_ai_provincial_building_desire_modifier(const province *province, const building_type *building, const int value)
+	{
+		this->set_ai_provincial_building_desire_modifier(province, building, this->get_ai_provincial_building_desire_modifier(province, building) + value);
+	}
+
 signals:
 	void religion_changed();
 	void overlord_changed();
@@ -1137,6 +1174,7 @@ private:
 	std::vector<const journal_entry *> inactive_journal_entries;
 	std::vector<const journal_entry *> finished_journal_entries;
 	building_type_map<int> ai_building_desire_modifiers;
+	province_map<building_type_map<int>> ai_provincial_building_desire_modifiers;
 };
 
 }
