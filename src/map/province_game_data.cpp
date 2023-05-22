@@ -385,6 +385,21 @@ bool province_game_data::has_building(const building_type *building) const
 	return this->get_slot_building(building->get_slot_type()) == building;
 }
 
+bool province_game_data::has_building_or_better(const building_type *building) const
+{
+	if (this->has_building(building)) {
+		return true;
+	}
+
+	for (const building_type *requiring_building : building->get_requiring_buildings()) {
+		if (this->has_building_or_better(requiring_building)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void province_game_data::clear_buildings()
 {
 	for (const qunique_ptr<provincial_building_slot> &building_slot : this->building_slots) {

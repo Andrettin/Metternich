@@ -164,7 +164,7 @@ bool journal_entry::check_completion_conditions(const country *country) const
 
 	for (const auto &[province, buildings] : this->get_built_provincial_buildings()) {
 		for (const building_type *building : buildings) {
-			if (!province->get_game_data()->has_building(building)) {
+			if (!province->get_game_data()->has_building_or_better(building)) {
 				return false;
 			}
 		}

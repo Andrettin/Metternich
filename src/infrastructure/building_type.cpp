@@ -73,6 +73,10 @@ void building_type::initialize()
 		this->building_class->set_default_building_type(this);
 	}
 
+	if (this->required_building != nullptr) {
+		this->required_building->requiring_buildings.push_back(this);
+	}
+
 	if (this->required_technology != nullptr) {
 		this->required_technology->add_enabled_building(this);
 	}
@@ -99,6 +103,10 @@ void building_type::check() const
 
 	if (this->get_province_conditions() != nullptr) {
 		this->get_province_conditions()->check_validity();
+	}
+
+	if (this->get_required_building() == this) {
+		throw std::runtime_error(std::format("Building type \"{}\" requires itself.", this->get_identifier()));
 	}
 
 	if (!this->get_production_types().empty() && !this->is_provincial()) {

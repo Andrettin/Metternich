@@ -144,6 +144,11 @@ public:
 		return this->required_building;
 	}
 
+	const std::vector<const building_type *> &get_requiring_buildings() const
+	{
+		return this->requiring_buildings;
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -192,6 +197,7 @@ private:
 	int max_level = 0;
 	int fort_level = 0;
 	building_type *required_building = nullptr;
+	std::vector<const building_type *> requiring_buildings; //buildings which require this one
 	technology *required_technology = nullptr;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<and_condition<province>> province_conditions;
