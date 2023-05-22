@@ -310,6 +310,30 @@ public:
 
 	bool at_war() const;
 
+	std::optional<diplomacy_state> get_offered_diplomacy_state(const metternich::country *other_country) const;
+
+	Q_INVOKABLE int get_offered_diplomacy_state_int(metternich::country *other_country) const
+	{
+		const std::optional<diplomacy_state> state = this->get_offered_diplomacy_state(other_country);
+
+		if (!state.has_value()) {
+			return -1;
+		}
+
+		return static_cast<int>(state.value());
+	}
+
+	void set_offered_diplomacy_state(const metternich::country *other_country, const std::optional<diplomacy_state> &state);
+
+	Q_INVOKABLE void set_offered_diplomacy_state_int(metternich::country *other_country, const int state)
+	{
+		if (state == -1) {
+			this->set_offered_diplomacy_state(other_country, std::nullopt);
+		} else {
+			this->set_offered_diplomacy_state(other_country, static_cast<diplomacy_state>(state));
+		}
+	}
+
 	QVariantList get_consulates_qvariant_list() const;
 
 	const consulate *get_consulate(const metternich::country *other_country) const
@@ -1075,6 +1099,7 @@ signals:
 	void type_name_changed();
 	void vassalage_type_name_changed();
 	void diplomacy_states_changed();
+	void offered_diplomacy_states_changed();
 	void consulates_changed();
 	void provinces_changed();
 	void diplomatic_map_image_changed();
@@ -1125,6 +1150,7 @@ private:
 	terrain_type_map<int> tile_terrain_counts;
 	country_map<diplomacy_state> diplomacy_states;
 	std::map<diplomacy_state, int> diplomacy_state_counts;
+	country_map<diplomacy_state> offered_diplomacy_states;
 	country_map<const consulate *> consulates;
 	country_map<int> base_opinions;
 	country_map<opinion_modifier_map<int>> opinion_modifiers;
