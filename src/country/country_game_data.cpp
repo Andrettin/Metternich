@@ -2361,8 +2361,6 @@ void country_game_data::set_current_research(const technology *technology)
 
 	this->current_research = technology;
 
-	this->set_stored_commodity(defines::get()->get_research_commodity(), 0);
-
 	emit current_research_changed();
 }
 
