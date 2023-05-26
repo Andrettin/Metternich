@@ -66,6 +66,7 @@ public:
 	static constexpr const char database_folder[] = "characters";
 	static constexpr bool history_enabled = true;
 
+	static constexpr size_t ruler_trait_count = 2;
 	static constexpr int max_skill = 6;
 	static constexpr int min_opinion = -200;
 	static constexpr int max_opinion = 200;
@@ -246,6 +247,19 @@ public:
 		return this->conditions.get();
 	}
 
+	const std::vector<const country *> &get_rulable_countries() const
+	{
+		return this->rulable_countries;
+	}
+
+	void add_rulable_country(country *country);
+
+	bool is_ruler() const
+	{
+		return !this->get_rulable_countries().empty();
+	}
+
+	std::string get_ruler_modifier_string() const;
 	QString get_advisor_modifier_string() const;
 
 	void apply_advisor_modifier(const country *country, const int multiplier) const;
@@ -278,6 +292,7 @@ private:
 	QDateTime birth_date;
 	QDateTime death_date;
 	int skill = 1;
+	std::vector<const country *> rulable_countries;
 	std::vector<const trait *> traits;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;

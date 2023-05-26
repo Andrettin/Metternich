@@ -93,6 +93,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(metternich::technology* current_research READ get_current_research_unconst WRITE set_current_research NOTIFY current_research_changed)
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
+	Q_PROPERTY(metternich::character* ruler READ get_ruler_unconst NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
 	Q_PROPERTY(metternich::character* next_advisor READ get_next_advisor_unconst WRITE set_next_advisor NOTIFY next_advisor_changed)
@@ -800,6 +801,24 @@ public:
 		return 100 + 10 * (this->get_province_count() - 1);
 	}
 
+	void check_characters();
+
+	const character *get_ruler() const
+	{
+		return this->ruler;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	character *get_ruler_unconst() const
+	{
+		return const_cast<character *>(this->get_ruler());
+	}
+
+public:
+	void set_ruler(const character *ruler);
+	void check_ruler();
+
 	const std::vector<const character *> &get_advisors() const
 	{
 		return this->advisors;
@@ -1122,6 +1141,7 @@ signals:
 	void technologies_changed();
 	void current_research_changed();
 	void technology_researched(QObject *technology);
+	void ruler_changed();
 	void advisors_changed();
 	void next_advisor_changed();
 	void advisor_recruited(QObject *advisor);
@@ -1181,6 +1201,7 @@ private:
 	commodity_map<int> commodity_outputs;
 	technology_set technologies;
 	const technology *current_research = nullptr;
+	const character *ruler = nullptr;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;

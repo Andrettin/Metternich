@@ -6,6 +6,7 @@
 #include "character/advisor_type.h"
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/trait.h"
 #include "country/country.h"
 #include "country/country_type.h"
 #include "country/culture.h"
@@ -102,9 +103,7 @@ void country_game_data::do_turn()
 		this->check_journal_entries();
 		this->do_events();
 
-		if (game::get()->get_rules()->are_advisors_enabled() && this->can_have_advisors()) {
-			this->check_advisors();
-		}
+		this->check_characters();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to process turn for country \"" + this->country->get_identifier() + "\"."));
 	}
@@ -2376,6 +2375,119 @@ void country_game_data::choose_current_research()
 	this->set_current_research(chosen_technology);
 }
 
+void country_game_data::check_characters()
+{
+	this->check_ruler();
+
+	if (game::get()->get_rules()->are_advisors_enabled() && this->can_have_advisors()) {
+		this->check_advisors();
+	}
+}
+
+void country_game_data::set_ruler(const character *ruler)
+{
+	if (ruler == this->get_ruler()) {
+		return;
+	}
+
+	const character *old_ruler = this->get_ruler();
+
+	if (old_ruler != nullptr) {
+		for (const trait *trait : old_ruler->get_traits()) {
+			if (trait->get_ruler_modifier() != nullptr) {
+				trait->get_ruler_modifier()->remove(this->country);
+			}
+		}
+
+		old_ruler->get_game_data()->set_country(nullptr);
+	}
+
+	this->ruler = ruler;
+
+	if (this->get_ruler() != nullptr) {
+		for (const trait *trait : this->get_ruler()->get_traits()) {
+			if (trait->get_ruler_modifier() != nullptr) {
+				trait->get_ruler_modifier()->apply(this->country);
+			}
+		}
+
+		this->get_ruler()->get_game_data()->set_country(this->country);
+	}
+
+	if (game::get()->is_running()) {
+		emit ruler_changed();
+
+		if (old_ruler != nullptr) {
+			emit old_ruler->get_game_data()->ruler_changed();
+		}
+
+		if (ruler != nullptr) {
+			emit ruler->get_game_data()->ruler_changed();
+		}
+	}
+}
+
+void country_game_data::check_ruler()
+{
+	//remove the ruler if they have become obsolete
+	if (this->get_ruler() != nullptr && this->get_ruler()->get_obsolescence_technology() != nullptr && this->has_technology(this->get_ruler()->get_obsolescence_technology())) {
+		if (this->country == game::get()->get_player_country()) {
+			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+			engine_interface::get()->add_notification("Ruler Died", interior_minister_portrait, std::format("Our ruler, {}, has died!", this->get_ruler()->get_full_name()));
+		}
+
+		context ctx(this->country);
+		ctx.source_scope = this->get_ruler();
+		country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
+
+		this->set_ruler(nullptr);
+		this->get_ruler()->get_game_data()->set_dead(true);
+	}
+
+	//if the country has no ruler, see if there is any character which can become its ruler
+	if (this->get_ruler() == nullptr) {
+		std::vector<const character *> potential_rulers;
+
+		for (const character *character : this->country->get_rulers()) {
+			assert_throw(character->is_ruler());
+
+			const character_game_data *character_game_data = character->get_game_data();
+			if (character_game_data->get_country() != nullptr) {
+				continue;
+			}
+
+			if (character_game_data->is_dead()) {
+				continue;
+			}
+
+			if (character->get_required_technology() != nullptr && !this->has_technology(character->get_required_technology())) {
+				continue;
+			}
+
+			if (character->get_obsolescence_technology() != nullptr && this->has_technology(character->get_obsolescence_technology())) {
+				continue;
+			}
+
+			if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->country, read_only_context(this->country))) {
+				continue;
+			}
+
+			potential_rulers.push_back(character);
+		}
+
+		if (!potential_rulers.empty()) {
+			this->set_ruler(vector::get_random(potential_rulers));
+
+			if (this->country == game::get()->get_player_country()) {
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification("New Ruler", interior_minister_portrait, std::format("{} has become our new ruler!\n\n{}", this->get_ruler()->get_full_name(), this->get_ruler()->get_ruler_modifier_string()));
+			}
+		}
+	}
+}
+
 QVariantList country_game_data::get_advisors_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_advisors());
@@ -2519,7 +2631,6 @@ void country_game_data::choose_next_advisor()
 	for (const advisor_category category : potential_categories) {
 		potential_advisor_map[category] = vector::get_random(potential_advisors_per_category[category]);
 	}
-
 
 	if (this->is_ai()) {
 		const advisor_category chosen_category = vector::get_random(potential_categories);

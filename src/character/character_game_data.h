@@ -30,6 +30,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
+	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
 
@@ -102,6 +103,8 @@ public:
 	void add_scripted_modifier(const scripted_character_modifier *modifier, const int duration);
 	void remove_scripted_modifier(const scripted_character_modifier *modifier);
 	void decrement_scripted_modifiers();
+
+	bool is_ruler() const;
 
 	metternich::military_unit *get_military_unit() const
 	{
@@ -176,6 +179,7 @@ signals:
 	void dead_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
+	void ruler_changed();
 	void spells_changed();
 
 private:

@@ -221,8 +221,13 @@ void character_game_data::remove_trait(const trait *trait)
 		this->remove_modifier(trait->get_modifier());
 	}
 
+	if (trait->get_ruler_modifier() != nullptr && this->is_ruler()) {
+		assert_throw(this->get_country() != nullptr);
+		trait->get_ruler_modifier()->remove(this->get_country());
+	}
+
 	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
-		this->apply_military_unit_modifier(this->get_military_unit(), -1);
+		trait->get_military_unit_modifier()->remove(this->get_military_unit());
 	}
 
 	this->sort_traits();
@@ -295,6 +300,11 @@ void character_game_data::decrement_scripted_modifiers()
 	for (const scripted_character_modifier *modifier : modifiers_to_remove) {
 		this->remove_scripted_modifier(modifier);
 	}
+}
+
+bool character_game_data::is_ruler() const
+{
+	return this->get_country() != nullptr && this->get_country()->get_game_data()->get_ruler() == this->character;
 }
 
 bool character_game_data::is_deployable() const

@@ -217,6 +217,8 @@ void game::start()
 				population_unit->choose_ideology();
 			}
 
+			country_game_data->check_ruler();
+
 			//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
 			country_game_data->check_journal_entries(true);
 		}
@@ -311,6 +313,21 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->set_religion(country_history->get_religion());
 			} else {
 				country_game_data->set_religion(country->get_default_religion());
+			}
+
+			const character *ruler = country_history->get_ruler();
+			if (ruler != nullptr) {
+				character_game_data *ruler_game_data = ruler->get_game_data();
+
+				if (ruler_game_data->get_country() != nullptr && ruler_game_data->get_country() != country) {
+					throw std::runtime_error(std::format("Cannot set \"{}\" as the ruler of \"{}\", as it is already assigned to another country.", ruler->get_identifier(), country->get_identifier()));
+				}
+
+				country_game_data->set_ruler(country_history->get_ruler());
+
+				if (ruler->get_required_technology() != nullptr) {
+					country_game_data->add_technology_with_prerequisites(ruler->get_required_technology());
+				}
 			}
 
 			for (const technology *technology : country_history->get_technologies()) {

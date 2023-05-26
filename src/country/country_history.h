@@ -18,6 +18,7 @@ class country_history final : public data_entry_history
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
+	Q_PROPERTY(metternich::character* ruler MEMBER ruler)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<metternich::technology *> technologies READ get_technologies)
 	Q_PROPERTY(std::vector<metternich::character *> advisor READ get_advisors)
@@ -30,6 +31,11 @@ public:
 	const religion *get_religion() const
 	{
 		return this->religion;
+	}
+
+	const character *get_ruler() const
+	{
+		return this->ruler;
 	}
 
 	const centesimal_int &get_literacy_rate() const
@@ -80,6 +86,7 @@ public:
 private:
 	const metternich::country *country = nullptr;
 	metternich::religion *religion = nullptr;
+	character *ruler = nullptr;
 	centesimal_int literacy_rate;
 	std::vector<technology *> technologies;
 	std::vector<character *> advisors;

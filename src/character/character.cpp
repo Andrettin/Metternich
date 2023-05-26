@@ -8,6 +8,7 @@
 #include "character/dynasty.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
+#include "country/country.h"
 #include "country/culture.h"
 #include "country/religion.h"
 #include "map/province.h"
@@ -17,6 +18,7 @@
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
+#include "util/log_util.h"
 
 namespace metternich {
 
@@ -43,7 +45,11 @@ void character::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "traits") {
+	if (tag == "rulable_countries") {
+		for (const std::string &value : values) {
+			this->add_rulable_country(country::get(value));
+		}
+	} else if (tag == "traits") {
 		for (const std::string &value : values) {
 			this->traits.push_back(trait::get(value));
 		}
@@ -131,8 +137,20 @@ void character::initialize()
 
 void character::check() const
 {
+	if (this->is_ruler() && this->is_advisor()) {
+		throw std::runtime_error(std::format("Character \"{}\" is both a ruler and an advisor.", this->get_identifier()));
+	}
+
+	if (this->is_ruler() && this->get_military_unit_category() != military_unit_category::none) {
+		throw std::runtime_error(std::format("Character \"{}\" is both a ruler and has a military unit category.", this->get_identifier()));
+	}
+
 	if (this->is_advisor() && this->get_military_unit_category() != military_unit_category::none) {
-		throw std::runtime_error("Character \"" + this->get_identifier() + "\" is both an advisor and has a military unit category.");
+		throw std::runtime_error(std::format("Character \"{}\" is both an advisor and has a military unit category.", this->get_identifier()));
+	}
+
+	if (this->is_ruler() && this->get_traits().size() < character::ruler_trait_count) {
+		log::log_error(std::format("Character \"{}\" is a ruler, but only has {} {}, instead of the expected {}.", this->get_identifier(), this->get_traits().size(), this->get_traits().size() == 1 ? "trait" : "traits", character::ruler_trait_count));
 	}
 
 	if (this->advisor_modifier != nullptr && !this->is_advisor()) {
@@ -171,16 +189,6 @@ void character::check() const
 	assert_throw(this->get_end_date() >= this->get_birth_date());
 	assert_throw(this->get_end_date() <= this->get_death_date());
 	assert_throw(this->get_birth_date() <= this->get_death_date());
-
-	std::set<trait_type> trait_types;
-
-	for (const trait *trait : this->get_traits()) {
-		if (trait_types.contains(trait->get_type())) {
-			throw std::runtime_error("Character \"" + this->get_identifier() + "\" has multiple traits of type \"" + enum_converter<trait_type>::to_string(trait->get_type()) + "\".");
-		}
-
-		trait_types.insert(trait->get_type());
-	}
 }
 
 data_entry_history *character::get_history_base()
@@ -215,6 +223,34 @@ std::string character::get_full_name() const
 	}
 
 	return full_name;
+}
+
+void character::add_rulable_country(country *country)
+{
+	this->rulable_countries.push_back(country);
+	country->add_ruler(this);
+}
+
+std::string character::get_ruler_modifier_string() const
+{
+	assert_throw(this->is_ruler());
+
+	std::string str;
+
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_ruler_modifier() == nullptr) {
+			continue;
+		}
+
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += trait->get_name();
+		str += trait->get_ruler_modifier()->get_string(1, 1);
+	}
+
+	return str;
 }
 
 QString character::get_advisor_modifier_string() const

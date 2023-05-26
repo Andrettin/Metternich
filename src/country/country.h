@@ -6,6 +6,7 @@
 
 namespace metternich {
 
+class character;
 class country_game_data;
 class country_history;
 class culture;
@@ -93,6 +94,16 @@ public:
 		return this->core_provinces;
 	}
 
+	const std::vector<const character *> &get_rulers() const
+	{
+		return this->rulers;
+	}
+
+	void add_ruler(const character *character)
+	{
+		this->rulers.push_back(character);
+	}
+
 	bool can_declare_war() const;
 
 signals:
@@ -107,6 +118,7 @@ private:
 	province *capital_province = nullptr;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	std::vector<province *> core_provinces;
+	std::vector<const character *> rulers;
 	qunique_ptr<country_history> history;
 	qunique_ptr<country_game_data> game_data;
 };
