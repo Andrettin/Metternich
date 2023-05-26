@@ -33,6 +33,8 @@ character_game_data::character_game_data(const metternich::character *character)
 	: character(character)
 {
 	connect(game::get(), &game::turn_changed, this, &character_game_data::age_changed);
+
+	this->portrait = this->character->get_portrait();
 }
 
 void character_game_data::on_game_started()
