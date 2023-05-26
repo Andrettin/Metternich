@@ -247,7 +247,7 @@ std::string character::get_ruler_modifier_string() const
 		}
 
 		str += trait->get_name();
-		str += trait->get_ruler_modifier()->get_string(1, 1);
+		str += "\n" + trait->get_ruler_modifier()->get_string(1, 1);
 	}
 
 	return str;
