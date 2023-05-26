@@ -30,6 +30,10 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		database::process_gsml_data(modifier, scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "ruler_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		database::process_gsml_data(modifier, scope);
+		this->ruler_modifier = std::move(modifier);
 	} else if (tag == "military_unit_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
 		database::process_gsml_data(modifier, scope);
@@ -41,29 +45,12 @@ void trait::process_gsml_scope(const gsml_data &scope)
 
 void trait::check() const
 {
-	assert_throw(this->get_type() != trait_type::none);
-	assert_throw(this->get_icon() != nullptr);
-
-	if ((this->get_type() == trait_type::expertise || this->is_item()) && this->get_level() == 0) {
-		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is an expertise or item trait, but has no level.");
-	} else if (this->get_type() != trait_type::expertise && !this->is_item() && this->get_level() > 0) {
-		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is not an expertise or item trait, but has a level.");
+	if (this->get_type() == trait_type::none) {
+		throw std::runtime_error(std::format("Trait \"{}\" has no type.", this->get_identifier()));
 	}
 
-	if (this->get_spell() != nullptr && !this->is_item()) {
-		throw std::runtime_error("Trait \"" + this->get_identifier() + "\" is not an item trait, but grants a spell.");
-	}
-}
-
-bool trait::is_item() const
-{
-	switch (this->get_type()) {
-		case trait_type::weapon:
-		case trait_type::armor:
-		case trait_type::trinket:
-			return true;
-		default:
-			return false;
+	if (this->get_icon() == nullptr) {
+		throw std::runtime_error(std::format("Trait \"{}\" has no icon.", this->get_identifier()));
 	}
 }
 
@@ -74,6 +61,15 @@ QString trait::get_modifier_string() const
 	}
 
 	return QString::fromStdString(this->get_modifier()->get_string());
+}
+
+QString trait::get_ruler_modifier_string() const
+{
+	if (this->get_ruler_modifier() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->get_ruler_modifier()->get_string());
 }
 
 QString trait::get_military_unit_modifier_string() const

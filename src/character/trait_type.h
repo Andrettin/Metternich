@@ -6,12 +6,8 @@ namespace metternich {
 
 enum class trait_type {
 	none,
-	expertise,
 	background,
-	personality,
-	weapon,
-	armor,
-	trinket
+	personality
 };
 
 }

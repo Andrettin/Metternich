@@ -90,11 +90,7 @@ public:
 	bool has_trait(const trait *trait) const;
 	void add_trait(const trait *trait);
 	void remove_trait(const trait *trait);
-	const trait *generate_trait(const trait_type trait_type, const int max_level);
-	void generate_missing_traits();
 	void sort_traits();
-	int get_total_expertise_trait_level() const;
-	void gain_item(const trait *item);
 
 	const scripted_character_modifier_map<int> &get_scripted_modifiers() const
 	{
@@ -164,28 +160,11 @@ public:
 		emit spells_changed();
 	}
 
-	bool has_item_spell(const spell *spell) const
-	{
-		return this->item_spells.contains(spell);
-	}
-
-	void add_item_spell(const spell *spell)
-	{
-		this->item_spells.insert(spell);
-		this->add_spell(spell);
-	}
-
-	void remove_item_spell(const spell *spell)
-	{
-		this->item_spells.erase(spell);
-		this->remove_spell(spell);
-	}
-
 	bool can_learn_spell(const spell *spell) const;
 
 	bool has_learned_spell(const spell *spell) const
 	{
-		return this->has_spell(spell) && !this->has_item_spell(spell);
+		return this->has_spell(spell);
 	}
 
 	void learn_spell(const spell *spell);

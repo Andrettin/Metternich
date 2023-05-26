@@ -6,9 +6,9 @@
 namespace metternich {
 
 class character;
+class country;
 class icon;
 class military_unit;
-class spell;
 enum class trait_type;
 
 template <typename scope_type>
@@ -23,10 +23,9 @@ class trait final : public named_data_entry, public data_type<trait>
 
 	Q_PROPERTY(metternich::trait_type type MEMBER type NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
-	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
+	Q_PROPERTY(QString ruler_modifier_string READ get_ruler_modifier_string CONSTANT)
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
-	Q_PROPERTY(metternich::spell* spell MEMBER spell NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "trait";
@@ -43,16 +42,9 @@ public:
 		return this->type;
 	}
 
-	bool is_item() const;
-
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
-	}
-
-	int get_level() const
-	{
-		return this->level;
 	}
 
 	const condition<character> *get_conditions() const
@@ -72,6 +64,13 @@ public:
 
 	QString get_modifier_string() const;
 
+	const metternich::modifier<const country> *get_ruler_modifier() const
+	{
+		return this->ruler_modifier.get();
+	}
+
+	QString get_ruler_modifier_string() const;
+
 	const metternich::modifier<military_unit> *get_military_unit_modifier() const
 	{
 		return this->military_unit_modifier.get();
@@ -79,23 +78,17 @@ public:
 
 	QString get_military_unit_modifier_string() const;
 
-	const metternich::spell *get_spell() const
-	{
-		return this->spell;
-	}
-
 signals:
 	void changed();
 
 private:
 	trait_type type;
 	metternich::icon *icon = nullptr;
-	int level = 0;
 	std::unique_ptr<const condition<character>> conditions;
 	std::unique_ptr<const condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
+	std::unique_ptr<const metternich::modifier<const country>> ruler_modifier;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
-	metternich::spell *spell = nullptr;
 };
 
 }

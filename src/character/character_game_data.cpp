@@ -41,8 +41,6 @@ void character_game_data::on_game_started()
 		this->add_trait(trait);
 	}
 
-	this->generate_missing_traits();
-
 	this->check_portrait();
 }
 
@@ -175,20 +173,6 @@ bool character_game_data::can_have_trait(const trait *trait) const
 		return false;
 	}
 
-	if (trait->is_item()) {
-		const std::vector<const metternich::trait *> current_items = this->get_traits_of_type(trait->get_type());
-
-		assert_throw(current_items.size() <= 1);
-		if (!current_items.empty() && current_items.front()->get_level() >= trait->get_level()) {
-			//cannot receive an item trait if we already have an item trait of the same type with a greater or equal level
-			return false;
-		}
-	}
-
-	if (trait->get_spell() != nullptr && this->has_spell(trait->get_spell())) {
-		return false;
-	}
-
 	return true;
 }
 
@@ -221,11 +205,6 @@ void character_game_data::add_trait(const trait *trait)
 		this->apply_military_unit_modifier(this->get_military_unit(), 1);
 	}
 
-	if (trait->get_spell() != nullptr) {
-		assert_throw(!this->has_spell(trait->get_spell()));
-		this->add_item_spell(trait->get_spell());
-	}
-
 	this->sort_traits();
 
 	if (game::get()->is_running()) {
@@ -246,79 +225,10 @@ void character_game_data::remove_trait(const trait *trait)
 		this->apply_military_unit_modifier(this->get_military_unit(), -1);
 	}
 
-	if (trait->get_spell() != nullptr) {
-		assert_throw(this->has_item_spell(trait->get_spell()));
-		this->remove_item_spell(trait->get_spell());
-	}
-
 	this->sort_traits();
 
 	if (game::get()->is_running()) {
 		emit traits_changed();
-	}
-}
-
-const trait *character_game_data::generate_trait(const trait_type trait_type, const int max_level)
-{
-	std::vector<const trait *> potential_traits;
-	int best_level = 0;
-
-	const read_only_context ctx(this->character);
-
-	for (const trait *trait : trait::get_all()) {
-		if (trait->get_type() != trait_type) {
-			continue;
-		}
-
-		if (this->has_trait(trait)) {
-			continue;
-		}
-
-		if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, ctx)) {
-			continue;
-		}
-
-		if (trait->get_generation_conditions() != nullptr && !trait->get_generation_conditions()->check(this->character, ctx)) {
-			continue;
-		}
-
-		if (trait->get_level() > max_level) {
-			continue;
-		}
-
-		if (trait->get_level() > best_level) {
-			potential_traits.clear();
-			best_level = trait->get_level();
-		} else if (trait->get_level() < best_level) {
-			continue;
-		}
-
-		potential_traits.push_back(trait);
-	}
-
-	if (potential_traits.empty()) {
-		return nullptr;
-	}
-
-	const trait *trait = vector::get_random(potential_traits);
-	this->add_trait(trait);
-	return trait;
-}
-
-void character_game_data::generate_missing_traits()
-{
-	std::set<trait_type> trait_types;
-
-	for (const trait *trait : this->get_traits()) {
-		trait_types.insert(trait->get_type());
-	}
-
-	static const std::vector<trait_type> required_trait_types = { trait_type::background, trait_type::personality };
-
-	for (const trait_type trait_type : required_trait_types) {
-		if (!trait_types.contains(trait_type)) {
-			this->generate_trait(trait_type, 1);
-		}
 	}
 }
 
@@ -329,42 +239,8 @@ void character_game_data::sort_traits()
 			return lhs->get_type() < rhs->get_type();
 		}
 
-		if (lhs->get_level() != rhs->get_level()) {
-			return lhs->get_level() > rhs->get_level();
-		}
-
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
-}
-
-int character_game_data::get_total_expertise_trait_level() const
-{
-	int level = 0;
-
-	for (const trait *trait : this->get_traits()) {
-		if (trait->get_type() != trait_type::expertise) {
-			continue;
-		}
-
-		level += trait->get_level();
-	}
-
-	return level;
-}
-
-void character_game_data::gain_item(const trait *item)
-{
-	assert_throw(item != nullptr);
-	assert_throw(item->is_item());
-
-	//remove items of the same type but of a lower level, and grant to other characters
-	const std::vector<const trait *> old_items = this->get_traits_of_type(item->get_type());
-
-	for (const trait *old_item : old_items) {
-		this->remove_trait(old_item);
-	}
-
-	this->add_trait(item);
 }
 
 QVariantList character_game_data::get_scripted_modifiers_qvariant_list() const
@@ -491,19 +367,6 @@ bool character_game_data::can_learn_spell(const spell *spell) const
 
 void character_game_data::learn_spell(const spell *spell)
 {
-	if (this->has_item_spell(spell)) {
-		this->remove_item_spell(spell);
-
-		const std::vector<const trait *> traits = this->get_traits();
-		for (const trait *trait : traits) {
-			if (trait->get_spell() == spell) {
-				//if we are learning a spell that otherwise would be granted to us by an item, remote the item
-				assert_throw(trait->is_item());
-				this->remove_trait(trait);
-			}
-		}
-	}
-
 	this->add_spell(spell);
 }
 
