@@ -913,6 +913,36 @@ public:
 		this->air_morale_resistance_modifier += change;
 	}
 
+	int get_infantry_cost_modifier() const
+	{
+		return this->infantry_cost_modifier;
+	}
+
+	void change_infantry_cost_modifier(const int change)
+	{
+		this->infantry_cost_modifier += change;
+	}
+
+	int get_cavalry_cost_modifier() const
+	{
+		return this->cavalry_cost_modifier;
+	}
+
+	void change_cavalry_cost_modifier(const int change)
+	{
+		this->cavalry_cost_modifier += change;
+	}
+
+	int get_artillery_cost_modifier() const
+	{
+		return this->artillery_cost_modifier;
+	}
+
+	void change_artillery_cost_modifier(const int change)
+	{
+		this->artillery_cost_modifier += change;
+	}
+
 	int get_output_modifier() const
 	{
 		return this->output_modifier;
@@ -1210,6 +1240,9 @@ private:
 	int land_morale_resistance_modifier = 0;
 	int naval_morale_resistance_modifier = 0;
 	int air_morale_resistance_modifier = 0;
+	int infantry_cost_modifier = 0;
+	int cavalry_cost_modifier = 0;
+	int artillery_cost_modifier = 0;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
 	int throughput_modifier = 0;
