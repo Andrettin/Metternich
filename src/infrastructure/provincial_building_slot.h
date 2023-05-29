@@ -10,6 +10,8 @@ class provincial_building_slot final : public building_slot
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string NOTIFY country_modifier_changed)
+
 public:
 	explicit provincial_building_slot(const building_slot_type *type, const metternich::province *province);
 
@@ -22,6 +24,11 @@ public:
 	}
 
 	virtual const country *get_country() const override;
+
+	QString get_country_modifier_string() const;
+
+signals:
+	void country_modifier_changed();
 
 private:
 	const metternich::province *province = nullptr;
