@@ -80,7 +80,7 @@ QString provincial_building_slot::get_country_modifier_string() const
 
 	if (this->get_building()->get_country_modifier() != nullptr) {
 		const centesimal_int multiplier = centesimal_int(1) / country_game_data->get_province_count();
-		str = this->get_building()->get_country_modifier()->get_string(multiplier);
+		str = this->get_building()->get_country_modifier()->get_string(multiplier, 0, false);
 	}
 
 	if (this->get_building()->get_stackable_country_modifier() != nullptr) {

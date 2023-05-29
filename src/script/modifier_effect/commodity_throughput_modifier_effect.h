@@ -30,9 +30,11 @@ public:
 		scope->get_game_data()->change_commodity_throughput_modifier(this->commodity, (this->quantity * multiplier).to_int());
 	}
 
-	virtual std::string get_string(const centesimal_int &multiplier) const override
+	virtual std::string get_string(const centesimal_int &multiplier, const bool ignore_decimals) const override
 	{
-		return std::format("{} Throughput: {}%", this->commodity->get_name(), number::to_signed_string((this->quantity * multiplier).to_int()));
+		const centesimal_int modified_quantity = this->quantity * multiplier;
+
+		return std::format("{} Throughput: {}%", this->commodity->get_name(), ignore_decimals ? number::to_signed_string(modified_quantity.to_int()) : modified_quantity.to_signed_string());
 	}
 
 	virtual int get_score() const override
