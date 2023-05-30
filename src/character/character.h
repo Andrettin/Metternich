@@ -37,6 +37,8 @@ class character final : public named_data_entry, public data_type<character>
 
 	Q_PROPERTY(metternich::dynasty* dynasty MEMBER dynasty NOTIFY changed)
 	Q_PROPERTY(QString surname READ get_surname_qstring NOTIFY changed)
+	Q_PROPERTY(std::string nickname MEMBER nickname NOTIFY changed)
+	Q_PROPERTY(std::string epithet MEMBER epithet NOTIFY changed)
 	Q_PROPERTY(QString full_name READ get_full_name_qstring NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::advisor_type* advisor_type MEMBER advisor_type NOTIFY changed)
@@ -119,6 +121,16 @@ public:
 	QString get_surname_qstring() const
 	{
 		return QString::fromStdString(this->get_surname());
+	}
+
+	const std::string &get_nickname() const
+	{
+		return this->nickname;
+	}
+
+	const std::string &get_epithet() const
+	{
+		return this->epithet;
 	}
 
 	std::string get_full_name() const;
@@ -283,6 +295,8 @@ signals:
 private:
 	metternich::dynasty *dynasty = nullptr;
 	std::string surname;
+	std::string nickname;
+	std::string epithet;
 	std::string description;
 	metternich::advisor_type *advisor_type = nullptr;
 	metternich::military_unit_category military_unit_category;

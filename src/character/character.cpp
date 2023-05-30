@@ -209,17 +209,25 @@ void character::reset_game_data()
 
 std::string character::get_full_name() const
 {
+	if (!this->get_nickname().empty()) {
+		return this->get_nickname();
+	}
+
 	const std::string &name = this->get_name();
 	std::string full_name = name;
 
-	if (full_name.empty() && !this->get_surname().empty()) {
-		full_name = this->get_surname();
-	}
-
-	if (!this->get_surname().empty()) {
-		if (!name.empty()) {
-			full_name += " " + this->get_surname();
+	if (!this->get_epithet().empty()) {
+		if (!full_name.empty()) {
+			full_name += " ";
 		}
+
+		full_name += this->get_epithet();
+	} else if (!this->get_surname().empty()) {
+		if (!full_name.empty()) {
+			full_name += " ";
+		}
+
+		full_name += this->get_surname();
 	}
 
 	return full_name;
