@@ -3,6 +3,7 @@
 #include "character/character.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
+#include "script/modifier_effect/advisor_cost_modifier_effect.h"
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
 #include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
@@ -34,7 +35,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		static const std::string research_modifier_suffix = "_research_modifier";
 		static const std::string throughput_modifier_suffix = "_throughput_modifier";
 
-		if (key == "air_morale_resistance") {
+		if (key == "advisor_cost_modifier") {
+			return std::make_unique<advisor_cost_modifier_effect>(value);
+		} else if (key == "air_morale_resistance") {
 			return std::make_unique<air_morale_resistance_modifier_effect>(value);
 		} else if (key == "artillery_cost_modifier") {
 			return std::make_unique<artillery_cost_modifier_effect>(value);

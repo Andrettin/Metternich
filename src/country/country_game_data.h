@@ -832,11 +832,18 @@ public:
 
 	int get_advisor_cost() const
 	{
+		int cost = 0;
+
 		if (this->get_advisors().empty()) {
-			return country_game_data::base_advisor_cost / 2;
+			cost = country_game_data::base_advisor_cost / 2;
+		} else {
+			cost = country_game_data::base_advisor_cost * static_cast<int>(this->get_advisors().size() + 1);
 		}
 
-		return country_game_data::base_advisor_cost * static_cast<int>(this->get_advisors().size() + 1);
+		cost *= 100 + this->get_advisor_cost_modifier();
+		cost /= 100;
+
+		return std::max(0, cost);
 	}
 
 	const character *get_next_advisor() const
@@ -1031,6 +1038,16 @@ public:
 	void change_category_research_modifier(const technology_category category, const int value)
 	{
 		this->set_category_research_modifier(category, this->get_category_research_modifier(category) + value);
+	}
+
+	int get_advisor_cost_modifier() const
+	{
+		return this->advisor_cost_modifier;
+	}
+
+	void change_advisor_cost_modifier(const int change)
+	{
+		this->advisor_cost_modifier += change;
 	}
 
 	void decrement_scripted_modifiers();
@@ -1248,6 +1265,7 @@ private:
 	int throughput_modifier = 0;
 	commodity_map<int> commodity_throughput_modifiers;
 	std::map<technology_category, int> category_research_modifiers;
+	int advisor_cost_modifier = 0;
 	province_set explored_provinces;
 	point_set explored_tiles; //used for tiles in partially-explored provinces
 	std::vector<const journal_entry *> active_journal_entries;
