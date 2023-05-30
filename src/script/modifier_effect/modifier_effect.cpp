@@ -15,6 +15,7 @@
 #include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
+#include "script/modifier_effect/land_damage_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/melee_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
@@ -47,6 +48,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<deployment_limit_modifier_effect>(value);
 		} else if (key == "infantry_cost_modifier") {
 			return std::make_unique<infantry_cost_modifier_effect>(value);
+		} else if (key == "land_damage_modifier") {
+			return std::make_unique<land_damage_modifier_effect>(value);
 		} else if (key == "land_morale_resistance") {
 			return std::make_unique<land_morale_resistance_modifier_effect>(value);
 		} else if (key == "naval_morale_resistance") {

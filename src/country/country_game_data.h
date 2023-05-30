@@ -890,6 +890,16 @@ public:
 		this->deployment_limit += change;
 	}
 
+	int get_land_damage_modifier() const
+	{
+		return this->land_damage_modifier;
+	}
+
+	void change_land_damage_modifier(const int change)
+	{
+		this->land_damage_modifier += change;
+	}
+
 	int get_land_morale_resistance_modifier() const
 	{
 		return this->land_morale_resistance_modifier;
@@ -1254,6 +1264,7 @@ private:
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	int deployment_limit = country_game_data::base_deployment_limit;
+	int land_damage_modifier = 0;
 	int land_morale_resistance_modifier = 0;
 	int naval_morale_resistance_modifier = 0;
 	int air_morale_resistance_modifier = 0;
