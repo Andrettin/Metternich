@@ -1060,6 +1060,16 @@ public:
 		this->advisor_cost_modifier += change;
 	}
 
+	int get_diplomatic_penalty_for_expansion_modifier() const
+	{
+		return this->diplomatic_penalty_for_expansion_modifier;
+	}
+
+	void change_diplomatic_penalty_for_expansion_modifier(const int change)
+	{
+		this->diplomatic_penalty_for_expansion_modifier += change;
+	}
+
 	void decrement_scripted_modifiers();
 
 	Q_INVOKABLE bool is_tile_explored(const QPoint &tile_pos) const;
@@ -1277,6 +1287,7 @@ private:
 	commodity_map<int> commodity_throughput_modifiers;
 	std::map<technology_category, int> category_research_modifiers;
 	int advisor_cost_modifier = 0;
+	int diplomatic_penalty_for_expansion_modifier = 0;
 	province_set explored_provinces;
 	point_set explored_tiles; //used for tiles in partially-explored provinces
 	std::vector<const journal_entry *> active_journal_entries;
