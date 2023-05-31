@@ -1141,7 +1141,7 @@ int country_game_data::get_opinion_of(const metternich::country *other) const
 		opinion += modifier->get_value();
 	}
 
-	opinion = std::clamp(opinion, character::min_opinion, character::max_opinion);
+	opinion = std::clamp(opinion, country::min_opinion, country::max_opinion);
 
 	return opinion;
 }

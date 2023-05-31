@@ -71,8 +71,6 @@ public:
 
 	static constexpr size_t ruler_trait_count = 2;
 	static constexpr int max_skill = 6;
-	static constexpr int min_opinion = -200;
-	static constexpr int max_opinion = 200;
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 

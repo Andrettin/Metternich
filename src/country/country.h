@@ -36,6 +36,8 @@ public:
 
 	static constexpr size_t max_great_powers = 7; //maximum true great powers, all others are called secondary powers instead
 	static constexpr int vassal_score_percent = 50;
+	static constexpr int min_opinion = -200;
+	static constexpr int max_opinion = 200;
 
 	explicit country(const std::string &identifier);
 	~country();
