@@ -18,14 +18,7 @@ void advisor_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "conditional_portraits") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
-			const metternich::portrait *portrait = portrait::get(child_scope.get_tag());
-			auto conditions = std::make_unique<and_condition<character>>();
-			database::process_gsml_data(conditions, child_scope);
-			this->conditional_portraits[portrait] = std::move(conditions);
-		});
-	} else if (tag == "modifier") {
+	if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(this->modifier, scope);
 	} else {
@@ -36,11 +29,6 @@ void advisor_type::process_gsml_scope(const gsml_data &scope)
 void advisor_type::check() const
 {
 	assert_throw(this->get_category() != advisor_category::none);
-	assert_throw(this->get_portrait() != nullptr);
-
-	for (const auto &[portrait, conditions] : this->get_conditional_portraits()) {
-		conditions->check_validity();
-	}
 }
 
 }

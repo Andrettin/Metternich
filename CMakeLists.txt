@@ -448,6 +448,8 @@ set(script_condition_HDRS
 	src/script/condition/has_population_culture_condition.h
 	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h
+	src/script/condition/is_advisor_condition.h
+	src/script/condition/is_ruler_condition.h
 	src/script/condition/location_condition.h
 	src/script/condition/not_condition.h
 	src/script/condition/numerical_condition.h

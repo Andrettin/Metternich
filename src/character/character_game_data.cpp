@@ -17,6 +17,7 @@
 #include "script/modifier.h"
 #include "script/scripted_character_modifier.h"
 #include "spell/spell.h"
+#include "ui/portrait.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
@@ -57,15 +58,10 @@ bool character_game_data::is_current_portrait_valid() const
 		return true;
 	}
 
-	const advisor_type *advisor_type = this->character->get_advisor_type();
-	const condition<metternich::character> *portrait_conditions = advisor_type->get_portrait_conditions(this->get_portrait());
-	if (portrait_conditions == nullptr && advisor_type->get_portrait() != this->get_portrait()) {
-		//portrait not available for the character type
-		return false;
-	}
+	assert_throw(this->get_portrait()->get_character_conditions() != nullptr);
 
-	if (portrait_conditions != nullptr) {
-		return portrait_conditions->check(this->character, read_only_context(this->character));
+	if (!this->get_portrait()->get_character_conditions()->check(this->character, read_only_context(this->character))) {
+		return false;
 	}
 
 	return true;
@@ -73,33 +69,32 @@ bool character_game_data::is_current_portrait_valid() const
 
 void character_game_data::check_portrait()
 {
+	if (!this->character->is_ruler() && !this->character->is_advisor()) {
+		//only rulers and advisors need portraits
+		return;
+	}
+
 	if (this->is_current_portrait_valid()) {
 		return;
 	}
 
-	if (this->character->get_advisor_type() != nullptr) {
-		const portrait_map<std::unique_ptr<const condition<metternich::character>>> &conditional_portraits = this->character->get_advisor_type()->get_conditional_portraits();
+	std::vector<const metternich::portrait *> potential_portraits;
 
-		if (!conditional_portraits.empty()) {
-			std::vector<const metternich::portrait *> potential_portraits;
-			const read_only_context ctx(this->character);
+	for (const metternich::portrait *portrait : portrait::get_character_portraits()) {
+		assert_throw(portrait->is_character_portrait());
+		assert_throw(portrait->get_character_conditions() != nullptr);
 
-			for (const auto &[portrait, conditions] : conditional_portraits) {
-				if (!conditions->check(this->character, ctx)) {
-					continue;
-				}
-
-				potential_portraits.push_back(portrait);
-			}
-
-			//there must always be an available conditional portrait if conditional portraits are defined
-			assert_throw(!potential_portraits.empty());
-
-			this->portrait = vector::get_random(potential_portraits);
-		} else {
-			this->portrait = this->character->get_advisor_type()->get_portrait();
+		if (!portrait->get_character_conditions()->check(this->character, read_only_context(this->character))) {
+			continue;
 		}
+
+		potential_portraits.push_back(portrait);
 	}
+
+	//there must always be an available portrait for characters which need them
+	assert_throw(!potential_portraits.empty());
+
+	this->portrait = vector::get_random(potential_portraits);
 }
 
 void character_game_data::set_country(const metternich::country *country)
