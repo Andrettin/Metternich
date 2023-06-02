@@ -19,6 +19,7 @@
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -257,7 +258,7 @@ std::string character::get_ruler_modifier_string() const
 			str += "\n";
 		}
 
-		str += trait->get_name();
+		str += string::highlight(trait->get_name());
 		str += "\n" + trait->get_ruler_modifier()->get_string(1, 1);
 	}
 
