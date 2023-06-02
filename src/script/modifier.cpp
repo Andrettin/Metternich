@@ -53,8 +53,8 @@ template <typename scope_type>
 std::string modifier<scope_type>::get_string(const centesimal_int &multiplier, const size_t indent, const bool ignore_decimals) const
 {
 	std::string str;
-	for (size_t i = 0; i < this->modifier_effects.size(); ++i) {
-		if (this->modifier_effects[i]->is_hidden()) {
+	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {
+		if (modifier_effect->is_hidden()) {
 			continue;
 		}
 
@@ -66,7 +66,7 @@ std::string modifier<scope_type>::get_string(const centesimal_int &multiplier, c
 			str += std::string(indent, '\t');
 		}
 
-		str += this->modifier_effects[i]->get_string(multiplier, ignore_decimals);
+		str += modifier_effect->get_string(multiplier, ignore_decimals);
 	}
 	return str;
 }

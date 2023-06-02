@@ -23,6 +23,8 @@
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
+#include "util/number_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -125,6 +127,22 @@ template <typename scope_type>
 void modifier_effect<scope_type>::process_gsml_scope(const gsml_data &scope)
 {
 	throw std::runtime_error(std::format("Invalid scope for \"{}\" effect: \"{}\".", this->get_identifier(), scope.get_tag()));
+}
+
+template <typename scope_type>
+centesimal_int modifier_effect<scope_type>::get_multiplied_value(const centesimal_int &multiplier) const
+{
+	return this->value * multiplier;
+}
+
+template <typename scope_type>
+std::string modifier_effect<scope_type>::get_string(const centesimal_int &multiplier, const bool ignore_decimals) const
+{
+	const centesimal_int value = this->get_multiplied_value(multiplier);
+	const std::string number_str = ignore_decimals ? number::to_signed_string(value.to_int()) : value.to_signed_string();
+	const std::string colored_number_str = string::colored(number_str + (this->is_percent() ? "%" : ""), this->is_negative() ? "red" : "forestgreen");
+
+	return std::format("{}: {}", this->get_base_string(), colored_number_str);
 }
 
 template class modifier_effect<const character>;

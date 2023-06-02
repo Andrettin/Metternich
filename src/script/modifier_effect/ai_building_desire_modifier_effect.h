@@ -36,9 +36,9 @@ public:
 		scope->get_game_data()->change_ai_building_desire_modifier(this->building, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_string(const centesimal_int &multiplier) const override
+	virtual std::string get_base_string() const override
 	{
-		return std::format("AI {} Building Desire: {}", this->building->get_name(), number::to_signed_string((this->value * multiplier).to_int()));
+		return std::format("AI {} Building Desire", this->building->get_name());
 	}
 
 	virtual int get_score() const override
@@ -53,7 +53,6 @@ public:
 
 private:
 	const building_type *building = nullptr;
-	int value = 0;
 };
 
 }

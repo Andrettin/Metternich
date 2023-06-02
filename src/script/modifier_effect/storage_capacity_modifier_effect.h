@@ -12,7 +12,7 @@ class storage_capacity_modifier_effect final : public modifier_effect<const coun
 public:
 	explicit storage_capacity_modifier_effect(const std::string &value)
 	{
-		this->quantity = std::stoi(value);
+		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -23,21 +23,18 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_storage_capacity((this->quantity * multiplier).to_int());
+		scope->get_game_data()->change_storage_capacity((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_string(const centesimal_int &multiplier) const override
+	virtual std::string get_base_string() const override
 	{
-		return std::format("Storage Capacity: {}", number::to_signed_string((this->quantity * multiplier).to_int()));
+		return "Storage Capacity";
 	}
 
 	virtual int get_score() const override
 	{
-		return this->quantity;
+		return this->value;
 	}
-
-private:
-	int quantity = 0;
 };
 
 }

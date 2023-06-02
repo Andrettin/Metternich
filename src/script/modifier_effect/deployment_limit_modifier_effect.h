@@ -12,7 +12,7 @@ class deployment_limit_modifier_effect final : public modifier_effect<const coun
 public:
 	explicit deployment_limit_modifier_effect(const std::string &value)
 	{
-		this->quantity = std::stoi(value);
+		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -23,21 +23,18 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_deployment_limit((this->quantity * multiplier).to_int());
+		scope->get_game_data()->change_deployment_limit((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_string(const centesimal_int &multiplier) const override
+	virtual std::string get_base_string() const override
 	{
-		return std::format("Deployment Limit: {}", number::to_signed_string((this->quantity * multiplier).to_int()));
+		return "Deployment Limit";
 	}
 
 	virtual int get_score() const override
 	{
-		return this->quantity * 10;
+		return this->value * 10;
 	}
-
-private:
-	int quantity = 0;
 };
 
 }

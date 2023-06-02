@@ -15,7 +15,7 @@ public:
 	explicit category_research_modifier_effect(const technology_category category, const std::string &value)
 		: category(category)
 	{
-		this->quantity = std::stoi(value);
+		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -26,22 +26,26 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_category_research_modifier(this->category, (this->quantity * multiplier).to_int());
+		scope->get_game_data()->change_category_research_modifier(this->category, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_string(const centesimal_int &multiplier) const override
+	virtual std::string get_base_string() const override
 	{
-		return std::format("{} Research: {}%", get_technology_category_name(this->category), number::to_signed_string((this->quantity * multiplier).to_int()));
+		return std::format("{} Research", get_technology_category_name(this->category));
+	}
+
+	virtual bool is_percent() const override
+	{
+		return true;
 	}
 
 	virtual int get_score() const override
 	{
-		return this->quantity;
+		return this->value;
 	}
 
 private:
 	const technology_category category = technology_category::none;
-	int quantity = 0;
 };
 
 }

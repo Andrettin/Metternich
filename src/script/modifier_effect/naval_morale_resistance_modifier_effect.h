@@ -12,7 +12,7 @@ class naval_morale_resistance_modifier_effect final : public modifier_effect<con
 public:
 	explicit naval_morale_resistance_modifier_effect(const std::string &value)
 	{
-		this->quantity = std::stoi(value);
+		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -23,21 +23,23 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_naval_morale_resistance_modifier((this->quantity * multiplier).to_int());
+		scope->get_game_data()->change_naval_morale_resistance_modifier((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_string(const centesimal_int &multiplier) const override
+	virtual std::string get_base_string() const override
 	{
-		return std::format("Naval Morale Resistance: {}%", number::to_signed_string((this->quantity * multiplier).to_int()));
+		return "Naval Morale Resistance";
+	}
+
+	virtual bool is_percent() const override
+	{
+		return true;
 	}
 
 	virtual int get_score() const override
 	{
-		return this->quantity;
+		return this->value;
 	}
-
-private:
-	int quantity = 0;
 };
 
 }
