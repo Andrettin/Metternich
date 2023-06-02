@@ -164,10 +164,13 @@ void character::check() const
 	}
 
 	assert_throw(this->get_phenotype() != nullptr);
-	assert_throw(this->get_home_province() != nullptr);
+
+	if (this->get_home_province() == nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has no home province.", this->get_identifier()));
+	}
 
 	if (this->get_gender() == gender::none) {
-		throw std::runtime_error("Character \"" + this->get_identifier() + "\" has no gender.");
+		throw std::runtime_error(std::format("Character \"{}\" has no gender.", this->get_identifier()));
 	}
 
 	if (this->get_father() != nullptr && this->get_father()->get_gender() != gender::male) {
