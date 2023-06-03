@@ -1,3 +1,5 @@
+#include "metternich.h"
+
 #include "script/modifier.h"
 
 #include "database/gsml_property.h"

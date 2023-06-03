@@ -1,6 +1,9 @@
+#include "metternich.h"
+
 #include "script/modifier_effect/modifier_effect.h"
 
 #include "character/character.h"
+#include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "script/modifier_effect/advisor_cost_modifier_effect.h"
@@ -140,7 +143,8 @@ std::string modifier_effect<scope_type>::get_string(const centesimal_int &multip
 {
 	const centesimal_int value = this->get_multiplied_value(multiplier);
 	const std::string number_str = ignore_decimals ? number::to_signed_string(value.to_int()) : value.to_signed_string();
-	const std::string colored_number_str = string::colored(number_str + (this->is_percent() ? "%" : ""), this->is_negative() ? "red" : "forestgreen");
+	const QColor &number_color = this->is_negative() ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+	const std::string colored_number_str = string::colored(number_str + (this->is_percent() ? "%" : ""), number_color);
 
 	return std::format("{}: {}", this->get_base_string(), colored_number_str);
 }

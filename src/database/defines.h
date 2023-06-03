@@ -19,6 +19,8 @@ class defines final : public defines_base, public singleton<defines>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QColor green_text_color MEMBER green_text_color READ get_green_text_color NOTIFY changed)
+	Q_PROPERTY(QColor red_text_color MEMBER red_text_color READ get_red_text_color NOTIFY changed)
 	Q_PROPERTY(QSize tile_size MEMBER tile_size READ get_tile_size NOTIFY changed)
 	Q_PROPERTY(QSize scaled_tile_size READ get_scaled_tile_size NOTIFY scaled_tile_size_changed)
 	Q_PROPERTY(int months_per_turn MEMBER months_per_turn READ get_months_per_turn NOTIFY changed)
@@ -53,6 +55,16 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
+
+	const QColor &get_green_text_color() const
+	{
+		return this->green_text_color;
+	}
+
+	const QColor &get_red_text_color() const
+	{
+		return this->red_text_color;
+	}
 
 	const QSize &get_tile_size() const
 	{
@@ -254,6 +266,8 @@ signals:
 	void scaled_tile_size_changed();
 
 private:
+	QColor green_text_color;
+	QColor red_text_color;
 	QSize tile_size = QSize(64, 64);
 	int months_per_turn = 3;
 	QDateTime default_start_date;
