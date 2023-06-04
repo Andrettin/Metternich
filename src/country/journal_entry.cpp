@@ -178,7 +178,7 @@ QString journal_entry::get_completion_conditions_string() const
 	std::string str;
 
 	if (this->completion_conditions != nullptr) {
-		str = this->completion_conditions->get_string(0);
+		str = this->completion_conditions->get_conditions_string(0);
 	}
 
 	for (const province *province : this->owned_provinces) {
@@ -224,7 +224,7 @@ QString journal_entry::get_failure_conditions_string() const
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_failure_conditions()->get_string(0));
+	return QString::fromStdString(this->get_failure_conditions()->get_conditions_string(0));
 }
 
 QString journal_entry::get_completion_effects_string(metternich::country *country) const

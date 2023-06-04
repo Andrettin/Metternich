@@ -41,7 +41,7 @@
 #include "population/phenotype.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
-#include "script/condition/condition.h"
+#include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/factor.h"
 #include "script/modifier.h"

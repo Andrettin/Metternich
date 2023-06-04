@@ -13,6 +13,9 @@ class province;
 class site;
 
 template <typename scope_type>
+class and_condition;
+
+template <typename scope_type>
 class condition;
 
 template <typename scope_type>
@@ -73,7 +76,7 @@ public:
 	bool check_completion_conditions(const country *country) const;
 	Q_INVOKABLE QString get_completion_conditions_string() const;
 
-	const condition<country> *get_failure_conditions() const
+	const and_condition<country> *get_failure_conditions() const
 	{
 		return this->failure_conditions.get();
 	}
@@ -126,8 +129,8 @@ private:
 	std::string description;
 	std::unique_ptr<const condition<country>> preconditions;
 	std::unique_ptr<const condition<country>> conditions;
-	std::unique_ptr<const condition<country>> completion_conditions;
-	std::unique_ptr<const condition<country>> failure_conditions;
+	std::unique_ptr<const and_condition<country>> completion_conditions;
+	std::unique_ptr<const and_condition<country>> failure_conditions;
 	std::unique_ptr<const effect_list<const country>> completion_effects;
 	std::unique_ptr<const effect_list<const country>> failure_effects;
 	std::unique_ptr<const modifier<const country>> active_modifier;
