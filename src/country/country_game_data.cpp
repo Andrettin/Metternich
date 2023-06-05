@@ -2371,7 +2371,33 @@ void country_game_data::choose_current_research()
 		return;
 	}
 
-	const technology *chosen_technology = vector::get_random(potential_technologies);
+	std::vector<const technology *> preferred_technologies;
+
+	int best_desire = 0;
+	for (const technology *technology : potential_technologies) {
+		int desire = 100 / (technology->get_total_prerequisite_depth() + 1);
+
+		for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
+			if (vector::contains(journal_entry->get_researched_technologies(), technology)) {
+				desire += journal_entry::ai_technology_desire_modifier;
+			}
+		}
+
+		assert_throw(desire > 0);
+
+		if (desire > best_desire) {
+			preferred_technologies.clear();
+			best_desire = desire;
+		}
+
+		if (desire >= best_desire) {
+			preferred_technologies.push_back(technology);
+		}
+	}
+
+	assert_throw(!preferred_technologies.empty());
+
+	const technology *chosen_technology = vector::get_random(preferred_technologies);
 	this->set_current_research(chosen_technology);
 }
 
@@ -2633,8 +2659,34 @@ void country_game_data::choose_next_advisor()
 	}
 
 	if (this->is_ai()) {
-		const advisor_category chosen_category = vector::get_random(potential_categories);
-		this->set_next_advisor(potential_advisor_map[chosen_category]);
+		std::vector<const character *> preferred_advisors;
+
+		int best_desire = 0;
+		for (const auto &[category, advisor] : potential_advisor_map) {
+			int desire = advisor->get_advisor_score();
+
+			for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
+				if (vector::contains(journal_entry->get_recruited_advisors(), advisor)) {
+					desire += journal_entry::ai_advisor_desire_modifier;
+				}
+			}
+
+			assert_throw(desire > 0);
+
+			if (desire > best_desire) {
+				preferred_advisors.clear();
+				best_desire = desire;
+			}
+
+			if (desire >= best_desire) {
+				preferred_advisors.push_back(advisor);
+			}
+		}
+
+		assert_throw(!preferred_advisors.empty());
+
+		const character *chosen_advisor = vector::get_random(preferred_advisors);
+		this->set_next_advisor(chosen_advisor);
 	} else {
 		const std::vector<const character *> potential_advisors = archimedes::map::get_values(potential_advisor_map);
 		emit engine_interface::get()->next_advisor_choosable(container::to_qvariant_list(potential_advisors));
@@ -3109,7 +3161,7 @@ void country_game_data::check_journal_entries(const bool ignore_effects)
 	}
 }
 
-bool country_game_data::check_potential_journal_entries(const read_only_context &ctx)
+bool country_game_data::check_potential_journal_entries()
 {
 	bool changed = false;
 
@@ -3126,7 +3178,7 @@ bool country_game_data::check_potential_journal_entries(const read_only_context 
 			continue;
 		}
 
-		if (journal_entry->get_preconditions() != nullptr && !journal_entry->get_preconditions()->check(this->country, ctx)) {
+		if (!journal_entry->check_preconditions(this->country)) {
 			continue;
 		}
 
@@ -3144,7 +3196,7 @@ bool country_game_data::check_inactive_journal_entries(const read_only_context &
 	const std::vector<const journal_entry *> inactive_entries = this->get_inactive_journal_entries();
 
 	for (const journal_entry *journal_entry : inactive_entries) {
-		if (journal_entry->get_preconditions() != nullptr && !journal_entry->get_preconditions()->check(this->country, ctx)) {
+		if (!journal_entry->check_preconditions(this->country)) {
 			std::erase(this->inactive_journal_entries, journal_entry);
 			changed = true;
 			continue;
@@ -3171,7 +3223,7 @@ bool country_game_data::check_active_journal_entries(const read_only_context &ct
 	const std::vector<const journal_entry *> active_entries = this->get_active_journal_entries();
 
 	for (const journal_entry *journal_entry : active_entries) {
-		if (journal_entry->get_preconditions() != nullptr && !journal_entry->get_preconditions()->check(this->country, ctx)) {
+		if (!journal_entry->check_preconditions(this->country)) {
 			this->remove_active_journal_entry(journal_entry);
 			changed = true;
 			continue;

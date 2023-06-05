@@ -2,6 +2,8 @@
 
 #include "country/journal_entry.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "infrastructure/building_type.h"
@@ -12,7 +14,9 @@
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
+#include "technology/technology.h"
 #include "util/string_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -85,6 +89,14 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 				this->built_provincial_buildings[province].push_back(building_type::get(value));
 			}
 		});
+	} else if (tag == "researched_technologies") {
+		for (const std::string &value : values) {
+			this->researched_technologies.push_back(technology::get(value));
+		}
+	} else if (tag == "recruited_advisors") {
+		for (const std::string &value : values) {
+			this->recruited_advisors.push_back(character::get(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -96,8 +108,8 @@ void journal_entry::check() const
 		throw std::runtime_error(std::format("Journal entry \"{}\" does not have a portrait.", this->get_identifier()));
 	}
 
-	if (this->get_preconditions() != nullptr) {
-		this->get_preconditions()->check_validity();
+	if (this->preconditions != nullptr) {
+		this->preconditions->check_validity();
 	}
 
 	if (this->get_conditions() != nullptr) {
@@ -119,11 +131,35 @@ void journal_entry::check() const
 	if (this->get_failure_effects() != nullptr) {
 		this->get_failure_effects()->check();
 	}
+
+	for (const character *character : this->get_recruited_advisors()) {
+		if (!character->is_advisor()) {
+			throw std::runtime_error(std::format("Journal entry \"{}\" requires recruiting \"{}\" as an advisor, but that character is not an advisor.", this->get_identifier(), character->get_identifier()));
+		}
+	}
+}
+
+bool journal_entry::check_preconditions(const country *country) const
+{
+	const read_only_context ctx(country);
+
+	if (this->preconditions != nullptr && !this->preconditions->check(country, ctx)) {
+		return false;
+	}
+
+	for (const character *advisor : this->get_recruited_advisors()) {
+		const metternich::country *advisor_country = advisor->get_game_data()->get_country();
+		if (advisor_country != nullptr && advisor_country != country) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 bool journal_entry::check_completion_conditions(const country *country) const
 {
-	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_provincial_buildings().empty()) {
+	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_provincial_buildings().empty() && this->get_researched_technologies().empty() && this->get_recruited_advisors().empty()) {
 		//no completion conditions at all, so the entry can't be completed normally
 		return false;
 	}
@@ -170,6 +206,18 @@ bool journal_entry::check_completion_conditions(const country *country) const
 		}
 	}
 
+	for (const technology *technology : this->get_researched_technologies()) {
+		if (!country_game_data->has_technology(technology)) {
+			return false;
+		}
+	}
+
+	for (const character *advisor : this->get_recruited_advisors()) {
+		if (!vector::contains(country_game_data->get_advisors(), advisor)) {
+			return false;
+		}
+	}
+
 	return true;
 }
 
@@ -213,6 +261,22 @@ QString journal_entry::get_completion_conditions_string() const
 
 			str += std::format("Build {} {} in {}", string::get_indefinite_article(building->get_name()), building->get_name(), province->get_game_data()->get_current_cultural_name());
 		}
+	}
+
+	for (const technology *technology : this->get_researched_technologies()) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("Research {}", technology->get_name());
+	}
+
+	for (const character *advisor : this->get_recruited_advisors()) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("Recruit {}", advisor->get_name());
 	}
 
 	return QString::fromStdString(str);

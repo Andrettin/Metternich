@@ -286,6 +286,8 @@ public:
 		return this->get_advisor_type() != nullptr;
 	}
 
+	int get_advisor_score() const;
+
 signals:
 	void changed();
 	void game_data_changed() const;

@@ -7,10 +7,12 @@
 namespace metternich {
 
 class building_type;
+class character;
 class country;
 class portrait;
 class province;
 class site;
+class technology;
 
 template <typename scope_type>
 class and_condition;
@@ -36,6 +38,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::journal_entry*";
 	static constexpr const char database_folder[] = "journal_entries";
 	static constexpr int ai_building_desire_modifier = 100;
+	static constexpr int ai_technology_desire_modifier = 100;
+	static constexpr int ai_advisor_desire_modifier = 1000;
 
 	explicit journal_entry(const std::string &identifier);
 	~journal_entry();
@@ -63,10 +67,7 @@ public:
 		return QString::fromStdString(this->get_description());
 	}
 
-	const condition<country> *get_preconditions() const
-	{
-		return this->preconditions.get();
-	}
+	bool check_preconditions(const country *country) const;
 
 	const condition<country> *get_conditions() const
 	{
@@ -121,6 +122,16 @@ public:
 
 	province_map<std::vector<const building_type *>> get_built_provincial_buildings_with_requirements() const;
 
+	const std::vector<const technology *> &get_researched_technologies() const
+	{
+		return this->researched_technologies;
+	}
+
+	const std::vector<const character *> &get_recruited_advisors() const
+	{
+		return this->recruited_advisors;
+	}
+
 signals:
 	void changed();
 
@@ -139,6 +150,8 @@ private:
 	std::vector<const site *> owned_sites;
 	std::vector<const building_type *> built_buildings;
 	province_map<std::vector<const building_type *>> built_provincial_buildings;
+	std::vector<const technology *> researched_technologies;
+	std::vector<const character *> recruited_advisors;
 };
 
 }

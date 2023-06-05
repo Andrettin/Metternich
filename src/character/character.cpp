@@ -291,4 +291,17 @@ void character::apply_advisor_modifier(const country *country, const int multipl
 	}
 }
 
+int character::get_advisor_score() const
+{
+	assert_throw(this->is_advisor());
+
+	if (this->advisor_modifier != nullptr) {
+		return this->advisor_modifier->get_score();
+	} else if (this->get_advisor_type()->get_modifier() != nullptr) {
+		return this->get_advisor_type()->get_modifier()->get_score() * this->get_skill();
+	}
+
+	return 0;
+}
+
 }
