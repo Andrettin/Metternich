@@ -112,8 +112,8 @@ void journal_entry::check() const
 		this->preconditions->check_validity();
 	}
 
-	if (this->get_conditions() != nullptr) {
-		this->get_conditions()->check_validity();
+	if (this->conditions != nullptr) {
+		this->conditions->check_validity();
 	}
 
 	if (this->completion_conditions != nullptr) {
@@ -150,6 +150,25 @@ bool journal_entry::check_preconditions(const country *country) const
 	for (const character *advisor : this->get_recruited_advisors()) {
 		const metternich::country *advisor_country = advisor->get_game_data()->get_country();
 		if (advisor_country != nullptr && advisor_country != country) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool journal_entry::check_conditions(const country *country) const
+{
+	const read_only_context ctx(country);
+
+	if (this->conditions != nullptr && !this->conditions->check(country, ctx)) {
+		return false;
+	}
+
+	const country_game_data *country_game_data = country->get_game_data();
+
+	for (const technology *technology : this->get_researched_technologies()) {
+		if (!technology->is_discovery() && !country_game_data->is_technology_available(technology)) {
 			return false;
 		}
 	}

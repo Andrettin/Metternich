@@ -3144,11 +3144,11 @@ void country_game_data::check_journal_entries(const bool ignore_effects)
 	bool changed = false;
 
 	//check if any journal entry has become potentially available
-	if (this->check_potential_journal_entries(ctx)) {
+	if (this->check_potential_journal_entries()) {
 		changed = true;
 	}
 
-	if (this->check_inactive_journal_entries(ctx)) {
+	if (this->check_inactive_journal_entries()) {
 		changed = true;
 	}
 
@@ -3189,7 +3189,7 @@ bool country_game_data::check_potential_journal_entries()
 	return changed;
 }
 
-bool country_game_data::check_inactive_journal_entries(const read_only_context &ctx)
+bool country_game_data::check_inactive_journal_entries()
 {
 	bool changed = false;
 
@@ -3202,7 +3202,7 @@ bool country_game_data::check_inactive_journal_entries(const read_only_context &
 			continue;
 		}
 
-		if (journal_entry->get_conditions() != nullptr && !journal_entry->get_conditions()->check(this->country, ctx)) {
+		if (!journal_entry->check_conditions(this->country)) {
 			continue;
 		}
 
@@ -3229,7 +3229,7 @@ bool country_game_data::check_active_journal_entries(const read_only_context &ct
 			continue;
 		}
 
-		if (journal_entry->get_conditions() != nullptr && !journal_entry->get_conditions()->check(this->country, ctx)) {
+		if (!journal_entry->check_conditions(this->country)) {
 			this->remove_active_journal_entry(journal_entry);
 			this->inactive_journal_entries.push_back(journal_entry);
 			changed = true;

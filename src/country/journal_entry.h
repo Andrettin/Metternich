@@ -68,12 +68,7 @@ public:
 	}
 
 	bool check_preconditions(const country *country) const;
-
-	const condition<country> *get_conditions() const
-	{
-		return this->conditions.get();
-	}
-
+	bool check_conditions(const country *country) const;
 	bool check_completion_conditions(const country *country) const;
 	Q_INVOKABLE QString get_completion_conditions_string() const;
 

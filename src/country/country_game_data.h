@@ -1110,7 +1110,7 @@ public:
 	QVariantList get_finished_journal_entries_qvariant_list() const;
 	void check_journal_entries(const bool ignore_effects = false);
 	bool check_potential_journal_entries();
-	bool check_inactive_journal_entries(const read_only_context &ctx);
+	bool check_inactive_journal_entries();
 	bool check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects);
 
 	int get_ai_building_desire_modifier(const building_type *building) const
