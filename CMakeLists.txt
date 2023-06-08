@@ -528,6 +528,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
 	src/script/modifier_effect/land_damage_modifier_effect.h
 	src/script/modifier_effect/land_morale_resistance_modifier_effect.h
+	src/script/modifier_effect/land_recovery_modifier_effect.h
 	src/script/modifier_effect/melee_modifier_effect.h
 	src/script/modifier_effect/modifier_effect.h
 	src/script/modifier_effect/naval_morale_resistance_modifier_effect.h
