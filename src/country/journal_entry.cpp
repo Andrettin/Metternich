@@ -295,7 +295,7 @@ QString journal_entry::get_completion_conditions_string() const
 			str += "\n";
 		}
 
-		str += std::format("Recruit {}", advisor->get_name());
+		str += std::format("Recruit {}", advisor->get_full_name());
 	}
 
 	return QString::fromStdString(str);
