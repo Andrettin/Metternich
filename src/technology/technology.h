@@ -213,18 +213,15 @@ public:
 	virtual named_data_entry *get_tree_parent() const override
 	{
 		if (!this->get_prerequisites().empty()) {
-			const technology *chosen_prerequisite = nullptr;
-
-			for (const technology *prerequisite : this->get_prerequisites()) {
-				if (chosen_prerequisite == nullptr || prerequisite->get_total_prerequisite_depth() > chosen_prerequisite->get_total_prerequisite_depth()) {
-					chosen_prerequisite = prerequisite;
-				}
-			}
-
-			return const_cast<technology *>(chosen_prerequisite);
+			return const_cast<technology *>(this->get_prerequisites().front());
 		}
 
 		return nullptr;
+	}
+
+	virtual int get_tree_y() const override
+	{
+		return this->get_total_prerequisite_depth();
 	}
 
 	virtual std::vector<const named_data_entry *> get_top_tree_elements() const override
