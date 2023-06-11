@@ -34,6 +34,7 @@
 #include "script/condition/game_rule_condition.h"
 #include "script/condition/gender_condition.h"
 #include "script/condition/has_population_culture_condition.h"
+#include "script/condition/has_terrain_condition.h"
 #include "script/condition/ideology_condition.h"
 #include "script/condition/improvement_condition.h"
 #include "script/condition/is_advisor_condition.h"
@@ -140,6 +141,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
 		} else if (key == "colony") {
 			return std::make_unique<colony_condition<scope_type>>(value, condition_operator);
+		} else if (key == "has_terrain") {
+			return std::make_unique<has_terrain_condition<scope_type>>(value, condition_operator);
 		} else if (key == "produces_commodity") {
 			return std::make_unique<produces_commodity_condition<scope_type>>(value, condition_operator);
 		}

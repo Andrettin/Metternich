@@ -446,6 +446,7 @@ set(script_condition_HDRS
 	src/script/condition/game_rule_condition.h
 	src/script/condition/gender_condition.h
 	src/script/condition/has_population_culture_condition.h
+	src/script/condition/has_terrain_condition.h
 	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h
 	src/script/condition/is_advisor_condition.h
