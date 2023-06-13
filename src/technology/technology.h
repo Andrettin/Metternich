@@ -16,6 +16,7 @@ class portrait;
 class production_type;
 class resource;
 class technological_period;
+class transporter_type;
 enum class technology_category;
 
 template <typename scope_type>
@@ -184,6 +185,15 @@ public:
 	std::vector<const military_unit_type *> get_enabled_military_units_for_culture(const culture *culture) const;
 	void add_enabled_military_unit(const military_unit_type *military_unit);
 
+	const std::vector<const transporter_type *> &get_enabled_transporters() const
+	{
+		return this->enabled_transporters;
+	}
+
+	QVariantList get_enabled_transporters_qvariant_list() const;
+	std::vector<const transporter_type *> get_enabled_transporters_for_culture(const culture *culture) const;
+	void add_enabled_transporter(const transporter_type *transporter);
+
 	const std::vector<const character *> &get_enabled_advisors() const
 	{
 		return this->enabled_advisors;
@@ -257,6 +267,7 @@ private:
 	std::vector<const production_type *> enabled_production_types;
 	std::vector<const improvement *> enabled_improvements;
 	std::vector<const military_unit_type *> enabled_military_units;
+	std::vector<const transporter_type *> enabled_transporters;
 	std::vector<const character *> enabled_advisors;
 	std::vector<const character *> retired_advisors;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;

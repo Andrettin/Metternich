@@ -33,7 +33,6 @@
 #include "ui/icon.h"
 #include "ui/icon_container.h"
 #include "unit/military_unit.h"
-#include "unit/military_unit_class.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"

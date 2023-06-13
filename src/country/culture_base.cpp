@@ -12,6 +12,8 @@
 #include "unit/civilian_unit_type.h"
 #include "unit/military_unit_class.h"
 #include "unit/military_unit_type.h"
+#include "unit/transporter_class.h"
+#include "unit/transporter_type.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -63,6 +65,15 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			const military_unit_class *unit_class = military_unit_class::get(key);
 			const military_unit_type *unit_type = military_unit_type::get(value);
 			this->set_military_class_unit_type(unit_class, unit_type);
+		});
+	} else if (tag == "transporter_class_types") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const transporter_class *transporter_class = transporter_class::get(key);
+			const transporter_type *transporter_type = transporter_type::get(value);
+			this->set_transporter_class_type(transporter_class, transporter_type);
 		});
 	} else {
 		data_entry::process_gsml_scope(scope);
@@ -183,6 +194,21 @@ const military_unit_type *culture_base::get_military_class_unit_type(const milit
 	}
 
 	return unit_class->get_default_unit_type();
+
+}
+
+const transporter_type *culture_base::get_transporter_class_type(const transporter_class *transporter_class) const
+{
+	const auto find_iterator = this->transporter_class_types.find(transporter_class);
+	if (find_iterator != this->transporter_class_types.end()) {
+		return find_iterator->second;
+	}
+
+	if (this->get_group() != nullptr) {
+		return this->get_group()->get_transporter_class_type(transporter_class);
+	}
+
+	return transporter_class->get_default_transporter_type();
 
 }
 
