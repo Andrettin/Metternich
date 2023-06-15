@@ -40,6 +40,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList enabled_advisors READ get_enabled_advisors_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList retired_advisors READ get_retired_advisors_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QObject* tree_parent READ get_tree_parent CONSTANT)
+	Q_PROPERTY(QVariantList secondary_tree_parents READ get_secondary_tree_parents CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "technology";
@@ -227,6 +228,17 @@ public:
 		}
 
 		return nullptr;
+	}
+
+	QVariantList get_secondary_tree_parents() const
+	{
+		QVariantList secondary_tree_parents;
+
+		for (size_t i = 1; i < this->get_prerequisites().size(); ++i) {
+			secondary_tree_parents.push_back(QVariant::fromValue(const_cast<technology *>(this->get_prerequisites()[i])));
+		}
+
+		return secondary_tree_parents;
 	}
 
 	virtual int get_tree_y() const override
