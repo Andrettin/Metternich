@@ -75,8 +75,17 @@ void technology::initialize()
 
 void technology::check() const
 {
-	assert_throw(this->get_category() != technology_category::none);
-	assert_throw(this->get_portrait() != nullptr);
+	if (this->get_category() == technology_category::none) {
+		throw std::runtime_error(std::format("Technology \"{}\" has no category.", this->get_identifier()));
+	}
+
+	if (this->get_portrait() == nullptr) {
+		throw std::runtime_error(std::format("Technology \"{}\" has no portrait.", this->get_identifier()));
+	}
+
+	if (this->get_icon() == nullptr) {
+		throw std::runtime_error(std::format("Technology \"{}\" has no icon.", this->get_identifier()));
+	}
 
 	if (this->get_cost() == 0 && !this->is_discovery()) {
 		throw std::runtime_error(std::format("Technology \"{}\" has no cost, and is not a discovery.", this->get_identifier()));

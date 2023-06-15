@@ -10,6 +10,7 @@ class character;
 class commodity;
 class country;
 class culture;
+class icon;
 class improvement;
 class military_unit_type;
 class portrait;
@@ -30,6 +31,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(metternich::technology_category category MEMBER category NOTIFY changed)
 	Q_PROPERTY(int category_index READ get_category_index NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
+	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(int cost MEMBER cost READ get_cost NOTIFY changed)
 	Q_PROPERTY(bool discovery MEMBER discovery READ is_discovery NOTIFY changed)
 	Q_PROPERTY(int year MEMBER year READ get_year NOTIFY changed)
@@ -86,6 +88,11 @@ public:
 	const metternich::portrait *get_portrait() const
 	{
 		return this->portrait;
+	}
+
+	const metternich::icon *get_icon() const
+	{
+		return this->icon;
 	}
 
 	int get_cost() const
@@ -268,6 +275,7 @@ private:
 	std::string description;
 	technology_category category;
 	metternich::portrait *portrait = nullptr;
+	metternich::icon *icon = nullptr;
 	int cost = 0;
 	bool discovery = false;
 	int year = 0; //the historical year that this technology was discovered
