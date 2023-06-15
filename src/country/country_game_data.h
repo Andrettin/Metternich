@@ -970,6 +970,16 @@ public:
 		this->artillery_cost_modifier += change;
 	}
 
+	int get_unit_upgrade_cost_modifier() const
+	{
+		return this->unit_upgrade_cost_modifier;
+	}
+
+	void change_unit_upgrade_cost_modifier(const int change)
+	{
+		this->unit_upgrade_cost_modifier += change;
+	}
+
 	int get_output_modifier() const
 	{
 		return this->output_modifier;
@@ -1292,6 +1302,7 @@ private:
 	int infantry_cost_modifier = 0;
 	int cavalry_cost_modifier = 0;
 	int artillery_cost_modifier = 0;
+	int unit_upgrade_cost_modifier = 0;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
 	int throughput_modifier = 0;

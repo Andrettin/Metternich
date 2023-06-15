@@ -27,6 +27,7 @@
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
+#include "script/modifier_effect/unit_upgrade_cost_modifier_effect.h"
 #include "util/number_util.h"
 #include "util/string_util.h"
 
@@ -69,6 +70,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<storage_capacity_modifier_effect>(value);
 		} else if (key == "throughput_modifier") {
 			return std::make_unique<throughput_modifier_effect<scope_type>>(value);
+		} else if (key == "unit_upgrade_cost_modifier") {
+			return std::make_unique<unit_upgrade_cost_modifier_effect>(value);
 		} else if (key.ends_with(building_capacity_modifier_suffix) && building_slot_type::try_get(key.substr(0, key.size() - building_capacity_modifier_suffix.size())) != nullptr) {
 			const building_slot_type *building_slot_type = building_slot_type::get(key.substr(0, key.size() - building_capacity_modifier_suffix.size()));
 			return std::make_unique<building_capacity_modifier_effect>(building_slot_type, value);
