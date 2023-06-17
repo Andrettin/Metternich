@@ -66,7 +66,7 @@ const country *provincial_building_slot::get_country() const
 	return this->get_province()->get_game_data()->get_owner();
 }
 
-QString provincial_building_slot::get_country_modifier_string() const
+QString provincial_building_slot::get_modifier_string() const
 {
 	if (this->get_building() == nullptr) {
 		return QString();
@@ -89,6 +89,14 @@ QString provincial_building_slot::get_country_modifier_string() const
 		}
 
 		str += this->get_building()->get_stackable_country_modifier()->get_string();
+	}
+
+	if (this->get_building()->get_province_modifier() != nullptr) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += this->get_building()->get_province_modifier()->get_string();
 	}
 
 	return QString::fromStdString(str);

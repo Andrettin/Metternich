@@ -44,6 +44,9 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<province>>();
 		database::process_gsml_data(conditions, scope);
 		this->province_conditions = std::move(conditions);
+	} else if (tag == "province_modifier") {
+		this->province_modifier = std::make_unique<modifier<const province>>();
+		database::process_gsml_data(this->province_modifier, scope);
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
 		database::process_gsml_data(this->country_modifier, scope);
@@ -121,6 +124,10 @@ void building_type::check() const
 		throw std::runtime_error(std::format("Building type \"{}\" has a maximum level greater than 1, but is not expandable.", this->get_identifier()));
 	}
 
+	if (this->get_province_modifier() != nullptr && !this->is_provincial()) {
+		throw std::runtime_error(std::format("Building type \"{}\" has a province modifier, but is not a provincial building.", this->get_identifier()));
+	}
+
 	if (this->get_stackable_country_modifier() != nullptr && !this->is_provincial()) {
 		throw std::runtime_error(std::format("Building type \"{}\" has a stackable country modifier, but is not a provincial building.", this->get_identifier()));
 	}
@@ -154,26 +161,11 @@ int building_type::get_score() const
 		score += this->get_stackable_country_modifier()->get_score();
 	}
 
+	if (this->get_province_modifier() != nullptr) {
+		score += this->get_province_modifier()->get_score();
+	}
+
 	return score;
-}
-
-QString building_type::get_country_modifier_string() const
-{
-	std::string str;
-
-	if (this->get_country_modifier() != nullptr) {
-		str = this->get_country_modifier()->get_string();
-	}
-
-	if (this->get_stackable_country_modifier() != nullptr) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		str += this->get_stackable_country_modifier()->get_string();
-	}
-
-	return QString::fromStdString(str);
 }
 
 }

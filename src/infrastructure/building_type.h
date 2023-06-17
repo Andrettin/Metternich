@@ -48,7 +48,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(int fort_level MEMBER fort_level READ get_fort_level NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
-	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "building_type";
@@ -166,6 +165,11 @@ public:
 		return this->province_conditions.get();
 	}
 
+	const modifier<const province> *get_province_modifier() const
+	{
+		return this->province_modifier.get();
+	}
+
 	const modifier<const country> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
@@ -175,8 +179,6 @@ public:
 	{
 		return this->stackable_country_modifier.get();
 	}
-
-	QString get_country_modifier_string() const;
 
 signals:
 	void changed();
@@ -201,6 +203,7 @@ private:
 	technology *required_technology = nullptr;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<and_condition<province>> province_conditions;
+	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const country>> country_modifier;
 	std::unique_ptr<modifier<const country>> stackable_country_modifier;
 };
