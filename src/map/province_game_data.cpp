@@ -665,6 +665,23 @@ QString province_game_data::get_military_unit_category_name(const military_unit_
 	return best_name;
 }
 
+void province_game_data::set_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value)
+{
+	if (value == this->get_commodity_bonus_per_improved_resource(commodity, resource)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->commodity_bonuses_per_improved_resources[commodity].erase(resource);
+
+		if (this->commodity_bonuses_per_improved_resources[commodity].empty()) {
+			this->commodity_bonuses_per_improved_resources.erase(commodity);
+		}
+	} else {
+		this->commodity_bonuses_per_improved_resources[commodity][resource] = value;
+	}
+}
+
 bool province_game_data::can_produce_commodity(const commodity *commodity) const
 {
 	for (const QPoint &tile_pos : this->resource_tiles) {

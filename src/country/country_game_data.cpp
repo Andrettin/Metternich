@@ -2888,6 +2888,23 @@ void country_game_data::set_commodity_throughput_modifier(const commodity *commo
 	}
 }
 
+void country_game_data::set_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value)
+{
+	if (value == this->get_commodity_bonus_per_improved_resource(commodity, resource)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->commodity_bonuses_per_improved_resources[commodity].erase(resource);
+
+		if (this->commodity_bonuses_per_improved_resources[commodity].empty()) {
+			this->commodity_bonuses_per_improved_resources.erase(commodity);
+		}
+	} else {
+		this->commodity_bonuses_per_improved_resources[commodity][resource] = value;
+	}
+}
+
 void country_game_data::set_category_research_modifier(const technology_category category, const int value)
 {
 	if (value == this->get_category_research_modifier(category)) {

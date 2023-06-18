@@ -320,6 +320,28 @@ public:
 		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + value);
 	}
 
+	int get_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource) const
+	{
+		const auto find_iterator = this->commodity_bonuses_per_improved_resources.find(commodity);
+
+		if (find_iterator != this->commodity_bonuses_per_improved_resources.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(resource);
+
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+
+		return 0;
+	}
+
+	void set_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value);
+
+	void change_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value)
+	{
+		this->set_commodity_bonus_per_improved_resource(commodity, resource, this->get_commodity_bonus_per_improved_resource(commodity, resource) + value);
+	}
+
 	bool can_produce_commodity(const commodity *commodity) const;
 
 	province_game_data &operator =(const province_game_data &other) = delete;
@@ -358,6 +380,7 @@ private:
 	std::map<military_unit_category, int> military_unit_category_counts;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
+	commodity_map<resource_map<int>> commodity_bonuses_per_improved_resources;
 };
 
 }
