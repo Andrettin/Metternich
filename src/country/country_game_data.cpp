@@ -683,7 +683,7 @@ void country_game_data::on_province_gained(const province *province, const int m
 		this->provincial_building_counts.clear();
 	}
 
-	const province_game_data *province_game_data = province->get_game_data();
+	province_game_data *province_game_data = province->get_game_data();
 
 	this->change_score(province_game_data->get_score() * multiplier);
 
@@ -703,8 +703,18 @@ void country_game_data::on_province_gained(const province *province, const int m
 		const tile *tile = map::get()->get_tile(tile_pos);
 		const improvement *improvement = tile->get_improvement();
 
-		if (improvement != nullptr && improvement->get_output_commodity() != nullptr) {
-			this->change_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier() * multiplier);
+		if (improvement != nullptr) {
+			if (improvement->get_output_commodity() != nullptr) {
+				this->change_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier() * multiplier);
+			}
+
+			for (const auto &[commodity, resource_map] : province_game_data->get_commodity_bonuses_per_improved_resources()) {
+				const auto find_iterator = resource_map.find(tile->get_resource());
+				if (find_iterator != resource_map.end()) {
+					const int value = find_iterator->second;
+					this->change_commodity_output(commodity, value * multiplier);
+				}
+			}
 		}
 	}
 
@@ -717,6 +727,12 @@ void country_game_data::on_province_gained(const province *province, const int m
 		if (building != nullptr) {
 			assert_throw(building->is_provincial());
 			this->change_provincial_building_count(building, 1 * multiplier);
+		}
+	}
+
+	for (const auto &[commodity, resource_map] : this->commodity_bonuses_per_improved_resources) {
+		for (const auto &[resource, value] : resource_map) {
+			province_game_data->change_commodity_bonus_per_improved_resource(commodity, resource, value * multiplier);
 		}
 	}
 }
@@ -2890,7 +2906,9 @@ void country_game_data::set_commodity_throughput_modifier(const commodity *commo
 
 void country_game_data::set_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value)
 {
-	if (value == this->get_commodity_bonus_per_improved_resource(commodity, resource)) {
+	const int old_value = this->get_commodity_bonus_per_improved_resource(commodity, resource);
+
+	if (value == old_value) {
 		return;
 	}
 
@@ -2902,6 +2920,10 @@ void country_game_data::set_commodity_bonus_per_improved_resource(const commodit
 		}
 	} else {
 		this->commodity_bonuses_per_improved_resources[commodity][resource] = value;
+	}
+
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->change_commodity_bonus_per_improved_resource(commodity, resource, value - old_value);
 	}
 }
 

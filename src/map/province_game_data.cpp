@@ -304,8 +304,14 @@ bool province_game_data::produces_commodity(const commodity *commodity) const
 		const tile *tile = map::get()->get_tile(tile_pos);
 		const improvement *improvement = tile->get_improvement();
 
-		if (improvement != nullptr && improvement->get_output_commodity() == commodity) {
-			return true;
+		if (improvement != nullptr) {
+			if (improvement->get_output_commodity() == commodity) {
+				return true;
+			}
+
+			if (this->get_commodity_bonus_per_improved_resource(commodity, tile->get_resource()) > 0) {
+				return true;
+			}
 		}
 	}
 
@@ -321,6 +327,14 @@ void province_game_data::on_improvement_gained(const improvement *improvement, c
 	if (this->get_owner() != nullptr) {
 		if (improvement->get_output_commodity() != nullptr) {
 			this->get_owner()->get_game_data()->change_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier() * multiplier);
+		}
+
+		for (const auto &[commodity, resource_map] : this->get_commodity_bonuses_per_improved_resources()) {
+			const auto find_iterator = resource_map.find(improvement->get_resource());
+			if (find_iterator != resource_map.end()) {
+				const int value = find_iterator->second;
+				this->get_owner()->get_game_data()->change_commodity_output(commodity, value * multiplier);
+			}
 		}
 	}
 }
@@ -667,7 +681,9 @@ QString province_game_data::get_military_unit_category_name(const military_unit_
 
 void province_game_data::set_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value)
 {
-	if (value == this->get_commodity_bonus_per_improved_resource(commodity, resource)) {
+	const int old_value = this->get_commodity_bonus_per_improved_resource(commodity, resource);
+
+	if (value == old_value) {
 		return;
 	}
 
@@ -679,6 +695,11 @@ void province_game_data::set_commodity_bonus_per_improved_resource(const commodi
 		}
 	} else {
 		this->commodity_bonuses_per_improved_resources[commodity][resource] = value;
+	}
+
+	if (this->get_owner() != nullptr) {
+		const int value_change = value - old_value;
+		this->get_owner()->get_game_data()->change_commodity_output(commodity, value_change);
 	}
 }
 

@@ -320,6 +320,11 @@ public:
 		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + value);
 	}
 
+	const commodity_map<resource_map<int>> &get_commodity_bonuses_per_improved_resources() const
+	{
+		return this->commodity_bonuses_per_improved_resources;
+	}
+
 	int get_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource) const
 	{
 		const auto find_iterator = this->commodity_bonuses_per_improved_resources.find(commodity);
