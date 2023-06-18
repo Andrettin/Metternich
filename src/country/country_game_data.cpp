@@ -551,42 +551,16 @@ void country_game_data::add_province(const province *province)
 {
 	this->explore_province(province);
 
-	for (const auto &[building, count] : this->provincial_building_counts) {
-		if (building->get_country_modifier() != nullptr) {
-			building->get_country_modifier()->apply(this->country, centesimal_int(-count) / this->get_province_count());
-		}
-	}
-
 	this->provinces.push_back(province);
 
-	for (const auto &[building, count] : this->provincial_building_counts) {
-		if (building->get_country_modifier() != nullptr) {
-			//reapply the provincial building's country modifier with the updated province count
-			building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_province_count());
-		}
-	}
+	this->on_province_gained(province, 1);
 
 	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
 
-	this->change_score(province_game_data->get_score());
-
-	if (province_game_data->is_coastal()) {
-		++this->coastal_province_count;
-	}
-
-	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
-		this->change_resource_count(resource, count);
-
-		if (this->get_overlord() != nullptr) {
-			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, count);
-		}
-	}
-
 	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
 		const tile *tile = map::get()->get_tile(tile_pos);
 		const resource *resource = tile->get_resource();
-		const improvement *improvement = tile->get_improvement();
 
 		if (resource != nullptr) {
 			if (!tile->is_resource_discovered()) {
@@ -596,22 +570,6 @@ void country_game_data::add_province(const province *province)
 					map::get()->set_tile_resource_discovered(tile_pos, true);
 				}
 			}
-		}
-
-		if (improvement != nullptr && improvement->get_output_commodity() != nullptr) {
-			this->change_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier());
-		}
-	}
-
-	for (const auto &[terrain, count] : province_game_data->get_tile_terrain_counts()) {
-		this->change_tile_terrain_count(terrain, count);
-	}
-
-	for (const qunique_ptr<provincial_building_slot> &building_slot : province_game_data->get_building_slots()) {
-		const building_type *building = building_slot->get_building();
-		if (building != nullptr) {
-			assert_throw(building->is_provincial());
-			this->change_provincial_building_count(building, 1);
 		}
 	}
 
@@ -660,58 +618,12 @@ void country_game_data::add_province(const province *province)
 
 void country_game_data::remove_province(const province *province)
 {
-	for (const auto &[building, count] : this->provincial_building_counts) {
-		if (building->get_country_modifier() != nullptr) {
-			building->get_country_modifier()->apply(this->country, centesimal_int(-count) / this->get_province_count());
-		}
-	}
-
 	std::erase(this->provinces, province);
 
-	for (const auto &[building, count] : this->provincial_building_counts) {
-		if (building->get_country_modifier() != nullptr) {
-			//reapply the provincial building's country modifier with the updated province count
-			building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_province_count());
-		}
-	}
+	this->on_province_gained(province, -1);
 
 	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
-
-	this->change_score(-province_game_data->get_score());
-
-	if (province_game_data->is_coastal()) {
-		--this->coastal_province_count;
-	}
-
-	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
-		this->change_resource_count(resource, -count);
-
-		if (this->get_overlord() != nullptr) {
-			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, -count);
-		}
-	}
-
-	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-		const improvement *improvement = tile->get_improvement();
-
-		if (improvement != nullptr && improvement->get_output_commodity() != nullptr) {
-			this->change_commodity_output(improvement->get_output_commodity(), -improvement->get_output_multiplier());
-		}
-	}
-
-	for (const auto &[terrain, count] : province_game_data->get_tile_terrain_counts()) {
-		this->change_tile_terrain_count(terrain, -count);
-	}
-
-	for (const qunique_ptr<provincial_building_slot> &building_slot : province_game_data->get_building_slots()) {
-		const building_type *building = building_slot->get_building();
-		if (building != nullptr) {
-			assert_throw(building->is_provincial());
-			this->change_provincial_building_count(building, -1);
-		}
-	}
 
 	for (const QPoint &tile_pos : province_game_data->get_border_tiles()) {
 		std::erase(this->border_tiles, tile_pos);
@@ -749,6 +661,63 @@ void country_game_data::remove_province(const province *province)
 
 	if (game::get()->is_running()) {
 		emit provinces_changed();
+	}
+}
+
+void country_game_data::on_province_gained(const province *province, const int multiplier)
+{
+	for (const auto &[building, count] : this->provincial_building_counts) {
+		if (building->get_country_modifier() != nullptr) {
+			building->get_country_modifier()->apply(this->country, centesimal_int(-count) / this->get_province_count() - multiplier);
+		}
+	}
+
+	if (this->get_province_count() != 0) {
+		for (const auto &[building, count] : this->provincial_building_counts) {
+			if (building->get_country_modifier() != nullptr) {
+				//reapply the provincial building's country modifier with the updated province count
+				building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_province_count());
+			}
+		}
+	} else {
+		this->provincial_building_counts.clear();
+	}
+
+	const province_game_data *province_game_data = province->get_game_data();
+
+	this->change_score(province_game_data->get_score() * multiplier);
+
+	if (province_game_data->is_coastal()) {
+		this->coastal_province_count += 1 * multiplier;
+	}
+
+	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
+		this->change_resource_count(resource, count * multiplier);
+
+		if (this->get_overlord() != nullptr) {
+			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, count * multiplier);
+		}
+	}
+
+	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+		const improvement *improvement = tile->get_improvement();
+
+		if (improvement != nullptr && improvement->get_output_commodity() != nullptr) {
+			this->change_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier() * multiplier);
+		}
+	}
+
+	for (const auto &[terrain, count] : province_game_data->get_tile_terrain_counts()) {
+		this->change_tile_terrain_count(terrain, count * multiplier);
+	}
+
+	for (const qunique_ptr<provincial_building_slot> &building_slot : province_game_data->get_building_slots()) {
+		const building_type *building = building_slot->get_building();
+		if (building != nullptr) {
+			assert_throw(building->is_provincial());
+			this->change_provincial_building_count(building, 1 * multiplier);
+		}
 	}
 }
 

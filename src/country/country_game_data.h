@@ -189,6 +189,7 @@ public:
 	QVariantList get_provinces_qvariant_list() const;
 	void add_province(const province *province);
 	void remove_province(const province *province);
+	void on_province_gained(const province *province, const int multiplier);
 
 	int get_province_count() const
 	{
