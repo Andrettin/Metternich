@@ -46,6 +46,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
 	Q_PROPERTY(std::filesystem::path river_image_filepath MEMBER river_image_filepath WRITE set_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path rivermouth_image_filepath MEMBER rivermouth_image_filepath WRITE set_rivermouth_image_filepath)
+	Q_PROPERTY(std::filesystem::path route_image_filepath MEMBER route_image_filepath WRITE set_route_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
@@ -231,6 +232,13 @@ public:
 
 	void set_rivermouth_image_filepath(const std::filesystem::path &filepath);
 
+	const std::filesystem::path &get_route_image_filepath() const
+	{
+		return this->route_image_filepath;
+	}
+
+	void set_route_image_filepath(const std::filesystem::path &filepath);
+
 	const std::filesystem::path &get_province_border_image_filepath() const
 	{
 		return this->province_border_image_filepath;
@@ -260,6 +268,8 @@ public:
 	void set_river_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
 	int get_rivermouth_adjacency_tile(const terrain_adjacency &adjacency) const;
 	void set_rivermouth_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
+	int get_route_adjacency_tile(const terrain_adjacency &adjacency) const;
+	void set_route_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
 
 signals:
 	void changed();
@@ -293,12 +303,14 @@ private:
 	std::filesystem::path default_settlement_image_filepath;
 	std::filesystem::path river_image_filepath;
 	std::filesystem::path rivermouth_image_filepath;
+	std::filesystem::path route_image_filepath;
 	std::filesystem::path province_border_image_filepath;
 	std::map<event_trigger, int> event_trigger_none_random_weights; //the weight for no event happening for a given event trigger's random event selection
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;
 	std::map<terrain_adjacency, int> river_adjacency_tiles;
 	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;
+	std::map<terrain_adjacency, int> route_adjacency_tiles;
 };
 
 }

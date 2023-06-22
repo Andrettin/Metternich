@@ -99,6 +99,13 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 					overlay_image_sources.push_back(std::move(river_image_source));
 				}
 
+				if (tile->has_route() && tile->get_route_frame() != -1) {
+					QString route_image_source = "tile/";
+					route_image_source += "route";
+					route_image_source += "/" + QString::number(tile->get_route_frame());
+					overlay_image_sources.push_back(std::move(route_image_source));
+				}
+
 				if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {
 					for (const direction direction : tile->get_border_directions()) {
 						overlay_image_sources.push_back("tile/borders/province_border/" + QString::number(static_cast<int>(direction)));

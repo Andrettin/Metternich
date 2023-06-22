@@ -283,6 +283,25 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 				tile->set_river_frame(river_frame);
 			}
 		}
+
+		if (!tile->get_route_directions().empty()) {
+			terrain_adjacency adjacency;
+
+			for (size_t i = 0; i < direction_count; ++i) {
+				const direction direction = static_cast<archimedes::direction>(i);
+				adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::other);
+			}
+
+			for (const direction direction : tile->get_route_directions()) {
+				adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+			}
+
+			const int route_frame = defines::get()->get_route_adjacency_tile(adjacency);
+
+			if (route_frame != -1) {
+				tile->set_route_frame(route_frame);
+			}
+		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to update terrain tile for tile pos " + point::to_string(tile_pos) + "."));
 	}
@@ -397,6 +416,12 @@ void map::add_tile_river_direction(const QPoint &tile_pos, const direction direc
 		default:
 			break;
 	}
+}
+
+void map::add_tile_route_direction(const QPoint &tile_pos, const direction direction)
+{
+	tile *tile = this->get_tile(tile_pos);
+	tile->add_route_direction(direction);
 }
 
 void map::set_tile_province(const QPoint &tile_pos, const province *province)
@@ -514,6 +539,12 @@ void map::set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian
 	tile->set_civilian_unit(civilian_unit);
 
 	emit tile_civilian_unit_changed(tile_pos);
+}
+
+bool map::is_tile_water(const QPoint &tile_pos) const
+{
+	const tile *tile = this->get_tile(tile_pos);
+	return tile->get_terrain() != nullptr && tile->get_terrain()->is_water();
 }
 
 bool map::is_tile_near_water(const QPoint &tile_pos) const

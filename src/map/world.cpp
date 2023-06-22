@@ -3,6 +3,7 @@
 #include "map/world.h"
 
 #include "map/province.h"
+#include "map/route.h"
 #include "map/terrain_feature.h"
 #include "map/terrain_type.h"
 #include "util/geojson_util.h"
@@ -40,6 +41,19 @@ terrain_geodata_map world::parse_terrain_geojson_folder() const
 			const QString terrain_type_identifier = properties.value("terrain_type").toString();
 			return terrain_type::get(terrain_type_identifier.toStdString());
 		}
+	}, nullptr);
+}
+
+route_map<std::vector<std::unique_ptr<QGeoShape>>> world::parse_routes_geojson_folder() const
+{
+	using route_geodata_map = route_map<std::vector<std::unique_ptr<QGeoShape>>>;
+
+	const std::vector<QVariantList> geojson_data_list = this->parse_geojson_folder(world::routes_map_folder);
+
+	return geojson::create_geodata_map<route_geodata_map>(geojson_data_list, [](const QVariantMap &properties) -> route_geodata_map::key_type {
+		const QString route_identifier = properties.value("route").toString();
+		const route *route = route::get(route_identifier.toStdString());
+		return route;
 	}, nullptr);
 }
 

@@ -66,6 +66,9 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 	} else if (tile_image_type == "rivermouth") {
 		filepath = defines::get()->get_rivermouth_image_filepath();
 		is_frame_image = true;
+	} else if (tile_image_type == "route") {
+		filepath = defines::get()->get_route_image_filepath();
+		is_frame_image = true;
 	} else {
 		assert_throw(false);
 	}

@@ -91,6 +91,15 @@ void tile::add_river_direction(const direction direction)
 	this->river_directions.push_back(direction);
 }
 
+void tile::add_route_direction(const direction direction)
+{
+	if (vector::contains(this->get_route_directions(), direction)) {
+		return;
+	}
+
+	this->route_directions.push_back(direction);
+}
+
 int tile::get_output_value() const
 {
 	if (this->get_improvement() == nullptr) {
