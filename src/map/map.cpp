@@ -284,24 +284,7 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 			}
 		}
 
-		if (!tile->get_route_directions().empty()) {
-			terrain_adjacency adjacency;
-
-			for (size_t i = 0; i < direction_count; ++i) {
-				const direction direction = static_cast<archimedes::direction>(i);
-				adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::other);
-			}
-
-			for (const direction direction : tile->get_route_directions()) {
-				adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::same);
-			}
-
-			const int route_frame = defines::get()->get_route_adjacency_tile(adjacency);
-
-			if (route_frame != -1) {
-				tile->set_route_frame(route_frame);
-			}
-		}
+		tile->calculate_pathway_frames();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to update terrain tile for tile pos " + point::to_string(tile_pos) + "."));
 	}
@@ -421,7 +404,7 @@ void map::add_tile_river_direction(const QPoint &tile_pos, const direction direc
 void map::add_tile_route_direction(const QPoint &tile_pos, const direction direction)
 {
 	tile *tile = this->get_tile(tile_pos);
-	tile->add_route_direction(direction);
+	tile->set_direction_pathway(direction, defines::get()->get_route_pathway());
 }
 
 void map::set_tile_province(const QPoint &tile_pos, const province *province)
@@ -530,6 +513,23 @@ void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improv
 
 	if (tile->get_site() != nullptr) {
 		emit tile->get_site()->get_game_data()->improvement_changed();
+	}
+}
+
+void map::set_tile_direction_pathway(const QPoint &tile_pos, const direction direction, const pathway *pathway)
+{
+	tile *tile = this->get_tile(tile_pos);
+
+	const metternich::pathway *old_pathway = tile->get_direction_pathway(direction);
+
+	tile->set_direction_pathway(direction, pathway);
+
+	if (old_pathway != nullptr) {
+		tile->calculate_pathway_frame(old_pathway);
+	}
+
+	if (pathway != nullptr) {
+		tile->calculate_pathway_frame(pathway);
 	}
 }
 

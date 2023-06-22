@@ -10,6 +10,7 @@ namespace metternich {
 
 class civilian_unit;
 class improvement;
+class pathway;
 class province;
 class resource;
 class site;
@@ -83,6 +84,7 @@ public:
 	void set_tile_resource(const QPoint &tile_pos, const resource *resource);
 	void set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
 	void set_tile_improvement(const QPoint &tile_pos, const improvement *improvement);
+	void set_tile_direction_pathway(const QPoint &tile_pos, const direction direction, const pathway *pathway);
 	void set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
 
 	bool is_tile_water(const QPoint &tile_pos) const;

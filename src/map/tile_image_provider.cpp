@@ -5,6 +5,7 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/pathway.h"
 #include "map/terrain_type.h"
 #include "util/assert_util.h"
 #include "util/image_util.h"
@@ -52,6 +53,11 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 		}
 		
 		is_frame_image = true;
+	} else if (tile_image_type == "pathway") {
+		const pathway *pathway = pathway::get(identifier);
+		filepath = pathway->get_image_filepath();
+		
+		is_frame_image = true;
 	} else if (tile_image_type == "borders") {
 		if (identifier == "province_border") {
 			filepath = defines::get()->get_province_border_image_filepath();
@@ -65,9 +71,6 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 		is_frame_image = true;
 	} else if (tile_image_type == "rivermouth") {
 		filepath = defines::get()->get_rivermouth_image_filepath();
-		is_frame_image = true;
-	} else if (tile_image_type == "route") {
-		filepath = defines::get()->get_route_image_filepath();
 		is_frame_image = true;
 	} else {
 		assert_throw(false);

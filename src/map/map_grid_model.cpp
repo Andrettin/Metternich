@@ -9,6 +9,7 @@
 #include "economy/resource.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/pathway.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -99,11 +100,12 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 					overlay_image_sources.push_back(std::move(river_image_source));
 				}
 
-				if (tile->has_route() && tile->get_route_frame() != -1) {
-					QString route_image_source = "tile/";
-					route_image_source += "route";
-					route_image_source += "/" + QString::number(tile->get_route_frame());
-					overlay_image_sources.push_back(std::move(route_image_source));
+				if (tile->has_route()) {
+					for (const auto &[pathway, frame] : tile->get_pathway_frames()) {
+						QString pathway_image_source = "tile/pathway/" + pathway->get_identifier_qstring();
+						pathway_image_source += "/" + QString::number(frame);
+						overlay_image_sources.push_back(std::move(pathway_image_source));
+					}
 				}
 
 				if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {

@@ -9,6 +9,7 @@ namespace metternich {
 
 class building_class;
 class commodity;
+class pathway;
 class population_class;
 class portrait;
 class terrain_type;
@@ -29,6 +30,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
+	Q_PROPERTY(metternich::pathway* route_pathway MEMBER route_pathway NOTIFY changed)
 	Q_PROPERTY(metternich::building_class* capitol_building_class MEMBER capitol_building_class)
 	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
 	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
@@ -46,7 +48,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
 	Q_PROPERTY(std::filesystem::path river_image_filepath MEMBER river_image_filepath WRITE set_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path rivermouth_image_filepath MEMBER rivermouth_image_filepath WRITE set_rivermouth_image_filepath)
-	Q_PROPERTY(std::filesystem::path route_image_filepath MEMBER route_image_filepath WRITE set_route_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
@@ -129,6 +130,11 @@ public:
 	const terrain_type *get_default_water_zone_terrain() const
 	{
 		return this->default_water_zone_terrain;
+	}
+
+	const pathway *get_route_pathway() const
+	{
+		return this->route_pathway;
 	}
 
 	const building_class *get_capitol_building_class() const
@@ -232,13 +238,6 @@ public:
 
 	void set_rivermouth_image_filepath(const std::filesystem::path &filepath);
 
-	const std::filesystem::path &get_route_image_filepath() const
-	{
-		return this->route_image_filepath;
-	}
-
-	void set_route_image_filepath(const std::filesystem::path &filepath);
-
 	const std::filesystem::path &get_province_border_image_filepath() const
 	{
 		return this->province_border_image_filepath;
@@ -285,6 +284,7 @@ private:
 	terrain_type *unexplored_terrain = nullptr;
 	terrain_type *default_province_terrain = nullptr;
 	terrain_type *default_water_zone_terrain = nullptr;
+	pathway *route_pathway = nullptr;
 	building_class *capitol_building_class = nullptr;
 	population_class *default_population_class = nullptr;
 	population_class *default_tribal_population_class = nullptr;

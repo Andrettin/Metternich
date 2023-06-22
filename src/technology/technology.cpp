@@ -10,6 +10,8 @@
 #include "economy/resource.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/pathway.h"
+#include "map/terrain_type.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
 #include "technology/technological_period.h"
@@ -152,6 +154,11 @@ std::vector<const building_type *> technology::get_enabled_buildings_for_culture
 QVariantList technology::get_enabled_improvements_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_enabled_improvements());
+}
+
+QVariantList technology::get_enabled_pathways_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_enabled_pathways());
 }
 
 QVariantList technology::get_enabled_military_units_qvariant_list() const
@@ -344,6 +351,28 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} improvement", improvement->get_name());
+		}
+	}
+
+	if (!this->get_enabled_pathways().empty()) {
+		for (const pathway *pathway : this->get_enabled_pathways()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {}", pathway->get_name());
+		}
+	}
+
+	if (!this->get_enabled_pathway_terrains().empty()) {
+		for (const auto &[pathway, terrains] : this->get_enabled_pathway_terrains()) {
+			for (const terrain_type *terrain : terrains) {
+				if (!str.empty()) {
+					str += "\n";
+				}
+
+				str += std::format("Enables {} in {}", pathway->get_name(), terrain->get_name());
+			}
 		}
 	}
 

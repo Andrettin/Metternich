@@ -5,10 +5,10 @@
 #include "economy/resource.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
-#include "population/population_type.h"
-#include "population/population_unit.h"
+#include "map/tile_image_provider.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/event_loop.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -39,6 +39,14 @@ void improvement::initialize()
 	if (this->required_technology != nullptr) {
 		this->required_technology->add_enabled_improvement(this);
 	}
+
+	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+		co_await tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/0");
+
+		for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
+			co_await tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/" + terrain->get_identifier() + "/0");
+		}
+	});
 
 	named_data_entry::initialize();
 }

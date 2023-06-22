@@ -1,0 +1,90 @@
+#pragma once
+
+#include "database/data_type.h"
+#include "database/named_data_entry.h"
+#include "map/terrain_type_container.h"
+
+namespace archimedes {
+	enum class direction;
+}
+
+namespace metternich {
+
+class technology;
+class tile;
+
+class pathway final : public named_data_entry, public data_type<pathway>
+{
+	Q_OBJECT
+
+	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
+	Q_PROPERTY(int transport_level MEMBER transport_level READ get_transport_level NOTIFY changed)
+	Q_PROPERTY(metternich::pathway* required_pathway MEMBER required_pathway NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+
+public:
+	static constexpr const char class_identifier[] = "pathway";
+	static constexpr const char property_class_identifier[] = "metternich::pathway*";
+	static constexpr const char database_folder[] = "pathways";
+
+	static constexpr int base_score = 10;
+
+	explicit pathway(const std::string &identifier) : named_data_entry(identifier)
+	{
+	}
+
+	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
+	virtual void check() const override;
+
+	const std::filesystem::path &get_image_filepath() const
+	{
+		return this->image_filepath;
+	}
+
+	void set_image_filepath(const std::filesystem::path &filepath);
+
+	int get_transport_level() const
+	{
+		return this->transport_level;
+	}
+
+	const pathway *get_required_pathway() const
+	{
+		return this->required_pathway;
+	}
+
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
+	const technology *get_terrain_required_technology(const terrain_type *terrain) const
+	{
+		const auto find_iterator = this->terrain_required_technologies.find(terrain);
+		if (find_iterator != this->terrain_required_technologies.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	int get_score() const
+	{
+		return pathway::base_score * this->get_transport_level();
+	}
+
+	bool is_buildable_on_tile(const tile *tile, const direction direction) const;
+
+signals:
+	void changed();
+
+private:
+	std::filesystem::path image_filepath;
+	int transport_level = 0;
+	pathway *required_pathway = nullptr;
+	technology *required_technology = nullptr;
+	terrain_type_map<const technology *> terrain_required_technologies;
+};
+
+}

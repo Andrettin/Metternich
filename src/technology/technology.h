@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "infrastructure/pathway_container.h"
 
 namespace metternich {
 
@@ -13,10 +14,12 @@ class culture;
 class icon;
 class improvement;
 class military_unit_type;
+class pathway;
 class portrait;
 class production_type;
 class resource;
 class technological_period;
+class terrain_type;
 class transporter_type;
 enum class technology_category;
 
@@ -38,6 +41,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList enabled_pathways READ get_enabled_pathways_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_advisors READ get_enabled_advisors_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList retired_advisors READ get_retired_advisors_qvariant_list NOTIFY changed)
@@ -184,6 +188,28 @@ public:
 		this->enabled_improvements.push_back(improvement);
 	}
 
+	const std::vector<const pathway *> &get_enabled_pathways() const
+	{
+		return this->enabled_pathways;
+	}
+
+	QVariantList get_enabled_pathways_qvariant_list() const;
+
+	void add_enabled_pathway(const pathway *pathway)
+	{
+		this->enabled_pathways.push_back(pathway);
+	}
+
+	const pathway_map<std::vector<const terrain_type *>> &get_enabled_pathway_terrains() const
+	{
+		return this->enabled_pathway_terrains;
+	}
+
+	void add_enabled_pathway_terrain(const pathway *pathway, const terrain_type *terrain)
+	{
+		this->enabled_pathway_terrains[pathway].push_back(terrain);
+	}
+
 	const std::vector<const military_unit_type *> &get_enabled_military_units() const
 	{
 		return this->enabled_military_units;
@@ -286,6 +312,8 @@ private:
 	std::vector<const building_type *> enabled_buildings;
 	std::vector<const production_type *> enabled_production_types;
 	std::vector<const improvement *> enabled_improvements;
+	std::vector<const pathway *> enabled_pathways;
+	pathway_map<std::vector<const terrain_type *>> enabled_pathway_terrains;
 	std::vector<const military_unit_type *> enabled_military_units;
 	std::vector<const transporter_type *> enabled_transporters;
 	std::vector<const character *> enabled_advisors;

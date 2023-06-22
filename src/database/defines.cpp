@@ -111,10 +111,6 @@ void defines::initialize()
 	});
 
 	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
-		co_await tile_image_provider::get()->load_image("route/0");
-	});
-
-	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
 		co_await tile_image_provider::get()->load_image("settlement/default");
 	});
 }
@@ -159,15 +155,6 @@ void defines::set_rivermouth_image_filepath(const std::filesystem::path &filepat
 	}
 
 	this->rivermouth_image_filepath = database::get()->get_graphics_filepath(filepath);
-}
-
-void defines::set_route_image_filepath(const std::filesystem::path &filepath)
-{
-	if (filepath == this->get_route_image_filepath()) {
-		return;
-	}
-
-	this->route_image_filepath = database::get()->get_graphics_filepath(filepath);
 }
 
 void defines::set_province_border_image_filepath(const std::filesystem::path &filepath)

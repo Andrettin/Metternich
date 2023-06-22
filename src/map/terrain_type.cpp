@@ -127,7 +127,7 @@ void terrain_type::initialize()
 	}
 
 	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
-		co_await tile_image_provider::get()->load_image("terrain/" + this->get_identifier());
+		co_await tile_image_provider::get()->load_image("terrain/" + this->get_identifier() + "/0");
 	});
 
 	named_data_entry::initialize();

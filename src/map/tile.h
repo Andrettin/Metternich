@@ -1,5 +1,7 @@
 #pragma once
 
+#include "infrastructure/pathway_container.h"
+
 namespace archimedes {
 	enum class direction;
 }
@@ -9,6 +11,7 @@ namespace metternich {
 class civilian_unit;
 class country;
 class improvement;
+class pathway;
 class province;
 class resource;
 class site;
@@ -121,32 +124,44 @@ public:
 		this->river_frame = frame;
 	}
 
-	const std::vector<direction> &get_route_directions() const
+	const pathway *get_direction_pathway(const direction direction) const
 	{
-		return this->route_directions;
+		return this->direction_pathways[static_cast<int>(direction)];
 	}
 
-	void add_route_direction(const direction direction);
-
-	void sort_route_directions()
-	{
-		std::sort(this->route_directions.begin(), this->route_directions.end());
-	}
+	void set_direction_pathway(const direction direction, const pathway *pathway);
 
 	bool has_route() const
 	{
-		return !this->get_route_directions().empty();
+		return !this->pathway_frames.empty();
 	}
 
-	short get_route_frame() const
+	const pathway_map<short> &get_pathway_frames() const
 	{
-		return this->route_frame;
+		return this->pathway_frames;
 	}
 
-	void set_route_frame(const short frame)
+	short get_pathway_frame(const pathway *pathway) const
 	{
-		this->route_frame = frame;
+		const auto find_iterator = this->pathway_frames.find(pathway);
+		if (find_iterator != this->pathway_frames.end()) {
+			return find_iterator->second;
+		}
+
+		return -1;
 	}
+
+	void set_pathway_frame(const pathway *pathway, const short frame)
+	{
+		if (frame == -1) {
+			this->pathway_frames.erase(pathway);
+		} else {
+			this->pathway_frames[pathway] = frame;
+		}
+	}
+
+	void calculate_pathway_frame(const pathway *pathway);
+	void calculate_pathway_frames();
 
 	const std::vector<direction> &get_border_directions() const
 	{
@@ -212,8 +227,8 @@ private:
 	int8_t improvement_variation = 0;
 	std::vector<direction> river_directions;
 	short river_frame = -1;
-	std::vector<direction> route_directions;
-	short route_frame = -1;
+	std::array<const pathway *, 8> direction_pathways{};
+	pathway_map<short> pathway_frames;
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 	std::vector<direction> country_border_directions;
 	metternich::civilian_unit *civilian_unit = nullptr;
