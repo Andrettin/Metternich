@@ -419,7 +419,7 @@ QString technology::get_effects_string(metternich::country *country) const
 				str += "\n";
 			}
 
-			str += std::format("Enables {} pathway", pathway->get_name());
+			str += std::format("Enables {}", pathway->get_name());
 		}
 	}
 
@@ -429,7 +429,7 @@ QString technology::get_effects_string(metternich::country *country) const
 				str += "\n";
 			}
 
-			str += std::format("Enables {} pathway across rivers", pathway->get_name());
+			str += std::format("Enables {} across rivers", pathway->get_name());
 		}
 	}
 
@@ -440,7 +440,7 @@ QString technology::get_effects_string(metternich::country *country) const
 					str += "\n";
 				}
 
-				str += std::format("Enables {} pathway in {}", pathway->get_name(), terrain->get_name());
+				str += std::format("Enables {} in {}", pathway->get_name(), terrain->get_name());
 			}
 		}
 	}
