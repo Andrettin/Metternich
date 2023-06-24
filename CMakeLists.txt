@@ -384,6 +384,8 @@ set(map_HDRS
 	src/map/region_history.h
 	src/map/route.h
 	src/map/route_container.h
+	src/map/route_game_data.h
+	src/map/route_history.h
 	src/map/site.h
 	src/map/site_container.h
 	src/map/site_game_data.h

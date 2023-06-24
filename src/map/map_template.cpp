@@ -9,6 +9,7 @@
 #include "map/province.h"
 #include "map/route.h"
 #include "map/route_container.h"
+#include "map/route_game_data.h"
 #include "map/site.h"
 #include "map/site_type.h"
 #include "map/terrain_feature.h"
@@ -656,6 +657,9 @@ void map_template::apply_routes() const
 			if (map->is_tile_water(tile_pos)) {
 				continue;
 			}
+
+			const route *route = route::get_by_color(tile_color);
+			route->get_game_data()->add_tile(tile_pos);
 
 			point::for_each_cardinally_adjacent(tile_pos, [map, &route_image, &tile_pos](const QPoint &adjacent_pos) {
 				if (!map->contains(adjacent_pos)) {

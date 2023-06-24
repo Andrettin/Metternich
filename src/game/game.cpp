@@ -22,12 +22,17 @@
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/pathway.h"
+#include "map/direction.h"
 #include "map/map.h"
 #include "map/map_generator.h"
 #include "map/map_template.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
+#include "map/route.h"
+#include "map/route_game_data.h"
+#include "map/route_history.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
@@ -514,6 +519,40 @@ void game::apply_history(const metternich::scenario *scenario)
 			if (site_history->is_resource_discovered()) {
 				assert_throw(site->get_type() == site_type::resource);
 				map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
+			}
+		}
+
+		for (const route *route : route::get_all()) {
+			const route_game_data *route_game_data = route->get_game_data();
+
+			if (!route_game_data->is_on_map()) {
+				continue;
+			}
+
+			const route_history *route_history = route->get_history();
+
+			const pathway *route_pathway = route_history->get_pathway();
+			if (route_pathway != nullptr) {
+				for (const QPoint &tile_pos : route_game_data->get_tiles()) {
+					tile *tile = map::get()->get_tile(tile_pos);
+
+					static constexpr size_t direction_count = static_cast<size_t>(direction::count);
+					for (size_t i = 0; i < direction_count; ++i) {
+						const direction direction = static_cast<archimedes::direction>(i);
+						const pathway *direction_pathway = tile->get_direction_pathway(direction);
+
+						if (direction_pathway != nullptr && direction_pathway->get_transport_level() < route_pathway->get_transport_level()) {
+							tile->set_direction_pathway(direction, route_pathway);
+						}
+					}
+
+					tile->calculate_pathway_frames();
+
+					//add prerequisites for the tile's pathway to its owner's researched technologies
+					if (route_pathway->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
+						tile->get_owner()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_required_technology());
+					}
+				}
 			}
 		}
 

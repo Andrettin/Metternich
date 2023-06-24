@@ -13,6 +13,7 @@
 #include "map/province.h"
 #include "map/province_container.h"
 #include "map/province_game_data.h"
+#include "map/route.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_type.h"
@@ -153,6 +154,10 @@ void map::clear()
 
 	for (site *site : site::get_all()) {
 		site->reset_game_data();
+	}
+
+	for (route *route : route::get_all()) {
+		route->reset_game_data();
 	}
 
 	this->provinces.clear();
