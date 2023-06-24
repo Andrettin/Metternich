@@ -21,6 +21,7 @@ class pathway final : public named_data_entry, public data_type<pathway>
 	Q_PROPERTY(int transport_level MEMBER transport_level READ get_transport_level NOTIFY changed)
 	Q_PROPERTY(metternich::pathway* required_pathway MEMBER required_pathway NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(metternich::technology* river_crossing_required_technology MEMBER river_crossing_required_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "pathway";
@@ -59,6 +60,11 @@ public:
 		return this->required_technology;
 	}
 
+	const technology *get_river_crossing_required_technology() const
+	{
+		return this->river_crossing_required_technology;
+	}
+
 	const technology *get_terrain_required_technology(const terrain_type *terrain) const
 	{
 		const auto find_iterator = this->terrain_required_technologies.find(terrain);
@@ -84,6 +90,7 @@ private:
 	int transport_level = 0;
 	pathway *required_pathway = nullptr;
 	technology *required_technology = nullptr;
+	technology *river_crossing_required_technology = nullptr;
 	terrain_type_map<const technology *> terrain_required_technologies;
 };
 

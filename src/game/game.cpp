@@ -543,14 +543,25 @@ void game::apply_history(const metternich::scenario *scenario)
 
 						if (direction_pathway != nullptr && direction_pathway->get_transport_level() < route_pathway->get_transport_level()) {
 							tile->set_direction_pathway(direction, route_pathway);
+
+							if (tile->has_river() && tile->get_owner() != nullptr && route_pathway->get_river_crossing_required_technology() != nullptr && tile->is_river_crossing_direction(direction)) {
+								tile->get_owner()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_river_crossing_required_technology());
+							}
 						}
 					}
 
 					tile->calculate_pathway_frames();
 
 					//add prerequisites for the tile's pathway to its owner's researched technologies
-					if (route_pathway->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
-						tile->get_owner()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_required_technology());
+					if (tile->get_owner() != nullptr) {
+						if (route_pathway->get_required_technology() != nullptr) {
+							tile->get_owner()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_required_technology());
+						}
+
+						const technology *terrain_required_technology = route_pathway->get_terrain_required_technology(tile->get_terrain());
+						if (terrain_required_technology != nullptr) {
+							tile->get_owner()->get_game_data()->add_technology_with_prerequisites(terrain_required_technology);
+						}
 					}
 				}
 			}

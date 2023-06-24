@@ -200,6 +200,16 @@ public:
 		this->enabled_pathways.push_back(pathway);
 	}
 
+	const std::vector<const pathway *> &get_enabled_river_crossing_pathways() const
+	{
+		return this->enabled_river_crossing_pathways;
+	}
+
+	void add_enabled_river_crossing_pathway(const pathway *pathway)
+	{
+		this->enabled_river_crossing_pathways.push_back(pathway);
+	}
+
 	const pathway_map<std::vector<const terrain_type *>> &get_enabled_pathway_terrains() const
 	{
 		return this->enabled_pathway_terrains;
@@ -329,6 +339,7 @@ private:
 	std::vector<const production_type *> enabled_production_types;
 	std::vector<const improvement *> enabled_improvements;
 	std::vector<const pathway *> enabled_pathways;
+	std::vector<const pathway *> enabled_river_crossing_pathways;
 	pathway_map<std::vector<const terrain_type *>> enabled_pathway_terrains;
 	std::vector<const military_unit_type *> enabled_military_units;
 	std::vector<const transporter_type *> enabled_transporters;

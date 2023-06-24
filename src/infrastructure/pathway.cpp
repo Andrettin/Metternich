@@ -39,6 +39,10 @@ void pathway::initialize()
 		this->required_technology->add_enabled_pathway(this);
 	}
 
+	if (this->river_crossing_required_technology != nullptr) {
+		this->river_crossing_required_technology->add_enabled_river_crossing_pathway(this);
+	}
+
 	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
 		co_await tile_image_provider::get()->load_image("pathway/" + this->get_identifier() + "/0");
 	});

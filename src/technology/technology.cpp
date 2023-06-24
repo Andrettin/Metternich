@@ -72,6 +72,9 @@ void technology::initialize()
 		this->period = technological_period::get_by_year(this->get_year());
 	}
 
+	std::sort(this->enabled_pathways.begin(), this->enabled_pathways.end(), pathway_compare());
+	std::sort(this->enabled_river_crossing_pathways.begin(), this->enabled_river_crossing_pathways.end(), pathway_compare());
+
 	named_data_entry::initialize();
 }
 
@@ -417,6 +420,16 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} pathway", pathway->get_name());
+		}
+	}
+
+	if (!this->get_enabled_river_crossing_pathways().empty()) {
+		for (const pathway *pathway : this->get_enabled_river_crossing_pathways()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} pathway across rivers", pathway->get_name());
 		}
 	}
 

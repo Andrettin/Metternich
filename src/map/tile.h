@@ -124,6 +124,8 @@ public:
 		this->river_frame = frame;
 	}
 
+	bool is_river_crossing_direction(const direction direction) const;
+
 	const pathway *get_direction_pathway(const direction direction) const
 	{
 		return this->direction_pathways[static_cast<int>(direction)];

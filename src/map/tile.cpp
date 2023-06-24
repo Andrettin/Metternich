@@ -95,6 +95,22 @@ void tile::add_river_direction(const direction direction)
 	this->river_directions.push_back(direction);
 }
 
+bool tile::is_river_crossing_direction(const direction direction) const
+{
+	switch (direction) {
+		case direction::north:
+		case direction::south:
+			return vector::contains(this->get_river_directions(), direction::west) && vector::contains(this->get_river_directions(), direction::east);
+		case direction::west:
+		case direction::east:
+			return vector::contains(this->get_river_directions(), direction::west) && vector::contains(this->get_river_directions(), direction::east);
+		default:
+			assert_throw(false);
+	}
+
+	return false;
+}
+
 void tile::set_direction_pathway(const direction direction, const pathway *pathway)
 {
 	const metternich::pathway *old_pathway = this->get_direction_pathway(direction);
