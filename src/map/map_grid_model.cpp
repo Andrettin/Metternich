@@ -31,6 +31,7 @@ map_grid_model::map_grid_model()
 	connect(map::get(), &map::tile_exploration_changed, this, &map_grid_model::on_tile_exploration_changed);
 	connect(map::get(), &map::tile_resource_changed, this, &map_grid_model::on_tile_resource_changed);
 	connect(map::get(), &map::tile_improvement_changed, this, &map_grid_model::on_tile_improvement_changed);
+	connect(map::get(), &map::tile_pathway_changed, this, &map_grid_model::on_tile_pathway_changed);
 	connect(map::get(), &map::tile_civilian_unit_changed, this, &map_grid_model::on_tile_civilian_unit_changed);
 }
 
@@ -156,6 +157,8 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return QVariant::fromValue(const_cast<resource *>(tile->get_resource()));
 			case role::improvement:
 				return QVariant::fromValue(const_cast<improvement *>(tile->get_improvement()));
+			case role::pathway:
+				return QVariant::fromValue(const_cast<pathway *>(tile->get_best_pathway()));
 			case role::civilian_unit:
 				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
 					return QVariant::fromValue(nullptr);
@@ -235,6 +238,15 @@ void map_grid_model::on_tile_improvement_changed(const QPoint &tile_pos)
 	emit dataChanged(index, index, {
 		static_cast<int>(role::overlay_image_sources),
 		static_cast<int>(role::improvement)
+	});
+}
+
+void map_grid_model::on_tile_pathway_changed(const QPoint &tile_pos)
+{
+	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
+	emit dataChanged(index, index, {
+		static_cast<int>(role::overlay_image_sources),
+		static_cast<int>(role::pathway)
 	});
 }
 

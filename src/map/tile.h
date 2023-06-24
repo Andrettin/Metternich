@@ -163,6 +163,8 @@ public:
 	void calculate_pathway_frame(const pathway *pathway);
 	void calculate_pathway_frames();
 
+	const pathway *get_best_pathway() const;
+
 	const std::vector<direction> &get_border_directions() const
 	{
 		return this->border_directions;

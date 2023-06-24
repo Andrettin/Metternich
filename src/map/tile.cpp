@@ -153,6 +153,23 @@ void tile::calculate_pathway_frames()
 	}
 }
 
+const pathway *tile::get_best_pathway() const
+{
+	if (!this->has_route()) {
+		return nullptr;
+	}
+
+	const pathway *best_pathway = nullptr;
+
+	for (const auto &[pathway, frame] : this->get_pathway_frames()) {
+		if (best_pathway == nullptr || pathway->get_transport_level() > best_pathway->get_transport_level()) {
+			best_pathway = pathway;
+		}
+	}
+
+	return best_pathway;
+}
+
 int tile::get_output_value() const
 {
 	if (this->get_improvement() == nullptr) {

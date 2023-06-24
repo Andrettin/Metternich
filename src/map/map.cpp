@@ -531,6 +531,8 @@ void map::set_tile_direction_pathway(const QPoint &tile_pos, const direction dir
 	if (pathway != nullptr) {
 		tile->calculate_pathway_frame(pathway);
 	}
+
+	emit tile_pathway_changed(tile_pos);
 }
 
 void map::set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)

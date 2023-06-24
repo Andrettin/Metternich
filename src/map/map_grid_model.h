@@ -23,6 +23,7 @@ public:
 		terrain,
 		resource,
 		improvement,
+		pathway,
 		civilian_unit,
 		upper_label
 	};
@@ -62,6 +63,7 @@ public:
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
 		role_names.insert(static_cast<int>(role::resource), "resource");
 		role_names.insert(static_cast<int>(role::improvement), "improvement");
+		role_names.insert(static_cast<int>(role::pathway), "pathway");
 		role_names.insert(static_cast<int>(role::civilian_unit), "civilian_unit");
 		role_names.insert(static_cast<int>(role::upper_label), "upper_label");
 
@@ -72,6 +74,7 @@ public:
 	void on_tile_exploration_changed(const QPoint &tile_pos);
 	void on_tile_resource_changed(const QPoint &tile_pos);
 	void on_tile_improvement_changed(const QPoint &tile_pos);
+	void on_tile_pathway_changed(const QPoint &tile_pos);
 	void on_tile_civilian_unit_changed(const QPoint &tile_pos);
 };
 
