@@ -123,7 +123,15 @@ void character::initialize()
 		}
 	}
 
-	if (this->is_advisor()) {
+	if (this->is_ruler()) {
+		if (this->required_technology != nullptr) {
+			this->required_technology->add_enabled_ruler(this);
+		}
+
+		if (this->obsolescence_technology != nullptr) {
+			this->obsolescence_technology->add_retired_ruler(this);
+		}
+	} else if (this->is_advisor()) {
 		if (this->required_technology != nullptr) {
 			this->required_technology->add_enabled_advisor(this);
 		}

@@ -231,6 +231,62 @@ void technology::add_enabled_transporter(const transporter_type *transporter)
 	});
 }
 
+std::vector<const character *> technology::get_enabled_rulers_for_country(const country *country) const
+{
+	std::vector<const character *> rulers;
+
+	for (const character *ruler : this->get_enabled_rulers()) {
+		if (!vector::contains(country->get_rulers(), ruler)) {
+			continue;
+		}
+
+		if (ruler->get_conditions() != nullptr && !ruler->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		rulers.push_back(ruler);
+	}
+
+	return rulers;
+}
+
+void technology::add_enabled_ruler(const character *ruler)
+{
+	this->enabled_rulers.push_back(ruler);
+
+	std::sort(this->enabled_rulers.begin(), this->enabled_rulers.end(), [](const character *lhs, const character *rhs) {
+		return lhs->get_full_name() < rhs->get_full_name();
+	});
+}
+
+std::vector<const character *> technology::get_retired_rulers_for_country(const country *country) const
+{
+	std::vector<const character *> rulers;
+
+	for (const character *ruler : this->get_retired_rulers()) {
+		if (!vector::contains(country->get_rulers(), ruler)) {
+			continue;
+		}
+
+		if (ruler->get_conditions() != nullptr && !ruler->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		rulers.push_back(ruler);
+	}
+
+	return rulers;
+}
+
+void technology::add_retired_ruler(const character *ruler)
+{
+	this->retired_rulers.push_back(ruler);
+
+	std::sort(this->retired_rulers.begin(), this->retired_rulers.end(), [](const character *lhs, const character *rhs) {
+		return lhs->get_full_name() < rhs->get_full_name();
+	});
+}
+
 QVariantList technology::get_enabled_advisors_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_enabled_advisors());
@@ -360,7 +416,7 @@ QString technology::get_effects_string(metternich::country *country) const
 				str += "\n";
 			}
 
-			str += std::format("Enables {}", pathway->get_name());
+			str += std::format("Enables {} pathway", pathway->get_name());
 		}
 	}
 
@@ -371,7 +427,7 @@ QString technology::get_effects_string(metternich::country *country) const
 					str += "\n";
 				}
 
-				str += std::format("Enables {} in {}", pathway->get_name(), terrain->get_name());
+				str += std::format("Enables {} pathway in {}", pathway->get_name(), terrain->get_name());
 			}
 		}
 	}
@@ -397,6 +453,30 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} {}", transporter->get_name(), transporter->is_ship() ? "ship" : "transporter");
+		}
+	}
+
+	const std::vector<const character *> enabled_rulers = get_enabled_rulers_for_country(country);
+
+	if (!enabled_rulers.empty()) {
+		for (const character *ruler : enabled_rulers) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} ruler", ruler->get_full_name());
+		}
+	}
+
+	const std::vector<const character *> retired_rulers = get_retired_rulers_for_country(country);
+
+	if (!retired_rulers.empty()) {
+		for (const character *ruler : retired_rulers) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Retires {} ruler", ruler->get_full_name());
 		}
 	}
 

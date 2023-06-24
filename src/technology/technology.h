@@ -228,6 +228,22 @@ public:
 	std::vector<const transporter_type *> get_enabled_transporters_for_culture(const culture *culture) const;
 	void add_enabled_transporter(const transporter_type *transporter);
 
+	const std::vector<const character *> &get_enabled_rulers() const
+	{
+		return this->enabled_rulers;
+	}
+
+	std::vector<const character *> get_enabled_rulers_for_country(const country *country) const;
+	void add_enabled_ruler(const character *ruler);
+
+	const std::vector<const character *> &get_retired_rulers() const
+	{
+		return this->retired_rulers;
+	}
+
+	std::vector<const character *> get_retired_rulers_for_country(const country *country) const;
+	void add_retired_ruler(const character *ruler);
+
 	const std::vector<const character *> &get_enabled_advisors() const
 	{
 		return this->enabled_advisors;
@@ -316,6 +332,8 @@ private:
 	pathway_map<std::vector<const terrain_type *>> enabled_pathway_terrains;
 	std::vector<const military_unit_type *> enabled_military_units;
 	std::vector<const transporter_type *> enabled_transporters;
+	std::vector<const character *> enabled_rulers;
+	std::vector<const character *> retired_rulers;
 	std::vector<const character *> enabled_advisors;
 	std::vector<const character *> retired_advisors;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
