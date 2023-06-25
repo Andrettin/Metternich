@@ -112,6 +112,7 @@ signals:
 	void event_fired(QObject *event_instance);
 	void event_closed(QObject *event_instance);
 	void current_research_choosable(const QVariantList &potential_technologies);
+	void free_technology_choosable(const QVariantList &potential_technologies);
 	void next_advisor_choosable(const QVariantList &potential_advisors);
 	void selected_military_units_changed();
 

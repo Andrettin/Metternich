@@ -517,6 +517,14 @@ QString technology::get_effects_string(metternich::country *country) const
 		}
 	}
 
+	if (this->grants_free_technology()) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += "Free technology for the first to research";
+	}
+
 	return QString::fromStdString(str);
 }
 

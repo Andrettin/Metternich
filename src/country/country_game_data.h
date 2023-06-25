@@ -796,10 +796,28 @@ private:
 public:
 	void set_current_research(const technology *technology);
 	void choose_current_research();
+	void on_technology_researched(const technology *technology);
 
 	int get_research_cost_modifier() const
 	{
 		return 100 + 10 * (this->get_province_count() - 1);
+	}
+
+	std::map<technology_category, const technology *> get_research_choice_map() const;
+	const technology *get_ai_research_choice(const std::map<technology_category, const technology *> &research_choice_map) const;
+
+	void gain_free_technology();
+
+	void gain_free_technology(const technology *technology)
+	{
+		this->on_technology_researched(technology);
+		--this->free_technology_count;
+	}
+
+	Q_INVOKABLE void gain_free_technology(metternich::technology *technology)
+	{
+		const metternich::technology *const_technology = technology;
+		return this->gain_free_technology(const_technology);
 	}
 
 	void check_characters();
@@ -1311,6 +1329,7 @@ private:
 	commodity_map<int> commodity_outputs;
 	technology_set technologies;
 	const technology *current_research = nullptr;
+	int free_technology_count = 0;
 	const character *ruler = nullptr;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;
