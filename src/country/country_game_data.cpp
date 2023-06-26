@@ -623,6 +623,16 @@ void country_game_data::add_province(const province *province)
 		game::get()->add_country(this->country);
 	}
 
+	for (const metternich::country *country : game::get()->get_countries()) {
+		if (country == this->country) {
+			continue;
+		}
+
+		if (!country->get_game_data()->is_country_known(this->country) && country->get_game_data()->is_province_discovered(province)) {
+			country->get_game_data()->add_known_country(this->country);
+		}
+	}
+
 	if (game::get()->is_running()) {
 		emit provinces_changed();
 	}
@@ -666,6 +676,34 @@ void country_game_data::remove_province(const province *province)
 	}
 
 	this->calculate_territory_rect();
+
+	//remove this as a known country for other countries, if they no longer have explored tiles in this country's territory
+	for (const metternich::country *country : game::get()->get_countries()) {
+		if (country == this->country) {
+			continue;
+		}
+
+		if (!country->get_game_data()->is_country_known(this->country)) {
+			continue;
+		}
+
+		if (!country->get_game_data()->is_province_discovered(province)) {
+			//the other country didn't have this province discovered, so its removal from this country's territory couldn't have impacted its knowability to them anyway
+			continue;
+		}
+
+		bool known_province = false;
+		for (const metternich::province *loop_province : this->get_provinces()) {
+			if (country->get_game_data()->is_province_discovered(loop_province)) {
+				known_province = true;
+				break;
+			}
+		}
+
+		if (!known_province) {
+			country->get_game_data()->remove_known_country(this->country);
+		}
+	}
 
 	if (this->get_provinces().empty()) {
 		game::get()->remove_country(this->country);
@@ -3116,7 +3154,12 @@ void country_game_data::explore_tile(const QPoint &tile_pos)
 	}
 
 	const tile *tile = map::get()->get_tile(tile_pos);
+	const metternich::country *tile_owner = tile->get_owner();
 	const resource *tile_resource = tile->get_resource();
+
+	if (tile_owner != nullptr && tile_owner != this->country && !this->is_country_known(tile_owner)) {
+		this->add_known_country(tile_owner);
+	}
 
 	if (tile_resource != nullptr && tile->is_resource_discovered() && tile_resource->get_discovery_technology() != nullptr) {
 		if (!this->has_technology(tile_resource->get_discovery_technology())) {
@@ -3152,6 +3195,12 @@ void country_game_data::explore_province(const province *province)
 
 	const province_game_data *province_game_data = province->get_game_data();
 	assert_throw(province_game_data->is_on_map());
+
+	const metternich::country *province_owner = province_game_data->get_owner();
+
+	if (province_owner != nullptr && province_owner != this->country && !this->is_country_known(province_owner)) {
+		this->add_known_country(province_owner);
+	}
 
 	if (!this->explored_tiles.empty()) {
 		for (const QPoint &tile_pos : province_game_data->get_tiles()) {

@@ -299,6 +299,26 @@ public:
 		}
 	}
 
+	const country_set &get_known_countries() const
+	{
+		return this->known_countries;
+	}
+
+	bool is_country_known(const metternich::country *other_country) const
+	{
+		return this->get_known_countries().contains(other_country);
+	}
+
+	void add_known_country(const metternich::country *other_country)
+	{
+		this->known_countries.insert(other_country);
+	}
+
+	void remove_known_country(const metternich::country *other_country)
+	{
+		this->known_countries.erase(other_country);
+	}
+
 	diplomacy_state get_diplomacy_state(const metternich::country *other_country) const;
 	void set_diplomacy_state(const metternich::country *other_country, const diplomacy_state state);
 
@@ -1296,6 +1316,7 @@ private:
 	resource_map<int> resource_counts;
 	resource_map<int> vassal_resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
+	country_set known_countries;
 	country_map<diplomacy_state> diplomacy_states;
 	std::map<diplomacy_state, int> diplomacy_state_counts;
 	country_map<diplomacy_state> offered_diplomacy_states;
