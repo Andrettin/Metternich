@@ -496,6 +496,7 @@ set(script_condition_HDRS
 source_group(script\\condition FILES ${script_condition_HDRS})
 
 set(script_effect_HDRS
+	src/script/effect/any_known_country_effect.h
 	src/script/effect/any_neighbor_country_effect.h
 	src/script/effect/any_population_unit_effect.h
 	src/script/effect/battle_effect.h

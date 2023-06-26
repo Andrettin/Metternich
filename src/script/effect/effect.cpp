@@ -12,6 +12,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "population/population_unit.h"
+#include "script/effect/any_known_country_effect.h"
 #include "script/effect/any_neighbor_country_effect.h"
 #include "script/effect/any_population_unit_effect.h"
 #include "script/effect/battle_effect.h"
@@ -97,7 +98,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	std::unique_ptr<effect> effect;
 
 	if constexpr (std::is_same_v<scope_type, const country>) {
-		if (effect_identifier == "any_neighbor_country") {
+		if (effect_identifier == "any_known_country") {
+			effect = std::make_unique<any_known_country_effect>(effect_operator);
+		} else if (effect_identifier == "any_neighbor_country") {
 			effect = std::make_unique<any_neighbor_country_effect>(effect_operator);
 		} else if (effect_identifier == "any_population_unit") {
 			effect = std::make_unique<any_population_unit_effect<scope_type>>(effect_operator);
