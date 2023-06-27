@@ -130,7 +130,7 @@ public:
 		return this->free_technology;
 	}
 
-	const std::vector<const technology *> get_prerequisites() const
+	const std::vector<technology *> get_prerequisites() const
 	{
 		return this->prerequisites;
 	}
@@ -138,7 +138,13 @@ public:
 	QVariantList get_prerequisites_qvariant_list() const;
 
 	bool requires_technology(const technology *technology) const;
-	int get_total_prerequisite_depth() const;
+
+	int get_total_prerequisite_depth() const
+	{
+		return this->total_prerequisite_depth;
+	}
+
+	void calculate_total_prerequisite_depth();
 
 	const std::vector<const commodity *> &get_enabled_commodities() const
 	{
@@ -360,7 +366,8 @@ private:
 	int year = 0; //the historical year that this technology was discovered
 	const technological_period *period = nullptr;
 	bool free_technology = false; //grants free technology for first one to research
-	std::vector<const technology *> prerequisites;
+	std::vector<technology *> prerequisites;
+	int total_prerequisite_depth = 0;
 	std::vector<const commodity *> enabled_commodities;
 	std::vector<const resource *> enabled_resources;
 	std::vector<const building_type *> enabled_buildings;

@@ -69,6 +69,8 @@ void technology::process_gsml_scope(const gsml_data &scope)
 
 void technology::initialize()
 {
+	this->calculate_total_prerequisite_depth();
+
 	if (this->get_year() != 0) {
 		this->period = technological_period::get_by_year(this->get_year());
 	}
@@ -124,15 +126,20 @@ bool technology::requires_technology(const technology *technology) const
 	return false;
 }
 
-int technology::get_total_prerequisite_depth() const
+void technology::calculate_total_prerequisite_depth()
 {
+	if (this->total_prerequisite_depth != 0 || this->get_prerequisites().empty()) {
+		return;
+	}
+
 	int depth = 0;
 
-	for (const technology *prerequisite : this->get_prerequisites()) {
+	for (technology *prerequisite : this->get_prerequisites()) {
+		prerequisite->calculate_total_prerequisite_depth();
 		depth = std::max(depth, prerequisite->get_total_prerequisite_depth() + 1);
 	}
 
-	return depth;
+	this->total_prerequisite_depth = depth;
 }
 
 QVariantList technology::get_enabled_buildings_qvariant_list() const
