@@ -11,6 +11,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
+#include "infrastructure/wonder.h"
 #include "map/terrain_type.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
@@ -390,6 +391,26 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} building", building->get_name());
+		}
+	}
+
+	if (!this->get_enabled_wonders().empty()) {
+		for (const wonder *wonder : this->get_enabled_wonders()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} wonder", wonder->get_name());
+		}
+	}
+
+	if (!this->get_disabled_wonders().empty()) {
+		for (const wonder *wonder : this->get_disabled_wonders()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Obsoletes {} wonder", wonder->get_name());
 		}
 	}
 

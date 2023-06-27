@@ -21,6 +21,7 @@ class resource;
 class technological_period;
 class terrain_type;
 class transporter_type;
+class wonder;
 enum class technology_category;
 
 template <typename scope_type>
@@ -170,6 +171,26 @@ public:
 	void add_enabled_building(const building_type *building)
 	{
 		this->enabled_buildings.push_back(building);
+	}
+
+	const std::vector<const wonder *> &get_enabled_wonders() const
+	{
+		return this->enabled_wonders;
+	}
+
+	void add_enabled_wonder(const wonder *wonder)
+	{
+		this->enabled_wonders.push_back(wonder);
+	}
+
+	const std::vector<const wonder *> &get_disabled_wonders() const
+	{
+		return this->disabled_wonders;
+	}
+
+	void add_disabled_wonder(const wonder *wonder)
+	{
+		this->disabled_wonders.push_back(wonder);
 	}
 
 	const std::vector<const production_type *> &get_enabled_production_types() const
@@ -343,6 +364,8 @@ private:
 	std::vector<const commodity *> enabled_commodities;
 	std::vector<const resource *> enabled_resources;
 	std::vector<const building_type *> enabled_buildings;
+	std::vector<const wonder *> enabled_wonders;
+	std::vector<const wonder *> disabled_wonders;
 	std::vector<const production_type *> enabled_production_types;
 	std::vector<const improvement *> enabled_improvements;
 	std::vector<const pathway *> enabled_pathways;

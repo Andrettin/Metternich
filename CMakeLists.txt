@@ -96,6 +96,7 @@ set(infrastructure_SRCS
 	src/infrastructure/pathway.cpp
 	src/infrastructure/pathway_container.cpp
 	src/infrastructure/provincial_building_slot.cpp
+	src/infrastructure/wonder.cpp
 )
 source_group(infrastructure FILES ${infrastructure_SRCS})
 set_source_files_properties(${infrastructure_SRCS} PROPERTIES UNITY_GROUP "infrastructure")
@@ -365,6 +366,7 @@ set(infrastructure_HDRS
 	src/infrastructure/pathway.h
 	src/infrastructure/pathway_container.h
 	src/infrastructure/provincial_building_slot.h
+	src/infrastructure/wonder.h
 )
 source_group(infrastructure FILES ${infrastructure_HDRS})
 
