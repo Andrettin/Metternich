@@ -35,7 +35,7 @@ public:
 	virtual void apply(scope_type *scope, const centesimal_int &multiplier) const = 0;
 
 	virtual std::string get_base_string() const = 0;
-	std::string get_string(const centesimal_int &multiplier, const bool ignore_decimals) const;
+	virtual std::string get_string(const centesimal_int &multiplier, const bool ignore_decimals) const;
 
 	virtual int get_score() const = 0;
 

@@ -30,6 +30,7 @@ set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character"
 
 set(country_SRCS
 	src/country/consulate.cpp
+	src/country/consulate_container.cpp
 	src/country/country.cpp
 	src/country/country_container.cpp
 	src/country/country_game_data.cpp
@@ -297,6 +298,7 @@ source_group(character FILES ${character_HDRS})
 
 set(country_HDRS
 	src/country/consulate.h
+	src/country/consulate_container.h
 	src/country/country.h
 	src/country/country_container.h
 	src/country/country_game_data.h
@@ -543,6 +545,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/defense_modifier_effect.h
 	src/script/modifier_effect/deployment_limit_modifier_effect.h
 	src/script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h
+	src/script/modifier_effect/free_consulate_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
 	src/script/modifier_effect/land_damage_modifier_effect.h
 	src/script/modifier_effect/land_morale_resistance_modifier_effect.h

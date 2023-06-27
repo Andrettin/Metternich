@@ -1,5 +1,6 @@
 #pragma once
 
+#include "country/consulate_container.h"
 #include "country/country_container.h"
 #include "country/culture_container.h"
 #include "country/ideology_container.h"
@@ -309,10 +310,7 @@ public:
 		return this->get_known_countries().contains(other_country);
 	}
 
-	void add_known_country(const metternich::country *other_country)
-	{
-		this->known_countries.insert(other_country);
-	}
+	void add_known_country(const metternich::country *other_country);
 
 	void remove_known_country(const metternich::country *other_country)
 	{
@@ -1194,6 +1192,24 @@ public:
 	bool check_inactive_journal_entries();
 	bool check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects);
 
+	int get_free_consulate_count(const consulate *consulate) const
+	{
+		const auto find_iterator = this->free_consulate_counts.find(consulate);
+
+		if (find_iterator != this->free_consulate_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_free_consulate_count(const consulate *consulate, const int value);
+
+	void change_free_consulate_count(const consulate *consulate, const int value)
+	{
+		this->set_free_consulate_count(consulate, this->get_free_consulate_count(consulate) + value);
+	}
+
 	int get_ai_building_desire_modifier(const building_type *building) const
 	{
 		const auto find_iterator = this->ai_building_desire_modifiers.find(building);
@@ -1379,6 +1395,7 @@ private:
 	std::vector<const journal_entry *> active_journal_entries;
 	std::vector<const journal_entry *> inactive_journal_entries;
 	std::vector<const journal_entry *> finished_journal_entries;
+	consulate_map<int> free_consulate_counts;
 	building_type_map<int> ai_building_desire_modifiers;
 	province_map<building_type_map<int>> ai_provincial_building_desire_modifiers;
 };

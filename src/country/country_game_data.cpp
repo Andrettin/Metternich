@@ -7,6 +7,7 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/trait.h"
+#include "country/consulate.h"
 #include "country/country.h"
 #include "country/country_type.h"
 #include "country/culture.h"
@@ -1017,6 +1018,25 @@ QVariantList country_game_data::get_tile_terrain_counts_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_tile_terrain_counts());
 }
 
+void country_game_data::add_known_country(const metternich::country *other_country)
+{
+	this->known_countries.insert(other_country);
+
+
+	const consulate *current_consulate = this->get_consulate(other_country);
+
+	const consulate *best_free_consulate = nullptr;
+	for (const auto &[consulate, count] : this->free_consulate_counts) {
+		if (best_free_consulate == nullptr || consulate->get_level() > best_free_consulate->get_level()) {
+			best_free_consulate = consulate;
+		}
+	}
+
+	if (best_free_consulate != nullptr && (current_consulate == nullptr || current_consulate->get_level() < best_free_consulate->get_level())) {
+		this->set_consulate(other_country, best_free_consulate);
+	}
+}
+
 diplomacy_state country_game_data::get_diplomacy_state(const metternich::country *other_country) const
 {
 	const auto find_iterator = this->diplomacy_states.find(other_country);
@@ -1156,6 +1176,10 @@ void country_game_data::set_consulate(const metternich::country *other_country, 
 		this->consulates.erase(other_country);
 	} else {
 		this->consulates[other_country] = consulate;
+
+		if (other_country->get_game_data()->get_consulate(this->country) != consulate) {
+			other_country->get_game_data()->set_consulate(this->country, consulate);
+		}
 	}
 
 	if (game::get()->is_running()) {
@@ -3424,6 +3448,29 @@ bool country_game_data::check_active_journal_entries(const read_only_context &ct
 	}
 
 	return changed;
+}
+
+void country_game_data::set_free_consulate_count(const consulate *consulate, const int value)
+{
+	const int old_value = this->get_free_consulate_count(consulate);
+	if (value == old_value) {
+		return;
+	}
+
+	assert_throw(value >= 0);
+
+	if (value == 0) {
+		this->free_consulate_counts.erase(consulate);
+	} else if (old_value == 0) {
+		this->free_consulate_counts[consulate] = value;
+
+		for (const metternich::country *known_country : this->get_known_countries()) {
+			const metternich::consulate *current_consulate = this->get_consulate(known_country);
+			if (current_consulate == nullptr || current_consulate->get_level() < consulate->get_level()) {
+				this->set_consulate(known_country, consulate);
+			}
+		}
+	}
 }
 
 }
