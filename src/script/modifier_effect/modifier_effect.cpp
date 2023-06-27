@@ -20,6 +20,7 @@
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
 #include "script/modifier_effect/free_consulate_modifier_effect.h"
+#include "script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
 #include "script/modifier_effect/land_damage_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
@@ -60,6 +61,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<diplomatic_penalty_for_expansion_modifier_effect>(value);
 		} else if (key == "free_consulate") {
 			return std::make_unique<free_consulate_modifier_effect>(value);
+		} else if (key == "gain_technologies_known_by_others") {
+			return std::make_unique<gain_technologies_known_by_others_modifier_effect>(value);
 		} else if (key == "infantry_cost_modifier") {
 			return std::make_unique<infantry_cost_modifier_effect>(value);
 		} else if (key == "land_damage_modifier") {

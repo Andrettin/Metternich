@@ -179,6 +179,10 @@ void country_game_data::do_production()
 void country_game_data::do_research()
 {
 	try {
+		if (this->get_gain_technologies_known_by_others_count() > 0) {
+			this->gain_technologies_known_by_others();
+		}
+
 		assert_throw(this->free_technology_count >= 0);
 
 		const technology *researched_technology = this->get_current_research();
@@ -199,8 +203,6 @@ void country_game_data::do_research()
 			} else {
 				this->change_stored_commodity(defines::get()->get_research_commodity(), -technology_cost);
 			}
-
-			this->set_current_research(nullptr);
 
 			this->on_technology_researched(researched_technology);
 		}
@@ -1034,6 +1036,10 @@ void country_game_data::add_known_country(const metternich::country *other_count
 
 	if (best_free_consulate != nullptr && (current_consulate == nullptr || current_consulate->get_level() < best_free_consulate->get_level())) {
 		this->set_consulate(other_country, best_free_consulate);
+	}
+
+	if (this->get_gain_technologies_known_by_others_count() > 0) {
+		this->gain_technologies_known_by_others();
 	}
 }
 
@@ -2281,7 +2287,7 @@ bool country_game_data::can_declare_war_on(const metternich::country *other_coun
 
 QVariantList country_game_data::get_technologies_qvariant_list() const
 {
-	return container::to_qvariant_list(this->technologies);
+	return container::to_qvariant_list(this->get_technologies());
 }
 
 void country_game_data::add_technology(const technology *technology)
@@ -2436,6 +2442,10 @@ void country_game_data::choose_current_research()
 
 void country_game_data::on_technology_researched(const technology *technology)
 {
+	if (technology == this->get_current_research()) {
+		this->set_current_research(nullptr);
+	}
+
 	this->add_technology(technology);
 
 	if (technology->grants_free_technology()) {
@@ -2541,6 +2551,31 @@ void country_game_data::gain_free_technology()
 	} else {
 		const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
 		emit engine_interface::get()->free_technology_choosable(container::to_qvariant_list(potential_technologies));
+	}
+}
+
+void country_game_data::gain_technologies_known_by_others()
+{
+	static constexpr int min_countries = 2;
+
+	technology_map<int> technology_known_counts;
+
+	for (const metternich::country *known_country : this->get_known_countries()) {
+		for (const technology *technology : known_country->get_game_data()->get_technologies()) {
+			++technology_known_counts[technology];
+		}
+	}
+
+	for (const auto &[technology, known_count] : technology_known_counts) {
+		if (known_count < min_countries) {
+			continue;
+		}
+
+		if (this->has_technology(technology)) {
+			continue;
+		}
+
+		this->on_technology_researched(technology);
 	}
 }
 
@@ -3448,6 +3483,22 @@ bool country_game_data::check_active_journal_entries(const read_only_context &ct
 	}
 
 	return changed;
+}
+
+void country_game_data::set_gain_technologies_known_by_others_count(const int value)
+{
+	const int old_value = this->get_gain_technologies_known_by_others_count();
+	if (value == old_value) {
+		return;
+	}
+
+	assert_throw(value >= 0);
+
+	this->gain_technologies_known_by_others_count = value;
+
+	if (old_value == 0) {
+		this->gain_technologies_known_by_others();
+	}
 }
 
 void country_game_data::set_free_consulate_count(const consulate *consulate, const int value)

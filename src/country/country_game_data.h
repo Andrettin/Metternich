@@ -771,11 +771,16 @@ public:
 
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
+	const technology_set &get_technologies() const
+	{
+		return this->technologies;
+	}
+
 	QVariantList get_technologies_qvariant_list() const;
 
 	bool has_technology(const technology *technology) const
 	{
-		return this->technologies.contains(technology);
+		return this->get_technologies().contains(technology);
 	}
 
 	Q_INVOKABLE bool has_technology(metternich::technology *technology) const
@@ -837,6 +842,8 @@ public:
 		const metternich::technology *const_technology = technology;
 		return this->gain_free_technology(const_technology);
 	}
+
+	void gain_technologies_known_by_others();
 
 	void check_characters();
 
@@ -1192,6 +1199,18 @@ public:
 	bool check_inactive_journal_entries();
 	bool check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects);
 
+	int get_gain_technologies_known_by_others_count() const
+	{
+		return this->gain_technologies_known_by_others_count;
+	}
+
+	void set_gain_technologies_known_by_others_count(const int value);
+
+	void change_gain_technologies_known_by_others_count(const int value)
+	{
+		this->set_gain_technologies_known_by_others_count(this->get_gain_technologies_known_by_others_count()  + value);
+	}
+
 	int get_free_consulate_count(const consulate *consulate) const
 	{
 		const auto find_iterator = this->free_consulate_counts.find(consulate);
@@ -1395,6 +1414,7 @@ private:
 	std::vector<const journal_entry *> active_journal_entries;
 	std::vector<const journal_entry *> inactive_journal_entries;
 	std::vector<const journal_entry *> finished_journal_entries;
+	int gain_technologies_known_by_others_count = 0;
 	consulate_map<int> free_consulate_counts;
 	building_type_map<int> ai_building_desire_modifiers;
 	province_map<building_type_map<int>> ai_provincial_building_desire_modifiers;
