@@ -6,6 +6,7 @@
 namespace metternich {
 
 class building_type;
+class wonder;
 
 class building_slot_type final : public named_data_entry, public data_type<building_slot_type>
 {
@@ -31,11 +32,22 @@ public:
 		this->building_types.push_back(building_type);
 	}
 
+	const std::vector<const wonder *> &get_wonders() const
+	{
+		return this->wonders;
+	}
+
+	void add_wonder(const wonder *wonder)
+	{
+		this->wonders.push_back(wonder);
+	}
+
 signals:
 	void changed();
 
 private:
 	std::vector<const building_type *> building_types;
+	std::vector<const wonder *> wonders;
 };
 
 }

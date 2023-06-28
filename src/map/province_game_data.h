@@ -27,6 +27,7 @@ class religion;
 class scripted_province_modifier;
 class site;
 class tile;
+class wonder;
 enum class military_unit_category;
 
 template <typename scope_type>
@@ -211,6 +212,7 @@ public:
 	void check_building_conditions();
 
 	void on_building_gained(const building_type *building, const int multiplier);
+	void on_wonder_gained(const wonder *wonder, const int multiplier);
 
 	const scripted_province_modifier_map<int> &get_scripted_modifiers() const
 	{

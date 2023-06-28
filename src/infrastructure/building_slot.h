@@ -15,7 +15,7 @@ class building_slot : public QObject
 	Q_PROPERTY(metternich::building_slot_type* type READ get_type_unconst CONSTANT)
 	Q_PROPERTY(metternich::building_type* building READ get_building_unconst NOTIFY building_changed)
 	Q_PROPERTY(metternich::building_type* under_construction_building READ get_under_construction_building_unconst WRITE set_under_construction_building NOTIFY under_construction_building_changed)
-	Q_PROPERTY(metternich::country *country READ get_country_unconst CONSTANT)
+	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
 
 public:
 	explicit building_slot(const building_slot_type *type);

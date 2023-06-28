@@ -25,6 +25,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/country_building_slot.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/wonder.h"
 #include "map/diplomatic_map_image_provider.h"
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
@@ -128,6 +129,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<site>("", 1);
 		qmlRegisterAnonymousType<site_game_data>("", 1);
 		qmlRegisterAnonymousType<technology>("", 1);
+		qmlRegisterAnonymousType<wonder>("", 1);
 
 		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
 		qmlRegisterType<MaskedMouseArea>("MaskedMouseArea", 1, 0, "MaskedMouseArea");

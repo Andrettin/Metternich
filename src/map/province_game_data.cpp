@@ -20,6 +20,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/provincial_building_slot.h"
+#include "infrastructure/wonder.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -474,6 +475,22 @@ void province_game_data::on_building_gained(const building_type *building, const
 
 	if (building->get_province_modifier() != nullptr) {
 		building->get_province_modifier()->apply(this->province, multiplier);
+	}
+}
+
+void province_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)
+{
+	assert_throw(wonder != nullptr);
+	assert_throw(multiplier != 0);
+
+	this->change_score(wonder->get_score() * multiplier);
+
+	if (this->get_owner() != nullptr && wonder->get_country_modifier() != nullptr) {
+		wonder->get_country_modifier()->apply(this->get_owner(), multiplier);
+	}
+
+	if (wonder->get_province_modifier() != nullptr) {
+		wonder->get_province_modifier()->apply(this->province, multiplier);
 	}
 }
 

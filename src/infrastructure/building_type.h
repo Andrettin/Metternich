@@ -143,6 +143,23 @@ public:
 		return this->required_building;
 	}
 
+	bool is_any_required_building(const building_type *building) const
+	{
+		if (building == nullptr) {
+			return false;
+		}
+
+		if (this->get_required_building() == nullptr) {
+			return false;
+		}
+
+		if (building == this->get_required_building()) {
+			return true;
+		}
+
+		return this->get_required_building()->is_any_required_building(building);
+	}
+
 	const std::vector<const building_type *> &get_requiring_buildings() const
 	{
 		return this->requiring_buildings;

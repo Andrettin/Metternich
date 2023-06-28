@@ -6,8 +6,10 @@
 
 namespace metternich {
 
+class building_type;
 class improvement;
 class site;
+class wonder;
 
 class site_history final : public data_entry_history
 {
@@ -33,7 +35,7 @@ public:
 
 	bool is_developed() const
 	{
-		return this->developed || this->get_improvement() != nullptr || !this->get_buildings().empty() || !this->get_population_groups().empty();
+		return this->developed || this->get_improvement() != nullptr || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
 	}
 
 	const metternich::improvement *get_improvement() const
@@ -50,6 +52,21 @@ public:
 	{
 		const auto find_iterator = this->buildings.find(slot_type);
 		if (find_iterator != this->buildings.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	const building_slot_type_map<const wonder *> &get_wonders() const
+	{
+		return this->wonders;
+	}
+
+	const wonder *get_wonder(const building_slot_type *slot_type) const
+	{
+		const auto find_iterator = this->wonders.find(slot_type);
+		if (find_iterator != this->wonders.end()) {
 			return find_iterator->second;
 		}
 
@@ -100,6 +117,7 @@ private:
 	bool developed = false;
 	metternich::improvement *improvement = nullptr;
 	building_slot_type_map<const building_type *> buildings;
+	building_slot_type_map<const wonder *> wonders;
 	population_group_map<int> population_groups;
 };
 

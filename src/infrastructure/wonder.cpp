@@ -2,6 +2,9 @@
 
 #include "infrastructure/wonder.h"
 
+#include "infrastructure/building_class.h"
+#include "infrastructure/building_slot_type.h"
+#include "infrastructure/building_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
@@ -41,6 +44,8 @@ void wonder::process_gsml_scope(const gsml_data &scope)
 
 void wonder::initialize()
 {
+	this->get_building()->get_building_class()->get_slot_type()->add_wonder(this);
+
 	if (this->required_technology != nullptr) {
 		this->required_technology->add_enabled_wonder(this);
 	}
@@ -56,6 +61,14 @@ void wonder::check() const
 {
 	if (this->get_portrait() == nullptr) {
 		throw std::runtime_error(std::format("Wonder \"{}\" has no portrait.", this->get_identifier()));
+	}
+
+	if (this->get_building() == nullptr) {
+		throw std::runtime_error(std::format("Wonder \"{}\" has no building type.", this->get_identifier()));
+	}
+
+	if (!this->get_building()->is_provincial()) {
+		throw std::runtime_error(std::format("Wonder \"{}\" has a non-provincial building type.", this->get_identifier()));
 	}
 
 	if (this->get_conditions() != nullptr) {
