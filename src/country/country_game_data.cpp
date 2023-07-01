@@ -2464,8 +2464,7 @@ void country_game_data::on_technology_researched(const technology *technology)
 		}
 
 		if (first_to_research) {
-			++this->free_technology_count;
-			this->gain_free_technology();
+			this->gain_free_technologies(1);
 		}
 	}
 
@@ -2552,6 +2551,14 @@ void country_game_data::gain_free_technology()
 		const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
 		emit engine_interface::get()->free_technology_choosable(container::to_qvariant_list(potential_technologies));
 	}
+}
+
+void country_game_data::gain_free_technologies(const int count)
+{
+	assert_throw(count > 0);
+
+	this->free_technology_count += count;
+	this->gain_free_technology();
 }
 
 void country_game_data::gain_technologies_known_by_others()
@@ -2736,6 +2743,11 @@ void country_game_data::check_advisors()
 				this->change_stored_commodity(defines::get()->get_advisor_commodity(), -this->get_advisor_cost());
 
 				this->add_advisor(this->get_next_advisor());
+
+				if (this->get_next_advisor()->get_advisor_effects() != nullptr) {
+					context ctx(country);
+					this->get_next_advisor()->get_advisor_effects()->do_effects(country, ctx);
+				}
 
 				emit advisor_recruited(const_cast<character *>(this->get_next_advisor()));
 

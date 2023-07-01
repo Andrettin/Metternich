@@ -835,6 +835,10 @@ public:
 	{
 		this->on_technology_researched(technology);
 		--this->free_technology_count;
+
+		if (this->free_technology_count > 0) {
+			this->gain_free_technology();
+		}
 	}
 
 	Q_INVOKABLE void gain_free_technology(metternich::technology *technology)
@@ -843,6 +847,7 @@ public:
 		return this->gain_free_technology(const_technology);
 	}
 
+	void gain_free_technologies(const int count);
 	void gain_technologies_known_by_others();
 
 	void check_characters();
