@@ -29,6 +29,9 @@ template <typename scope_type>
 class condition;
 
 template <typename scope_type>
+class effect_list;
+
+template <typename scope_type>
 class modifier;
 
 class character final : public named_data_entry, public data_type<character>
@@ -60,7 +63,6 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
 	Q_PROPERTY(QString ruler_modifier_string READ get_ruler_modifier_qstring CONSTANT)
-	Q_PROPERTY(QString advisor_modifier_string READ get_advisor_modifier_string CONSTANT)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
@@ -277,7 +279,12 @@ public:
 		return QString::fromStdString(this->get_ruler_modifier_string());
 	}
 
-	QString get_advisor_modifier_string() const;
+	Q_INVOKABLE QString get_advisor_effects_string(metternich::country *country) const;
+
+	const effect_list<const country> *get_advisor_effects() const
+	{
+		return this->advisor_effects.get();
+	}
 
 	void apply_advisor_modifier(const country *country, const int multiplier) const;
 
@@ -319,6 +326,7 @@ private:
 	technology *obsolescence_technology = nullptr;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<const modifier<const country>> advisor_modifier;
+	std::unique_ptr<const effect_list<const country>> advisor_effects;
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;
 };

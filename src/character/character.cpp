@@ -13,6 +13,7 @@
 #include "country/religion.h"
 #include "map/province.h"
 #include "script/condition/and_condition.h"
+#include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "unit/military_unit_category.h"
@@ -62,6 +63,10 @@ void character::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
 		this->advisor_modifier = std::move(modifier);
+	} else if (tag == "advisor_effects") {
+		auto effect_list = std::make_unique<metternich::effect_list<const country>>();
+		database::process_gsml_data(effect_list, scope);
+		this->advisor_effects = std::move(effect_list);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -163,7 +168,11 @@ void character::check() const
 	}
 
 	if (this->advisor_modifier != nullptr && !this->is_advisor()) {
-		throw std::runtime_error("Character \"" + this->get_identifier() + "\" has an advisor modifier, but is not an advisor.");
+		throw std::runtime_error(std::format("Character \"{}\" has an advisor modifier, but is not an advisor.", this->get_identifier()));
+	}
+
+	if (this->advisor_effects != nullptr && !this->is_advisor()) {
+		throw std::runtime_error(std::format("Character \"{}\" has advisor effects, but is not an advisor.", this->get_identifier()));
 	}
 
 	assert_throw(this->get_culture() != nullptr);
@@ -273,12 +282,16 @@ std::string character::get_ruler_modifier_string() const
 	return str;
 }
 
-QString character::get_advisor_modifier_string() const
+QString character::get_advisor_effects_string(metternich::country *country) const
 {
 	assert_throw(this->is_advisor());
 
 	if (this->advisor_modifier != nullptr) {
 		return QString::fromStdString(this->advisor_modifier->get_string());
+	}
+
+	if (this->advisor_effects != nullptr) {
+		return QString::fromStdString(this->advisor_effects->get_effects_string(country, read_only_context(country)));
 	}
 
 	if (this->get_advisor_type()->get_modifier() != nullptr) {
@@ -292,6 +305,10 @@ void character::apply_advisor_modifier(const country *country, const int multipl
 {
 	assert_throw(this->is_advisor());
 
+	if (this->advisor_effects != nullptr) {
+		return;
+	}
+
 	if (this->advisor_modifier != nullptr) {
 		this->advisor_modifier->apply(country, multiplier);
 	} else if (this->get_advisor_type()->get_modifier() != nullptr) {
@@ -303,7 +320,9 @@ int character::get_advisor_score() const
 {
 	assert_throw(this->is_advisor());
 
-	if (this->advisor_modifier != nullptr) {
+	if (this->get_advisor_effects() != nullptr) {
+		return this->get_advisor_effects()->get_score();
+	} else if (this->advisor_modifier != nullptr) {
 		return this->advisor_modifier->get_score();
 	} else if (this->get_advisor_type()->get_modifier() != nullptr) {
 		return this->get_advisor_type()->get_modifier()->get_score() * this->get_skill();
