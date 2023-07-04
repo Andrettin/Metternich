@@ -92,7 +92,9 @@ void character_game_data::check_portrait()
 	}
 
 	//there must always be an available portrait for characters which need them
-	assert_throw(!potential_portraits.empty());
+	if (potential_portraits.empty()) {
+		throw std::runtime_error(std::format("No portrait is suitable for character \"{}\".", this->character->get_identifier()));
+	}
 
 	this->portrait = vector::get_random(potential_portraits);
 }

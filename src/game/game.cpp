@@ -992,6 +992,8 @@ void game::on_setup_finished()
 	emit countries_changed();
 
 	for (const country *country : this->get_countries()) {
+		country->get_game_data()->check_ruler();
+
 		for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
 			map::get()->calculate_tile_country_border_directions(border_tile_pos);
 		}
@@ -1001,6 +1003,8 @@ void game::on_setup_finished()
 
 	for (const character *character : character::get_all()) {
 		character->get_game_data()->on_game_started();
+
+		emit character->game_data_changed();
 	}
 
 	emit setup_finished();

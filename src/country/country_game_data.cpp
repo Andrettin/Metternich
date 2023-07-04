@@ -2642,15 +2642,17 @@ void country_game_data::check_ruler()
 {
 	//remove the ruler if they have become obsolete
 	if (this->get_ruler() != nullptr && this->get_ruler()->get_obsolescence_technology() != nullptr && this->has_technology(this->get_ruler()->get_obsolescence_technology())) {
-		if (this->country == game::get()->get_player_country()) {
-			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+		if (game::get()->is_running()) {
+			if (this->country == game::get()->get_player_country()) {
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
-			engine_interface::get()->add_notification("Ruler Died", interior_minister_portrait, std::format("Our ruler, {}, has died!", this->get_ruler()->get_full_name()));
+				engine_interface::get()->add_notification("Ruler Died", interior_minister_portrait, std::format("Our ruler, {}, has died!", this->get_ruler()->get_full_name()));
+			}
+
+			context ctx(this->country);
+			ctx.source_scope = this->get_ruler();
+			country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
 		}
-
-		context ctx(this->country);
-		ctx.source_scope = this->get_ruler();
-		country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
 
 		this->set_ruler(nullptr);
 		this->get_ruler()->get_game_data()->set_dead(true);
@@ -2690,7 +2692,7 @@ void country_game_data::check_ruler()
 		if (!potential_rulers.empty()) {
 			this->set_ruler(vector::get_random(potential_rulers));
 
-			if (this->country == game::get()->get_player_country()) {
+			if (this->country == game::get()->get_player_country() && game::get()->is_running()) {
 				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification("New Ruler", interior_minister_portrait, std::format("{} has become our new ruler!\n\n{}", this->get_ruler()->get_full_name(), this->get_ruler()->get_ruler_modifier_string()));
