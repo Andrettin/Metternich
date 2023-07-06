@@ -349,6 +349,43 @@ public:
 		this->set_commodity_bonus_per_improved_resource(commodity, resource, this->get_commodity_bonus_per_improved_resource(commodity, resource) + value);
 	}
 
+	const commodity_map<std::map<int, int>> &get_commodity_bonuses_for_tile_thresholds() const
+	{
+		return this->commodity_bonuses_for_tile_thresholds;
+	}
+
+	const std::map<int, int> &get_commodity_bonus_for_tile_threshold_map(const commodity *commodity) const
+	{
+		static std::map<int, int> empty_map;
+
+		const auto find_iterator = this->commodity_bonuses_for_tile_thresholds.find(commodity);
+
+		if (find_iterator != this->commodity_bonuses_for_tile_thresholds.end()) {
+			return find_iterator->second;
+		}
+
+		return empty_map;
+	}
+
+	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
+	{
+		const std::map<int, int> &threshold_map = this->get_commodity_bonus_for_tile_threshold_map(commodity);
+
+		const auto find_iterator = threshold_map.find(threshold);
+		if (find_iterator != threshold_map.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value);
+
+	void change_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
+	{
+		this->set_commodity_bonus_for_tile_threshold(commodity, threshold, this->get_commodity_bonus_for_tile_threshold(commodity, threshold) + value);
+	}
+
 	bool can_produce_commodity(const commodity *commodity) const;
 
 	province_game_data &operator =(const province_game_data &other) = delete;
@@ -388,6 +425,7 @@ private:
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
 	commodity_map<resource_map<int>> commodity_bonuses_per_improved_resources;
+	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 };
 
 }

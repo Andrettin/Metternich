@@ -13,6 +13,7 @@
 #include "script/modifier_effect/building_capacity_modifier_effect.h"
 #include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/cavalry_cost_modifier_effect.h"
+#include "script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h"
 #include "script/modifier_effect/commodity_per_improved_resource_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/commodity_throughput_modifier_effect.h"
@@ -98,7 +99,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	}
 	
 	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province>) {
-		static const std::string commodity_per_improved_resource_modifier_infix = "_per_improved_";
+		static const std::string commodity_bonus_for_tile_threshold_suffix = "_bonus_for_tile_threshold";
+		static const std::string commodity_per_improved_resource_infix = "_per_improved_";
 		static const std::string output_modifier_suffix = "_output_modifier";
 
 		if (key == "output_modifier") {
@@ -106,11 +108,16 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (key.ends_with(output_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - output_modifier_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - output_modifier_suffix.size()));
 			return std::make_unique<commodity_output_modifier_effect<scope_type>>(commodity, value);
-		} else if (key.find(commodity_per_improved_resource_modifier_infix) != std::string::npos && !key.starts_with(commodity_per_improved_resource_modifier_infix) && !key.ends_with(commodity_per_improved_resource_modifier_infix)) {
-			const size_t infix_pos = key.find(commodity_per_improved_resource_modifier_infix);
+		} else if (key.ends_with(commodity_bonus_for_tile_threshold_suffix)) {
+			const size_t commodity_identifier_size = key.size() - commodity_bonus_for_tile_threshold_suffix.size();
+			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
+
+			return std::make_unique<commodity_bonus_for_tile_threshold_modifier_effect<scope_type>>(commodity, value);
+		} else if (key.find(commodity_per_improved_resource_infix) != std::string::npos && !key.starts_with(commodity_per_improved_resource_infix) && !key.ends_with(commodity_per_improved_resource_infix)) {
+			const size_t infix_pos = key.find(commodity_per_improved_resource_infix);
 			const commodity *commodity = commodity::get(key.substr(0, infix_pos));
 
-			const size_t resource_identifier_pos = infix_pos + commodity_per_improved_resource_modifier_infix.size();
+			const size_t resource_identifier_pos = infix_pos + commodity_per_improved_resource_infix.size();
 			const resource *resource = resource::get(key.substr(resource_identifier_pos, key.size() - resource_identifier_pos));
 
 			return std::make_unique<commodity_per_improved_resource_modifier_effect<scope_type>>(commodity, resource, value);

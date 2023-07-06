@@ -710,6 +710,34 @@ void province_game_data::set_commodity_bonus_per_improved_resource(const commodi
 	}
 }
 
+void province_game_data::set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
+{
+	const int old_value = this->get_commodity_bonus_for_tile_threshold(commodity, threshold);
+
+	if (value == old_value) {
+		return;
+	}
+
+	if (value == 0) {
+		this->commodity_bonuses_for_tile_thresholds[commodity].erase(threshold);
+
+		if (this->commodity_bonuses_for_tile_thresholds[commodity].empty()) {
+			this->commodity_bonuses_for_tile_thresholds.erase(commodity);
+		}
+	} else {
+		this->commodity_bonuses_for_tile_thresholds[commodity][threshold] = value;
+	}
+
+	for (const QPoint &tile_pos : this->resource_tiles) {
+		tile *tile = map::get()->get_tile(tile_pos);
+		if (!tile->get_commodity_outputs().contains(commodity)) {
+			continue;
+		}
+
+		tile->calculate_commodity_outputs();
+	}
+}
+
 bool province_game_data::can_produce_commodity(const commodity *commodity) const
 {
 	for (const QPoint &tile_pos : this->resource_tiles) {

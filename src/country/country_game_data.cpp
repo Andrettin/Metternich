@@ -777,6 +777,12 @@ void country_game_data::on_province_gained(const province *province, const int m
 			province_game_data->change_commodity_bonus_per_improved_resource(commodity, resource, value * multiplier);
 		}
 	}
+
+	for (const auto &[commodity, threshold_map] : this->commodity_bonuses_for_tile_thresholds) {
+		for (const auto &[threshold, value] : threshold_map) {
+			province_game_data->change_commodity_bonus_for_tile_threshold(commodity, threshold, value * multiplier);
+		}
+	}
 }
 
 bool country_game_data::is_under_anarchy() const
@@ -3100,6 +3106,29 @@ void country_game_data::set_commodity_bonus_per_improved_resource(const commodit
 
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->change_commodity_bonus_per_improved_resource(commodity, resource, value - old_value);
+	}
+}
+
+void country_game_data::set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
+{
+	const int old_value = this->get_commodity_bonus_for_tile_threshold(commodity, threshold);
+
+	if (value == old_value) {
+		return;
+	}
+
+	if (value == 0) {
+		this->commodity_bonuses_for_tile_thresholds[commodity].erase(threshold);
+
+		if (this->commodity_bonuses_for_tile_thresholds[commodity].empty()) {
+			this->commodity_bonuses_for_tile_thresholds.erase(commodity);
+		}
+	} else {
+		this->commodity_bonuses_for_tile_thresholds[commodity][threshold] = value;
+	}
+
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->change_commodity_bonus_for_tile_threshold(commodity, threshold, value - old_value);
 	}
 }
 

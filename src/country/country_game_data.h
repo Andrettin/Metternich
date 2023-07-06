@@ -1123,6 +1123,28 @@ public:
 		this->set_commodity_bonus_per_improved_resource(commodity, resource, this->get_commodity_bonus_per_improved_resource(commodity, resource) + value);
 	}
 
+	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
+	{
+		const auto find_iterator = this->commodity_bonuses_for_tile_thresholds.find(commodity);
+
+		if (find_iterator != this->commodity_bonuses_for_tile_thresholds.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(threshold);
+
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+
+		return 0;
+	}
+
+	void set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value);
+
+	void change_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
+	{
+		this->set_commodity_bonus_for_tile_threshold(commodity, threshold, this->get_commodity_bonus_for_tile_threshold(commodity, threshold) + value);
+	}
+
 	Q_INVOKABLE int get_category_research_modifier(metternich::technology_category category) const
 	{
 		const auto find_iterator = this->category_research_modifiers.find(category);
@@ -1411,6 +1433,7 @@ private:
 	int throughput_modifier = 0;
 	commodity_map<int> commodity_throughput_modifiers;
 	commodity_map<resource_map<int>> commodity_bonuses_per_improved_resources;
+	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	std::map<technology_category, int> category_research_modifiers;
 	int advisor_cost_modifier = 0;
 	int diplomatic_penalty_for_expansion_modifier = 0;

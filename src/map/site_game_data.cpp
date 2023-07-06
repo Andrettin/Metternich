@@ -127,6 +127,16 @@ void site_game_data::calculate_commodity_outputs()
 		}
 	}
 
+	if (province != nullptr) {
+		for (auto &[commodity, output] : outputs) {
+			for (const auto &[threshold, bonus] : province->get_game_data()->get_commodity_bonus_for_tile_threshold_map(commodity)) {
+				if (output >= threshold) {
+					output += bonus;
+				}
+			}
+		}
+	}
+
 	for (const auto &[commodity, output] : outputs) {
 		this->set_commodity_output(commodity, output);
 	}
