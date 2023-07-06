@@ -217,7 +217,8 @@ public:
 		this->civilian_unit = civilian_unit;
 	}
 
-	int get_output_value() const;
+	const commodity_map<int> &get_commodity_outputs() const;
+	void calculate_commodity_outputs();
 
 private:
 	const terrain_type *terrain = nullptr;

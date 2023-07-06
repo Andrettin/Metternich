@@ -504,7 +504,8 @@ void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improv
 {
 	tile *tile = this->get_tile(tile_pos);
 
-	if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
+	const metternich::improvement *old_improvement = tile->get_improvement();
+	if (old_improvement != nullptr && tile->get_province() != nullptr) {
 		tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), -1);
 	}
 
@@ -513,6 +514,8 @@ void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improv
 	if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
 		tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
 	}
+
+	tile->calculate_commodity_outputs();
 
 	emit tile_improvement_changed(tile_pos);
 

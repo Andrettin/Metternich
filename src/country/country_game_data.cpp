@@ -754,20 +754,9 @@ void country_game_data::on_province_gained(const province *province, const int m
 
 	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
 		const tile *tile = map::get()->get_tile(tile_pos);
-		const improvement *improvement = tile->get_improvement();
 
-		if (improvement != nullptr) {
-			if (improvement->get_output_commodity() != nullptr) {
-				this->change_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier() * multiplier);
-			}
-
-			for (const auto &[commodity, resource_map] : province_game_data->get_commodity_bonuses_per_improved_resources()) {
-				const auto find_iterator = resource_map.find(tile->get_resource());
-				if (find_iterator != resource_map.end()) {
-					const int value = find_iterator->second;
-					this->change_commodity_output(commodity, value * multiplier);
-				}
-			}
+		for (const auto &[commodity, output] : tile->get_commodity_outputs()) {
+			this->change_commodity_output(commodity, output * multiplier);
 		}
 	}
 

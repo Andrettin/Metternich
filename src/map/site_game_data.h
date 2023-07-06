@@ -1,5 +1,7 @@
 #pragma once
 
+#include "economy/commodity_container.h"
+
 namespace metternich {
 
 class culture;
@@ -18,7 +20,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(metternich::province* province READ get_province_unconst NOTIFY tile_pos_changed)
 	Q_PROPERTY(metternich::improvement* improvement READ get_improvement_unconst NOTIFY improvement_changed)
-	Q_PROPERTY(int output READ get_output NOTIFY improvement_changed)
+	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 
 public:
 	explicit site_game_data(const site *site) : site(site)
@@ -82,7 +84,25 @@ private:
 	}
 
 public:
-	int get_output() const;
+	const commodity_map<int> &get_commodity_outputs() const
+	{
+		return this->commodity_outputs;
+	}
+
+	QVariantList get_commodity_outputs_qvariant_list() const;
+
+	int get_commodity_output(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_outputs.find(commodity);
+		if (find_iterator != this->commodity_outputs.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_commodity_output(const commodity *commodity, const int output);
+	void calculate_commodity_outputs();
 
 	const std::vector<military_unit *> &get_visiting_military_units() const
 	{
@@ -103,10 +123,12 @@ signals:
 	void tile_pos_changed();
 	void culture_changed();
 	void improvement_changed();
+	void commodity_outputs_changed();
 
 private:
 	const metternich::site *site = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
+	commodity_map<int> commodity_outputs;
 	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site
 };
 

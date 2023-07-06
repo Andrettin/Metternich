@@ -217,6 +217,14 @@ void game::start()
 		map::get()->create_minimap_image();
 		co_await this->create_exploration_diplomatic_map_image();
 
+		for (const site *site : site::get_all()) {
+			if (!site->get_game_data()->is_on_map()) {
+				continue;
+			}
+
+			site->get_game_data()->calculate_commodity_outputs();
+		}
+
 		for (const country *country : this->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
 

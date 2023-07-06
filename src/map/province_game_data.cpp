@@ -324,20 +324,6 @@ void province_game_data::on_improvement_gained(const improvement *improvement, c
 	assert_throw(improvement != nullptr);
 
 	this->change_score(improvement->get_score() * multiplier);
-
-	if (this->get_owner() != nullptr) {
-		if (improvement->get_output_commodity() != nullptr) {
-			this->get_owner()->get_game_data()->change_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier() * multiplier);
-		}
-
-		for (const auto &[commodity, resource_map] : this->get_commodity_bonuses_per_improved_resources()) {
-			const auto find_iterator = resource_map.find(improvement->get_resource());
-			if (find_iterator != resource_map.end()) {
-				const int value = find_iterator->second;
-				this->get_owner()->get_game_data()->change_commodity_output(commodity, value * multiplier);
-			}
-		}
-	}
 }
 
 QVariantList province_game_data::get_building_slots_qvariant_list() const
@@ -714,9 +700,13 @@ void province_game_data::set_commodity_bonus_per_improved_resource(const commodi
 		this->commodity_bonuses_per_improved_resources[commodity][resource] = value;
 	}
 
-	if (this->get_owner() != nullptr) {
-		const int value_change = value - old_value;
-		this->get_owner()->get_game_data()->change_commodity_output(commodity, value_change);
+	for (const QPoint &tile_pos : this->resource_tiles) {
+		tile *tile = map::get()->get_tile(tile_pos);
+		if (tile->get_resource() != resource || tile->get_improvement() == nullptr) {
+			continue;
+		}
+
+		tile->calculate_commodity_outputs();
 	}
 }
 

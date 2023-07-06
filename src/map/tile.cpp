@@ -12,6 +12,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/site_type.h"
 #include "map/terrain_adjacency_type.h"
 #include "map/terrain_type.h"
@@ -71,6 +72,10 @@ void tile::set_resource(const metternich::resource *resource)
 
 void tile::set_improvement(const metternich::improvement *improvement)
 {
+	if (improvement == this->get_improvement()) {
+		return;
+	}
+
 	this->improvement = improvement;
 
 	if (improvement != nullptr) {
@@ -186,19 +191,22 @@ const pathway *tile::get_best_pathway() const
 	return best_pathway;
 }
 
-int tile::get_output_value() const
+const commodity_map<int> &tile::get_commodity_outputs() const
 {
-	if (this->get_improvement() == nullptr) {
-		return 0;
+	static commodity_map<int> empty_map;
+
+	if (this->get_site() != nullptr) {
+		return this->get_site()->get_game_data()->get_commodity_outputs();
 	}
 
-	const commodity *output_commodity = this->get_improvement()->get_output_commodity();
+	return empty_map;
+}
 
-	if (output_commodity == nullptr) {
-		return 0;
+void tile::calculate_commodity_outputs()
+{
+	if (this->get_site() != nullptr) {
+		this->get_site()->get_game_data()->calculate_commodity_outputs();
 	}
-
-	return this->get_improvement()->get_output_multiplier();
 }
 
 }

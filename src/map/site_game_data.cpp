@@ -2,6 +2,8 @@
 
 #include "map/site_game_data.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "infrastructure/improvement.h"
@@ -13,6 +15,7 @@
 #include "script/context.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 
 namespace metternich {
 
@@ -101,14 +104,63 @@ const improvement *site_game_data::get_improvement() const
 	return nullptr;
 }
 
-int site_game_data::get_output() const
+void site_game_data::calculate_commodity_outputs()
 {
-	const tile *tile = this->get_tile();
-	if (tile != nullptr) {
-		return tile->get_output_value();
+	commodity_map<int> outputs;
+
+	const province *province = this->get_province();
+
+	const improvement *improvement = this->get_improvement();
+	if (improvement != nullptr) {
+		if (improvement->get_output_commodity() != nullptr) {
+			outputs[improvement->get_output_commodity()] = improvement->get_output_multiplier();
+		}
+
+		const resource *resource = this->get_tile()->get_resource();
+		if (province != nullptr && resource != nullptr) {
+			for (const auto &[commodity, resource_map] : province->get_game_data()->get_commodity_bonuses_per_improved_resources()) {
+				const auto find_iterator = resource_map.find(resource);
+				if (find_iterator != resource_map.end()) {
+					outputs[commodity] += find_iterator->second;
+				}
+			}
+		}
 	}
 
-	return 0;
+	for (const auto &[commodity, output] : outputs) {
+		this->set_commodity_output(commodity, output);
+	}
+}
+
+QVariantList site_game_data::get_commodity_outputs_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
+}
+
+void site_game_data::set_commodity_output(const commodity *commodity, const int output)
+{
+	assert_throw(output >= 0);
+
+	const int old_output = this->get_commodity_output(commodity);
+	if (output == old_output) {
+		return;
+	}
+
+	if (output == 0) {
+		this->commodity_outputs.erase(commodity);
+	} else {
+		this->commodity_outputs[commodity] = output;
+	}
+
+	const province *province = this->get_province();
+	if (province != nullptr) {
+		const country *owner = province->get_game_data()->get_owner();
+		if (owner != nullptr) {
+			owner->get_game_data()->change_commodity_output(commodity, output - old_output);
+		}
+	}
+
+	emit commodity_outputs_changed();
 }
 
 }
