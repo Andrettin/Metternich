@@ -220,6 +220,11 @@ public:
 	const commodity_map<int> &get_commodity_outputs() const;
 	void calculate_commodity_outputs();
 
+	bool produces_commodity(const commodity *commodity) const
+	{
+		return this->get_commodity_outputs().contains(commodity);
+	}
+
 private:
 	const terrain_type *terrain = nullptr;
 	short base_tile_frame = 0;

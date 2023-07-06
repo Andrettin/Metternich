@@ -303,16 +303,9 @@ bool province_game_data::produces_commodity(const commodity *commodity) const
 {
 	for (const QPoint &tile_pos : this->get_resource_tiles()) {
 		const tile *tile = map::get()->get_tile(tile_pos);
-		const improvement *improvement = tile->get_improvement();
 
-		if (improvement != nullptr) {
-			if (improvement->get_output_commodity() == commodity) {
-				return true;
-			}
-
-			if (this->get_commodity_bonus_per_improved_resource(commodity, tile->get_resource()) > 0) {
-				return true;
-			}
+		if (tile->produces_commodity(commodity)) {
+			return true;
 		}
 	}
 
@@ -730,7 +723,7 @@ void province_game_data::set_commodity_bonus_for_tile_threshold(const commodity 
 
 	for (const QPoint &tile_pos : this->resource_tiles) {
 		tile *tile = map::get()->get_tile(tile_pos);
-		if (!tile->get_commodity_outputs().contains(commodity)) {
+		if (!tile->produces_commodity(commodity)) {
 			continue;
 		}
 
