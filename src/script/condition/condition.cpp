@@ -49,6 +49,8 @@
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
 #include "script/condition/root_character_condition.h"
+#include "script/condition/ruler_condition.h"
+#include "script/condition/ruler_scope_condition.h"
 #include "script/condition/saved_scope_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
@@ -106,6 +108,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
 		} else if (key == "owns_province") {
 			return std::make_unique<owns_province_condition>(value, condition_operator);
+		} else if (key == "ruler") {
+			return std::make_unique<ruler_condition>(value, condition_operator);
 		} else if (key == "wealth") {
 			return std::make_unique<wealth_condition<scope_type>>(value, condition_operator);
 		} else if (commodity::try_get(key) != nullptr) {
@@ -204,6 +208,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 	if constexpr (std::is_same_v<scope_type, site>) {
 		if (tag == "location") {
 			condition = std::make_unique<location_condition<scope_type>>(condition_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province>) {
+		if (tag == "ruler") {
+			condition = std::make_unique<ruler_scope_condition<scope_type>>(condition_operator);
 		}
 	}
 

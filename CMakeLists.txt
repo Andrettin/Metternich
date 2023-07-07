@@ -480,6 +480,8 @@ set(script_condition_HDRS
 	src/script/condition/religion_condition.h
 	src/script/condition/religious_group_condition.h
 	src/script/condition/root_character_condition.h
+	src/script/condition/ruler_condition.h
+	src/script/condition/ruler_scope_condition.h
 	src/script/condition/saved_scope_condition.h
 	src/script/condition/scripted_modifier_condition.h
 	src/script/condition/scope_condition.h
