@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/commodity_container.h"
 
 namespace metternich {
 
@@ -23,6 +24,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
 	Q_PROPERTY(metternich::improvement* required_improvement MEMBER required_improvement NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "improvement";
@@ -107,6 +109,16 @@ public:
 		return improvement::base_score * this->get_output_multiplier();
 	}
 
+	int get_wealth_cost() const
+	{
+		return this->wealth_cost;
+	}
+
+	const commodity_map<int> &get_commodity_costs() const
+	{
+		return this->commodity_costs;
+	}
+
 	bool is_buildable_on_tile(const tile *tile) const;
 
 signals:
@@ -122,6 +134,8 @@ private:
 	int variation_count = 1;
 	improvement *required_improvement = nullptr;
 	technology *required_technology = nullptr;
+	int wealth_cost = 0;
+	commodity_map<int> commodity_costs;
 };
 
 }

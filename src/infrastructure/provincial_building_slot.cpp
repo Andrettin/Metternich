@@ -155,7 +155,55 @@ bool provincial_building_slot::can_build_wonder(const metternich::wonder *wonder
 		return false;
 	}
 
+	const country_game_data *country_game_data = this->get_country()->get_game_data();
+	if (wonder->get_wealth_cost() > 0 && wonder->get_wealth_cost() > country_game_data->get_wealth_with_credit()) {
+		return false;
+	}
+
+	for (const auto &[commodity, cost] : wonder->get_commodity_costs()) {
+		if (cost > country_game_data->get_stored_commodity(commodity)) {
+			return false;
+		}
+	}
+
 	return this->can_have_wonder(wonder);
+}
+
+void provincial_building_slot::build_wonder(const metternich::wonder *wonder)
+{
+	if (this->get_under_construction_building() != nullptr || this->get_under_construction_wonder() != nullptr) {
+		this->cancel_construction();
+	}
+
+	country_game_data *country_game_data = this->get_country()->get_game_data();
+	if (wonder->get_wealth_cost() > 0) {
+		country_game_data->change_wealth(-wonder->get_wealth_cost());
+	}
+
+	for (const auto &[commodity, cost] : wonder->get_commodity_costs()) {
+		country_game_data->change_stored_commodity(commodity, -cost);
+	}
+
+	this->set_under_construction_wonder(wonder);
+}
+
+void provincial_building_slot::cancel_construction()
+{
+	if (this->get_under_construction_wonder() != nullptr) {
+		country_game_data *country_game_data = this->get_country()->get_game_data();
+		if (this->get_under_construction_wonder()->get_wealth_cost() > 0) {
+			country_game_data->change_wealth(this->get_under_construction_wonder()->get_wealth_cost());
+		}
+
+		for (const auto &[commodity, cost] : this->get_under_construction_wonder()->get_commodity_costs()) {
+			country_game_data->change_stored_commodity(commodity, cost);
+		}
+
+		this->set_under_construction_wonder(nullptr);
+		return;
+	}
+
+	building_slot::cancel_construction();
 }
 
 wonder *provincial_building_slot::get_buildable_wonder() const

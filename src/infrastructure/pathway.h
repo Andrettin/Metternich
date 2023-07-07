@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/commodity_container.h"
 #include "map/terrain_type_container.h"
 
 namespace archimedes {
@@ -22,6 +23,7 @@ class pathway final : public named_data_entry, public data_type<pathway>
 	Q_PROPERTY(metternich::pathway* required_pathway MEMBER required_pathway NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* river_crossing_required_technology MEMBER river_crossing_required_technology NOTIFY changed)
+	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "pathway";
@@ -80,6 +82,16 @@ public:
 		return pathway::base_score * this->get_transport_level();
 	}
 
+	int get_wealth_cost() const
+	{
+		return this->wealth_cost;
+	}
+
+	const commodity_map<int> &get_commodity_costs() const
+	{
+		return this->commodity_costs;
+	}
+
 	bool is_buildable_on_tile(const tile *tile, const direction direction) const;
 
 signals:
@@ -92,6 +104,8 @@ private:
 	technology *required_technology = nullptr;
 	technology *river_crossing_required_technology = nullptr;
 	terrain_type_map<const technology *> terrain_required_technologies;
+	int wealth_cost = 0;
+	commodity_map<int> commodity_costs;
 };
 
 }

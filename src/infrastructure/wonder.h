@@ -15,6 +15,9 @@ template <typename scope_type>
 class condition;
 
 template <typename scope_type>
+class factor;
+
+template <typename scope_type>
 class modifier;
 
 class wonder final : public named_data_entry, public data_type<wonder>
@@ -25,6 +28,7 @@ class wonder final : public named_data_entry, public data_type<wonder>
 	Q_PROPERTY(metternich::building_type* building MEMBER building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
+	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "wonder";
@@ -60,6 +64,21 @@ public:
 
 	int get_score() const;
 
+	int get_wealth_cost() const
+	{
+		return this->wealth_cost;
+	}
+
+	const commodity_map<int> &get_commodity_costs() const
+	{
+		return this->commodity_costs;
+	}
+
+	const factor<country> *get_cost_factor() const
+	{
+		return this->cost_factor.get();
+	}
+
 	const condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -88,6 +107,9 @@ private:
 	building_type *building = nullptr;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
+	int wealth_cost = 0;
+	commodity_map<int> commodity_costs;
+	std::unique_ptr<const factor<country>> cost_factor;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<const condition<province>> province_conditions;
 	std::unique_ptr<modifier<const province>> province_modifier;

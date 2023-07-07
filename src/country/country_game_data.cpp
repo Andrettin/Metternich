@@ -373,7 +373,7 @@ void country_game_data::do_ai_turn()
 		country_building_slot *building_slot = this->get_building_slot(ai_desired_building->get_slot_type());
 		assert_throw(building_slot != nullptr);
 
-		building_slot->set_under_construction_building(ai_desired_building);
+		building_slot->build_building(ai_desired_building);
 	}
 
 	for (const province *province : this->get_provinces()) {

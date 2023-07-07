@@ -67,6 +67,16 @@ public:
 	virtual bool can_have_building(const building_type *building) const;
 	virtual bool can_build_building(const building_type *building) const;
 
+	void build_building(const building_type *building);
+
+	Q_INVOKABLE void build_building(metternich::building_type *building)
+	{
+		const metternich::building_type *const_building = building;
+		this->build_building(const_building);
+	}
+
+	Q_INVOKABLE virtual void cancel_construction();
+
 	Q_INVOKABLE metternich::building_type *get_buildable_building() const;
 
 	virtual const metternich::country *get_country() const = 0;

@@ -55,6 +55,9 @@ public:
 	bool can_have_wonder(const wonder *wonder) const;
 	bool can_build_wonder(const wonder *wonder) const;
 
+	void build_wonder(const wonder *wonder);
+	Q_INVOKABLE virtual void cancel_construction() override;
+
 	Q_INVOKABLE metternich::wonder *get_buildable_wonder() const;
 
 	const metternich::province *get_province() const

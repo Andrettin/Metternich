@@ -2,6 +2,7 @@
 
 #include "infrastructure/wonder.h"
 
+#include "economy/commodity.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
@@ -23,7 +24,16 @@ void wonder::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "conditions") {
+	if (tag == "commodity_costs") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->commodity_costs[commodity] = std::stoi(property.get_value());
+		});
+	} else if (tag == "cost_factor") {
+		auto factor = std::make_unique<metternich::factor<country>>(100);
+		database::process_gsml_data(factor, scope);
+		this->cost_factor = std::move(factor);
+	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);

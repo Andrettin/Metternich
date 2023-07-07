@@ -3,6 +3,7 @@
 #include "infrastructure/pathway.h"
 
 #include "database/defines.h"
+#include "economy/commodity.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "map/tile_image_provider.h"
@@ -27,6 +28,11 @@ void pathway::process_gsml_scope(const gsml_data &scope)
 			this->terrain_required_technologies[terrain] = technology;
 
 			technology->add_enabled_pathway_terrain(this, terrain);
+		});
+	} else if (tag == "commodity_costs") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->commodity_costs[commodity] = std::stoi(property.get_value());
 		});
 	} else {
 		data_entry::process_gsml_scope(scope);

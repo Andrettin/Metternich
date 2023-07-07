@@ -2,6 +2,7 @@
 
 #include "infrastructure/improvement.h"
 
+#include "economy/commodity.h"
 #include "economy/resource.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
@@ -28,6 +29,11 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			this->terrain_image_filepaths[terrain_type::get(key)] = database::get()->get_graphics_path(this->get_module()) / value;
+		});
+	} else if (tag == "commodity_costs") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->commodity_costs[commodity] = std::stoi(property.get_value());
 		});
 	} else {
 		data_entry::process_gsml_scope(scope);
