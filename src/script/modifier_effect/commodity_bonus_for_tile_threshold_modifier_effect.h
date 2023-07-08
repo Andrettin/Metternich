@@ -35,7 +35,7 @@ public:
 	virtual std::string get_base_string() const override
 	{
 		if (this->threshold > 1) {
-			return std::format("{} per Tile Producing at Least {} {}", number::to_signed_string(this->value), this->commodity->get_name(), this->threshold, this->commodity->get_name());
+			return std::format("{} per Tile Producing at Least {} {}", this->commodity->get_name(), this->threshold, this->commodity->get_name());
 		} else {
 			return std::format("{} per {}-Producing Tile", this->commodity->get_name(), this->commodity->get_name());
 		}

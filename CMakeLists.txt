@@ -555,6 +555,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
 	src/script/modifier_effect/land_damage_modifier_effect.h
+	src/script/modifier_effect/land_morale_recovery_modifier_effect.h
 	src/script/modifier_effect/land_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/land_recovery_modifier_effect.h
 	src/script/modifier_effect/melee_modifier_effect.h
