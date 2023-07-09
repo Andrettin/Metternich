@@ -19,6 +19,7 @@ class military_unit final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString name READ get_name_qstring NOTIFY name_changed)
 	Q_PROPERTY(metternich::military_unit_type* type READ get_type_unconst NOTIFY type_changed)
 	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
 	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
@@ -40,6 +41,27 @@ public:
 
 	void do_turn();
 	void do_ai_turn();
+
+	const std::string &get_name() const
+	{
+		return this->name;
+	}
+
+	QString get_name_qstring() const
+	{
+		return QString::fromStdString(this->get_name());
+	}
+
+	void set_name(const std::string &name)
+	{
+		if (name == this->get_name()) {
+			return;
+		}
+
+		this->name = name;
+
+		emit name_changed();
+	}
 
 	const military_unit_type *get_type() const
 	{
@@ -257,6 +279,7 @@ public:
 	int get_score() const;
 
 signals:
+	void name_changed();
 	void type_changed();
 	void icon_changed();
 	void province_changed();
@@ -264,6 +287,7 @@ signals:
 	void site_changed();
 
 private:
+	std::string name;
 	const military_unit_type *type = nullptr;
 	const metternich::country *country = nullptr;
 	const metternich::population_type *population_type = nullptr;
