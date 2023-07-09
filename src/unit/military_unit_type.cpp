@@ -8,9 +8,24 @@
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_class.h"
 #include "unit/military_unit_domain.h"
+#include "unit/promotion.h"
 #include "util/assert_util.h"
 
 namespace metternich {
+
+void military_unit_type::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "free_promotions") {
+		for (const std::string &value : values) {
+			this->free_promotions.push_back(promotion::get(value));
+		}
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
+}
 
 void military_unit_type::initialize()
 {

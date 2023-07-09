@@ -79,6 +79,10 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	this->bonus_vs_cavalry = type->get_bonus_vs_cavalry();
 	this->bonus_vs_artillery = type->get_bonus_vs_artillery();
 	this->bonus_vs_fortifications = type->get_bonus_vs_fortifications();
+
+	for (const promotion *promotion : type->get_free_promotions()) {
+		this->add_promotion(promotion);
+	}
 }
 
 military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
@@ -205,6 +209,29 @@ void military_unit::set_type(const military_unit_type *type)
 	if (type->get_defense() != old_type->get_defense()) {
 		this->change_defense(type->get_defense() - old_type->get_defense());
 	}
+
+	if (type->get_bonus_vs_infantry() != old_type->get_bonus_vs_infantry()) {
+		this->change_bonus_vs_infantry(type->get_bonus_vs_infantry() - old_type->get_bonus_vs_infantry());
+	}
+
+	if (type->get_bonus_vs_cavalry() != old_type->get_bonus_vs_cavalry()) {
+		this->change_bonus_vs_cavalry(type->get_bonus_vs_cavalry() - old_type->get_bonus_vs_cavalry());
+	}
+
+	if (type->get_bonus_vs_artillery() != old_type->get_bonus_vs_artillery()) {
+		this->change_bonus_vs_artillery(type->get_bonus_vs_artillery() - old_type->get_bonus_vs_artillery());
+	}
+
+	if (type->get_bonus_vs_fortifications() != old_type->get_bonus_vs_fortifications()) {
+		this->change_bonus_vs_fortifications(type->get_bonus_vs_fortifications() - old_type->get_bonus_vs_fortifications());
+	}
+
+	for (const promotion *promotion : type->get_free_promotions()) {
+		this->add_promotion(promotion);
+	}
+
+	//check promotions in case any have been invalidated by the type change
+	this->check_promotions();
 
 	emit type_changed();
 }
@@ -432,6 +459,32 @@ void military_unit::remove_promotion(const promotion *promotion)
 
 	if (game::get()->is_running()) {
 		emit promotions_changed();
+	}
+}
+
+void military_unit::check_promotions()
+{
+	std::vector<const promotion *> promotions_to_remove;
+
+	const read_only_context ctx(this);
+
+	for (const promotion *promotion : this->promotions) {
+		if (vector::contains(promotions_to_remove, promotion)) {
+			continue;
+		}
+
+		if (promotion->get_conditions() != nullptr && !promotion->get_conditions()->check(this, ctx)) {
+			promotions_to_remove.push_back(promotion);
+		}
+	}
+
+	if (!promotions_to_remove.empty()) {
+		for (const promotion *promotion : promotions_to_remove) {
+			this->remove_promotion(promotion);
+		}
+
+		//check promotions again, as the removal of a promotion might have invalidated other ones
+		this->check_promotions();
 	}
 }
 

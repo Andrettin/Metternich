@@ -9,6 +9,7 @@ class military_unit_class;
 class cultural_group;
 class culture;
 class icon;
+class promotion;
 class technology;
 enum class military_unit_category;
 enum class military_unit_domain;
@@ -46,6 +47,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -146,6 +148,11 @@ public:
 		return this->required_technology;
 	}
 
+	const std::vector<const promotion *> &get_free_promotions() const
+	{
+		return this->free_promotions;
+	}
+
 	int get_score() const
 	{
 		return this->get_firepower() + this->get_melee() + this->get_range() + this->get_defense() + this->get_resistance() / 4 + this->get_hit_points() + this->get_movement();
@@ -173,6 +180,7 @@ private:
 	int bonus_vs_artillery = 0;
 	int bonus_vs_fortifications = 0;
 	technology *required_technology = nullptr;
+	std::vector<const promotion *> free_promotions;
 };
 
 }
