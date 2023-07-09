@@ -378,6 +378,7 @@ public:
 	void add_promotion(const promotion *promotion);
 	void remove_promotion(const promotion *promotion);
 	void check_promotions();
+	void check_free_promotions();
 
 	void receive_damage(const int damage);
 	void heal(const int healing);

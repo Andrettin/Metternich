@@ -3533,6 +3533,78 @@ void country_game_data::set_gain_technologies_known_by_others_count(const int va
 	}
 }
 
+void country_game_data::set_free_infantry_promotion_count(const promotion *promotion, const int value)
+{
+	const int old_value = this->get_free_infantry_promotion_count(promotion);
+	if (value == old_value) {
+		return;
+	}
+
+	assert_throw(value >= 0);
+
+	if (value == 0) {
+		this->free_infantry_promotion_counts.erase(promotion);
+	} else if (old_value == 0) {
+		this->free_infantry_promotion_counts[promotion] = value;
+
+		for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
+			if (!military_unit->get_type()->is_infantry()) {
+				continue;
+			}
+
+			military_unit->check_free_promotions();
+		}
+	}
+}
+
+void country_game_data::set_free_cavalry_promotion_count(const promotion *promotion, const int value)
+{
+	const int old_value = this->get_free_cavalry_promotion_count(promotion);
+	if (value == old_value) {
+		return;
+	}
+
+	assert_throw(value >= 0);
+
+	if (value == 0) {
+		this->free_cavalry_promotion_counts.erase(promotion);
+	} else if (old_value == 0) {
+		this->free_cavalry_promotion_counts[promotion] = value;
+
+		for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
+			if (!military_unit->get_type()->is_cavalry()) {
+				continue;
+			}
+
+			military_unit->check_free_promotions();
+		}
+	}
+}
+
+void country_game_data::set_free_artillery_promotion_count(const promotion *promotion, const int value)
+{
+	const int old_value = this->get_free_artillery_promotion_count(promotion);
+	if (value == old_value) {
+		return;
+	}
+
+	assert_throw(value >= 0);
+
+	if (value == 0) {
+		this->free_artillery_promotion_counts.erase(promotion);
+	} else if (old_value == 0) {
+		this->free_artillery_promotion_counts[promotion] = value;
+
+		for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
+			if (!military_unit->get_type()->is_artillery()) {
+				continue;
+			}
+
+			military_unit->check_free_promotions();
+		}
+	}
+}
+
 void country_game_data::set_free_consulate_count(const consulate *consulate, const int value)
 {
 	const int old_value = this->get_free_consulate_count(consulate);

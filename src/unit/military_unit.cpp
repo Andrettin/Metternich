@@ -20,6 +20,7 @@
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
 #include "unit/promotion.h"
+#include "unit/promotion_container.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -80,9 +81,7 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	this->bonus_vs_artillery = type->get_bonus_vs_artillery();
 	this->bonus_vs_fortifications = type->get_bonus_vs_fortifications();
 
-	for (const promotion *promotion : type->get_free_promotions()) {
-		this->add_promotion(promotion);
-	}
+	this->check_free_promotions();
 }
 
 military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
@@ -226,11 +225,7 @@ void military_unit::set_type(const military_unit_type *type)
 		this->change_bonus_vs_fortifications(type->get_bonus_vs_fortifications() - old_type->get_bonus_vs_fortifications());
 	}
 
-	for (const promotion *promotion : type->get_free_promotions()) {
-		this->add_promotion(promotion);
-	}
-
-	//check promotions in case any have been invalidated by the type change
+	//check promotions in case any have been invalidated by the type change, or if new free promotions have been gained
 	this->check_promotions();
 
 	emit type_changed();
@@ -464,6 +459,8 @@ void military_unit::remove_promotion(const promotion *promotion)
 
 void military_unit::check_promotions()
 {
+	this->check_free_promotions();
+
 	std::vector<const promotion *> promotions_to_remove;
 
 	const read_only_context ctx(this);
@@ -485,6 +482,48 @@ void military_unit::check_promotions()
 
 		//check promotions again, as the removal of a promotion might have invalidated other ones
 		this->check_promotions();
+	}
+}
+
+void military_unit::check_free_promotions()
+{
+	for (const promotion *promotion : this->get_type()->get_free_promotions()) {
+		if (this->has_promotion(promotion)) {
+			continue;
+		}
+
+		if (!this->can_have_promotion(promotion)) {
+			continue;
+		}
+
+		this->add_promotion(promotion);
+	}
+
+	const promotion_map<int> *free_promotion_map = nullptr;
+	if (this->get_country() != nullptr) {
+		if (this->get_type()->is_infantry()) {
+			free_promotion_map = &this->get_country()->get_game_data()->get_free_infantry_promotion_counts();
+		} else if (this->get_type()->is_cavalry()) {
+			free_promotion_map = &this->get_country()->get_game_data()->get_free_cavalry_promotion_counts();
+		} else if (this->get_type()->is_artillery()) {
+			free_promotion_map = &this->get_country()->get_game_data()->get_free_artillery_promotion_counts();
+		}
+	}
+
+	if (free_promotion_map != nullptr) {
+		for (const auto &[promotion, count] : *free_promotion_map) {
+			assert_throw(count > 0);
+
+			if (this->has_promotion(promotion)) {
+				continue;
+			}
+
+			if (!this->can_have_promotion(promotion)) {
+				continue;
+			}
+
+			this->add_promotion(promotion);
+		}
 	}
 }
 

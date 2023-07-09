@@ -15,6 +15,7 @@
 #include "population/population_type_container.h"
 #include "script/opinion_modifier_container.h"
 #include "technology/technology_container.h"
+#include "unit/promotion_container.h"
 #include "util/fractional_int.h"
 #include "util/point_container.h"
 #include "util/qunique_ptr.h"
@@ -1248,6 +1249,75 @@ public:
 		this->set_gain_technologies_known_by_others_count(this->get_gain_technologies_known_by_others_count()  + value);
 	}
 
+	const promotion_map<int> &get_free_infantry_promotion_counts() const
+	{
+		return this->free_infantry_promotion_counts;
+	}
+
+	int get_free_infantry_promotion_count(const promotion *promotion) const
+	{
+		const auto find_iterator = this->free_infantry_promotion_counts.find(promotion);
+
+		if (find_iterator != this->free_infantry_promotion_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_free_infantry_promotion_count(const promotion *promotion, const int value);
+
+	void change_free_infantry_promotion_count(const promotion *promotion, const int value)
+	{
+		this->set_free_infantry_promotion_count(promotion, this->get_free_infantry_promotion_count(promotion) + value);
+	}
+
+	const promotion_map<int> &get_free_cavalry_promotion_counts() const
+	{
+		return this->free_cavalry_promotion_counts;
+	}
+
+	int get_free_cavalry_promotion_count(const promotion *promotion) const
+	{
+		const auto find_iterator = this->free_cavalry_promotion_counts.find(promotion);
+
+		if (find_iterator != this->free_cavalry_promotion_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_free_cavalry_promotion_count(const promotion *promotion, const int value);
+
+	void change_free_cavalry_promotion_count(const promotion *promotion, const int value)
+	{
+		this->set_free_cavalry_promotion_count(promotion, this->get_free_cavalry_promotion_count(promotion) + value);
+	}
+
+	const promotion_map<int> &get_free_artillery_promotion_counts() const
+	{
+		return this->free_artillery_promotion_counts;
+	}
+
+	int get_free_artillery_promotion_count(const promotion *promotion) const
+	{
+		const auto find_iterator = this->free_artillery_promotion_counts.find(promotion);
+
+		if (find_iterator != this->free_artillery_promotion_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_free_artillery_promotion_count(const promotion *promotion, const int value);
+
+	void change_free_artillery_promotion_count(const promotion *promotion, const int value)
+	{
+		this->set_free_artillery_promotion_count(promotion, this->get_free_artillery_promotion_count(promotion) + value);
+	}
+
 	int get_free_consulate_count(const consulate *consulate) const
 	{
 		const auto find_iterator = this->free_consulate_counts.find(consulate);
@@ -1454,6 +1524,9 @@ private:
 	std::vector<const journal_entry *> inactive_journal_entries;
 	std::vector<const journal_entry *> finished_journal_entries;
 	int gain_technologies_known_by_others_count = 0;
+	promotion_map<int> free_infantry_promotion_counts;
+	promotion_map<int> free_cavalry_promotion_counts;
+	promotion_map<int> free_artillery_promotion_counts;
 	consulate_map<int> free_consulate_counts;
 	building_type_map<int> ai_building_desire_modifiers;
 	province_map<building_type_map<int>> ai_provincial_building_desire_modifiers;

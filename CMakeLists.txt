@@ -241,6 +241,7 @@ set(unit_SRCS
 	src/unit/military_unit_type.cpp
 	src/unit/military_unit_type_container.cpp
 	src/unit/promotion.cpp
+	src/unit/promotion_container.cpp
 	src/unit/transporter_category.cpp
 	src/unit/transporter_class.cpp
 	src/unit/transporter_class_container.cpp
@@ -564,7 +565,10 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/defense_modifier_effect.h
 	src/script/modifier_effect/deployment_limit_modifier_effect.h
 	src/script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h
+	src/script/modifier_effect/free_artillery_promotion_modifier_effect.h
+	src/script/modifier_effect/free_cavalry_promotion_modifier_effect.h
 	src/script/modifier_effect/free_consulate_modifier_effect.h
+	src/script/modifier_effect/free_infantry_promotion_modifier_effect.h
 	src/script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
 	src/script/modifier_effect/land_damage_modifier_effect.h
@@ -633,6 +637,7 @@ set(unit_HDRS
 	src/unit/military_unit_type.h
 	src/unit/military_unit_type_container.h
 	src/unit/promotion.h
+	src/unit/promotion_container.h
 	src/unit/transporter_category.h
 	src/unit/transporter_class.h
 	src/unit/transporter_class_container.h
