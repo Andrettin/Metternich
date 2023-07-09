@@ -41,6 +41,9 @@
 #include "script/condition/is_advisor_condition.h"
 #include "script/condition/is_ruler_condition.h"
 #include "script/condition/location_condition.h"
+#include "script/condition/military_unit_category_condition.h"
+#include "script/condition/military_unit_domain_condition.h"
+#include "script/condition/military_unit_type_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
 #include "script/condition/owns_province_condition.h"
@@ -64,6 +67,7 @@
 #include "script/condition/war_condition.h"
 #include "script/condition/wealth_condition.h"
 #include "script/condition/year_condition.h"
+#include "unit/military_unit.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -114,6 +118,14 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<wealth_condition<scope_type>>(value, condition_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
+		if (key == "military_unit_category") {
+			return std::make_unique<military_unit_category_condition>(value, condition_operator);
+		} else if (key == "military_unit_domain") {
+			return std::make_unique<military_unit_domain_condition>(value, condition_operator);
+		} else if (key == "military_unit_type") {
+			return std::make_unique<military_unit_type_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		if (key == "ideology") {
@@ -265,7 +277,7 @@ const country *condition<scope_type>::get_scope_country(const scope_type *scope)
 		return condition<province>::get_scope_country(scope->get_home_province());
 	} else if constexpr (std::is_same_v<scope_type, country>) {
 		return scope;
-	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+	} else if constexpr (std::is_same_v<scope_type, military_unit> || std::is_same_v<scope_type, population_unit>) {
 		return scope->get_country();
 	} else if constexpr (std::is_same_v<scope_type, province>) {
 		return scope->get_game_data()->get_owner();

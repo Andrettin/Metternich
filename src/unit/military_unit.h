@@ -21,7 +21,7 @@ class military_unit final : public QObject
 
 	Q_PROPERTY(metternich::military_unit_type* type READ get_type_unconst NOTIFY type_changed)
 	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
-	Q_PROPERTY(metternich::country* owner READ get_owner_unconst CONSTANT)
+	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
 	Q_PROPERTY(metternich::site* site READ get_site_unconst NOTIFY site_changed)
 
@@ -34,8 +34,8 @@ public:
 	static int get_army_score(const std::vector<military_unit *> &military_units);
 
 	explicit military_unit(const military_unit_type *type);
-	explicit military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
-	explicit military_unit(const military_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
+	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
+	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
 	explicit military_unit(const military_unit_type *type, const character *character);
 
 	void do_turn();
@@ -69,16 +69,16 @@ private:
 	}
 
 public:
-	const country *get_owner() const
+	const metternich::country *get_country() const
 	{
-		return this->owner;
+		return this->country;
 	}
 
 private:
 	//for the Qt property (pointers there can't be const)
-	country *get_owner_unconst() const
+	metternich::country *get_country_unconst() const
 	{
-		return const_cast<country *>(this->get_owner());
+		return const_cast<metternich::country *>(this->get_country());
 	}
 
 public:
@@ -265,7 +265,7 @@ signals:
 
 private:
 	const military_unit_type *type = nullptr;
-	const country *owner = nullptr;
+	const metternich::country *country = nullptr;
 	const metternich::population_type *population_type = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;

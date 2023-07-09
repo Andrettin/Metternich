@@ -93,6 +93,35 @@ public:
 	}
 };
 
+class military_unit_scripted_condition final : public data_entry, public data_type<military_unit_scripted_condition>, public scripted_condition_base<military_unit>
+{
+	Q_OBJECT
+
+public:
+	static constexpr const char class_identifier[] = "military_unit_scripted_condition";
+	static constexpr const char property_class_identifier[] = "metternich::military_unit_scripted_condition*";
+	static constexpr const char database_folder[] = "scripted_conditions/military_unit";
+
+	explicit military_unit_scripted_condition(const std::string &identifier) : data_entry(identifier)
+	{
+	}
+
+	virtual void process_gsml_property(const gsml_property &property) override
+	{
+		scripted_condition_base::process_gsml_property(property);
+	}
+
+	virtual void process_gsml_scope(const gsml_data &scope) override
+	{
+		scripted_condition_base::process_gsml_scope(scope);
+	}
+
+	virtual void check() const override
+	{
+		scripted_condition_base::check();
+	}
+};
+
 class population_unit_scripted_condition final : public data_entry, public data_type<population_unit_scripted_condition>, public scripted_condition_base<population_unit>
 {
 	Q_OBJECT

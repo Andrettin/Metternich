@@ -27,6 +27,7 @@ not_condition<scope_type>::not_condition(std::unique_ptr<const condition<scope_t
 
 template class not_condition<character>;
 template class not_condition<country>;
+template class not_condition<military_unit>;
 template class not_condition<population_unit>;
 template class not_condition<province>;
 template class not_condition<site>;

@@ -70,16 +70,16 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	this->defense = type->get_defense();
 }
 
-military_unit::military_unit(const military_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
+military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
 	: military_unit(type)
 {
-	this->owner = owner;
+	this->country = country;
 	this->population_type = population_type;
 	this->culture = culture;
 	this->religion = religion;
 	this->phenotype = phenotype;
 
-	assert_throw(this->get_owner() != nullptr);
+	assert_throw(this->get_country() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
@@ -87,8 +87,8 @@ military_unit::military_unit(const military_unit_type *type, const country *owne
 	connect(this, &military_unit::type_changed, this, &military_unit::icon_changed);
 }
 
-military_unit::military_unit(const military_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
-	: military_unit(type, owner, culture, religion, phenotype)
+military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
+	: military_unit(type, country, culture, religion, phenotype)
 {
 	this->population_type = population_type;
 
@@ -131,12 +131,12 @@ void military_unit::do_turn()
 			//when ships move to a water zone, explore all adjacent water zones and coasts as well
 			if (this->get_province()->is_water_zone()) {
 				for (const metternich::province *neighbor_province : this->get_province()->get_game_data()->get_neighbor_provinces()) {
-					if (this->get_owner()->get_game_data()->is_province_explored(neighbor_province)) {
+					if (this->get_country()->get_game_data()->is_province_explored(neighbor_province)) {
 						continue;
 					}
 
 					if (neighbor_province->is_water_zone()) {
-						this->get_owner()->get_game_data()->explore_province(neighbor_province);
+						this->get_country()->get_game_data()->explore_province(neighbor_province);
 					} else {
 						//for coastal provinces bordering the water zone, explore all their tiles bordering it
 						for (const QPoint &coastal_tile_pos : neighbor_province->get_game_data()->get_border_tiles()) {
@@ -144,8 +144,8 @@ void military_unit::do_turn()
 								continue;
 							}
 
-							if (!this->get_owner()->get_game_data()->is_tile_explored(coastal_tile_pos)) {
-								this->get_owner()->get_game_data()->explore_tile(coastal_tile_pos);
+							if (!this->get_country()->get_game_data()->is_tile_explored(coastal_tile_pos)) {
+								this->get_country()->get_game_data()->explore_tile(coastal_tile_pos);
 							}
 						}
 					}
@@ -260,13 +260,13 @@ bool military_unit::can_move_to(const metternich::province *province) const
 		//water zones can be freely moved to, if there is a path to them, as they are never owned by countries
 		return true;
 	} else {
-		const country *province_owner = province->get_game_data()->get_owner();
-		if (province_owner == this->get_owner()) {
+		const metternich::country *province_owner = province->get_game_data()->get_owner();
+		if (province_owner == this->get_country()) {
 			return true;
 		}
 
 		if (province_owner != nullptr) {
-			return province_owner->get_game_data()->is_any_vassal_of(this->get_owner());
+			return province_owner->get_game_data()->is_any_vassal_of(this->get_country());
 		}
 	}
 
@@ -344,18 +344,18 @@ int military_unit::get_morale_resistance() const
 {
 	int morale_resistance = 0;
 
-	if (this->get_owner() != nullptr) {
-		const country_game_data *owner_game_data = this->get_owner()->get_game_data();
+	if (this->get_country() != nullptr) {
+		const country_game_data *country_game_data = this->get_country()->get_game_data();
 
 		switch (this->get_domain()) {
 			case military_unit_domain::land:
-				morale_resistance += owner_game_data->get_land_morale_resistance_modifier();
+				morale_resistance += country_game_data->get_land_morale_resistance_modifier();
 				break;
 			case military_unit_domain::water:
-				morale_resistance += owner_game_data->get_naval_morale_resistance_modifier();
+				morale_resistance += country_game_data->get_naval_morale_resistance_modifier();
 				break;
 			case military_unit_domain::air:
-				morale_resistance += owner_game_data->get_air_morale_resistance_modifier();
+				morale_resistance += country_game_data->get_air_morale_resistance_modifier();
 				break;
 			default:
 				break;
@@ -402,8 +402,8 @@ void military_unit::disband(const bool restore_population_unit)
 		}
 	}
 
-	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->remove_military_unit(this);
+	if (this->get_country() != nullptr) {
+		this->get_country()->get_game_data()->remove_military_unit(this);
 
 		if (restore_population_unit) {
 			assert_throw(this->get_population_type() != nullptr);
@@ -411,7 +411,7 @@ void military_unit::disband(const bool restore_population_unit)
 			assert_throw(this->get_religion() != nullptr);
 			assert_throw(this->get_phenotype() != nullptr);
 
-			this->get_owner()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
+			this->get_country()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
 		}
 	}
 }

@@ -35,7 +35,7 @@ public:
 		std::vector<const character *> potential_characters;
 
 		for (const military_unit *military_unit : ctx.attacking_military_units) {
-			if (military_unit->get_owner() != scope) {
+			if (military_unit->get_country() != scope) {
 				continue;
 			}
 
@@ -49,7 +49,7 @@ public:
 		}
 
 		for (const military_unit *military_unit : ctx.defending_military_units) {
-			if (military_unit->get_owner() != scope) {
+			if (military_unit->get_country() != scope) {
 				continue;
 			}
 

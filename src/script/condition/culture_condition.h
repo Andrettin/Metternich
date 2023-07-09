@@ -27,7 +27,7 @@ public:
 
 		const metternich::culture *culture = nullptr;
 
-		if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country> || std::is_same_v<scope_type, population_unit>) {
+		if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country> || std::is_same_v<scope_type, military_unit> || std::is_same_v<scope_type, population_unit>) {
 			culture = scope->get_culture();
 		} else {
 			culture = scope->get_game_data()->get_culture();

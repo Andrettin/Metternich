@@ -27,7 +27,7 @@ public:
 
 		const metternich::religion *religion = nullptr;
 
-		if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, population_unit>) {
+		if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, military_unit> || std::is_same_v<scope_type, population_unit>) {
 			religion = scope->get_religion();
 		} else {
 			religion = scope->get_game_data()->get_religion();

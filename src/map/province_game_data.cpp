@@ -117,7 +117,7 @@ void province_game_data::do_ai_turn()
 
 			const std::vector<military_unit *> military_units = this->get_military_units();
 			for (military_unit *military_unit : military_units) {
-				if (military_unit->get_owner() != this->get_owner()) {
+				if (military_unit->get_country() != this->get_owner()) {
 					continue;
 				}
 
@@ -602,7 +602,7 @@ void province_game_data::change_military_unit_category_count(const military_unit
 bool province_game_data::has_country_military_unit(const country *country) const
 {
 	for (const military_unit *military_unit : this->get_military_units()) {
-		if (military_unit->get_owner() == country) {
+		if (military_unit->get_country() == country) {
 			return true;
 		}
 	}
@@ -615,7 +615,7 @@ int province_game_data::get_country_military_unit_category_count(const metternic
 	int count = 0;
 
 	for (const military_unit *military_unit : this->get_military_units()) {
-		if (military_unit->get_category() == category && military_unit->get_owner() == country) {
+		if (military_unit->get_category() == category && military_unit->get_country() == country) {
 			++count;
 		}
 	}

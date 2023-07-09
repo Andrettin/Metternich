@@ -19,11 +19,10 @@ enum class special_target_type;
 template <bool read_only>
 struct context_base
 {
+	using military_unit_ptr = std::conditional_t<read_only, const military_unit *, military_unit *>;
 	using population_unit_type = std::conditional_t<read_only, const population_unit, population_unit>;
 	using population_unit_ptr = population_unit_type *;
-	using scope_variant_type = std::variant<std::monostate, const character *, const country *, population_unit_ptr, const province *, const site *>;
-
-	using military_unit_ptr = std::conditional_t<read_only, const military_unit *, military_unit *>;
+	using scope_variant_type = std::variant<std::monostate, const character *, const country *, military_unit_ptr, population_unit_ptr, const province *, const site *>;
 
 	context_base()
 	{

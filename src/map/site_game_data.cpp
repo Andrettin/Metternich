@@ -30,7 +30,7 @@ void site_game_data::do_turn()
 		assert_throw(this->get_improvement() != nullptr);
 		assert_throw(this->get_improvement()->is_ruins());
 
-		const country *country = this->get_visiting_military_units().front()->get_owner();
+		const country *country = this->get_visiting_military_units().front()->get_country();
 		context ctx(country);
 		ctx.source_scope = this->site;
 		ctx.attacking_military_units = this->get_visiting_military_units();

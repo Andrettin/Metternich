@@ -6,6 +6,7 @@ namespace metternich {
 
 class character;
 class country;
+class military_unit;
 class population_unit;
 class province;
 class site;
@@ -86,6 +87,7 @@ private:
 
 extern template class or_condition<character>;
 extern template class or_condition<country>;
+extern template class or_condition<military_unit>;
 extern template class or_condition<population_unit>;
 extern template class or_condition<province>;
 extern template class or_condition<site>;

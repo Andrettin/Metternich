@@ -142,7 +142,7 @@ void engine_interface::change_selected_military_unit_category_count(const metter
 		int added_count = 0;
 
 		for (military_unit *military_unit : province_game_data->get_military_units()) {
-			if (military_unit->get_owner() != game::get()->get_player_country()) {
+			if (military_unit->get_country() != game::get()->get_player_country()) {
 				continue;
 			}
 
