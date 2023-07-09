@@ -37,7 +37,7 @@ class character_game_data final : public QObject
 public:
 	explicit character_game_data(const metternich::character *character);
 
-	void on_game_started();
+	void on_setup_finished();
 
 	const metternich::portrait *get_portrait() const
 	{

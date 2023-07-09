@@ -38,7 +38,7 @@ character_game_data::character_game_data(const metternich::character *character)
 	this->portrait = this->character->get_portrait();
 }
 
-void character_game_data::on_game_started()
+void character_game_data::on_setup_finished()
 {
 	for (const trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);

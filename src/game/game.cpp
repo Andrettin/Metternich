@@ -1010,7 +1010,7 @@ void game::on_setup_finished()
 	}
 
 	for (const character *character : character::get_all()) {
-		character->get_game_data()->on_game_started();
+		character->get_game_data()->on_setup_finished();
 
 		emit character->game_data_changed();
 	}
