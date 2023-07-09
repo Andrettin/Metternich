@@ -20,7 +20,7 @@ class historical_military_unit final : public named_data_entry, public data_type
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::military_unit_type* type MEMBER type)
-	Q_PROPERTY(metternich::country* owner MEMBER owner)
+	Q_PROPERTY(metternich::country* country MEMBER country)
 	Q_PROPERTY(metternich::province* home_province MEMBER home_province)
 	Q_PROPERTY(metternich::population_type* population_type MEMBER population_type)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
@@ -51,9 +51,9 @@ public:
 		return this->type;
 	}
 
-	const country *get_owner() const
+	const metternich::country *get_country() const
 	{
-		return this->owner;
+		return this->country;
 	}
 
 	const province *get_home_province() const
@@ -83,7 +83,7 @@ public:
 
 private:
 	military_unit_type *type = nullptr;
-	country *owner = nullptr;
+	metternich::country *country = nullptr;
 	province *home_province = nullptr;
 	metternich::population_type *population_type = nullptr;
 	metternich::culture *culture = nullptr;

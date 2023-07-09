@@ -736,21 +736,21 @@ void game::apply_history(const metternich::scenario *scenario)
 				continue;
 			}
 
-			const country *owner = historical_military_unit->get_owner();
+			const country *country = historical_military_unit->get_country();
 
-			if (owner == nullptr) {
-				owner = province->get_game_data()->get_owner();
+			if (country == nullptr) {
+				country = province->get_game_data()->get_owner();
 			}
 
-			assert_throw(owner != nullptr);
-			assert_throw(owner->get_game_data()->is_alive());
+			assert_throw(country != nullptr);
+			assert_throw(country->get_game_data()->is_alive());
 
 			const metternich::province *home_province = historical_military_unit->get_home_province();
 			if (home_province == nullptr) {
-				if (province->get_game_data()->get_owner() == owner) {
+				if (province->get_game_data()->get_owner() == country) {
 					home_province = province;
-				} else if (!owner->get_game_data()->is_under_anarchy()) {
-					home_province = owner->get_capital_province();
+				} else if (!country->get_game_data()->is_under_anarchy()) {
+					home_province = country->get_capital_province();
 				} else {
 					continue;
 				}
@@ -762,7 +762,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				if (home_province->get_game_data()->get_culture() != nullptr) {
 					culture = home_province->get_game_data()->get_culture();
 				} else {
-					culture = owner->get_culture();
+					culture = country->get_culture();
 				}
 			}
 			assert_throw(culture != nullptr);
@@ -772,7 +772,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				if (home_province->get_game_data()->get_religion() != nullptr) {
 					religion = home_province->get_game_data()->get_religion();
 				} else {
-					religion = owner->get_game_data()->get_religion();
+					religion = country->get_game_data()->get_religion();
 				}
 			}
 			assert_throw(religion != nullptr);
@@ -789,10 +789,14 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(phenotype != nullptr);
 
-			auto military_unit = make_qunique<metternich::military_unit>(historical_military_unit->get_type(), owner, population_type, culture, religion, phenotype);
+			auto military_unit = make_qunique<metternich::military_unit>(historical_military_unit->get_type(), country, population_type, culture, religion, phenotype);
 			military_unit->set_province(province);
 
-			owner->get_game_data()->add_military_unit(std::move(military_unit));
+			for (const promotion *promotion : historical_military_unit_history->get_promotions()) {
+				military_unit->add_promotion(promotion);
+			}
+
+			country->get_game_data()->add_military_unit(std::move(military_unit));
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to apply history for scenario \"" + scenario->get_identifier() + "\"."));
