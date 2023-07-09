@@ -446,9 +446,11 @@ set(script_condition_HDRS
 	src/script/condition/age_condition.h
 	src/script/condition/and_condition.h
 	src/script/condition/any_neighbor_country_condition.h
+	src/script/condition/artillery_condition.h
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/capital_condition.h
+	src/script/condition/cavalry_condition.h
 	src/script/condition/coastal_condition.h
 	src/script/condition/colony_condition.h
 	src/script/condition/commodity_condition.h
@@ -469,6 +471,7 @@ set(script_condition_HDRS
 	src/script/condition/has_terrain_condition.h
 	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h
+	src/script/condition/infantry_condition.h
 	src/script/condition/is_advisor_condition.h
 	src/script/condition/is_ruler_condition.h
 	src/script/condition/location_condition.h

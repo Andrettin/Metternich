@@ -16,9 +16,11 @@
 #include "script/condition/age_condition.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
+#include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/can_have_trait_condition.h"
 #include "script/condition/capital_condition.h"
+#include "script/condition/cavalry_condition.h"
 #include "script/condition/coastal_condition.h"
 #include "script/condition/colony_condition.h"
 #include "script/condition/commodity_condition.h"
@@ -38,6 +40,7 @@
 #include "script/condition/has_terrain_condition.h"
 #include "script/condition/ideology_condition.h"
 #include "script/condition/improvement_condition.h"
+#include "script/condition/infantry_condition.h"
 #include "script/condition/is_advisor_condition.h"
 #include "script/condition/is_ruler_condition.h"
 #include "script/condition/location_condition.h"
@@ -121,7 +124,13 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
-		if (key == "military_unit_category") {
+		if (key == "artillery") {
+			return std::make_unique<artillery_condition>(value, condition_operator);
+		} else if (key == "cavalry") {
+			return std::make_unique<cavalry_condition>(value, condition_operator);
+		} else if (key == "infantry") {
+			return std::make_unique<infantry_condition>(value, condition_operator);
+		} else if (key == "military_unit_category") {
 			return std::make_unique<military_unit_category_condition>(value, condition_operator);
 		} else if (key == "military_unit_domain") {
 			return std::make_unique<military_unit_domain_condition>(value, condition_operator);
