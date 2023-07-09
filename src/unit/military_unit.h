@@ -9,6 +9,7 @@ class icon;
 class military_unit_type;
 class phenotype;
 class population_type;
+class promotion;
 class province;
 class religion;
 class site;
@@ -25,6 +26,7 @@ class military_unit final : public QObject
 	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
 	Q_PROPERTY(metternich::site* site READ get_site_unconst NOTIFY site_changed)
+	Q_PROPERTY(QVariantList promotions READ get_promotions_qvariant_list NOTIFY promotions_changed)
 
 public:
 	static constexpr int hit_point_recovery_per_turn = 10;
@@ -270,6 +272,17 @@ public:
 		this->set_defense(this->get_defense() + change);
 	}
 
+	const std::vector<const promotion *> &get_promotions() const
+	{
+		return this->promotions;
+	}
+
+	QVariantList get_promotions_qvariant_list() const;
+	bool can_have_promotion(const promotion *promotion) const;
+	bool has_promotion(const promotion *promotion) const;
+	void add_promotion(const promotion *promotion);
+	void remove_promotion(const promotion *promotion);
+
 	void receive_damage(const int damage);
 	void heal(const int healing);
 
@@ -285,6 +298,7 @@ signals:
 	void province_changed();
 	void original_province_changed();
 	void site_changed();
+	void promotions_changed();
 
 private:
 	std::string name;
@@ -303,6 +317,7 @@ private:
 	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat
 	int melee = 0;
 	int defense = 0;
+	std::vector<const promotion *> promotions;
 };
 
 }

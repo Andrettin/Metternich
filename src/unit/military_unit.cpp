@@ -8,16 +8,23 @@
 #include "country/country_game_data.h"
 #include "country/culture.h"
 #include "country/religion.h"
+#include "game/game.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "script/condition/condition.h"
+#include "script/modifier.h"
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
+#include "unit/promotion.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
+#include "util/log_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -365,6 +372,63 @@ int military_unit::get_morale_resistance() const
 	//FIXME: add morale resistance from commander
 
 	return morale_resistance;
+}
+
+QVariantList military_unit::get_promotions_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_promotions());
+}
+
+bool military_unit::can_have_promotion(const promotion *promotion) const
+{
+	if (promotion->get_conditions() != nullptr && !promotion->get_conditions()->check(this, read_only_context(this))) {
+		return false;
+	}
+
+	return true;
+}
+
+bool military_unit::has_promotion(const promotion *promotion) const
+{
+	return vector::contains(this->get_promotions(), promotion);
+}
+
+void military_unit::add_promotion(const promotion *promotion)
+{
+	if (vector::contains(this->get_promotions(), promotion)) {
+		log::log_error(std::format("Tried to add promotion \"{}\" to military unit \"{}\" ({}), but it already has the promotion.", promotion->get_identifier(), this->get_name(), this->get_type()->get_name()));
+		return;
+	}
+
+	const read_only_context ctx(this);
+
+	if (promotion->get_conditions() != nullptr && !promotion->get_conditions()->check(this, ctx)) {
+		log::log_error(std::format("Tried to add promotion \"{}\" to military unit \"{}\" ({}), for which the promotion's conditions are not fulfilled.", promotion->get_identifier(), this->get_name(), this->get_type()->get_name()));
+		return;
+	}
+
+	this->promotions.push_back(promotion);
+
+	if (promotion->get_modifier() != nullptr) {
+		promotion->get_modifier()->apply(this);
+	}
+
+	if (game::get()->is_running()) {
+		emit promotions_changed();
+	}
+}
+
+void military_unit::remove_promotion(const promotion *promotion)
+{
+	std::erase(this->promotions, promotion);
+
+	if (promotion->get_modifier() != nullptr) {
+		promotion->get_modifier()->remove(this);
+	}
+
+	if (game::get()->is_running()) {
+		emit promotions_changed();
+	}
 }
 
 void military_unit::receive_damage(const int damage)

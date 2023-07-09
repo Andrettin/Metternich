@@ -240,6 +240,7 @@ set(unit_SRCS
 	src/unit/military_unit_category.cpp
 	src/unit/military_unit_type.cpp
 	src/unit/military_unit_type_container.cpp
+	src/unit/promotion.cpp
 	src/unit/transporter_category.cpp
 	src/unit/transporter_class.cpp
 	src/unit/transporter_class_container.cpp
@@ -622,6 +623,7 @@ set(unit_HDRS
 	src/unit/military_unit_category.h
 	src/unit/military_unit_type.h
 	src/unit/military_unit_type_container.h
+	src/unit/promotion.h
 	src/unit/transporter_category.h
 	src/unit/transporter_class.h
 	src/unit/transporter_class_container.h
