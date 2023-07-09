@@ -10,6 +10,10 @@
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
 #include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
+#include "script/modifier_effect/bonus_vs_artillery_modifier_effect.h"
+#include "script/modifier_effect/bonus_vs_cavalry_modifier_effect.h"
+#include "script/modifier_effect/bonus_vs_fortifications_modifier_effect.h"
+#include "script/modifier_effect/bonus_vs_infantry_modifier_effect.h"
 #include "script/modifier_effect/building_capacity_modifier_effect.h"
 #include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/cavalry_cost_modifier_effect.h"
@@ -94,7 +98,15 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<category_research_modifier_effect<scope_type>>(category, value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
-		if (key == "defense") {
+		if (key == "bonus_vs_artillery") {
+			return std::make_unique<bonus_vs_artillery_modifier_effect>(value);
+		} else if (key == "bonus_vs_cavalry") {
+			return std::make_unique<bonus_vs_cavalry_modifier_effect>(value);
+		} else if (key == "bonus_vs_fortifications") {
+			return std::make_unique<bonus_vs_fortifications_modifier_effect>(value);
+		} else if (key == "bonus_vs_infantry") {
+			return std::make_unique<bonus_vs_infantry_modifier_effect>(value);
+		} else if (key == "defense") {
 			return std::make_unique<defense_modifier_effect>(value);
 		} else if (key == "melee") {
 			return std::make_unique<melee_modifier_effect>(value);

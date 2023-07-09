@@ -62,4 +62,41 @@ military_unit_domain military_unit_type::get_domain() const
 	return this->get_unit_class()->get_domain();
 }
 
+bool military_unit_type::is_infantry() const
+{
+	switch (this->get_category()) {
+		case military_unit_category::militia:
+		case military_unit_category::light_infantry:
+		case military_unit_category::regular_infantry:
+		case military_unit_category::heavy_infantry:
+		case military_unit_category::bowmen:
+			return true;
+		default:
+			return false;
+	}
+}
+
+bool military_unit_type::is_cavalry() const
+{
+	switch (this->get_category()) {
+		case military_unit_category::light_cavalry:
+		case military_unit_category::heavy_cavalry:
+		case military_unit_category::spear_cavalry:
+			return true;
+		default:
+			return false;
+	}
+}
+
+bool military_unit_type::is_artillery() const
+{
+	switch (this->get_category()) {
+		case military_unit_category::light_artillery:
+		case military_unit_category::heavy_artillery:
+			return true;
+		default:
+			return false;
+	}
+}
+
 }

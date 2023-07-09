@@ -75,6 +75,10 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 
 	this->melee = type->get_melee();
 	this->defense = type->get_defense();
+	this->bonus_vs_infantry = type->get_bonus_vs_infantry();
+	this->bonus_vs_cavalry = type->get_bonus_vs_cavalry();
+	this->bonus_vs_artillery = type->get_bonus_vs_artillery();
+	this->bonus_vs_fortifications = type->get_bonus_vs_fortifications();
 }
 
 military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)

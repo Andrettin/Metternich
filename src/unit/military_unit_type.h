@@ -30,6 +30,10 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(int movement MEMBER movement READ get_movement NOTIFY changed)
 	Q_PROPERTY(bool entrench MEMBER entrench READ can_entrench NOTIFY changed)
 	Q_PROPERTY(int entrench_bonus MEMBER entrench_bonus READ get_entrench_bonus NOTIFY changed)
+	Q_PROPERTY(int bonus_vs_infantry MEMBER bonus_vs_infantry READ get_bonus_vs_infantry NOTIFY changed)
+	Q_PROPERTY(int bonus_vs_cavalry MEMBER bonus_vs_cavalry READ get_bonus_vs_cavalry NOTIFY changed)
+	Q_PROPERTY(int bonus_vs_artillery MEMBER bonus_vs_artillery READ get_bonus_vs_artillery NOTIFY changed)
+	Q_PROPERTY(int bonus_vs_fortifications MEMBER bonus_vs_fortifications READ get_bonus_vs_fortifications NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
@@ -52,6 +56,10 @@ public:
 
 	military_unit_category get_category() const;
 	military_unit_domain get_domain() const;
+
+	bool is_infantry() const;
+	bool is_cavalry() const;
+	bool is_artillery() const;
 
 	const metternich::culture *get_culture() const
 	{
@@ -113,6 +121,26 @@ public:
 		return this->entrench_bonus;
 	}
 
+	int get_bonus_vs_infantry() const
+	{
+		return this->bonus_vs_infantry;
+	}
+
+	int get_bonus_vs_cavalry() const
+	{
+		return this->bonus_vs_cavalry;
+	}
+
+	int get_bonus_vs_artillery() const
+	{
+		return this->bonus_vs_artillery;
+	}
+
+	int get_bonus_vs_fortifications() const
+	{
+		return this->bonus_vs_fortifications;
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -140,6 +168,10 @@ private:
 	int movement = 0;
 	bool entrench = false;
 	int entrench_bonus = 1; //the entrenchment bonus to defense
+	int bonus_vs_infantry = 0;
+	int bonus_vs_cavalry = 0;
+	int bonus_vs_artillery = 0;
+	int bonus_vs_fortifications = 0;
 	technology *required_technology = nullptr;
 };
 

@@ -545,6 +545,10 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/ai_building_desire_modifier_effect.h
 	src/script/modifier_effect/air_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/artillery_cost_modifier_effect.h
+	src/script/modifier_effect/bonus_vs_artillery_modifier_effect.h
+	src/script/modifier_effect/bonus_vs_cavalry_modifier_effect.h
+	src/script/modifier_effect/bonus_vs_fortifications_modifier_effect.h
+	src/script/modifier_effect/bonus_vs_infantry_modifier_effect.h
 	src/script/modifier_effect/building_capacity_modifier_effect.h
 	src/script/modifier_effect/category_research_modifier_effect.h
 	src/script/modifier_effect/cavalry_cost_modifier_effect.h
