@@ -481,6 +481,7 @@ set(script_condition_HDRS
 	src/script/condition/owns_province_condition.h
 	src/script/condition/population_type_condition.h
 	src/script/condition/produces_commodity_condition.h
+	src/script/condition/promotion_condition.h
 	src/script/condition/religion_condition.h
 	src/script/condition/religious_group_condition.h
 	src/script/condition/root_character_condition.h

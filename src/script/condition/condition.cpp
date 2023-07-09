@@ -49,6 +49,7 @@
 #include "script/condition/owns_province_condition.h"
 #include "script/condition/population_type_condition.h"
 #include "script/condition/produces_commodity_condition.h"
+#include "script/condition/promotion_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
 #include "script/condition/root_character_condition.h"
@@ -126,6 +127,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<military_unit_domain_condition>(value, condition_operator);
 		} else if (key == "military_unit_type") {
 			return std::make_unique<military_unit_type_condition>(value, condition_operator);
+		} else if (key == "promotion") {
+			return std::make_unique<promotion_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		if (key == "ideology") {
