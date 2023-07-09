@@ -21,6 +21,7 @@
 #include "script/modifier_effect/commodity_per_improved_resource_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/commodity_throughput_modifier_effect.h"
+#include "script/modifier_effect/damage_bonus_modifier_effect.h"
 #include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
@@ -106,6 +107,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<bonus_vs_fortifications_modifier_effect>(value);
 		} else if (key == "bonus_vs_infantry") {
 			return std::make_unique<bonus_vs_infantry_modifier_effect>(value);
+		} else if (key == "damage_bonus") {
+			return std::make_unique<damage_bonus_modifier_effect>(value);
 		} else if (key == "defense") {
 			return std::make_unique<defense_modifier_effect>(value);
 		} else if (key == "melee") {
