@@ -330,6 +330,10 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->set_religion(country->get_default_religion());
 			}
 
+			if (country_history->get_government_type() != nullptr) {
+				country_game_data->set_government_type(country_history->get_government_type());
+			}
+
 			const character *ruler = country_history->get_ruler();
 			if (ruler != nullptr) {
 				character_game_data *ruler_game_data = ruler->get_game_data();

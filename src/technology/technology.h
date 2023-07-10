@@ -11,6 +11,7 @@ class character;
 class commodity;
 class country;
 class culture;
+class government_type;
 class icon;
 class improvement;
 class military_unit_type;
@@ -271,6 +272,13 @@ public:
 	std::vector<const transporter_type *> get_enabled_transporters_for_culture(const culture *culture) const;
 	void add_enabled_transporter(const transporter_type *transporter);
 
+	const std::vector<const government_type *> &get_enabled_government_types() const
+	{
+		return this->enabled_government_types;
+	}
+
+	void add_enabled_government_type(const government_type *government_type);
+
 	const std::vector<const character *> &get_enabled_rulers() const
 	{
 		return this->enabled_rulers;
@@ -380,6 +388,7 @@ private:
 	pathway_map<std::vector<const terrain_type *>> enabled_pathway_terrains;
 	std::vector<const military_unit_type *> enabled_military_units;
 	std::vector<const transporter_type *> enabled_transporters;
+	std::vector<const government_type *> enabled_government_types;
 	std::vector<const character *> enabled_rulers;
 	std::vector<const character *> retired_rulers;
 	std::vector<const character *> enabled_advisors;

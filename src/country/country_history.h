@@ -9,6 +9,7 @@ namespace metternich {
 class character;
 class consulate;
 class country;
+class government_type;
 class religion;
 class technology;
 enum class diplomacy_state;
@@ -18,6 +19,7 @@ class country_history final : public data_entry_history
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
+	Q_PROPERTY(metternich::government_type* government_type MEMBER government_type)
 	Q_PROPERTY(metternich::character* ruler MEMBER ruler)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<metternich::technology *> technologies READ get_technologies)
@@ -28,9 +30,14 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
-	const religion *get_religion() const
+	const metternich::religion *get_religion() const
 	{
 		return this->religion;
+	}
+
+	const metternich::government_type *get_government_type() const
+	{
+		return this->government_type;
 	}
 
 	const character *get_ruler() const
@@ -86,6 +93,7 @@ public:
 private:
 	const metternich::country *country = nullptr;
 	metternich::religion *religion = nullptr;
+	metternich::government_type *government_type = nullptr;
 	character *ruler = nullptr;
 	centesimal_int literacy_rate;
 	std::vector<technology *> technologies;

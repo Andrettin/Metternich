@@ -487,6 +487,8 @@ void military_unit::check_promotions()
 
 void military_unit::check_free_promotions()
 {
+	bool changed = false;
+
 	for (const promotion *promotion : this->get_type()->get_free_promotions()) {
 		if (this->has_promotion(promotion)) {
 			continue;
@@ -497,6 +499,7 @@ void military_unit::check_free_promotions()
 		}
 
 		this->add_promotion(promotion);
+		changed = true;
 	}
 
 	const promotion_map<int> *free_promotion_map = nullptr;
@@ -523,7 +526,13 @@ void military_unit::check_free_promotions()
 			}
 
 			this->add_promotion(promotion);
+			changed = true;
 		}
+	}
+
+	if (changed) {
+		//check free promotions again, as the addition of a free promotion might have caused the requirements of others to be fulfilled
+		this->check_free_promotions();
 	}
 }
 

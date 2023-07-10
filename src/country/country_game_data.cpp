@@ -12,6 +12,7 @@
 #include "country/country_type.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
+#include "country/government_type.h"
 #include "country/journal_entry.h"
 #include "country/religion.h"
 #include "database/defines.h"
@@ -2578,6 +2579,27 @@ void country_game_data::gain_technologies_known_by_others()
 		}
 
 		this->on_technology_researched(technology);
+	}
+}
+
+void country_game_data::set_government_type(const metternich::government_type *government_type)
+{
+	if (government_type == this->get_government_type()) {
+		return;
+	}
+
+	if (this->get_government_type() != nullptr) {
+		this->get_government_type()->get_modifier()->remove(this->country);
+	}
+
+	this->government_type = government_type;
+
+	if (this->get_government_type() != nullptr) {
+		this->get_government_type()->get_modifier()->apply(this->country);
+	}
+
+	if (game::get()->is_running()) {
+		emit government_type_changed();
 	}
 }
 

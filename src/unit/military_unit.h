@@ -367,6 +367,25 @@ public:
 		this->set_bonus_vs_fortifications(this->get_bonus_vs_fortifications() + change);
 	}
 
+	int get_entrench_bonus_modifier() const
+	{
+		return this->entrench_bonus_modifier;
+	}
+
+	void set_entrench_bonus_modifier(const int bonus)
+	{
+		if (bonus == this->get_entrench_bonus_modifier()) {
+			return;
+		}
+
+		this->entrench_bonus_modifier = bonus;
+	}
+
+	void change_entrench_bonus_modifier(const int change)
+	{
+		this->set_entrench_bonus_modifier(this->get_entrench_bonus_modifier() + change);
+	}
+
 	const std::vector<const promotion *> &get_promotions() const
 	{
 		return this->promotions;
@@ -419,6 +438,7 @@ private:
 	int bonus_vs_cavalry = 0;
 	int bonus_vs_artillery = 0;
 	int bonus_vs_fortifications = 0;
+	int entrench_bonus_modifier = 0;
 	std::vector<const promotion *> promotions;
 };
 

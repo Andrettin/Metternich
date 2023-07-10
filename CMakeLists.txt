@@ -43,6 +43,7 @@ set(country_SRCS
 	src/country/culture_container.cpp
 	src/country/culture_history.cpp
 	src/country/diplomacy_state.cpp
+	src/country/government_type.cpp
 	src/country/ideology.cpp
 	src/country/ideology_container.cpp
 	src/country/journal_entry.cpp
@@ -314,6 +315,7 @@ set(country_HDRS
 	src/country/culture_container.h
 	src/country/culture_history.h
 	src/country/diplomacy_state.h
+	src/country/government_type.h
 	src/country/ideology.h
 	src/country/ideology_container.h
 	src/country/journal_entry.h

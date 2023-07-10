@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "country/country.h"
 #include "country/culture.h"
+#include "country/government_type.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
 #include "economy/resource.h"
@@ -238,6 +239,15 @@ void technology::add_enabled_transporter(const transporter_type *transporter)
 			return lhs->get_category() < rhs->get_category();
 		}
 
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+}
+
+void technology::add_enabled_government_type(const government_type *government_type)
+{
+	this->enabled_government_types.push_back(government_type);
+
+	std::sort(this->enabled_government_types.begin(), this->enabled_government_types.end(), [](const metternich::government_type *lhs, const metternich::government_type *rhs) {
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 }
@@ -494,6 +504,16 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} {}", transporter->get_name(), transporter->is_ship() ? "ship" : "transporter");
+		}
+	}
+
+	if (!this->get_enabled_government_types().empty()) {
+		for (const government_type *government_type : this->get_enabled_government_types()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} government type", government_type->get_name());
 		}
 	}
 

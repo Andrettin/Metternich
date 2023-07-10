@@ -11,6 +11,7 @@
 #include "country/country_type.h"
 #include "country/cultural_group_rank.h"
 #include "country/diplomacy_state.h"
+#include "country/government_type.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -117,6 +118,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<event>("", 1);
 		qmlRegisterAnonymousType<game>("", 1);
 		qmlRegisterAnonymousType<game_rules>("", 1);
+		qmlRegisterAnonymousType<government_type>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<population_type>("", 1);

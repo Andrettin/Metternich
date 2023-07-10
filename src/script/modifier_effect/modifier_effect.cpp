@@ -25,6 +25,7 @@
 #include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
+#include "script/modifier_effect/entrench_bonus_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_cavalry_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_consulate_modifier_effect.h"
@@ -120,6 +121,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<damage_bonus_modifier_effect>(value);
 		} else if (key == "defense") {
 			return std::make_unique<defense_modifier_effect>(value);
+		} else if (key == "entrench_bonus_modifier") {
+			return std::make_unique<entrench_bonus_modifier_effect>(value);
 		} else if (key == "melee") {
 			return std::make_unique<melee_modifier_effect>(value);
 		}

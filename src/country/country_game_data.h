@@ -30,6 +30,7 @@ class country;
 class country_building_slot;
 class culture;
 class event;
+class government_type;
 class journal_entry;
 class military_unit;
 class military_unit_type;
@@ -95,6 +96,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(metternich::technology* current_research READ get_current_research_unconst WRITE set_current_research NOTIFY current_research_changed)
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
+	Q_PROPERTY(metternich::government_type* government_type READ get_government_type_unconst NOTIFY government_type_changed)
 	Q_PROPERTY(metternich::character* ruler READ get_ruler_unconst NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
@@ -851,6 +853,21 @@ public:
 	void gain_free_technologies(const int count);
 	void gain_technologies_known_by_others();
 
+	const metternich::government_type *get_government_type() const
+	{
+		return this->government_type;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::government_type *get_government_type_unconst() const
+	{
+		return const_cast<metternich::government_type *>(this->get_government_type());
+	}
+
+public:
+	void set_government_type(const metternich::government_type *government_type);
+
 	void check_characters();
 
 	const character *get_ruler() const
@@ -1431,6 +1448,7 @@ signals:
 	void technologies_changed();
 	void current_research_changed();
 	void technology_researched(QObject *technology);
+	void government_type_changed();
 	void ruler_changed();
 	void advisors_changed();
 	void next_advisor_changed();
@@ -1493,6 +1511,7 @@ private:
 	technology_set technologies;
 	const technology *current_research = nullptr;
 	int free_technology_count = 0;
+	const metternich::government_type *government_type = nullptr;
 	const character *ruler = nullptr;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;
