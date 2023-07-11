@@ -27,9 +27,13 @@
 
 namespace metternich {
 
-//map templates must be initialized after sites, as sites add themselves to the world site list in their initialization function, and during map template initialization the sites are then added to the map template's site position map
-//map templates must also be initialized after provinces, as they set their settlements to have them as their provinces, which is needed for site position initialization
-const std::set<std::string> map_template::database_dependencies = { site::class_identifier, province::class_identifier };
+const std::set<std::string> map_template::database_dependencies = {
+	//map templates must be initialized after sites, as sites add themselves to the world site list in their initialization function, and during map template initialization the sites are then added to the map template's site position map
+	site::class_identifier,
+
+	//map templates must also be initialized after provinces, as they set their settlements to have them as their provinces, which is needed for site position initialization
+	province::class_identifier
+};
 
 void map_template::initialize()
 {

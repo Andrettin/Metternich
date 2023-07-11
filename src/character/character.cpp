@@ -12,6 +12,7 @@
 #include "country/culture.h"
 #include "country/religion.h"
 #include "map/province.h"
+#include "map/site.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
@@ -23,6 +24,11 @@
 #include "util/string_util.h"
 
 namespace metternich {
+
+const std::set<std::string> character::database_dependencies = {
+	//characters must be initialized after provinces, as their initialization results in settlements being assigned to their provinces, which is necessary for getting the provinces for home sites
+	province::class_identifier
+};
 
 bool character::skill_compare(const character *lhs, const character *rhs)
 {
@@ -74,6 +80,10 @@ void character::process_gsml_scope(const gsml_data &scope)
 
 void character::initialize()
 {
+	if (this->get_home_province() == nullptr && this->get_home_site() != nullptr && this->get_home_site()->get_province() != nullptr) {
+		this->home_province = this->get_home_site()->get_province();
+	}
+
 	if (this->get_home_province() != nullptr) {
 		this->home_province->add_character(this);
 	}

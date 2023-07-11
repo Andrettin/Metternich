@@ -96,7 +96,7 @@ public:
 		return this->resource;
 	}
 
-	const metternich::province *get_province() const
+	metternich::province *get_province() const
 	{
 		return this->province;
 	}

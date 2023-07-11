@@ -21,6 +21,7 @@ class phenotype;
 class portrait;
 class province;
 class religion;
+class site;
 class technology;
 class trait;
 enum class military_unit_category;
@@ -51,6 +52,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::province* home_province MEMBER home_province NOTIFY changed)
+	Q_PROPERTY(metternich::site* home_site MEMBER home_site NOTIFY changed)
 	Q_PROPERTY(archimedes::gender gender MEMBER gender NOTIFY changed)
 	Q_PROPERTY(metternich::character* father MEMBER father NOTIFY changed)
 	Q_PROPERTY(metternich::character* mother MEMBER mother NOTIFY changed)
@@ -70,6 +72,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::character*";
 	static constexpr const char database_folder[] = "characters";
 	static constexpr bool history_enabled = true;
+
+	static const std::set<std::string> database_dependencies;
 
 	static constexpr size_t ruler_trait_count = 2;
 	static constexpr int max_skill = 6;
@@ -188,6 +192,11 @@ public:
 	const province *get_home_province() const
 	{
 		return this->home_province;
+	}
+
+	const site *get_home_site() const
+	{
+		return this->home_site;
 	}
 
 	gender get_gender() const
@@ -312,6 +321,7 @@ private:
 	metternich::phenotype *phenotype = nullptr;
 	metternich::portrait *portrait = nullptr;
 	province *home_province = nullptr;
+	site *home_site = nullptr;
 	archimedes::gender gender;
 	character *father = nullptr;
 	character *mother = nullptr;
