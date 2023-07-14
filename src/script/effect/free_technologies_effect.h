@@ -7,8 +7,6 @@
 
 namespace metternich {
 
-class character;
-
 class free_technologies_effect final : public effect<const country>
 {
 public:
