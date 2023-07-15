@@ -27,7 +27,7 @@
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
 #include "script/modifier_effect/entrench_bonus_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
-#include "script/modifier_effect/free_building_modifier_effect.h"
+#include "script/modifier_effect/free_building_class_modifier_effect.h"
 #include "script/modifier_effect/free_cavalry_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_consulate_modifier_effect.h"
 #include "script/modifier_effect/free_infantry_promotion_modifier_effect.h"
@@ -73,8 +73,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<diplomatic_penalty_for_expansion_modifier_effect>(value);
 		} else if (key == "free_artillery_promotion") {
 			return std::make_unique<free_artillery_promotion_modifier_effect>(value);
-		} else if (key == "free_building") {
-			return std::make_unique<free_building_modifier_effect>(value);
+		} else if (key == "free_building_class") {
+			return std::make_unique<free_building_class_modifier_effect>(value);
 		} else if (key == "free_cavalry_promotion") {
 			return std::make_unique<free_cavalry_promotion_modifier_effect>(value);
 		} else if (key == "free_consulate") {

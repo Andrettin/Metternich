@@ -10,10 +10,10 @@
 
 namespace metternich {
 
-class free_building_modifier_effect final : public modifier_effect<const country>
+class free_building_class_modifier_effect final : public modifier_effect<const country>
 {
 public:
-	explicit free_building_modifier_effect(const std::string &value)
+	explicit free_building_class_modifier_effect(const std::string &value)
 	{
 		this->building_class = building_class::get(value);
 		this->value = 1;
@@ -21,7 +21,7 @@ public:
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "free_building";
+		static const std::string identifier = "free_building_class";
 		return identifier;
 	}
 
