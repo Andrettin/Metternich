@@ -47,7 +47,7 @@ QString promotion::get_modifier_string() const
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string());
+	return QString::fromStdString(this->get_modifier()->get_string(nullptr));
 }
 
 }

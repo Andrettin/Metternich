@@ -15,7 +15,6 @@ class government_type final : public named_data_entry, public data_type<governme
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
-	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "government_type";
@@ -39,7 +38,7 @@ public:
 		return this->modifier.get();
 	}
 
-	QString get_modifier_string() const;
+	Q_INVOKABLE QString get_modifier_string(metternich::country *country) const;
 
 signals:
 	void changed();

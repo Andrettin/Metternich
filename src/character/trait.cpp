@@ -60,16 +60,16 @@ QString trait::get_modifier_string() const
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string());
+	return QString::fromStdString(this->get_modifier()->get_string(nullptr));
 }
 
-QString trait::get_ruler_modifier_string() const
+QString trait::get_ruler_modifier_string(metternich::country *country) const
 {
 	if (this->get_ruler_modifier() == nullptr) {
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_ruler_modifier()->get_string());
+	return QString::fromStdString(this->get_ruler_modifier()->get_string(country));
 }
 
 QString trait::get_military_unit_modifier_string() const
@@ -78,7 +78,7 @@ QString trait::get_military_unit_modifier_string() const
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_military_unit_modifier()->get_string());
+	return QString::fromStdString(this->get_military_unit_modifier()->get_string(nullptr));
 }
 
 }

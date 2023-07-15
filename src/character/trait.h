@@ -24,7 +24,6 @@ class trait final : public named_data_entry, public data_type<trait>
 	Q_PROPERTY(metternich::trait_type type MEMBER type NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
-	Q_PROPERTY(QString ruler_modifier_string READ get_ruler_modifier_string CONSTANT)
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
 
 public:
@@ -69,7 +68,7 @@ public:
 		return this->ruler_modifier.get();
 	}
 
-	QString get_ruler_modifier_string() const;
+	Q_INVOKABLE QString get_ruler_modifier_string(metternich::country *country) const;
 
 	const metternich::modifier<military_unit> *get_military_unit_modifier() const
 	{

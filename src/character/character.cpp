@@ -270,7 +270,7 @@ void character::add_rulable_country(country *country)
 	country->add_ruler(this);
 }
 
-std::string character::get_ruler_modifier_string() const
+std::string character::get_ruler_modifier_string(const country *country) const
 {
 	assert_throw(this->is_ruler());
 
@@ -286,7 +286,7 @@ std::string character::get_ruler_modifier_string() const
 		}
 
 		str += string::highlight(trait->get_name());
-		str += "\n" + trait->get_ruler_modifier()->get_string(1, 1);
+		str += "\n" + trait->get_ruler_modifier()->get_string(country, 1, 1);
 	}
 
 	return str;
@@ -297,7 +297,7 @@ QString character::get_advisor_effects_string(metternich::country *country) cons
 	assert_throw(this->is_advisor());
 
 	if (this->advisor_modifier != nullptr) {
-		return QString::fromStdString(this->advisor_modifier->get_string());
+		return QString::fromStdString(this->advisor_modifier->get_string(country));
 	}
 
 	if (this->advisor_effects != nullptr) {
@@ -305,7 +305,7 @@ QString character::get_advisor_effects_string(metternich::country *country) cons
 	}
 
 	if (this->get_advisor_type()->get_modifier() != nullptr) {
-		return QString::fromStdString(this->get_advisor_type()->get_modifier()->get_string(this->get_skill()));
+		return QString::fromStdString(this->get_advisor_type()->get_modifier()->get_string(country, this->get_skill()));
 	}
 
 	return QString();

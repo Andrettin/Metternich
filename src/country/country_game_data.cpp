@@ -2712,7 +2712,7 @@ void country_game_data::check_ruler()
 			if (this->country == game::get()->get_player_country() && game::get()->is_running()) {
 				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
-				engine_interface::get()->add_notification("New Ruler", interior_minister_portrait, std::format("{} has become our new ruler!\n\n{}", this->get_ruler()->get_full_name(), this->get_ruler()->get_ruler_modifier_string()));
+				engine_interface::get()->add_notification("New Ruler", interior_minister_portrait, std::format("{} has become our new ruler!\n\n{}", this->get_ruler()->get_full_name(), this->get_ruler()->get_ruler_modifier_string(this->country)));
 			}
 		}
 	}
@@ -3552,6 +3552,26 @@ void country_game_data::set_gain_technologies_known_by_others_count(const int va
 
 	if (old_value == 0) {
 		this->gain_technologies_known_by_others();
+	}
+}
+
+void country_game_data::set_free_building_class_count(const building_class *building_class, const int value)
+{
+	const int old_value = this->get_free_building_class_count(building_class);
+	if (value == old_value) {
+		return;
+	}
+
+	assert_throw(value >= 0);
+
+	if (value == 0) {
+		this->free_building_class_counts.erase(building_class);
+	} else if (old_value == 0) {
+		this->free_building_class_counts[building_class] = value;
+
+		for (const province *province : this->get_provinces()) {
+			province->get_game_data()->check_free_buildings();
+		}
 	}
 }
 

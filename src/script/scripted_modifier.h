@@ -13,7 +13,6 @@ class scripted_modifier : public named_data_entry
 
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(bool negative MEMBER negative READ is_negative NOTIFY changed)
-	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 
 public:
 	explicit scripted_modifier(const std::string &identifier) : named_data_entry(identifier)
@@ -36,8 +35,6 @@ public:
 	{
 		return this->negative;
 	}
-
-	virtual QString get_modifier_string() const = 0;
 
 signals:
 	void changed();

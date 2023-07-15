@@ -428,7 +428,7 @@ QString country_building_slot::get_country_modifier_string() const
 			multiplier = centesimal_int(country_game_data->get_provincial_building_count(this->get_building())) / country_game_data->get_province_count();
 		}
 
-		str = this->get_building()->get_country_modifier()->get_string(multiplier);
+		str = this->get_building()->get_country_modifier()->get_string(this->get_country(), multiplier);
 	}
 
 	if (this->get_building()->get_stackable_country_modifier() != nullptr) {
@@ -438,7 +438,7 @@ QString country_building_slot::get_country_modifier_string() const
 
 		assert_throw(this->get_building()->is_provincial());
 		const int multiplier = country_game_data->get_provincial_building_count(this->get_building());
-		str += this->get_building()->get_stackable_country_modifier()->get_string(multiplier);
+		str += this->get_building()->get_stackable_country_modifier()->get_string(this->get_country(), multiplier);
 	}
 
 	return QString::fromStdString(str);

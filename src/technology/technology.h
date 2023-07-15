@@ -318,7 +318,7 @@ public:
 		return this->modifier.get();
 	}
 
-	std::string get_modifier_string() const;
+	std::string get_modifier_string(const country *country) const;
 	Q_INVOKABLE QString get_effects_string(metternich::country *country) const;
 
 	virtual named_data_entry *get_tree_parent() const override

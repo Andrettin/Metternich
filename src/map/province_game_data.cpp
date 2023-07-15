@@ -146,6 +146,7 @@ void province_game_data::set_owner(const country *country)
 	}
 
 	this->check_building_conditions();
+	this->check_free_buildings();
 
 	if (game::get()->is_running()) {
 		for (const QPoint &tile_pos : this->get_border_tiles()) {
@@ -437,6 +438,54 @@ void province_game_data::check_building_conditions()
 		if (building != building_slot->get_building()) {
 			building_slot->set_building(building);
 		}
+	}
+}
+
+void province_game_data::check_free_buildings()
+{
+	const country *owner = this->get_owner();
+	if (owner == nullptr) {
+		return;
+	}
+
+	const country_game_data *owner_game_data = owner->get_game_data();
+
+	bool changed = false;
+
+	for (const auto &[building_class, count] : owner_game_data->get_free_building_class_counts()) {
+		assert_throw(count > 0);
+
+		const building_type *building = this->get_culture()->get_building_class_type(building_class);
+
+		if (building == nullptr) {
+			continue;
+		}
+
+		if (this->has_building_or_better(building)) {
+			continue;
+		}
+
+		provincial_building_slot *building_slot = this->get_building_slot(building_class->get_slot_type());
+
+		if (building_slot == nullptr) {
+			continue;
+		}
+
+		if (!building_slot->can_have_building(building)) {
+			continue;
+		}
+
+		if (building->get_required_building() != nullptr && building_slot->get_building() != building->get_required_building()) {
+			continue;
+		}
+
+		building_slot->set_building(building);
+		changed = true;
+	}
+
+	if (changed) {
+		//check free buildings again, as the addition of a free building might have caused the requirements of others to be fulfilled
+		this->check_free_buildings();
 	}
 }
 

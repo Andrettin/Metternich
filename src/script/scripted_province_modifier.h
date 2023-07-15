@@ -37,9 +37,9 @@ public:
 		scripted_scoped_modifier::check();
 	}
 
-	virtual QString get_modifier_string() const override
+	Q_INVOKABLE QString get_modifier_string(metternich::province *scope) const
 	{
-		return scripted_scoped_modifier::get_modifier_string();
+		return scripted_scoped_modifier::get_modifier_string(scope);
 	}
 };
 

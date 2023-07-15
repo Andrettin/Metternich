@@ -319,7 +319,7 @@ QString journal_entry::get_completion_effects_string(metternich::country *countr
 	}
 
 	if (this->get_completion_modifier() != nullptr) {
-		std::string modifier_str = this->get_completion_modifier()->get_string();
+		std::string modifier_str = this->get_completion_modifier()->get_string(country);
 
 		if (!modifier_str.empty()) {
 			if (!str.empty()) {

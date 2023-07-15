@@ -44,9 +44,9 @@ void government_type::check() const
 	}
 }
 
-QString government_type::get_modifier_string() const
+QString government_type::get_modifier_string(metternich::country *country) const
 {
-	return QString::fromStdString(this->get_modifier()->get_string());
+	return QString::fromStdString(this->get_modifier()->get_string(country));
 }
 
 }

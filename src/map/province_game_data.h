@@ -210,6 +210,7 @@ public:
 	bool has_building_or_better(const building_type *building) const;
 	void clear_buildings();
 	void check_building_conditions();
+	void check_free_buildings();
 
 	void on_building_gained(const building_type *building, const int multiplier);
 	void on_wonder_gained(const wonder *wonder, const int multiplier);

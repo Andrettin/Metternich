@@ -34,8 +34,8 @@ public:
 	void apply(scope_type *scope, const centesimal_int &multiplier) const;
 	void apply(scope_type *scope, const int multiplier = 1) const;
 	void remove(scope_type *scope, const int multiplier = 1) const;
-	std::string get_string(const centesimal_int &multiplier, const size_t indent = 0, const bool ignore_decimals = true) const;
-	std::string get_string(const int multiplier = 1, const size_t indent = 0) const;
+	std::string get_string(const scope_type *scope, const centesimal_int &multiplier, const size_t indent = 0, const bool ignore_decimals = true) const;
+	std::string get_string(const scope_type *scope, const int multiplier = 1, const size_t indent = 0) const;
 	int get_score() const;
 
 private:

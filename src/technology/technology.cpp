@@ -366,18 +366,18 @@ void technology::add_retired_advisor(const character *advisor)
 	});
 }
 
-std::string technology::get_modifier_string() const
+std::string technology::get_modifier_string(const country *country) const
 {
 	if (this->get_modifier() == nullptr) {
 		return std::string();
 	}
 
-	return this->get_modifier()->get_string();
+	return this->get_modifier()->get_string(country);
 }
 
 QString technology::get_effects_string(metternich::country *country) const
 {
-	std::string str = this->get_modifier_string();
+	std::string str = this->get_modifier_string(country);
 
 	if (!this->get_enabled_commodities().empty()) {
 		for (const commodity *commodity : this->get_enabled_commodities()) {

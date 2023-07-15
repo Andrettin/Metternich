@@ -28,7 +28,7 @@ public:
 		return this->modifier.get();
 	}
 
-	QString get_modifier_string() const;
+	QString get_modifier_string(const scope_type *scope) const;
 
 private:
 	std::unique_ptr<modifier<const scope_type>> modifier;

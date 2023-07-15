@@ -64,7 +64,6 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
-	Q_PROPERTY(QString ruler_modifier_string READ get_ruler_modifier_qstring CONSTANT)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
@@ -281,11 +280,11 @@ public:
 		return !this->get_rulable_countries().empty();
 	}
 
-	std::string get_ruler_modifier_string() const;
+	std::string get_ruler_modifier_string(const country *country) const;
 
-	QString get_ruler_modifier_qstring() const
+	Q_INVOKABLE QString get_ruler_modifier_qstring(metternich::country *country) const
 	{
-		return QString::fromStdString(this->get_ruler_modifier_string());
+		return QString::fromStdString(this->get_ruler_modifier_string(country));
 	}
 
 	Q_INVOKABLE QString get_advisor_effects_string(metternich::country *country) const;

@@ -40,13 +40,13 @@ void scripted_scoped_modifier<scope_type>::check() const
 }
 
 template <typename scope_type>
-QString scripted_scoped_modifier<scope_type>::get_modifier_string() const
+QString scripted_scoped_modifier<scope_type>::get_modifier_string(const scope_type *scope) const
 {
 	if (this->get_modifier() == nullptr) {
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string());
+	return QString::fromStdString(this->get_modifier()->get_string(scope));
 }
 
 template class scripted_scoped_modifier<character>;

@@ -7,6 +7,7 @@
 #include "country/religion_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
+#include "infrastructure/building_class_container.h"
 #include "infrastructure/building_type_container.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "map/province_container.h"
@@ -1266,6 +1267,29 @@ public:
 		this->set_gain_technologies_known_by_others_count(this->get_gain_technologies_known_by_others_count()  + value);
 	}
 
+	const building_class_map<int> &get_free_building_class_counts() const
+	{
+		return this->free_building_class_counts;
+	}
+
+	int get_free_building_class_count(const building_class *building_class) const
+	{
+		const auto find_iterator = this->free_building_class_counts.find(building_class);
+
+		if (find_iterator != this->free_building_class_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_free_building_class_count(const building_class *building_class, const int value);
+
+	void change_free_building_class_count(const building_class *building_class, const int value)
+	{
+		this->set_free_building_class_count(building_class, this->get_free_building_class_count(building_class) + value);
+	}
+
 	const promotion_map<int> &get_free_infantry_promotion_counts() const
 	{
 		return this->free_infantry_promotion_counts;
@@ -1543,6 +1567,7 @@ private:
 	std::vector<const journal_entry *> inactive_journal_entries;
 	std::vector<const journal_entry *> finished_journal_entries;
 	int gain_technologies_known_by_others_count = 0;
+	building_class_map<int> free_building_class_counts;
 	promotion_map<int> free_infantry_promotion_counts;
 	promotion_map<int> free_cavalry_promotion_counts;
 	promotion_map<int> free_artillery_promotion_counts;

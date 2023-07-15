@@ -37,6 +37,13 @@ public:
 	virtual std::string get_base_string() const = 0;
 	virtual std::string get_string(const centesimal_int &multiplier, const bool ignore_decimals) const;
 
+	virtual std::string get_string(const scope_type *scope, const centesimal_int &multiplier, const bool ignore_decimals) const
+	{
+		Q_UNUSED(scope);
+
+		return this->get_string(multiplier, ignore_decimals);
+	}
+
 	virtual int get_score() const = 0;
 
 	bool is_negative() const
