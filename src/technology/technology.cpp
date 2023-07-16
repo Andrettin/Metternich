@@ -379,6 +379,14 @@ QString technology::get_effects_string(metternich::country *country) const
 {
 	std::string str = this->get_modifier_string(country);
 
+	if (this->grants_free_technology()) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += "Free technology for the first to research";
+	}
+
 	if (!this->get_enabled_commodities().empty()) {
 		for (const commodity *commodity : this->get_enabled_commodities()) {
 			if (!str.empty()) {
@@ -563,14 +571,6 @@ QString technology::get_effects_string(metternich::country *country) const
 
 			str += std::format("Retires {} advisor", advisor->get_full_name());
 		}
-	}
-
-	if (this->grants_free_technology()) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		str += "Free technology for the first to research";
 	}
 
 	return QString::fromStdString(str);
