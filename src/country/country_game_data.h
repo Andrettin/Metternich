@@ -575,7 +575,6 @@ public:
 
 	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
-	void initialize_free_buildings();
 
 	country_building_slot *get_building_slot(const building_slot_type *slot_type) const
 	{

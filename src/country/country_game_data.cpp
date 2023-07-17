@@ -1898,45 +1898,6 @@ void country_game_data::initialize_building_slots()
 	}
 }
 
-void country_game_data::initialize_free_buildings()
-{
-	assert_throw(this->country->get_culture() != nullptr);
-
-	//add a free warehouse
-	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
-		const building_type *buildable_warehouse = nullptr;
-
-		for (const building_type *building_type : building_slot->get_type()->get_building_types()) {
-			if (!building_type->is_warehouse()) {
-				continue;
-			}
-
-			if (building_type != this->country->get_culture()->get_building_class_type(building_type->get_building_class())) {
-				continue;
-			}
-
-			if (building_type->get_required_technology() != nullptr) {
-				//only a basic warehouse is free
-				continue;
-			}
-
-			if (!building_slot->can_have_building(building_type)) {
-				continue;
-			}
-
-			buildable_warehouse = building_type;
-			break;
-		}
-
-		if (buildable_warehouse == nullptr) {
-			continue;
-		}
-
-		building_slot->set_building(buildable_warehouse);
-		break;
-	}
-}
-
 const building_type *country_game_data::get_slot_building(const building_slot_type *slot_type) const
 {
 	const auto find_iterator = this->building_slot_map.find(slot_type);

@@ -461,32 +461,55 @@ void province_game_data::check_free_buildings()
 			continue;
 		}
 
-		if (this->has_building_or_better(building)) {
-			continue;
+		if (this->check_free_building(building)) {
+			changed = true;
 		}
+	}
 
-		provincial_building_slot *building_slot = this->get_building_slot(building_class->get_slot_type());
+	if (this->is_capital()) {
+		for (const building_type *building : building_type::get_all()) {
+			if (!building->is_free_in_capital()) {
+				continue;
+			}
 
-		if (building_slot == nullptr) {
-			continue;
+			if (building != this->get_culture()->get_building_class_type(building->get_building_class())) {
+				continue;
+			}
+
+			if (this->check_free_building(building)) {
+				changed = true;
+			}
 		}
-
-		if (!building_slot->can_have_building(building)) {
-			continue;
-		}
-
-		if (building->get_required_building() != nullptr && building_slot->get_building() != building->get_required_building()) {
-			continue;
-		}
-
-		building_slot->set_building(building);
-		changed = true;
 	}
 
 	if (changed) {
 		//check free buildings again, as the addition of a free building might have caused the requirements of others to be fulfilled
 		this->check_free_buildings();
 	}
+}
+
+bool province_game_data::check_free_building(const building_type *building)
+{
+	if (this->has_building_or_better(building)) {
+		return false;
+	}
+
+	provincial_building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+
+	if (building_slot == nullptr) {
+		return false;
+	}
+
+	if (!building_slot->can_have_building(building)) {
+		return false;
+	}
+
+	if (building->get_required_building() != nullptr && building_slot->get_building() != building->get_required_building()) {
+		return false;
+	}
+
+	building_slot->set_building(building);
+	return true;
 }
 
 void province_game_data::on_building_gained(const building_type *building, const int multiplier)

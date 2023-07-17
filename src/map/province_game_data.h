@@ -211,6 +211,7 @@ public:
 	void clear_buildings();
 	void check_building_conditions();
 	void check_free_buildings();
+	bool check_free_building(const building_type *building);
 
 	void on_building_gained(const building_type *building, const int multiplier);
 	void on_wonder_gained(const wonder *wonder, const int multiplier);
