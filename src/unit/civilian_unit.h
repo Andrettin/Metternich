@@ -31,7 +31,7 @@ public:
 	static constexpr int improvement_construction_turns = 2;
 	static constexpr int exploration_turns = 1;
 
-	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
+	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const province *home_province);
 
 	void do_turn();
 	void do_ai_turn();
@@ -100,6 +100,11 @@ public:
 	const metternich::phenotype *get_phenotype() const
 	{
 		return this->phenotype;
+	}
+
+	const province *get_home_province() const
+	{
+		return this->home_province;
 	}
 
 	const QPoint &get_tile_pos() const
@@ -182,6 +187,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
+	const province *home_province = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	QPoint original_tile_pos = QPoint(-1, -1); //the tile position before moving
 	const improvement *improvement_under_construction = nullptr;

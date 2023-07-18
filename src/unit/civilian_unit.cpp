@@ -20,8 +20,8 @@
 
 namespace metternich {
 
-civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
-	: type(type), owner(owner), population_type(population_type), culture(culture), religion(religion), phenotype(phenotype)
+civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *home_province)
+	: type(type), owner(owner), population_type(population_type), culture(culture), religion(religion), phenotype(phenotype), home_province(home_province)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_owner() != nullptr);
@@ -29,6 +29,7 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owne
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
+	assert_throw(this->get_home_province() != nullptr);
 
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
 
@@ -351,7 +352,7 @@ void civilian_unit::disband(const bool restore_population_unit)
 	map::get()->set_tile_civilian_unit(this->get_tile_pos(), nullptr);
 
 	if (restore_population_unit) {
-		this->get_owner()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
+		this->get_owner()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_home_province());
 	}
 
 	this->get_owner()->get_game_data()->remove_civilian_unit(this);

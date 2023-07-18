@@ -37,8 +37,8 @@ public:
 	static int get_army_score(const std::vector<military_unit *> &military_units);
 
 	explicit military_unit(const military_unit_type *type);
-	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
-	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
+	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *home_province);
+	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *home_province);
 	explicit military_unit(const military_unit_type *type, const character *character);
 
 	void do_turn();
@@ -124,6 +124,11 @@ public:
 	const metternich::phenotype *get_phenotype() const
 	{
 		return this->phenotype;
+	}
+
+	const metternich::province *get_home_province() const
+	{
+		return this->home_province;
 	}
 
 	const metternich::character *get_character() const
@@ -424,6 +429,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
+	const metternich::province *home_province = nullptr;
 	const metternich::character *character = nullptr;
 	const metternich::province *province = nullptr; //the province the unit is in
 	const metternich::province *original_province = nullptr; //the province before moving

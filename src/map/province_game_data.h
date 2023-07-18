@@ -21,6 +21,7 @@ class icon;
 class improvement;
 class military_unit;
 class phenotype;
+class population_unit;
 class province;
 class provincial_building_slot;
 class religion;
@@ -246,6 +247,15 @@ public:
 
 	void change_score(const int change);
 
+	const std::vector<population_unit *> &get_population_units() const
+	{
+		return this->population_units;
+	}
+
+	void add_population_unit(population_unit *population_unit);
+	void remove_population_unit(population_unit *population_unit);
+	void clear_population_units();
+
 	const std::vector<military_unit *> &get_military_units() const
 	{
 		return this->military_units;
@@ -398,6 +408,7 @@ signals:
 	void religion_changed();
 	void territory_changed();
 	void scripted_modifiers_changed();
+	void population_units_changed();
 	void military_units_changed();
 	void military_unit_category_counts_changed();
 
@@ -422,6 +433,7 @@ private:
 	scripted_province_modifier_map<int> scripted_modifiers;
 	int free_food_consumption = 0;
 	int score = 0;
+	std::vector<population_unit *> population_units;
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;
 	int output_modifier = 0;

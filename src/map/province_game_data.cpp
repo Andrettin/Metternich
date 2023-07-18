@@ -64,10 +64,11 @@ province_game_data::~province_game_data()
 void province_game_data::reset_non_map_data()
 {
 	this->clear_buildings();
+	this->clear_population_units();
+	this->clear_military_units();
 	this->set_owner(nullptr);
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
 	this->score = province::base_score;
-	this->clear_military_units();
 	this->output_modifier = 0;
 	this->commodity_output_modifiers.clear();
 }
@@ -143,6 +144,20 @@ void province_game_data::set_owner(const country *country)
 
 	if (this->owner != nullptr) {
 		this->owner->get_game_data()->add_province(this->province);
+	}
+
+	for (population_unit *population_unit : this->population_units) {
+		assert_throw(old_owner != nullptr);
+
+		qunique_ptr<metternich::population_unit> unique_ptr = old_owner->get_game_data()->pop_population_unit(population_unit);
+
+		if (this->get_owner() != nullptr) {
+			this->get_owner()->get_game_data()->add_population_unit(std::move(unique_ptr));
+		}
+	}
+
+	if (this->get_owner() == nullptr) {
+		this->clear_population_units();
 	}
 
 	this->check_building_conditions();
@@ -617,6 +632,29 @@ void province_game_data::change_score(const int change)
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score(change);
 	}
+}
+
+void province_game_data::add_population_unit(population_unit *population_unit)
+{
+	this->population_units.push_back(population_unit);
+
+	if (game::get()->is_running()) {
+		emit population_units_changed();
+	}
+}
+
+void province_game_data::remove_population_unit(population_unit *population_unit)
+{
+	std::erase(this->population_units, population_unit);
+
+	if (game::get()->is_running()) {
+		emit population_units_changed();
+	}
+}
+
+void province_game_data::clear_population_units()
+{
+	this->population_units.clear();
 }
 
 void province_game_data::add_military_unit(military_unit *military_unit)

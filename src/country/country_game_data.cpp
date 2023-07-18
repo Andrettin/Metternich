@@ -1605,9 +1605,10 @@ qunique_ptr<population_unit> country_game_data::pop_population_unit(population_u
 	return nullptr;
 }
 
-void country_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype)
+void country_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const province *province)
 {
-	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, this->country);
+	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, province);
+	province->get_game_data()->add_population_unit(population_unit.get());
 	this->add_population_unit(std::move(population_unit));
 }
 
@@ -1768,7 +1769,7 @@ void country_game_data::set_population_growth(const int growth)
 void country_game_data::grow_population()
 {
 	if (this->population_units.empty()) {
-		throw std::runtime_error("Tried to grow population in a province which has no pre-existing population.");
+		throw std::runtime_error("Tried to grow population in a country which has no pre-existing population.");
 	}
 
 	const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
@@ -1776,8 +1777,9 @@ void country_game_data::grow_population()
 	const metternich::religion *religion = population_unit->get_religion();
 	const phenotype *phenotype = population_unit->get_phenotype();
 	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
+	const province *province = population_unit->get_province();
 
-	this->create_population_unit(population_type, culture, religion, phenotype);
+	this->create_population_unit(population_type, culture, religion, phenotype, province);
 
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
@@ -1787,7 +1789,9 @@ void country_game_data::decrease_population()
 	//disband population unit, if possible
 	if (!this->population_units.empty()) {
 		this->change_population_growth(1);
-		this->pop_population_unit(this->choose_starvation_population_unit());
+		population_unit *population_unit = this->choose_starvation_population_unit();
+		population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
+		this->pop_population_unit(population_unit);
 		return;
 	}
 

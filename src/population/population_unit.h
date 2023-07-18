@@ -10,6 +10,7 @@ class icon;
 class ideology;
 class phenotype;
 class population_type;
+class province;
 class religion;
 
 class population_unit final : public QObject
@@ -22,11 +23,12 @@ class population_unit final : public QObject
 	Q_PROPERTY(metternich::phenotype* phenotype READ get_phenotype_unconst NOTIFY phenotype_changed)
 	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
 	Q_PROPERTY(metternich::country* country READ get_country_unconst NOTIFY country_changed)
+	Q_PROPERTY(metternich::province* province READ get_province_unconst NOTIFY province_changed)
 
 public:
 	static constexpr int base_score = 1;
 
-	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::country *country);
+	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *province);
 
 	const population_type *get_type() const
 	{
@@ -115,6 +117,21 @@ private:
 public:
 	void set_country(const metternich::country *country);
 
+	const metternich::province *get_province() const
+	{
+		return this->province;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::province *get_province_unconst() const
+	{
+		return const_cast<metternich::province *>(this->get_province());
+	}
+
+public:
+	void set_province(const metternich::province *province);
+
 	const metternich::ideology *get_ideology() const
 	{
 		return this->ideology;
@@ -124,7 +141,7 @@ public:
 
 	void choose_ideology();
 
-	void migrate_to(const metternich::country *country);
+	void migrate_to(const metternich::province *province);
 
 signals:
 	void type_changed();
@@ -133,6 +150,7 @@ signals:
 	void phenotype_changed();
 	void icon_changed();
 	void country_changed();
+	void province_changed();
 
 private:
 	const population_type *type = nullptr;
@@ -140,6 +158,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::country *country = nullptr;
+	const metternich::province *province = nullptr;
 	const metternich::ideology *ideology = nullptr;
 };
 

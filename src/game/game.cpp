@@ -719,7 +719,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(phenotype != nullptr);
 
-			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, population_type, culture, religion, phenotype);
+			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, population_type, culture, religion, phenotype, home_province);
 			civilian_unit->set_tile_pos(tile_pos);
 
 			owner->get_game_data()->add_civilian_unit(std::move(civilian_unit));
@@ -793,7 +793,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(phenotype != nullptr);
 
-			auto military_unit = make_qunique<metternich::military_unit>(historical_military_unit->get_type(), country, population_type, culture, religion, phenotype);
+			auto military_unit = make_qunique<metternich::military_unit>(historical_military_unit->get_type(), country, population_type, culture, religion, phenotype, home_province);
 			military_unit->set_province(province);
 
 			for (const promotion *promotion : historical_military_unit_history->get_promotions()) {
@@ -980,7 +980,7 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 				const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
 
 				for (int i = 0; i < literate_population_unit_count; ++i) {
-					country_game_data->create_population_unit(literate_population_type, culture, religion, phenotype);
+					country_game_data->create_population_unit(literate_population_type, culture, religion, phenotype, province);
 				}
 			}
 
@@ -991,7 +991,7 @@ int64_t game::apply_historical_population_group_to_province(const population_gro
 	assert_throw(population_type != nullptr);
 
 	for (int i = 0; i < population_unit_count; ++i) {
-		country_game_data->create_population_unit(population_type, culture, religion, phenotype);
+		country_game_data->create_population_unit(population_type, culture, religion, phenotype, province);
 	}
 
 	int64_t remaining_population = population % defines::get()->get_population_per_unit();

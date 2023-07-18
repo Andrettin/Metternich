@@ -9,6 +9,8 @@
 #include "country/religion.h"
 #include "economy/commodity.h"
 #include "game/game.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
 #include "population/population_type.h"
 #include "script/condition/condition.h"
 #include "script/factor.h"
@@ -18,8 +20,8 @@
 
 namespace metternich {
 
-population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::country *country)
-	: type(type), culture(culture), religion(religion), phenotype(phenotype), country(country)
+population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *province)
+	: type(type), culture(culture), religion(religion), phenotype(phenotype), country(province->get_game_data()->get_owner()), province(province)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
@@ -116,6 +118,17 @@ void population_unit::set_country(const metternich::country *country)
 	emit country_changed();
 }
 
+void population_unit::set_province(const metternich::province *province)
+{
+	if (province == this->get_province()) {
+		return;
+	}
+
+	this->province = province;
+
+	emit province_changed();
+}
+
 void population_unit::set_ideology(const metternich::ideology *ideology)
 {
 	if (ideology == this->get_ideology()) {
@@ -154,14 +167,21 @@ void population_unit::choose_ideology()
 	}
 }
 
-void population_unit::migrate_to(const metternich::country *country)
+void population_unit::migrate_to(const metternich::province *province)
 {
 	qunique_ptr<population_unit> unique_ptr = this->get_country()->get_game_data()->pop_population_unit(this);
+	this->get_province()->get_game_data()->remove_population_unit(this);
 
 	assert_throw(unique_ptr != nullptr);
 
+	const metternich::country *country = province->get_game_data()->get_owner();
+	assert_throw(country != nullptr);
+
 	country->get_game_data()->add_population_unit(std::move(unique_ptr));
 	this->set_country(country);
+
+	province->get_game_data()->add_population_unit(this);
+	this->set_province(province);
 }
 
 }
