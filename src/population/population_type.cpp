@@ -18,7 +18,16 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "phenotype_icons") {
+	if (tag == "consumed_commodities") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const commodity *commodity = commodity::get(key);
+			const int consumption = std::stoi(value);
+			this->consumed_commodities[commodity] = consumption;
+		});
+	} else if (tag == "phenotype_icons") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();

@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "population/phenotype_container.h"
 #include "util/fractional_int.h"
 
 namespace metternich {
@@ -96,6 +97,11 @@ public:
 		return this->get_small_icon();
 	}
 
+	const commodity_map<int> &get_consumed_commodities() const
+	{
+		return this->consumed_commodities;
+	}
+
 	const commodity *get_output_commodity() const
 	{
 		return this->output_commodity;
@@ -117,8 +123,9 @@ private:
 	bool literate = false;
 	metternich::icon *icon = nullptr;
 	metternich::icon *small_icon = nullptr;
-	std::map<const phenotype *, const metternich::icon *> phenotype_icons;
-	std::map<const phenotype *, const metternich::icon *> phenotype_small_icons;
+	phenotype_map<const metternich::icon *> phenotype_icons;
+	phenotype_map<const metternich::icon *> phenotype_small_icons;
+	commodity_map<int> consumed_commodities;
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
 };
