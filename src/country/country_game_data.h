@@ -91,6 +91,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
 	Q_PROPERTY(QVariantList commodity_inputs READ get_commodity_inputs_qvariant_list NOTIFY commodity_inputs_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
+	Q_PROPERTY(QVariantList commodity_consumptions READ get_commodity_consumptions_qvariant_list NOTIFY commodity_consumptions_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
@@ -119,6 +120,7 @@ public:
 	void do_production();
 	void do_research();
 	void do_population_growth();
+	void do_consumption();
 	void do_cultural_change();
 	void do_construction();
 	void do_events();
@@ -765,6 +767,27 @@ public:
 	{
 		return this->get_commodity_output(commodity) - this->get_commodity_input(commodity);
 	}
+
+	const commodity_map<int> &get_commodity_consumptions() const
+	{
+		return this->commodity_consumptions;
+	}
+
+	QVariantList get_commodity_consumptions_qvariant_list() const;
+
+	int get_commodity_consumption(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_consumptions.find(commodity);
+
+		if (find_iterator != this->commodity_consumptions.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	Q_INVOKABLE int get_commodity_consumption(const QString &commodity_identifier) const;
+	void change_commodity_consumption(const commodity *commodity, const int change);
 
 	void assign_production();
 	void decrease_wealth_consumption(const bool restore_inputs = true);
@@ -1478,6 +1501,7 @@ signals:
 	void advisor_recruited(QObject *advisor);
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
+	void commodity_consumptions_changed();
 	void output_modifier_changed();
 	void throughput_modifier_changed();
 	void journal_entries_changed();
@@ -1531,6 +1555,7 @@ private:
 	int storage_capacity = 0;
 	commodity_map<int> commodity_inputs;
 	commodity_map<int> commodity_outputs;
+	commodity_map<int> commodity_consumptions;
 	technology_set technologies;
 	const technology *current_research = nullptr;
 	int free_technology_count = 0;

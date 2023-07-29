@@ -90,6 +90,7 @@ void country_game_data::do_turn()
 		this->do_production();
 		this->do_research();
 		this->do_population_growth();
+		this->do_consumption();
 		this->do_construction();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
@@ -268,6 +269,30 @@ void country_game_data::do_population_growth()
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error doing population growth for country \"" + this->country->get_identifier() + "\"."));
 	}
+}
+
+void country_game_data::do_consumption()
+{
+	commodity_map<int> commodity_consumptions = this->get_commodity_consumptions();
+
+	for (auto &[commodity, consumption] : commodity_consumptions) {
+		int effective_consumption = 0;
+
+		if (commodity->is_storable()) {
+			effective_consumption = std::min(consumption, this->get_stored_commodity(commodity));
+			this->change_stored_commodity(commodity, -effective_consumption);
+		} else {
+			effective_consumption = std::min(consumption, this->get_net_commodity_output(commodity));
+		}
+
+		if (commodity->is_happiness() && effective_consumption < consumption) {
+			//FIXME: convert luxury goods in storage to happiness to fulfill the consumption
+		}
+
+		consumption -= effective_consumption;
+	}
+
+	//FIXME: make population units which couldn't have their consumption fulfilled be unhappy/refuse to work for the turn (and possibly demote when demotion is implemented)
 }
 
 void country_game_data::do_cultural_change()
@@ -1638,6 +1663,10 @@ void country_game_data::change_population_type_count(const population_type *type
 	if (type->get_output_commodity() != nullptr) {
 		this->change_commodity_output(type->get_output_commodity(), type->get_output_value() * change);
 	}
+
+	for (const auto &[commodity, value] : type->get_consumed_commodities()) {
+		this->change_commodity_consumption(commodity, value * change);
+	}
 }
 
 QVariantList country_game_data::get_population_culture_counts_qvariant_list() const
@@ -2129,6 +2158,35 @@ void country_game_data::change_commodity_output(const commodity *commodity, cons
 		while (this->get_net_commodity_output(commodity) < 0) {
 			this->decrease_commodity_consumption(commodity);
 		}
+	}
+}
+
+QVariantList country_game_data::get_commodity_consumptions_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_commodity_consumptions());
+}
+
+int country_game_data::get_commodity_consumption(const QString &commodity_identifier) const
+{
+	return this->get_commodity_consumption(commodity::get(commodity_identifier.toStdString()));
+}
+
+void country_game_data::change_commodity_consumption(const commodity *commodity, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->commodity_consumptions[commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->commodity_consumptions.erase(commodity);
+	}
+
+	if (game::get()->is_running()) {
+		emit commodity_consumptions_changed();
 	}
 }
 

@@ -20,6 +20,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(bool storable MEMBER storable READ is_storable NOTIFY changed)
 	Q_PROPERTY(bool negative_allowed MEMBER negative_allowed READ is_negative_allowed NOTIFY changed)
 	Q_PROPERTY(bool labor MEMBER labor READ is_labor NOTIFY changed)
+	Q_PROPERTY(bool happiness MEMBER happiness READ is_happiness NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
@@ -74,6 +75,11 @@ public:
 		return this->labor;
 	}
 
+	bool is_happiness() const
+	{
+		return this->happiness;
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -90,6 +96,7 @@ private:
 	bool storable = true;
 	bool negative_allowed = false;
 	bool labor = false;
+	bool happiness = false;
 	technology *required_technology = nullptr;
 };
 
