@@ -143,7 +143,7 @@ void country_game_data::do_production()
 		const std::vector<const commodity *> input_commodities = archimedes::map::get_keys(this->get_commodity_inputs());
 
 		for (const commodity *commodity : input_commodities) {
-			if (!commodity->is_storable()) {
+			if (!commodity->is_storable() || commodity->is_negative_allowed()) {
 				continue;
 			}
 
@@ -2028,7 +2028,7 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 		return;
 	}
 
-	if (value < 0) {
+	if (value < 0 && !commodity->is_negative_allowed()) {
 		throw std::runtime_error("Tried to set the storage of commodity \"" + commodity->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\" to a negative number.");
 	}
 
@@ -2124,7 +2124,7 @@ void country_game_data::change_commodity_output(const commodity *commodity, cons
 		emit commodity_outputs_changed();
 	}
 
-	if (change < 0 && !commodity->is_storable()) {
+	if (change < 0 && !commodity->is_storable() && !commodity->is_negative_allowed()) {
 		//decrease consumption of non-storable commodities immediately if the net output goes below zero, since for those commodities consumption cannot be fulfilled by storage
 		while (this->get_net_commodity_output(commodity) < 0) {
 			this->decrease_commodity_consumption(commodity);
