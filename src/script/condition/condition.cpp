@@ -29,6 +29,7 @@
 #include "script/condition/country_exists_condition.h"
 #include "script/condition/country_scope_condition.h"
 #include "script/condition/country_type_condition.h"
+#include "script/condition/cultural_group_condition.h"
 #include "script/condition/culture_condition.h"
 #include "script/condition/discovered_province_condition.h"
 #include "script/condition/discovered_region_condition.h"
@@ -181,6 +182,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 
 	if (key == "country_exists") {
 		return std::make_unique<country_exists_condition<scope_type>>(value, condition_operator);
+	} else if (key == "cultural_group") {
+		return std::make_unique<cultural_group_condition<scope_type>>(value, condition_operator);
 	} else if (key == "culture") {
 		return std::make_unique<culture_condition<scope_type>>(value, condition_operator);
 	} else if (key == "event") {
