@@ -17,6 +17,7 @@
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
+#include "time/calendar.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
@@ -98,6 +99,30 @@ void character::initialize()
 		}
 
 		this->surname += this->get_dynasty()->get_name();
+	}
+
+	if (this->vital_date_calendar != nullptr) {
+		if (!this->vital_date_calendar->is_initialized()) {
+			this->vital_date_calendar->initialize();
+		}
+
+		if (this->start_date.isValid()) {
+			this->start_date = this->start_date.addYears(this->vital_date_calendar->get_year_offset());
+		}
+
+		if (this->end_date.isValid()) {
+			this->end_date = this->end_date.addYears(this->vital_date_calendar->get_year_offset());
+		}
+
+		if (this->birth_date.isValid()) {
+			this->birth_date = this->birth_date.addYears(this->vital_date_calendar->get_year_offset());
+		}
+
+		if (this->death_date.isValid()) {
+			this->death_date = this->death_date.addYears(this->vital_date_calendar->get_year_offset());
+		}
+
+		this->vital_date_calendar = nullptr;
 	}
 
 	bool date_changed = true;

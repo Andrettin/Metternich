@@ -6,6 +6,7 @@
 #include "util/qunique_ptr.h"
 
 namespace archimedes {
+	class calendar;
 	enum class gender;
 }
 
@@ -60,6 +61,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(QDateTime end_date MEMBER end_date READ get_end_date NOTIFY changed)
 	Q_PROPERTY(QDateTime birth_date MEMBER birth_date READ get_birth_date NOTIFY changed)
 	Q_PROPERTY(QDateTime death_date MEMBER death_date READ get_death_date NOTIFY changed)
+	Q_PROPERTY(archimedes::calendar* vital_date_calendar MEMBER vital_date_calendar)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -338,6 +340,7 @@ private:
 	QDateTime end_date;
 	QDateTime birth_date;
 	QDateTime death_date;
+	calendar *vital_date_calendar = nullptr; //the calendar for the birth, death, start and end dates
 	int skill = 1;
 	std::vector<const country *> rulable_countries;
 	std::vector<const trait *> traits;
