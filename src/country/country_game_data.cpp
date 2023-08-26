@@ -2990,7 +2990,10 @@ void country_game_data::check_leaders()
 			}
 
 			this->set_next_leader(nullptr);
-		} else if (this->get_next_leader()->get_obsolescence_technology() != nullptr && this->has_technology(this->get_next_leader()->get_obsolescence_technology())) {
+		} else if (
+			(this->get_next_leader()->get_obsolescence_technology() != nullptr && this->has_technology(this->get_next_leader()->get_obsolescence_technology()))
+			|| this->get_best_military_unit_category_type(this->get_next_leader()->get_military_unit_category(), this->get_next_leader()->get_culture()) == nullptr
+		) {
 			if (this->country == game::get()->get_player_country()) {
 				const portrait *war_minister_portrait = defines::get()->get_war_minister_portrait();
 
