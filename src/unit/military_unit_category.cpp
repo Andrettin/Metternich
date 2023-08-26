@@ -27,6 +27,13 @@ const std::map<std::string, metternich::military_unit_category> enum_converter<m
 	{ "heavy_artillery", metternich::military_unit_category::heavy_artillery },
 	{ "combat_engineers", metternich::military_unit_category::combat_engineers },
 	{ "general", metternich::military_unit_category::general },
+	{ "alchemist", metternich::military_unit_category::alchemist },
+	{ "bard", metternich::military_unit_category::bard },
+	{ "cleric", metternich::military_unit_category::cleric },
+	{ "mage", metternich::military_unit_category::mage },
+	{ "paladin", metternich::military_unit_category::paladin },
+	{ "ranger", metternich::military_unit_category::ranger },
+	{ "rogue", metternich::military_unit_category::rogue },
 	{ "warrior", metternich::military_unit_category::warrior },
 	{ "light_warship", metternich::military_unit_category::light_warship },
 	{ "heavy_warship", metternich::military_unit_category::heavy_warship }
