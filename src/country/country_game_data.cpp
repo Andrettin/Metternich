@@ -3150,6 +3150,15 @@ void country_game_data::choose_next_leader()
 	}
 }
 
+military_unit_type *country_game_data::get_next_leader_military_unit_type() const
+{
+	if (this->get_next_leader() == nullptr) {
+		return nullptr;
+	}
+
+	return const_cast<military_unit_type *>(this->get_best_military_unit_category_type(this->get_next_leader()->get_military_unit_category(), this->get_next_leader()->get_culture()));
+}
+
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
 	this->civilian_units.push_back(std::move(civilian_unit));
