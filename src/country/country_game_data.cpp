@@ -195,7 +195,9 @@ void country_game_data::do_research()
 			if (this->free_technology_count > 0) {
 				this->gain_free_technology();
 			} else {
-				this->choose_current_research();
+				if (this->get_commodity_output(defines::get()->get_research_commodity()) > 0 || this->get_stored_commodity(defines::get()->get_research_commodity()) > 0) {
+					this->choose_current_research();
+				}
 			}
 			return;
 		}
@@ -2809,7 +2811,9 @@ void country_game_data::check_advisors()
 			}
 		}
 	} else {
-		this->choose_next_advisor();
+		if (this->get_commodity_output(defines::get()->get_advisor_commodity()) > 0 || this->get_stored_commodity(defines::get()->get_advisor_commodity()) > 0) {
+			this->choose_next_advisor();
+		}
 	}
 }
 
@@ -3009,7 +3013,9 @@ void country_game_data::check_leaders()
 			}
 		}
 	} else {
-		this->choose_next_leader();
+		if (this->get_commodity_output(defines::get()->get_leader_commodity()) > 0 || this->get_stored_commodity(defines::get()->get_leader_commodity()) > 0) {
+			this->choose_next_leader();
+		}
 	}
 }
 
