@@ -40,6 +40,7 @@ public:
 	static constexpr int ai_building_desire_modifier = 100;
 	static constexpr int ai_technology_desire_modifier = 100;
 	static constexpr int ai_advisor_desire_modifier = 1000;
+	static constexpr int ai_leader_desire_modifier = 1000;
 
 	explicit journal_entry(const std::string &identifier);
 	~journal_entry();
@@ -127,6 +128,11 @@ public:
 		return this->recruited_advisors;
 	}
 
+	const std::vector<const character *> &get_recruited_leaders() const
+	{
+		return this->recruited_leaders;
+	}
+
 signals:
 	void changed();
 
@@ -147,6 +153,7 @@ private:
 	province_map<std::vector<const building_type *>> built_provincial_buildings;
 	std::vector<const technology *> researched_technologies;
 	std::vector<const character *> recruited_advisors;
+	std::vector<const character *> recruited_leaders;
 };
 
 }

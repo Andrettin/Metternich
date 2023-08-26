@@ -54,6 +54,7 @@
 #include "ui/portrait.h"
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
+#include "unit/military_unit_category.h"
 #include "unit/military_unit_class.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
@@ -63,6 +64,7 @@
 #include "util/point_util.h"
 #include "util/rect_util.h"
 #include "util/size_util.h"
+#include "util/string_util.h"
 #include "util/thread_pool.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -2633,6 +2635,8 @@ void country_game_data::check_characters()
 	if (game::get()->get_rules()->are_advisors_enabled() && this->can_have_advisors()) {
 		this->check_advisors();
 	}
+
+	this->check_leaders();
 }
 
 void country_game_data::set_ruler(const character *ruler)
@@ -2755,12 +2759,20 @@ void country_game_data::check_advisors()
 			if (this->country == game::get()->get_player_country()) {
 				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
-				engine_interface::get()->add_notification("Advisor Retired", interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the advisor {} has decided to retire.", this->get_next_advisor()->get_full_name()));
+				engine_interface::get()->add_notification("Advisor Retired", interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the advisor {} has decided to retire.", advisor->get_full_name()));
 			}
 
 			this->remove_advisor(advisor);
 			advisor->get_game_data()->set_dead(true);
 		}
+	}
+
+	if (this->is_under_anarchy()) {
+		if (this->get_next_advisor() != nullptr) {
+			this->set_next_advisor(nullptr);
+		}
+
+		return;
 	}
 
 	if (this->get_next_advisor() != nullptr) {
@@ -2931,6 +2943,204 @@ bool country_game_data::can_have_advisors() const
 	return this->country->get_type() == country_type::great_power;
 }
 
+QVariantList country_game_data::get_leaders_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_leaders());
+}
+
+void country_game_data::check_leaders()
+{
+	//remove obsolete leaders
+	const std::vector<const character *> leaders = this->get_leaders();
+	for (const character *leader : leaders) {
+		if (leader->get_obsolescence_technology() != nullptr && this->has_technology(leader->get_obsolescence_technology())) {
+			if (this->country == game::get()->get_player_country()) {
+				const portrait *war_minister_portrait = defines::get()->get_war_minister_portrait();
+
+				const std::string leader_type_name = leader->get_leader_type_name();
+
+				engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(leader_type_name), leader->get_full_name()));
+			}
+
+			this->remove_leader(leader);
+			leader->get_game_data()->set_dead(true);
+		}
+	}
+
+	if (this->is_under_anarchy()) {
+		if (this->get_next_leader() != nullptr) {
+			this->set_next_leader(nullptr);
+		}
+
+		return;
+	}
+
+	if (this->get_next_leader() != nullptr) {
+		if (this->get_next_leader()->get_game_data()->get_country() != nullptr) {
+			if (this->country == game::get()->get_player_country()) {
+				const portrait *war_minister_portrait = defines::get()->get_war_minister_portrait();
+
+				const std::string leader_type_name = this->get_next_leader()->get_leader_type_name();
+
+				engine_interface::get()->add_notification(std::format("{} Unavailable", leader_type_name), war_minister_portrait, std::format("Your Excellency, the {} {} has unfortunately decided to join {}, and is no longer available for recruitment.", string::lowered(leader_type_name), this->get_next_leader()->get_full_name(), this->get_next_leader()->get_game_data()->get_country()->get_name()));
+			}
+
+			this->set_next_leader(nullptr);
+		} else if (this->get_next_leader()->get_obsolescence_technology() != nullptr && this->has_technology(this->get_next_leader()->get_obsolescence_technology())) {
+			if (this->country == game::get()->get_player_country()) {
+				const portrait *war_minister_portrait = defines::get()->get_war_minister_portrait();
+
+				const std::string leader_type_name = this->get_next_leader()->get_leader_type_name();
+
+				engine_interface::get()->add_notification(std::format("{} Unavailable", leader_type_name), war_minister_portrait, std::format("Your Excellency, the {} {} is no longer available for recruitment.", string::lowered(leader_type_name), this->get_next_leader()->get_full_name()));
+			}
+
+			this->set_next_leader(nullptr);
+		} else {
+			if (this->get_stored_commodity(defines::get()->get_leader_commodity()) >= this->get_leader_cost()) {
+				this->change_stored_commodity(defines::get()->get_leader_commodity(), -this->get_leader_cost());
+
+				this->add_leader(this->get_next_leader());
+				this->get_next_leader()->get_game_data()->deploy_to_province(this->country->get_capital_province());
+
+				emit leader_recruited(const_cast<character *>(this->get_next_leader()));
+
+				this->set_next_leader(nullptr);
+			}
+		}
+	} else {
+		this->choose_next_leader();
+	}
+}
+
+void country_game_data::add_leader(const character *leader)
+{
+	this->leaders.push_back(leader);
+	leader->get_game_data()->set_country(this->country);
+
+	emit leaders_changed();
+}
+
+void country_game_data::remove_leader(const character *leader)
+{
+	assert_throw(leader->get_game_data()->get_country() == this->country);
+
+	std::erase(this->leaders, leader);
+	leader->get_game_data()->set_country(nullptr);
+
+	emit leaders_changed();
+}
+
+void country_game_data::clear_leaders()
+{
+	const std::vector<const character *> leaders = this->get_leaders();
+	for (const character *leader : leaders) {
+		this->remove_leader(leader);
+	}
+
+	assert_throw(this->get_leaders().empty());
+
+	emit leaders_changed();
+}
+
+void country_game_data::choose_next_leader()
+{
+	std::map<military_unit_category, std::vector<const character *>> potential_leaders_per_category;
+
+	for (const character *character : character::get_all()) {
+		if (!character->is_leader()) {
+			continue;
+		}
+
+		const character_game_data *character_game_data = character->get_game_data();
+		if (character_game_data->get_country() != nullptr) {
+			continue;
+		}
+
+		if (character_game_data->is_dead()) {
+			continue;
+		}
+
+		const military_unit_type *military_unit_type = this->get_best_military_unit_category_type(character->get_military_unit_category(), character->get_culture());
+		if (military_unit_type == nullptr) {
+			continue;
+		}
+
+		if (character->get_required_technology() != nullptr && !this->has_technology(character->get_required_technology())) {
+			continue;
+		}
+
+		if (character->get_obsolescence_technology() != nullptr && this->has_technology(character->get_obsolescence_technology())) {
+			continue;
+		}
+
+		if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->country, read_only_context(this->country))) {
+			continue;
+		}
+
+		military_unit_category leader_category = character->get_military_unit_category();
+		if (character->is_admiral()) {
+			//place all admirals in the same category, even if they have different kinds of ships
+			leader_category = military_unit_category::heavy_warship;
+		}
+
+		std::vector<const metternich::character *> &category_leaders = potential_leaders_per_category[leader_category];
+
+		category_leaders.push_back(character);
+	}
+
+	if (potential_leaders_per_category.empty()) {
+		return;
+	}
+
+	std::map<military_unit_category, const character *> potential_leader_map;
+	const std::vector<military_unit_category> potential_categories = archimedes::map::get_keys(potential_leaders_per_category);
+
+	for (const military_unit_category category : potential_categories) {
+		potential_leader_map[category] = vector::get_random(potential_leaders_per_category[category]);
+	}
+
+	if (this->is_ai()) {
+		std::vector<const character *> preferred_leaders;
+
+		int best_desire = 0;
+		for (const auto &[category, leader] : potential_leader_map) {
+			const military_unit_type *military_unit_type = this->get_best_military_unit_category_type(leader->get_military_unit_category(), leader->get_culture());
+			assert_throw(military_unit_type != nullptr);
+			const int leader_score = military_unit_type->get_score();
+
+			assert_throw(leader_score > 0);
+
+			int desire = leader_score;
+
+			for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
+				if (vector::contains(journal_entry->get_recruited_leaders(), leader)) {
+					desire += journal_entry::ai_leader_desire_modifier;
+				}
+			}
+
+			assert_throw(desire > 0);
+
+			if (desire > best_desire) {
+				preferred_leaders.clear();
+				best_desire = desire;
+			}
+
+			if (desire >= best_desire) {
+				preferred_leaders.push_back(leader);
+			}
+		}
+
+		assert_throw(!preferred_leaders.empty());
+
+		const character *chosen_leader = vector::get_random(preferred_leaders);
+		this->set_next_leader(chosen_leader);
+	} else {
+		const std::vector<const character *> potential_leaders = archimedes::map::get_values(potential_leader_map);
+		emit engine_interface::get()->next_leader_choosable(container::to_qvariant_list(potential_leaders));
+	}
+}
+
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
 	this->civilian_units.push_back(std::move(civilian_unit));
@@ -2961,7 +3171,7 @@ void country_game_data::remove_military_unit(military_unit *military_unit)
 	}
 }
 
-const military_unit_type *country_game_data::get_best_military_unit_category_type(const military_unit_category category) const
+const military_unit_type *country_game_data::get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const
 {
 	const military_unit_type *best_type = nullptr;
 	int best_score = 0;
@@ -2971,7 +3181,7 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 			continue;
 		}
 
-		const military_unit_type *type = this->country->get_culture()->get_military_class_unit_type(military_unit_class);
+		const military_unit_type *type = culture->get_military_class_unit_type(military_unit_class);
 
 		if (type == nullptr) {
 			continue;
@@ -2989,6 +3199,11 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 	}
 
 	return best_type;
+}
+
+const military_unit_type *country_game_data::get_best_military_unit_category_type(const military_unit_category category) const
+{
+	return this->get_best_military_unit_category_type(category, this->country->get_culture());
 }
 
 void country_game_data::set_output_modifier(const int value)

@@ -114,6 +114,7 @@ signals:
 	void current_research_choosable(const QVariantList &potential_technologies);
 	void free_technology_choosable(const QVariantList &potential_technologies);
 	void next_advisor_choosable(const QVariantList &potential_advisors);
+	void next_leader_choosable(const QVariantList &potential_leaders);
 	void selected_military_units_changed();
 
 private:

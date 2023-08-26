@@ -48,6 +48,8 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_advisors READ get_enabled_advisors_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList retired_advisors READ get_retired_advisors_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList enabled_leaders READ get_enabled_leaders_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList retired_leaders READ get_retired_leaders_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QObject* tree_parent READ get_tree_parent CONSTANT)
 	Q_PROPERTY(QVariantList secondary_tree_parents READ get_secondary_tree_parents CONSTANT)
 
@@ -313,6 +315,24 @@ public:
 	std::vector<const character *> get_retired_advisors_for_country(const country *country) const;
 	void add_retired_advisor(const character *advisor);
 
+	const std::vector<const character *> &get_enabled_leaders() const
+	{
+		return this->enabled_leaders;
+	}
+
+	QVariantList get_enabled_leaders_qvariant_list() const;
+	std::vector<const character *> get_enabled_leaders_for_country(const country *country) const;
+	void add_enabled_leader(const character *leader);
+
+	const std::vector<const character *> &get_retired_leaders() const
+	{
+		return this->retired_leaders;
+	}
+
+	QVariantList get_retired_leaders_qvariant_list() const;
+	std::vector<const character *> get_retired_leaders_for_country(const country *country) const;
+	void add_retired_leader(const character *leader);
+
 	const metternich::modifier<const country> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -393,6 +413,8 @@ private:
 	std::vector<const character *> retired_rulers;
 	std::vector<const character *> enabled_advisors;
 	std::vector<const character *> retired_advisors;
+	std::vector<const character *> enabled_leaders;
+	std::vector<const character *> retired_leaders;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
 };
 

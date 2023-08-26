@@ -72,6 +72,17 @@ inline std::string get_military_unit_category_name(const military_unit_category 
 	throw std::runtime_error(std::format("Invalid military unit category: \"{}\".", std::to_string(static_cast<int>(category))));
 }
 
+inline bool is_ship_military_unit_category(const military_unit_category category)
+{
+	switch (category) {
+		case military_unit_category::light_warship:
+		case military_unit_category::heavy_warship:
+			return true;
+		default:
+			return false;
+	}
+}
+
 }
 
 extern template class archimedes::enum_converter<metternich::military_unit_category>;

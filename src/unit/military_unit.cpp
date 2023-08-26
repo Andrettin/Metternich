@@ -560,7 +560,14 @@ void military_unit::heal(const int healing)
 void military_unit::disband(const bool restore_population_unit)
 {
 	if (this->get_character() != nullptr) {
-		this->get_character()->get_game_data()->set_military_unit(nullptr);
+		character_game_data *character_game_data = this->get_character()->get_game_data();
+		character_game_data->set_military_unit(nullptr);
+
+		if (character_game_data->get_country() != nullptr) {
+			character_game_data->get_country()->get_game_data()->remove_leader(this->get_character());
+		}
+
+		character_game_data->set_dead(true);
 	}
 
 	if (this->is_moving()) {

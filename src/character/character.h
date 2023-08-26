@@ -64,6 +64,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
+	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
@@ -302,6 +303,15 @@ public:
 	}
 
 	int get_advisor_score() const;
+
+	bool is_leader() const;
+	bool is_admiral() const;
+	std::string get_leader_type_name() const;
+
+	QString get_leader_type_name_qstring() const
+	{
+		return QString::fromStdString(this->get_leader_type_name());
+	}
 
 signals:
 	void changed();

@@ -103,6 +103,9 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
 	Q_PROPERTY(metternich::character* next_advisor READ get_next_advisor_unconst WRITE set_next_advisor NOTIFY next_advisor_changed)
+	Q_PROPERTY(QVariantList leaders READ get_leaders_qvariant_list NOTIFY leaders_changed)
+	Q_PROPERTY(int leader_cost READ get_leader_cost NOTIFY leaders_changed)
+	Q_PROPERTY(metternich::character* next_leader READ get_next_leader_unconst WRITE set_next_leader NOTIFY next_leader_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier NOTIFY output_modifier_changed)
 	Q_PROPERTY(int throughput_modifier READ get_throughput_modifier NOTIFY throughput_modifier_changed)
 	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
@@ -111,6 +114,7 @@ class country_game_data final : public QObject
 
 public:
 	static constexpr int base_advisor_cost = 80;
+	static constexpr int base_leader_cost = 80;
 	static constexpr int base_deployment_limit = 10;
 
 	explicit country_game_data(metternich::country *country);
@@ -962,12 +966,65 @@ public:
 	void choose_next_advisor();
 	bool can_have_advisors() const;
 
+	const std::vector<const character *> &get_leaders() const
+	{
+		return this->leaders;
+	}
+
+	QVariantList get_leaders_qvariant_list() const;
+	void check_leaders();
+	void add_leader(const character *leader);
+	void remove_leader(const character *leader);
+	void clear_leaders();
+
+	int get_leader_cost() const
+	{
+		int cost = 0;
+
+		if (this->get_leaders().empty()) {
+			cost = country_game_data::base_leader_cost / 2;
+		} else {
+			cost = country_game_data::base_leader_cost * static_cast<int>(this->get_leaders().size() + 1);
+		}
+
+		cost *= 100 + this->get_leader_cost_modifier();
+		cost /= 100;
+
+		return std::max(0, cost);
+	}
+
+	const character *get_next_leader() const
+	{
+		return this->next_leader;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	character *get_next_leader_unconst() const
+	{
+		return const_cast<character *>(this->get_next_leader());
+	}
+
+public:
+	void set_next_leader(const character *leader)
+	{
+		if (leader == this->get_next_leader()) {
+			return;
+		}
+
+		this->next_leader = leader;
+		emit next_leader_changed();
+	}
+
+	void choose_next_leader();
+
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
 
 	void add_military_unit(qunique_ptr<military_unit> &&civilian_unit);
 	void remove_military_unit(military_unit *civilian_unit);
 
+	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const;
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category) const;
 
 	int get_deployment_limit() const
@@ -1222,6 +1279,16 @@ public:
 	void change_advisor_cost_modifier(const int change)
 	{
 		this->advisor_cost_modifier += change;
+	}
+
+	int get_leader_cost_modifier() const
+	{
+		return this->leader_cost_modifier;
+	}
+
+	void change_leader_cost_modifier(const int change)
+	{
+		this->leader_cost_modifier += change;
 	}
 
 	int get_diplomatic_penalty_for_expansion_modifier() const
@@ -1499,6 +1566,9 @@ signals:
 	void advisors_changed();
 	void next_advisor_changed();
 	void advisor_recruited(QObject *advisor);
+	void leaders_changed();
+	void next_leader_changed();
+	void leader_recruited(QObject *leader);
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
 	void commodity_consumptions_changed();
@@ -1563,6 +1633,8 @@ private:
 	const character *ruler = nullptr;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;
+	std::vector<const character *> leaders;
+	const character *next_leader = nullptr;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	int deployment_limit = country_game_data::base_deployment_limit;
@@ -1584,6 +1656,7 @@ private:
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	std::map<technology_category, int> category_research_modifiers;
 	int advisor_cost_modifier = 0;
+	int leader_cost_modifier = 0;
 	int diplomatic_penalty_for_expansion_modifier = 0;
 	province_set explored_provinces;
 	point_set explored_tiles; //used for tiles in partially-explored provinces

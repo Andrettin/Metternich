@@ -97,6 +97,10 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->recruited_advisors.push_back(character::get(value));
 		}
+	} else if (tag == "recruited_leaders") {
+		for (const std::string &value : values) {
+			this->recruited_leaders.push_back(character::get(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -137,6 +141,12 @@ void journal_entry::check() const
 			throw std::runtime_error(std::format("Journal entry \"{}\" requires recruiting \"{}\" as an advisor, but that character is not an advisor.", this->get_identifier(), character->get_identifier()));
 		}
 	}
+
+	for (const character *character : this->get_recruited_leaders()) {
+		if (!character->is_leader()) {
+			throw std::runtime_error(std::format("Journal entry \"{}\" requires recruiting \"{}\" as a leader, but that character is not a leader.", this->get_identifier(), character->get_identifier()));
+		}
+	}
 }
 
 bool journal_entry::check_preconditions(const country *country) const
@@ -150,6 +160,13 @@ bool journal_entry::check_preconditions(const country *country) const
 	for (const character *advisor : this->get_recruited_advisors()) {
 		const metternich::country *advisor_country = advisor->get_game_data()->get_country();
 		if (advisor_country != nullptr && advisor_country != country) {
+			return false;
+		}
+	}
+
+	for (const character *leader : this->get_recruited_leaders()) {
+		const metternich::country *leader_country = leader->get_game_data()->get_country();
+		if (leader_country != nullptr && leader_country != country) {
 			return false;
 		}
 	}
@@ -178,7 +195,7 @@ bool journal_entry::check_conditions(const country *country) const
 
 bool journal_entry::check_completion_conditions(const country *country) const
 {
-	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_provincial_buildings().empty() && this->get_researched_technologies().empty() && this->get_recruited_advisors().empty()) {
+	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_provincial_buildings().empty() && this->get_researched_technologies().empty() && this->get_recruited_advisors().empty() && this->get_recruited_leaders().empty()) {
 		//no completion conditions at all, so the entry can't be completed normally
 		return false;
 	}
@@ -233,6 +250,12 @@ bool journal_entry::check_completion_conditions(const country *country) const
 
 	for (const character *advisor : this->get_recruited_advisors()) {
 		if (!vector::contains(country_game_data->get_advisors(), advisor)) {
+			return false;
+		}
+	}
+
+	for (const character *leader : this->get_recruited_leaders()) {
+		if (!vector::contains(country_game_data->get_leaders(), leader)) {
 			return false;
 		}
 	}
@@ -295,7 +318,15 @@ QString journal_entry::get_completion_conditions_string() const
 			str += "\n";
 		}
 
-		str += std::format("Recruit {}", advisor->get_full_name());
+		str += std::format("Recruit {} (Advisor)", advisor->get_full_name());
+	}
+
+	for (const character *leader : this->get_recruited_leaders()) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("Recruit {} ({})", leader->get_full_name(), leader->get_leader_type_name());
 	}
 
 	return QString::fromStdString(str);

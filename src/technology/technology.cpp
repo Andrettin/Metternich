@@ -366,6 +366,64 @@ void technology::add_retired_advisor(const character *advisor)
 	});
 }
 
+QVariantList technology::get_enabled_leaders_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_enabled_leaders());
+}
+
+std::vector<const character *> technology::get_enabled_leaders_for_country(const country *country) const
+{
+	std::vector<const character *> leaders;
+
+	for (const character *leader : this->get_enabled_leaders()) {
+		if (leader->get_conditions() != nullptr && !leader->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		leaders.push_back(leader);
+	}
+
+	return leaders;
+}
+
+void technology::add_enabled_leader(const character *leader)
+{
+	this->enabled_leaders.push_back(leader);
+
+	std::sort(this->enabled_leaders.begin(), this->enabled_leaders.end(), [](const character *lhs, const character *rhs) {
+		return lhs->get_full_name() < rhs->get_full_name();
+	});
+}
+
+QVariantList technology::get_retired_leaders_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_retired_leaders());
+}
+
+std::vector<const character *> technology::get_retired_leaders_for_country(const country *country) const
+{
+	std::vector<const character *> leaders;
+
+	for (const character *leader : this->get_retired_leaders()) {
+		if (leader->get_conditions() != nullptr && !leader->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		leaders.push_back(leader);
+	}
+
+	return leaders;
+}
+
+void technology::add_retired_leader(const character *leader)
+{
+	this->retired_leaders.push_back(leader);
+
+	std::sort(this->retired_leaders.begin(), this->retired_leaders.end(), [](const character *lhs, const character *rhs) {
+		return lhs->get_full_name() < rhs->get_full_name();
+	});
+}
+
 std::string technology::get_modifier_string(const country *country) const
 {
 	if (this->get_modifier() == nullptr) {
@@ -570,6 +628,30 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Retires {} advisor", advisor->get_full_name());
+		}
+	}
+
+	const std::vector<const character *> enabled_leaders = get_enabled_leaders_for_country(country);
+
+	if (!enabled_leaders.empty()) {
+		for (const character *leader : enabled_leaders) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} leader", leader->get_full_name());
+		}
+	}
+
+	const std::vector<const character *> retired_leaders = get_retired_leaders_for_country(country);
+
+	if (!retired_leaders.empty()) {
+		for (const character *leader : retired_leaders) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Retires {} leader", leader->get_full_name());
 		}
 	}
 

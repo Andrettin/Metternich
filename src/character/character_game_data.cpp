@@ -321,7 +321,7 @@ void character_game_data::deploy_to_province(const province *province)
 	assert_throw(!this->is_deployed());
 	assert_throw(this->is_deployable());
 
-	const military_unit_type *military_unit_type = this->get_country()->get_game_data()->get_best_military_unit_category_type(this->character->get_military_unit_category());
+	const military_unit_type *military_unit_type = this->get_country()->get_game_data()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
 
 	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->character);
 

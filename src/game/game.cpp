@@ -621,25 +621,32 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const country *country = character_history->get_country();
 
-			if (character->get_military_unit_category() != military_unit_category::none && scenario->get_start_date() < character->get_end_date()) {
-				if (character_history->get_deployment_province() != nullptr) {
-					assert_throw(country != nullptr);
-					character_game_data->set_country(country);
-
-					assert_throw(character_game_data->get_country() != nullptr);
-					character_game_data->deploy_to_province(character_history->get_deployment_province());
-				}
-			}
-
-			country_game_data *country_game_data = country ? country->get_game_data() : nullptr;
-
-			if (character->is_advisor() && country != nullptr && this->get_rules()->are_advisors_enabled() && country_game_data->can_have_advisors()) {
+			if ((character->is_advisor() || character->is_leader()) && country != nullptr) {
+				country_game_data *country_game_data = country->get_game_data();
 				const technology *obsolescence_technology = character->get_obsolescence_technology();
 
 				if (obsolescence_technology != nullptr && country_game_data->has_technology(obsolescence_technology)) {
 					character_game_data->set_dead(true);
 				} else {
-					country_game_data->add_advisor(character);
+					if (character->is_advisor()) {
+						if (this->get_rules()->are_advisors_enabled() && country_game_data->can_have_advisors()) {
+							country_game_data->add_advisor(character);
+						}
+					} else if (character->is_leader()) {
+						const province *deployment_province = character_history->get_deployment_province();
+						if (deployment_province == nullptr) {
+							country->get_capital_province();
+						}
+
+						assert_throw(deployment_province != nullptr);
+
+						if (deployment_province->get_game_data()->get_owner() == country) {
+							country_game_data->add_leader(character);
+
+							assert_throw(character_game_data->get_country() != nullptr);
+							character_game_data->deploy_to_province(character_history->get_deployment_province());
+						}
+					}
 				}
 
 				if (character->get_required_technology() != nullptr) {
@@ -1112,6 +1119,7 @@ void game::remove_country(country *country)
 	}
 
 	country->get_game_data()->clear_advisors();
+	country->get_game_data()->clear_leaders();
 
 	for (const metternich::country *other_country : this->get_countries()) {
 		country_game_data *other_country_game_data = other_country->get_game_data();

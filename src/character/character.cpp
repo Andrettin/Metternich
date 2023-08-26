@@ -154,6 +154,14 @@ void character::initialize()
 		if (this->obsolescence_technology != nullptr) {
 			this->obsolescence_technology->add_retired_advisor(this);
 		}
+	} else if (this->is_leader()) {
+		if (this->required_technology != nullptr) {
+			this->required_technology->add_enabled_leader(this);
+		}
+
+		if (this->obsolescence_technology != nullptr) {
+			this->obsolescence_technology->add_retired_leader(this);
+		}
 	}
 
 	named_data_entry::initialize();
@@ -165,12 +173,12 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" is both a ruler and an advisor.", this->get_identifier()));
 	}
 
-	if (this->is_ruler() && this->get_military_unit_category() != military_unit_category::none) {
-		throw std::runtime_error(std::format("Character \"{}\" is both a ruler and has a military unit category.", this->get_identifier()));
+	if (this->is_ruler() && this->is_leader()) {
+		throw std::runtime_error(std::format("Character \"{}\" is both a ruler and a leader.", this->get_identifier()));
 	}
 
-	if (this->is_advisor() && this->get_military_unit_category() != military_unit_category::none) {
-		throw std::runtime_error(std::format("Character \"{}\" is both an advisor and has a military unit category.", this->get_identifier()));
+	if (this->is_advisor() && this->is_leader()) {
+		throw std::runtime_error(std::format("Character \"{}\" is both an advisor and a leader.", this->get_identifier()));
 	}
 
 	if (this->is_ruler() && this->get_traits().size() < character::ruler_trait_count) {
@@ -188,7 +196,7 @@ void character::check() const
 	assert_throw(this->get_culture() != nullptr);
 
 	if (this->get_religion() == nullptr) {
-		throw std::runtime_error("Character \"" + this->get_identifier() + "\" has no religion.");
+		throw std::runtime_error(std::format("Character \"{}\" has no religion.", this->get_identifier()));
 	}
 
 	assert_throw(this->get_phenotype() != nullptr);
@@ -339,6 +347,27 @@ int character::get_advisor_score() const
 	}
 
 	return 0;
+}
+
+bool character::is_leader() const
+{
+	return this->get_military_unit_category() != military_unit_category::none;
+}
+
+bool character::is_admiral() const
+{
+	return is_ship_military_unit_category(this->get_military_unit_category());
+}
+
+std::string character::get_leader_type_name() const
+{
+	assert_throw(this->is_leader());
+
+	if (this->is_admiral()) {
+		return "Admiral";
+	}
+
+	return get_military_unit_category_name(this->get_military_unit_category());
 }
 
 }
