@@ -22,6 +22,7 @@ enum class military_unit_category {
 	heavy_artillery,
 	combat_engineers,
 	general,
+	warrior,
 	light_warship,
 	heavy_warship
 };
@@ -61,6 +62,8 @@ inline std::string get_military_unit_category_name(const military_unit_category 
 			return "Combat Engineers";
 		case military_unit_category::general:
 			return "General";
+		case military_unit_category::warrior:
+			return "Warrior";
 		case military_unit_category::light_warship:
 			return "Light Warship";
 		case military_unit_category::heavy_warship:
