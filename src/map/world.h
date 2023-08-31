@@ -31,10 +31,7 @@ public:
 		return this->sites;
 	}
 
-	void add_site(const site *site)
-	{
-		this->sites.push_back(site);
-	}
+	void add_site(const site *site);
 
 	std::vector<QVariantList> parse_geojson_folder(const std::string_view &folder) const;
 	terrain_geodata_map parse_terrain_geojson_folder() const;
@@ -43,6 +40,7 @@ public:
 
 private:
 	std::vector<const site *> sites;
+	std::map<geocoordinate, const site *> sites_by_geocoordinate;
 };
 
 }

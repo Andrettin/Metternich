@@ -4,13 +4,28 @@
 
 #include "map/province.h"
 #include "map/route.h"
+#include "map/site.h"
 #include "map/terrain_feature.h"
 #include "map/terrain_type.h"
 #include "util/geojson_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
-	
+
+void world::add_site(const site *site)
+{
+	this->sites.push_back(site);
+
+	const geocoordinate site_geocoordinate = site->get_geocoordinate();
+	if (!site_geocoordinate.is_null()) {
+		if (this->sites_by_geocoordinate.contains(site_geocoordinate)) {
+			throw std::runtime_error(std::format("Both the sites of \"{}\" and \"{}\" occupy the {} geocoordinate in world \"{}\".", this->sites_by_geocoordinate.find(site_geocoordinate)->second->get_identifier(), site->get_identifier(), site_geocoordinate.to_string(), this->get_identifier()));
+		} else {
+			this->sites_by_geocoordinate[site_geocoordinate] = site;
+		}
+	}
+}
+
 std::vector<QVariantList> world::parse_geojson_folder(const std::string_view &folder) const
 {
 	std::vector<QVariantList> geojson_data_list;

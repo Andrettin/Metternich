@@ -112,7 +112,7 @@ void map_template::initialize()
 			assert_throw(map_rect.contains(tile_pos));
 
 			if (this->sites_by_position.contains(tile_pos)) {
-				throw std::runtime_error("Both the sites of \"" + this->sites_by_position.find(tile_pos)->second->get_identifier() + "\" and \"" + site->get_identifier() + "\" occupy the " + point::to_string(tile_pos) + " position in map template \"" + this->get_identifier() + "\".");
+				throw std::runtime_error(std::format("Both the sites of \"{}\" and \"{}\" occupy the {} position in map template \"{}\".", this->sites_by_position.find(tile_pos)->second->get_identifier(), site->get_identifier(), point::to_string(tile_pos), this->get_identifier()));
 			}
 
 			this->sites_by_position[tile_pos] = site;
