@@ -408,7 +408,7 @@ void game::apply_history(const metternich::scenario *scenario)
 		}
 
 		for (const site *site : site::get_all()) {
-			const site_game_data *site_game_data = site->get_game_data();
+			site_game_data *site_game_data = site->get_game_data();
 			tile *tile = site_game_data->get_tile();
 
 			const province *site_province = site->get_province();
@@ -418,8 +418,16 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const site_history *site_history = site->get_history();
 
-			//apply site buildings to its province's owner
+			//apply site buildings
 			if (site_province != nullptr && site_province->get_game_data()->is_on_map()) {
+				if (site_history->get_settlement_type() != nullptr) {
+					if (site->get_type() != site_type::settlement) {
+						throw std::runtime_error(std::format("Site \"{}\" has a settlement type in history, but is not a settlement.", site->get_identifier()));
+					}
+					
+					site_game_data->set_settlement_type(site_history->get_settlement_type());
+				}
+
 				province_game_data *site_province_game_data = site_province->get_game_data();
 				const country *owner = site_province_game_data->get_owner();
 

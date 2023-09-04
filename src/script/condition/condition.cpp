@@ -62,6 +62,7 @@
 #include "script/condition/saved_scope_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
+#include "script/condition/settlement_type_condition.h"
 #include "script/condition/source_character_condition.h"
 #include "script/condition/source_site_condition.h"
 #include "script/condition/source_site_scope_condition.h"
@@ -155,6 +156,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (key == "improvement") {
 			return std::make_unique<improvement_condition>(value, condition_operator);
+		} else if (key == "settlement_type") {
+			return std::make_unique<settlement_type_condition>(value, condition_operator);
 		} else if (key == "terrain") {
 			return std::make_unique<terrain_condition>(value, condition_operator);
 		}

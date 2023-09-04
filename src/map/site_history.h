@@ -8,6 +8,7 @@ namespace metternich {
 
 class building_type;
 class improvement;
+class settlement_type;
 class site;
 class wonder;
 
@@ -16,6 +17,7 @@ class site_history final : public data_entry_history
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::improvement* improvement MEMBER improvement)
+	Q_PROPERTY(metternich::settlement_type* settlement_type MEMBER settlement_type)
 	Q_PROPERTY(bool resource_discovered MEMBER resource_discovered READ is_resource_discovered)
 	Q_PROPERTY(bool developed MEMBER developed)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
@@ -35,12 +37,17 @@ public:
 
 	bool is_developed() const
 	{
-		return this->developed || this->get_improvement() != nullptr || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
+		return this->developed || this->get_improvement() != nullptr || this->get_settlement_type() != nullptr || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
 	}
 
 	const metternich::improvement *get_improvement() const
 	{
 		return this->improvement;
+	}
+
+	const metternich::settlement_type *get_settlement_type() const
+	{
+		return this->settlement_type;
 	}
 
 	const building_slot_type_map<const building_type *> &get_buildings() const
@@ -116,6 +123,7 @@ private:
 	bool resource_discovered = false;
 	bool developed = false;
 	metternich::improvement *improvement = nullptr;
+	metternich::settlement_type *settlement_type = nullptr;
 	building_slot_type_map<const building_type *> buildings;
 	building_slot_type_map<const wonder *> wonders;
 	population_group_map<int> population_groups;

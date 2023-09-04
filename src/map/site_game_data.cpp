@@ -21,6 +21,7 @@ namespace metternich {
 
 void site_game_data::reset_non_map_data()
 {
+	this->settlement_type = nullptr;
 	this->visiting_military_units.clear();
 }
 

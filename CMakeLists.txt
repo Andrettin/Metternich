@@ -97,6 +97,7 @@ set(infrastructure_SRCS
 	src/infrastructure/pathway.cpp
 	src/infrastructure/pathway_container.cpp
 	src/infrastructure/provincial_building_slot.cpp
+	src/infrastructure/settlement_type.cpp
 	src/infrastructure/wonder.cpp
 )
 source_group(infrastructure FILES ${infrastructure_SRCS})
@@ -370,6 +371,7 @@ set(infrastructure_HDRS
 	src/infrastructure/pathway.h
 	src/infrastructure/pathway_container.h
 	src/infrastructure/provincial_building_slot.h
+	src/infrastructure/settlement_type.h
 	src/infrastructure/wonder.h
 )
 source_group(infrastructure FILES ${infrastructure_HDRS})
@@ -500,6 +502,7 @@ set(script_condition_HDRS
 	src/script/condition/scope_condition_base.h
 	src/script/condition/scripted_condition.h
 	src/script/condition/scripted_condition_condition.h
+	src/script/condition/settlement_type_condition.h
 	src/script/condition/source_character_condition.h
 	src/script/condition/source_site_condition.h
 	src/script/condition/source_site_scope_condition.h

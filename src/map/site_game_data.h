@@ -9,6 +9,7 @@ class improvement;
 class military_unit;
 class province;
 class religion;
+class settlement_type;
 class site;
 class tile;
 
@@ -84,6 +85,21 @@ private:
 	}
 
 public:
+	const metternich::settlement_type *get_settlement_type() const
+	{
+		return this->settlement_type;
+	}
+
+	void set_settlement_type(const metternich::settlement_type *settlement_type)
+	{
+		if (settlement_type == this->get_settlement_type()) {
+			return;
+		}
+
+		this->settlement_type = settlement_type;
+		emit settlement_type_changed();
+	}
+
 	const commodity_map<int> &get_commodity_outputs() const
 	{
 		return this->commodity_outputs;
@@ -123,11 +139,13 @@ signals:
 	void tile_pos_changed();
 	void culture_changed();
 	void improvement_changed();
+	void settlement_type_changed();
 	void commodity_outputs_changed();
 
 private:
 	const metternich::site *site = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
+	const metternich::settlement_type *settlement_type = nullptr;
 	commodity_map<int> commodity_outputs;
 	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site
 };
