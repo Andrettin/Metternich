@@ -139,6 +139,12 @@ bool provincial_building_slot::can_have_wonder(const metternich::wonder *wonder)
 		}
 	}
 
+	const site *settlement = this->get_province()->get_capital_settlement();
+	const site_game_data *settlement_game_data = settlement->get_game_data();
+	if (!vector::contains(wonder->get_building()->get_settlement_types(), settlement_game_data->get_settlement_type())) {
+		return false;
+	}
+
 	if (wonder->get_building()->get_province_conditions() != nullptr) {
 		if (!wonder->get_building()->get_province_conditions()->check(this->get_province(), read_only_context(this->get_province()))) {
 			return false;
