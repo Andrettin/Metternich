@@ -65,7 +65,7 @@ void province::initialize()
 void province::check() const
 {
 	if (this->get_capital_settlement() == nullptr && !this->is_water_zone()) {
-		log::log_error("Province \"" + this->get_identifier() + "\" has no capital settlement.");
+		throw std::runtime_error(std::format("Province \"{}\" has no capital settlement.", this->get_identifier()));
 	} else if (this->get_capital_settlement() != nullptr && this->is_water_zone()) {
 		throw std::runtime_error("Water zone \"" + this->get_identifier() + "\" has a capital settlement.");
 	}
