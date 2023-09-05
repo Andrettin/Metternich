@@ -18,6 +18,7 @@
 #include "script/condition/any_neighbor_country_condition.h"
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
+#include "script/condition/birth_year_condition.h"
 #include "script/condition/can_have_trait_condition.h"
 #include "script/condition/capital_condition.h"
 #include "script/condition/cavalry_condition.h"
@@ -90,6 +91,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<advisor_type_condition>(value, condition_operator);
 		} else if (key == "age") {
 			return std::make_unique<age_condition>(value, condition_operator);
+		} else if (key == "birth_year") {
+			return std::make_unique<birth_year_condition>(value, condition_operator);
 		} else if (key == "can_have_trait") {
 			return std::make_unique<can_have_trait_condition>(value, condition_operator);
 		} else if (key == "gender") {
