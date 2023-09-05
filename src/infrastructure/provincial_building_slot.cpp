@@ -13,9 +13,12 @@
 #include "infrastructure/wonder.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -52,6 +55,12 @@ void provincial_building_slot::set_building(const building_type *building)
 bool provincial_building_slot::can_have_building(const building_type *building) const
 {
 	if (!building->is_provincial()) {
+		return false;
+	}
+
+	const site *settlement = this->get_province()->get_capital_settlement();
+	const site_game_data *settlement_game_data = settlement->get_game_data();
+	if (!vector::contains(building->get_settlement_types(), settlement_game_data->get_settlement_type())) {
 		return false;
 	}
 

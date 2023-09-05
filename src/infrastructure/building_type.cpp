@@ -8,6 +8,7 @@
 #include "economy/production_type.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
+#include "infrastructure/settlement_type.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
@@ -34,7 +35,11 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "production_types") {
+	if (tag == "settlement_types") {
+		for (const std::string &value : values) {
+			this->settlement_types.push_back(settlement_type::get(value));
+		}
+	} else if (tag == "production_types") {
 		for (const std::string &value : values) {
 			this->production_types.push_back(production_type::get(value));
 		}
@@ -121,6 +126,14 @@ void building_type::check() const
 
 	if (this->get_required_building() == this) {
 		throw std::runtime_error(std::format("Building type \"{}\" requires itself.", this->get_identifier()));
+	}
+
+	if (this->is_provincial() && this->get_settlement_types().empty()) {
+		throw std::runtime_error(std::format("Building type \"{}\" is provincial, but does not have any settlement types listed for it.", this->get_identifier()));
+	}
+
+	if (!this->is_provincial() && !this->get_settlement_types().empty()) {
+		throw std::runtime_error(std::format("Building type \"{}\" is not provincial, but does have settlement types listed for it.", this->get_identifier()));
 	}
 
 	if (!this->get_production_types().empty() && !this->is_provincial()) {

@@ -17,6 +17,7 @@ class population_unit;
 class portrait;
 class production_type;
 class province;
+class settlement_type;
 class technology;
 
 template <typename scope_type>
@@ -99,6 +100,11 @@ public:
 	bool is_provincial() const
 	{
 		return this->provincial;
+	}
+
+	const std::vector<const settlement_type *> &get_settlement_types() const
+	{
+		return this->settlement_types;
 	}
 
 	const std::vector<const production_type *> &get_production_types() const
@@ -232,6 +238,7 @@ private:
 	metternich::portrait *portrait = nullptr;
 	metternich::icon *icon = nullptr;
 	bool provincial = false;
+	std::vector<const settlement_type *> settlement_types;
 	std::vector<const production_type *> production_types;
 	int base_capacity = 0;
 	int capacity_increment = 0;
