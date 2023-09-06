@@ -488,30 +488,10 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 
 				for (auto [building_slot_type, wonder] : site_history->get_wonders()) {
-					if (wonder->get_conditions() != nullptr) {
-						if (owner == nullptr) {
-							continue;
-						}
-
-						if (!wonder->get_conditions()->check(owner, read_only_context(owner))) {
-							continue;
-						}
-					}
-
-					if (wonder->get_province_conditions() != nullptr) {
-						if (!wonder->get_province_conditions()->check(site_province, read_only_context(site_province))) {
-							continue;
-						}
-					}
-
 					provincial_building_slot *building_slot = site_province_game_data->get_building_slot(building_slot_type);
 
-					if (building_slot != nullptr) {
-						const metternich::wonder *slot_wonder = building_slot->get_wonder();
-
-						if (slot_wonder == nullptr || slot_wonder->get_score() < wonder->get_score()) {
-							building_slot->set_wonder(wonder);
-						}
+					if (building_slot != nullptr && building_slot->can_have_wonder(wonder)) {
+						building_slot->set_wonder(wonder);
 					}
 
 					if (wonder->get_required_technology() != nullptr && owner_game_data != nullptr) {
