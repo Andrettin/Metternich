@@ -525,7 +525,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					}
 
 					if (!vector::contains(wonder->get_building()->get_settlement_types(), settlement_type)) {
-						throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but its settlement type of \"{}\" is not appropriate for its building type.", settlement->get_identifier(), wonder->get_identifier(), settlement_type->get_identifier()));
+						throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but its settlement type of \"{}\" is not appropriate for the wonder's building type of \"{}\".", settlement->get_identifier(), wonder->get_identifier(), settlement_type->get_identifier(), wonder->get_building()->get_identifier()));
 					}
 
 					provincial_building_slot *building_slot = site_province_game_data->get_building_slot(building_slot_type);
