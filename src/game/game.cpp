@@ -24,6 +24,7 @@
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/provincial_building_slot.h"
+#include "infrastructure/settlement_type.h"
 #include "infrastructure/wonder.h"
 #include "map/direction.h"
 #include "map/map.h"
@@ -462,9 +463,17 @@ void game::apply_history(const metternich::scenario *scenario)
 							}
 						}
 
-						if (building->is_provincial() && !vector::contains(building->get_settlement_types(), site_province->get_capital_settlement()->get_game_data()->get_settlement_type())) {
-							building = building->get_required_building();
-							continue;
+						if (building->is_provincial()) {
+							const metternich::site *settlement = site_province->get_capital_settlement();
+							const metternich::settlement_type *settlement_type = settlement->get_game_data()->get_settlement_type();
+
+							if (settlement_type == nullptr) {
+								throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but has no settlement type.", settlement->get_identifier(), building->get_identifier()));
+							}
+
+							if (!vector::contains(building->get_settlement_types(), settlement_type)) {
+								throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but its settlement type of \"{}\" is not appropriate for it.", settlement->get_identifier(), building->get_identifier(), settlement_type->get_identifier()));
+							}
 						}
 
 						if (building->get_province_conditions() != nullptr) {
@@ -508,11 +517,28 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 
 				for (auto [building_slot_type, wonder] : site_history->get_wonders()) {
+					const metternich::site *settlement = site_province->get_capital_settlement();
+					const metternich::settlement_type *settlement_type = settlement->get_game_data()->get_settlement_type();
+
+					if (settlement_type == nullptr) {
+						throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but has no settlement type.", settlement->get_identifier(), wonder->get_identifier()));
+					}
+
+					if (!vector::contains(wonder->get_building()->get_settlement_types(), settlement_type)) {
+						throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but its settlement type of \"{}\" is not appropriate for its building type.", settlement->get_identifier(), wonder->get_identifier(), settlement_type->get_identifier()));
+					}
+
 					provincial_building_slot *building_slot = site_province_game_data->get_building_slot(building_slot_type);
 
-					if (building_slot != nullptr && building_slot->can_have_wonder(wonder)) {
-						building_slot->set_wonder(wonder);
+					if (building_slot == nullptr) {
+						throw std::runtime_error(std::format("Province \"{}\" is set in history to have wonder \"{}\", but does not have its building slot available.", site_province->get_identifier(), wonder->get_identifier()));
 					}
+
+					if (!building_slot->can_have_wonder(wonder)) {
+						throw std::runtime_error(std::format("Province \"{}\" is set in history to have wonder \"{}\", but cannot have it.", site_province->get_identifier(), wonder->get_identifier()));
+					}
+
+					building_slot->set_wonder(wonder);
 
 					if (wonder->get_required_technology() != nullptr && owner_game_data != nullptr) {
 						owner_game_data->add_technology_with_prerequisites(wonder->get_required_technology());
