@@ -25,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->is_ruler();
+		return scope->is_ruler() == this->value;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
