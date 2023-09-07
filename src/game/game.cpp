@@ -468,10 +468,20 @@ void game::apply_history(const metternich::scenario *scenario)
 							const metternich::settlement_type *settlement_type = settlement->get_game_data()->get_settlement_type();
 
 							if (settlement_type == nullptr) {
+								if (settlement != site) {
+									building = building->get_required_building();
+									continue;
+								}
+
 								throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but has no settlement type.", settlement->get_identifier(), building->get_identifier()));
 							}
 
 							if (!vector::contains(building->get_settlement_types(), settlement_type)) {
+								if (settlement != site) {
+									building = building->get_required_building();
+									continue;
+								}
+
 								throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but its settlement type of \"{}\" is not appropriate for it.", settlement->get_identifier(), building->get_identifier(), settlement_type->get_identifier()));
 							}
 						}
