@@ -412,6 +412,7 @@ bool province_game_data::has_building_or_better(const building_type *building) c
 void province_game_data::clear_buildings()
 {
 	for (const qunique_ptr<provincial_building_slot> &building_slot : this->building_slots) {
+		building_slot->set_wonder(nullptr);
 		building_slot->set_building(nullptr);
 	}
 }
