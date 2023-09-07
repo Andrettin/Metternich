@@ -2,7 +2,9 @@
 
 #include "infrastructure/settlement_type.h"
 
+#include "map/tile_image_provider.h"
 #include "script/condition/and_condition.h"
+#include "util/event_loop.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -35,8 +37,21 @@ void settlement_type::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void settlement_type::initialize()
+{
+	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+		co_await tile_image_provider::get()->load_image("settlement/" + this->get_identifier() + "/0");
+	});
+
+	named_data_entry::initialize();
+}
+
 void settlement_type::check() const
 {
+	if (this->get_image_filepath().empty()) {
+		throw std::runtime_error(std::format("Settlement type \"{}\" has no image filepath.", this->get_identifier()));
+	}
+
 	if (vector::contains(this->get_base_settlement_types(), this)) {
 		throw std::runtime_error(std::format("Settlement type \"{}\" is an upgrade of itself.", this->get_identifier()));
 	}
@@ -44,6 +59,15 @@ void settlement_type::check() const
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
 	}
+}
+
+void settlement_type::set_image_filepath(const std::filesystem::path &filepath)
+{
+	if (filepath == this->get_image_filepath()) {
+		return;
+	}
+
+	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
 }
 
 }

@@ -90,15 +90,7 @@ public:
 		return this->settlement_type;
 	}
 
-	void set_settlement_type(const metternich::settlement_type *settlement_type)
-	{
-		if (settlement_type == this->get_settlement_type()) {
-			return;
-		}
-
-		this->settlement_type = settlement_type;
-		emit settlement_type_changed();
-	}
+	void set_settlement_type(const metternich::settlement_type *settlement_type);
 
 	const commodity_map<int> &get_commodity_outputs() const
 	{

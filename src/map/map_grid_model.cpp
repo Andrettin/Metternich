@@ -10,6 +10,7 @@
 #include "game/game.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
+#include "infrastructure/settlement_type.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -30,6 +31,7 @@ map_grid_model::map_grid_model()
 	connect(map::get(), &map::tile_terrain_changed, this, &map_grid_model::on_tile_terrain_changed);
 	connect(map::get(), &map::tile_exploration_changed, this, &map_grid_model::on_tile_exploration_changed);
 	connect(map::get(), &map::tile_resource_changed, this, &map_grid_model::on_tile_resource_changed);
+	connect(map::get(), &map::tile_settlement_type_changed, this, &map_grid_model::on_tile_settlement_type_changed);
 	connect(map::get(), &map::tile_improvement_changed, this, &map_grid_model::on_tile_improvement_changed);
 	connect(map::get(), &map::tile_pathway_changed, this, &map_grid_model::on_tile_pathway_changed);
 	connect(map::get(), &map::tile_civilian_unit_changed, this, &map_grid_model::on_tile_civilian_unit_changed);
@@ -115,8 +117,9 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 					}
 				}
 
-				if (tile->get_settlement() != nullptr) {
-					overlay_image_sources.push_back("tile/settlement/default");
+				if (tile->get_settlement_type() != nullptr) {
+					QString image_source = "tile/settlement/" + tile->get_settlement_type()->get_identifier_qstring() + "/0";
+					overlay_image_sources.push_back(std::move(image_source));
 				}
 				
 				if (tile->get_improvement() != nullptr) {
@@ -229,6 +232,14 @@ void map_grid_model::on_tile_resource_changed(const QPoint &tile_pos)
 	emit dataChanged(index, index, {
 		static_cast<int>(role::overlay_image_sources),
 		static_cast<int>(role::resource)
+	});
+}
+
+void map_grid_model::on_tile_settlement_type_changed(const QPoint &tile_pos)
+{
+	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
+	emit dataChanged(index, index, {
+		static_cast<int>(role::overlay_image_sources)
 	});
 }
 

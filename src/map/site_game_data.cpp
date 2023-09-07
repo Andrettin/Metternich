@@ -6,6 +6,7 @@
 #include "country/country_game_data.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
+#include "game/game.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -140,6 +141,20 @@ void site_game_data::calculate_commodity_outputs()
 
 	for (const auto &[commodity, output] : outputs) {
 		this->set_commodity_output(commodity, output);
+	}
+}
+
+void site_game_data::set_settlement_type(const metternich::settlement_type *settlement_type)
+{
+	if (settlement_type == this->get_settlement_type()) {
+		return;
+	}
+
+	this->settlement_type = settlement_type;
+	emit settlement_type_changed();
+
+	if (game::get()->is_running()) {
+		emit map::get()->tile_improvement_changed(this->get_tile_pos());
 	}
 }
 

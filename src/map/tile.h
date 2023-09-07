@@ -14,6 +14,7 @@ class improvement;
 class pathway;
 class province;
 class resource;
+class settlement_type;
 class site;
 class terrain_type;
 
@@ -67,6 +68,7 @@ public:
 	}
 
 	const metternich::site *get_settlement() const;
+	const settlement_type *get_settlement_type() const;
 
 	const metternich::resource *get_resource() const
 	{

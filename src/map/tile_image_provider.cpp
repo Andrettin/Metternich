@@ -6,6 +6,7 @@
 #include "database/preferences.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
+#include "infrastructure/settlement_type.h"
 #include "map/terrain_type.h"
 #include "util/assert_util.h"
 #include "util/image_util.h"
@@ -41,7 +42,9 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 		filepath = terrain->get_image_filepath();
 		is_frame_image = true;
 	} else if (tile_image_type == "settlement") {
-		filepath = defines::get()->get_default_settlement_image_filepath();
+		const settlement_type *settlement_type = settlement_type::get(identifier);
+		filepath = settlement_type->get_image_filepath();
+		is_frame_image = true;
 	} else if (tile_image_type == "improvement") {
 		const improvement *improvement = improvement::get(identifier);
 		if (id_list.size() >= 4) {

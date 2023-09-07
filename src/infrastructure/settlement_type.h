@@ -14,6 +14,8 @@ class settlement_type final : public named_data_entry, public data_type<settleme
 {
 	Q_OBJECT
 
+	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
+
 public:
 	static constexpr const char class_identifier[] = "settlement_type";
 	static constexpr const char property_class_identifier[] = "metternich::settlement_type*";
@@ -23,7 +25,15 @@ public:
 	~settlement_type();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
+
+	const std::filesystem::path &get_image_filepath() const
+	{
+		return this->image_filepath;
+	}
+
+	void set_image_filepath(const std::filesystem::path &filepath);
 
 	const std::vector<const settlement_type *> &get_base_settlement_types() const
 	{
@@ -44,6 +54,7 @@ signals:
 	void changed();
 
 private:
+	std::filesystem::path image_filepath;
 	std::vector<const settlement_type *> base_settlement_types;
 	std::vector<const settlement_type *> upgraded_settlement_types;
 	std::unique_ptr<const condition<site>> conditions;

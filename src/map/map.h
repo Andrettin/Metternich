@@ -135,6 +135,7 @@ signals:
 	void tile_terrain_changed(const QPoint &tile_pos);
 	void tile_exploration_changed(const QPoint &tile_pos);
 	void tile_resource_changed(const QPoint &tile_pos);
+	void tile_settlement_type_changed(const QPoint &tile_pos);
 	void tile_improvement_changed(const QPoint &tile_pos);
 	void tile_pathway_changed(const QPoint &tile_pos);
 	void tile_civilian_unit_changed(const QPoint &tile_pos);

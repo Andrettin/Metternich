@@ -65,7 +65,9 @@ void improvement::check() const
 		assert_throw(this->get_output_multiplier() > 0);
 	}
 
-	assert_log(!this->get_image_filepath().empty());
+	if (this->get_image_filepath().empty()) {
+		throw std::runtime_error(std::format("Improvement \"{}\" has no image filepath.", this->get_identifier()));
+	}
 
 	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
 		assert_throw(vector::contains(this->get_terrain_types(), terrain) || vector::contains(this->get_resource()->get_terrain_types(), terrain));
