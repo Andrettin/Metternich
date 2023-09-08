@@ -81,14 +81,6 @@ void character::process_gsml_scope(const gsml_data &scope)
 
 void character::initialize()
 {
-	if (this->get_home_province() == nullptr && this->get_home_site() != nullptr && this->get_home_site()->get_province() != nullptr) {
-		this->home_province = this->get_home_site()->get_province();
-	}
-
-	if (this->get_home_province() != nullptr) {
-		this->home_province->add_character(this);
-	}
-
 	if (this->get_phenotype() == nullptr && this->get_culture() != nullptr) {
 		this->phenotype = this->get_culture()->get_default_phenotype();
 	}
@@ -226,8 +218,10 @@ void character::check() const
 
 	assert_throw(this->get_phenotype() != nullptr);
 
-	if (this->get_home_province() == nullptr) {
-		throw std::runtime_error(std::format("Character \"{}\" has no home province.", this->get_identifier()));
+	if (this->get_home_settlement() == nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has no home settlement.", this->get_identifier()));
+	} else if (!this->get_home_settlement()->is_settlement()) {
+		throw std::runtime_error(std::format("Character \"{}\" has \"{}\" set as their home settlement, but it is not a settlement.", this->get_identifier(), this->get_home_settlement()->get_identifier()));
 	}
 
 	if (this->get_gender() == gender::none) {

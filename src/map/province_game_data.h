@@ -172,6 +172,16 @@ public:
 		return this->resource_tiles;
 	}
 
+	const std::vector<const site *> &get_settlements() const
+	{
+		return this->settlements;
+	}
+
+	int get_settlement_count() const
+	{
+		return static_cast<int>(this->get_settlements().size());
+	}
+
 	const resource_map<int> &get_resource_counts() const
 	{
 		return this->resource_counts;
@@ -426,6 +436,7 @@ private:
 	std::vector<QPoint> border_tiles;
 	std::vector<QPoint> resource_tiles;
 	std::vector<const site *> sites;
+	std::vector<const site *> settlements;
 	resource_map<int> resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
 	std::vector<qunique_ptr<provincial_building_slot>> building_slots;

@@ -20,7 +20,6 @@ class culture;
 class dynasty;
 class phenotype;
 class portrait;
-class province;
 class religion;
 class site;
 class technology;
@@ -52,8 +51,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
-	Q_PROPERTY(metternich::province* home_province MEMBER home_province NOTIFY changed)
-	Q_PROPERTY(metternich::site* home_site MEMBER home_site NOTIFY changed)
+	Q_PROPERTY(metternich::site* home_settlement MEMBER home_settlement NOTIFY changed)
 	Q_PROPERTY(archimedes::gender gender MEMBER gender NOTIFY changed)
 	Q_PROPERTY(metternich::character* father MEMBER father NOTIFY changed)
 	Q_PROPERTY(metternich::character* mother MEMBER mother NOTIFY changed)
@@ -191,14 +189,9 @@ public:
 		return this->portrait;
 	}
 
-	const province *get_home_province() const
+	const site *get_home_settlement() const
 	{
-		return this->home_province;
-	}
-
-	const site *get_home_site() const
-	{
-		return this->home_site;
+		return this->home_settlement;
 	}
 
 	gender get_gender() const
@@ -331,8 +324,7 @@ private:
 	metternich::religion *religion = nullptr;
 	metternich::phenotype *phenotype = nullptr;
 	metternich::portrait *portrait = nullptr;
-	province *home_province = nullptr;
-	site *home_site = nullptr;
+	site *home_settlement = nullptr;
 	archimedes::gender gender;
 	character *father = nullptr;
 	character *mother = nullptr;

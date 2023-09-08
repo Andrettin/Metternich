@@ -48,7 +48,7 @@ const country *tile::get_owner() const
 
 const metternich::site *tile::get_settlement() const
 {
-	if (this->get_site() != nullptr && this->get_site()->get_type() == site_type::settlement) {
+	if (this->get_site() != nullptr && this->get_site()->is_settlement()) {
 		return this->get_site();
 	}
 

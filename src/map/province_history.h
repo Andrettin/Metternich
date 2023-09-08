@@ -81,59 +81,7 @@ public:
 		}
 	}
 
-	const population_group_map<int> &get_lower_bound_population_groups() const
-	{
-		return this->lower_bound_population_groups;
-	}
-
-	int get_lower_bound_group_population(const population_group_key &group_key) const
-	{
-		const auto find_iterator = this->lower_bound_population_groups.find(group_key);
-		if (find_iterator != this->lower_bound_population_groups.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void set_lower_bound_group_population(const population_group_key &group_key, const int population)
-	{
-		if (population == 0) {
-			this->lower_bound_population_groups.erase(group_key);
-		} else {
-			this->lower_bound_population_groups[group_key] = population;
-		}
-	}
-
-	void change_lower_bound_group_population(const population_group_key &group_key, const int change)
-	{
-		this->set_lower_bound_group_population(group_key, this->get_lower_bound_group_population(group_key) + change);
-	}
-
-	void initialize_population()
-	{
-		for (const auto &[group_key, lower_bound_population] : this->lower_bound_population_groups) {
-			if (lower_bound_population > this->get_group_population(group_key)) {
-				this->set_group_population(group_key, lower_bound_population);
-			}
-		}
-
-		for (auto it = this->population_groups.begin(); it != this->population_groups.end(); ++it) {
-			const population_group_key &group_key = it->first;
-			const int population = it->second;
-
-			auto other_it = it;
-			++other_it;
-			for (; other_it != this->population_groups.end(); ++other_it) {
-				const population_group_key &other_group_key = other_it->first;
-				int &other_population = other_it->second;
-
-				if (other_group_key.contains(group_key)) {
-					other_population -= population;
-				}
-			}
-		}
-	}
+	void distribute_population();
 
 	const centesimal_int &get_literacy_rate() const
 	{
@@ -151,7 +99,6 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	population_group_map<int> population_groups;
-	population_group_map<int> lower_bound_population_groups;
 	centesimal_int literacy_rate;
 };
 

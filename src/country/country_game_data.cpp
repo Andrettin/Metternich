@@ -1634,10 +1634,11 @@ qunique_ptr<population_unit> country_game_data::pop_population_unit(population_u
 	return nullptr;
 }
 
-void country_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const province *province)
+void country_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const site *settlement)
 {
-	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, province);
-	province->get_game_data()->add_population_unit(population_unit.get());
+	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, settlement);
+	settlement->get_game_data()->add_population_unit(population_unit.get());
+	settlement->get_game_data()->get_province()->get_game_data()->add_population_unit(population_unit.get());
 	this->add_population_unit(std::move(population_unit));
 }
 
@@ -1810,9 +1811,9 @@ void country_game_data::grow_population()
 	const metternich::religion *religion = population_unit->get_religion();
 	const phenotype *phenotype = population_unit->get_phenotype();
 	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
-	const province *province = population_unit->get_province();
+	const site *settlement = population_unit->get_settlement();
 
-	this->create_population_unit(population_type, culture, religion, phenotype, province);
+	this->create_population_unit(population_type, culture, religion, phenotype, settlement);
 
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
@@ -1823,6 +1824,7 @@ void country_game_data::decrease_population()
 	if (!this->population_units.empty()) {
 		this->change_population_growth(1);
 		population_unit *population_unit = this->choose_starvation_population_unit();
+		population_unit->get_settlement()->get_game_data()->remove_population_unit(population_unit);
 		population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
 		this->pop_population_unit(population_unit);
 		return;
@@ -2884,7 +2886,7 @@ void country_game_data::choose_next_advisor()
 
 		int weight = 1;
 
-		if (character->get_home_province()->get_game_data()->get_owner() == this->country) {
+		if (character->get_home_settlement()->get_game_data()->get_owner() == this->country) {
 			weight += 4;
 		}
 

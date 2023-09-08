@@ -49,7 +49,7 @@ public:
 		const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
 		assert_throw(population_type != nullptr);
 
-		auto military_unit = make_qunique<metternich::military_unit>(this->type, scope, population_type, culture, scope->get_game_data()->get_religion(), culture->get_default_phenotype(), province);
+		auto military_unit = make_qunique<metternich::military_unit>(this->type, scope, population_type, culture, scope->get_game_data()->get_religion(), culture->get_default_phenotype(), province->get_capital_settlement());
 		military_unit->set_province(province);
 
 		scope->get_game_data()->add_military_unit(std::move(military_unit));

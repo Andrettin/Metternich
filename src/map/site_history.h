@@ -16,11 +16,14 @@ class site_history final : public data_entry_history
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::improvement* improvement MEMBER improvement)
-	Q_PROPERTY(metternich::settlement_type* settlement_type MEMBER settlement_type)
 	Q_PROPERTY(bool resource_discovered MEMBER resource_discovered READ is_resource_discovered)
 	Q_PROPERTY(bool developed MEMBER developed)
+	Q_PROPERTY(metternich::improvement* improvement MEMBER improvement)
+	Q_PROPERTY(metternich::settlement_type* settlement_type MEMBER settlement_type)
+	Q_PROPERTY(metternich::culture* culture MEMBER culture)
+	Q_PROPERTY(metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
+	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 
 public:
 	explicit site_history(const metternich::site *site) : site(site)
@@ -80,6 +83,16 @@ public:
 		return nullptr;
 	}
 
+	const metternich::culture *get_culture() const
+	{
+		return this->culture;
+	}
+
+	const metternich::religion *get_religion() const
+	{
+		return this->religion;
+	}
+
 	int get_population() const
 	{
 		static const population_group_key group_key;
@@ -118,15 +131,47 @@ public:
 		}
 	}
 
+	void initialize_population()
+	{
+		for (auto it = this->population_groups.begin(); it != this->population_groups.end(); ++it) {
+			const population_group_key &group_key = it->first;
+			const int population = it->second;
+
+			auto other_it = it;
+			++other_it;
+			for (; other_it != this->population_groups.end(); ++other_it) {
+				const population_group_key &other_group_key = other_it->first;
+				int &other_population = other_it->second;
+
+				if (other_group_key.contains(group_key)) {
+					other_population -= population;
+				}
+			}
+		}
+	}
+
+	const centesimal_int &get_literacy_rate() const
+	{
+		return this->literacy_rate;
+	}
+
+	void set_literacy_rate(const centesimal_int &literacy_rate)
+	{
+		this->literacy_rate = literacy_rate;
+	}
+
 private:
 	const metternich::site *site = nullptr;
 	bool resource_discovered = false;
 	bool developed = false;
 	metternich::improvement *improvement = nullptr;
 	metternich::settlement_type *settlement_type = nullptr;
+	metternich::culture *culture = nullptr;
+	metternich::religion *religion = nullptr;
 	building_slot_type_map<const building_type *> buildings;
 	building_slot_type_map<const wonder *> wonders;
 	population_group_map<int> population_groups;
+	centesimal_int literacy_rate;
 };
 
 }

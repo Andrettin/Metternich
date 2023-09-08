@@ -12,8 +12,8 @@ class culture;
 class historical_civilian_unit_history;
 class phenotype;
 class population_type;
-class province;
 class religion;
+class site;
 
 class historical_civilian_unit final : public named_data_entry, public data_type<historical_civilian_unit>
 {
@@ -21,7 +21,7 @@ class historical_civilian_unit final : public named_data_entry, public data_type
 
 	Q_PROPERTY(metternich::civilian_unit_type* type MEMBER type)
 	Q_PROPERTY(metternich::country* owner MEMBER owner)
-	Q_PROPERTY(metternich::province* home_province MEMBER home_province)
+	Q_PROPERTY(metternich::site* home_settlement MEMBER home_settlement)
 	Q_PROPERTY(metternich::population_type* population_type MEMBER population_type)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
@@ -56,9 +56,9 @@ public:
 		return this->owner;
 	}
 
-	const province *get_home_province() const
+	const site *get_home_settlement() const
 	{
-		return this->home_province;
+		return this->home_settlement;
 	}
 
 	const metternich::population_type *get_population_type() const
@@ -84,7 +84,7 @@ public:
 private:
 	civilian_unit_type *type = nullptr;
 	country *owner = nullptr;
-	province *home_province = nullptr;
+	site *home_settlement = nullptr;
 	metternich::population_type *population_type = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;

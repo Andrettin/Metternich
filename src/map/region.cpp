@@ -9,32 +9,6 @@
 
 namespace metternich {
 
-const std::set<std::string> region::history_database_dependencies = {
-	//must be loaded after provinces and sites, since it relies on their population data having been loaded first
-	province::class_identifier,
-	site::class_identifier
-};
-
-void region::load_history_database(const QDateTime &start_date, const timeline *current_timeline, const QObject *game_rules)
-{
-	data_type::load_history_database(start_date, current_timeline, game_rules);
-
-	std::vector<region *> regions = region::get_all();
-
-	std::sort(regions.begin(), regions.end(), [](const region *lhs, const region *rhs) {
-		//give priority to smaller regions
-		if (lhs->get_provinces().size() != rhs->get_provinces().size()) {
-			return lhs->get_provinces().size() < rhs->get_provinces().size();
-		}
-
-		return lhs->get_identifier() < rhs->get_identifier();
-	});
-
-	for (const region *region : regions) {
-		region->get_history()->distribute_population();
-	}
-}
-
 region::region(const std::string &identifier) : named_data_entry(identifier)
 {
 }

@@ -295,7 +295,7 @@ const country *condition<scope_type>::get_scope_country(const scope_type *scope)
 		if (country != nullptr) {
 			return country;
 		}
-		return condition<province>::get_scope_country(scope->get_home_province());
+		return condition<site>::get_scope_country(scope->get_home_settlement());
 	} else if constexpr (std::is_same_v<scope_type, country>) {
 		return scope;
 	} else if constexpr (std::is_same_v<scope_type, military_unit> || std::is_same_v<scope_type, population_unit>) {

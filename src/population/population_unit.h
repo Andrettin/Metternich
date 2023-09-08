@@ -12,6 +12,7 @@ class phenotype;
 class population_type;
 class province;
 class religion;
+class site;
 
 class population_unit final : public QObject
 {
@@ -24,11 +25,12 @@ class population_unit final : public QObject
 	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
 	Q_PROPERTY(metternich::country* country READ get_country_unconst NOTIFY country_changed)
 	Q_PROPERTY(metternich::province* province READ get_province_unconst NOTIFY province_changed)
+	Q_PROPERTY(metternich::site* settlement READ get_settlement_unconst NOTIFY settlement_changed)
 
 public:
 	static constexpr int base_score = 1;
 
-	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::province *province);
+	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *settlement);
 
 	const population_type *get_type() const
 	{
@@ -117,20 +119,30 @@ private:
 public:
 	void set_country(const metternich::country *country);
 
-	const metternich::province *get_province() const
+	const province *get_province() const;
+
+private:
+	//for the Qt property (pointers there can't be const)
+	province *get_province_unconst() const
 	{
-		return this->province;
+		return const_cast<province *>(this->get_province());
+	}
+
+public:
+	const site *get_settlement() const
+	{
+		return this->settlement;
 	}
 
 private:
 	//for the Qt property (pointers there can't be const)
-	metternich::province *get_province_unconst() const
+	site *get_settlement_unconst() const
 	{
-		return const_cast<metternich::province *>(this->get_province());
+		return const_cast<site *>(this->get_settlement());
 	}
 
 public:
-	void set_province(const metternich::province *province);
+	void set_settlement(const site *settlement);
 
 	const metternich::ideology *get_ideology() const
 	{
@@ -138,10 +150,9 @@ public:
 	}
 
 	void set_ideology(const metternich::ideology *ideology);
-
 	void choose_ideology();
 
-	void migrate_to(const metternich::province *province);
+	void migrate_to(const site *settlement);
 
 signals:
 	void type_changed();
@@ -151,6 +162,7 @@ signals:
 	void icon_changed();
 	void country_changed();
 	void province_changed();
+	void settlement_changed();
 
 private:
 	const population_type *type = nullptr;
@@ -158,7 +170,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::country *country = nullptr;
-	const metternich::province *province = nullptr;
+	const site *settlement = nullptr;
 	const metternich::ideology *ideology = nullptr;
 };
 

@@ -40,6 +40,7 @@ class population_unit;
 class province;
 class region;
 class religion;
+class site;
 class trait;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
@@ -498,7 +499,7 @@ public:
 
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
-	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const province *province);
+	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const site *settlement);
 
 	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
 	{

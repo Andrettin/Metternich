@@ -17,6 +17,7 @@ class game_rules;
 class military_unit;
 class province;
 class scenario;
+class site;
 struct population_group_key;
 
 template <typename scope_type>
@@ -83,7 +84,7 @@ public:
 
 	void apply_history(const metternich::scenario *scenario);
 	void apply_population_history();
-	int64_t apply_historical_population_group_to_province(const population_group_key &group_key, const int population, const province *province);
+	int64_t apply_historical_population_group_to_settlement(const population_group_key &group_key, const int population, const site *settlement);
 
 	void on_setup_finished();
 

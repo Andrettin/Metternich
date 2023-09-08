@@ -158,6 +158,10 @@ void province_game_data::set_owner(const country *country)
 
 	if (this->get_owner() == nullptr) {
 		this->clear_population_units();
+
+		for (const site *site : this->get_settlements()) {
+			site->get_game_data()->clear_population_units();
+		}
 	}
 
 	this->check_building_conditions();
@@ -290,6 +294,10 @@ void province_game_data::add_tile(const QPoint &tile_pos)
 
 	if (tile->get_site() != nullptr) {
 		this->sites.push_back(tile->get_site());
+
+		if (tile->get_site()->is_settlement()) {
+			this->settlements.push_back(tile->get_site());
+		}
 	}
 }
 

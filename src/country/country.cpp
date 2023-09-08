@@ -104,6 +104,15 @@ const QColor &country::get_color() const
 	return this->color;
 }
 
+const site *country::get_capital_settlement() const
+{
+	if (this->get_capital_province() == nullptr) {
+		return nullptr;
+	}
+
+	return this->get_capital_province()->get_capital_settlement();
+}
+
 bool country::can_declare_war() const
 {
 	return this->get_type() == country_type::great_power;

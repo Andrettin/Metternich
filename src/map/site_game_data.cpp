@@ -13,6 +13,7 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/tile.h"
+#include "population/population_unit.h"
 #include "script/context.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
@@ -22,6 +23,7 @@ namespace metternich {
 
 void site_game_data::reset_non_map_data()
 {
+	this->clear_population_units();
 	this->settlement_type = nullptr;
 	this->visiting_military_units.clear();
 }
@@ -52,6 +54,30 @@ void site_game_data::do_turn()
 	}
 }
 
+void site_game_data::set_tile_pos(const QPoint &tile_pos)
+{
+	if (tile_pos == this->get_tile_pos()) {
+		return;
+	}
+
+	const province *old_province = this->get_province();
+
+	this->tile_pos = tile_pos;
+	emit tile_pos_changed();
+
+	const province *province = this->get_province();
+
+	if (old_province != province) {
+		if (old_province != nullptr) {
+			disconnect(old_province->get_game_data(), &province_game_data::owner_changed, this, &site_game_data::owner_changed);
+		}
+
+		if (province != nullptr) {
+			connect(province->get_game_data(), &province_game_data::owner_changed, this, &site_game_data::owner_changed);
+		}
+	}
+}
+
 tile *site_game_data::get_tile() const
 {
 	if (this->get_tile_pos() != QPoint(-1, -1)) {
@@ -66,6 +92,34 @@ const province *site_game_data::get_province() const
 	const tile *tile = this->get_tile();
 	if (tile != nullptr) {
 		return tile->get_province();
+	}
+
+	return nullptr;
+}
+
+bool site_game_data::is_provincial_capital() const
+{
+	if (this->get_province() == nullptr) {
+		return false;
+	}
+
+	return this->get_province()->get_capital_settlement() == this->site;
+}
+
+bool site_game_data::is_capital() const
+{
+	if (this->get_province() == nullptr) {
+		return false;
+	}
+
+	return this->get_province()->get_game_data()->is_capital() && this->is_provincial_capital();
+}
+
+const country *site_game_data::get_owner() const
+{
+	const province *province = this->get_province();
+	if (province != nullptr) {
+		return province->get_game_data()->get_owner();
 	}
 
 	return nullptr;
@@ -104,6 +158,29 @@ const improvement *site_game_data::get_improvement() const
 	}
 
 	return nullptr;
+}
+
+void site_game_data::add_population_unit(population_unit *population_unit)
+{
+	this->population_units.push_back(population_unit);
+
+	if (game::get()->is_running()) {
+		emit population_units_changed();
+	}
+}
+
+void site_game_data::remove_population_unit(population_unit *population_unit)
+{
+	std::erase(this->population_units, population_unit);
+
+	if (game::get()->is_running()) {
+		emit population_units_changed();
+	}
+}
+
+void site_game_data::clear_population_units()
+{
+	this->population_units.clear();
 }
 
 void site_game_data::calculate_commodity_outputs()

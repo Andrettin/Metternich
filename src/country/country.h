@@ -13,6 +13,7 @@ class culture;
 class era;
 class province;
 class religion;
+class site;
 enum class country_type;
 
 class country final : public named_data_entry, public data_type<country>
@@ -85,6 +86,8 @@ public:
 	{
 		return this->capital_province;
 	}
+
+	const site *get_capital_settlement() const;
 
 	const std::vector<const era *> &get_eras() const
 	{

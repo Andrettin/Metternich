@@ -11,8 +11,8 @@ class icon;
 class improvement;
 class phenotype;
 class population_type;
-class province;
 class religion;
+class site;
 class tile;
 
 class civilian_unit final : public QObject
@@ -31,7 +31,7 @@ public:
 	static constexpr int improvement_construction_turns = 2;
 	static constexpr int exploration_turns = 1;
 
-	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const province *home_province);
+	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement);
 
 	void do_turn();
 	void do_ai_turn();
@@ -102,9 +102,9 @@ public:
 		return this->phenotype;
 	}
 
-	const province *get_home_province() const
+	const site *get_home_settlement() const
 	{
-		return this->home_province;
+		return this->home_settlement;
 	}
 
 	const QPoint &get_tile_pos() const
@@ -187,7 +187,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
-	const province *home_province = nullptr;
+	const site *home_settlement = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	QPoint original_tile_pos = QPoint(-1, -1); //the tile position before moving
 	const improvement *improvement_under_construction = nullptr;

@@ -15,6 +15,7 @@
 #include "map/province_game_data.h"
 #include "map/region.h"
 #include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/site_type.h"
 #include "map/temperature_type.h"
 #include "map/terrain_type.h"
@@ -72,22 +73,24 @@ void map_generator::generate()
 		province_game_data->set_owner(country);
 
 		//add population
-		const int population_unit_count = province_game_data->is_capital() ? 4 : 1;
-		const population_class *population_class = nullptr;
-		if (country->is_tribe()) {
-			population_class = defines::get()->get_default_tribal_population_class();
-		} else {
-			population_class = defines::get()->get_default_population_class();
-		}
+		for (const site *settlement : province_game_data->get_settlements()) {
+			const int population_unit_count = settlement->get_game_data()->is_capital() ? 4 : 1;
+			const population_class *population_class = nullptr;
+			if (country->is_tribe()) {
+				population_class = defines::get()->get_default_tribal_population_class();
+			} else {
+				population_class = defines::get()->get_default_population_class();
+			}
 
-		const culture *culture = country->get_culture();
-		const religion *religion = country->get_default_religion();
-		const population_type *population_type = culture->get_population_class_type(population_class);
+			const culture *culture = country->get_culture();
+			const religion *religion = country->get_default_religion();
+			const population_type *population_type = culture->get_population_class_type(population_class);
 
-		country_game_data *country_game_data = country->get_game_data();
+			country_game_data *country_game_data = country->get_game_data();
 
-		for (int i = 0; i < population_unit_count; ++i) {
-			country_game_data->create_population_unit(population_type, culture, religion, culture->get_default_phenotype(), province);
+			for (int i = 0; i < population_unit_count; ++i) {
+				country_game_data->create_population_unit(population_type, culture, religion, culture->get_default_phenotype(), settlement);
+			}
 		}
 	}
 }
