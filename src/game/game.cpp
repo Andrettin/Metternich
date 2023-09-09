@@ -434,179 +434,184 @@ void game::apply_history(const metternich::scenario *scenario)
 		}
 
 		for (const site *site : site::get_all()) {
-			site_game_data *site_game_data = site->get_game_data();
-			tile *tile = site_game_data->get_tile();
+			try {
+				site_game_data *site_game_data = site->get_game_data();
+				tile *tile = site_game_data->get_tile();
 
-			const province *site_province = site->get_province();
-			if (site_province == nullptr && tile != nullptr) {
-				site_province = tile->get_province();
-			}
+				const province *site_province = site->get_province();
+				if (site_province == nullptr && tile != nullptr) {
+					site_province = tile->get_province();
+				}
 
-			const site_history *site_history = site->get_history();
+				const site_history *site_history = site->get_history();
 
-			//apply site buildings
-			if (site_province != nullptr && site_province->get_game_data()->is_on_map()) {
-				const metternich::site *settlement = site->is_settlement() ? site : site_province->get_capital_settlement();
-				metternich::site_game_data *settlement_game_data = settlement->get_game_data();
-				const metternich::settlement_type *settlement_type = settlement->get_game_data()->get_settlement_type();
+				//apply site buildings
+				if (site_province != nullptr && site_province->get_game_data()->is_on_map()) {
+					const metternich::site *settlement = site->is_settlement() ? site : site_province->get_capital_settlement();
+					assert_throw(settlement != nullptr);
+					metternich::site_game_data *settlement_game_data = settlement->get_game_data();
+					const metternich::settlement_type *settlement_type = settlement_game_data->get_settlement_type();
 
-				const country *owner = settlement_game_data->get_owner();
-				country_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
+					const country *owner = settlement_game_data->get_owner();
+					country_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
 
-				for (auto [building_slot_type, building] : site_history->get_buildings()) {
-					while (building != nullptr) {
-						if (building->get_conditions() != nullptr) {
-							if (owner == nullptr) {
-								building = building->get_required_building();
-								continue;
-							}
-
-							if (!building->get_conditions()->check(owner, read_only_context(owner))) {
-								building = building->get_required_building();
-								continue;
-							}
-						}
-
-						if (building->is_provincial()) {
-							if (settlement_type == nullptr) {
-								if (settlement != site) {
+					for (auto [building_slot_type, building] : site_history->get_buildings()) {
+						while (building != nullptr) {
+							if (building->get_conditions() != nullptr) {
+								if (owner == nullptr) {
 									building = building->get_required_building();
 									continue;
 								}
 
-								throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but has no settlement type.", settlement->get_identifier(), building->get_identifier()));
-							}
-
-							if (!vector::contains(building->get_settlement_types(), settlement_type)) {
-								if (settlement != site) {
+								if (!building->get_conditions()->check(owner, read_only_context(owner))) {
 									building = building->get_required_building();
 									continue;
 								}
-
-								throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but its settlement type of \"{}\" is not appropriate for it.", settlement->get_identifier(), building->get_identifier(), settlement_type->get_identifier()));
 							}
+
+							if (building->is_provincial()) {
+								if (settlement_type == nullptr) {
+									if (settlement != site) {
+										building = building->get_required_building();
+										continue;
+									}
+
+									throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but has no settlement type.", settlement->get_identifier(), building->get_identifier()));
+								}
+
+								if (!vector::contains(building->get_settlement_types(), settlement_type)) {
+									if (settlement != site) {
+										building = building->get_required_building();
+										continue;
+									}
+
+									throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but its settlement type of \"{}\" is not appropriate for it.", settlement->get_identifier(), building->get_identifier(), settlement_type->get_identifier()));
+								}
+							}
+
+							if (building->get_province_conditions() != nullptr) {
+								if (!building->get_province_conditions()->check(site_province, read_only_context(site_province))) {
+									building = building->get_required_building();
+									continue;
+								}
+							}
+
+							//checks successful
+							break;
 						}
 
-						if (building->get_province_conditions() != nullptr) {
-							if (!building->get_province_conditions()->check(site_province, read_only_context(site_province))) {
-								building = building->get_required_building();
-								continue;
-							}
-						}
-
-						//checks successful
-						break;
-					}
-
-					if (building == nullptr) {
-						continue;
-					}
-
-					const building_type *slot_building = nullptr;
-
-					if (building->is_provincial()) {
-						slot_building = settlement_game_data->get_slot_building(building_slot_type);
-					} else {
-						if (owner == nullptr) {
+						if (building == nullptr) {
 							continue;
 						}
 
-						slot_building = owner_game_data->get_slot_building(building_slot_type);
-					}
+						const building_type *slot_building = nullptr;
 
-					if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
 						if (building->is_provincial()) {
-							settlement_game_data->set_slot_building(building_slot_type, building);
+							slot_building = settlement_game_data->get_slot_building(building_slot_type);
 						} else {
-							owner_game_data->set_slot_building(building_slot_type, building);
+							if (owner == nullptr) {
+								continue;
+							}
+
+							slot_building = owner_game_data->get_slot_building(building_slot_type);
+						}
+
+						if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
+							if (building->is_provincial()) {
+								settlement_game_data->set_slot_building(building_slot_type, building);
+							} else {
+								owner_game_data->set_slot_building(building_slot_type, building);
+							}
+						}
+
+						if (building->get_required_technology() != nullptr && owner_game_data != nullptr) {
+							owner_game_data->add_technology_with_prerequisites(building->get_required_technology());
 						}
 					}
 
-					if (building->get_required_technology() != nullptr && owner_game_data != nullptr) {
-						owner_game_data->add_technology_with_prerequisites(building->get_required_technology());
+					for (auto [building_slot_type, wonder] : site_history->get_wonders()) {
+						if (settlement_type == nullptr) {
+							throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but has no settlement type.", settlement->get_identifier(), wonder->get_identifier()));
+						}
+
+						if (!vector::contains(wonder->get_building()->get_settlement_types(), settlement_type)) {
+							throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but its settlement type of \"{}\" is not appropriate for the wonder's building type of \"{}\".", settlement->get_identifier(), wonder->get_identifier(), settlement_type->get_identifier(), wonder->get_building()->get_identifier()));
+						}
+
+						settlement_building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
+
+						if (building_slot == nullptr) {
+							throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but does not have its building slot available.", settlement->get_identifier(), wonder->get_identifier()));
+						}
+
+						if (!building_slot->can_have_wonder(wonder)) {
+							throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but cannot have it.", settlement->get_identifier(), wonder->get_identifier()));
+						}
+
+						building_slot->set_wonder(wonder);
+
+						if (wonder->get_required_technology() != nullptr && owner_game_data != nullptr) {
+							owner_game_data->add_technology_with_prerequisites(wonder->get_required_technology());
+						}
 					}
 				}
 
-				for (auto [building_slot_type, wonder] : site_history->get_wonders()) {
-					if (settlement_type == nullptr) {
-						throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but has no settlement type.", settlement->get_identifier(), wonder->get_identifier()));
-					}
+				if (tile == nullptr) {
+					continue;
+				}
 
-					if (!vector::contains(wonder->get_building()->get_settlement_types(), settlement_type)) {
-						throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but its settlement type of \"{}\" is not appropriate for the wonder's building type of \"{}\".", settlement->get_identifier(), wonder->get_identifier(), settlement_type->get_identifier(), wonder->get_building()->get_identifier()));
-					}
+				const improvement *site_improvement = site_history->get_improvement();
+				if (site_improvement == nullptr && site_history->is_developed() && site->get_type() == site_type::resource) {
+					//if the site is marked as developed, but has no specific improvement set for it, pick the most basic improvement for its resource
+					for (const improvement *improvement : improvement::get_all()) {
+						if (improvement->get_resource() != site->get_resource()) {
+							continue;
+						}
 
-					settlement_building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
+						if (improvement->get_required_improvement() != nullptr) {
+							continue;
+						}
 
-					if (building_slot == nullptr) {
-						throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but does not have its building slot available.", settlement->get_identifier(), wonder->get_identifier()));
-					}
-
-					if (!building_slot->can_have_wonder(wonder)) {
-						throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but cannot have it.", settlement->get_identifier(), wonder->get_identifier()));
-					}
-
-					building_slot->set_wonder(wonder);
-
-					if (wonder->get_required_technology() != nullptr && owner_game_data != nullptr) {
-						owner_game_data->add_technology_with_prerequisites(wonder->get_required_technology());
+						site_improvement = improvement;
+						break;
 					}
 				}
-			}
 
-			if (tile == nullptr) {
-				continue;
-			}
+				if (site_improvement != nullptr) {
+					assert_throw(site_improvement->get_resource() != nullptr || site_improvement->is_ruins());
 
-			const improvement *site_improvement = site_history->get_improvement();
-			if (site_improvement == nullptr && site_history->is_developed() && site->get_type() == site_type::resource) {
-				//if the site is marked as developed, but has no specific improvement set for it, pick the most basic improvement for its resource
-				for (const improvement *improvement : improvement::get_all()) {
-					if (improvement->get_resource() != site->get_resource()) {
-						continue;
+					if (site_improvement->get_resource() != nullptr) {
+						assert_throw(site->get_type() == site_type::resource);
+
+						if (tile->get_resource() == nullptr) {
+							throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as it has no resource.");
+						}
+
+						if (tile->get_resource() != site_improvement->get_resource()) {
+							throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as its resource is different than that of the improvement.");
+						}
+
+						map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 					}
 
-					if (improvement->get_required_improvement() != nullptr) {
-						continue;
+					tile->set_improvement(site_improvement);
+
+					//add prerequisites for the tile's improvement to its owner's researched technologies
+					if (tile->get_improvement()->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
+						tile->get_owner()->get_game_data()->add_technology_with_prerequisites(tile->get_improvement()->get_required_technology());
 					}
 
-					site_improvement = improvement;
-					break;
+					if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
+						tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
+					}
 				}
-			}
 
-			if (site_improvement != nullptr) {
-				assert_throw(site_improvement->get_resource() != nullptr || site_improvement->is_ruins());
-
-				if (site_improvement->get_resource() != nullptr) {
-					assert_throw(site->get_type() == site_type::resource);
-
-					if (tile->get_resource() == nullptr) {
-						throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as it has no resource.");
-					}
-
-					if (tile->get_resource() != site_improvement->get_resource()) {
-						throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as its resource is different than that of the improvement.");
-					}
-
+				if (site_history->is_resource_discovered()) {
+					assert_throw(site->get_type() == site_type::resource || site->is_settlement());
 					map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 				}
-
-				tile->set_improvement(site_improvement);
-
-				//add prerequisites for the tile's improvement to its owner's researched technologies
-				if (tile->get_improvement()->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
-					tile->get_owner()->get_game_data()->add_technology_with_prerequisites(tile->get_improvement()->get_required_technology());
-				}
-
-				if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
-					tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
-				}
-			}
-
-			if (site_history->is_resource_discovered()) {
-				assert_throw(site->get_type() == site_type::resource || site->is_settlement());
-				map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
+			} catch (...) {
+				std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for site \"{}\".", site->get_identifier())));
 			}
 		}
 
