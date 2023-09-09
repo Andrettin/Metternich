@@ -1029,7 +1029,7 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 	if (religion == nullptr) {
 		if (settlement_religion != nullptr) {
 			religion = settlement_religion;
-		} else if (province_religion == nullptr) {
+		} else if (province_religion != nullptr) {
 			religion = province_religion;
 		} else {
 			log::log_error(std::format("Province \"{}\" has no religion.", province->get_identifier()));
