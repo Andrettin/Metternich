@@ -94,6 +94,10 @@ const commodity *improvement::get_output_commodity() const
 
 bool improvement::is_buildable_on_tile(const tile *tile) const
 {
+	if (tile->get_settlement() != nullptr) {
+		return false;
+	}
+
 	if (this->get_resource() != nullptr && this->get_resource() != tile->get_resource()) {
 		return false;
 	}
