@@ -23,6 +23,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(metternich::province* province READ get_province_unconst NOTIFY tile_pos_changed)
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
+	Q_PROPERTY(metternich::settlement_type* settlement_type READ get_settlement_type_unconst NOTIFY settlement_type_changed)
 	Q_PROPERTY(metternich::improvement* improvement READ get_improvement_unconst NOTIFY improvement_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 
@@ -82,6 +83,21 @@ public:
 
 	const religion *get_religion() const;
 
+	const metternich::settlement_type *get_settlement_type() const
+	{
+		return this->settlement_type;
+	}
+
+private:
+	//for the Qt property (pointers there can't be const)
+	metternich::settlement_type *get_settlement_type_unconst() const
+	{
+		return const_cast<metternich::settlement_type *>(this->get_settlement_type());
+	}
+
+public:
+	void set_settlement_type(const metternich::settlement_type *settlement_type);
+
 	const improvement *get_improvement() const;
 
 private:
@@ -92,13 +108,6 @@ private:
 	}
 
 public:
-	const metternich::settlement_type *get_settlement_type() const
-	{
-		return this->settlement_type;
-	}
-
-	void set_settlement_type(const metternich::settlement_type *settlement_type);
-
 	const std::vector<population_unit *> &get_population_units() const
 	{
 		return this->population_units;
