@@ -28,7 +28,7 @@ country_building_slot::country_building_slot(const building_slot_type *type, con
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
 
-	connect(country_game_data, &country_game_data::provincial_building_counts_changed, this, &country_building_slot::country_modifier_changed);
+	connect(country_game_data, &country_game_data::settlement_building_counts_changed, this, &country_building_slot::country_modifier_changed);
 	connect(country_game_data, &country_game_data::provinces_changed, this, &country_building_slot::country_modifier_changed);
 }
 
@@ -425,7 +425,7 @@ QString country_building_slot::get_country_modifier_string() const
 	if (this->get_building()->get_country_modifier() != nullptr) {
 		centesimal_int multiplier(1);
 		if (this->get_building()->is_provincial()) {
-			multiplier = centesimal_int(country_game_data->get_provincial_building_count(this->get_building())) / country_game_data->get_province_count();
+			multiplier = centesimal_int(country_game_data->get_settlement_building_count(this->get_building())) / country_game_data->get_settlement_count();
 		}
 
 		str = this->get_building()->get_country_modifier()->get_string(this->get_country(), multiplier);
@@ -437,7 +437,7 @@ QString country_building_slot::get_country_modifier_string() const
 		}
 
 		assert_throw(this->get_building()->is_provincial());
-		const int multiplier = country_game_data->get_provincial_building_count(this->get_building());
+		const int multiplier = country_game_data->get_settlement_building_count(this->get_building());
 		str += this->get_building()->get_stackable_country_modifier()->get_string(this->get_country(), multiplier);
 	}
 

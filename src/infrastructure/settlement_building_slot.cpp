@@ -11,8 +11,6 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/country_building_slot.h"
 #include "infrastructure/wonder.h"
-#include "map/province.h"
-#include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "script/condition/and_condition.h"
@@ -22,10 +20,10 @@
 
 namespace metternich {
 
-settlement_building_slot::settlement_building_slot(const building_slot_type *type, const metternich::province *province)
-	: building_slot(type), province(province)
+settlement_building_slot::settlement_building_slot(const building_slot_type *type, const site *settlement)
+	: building_slot(type), settlement(settlement)
 {
-	assert_throw(this->get_province() != nullptr);
+	assert_throw(this->get_settlement() != nullptr);
 
 	connect(this, &building_slot::building_changed, this, &settlement_building_slot::country_modifier_changed);
 }
@@ -37,18 +35,18 @@ void settlement_building_slot::set_building(const building_type *building)
 		return;
 	}
 
-	province_game_data *province_game_data = this->get_province()->get_game_data();
+	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
 
 	const building_type *old_building = this->get_building();
 
 	if (old_building != nullptr) {
-		province_game_data->on_building_gained(old_building, -1);
+		settlement_game_data->on_building_gained(old_building, -1);
 	}
 
 	building_slot::set_building(building);
 
 	if (this->get_building() != nullptr) {
-		province_game_data->on_building_gained(this->get_building(), 1);
+		settlement_game_data->on_building_gained(this->get_building(), 1);
 	}
 }
 
@@ -58,14 +56,13 @@ bool settlement_building_slot::can_have_building(const building_type *building) 
 		return false;
 	}
 
-	const site *settlement = this->get_province()->get_capital_settlement();
-	const site_game_data *settlement_game_data = settlement->get_game_data();
+	const site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
 	if (!vector::contains(building->get_settlement_types(), settlement_game_data->get_settlement_type())) {
 		return false;
 	}
 
 	if (building->get_province_conditions() != nullptr) {
-		if (!building->get_province_conditions()->check(this->get_province(), read_only_context(this->get_province()))) {
+		if (!building->get_province_conditions()->check(settlement_game_data->get_province(), read_only_context(settlement_game_data->get_province()))) {
 			return false;
 		}
 	}
@@ -83,16 +80,16 @@ void settlement_building_slot::set_wonder(const metternich::wonder *wonder)
 		assert_throw(wonder->get_building()->get_slot_type() == this->get_type());
 	}
 
-	province_game_data *province_game_data = this->get_province()->get_game_data();
+	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
 
 	if (this->get_wonder() != nullptr) {
-		province_game_data->on_wonder_gained(this->get_wonder(), -1);
+		settlement_game_data->on_wonder_gained(this->get_wonder(), -1);
 	}
 
 	this->wonder = wonder;
 
 	if (this->get_wonder() != nullptr) {
-		province_game_data->on_wonder_gained(this->get_wonder(), 1);
+		settlement_game_data->on_wonder_gained(this->get_wonder(), 1);
 
 		if (this->get_building() == nullptr || this->get_wonder()->get_building()->is_any_required_building(this->get_building())) {
 			this->set_building(this->get_wonder()->get_building());
@@ -133,20 +130,20 @@ bool settlement_building_slot::can_have_wonder(const metternich::wonder *wonder)
 		}
 	}
 
+	const site_game_data *settlement_game_data = settlement->get_game_data();
+
 	if (wonder->get_province_conditions() != nullptr) {
-		if (!wonder->get_province_conditions()->check(this->get_province(), read_only_context(this->get_province()))) {
+		if (!wonder->get_province_conditions()->check(settlement_game_data->get_province(), read_only_context(settlement_game_data->get_province()))) {
 			return false;
 		}
 	}
 
-	const site *settlement = this->get_province()->get_capital_settlement();
-	const site_game_data *settlement_game_data = settlement->get_game_data();
 	if (!vector::contains(wonder->get_building()->get_settlement_types(), settlement_game_data->get_settlement_type())) {
 		return false;
 	}
 
 	if (wonder->get_building()->get_province_conditions() != nullptr) {
-		if (!wonder->get_building()->get_province_conditions()->check(this->get_province(), read_only_context(this->get_province()))) {
+		if (!wonder->get_building()->get_province_conditions()->check(settlement_game_data->get_province(), read_only_context(settlement_game_data->get_province()))) {
 			return false;
 		}
 	}
@@ -261,7 +258,7 @@ wonder *settlement_building_slot::get_buildable_wonder() const
 
 const country *settlement_building_slot::get_country() const
 {
-	return this->get_province()->get_game_data()->get_owner();
+	return this->get_settlement()->get_game_data()->get_owner();
 }
 
 QString settlement_building_slot::get_modifier_string() const
@@ -273,6 +270,8 @@ QString settlement_building_slot::get_modifier_string() const
 	assert_throw(this->get_building()->is_provincial());
 
 	std::string str;
+
+	const province *province = this->get_settlement()->get_game_data()->get_province();
 
 	if (this->get_wonder() != nullptr) {
 		if (this->get_wonder()->get_country_modifier() != nullptr) {
@@ -288,7 +287,7 @@ QString settlement_building_slot::get_modifier_string() const
 				str += "\n";
 			}
 
-			str += this->get_wonder()->get_province_modifier()->get_string(this->get_province());
+			str += this->get_wonder()->get_province_modifier()->get_string(province);
 		}
 	}
 
@@ -298,7 +297,7 @@ QString settlement_building_slot::get_modifier_string() const
 		}
 
 		const country_game_data *country_game_data = this->get_country()->get_game_data();
-		const centesimal_int multiplier = centesimal_int(1) / country_game_data->get_province_count();
+		const centesimal_int multiplier = centesimal_int(1) / country_game_data->get_settlement_count();
 		str += this->get_building()->get_country_modifier()->get_string(this->get_country(), multiplier, 0, false);
 	}
 
@@ -315,7 +314,7 @@ QString settlement_building_slot::get_modifier_string() const
 			str += "\n";
 		}
 
-		str += this->get_building()->get_province_modifier()->get_string(this->get_province());
+		str += this->get_building()->get_province_modifier()->get_string(province);
 	}
 
 	return QString::fromStdString(str);

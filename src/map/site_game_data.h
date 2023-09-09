@@ -1,6 +1,7 @@
 #pragma once
 
 #include "economy/commodity_container.h"
+#include "infrastructure/building_slot_type_container.h"
 
 namespace metternich {
 
@@ -11,6 +12,7 @@ class military_unit;
 class population_unit;
 class province;
 class religion;
+class settlement_building_slot;
 class settlement_type;
 class site;
 class tile;
@@ -25,12 +27,11 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(metternich::settlement_type* settlement_type READ get_settlement_type_unconst NOTIFY settlement_type_changed)
 	Q_PROPERTY(metternich::improvement* improvement READ get_improvement_unconst NOTIFY improvement_changed)
+	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 
 public:
-	explicit site_game_data(const site *site) : site(site)
-	{
-	}
+	explicit site_game_data(const metternich::site *site);
 
 	void reset_non_map_data();
 
@@ -108,6 +109,37 @@ private:
 	}
 
 public:
+	const std::vector<qunique_ptr<settlement_building_slot>> &get_building_slots() const
+	{
+		return this->building_slots;
+	}
+
+	QVariantList get_building_slots_qvariant_list() const;
+	void initialize_building_slots();
+
+	settlement_building_slot *get_building_slot(const building_slot_type *slot_type) const
+	{
+		const auto find_iterator = this->building_slot_map.find(slot_type);
+
+		if (find_iterator != this->building_slot_map.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	const building_type *get_slot_building(const building_slot_type *slot_type) const;
+	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
+	bool has_building(const building_type *building) const;
+	bool has_building_or_better(const building_type *building) const;
+	void clear_buildings();
+	void check_building_conditions();
+	void check_free_buildings();
+	bool check_free_building(const building_type *building);
+
+	void on_building_gained(const building_type *building, const int multiplier);
+	void on_wonder_gained(const wonder *wonder, const int multiplier);
+
 	const std::vector<population_unit *> &get_population_units() const
 	{
 		return this->population_units;
@@ -165,6 +197,8 @@ private:
 	const metternich::site *site = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	const metternich::settlement_type *settlement_type = nullptr;
+	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
+	building_slot_type_map<settlement_building_slot *> building_slot_map;
 	std::vector<population_unit *> population_units;
 	commodity_map<int> commodity_outputs;
 	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site

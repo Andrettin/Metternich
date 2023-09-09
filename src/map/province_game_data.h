@@ -5,7 +5,6 @@
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_type_container.h"
-#include "infrastructure/building_slot_type_container.h"
 #include "map/terrain_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/fractional_int.h"
@@ -25,7 +24,6 @@ class population_unit;
 class province;
 class religion;
 class scripted_province_modifier;
-class settlement_building_slot;
 class site;
 class tile;
 class wonder;
@@ -45,7 +43,6 @@ class province_game_data final : public QObject
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos NOTIFY territory_changed)
-	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 
@@ -195,37 +192,6 @@ public:
 	bool produces_commodity(const commodity *commodity) const;
 
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
-
-	const std::vector<qunique_ptr<settlement_building_slot>> &get_building_slots() const
-	{
-		return this->building_slots;
-	}
-
-	QVariantList get_building_slots_qvariant_list() const;
-	void initialize_building_slots();
-
-	settlement_building_slot *get_building_slot(const building_slot_type *slot_type) const
-	{
-		const auto find_iterator = this->building_slot_map.find(slot_type);
-
-		if (find_iterator != this->building_slot_map.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	const building_type *get_slot_building(const building_slot_type *slot_type) const;
-	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
-	bool has_building(const building_type *building) const;
-	bool has_building_or_better(const building_type *building) const;
-	void clear_buildings();
-	void check_building_conditions();
-	void check_free_buildings();
-	bool check_free_building(const building_type *building);
-
-	void on_building_gained(const building_type *building, const int multiplier);
-	void on_wonder_gained(const wonder *wonder, const int multiplier);
 
 	const scripted_province_modifier_map<int> &get_scripted_modifiers() const
 	{
@@ -439,8 +405,6 @@ private:
 	std::vector<const site *> settlements;
 	resource_map<int> resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
-	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
-	building_slot_type_map<settlement_building_slot *> building_slot_map;
 	scripted_province_modifier_map<int> scripted_modifiers;
 	int free_food_consumption = 0;
 	int score = 0;

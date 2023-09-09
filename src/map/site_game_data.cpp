@@ -4,25 +4,43 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/culture.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "infrastructure/building_class.h"
+#include "infrastructure/building_slot_type.h"
+#include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/settlement_building_slot.h"
+#include "infrastructure/wonder.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/tile.h"
 #include "population/population_unit.h"
+#include "script/condition/and_condition.h"
 #include "script/context.h"
+#include "script/modifier.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
+#include "util/vector_random_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
+site_game_data::site_game_data(const metternich::site *site) : site(site)
+{
+	if (site->is_settlement()) {
+		this->initialize_building_slots();
+	}
+}
+
 void site_game_data::reset_non_map_data()
 {
+	this->clear_buildings();
 	this->clear_population_units();
 	this->settlement_type = nullptr;
 	this->visiting_military_units.clear();
@@ -158,6 +176,238 @@ const improvement *site_game_data::get_improvement() const
 	}
 
 	return nullptr;
+}
+
+QVariantList site_game_data::get_building_slots_qvariant_list() const
+{
+	std::vector<const settlement_building_slot *> available_building_slots;
+
+	for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
+		if (!building_slot->is_available()) {
+			continue;
+		}
+
+		available_building_slots.push_back(building_slot.get());
+	}
+
+	return container::to_qvariant_list(available_building_slots);
+}
+
+void site_game_data::initialize_building_slots()
+{
+	assert_throw(this->site->is_settlement());
+
+	//initialize building slots, placing them in random order
+	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
+	vector::shuffle(building_slot_types);
+
+	for (const building_slot_type *building_slot_type : building_slot_types) {
+		this->building_slots.push_back(make_qunique<settlement_building_slot>(building_slot_type, this->site));
+		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
+	}
+}
+
+const building_type *site_game_data::get_slot_building(const building_slot_type *slot_type) const
+{
+	const auto find_iterator = this->building_slot_map.find(slot_type);
+	if (find_iterator != this->building_slot_map.end()) {
+		return find_iterator->second->get_building();
+	}
+
+	assert_throw(false);
+
+	return nullptr;
+}
+
+void site_game_data::set_slot_building(const building_slot_type *slot_type, const building_type *building)
+{
+	if (building != nullptr) {
+		assert_throw(building->get_slot_type() == slot_type);
+	}
+
+	const auto find_iterator = this->building_slot_map.find(slot_type);
+	if (find_iterator != this->building_slot_map.end()) {
+		find_iterator->second->set_building(building);
+		return;
+	}
+
+	assert_throw(false);
+}
+
+bool site_game_data::has_building(const building_type *building) const
+{
+	return this->get_slot_building(building->get_slot_type()) == building;
+}
+
+bool site_game_data::has_building_or_better(const building_type *building) const
+{
+	if (this->has_building(building)) {
+		return true;
+	}
+
+	for (const building_type *requiring_building : building->get_requiring_buildings()) {
+		if (this->has_building_or_better(requiring_building)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void site_game_data::clear_buildings()
+{
+	for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
+		building_slot->set_wonder(nullptr);
+		building_slot->set_building(nullptr);
+	}
+}
+
+void site_game_data::check_building_conditions()
+{
+	assert_throw(this->site->is_settlement());
+
+	for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
+		const building_type *building = building_slot->get_building();
+
+		if (building == nullptr) {
+			continue;
+		}
+
+		//if the building fails its conditions, try to replace it with one of its required building, if valid
+		while (building != nullptr) {
+			if (building->get_conditions() != nullptr) {
+				if (this->get_owner() == nullptr) {
+					building = building->get_required_building();
+					continue;
+				}
+
+				if (!building->get_conditions()->check(this->get_owner(), read_only_context(this->get_owner()))) {
+					building = building->get_required_building();
+					continue;
+				}
+			}
+
+			if (building->get_province_conditions() != nullptr) {
+				if (!building->get_province_conditions()->check(this->get_province(), read_only_context(this->get_province()))) {
+					building = building->get_required_building();
+					continue;
+				}
+			}
+
+			//checks successful
+			break;
+		}
+
+		if (building != building_slot->get_building()) {
+			building_slot->set_building(building);
+		}
+	}
+}
+
+void site_game_data::check_free_buildings()
+{
+	assert_throw(this->site->is_settlement());
+
+	const country *owner = this->get_owner();
+	if (owner == nullptr) {
+		return;
+	}
+
+	const country_game_data *owner_game_data = owner->get_game_data();
+
+	bool changed = false;
+
+	for (const auto &[building_class, count] : owner_game_data->get_free_building_class_counts()) {
+		assert_throw(count > 0);
+
+		const building_type *building = this->get_culture()->get_building_class_type(building_class);
+
+		if (building == nullptr) {
+			continue;
+		}
+
+		if (this->check_free_building(building)) {
+			changed = true;
+		}
+	}
+
+	if (this->is_capital()) {
+		for (const building_type *building : building_type::get_all()) {
+			if (!building->is_free_in_capital()) {
+				continue;
+			}
+
+			if (building != this->get_culture()->get_building_class_type(building->get_building_class())) {
+				continue;
+			}
+
+			if (this->check_free_building(building)) {
+				changed = true;
+			}
+		}
+	}
+
+	if (changed) {
+		//check free buildings again, as the addition of a free building might have caused the requirements of others to be fulfilled
+		this->check_free_buildings();
+	}
+}
+
+bool site_game_data::check_free_building(const building_type *building)
+{
+	if (this->has_building_or_better(building)) {
+		return false;
+	}
+
+	settlement_building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+
+	if (building_slot == nullptr) {
+		return false;
+	}
+
+	if (!building_slot->can_have_building(building)) {
+		return false;
+	}
+
+	if (building->get_required_building() != nullptr && building_slot->get_building() != building->get_required_building()) {
+		return false;
+	}
+
+	building_slot->set_building(building);
+	return true;
+}
+
+void site_game_data::on_building_gained(const building_type *building, const int multiplier)
+{
+	assert_throw(building != nullptr);
+	assert_throw(multiplier != 0);
+
+	this->get_province()->get_game_data()->change_score(building->get_score() * multiplier);
+
+	if (this->get_owner() != nullptr) {
+		country_game_data *country_game_data = this->get_owner()->get_game_data();
+		country_game_data->change_settlement_building_count(building, multiplier);
+	}
+
+	if (building->get_province_modifier() != nullptr) {
+		building->get_province_modifier()->apply(this->get_province(), multiplier);
+	}
+}
+
+void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)
+{
+	assert_throw(wonder != nullptr);
+	assert_throw(multiplier != 0);
+
+	this->get_province()->get_game_data()->change_score(wonder->get_score() * multiplier);
+
+	if (this->get_owner() != nullptr && wonder->get_country_modifier() != nullptr) {
+		wonder->get_country_modifier()->apply(this->get_owner(), multiplier);
+	}
+
+	if (wonder->get_province_modifier() != nullptr) {
+		wonder->get_province_modifier()->apply(this->get_province(), multiplier);
+	}
 }
 
 void site_game_data::add_population_unit(population_unit *population_unit)

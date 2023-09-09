@@ -749,23 +749,6 @@ void country_game_data::remove_province(const province *province)
 
 void country_game_data::on_province_gained(const province *province, const int multiplier)
 {
-	for (const auto &[building, count] : this->provincial_building_counts) {
-		if (building->get_country_modifier() != nullptr) {
-			building->get_country_modifier()->apply(this->country, centesimal_int(-count) / this->get_province_count() - multiplier);
-		}
-	}
-
-	if (this->get_province_count() != 0) {
-		for (const auto &[building, count] : this->provincial_building_counts) {
-			if (building->get_country_modifier() != nullptr) {
-				//reapply the provincial building's country modifier with the updated province count
-				building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_province_count());
-			}
-		}
-	} else {
-		this->provincial_building_counts.clear();
-	}
-
 	province_game_data *province_game_data = province->get_game_data();
 
 	this->change_score(province_game_data->get_score() * multiplier);
@@ -794,11 +777,15 @@ void country_game_data::on_province_gained(const province *province, const int m
 		this->change_tile_terrain_count(terrain, count * multiplier);
 	}
 
-	for (const qunique_ptr<settlement_building_slot> &building_slot : province_game_data->get_building_slots()) {
-		const building_type *building = building_slot->get_building();
-		if (building != nullptr) {
-			assert_throw(building->is_provincial());
-			this->change_provincial_building_count(building, 1 * multiplier);
+	this->change_settlement_count(province_game_data->get_settlement_count() * multiplier);
+
+	for (const site *settlement : province_game_data->get_settlements()) {
+		for (const qunique_ptr<settlement_building_slot> &building_slot : settlement->get_game_data()->get_building_slots()) {
+			const building_type *building = building_slot->get_building();
+			if (building != nullptr) {
+				assert_throw(building->is_provincial());
+				this->change_settlement_building_count(building, 1 * multiplier);
+			}
 		}
 	}
 
@@ -812,6 +799,34 @@ void country_game_data::on_province_gained(const province *province, const int m
 		for (const auto &[threshold, value] : threshold_map) {
 			province_game_data->change_commodity_bonus_for_tile_threshold(commodity, threshold, value * multiplier);
 		}
+	}
+}
+
+void country_game_data::change_settlement_count(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int old_settlement_count = this->get_settlement_count();
+
+	this->settlement_count += change;
+
+	for (const auto &[building, count] : this->settlement_building_counts) {
+		if (building->get_country_modifier() != nullptr) {
+			building->get_country_modifier()->apply(this->country, centesimal_int(-count) / old_settlement_count);
+		}
+	}
+
+	if (this->get_settlement_count() != 0) {
+		for (const auto &[building, count] : this->settlement_building_counts) {
+			if (building->get_country_modifier() != nullptr) {
+				//reapply the settlement building's country modifier with the updated province count
+				building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_settlement_count());
+			}
+		}
+	} else {
+		this->settlement_building_counts.clear();
 	}
 }
 
@@ -1983,20 +1998,20 @@ void country_game_data::on_building_gained(const building_type *building, const 
 	this->change_score(building->get_score() * multiplier);
 }
 
-void country_game_data::change_provincial_building_count(const building_type *building, const int change)
+void country_game_data::change_settlement_building_count(const building_type *building, const int change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int old_count = this->get_provincial_building_count(building);
+	const int old_count = this->get_settlement_building_count(building);
 
-	const int count = (this->provincial_building_counts[building] += change);
+	const int count = (this->settlement_building_counts[building] += change);
 
 	assert_throw(count >= 0);
 
 	if (count == 0) {
-		this->provincial_building_counts.erase(building);
+		this->settlement_building_counts.erase(building);
 	}
 
 	country_building_slot *country_building_slot = this->get_building_slot(building->get_slot_type());
@@ -2004,21 +2019,21 @@ void country_game_data::change_provincial_building_count(const building_type *bu
 	assert_throw(country_building_slot != nullptr);
 
 	if (count == 0) {
-		//lost last provincial building
+		//lost last settlement building
 		if (country_building_slot->get_building() == building) {
-			//get the best provincial building to replace the one that was lost (if any), and set it to the building slot
+			//get the best settlement building to replace the one that was lost (if any), and set it to the building slot
 
 			const building_type *best_building = nullptr;
 			int best_score = 0;
 
-			for (const auto &[provincial_building, building_count] : this->provincial_building_counts) {
-				if (provincial_building->get_slot_type() != country_building_slot->get_type()) {
+			for (const auto &[settlement_building, building_count] : this->settlement_building_counts) {
+				if (settlement_building->get_slot_type() != country_building_slot->get_type()) {
 					continue;
 				}
 
-				const int score = provincial_building->get_score();
+				const int score = settlement_building->get_score();
 				if (score > best_score) {
-					best_building = provincial_building;
+					best_building = settlement_building;
 					best_score = score;
 				}
 			}
@@ -2026,16 +2041,16 @@ void country_game_data::change_provincial_building_count(const building_type *bu
 			country_building_slot->set_building(best_building);
 		}
 	} else if (count > 0 && old_count == 0) {
-		//gained first provincial building
+		//gained first settlement building
 		if (country_building_slot->can_have_building(building)) {
 			country_building_slot->set_building(building);
 		}
 	}
 
 	if (building->get_country_modifier() != nullptr) {
-		//reapply the provincial building's country modifier with the updated count
-		building->get_country_modifier()->apply(this->country, centesimal_int(-old_count) / this->get_province_count());
-		building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_province_count());
+		//reapply the settlement building's country modifier with the updated count
+		building->get_country_modifier()->apply(this->country, centesimal_int(-old_count) / this->get_settlement_count());
+		building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_settlement_count());
 	}
 
 	if (building->get_stackable_country_modifier() != nullptr) {
@@ -2043,7 +2058,7 @@ void country_game_data::change_provincial_building_count(const building_type *bu
 	}
 
 	if (game::get()->is_running()) {
-		emit provincial_building_counts_changed();
+		emit settlement_building_counts_changed();
 	}
 }
 
@@ -3625,9 +3640,9 @@ void country_game_data::add_active_journal_entry(const journal_entry *journal_en
 		this->change_ai_building_desire_modifier(building, journal_entry::ai_building_desire_modifier);
 	}
 
-	for (const auto &[province, buildings] : journal_entry->get_built_provincial_buildings_with_requirements()) {
+	for (const auto &[settlement, buildings] : journal_entry->get_built_settlement_buildings_with_requirements()) {
 		for (const building_type *building : buildings) {
-			this->change_ai_provincial_building_desire_modifier(province, building, journal_entry::ai_building_desire_modifier);
+			this->change_ai_settlement_building_desire_modifier(settlement, building, journal_entry::ai_building_desire_modifier);
 		}
 	}
 }
@@ -3644,9 +3659,9 @@ void country_game_data::remove_active_journal_entry(const journal_entry *journal
 		this->change_ai_building_desire_modifier(building, -journal_entry::ai_building_desire_modifier);
 	}
 
-	for (const auto &[province, buildings] : journal_entry->get_built_provincial_buildings_with_requirements()) {
+	for (const auto &[settlement, buildings] : journal_entry->get_built_settlement_buildings_with_requirements()) {
 		for (const building_type *building : buildings) {
-			this->change_ai_provincial_building_desire_modifier(province, building, -journal_entry::ai_building_desire_modifier);
+			this->change_ai_settlement_building_desire_modifier(settlement, building, -journal_entry::ai_building_desire_modifier);
 		}
 	}
 }
@@ -3828,7 +3843,9 @@ void country_game_data::set_free_building_class_count(const building_class *buil
 		this->free_building_class_counts[building_class] = value;
 
 		for (const province *province : this->get_provinces()) {
-			province->get_game_data()->check_free_buildings();
+			for (const site *settlement : province->get_game_data()->get_settlements()) {
+				settlement->get_game_data()->check_free_buildings();
+			}
 		}
 	}
 }

@@ -4,7 +4,7 @@
 
 namespace metternich {
 
-class province;
+class site;
 class wonder;
 
 class settlement_building_slot final : public building_slot
@@ -16,7 +16,7 @@ class settlement_building_slot final : public building_slot
 	Q_PROPERTY(QString modifier_string READ get_modifier_string NOTIFY country_modifier_changed)
 
 public:
-	explicit settlement_building_slot(const building_slot_type *type, const metternich::province *province);
+	explicit settlement_building_slot(const building_slot_type *type, const site *settlement);
 
 	void set_building(const building_type *building);
 	virtual bool can_have_building(const building_type *building) const override;
@@ -60,9 +60,9 @@ public:
 
 	Q_INVOKABLE metternich::wonder *get_buildable_wonder() const;
 
-	const metternich::province *get_province() const
+	const site *get_settlement() const
 	{
-		return this->province;
+		return this->settlement;
 	}
 
 	virtual const country *get_country() const override;
@@ -75,7 +75,7 @@ signals:
 	void country_modifier_changed();
 
 private:
-	const metternich::province *province = nullptr;
+	const site *settlement = nullptr;
 	const metternich::wonder *wonder = nullptr;
 	const metternich::wonder *under_construction_wonder = nullptr;
 };

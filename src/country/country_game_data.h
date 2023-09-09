@@ -11,6 +11,7 @@
 #include "infrastructure/building_type_container.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "map/province_container.h"
+#include "map/site_container.h"
 #include "map/terrain_type_container.h"
 #include "population/phenotype_container.h"
 #include "population/population_type_container.h"
@@ -208,6 +209,13 @@ public:
 	{
 		return static_cast<int>(this->get_provinces().size());
 	}
+
+	int get_settlement_count() const
+	{
+		return this->settlement_count;
+	}
+
+	void change_settlement_count(const int change);
 
 	const std::vector<const province *> &get_border_provinces() const
 	{
@@ -602,24 +610,24 @@ public:
 
 	void on_building_gained(const building_type *building, const int multiplier);
 
-	int get_provincial_building_count(const building_type *building) const
+	int get_settlement_building_count(const building_type *building) const
 	{
-		const auto find_iterator = this->provincial_building_counts.find(building);
+		const auto find_iterator = this->settlement_building_counts.find(building);
 
-		if (find_iterator != this->provincial_building_counts.end()) {
+		if (find_iterator != this->settlement_building_counts.end()) {
 			return find_iterator->second;
 		}
 
 		return 0;
 	}
 
-	Q_INVOKABLE int get_provincial_building_count(metternich::building_type *building) const
+	Q_INVOKABLE int get_settlement_building_count(metternich::building_type *building) const
 	{
 		const metternich::building_type *const_building = building;
-		return this->get_provincial_building_count(const_building);
+		return this->get_settlement_building_count(const_building);
 	}
 
-	void change_provincial_building_count(const building_type *building, const int change);
+	void change_settlement_building_count(const building_type *building, const int change);
 
 	int get_wealth() const
 	{
@@ -1498,11 +1506,11 @@ public:
 		this->set_ai_building_desire_modifier(building, this->get_ai_building_desire_modifier(building) + value);
 	}
 
-	int get_ai_provincial_building_desire_modifier(const province *province, const building_type *building) const
+	int get_ai_settlement_building_desire_modifier(const site *settlement, const building_type *building) const
 	{
-		const auto find_iterator = this->ai_provincial_building_desire_modifiers.find(province);
+		const auto find_iterator = this->ai_settlement_building_desire_modifiers.find(settlement);
 
-		if (find_iterator != this->ai_provincial_building_desire_modifiers.end()) {
+		if (find_iterator != this->ai_settlement_building_desire_modifiers.end()) {
 			const auto sub_find_iterator = find_iterator->second.find(building);
 
 			if (sub_find_iterator != find_iterator->second.end()) {
@@ -1513,26 +1521,26 @@ public:
 		return 0;
 	}
 
-	void set_ai_provincial_building_desire_modifier(const province *province, const building_type *building, const int value)
+	void set_ai_settlement_building_desire_modifier(const site *settlement, const building_type *building, const int value)
 	{
-		if (value == this->get_ai_provincial_building_desire_modifier(province, building)) {
+		if (value == this->get_ai_settlement_building_desire_modifier(settlement, building)) {
 			return;
 		}
 
 		if (value == 0) {
-			this->ai_provincial_building_desire_modifiers[province].erase(building);
+			this->ai_settlement_building_desire_modifiers[settlement].erase(building);
 
-			if (this->ai_provincial_building_desire_modifiers[province].empty()) {
-				this->ai_provincial_building_desire_modifiers.erase(province);
+			if (this->ai_settlement_building_desire_modifiers[settlement].empty()) {
+				this->ai_settlement_building_desire_modifiers.erase(settlement);
 			}
 		} else {
-			this->ai_provincial_building_desire_modifiers[province][building] = value;
+			this->ai_settlement_building_desire_modifiers[settlement][building] = value;
 		}
 	}
 
-	void change_ai_provincial_building_desire_modifier(const province *province, const building_type *building, const int value)
+	void change_ai_settlement_building_desire_modifier(const site *settlement, const building_type *building, const int value)
 	{
-		this->set_ai_provincial_building_desire_modifier(province, building, this->get_ai_provincial_building_desire_modifier(province, building) + value);
+		this->set_ai_settlement_building_desire_modifier(settlement, building, this->get_ai_settlement_building_desire_modifier(settlement, building) + value);
 	}
 
 signals:
@@ -1555,7 +1563,7 @@ signals:
 	void population_ideology_counts_changed();
 	void population_changed();
 	void population_growth_changed();
-	void provincial_building_counts_changed();
+	void settlement_building_counts_changed();
 	void wealth_changed();
 	void wealth_income_changed();
 	void credit_limit_changed();
@@ -1585,6 +1593,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;
+	int settlement_count = 0;
 	std::vector<const province *> border_provinces;
 	int coastal_province_count = 0;
 	QRect territory_rect;
@@ -1620,7 +1629,7 @@ private:
 	int population_growth = 0; //population growth counter
 	std::vector<qunique_ptr<country_building_slot>> building_slots;
 	building_slot_type_map<country_building_slot *> building_slot_map;
-	building_type_map<int> provincial_building_counts;
+	building_type_map<int> settlement_building_counts;
 	int wealth = 0;
 	int wealth_income = 0;
 	int credit_limit = 0;
@@ -1673,7 +1682,7 @@ private:
 	promotion_map<int> free_artillery_promotion_counts;
 	consulate_map<int> free_consulate_counts;
 	building_type_map<int> ai_building_desire_modifiers;
-	province_map<building_type_map<int>> ai_provincial_building_desire_modifiers;
+	site_map<building_type_map<int>> ai_settlement_building_desire_modifiers;
 };
 
 }
