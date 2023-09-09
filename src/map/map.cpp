@@ -438,6 +438,11 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 			}
 			[[fallthrough]];
 		case site_type::resource:
+			if (site->get_resource() == nullptr) {
+				log::log_error(std::format("Settlement or resource site \"{}\" {} has no resource.", site->get_identifier(), point::to_string(tile_pos)));
+				break;
+			}
+
 			tile->set_resource(site->get_resource());
 
 			if (tile->get_resource()->is_near_water() && !this->is_tile_near_water(tile_pos)) {
