@@ -825,8 +825,6 @@ void country_game_data::change_settlement_count(const int change)
 				building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_settlement_count());
 			}
 		}
-	} else {
-		this->settlement_building_counts.clear();
 	}
 }
 
@@ -2008,7 +2006,9 @@ void country_game_data::change_settlement_building_count(const building_type *bu
 
 	const int count = (this->settlement_building_counts[building] += change);
 
-	assert_throw(count >= 0);
+	if (count < 0) {
+		throw std::runtime_error(std::format("The settlement building count for country \"{}\" for building \"{}\" is negative ({}).", this->country->get_identifier(), building->get_identifier(), change));
+	}
 
 	if (count == 0) {
 		this->settlement_building_counts.erase(building);
@@ -2047,7 +2047,7 @@ void country_game_data::change_settlement_building_count(const building_type *bu
 		}
 	}
 
-	if (building->get_country_modifier() != nullptr) {
+	if (building->get_country_modifier() != nullptr && this->get_settlement_count() != 0) {
 		//reapply the settlement building's country modifier with the updated count
 		building->get_country_modifier()->apply(this->country, centesimal_int(-old_count) / this->get_settlement_count());
 		building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_settlement_count());
