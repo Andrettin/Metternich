@@ -222,7 +222,7 @@ void character::check() const
 	if (this->get_home_settlement() == nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has no home settlement.", this->get_identifier()));
 	} else if (!this->get_home_settlement()->is_settlement() && this->get_home_settlement()->get_type() != site_type::resource) {
-		throw std::runtime_error(std::format("Character \"{}\" has \"{}\" set as their home settlement, but it is neither a settlement nor a resource.", this->get_identifier(), this->get_home_settlement()->get_identifier()));
+		throw std::runtime_error(std::format("Character \"{}\" has \"{}\" set as their home settlement, but it is neither a settlement nor a resource site.", this->get_identifier(), this->get_home_settlement()->get_identifier()));
 	}
 
 	if (this->get_gender() == gender::none) {

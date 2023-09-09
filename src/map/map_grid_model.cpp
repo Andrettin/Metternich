@@ -120,9 +120,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				if (tile->get_settlement_type() != nullptr) {
 					QString image_source = "tile/settlement/" + tile->get_settlement_type()->get_identifier_qstring() + "/0";
 					overlay_image_sources.push_back(std::move(image_source));
-				}
-				
-				if (tile->get_improvement() != nullptr) {
+				} else if (tile->get_improvement() != nullptr) {
 					QString image_source = "tile/improvement/" + tile->get_improvement()->get_identifier_qstring();
 
 					if (tile->get_improvement()->has_terrain_image_filepath(tile->get_terrain())) {

@@ -436,20 +436,20 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 			if (tile->get_province() == nullptr || tile->get_province()->get_capital_settlement() != site) {
 				log::log_error(std::format("Settlement \"{}\" {} was not placed within its province.", site->get_identifier(), point::to_string(tile_pos)));
 			}
-			break;
+			[[fallthrough]];
 		case site_type::resource:
 			tile->set_resource(site->get_resource());
 
 			if (tile->get_resource()->is_near_water() && !this->is_tile_near_water(tile_pos)) {
-				log::log_error("Tile " + point::to_string(tile_pos) + " has near water resource \"" + tile->get_resource()->get_identifier() + "\", but is not near water.");
+				log::log_error(std::format("Site \"{}\" {} has near water resource \"{}\", but is not near water.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier()));
 			}
 
 			if (tile->get_resource()->is_coastal() && !this->is_tile_coastal(tile_pos)) {
-				log::log_error("Tile " + point::to_string(tile_pos) + " has coastal resource \"" + tile->get_resource()->get_identifier() + "\", but is not coastal.");
+				log::log_error(std::format("Site \"{}\" {} has coastal resource \"{}\", but is not coastal.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier()));
 			}
 
 			if (!vector::contains(tile->get_resource()->get_terrain_types(), tile->get_terrain())) {
-				log::log_error("Tile " + point::to_string(tile_pos) + " has resource \"" + tile->get_resource()->get_identifier() + "\", which doesn't match its \"" + tile->get_terrain()->get_identifier() + "\" terrain type.");
+				log::log_error(std::format("Site \"{}\" {} has resource \"{}\", which doesn't match its \"{}\" terrain type.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier(), tile->get_terrain()->get_identifier()));
 			}
 			break;
 		default:

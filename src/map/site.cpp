@@ -66,14 +66,23 @@ void site::check() const
 		}
 	}
 
-	if (this->get_type() == site_type::resource) {
-		assert_throw(this->get_resource() != nullptr);
 
-		if (this->get_province() == nullptr && this->get_geocoordinate().is_valid()) {
-			log::log_error("Resource site \"" + this->get_identifier() + "\" has no province, but has a valid geocoordinate.");
-		}
-	} else {
-		assert_throw(this->get_resource() == nullptr);
+	switch (this->get_type()) {
+		case site_type::resource:
+			assert_throw(this->get_resource() != nullptr);
+			[[fallthrough]];
+		case site_type::settlement:
+			if (this->get_resource() == nullptr) {
+				log::log_error(std::format("Settlement or resource site \"{}\" has no resource.", this->get_identifier()));
+			}
+
+			if (this->get_province() == nullptr && this->get_geocoordinate().is_valid()) {
+				log::log_error(std::format("Settlement or resource site \"{}\" has no province, but has a valid geocoordinate.", this->get_identifier()));
+			}
+			break;
+		default:
+			assert_throw(this->get_resource() == nullptr);
+			break;
 	}
 }
 

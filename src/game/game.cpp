@@ -609,7 +609,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			if (site_history->is_resource_discovered()) {
-				assert_throw(site->get_type() == site_type::resource);
+				assert_throw(site->get_type() == site_type::resource || site->is_settlement());
 				map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 			}
 		}

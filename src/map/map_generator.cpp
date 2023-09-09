@@ -848,7 +848,7 @@ void map_generator::generate_sites()
 		}
 
 		for (const site *site : province->get_sites()) {
-			if (site->get_type() != site_type::resource) {
+			if (site->get_type() != site_type::resource && !site->is_settlement()) {
 				continue;
 			}
 
