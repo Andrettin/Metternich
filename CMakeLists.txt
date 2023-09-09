@@ -96,7 +96,7 @@ set(infrastructure_SRCS
 	src/infrastructure/improvement.cpp
 	src/infrastructure/pathway.cpp
 	src/infrastructure/pathway_container.cpp
-	src/infrastructure/provincial_building_slot.cpp
+	src/infrastructure/settlement_building_slot.cpp
 	src/infrastructure/settlement_type.cpp
 	src/infrastructure/wonder.cpp
 )
@@ -370,7 +370,7 @@ set(infrastructure_HDRS
 	src/infrastructure/improvement.h
 	src/infrastructure/pathway.h
 	src/infrastructure/pathway_container.h
-	src/infrastructure/provincial_building_slot.h
+	src/infrastructure/settlement_building_slot.h
 	src/infrastructure/settlement_type.h
 	src/infrastructure/wonder.h
 )

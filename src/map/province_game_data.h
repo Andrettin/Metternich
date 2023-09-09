@@ -23,9 +23,9 @@ class military_unit;
 class phenotype;
 class population_unit;
 class province;
-class provincial_building_slot;
 class religion;
 class scripted_province_modifier;
+class settlement_building_slot;
 class site;
 class tile;
 class wonder;
@@ -196,7 +196,7 @@ public:
 
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
 
-	const std::vector<qunique_ptr<provincial_building_slot>> &get_building_slots() const
+	const std::vector<qunique_ptr<settlement_building_slot>> &get_building_slots() const
 	{
 		return this->building_slots;
 	}
@@ -204,7 +204,7 @@ public:
 	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
 
-	provincial_building_slot *get_building_slot(const building_slot_type *slot_type) const
+	settlement_building_slot *get_building_slot(const building_slot_type *slot_type) const
 	{
 		const auto find_iterator = this->building_slot_map.find(slot_type);
 
@@ -439,8 +439,8 @@ private:
 	std::vector<const site *> settlements;
 	resource_map<int> resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
-	std::vector<qunique_ptr<provincial_building_slot>> building_slots;
-	building_slot_type_map<provincial_building_slot *> building_slot_map;
+	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
+	building_slot_type_map<settlement_building_slot *> building_slot_map;
 	scripted_province_modifier_map<int> scripted_modifiers;
 	int free_food_consumption = 0;
 	int score = 0;

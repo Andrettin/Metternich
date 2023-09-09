@@ -19,7 +19,7 @@
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
-#include "infrastructure/provincial_building_slot.h"
+#include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/wonder.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -345,9 +345,9 @@ void province_game_data::on_improvement_gained(const improvement *improvement, c
 
 QVariantList province_game_data::get_building_slots_qvariant_list() const
 {
-	std::vector<const provincial_building_slot *> available_building_slots;
+	std::vector<const settlement_building_slot *> available_building_slots;
 
-	for (const qunique_ptr<provincial_building_slot> &building_slot : this->building_slots) {
+	for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
 		if (!building_slot->is_available()) {
 			continue;
 		}
@@ -365,7 +365,7 @@ void province_game_data::initialize_building_slots()
 	vector::shuffle(building_slot_types);
 
 	for (const building_slot_type *building_slot_type : building_slot_types) {
-		this->building_slots.push_back(make_qunique<provincial_building_slot>(building_slot_type, this->province));
+		this->building_slots.push_back(make_qunique<settlement_building_slot>(building_slot_type, this->province));
 		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
 	}
 }
@@ -419,7 +419,7 @@ bool province_game_data::has_building_or_better(const building_type *building) c
 
 void province_game_data::clear_buildings()
 {
-	for (const qunique_ptr<provincial_building_slot> &building_slot : this->building_slots) {
+	for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
 		building_slot->set_wonder(nullptr);
 		building_slot->set_building(nullptr);
 	}
@@ -427,7 +427,7 @@ void province_game_data::clear_buildings()
 
 void province_game_data::check_building_conditions()
 {
-	for (const qunique_ptr<provincial_building_slot> &building_slot : this->building_slots) {
+	for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
 		const building_type *building = building_slot->get_building();
 
 		if (building == nullptr) {
@@ -518,7 +518,7 @@ bool province_game_data::check_free_building(const building_type *building)
 		return false;
 	}
 
-	provincial_building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+	settlement_building_slot *building_slot = this->get_building_slot(building->get_slot_type());
 
 	if (building_slot == nullptr) {
 		return false;

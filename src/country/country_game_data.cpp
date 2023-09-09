@@ -30,7 +30,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/country_building_slot.h"
 #include "infrastructure/improvement.h"
-#include "infrastructure/provincial_building_slot.h"
+#include "infrastructure/settlement_building_slot.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -794,7 +794,7 @@ void country_game_data::on_province_gained(const province *province, const int m
 		this->change_tile_terrain_count(terrain, count * multiplier);
 	}
 
-	for (const qunique_ptr<provincial_building_slot> &building_slot : province_game_data->get_building_slots()) {
+	for (const qunique_ptr<settlement_building_slot> &building_slot : province_game_data->get_building_slots()) {
 		const building_type *building = building_slot->get_building();
 		if (building != nullptr) {
 			assert_throw(building->is_provincial());
