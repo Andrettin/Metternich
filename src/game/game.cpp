@@ -55,6 +55,7 @@
 #include "unit/historical_military_unit_history.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
+#include "util/aggregate_exception.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
@@ -660,12 +661,20 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 		}
 
+		std::vector<std::exception_ptr> exceptions;
 		for (const country *country : this->get_countries()) {
-			const site *capital_settlement = country->get_capital_settlement();
-			const site_game_data *capital_settlement_game_data = capital_settlement->get_game_data();
-			if (capital_settlement_game_data->get_owner() == country && !capital_settlement_game_data->is_built()) {
-				throw std::runtime_error(std::format("The capital settlement of country \"{}\" (\"{}\") is not built.", country->get_identifier(), capital_settlement->get_identifier()));
+			try {
+				const site *capital_settlement = country->get_capital_settlement();
+				const site_game_data *capital_settlement_game_data = capital_settlement->get_game_data();
+				if (capital_settlement_game_data->get_owner() == country && !capital_settlement_game_data->is_built()) {
+					throw std::runtime_error(std::format("The capital settlement of country \"{}\" (\"{}\") is unbuilt.", country->get_identifier(), capital_settlement->get_identifier()));
+				}
+			} catch (...) {
+				exceptions.push_back(std::current_exception());
 			}
+		}
+		if (!exceptions.empty()) {
+			throw aggregate_exception("One or more countries have unbuilt capital settlements.", std::move(exceptions));
 		}
 
 		this->apply_population_history();
