@@ -64,12 +64,7 @@ preferences *engine_interface::get_preferences() const
 
 QObject *engine_interface::get_map_template(const QString &identifier) const
 {
-	try {
-		return map_template::get(identifier.toStdString());
-	} catch (const std::exception &exception) {
-		exception::report(exception);
-		return nullptr;
-	}
+	return map_template::try_get(identifier.toStdString());
 }
 
 QVariantList engine_interface::get_scenarios() const

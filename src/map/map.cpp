@@ -69,8 +69,8 @@ void map::initialize()
 
 			try {
 				this->update_tile_terrain_tile(tile_pos);
-			} catch (const std::exception &exception) {
-				exception::report(exception);
+			} catch (...) {
+				exception::report(std::current_exception());
 			}
 		}
 	}

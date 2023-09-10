@@ -168,8 +168,8 @@ int main(int argc, char **argv)
 
 					database::get()->initialize();
 					engine_interface::get()->set_running(true);
-				} catch (const std::exception &exception) {
-					exception::report(exception);
+				} catch (...) {
+					exception::report(std::current_exception());
 					QMetaObject::invokeMethod(QApplication::instance(), [] {
 						QApplication::exit(EXIT_FAILURE);
 					}, Qt::QueuedConnection);
@@ -189,8 +189,8 @@ int main(int argc, char **argv)
 		on_exit_cleanup();
 
 		return result;
-	} catch (const std::exception &exception) {
-		exception::report(exception);
+	} catch (...) {
+		exception::report(std::current_exception());
 		return -1;
 	}
 }

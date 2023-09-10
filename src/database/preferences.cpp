@@ -46,8 +46,8 @@ void preferences::load_file()
 
 	try {
 		data = parser.parse(preferences_path);
-	} catch (const std::exception &exception) {
-		exception::report(exception);
+	} catch (...) {
+		exception::report(std::current_exception());
 		log::log_error("Failed to parse preferences file.");
 	}
 
@@ -66,8 +66,8 @@ void preferences::save() const
 
 	try {
 		data.print_to_file(preferences_path);
-	} catch (const std::exception &exception) {
-		exception::report(exception);
+	} catch (...) {
+		exception::report(std::current_exception());
 		log::log_error("Failed to save preferences file.");
 	}
 }
@@ -77,8 +77,8 @@ void preferences::process_gsml_property(const gsml_property &property)
 	//use a try-catch for the properties, as the property or its value could no longer exist
 	try {
 		database::get()->process_gsml_property_for_object(this, property);
-	} catch (const std::runtime_error &exception) {
-		exception::report(exception);
+	} catch (...) {
+		exception::report(std::current_exception());
 	}
 }
 
@@ -92,8 +92,8 @@ void preferences::process_gsml_scope(const gsml_data &scope)
 		} else {
 			database::get()->process_gsml_scope_for_object(this, scope);
 		}
-	} catch (const std::runtime_error &exception) {
-		exception::report(exception);
+	} catch (...) {
+		exception::report(std::current_exception());
 	}
 }
 
