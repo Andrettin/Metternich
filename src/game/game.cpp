@@ -182,8 +182,8 @@ void game::create_random_map(const QSize &map_size, metternich::era *era)
 		this->date = game::normalize_date(era->get_start_date());
 
 		this->on_setup_finished();
-	} catch (const std::exception &exception) {
-		exception::report(exception);
+	} catch (...) {
+		exception::report(std::current_exception());
 		std::terminate();
 	}
 }
@@ -204,8 +204,8 @@ void game::setup_scenario(metternich::scenario *scenario)
 
 		this->apply_history(scenario);
 		this->on_setup_finished();
-	} catch (const std::exception &exception) {
-		exception::report(exception);
+	} catch (...) {
+		exception::report(std::current_exception());
 		std::terminate();
 	}
 }
@@ -1162,8 +1162,8 @@ void game::do_turn_async()
 		try {
 			this->do_turn();
 			co_return;
-		} catch (const std::exception &exception) {
-			exception::report(exception);
+		} catch (...) {
+			exception::report(std::current_exception());
 			std::terminate();
 		}
 	});
