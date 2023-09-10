@@ -679,6 +679,15 @@ void game::apply_history(const metternich::scenario *scenario)
 
 		this->apply_population_history();
 
+		for (const province *province : map::get()->get_provinces()) {
+			for (const site *settlement : province->get_game_data()->get_settlements()) {
+				site_game_data *settlement_game_data = settlement->get_game_data();
+				if (settlement_game_data->is_built()) {
+					settlement_game_data->check_free_buildings();
+				}
+			}
+		}
+
 		for (const character *character : character::get_all()) {
 			character_game_data *character_game_data = character->get_game_data();
 			const character_history *character_history = character->get_history();
