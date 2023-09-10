@@ -176,7 +176,12 @@ public:
 
 	int get_settlement_count() const
 	{
-		return static_cast<int>(this->get_settlements().size());
+		return this->settlement_count;
+	}
+
+	void change_settlement_count(const int change)
+	{
+		this->settlement_count += change;
 	}
 
 	const resource_map<int> &get_resource_counts() const
@@ -402,7 +407,8 @@ private:
 	std::vector<QPoint> border_tiles;
 	std::vector<QPoint> resource_tiles;
 	std::vector<const site *> sites;
-	std::vector<const site *> settlements;
+	std::vector<const site *> settlements; //includes all settlements, even if unbuilt
+	int settlement_count = 0; //only includes built settlements
 	resource_map<int> resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
 	scripted_province_modifier_map<int> scripted_modifiers;

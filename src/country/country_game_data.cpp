@@ -777,8 +777,6 @@ void country_game_data::on_province_gained(const province *province, const int m
 		this->change_tile_terrain_count(terrain, count * multiplier);
 	}
 
-	this->change_settlement_count(province_game_data->get_settlement_count() * multiplier);
-
 	for (const site *settlement : province_game_data->get_settlements()) {
 		for (const qunique_ptr<settlement_building_slot> &building_slot : settlement->get_game_data()->get_building_slots()) {
 			const building_type *building = building_slot->get_building();

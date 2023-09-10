@@ -56,10 +56,15 @@ void province_game_data::reset_non_map_data()
 	this->clear_population_units();
 	this->clear_military_units();
 	this->set_owner(nullptr);
+	this->culture = nullptr;
+	this->religion = nullptr;
+	this->settlement_count = 0;
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
 	this->score = province::base_score;
 	this->output_modifier = 0;
 	this->commodity_output_modifiers.clear();
+	this->commodity_bonuses_per_improved_resources.clear();
+	this->commodity_bonuses_for_tile_thresholds.clear();
 }
 
 void province_game_data::on_map_created()
@@ -153,9 +158,10 @@ void province_game_data::set_owner(const country *country)
 		}
 	}
 
-	for (const site *site : this->get_settlements()) {
-		site->get_game_data()->check_building_conditions();
-		site->get_game_data()->check_free_buildings();
+	for (const site *site : this->sites) {
+		if (site->get_game_data()->get_owner() == old_owner) {
+			site->get_game_data()->set_owner(owner);
+		}
 	}
 
 	if (game::get()->is_running()) {

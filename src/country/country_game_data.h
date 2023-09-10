@@ -1593,7 +1593,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;
-	int settlement_count = 0;
+	int settlement_count = 0; //only includes built settlements
 	std::vector<const province *> border_provinces;
 	int coastal_province_count = 0;
 	QRect territory_rect;

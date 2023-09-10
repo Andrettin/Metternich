@@ -65,6 +65,10 @@ void region_history::distribute_population()
 				continue;
 			}
 
+			if (province->get_game_data()->get_settlement_count() == 0) {
+				continue;
+			}
+
 			int province_total_settlement_group_population = 0;
 
 			for (const site *settlement : province->get_game_data()->get_settlements()) {
@@ -92,6 +96,10 @@ void region_history::distribute_population()
 
 		for (const province *province : this->region->get_provinces()) {
 			if (province->is_water_zone()) {
+				continue;
+			}
+
+			if (province->get_game_data()->get_settlement_count() == 0) {
 				continue;
 			}
 

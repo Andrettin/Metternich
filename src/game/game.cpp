@@ -660,6 +660,14 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 		}
 
+		for (const country *country : this->get_countries()) {
+			const site *capital_settlement = country->get_capital_settlement();
+			const site_game_data *capital_settlement_game_data = capital_settlement->get_game_data();
+			if (capital_settlement_game_data->get_owner() == country && !capital_settlement_game_data->is_built()) {
+				throw std::runtime_error(std::format("The capital settlement of country \"{}\" (\"{}\") is not built.", country->get_identifier(), capital_settlement->get_identifier()));
+			}
+		}
+
 		this->apply_population_history();
 
 		for (const character *character : character::get_all()) {
@@ -885,9 +893,13 @@ void game::apply_population_history()
 			continue;
 		}
 
-		province->get_history()->distribute_population();
-
 		province_game_data *province_game_data = province->get_game_data();
+
+		if (province_game_data->get_settlement_count() == 0) {
+			continue;
+		}
+
+		province->get_history()->distribute_population();
 
 		for (const site *settlement : province_game_data->get_settlements()) {
 			site_game_data *settlement_game_data = settlement->get_game_data();

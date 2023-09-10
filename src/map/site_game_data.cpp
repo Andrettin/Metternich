@@ -42,7 +42,9 @@ void site_game_data::reset_non_map_data()
 {
 	this->clear_buildings();
 	this->clear_population_units();
+	this->set_owner(nullptr);
 	this->settlement_type = nullptr;
+	this->commodity_outputs.clear();
 	this->visiting_military_units.clear();
 }
 
@@ -133,14 +135,32 @@ bool site_game_data::is_capital() const
 	return this->get_province()->get_game_data()->is_capital() && this->is_provincial_capital();
 }
 
-const country *site_game_data::get_owner() const
+void site_game_data::set_owner(const country *owner)
 {
-	const province *province = this->get_province();
-	if (province != nullptr) {
-		return province->get_game_data()->get_owner();
+	if (owner == this->get_owner()) {
+		return;
 	}
 
-	return nullptr;
+	const country *old_owner = this->get_owner();
+
+	this->owner = owner;
+
+	if (this->site->is_settlement() && this->is_built()) {
+		if (old_owner != nullptr) {
+			old_owner->get_game_data()->change_settlement_count(-1);
+		}
+
+		if (owner != nullptr) {
+			owner->get_game_data()->change_settlement_count(1);
+		}
+
+		this->check_building_conditions();
+		this->check_free_buildings();
+	}
+
+	if (game::get()->is_running()) {
+		emit owner_changed();
+	}
 }
 
 const culture *site_game_data::get_culture() const
@@ -166,6 +186,41 @@ const religion *site_game_data::get_religion() const
 	}
 
 	return nullptr;
+}
+
+void site_game_data::set_settlement_type(const metternich::settlement_type *settlement_type)
+{
+	assert_throw(this->site->is_settlement());
+
+	if (settlement_type == this->get_settlement_type()) {
+		return;
+	}
+
+	const metternich::settlement_type *old_settlement_type = this->get_settlement_type();
+
+	this->settlement_type = settlement_type;
+
+	if (this->get_owner() != nullptr) {
+		if (old_settlement_type == nullptr && this->get_settlement_type() != nullptr) {
+			this->get_province()->get_game_data()->change_settlement_count(1);
+			this->get_owner()->get_game_data()->change_settlement_count(1);
+		} else if (old_settlement_type != nullptr && this->get_settlement_type() == nullptr) {
+			this->get_province()->get_game_data()->change_settlement_count(-1);
+			this->get_owner()->get_game_data()->change_settlement_count(-1);
+		}
+	}
+
+	if (game::get()->is_running()) {
+		emit settlement_type_changed();
+		emit map::get()->tile_settlement_type_changed(this->get_tile_pos());
+	}
+}
+
+bool site_game_data::is_built() const
+{
+	assert_throw(this->site->is_settlement());
+
+	return this->get_settlement_type() != nullptr;
 }
 
 const improvement *site_game_data::get_improvement() const
@@ -468,20 +523,6 @@ void site_game_data::calculate_commodity_outputs()
 
 	for (const auto &[commodity, output] : outputs) {
 		this->set_commodity_output(commodity, output);
-	}
-}
-
-void site_game_data::set_settlement_type(const metternich::settlement_type *settlement_type)
-{
-	if (settlement_type == this->get_settlement_type()) {
-		return;
-	}
-
-	this->settlement_type = settlement_type;
-	emit settlement_type_changed();
-
-	if (game::get()->is_running()) {
-		emit map::get()->tile_improvement_changed(this->get_tile_pos());
 	}
 }
 

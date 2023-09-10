@@ -63,7 +63,10 @@ public:
 	bool is_provincial_capital() const;
 	bool is_capital() const;
 
-	const country *get_owner() const;
+	const country *get_owner() const
+	{
+		return this->owner;
+	}
 
 private:
 	//for the Qt property (pointers there can't be const)
@@ -73,6 +76,8 @@ private:
 	}
 
 public:
+	void set_owner(const country *owner);
+
 	const culture *get_culture() const;
 
 	const std::string &get_current_cultural_name() const;
@@ -98,6 +103,8 @@ private:
 
 public:
 	void set_settlement_type(const metternich::settlement_type *settlement_type);
+
+	bool is_built() const;
 
 	const improvement *get_improvement() const;
 
@@ -196,6 +203,7 @@ signals:
 private:
 	const metternich::site *site = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
+	const country *owner = nullptr;
 	const metternich::settlement_type *settlement_type = nullptr;
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
 	building_slot_type_map<settlement_building_slot *> building_slot_map;
