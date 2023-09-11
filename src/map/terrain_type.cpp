@@ -86,7 +86,11 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "tiles") {
+	if (tag == "fallback_terrains") {
+		for (const std::string &value : values) {
+			this->fallback_terrains.push_back(terrain_type::get(value));
+		}
+	} else if (tag == "tiles") {
 		for (const std::string &value : values) {
 			this->tiles.push_back(std::stoi(value));
 		}

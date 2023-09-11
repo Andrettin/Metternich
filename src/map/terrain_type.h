@@ -123,6 +123,11 @@ public:
 
 	void assign_to_biome(const elevation_type elevation_type, const temperature_type temperature_type, const moisture_type moisture_type, const forestation_type forestation_type);
 
+	const std::vector<const terrain_type *> &get_fallback_terrains() const
+	{
+		return this->fallback_terrains;
+	}
+
 	const std::vector<int> &get_tiles() const
 	{
 		return this->tiles;
@@ -156,6 +161,7 @@ private:
 	metternich::temperature_type temperature_type;
 	metternich::moisture_type moisture_type;
 	metternich::forestation_type forestation_type;
+	std::vector<const terrain_type *> fallback_terrains;
 	std::vector<int> tiles;
 	std::map<terrain_adjacency, std::vector<int>> adjacency_tiles;
 };

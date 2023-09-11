@@ -3,6 +3,7 @@
 #include "map/map_template.h"
 
 #include "database/defines.h"
+#include "economy/resource.h"
 #include "map/direction.h"
 #include "map/map.h"
 #include "map/map_projection.h"
@@ -504,13 +505,32 @@ void map_template::apply_terrain() const
 
 	//apply site terrain
 	for (const auto &[tile_pos, site] : this->sites_by_position) {
-		if (site->get_terrain_type() == nullptr) {
+		const terrain_type *site_terrain = site->get_terrain_type();
+		const resource *site_resource = site->get_resource();
+
+		//use a fallback terrain if the tile's terrain doesn't match the site's resource
+		if (site_terrain == nullptr && site_resource != nullptr) {
+			const tile *tile = map->get_tile(tile_pos);
+			const terrain_type *tile_terrain = tile->get_terrain();
+			const std::vector<const terrain_type *> &resource_terrains = site_resource->get_terrain_types();
+
+			if (tile_terrain != nullptr && !vector::contains(resource_terrains, tile_terrain)) {
+				for (const terrain_type *fallback_terrain : tile_terrain->get_fallback_terrains()) {
+					if (vector::contains(resource_terrains, fallback_terrain)) {
+						site_terrain = fallback_terrain;
+						break;
+					}
+				}
+			}
+		}
+
+		if (site_terrain == nullptr) {
 			continue;
 		}
 
 		assert_throw(site->get_type() == site_type::terrain || site->get_type() == site_type::resource || site->get_type() == site_type::settlement);
 
-		map->set_tile_terrain(tile_pos, site->get_terrain_type());
+		map->set_tile_terrain(tile_pos, site_terrain);
 	}
 }
 
