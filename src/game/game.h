@@ -83,6 +83,7 @@ public:
 	void clear();
 
 	void apply_history(const metternich::scenario *scenario);
+	void apply_sites();
 	void apply_population_history();
 	int64_t apply_historical_population_group_to_settlement(const population_group_key &group_key, const int population, const site *settlement);
 
