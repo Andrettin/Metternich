@@ -174,12 +174,7 @@ const country *effect<scope_type>::get_scope_country(const scope_type *scope)
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
 		return scope->get_game_data()->get_owner();
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
-		const province *province = scope->get_game_data()->get_province();
-		if (province != nullptr) {
-			return province->get_game_data()->get_owner();
-		}
-
-		return nullptr;
+		return scope->get_game_data()->get_owner();
 	}
 }
 
