@@ -711,6 +711,14 @@ void game::apply_sites()
 				continue;
 			}
 
+			if (settlement_type->get_conditions() != nullptr && !settlement_type->get_conditions()->check(capital_settlement, read_only_context(capital_settlement))) {
+				continue;
+			}
+
+			if (settlement_type->get_build_conditions() != nullptr && !settlement_type->get_build_conditions()->check(capital_settlement, read_only_context(capital_settlement))) {
+				continue;
+			}
+
 			best_settlement_type = settlement_type;
 		}
 
