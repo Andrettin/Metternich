@@ -50,6 +50,11 @@ public:
 		return this->conditions.get();
 	}
 
+	const condition<site> *get_build_conditions() const
+	{
+		return this->build_conditions.get();
+	}
+
 signals:
 	void changed();
 
@@ -58,6 +63,7 @@ private:
 	std::vector<const settlement_type *> base_settlement_types;
 	std::vector<const settlement_type *> upgraded_settlement_types;
 	std::unique_ptr<const condition<site>> conditions;
+	std::unique_ptr<const condition<site>> build_conditions;
 };
 
 }

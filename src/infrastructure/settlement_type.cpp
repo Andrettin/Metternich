@@ -32,6 +32,10 @@ void settlement_type::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<site>>();
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
+	} else if (tag == "build_conditions") {
+		auto conditions = std::make_unique<and_condition<site>>();
+		database::process_gsml_data(conditions, scope);
+		this->build_conditions = std::move(conditions);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -58,6 +62,10 @@ void settlement_type::check() const
 
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
+	}
+
+	if (this->get_build_conditions() != nullptr) {
+		this->get_build_conditions()->check_validity();
 	}
 }
 
