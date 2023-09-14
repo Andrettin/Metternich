@@ -2040,7 +2040,7 @@ void country_game_data::change_settlement_building_count(const building_type *bu
 		}
 	} else if (count > 0 && old_count == 0) {
 		//gained first settlement building
-		if (country_building_slot->can_have_building(building)) {
+		if (country_building_slot->can_gain_building(building)) {
 			country_building_slot->set_building(building);
 		}
 	}

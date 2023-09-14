@@ -420,7 +420,7 @@ bool site_game_data::check_free_building(const building_type *building)
 		return false;
 	}
 
-	if (!building_slot->can_have_building(building)) {
+	if (!building_slot->can_gain_building(building)) {
 		return false;
 	}
 

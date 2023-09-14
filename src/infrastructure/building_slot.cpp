@@ -62,6 +62,15 @@ bool building_slot::can_have_building(const building_type *building) const
 		}
 	}
 
+	return true;
+}
+
+bool building_slot::can_gain_building(const building_type *building) const
+{
+	if (!this->can_have_building(building)) {
+		return false;
+	}
+
 	if (this->get_building() != nullptr) {
 		if (building == this->get_building()) {
 			return false;
@@ -105,7 +114,7 @@ bool building_slot::can_build_building(const building_type *building) const
 		}
 	}
 
-	return this->can_have_building(building);
+	return this->can_gain_building(building);
 }
 
 void building_slot::build_building(const building_type *building)

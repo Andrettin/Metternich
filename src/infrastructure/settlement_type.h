@@ -14,7 +14,8 @@ class settlement_type final : public named_data_entry, public data_type<settleme
 {
 	Q_OBJECT
 
-	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
+	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath NOTIFY changed)
+	Q_PROPERTY(int free_resource_building_level MEMBER free_resource_building_level READ get_free_resource_building_level NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "settlement_type";
@@ -45,6 +46,11 @@ public:
 		return this->upgraded_settlement_types;
 	}
 
+	int get_free_resource_building_level() const
+	{
+		return this->free_resource_building_level;
+	}
+
 	const condition<site> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -62,6 +68,7 @@ private:
 	std::filesystem::path image_filepath;
 	std::vector<const settlement_type *> base_settlement_types;
 	std::vector<const settlement_type *> upgraded_settlement_types;
+	int free_resource_building_level = 0;
 	std::unique_ptr<const condition<site>> conditions;
 	std::unique_ptr<const condition<site>> build_conditions;
 };
