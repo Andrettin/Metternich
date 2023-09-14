@@ -749,48 +749,24 @@ void game::apply_sites()
 				country_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
 
 				for (auto [building_slot_type, building] : site_history->get_buildings()) {
+					const settlement_building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
+
 					while (building != nullptr) {
-						if (building->get_conditions() != nullptr) {
-							if (owner == nullptr) {
-								building = building->get_required_building();
-								continue;
-							}
-
-							if (!building->get_conditions()->check(owner, read_only_context(owner))) {
-								building = building->get_required_building();
-								continue;
-							}
-						}
-
-						if (building->is_provincial()) {
+						if (building->is_provincial() && settlement == site) {
 							if (settlement_type == nullptr) {
-								if (settlement != site) {
-									building = building->get_required_building();
-									continue;
-								}
-
 								throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but has no settlement type.", settlement->get_identifier(), building->get_identifier()));
 							}
 
 							if (!vector::contains(building->get_settlement_types(), settlement_type)) {
-								if (settlement != site) {
-									building = building->get_required_building();
-									continue;
-								}
-
 								throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but its settlement type of \"{}\" is not appropriate for it.", settlement->get_identifier(), building->get_identifier(), settlement_type->get_identifier()));
 							}
 						}
 
-						if (building->get_province_conditions() != nullptr) {
-							if (!building->get_province_conditions()->check(site_province, read_only_context(site_province))) {
-								building = building->get_required_building();
-								continue;
-							}
+						if (building_slot->can_have_building(building)) {
+							break;
 						}
 
-						//checks successful
-						break;
+						building = building->get_required_building();
 					}
 
 					if (building == nullptr) {

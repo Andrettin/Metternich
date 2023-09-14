@@ -130,7 +130,7 @@ bool settlement_building_slot::can_have_wonder(const metternich::wonder *wonder)
 		}
 	}
 
-	const site_game_data *settlement_game_data = settlement->get_game_data();
+	const site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
 
 	if (wonder->get_province_conditions() != nullptr) {
 		if (!wonder->get_province_conditions()->check(settlement_game_data->get_province(), read_only_context(settlement_game_data->get_province()))) {
@@ -138,24 +138,13 @@ bool settlement_building_slot::can_have_wonder(const metternich::wonder *wonder)
 		}
 	}
 
-	if (!vector::contains(wonder->get_building()->get_settlement_types(), settlement_game_data->get_settlement_type())) {
+	return this->can_have_building(wonder->get_building());
+}
+
+bool settlement_building_slot::can_gain_wonder(const metternich::wonder *wonder) const
+{
+	if (!this->can_have_wonder(wonder)) {
 		return false;
-	}
-
-	if (wonder->get_building()->get_province_conditions() != nullptr) {
-		if (!wonder->get_building()->get_province_conditions()->check(settlement_game_data->get_province(), read_only_context(settlement_game_data->get_province()))) {
-			return false;
-		}
-	}
-
-	if (wonder->get_building()->get_conditions() != nullptr) {
-		if (this->get_country() == nullptr) {
-			return false;
-		}
-
-		if (!wonder->get_building()->get_conditions()->check(this->get_country(), read_only_context(this->get_country()))) {
-			return false;
-		}
 	}
 
 	if (this->get_wonder() != nullptr) {
@@ -193,7 +182,7 @@ bool settlement_building_slot::can_build_wonder(const metternich::wonder *wonder
 		}
 	}
 
-	return this->can_have_wonder(wonder);
+	return this->can_gain_wonder(wonder);
 }
 
 void settlement_building_slot::build_wonder(const metternich::wonder *wonder)

@@ -210,6 +210,11 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 		}
 	}
 
+	if (this->get_settlement_type() != nullptr) {
+		this->check_building_conditions();
+		this->check_free_buildings();
+	}
+
 	if (game::get()->is_running()) {
 		emit settlement_type_changed();
 		emit map::get()->tile_settlement_type_changed(this->get_tile_pos());
@@ -328,29 +333,13 @@ void site_game_data::check_building_conditions()
 			continue;
 		}
 
-		//if the building fails its conditions, try to replace it with one of its required building, if valid
+		//if the building fails its conditions, try to replace it with one of its required buildings, if valid
 		while (building != nullptr) {
-			if (building->get_conditions() != nullptr) {
-				if (this->get_owner() == nullptr) {
-					building = building->get_required_building();
-					continue;
-				}
-
-				if (!building->get_conditions()->check(this->get_owner(), read_only_context(this->get_owner()))) {
-					building = building->get_required_building();
-					continue;
-				}
+			if (building_slot->can_have_building(building)) {
+				break;
 			}
 
-			if (building->get_province_conditions() != nullptr) {
-				if (!building->get_province_conditions()->check(this->get_province(), read_only_context(this->get_province()))) {
-					building = building->get_required_building();
-					continue;
-				}
-			}
-
-			//checks successful
-			break;
+			building = building->get_required_building();
 		}
 
 		if (building != building_slot->get_building()) {

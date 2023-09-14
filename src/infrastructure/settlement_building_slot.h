@@ -53,6 +53,7 @@ public:
 	void set_under_construction_wonder(const wonder *wonder);
 
 	bool can_have_wonder(const wonder *wonder) const;
+	bool can_gain_wonder(const wonder *wonder) const;
 	bool can_build_wonder(const wonder *wonder) const;
 
 	void build_wonder(const wonder *wonder);
