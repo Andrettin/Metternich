@@ -178,6 +178,12 @@ public:
 		return 0;
 	}
 
+	Q_INVOKABLE int get_commodity_output(metternich::commodity *commodity)
+	{
+		const metternich::commodity *const_commodity = commodity;
+		return this->get_commodity_output(const_commodity);
+	}
+
 	void set_commodity_output(const commodity *commodity, const int output);
 	void calculate_commodity_outputs();
 
