@@ -12,6 +12,7 @@ class military_unit;
 class population_unit;
 class province;
 class religion;
+class resource;
 class settlement_building_slot;
 class settlement_type;
 class site;
@@ -105,6 +106,8 @@ public:
 	void set_settlement_type(const metternich::settlement_type *settlement_type);
 
 	bool is_built() const;
+
+	const resource *get_resource() const;
 
 	const improvement *get_improvement() const;
 

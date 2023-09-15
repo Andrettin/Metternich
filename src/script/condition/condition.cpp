@@ -58,6 +58,7 @@
 #include "script/condition/promotion_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
+#include "script/condition/resource_condition.h"
 #include "script/condition/root_character_condition.h"
 #include "script/condition/ruler_condition.h"
 #include "script/condition/ruler_scope_condition.h"
@@ -162,6 +163,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (key == "improvement") {
 			return std::make_unique<improvement_condition>(value, condition_operator);
+		} else if (key == "resource") {
+			return std::make_unique<resource_condition>(value, condition_operator);
 		} else if (key == "settlement_type") {
 			return std::make_unique<settlement_type_condition>(value, condition_operator);
 		} else if (key == "terrain") {

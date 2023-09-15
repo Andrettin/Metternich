@@ -228,6 +228,16 @@ bool site_game_data::is_built() const
 	return this->get_settlement_type() != nullptr;
 }
 
+const resource *site_game_data::get_resource() const
+{
+	const tile *tile = this->get_tile();
+	if (tile != nullptr) {
+		return tile->get_resource();
+	}
+
+	return nullptr;
+}
+
 const improvement *site_game_data::get_improvement() const
 {
 	const tile *tile = this->get_tile();
