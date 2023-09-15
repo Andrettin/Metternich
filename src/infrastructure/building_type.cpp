@@ -6,6 +6,7 @@
 #include "country/culture.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
+#include "economy/resource.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/settlement_type.h"
@@ -13,8 +14,10 @@
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/capital_condition.h"
+#include "script/condition/resource_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
+#include "script/modifier_effect/commodity_bonus_modifier_effect.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -38,6 +41,10 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	if (tag == "settlement_types") {
 		for (const std::string &value : values) {
 			this->settlement_types.push_back(settlement_type::get(value));
+		}
+	} else if (tag == "resources") {
+		for (const std::string &value : values) {
+			this->resources.push_back(resource::get(value));
 		}
 	} else if (tag == "production_types") {
 		for (const std::string &value : values) {
@@ -107,6 +114,27 @@ void building_type::initialize()
 		this->required_technology->add_enabled_building(this);
 	}
 
+	if (!this->get_resources().empty()) {
+		for (resource *resource : this->get_resources()) {
+			resource->add_building(this);
+		}
+
+		if (this->get_settlement_conditions() == nullptr) {
+			this->settlement_conditions = std::make_unique<and_condition<site>>();
+		}
+
+		for (const resource *resource : this->get_resources()) {
+			this->settlement_conditions->add_condition(std::make_unique<resource_condition>(resource));
+		}
+
+		if (this->get_settlement_modifier() == nullptr) {
+			this->settlement_modifier = std::make_unique<modifier<const site>>();
+		}
+
+		const commodity *resource_commodity = this->get_resources().at(0)->get_commodity();
+		this->settlement_modifier->add_modifier_effect(std::make_unique<commodity_bonus_modifier_effect>(resource_commodity, this->get_resource_level()));
+	}
+
 	if (this->is_capital_only()) {
 		if (this->get_province_conditions() == nullptr) {
 			this->province_conditions = std::make_unique<and_condition<province>>();
@@ -145,6 +173,24 @@ void building_type::check() const
 
 	if (!this->is_provincial() && !this->get_settlement_types().empty()) {
 		throw std::runtime_error(std::format("Building type \"{}\" is not provincial, but does have settlement types listed for it.", this->get_identifier()));
+	}
+
+	if (this->get_resource_level() > 0 && this->get_resources().empty()) {
+		throw std::runtime_error(std::format("Building type \"{}\" has a resource level, but no resources listed for it.", this->get_identifier()));
+	}
+
+	if (!this->get_resources().empty() && this->get_resource_level() == 0) {
+		throw std::runtime_error(std::format("Building type \"{}\" has resources listed for it, but no resource level.", this->get_identifier()));
+	}
+
+	if (this->get_resources().size() > 1) {
+		const commodity *resource_commodity = this->get_resources().at(0)->get_commodity();
+
+		for (const resource *resource : this->get_resources()) {
+			if (resource->get_commodity() != resource_commodity) {
+				throw std::runtime_error(std::format("Building type \"{}\" has resources which pertain to different commodities.", this->get_identifier()));
+			}
+		}
 	}
 
 	if (!this->get_production_types().empty() && !this->is_provincial()) {

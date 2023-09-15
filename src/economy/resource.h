@@ -5,6 +5,7 @@
 
 namespace metternich {
 
+class building_type;
 class commodity;
 class icon;
 class technology;
@@ -76,6 +77,16 @@ public:
 		return this->terrain_types;
 	}
 
+	const std::vector<const building_type *> &get_buildings() const
+	{
+		return this->buildings;
+	}
+
+	void add_building(const building_type *building)
+	{
+		this->buildings.push_back(building);
+	}
+
 signals:
 	void changed();
 
@@ -87,6 +98,7 @@ private:
 	bool coastal = false;
 	bool near_water = false;
 	std::vector<const terrain_type *> terrain_types;
+	std::vector<const building_type *> buildings;
 };
 
 }

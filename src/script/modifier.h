@@ -39,7 +39,6 @@ public:
 	std::string get_string(const scope_type *scope, const int multiplier = 1, const size_t indent = 0) const;
 	int get_score() const;
 
-private:
 	void add_modifier_effect(std::unique_ptr<modifier_effect<scope_type>> &&modifier_effect);
 
 private:

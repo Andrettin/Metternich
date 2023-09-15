@@ -17,6 +17,7 @@ class population_unit;
 class portrait;
 class production_type;
 class province;
+class resource;
 class settlement_type;
 class site;
 class technology;
@@ -43,6 +44,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
+	Q_PROPERTY(int resource_level MEMBER resource_level READ get_resource_level NOTIFY changed)
 	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
 	Q_PROPERTY(int capacity_increment MEMBER capacity_increment READ get_capacity_increment NOTIFY changed)
@@ -106,6 +108,16 @@ public:
 	const std::vector<const settlement_type *> &get_settlement_types() const
 	{
 		return this->settlement_types;
+	}
+
+	int get_resource_level() const
+	{
+		return this->resource_level;
+	}
+
+	const std::vector<resource *> &get_resources() const
+	{
+		return this->resources;
 	}
 
 	const std::vector<const production_type *> &get_production_types() const
@@ -250,6 +262,8 @@ private:
 	metternich::icon *icon = nullptr;
 	bool provincial = false;
 	std::vector<const settlement_type *> settlement_types;
+	int resource_level = 0;
+	std::vector<resource *> resources;
 	std::vector<const production_type *> production_types;
 	int base_capacity = 0;
 	int capacity_increment = 0;
