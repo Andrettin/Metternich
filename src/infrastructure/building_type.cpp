@@ -60,6 +60,9 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<province>>();
 		database::process_gsml_data(conditions, scope);
 		this->province_conditions = std::move(conditions);
+	} else if (tag == "settlement_modifier") {
+		this->settlement_modifier = std::make_unique<modifier<const site>>();
+		database::process_gsml_data(this->settlement_modifier, scope);
 	} else if (tag == "province_modifier") {
 		this->province_modifier = std::make_unique<modifier<const province>>();
 		database::process_gsml_data(this->province_modifier, scope);
@@ -183,6 +186,10 @@ int building_type::get_score() const
 
 	if (this->get_stackable_country_modifier() != nullptr) {
 		score += this->get_stackable_country_modifier()->get_score();
+	}
+
+	if (this->get_settlement_modifier() != nullptr) {
+		score += this->get_settlement_modifier()->get_score();
 	}
 
 	if (this->get_province_modifier() != nullptr) {

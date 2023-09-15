@@ -447,6 +447,10 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	if (building->get_province_modifier() != nullptr) {
 		building->get_province_modifier()->apply(this->get_province(), multiplier);
 	}
+
+	if (building->get_settlement_modifier() != nullptr) {
+		building->get_settlement_modifier()->apply(this->site, multiplier);
+	}
 }
 
 void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)

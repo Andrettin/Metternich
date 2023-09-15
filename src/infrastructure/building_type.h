@@ -213,6 +213,11 @@ public:
 		return this->province_conditions.get();
 	}
 
+	const modifier<const site> *get_settlement_modifier() const
+	{
+		return this->settlement_modifier.get();
+	}
+
 	const modifier<const province> *get_province_modifier() const
 	{
 		return this->province_modifier.get();
@@ -256,6 +261,7 @@ private:
 	std::unique_ptr<const factor<country>> cost_factor;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<and_condition<province>> province_conditions;
+	std::unique_ptr<modifier<const site>> settlement_modifier;
 	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const country>> country_modifier;
 	std::unique_ptr<modifier<const country>> stackable_country_modifier;
