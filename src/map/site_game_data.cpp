@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
+#include "economy/resource.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -13,6 +14,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/settlement_building_slot.h"
+#include "infrastructure/settlement_type.h"
 #include "infrastructure/wonder.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -383,6 +385,24 @@ void site_game_data::check_free_buildings()
 
 		if (this->check_free_building(building)) {
 			changed = true;
+		}
+	}
+
+	const resource *resource = this->get_resource();
+	const int free_resource_building_level = this->get_settlement_type()->get_free_resource_building_level();
+	if (resource != nullptr && free_resource_building_level > 0) {
+		for (const building_type *building : resource->get_buildings()) {
+			if (building->get_resource_level() > free_resource_building_level) {
+				continue;
+			}
+
+			if (building != this->get_culture()->get_building_class_type(building->get_building_class())) {
+				continue;
+			}
+
+			if (this->check_free_building(building)) {
+				changed = true;
+			}
 		}
 	}
 
