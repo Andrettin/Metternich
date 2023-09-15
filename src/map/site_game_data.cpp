@@ -456,6 +456,7 @@ void site_game_data::on_building_gained(const building_type *building, const int
 {
 	assert_throw(building != nullptr);
 	assert_throw(multiplier != 0);
+	assert_throw(this->get_province() != nullptr);
 
 	this->get_province()->get_game_data()->change_score(building->get_score() * multiplier);
 
