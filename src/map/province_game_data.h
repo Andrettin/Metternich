@@ -169,9 +169,9 @@ public:
 		return this->resource_tiles;
 	}
 
-	const std::vector<const site *> &get_settlements() const
+	const std::vector<const site *> &get_settlement_sites() const
 	{
-		return this->settlements;
+		return this->settlement_sites;
 	}
 
 	int get_settlement_count() const
@@ -407,7 +407,7 @@ private:
 	std::vector<QPoint> border_tiles;
 	std::vector<QPoint> resource_tiles;
 	std::vector<const site *> sites;
-	std::vector<const site *> settlements; //includes all settlements, even if unbuilt
+	std::vector<const site *> settlement_sites; //includes all settlements, even if unbuilt
 	int settlement_count = 0; //only includes built settlements
 	resource_map<int> resource_counts;
 	terrain_type_map<int> tile_terrain_counts;

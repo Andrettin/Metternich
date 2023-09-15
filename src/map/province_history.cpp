@@ -44,7 +44,7 @@ void province_history::distribute_population()
 		int unpopulated_settlement_count = 0;
 
 		//subtract the predefined population of settlements in the province from that of the province
-		for (const site *settlement : this->province->get_game_data()->get_settlements()) {
+		for (const site *settlement : this->province->get_game_data()->get_settlement_sites()) {
 			const site_history *settlement_history = settlement->get_history();
 			const int settlement_group_population = settlement_history->get_group_population(group_key);
 
@@ -62,7 +62,7 @@ void province_history::distribute_population()
 		//apply the remaining population to settlements
 		const int64_t population_per_settlement = remaining_population / unpopulated_settlement_count;
 
-		for (const site *settlement : this->province->get_game_data()->get_settlements()) {
+		for (const site *settlement : this->province->get_game_data()->get_settlement_sites()) {
 			site_history *settlement_history = settlement->get_history();
 			const int settlement_group_population = settlement_history->get_group_population(group_key);
 			settlement_history->set_group_population(group_key, population_per_settlement + settlement_group_population);

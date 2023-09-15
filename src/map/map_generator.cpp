@@ -73,7 +73,7 @@ void map_generator::generate()
 		province_game_data->set_owner(country);
 
 		//add population
-		for (const site *settlement : province_game_data->get_settlements()) {
+		for (const site *settlement : province_game_data->get_settlement_sites()) {
 			const int population_unit_count = settlement->get_game_data()->is_capital() ? 4 : 1;
 			const population_class *population_class = nullptr;
 			if (country->is_tribe()) {
