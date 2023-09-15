@@ -18,6 +18,7 @@ class portrait;
 class production_type;
 class province;
 class settlement_type;
+class site;
 class technology;
 
 template <typename scope_type>
@@ -208,6 +209,11 @@ public:
 		return this->conditions.get();
 	}
 
+	const and_condition<site> *get_settlement_conditions() const
+	{
+		return this->settlement_conditions.get();
+	}
+
 	const and_condition<province> *get_province_conditions() const
 	{
 		return this->province_conditions.get();
@@ -260,6 +266,7 @@ private:
 	commodity_map<int> commodity_costs;
 	std::unique_ptr<const factor<country>> cost_factor;
 	std::unique_ptr<const condition<country>> conditions;
+	std::unique_ptr<and_condition<site>> settlement_conditions;
 	std::unique_ptr<and_condition<province>> province_conditions;
 	std::unique_ptr<modifier<const site>> settlement_modifier;
 	std::unique_ptr<modifier<const province>> province_modifier;
