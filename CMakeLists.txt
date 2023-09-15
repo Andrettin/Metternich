@@ -568,6 +568,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/category_research_modifier_effect.h
 	src/script/modifier_effect/cavalry_cost_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h
+	src/script/modifier_effect/commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/commodity_per_improved_resource_modifier_effect.h
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h

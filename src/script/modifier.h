@@ -16,6 +16,7 @@ class character;
 class country;
 class military_unit;
 class province;
+class site;
 
 template <typename scope_type>
 class modifier_effect;
@@ -49,5 +50,6 @@ extern template class modifier<const character>;
 extern template class modifier<const country>;
 extern template class modifier<military_unit>;
 extern template class modifier<const province>;
+extern template class modifier<const site>;
 
 }

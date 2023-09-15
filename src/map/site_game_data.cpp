@@ -45,6 +45,7 @@ void site_game_data::reset_non_map_data()
 	this->set_owner(nullptr);
 	this->settlement_type = nullptr;
 	this->commodity_outputs.clear();
+	this->base_commodity_outputs.clear();
 	this->visiting_military_units.clear();
 }
 
@@ -487,9 +488,57 @@ void site_game_data::clear_population_units()
 	this->population_units.clear();
 }
 
+void site_game_data::change_base_commodity_output(const commodity *commodity, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->base_commodity_outputs[commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->base_commodity_outputs.erase(commodity);
+	}
+
+	this->calculate_commodity_outputs();
+}
+
+QVariantList site_game_data::get_commodity_outputs_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
+}
+
+void site_game_data::set_commodity_output(const commodity *commodity, const int output)
+{
+	assert_throw(output >= 0);
+
+	const int old_output = this->get_commodity_output(commodity);
+	if (output == old_output) {
+		return;
+	}
+
+	if (output == 0) {
+		this->commodity_outputs.erase(commodity);
+	} else {
+		this->commodity_outputs[commodity] = output;
+	}
+
+	const province *province = this->get_province();
+	if (province != nullptr) {
+		const country *owner = province->get_game_data()->get_owner();
+		if (owner != nullptr) {
+			owner->get_game_data()->change_commodity_output(commodity, output - old_output);
+		}
+	}
+
+	emit commodity_outputs_changed();
+}
+
 void site_game_data::calculate_commodity_outputs()
 {
-	commodity_map<int> outputs;
+	commodity_map<int> outputs = this->base_commodity_outputs;
 
 	const province *province = this->get_province();
 
@@ -523,37 +572,6 @@ void site_game_data::calculate_commodity_outputs()
 	for (const auto &[commodity, output] : outputs) {
 		this->set_commodity_output(commodity, output);
 	}
-}
-
-QVariantList site_game_data::get_commodity_outputs_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
-}
-
-void site_game_data::set_commodity_output(const commodity *commodity, const int output)
-{
-	assert_throw(output >= 0);
-
-	const int old_output = this->get_commodity_output(commodity);
-	if (output == old_output) {
-		return;
-	}
-
-	if (output == 0) {
-		this->commodity_outputs.erase(commodity);
-	} else {
-		this->commodity_outputs[commodity] = output;
-	}
-
-	const province *province = this->get_province();
-	if (province != nullptr) {
-		const country *owner = province->get_game_data()->get_owner();
-		if (owner != nullptr) {
-			owner->get_game_data()->change_commodity_output(commodity, output - old_output);
-		}
-	}
-
-	emit commodity_outputs_changed();
 }
 
 }

@@ -159,6 +159,8 @@ public:
 	void remove_population_unit(population_unit *population_unit);
 	void clear_population_units();
 
+	void change_base_commodity_output(const commodity *commodity, const int change);
+
 	const commodity_map<int> &get_commodity_outputs() const
 	{
 		return this->commodity_outputs;
@@ -211,6 +213,7 @@ private:
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
 	building_slot_type_map<settlement_building_slot *> building_slot_map;
 	std::vector<population_unit *> population_units;
+	commodity_map<int> base_commodity_outputs;
 	commodity_map<int> commodity_outputs;
 	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site
 };

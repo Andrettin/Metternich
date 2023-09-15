@@ -17,6 +17,7 @@
 #include "script/modifier_effect/building_capacity_modifier_effect.h"
 #include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/cavalry_cost_modifier_effect.h"
+#include "script/modifier_effect/commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h"
 #include "script/modifier_effect/commodity_per_improved_resource_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
@@ -160,6 +161,17 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		}
 	}
 
+	if constexpr (std::is_same_v<scope_type, const site>) {
+		static const std::string commodity_bonus_suffix = "_bonus";
+
+		if (key.ends_with(commodity_bonus_suffix)) {
+			const size_t commodity_identifier_size = key.size() - commodity_bonus_suffix.size();
+			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
+
+			return std::make_unique<commodity_bonus_modifier_effect>(commodity, value);
+		}
+	}
+
 	throw std::runtime_error("Invalid property modifier effect: \"" + key + "\".");
 }
 
@@ -218,5 +230,6 @@ template class modifier_effect<const character>;
 template class modifier_effect<const country>;
 template class modifier_effect<military_unit>;
 template class modifier_effect<const province>;
+template class modifier_effect<const site>;
 
 }

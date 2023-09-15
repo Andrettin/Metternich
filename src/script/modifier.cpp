@@ -101,5 +101,6 @@ template class modifier<const character>;
 template class modifier<const country>;
 template class modifier<military_unit>;
 template class modifier<const province>;
+template class modifier<const site>;
 
 }
