@@ -36,6 +36,10 @@ void resource::check() const
 {
 	assert_throw(this->get_commodity() != nullptr);
 	assert_throw(this->get_icon() != nullptr);
+
+	if (this->get_commodity() != nullptr && this->get_buildings().empty()) {
+		throw std::runtime_error(std::format("Resource \"{}\" has a commodity, but no buildings to produce it.", this->get_identifier()));
+	}
 }
 
 const metternich::icon *resource::get_icon() const
