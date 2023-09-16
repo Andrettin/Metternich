@@ -14,6 +14,7 @@
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/capital_condition.h"
+#include "script/condition/or_condition.h"
 #include "script/condition/resource_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
@@ -123,8 +124,17 @@ void building_type::initialize()
 			this->settlement_conditions = std::make_unique<and_condition<site>>();
 		}
 
-		for (const resource *resource : this->get_resources()) {
-			this->settlement_conditions->add_condition(std::make_unique<resource_condition>(resource));
+		if (this->get_resources().size() > 1) {
+			std::vector<std::unique_ptr<const condition<site>>> resource_conditions;
+
+			for (const resource *resource : this->get_resources()) {
+				resource_conditions.push_back(std::make_unique<resource_condition>(resource));
+			}
+
+			auto or_condition = std::make_unique<metternich::or_condition<site>>(std::move(resource_conditions));
+			this->settlement_conditions->add_condition(std::move(or_condition));
+		} else {
+			this->settlement_conditions->add_condition(std::make_unique<resource_condition>(this->get_resources().at(0)));
 		}
 
 		if (this->get_settlement_modifier() == nullptr) {
