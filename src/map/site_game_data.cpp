@@ -16,6 +16,7 @@
 #include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/settlement_type.h"
 #include "infrastructure/wonder.h"
+#include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -29,6 +30,7 @@
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
+#include "util/thread_pool.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -47,13 +49,17 @@ void site_game_data::reset_non_map_data()
 {
 	this->clear_buildings();
 	this->clear_population_units();
-	this->set_owner(nullptr);
+	this->owner = nullptr;
+	this->culture = nullptr;
+	this->religion = nullptr;
 	this->settlement_type = nullptr;
 	this->commodity_outputs.clear();
 	this->base_commodity_outputs.clear();
 	this->visiting_military_units.clear();
 
 	this->population = make_qunique<metternich::population>();
+	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::set_culture);
+	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::set_religion);
 	if (this->get_province() != nullptr) {
 		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
 	}
@@ -180,29 +186,47 @@ void site_game_data::set_owner(const country *owner)
 	}
 }
 
-const culture *site_game_data::get_culture() const
-{
-	const province *province = this->get_province();
-	if (province != nullptr) {
-		return province->get_game_data()->get_culture();
-	}
-
-	return nullptr;
-}
-
 const std::string &site_game_data::get_current_cultural_name() const
 {
 	return this->site->get_cultural_name(this->get_culture());
 }
 
-const religion *site_game_data::get_religion() const
+void site_game_data::set_culture(const metternich::culture *culture)
 {
-	const province *province = this->get_province();
-	if (province != nullptr) {
-		return province->get_game_data()->get_religion();
+	if (culture == this->get_culture()) {
+		return;
 	}
 
-	return nullptr;
+	this->culture = culture;
+
+	if (game::get()->is_running()) {
+		if (this->get_owner() != nullptr) {
+			thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+				co_await this->get_owner()->get_game_data()->create_diplomatic_map_mode_image(diplomatic_map_mode::cultural, {});
+			});
+		}
+	}
+
+	emit culture_changed();
+}
+
+void site_game_data::set_religion(const metternich::religion *religion)
+{
+	if (religion == this->get_religion()) {
+		return;
+	}
+
+	this->religion = religion;
+
+	if (game::get()->is_running()) {
+		if (this->get_owner() != nullptr) {
+			thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+				co_await this->get_owner()->get_game_data()->create_diplomatic_map_mode_image(diplomatic_map_mode::religious, {});
+			});
+		}
+	}
+
+	emit religion_changed();
 }
 
 void site_game_data::set_settlement_type(const metternich::settlement_type *settlement_type)
@@ -381,6 +405,10 @@ void site_game_data::check_free_buildings()
 
 	const country *owner = this->get_owner();
 	if (owner == nullptr) {
+		return;
+	}
+
+	if (this->get_culture() == nullptr) {
 		return;
 	}
 

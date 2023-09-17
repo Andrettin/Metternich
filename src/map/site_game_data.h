@@ -84,7 +84,12 @@ private:
 public:
 	void set_owner(const country *owner);
 
-	const culture *get_culture() const;
+	const metternich::culture *get_culture() const
+	{
+		return this->culture;
+	}
+
+	void set_culture(const metternich::culture *culture);
 
 	const std::string &get_current_cultural_name() const;
 
@@ -93,7 +98,12 @@ public:
 		return QString::fromStdString(this->get_current_cultural_name());
 	}
 
-	const religion *get_religion() const;
+	const metternich::religion *get_religion() const
+	{
+		return this->religion;
+	}
+
+	void set_religion(const metternich::religion *religion);
 
 	const metternich::settlement_type *get_settlement_type() const
 	{
@@ -217,6 +227,7 @@ signals:
 	void tile_pos_changed();
 	void owner_changed();
 	void culture_changed();
+	void religion_changed();
 	void improvement_changed();
 	void settlement_type_changed();
 	void population_units_changed();
@@ -226,6 +237,8 @@ private:
 	const metternich::site *site = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	const country *owner = nullptr;
+	const metternich::culture *culture = nullptr;
+	const metternich::religion *religion = nullptr;
 	const metternich::settlement_type *settlement_type = nullptr;
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
 	building_slot_type_map<settlement_building_slot *> building_slot_map;

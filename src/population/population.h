@@ -46,6 +46,31 @@ public:
 	QVariantList get_culture_counts_qvariant_list() const;
 	void change_culture_count(const culture *culture, const int change);
 
+	void set_main_culture(const culture *culture)
+	{
+		if (culture == this->main_culture) {
+			return;
+		}
+
+		this->main_culture = culture;
+		emit main_culture_changed(culture);
+	}
+
+	void calculate_main_culture()
+	{
+		const culture *main_culture = nullptr;
+		int best_count = 0;
+
+		for (const auto &[culture, count] : this->get_culture_counts()) {
+			if (count > best_count) {
+				main_culture = culture;
+				best_count = count;
+			}
+		}
+
+		this->set_main_culture(main_culture);
+	}
+
 	const religion_map<int> &get_religion_counts() const
 	{
 		return this->religion_counts;
@@ -53,6 +78,31 @@ public:
 
 	QVariantList get_religion_counts_qvariant_list() const;
 	void change_religion_count(const religion *religion, const int change);
+
+	void set_main_religion(const religion *religion)
+	{
+		if (religion == this->main_religion) {
+			return;
+		}
+
+		this->main_religion = religion;
+		emit main_religion_changed(religion);
+	}
+
+	void calculate_main_religion()
+	{
+		const religion *main_religion = nullptr;
+		int best_count = 0;
+
+		for (const auto &[religion, count] : this->get_religion_counts()) {
+			if (count > best_count) {
+				main_religion = religion;
+				best_count = count;
+			}
+		}
+
+		this->set_main_religion(main_religion);
+	}
 
 	const phenotype_map<int> &get_phenotype_counts() const
 	{
@@ -125,7 +175,9 @@ signals:
 	void type_counts_changed();
 	void type_count_changed(const population_type *type, const int change);
 	void culture_counts_changed();
+	void main_culture_changed(const culture *culture);
 	void religion_counts_changed();
+	void main_religion_changed(const religion *religion);
 	void phenotype_counts_changed();
 	void ideology_counts_changed();
 
@@ -133,7 +185,9 @@ private:
 	int64_t size = 0;
 	population_type_map<int> type_counts;
 	culture_map<int> culture_counts;
+	const culture *main_culture = nullptr;
 	religion_map<int> religion_counts;
+	const religion *main_religion = nullptr;
 	phenotype_map<int> phenotype_counts;
 	ideology_map<int> ideology_counts;
 	std::vector<population *> upper_populations;

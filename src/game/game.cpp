@@ -749,6 +749,21 @@ void game::apply_sites()
 				metternich::site_game_data *settlement_game_data = settlement->get_game_data();
 				const metternich::settlement_type *settlement_type = settlement_game_data->get_settlement_type();
 
+				if (site == settlement && settlement_game_data->is_built()) {
+					//set an initial culture/religion so that buildings can be applied without issues
+					if (site_history->get_culture() != nullptr) {
+						settlement_game_data->set_culture(site_history->get_culture());
+					} else {
+						settlement_game_data->set_culture(settlement_game_data->get_province()->get_game_data()->get_culture());
+					}
+
+					if (site_history->get_religion() != nullptr) {
+						settlement_game_data->set_religion(site_history->get_religion());
+					} else {
+						settlement_game_data->set_religion(settlement_game_data->get_province()->get_game_data()->get_religion());
+					}
+				}
+
 				const country *owner = settlement_game_data->get_owner();
 				country_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
 

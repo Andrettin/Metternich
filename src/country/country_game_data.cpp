@@ -1492,18 +1492,32 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image
 					color = &tile->get_terrain()->get_color();
 					break;
 				case diplomatic_map_mode::cultural: {
-					const culture *culture = tile->get_province()->get_game_data()->get_culture();
+					const culture *culture = nullptr;
+
+					if (tile->get_settlement() != nullptr && tile->get_settlement()->get_game_data()->get_culture() != nullptr) {
+						culture = tile->get_settlement()->get_game_data()->get_culture();
+					} else {
+						culture = tile->get_province()->get_game_data()->get_culture();
+					}
+
 					if (culture != nullptr) {
-						color = &tile->get_province()->get_game_data()->get_culture()->get_color();
+						color = &culture->get_color();
 					} else {
 						color = &empty_color;
 					}
 					break;
 				}
 				case diplomatic_map_mode::religious: {
-					const metternich::religion *religion = tile->get_province()->get_game_data()->get_religion();
+					const metternich::religion *religion = nullptr;
+
+					if (tile->get_settlement() != nullptr && tile->get_settlement()->get_game_data()->get_religion() != nullptr) {
+						religion = tile->get_settlement()->get_game_data()->get_religion();
+					} else {
+						religion = tile->get_province()->get_game_data()->get_religion();
+					}
+
 					if (religion != nullptr) {
-						color = &tile->get_province()->get_game_data()->get_religion()->get_color();
+						color = &religion->get_color();
 					} else {
 						color = &empty_color;
 					}

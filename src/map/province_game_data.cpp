@@ -56,7 +56,7 @@ void province_game_data::reset_non_map_data()
 {
 	this->clear_population_units();
 	this->clear_military_units();
-	this->set_owner(nullptr);
+	this->owner = nullptr;
 	this->culture = nullptr;
 	this->religion = nullptr;
 	this->settlement_count = 0;
@@ -68,6 +68,8 @@ void province_game_data::reset_non_map_data()
 	this->commodity_bonuses_for_tile_thresholds.clear();
 
 	this->population = make_qunique<metternich::population>();
+	connect(this->get_population(), &population::main_culture_changed, this, &province_game_data::set_culture);
+	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::set_religion);
 }
 
 void province_game_data::on_map_created()
@@ -194,14 +196,9 @@ void province_game_data::set_culture(const metternich::culture *culture)
 
 	emit culture_changed();
 
-	if (this->province->get_capital_settlement() != nullptr) {
-		emit this->province->get_capital_settlement()->get_game_data()->culture_changed();
-	}
-
-	for (const QPoint &tile_pos : this->tiles) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-		if (tile->get_site() != nullptr && tile->get_site() != this->province->get_capital_settlement()) {
-			emit tile->get_site()->get_game_data()->culture_changed();
+	for (const site *site : this->sites) {
+		if (!site->is_settlement()) {
+			site->get_game_data()->set_culture(culture);
 		}
 	}
 }

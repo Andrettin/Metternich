@@ -80,6 +80,8 @@ void population::change_culture_count(const culture *culture, const int change)
 		upper_population->change_culture_count(culture, change);
 	}
 
+	this->calculate_main_culture();
+
 	if (game::get()->is_running()) {
 		emit culture_counts_changed();
 	}
