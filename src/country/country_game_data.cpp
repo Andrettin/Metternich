@@ -41,6 +41,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/phenotype.h"
+#include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
@@ -76,6 +77,8 @@ namespace metternich {
 country_game_data::country_game_data(metternich::country *country) : country(country)
 {
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
+
+	this->population = make_qunique<metternich::population>();
 }
 
 country_game_data::~country_game_data()
@@ -1598,14 +1601,8 @@ void country_game_data::change_score(const int change)
 
 void country_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
 {
-	this->change_population_type_count(population_unit->get_type(), 1);
-	this->change_population_culture_count(population_unit->get_culture(), 1);
-	this->change_population_religion_count(population_unit->get_religion(), 1);
-	this->change_population_phenotype_count(population_unit->get_phenotype(), 1);
-	if (population_unit->get_ideology() != nullptr) {
-		this->change_population_ideology_count(population_unit->get_ideology(), 1);
-	}
-	this->change_population(defines::get()->get_population_per_unit());
+	this->get_population()->on_population_unit_gained(population_unit.get());
+	this->on_population_type_count_changed(population_unit->get_type(), 1);
 
 	this->population_units.push_back(std::move(population_unit));
 
@@ -1621,14 +1618,9 @@ qunique_ptr<population_unit> country_game_data::pop_population_unit(population_u
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
 			this->population_units.erase(this->population_units.begin() + i);
 
-			this->change_population_type_count(population_unit->get_type(), -1);
-			this->change_population_culture_count(population_unit->get_culture(), -1);
-			this->change_population_religion_count(population_unit->get_religion(), -1);
-			this->change_population_phenotype_count(population_unit->get_phenotype(), -1);
-			if (population_unit->get_ideology() != nullptr) {
-				this->change_population_ideology_count(population_unit->get_ideology(), -1);
-			}
-			this->change_population(-defines::get()->get_population_per_unit());
+			this->get_population()->on_population_unit_lost(population_unit);
+
+			this->on_population_type_count_changed(population_unit->get_type(), -1);
 
 			if (game::get()->is_running()) {
 				emit population_units_changed();
@@ -1653,144 +1645,14 @@ void country_game_data::create_population_unit(const population_type *type, cons
 	this->add_population_unit(std::move(population_unit));
 }
 
-QVariantList country_game_data::get_population_type_counts_qvariant_list() const
+void country_game_data::on_population_type_count_changed(const population_type *type, const int change)
 {
-	return archimedes::map::to_qvariant_list(this->get_population_type_counts());
-}
-
-void country_game_data::change_population_type_count(const population_type *type, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->population_type_counts[type] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->population_type_counts.erase(type);
-	}
-
-	if (game::get()->is_running()) {
-		emit population_type_counts_changed();
-	}
-
 	if (type->get_output_commodity() != nullptr) {
 		this->change_commodity_output(type->get_output_commodity(), type->get_output_value() * change);
 	}
 
 	for (const auto &[commodity, value] : type->get_consumed_commodities()) {
 		this->change_commodity_consumption(commodity, value * change);
-	}
-}
-
-QVariantList country_game_data::get_population_culture_counts_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_population_culture_counts());
-}
-
-void country_game_data::change_population_culture_count(const culture *culture, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->population_culture_counts[culture] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->population_culture_counts.erase(culture);
-	}
-
-	if (game::get()->is_running()) {
-		emit population_culture_counts_changed();
-	}
-}
-
-QVariantList country_game_data::get_population_religion_counts_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_population_religion_counts());
-}
-
-void country_game_data::change_population_religion_count(const metternich::religion *religion, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->population_religion_counts[religion] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->population_religion_counts.erase(religion);
-	}
-
-	if (game::get()->is_running()) {
-		emit population_religion_counts_changed();
-	}
-}
-
-QVariantList country_game_data::get_population_phenotype_counts_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_population_phenotype_counts());
-}
-
-void country_game_data::change_population_phenotype_count(const phenotype *phenotype, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->population_phenotype_counts[phenotype] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->population_phenotype_counts.erase(phenotype);
-	}
-
-	if (game::get()->is_running()) {
-		emit population_phenotype_counts_changed();
-	}
-}
-
-QVariantList country_game_data::get_population_ideology_counts_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_population_ideology_counts());
-}
-
-void country_game_data::change_population_ideology_count(const ideology *ideology, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->population_ideology_counts[ideology] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->population_ideology_counts.erase(ideology);
-	}
-
-	if (game::get()->is_running()) {
-		emit population_ideology_counts_changed();
-	}
-}
-
-void country_game_data::change_population(const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->population += change;
-
-	if (game::get()->is_running()) {
-		emit population_changed();
 	}
 }
 
@@ -1804,7 +1666,7 @@ void country_game_data::set_population_growth(const int growth)
 
 	this->population_growth = growth;
 
-	this->change_population(change * defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold());
+	this->get_population()->change_size(change * defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold());
 
 	if (game::get()->is_running()) {
 		emit population_growth_changed();

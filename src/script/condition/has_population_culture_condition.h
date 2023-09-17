@@ -5,6 +5,7 @@
 #include "country/culture.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "population/population.h"
 #include "script/condition/condition.h"
 
 namespace metternich {
@@ -29,7 +30,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_population_culture_counts().contains(this->culture);
+		return scope->get_game_data()->get_population()->get_culture_counts().contains(this->culture);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

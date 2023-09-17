@@ -2,9 +2,6 @@
 
 #include "country/consulate_container.h"
 #include "country/country_container.h"
-#include "country/culture_container.h"
-#include "country/ideology_container.h"
-#include "country/religion_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_class_container.h"
@@ -13,8 +10,6 @@
 #include "map/province_container.h"
 #include "map/site_container.h"
 #include "map/terrain_type_container.h"
-#include "population/phenotype_container.h"
-#include "population/population_type_container.h"
 #include "script/opinion_modifier_container.h"
 #include "technology/technology_container.h"
 #include "unit/promotion_container.h"
@@ -37,6 +32,9 @@ class journal_entry;
 class military_unit;
 class military_unit_type;
 class opinion_modifier;
+class phenotype;
+class population;
+class population_type;
 class population_unit;
 class province;
 class region;
@@ -78,12 +76,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int rank READ get_rank NOTIFY rank_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
-	Q_PROPERTY(QVariantList population_type_counts READ get_population_type_counts_qvariant_list NOTIFY population_type_counts_changed)
-	Q_PROPERTY(QVariantList population_culture_counts READ get_population_culture_counts_qvariant_list NOTIFY population_culture_counts_changed)
-	Q_PROPERTY(QVariantList population_religion_counts READ get_population_religion_counts_qvariant_list NOTIFY population_religion_counts_changed)
-	Q_PROPERTY(QVariantList population_phenotype_counts READ get_population_phenotype_counts_qvariant_list NOTIFY population_phenotype_counts_changed)
-	Q_PROPERTY(QVariantList population_ideology_counts READ get_population_ideology_counts_qvariant_list NOTIFY population_ideology_counts_changed)
-	Q_PROPERTY(int population READ get_population NOTIFY population_changed)
+	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
@@ -519,52 +512,12 @@ public:
 		return static_cast<int>(this->population_units.size());
 	}
 
-	const population_type_map<int> &get_population_type_counts() const
+	metternich::population *get_population() const
 	{
-		return this->population_type_counts;
+		return this->population.get();
 	}
 
-	QVariantList get_population_type_counts_qvariant_list() const;
-	void change_population_type_count(const population_type *type, const int change);
-
-	const culture_map<int> &get_population_culture_counts() const
-	{
-		return this->population_culture_counts;
-	}
-
-	QVariantList get_population_culture_counts_qvariant_list() const;
-	void change_population_culture_count(const culture *culture, const int change);
-
-	const religion_map<int> &get_population_religion_counts() const
-	{
-		return this->population_religion_counts;
-	}
-
-	QVariantList get_population_religion_counts_qvariant_list() const;
-	void change_population_religion_count(const religion *religion, const int change);
-
-	const phenotype_map<int> &get_population_phenotype_counts() const
-	{
-		return this->population_phenotype_counts;
-	}
-
-	QVariantList get_population_phenotype_counts_qvariant_list() const;
-	void change_population_phenotype_count(const phenotype *phenotype, const int change);
-
-	const ideology_map<int> &get_population_ideology_counts() const
-	{
-		return this->population_ideology_counts;
-	}
-
-	QVariantList get_population_ideology_counts_qvariant_list() const;
-	void change_population_ideology_count(const ideology *ideology, const int change);
-
-	int get_population() const
-	{
-		return this->population;
-	}
-
-	void change_population(const int change);
+	void on_population_type_count_changed(const population_type *type, const int change);
 
 	int get_population_growth() const
 	{
@@ -1556,12 +1509,6 @@ signals:
 	void rank_changed();
 	void score_changed();
 	void population_units_changed();
-	void population_type_counts_changed();
-	void population_culture_counts_changed();
-	void population_religion_counts_changed();
-	void population_phenotype_counts_changed();
-	void population_ideology_counts_changed();
-	void population_changed();
 	void population_growth_changed();
 	void settlement_building_counts_changed();
 	void wealth_changed();
@@ -1620,12 +1567,7 @@ private:
 	int rank = 0;
 	int score = 0;
 	std::vector<qunique_ptr<population_unit>> population_units;
-	population_type_map<int> population_type_counts;
-	culture_map<int> population_culture_counts;
-	religion_map<int> population_religion_counts;
-	phenotype_map<int> population_phenotype_counts;
-	ideology_map<int> population_ideology_counts;
-	int population = 0;
+	qunique_ptr<metternich::population> population;
 	int population_growth = 0; //population growth counter
 	std::vector<qunique_ptr<country_building_slot>> building_slots;
 	building_slot_type_map<country_building_slot *> building_slot_map;
