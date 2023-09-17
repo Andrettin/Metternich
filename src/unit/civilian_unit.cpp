@@ -11,6 +11,8 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/tile.h"
 #include "unit/civilian_unit_type.h"
 #include "ui/icon.h"
@@ -352,7 +354,7 @@ void civilian_unit::disband(const bool restore_population_unit)
 	map::get()->set_tile_civilian_unit(this->get_tile_pos(), nullptr);
 
 	if (restore_population_unit) {
-		this->get_owner()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_home_settlement());
+		this->get_home_settlement()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
 	}
 
 	this->get_owner()->get_game_data()->remove_civilian_unit(this);

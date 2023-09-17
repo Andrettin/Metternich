@@ -590,7 +590,7 @@ void military_unit::disband(const bool restore_population_unit)
 			assert_throw(this->get_phenotype() != nullptr);
 			assert_throw(this->get_home_settlement() != nullptr);
 
-			this->get_country()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_home_settlement());
+			this->get_home_settlement()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
 		}
 	}
 }

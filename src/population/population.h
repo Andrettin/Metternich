@@ -70,6 +70,48 @@ public:
 	QVariantList get_ideology_counts_qvariant_list() const;
 	void change_ideology_count(const ideology *ideology, const int change);
 
+	void add_upper_population(population *upper_population)
+	{
+		if (upper_population != nullptr) {
+			upper_population->change_from(this, 1);
+		}
+
+		this->upper_populations.push_back(upper_population);
+	}
+
+	void remove_upper_population(population *upper_population)
+	{
+		if (upper_population != nullptr) {
+			upper_population->change_from(this, -1);
+		}
+
+		std::erase(this->upper_populations, upper_population);
+	}
+
+	void change_from(population *other_population, const int change)
+	{
+		this->change_size(other_population->get_size() * change);
+
+		for (const auto &[type, count] : other_population->get_type_counts()) {
+			this->change_type_count(type, count * change);
+		}
+
+		for (const auto &[culture, count] : other_population->get_culture_counts()) {
+			this->change_culture_count(culture, count * change);
+		}
+
+		for (const auto &[religion, count] : other_population->get_religion_counts()) {
+			this->change_religion_count(religion, count * change);
+		}
+
+		for (const auto &[phenotype, count] : other_population->get_phenotype_counts()) {
+			this->change_phenotype_count(phenotype, count * change);
+		}
+
+		for (const auto &[ideology, count] : other_population->get_ideology_counts()) {
+			this->change_ideology_count(ideology, count * change);
+		}
+	}
 
 	void on_population_unit_gained(const population_unit *population_unit, const int multiplier = 1);
 
@@ -93,6 +135,7 @@ private:
 	religion_map<int> religion_counts;
 	phenotype_map<int> phenotype_counts;
 	ideology_map<int> ideology_counts;
+	std::vector<population *> upper_populations;
 };
 
 }

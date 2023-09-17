@@ -498,19 +498,18 @@ public:
 
 	void change_score(const int change);
 
-	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
-	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
-	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const site *settlement);
-
-	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
+	const std::vector<population_unit *> &get_population_units() const
 	{
 		return this->population_units;
 	}
 
 	int get_population_unit_count() const
 	{
-		return static_cast<int>(this->population_units.size());
+		return static_cast<int>(this->get_population_units().size());
 	}
+
+	void add_population_unit(population_unit *population_unit);
+	void remove_population_unit(population_unit *population_unit);
 
 	metternich::population *get_population() const
 	{
@@ -1566,7 +1565,7 @@ private:
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;
-	std::vector<qunique_ptr<population_unit>> population_units;
+	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
 	int population_growth = 0; //population growth counter
 	std::vector<qunique_ptr<country_building_slot>> building_slots;

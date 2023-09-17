@@ -20,6 +20,7 @@ class icon;
 class improvement;
 class military_unit;
 class phenotype;
+class population;
 class population_unit;
 class province;
 class religion;
@@ -44,6 +45,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
+	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 
 public:
@@ -237,6 +239,11 @@ public:
 	void remove_population_unit(population_unit *population_unit);
 	void clear_population_units();
 
+	metternich::population *get_population() const
+	{
+		return this->population.get();
+	}
+
 	const std::vector<military_unit *> &get_military_units() const
 	{
 		return this->military_units;
@@ -415,6 +422,7 @@ private:
 	int free_food_consumption = 0;
 	int score = 0;
 	std::vector<population_unit *> population_units;
+	qunique_ptr<metternich::population> population;
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;
 	int output_modifier = 0;

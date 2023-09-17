@@ -306,15 +306,15 @@ void country_game_data::do_cultural_change()
 {
 	static constexpr int cultural_derivation_chance = 1;
 
-	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
+	for (population_unit *population_unit : this->population_units) {
 		const metternich::culture *current_culture = population_unit->get_culture();
 
 		std::vector<const metternich::culture *> potential_cultures;
 
-		const read_only_context ctx(population_unit.get());
+		const read_only_context ctx(population_unit);
 
 		for (const metternich::culture *culture : current_culture->get_derived_cultures()) {
-			if (culture->get_derivation_conditions() != nullptr && !culture->get_derivation_conditions()->check(population_unit.get(), ctx)) {
+			if (culture->get_derivation_conditions() != nullptr && !culture->get_derivation_conditions()->check(population_unit, ctx)) {
 				continue;
 			}
 
@@ -1599,50 +1599,26 @@ void country_game_data::change_score(const int change)
 	emit score_changed();
 }
 
-void country_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
+void country_game_data::add_population_unit(population_unit *population_unit)
 {
-	this->get_population()->on_population_unit_gained(population_unit.get());
-	this->on_population_type_count_changed(population_unit->get_type(), 1);
+	this->population_units.push_back(population_unit);
 
-	this->population_units.push_back(std::move(population_unit));
+	this->on_population_type_count_changed(population_unit->get_type(), 1);
 
 	if (game::get()->is_running()) {
 		emit population_units_changed();
 	}
 }
 
-qunique_ptr<population_unit> country_game_data::pop_population_unit(population_unit *population_unit)
+void country_game_data::remove_population_unit(population_unit *population_unit)
 {
-	for (size_t i = 0; i < this->population_units.size();) {
-		if (this->population_units[i].get() == population_unit) {
-			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
-			this->population_units.erase(this->population_units.begin() + i);
+	std::erase(this->population_units, population_unit);
 
-			this->get_population()->on_population_unit_lost(population_unit);
+	this->on_population_type_count_changed(population_unit->get_type(), -1);
 
-			this->on_population_type_count_changed(population_unit->get_type(), -1);
-
-			if (game::get()->is_running()) {
-				emit population_units_changed();
-			}
-
-			return population_unit_unique_ptr;
-		} else {
-			++i;
-		}
+	if (game::get()->is_running()) {
+		emit population_units_changed();
 	}
-
-	assert_throw(false);
-
-	return nullptr;
-}
-
-void country_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const site *settlement)
-{
-	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, settlement);
-	settlement->get_game_data()->add_population_unit(population_unit.get());
-	settlement->get_game_data()->get_province()->get_game_data()->add_population_unit(population_unit.get());
-	this->add_population_unit(std::move(population_unit));
 }
 
 void country_game_data::on_population_type_count_changed(const population_type *type, const int change)
@@ -1679,14 +1655,14 @@ void country_game_data::grow_population()
 		throw std::runtime_error("Tried to grow population in a country which has no pre-existing population.");
 	}
 
-	const qunique_ptr<population_unit> &population_unit = vector::get_random(this->population_units);
+	const population_unit *population_unit = vector::get_random(this->population_units);
 	const metternich::culture *culture = population_unit->get_culture();
 	const metternich::religion *religion = population_unit->get_religion();
 	const phenotype *phenotype = population_unit->get_phenotype();
 	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
 	const site *settlement = population_unit->get_settlement();
 
-	this->create_population_unit(population_type, culture, religion, phenotype, settlement);
+	settlement->get_game_data()->create_population_unit(population_type, culture, religion, phenotype);
 
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
@@ -1697,9 +1673,8 @@ void country_game_data::decrease_population()
 	if (!this->population_units.empty()) {
 		this->change_population_growth(1);
 		population_unit *population_unit = this->choose_starvation_population_unit();
-		population_unit->get_settlement()->get_game_data()->remove_population_unit(population_unit);
 		population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
-		this->pop_population_unit(population_unit);
+		population_unit->get_settlement()->get_game_data()->pop_population_unit(population_unit);
 		return;
 	}
 
@@ -1742,21 +1717,22 @@ void country_game_data::decrease_population()
 
 population_unit *country_game_data::choose_starvation_population_unit()
 {
-	population_unit *best_population_unit = nullptr;
+	std::vector<population_unit *> population_units;
 
-	for (auto it = this->population_units.rbegin(); it != this->population_units.rend(); ++it) {
-		population_unit *population_unit = it->get();
-
+	for (population_unit *population_unit : this->get_population_units()) {
 		if (
-			best_population_unit == nullptr
-			|| best_population_unit->get_type()->get_output_value() < population_unit->get_type()->get_output_value()
+			population_units.empty()
+			|| population_units.at(0)->get_type()->get_output_value() > population_unit->get_type()->get_output_value()
 		) {
-			best_population_unit = population_unit;
+			population_units.clear();
+			population_units.push_back(population_unit);
+		} else if (population_units.at(0)->get_type()->get_output_value() == population_unit->get_type()->get_output_value()) {
+			population_units.push_back(population_unit);
 		}
 	}
 
-	assert_throw(best_population_unit != nullptr);
-	return best_population_unit;
+	assert_throw(!population_units.empty());
+	return vector::get_random(population_units);
 }
 
 QObject *country_game_data::get_population_type_small_icon(population_type *type) const

@@ -119,8 +119,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<discovered_province_condition>(value, condition_operator);
 		} else if (key == "discovered_region") {
 			return std::make_unique<discovered_region_condition>(value, condition_operator);
-		} else if (key == "has_population_culture") {
-			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
 		} else if (key == "owns_province") {
 			return std::make_unique<owns_province_condition>(value, condition_operator);
 		} else if (key == "owns_site") {
@@ -189,6 +187,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<has_terrain_condition<scope_type>>(value, condition_operator);
 		} else if (key == "produces_commodity") {
 			return std::make_unique<produces_commodity_condition<scope_type>>(value, condition_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
+		if (key == "has_population_culture") {
+			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

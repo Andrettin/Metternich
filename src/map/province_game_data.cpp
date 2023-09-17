@@ -21,6 +21,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
+#include "population/population.h"
 #include "population/population_unit.h"
 #include "script/context.h"
 #include "script/modifier.h"
@@ -65,6 +66,8 @@ void province_game_data::reset_non_map_data()
 	this->commodity_output_modifiers.clear();
 	this->commodity_bonuses_per_improved_resources.clear();
 	this->commodity_bonuses_for_tile_thresholds.clear();
+
+	this->population = make_qunique<metternich::population>();
 }
 
 void province_game_data::on_map_created()
@@ -140,27 +143,16 @@ void province_game_data::set_owner(const country *country)
 		this->owner->get_game_data()->add_province(this->province);
 	}
 
-	for (population_unit *population_unit : this->population_units) {
-		assert_throw(old_owner != nullptr);
-
-		qunique_ptr<metternich::population_unit> unique_ptr = old_owner->get_game_data()->pop_population_unit(population_unit);
-
-		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_game_data()->add_population_unit(std::move(unique_ptr));
-		}
-	}
-
 	if (this->get_owner() == nullptr) {
-		this->clear_population_units();
-
-		for (const site *site : this->get_settlement_sites()) {
-			site->get_game_data()->clear_population_units();
+		//remove population if this province becomes unowned
+		for (population_unit *population_unit : this->population_units) {
+			population_unit->get_settlement()->get_game_data()->pop_population_unit(population_unit);
 		}
 	}
 
 	for (const site *site : this->sites) {
 		if (site->get_game_data()->get_owner() == old_owner) {
-			site->get_game_data()->set_owner(owner);
+			site->get_game_data()->set_owner(country);
 		}
 	}
 

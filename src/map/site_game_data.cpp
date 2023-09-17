@@ -21,6 +21,7 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/tile.h"
+#include "population/population.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
@@ -38,6 +39,8 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	if (site->is_settlement()) {
 		this->initialize_building_slots();
 	}
+
+	this->reset_non_map_data();
 }
 
 void site_game_data::reset_non_map_data()
@@ -49,6 +52,11 @@ void site_game_data::reset_non_map_data()
 	this->commodity_outputs.clear();
 	this->base_commodity_outputs.clear();
 	this->visiting_military_units.clear();
+
+	this->population = make_qunique<metternich::population>();
+	if (this->get_province() != nullptr) {
+		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
+	}
 }
 
 void site_game_data::do_turn()
@@ -83,21 +91,15 @@ void site_game_data::set_tile_pos(const QPoint &tile_pos)
 		return;
 	}
 
-	const province *old_province = this->get_province();
+	if (this->get_province() != nullptr) {
+		this->get_population()->remove_upper_population(this->get_province()->get_game_data()->get_population());
+	}
 
 	this->tile_pos = tile_pos;
 	emit tile_pos_changed();
 
-	const province *province = this->get_province();
-
-	if (old_province != province) {
-		if (old_province != nullptr) {
-			disconnect(old_province->get_game_data(), &province_game_data::owner_changed, this, &site_game_data::owner_changed);
-		}
-
-		if (province != nullptr) {
-			connect(province->get_game_data(), &province_game_data::owner_changed, this, &site_game_data::owner_changed);
-		}
+	if (this->get_province() != nullptr) {
+		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
 	}
 }
 
@@ -146,7 +148,19 @@ void site_game_data::set_owner(const country *owner)
 
 	const country *old_owner = this->get_owner();
 
+	if (old_owner != nullptr) {
+		this->population->remove_upper_population(old_owner->get_game_data()->get_population());
+	}
+
 	this->owner = owner;
+
+	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
+		population_unit->set_country(owner);
+	}
+
+	if (this->get_owner() != nullptr) {
+		this->population->add_upper_population(this->get_owner()->get_game_data()->get_population());
+	}
 
 	if (this->site->is_settlement() && this->is_built()) {
 		if (old_owner != nullptr) {
@@ -490,27 +504,61 @@ void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier
 	}
 }
 
-void site_game_data::add_population_unit(population_unit *population_unit)
+void site_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
 {
-	this->population_units.push_back(population_unit);
+	this->get_population()->on_population_unit_gained(population_unit.get());
+
+	this->population_units.push_back(std::move(population_unit));
 
 	if (game::get()->is_running()) {
 		emit population_units_changed();
 	}
 }
 
-void site_game_data::remove_population_unit(population_unit *population_unit)
+qunique_ptr<population_unit> site_game_data::pop_population_unit(population_unit *population_unit)
 {
-	std::erase(this->population_units, population_unit);
+	for (size_t i = 0; i < this->population_units.size();) {
+		if (this->population_units[i].get() == population_unit) {
+			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
+			this->population_units.erase(this->population_units.begin() + i);
 
-	if (game::get()->is_running()) {
-		emit population_units_changed();
+			population_unit->set_settlement(nullptr);
+
+			this->get_population()->on_population_unit_lost(population_unit);
+
+			if (game::get()->is_running()) {
+				emit population_units_changed();
+			}
+
+			return population_unit_unique_ptr;
+		} else {
+			++i;
+		}
 	}
+
+	assert_throw(false);
+
+	return nullptr;
 }
 
 void site_game_data::clear_population_units()
 {
 	this->population_units.clear();
+}
+
+void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype)
+{
+	assert_throw(this->site->is_settlement());
+
+	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, this->site);
+	this->get_province()->get_game_data()->add_population_unit(population_unit.get());
+
+	const country *owner = this->get_owner();
+	if (owner != nullptr) {
+		owner->get_game_data()->add_population_unit(population_unit.get());
+	}
+
+	this->add_population_unit(std::move(population_unit));
 }
 
 void site_game_data::change_base_commodity_output(const commodity *commodity, const int change)

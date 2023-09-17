@@ -86,10 +86,8 @@ void map_generator::generate()
 			const religion *religion = country->get_default_religion();
 			const population_type *population_type = culture->get_population_class_type(population_class);
 
-			country_game_data *country_game_data = country->get_game_data();
-
 			for (int i = 0; i < population_unit_count; ++i) {
-				country_game_data->create_population_unit(population_type, culture, religion, culture->get_default_phenotype(), settlement);
+				settlement->get_game_data()->create_population_unit(population_type, culture, religion, culture->get_default_phenotype());
 			}
 		}
 	}

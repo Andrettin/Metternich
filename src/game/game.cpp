@@ -233,7 +233,7 @@ void game::start()
 		for (const country *country : this->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
 
-			for (const qunique_ptr<population_unit> &population_unit : country_game_data->get_population_units()) {
+			for (population_unit *population_unit : country_game_data->get_population_units()) {
 				population_unit->choose_ideology();
 			}
 
@@ -1038,8 +1038,6 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 		return 0;
 	}
 
-	country_game_data *country_game_data = country->get_game_data();
-
 	const culture *settlement_culture = settlement_history->get_culture();
 	const culture *province_culture = province_history->get_culture();
 
@@ -1101,7 +1099,7 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 				const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
 
 				for (int i = 0; i < literate_population_unit_count; ++i) {
-					country_game_data->create_population_unit(literate_population_type, culture, religion, phenotype, settlement);
+					settlement_game_data->create_population_unit(literate_population_type, culture, religion, phenotype);
 				}
 			}
 
@@ -1112,7 +1110,7 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 	assert_throw(population_type != nullptr);
 
 	for (int i = 0; i < population_unit_count; ++i) {
-		country_game_data->create_population_unit(population_type, culture, religion, phenotype, settlement);
+		settlement_game_data->create_population_unit(population_type, culture, religion, phenotype);
 	}
 
 	int64_t remaining_population = population % defines::get()->get_population_per_unit();

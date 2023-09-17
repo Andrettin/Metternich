@@ -18,6 +18,10 @@ void population::change_size(const int64_t change)
 
 	this->size += change;
 
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_size(change);
+	}
+
 	if (game::get()->is_running()) {
 		emit size_changed();
 	}
@@ -40,6 +44,10 @@ void population::change_type_count(const population_type *type, const int change
 
 	if (count == 0) {
 		this->type_counts.erase(type);
+	}
+
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_type_count(type, change);
 	}
 
 	if (game::get()->is_running()) {
@@ -66,6 +74,10 @@ void population::change_culture_count(const culture *culture, const int change)
 		this->culture_counts.erase(culture);
 	}
 
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_culture_count(culture, change);
+	}
+
 	if (game::get()->is_running()) {
 		emit culture_counts_changed();
 	}
@@ -88,6 +100,10 @@ void population::change_religion_count(const metternich::religion *religion, con
 
 	if (count == 0) {
 		this->religion_counts.erase(religion);
+	}
+
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_religion_count(religion, change);
 	}
 
 	if (game::get()->is_running()) {
@@ -114,6 +130,10 @@ void population::change_phenotype_count(const phenotype *phenotype, const int ch
 		this->phenotype_counts.erase(phenotype);
 	}
 
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_phenotype_count(phenotype, change);
+	}
+
 	if (game::get()->is_running()) {
 		emit phenotype_counts_changed();
 	}
@@ -136,6 +156,10 @@ void population::change_ideology_count(const ideology *ideology, const int chang
 
 	if (count == 0) {
 		this->ideology_counts.erase(ideology);
+	}
+
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_ideology_count(ideology, change);
 	}
 
 	if (game::get()->is_running()) {

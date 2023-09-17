@@ -39,7 +39,7 @@ public:
 	{
 		for (const auto &population_unit : upper_scope->get_game_data()->get_population_units()) {
 			metternich::population_unit *population_unit_ptr = nullptr;
-			if constexpr (std::is_same_v<upper_scope_type, const country>) {
+			if constexpr (std::is_same_v<upper_scope_type, const site>) {
 				population_unit_ptr = population_unit.get();
 			} else {
 				population_unit_ptr = population_unit;

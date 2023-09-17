@@ -2,6 +2,7 @@
 
 #include "economy/commodity_container.h"
 #include "infrastructure/building_slot_type_container.h"
+#include "util/qunique_ptr.h"
 
 namespace metternich {
 
@@ -9,6 +10,9 @@ class country;
 class culture;
 class improvement;
 class military_unit;
+class phenotype;
+class population;
+class population_type;
 class population_unit;
 class province;
 class religion;
@@ -29,6 +33,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(metternich::settlement_type* settlement_type READ get_settlement_type_unconst NOTIFY settlement_type_changed)
 	Q_PROPERTY(metternich::improvement* improvement READ get_improvement_unconst NOTIFY improvement_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
+	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 
 public:
@@ -150,14 +155,20 @@ public:
 	void on_building_gained(const building_type *building, const int multiplier);
 	void on_wonder_gained(const wonder *wonder, const int multiplier);
 
-	const std::vector<population_unit *> &get_population_units() const
+	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
 	{
 		return this->population_units;
 	}
 
-	void add_population_unit(population_unit *population_unit);
-	void remove_population_unit(population_unit *population_unit);
+	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
+	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
 	void clear_population_units();
+	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype);
+
+	metternich::population *get_population() const
+	{
+		return this->population.get();
+	}
 
 	void change_base_commodity_output(const commodity *commodity, const int change);
 
@@ -218,7 +229,8 @@ private:
 	const metternich::settlement_type *settlement_type = nullptr;
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
 	building_slot_type_map<settlement_building_slot *> building_slot_map;
-	std::vector<population_unit *> population_units;
+	std::vector<qunique_ptr<population_unit>> population_units;
+	qunique_ptr<metternich::population> population;
 	commodity_map<int> base_commodity_outputs;
 	commodity_map<int> commodity_outputs;
 	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site
