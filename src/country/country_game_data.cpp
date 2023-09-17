@@ -79,6 +79,7 @@ country_game_data::country_game_data(metternich::country *country) : country(cou
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 
 	this->population = make_qunique<metternich::population>();
+	connect(this->get_population(), &population::type_count_changed, this, &country_game_data::on_population_type_count_changed);
 }
 
 country_game_data::~country_game_data()
@@ -1603,8 +1604,6 @@ void country_game_data::add_population_unit(population_unit *population_unit)
 {
 	this->population_units.push_back(population_unit);
 
-	this->on_population_type_count_changed(population_unit->get_type(), 1);
-
 	if (game::get()->is_running()) {
 		emit population_units_changed();
 	}
@@ -1613,8 +1612,6 @@ void country_game_data::add_population_unit(population_unit *population_unit)
 void country_game_data::remove_population_unit(population_unit *population_unit)
 {
 	std::erase(this->population_units, population_unit);
-
-	this->on_population_type_count_changed(population_unit->get_type(), -1);
 
 	if (game::get()->is_running()) {
 		emit population_units_changed();

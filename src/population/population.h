@@ -123,6 +123,7 @@ public:
 signals:
 	void size_changed();
 	void type_counts_changed();
+	void type_count_changed(const population_type *type, const int change);
 	void culture_counts_changed();
 	void religion_counts_changed();
 	void phenotype_counts_changed();

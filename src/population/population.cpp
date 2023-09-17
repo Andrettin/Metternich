@@ -50,6 +50,8 @@ void population::change_type_count(const population_type *type, const int change
 		upper_population->change_type_count(type, change);
 	}
 
+	emit type_count_changed(type, change);
+
 	if (game::get()->is_running()) {
 		emit type_counts_changed();
 	}

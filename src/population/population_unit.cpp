@@ -47,12 +47,10 @@ void population_unit::set_type(const population_type *type)
 	}
 
 	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), -1);
-	this->get_country()->get_game_data()->on_population_type_count_changed(this->get_type(), -1);
 
 	this->type = type;
 
 	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), 1);
-	this->get_country()->get_game_data()->on_population_type_count_changed(this->get_type(), 1);
 
 	emit type_changed();
 }
