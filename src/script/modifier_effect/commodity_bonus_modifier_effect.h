@@ -40,7 +40,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value * 10;
+		return this->value;
 	}
 
 private:

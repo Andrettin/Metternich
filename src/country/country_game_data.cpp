@@ -789,6 +789,8 @@ void country_game_data::on_province_gained(const province *province, const int m
 				this->change_settlement_building_count(building, 1 * multiplier);
 			}
 		}
+
+		this->change_score(settlement->get_game_data()->get_score());
 	}
 
 	for (const auto &[commodity, resource_map] : this->commodity_bonuses_per_improved_resources) {

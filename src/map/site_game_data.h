@@ -37,6 +37,8 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 
 public:
+	static constexpr int base_settlement_score = 10;
+
 	explicit site_game_data(const metternich::site *site);
 
 	void reset_non_map_data();
@@ -165,6 +167,13 @@ public:
 	void on_building_gained(const building_type *building, const int multiplier);
 	void on_wonder_gained(const wonder *wonder, const int multiplier);
 
+	int get_score() const
+	{
+		return this->score;
+	}
+
+	void change_score(const int change);
+
 	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
 	{
 		return this->population_units;
@@ -242,6 +251,7 @@ private:
 	const metternich::settlement_type *settlement_type = nullptr;
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
 	building_slot_type_map<settlement_building_slot *> building_slot_map;
+	int score = 0;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
 	commodity_map<int> base_commodity_outputs;

@@ -53,6 +53,7 @@ void site_game_data::reset_non_map_data()
 	this->culture = nullptr;
 	this->religion = nullptr;
 	this->settlement_type = nullptr;
+	this->score = this->site->is_settlement() ? site_game_data::base_settlement_score : 0;
 	this->commodity_outputs.clear();
 	this->base_commodity_outputs.clear();
 	this->visiting_military_units.clear();
@@ -500,7 +501,7 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	assert_throw(multiplier != 0);
 	assert_throw(this->get_province() != nullptr);
 
-	this->get_province()->get_game_data()->change_score(building->get_score() * multiplier);
+	this->change_score(building->get_score() * multiplier);
 
 	if (this->get_owner() != nullptr) {
 		country_game_data *country_game_data = this->get_owner()->get_game_data();
@@ -529,6 +530,19 @@ void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier
 
 	if (wonder->get_province_modifier() != nullptr) {
 		wonder->get_province_modifier()->apply(this->get_province(), multiplier);
+	}
+}
+
+void site_game_data::change_score(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->score += change;
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_score(change);
 	}
 }
 
