@@ -59,6 +59,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
 	Q_PROPERTY(QString vassalage_type_name READ get_vassalage_type_name_qstring NOTIFY vassalage_type_name_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
+	Q_PROPERTY(metternich::site* capital READ get_capital_unconst NOTIFY capital_changed)
 	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
 	Q_PROPERTY(bool anarchy READ is_under_anarchy NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
@@ -208,6 +209,14 @@ public:
 		return this->capital;
 	}
 
+private:
+	//for the Qt property (pointers there can't be const)
+	site *get_capital_unconst() const
+	{
+		return const_cast<site *>(this->get_capital());
+	}
+
+public:
 	void set_capital(const site *capital);
 	void choose_capital();
 
