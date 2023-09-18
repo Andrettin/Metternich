@@ -462,6 +462,18 @@ void game::apply_history(const metternich::scenario *scenario)
 		this->apply_population_history();
 
 		for (const province *province : map::get()->get_provinces()) {
+			if (province->is_water_zone()) {
+				continue;
+			}
+
+			province->get_game_data()->choose_provincial_capital();
+		}
+
+		for (const country *country : this->get_countries()) {
+			country->get_game_data()->choose_capital();
+		}
+
+		for (const province *province : map::get()->get_provinces()) {
 			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
 				site_game_data *settlement_game_data = settlement->get_game_data();
 				if (settlement_game_data->is_built()) {

@@ -248,12 +248,12 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_game_data()->change_settlement_count(1);
 
-			if (this->get_owner()->get_default_capital() == this->site || this->get_owner()->get_game_data()->get_capital() == nullptr) {
+			if (this->get_owner()->get_game_data()->get_capital() == nullptr) {
 				this->get_owner()->get_game_data()->set_capital(this->site);
 			}
 		}
 
-		if ((this->get_province()->get_default_provincial_capital() == this->site && !this->get_province()->get_game_data()->is_capital()) || this->get_province()->get_game_data()->get_provincial_capital() == nullptr) {
+		if (this->get_province()->get_game_data()->get_provincial_capital() == nullptr) {
 			this->get_province()->get_game_data()->set_provincial_capital(this->site);
 		}
 	} else if (old_settlement_type != nullptr && this->get_settlement_type() == nullptr) {

@@ -671,10 +671,8 @@ void country_game_data::add_province(const province *province)
 		}
 	}
 
-	if (this->country->get_default_capital()->get_game_data()->get_province() == province && this->country->get_default_capital()->get_game_data()->is_built()) {
-		this->set_capital(this->country->get_default_capital());
-	} else if (this->get_capital() == nullptr && province->get_game_data()->get_provincial_capital() != nullptr && province->get_game_data()->get_provincial_capital()->get_game_data()->is_built()) {
-		this->set_capital(province->get_game_data()->get_provincial_capital());
+	if (this->get_capital() == nullptr) {
+		this->choose_capital();
 	}
 
 	if (game::get()->is_running()) {
@@ -840,6 +838,11 @@ void country_game_data::set_capital(const site *capital)
 
 void country_game_data::choose_capital()
 {
+	if (this->country->get_default_capital()->get_game_data()->get_owner() == this->country && this->country->get_default_capital()->get_game_data()->is_built()) {
+		this->set_capital(this->country->get_default_capital());
+		return;
+	}
+
 	const site *best_capital = nullptr;
 
 	for (const metternich::province *province : this->get_provinces()) {
