@@ -61,6 +61,7 @@ void province_game_data::reset_non_map_data()
 	this->culture = nullptr;
 	this->religion = nullptr;
 	this->settlement_count = 0;
+	this->provincial_capital = nullptr;
 	this->free_food_consumption = province_game_data::base_free_food_consumption;
 	this->score = province::base_score;
 	this->output_modifier = 0;
