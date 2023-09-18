@@ -83,6 +83,14 @@ private:
 public:
 	void set_owner(const country *country);
 
+	const site *get_provincial_capital() const
+	{
+		return this->provincial_capital;
+	}
+
+	void set_provincial_capital(const site *provincial_capital);
+	void choose_provincial_capital();
+
 	bool is_capital() const;
 
 	const metternich::culture *get_culture() const
@@ -392,6 +400,7 @@ public:
 
 signals:
 	void owner_changed();
+	void provincial_capital_changed();
 	void culture_changed();
 	void religion_changed();
 	void territory_changed();
@@ -416,6 +425,7 @@ private:
 	std::vector<const site *> sites;
 	std::vector<const site *> settlement_sites; //includes all settlements, even if unbuilt
 	int settlement_count = 0; //only includes built settlements
+	const site *provincial_capital = nullptr;
 	resource_map<int> resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
 	scripted_province_modifier_map<int> scripted_modifiers;

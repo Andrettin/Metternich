@@ -830,8 +830,8 @@ void map_generator::generate_sites()
 		const QPoint &province_seed = this->province_seeds[province_index];
 
 		//place capital settlement
-		if (province->get_capital_settlement() != nullptr) {
-			map->set_tile_site(province_seed, province->get_capital_settlement());
+		if (province->get_default_provincial_capital() != nullptr) {
+			map->set_tile_site(province_seed, province->get_default_provincial_capital());
 
 			//change non-flatlands or forested terrain to unforested flatlands for settlements
 			const terrain_type *tile_terrain = map->get_tile(province_seed)->get_terrain();

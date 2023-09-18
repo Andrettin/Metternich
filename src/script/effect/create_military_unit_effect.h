@@ -33,12 +33,11 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const province *province = nullptr;
 		if (scope->get_game_data()->is_under_anarchy()) {
-			province = scope->get_game_data()->get_provinces().at(0);
-		} else {
-			province = scope->get_game_data()->get_capital_province();
+			return;
 		}
+
+		const province *province = scope->get_game_data()->get_capital_province();
 
 		assert_throw(province != nullptr);
 		assert_throw(province->get_game_data()->is_on_map());
@@ -49,7 +48,7 @@ public:
 		const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
 		assert_throw(population_type != nullptr);
 
-		auto military_unit = make_qunique<metternich::military_unit>(this->type, scope, population_type, culture, scope->get_game_data()->get_religion(), culture->get_default_phenotype(), province->get_capital_settlement());
+		auto military_unit = make_qunique<metternich::military_unit>(this->type, scope, population_type, culture, scope->get_game_data()->get_religion(), culture->get_default_phenotype(), scope->get_game_data()->get_capital());
 		military_unit->set_province(province);
 
 		scope->get_game_data()->add_military_unit(std::move(military_unit));

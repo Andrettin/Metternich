@@ -26,7 +26,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_PROPERTY(bool bay MEMBER bay READ is_bay NOTIFY changed)
 	Q_PROPERTY(bool lake MEMBER lake READ is_lake NOTIFY changed)
 	Q_PROPERTY(bool water_zone READ is_water_zone NOTIFY changed)
-	Q_PROPERTY(metternich::site* capital_settlement MEMBER capital_settlement NOTIFY changed)
+	Q_PROPERTY(metternich::site* default_provincial_capital MEMBER default_provincial_capital NOTIFY changed)
 	Q_PROPERTY(std::vector<metternich::region *> regions READ get_regions NOTIFY changed)
 	Q_PROPERTY(metternich::province_game_data* game_data READ get_game_data NOTIFY changed)
 
@@ -130,9 +130,9 @@ public:
 		return this->is_sea() || this->is_bay() || this->is_lake();
 	}
 
-	const site *get_capital_settlement() const
+	const site *get_default_provincial_capital() const
 	{
-		return this->capital_settlement;
+		return this->default_provincial_capital;
 	}
 
 	const std::string &get_cultural_name(const culture *culture) const;
@@ -180,7 +180,7 @@ private:
 	bool sea = false;
 	bool bay = false;
 	bool lake = false;
-	site *capital_settlement = nullptr;
+	site *default_provincial_capital = nullptr;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	std::vector<region *> regions; //regions where this province is located

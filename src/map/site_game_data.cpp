@@ -135,7 +135,7 @@ bool site_game_data::is_provincial_capital() const
 		return false;
 	}
 
-	return this->get_province()->get_capital_settlement() == this->site;
+	return this->get_province()->get_game_data()->get_provincial_capital() == this->site;
 }
 
 bool site_game_data::is_capital() const
@@ -252,6 +252,10 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 				this->get_owner()->get_game_data()->set_capital(this->site);
 			}
 		}
+
+		if ((this->get_province()->get_default_provincial_capital() == this->site && !this->get_province()->get_game_data()->is_capital()) || this->get_province()->get_game_data()->get_provincial_capital() == nullptr) {
+			this->get_province()->get_game_data()->set_provincial_capital(this->site);
+		}
 	} else if (old_settlement_type != nullptr && this->get_settlement_type() == nullptr) {
 		this->get_province()->get_game_data()->change_settlement_count(-1);
 
@@ -261,6 +265,10 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 			if (this->get_owner()->get_game_data()->get_capital() == this->site) {
 				this->get_owner()->get_game_data()->choose_capital();
 			}
+		}
+
+		if (this->get_province()->get_game_data()->get_provincial_capital() == this->site) {
+			this->get_province()->get_game_data()->choose_provincial_capital();
 		}
 	}
 

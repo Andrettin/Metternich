@@ -69,10 +69,6 @@ void country::check() const
 		throw std::runtime_error(std::format("The default capital for country \"{}\" is not a settlement.", this->get_identifier()));
 	}
 
-	if (this->get_default_capital()->get_province()->get_capital_settlement() != this->get_default_capital()) {
-		throw std::runtime_error(std::format("The default capital for country \"{}\" is not a provincial capital.", this->get_identifier()));
-	}
-
 	assert_throw(this->get_color().isValid());
 }
 

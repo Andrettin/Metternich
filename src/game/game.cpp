@@ -536,7 +536,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const metternich::site *home_settlement = historical_civilian_unit->get_home_settlement();
 			if (home_settlement == nullptr) {
-				if (site->get_game_data()->get_owner() == owner) {
+				if (site->get_game_data()->get_owner() == owner && site->is_settlement() && site->get_game_data()->is_built()) {
 					home_settlement = site;
 				} else if (!owner->get_game_data()->is_under_anarchy()) {
 					home_settlement = owner->get_game_data()->get_capital();
@@ -612,8 +612,8 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const site *home_settlement = historical_military_unit->get_home_settlement();
 			if (home_settlement == nullptr) {
-				if (province->get_game_data()->get_owner() == country) {
-					home_settlement = province->get_capital_settlement();
+				if (province->get_game_data()->get_owner() == country && province->get_game_data()->get_provincial_capital() != nullptr) {
+					home_settlement = province->get_game_data()->get_provincial_capital();
 				} else if (!country->get_game_data()->is_under_anarchy()) {
 					home_settlement = country->get_game_data()->get_capital();
 				} else {
@@ -746,7 +746,7 @@ void game::apply_sites()
 
 			//apply site buildings
 			if (site_province != nullptr && site_province->get_game_data()->is_on_map()) {
-				const metternich::site *settlement = site->is_settlement() && tile != nullptr ? site : site_province->get_capital_settlement();
+				const metternich::site *settlement = site->is_settlement() && tile != nullptr ? site : site_province->get_game_data()->get_provincial_capital();
 				assert_throw(settlement != nullptr);
 				metternich::site_game_data *settlement_game_data = settlement->get_game_data();
 				const metternich::settlement_type *settlement_type = settlement_game_data->get_settlement_type();

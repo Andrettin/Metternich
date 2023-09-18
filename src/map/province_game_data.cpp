@@ -15,6 +15,7 @@
 #include "game/game.h"
 #include "game/province_event.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/settlement_type.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -76,8 +77,8 @@ void province_game_data::on_map_created()
 {
 	this->calculate_territory_rect_center();
 
-	if (this->province->get_capital_settlement() != nullptr && this->province->get_capital_settlement()->get_game_data()->get_province() == this->province) {
-		this->center_tile_pos = this->province->get_capital_settlement()->get_game_data()->get_tile_pos();
+	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_game_data()->get_province() == this->province) {
+		this->center_tile_pos = this->province->get_default_provincial_capital()->get_game_data()->get_tile_pos();
 	} else {
 		this->center_tile_pos = this->territory_rect_center;
 	}
@@ -167,6 +168,55 @@ void province_game_data::set_owner(const country *country)
 
 		emit owner_changed();
 	}
+}
+
+void province_game_data::set_provincial_capital(const site *provincial_capital)
+{
+	if (provincial_capital == this->get_provincial_capital()) {
+		return;
+	}
+
+	if (provincial_capital != nullptr) {
+		assert_throw(provincial_capital->is_settlement());
+		assert_throw(provincial_capital->get_game_data()->get_province() == this->province);
+		assert_throw(provincial_capital->get_game_data()->is_built());
+	}
+
+	this->provincial_capital = provincial_capital;
+
+	if (provincial_capital != nullptr) {
+		this->center_tile_pos = provincial_capital->get_game_data()->get_tile_pos();
+	}
+
+	emit provincial_capital_changed();
+}
+
+void province_game_data::choose_provincial_capital()
+{
+	if (this->province->get_default_provincial_capital()->get_game_data()->is_built()) {
+		this->set_provincial_capital(this->province->get_default_provincial_capital());
+		return;
+	}
+
+	const site *best_provincial_capital = nullptr;
+
+	for (const site *settlement : this->get_settlement_sites()) {
+		const site_game_data *settlement_game_data = settlement->get_game_data();
+
+		if (!settlement_game_data->is_built()) {
+			continue;
+		}
+
+		if (best_provincial_capital != nullptr) {
+			if (best_provincial_capital->get_game_data()->get_settlement_type()->get_free_resource_building_level() >= settlement_game_data->get_settlement_type()->get_free_resource_building_level()) {
+				continue;
+			}
+		}
+
+		best_provincial_capital = settlement;
+	}
+
+	this->set_provincial_capital(best_provincial_capital);
 }
 
 bool province_game_data::is_capital() const
