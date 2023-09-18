@@ -673,7 +673,7 @@ void country_game_data::add_province(const province *province)
 
 	if (this->country->get_default_capital()->get_game_data()->get_province() == province && this->country->get_default_capital()->get_game_data()->is_built()) {
 		this->set_capital(this->country->get_default_capital());
-	} else if (this->get_capital() == nullptr && province->get_game_data()->get_provincial_capital()->get_game_data()->is_built()) {
+	} else if (this->get_capital() == nullptr && province->get_game_data()->get_provincial_capital() != nullptr && province->get_game_data()->get_provincial_capital()->get_game_data()->is_built()) {
 		this->set_capital(province->get_game_data()->get_provincial_capital());
 	}
 
