@@ -476,7 +476,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const country *country = character_history->get_country();
 
-			if ((character->is_advisor() || character->is_leader()) && country != nullptr) {
+			if ((character->is_advisor() || character->is_leader()) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
 				country_game_data *country_game_data = country->get_game_data();
 				const technology *obsolescence_technology = character->get_obsolescence_technology();
 
@@ -489,8 +489,8 @@ void game::apply_history(const metternich::scenario *scenario)
 						}
 					} else if (character->is_leader()) {
 						const province *deployment_province = character_history->get_deployment_province();
-						if (deployment_province == nullptr) {
-							country->get_capital_province();
+						if (deployment_province == nullptr && country_game_data->get_capital_province() != nullptr) {
+							deployment_province = country_game_data->get_capital_province();
 						}
 
 						assert_throw(deployment_province != nullptr);
@@ -539,7 +539,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				if (site->get_game_data()->get_owner() == owner) {
 					home_settlement = site;
 				} else if (!owner->get_game_data()->is_under_anarchy()) {
-					home_settlement = owner->get_capital_settlement();
+					home_settlement = owner->get_game_data()->get_capital();
 				} else {
 					continue;
 				}
@@ -615,7 +615,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				if (province->get_game_data()->get_owner() == country) {
 					home_settlement = province->get_capital_settlement();
 				} else if (!country->get_game_data()->is_under_anarchy()) {
-					home_settlement = country->get_capital_settlement();
+					home_settlement = country->get_game_data()->get_capital();
 				} else {
 					continue;
 				}
@@ -698,14 +698,16 @@ void game::apply_sites()
 
 	//ensure country capitals always have a settlement
 	for (const country *country : this->get_countries()) {
-		const site *capital_settlement = country->get_capital_settlement();
-		site_game_data *capital_settlement_game_data = capital_settlement->get_game_data();
+		const site *capital = country->get_game_data()->get_capital();
 
-		if (capital_settlement_game_data->is_built()) {
+		if (capital == nullptr) {
 			continue;
 		}
 
-		if (capital_settlement_game_data->get_owner() != country) {
+		site_game_data *capital_game_data = capital->get_game_data();
+		assert_throw(capital_game_data->get_owner() == country);
+
+		if (capital_game_data->is_built()) {
 			continue;
 		}
 
@@ -715,11 +717,11 @@ void game::apply_sites()
 				continue;
 			}
 
-			if (settlement_type->get_conditions() != nullptr && !settlement_type->get_conditions()->check(capital_settlement, read_only_context(capital_settlement))) {
+			if (settlement_type->get_conditions() != nullptr && !settlement_type->get_conditions()->check(capital, read_only_context(capital))) {
 				continue;
 			}
 
-			if (settlement_type->get_build_conditions() != nullptr && !settlement_type->get_build_conditions()->check(capital_settlement, read_only_context(capital_settlement))) {
+			if (settlement_type->get_build_conditions() != nullptr && !settlement_type->get_build_conditions()->check(capital, read_only_context(capital))) {
 				continue;
 			}
 
@@ -727,7 +729,7 @@ void game::apply_sites()
 		}
 
 		assert_throw(best_settlement_type != nullptr);
-		capital_settlement_game_data->set_settlement_type(best_settlement_type);
+		capital_game_data->set_settlement_type(best_settlement_type);
 	}
 
 	for (const site *site : site::get_all()) {
@@ -959,12 +961,14 @@ void game::apply_population_history()
 	}
 
 	for (auto &[country, population_groups] : country_populations) {
-		const site *capital_settlement = country->get_capital_settlement();
-		site_game_data *capital_settlement_game_data = capital_settlement->get_game_data();
+		const site *capital = country->get_game_data()->get_capital();
 
-		if (capital_settlement_game_data->get_owner() != country) {
+		if (capital == nullptr) {
 			continue;
 		}
+
+		site_game_data *capital_game_data = capital->get_game_data();
+		assert_throw(capital_game_data->get_owner() == country);
 
 		//initialize entries for groups with less defined properties, since we might need to use them
 		population_groups[population_group_key()];
@@ -1004,7 +1008,7 @@ void game::apply_population_history()
 				continue;
 			}
 
-			const int64_t remaining_population = this->apply_historical_population_group_to_settlement(group_key, population, capital_settlement);
+			const int64_t remaining_population = this->apply_historical_population_group_to_settlement(group_key, population, capital);
 
 			//add the remaining population to broader groups
 			if (remaining_population > 0 && !group_key.is_empty()) {

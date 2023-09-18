@@ -26,7 +26,7 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* default_religion MEMBER default_religion NOTIFY changed)
-	Q_PROPERTY(metternich::province* capital_province MEMBER capital_province NOTIFY changed)
+	Q_PROPERTY(metternich::site* default_capital MEMBER default_capital NOTIFY changed)
 	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
 public:
@@ -82,12 +82,10 @@ public:
 		return this->default_religion;
 	}
 
-	const province *get_capital_province() const
+	const site *get_default_capital() const
 	{
-		return this->capital_province;
+		return this->default_capital;
 	}
-
-	const site *get_capital_settlement() const;
 
 	const std::vector<const era *> &get_eras() const
 	{
@@ -120,7 +118,7 @@ private:
 	QColor color;
 	metternich::culture *culture = nullptr;
 	religion *default_religion = nullptr;
-	province *capital_province = nullptr;
+	site *default_capital = nullptr;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	std::vector<province *> core_provinces;
 	std::vector<const character *> rulers;

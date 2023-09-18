@@ -317,6 +317,7 @@ bool character_game_data::is_deployable() const
 
 void character_game_data::deploy_to_province(const province *province)
 {
+	assert_throw(province != nullptr);
 	assert_throw(this->get_country() != nullptr);
 	assert_throw(!this->is_deployed());
 	assert_throw(this->is_deployable());

@@ -586,7 +586,7 @@ bool map_generator::generate_ocean(const region *ocean)
 
 bool map_generator::generate_country(const country *country)
 {
-	if (this->generated_provinces.contains(country->get_capital_province())) {
+	if (this->generated_provinces.contains(country->get_core_provinces().at(0))) {
 		return false;
 	}
 
@@ -597,7 +597,7 @@ bool map_generator::generate_country(const country *country)
 		potential_provinces.push_back(province);
 	}
 
-	const std::vector<const province *> provinces = this->generate_province_group(potential_provinces, max_country_provinces, country->get_capital_province());
+	const std::vector<const province *> provinces = this->generate_province_group(potential_provinces, max_country_provinces, country->get_core_provinces().at(0));
 
 	for (const province *province : provinces) {
 		this->province_owners[province] = country;

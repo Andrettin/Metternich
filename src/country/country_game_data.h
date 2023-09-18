@@ -203,6 +203,16 @@ public:
 		return static_cast<int>(this->get_provinces().size());
 	}
 
+	const site *get_capital() const
+	{
+		return this->capital;
+	}
+
+	void set_capital(const site *capital);
+	void choose_capital();
+
+	const province *get_capital_province() const;
+
 	int get_settlement_count() const
 	{
 		return this->settlement_count;
@@ -220,7 +230,10 @@ public:
 		return !this->get_provinces().empty();
 	}
 
-	bool is_under_anarchy() const;
+	bool is_under_anarchy() const
+	{
+		return this->get_capital() == nullptr;
+	}
 
 	bool is_coastal() const
 	{
@@ -1504,6 +1517,7 @@ signals:
 	void offered_diplomacy_states_changed();
 	void consulates_changed();
 	void provinces_changed();
+	void capital_changed();
 	void diplomatic_map_image_changed();
 	void rank_changed();
 	void score_changed();
@@ -1539,6 +1553,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;
+	const site *capital = nullptr;
 	int settlement_count = 0; //only includes built settlements
 	std::vector<const province *> border_provinces;
 	int coastal_province_count = 0;

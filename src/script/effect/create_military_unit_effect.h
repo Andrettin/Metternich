@@ -37,7 +37,7 @@ public:
 		if (scope->get_game_data()->is_under_anarchy()) {
 			province = scope->get_game_data()->get_provinces().at(0);
 		} else {
-			province = scope->get_capital_province();
+			province = scope->get_game_data()->get_capital_province();
 		}
 
 		assert_throw(province != nullptr);

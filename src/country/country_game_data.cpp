@@ -31,6 +31,7 @@
 #include "infrastructure/country_building_slot.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/settlement_building_slot.h"
+#include "infrastructure/settlement_type.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -670,6 +671,12 @@ void country_game_data::add_province(const province *province)
 		}
 	}
 
+	if (this->country->get_default_capital()->get_game_data()->get_province() == province && this->country->get_default_capital()->get_game_data()->is_built()) {
+		this->set_capital(this->country->get_default_capital());
+	} else if (this->get_capital() == nullptr && province->get_capital_settlement()->get_game_data()->is_built()) {
+		this->set_capital(province->get_capital_settlement());
+	}
+
 	if (game::get()->is_running()) {
 		emit provinces_changed();
 	}
@@ -678,6 +685,10 @@ void country_game_data::add_province(const province *province)
 void country_game_data::remove_province(const province *province)
 {
 	std::erase(this->provinces, province);
+
+	if (this->get_capital_province() == province) {
+		this->choose_capital();
+	}
 
 	this->on_province_gained(province, -1);
 
@@ -806,6 +817,55 @@ void country_game_data::on_province_gained(const province *province, const int m
 	}
 }
 
+void country_game_data::set_capital(const site *capital)
+{
+	if (capital == this->get_capital()) {
+		return;
+	}
+
+	if (capital != nullptr) {
+		assert_throw(capital->is_settlement());
+		assert_throw(capital->get_province()->get_game_data()->get_owner() == this->country);
+		assert_throw(capital->get_game_data()->is_built());
+	}
+
+	this->capital = capital;
+	emit capital_changed();
+}
+
+void country_game_data::choose_capital()
+{
+	const site *best_capital = nullptr;
+
+	for (const metternich::province *province : this->get_provinces()) {
+		const site *settlement = province->get_capital_settlement();
+		const site_game_data *settlement_game_data = settlement->get_game_data();
+
+		if (!settlement_game_data->is_built()) {
+			continue;
+		}
+
+		if (best_capital != nullptr) {
+			if (best_capital->get_game_data()->get_settlement_type()->get_free_resource_building_level() >= settlement_game_data->get_settlement_type()->get_free_resource_building_level()) {
+				continue;
+			}
+		}
+
+		best_capital = settlement;
+	}
+
+	this->set_capital(best_capital);
+}
+
+const province *country_game_data::get_capital_province() const
+{
+	if (this->get_capital() != nullptr) {
+		return this->get_capital()->get_game_data()->get_province();
+	}
+
+	return nullptr;
+}
+
 void country_game_data::change_settlement_count(const int change)
 {
 	if (change == 0) {
@@ -830,11 +890,6 @@ void country_game_data::change_settlement_count(const int change)
 			}
 		}
 	}
-}
-
-bool country_game_data::is_under_anarchy() const
-{
-	return this->country->get_capital_province()->get_game_data()->get_owner() != this->country;
 }
 
 void country_game_data::calculate_territory_rect()
@@ -877,7 +932,7 @@ void country_game_data::calculate_territory_rect()
 
 	this->territory_rect = territory_rect;
 
-	const QPoint &capital_pos = this->country->get_capital_province()->get_capital_settlement()->get_game_data()->get_tile_pos();
+	const QPoint &capital_pos = this->get_capital() ? this->get_capital()->get_game_data()->get_tile_pos() : this->country->get_default_capital()->get_game_data()->get_tile_pos();
 	int best_distance = std::numeric_limits<int>::max();
 	for (const QRect &contiguous_territory_rect : this->get_contiguous_territory_rects()) {
 		if (contiguous_territory_rect.contains(capital_pos)) {
@@ -943,8 +998,8 @@ void country_game_data::calculate_text_rect()
 
 	const map *map = map::get();
 
-	if (map->get_tile(center_pos)->get_owner() != this->country) {
-		center_pos = this->country->get_capital_province()->get_game_data()->get_center_tile_pos();
+	if (map->get_tile(center_pos)->get_owner() != this->country && this->get_capital() != nullptr) {
+		center_pos = this->get_capital()->get_game_data()->get_tile_pos();
 
 		if (map->get_tile(center_pos)->get_owner() != this->country) {
 			return;
@@ -2874,7 +2929,7 @@ void country_game_data::check_leaders()
 				this->change_stored_commodity(defines::get()->get_leader_commodity(), -this->get_leader_cost());
 
 				this->add_leader(this->get_next_leader());
-				this->get_next_leader()->get_game_data()->deploy_to_province(this->country->get_capital_province());
+				this->get_next_leader()->get_game_data()->deploy_to_province(this->get_capital_province());
 
 				emit leader_recruited(const_cast<character *>(this->get_next_leader()));
 

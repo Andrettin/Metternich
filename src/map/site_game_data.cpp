@@ -140,11 +140,11 @@ bool site_game_data::is_provincial_capital() const
 
 bool site_game_data::is_capital() const
 {
-	if (this->get_province() == nullptr) {
+	if (this->get_owner() == nullptr) {
 		return false;
 	}
 
-	return this->get_province()->get_game_data()->is_capital() && this->is_provincial_capital();
+	return this->get_owner()->get_game_data()->get_capital() == this->site;
 }
 
 void site_game_data::set_owner(const country *owner)
@@ -242,13 +242,25 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 
 	this->settlement_type = settlement_type;
 
-	if (this->get_owner() != nullptr) {
-		if (old_settlement_type == nullptr && this->get_settlement_type() != nullptr) {
-			this->get_province()->get_game_data()->change_settlement_count(1);
+	if (old_settlement_type == nullptr && this->get_settlement_type() != nullptr) {
+		this->get_province()->get_game_data()->change_settlement_count(1);
+
+		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_game_data()->change_settlement_count(1);
-		} else if (old_settlement_type != nullptr && this->get_settlement_type() == nullptr) {
-			this->get_province()->get_game_data()->change_settlement_count(-1);
+
+			if (this->get_owner()->get_default_capital() == this->site || this->get_owner()->get_game_data()->get_capital() == nullptr) {
+				this->get_owner()->get_game_data()->set_capital(this->site);
+			}
+		}
+	} else if (old_settlement_type != nullptr && this->get_settlement_type() == nullptr) {
+		this->get_province()->get_game_data()->change_settlement_count(-1);
+
+		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_game_data()->change_settlement_count(-1);
+
+			if (this->get_owner()->get_game_data()->get_capital() == this->site) {
+				this->get_owner()->get_game_data()->choose_capital();
+			}
 		}
 	}
 

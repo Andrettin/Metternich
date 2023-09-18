@@ -175,7 +175,7 @@ bool province_game_data::is_capital() const
 		return false;
 	}
 
-	return this->get_owner()->get_capital_province() == this->province;
+	return this->get_owner()->get_game_data()->get_capital_province() == this->province;
 }
 
 void province_game_data::set_culture(const metternich::culture *culture)

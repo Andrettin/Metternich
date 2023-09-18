@@ -7,6 +7,7 @@
 #include "country/country_type.h"
 #include "database/defines.h"
 #include "map/province.h"
+#include "map/site.h"
 #include "time/era.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
@@ -53,19 +54,26 @@ void country::initialize()
 void country::check() const
 {
 	if (this->get_culture() == nullptr) {
-		throw std::runtime_error("Country \"" + this->get_identifier() + "\" has no culture.");
+		throw std::runtime_error(std::format("Country \"{}\" has no culture.", this->get_identifier()));
 	}
 
 	if (this->get_default_religion() == nullptr) {
-		throw std::runtime_error("Country \"" + this->get_identifier() + "\" has no default religion.");
+		throw std::runtime_error(std::format("Country \"{}\" has no default religion.", this->get_identifier()));
 	}
 
-	assert_throw(this->get_capital_province() != nullptr);
+	if (this->get_default_capital() == nullptr) {
+		throw std::runtime_error(std::format("Country \"{}\" has no default capital.", this->get_identifier()));
+	}
+
+	if (!this->get_default_capital()->is_settlement()) {
+		throw std::runtime_error(std::format("The default capital for country \"{}\" is not a settlement.", this->get_identifier()));
+	}
+
+	if (this->get_default_capital()->get_province()->get_capital_settlement() != this->get_default_capital()) {
+		throw std::runtime_error(std::format("The default capital for country \"{}\" is not a provincial capital.", this->get_identifier()));
+	}
+
 	assert_throw(this->get_color().isValid());
-
-	if (!this->get_core_provinces().empty()) {
-		assert_throw(this->get_core_provinces().at(0) == this->get_capital_province());
-	}
 }
 
 data_entry_history *country::get_history_base()
@@ -102,15 +110,6 @@ const QColor &country::get_color() const
 	}
 
 	return this->color;
-}
-
-const site *country::get_capital_settlement() const
-{
-	if (this->get_capital_province() == nullptr) {
-		return nullptr;
-	}
-
-	return this->get_capital_province()->get_capital_settlement();
 }
 
 bool country::can_declare_war() const
