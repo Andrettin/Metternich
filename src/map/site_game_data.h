@@ -58,6 +58,9 @@ public:
 		return this->tile_pos != QPoint(-1, -1);
 	}
 
+	bool is_coastal() const;
+	bool is_near_water() const;
+
 	const province *get_province() const;
 
 private:

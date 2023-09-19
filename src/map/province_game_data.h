@@ -135,6 +135,11 @@ public:
 		return this->coastal;
 	}
 
+	bool is_near_water() const
+	{
+		return this->is_coastal() || this->has_river;
+	}
+
 	const QRect &get_territory_rect() const
 	{
 		return this->territory_rect;
@@ -415,6 +420,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	bool coastal = false;
+	bool has_river = false;
 	QRect territory_rect;
 	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<const metternich::province *> neighbor_provinces;

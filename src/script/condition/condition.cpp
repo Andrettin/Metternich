@@ -48,6 +48,7 @@
 #include "script/condition/military_unit_category_condition.h"
 #include "script/condition/military_unit_domain_condition.h"
 #include "script/condition/military_unit_type_condition.h"
+#include "script/condition/near_water_condition.h"
 #include "script/condition/not_condition.h"
 #include "script/condition/or_condition.h"
 #include "script/condition/owns_province_condition.h"
@@ -176,9 +177,7 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	}
 	
 	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province>) {
-		if (key == "coastal") {
-			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
-		} else if (key == "colony") {
+		if (key == "colony") {
 			return std::make_unique<colony_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_resource") {
 			return std::make_unique<has_resource_condition<scope_type>>(value, condition_operator);
@@ -192,13 +191,17 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
 		if (key == "capital") {
 			return std::make_unique<capital_condition<scope_type>>(value, condition_operator);
+		} else if (key == "coastal") {
+			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_culture") {
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
 		}
 	}
 
 	if constexpr (std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
-		if (key == "provincial_capital") {
+		if (key == "near_water") {
+			return std::make_unique<near_water_condition<scope_type>>(value, condition_operator);
+		} else if (key == "provincial_capital") {
 			return std::make_unique<provincial_capital_condition<scope_type>>(value, condition_operator);
 		}
 	}

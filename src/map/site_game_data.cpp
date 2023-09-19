@@ -119,6 +119,24 @@ tile *site_game_data::get_tile() const
 	return nullptr;
 }
 
+bool site_game_data::is_coastal() const
+{
+	if (!this->is_on_map()) {
+		return false;
+	}
+
+	return map::get()->is_tile_coastal(this->get_tile_pos());
+}
+
+bool site_game_data::is_near_water() const
+{
+	if (!this->is_on_map()) {
+		return false;
+	}
+
+	return map::get()->is_tile_near_water(this->get_tile_pos());
+}
+
 const province *site_game_data::get_province() const
 {
 	const tile *tile = this->get_tile();

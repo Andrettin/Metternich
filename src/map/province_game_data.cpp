@@ -329,6 +329,10 @@ void province_game_data::add_tile(const QPoint &tile_pos)
 		++this->tile_terrain_counts[tile->get_terrain()];
 	}
 
+	if (tile->has_river()) {
+		this->has_river = true;
+	}
+
 	if (tile->get_site() != nullptr) {
 		this->sites.push_back(tile->get_site());
 
