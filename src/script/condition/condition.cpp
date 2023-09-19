@@ -56,6 +56,7 @@
 #include "script/condition/population_type_condition.h"
 #include "script/condition/produces_commodity_condition.h"
 #include "script/condition/promotion_condition.h"
+#include "script/condition/provincial_capital_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
 #include "script/condition/resource_condition.h"
@@ -193,6 +194,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<capital_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_culture") {
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
+		if (key == "provincial_capital") {
+			return std::make_unique<provincial_capital_condition<scope_type>>(value, condition_operator);
 		}
 	}
 
