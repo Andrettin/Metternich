@@ -165,6 +165,8 @@ public:
 		return this->center_tile_pos;
 	}
 
+	void reset_center_tile_pos();
+
 	const std::vector<QPoint> &get_tiles() const
 	{
 		return this->tiles;

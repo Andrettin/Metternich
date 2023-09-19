@@ -69,6 +69,10 @@ void province_game_data::reset_non_map_data()
 	this->commodity_bonuses_per_improved_resources.clear();
 	this->commodity_bonuses_for_tile_thresholds.clear();
 
+	if (this->is_on_map()) {
+		this->reset_center_tile_pos();
+	}
+
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::main_culture_changed, this, &province_game_data::set_culture);
 	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::set_religion);
@@ -77,14 +81,7 @@ void province_game_data::reset_non_map_data()
 void province_game_data::on_map_created()
 {
 	this->calculate_territory_rect_center();
-
-	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_game_data()->get_province() == this->province) {
-		this->center_tile_pos = this->province->get_default_provincial_capital()->get_game_data()->get_tile_pos();
-	} else {
-		this->center_tile_pos = this->territory_rect_center;
-	}
-
-	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
+	this->reset_center_tile_pos();
 }
 
 void province_game_data::do_turn()
@@ -319,6 +316,17 @@ bool province_game_data::is_country_border_province() const
 	}
 
 	return false;
+}
+
+void province_game_data::reset_center_tile_pos()
+{
+	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_game_data()->get_province() == this->province) {
+		this->center_tile_pos = this->province->get_default_provincial_capital()->get_game_data()->get_tile_pos();
+	} else {
+		this->center_tile_pos = this->territory_rect_center;
+	}
+
+	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
 }
 
 void province_game_data::add_tile(const QPoint &tile_pos)
