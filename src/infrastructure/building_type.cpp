@@ -146,11 +146,11 @@ void building_type::initialize()
 	}
 
 	if (this->is_capital_only()) {
-		if (this->get_province_conditions() == nullptr) {
-			this->province_conditions = std::make_unique<and_condition<province>>();
+		if (this->get_settlement_conditions() == nullptr) {
+			this->settlement_conditions = std::make_unique<and_condition<site>>();
 		}
 
-		this->province_conditions->add_condition(std::make_unique<capital_condition>(true));
+		this->settlement_conditions->add_condition(std::make_unique<capital_condition<site>>(true));
 	}
 
 	named_data_entry::initialize();
