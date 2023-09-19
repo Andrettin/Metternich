@@ -32,6 +32,7 @@ public:
 	static constexpr const char database_folder[] = "traits";
 
 	explicit trait(const std::string &identifier);
+	~trait();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;

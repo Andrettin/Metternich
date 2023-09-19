@@ -722,17 +722,17 @@ find_package(Boost 1.69.0 REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 add_definitions(-DBOOST_DATE_TIME_NO_LIB)
 
-#Qt5 modules
-#different modules have different licenses, make sure all modules used here are compatible with the MIT license
+#Qt6 modules
+#different modules have different licenses, make sure all modules used here are compatible with the GPL 3.0 license
 set(CMAKE_AUTOMOC ON)
-find_package(Qt5 5.14 COMPONENTS Core REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt5 5.14 COMPONENTS Gui REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt5 5.14 COMPONENTS Widgets REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt5 5.14 COMPONENTS Multimedia REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt5 5.14 COMPONENTS Location REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt5 5.14 COMPONENTS Qml REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt5 5.14 COMPONENTS Quick REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt5 5.14 COMPONENTS Charts REQUIRED) #licensed under the GPL 3.0
+find_package(Qt6 6.5 COMPONENTS Core REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.5 COMPONENTS Gui REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.5 COMPONENTS Widgets REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.5 COMPONENTS Multimedia REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.5 COMPONENTS Location REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.5 COMPONENTS Qml REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.5 COMPONENTS Quick REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.5 COMPONENTS Charts REQUIRED) #licensed under the GPL 3.0
 
 if(WITH_GEOJSON)
 	add_definitions(-DUSE_GEOJSON)
@@ -777,5 +777,5 @@ target_precompile_headers(metternich_test REUSE_FROM archimedes)
 
 set_target_properties(metternich_main PROPERTIES OUTPUT_NAME "metternich")
 
-target_link_libraries(metternich_main PUBLIC metternich Qt5::Charts)
+target_link_libraries(metternich_main PUBLIC metternich Qt6::Charts)
 target_link_libraries(metternich_test PUBLIC metternich)

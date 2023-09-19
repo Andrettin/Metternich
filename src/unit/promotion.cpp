@@ -13,6 +13,10 @@ promotion::promotion(const std::string &identifier)
 {
 }
 
+promotion::~promotion()
+{
+}
+
 void promotion::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();

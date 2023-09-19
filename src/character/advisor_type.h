@@ -23,6 +23,7 @@ public:
 	static constexpr const char database_folder[] = "advisor_types";
 
 	explicit advisor_type(const std::string &identifier);
+	~advisor_type();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;

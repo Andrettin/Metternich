@@ -14,6 +14,10 @@ advisor_type::advisor_type(const std::string &identifier)
 {
 }
 
+advisor_type::~advisor_type()
+{
+}
+
 void advisor_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();

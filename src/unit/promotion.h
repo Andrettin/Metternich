@@ -27,6 +27,7 @@ public:
 	static constexpr const char database_folder[] = "promotions";
 
 	explicit promotion(const std::string &identifier);
+	~promotion();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;

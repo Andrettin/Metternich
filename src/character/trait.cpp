@@ -14,6 +14,10 @@ trait::trait(const std::string &identifier)
 {
 }
 
+trait::~trait()
+{
+}
+
 void trait::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
