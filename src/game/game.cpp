@@ -470,6 +470,7 @@ void game::apply_history(const metternich::scenario *scenario)
 		}
 
 		for (const country *country : this->get_countries()) {
+			country->get_game_data()->set_capital(nullptr);
 			country->get_game_data()->choose_capital();
 		}
 
