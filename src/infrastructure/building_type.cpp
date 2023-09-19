@@ -17,6 +17,7 @@
 #include "script/condition/or_condition.h"
 #include "script/condition/provincial_capital_condition.h"
 #include "script/condition/resource_condition.h"
+#include "script/effect/effect_list.h"
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
@@ -85,6 +86,10 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "stackable_country_modifier") {
 		this->stackable_country_modifier = std::make_unique<modifier<const country>>();
 		database::process_gsml_data(this->stackable_country_modifier, scope);
+	} else if (tag == "effects") {
+		auto effect_list = std::make_unique<metternich::effect_list<const site>>();
+		database::process_gsml_data(effect_list, scope);
+		this->effects = std::move(effect_list);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -270,6 +275,17 @@ int building_type::get_score() const
 	}
 
 	return score;
+}
+
+QString building_type::get_effects_string(metternich::site *site) const
+{
+	assert_throw(site->is_settlement());
+
+	if (this->get_effects() != nullptr) {
+		return QString::fromStdString(this->get_effects()->get_effects_string(site, read_only_context(site)));
+	}
+
+	return QString();
 }
 
 }

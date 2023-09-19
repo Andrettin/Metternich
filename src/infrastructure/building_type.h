@@ -29,6 +29,9 @@ template <typename scope_type>
 class condition;
 
 template <typename scope_type>
+class effect_list;
+
+template <typename scope_type>
 class factor;
 
 template <typename scope_type>
@@ -257,6 +260,13 @@ public:
 		return this->stackable_country_modifier.get();
 	}
 
+	Q_INVOKABLE QString get_effects_string(metternich::site *site) const;
+
+	const effect_list<const site> *get_effects() const
+	{
+		return this->effects.get();
+	}
+
 signals:
 	void changed();
 
@@ -293,6 +303,7 @@ private:
 	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const country>> country_modifier;
 	std::unique_ptr<modifier<const country>> stackable_country_modifier;
+	std::unique_ptr<const effect_list<const site>> effects;
 };
 
 }

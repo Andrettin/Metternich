@@ -16,6 +16,7 @@
 #include "script/effect/any_neighbor_country_effect.h"
 #include "script/effect/any_population_unit_effect.h"
 #include "script/effect/battle_effect.h"
+#include "script/effect/capital_effect.h"
 #include "script/effect/change_opinion_effect.h"
 #include "script/effect/commodity_effect.h"
 #include "script/effect/commodity_percent_effect.h"
@@ -29,6 +30,7 @@
 #include "script/effect/if_effect.h"
 #include "script/effect/location_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
+#include "script/effect/provincial_capital_effect.h"
 #include "script/effect/random_list_effect.h"
 #include "script/effect/random_neighbor_country_effect.h"
 #include "script/effect/save_scope_as_effect.h"
@@ -82,6 +84,18 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		if (key == "scripted_modifiers") {
 			assert_throw(effect_operator == gsml_operator::subtraction);
 			return std::make_unique<scripted_modifiers_effect<scope_type>>(value, effect_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const site>) {
+		if (key == "capital") {
+			return std::make_unique<capital_effect<scope_type>>(value, effect_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
+		if (key == "provincial_capital") {
+			return std::make_unique<provincial_capital_effect<scope_type>>(value, effect_operator);
 		}
 	}
 
