@@ -150,6 +150,8 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return QVariant::fromValue(const_cast<province *>(tile->get_province()));
 			case role::terrain:
 				return QVariant::fromValue(const_cast<terrain_type *>(tile->get_terrain()));
+			case role::river:
+				return tile->has_river();
 			case role::resource:
 				if (!tile->is_resource_discovered()) {
 					return QVariant::fromValue(nullptr);

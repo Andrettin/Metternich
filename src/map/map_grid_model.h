@@ -21,6 +21,7 @@ public:
 		site,
 		province,
 		terrain,
+		river,
 		resource,
 		improvement,
 		pathway,
@@ -61,6 +62,7 @@ public:
 		role_names.insert(static_cast<int>(role::site), "site");
 		role_names.insert(static_cast<int>(role::province), "province");
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
+		role_names.insert(static_cast<int>(role::river), "river");
 		role_names.insert(static_cast<int>(role::resource), "resource");
 		role_names.insert(static_cast<int>(role::improvement), "improvement");
 		role_names.insert(static_cast<int>(role::pathway), "pathway");
