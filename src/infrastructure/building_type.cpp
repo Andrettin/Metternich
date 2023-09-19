@@ -15,6 +15,7 @@
 #include "script/condition/and_condition.h"
 #include "script/condition/capital_condition.h"
 #include "script/condition/or_condition.h"
+#include "script/condition/provincial_capital_condition.h"
 #include "script/condition/resource_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
@@ -151,6 +152,14 @@ void building_type::initialize()
 		}
 
 		this->settlement_conditions->add_condition(std::make_unique<capital_condition<site>>(true));
+	}
+
+	if (this->is_provincial_capital_only()) {
+		if (this->get_settlement_conditions() == nullptr) {
+			this->settlement_conditions = std::make_unique<and_condition<site>>();
+		}
+
+		this->settlement_conditions->add_condition(std::make_unique<provincial_capital_condition<site>>(true));
 	}
 
 	named_data_entry::initialize();

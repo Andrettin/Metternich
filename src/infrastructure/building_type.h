@@ -51,6 +51,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
 	Q_PROPERTY(bool free_in_capital MEMBER free_in_capital READ is_free_in_capital NOTIFY changed)
 	Q_PROPERTY(bool capital_only MEMBER capital_only READ is_capital_only NOTIFY changed)
+	Q_PROPERTY(bool provincial_capital_only MEMBER provincial_capital_only READ is_provincial_capital_only NOTIFY changed)
 	Q_PROPERTY(bool expandable MEMBER expandable READ is_expandable NOTIFY changed)
 	Q_PROPERTY(int max_level MEMBER max_level READ get_max_level NOTIFY changed)
 	Q_PROPERTY(int fort_level MEMBER fort_level READ get_fort_level NOTIFY changed)
@@ -150,6 +151,11 @@ public:
 	bool is_capital_only() const
 	{
 		return this->capital_only;
+	}
+
+	bool is_provincial_capital_only() const
+	{
+		return this->provincial_capital_only;
 	}
 
 	bool is_expandable() const
@@ -270,6 +276,7 @@ private:
 	bool warehouse = false;
 	bool free_in_capital = false;
 	bool capital_only = false;
+	bool provincial_capital_only = false;
 	bool expandable = false;
 	int max_level = 0;
 	int fort_level = 0;
