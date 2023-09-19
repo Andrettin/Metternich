@@ -176,6 +176,22 @@ bool site_game_data::is_capital() const
 	return this->get_owner()->get_game_data()->get_capital() == this->site;
 }
 
+bool site_game_data::can_be_capital() const
+{
+	assert_throw(this->site->is_settlement());
+
+	if (!this->is_built()) {
+		return false;
+	}
+
+	if (!this->is_near_water()) {
+		//settlements need to have sea access to be capitals, so that the country's transport network can include water access, and so that the country can trade in the world market
+		return false;
+	}
+
+	return true;
+}
+
 void site_game_data::set_owner(const country *owner)
 {
 	if (owner == this->get_owner()) {
@@ -277,7 +293,7 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_game_data()->change_settlement_count(1);
 
-			if (this->get_owner()->get_game_data()->get_capital() == nullptr) {
+			if (this->get_owner()->get_game_data()->get_capital() == nullptr && this->can_be_capital()) {
 				this->get_owner()->get_game_data()->set_capital(this->site);
 			}
 		}

@@ -37,18 +37,30 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		if constexpr (std::is_same_v<scope_type, const country>) {
-			if (this->value->get_game_data()->get_owner() != scope) {
-				return;
-			}
+		const site *settlement = nullptr;
+		const country *country = nullptr;
 
-			scope->get_game_data()->set_capital(this->value);
+		if constexpr (std::is_same_v<scope_type, const metternich::country>) {
+			settlement = this->value;
+			country = scope;
 		} else {
-			const country *owner = scope->get_game_data()->get_owner();
-			if (owner != nullptr) {
-				owner->get_game_data()->set_capital(scope);
-			}
+			settlement = scope;
+			country = scope->get_game_data()->get_owner();
 		}
+
+		if (country == nullptr) {
+			return;
+		}
+
+		if (settlement->get_game_data()->get_owner() != country) {
+			return;
+		}
+
+		if (!settlement->get_game_data()->can_be_capital()) {
+			return;
+		}
+
+		country->get_game_data()->set_capital(settlement);
 	}
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

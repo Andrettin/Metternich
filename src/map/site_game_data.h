@@ -74,6 +74,7 @@ private:
 public:
 	bool is_provincial_capital() const;
 	bool is_capital() const;
+	bool can_be_capital() const;
 
 	const country *get_owner() const
 	{

@@ -845,7 +845,7 @@ void country_game_data::set_capital(const site *capital)
 
 void country_game_data::choose_capital()
 {
-	if (this->country->get_default_capital()->get_game_data()->get_owner() == this->country && this->country->get_default_capital()->get_game_data()->is_built()) {
+	if (this->country->get_default_capital()->get_game_data()->get_owner() == this->country && this->country->get_default_capital()->get_game_data()->can_be_capital()) {
 		this->set_capital(this->country->get_default_capital());
 		return;
 	}
@@ -853,25 +853,25 @@ void country_game_data::choose_capital()
 	const site *best_capital = nullptr;
 
 	for (const metternich::province *province : this->get_provinces()) {
-		const site *settlement = province->get_game_data()->get_provincial_capital();
+		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+			const site_game_data *settlement_game_data = settlement->get_game_data();
 
-		if (settlement == nullptr) {
-			continue;
-		}
-
-		const site_game_data *settlement_game_data = settlement->get_game_data();
-
-		if (!settlement_game_data->is_built()) {
-			continue;
-		}
-
-		if (best_capital != nullptr) {
-			if (best_capital->get_game_data()->get_settlement_type()->get_free_resource_building_level() >= settlement_game_data->get_settlement_type()->get_free_resource_building_level()) {
+			if (!settlement_game_data->can_be_capital()) {
 				continue;
 			}
-		}
 
-		best_capital = settlement;
+			if (best_capital != nullptr) {
+				if (best_capital->get_game_data()->is_provincial_capital() && !settlement_game_data->is_provincial_capital()) {
+					continue;
+				}
+
+				if (best_capital->get_game_data()->get_settlement_type()->get_free_resource_building_level() >= settlement_game_data->get_settlement_type()->get_free_resource_building_level()) {
+					continue;
+				}
+			}
+
+			best_capital = settlement;
+		}
 	}
 
 	this->set_capital(best_capital);
