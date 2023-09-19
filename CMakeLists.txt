@@ -483,7 +483,6 @@ set(script_condition_HDRS
 	src/script/condition/infantry_condition.h
 	src/script/condition/is_advisor_condition.h
 	src/script/condition/is_ruler_condition.h
-	src/script/condition/location_condition.h
 	src/script/condition/military_unit_category_condition.h
 	src/script/condition/military_unit_domain_condition.h
 	src/script/condition/military_unit_type_condition.h
@@ -495,6 +494,7 @@ set(script_condition_HDRS
 	src/script/condition/population_type_condition.h
 	src/script/condition/produces_commodity_condition.h
 	src/script/condition/promotion_condition.h
+	src/script/condition/province_condition.h
 	src/script/condition/provincial_capital_condition.h
 	src/script/condition/religion_condition.h
 	src/script/condition/religious_group_condition.h

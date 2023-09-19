@@ -45,7 +45,6 @@
 #include "script/condition/infantry_condition.h"
 #include "script/condition/is_advisor_condition.h"
 #include "script/condition/is_ruler_condition.h"
-#include "script/condition/location_condition.h"
 #include "script/condition/military_unit_category_condition.h"
 #include "script/condition/military_unit_domain_condition.h"
 #include "script/condition/military_unit_type_condition.h"
@@ -56,6 +55,7 @@
 #include "script/condition/population_type_condition.h"
 #include "script/condition/produces_commodity_condition.h"
 #include "script/condition/promotion_condition.h"
+#include "script/condition/province_condition.h"
 #include "script/condition/provincial_capital_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
@@ -256,8 +256,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 	}
 	
 	if constexpr (std::is_same_v<scope_type, site>) {
-		if (tag == "location") {
-			condition = std::make_unique<location_condition<scope_type>>(condition_operator);
+		if (tag == "province") {
+			condition = std::make_unique<province_condition<scope_type>>(condition_operator);
 		}
 	}
 
