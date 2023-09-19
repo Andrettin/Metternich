@@ -708,18 +708,16 @@ void game::apply_sites()
 		}
 	}
 
-	//ensure country capitals always have a settlement
+	//ensure country default capitals always have a settlement
 	for (const country *country : this->get_countries()) {
-		const site *capital = country->get_game_data()->get_capital();
+		const site *default_capital = country->get_default_capital();
+		site_game_data *default_capital_game_data = default_capital->get_game_data();
 
-		if (capital == nullptr) {
+		if (default_capital_game_data->get_owner() != country) {
 			continue;
 		}
 
-		site_game_data *capital_game_data = capital->get_game_data();
-		assert_throw(capital_game_data->get_owner() == country);
-
-		if (capital_game_data->is_built()) {
+		if (default_capital_game_data->is_built()) {
 			continue;
 		}
 
@@ -729,11 +727,11 @@ void game::apply_sites()
 				continue;
 			}
 
-			if (settlement_type->get_conditions() != nullptr && !settlement_type->get_conditions()->check(capital, read_only_context(capital))) {
+			if (settlement_type->get_conditions() != nullptr && !settlement_type->get_conditions()->check(default_capital, read_only_context(default_capital))) {
 				continue;
 			}
 
-			if (settlement_type->get_build_conditions() != nullptr && !settlement_type->get_build_conditions()->check(capital, read_only_context(capital))) {
+			if (settlement_type->get_build_conditions() != nullptr && !settlement_type->get_build_conditions()->check(default_capital, read_only_context(default_capital))) {
 				continue;
 			}
 
@@ -741,7 +739,7 @@ void game::apply_sites()
 		}
 
 		assert_throw(best_settlement_type != nullptr);
-		capital_game_data->set_settlement_type(best_settlement_type);
+		default_capital_game_data->set_settlement_type(best_settlement_type);
 	}
 
 	for (const site *site : site::get_all()) {
