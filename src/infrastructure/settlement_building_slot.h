@@ -20,6 +20,7 @@ public:
 
 	void set_building(const building_type *building);
 	virtual bool can_have_building(const building_type *building) const override;
+	virtual bool can_maintain_building(const building_type *building) const override;
 
 public:
 	const wonder *get_wonder() const

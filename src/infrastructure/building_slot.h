@@ -65,6 +65,7 @@ public:
 	void set_under_construction_building(const building_type *building);
 
 	virtual bool can_have_building(const building_type *building) const;
+	virtual bool can_maintain_building(const building_type *building) const;
 	virtual bool can_gain_building(const building_type *building) const;
 	virtual bool can_build_building(const building_type *building) const;
 

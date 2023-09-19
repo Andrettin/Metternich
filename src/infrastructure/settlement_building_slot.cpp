@@ -73,7 +73,24 @@ bool settlement_building_slot::can_have_building(const building_type *building) 
 		}
 	}
 
+	if (building->is_capitol() && !this->get_settlement()->get_game_data()->can_be_capital()) {
+		return false;
+	}
+
 	return building_slot::can_have_building(building);
+}
+
+bool settlement_building_slot::can_maintain_building(const building_type *building) const
+{
+	if (building->is_capitol() && !this->get_settlement()->get_game_data()->is_capital()) {
+		return false;
+	}
+
+	if (building->is_provincial_capitol() && !this->get_settlement()->get_game_data()->is_provincial_capital()) {
+		return false;
+	}
+
+	return building_slot::can_maintain_building(building);
 }
 
 void settlement_building_slot::set_wonder(const metternich::wonder *wonder)

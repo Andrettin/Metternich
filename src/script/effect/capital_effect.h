@@ -12,7 +12,13 @@ class capital_effect final : public effect<scope_type>
 public:
 	using value_type = std::conditional_t<std::is_same_v<scope_type, const country>, const site *, bool>;
 
-	explicit capital_effect(const std::string &value, const gsml_operator effect_operator) : effect<scope_type>(effect_operator)
+	explicit capital_effect(const value_type value, const gsml_operator effect_operator = gsml_operator::assignment)
+		: effect<scope_type>(effect_operator), value(value)
+	{
+	}
+
+	explicit capital_effect(const std::string &value, const gsml_operator effect_operator)
+		: effect<scope_type>(effect_operator)
 	{
 		if constexpr (std::is_same_v<scope_type, const country>) {
 			this->value = site::get(value);

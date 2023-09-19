@@ -102,5 +102,6 @@ int effect_list<scope_type>::get_score() const
 
 template class effect_list<const character>;
 template class effect_list<const country>;
+template class effect_list<const site>;
 
 }

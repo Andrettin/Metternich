@@ -827,10 +827,17 @@ void country_game_data::set_capital(const site *capital)
 		assert_throw(capital->get_game_data()->is_built());
 	}
 
+	const site *old_capital = this->get_capital();
+
 	this->capital = capital;
 
 	if (capital != nullptr) {
 		capital->get_game_data()->get_province()->get_game_data()->set_provincial_capital(capital);
+		capital->get_game_data()->check_building_conditions();
+	}
+
+	if (old_capital != nullptr) {
+		old_capital->get_game_data()->check_building_conditions();
 	}
 
 	emit capital_changed();

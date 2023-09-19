@@ -65,6 +65,11 @@ bool building_slot::can_have_building(const building_type *building) const
 	return true;
 }
 
+bool building_slot::can_maintain_building(const building_type *building) const
+{
+	return this->can_have_building(building);
+}
+
 bool building_slot::can_gain_building(const building_type *building) const
 {
 	if (!this->can_have_building(building)) {

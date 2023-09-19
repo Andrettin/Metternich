@@ -51,6 +51,8 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
 	Q_PROPERTY(int capacity_increment MEMBER capacity_increment READ get_capacity_increment NOTIFY changed)
+	Q_PROPERTY(bool capitol MEMBER capitol READ is_capitol NOTIFY changed)
+	Q_PROPERTY(bool provincial_capitol MEMBER provincial_capitol READ is_provincial_capitol NOTIFY changed)
 	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
 	Q_PROPERTY(bool free_in_capital MEMBER free_in_capital READ is_free_in_capital NOTIFY changed)
 	Q_PROPERTY(bool capital_only MEMBER capital_only READ is_capital_only NOTIFY changed)
@@ -139,6 +141,16 @@ public:
 	int get_capacity_increment() const
 	{
 		return this->capacity_increment;
+	}
+
+	bool is_capitol() const
+	{
+		return this->capitol;
+	}
+
+	bool is_provincial_capitol() const
+	{
+		return this->provincial_capitol;
 	}
 
 	bool is_warehouse() const
@@ -235,7 +247,7 @@ public:
 		return this->settlement_conditions.get();
 	}
 
-	const and_condition<province> *get_province_conditions() const
+	const condition<province> *get_province_conditions() const
 	{
 		return this->province_conditions.get();
 	}
@@ -283,6 +295,8 @@ private:
 	std::vector<const production_type *> production_types;
 	int base_capacity = 0;
 	int capacity_increment = 0;
+	bool capitol = false;
+	bool provincial_capitol = false;
 	bool warehouse = false;
 	bool free_in_capital = false;
 	bool capital_only = false;
@@ -298,12 +312,12 @@ private:
 	std::unique_ptr<const factor<country>> cost_factor;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<and_condition<site>> settlement_conditions;
-	std::unique_ptr<and_condition<province>> province_conditions;
+	std::unique_ptr<const condition<province>> province_conditions;
 	std::unique_ptr<modifier<const site>> settlement_modifier;
 	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const country>> country_modifier;
 	std::unique_ptr<modifier<const country>> stackable_country_modifier;
-	std::unique_ptr<const effect_list<const site>> effects;
+	std::unique_ptr<effect_list<const site>> effects;
 };
 
 }

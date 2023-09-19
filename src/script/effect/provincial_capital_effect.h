@@ -12,7 +12,13 @@ class provincial_capital_effect final : public effect<scope_type>
 public:
 	using value_type = std::conditional_t<std::is_same_v<scope_type, const province>, const site *, bool>;
 
-	explicit provincial_capital_effect(const std::string &value, const gsml_operator effect_operator) : effect<scope_type>(effect_operator)
+	explicit provincial_capital_effect(const value_type value, const gsml_operator effect_operator = gsml_operator::assignment)
+		: effect<scope_type>(effect_operator), value(value)
+	{
+	}
+
+	explicit provincial_capital_effect(const std::string &value, const gsml_operator effect_operator)
+		: effect<scope_type>(effect_operator)
 	{
 		if constexpr (std::is_same_v<scope_type, const province>) {
 			this->value = site::get(value);

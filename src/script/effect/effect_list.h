@@ -9,6 +9,7 @@ namespace metternich {
 
 class character;
 class country;
+class site;
 struct context;
 struct read_only_context;
 
@@ -38,5 +39,6 @@ private:
 
 extern template class effect_list<const character>;
 extern template class effect_list<const country>;
+extern template class effect_list<const site>;
 
 }

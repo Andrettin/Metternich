@@ -436,7 +436,7 @@ void site_game_data::check_building_conditions()
 
 		//if the building fails its conditions, try to replace it with one of its required buildings, if valid
 		while (building != nullptr) {
-			if (building_slot->can_have_building(building)) {
+			if (building_slot->can_maintain_building(building)) {
 				break;
 			}
 

@@ -183,10 +183,17 @@ void province_game_data::set_provincial_capital(const site *provincial_capital)
 		assert_throw(provincial_capital->get_game_data()->is_built());
 	}
 
+	const site *old_provincial_capital = this->get_provincial_capital();
+
 	this->provincial_capital = provincial_capital;
+
+	if (old_provincial_capital != nullptr) {
+		old_provincial_capital->get_game_data()->check_building_conditions();
+	}
 
 	if (provincial_capital != nullptr) {
 		this->center_tile_pos = provincial_capital->get_game_data()->get_tile_pos();
+		provincial_capital->get_game_data()->check_building_conditions();
 	}
 
 	emit provincial_capital_changed();
