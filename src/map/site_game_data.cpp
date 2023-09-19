@@ -137,6 +137,17 @@ bool site_game_data::is_near_water() const
 	return map::get()->is_tile_near_water(this->get_tile_pos());
 }
 
+bool site_game_data::has_route() const
+{
+	const tile *tile = this->get_tile();
+
+	if (tile == nullptr) {
+		return false;
+	}
+
+	return tile->has_route();
+}
+
 const province *site_game_data::get_province() const
 {
 	const tile *tile = this->get_tile();

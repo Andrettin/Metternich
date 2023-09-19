@@ -39,6 +39,7 @@
 #include "script/condition/gender_condition.h"
 #include "script/condition/has_population_culture_condition.h"
 #include "script/condition/has_resource_condition.h"
+#include "script/condition/has_route_condition.h"
 #include "script/condition/has_terrain_condition.h"
 #include "script/condition/ideology_condition.h"
 #include "script/condition/improvement_condition.h"
@@ -159,7 +160,9 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<core_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, site>) {
-		if (key == "improvement") {
+		if (key == "has_route") {
+			return std::make_unique<has_route_condition<site>>(value, condition_operator);
+		} else if (key == "improvement") {
 			return std::make_unique<improvement_condition>(value, condition_operator);
 		} else if (key == "resource") {
 			return std::make_unique<resource_condition>(value, condition_operator);

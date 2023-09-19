@@ -60,6 +60,7 @@ public:
 
 	bool is_coastal() const;
 	bool is_near_water() const;
+	bool has_route() const;
 
 	const province *get_province() const;
 
