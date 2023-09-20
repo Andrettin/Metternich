@@ -733,6 +733,7 @@ find_package(Qt6 6.5 COMPONENTS Location REQUIRED) #licensed under the GPL 2.0, 
 find_package(Qt6 6.5 COMPONENTS Qml REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
 find_package(Qt6 6.5 COMPONENTS Quick REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
 find_package(Qt6 6.5 COMPONENTS Charts REQUIRED) #licensed under the GPL 3.0
+find_package(Qt6 6.5 COMPONENTS ShaderTools REQUIRED)
 
 if(WITH_GEOJSON)
 	add_definitions(-DUSE_GEOJSON)
@@ -762,6 +763,14 @@ add_executable(metternich_main WIN32 ${metternich_main_SRCS})
 add_executable(metternich_test ${metternich_test_SRCS})
 add_test(metternich_test metternich_test)
 enable_testing()
+
+qt_add_shaders(metternich_main "shaders"
+	PREFIX "/"
+	FILES
+		"shaders/opacitymask.frag"
+	OUTPUTS
+		"opacitymask.frag.qsb"
+)
 
 target_precompile_headers(metternich REUSE_FROM archimedes)
 
