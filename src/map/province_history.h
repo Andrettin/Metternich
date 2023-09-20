@@ -4,6 +4,9 @@
 #include "population/population_group_map.h"
 #include "util/fractional_int.h"
 
+Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("country/religion.h")
+
 namespace metternich {
 
 class country;

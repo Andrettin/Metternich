@@ -2,6 +2,8 @@
 
 #include "database/data_entry_history.h"
 
+Q_MOC_INCLUDE("infrastructure/pathway.h")
+
 namespace metternich {
 
 class pathway;

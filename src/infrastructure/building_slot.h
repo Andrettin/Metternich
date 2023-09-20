@@ -2,6 +2,9 @@
 
 #include "economy/commodity_container.h"
 
+Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("infrastructure/building_type.h")
+
 namespace metternich {
 
 class building_slot_type;

@@ -5,6 +5,9 @@
 #include "spell/spell_container.h"
 #include "util/fractional_int.h"
 
+Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("ui/portrait.h")
+
 namespace metternich {
 
 class character;

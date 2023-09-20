@@ -3,6 +3,8 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("infrastructure/building_slot_type.h")
+
 namespace metternich {
 
 class building_slot_type;

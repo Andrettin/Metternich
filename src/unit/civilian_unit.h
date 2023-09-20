@@ -2,6 +2,10 @@
 
 #include "economy/resource_container.h"
 
+Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("ui/icon.h")
+Q_MOC_INCLUDE("unit/civilian_unit_type.h")
+
 namespace metternich {
 
 class civilian_unit_type;

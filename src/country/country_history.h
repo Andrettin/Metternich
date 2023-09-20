@@ -4,6 +4,10 @@
 #include "database/data_entry_history.h"
 #include "util/fractional_int.h"
 
+Q_MOC_INCLUDE("character/character.h")
+Q_MOC_INCLUDE("country/government_type.h")
+Q_MOC_INCLUDE("country/religion.h")
+
 namespace metternich {
 
 class character;

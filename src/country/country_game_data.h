@@ -17,6 +17,15 @@
 #include "util/point_container.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("character/character.h")
+Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("country/government_type.h")
+Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("map/site.h")
+Q_MOC_INCLUDE("population/population.h")
+Q_MOC_INCLUDE("technology/technology.h")
+Q_MOC_INCLUDE("unit/military_unit_type.h")
+
 namespace metternich {
 
 class building_type;

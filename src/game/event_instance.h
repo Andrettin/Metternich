@@ -4,6 +4,8 @@
 #include "database/named_data_entry.h"
 #include "script/context.h"
 
+Q_MOC_INCLUDE("game/event.h")
+
 namespace metternich {
 
 class event;

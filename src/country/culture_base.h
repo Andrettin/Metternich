@@ -9,6 +9,8 @@
 #include "unit/transporter_class_container.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("population/phenotype.h")
+
 namespace metternich {
 
 class building_type;

@@ -3,6 +3,11 @@
 #include "util/qunique_ptr.h"
 #include "util/singleton.h"
 
+Q_MOC_INCLUDE("database/defines.h")
+Q_MOC_INCLUDE("database/preferences.h")
+Q_MOC_INCLUDE("game/game.h")
+Q_MOC_INCLUDE("map/map.h")
+
 namespace metternich {
 
 class defines;

@@ -5,6 +5,8 @@
 #include "economy/commodity_container.h"
 #include "map/terrain_type_container.h"
 
+Q_MOC_INCLUDE("technology/technology.h")
+
 namespace archimedes {
 	enum class direction;
 }

@@ -6,6 +6,9 @@
 #include "util/color_container.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("map/province_game_data.h")
+Q_MOC_INCLUDE("map/site.h")
+
 namespace metternich {
 
 class country;

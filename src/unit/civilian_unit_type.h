@@ -3,6 +3,11 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("country/cultural_group.h")
+Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("ui/icon.h")
+Q_MOC_INCLUDE("unit/civilian_unit_class.h")
+
 namespace metternich {
 
 class civilian_unit_class;

@@ -4,6 +4,12 @@
 #include "infrastructure/building_slot_type_container.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("infrastructure/improvement.h")
+Q_MOC_INCLUDE("infrastructure/settlement_type.h")
+Q_MOC_INCLUDE("map/province.h")
+Q_MOC_INCLUDE("population/population.h")
+
 namespace metternich {
 
 class country;

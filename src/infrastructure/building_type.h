@@ -5,6 +5,13 @@
 #include "economy/commodity_container.h"
 #include "util/fractional_int.h"
 
+Q_MOC_INCLUDE("country/cultural_group.h")
+Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("infrastructure/building_class.h")
+Q_MOC_INCLUDE("technology/technology.h")
+Q_MOC_INCLUDE("ui/icon.h")
+Q_MOC_INCLUDE("ui/portrait.h")
+
 namespace metternich {
 
 class building_class;

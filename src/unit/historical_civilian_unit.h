@@ -4,6 +4,14 @@
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("map/site.h")
+Q_MOC_INCLUDE("population/phenotype.h")
+Q_MOC_INCLUDE("population/population_type.h")
+Q_MOC_INCLUDE("unit/civilian_unit_type.h")
+
 namespace metternich {
 
 class civilian_unit_type;

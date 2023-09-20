@@ -2,6 +2,8 @@
 
 #include "infrastructure/building_slot.h"
 
+Q_MOC_INCLUDE("infrastructure/wonder.h")
+
 namespace metternich {
 
 class site;

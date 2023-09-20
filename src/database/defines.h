@@ -5,6 +5,12 @@
 #include "util/fractional_int.h"
 #include "util/singleton.h"
 
+Q_MOC_INCLUDE("economy/commodity.h")
+Q_MOC_INCLUDE("infrastructure/pathway.h")
+Q_MOC_INCLUDE("map/terrain_type.h")
+Q_MOC_INCLUDE("population/population_class.h")
+Q_MOC_INCLUDE("ui/portrait.h")
+
 namespace metternich {
 
 class building_class;

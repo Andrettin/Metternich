@@ -4,6 +4,8 @@
 #include "util/qunique_ptr.h"
 #include "util/singleton.h"
 
+Q_MOC_INCLUDE("game/game_rules.h")
+
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;

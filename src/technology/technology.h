@@ -4,6 +4,9 @@
 #include "database/named_data_entry.h"
 #include "infrastructure/pathway_container.h"
 
+Q_MOC_INCLUDE("ui/icon.h")
+Q_MOC_INCLUDE("ui/portrait.h")
+
 namespace metternich {
 
 class building_type;

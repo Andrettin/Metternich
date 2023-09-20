@@ -4,6 +4,11 @@
 #include "infrastructure/building_slot_type_container.h"
 #include "population/population_group_map.h"
 
+Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("infrastructure/improvement.h")
+Q_MOC_INCLUDE("infrastructure/settlement_type.h")
+
 namespace metternich {
 
 class building_type;

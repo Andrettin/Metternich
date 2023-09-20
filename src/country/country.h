@@ -4,6 +4,11 @@
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("country/country_game_data.h")
+Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("map/site.h")
+
 namespace metternich {
 
 class character;

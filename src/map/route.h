@@ -5,6 +5,8 @@
 #include "util/color_container.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("map/route_game_data.h")
+
 namespace metternich {
 
 class route_game_data;

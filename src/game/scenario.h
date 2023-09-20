@@ -3,6 +3,10 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("map/map_template.h")
+Q_MOC_INCLUDE("time/calendar.h")
+Q_MOC_INCLUDE("time/timeline.h")
+
 namespace archimedes {
 	class calendar;
 }

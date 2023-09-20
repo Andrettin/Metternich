@@ -5,6 +5,12 @@
 #include "util/geocoordinate.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("economy/resource.h")
+Q_MOC_INCLUDE("map/province.h")
+Q_MOC_INCLUDE("map/site_game_data.h")
+Q_MOC_INCLUDE("map/terrain_type.h")
+Q_MOC_INCLUDE("map/world.h")
+
 namespace metternich {
 
 class cultural_group;

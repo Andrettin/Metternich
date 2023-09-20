@@ -1,5 +1,10 @@
 #pragma once
 
+Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("map/site.h")
+Q_MOC_INCLUDE("ui/icon.h")
+Q_MOC_INCLUDE("unit/military_unit_type.h")
+
 namespace metternich {
 
 class character;

@@ -10,6 +10,11 @@
 #include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("population/population.h")
+
 namespace metternich {
 
 class civilian_unit;

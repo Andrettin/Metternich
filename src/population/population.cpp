@@ -2,6 +2,7 @@
 
 #include "population/population.h"
 
+#include "country/culture.h"
 #include "database/defines.h"
 #include "game/game.h"
 #include "population/population_unit.h"

@@ -6,6 +6,12 @@
 #include "population/phenotype_container.h"
 #include "util/fractional_int.h"
 
+Q_MOC_INCLUDE("country/cultural_group.h")
+Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("economy/commodity.h")
+Q_MOC_INCLUDE("population/population_class.h")
+Q_MOC_INCLUDE("ui/icon.h")
+
 namespace metternich {
 
 class population_class;

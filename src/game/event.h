@@ -3,6 +3,9 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("game/event_random_group.h")
+Q_MOC_INCLUDE("ui/portrait.h")
+
 namespace metternich {
 
 class event_random_group;

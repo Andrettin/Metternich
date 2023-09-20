@@ -6,6 +6,9 @@
 #include "util/georectangle.h"
 #include "util/point_container.h"
 
+Q_MOC_INCLUDE("map/map_projection.h")
+Q_MOC_INCLUDE("map/world.h")
+
 namespace archimedes {
 	class map_projection;
 }

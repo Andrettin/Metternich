@@ -2,6 +2,15 @@
 
 #include "util/fractional_int.h"
 
+Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("map/province.h")
+Q_MOC_INCLUDE("map/site.h")
+Q_MOC_INCLUDE("population/phenotype.h")
+Q_MOC_INCLUDE("population/population_type.h")
+Q_MOC_INCLUDE("ui/icon.h")
+
 namespace metternich {
 
 class country;

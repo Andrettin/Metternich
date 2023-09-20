@@ -5,6 +5,16 @@
 #include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("character/advisor_type.h")
+Q_MOC_INCLUDE("character/character_game_data.h")
+Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("map/site.h")
+Q_MOC_INCLUDE("population/phenotype.h")
+Q_MOC_INCLUDE("technology/technology.h")
+Q_MOC_INCLUDE("time/calendar.h")
+Q_MOC_INCLUDE("ui/portrait.h")
+
 namespace archimedes {
 	class calendar;
 	enum class gender;
