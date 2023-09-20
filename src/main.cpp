@@ -81,6 +81,10 @@ int main(int argc, char **argv)
 
 		qInstallMessageHandler(log::log_qt_message);
 
+#ifdef Q_OS_WINDOWS
+		qputenv("QT_ENABLE_HIGHDPI_SCALING", "0");
+#endif
+
 		QApplication app(argc, argv);
 		app.setApplicationName("Iron Barons");
 		app.setApplicationVersion("1.0.0");
