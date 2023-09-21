@@ -183,6 +183,10 @@ bool scoped_event_base<scope_type>::process_gsml_scope(const gsml_data &scope)
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
 		return true;
+	} else if (tag == "immediate_effects") {
+		this->immediate_effects = std::make_unique<effect_list<scope_type>>();
+		database::process_gsml_data(this->immediate_effects, scope);
+		return true;
 	} else if (tag == "option") {
 		auto option = std::make_unique<event_option<scope_type>>();
 		database::process_gsml_data(option, scope);
@@ -267,6 +271,14 @@ bool scoped_event_base<scope_type>::can_fire(const scope_type *scope, const read
 }
 
 template <typename scope_type>
+void scoped_event_base<scope_type>::do_immediate_effects(scope_type *scope, context &ctx) const
+{
+	if (this->immediate_effects != nullptr) {
+		this->immediate_effects->do_effects(scope, ctx);
+	}
+}
+
+template <typename scope_type>
 bool scoped_event_base<scope_type>::is_option_available(const int option_index, const read_only_context &ctx) const
 {
 	const condition<std::remove_const_t<scope_type>> *conditions = this->get_options().at(option_index)->get_conditions();
@@ -307,6 +319,8 @@ void scoped_event_base<scope_type>::fire(const scope_type *scope, const context 
 	}
 
 	scoped_event_base::fired_events.insert(this);
+
+	this->do_immediate_effects();
 
 	if (scoped_event_base::is_player_scope(scope)) {
 		this->create_instance(ctx);

@@ -17,6 +17,9 @@ template <typename scope_type>
 class condition;
 
 template <typename scope_type>
+class effect_list;
+
+template <typename scope_type>
 class event_option;
 
 template <typename scope_type>
@@ -123,6 +126,8 @@ public:
 
 	bool can_fire(const scope_type *scope, const read_only_context &ctx) const;
 
+	void do_immediate_effects(scope_type *scope, context &ctx) const;
+
 	const std::vector<std::unique_ptr<event_option<scope_type>>> &get_options() const
 	{
 		return this->options;
@@ -150,6 +155,7 @@ private:
 	std::unique_ptr<factor<std::remove_const_t<scope_type>>> random_weight_factor;
 	std::unique_ptr<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>> mean_time_to_happen;
 	std::unique_ptr<const condition<std::remove_const_t<scope_type>>> conditions;
+	std::unique_ptr<effect_list<scope_type>> immediate_effects;
 	std::vector<std::unique_ptr<event_option<scope_type>>> options;
 };
 
