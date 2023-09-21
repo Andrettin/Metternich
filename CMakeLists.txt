@@ -493,6 +493,7 @@ set(script_condition_HDRS
 	src/script/condition/or_condition.h
 	src/script/condition/owns_province_condition.h
 	src/script/condition/owns_site_condition.h
+	src/script/condition/population_scaled_commodity_condition.h
 	src/script/condition/population_type_condition.h
 	src/script/condition/produces_commodity_condition.h
 	src/script/condition/promotion_condition.h
