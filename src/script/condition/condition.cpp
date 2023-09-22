@@ -17,6 +17,7 @@
 #include "script/condition/and_condition.h"
 #include "script/condition/any_global_population_unit_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
+#include "script/condition/any_settlement_condition.h"
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/birth_year_condition.h"
@@ -275,7 +276,9 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 	}
 
 	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province>) {
-		if (tag == "ruler") {
+		if (tag == "any_settlement") {
+			condition = std::make_unique<any_settlement_condition<scope_type>>(condition_operator);
+		} else if (tag == "ruler") {
 			condition = std::make_unique<ruler_scope_condition<scope_type>>(condition_operator);
 		}
 	}
