@@ -77,6 +77,21 @@ gsml_data context_base<read_only>::to_gsml_data(const std::string &tag) const
 	return data;
 }
 
+template <bool read_only>
+const typename context_base<read_only>::scope_variant_type &context_base<read_only>::get_special_target_scope_variant(const special_target_type special_target_type) const
+{
+	switch (special_target_type) {
+		case special_target_type::root:
+			return this->root_scope;
+		case special_target_type::source:
+			return this->source_scope;
+		case special_target_type::previous:
+			return this->previous_scope;
+		default:
+			throw std::runtime_error(std::format("Invalid special target type value: {}.", static_cast<int>(special_target_type)));
+	}
+}
+
 template struct context_base<false>;
 template struct context_base<true>;
 

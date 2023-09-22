@@ -69,26 +69,28 @@ struct context_base
 	}
 
 	template <typename scope_type>
+	scope_type *get_saved_scope(const std::string &scope_name) const
+	{
+		const std::map<std::string, scope_type *> &saved_scopes = this->get_saved_scopes<scope_type>();
+
+		const auto find_iterator = saved_scopes.find(scope_name);
+
+		if (find_iterator == saved_scopes.end()) {
+			throw std::runtime_error(std::format("No saved scope found with name \"{}\".", scope_name));
+		}
+
+		return find_iterator->second;
+	}
+
+	const scope_variant_type &get_special_target_scope_variant(const special_target_type special_target_type) const;
+
+	template <typename scope_type>
 	scope_type *get_special_target_scope(const special_target_type special_target_type) const
 	{
-		switch (special_target_type) {
-			case special_target_type::root:
-				if (std::holds_alternative<scope_type *>(this->root_scope)) {
-					return std::get<scope_type *>(this->root_scope);
-				}
-				break;
-			case special_target_type::source:
-				if (std::holds_alternative<scope_type *>(this->source_scope)) {
-					return std::get<scope_type *>(this->source_scope);
-				}
-				break;
-			case special_target_type::previous:
-				if (std::holds_alternative<scope_type *>(this->previous_scope)) {
-					return std::get<scope_type *>(this->previous_scope);
-				}
-				break;
-			default:
-				break;
+		const scope_variant_type &special_target_scope_variant = this->get_special_target_scope_variant(special_target_type);
+
+		if (std::holds_alternative<scope_type *>(special_target_scope_variant)) {
+			return std::get<scope_type *>(special_target_scope_variant);
 		}
 
 		return nullptr;

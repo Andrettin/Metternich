@@ -33,12 +33,7 @@ public:
 	{
 		Q_UNUSED(upper_scope);
 
-		const std::map<std::string, const scope_type *> &saved_scopes = ctx.get_saved_scopes<const scope_type>();
-
-		const auto find_iterator = saved_scopes.find(this->scope_name);
-		assert_throw(find_iterator != saved_scopes.end());
-
-		return find_iterator->second;
+		return ctx.get_saved_scope<const scope_type>(this->scope_name);
 	}
 
 	virtual std::string get_scope_name() const override
