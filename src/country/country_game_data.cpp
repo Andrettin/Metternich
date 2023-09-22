@@ -3768,6 +3768,10 @@ void country_game_data::set_free_building_class_count(const building_class *buil
 
 		for (const province *province : this->get_provinces()) {
 			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+				if (!settlement->get_game_data()->is_built()) {
+					continue;
+				}
+
 				settlement->get_game_data()->check_free_buildings();
 			}
 		}
