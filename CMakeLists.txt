@@ -549,8 +549,10 @@ set(script_effect_HDRS
 	src/script/effect/location_effect.h
 	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/provincial_capital_effect.h
+	src/script/effect/random_global_population_unit_effect.h
 	src/script/effect/random_list_effect.h
 	src/script/effect/random_neighbor_country_effect.h
+	src/script/effect/random_settlement_effect.h
 	src/script/effect/save_scope_as_effect.h
 	src/script/effect/scope_effect.h
 	src/script/effect/scope_effect_base.h
