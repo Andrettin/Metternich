@@ -191,9 +191,7 @@ const country *effect<scope_type>::get_scope_country(const scope_type *scope)
 		return scope;
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		return scope->get_country();
-	} else if constexpr (std::is_same_v<scope_type, const province>) {
-		return scope->get_game_data()->get_owner();
-	} else if constexpr (std::is_same_v<scope_type, const site>) {
+	} else if constexpr (std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
 		return scope->get_game_data()->get_owner();
 	}
 }

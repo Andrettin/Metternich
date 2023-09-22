@@ -118,8 +118,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 
 		if (key == "advisor") {
 			return std::make_unique<advisor_condition>(value, condition_operator);
-		} else if (key == "country") {
-			return std::make_unique<country_condition>(value, condition_operator);
 		} else if (key == "country_type") {
 			return std::make_unique<country_type_condition>(value, condition_operator);
 		} else if (key == "discovered_province") {
@@ -216,7 +214,9 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		}
 	}
 
-	if (key == "country_exists") {
+	if (key == "country") {
+		return std::make_unique<country_condition<scope_type>>(value, condition_operator);
+	} else if (key == "country_exists") {
 		return std::make_unique<country_exists_condition<scope_type>>(value, condition_operator);
 	} else if (key == "cultural_group") {
 		return std::make_unique<cultural_group_condition<scope_type>>(value, condition_operator);
@@ -323,18 +323,12 @@ template <typename scope_type>
 const country *condition<scope_type>::get_scope_country(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, character>) {
-		const country *country = scope->get_game_data()->get_country();
-		if (country != nullptr) {
-			return country;
-		}
-		return condition<site>::get_scope_country(scope->get_home_settlement());
+		return scope->get_game_data()->get_country();
 	} else if constexpr (std::is_same_v<scope_type, country>) {
 		return scope;
 	} else if constexpr (std::is_same_v<scope_type, military_unit> || std::is_same_v<scope_type, population_unit>) {
 		return scope->get_country();
-	} else if constexpr (std::is_same_v<scope_type, province>) {
-		return scope->get_game_data()->get_owner();
-	} else if constexpr (std::is_same_v<scope_type, site>) {
+	} else if constexpr (std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
 		return scope->get_game_data()->get_owner();
 	}
 }
