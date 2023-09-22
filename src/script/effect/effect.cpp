@@ -29,6 +29,7 @@
 #include "script/effect/hidden_effect.h"
 #include "script/effect/if_effect.h"
 #include "script/effect/location_effect.h"
+#include "script/effect/migrate_to_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/provincial_capital_effect.h"
 #include "script/effect/random_global_population_unit_effect.h"
@@ -74,6 +75,10 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		} else if (key.ends_with(percent_suffix) && commodity::try_get(key.substr(0, key.size() - percent_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - percent_suffix.size()));
 			return std::make_unique<commodity_percent_effect>(commodity, value, effect_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+		if (key == "migrate_to") {
+			return std::make_unique<migrate_to_effect>(value, effect_operator);
 		}
 	}
 

@@ -547,6 +547,7 @@ set(script_effect_HDRS
 	src/script/effect/hidden_effect.h
 	src/script/effect/if_effect.h
 	src/script/effect/location_effect.h
+	src/script/effect/migrate_to_effect.h
 	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/provincial_capital_effect.h
 	src/script/effect/random_global_population_unit_effect.h
