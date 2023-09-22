@@ -320,17 +320,19 @@ void scoped_event_base<scope_type>::fire(const scope_type *scope, const context 
 
 	scoped_event_base::fired_events.insert(this);
 
-	this->do_immediate_effects();
+	context event_ctx = ctx;
+
+	this->do_immediate_effects(scope, event_ctx);
 
 	if (scoped_event_base::is_player_scope(scope)) {
-		this->create_instance(ctx);
+		this->create_instance(event_ctx);
 	} else {
 		//the event doesn't need to be displayed for AIs; instead, it is processed immediately
 		//pick a random option out of the available ones
 		std::vector<const event_option<scope_type> *> options;
 
 		for (const std::unique_ptr<event_option<scope_type>> &option : this->get_options()) {
-			if (option->get_conditions() != nullptr && !option->get_conditions()->check(scope, ctx)) {
+			if (option->get_conditions() != nullptr && !option->get_conditions()->check(scope, event_ctx)) {
 				continue;
 			}
 
@@ -339,8 +341,7 @@ void scoped_event_base<scope_type>::fire(const scope_type *scope, const context 
 
 		if (!options.empty()) {
 			const event_option<scope_type> *option = vector::get_random(options);
-			context option_ctx = ctx;
-			option->do_effects(scope, option_ctx);
+			option->do_effects(scope, event_ctx);
 		}
 	}
 }
