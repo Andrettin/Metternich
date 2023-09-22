@@ -15,6 +15,7 @@
 #include "script/condition/advisor_type_condition.h"
 #include "script/condition/age_condition.h"
 #include "script/condition/and_condition.h"
+#include "script/condition/any_global_population_unit_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
@@ -279,7 +280,9 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		}
 	}
 
-	if (tag == "attacking_commander") {
+	if (tag == "any_global_population_unit") {
+		condition = std::make_unique<any_global_population_unit_condition<scope_type>>(condition_operator);
+	} else if (tag == "attacking_commander") {
 		condition = std::make_unique<attacking_commander_condition<scope_type>>(condition_operator);
 	} else if (tag == "country") {
 		condition = std::make_unique<country_scope_condition<scope_type>>(condition_operator);
