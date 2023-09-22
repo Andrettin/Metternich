@@ -36,6 +36,7 @@
 #include "script/effect/random_neighbor_country_effect.h"
 #include "script/effect/random_settlement_effect.h"
 #include "script/effect/save_scope_as_effect.h"
+#include "script/effect/saved_scope_effect.h"
 #include "script/effect/scripted_effect_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
 #include "script/effect/source_site_effect.h"
@@ -167,6 +168,16 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		effect = std::make_unique<random_global_population_unit_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "random_list") {
 		effect = std::make_unique<random_list_effect<scope_type>>(effect_operator);
+	} else if (effect_identifier == "saved_character_scope") {
+		effect = std::make_unique<saved_scope_effect<scope_type, const character>>(effect_operator);
+	} else if (effect_identifier == "saved_country_scope") {
+		effect = std::make_unique<saved_scope_effect<scope_type, const country>>(effect_operator);
+	} else if (effect_identifier == "saved_population_unit_scope") {
+		effect = std::make_unique<saved_scope_effect<scope_type, population_unit>>(effect_operator);
+	} else if (effect_identifier == "saved_province_scope") {
+		effect = std::make_unique<saved_scope_effect<scope_type, const province>>(effect_operator);
+	} else if (effect_identifier == "saved_site_scope") {
+		effect = std::make_unique<saved_scope_effect<scope_type, const site>>(effect_operator);
 	} else if (effect_identifier == "source_site") {
 		effect = std::make_unique<source_site_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "tooltip") {

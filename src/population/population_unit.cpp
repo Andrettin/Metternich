@@ -35,6 +35,11 @@ population_unit::population_unit(const population_type *type, const metternich::
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
 }
 
+std::string population_unit::get_scope_name() const
+{
+	return std::format("{} {}", this->get_culture()->get_name(), this->get_type()->get_name());
+}
+
 const icon *population_unit::get_icon() const
 {
 	return this->get_type()->get_phenotype_icon(this->get_phenotype());
