@@ -207,8 +207,9 @@ void population_unit::migrate_to(const site *settlement)
 {
 	assert_throw(settlement != nullptr);
 
-	qunique_ptr<population_unit> unique_ptr = this->get_settlement()->get_game_data()->pop_population_unit(this);
 	this->get_province()->get_game_data()->remove_population_unit(this);
+
+	qunique_ptr<population_unit> unique_ptr = this->get_settlement()->get_game_data()->pop_population_unit(this);
 
 	assert_throw(unique_ptr != nullptr);
 

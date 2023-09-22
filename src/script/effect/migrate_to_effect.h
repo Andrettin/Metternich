@@ -4,7 +4,6 @@
 #include "script/effect/effect.h"
 #include "script/target_variant.h"
 #include "util/assert_util.h"
-#include "util/enum_converter.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -15,11 +14,7 @@ public:
 	explicit migrate_to_effect(const std::string &value, const gsml_operator effect_operator)
 		: effect<population_unit>(effect_operator)
 	{
-		if (enum_converter<special_target_type>::has_value(value)) {
-			this->settlement_target = enum_converter<special_target_type>::to_enum(value);
-		} else {
-			this->settlement_target = site::get(value);
-		}
+		this->settlement_target = string_to_target_variant<const site>(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -33,6 +28,12 @@ public:
 		Q_UNUSED(ctx);
 
 		const site *settlement = this->get_settlement(ctx);
+		assert_throw(settlement->is_settlement());
+
+		if (!settlement->get_game_data()->is_built()) {
+			return;
+		}
+
 		scope->migrate_to(settlement);
 	}
 
@@ -51,6 +52,8 @@ public:
 	{
 		if (std::holds_alternative<const site *>(this->settlement_target)) {
 			return std::get<const site *>(this->settlement_target);
+		} else if (std::holds_alternative<std::string>(this->settlement_target)) {
+			return ctx.get_saved_scope<const site>(std::get<std::string>(this->settlement_target));
 		} else if (std::holds_alternative<special_target_type>(this->settlement_target)) {
 			const special_target_type target_type = std::get<special_target_type>(this->settlement_target);
 			const read_only_context::scope_variant_type &target_scope_variant = ctx.get_special_target_scope_variant(target_type);
