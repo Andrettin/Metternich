@@ -43,6 +43,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 
 public:
+	static constexpr int base_free_food_consumption = 1;
 	static constexpr int base_settlement_score = 10;
 
 	explicit site_game_data(const metternich::site *site);
@@ -205,6 +206,11 @@ public:
 		return this->population.get();
 	}
 
+	int get_free_food_consumption() const
+	{
+		return this->free_food_consumption;
+	}
+
 	void change_base_commodity_output(const commodity *commodity, const int change);
 
 	const commodity_map<int> &get_commodity_outputs() const
@@ -270,6 +276,7 @@ private:
 	int score = 0;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
+	int free_food_consumption = 0;
 	commodity_map<int> base_commodity_outputs;
 	commodity_map<int> commodity_outputs;
 	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site

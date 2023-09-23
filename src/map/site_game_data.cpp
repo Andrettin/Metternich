@@ -53,6 +53,7 @@ void site_game_data::reset_non_map_data()
 	this->culture = nullptr;
 	this->religion = nullptr;
 	this->settlement_type = nullptr;
+	this->free_food_consumption = site_game_data::base_free_food_consumption;
 	this->score = this->site->is_settlement() ? site_game_data::base_settlement_score : 0;
 	this->commodity_outputs.clear();
 	this->base_commodity_outputs.clear();

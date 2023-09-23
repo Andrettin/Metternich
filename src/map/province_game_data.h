@@ -54,8 +54,6 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 
 public:
-	static constexpr int base_free_food_consumption = 1;
-
 	explicit province_game_data(const metternich::province *province);
 	province_game_data(const province_game_data &other) = delete;
 	~province_game_data();
@@ -236,11 +234,6 @@ public:
 	void remove_modifier(const modifier<const metternich::province> *modifier)
 	{
 		this->apply_modifier(modifier, -1);
-	}
-
-	int get_free_food_consumption() const
-	{
-		return this->free_food_consumption;
 	}
 
 	int get_score() const
@@ -447,7 +440,6 @@ private:
 	resource_map<int> resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
 	scripted_province_modifier_map<int> scripted_modifiers;
-	int free_food_consumption = 0;
 	int score = 0;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;

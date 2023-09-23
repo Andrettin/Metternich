@@ -244,7 +244,13 @@ void country_game_data::do_population_growth()
 		int food_consumption = this->get_food_consumption();
 
 		for (const province *province : this->get_provinces()) {
-			food_consumption -= province->get_game_data()->get_free_food_consumption();
+			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+				if (!settlement->get_game_data()->is_built()) {
+					continue;
+				}
+
+				food_consumption -= settlement->get_game_data()->get_free_food_consumption();
+			}
 		}
 
 		const int net_food = stored_food - food_consumption;
