@@ -45,7 +45,7 @@ public:
 
 		const site *settlement = this->get_settlement(ctx);
 
-		return std::format("Migrate to {}", string::highlight(settlement->get_name()));
+		return std::format("Migrate to {}", string::highlight(settlement->get_game_data()->get_current_cultural_name()));
 	}
 
 	const site *get_settlement(const read_only_context &ctx) const
