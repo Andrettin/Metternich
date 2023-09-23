@@ -567,9 +567,14 @@ public:
 
 	Q_INVOKABLE QObject *get_population_type_small_icon(metternich::population_type *type) const;
 
-	int get_food_consumption() const
+	int get_total_unit_count() const
 	{
 		return this->get_population_unit_count() + static_cast<int>(this->civilian_units.size()) + static_cast<int>(this->military_units.size());
+	}
+
+	int get_food_consumption() const
+	{
+		return this->get_total_unit_count();
 	}
 
 	QVariantList get_building_slots_qvariant_list() const;

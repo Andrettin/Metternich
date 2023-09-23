@@ -58,6 +58,7 @@
 #include "script/condition/owns_site_condition.h"
 #include "script/condition/population_scaled_commodity_condition.h"
 #include "script/condition/population_type_condition.h"
+#include "script/condition/population_unit_count_condition.h"
 #include "script/condition/produces_commodity_condition.h"
 #include "script/condition/promotion_condition.h"
 #include "script/condition/province_condition.h"
@@ -71,6 +72,7 @@
 #include "script/condition/saved_scope_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
+#include "script/condition/settlement_condition.h"
 #include "script/condition/settlement_type_condition.h"
 #include "script/condition/source_character_condition.h"
 #include "script/condition/source_site_condition.h"
@@ -204,6 +206,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_culture") {
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
+		} else if (key == "population_unit_count") {
+			return std::make_unique<population_unit_count_condition<scope_type>>(value, condition_operator);
 		}
 	}
 
@@ -267,9 +271,11 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 		if (tag == "any_neighbor_country") {
 			condition = std::make_unique<any_neighbor_country_condition>(condition_operator);
 		}
-	}
-	
-	if constexpr (std::is_same_v<scope_type, site>) {
+	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+		if (tag == "settlement") {
+			condition = std::make_unique<settlement_condition>(condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (tag == "province") {
 			condition = std::make_unique<province_condition<scope_type>>(condition_operator);
 		}

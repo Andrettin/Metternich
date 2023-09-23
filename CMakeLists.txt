@@ -497,6 +497,7 @@ set(script_condition_HDRS
 	src/script/condition/owns_site_condition.h
 	src/script/condition/population_scaled_commodity_condition.h
 	src/script/condition/population_type_condition.h
+	src/script/condition/population_unit_count_condition.h
 	src/script/condition/produces_commodity_condition.h
 	src/script/condition/promotion_condition.h
 	src/script/condition/province_condition.h
@@ -513,6 +514,7 @@ set(script_condition_HDRS
 	src/script/condition/scope_condition_base.h
 	src/script/condition/scripted_condition.h
 	src/script/condition/scripted_condition_condition.h
+	src/script/condition/settlement_condition.h
 	src/script/condition/settlement_type_condition.h
 	src/script/condition/source_character_condition.h
 	src/script/condition/source_site_condition.h

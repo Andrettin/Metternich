@@ -190,6 +190,11 @@ public:
 		return this->population_units;
 	}
 
+	int get_population_unit_count() const
+	{
+		return static_cast<int>(this->get_population_units().size());
+	}
+
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
 	void clear_population_units();
