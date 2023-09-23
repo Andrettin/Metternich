@@ -31,6 +31,7 @@
 #include "script/effect/location_effect.h"
 #include "script/effect/migrate_to_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
+#include "script/effect/population_scaled_commodity_effect.h"
 #include "script/effect/provincial_capital_effect.h"
 #include "script/effect/random_global_population_unit_effect.h"
 #include "script/effect/random_list_effect.h"
@@ -61,6 +62,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		static const std::string percent_suffix = "_percent";
+		static const std::string population_scaled_commodity_prefix = "population_scaled_";
 
 		if (key == "create_military_unit") {
 			return std::make_unique<create_military_unit_effect>(value, effect_operator);
@@ -72,6 +74,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<wealth_effect<scope_type>>(value, effect_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);
+		} else if (key.starts_with(population_scaled_commodity_prefix) && commodity::try_get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size())) != nullptr) {
+			const commodity *commodity = commodity::get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size()));
+			return std::make_unique<population_scaled_commodity_effect>(commodity, value, effect_operator);
 		} else if (key.ends_with(percent_suffix) && commodity::try_get(key.substr(0, key.size() - percent_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - percent_suffix.size()));
 			return std::make_unique<commodity_percent_effect>(commodity, value, effect_operator);

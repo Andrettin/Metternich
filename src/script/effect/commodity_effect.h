@@ -23,6 +23,11 @@ public:
 		return identifier;
 	}
 
+	virtual void check() const override
+	{
+		assert_throw(this->commodity != nullptr);
+	}
+
 	virtual void do_assignment_effect(const country *scope) const override
 	{
 		scope->get_game_data()->set_stored_commodity(this->commodity, this->quantity);
@@ -54,17 +59,17 @@ public:
 
 	virtual std::string get_assignment_string() const override
 	{
-		return "Set " + string::highlight(this->commodity->get_name())  + " to " + std::to_string(this->quantity);
+		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), std::to_string(this->quantity));
 	}
 
 	virtual std::string get_addition_string() const override
 	{
-		return "Gain " + std::to_string(this->quantity) + " " + string::highlight(this->commodity->get_name());
+		return std::format("Gain {} {}", std::to_string(this->quantity), string::highlight(this->commodity->get_name()));
 	}
 
 	virtual std::string get_subtraction_string() const override
 	{
-		return "Lose " + std::to_string(this->quantity) + " " + string::highlight(this->commodity->get_name());
+		return std::format("Lose {} {}", std::to_string(this->quantity), string::highlight(this->commodity->get_name()));
 	}
 
 private:

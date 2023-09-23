@@ -133,11 +133,11 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<ruler_condition>(value, condition_operator);
 		} else if (key == "wealth") {
 			return std::make_unique<wealth_condition<scope_type>>(value, condition_operator);
+		} else if (commodity::try_get(key) != nullptr) {
+			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		} else if (key.starts_with(population_scaled_commodity_prefix) && commodity::try_get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size()));
 			return std::make_unique<population_scaled_commodity_condition>(commodity, value, condition_operator);
-		} else if (commodity::try_get(key) != nullptr) {
-			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
 		if (key == "artillery") {

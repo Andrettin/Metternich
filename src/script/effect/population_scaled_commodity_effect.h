@@ -5,22 +5,23 @@
 #include "economy/commodity.h"
 #include "script/effect/effect.h"
 #include "util/assert_util.h"
+#include "util/fractional_int.h"
 #include "util/string_util.h"
 
 namespace metternich {
 
-class commodity_percent_effect final : public effect<const country>
+class population_scaled_commodity_effect final : public effect<const country>
 {
 public:
-	explicit commodity_percent_effect(const commodity *commodity, const std::string &value, const gsml_operator effect_operator)
-		: effect(effect_operator), commodity(commodity)
+	explicit population_scaled_commodity_effect(const metternich::commodity *commodity, const std::string &value, const gsml_operator effect_operator)
+		: effect<const country>(effect_operator), commodity(commodity)
 	{
-		this->percent = std::stoi(value);
+		this->base_quantity = centesimal_int(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string identifier = "commodity_percent";
+		static const std::string identifier = "population_scaled_commodity";
 		return identifier;
 	}
 
@@ -32,7 +33,7 @@ public:
 	int get_quantity(const country *scope) const
 	{
 		const int stored_commodity = scope->get_game_data()->get_stored_commodity(this->commodity);
-		return stored_commodity * this->percent / 100;
+		return (this->base_quantity * scope->get_game_data()->get_population_unit_count()).to_int();
 	}
 
 	virtual void do_assignment_effect(const country *scope) const override
@@ -42,12 +43,26 @@ public:
 
 	virtual void do_addition_effect(const country *scope) const override
 	{
-		scope->get_game_data()->change_stored_commodity(this->commodity, this->get_quantity(scope));
+		int change = this->get_quantity(scope);
+
+		const int storage = scope->get_game_data()->get_stored_commodity(this->commodity);
+		if (change < 0 && std::abs(change) > storage) {
+			change = -storage;
+		}
+
+		scope->get_game_data()->change_stored_commodity(this->commodity, change);
 	}
 
 	virtual void do_subtraction_effect(const country *scope) const override
 	{
-		scope->get_game_data()->change_stored_commodity(this->commodity, this->get_quantity(scope) * -1);
+		int change = -this->get_quantity(scope);
+
+		const int storage = scope->get_game_data()->get_stored_commodity(this->commodity);
+		if (change < 0 && std::abs(change) > storage) {
+			change = -storage;
+		}
+
+		scope->get_game_data()->change_stored_commodity(this->commodity, change);
 	}
 
 	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
@@ -75,7 +90,7 @@ public:
 
 private:
 	const metternich::commodity *commodity = nullptr;
-	int percent = 0;
+	centesimal_int base_quantity;
 };
 
 }
