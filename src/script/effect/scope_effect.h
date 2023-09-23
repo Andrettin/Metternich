@@ -1,6 +1,7 @@
 #pragma once
 
 #include "script/effect/scope_effect_base.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -21,7 +22,7 @@ public:
 			return std::string();
 		}
 
-		return scope->get_scope_name();
+		return string::highlight(scope->get_scope_name());
 	}
 
 	virtual scope_type *get_scope(const upper_scope_type *upper_scope) const
