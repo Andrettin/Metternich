@@ -657,6 +657,7 @@ void site_game_data::clear_population_units()
 void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype)
 {
 	assert_throw(this->site->is_settlement());
+	assert_throw(this->is_built());
 
 	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, this->site);
 	this->get_province()->get_game_data()->add_population_unit(population_unit.get());

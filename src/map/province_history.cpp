@@ -6,6 +6,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/site_history.h"
 
 namespace metternich {
@@ -45,6 +46,10 @@ void province_history::distribute_population()
 
 		//subtract the predefined population of settlements in the province from that of the province
 		for (const site *settlement : this->province->get_game_data()->get_settlement_sites()) {
+			if (!settlement->get_game_data()->is_built()) {
+				continue;
+			}
+
 			const site_history *settlement_history = settlement->get_history();
 			const int settlement_group_population = settlement_history->get_group_population(group_key);
 
@@ -63,6 +68,10 @@ void province_history::distribute_population()
 		const int64_t population_per_settlement = remaining_population / unpopulated_settlement_count;
 
 		for (const site *settlement : this->province->get_game_data()->get_settlement_sites()) {
+			if (!settlement->get_game_data()->is_built()) {
+				continue;
+			}
+
 			site_history *settlement_history = settlement->get_history();
 			const int settlement_group_population = settlement_history->get_group_population(group_key);
 			settlement_history->set_group_population(group_key, population_per_settlement + settlement_group_population);

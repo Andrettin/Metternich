@@ -7,6 +7,7 @@
 #include "map/province_history.h"
 #include "map/region.h"
 #include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/site_history.h"
 #include "util/vector_util.h"
 
@@ -72,6 +73,10 @@ void region_history::distribute_population()
 			int province_total_settlement_group_population = 0;
 
 			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+				if (!settlement->get_game_data()->is_built()) {
+					continue;
+				}
+
 				province_total_settlement_group_population += settlement->get_history()->get_group_population(group_key);
 			}
 
