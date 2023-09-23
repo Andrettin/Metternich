@@ -60,7 +60,11 @@ void population::change_type_count(const population_type *type, const int change
 
 QVariantList population::get_culture_counts_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_culture_counts());
+	QVariantList counts = archimedes::map::to_qvariant_list(this->get_culture_counts());
+	std::sort(counts.begin(), counts.end(), [](const QVariant &lhs, const QVariant &rhs) {
+		return lhs.toMap().value("value").toInt() > rhs.toMap().value("value").toInt();
+	});
+	return counts;
 }
 
 void population::change_culture_count(const culture *culture, const int change)
@@ -90,7 +94,11 @@ void population::change_culture_count(const culture *culture, const int change)
 
 QVariantList population::get_religion_counts_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_religion_counts());
+	QVariantList counts = archimedes::map::to_qvariant_list(this->get_religion_counts());
+	std::sort(counts.begin(), counts.end(), [](const QVariant &lhs, const QVariant &rhs) {
+		return lhs.toMap().value("value").toInt() > rhs.toMap().value("value").toInt();
+	});
+	return counts;
 }
 
 void population::change_religion_count(const metternich::religion *religion, const int change)

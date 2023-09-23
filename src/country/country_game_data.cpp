@@ -1134,7 +1134,11 @@ QVariantList country_game_data::get_vassal_resource_counts_qvariant_list() const
 
 QVariantList country_game_data::get_tile_terrain_counts_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_tile_terrain_counts());
+	QVariantList counts = archimedes::map::to_qvariant_list(this->get_tile_terrain_counts());
+	std::sort(counts.begin(), counts.end(), [](const QVariant &lhs, const QVariant &rhs) {
+		return lhs.toMap().value("value").toInt() > rhs.toMap().value("value").toInt();
+	});
+	return counts;
 }
 
 void country_game_data::add_known_country(const metternich::country *other_country)
