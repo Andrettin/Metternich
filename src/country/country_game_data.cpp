@@ -1769,11 +1769,13 @@ void country_game_data::decrease_population()
 {
 	//disband population unit, if possible
 	if (!this->population_units.empty()) {
-		this->change_population_growth(1);
 		population_unit *population_unit = this->choose_starvation_population_unit();
-		population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
-		population_unit->get_settlement()->get_game_data()->pop_population_unit(population_unit);
-		return;
+		if (population_unit != nullptr) {
+			this->change_population_growth(1);
+			population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
+			population_unit->get_settlement()->get_game_data()->pop_population_unit(population_unit);
+			return;
+		}
 	}
 
 	//disband civilian unit, if possible
@@ -1818,6 +1820,11 @@ population_unit *country_game_data::choose_starvation_population_unit()
 	std::vector<population_unit *> population_units;
 
 	for (population_unit *population_unit : this->get_population_units()) {
+		if (population_unit->get_settlement()->get_game_data()->get_population_unit_count() == 1) {
+			//do not remove a settlement's last population unit
+			continue;
+		}
+
 		if (
 			population_units.empty()
 			|| population_units.at(0)->get_type()->get_output_value() > population_unit->get_type()->get_output_value()
@@ -1829,7 +1836,10 @@ population_unit *country_game_data::choose_starvation_population_unit()
 		}
 	}
 
-	assert_throw(!population_units.empty());
+	if (population_units.empty()) {
+		return nullptr;
+	}
+
 	return vector::get_random(population_units);
 }
 
