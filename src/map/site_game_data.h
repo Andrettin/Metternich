@@ -42,6 +42,8 @@ class site_game_data final : public QObject
 	Q_PROPERTY(metternich::improvement* improvement READ get_improvement_unconst NOTIFY improvement_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
+	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
+	Q_PROPERTY(int housing READ get_housing NOTIFY housing_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 
 public:
@@ -209,6 +211,21 @@ public:
 		return this->population.get();
 	}
 
+	int get_housing() const
+	{
+		return this->housing;
+	}
+
+	void change_housing(const int change)
+	{
+		if (change == 0) {
+			return;
+		}
+
+		this->housing += change;
+		emit housing_changed();
+	}
+
 	int get_free_food_consumption() const
 	{
 		return this->free_food_consumption;
@@ -265,6 +282,7 @@ signals:
 	void improvement_changed();
 	void settlement_type_changed();
 	void population_units_changed();
+	void housing_changed();
 	void commodity_outputs_changed();
 
 private:
@@ -279,6 +297,7 @@ private:
 	int score = 0;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
+	int housing = 0;
 	int free_food_consumption = 0;
 	commodity_map<int> base_commodity_outputs;
 	commodity_map<int> commodity_outputs;

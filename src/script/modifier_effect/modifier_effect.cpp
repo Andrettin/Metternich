@@ -33,6 +33,7 @@
 #include "script/modifier_effect/free_consulate_modifier_effect.h"
 #include "script/modifier_effect/free_infantry_promotion_modifier_effect.h"
 #include "script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h"
+#include "script/modifier_effect/housing_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
 #include "script/modifier_effect/land_damage_modifier_effect.h"
 #include "script/modifier_effect/land_morale_recovery_modifier_effect.h"
@@ -133,6 +134,17 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (key == "melee") {
 			return std::make_unique<melee_modifier_effect>(value);
 		}
+	} else if constexpr (std::is_same_v<scope_type, const site>) {
+		static const std::string commodity_bonus_suffix = "_bonus";
+
+		if (key == "housing") {
+			return std::make_unique<housing_modifier_effect>(value);
+		} else if (key.ends_with(commodity_bonus_suffix)) {
+			const size_t commodity_identifier_size = key.size() - commodity_bonus_suffix.size();
+			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
+
+			return std::make_unique<commodity_bonus_modifier_effect>(commodity, value);
+		}
 	}
 	
 	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province>) {
@@ -172,7 +184,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		}
 	}
 
-	throw std::runtime_error("Invalid property modifier effect: \"" + key + "\".");
+	throw std::runtime_error(std::format("Invalid property modifier effect: \"{}\".", key));
 }
 
 

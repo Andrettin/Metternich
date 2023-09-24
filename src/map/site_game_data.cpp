@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
+#include "database/defines.h"
 #include "economy/resource.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
@@ -53,6 +54,7 @@ void site_game_data::reset_non_map_data()
 	this->culture = nullptr;
 	this->religion = nullptr;
 	this->settlement_type = nullptr;
+	this->housing = defines::get()->get_base_housing();
 	this->free_food_consumption = site_game_data::base_free_food_consumption;
 	this->score = this->site->is_settlement() ? site_game_data::base_settlement_score : 0;
 	this->commodity_outputs.clear();

@@ -126,15 +126,6 @@ int defines::get_scaled_tile_height() const
 	return (this->get_tile_height() * preferences::get()->get_scale_factor()).to_int();
 }
 
-void defines::set_default_settlement_image_filepath(const std::filesystem::path &filepath)
-{
-	if (filepath == this->get_default_settlement_image_filepath()) {
-		return;
-	}
-
-	this->default_settlement_image_filepath = database::get()->get_graphics_filepath(filepath);
-}
-
 void defines::set_river_image_filepath(const std::filesystem::path &filepath)
 {
 	if (filepath == this->get_river_image_filepath()) {

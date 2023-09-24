@@ -601,6 +601,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/free_consulate_modifier_effect.h
 	src/script/modifier_effect/free_infantry_promotion_modifier_effect.h
 	src/script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h
+	src/script/modifier_effect/housing_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
 	src/script/modifier_effect/land_damage_modifier_effect.h
 	src/script/modifier_effect/land_morale_recovery_modifier_effect.h

@@ -242,6 +242,7 @@ void country_game_data::do_population_growth()
 		}
 
 		int food_consumption = this->get_food_consumption();
+		int available_housing = 0;
 
 		for (const province *province : this->get_provinces()) {
 			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
@@ -250,12 +251,15 @@ void country_game_data::do_population_growth()
 				}
 
 				food_consumption -= settlement->get_game_data()->get_free_food_consumption();
+				available_housing += settlement->get_game_data()->get_housing() - settlement->get_game_data()->get_population_unit_count();
 			}
 		}
 
 		const int net_food = stored_food - food_consumption;
+		available_housing = std::max(0, available_housing);
 
-		this->change_population_growth(net_food);
+		const int population_growth_change = std::min(net_food, available_housing);
+		this->change_population_growth(population_growth_change);
 
 		while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
 			this->grow_population();

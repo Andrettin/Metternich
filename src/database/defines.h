@@ -42,6 +42,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
 	Q_PROPERTY(int population_per_unit MEMBER population_per_unit READ get_population_per_unit)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
+	Q_PROPERTY(int base_housing MEMBER base_housing READ get_base_housing NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* research_commodity MEMBER research_commodity NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* advisor_commodity MEMBER advisor_commodity NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* leader_commodity MEMBER leader_commodity NOTIFY changed)
@@ -52,7 +53,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QColor selected_country_color MEMBER selected_country_color READ get_selected_country_color)
 	Q_PROPERTY(QColor ocean_color MEMBER ocean_color READ get_ocean_color)
 	Q_PROPERTY(QColor minimap_ocean_color MEMBER minimap_ocean_color READ get_minimap_ocean_color)
-	Q_PROPERTY(std::filesystem::path default_settlement_image_filepath MEMBER default_settlement_image_filepath WRITE set_default_settlement_image_filepath)
 	Q_PROPERTY(std::filesystem::path river_image_filepath MEMBER river_image_filepath WRITE set_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path rivermouth_image_filepath MEMBER rivermouth_image_filepath WRITE set_rivermouth_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
@@ -169,6 +169,11 @@ public:
 		return this->population_growth_threshold;
 	}
 
+	int get_base_housing() const
+	{
+		return this->base_housing;
+	}
+
 	const commodity *get_research_commodity() const
 	{
 		return this->research_commodity;
@@ -228,13 +233,6 @@ public:
 
 		throw std::runtime_error("Failed to get color for diplomacy state: " + static_cast<int>(state));
 	}
-
-	const std::filesystem::path &get_default_settlement_image_filepath() const
-	{
-		return this->default_settlement_image_filepath;
-	}
-
-	void set_default_settlement_image_filepath(const std::filesystem::path &filepath);
 
 	const std::filesystem::path &get_river_image_filepath() const
 	{
@@ -302,6 +300,7 @@ private:
 	population_class *default_literate_population_class = nullptr;
 	int population_per_unit = 10000;
 	int population_growth_threshold = 100;
+	int base_housing = 0;
 	commodity *research_commodity = nullptr;
 	commodity *advisor_commodity = nullptr;
 	commodity *leader_commodity = nullptr;
@@ -313,7 +312,6 @@ private:
 	QColor ocean_color;
 	QColor minimap_ocean_color;
 	std::map<diplomacy_state, QColor> diplomacy_state_colors;
-	std::filesystem::path default_settlement_image_filepath;
 	std::filesystem::path river_image_filepath;
 	std::filesystem::path rivermouth_image_filepath;
 	std::filesystem::path route_image_filepath;
