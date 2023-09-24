@@ -20,7 +20,7 @@ public:
 		const QVariant game_rule_variant = preferences::get()->get_game_rules()->property(value.c_str());
 
 		assert_throw(game_rule_variant.isValid());
-		assert_throw(game_rule_variant.type() == QVariant::Bool);
+		assert_throw(game_rule_variant.typeId() == QMetaType::Type::Bool);
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -37,7 +37,7 @@ public:
 		const QVariant game_rule_variant = game::get()->get_rules()->property(this->game_rule.c_str());
 
 		assert_throw(game_rule_variant.isValid());
-		assert_throw(game_rule_variant.type() == QVariant::Bool);
+		assert_throw(game_rule_variant.typeId() == QMetaType::Type::Bool);
 
 		return game_rule_variant.toBool();
 	}
