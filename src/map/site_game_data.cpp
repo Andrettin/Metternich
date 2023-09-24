@@ -623,6 +623,21 @@ void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier
 	}
 }
 
+void site_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
+{
+	if (improvement->get_output_commodity() != nullptr) {
+		this->change_base_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier() * multiplier);
+	}
+
+	if (this->get_province() != nullptr && this->get_resource() != nullptr) {
+		for (const auto &[commodity, value] : this->get_province()->get_game_data()->get_improved_resource_commodity_bonuses(this->get_resource())) {
+			this->change_base_commodity_output(commodity, value * multiplier);
+		}
+	}
+
+	emit improvement_changed();
+}
+
 void site_game_data::change_score(const int change)
 {
 	if (change == 0) {
@@ -750,14 +765,6 @@ void site_game_data::calculate_commodity_outputs()
 	commodity_map<int> commodity_output_modifiers = this->get_commodity_output_modifiers();
 
 	const province *province = this->get_province();
-
-	const improvement *improvement = this->get_improvement();
-	if (improvement != nullptr) {
-		if (improvement->get_output_commodity() != nullptr) {
-			outputs[improvement->get_output_commodity()] = improvement->get_output_multiplier();
-		}
-	}
-
 	if (province != nullptr) {
 		for (auto &[commodity, output] : outputs) {
 			for (const auto &[threshold, bonus] : province->get_game_data()->get_commodity_bonus_for_tile_threshold_map(commodity)) {

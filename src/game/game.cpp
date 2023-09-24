@@ -807,6 +807,8 @@ void game::apply_sites()
 				if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
 					tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
 				}
+
+				site->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
 			}
 
 			if (site_history->is_resource_discovered()) {

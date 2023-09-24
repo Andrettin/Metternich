@@ -184,6 +184,7 @@ public:
 	void on_settlement_built(const int multiplier);
 	void on_building_gained(const building_type *building, const int multiplier);
 	void on_wonder_gained(const wonder *wonder, const int multiplier);
+	void on_improvement_gained(const improvement *improvement, const int multiplier);
 
 	int get_score() const
 	{
