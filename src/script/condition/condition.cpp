@@ -20,6 +20,7 @@
 #include "script/condition/any_settlement_condition.h"
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
+#include "script/condition/available_housing_condition.h"
 #include "script/condition/birth_year_condition.h"
 #include "script/condition/can_have_trait_condition.h"
 #include "script/condition/capital_condition.h"
@@ -45,6 +46,7 @@
 #include "script/condition/has_resource_condition.h"
 #include "script/condition/has_route_condition.h"
 #include "script/condition/has_terrain_condition.h"
+#include "script/condition/housing_condition.h"
 #include "script/condition/ideology_condition.h"
 #include "script/condition/improvement_condition.h"
 #include "script/condition/infantry_condition.h"
@@ -214,6 +216,14 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
 		} else if (key == "population_unit_count") {
 			return std::make_unique<population_unit_count_condition<scope_type>>(value, condition_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, site>) {
+		if (key == "available_housing") {
+			return std::make_unique<available_housing_condition<scope_type>>(value, condition_operator);
+		} else if (key == "housing") {
+			return std::make_unique<housing_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

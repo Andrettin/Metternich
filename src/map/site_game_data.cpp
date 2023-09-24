@@ -709,6 +709,21 @@ void site_game_data::create_population_unit(const population_type *type, const m
 	this->add_population_unit(std::move(population_unit));
 }
 
+void site_game_data::change_housing(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->housing += change;
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_housing(change);
+	}
+
+	emit housing_changed();
+}
+
 void site_game_data::change_base_commodity_output(const commodity *commodity, const int change)
 {
 	if (change == 0) {

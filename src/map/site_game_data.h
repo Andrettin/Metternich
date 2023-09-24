@@ -218,14 +218,11 @@ public:
 		return this->housing;
 	}
 
-	void change_housing(const int change)
-	{
-		if (change == 0) {
-			return;
-		}
+	void change_housing(const int change);
 
-		this->housing += change;
-		emit housing_changed();
+	int get_available_housing() const
+	{
+		return this->get_housing() - this->get_population_unit_count();
 	}
 
 	int get_free_food_consumption() const

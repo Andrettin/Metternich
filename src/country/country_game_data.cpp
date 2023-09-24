@@ -242,7 +242,6 @@ void country_game_data::do_population_growth()
 		}
 
 		int food_consumption = this->get_food_consumption();
-		int available_housing = 0;
 
 		for (const province *province : this->get_provinces()) {
 			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
@@ -251,12 +250,12 @@ void country_game_data::do_population_growth()
 				}
 
 				food_consumption -= settlement->get_game_data()->get_free_food_consumption();
-				available_housing += settlement->get_game_data()->get_housing() - settlement->get_game_data()->get_population_unit_count();
 			}
 		}
 
 		const int net_food = stored_food - food_consumption;
-		available_housing = std::max(0, available_housing);
+
+		const int available_housing = std::max(0, this->get_available_housing());
 
 		const int population_growth_change = std::min(net_food, available_housing);
 		this->change_population_growth(population_growth_change);
@@ -801,6 +800,10 @@ void country_game_data::on_province_gained(const province *province, const int m
 	}
 
 	for (const site *settlement : province_game_data->get_settlement_sites()) {
+		if (!settlement->get_game_data()->is_built()) {
+			continue;
+		}
+
 		for (const qunique_ptr<settlement_building_slot> &building_slot : settlement->get_game_data()->get_building_slots()) {
 			const building_type *building = building_slot->get_building();
 			if (building != nullptr) {
@@ -809,7 +812,8 @@ void country_game_data::on_province_gained(const province *province, const int m
 			}
 		}
 
-		this->change_score(settlement->get_game_data()->get_score());
+		this->change_housing(settlement->get_game_data()->get_housing() * multiplier);
+		this->change_score(settlement->get_game_data()->get_score() * multiplier);
 	}
 
 	for (const auto &[resource, commodity_map] : this->improved_resource_commodity_bonuses) {
@@ -1757,7 +1761,17 @@ void country_game_data::grow_population()
 		throw std::runtime_error("Tried to grow population in a country which has no pre-existing population.");
 	}
 
-	const population_unit *population_unit = vector::get_random(this->population_units);
+	std::vector<population_unit *> potential_base_population_units = this->population_units;
+
+	std::erase_if(potential_base_population_units, [this](const population_unit *population_unit) {
+		if (population_unit->get_settlement()->get_game_data()->get_available_housing() <= 0) {
+			return true;
+		}
+
+		return false;
+	});
+
+	const population_unit *population_unit = vector::get_random(potential_base_population_units);
 	const metternich::culture *culture = population_unit->get_culture();
 	const metternich::religion *religion = population_unit->get_religion();
 	const phenotype *phenotype = population_unit->get_phenotype();
@@ -3347,7 +3361,7 @@ void country_game_data::set_commodity_throughput_modifier(const commodity *commo
 	}
 }
 
-void country_game_data::change_improved_resource_commodity_bonus(const commodity *commodity, const resource *resource, const int change)
+void country_game_data::change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change)
 {
 	if (change == 0) {
 		return;

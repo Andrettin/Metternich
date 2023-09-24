@@ -457,6 +457,7 @@ set(script_condition_HDRS
 	src/script/condition/any_settlement_condition.h
 	src/script/condition/artillery_condition.h
 	src/script/condition/attacking_commander_condition.h
+	src/script/condition/available_housing_condition.h
 	src/script/condition/birth_year_condition.h
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/capital_condition.h
@@ -483,6 +484,7 @@ set(script_condition_HDRS
 	src/script/condition/has_resource_condition.h
 	src/script/condition/has_route_condition.h
 	src/script/condition/has_terrain_condition.h
+	src/script/condition/housing_condition.h
 	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h
 	src/script/condition/infantry_condition.h
