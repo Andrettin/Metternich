@@ -131,6 +131,8 @@ public:
 	void do_production();
 	void do_research();
 	void do_population_growth();
+	void do_food_consumption(const int food_consumption);
+	void do_starvation();
 	void do_consumption();
 	void do_cultural_change();
 	void do_construction();
@@ -599,6 +601,8 @@ public:
 		return this->get_total_unit_count();
 	}
 
+	int get_net_food_consumption() const;
+
 	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
 
@@ -732,6 +736,8 @@ public:
 	{
 		this->set_stored_commodity(commodity, this->get_stored_commodity(commodity) + value);
 	}
+
+	int get_stored_food() const;
 
 	int get_storage_capacity() const
 	{

@@ -230,28 +230,9 @@ void country_game_data::do_population_growth()
 			return;
 		}
 
-		//this is a copy because we may need to erase elements from the map in the subsequent code
-		const commodity_map<int> stored_commodities = this->get_stored_commodities();
+		const int stored_food = this->get_stored_food();
 
-		int stored_food = 0;
-		for (const auto &[commodity, quantity] : stored_commodities) {
-			if (commodity->is_food()) {
-				stored_food += quantity;
-				this->set_stored_commodity(commodity, 0);
-			}
-		}
-
-		int food_consumption = this->get_food_consumption();
-
-		for (const province *province : this->get_provinces()) {
-			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-				if (!settlement->get_game_data()->is_built()) {
-					continue;
-				}
-
-				food_consumption -= settlement->get_game_data()->get_free_food_consumption();
-			}
-		}
+		int food_consumption = this->get_net_food_consumption();
 
 		const int net_food = stored_food - food_consumption;
 
@@ -260,32 +241,66 @@ void country_game_data::do_population_growth()
 		const int population_growth_change = std::min(net_food, available_housing);
 		this->change_population_growth(population_growth_change);
 
+		if (population_growth_change > 0) {
+			//food consumed for population growth
+			food_consumption += population_growth_change;
+		}
+		this->do_food_consumption(food_consumption);
+
 		while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
 			this->grow_population();
 		}
 
-		int starvation_count = 0;
+		if (this->get_population_growth() < 0) {
+			this->do_starvation();
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error doing population growth for country \"{}\".", this->country->get_identifier())));
+	}
+}
 
-		while (this->get_population_growth() < 0) {
-			//starvation
-			this->decrease_population();
-			++starvation_count;
+void country_game_data::do_food_consumption(const int food_consumption)
+{
+	int remaining_food_consumption = food_consumption;
 
-			if (this->get_food_consumption() == 0) {
-				this->set_population_growth(0);
+	//this is a copy because we may need to erase elements from the map in the subsequent code
+	const commodity_map<int> stored_commodities = this->get_stored_commodities();
+
+	for (const auto &[commodity, quantity] : stored_commodities) {
+		if (commodity->is_food()) {
+			const int consumed_food = std::min(remaining_food_consumption, quantity);
+			this->change_stored_commodity(commodity, -consumed_food);
+
+			remaining_food_consumption -= consumed_food;
+
+			if (remaining_food_consumption == 0) {
 				break;
 			}
 		}
+	}
+}
 
-		if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
-			const bool plural = starvation_count > 1;
+void country_game_data::do_starvation()
+{
+	int starvation_count = 0;
 
-			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+	while (this->get_population_growth() < 0) {
+		//starvation
+		this->decrease_population();
+		++starvation_count;
 
-			engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
+		if (this->get_food_consumption() == 0) {
+			this->set_population_growth(0);
+			break;
 		}
-	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Error doing population growth for country \"" + this->country->get_identifier() + "\"."));
+	}
+
+	if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
+		const bool plural = starvation_count > 1;
+
+		const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+		engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
 	}
 }
 
@@ -1891,6 +1906,23 @@ QObject *country_game_data::get_population_type_small_icon(population_type *type
 	return const_cast<icon *>(best_icon);
 }
 
+int country_game_data::get_net_food_consumption() const
+{
+	int food_consumption = this->get_food_consumption();
+
+	for (const province *province : this->get_provinces()) {
+		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+			if (!settlement->get_game_data()->is_built()) {
+				continue;
+			}
+
+			food_consumption -= settlement->get_game_data()->get_free_food_consumption();
+		}
+	}
+
+	return food_consumption;
+}
+
 QVariantList country_game_data::get_building_slots_qvariant_list() const
 {
 	std::vector<const country_building_slot *> available_building_slots;
@@ -2070,6 +2102,19 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 	if (game::get()->is_running()) {
 		emit stored_commodities_changed();
 	}
+}
+
+int country_game_data::get_stored_food() const
+{
+	int stored_food = 0;
+
+	for (const auto &[commodity, quantity] : this->get_stored_commodities()) {
+		if (commodity->is_food()) {
+			stored_food += quantity;
+		}
+	}
+
+	return stored_food;
 }
 
 void country_game_data::set_storage_capacity(const int capacity)
