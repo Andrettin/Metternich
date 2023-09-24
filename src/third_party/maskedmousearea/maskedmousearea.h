@@ -74,12 +74,12 @@ protected:
     //Metternich start
     void mouseMoveEvent(QMouseEvent *event) override
     {
-        setMousePos(event->localPos());
+        setMousePos(event->position());
     }
 
     void hoverMoveEvent(QHoverEvent *event) override
     {
-        setMousePos(event->posF());
+        setMousePos(event->position());
     }
     //Metternich end
 
