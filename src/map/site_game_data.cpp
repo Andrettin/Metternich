@@ -735,6 +735,9 @@ void site_game_data::calculate_commodity_outputs()
 {
 	commodity_map<int> outputs = this->base_commodity_outputs;
 
+	int output_modifier = this->get_output_modifier();
+	commodity_map<int> commodity_output_modifiers = this->get_commodity_output_modifiers();
+
 	const province *province = this->get_province();
 
 	const improvement *improvement = this->get_improvement();
@@ -742,14 +745,14 @@ void site_game_data::calculate_commodity_outputs()
 		if (improvement->get_output_commodity() != nullptr) {
 			outputs[improvement->get_output_commodity()] = improvement->get_output_multiplier();
 		}
+	}
 
-		const resource *resource = this->get_tile()->get_resource();
-		if (province != nullptr && resource != nullptr) {
-			for (const auto &[commodity, resource_map] : province->get_game_data()->get_commodity_bonuses_per_improved_resources()) {
-				const auto find_iterator = resource_map.find(resource);
-				if (find_iterator != resource_map.end()) {
-					outputs[commodity] += find_iterator->second;
-				}
+	const resource *resource = this->get_resource();
+	if (province != nullptr && resource != nullptr && (improvement != nullptr || this->get_settlement_type() != nullptr)) {
+		for (const auto &[commodity, resource_map] : province->get_game_data()->get_commodity_bonuses_per_improved_resources()) {
+			const auto find_iterator = resource_map.find(resource);
+			if (find_iterator != resource_map.end()) {
+				outputs[commodity] += find_iterator->second;
 			}
 		}
 	}
@@ -762,9 +765,30 @@ void site_game_data::calculate_commodity_outputs()
 				}
 			}
 		}
+
+		output_modifier += province->get_game_data()->get_output_modifier();
+
+		for (const auto &[commodity, modifier] : province->get_game_data()->get_commodity_output_modifiers()) {
+			commodity_output_modifiers[commodity] += modifier;
+		}
 	}
 
-	for (const auto &[commodity, output] : outputs) {
+	if (this->get_owner() != nullptr) {
+		output_modifier += this->get_owner()->get_game_data()->get_output_modifier();
+
+		for (const auto &[commodity, modifier] : this->get_owner()->get_game_data()->get_commodity_output_modifiers()) {
+			commodity_output_modifiers[commodity] += modifier;
+		}
+	}
+
+	for (auto &[commodity, output] : outputs) {
+		const int modifier = output_modifier + commodity_output_modifiers[commodity];
+
+		if (modifier != 0) {
+			output *= modifier;
+			output /= 100;
+		}
+
 		this->set_commodity_output(commodity, output);
 	}
 }

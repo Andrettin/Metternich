@@ -231,6 +231,11 @@ public:
 		return this->free_food_consumption;
 	}
 
+	const commodity_map<int> &get_base_commodity_outputs() const
+	{
+		return this->base_commodity_outputs;
+	}
+
 	void change_base_commodity_output(const commodity *commodity, const int change);
 
 	const commodity_map<int> &get_commodity_outputs() const
@@ -258,6 +263,68 @@ public:
 
 	void set_commodity_output(const commodity *commodity, const int output);
 	void calculate_commodity_outputs();
+
+	int get_output_modifier() const
+	{
+		return this->output_modifier;
+	}
+
+	void set_output_modifier(const int value)
+	{
+		if (value == this->get_output_modifier()) {
+			return;
+		}
+
+		this->output_modifier = value;
+
+		this->calculate_commodity_outputs();
+	}
+
+	void change_output_modifier(const int value)
+	{
+		this->set_output_modifier(this->get_output_modifier() + value);
+	}
+
+	const commodity_map<int> &get_commodity_output_modifiers() const
+	{
+		return this->commodity_output_modifiers;
+	}
+
+	int get_commodity_output_modifier(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_output_modifiers.find(commodity);
+
+		if (find_iterator != this->commodity_output_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_commodity_output_modifier(const commodity *commodity, const int value)
+	{
+		if (value == this->get_commodity_output_modifier(commodity)) {
+			return;
+		}
+
+		if (value == 0) {
+			this->commodity_output_modifiers.erase(commodity);
+		} else {
+			this->commodity_output_modifiers[commodity] = value;
+		}
+
+		this->calculate_commodity_outputs();
+	}
+
+	void change_commodity_output_modifier(const commodity *commodity, const int value)
+	{
+		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + value);
+	}
+
+	bool produces_commodity(const commodity *commodity) const
+	{
+		return this->get_commodity_outputs().contains(commodity);
+	}
 
 	const std::vector<military_unit *> &get_visiting_military_units() const
 	{
@@ -301,6 +368,8 @@ private:
 	int free_food_consumption = 0;
 	commodity_map<int> base_commodity_outputs;
 	commodity_map<int> commodity_outputs;
+	int output_modifier = 0;
+	commodity_map<int> commodity_output_modifiers;
 	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site
 };
 

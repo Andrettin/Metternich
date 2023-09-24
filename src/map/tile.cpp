@@ -219,4 +219,13 @@ void tile::calculate_commodity_outputs()
 	}
 }
 
+bool tile::produces_commodity(const commodity *commodity) const
+{
+	if (this->get_site() != nullptr) {
+		this->get_site()->get_game_data()->produces_commodity(commodity);
+	}
+
+	return false;
+}
+
 }

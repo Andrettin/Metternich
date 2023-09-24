@@ -623,6 +623,33 @@ QString province_game_data::get_military_unit_category_name(const military_unit_
 	return best_name;
 }
 
+
+void province_game_data::calculate_settlement_commodity_outputs()
+{
+	for (const site *settlement : this->get_settlement_sites()) {
+		if (!settlement->get_game_data()->is_built()) {
+			continue;
+		}
+
+		settlement->get_game_data()->calculate_commodity_outputs();
+	}
+}
+
+void province_game_data::calculate_settlement_commodity_output(const commodity *commodity)
+{
+	for (const site *settlement : this->get_settlement_sites()) {
+		if (!settlement->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (!settlement->get_game_data()->produces_commodity(commodity) && !settlement->get_game_data()->get_base_commodity_outputs().contains(commodity)) {
+			continue;
+		}
+
+		settlement->get_game_data()->calculate_commodity_outputs();
+	}
+}
+
 void province_game_data::set_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value)
 {
 	const int old_value = this->get_commodity_bonus_per_improved_resource(commodity, resource);

@@ -292,6 +292,9 @@ public:
 	Q_INVOKABLE QObject *get_military_unit_category_icon(const metternich::military_unit_category category) const;
 	Q_INVOKABLE QString get_military_unit_category_name(const metternich::military_unit_category category) const;
 
+	void calculate_settlement_commodity_outputs();
+	void calculate_settlement_commodity_output(const commodity *commodity);
+
 	int get_output_modifier() const
 	{
 		return this->output_modifier;
@@ -304,11 +307,18 @@ public:
 		}
 
 		this->output_modifier = value;
+
+		this->calculate_settlement_commodity_outputs();
 	}
 
 	void change_output_modifier(const int value)
 	{
 		this->set_output_modifier(this->get_output_modifier() + value);
+	}
+
+	const commodity_map<int> &get_commodity_output_modifiers() const
+	{
+		return this->commodity_output_modifiers;
 	}
 
 	int get_commodity_output_modifier(const commodity *commodity) const
@@ -333,6 +343,8 @@ public:
 		} else {
 			this->commodity_output_modifiers[commodity] = value;
 		}
+
+		this->calculate_settlement_commodity_output(commodity);
 	}
 
 	void change_commodity_output_modifier(const commodity *commodity, const int value)

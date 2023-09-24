@@ -770,6 +770,9 @@ public:
 		return this->get_commodity_output(commodity) - this->get_commodity_input(commodity);
 	}
 
+	void calculate_settlement_commodity_outputs();
+	void calculate_settlement_commodity_output(const commodity *commodity);
+
 	const commodity_map<int> &get_commodity_consumptions() const
 	{
 		return this->commodity_consumptions;
@@ -1146,6 +1149,11 @@ public:
 	void change_output_modifier(const int value)
 	{
 		this->set_output_modifier(this->get_output_modifier() + value);
+	}
+
+	const commodity_map<int> &get_commodity_output_modifiers() const
+	{
+		return this->commodity_output_modifiers;
 	}
 
 	int get_commodity_output_modifier(const commodity *commodity) const

@@ -2130,6 +2130,20 @@ void country_game_data::change_commodity_output(const commodity *commodity, cons
 	}
 }
 
+void country_game_data::calculate_settlement_commodity_outputs()
+{
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->calculate_settlement_commodity_outputs();
+	}
+}
+
+void country_game_data::calculate_settlement_commodity_output(const commodity *commodity)
+{
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->calculate_settlement_commodity_output(commodity);
+	}
+}
+
 QVariantList country_game_data::get_commodity_consumptions_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_commodity_consumptions());
@@ -3209,6 +3223,8 @@ void country_game_data::set_output_modifier(const int value)
 		}
 	}
 
+	this->calculate_settlement_commodity_outputs();
+
 	if (game::get()->is_running()) {
 		emit output_modifier_changed();
 	}
@@ -3245,6 +3261,8 @@ void country_game_data::set_commodity_output_modifier(const commodity *commodity
 			this->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
 		}
 	}
+
+	this->calculate_settlement_commodity_output(commodity);
 }
 
 void country_game_data::set_throughput_modifier(const int value)

@@ -146,18 +146,12 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<commodity_bonus_modifier_effect>(commodity, value);
 		}
 	}
-	
+
 	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province>) {
 		static const std::string commodity_bonus_for_tile_threshold_suffix = "_bonus_for_tile_threshold";
 		static const std::string commodity_per_improved_resource_infix = "_per_improved_";
-		static const std::string output_modifier_suffix = "_output_modifier";
 
-		if (key == "output_modifier") {
-			return std::make_unique<output_modifier_effect<scope_type>>(value);
-		} else if (key.ends_with(output_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - output_modifier_suffix.size())) != nullptr) {
-			const commodity *commodity = commodity::get(key.substr(0, key.size() - output_modifier_suffix.size()));
-			return std::make_unique<commodity_output_modifier_effect<scope_type>>(commodity, value);
-		} else if (key.ends_with(commodity_bonus_for_tile_threshold_suffix)) {
+		if (key.ends_with(commodity_bonus_for_tile_threshold_suffix)) {
 			const size_t commodity_identifier_size = key.size() - commodity_bonus_for_tile_threshold_suffix.size();
 			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
 
@@ -173,14 +167,14 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, const site>) {
-		static const std::string commodity_bonus_suffix = "_bonus";
+	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
+		static const std::string output_modifier_suffix = "_output_modifier";
 
-		if (key.ends_with(commodity_bonus_suffix)) {
-			const size_t commodity_identifier_size = key.size() - commodity_bonus_suffix.size();
-			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
-
-			return std::make_unique<commodity_bonus_modifier_effect>(commodity, value);
+		if (key == "output_modifier") {
+			return std::make_unique<output_modifier_effect<scope_type>>(value);
+		} else if (key.ends_with(output_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - output_modifier_suffix.size())) != nullptr) {
+			const commodity *commodity = commodity::get(key.substr(0, key.size() - output_modifier_suffix.size()));
+			return std::make_unique<commodity_output_modifier_effect<scope_type>>(commodity, value);
 		}
 	}
 
