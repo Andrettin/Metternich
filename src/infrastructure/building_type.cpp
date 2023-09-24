@@ -76,6 +76,10 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<province>>();
 		database::process_gsml_data(conditions, scope);
 		this->province_conditions = std::move(conditions);
+	} else if (tag == "build_conditions") {
+		auto conditions = std::make_unique<and_condition<site>>();
+		database::process_gsml_data(conditions, scope);
+		this->build_conditions = std::move(conditions);
 	} else if (tag == "settlement_modifier") {
 		this->settlement_modifier = std::make_unique<modifier<const site>>();
 		database::process_gsml_data(this->settlement_modifier, scope);
@@ -207,6 +211,10 @@ void building_type::check() const
 
 	if (this->get_settlement_conditions() != nullptr) {
 		this->get_settlement_conditions()->check_validity();
+	}
+
+	if (this->get_build_conditions() != nullptr) {
+		this->get_build_conditions()->check_validity();
 	}
 
 	if (this->get_required_building() == this) {

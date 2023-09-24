@@ -93,6 +93,17 @@ bool settlement_building_slot::can_maintain_building(const building_type *buildi
 	return building_slot::can_maintain_building(building);
 }
 
+bool settlement_building_slot::can_build_building(const building_type *building) const
+{
+	if (building->get_build_conditions() != nullptr) {
+		if (!building->get_build_conditions()->check(this->get_settlement(), read_only_context(this->get_settlement()))) {
+			return false;
+		}
+	}
+
+	return building_slot::can_build_building(building);
+}
+
 void settlement_building_slot::set_wonder(const metternich::wonder *wonder)
 {
 	if (wonder == this->get_wonder()) {
