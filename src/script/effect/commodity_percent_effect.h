@@ -63,14 +63,24 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return std::format("Gain {} {}", std::to_string(this->get_quantity(scope)), string::highlight(this->commodity->get_name()));
+		const int quantity = this->get_quantity(scope);
+		if (quantity == 0) {
+			return std::string();
+		}
+
+		return std::format("Gain {} {}", std::to_string(quantity), string::highlight(this->commodity->get_name()));
 	}
 
 	virtual std::string get_subtraction_string(const country *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		return std::format("Lose {} {}", std::to_string(this->get_quantity(scope)), string::highlight(this->commodity->get_name()));
+		const int quantity = this->get_quantity(scope);
+		if (quantity == 0) {
+			return std::string();
+		}
+
+		return std::format("Lose {} {}", std::to_string(quantity), string::highlight(this->commodity->get_name()));
 	}
 
 private:
