@@ -73,8 +73,8 @@ void province_game_data::reset_non_map_data()
 	}
 
 	this->population = make_qunique<metternich::population>();
-	connect(this->get_population(), &population::main_culture_changed, this, &province_game_data::set_culture);
-	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::set_religion);
+	connect(this->get_population(), &population::main_culture_changed, this, &province_game_data::on_population_main_culture_changed);
+	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::on_population_main_religion_changed);
 }
 
 void province_game_data::on_map_created()
@@ -153,6 +153,16 @@ void province_game_data::set_owner(const country *country)
 	for (const site *site : this->sites) {
 		if (site->get_game_data()->get_owner() == old_owner) {
 			site->get_game_data()->set_owner(country);
+		}
+	}
+
+	if (this->get_owner() != nullptr) {
+		if (this->get_population()->get_main_culture() == nullptr) {
+			this->set_culture(this->get_owner()->get_culture());
+		}
+
+		if (this->get_population()->get_main_religion() == nullptr) {
+			this->set_religion(this->get_owner()->get_game_data()->get_religion());
 		}
 	}
 
@@ -255,6 +265,27 @@ void province_game_data::set_culture(const metternich::culture *culture)
 			site->get_game_data()->set_culture(culture);
 		}
 	}
+
+	for (const site *settlement : this->get_settlement_sites()) {
+		if (!settlement->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (settlement->get_game_data()->get_population()->get_main_culture() == nullptr) {
+			settlement->get_game_data()->set_culture(this->get_culture());
+		}
+	}
+}
+
+void province_game_data::on_population_main_culture_changed(const metternich::culture *culture)
+{
+	if (culture != nullptr) {
+		this->set_culture(culture);
+	} else if (this->get_owner() != nullptr) {
+		this->set_culture(this->get_owner()->get_culture());
+	} else {
+		this->set_culture(nullptr);
+	}
 }
 
 void province_game_data::set_religion(const metternich::religion *religion)
@@ -265,6 +296,16 @@ void province_game_data::set_religion(const metternich::religion *religion)
 
 	this->religion = religion;
 
+	for (const site *settlement : this->get_settlement_sites()) {
+		if (!settlement->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (settlement->get_game_data()->get_population()->get_main_religion() == nullptr) {
+			settlement->get_game_data()->set_religion(this->get_religion());
+		}
+	}
+
 	if (game::get()->is_running()) {
 		if (this->get_owner() != nullptr) {
 			thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
@@ -274,6 +315,17 @@ void province_game_data::set_religion(const metternich::religion *religion)
 	}
 
 	emit religion_changed();
+}
+
+void province_game_data::on_population_main_religion_changed(const metternich::religion *religion)
+{
+	if (religion != nullptr) {
+		this->set_religion(religion);
+	} else if (this->get_owner() != nullptr) {
+		this->set_religion(this->get_owner()->get_game_data()->get_religion());
+	} else {
+		this->set_religion(nullptr);
+	}
 }
 
 const std::string &province_game_data::get_current_cultural_name() const

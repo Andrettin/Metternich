@@ -62,8 +62,8 @@ void site_game_data::reset_non_map_data()
 	this->visiting_military_units.clear();
 
 	this->population = make_qunique<metternich::population>();
-	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::set_culture);
-	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::set_religion);
+	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::on_population_main_culture_changed);
+	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::on_population_main_religion_changed);
 	if (this->get_province() != nullptr) {
 		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
 	}
@@ -259,6 +259,17 @@ void site_game_data::set_culture(const metternich::culture *culture)
 	emit culture_changed();
 }
 
+void site_game_data::on_population_main_culture_changed(const metternich::culture *culture)
+{
+	if (culture != nullptr) {
+		this->set_culture(culture);
+	} else if (this->get_province() != nullptr) {
+		this->set_culture(this->get_province()->get_game_data()->get_culture());
+	} else {
+		this->set_culture(nullptr);
+	}
+}
+
 void site_game_data::set_religion(const metternich::religion *religion)
 {
 	if (religion == this->get_religion()) {
@@ -276,6 +287,17 @@ void site_game_data::set_religion(const metternich::religion *religion)
 	}
 
 	emit religion_changed();
+}
+
+void site_game_data::on_population_main_religion_changed(const metternich::religion *religion)
+{
+	if (religion != nullptr) {
+		this->set_religion(religion);
+	} else if (this->get_province() != nullptr) {
+		this->set_religion(this->get_province()->get_game_data()->get_religion());
+	} else {
+		this->set_religion(nullptr);
+	}
 }
 
 void site_game_data::set_settlement_type(const metternich::settlement_type *settlement_type)

@@ -110,6 +110,7 @@ private:
 
 public:
 	void set_culture(const metternich::culture *culture);
+	void on_population_main_culture_changed(const metternich::culture *culture);
 
 	const metternich::religion *get_religion() const
 	{
@@ -125,6 +126,7 @@ private:
 
 public:
 	void set_religion(const metternich::religion *religion);
+	void on_population_main_religion_changed(const metternich::religion *religion);
 
 	const std::string &get_current_cultural_name() const;
 

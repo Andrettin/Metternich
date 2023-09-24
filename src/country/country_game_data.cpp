@@ -456,6 +456,12 @@ void country_game_data::set_religion(const metternich::religion *religion)
 
 	this->religion = religion;
 
+	for (const province *province : this->get_provinces()) {
+		if (province->get_game_data()->get_population()->get_main_religion() == nullptr) {
+			province->get_game_data()->set_religion(this->get_religion());
+		}
+	}
+
 	if (game::get()->is_running()) {
 		emit religion_changed();
 	}

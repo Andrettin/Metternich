@@ -46,6 +46,11 @@ public:
 	QVariantList get_culture_counts_qvariant_list() const;
 	void change_culture_count(const culture *culture, const int change);
 
+	const culture *get_main_culture() const
+	{
+		return this->main_culture;
+	}
+
 	void set_main_culture(const culture *culture)
 	{
 		if (culture == this->main_culture) {
@@ -78,6 +83,11 @@ public:
 
 	QVariantList get_religion_counts_qvariant_list() const;
 	void change_religion_count(const religion *religion, const int change);
+
+	const religion *get_main_religion() const
+	{
+		return this->main_religion;
+	}
 
 	void set_main_religion(const religion *religion)
 	{

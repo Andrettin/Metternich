@@ -108,6 +108,7 @@ public:
 	}
 
 	void set_culture(const metternich::culture *culture);
+	void on_population_main_culture_changed(const metternich::culture *culture);
 
 	const std::string &get_current_cultural_name() const;
 
@@ -122,6 +123,7 @@ public:
 	}
 
 	void set_religion(const metternich::religion *religion);
+	void on_population_main_religion_changed(const metternich::religion *religion);
 
 	const metternich::settlement_type *get_settlement_type() const
 	{
