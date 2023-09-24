@@ -39,6 +39,8 @@
 #include "script/condition/event_condition.h"
 #include "script/condition/game_rule_condition.h"
 #include "script/condition/gender_condition.h"
+#include "script/condition/has_building_condition.h"
+#include "script/condition/has_building_class_condition.h"
 #include "script/condition/has_population_culture_condition.h"
 #include "script/condition/has_resource_condition.h"
 #include "script/condition/has_route_condition.h"
@@ -204,6 +206,10 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<capital_condition<scope_type>>(value, condition_operator);
 		} else if (key == "coastal") {
 			return std::make_unique<coastal_condition<scope_type>>(value, condition_operator);
+		} else if (key == "has_building") {
+			return std::make_unique<has_building_condition<scope_type>>(value, condition_operator);
+		} else if (key == "has_building_class") {
+			return std::make_unique<has_building_class_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_culture") {
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
 		} else if (key == "population_unit_count") {

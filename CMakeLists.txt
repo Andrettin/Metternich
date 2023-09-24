@@ -477,6 +477,8 @@ set(script_condition_HDRS
 	src/script/condition/event_condition.h
 	src/script/condition/game_rule_condition.h
 	src/script/condition/gender_condition.h
+	src/script/condition/has_building_class_condition.h
+	src/script/condition/has_building_condition.h
 	src/script/condition/has_population_culture_condition.h
 	src/script/condition/has_resource_condition.h
 	src/script/condition/has_route_condition.h

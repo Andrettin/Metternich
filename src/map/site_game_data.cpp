@@ -432,6 +432,17 @@ bool site_game_data::has_building_or_better(const building_type *building) const
 	return false;
 }
 
+bool site_game_data::has_building_class(const building_class *building_class) const
+{
+	const building_type *building = this->get_slot_building(building_class->get_slot_type());
+
+	if (building == nullptr) {
+		false;
+	}
+
+	return building->get_building_class() == building_class;
+}
+
 void site_game_data::clear_buildings()
 {
 	for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
