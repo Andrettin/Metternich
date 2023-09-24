@@ -352,17 +352,30 @@ public:
 		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + value);
 	}
 
-	const commodity_map<resource_map<int>> &get_commodity_bonuses_per_improved_resources() const
+	const resource_map<commodity_map<int>> &get_improved_resource_commodity_bonuses() const
 	{
-		return this->commodity_bonuses_per_improved_resources;
+		return this->improved_resource_commodity_bonuses;
 	}
 
-	int get_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource) const
+	const commodity_map<int> &get_improved_resource_commodity_bonuses(const resource *resource) const
 	{
-		const auto find_iterator = this->commodity_bonuses_per_improved_resources.find(commodity);
+		static const commodity_map<int> empty_map;
 
-		if (find_iterator != this->commodity_bonuses_per_improved_resources.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(resource);
+		const auto find_iterator = this->improved_resource_commodity_bonuses.find(resource);
+
+		if (find_iterator != this->improved_resource_commodity_bonuses.end()) {
+			return find_iterator->second;
+		}
+
+		return empty_map;
+	}
+
+	int get_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity) const
+	{
+		const auto find_iterator = this->improved_resource_commodity_bonuses.find(resource);
+
+		if (find_iterator != this->improved_resource_commodity_bonuses.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(commodity);
 
 			if (sub_find_iterator != find_iterator->second.end()) {
 				return sub_find_iterator->second;
@@ -372,12 +385,7 @@ public:
 		return 0;
 	}
 
-	void set_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value);
-
-	void change_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value)
-	{
-		this->set_commodity_bonus_per_improved_resource(commodity, resource, this->get_commodity_bonus_per_improved_resource(commodity, resource) + value);
-	}
+	void change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change);
 
 	const commodity_map<std::map<int, int>> &get_commodity_bonuses_for_tile_thresholds() const
 	{
@@ -459,7 +467,7 @@ private:
 	std::map<military_unit_category, int> military_unit_category_counts;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
-	commodity_map<resource_map<int>> commodity_bonuses_per_improved_resources;
+	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 };
 

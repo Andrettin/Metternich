@@ -65,7 +65,7 @@ void province_game_data::reset_non_map_data()
 	this->score = province::base_score;
 	this->output_modifier = 0;
 	this->commodity_output_modifiers.clear();
-	this->commodity_bonuses_per_improved_resources.clear();
+	this->improved_resource_commodity_bonuses.clear();
 	this->commodity_bonuses_for_tile_thresholds.clear();
 
 	if (this->is_on_map()) {
@@ -650,31 +650,37 @@ void province_game_data::calculate_settlement_commodity_output(const commodity *
 	}
 }
 
-void province_game_data::set_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value)
+void province_game_data::change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change)
 {
-	const int old_value = this->get_commodity_bonus_per_improved_resource(commodity, resource);
-
-	if (value == old_value) {
+	if (change == 0) {
 		return;
 	}
 
-	if (value == 0) {
-		this->commodity_bonuses_per_improved_resources[commodity].erase(resource);
+	const int count = (this->improved_resource_commodity_bonuses[resource][commodity] += change);
 
-		if (this->commodity_bonuses_per_improved_resources[commodity].empty()) {
-			this->commodity_bonuses_per_improved_resources.erase(commodity);
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->improved_resource_commodity_bonuses[resource].erase(commodity);
+
+		if (this->improved_resource_commodity_bonuses[resource].empty()) {
+			this->improved_resource_commodity_bonuses.erase(resource);
 		}
-	} else {
-		this->commodity_bonuses_per_improved_resources[commodity][resource] = value;
 	}
 
 	for (const QPoint &tile_pos : this->resource_tiles) {
 		tile *tile = map::get()->get_tile(tile_pos);
-		if (tile->get_resource() != resource || tile->get_improvement() == nullptr) {
+		if (tile->get_resource() != resource) {
 			continue;
 		}
 
-		tile->calculate_commodity_outputs();
+		if (tile->get_improvement() == nullptr && tile->get_settlement_type() == nullptr) {
+			continue;
+		}
+
+		assert_throw(tile->get_site() != nullptr);
+
+		tile->get_site()->get_game_data()->change_base_commodity_output(commodity, change);
 	}
 }
 

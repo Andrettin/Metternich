@@ -29,7 +29,7 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_commodity_bonus_per_improved_resource(this->commodity, this->resource, (this->value * multiplier).to_int());
+		scope->get_game_data()->change_improved_resource_commodity_bonus(this->resource, this->commodity, (this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string() const override

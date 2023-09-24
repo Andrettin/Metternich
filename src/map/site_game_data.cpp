@@ -291,11 +291,9 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 	this->settlement_type = settlement_type;
 
 	if (old_settlement_type == nullptr && this->get_settlement_type() != nullptr) {
-		this->get_province()->get_game_data()->change_settlement_count(1);
+		this->on_settlement_built(1);
 
 		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_game_data()->change_settlement_count(1);
-
 			if (this->get_owner()->get_game_data()->get_capital() == nullptr && this->can_be_capital()) {
 				this->get_owner()->get_game_data()->set_capital(this->site);
 			}
@@ -305,11 +303,9 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 			this->get_province()->get_game_data()->set_provincial_capital(this->site);
 		}
 	} else if (old_settlement_type != nullptr && this->get_settlement_type() == nullptr) {
-		this->get_province()->get_game_data()->change_settlement_count(-1);
+		this->on_settlement_built(-1);
 
 		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_game_data()->change_settlement_count(-1);
-
 			if (this->get_owner()->get_game_data()->get_capital() == this->site) {
 				this->get_owner()->get_game_data()->choose_capital();
 			}
@@ -574,6 +570,21 @@ bool site_game_data::check_free_building(const building_type *building)
 	return true;
 }
 
+void site_game_data::on_settlement_built(const int multiplier)
+{
+	this->get_province()->get_game_data()->change_settlement_count(multiplier);
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_settlement_count(multiplier);
+	}
+
+	if (this->get_province() != nullptr && this->get_resource() != nullptr) {
+		for (const auto &[commodity, value] : this->get_province()->get_game_data()->get_improved_resource_commodity_bonuses(this->get_resource())) {
+			this->change_base_commodity_output(commodity, value * multiplier);
+		}
+	}
+}
+
 void site_game_data::on_building_gained(const building_type *building, const int multiplier)
 {
 	assert_throw(building != nullptr);
@@ -744,16 +755,6 @@ void site_game_data::calculate_commodity_outputs()
 	if (improvement != nullptr) {
 		if (improvement->get_output_commodity() != nullptr) {
 			outputs[improvement->get_output_commodity()] = improvement->get_output_multiplier();
-		}
-	}
-
-	const resource *resource = this->get_resource();
-	if (province != nullptr && resource != nullptr && (improvement != nullptr || this->get_settlement_type() != nullptr)) {
-		for (const auto &[commodity, resource_map] : province->get_game_data()->get_commodity_bonuses_per_improved_resources()) {
-			const auto find_iterator = resource_map.find(resource);
-			if (find_iterator != resource_map.end()) {
-				outputs[commodity] += find_iterator->second;
-			}
 		}
 	}
 

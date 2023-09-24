@@ -812,9 +812,9 @@ void country_game_data::on_province_gained(const province *province, const int m
 		this->change_score(settlement->get_game_data()->get_score());
 	}
 
-	for (const auto &[commodity, resource_map] : this->commodity_bonuses_per_improved_resources) {
-		for (const auto &[resource, value] : resource_map) {
-			province_game_data->change_commodity_bonus_per_improved_resource(commodity, resource, value * multiplier);
+	for (const auto &[resource, commodity_map] : this->improved_resource_commodity_bonuses) {
+		for (const auto &[commodity, value] : commodity_map) {
+			province_game_data->change_improved_resource_commodity_bonus(resource, commodity, value * multiplier);
 		}
 	}
 
@@ -3347,26 +3347,26 @@ void country_game_data::set_commodity_throughput_modifier(const commodity *commo
 	}
 }
 
-void country_game_data::set_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value)
+void country_game_data::change_improved_resource_commodity_bonus(const commodity *commodity, const resource *resource, const int change)
 {
-	const int old_value = this->get_commodity_bonus_per_improved_resource(commodity, resource);
-
-	if (value == old_value) {
+	if (change == 0) {
 		return;
 	}
 
-	if (value == 0) {
-		this->commodity_bonuses_per_improved_resources[commodity].erase(resource);
+	const int count = (this->improved_resource_commodity_bonuses[resource][commodity] += change);
 
-		if (this->commodity_bonuses_per_improved_resources[commodity].empty()) {
-			this->commodity_bonuses_per_improved_resources.erase(commodity);
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->improved_resource_commodity_bonuses[resource].erase(commodity);
+
+		if (this->improved_resource_commodity_bonuses[resource].empty()) {
+			this->improved_resource_commodity_bonuses.erase(resource);
 		}
-	} else {
-		this->commodity_bonuses_per_improved_resources[commodity][resource] = value;
 	}
 
 	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->change_commodity_bonus_per_improved_resource(commodity, resource, value - old_value);
+		province->get_game_data()->change_improved_resource_commodity_bonus(resource, commodity, change);
 	}
 }
 

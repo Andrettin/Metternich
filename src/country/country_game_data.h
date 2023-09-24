@@ -1216,12 +1216,12 @@ public:
 		this->set_commodity_throughput_modifier(commodity, this->get_commodity_throughput_modifier(commodity) + value);
 	}
 
-	int get_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource) const
+	int get_improved_resource_commodity_bonus(const commodity *commodity, const resource *resource) const
 	{
-		const auto find_iterator = this->commodity_bonuses_per_improved_resources.find(commodity);
+		const auto find_iterator = this->improved_resource_commodity_bonuses.find(resource);
 
-		if (find_iterator != this->commodity_bonuses_per_improved_resources.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(resource);
+		if (find_iterator != this->improved_resource_commodity_bonuses.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(commodity);
 
 			if (sub_find_iterator != find_iterator->second.end()) {
 				return sub_find_iterator->second;
@@ -1231,12 +1231,7 @@ public:
 		return 0;
 	}
 
-	void set_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value);
-
-	void change_commodity_bonus_per_improved_resource(const commodity *commodity, const resource *resource, const int value)
-	{
-		this->set_commodity_bonus_per_improved_resource(commodity, resource, this->get_commodity_bonus_per_improved_resource(commodity, resource) + value);
-	}
+	void change_improved_resource_commodity_bonus(const commodity *commodity, const resource *resource, const int change);
 
 	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
 	{
@@ -1651,7 +1646,7 @@ private:
 	commodity_map<int> commodity_output_modifiers;
 	int throughput_modifier = 0;
 	commodity_map<int> commodity_throughput_modifiers;
-	commodity_map<resource_map<int>> commodity_bonuses_per_improved_resources;
+	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	std::map<technology_category, int> category_research_modifiers;
 	int advisor_cost_modifier = 0;
