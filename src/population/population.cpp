@@ -119,6 +119,8 @@ void population::change_religion_count(const metternich::religion *religion, con
 		upper_population->change_religion_count(religion, change);
 	}
 
+	this->calculate_main_religion();
+
 	if (game::get()->is_running()) {
 		emit religion_counts_changed();
 	}
