@@ -332,6 +332,14 @@ QString settlement_building_slot::get_modifier_string() const
 		str += this->get_building()->get_stackable_country_modifier()->get_string(this->get_country());
 	}
 
+	if (this->get_building()->get_settlement_modifier() != nullptr) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += this->get_building()->get_settlement_modifier()->get_string(this->get_settlement());
+	}
+
 	if (this->get_building()->get_province_modifier() != nullptr) {
 		if (!str.empty()) {
 			str += "\n";
