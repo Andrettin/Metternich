@@ -64,6 +64,7 @@ void site_game_data::reset_non_map_data()
 	this->visiting_military_units.clear();
 
 	this->population = make_qunique<metternich::population>();
+	connect(this->get_population(), &population::type_count_changed, this, &site_game_data::on_population_type_count_changed);
 	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::on_population_main_culture_changed);
 	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::on_population_main_religion_changed);
 	if (this->get_province() != nullptr) {
