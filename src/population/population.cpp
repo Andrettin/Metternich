@@ -11,6 +11,23 @@
 
 namespace metternich {
 
+void population::change_population_unit_count(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->population_unit_count += change;
+
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_population_unit_count(change);
+	}
+
+	if (game::get()->is_running()) {
+		emit population_unit_count_changed();
+	}
+}
+
 void population::change_size(const int64_t change)
 {
 	if (change == 0) {
@@ -182,9 +199,62 @@ void population::change_ideology_count(const ideology *ideology, const int chang
 	}
 }
 
+centesimal_int population::get_average_consciousness() const
+{
+	if (this->get_population_unit_count() == 0) {
+		return centesimal_int(0);
+	}
+
+	return this->get_total_consciousness() / this->get_population_unit_count();
+}
+
+void population::change_total_consciousness(const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->total_consciousness += change;
+
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_total_consciousness(change);
+	}
+
+	if (game::get()->is_running()) {
+		emit consciousness_changed();
+	}
+}
+
+centesimal_int population::get_average_militancy() const
+{
+	if (this->get_population_unit_count() == 0) {
+		return centesimal_int(0);
+	}
+
+	return this->get_total_militancy() / this->get_population_unit_count();
+}
+
+void population::change_total_militancy(const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->total_militancy += change;
+
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_total_militancy(change);
+	}
+
+	if (game::get()->is_running()) {
+		emit militancy_changed();
+	}
+}
+
 void population::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
 {
-	this->change_size(defines::get()->get_population_per_unit() * multiplier);
+	this->change_population_unit_count(multiplier);
+	this->change_size(static_cast<int64_t>(defines::get()->get_population_per_unit()) * multiplier);
 
 	this->change_type_count(population_unit->get_type(), multiplier);
 	this->change_culture_count(population_unit->get_culture(), multiplier);
@@ -193,6 +263,9 @@ void population::on_population_unit_gained(const population_unit *population_uni
 	if (population_unit->get_ideology() != nullptr) {
 		this->change_ideology_count(population_unit->get_ideology(), multiplier);
 	}
+
+	this->change_total_consciousness(population_unit->get_consciousness() * multiplier);
+	this->change_total_militancy(population_unit->get_militancy() * multiplier);
 }
 
 }

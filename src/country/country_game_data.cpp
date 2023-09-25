@@ -360,6 +360,17 @@ void country_game_data::do_consumption()
 		}
 	}
 
+	static const centesimal_int militancy_change_for_unfulfilled_consumption(0.1);
+	static const centesimal_int militancy_change_for_fulfilled_consumption(-0.1);
+
+	for (population_unit *population_unit : population_units) {
+		if (population_unit->is_consumption_fulfilled()) {
+			population_unit->change_militancy(militancy_change_for_fulfilled_consumption);
+		} else {
+			population_unit->change_militancy(militancy_change_for_unfulfilled_consumption);
+		}
+	}
+
 	//FIXME: make population units which couldn't have their consumption fulfilled be unhappy/refuse to work for the turn (and possibly demote when demotion is implemented)
 }
 

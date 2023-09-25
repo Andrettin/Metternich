@@ -20,6 +20,7 @@
 #include "script/effect/change_opinion_effect.h"
 #include "script/effect/commodity_effect.h"
 #include "script/effect/commodity_percent_effect.h"
+#include "script/effect/consciousness_effect.h"
 #include "script/effect/country_effect.h"
 #include "script/effect/create_military_unit_effect.h"
 #include "script/effect/delayed_effect.h"
@@ -30,6 +31,7 @@
 #include "script/effect/if_effect.h"
 #include "script/effect/location_effect.h"
 #include "script/effect/migrate_to_effect.h"
+#include "script/effect/militancy_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/population_scaled_commodity_effect.h"
 #include "script/effect/provincial_capital_effect.h"
@@ -82,8 +84,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<commodity_percent_effect>(commodity, value, effect_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
-		if (key == "migrate_to") {
+		if (key == "consciousness") {
+			return std::make_unique<consciousness_effect>(value, effect_operator);
+		} else if (key == "migrate_to") {
 			return std::make_unique<migrate_to_effect>(value, effect_operator);
+		} else if (key == "militancy") {
+			return std::make_unique<militancy_effect>(value, effect_operator);
 		}
 	}
 
