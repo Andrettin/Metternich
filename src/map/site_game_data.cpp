@@ -6,6 +6,7 @@
 #include "country/country_game_data.h"
 #include "country/culture.h"
 #include "database/defines.h"
+#include "economy/commodity.h"
 #include "economy/resource.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
@@ -24,6 +25,7 @@
 #include "map/site.h"
 #include "map/tile.h"
 #include "population/population.h"
+#include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
@@ -92,6 +94,23 @@ void site_game_data::do_turn()
 		}
 
 		map::get()->set_tile_improvement(this->get_tile_pos(), nullptr);
+	}
+}
+
+void site_game_data::do_consumption()
+{
+	for (const auto &[commodity, consumption] : this->local_commodity_consumptions) {
+		assert_throw(commodity->is_local());
+		assert_throw(!commodity->is_storable());
+
+		const int effective_consumption = std::min(consumption.to_int(), this->get_commodity_output(commodity));
+
+		int remaining_consumption = effective_consumption;
+		if (remaining_consumption == 0) {
+			continue;
+		}
+
+		//FIXME: go through population units belonging to the settlement in random order, and cause the effects of them not being able to have their consumption fulfilled
 	}
 }
 
@@ -731,6 +750,19 @@ void site_game_data::create_population_unit(const population_type *type, const m
 	this->add_population_unit(std::move(population_unit));
 }
 
+void site_game_data::on_population_type_count_changed(const population_type *type, const int change)
+{
+	if (type->get_output_commodity() != nullptr) {
+		this->change_base_commodity_output(type->get_output_commodity(), type->get_output_value() * change);
+	}
+
+	for (const auto &[commodity, value] : type->get_consumed_commodities()) {
+		if (commodity->is_local()) {
+			this->change_local_commodity_consumption(commodity, value * change);
+		}
+	}
+}
+
 void site_game_data::change_housing(const int change)
 {
 	if (change == 0) {
@@ -783,12 +815,8 @@ void site_game_data::set_commodity_output(const commodity *commodity, const int 
 		this->commodity_outputs[commodity] = output;
 	}
 
-	const province *province = this->get_province();
-	if (province != nullptr) {
-		const country *owner = province->get_game_data()->get_owner();
-		if (owner != nullptr) {
-			owner->get_game_data()->change_commodity_output(commodity, output - old_output);
-		}
+	if (this->get_owner() != nullptr && !commodity->is_local()) {
+		this->get_owner()->get_game_data()->change_commodity_output(commodity, output - old_output);
 	}
 
 	emit commodity_outputs_changed();
@@ -835,6 +863,21 @@ void site_game_data::calculate_commodity_outputs()
 		}
 
 		this->set_commodity_output(commodity, output);
+	}
+}
+
+void site_game_data::change_local_commodity_consumption(const commodity *commodity, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const centesimal_int count = (this->local_commodity_consumptions[commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->local_commodity_consumptions.erase(commodity);
 	}
 }
 

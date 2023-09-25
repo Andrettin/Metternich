@@ -306,23 +306,35 @@ void country_game_data::do_starvation()
 
 void country_game_data::do_consumption()
 {
-	commodity_map<int> commodity_consumptions = this->get_commodity_consumptions();
+	for (const auto &[commodity, consumption] : this->get_commodity_consumptions()) {
+		//local consumption is handled separately
+		assert_throw(!commodity->is_local());
 
-	for (auto &[commodity, consumption] : commodity_consumptions) {
 		int effective_consumption = 0;
 
 		if (commodity->is_storable()) {
-			effective_consumption = std::min(consumption, this->get_stored_commodity(commodity));
+			effective_consumption = std::min(consumption.to_int(), this->get_stored_commodity(commodity));
 			this->change_stored_commodity(commodity, -effective_consumption);
 		} else {
-			effective_consumption = std::min(consumption, this->get_net_commodity_output(commodity));
+			effective_consumption = std::min(consumption.to_int(), this->get_net_commodity_output(commodity));
 		}
 
-		if (commodity->is_happiness() && effective_consumption < consumption) {
-			//FIXME: convert luxury goods in storage to happiness to fulfill the consumption
+		int remaining_consumption = effective_consumption;
+		if (remaining_consumption == 0) {
+			continue;
 		}
 
-		consumption -= effective_consumption;
+		//FIXME: go through population units belonging to the country in random order, and cause the effects of them not being able to have their consumption fulfilled
+	}
+
+	for (const province *province : this->get_provinces()) {
+		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+			if (!settlement->get_game_data()->is_built()) {
+				continue;
+			}
+
+			settlement->get_game_data()->do_consumption();
+		}
 	}
 
 	//FIXME: make population units which couldn't have their consumption fulfilled be unhappy/refuse to work for the turn (and possibly demote when demotion is implemented)
@@ -812,6 +824,10 @@ void country_game_data::on_province_gained(const province *province, const int m
 		const tile *tile = map::get()->get_tile(tile_pos);
 
 		for (const auto &[commodity, output] : tile->get_commodity_outputs()) {
+			if (commodity->is_local()) {
+				continue;
+			}
+
 			this->change_commodity_output(commodity, output * multiplier);
 		}
 	}
@@ -1750,11 +1766,12 @@ void country_game_data::remove_population_unit(population_unit *population_unit)
 
 void country_game_data::on_population_type_count_changed(const population_type *type, const int change)
 {
-	if (type->get_output_commodity() != nullptr) {
-		this->change_commodity_output(type->get_output_commodity(), type->get_output_value() * change);
-	}
-
 	for (const auto &[commodity, value] : type->get_consumed_commodities()) {
+		if (commodity->is_local()) {
+			//handled at the settlement level
+			continue;
+		}
+
 		this->change_commodity_consumption(commodity, value * change);
 	}
 }
@@ -2211,21 +2228,27 @@ void country_game_data::calculate_settlement_commodity_output(const commodity *c
 
 QVariantList country_game_data::get_commodity_consumptions_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_commodity_consumptions());
+	commodity_map<int> int_commodity_consumptions;
+
+	for (const auto &[commodity, consumption] : this->get_commodity_consumptions()) {
+		int_commodity_consumptions[commodity] = consumption.to_int();
+	}
+
+	return archimedes::map::to_qvariant_list(int_commodity_consumptions);
 }
 
 int country_game_data::get_commodity_consumption(const QString &commodity_identifier) const
 {
-	return this->get_commodity_consumption(commodity::get(commodity_identifier.toStdString()));
+	return this->get_commodity_consumption(commodity::get(commodity_identifier.toStdString())).to_int();
 }
 
-void country_game_data::change_commodity_consumption(const commodity *commodity, const int change)
+void country_game_data::change_commodity_consumption(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int count = (this->commodity_consumptions[commodity] += change);
+	const centesimal_int count = (this->commodity_consumptions[commodity] += change);
 
 	assert_throw(count >= 0);
 

@@ -103,19 +103,20 @@ public:
 		return this->get_small_icon();
 	}
 
-	const commodity_map<int> &get_consumed_commodities() const
+	const commodity_map<centesimal_int> &get_consumed_commodities() const
 	{
 		return this->consumed_commodities;
 	}
 
-	int get_commodity_consumption(const commodity *commodity) const
+	const centesimal_int &get_commodity_consumption(const commodity *commodity) const
 	{
 		const auto find_iterator = this->get_consumed_commodities().find(commodity);
 		if (find_iterator != this->get_consumed_commodities().end()) {
 			return find_iterator->second;
 		}
 
-		return 0;
+		static const centesimal_int zero;
+		return zero;
 	}
 
 	const commodity *get_output_commodity() const
@@ -141,7 +142,7 @@ private:
 	metternich::icon *small_icon = nullptr;
 	phenotype_map<const metternich::icon *> phenotype_icons;
 	phenotype_map<const metternich::icon *> phenotype_small_icons;
-	commodity_map<int> consumed_commodities;
+	commodity_map<centesimal_int> consumed_commodities;
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
 };

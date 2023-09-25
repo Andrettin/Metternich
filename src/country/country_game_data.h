@@ -801,14 +801,14 @@ public:
 	void calculate_settlement_commodity_outputs();
 	void calculate_settlement_commodity_output(const commodity *commodity);
 
-	const commodity_map<int> &get_commodity_consumptions() const
+	const commodity_map<centesimal_int> &get_commodity_consumptions() const
 	{
 		return this->commodity_consumptions;
 	}
 
 	QVariantList get_commodity_consumptions_qvariant_list() const;
 
-	int get_commodity_consumption(const commodity *commodity) const
+	const centesimal_int &get_commodity_consumption(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_consumptions.find(commodity);
 
@@ -816,11 +816,12 @@ public:
 			return find_iterator->second;
 		}
 
-		return 0;
+		static const centesimal_int zero;
+		return zero;
 	}
 
 	Q_INVOKABLE int get_commodity_consumption(const QString &commodity_identifier) const;
-	void change_commodity_consumption(const commodity *commodity, const int change);
+	void change_commodity_consumption(const commodity *commodity, const centesimal_int &change);
 
 	void assign_production();
 	void decrease_wealth_consumption(const bool restore_inputs = true);
@@ -1649,7 +1650,7 @@ private:
 	int storage_capacity = 0;
 	commodity_map<int> commodity_inputs;
 	commodity_map<int> commodity_outputs;
-	commodity_map<int> commodity_consumptions;
+	commodity_map<centesimal_int> commodity_consumptions;
 	technology_set technologies;
 	const technology *current_research = nullptr;
 	int free_technology_count = 0;

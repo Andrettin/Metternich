@@ -26,6 +26,16 @@ void commodity::check() const
 {
 	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_wealth_value() >= 0);
+
+	if (this->is_local()) {
+		if (!this->is_abstract()) {
+			throw std::runtime_error(std::format("Commodity \"{}\" is local but is not abstract, which is not supported.", this->get_identifier()));
+		}
+
+		if (this->is_storable()) {
+			throw std::runtime_error(std::format("Commodity \"{}\" is local and storable, which is not supported.", this->get_identifier()));
+		}
+	}
 }
 
 bool commodity::is_food() const

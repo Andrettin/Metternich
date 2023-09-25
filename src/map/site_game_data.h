@@ -55,6 +55,7 @@ public:
 	void reset_non_map_data();
 
 	void do_turn();
+	void do_consumption();
 
 	const QPoint &get_tile_pos() const
 	{
@@ -215,6 +216,8 @@ public:
 		return this->population.get();
 	}
 
+	void on_population_type_count_changed(const population_type *type, const int change);
+
 	int get_housing() const
 	{
 		return this->housing;
@@ -264,6 +267,8 @@ public:
 
 	void set_commodity_output(const commodity *commodity, const int output);
 	void calculate_commodity_outputs();
+
+	void change_local_commodity_consumption(const commodity *commodity, const centesimal_int &change);
 
 	int get_output_modifier() const
 	{
@@ -369,6 +374,7 @@ private:
 	int free_food_consumption = 0;
 	commodity_map<int> base_commodity_outputs;
 	commodity_map<int> commodity_outputs;
+	commodity_map<centesimal_int> local_commodity_consumptions;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
 	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site
