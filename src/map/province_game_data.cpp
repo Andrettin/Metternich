@@ -267,10 +267,6 @@ void province_game_data::set_culture(const metternich::culture *culture)
 	}
 
 	for (const site *settlement : this->get_settlement_sites()) {
-		if (!settlement->get_game_data()->is_built()) {
-			continue;
-		}
-
 		if (settlement->get_game_data()->get_population()->get_main_culture() == nullptr) {
 			settlement->get_game_data()->set_culture(this->get_culture());
 		}
@@ -297,10 +293,6 @@ void province_game_data::set_religion(const metternich::religion *religion)
 	this->religion = religion;
 
 	for (const site *settlement : this->get_settlement_sites()) {
-		if (!settlement->get_game_data()->is_built()) {
-			continue;
-		}
-
 		if (settlement->get_game_data()->get_population()->get_main_religion() == nullptr) {
 			settlement->get_game_data()->set_religion(this->get_religion());
 		}

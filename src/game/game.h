@@ -91,6 +91,7 @@ public:
 	int64_t apply_historical_population_group_to_settlement(const population_group_key &group_key, const int population, const site *settlement);
 
 	void on_setup_finished();
+	void adjust_food_production_for_country_populations();
 
 	void do_turn();
 	Q_INVOKABLE void do_turn_async();
