@@ -121,7 +121,7 @@ void site_game_data::do_consumption()
 
 		const int effective_consumption = std::min(consumption.to_int(), this->get_commodity_output(commodity));
 
-		centesimal_int remaining_consumption(effective_consumption);
+		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
 		if (remaining_consumption == 0) {
 			continue;
 		}

@@ -329,7 +329,7 @@ void country_game_data::do_consumption()
 			effective_consumption = std::min(consumption.to_int(), this->get_net_commodity_output(commodity));
 		}
 
-		centesimal_int remaining_consumption(effective_consumption);
+		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
 		if (remaining_consumption == 0) {
 			continue;
 		}
