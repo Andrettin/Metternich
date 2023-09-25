@@ -306,6 +306,16 @@ void country_game_data::do_starvation()
 
 void country_game_data::do_consumption()
 {
+	if (this->get_population_units().empty()) {
+		return;
+	}
+
+	const std::vector<population_unit *> population_units = vector::shuffled(this->get_population_units());
+
+	for (population_unit *population_unit : population_units) {
+		population_unit->set_consumption_fulfilled(true);
+	}
+
 	for (const auto &[commodity, consumption] : this->get_commodity_consumptions()) {
 		//local consumption is handled separately
 		assert_throw(!commodity->is_local());
@@ -319,12 +329,25 @@ void country_game_data::do_consumption()
 			effective_consumption = std::min(consumption.to_int(), this->get_net_commodity_output(commodity));
 		}
 
-		int remaining_consumption = effective_consumption;
+		centesimal_int remaining_consumption(effective_consumption);
 		if (remaining_consumption == 0) {
 			continue;
 		}
 
-		//FIXME: go through population units belonging to the country in random order, and cause the effects of them not being able to have their consumption fulfilled
+		//go through population units belonging to the country in random order, set whether their consumption was fulfilled
+		for (population_unit *population_unit : population_units) {
+			const centesimal_int pop_consumption = population_unit->get_type()->get_commodity_consumption(commodity);
+			if (pop_consumption == 0) {
+				continue;
+			}
+
+			population_unit->set_consumption_fulfilled(false);
+			remaining_consumption -= pop_consumption;
+
+			if (remaining_consumption <= 0) {
+				break;
+			}
+		}
 	}
 
 	for (const province *province : this->get_provinces()) {

@@ -163,6 +163,20 @@ public:
 	void set_ideology(const metternich::ideology *ideology);
 	void choose_ideology();
 
+	bool is_consumption_fulfilled() const
+	{
+		return this->consumption_fulfilled;
+	}
+
+	void set_consumption_fulfilled(const bool value)
+	{
+		if (value == this->is_consumption_fulfilled()) {
+			return;
+		}
+
+		this->consumption_fulfilled = value;
+	}
+
 	void migrate_to(const site *settlement);
 
 signals:
@@ -183,6 +197,7 @@ private:
 	const metternich::country *country = nullptr;
 	const site *settlement = nullptr;
 	const metternich::ideology *ideology = nullptr;
+	bool consumption_fulfilled = true;
 };
 
 }

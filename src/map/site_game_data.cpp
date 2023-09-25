@@ -100,18 +100,46 @@ void site_game_data::do_turn()
 
 void site_game_data::do_consumption()
 {
+	std::vector<population_unit *> shuffled_population_units;
+	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
+		shuffled_population_units.push_back(population_unit.get());
+	}
+	vector::shuffle(shuffled_population_units);
+
+	std::vector<population_unit *> population_units;
+	for (population_unit *population_unit : shuffled_population_units) {
+		if (population_unit->is_consumption_fulfilled()) {
+			population_units.push_back(population_unit);
+		} else {
+			population_units.insert(population_units.begin(), population_unit);
+		}
+	}
+
 	for (const auto &[commodity, consumption] : this->local_commodity_consumptions) {
 		assert_throw(commodity->is_local());
 		assert_throw(!commodity->is_storable());
 
 		const int effective_consumption = std::min(consumption.to_int(), this->get_commodity_output(commodity));
 
-		int remaining_consumption = effective_consumption;
+		centesimal_int remaining_consumption(effective_consumption);
 		if (remaining_consumption == 0) {
 			continue;
 		}
 
-		//FIXME: go through population units belonging to the settlement in random order, and cause the effects of them not being able to have their consumption fulfilled
+		//go through population units belonging to the settlement in random order, and cause the effects of them not being able to have their consumption fulfilled
+		for (population_unit *population_unit : population_units) {
+			const centesimal_int pop_consumption = population_unit->get_type()->get_commodity_consumption(commodity);
+			if (pop_consumption == 0) {
+				continue;
+			}
+
+			population_unit->set_consumption_fulfilled(false);
+			remaining_consumption -= pop_consumption;
+
+			if (remaining_consumption <= 0) {
+				break;
+			}
+		}
 	}
 }
 
