@@ -141,8 +141,6 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<any_known_country_effect>(effect_operator);
 		} else if (effect_identifier == "any_neighbor_country") {
 			effect = std::make_unique<any_neighbor_country_effect>(effect_operator);
-		} else if (effect_identifier == "any_population_unit") {
-			effect = std::make_unique<any_population_unit_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "battle") {
 			effect = std::make_unique<battle_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "change_opinion") {
@@ -153,6 +151,10 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<random_neighbor_country_effect>(effect_operator);
 		} else if (effect_identifier == "random_settlement") {
 			effect = std::make_unique<random_settlement_effect>(effect_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, const site>) {
+		if (effect_identifier == "location") {
+			effect = std::make_unique<location_effect<scope_type>>(effect_operator);
 		}
 	}
 
@@ -168,9 +170,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, const site>) {
-		if (effect_identifier == "location") {
-			effect = std::make_unique<location_effect<scope_type>>(effect_operator);
+	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
+		if (effect_identifier == "any_population_unit") {
+			effect = std::make_unique<any_population_unit_effect<scope_type>>(effect_operator);
 		}
 	}
 

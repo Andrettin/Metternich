@@ -17,6 +17,7 @@
 #include "script/condition/and_condition.h"
 #include "script/condition/any_global_population_unit_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
+#include "script/condition/any_population_unit_condition.h"
 #include "script/condition/any_settlement_condition.h"
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
@@ -44,6 +45,8 @@
 #include "script/condition/has_building_condition.h"
 #include "script/condition/has_building_class_condition.h"
 #include "script/condition/has_population_culture_condition.h"
+#include "script/condition/has_population_religion_condition.h"
+#include "script/condition/has_population_type_condition.h"
 #include "script/condition/has_resource_condition.h"
 #include "script/condition/has_route_condition.h"
 #include "script/condition/has_terrain_condition.h"
@@ -216,6 +219,10 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<has_building_class_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_culture") {
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
+		} else if (key == "has_population_religion") {
+			return std::make_unique<has_population_religion_condition<scope_type>>(value, condition_operator);
+		} else if (key == "has_population_type") {
+			return std::make_unique<has_population_type_condition<scope_type>>(value, condition_operator);
 		} else if (key == "population_unit_count") {
 			return std::make_unique<population_unit_count_condition<scope_type>>(value, condition_operator);
 		}
@@ -312,6 +319,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 			condition = std::make_unique<any_settlement_condition<scope_type>>(condition_operator);
 		} else if (tag == "ruler") {
 			condition = std::make_unique<ruler_scope_condition<scope_type>>(condition_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
+		if (tag == "any_population_unit") {
+			condition = std::make_unique<any_population_unit_condition<scope_type>>(condition_operator);
 		}
 	}
 

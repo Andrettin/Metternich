@@ -37,7 +37,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return "Has " + this->culture->get_name() + " population culture";
+		return std::format("Has {} population culture", string::highlight(this->culture->get_name()));
 	}
 
 private:

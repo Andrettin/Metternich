@@ -454,6 +454,7 @@ set(script_condition_HDRS
 	src/script/condition/and_condition.h
 	src/script/condition/any_global_population_unit_condition.h
 	src/script/condition/any_neighbor_country_condition.h
+	src/script/condition/any_population_unit_condition.h
 	src/script/condition/any_settlement_condition.h
 	src/script/condition/artillery_condition.h
 	src/script/condition/attacking_commander_condition.h
@@ -482,6 +483,8 @@ set(script_condition_HDRS
 	src/script/condition/has_building_class_condition.h
 	src/script/condition/has_building_condition.h
 	src/script/condition/has_population_culture_condition.h
+	src/script/condition/has_population_religion_condition.h
+	src/script/condition/has_population_type_condition.h
 	src/script/condition/has_resource_condition.h
 	src/script/condition/has_route_condition.h
 	src/script/condition/has_terrain_condition.h
