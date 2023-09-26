@@ -34,6 +34,14 @@ void production_type::initialize()
 		this->required_technology->add_enabled_production_type(this);
 	}
 
+	//set whether this production type is industrial
+	for (const auto &[commodity, input] : this->get_input_commodities()) {
+		if (!commodity->is_abstract() && !commodity->is_labor()) {
+			this->industrial = true;
+			break;
+		}
+	}
+
 	named_data_entry::initialize();
 }
 

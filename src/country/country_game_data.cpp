@@ -3352,6 +3352,54 @@ void country_game_data::set_output_modifier(const int value)
 	}
 }
 
+void country_game_data::set_resource_output_modifier(const int value)
+{
+	if (value == this->get_resource_output_modifier()) {
+		return;
+	}
+
+	this->resource_output_modifier = value;
+
+	this->calculate_settlement_commodity_outputs();
+
+	if (game::get()->is_running()) {
+		emit resource_output_modifier_changed();
+	}
+}
+
+void country_game_data::set_industrial_output_modifier(const int value)
+{
+	if (value == this->get_industrial_output_modifier()) {
+		return;
+	}
+
+	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
+			if (!production_type->is_industrial()) {
+				continue;
+			}
+
+			this->change_commodity_output(production_type->get_output_commodity(), -building_slot->get_production_type_output(production_type));
+		}
+	}
+
+	this->industrial_output_modifier = value;
+
+	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
+			if (!production_type->is_industrial()) {
+				continue;
+			}
+
+			this->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
+		}
+	}
+
+	if (game::get()->is_running()) {
+		emit industrial_output_modifier_changed();
+	}
+}
+
 void country_game_data::set_commodity_output_modifier(const commodity *commodity, const int value)
 {
 	if (value == this->get_commodity_output_modifier(commodity)) {

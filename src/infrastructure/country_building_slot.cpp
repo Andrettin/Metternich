@@ -291,7 +291,12 @@ int country_building_slot::get_production_type_output(const production_type *pro
 	}
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
-	const int output_modifier = country_game_data->get_output_modifier() + country_game_data->get_commodity_output_modifier(production_type->get_output_commodity());
+
+	int output_modifier = country_game_data->get_output_modifier() + country_game_data->get_commodity_output_modifier(production_type->get_output_commodity());
+	if (production_type->is_industrial()) {
+		output_modifier += country_game_data->get_industrial_output_modifier();
+	}
+
 	if (output_modifier != 0) {
 		output *= 100 + output_modifier;
 		output /= 100;

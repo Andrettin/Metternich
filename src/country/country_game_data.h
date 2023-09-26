@@ -114,6 +114,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(metternich::character* next_leader READ get_next_leader_unconst WRITE set_next_leader NOTIFY next_leader_changed)
 	Q_PROPERTY(metternich::military_unit_type* next_leader_military_unit_type READ get_next_leader_military_unit_type NOTIFY next_leader_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier NOTIFY output_modifier_changed)
+	Q_PROPERTY(int resource_output_modifier READ get_resource_output_modifier NOTIFY resource_output_modifier_changed)
+	Q_PROPERTY(int industrial_output_modifier READ get_industrial_output_modifier NOTIFY industrial_output_modifier_changed)
 	Q_PROPERTY(int throughput_modifier READ get_throughput_modifier NOTIFY throughput_modifier_changed)
 	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList inactive_journal_entries READ get_inactive_journal_entries_qvariant_list NOTIFY journal_entries_changed)
@@ -1180,6 +1182,30 @@ public:
 		this->set_output_modifier(this->get_output_modifier() + value);
 	}
 
+	int get_resource_output_modifier() const
+	{
+		return this->resource_output_modifier;
+	}
+
+	void set_resource_output_modifier(const int value);
+
+	void change_resource_output_modifier(const int value)
+	{
+		this->set_resource_output_modifier(this->get_resource_output_modifier() + value);
+	}
+
+	int get_industrial_output_modifier() const
+	{
+		return this->industrial_output_modifier;
+	}
+
+	void set_industrial_output_modifier(const int value);
+
+	void change_industrial_output_modifier(const int value)
+	{
+		this->set_industrial_output_modifier(this->get_industrial_output_modifier() + value);
+	}
+
 	const commodity_map<int> &get_commodity_output_modifiers() const
 	{
 		return this->commodity_output_modifiers;
@@ -1600,6 +1626,8 @@ signals:
 	void commodity_outputs_changed();
 	void commodity_consumptions_changed();
 	void output_modifier_changed();
+	void resource_output_modifier_changed();
+	void industrial_output_modifier_changed();
 	void throughput_modifier_changed();
 	void journal_entries_changed();
 	void journal_entry_completed(QObject *journal_entry);
@@ -1674,6 +1702,8 @@ private:
 	int artillery_cost_modifier = 0;
 	int unit_upgrade_cost_modifier = 0;
 	int output_modifier = 0;
+	int resource_output_modifier = 0;
+	int industrial_output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
 	int throughput_modifier = 0;
 	commodity_map<int> commodity_throughput_modifiers;

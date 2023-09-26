@@ -881,6 +881,9 @@ void site_game_data::calculate_commodity_outputs()
 
 	if (this->get_owner() != nullptr) {
 		output_modifier += this->get_owner()->get_game_data()->get_output_modifier();
+		if (this->get_resource() != nullptr && this->get_resource()->get_commodity() != nullptr) {
+			commodity_output_modifiers[this->get_resource()->get_commodity()] += this->get_owner()->get_game_data()->get_resource_output_modifier();
+		}
 
 		for (const auto &[commodity, modifier] : this->get_owner()->get_game_data()->get_commodity_output_modifiers()) {
 			commodity_output_modifiers[commodity] += modifier;

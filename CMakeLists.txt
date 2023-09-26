@@ -611,6 +611,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/free_infantry_promotion_modifier_effect.h
 	src/script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h
 	src/script/modifier_effect/housing_modifier_effect.h
+	src/script/modifier_effect/industrial_output_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
 	src/script/modifier_effect/land_damage_modifier_effect.h
 	src/script/modifier_effect/land_morale_recovery_modifier_effect.h
@@ -621,6 +622,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/modifier_effect.h
 	src/script/modifier_effect/naval_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
+	src/script/modifier_effect/resource_output_modifier_effect.h
 	src/script/modifier_effect/storage_capacity_modifier_effect.h
 	src/script/modifier_effect/throughput_modifier_effect.h
 	src/script/modifier_effect/unit_upgrade_cost_modifier_effect.h

@@ -21,6 +21,7 @@ class production_type final : public named_data_entry, public data_type<producti
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(bool industrial READ is_industrial CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "production_type";
@@ -62,6 +63,11 @@ public:
 		return this->required_technology;
 	}
 
+	bool is_industrial() const
+	{
+		return this->industrial;
+	}
+
 signals:
 	void changed();
 
@@ -71,6 +77,7 @@ private:
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
 	technology *required_technology = nullptr;
+	bool industrial = false;
 };
 
 }

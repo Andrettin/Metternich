@@ -34,6 +34,7 @@
 #include "script/modifier_effect/free_infantry_promotion_modifier_effect.h"
 #include "script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h"
 #include "script/modifier_effect/housing_modifier_effect.h"
+#include "script/modifier_effect/industrial_output_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
 #include "script/modifier_effect/land_damage_modifier_effect.h"
 #include "script/modifier_effect/land_morale_recovery_modifier_effect.h"
@@ -43,6 +44,7 @@
 #include "script/modifier_effect/melee_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
+#include "script/modifier_effect/resource_output_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
 #include "script/modifier_effect/unit_upgrade_cost_modifier_effect.h"
@@ -86,6 +88,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<free_infantry_promotion_modifier_effect>(value);
 		} else if (key == "gain_technologies_known_by_others") {
 			return std::make_unique<gain_technologies_known_by_others_modifier_effect>(value);
+		} else if (key == "industrial_output_modifier") {
+			return std::make_unique<industrial_output_modifier_effect<scope_type>>(value);
 		} else if (key == "infantry_cost_modifier") {
 			return std::make_unique<infantry_cost_modifier_effect>(value);
 		} else if (key == "land_damage_modifier") {
@@ -100,6 +104,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<leader_cost_modifier_effect>(value);
 		} else if (key == "naval_morale_resistance") {
 			return std::make_unique<naval_morale_resistance_modifier_effect>(value);
+		} else if (key == "resource_output_modifier") {
+			return std::make_unique<resource_output_modifier_effect<scope_type>>(value);
 		} else if (key == "storage_capacity") {
 			return std::make_unique<storage_capacity_modifier_effect>(value);
 		} else if (key == "throughput_modifier") {
