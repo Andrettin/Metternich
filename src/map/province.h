@@ -138,6 +138,7 @@ public:
 		return this->default_provincial_capital;
 	}
 
+	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture *culture) const;
 
 	const std::vector<region *> &get_regions() const

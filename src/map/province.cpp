@@ -96,6 +96,11 @@ void province::reset_game_data()
 	this->game_data = make_qunique<province_game_data>(this);
 }
 
+std::string province::get_scope_name() const
+{
+	return this->get_game_data()->get_current_cultural_name();
+}
+
 const std::string &province::get_cultural_name(const culture *culture) const
 {
 	if (culture != nullptr) {

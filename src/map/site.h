@@ -108,6 +108,7 @@ public:
 		this->province = province;
 	}
 
+	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture *culture) const;
 
 signals:

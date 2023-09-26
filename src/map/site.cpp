@@ -107,6 +107,11 @@ bool site::is_settlement() const
 	return this->get_type() == site_type::settlement;
 }
 
+std::string site::get_scope_name() const
+{
+	return this->get_game_data()->get_current_cultural_name();
+}
+
 const std::string &site::get_cultural_name(const culture *culture) const
 {
 	if (culture != nullptr) {
