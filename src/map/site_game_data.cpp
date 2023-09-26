@@ -32,6 +32,7 @@
 #include "script/modifier.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
+#include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/thread_pool.h"
 #include "util/vector_random_util.h"
@@ -902,7 +903,11 @@ void site_game_data::change_local_commodity_consumption(const commodity *commodi
 		return;
 	}
 
+	log_trace(std::format("Changing local consumption in settlement {} of commodity {} (currently {}) by {}.", this->site->get_identifier(), commodity->get_identifier(), this->get_local_commodity_consumption(commodity).to_string(), change.to_string()));
+
 	const centesimal_int count = (this->local_commodity_consumptions[commodity] += change);
+
+	log_trace(std::format("Changed local consumption in settlement {} of commodity {} by {}, making it now {}.", this->site->get_identifier(), commodity->get_identifier(), change.to_string(), this->get_local_commodity_consumption(commodity).to_string()));
 
 	assert_throw(count >= 0);
 

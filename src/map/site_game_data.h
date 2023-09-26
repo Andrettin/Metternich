@@ -268,6 +268,18 @@ public:
 	void set_commodity_output(const commodity *commodity, const int output);
 	void calculate_commodity_outputs();
 
+	const centesimal_int &get_local_commodity_consumption(const commodity *commodity) const
+	{
+		const auto find_iterator = this->local_commodity_consumptions.find(commodity);
+
+		if (find_iterator != this->local_commodity_consumptions.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
 	void change_local_commodity_consumption(const commodity *commodity, const centesimal_int &change);
 
 	int get_output_modifier() const
