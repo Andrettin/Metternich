@@ -61,6 +61,7 @@ void site_game_data::reset_non_map_data()
 	this->score = this->site->is_settlement() ? site_game_data::base_settlement_score : 0;
 	this->commodity_outputs.clear();
 	this->base_commodity_outputs.clear();
+	this->local_commodity_consumptions.clear();
 	this->visiting_military_units.clear();
 
 	this->population = make_qunique<metternich::population>();
