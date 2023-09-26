@@ -860,7 +860,7 @@ void site_game_data::calculate_commodity_outputs()
 		const int modifier = output_modifier + commodity_output_modifiers[commodity];
 
 		if (modifier != 0) {
-			output *= modifier;
+			output *= 100 + modifier;
 			output /= 100;
 		}
 
