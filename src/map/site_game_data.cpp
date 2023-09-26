@@ -746,11 +746,6 @@ void site_game_data::create_population_unit(const population_type *type, const m
 	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, this->site);
 	this->get_province()->get_game_data()->add_population_unit(population_unit.get());
 
-	const country *owner = this->get_owner();
-	if (owner != nullptr) {
-		owner->get_game_data()->add_population_unit(population_unit.get());
-	}
-
 	this->add_population_unit(std::move(population_unit));
 }
 

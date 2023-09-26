@@ -7,12 +7,21 @@
 #include "economy/commodity.h"
 #include "population/phenotype.h"
 #include "population/population_class.h"
+#include "script/modifier.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/random.h"
 
 namespace metternich {
+
+population_type::population_type(const std::string &identifier) : named_data_entry(identifier)
+{
+}
+
+population_type::~population_type()
+{
+}
 
 void population_type::process_gsml_scope(const gsml_data &scope)
 {
@@ -27,6 +36,9 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			const centesimal_int consumption(value);
 			this->consumed_commodities[commodity] = std::move(consumption);
 		});
+	} else if (tag == "country_modifier") {
+		this->country_modifier = std::make_unique<modifier<const country>>();
+		database::process_gsml_data(this->country_modifier, scope);
 	} else if (tag == "phenotype_icons") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -80,8 +92,11 @@ void population_type::check() const
 	assert_throw(this->get_color().isValid());
 	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_small_icon() != nullptr);
-	assert_throw(this->get_output_commodity() != nullptr);
-	assert_throw(this->get_output_value() > 0);
+
+	if (this->get_country_modifier() == nullptr) {
+		assert_throw(this->get_output_commodity() != nullptr);
+		assert_throw(this->get_output_value() > 0);
+	}
 }
 
 }

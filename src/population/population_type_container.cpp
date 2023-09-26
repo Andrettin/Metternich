@@ -18,7 +18,7 @@ bool population_type_compare::operator()(const population_type *lhs, const popul
 
 	if (lhs_output_commodity != rhs_output_commodity) {
 		if (lhs_output_commodity == nullptr || rhs_output_commodity == nullptr) {
-			return lhs_output_commodity == nullptr;
+			return lhs_output_commodity != nullptr;
 		}
 
 		if (lhs_output_commodity->is_storable() != rhs_output_commodity->is_storable()) {

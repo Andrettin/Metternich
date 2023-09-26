@@ -20,6 +20,9 @@ class culture;
 class icon;
 class phenotype;
 
+template <typename scope_type>
+class modifier;
+
 class population_type final : public named_data_entry, public data_type<population_type>
 {
 	Q_OBJECT
@@ -40,9 +43,8 @@ public:
 	static constexpr const char database_folder[] = "population_types";
 
 public:
-	explicit population_type(const std::string &identifier) : named_data_entry(identifier)
-	{
-	}
+	explicit population_type(const std::string &identifier);
+	~population_type();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
@@ -129,6 +131,11 @@ public:
 		return this->output_value;
 	}
 
+	const modifier<const country> *get_country_modifier() const
+	{
+		return this->country_modifier.get();
+	}
+
 signals:
 	void changed();
 
@@ -145,6 +152,7 @@ private:
 	commodity_map<centesimal_int> consumed_commodities;
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
+	std::unique_ptr<modifier<const country>> country_modifier;
 };
 
 }

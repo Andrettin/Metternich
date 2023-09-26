@@ -17,6 +17,7 @@
 #include "population/population_type.h"
 #include "script/condition/condition.h"
 #include "script/factor.h"
+#include "script/modifier.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/vector_random_util.h"
@@ -24,12 +25,14 @@
 namespace metternich {
 
 population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *settlement)
-	: type(type), culture(culture), religion(religion), phenotype(phenotype), country(settlement->get_game_data()->get_owner()), settlement(settlement)
+	: type(type), culture(culture), religion(religion), phenotype(phenotype), settlement(settlement)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
+
+	this->set_country(settlement->get_game_data()->get_owner());
 	assert_throw(this->get_country() != nullptr);
 
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
@@ -123,12 +126,20 @@ void population_unit::set_country(const metternich::country *country)
 
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->remove_population_unit(this);
+
+		if (this->get_type()->get_country_modifier() != nullptr) {
+			this->get_type()->get_country_modifier()->remove(this->get_country());
+		}
 	}
 
 	this->country = country;
 
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->add_population_unit(this);
+
+		if (this->get_type()->get_country_modifier() != nullptr) {
+			this->get_type()->get_country_modifier()->apply(this->get_country());
+		}
 	}
 
 	emit country_changed();
