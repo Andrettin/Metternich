@@ -76,6 +76,8 @@ static void on_exit_cleanup()
 int main(int argc, char **argv)
 {
 	try {
+		log::min_log_level = log_level::warning;
+
 		const std::filesystem::path output_log_path = std::filesystem::current_path() / "output.log";
 		const std::filesystem::path error_log_path = std::filesystem::current_path() / "error.log";
 		const log_output_handler log_output_handler(output_log_path, error_log_path);
