@@ -8,6 +8,7 @@
 #include "map/province_history.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
+#include "map/site_map_data.h"
 #include "map/site_type.h"
 #include "map/tile.h"
 #include "map/world.h"
@@ -18,6 +19,7 @@ namespace metternich {
 
 site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::none)
 {
+	this->reset_map_data();
 	this->reset_game_data();
 }
 
@@ -95,6 +97,11 @@ data_entry_history *site::get_history_base()
 void site::reset_history()
 {
 	this->history = make_qunique<site_history>(this);
+}
+
+void site::reset_map_data()
+{
+	this->map_data = make_qunique<site_map_data>(this);
 }
 
 void site::reset_game_data()

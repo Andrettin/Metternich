@@ -277,8 +277,8 @@ void game::clear()
 			province_game_data->reset_non_map_data();
 		}
 
-		for (const site *site : site::get_all()) {
-			site->get_game_data()->reset_non_map_data();
+		for (site *site : site::get_all()) {
+			site->reset_game_data();
 		}
 
 		//clear data related to the game (i.e. the data determined by history), but not that related only to the map

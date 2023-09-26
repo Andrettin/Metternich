@@ -34,8 +34,8 @@ class site_game_data final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
-	Q_PROPERTY(metternich::province* province READ get_province_unconst NOTIFY tile_pos_changed)
+	Q_PROPERTY(QPoint tile_pos READ get_tile_pos CONSTANT)
+	Q_PROPERTY(metternich::province* province READ get_province_unconst CONSTANT)
 	Q_PROPERTY(metternich::country* owner READ get_owner_unconst NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(metternich::settlement_type* settlement_type READ get_settlement_type_unconst NOTIFY settlement_type_changed)
@@ -52,22 +52,15 @@ public:
 
 	explicit site_game_data(const metternich::site *site);
 
-	void reset_non_map_data();
-
 	void do_turn();
 	void do_consumption();
 
-	const QPoint &get_tile_pos() const
-	{
-		return this->tile_pos;
-	}
-
-	void set_tile_pos(const QPoint &tile_pos);
+	const QPoint &get_tile_pos() const;
 	tile *get_tile() const;
 
 	bool is_on_map() const
 	{
-		return this->tile_pos != QPoint(-1, -1);
+		return this->get_tile_pos() != QPoint(-1, -1);
 	}
 
 	bool is_coastal() const;
@@ -360,7 +353,6 @@ public:
 	}
 
 signals:
-	void tile_pos_changed();
 	void owner_changed();
 	void culture_changed();
 	void religion_changed();
@@ -372,7 +364,6 @@ signals:
 
 private:
 	const metternich::site *site = nullptr;
-	QPoint tile_pos = QPoint(-1, -1);
 	const country *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;

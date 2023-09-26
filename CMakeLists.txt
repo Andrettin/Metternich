@@ -124,6 +124,7 @@ set(map_SRCS
 	src/map/site_container.cpp
 	src/map/site_game_data.cpp
 	src/map/site_history.cpp
+	src/map/site_map_data.cpp
 	src/map/site_type.cpp
 	src/map/temperature_type.cpp
 	src/map/terrain_adjacency.cpp
@@ -401,6 +402,7 @@ set(map_HDRS
 	src/map/site_container.h
 	src/map/site_game_data.h
 	src/map/site_history.h
+	src/map/site_map_data.h
 	src/map/site_type.h
 	src/map/temperature_type.h
 	src/map/terrain_adjacency.h

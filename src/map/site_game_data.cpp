@@ -23,6 +23,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
+#include "map/site_map_data.h"
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
@@ -46,26 +47,9 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 		this->initialize_building_slots();
 	}
 
-	this->reset_non_map_data();
-}
-
-void site_game_data::reset_non_map_data()
-{
-	this->clear_buildings();
-	this->clear_population_units();
-	this->owner = nullptr;
-	this->culture = nullptr;
-	this->religion = nullptr;
-	this->settlement_type = nullptr;
 	this->housing = defines::get()->get_base_housing();
 	this->free_food_consumption = site_game_data::base_free_food_consumption;
 	this->score = this->site->is_settlement() ? site_game_data::base_settlement_score : 0;
-	this->commodity_outputs.clear();
-	this->base_commodity_outputs.clear();
-	this->local_commodity_consumptions.clear();
-	this->output_modifier = 0;
-	this->commodity_output_modifiers.clear();
-	this->visiting_military_units.clear();
 
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::type_count_changed, this, &site_game_data::on_population_type_count_changed);
@@ -147,22 +131,9 @@ void site_game_data::do_consumption()
 	}
 }
 
-void site_game_data::set_tile_pos(const QPoint &tile_pos)
+const QPoint &site_game_data::get_tile_pos() const
 {
-	if (tile_pos == this->get_tile_pos()) {
-		return;
-	}
-
-	if (this->get_province() != nullptr) {
-		this->get_population()->remove_upper_population(this->get_province()->get_game_data()->get_population());
-	}
-
-	this->tile_pos = tile_pos;
-	emit tile_pos_changed();
-
-	if (this->get_province() != nullptr) {
-		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
-	}
+	return this->site->get_map_data()->get_tile_pos();
 }
 
 tile *site_game_data::get_tile() const

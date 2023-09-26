@@ -16,6 +16,7 @@
 #include "map/route.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_map_data.h"
 #include "map/site_type.h"
 #include "map/terrain_adjacency.h"
 #include "map/terrain_adjacency_type.h"
@@ -153,7 +154,7 @@ void map::clear()
 	}
 
 	for (site *site : site::get_all()) {
-		site->reset_game_data();
+		site->reset_map_data();
 	}
 
 	for (route *route : route::get_all()) {
@@ -461,7 +462,7 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 			break;
 	}
 
-	site->get_game_data()->set_tile_pos(tile_pos);
+	site->get_map_data()->set_tile_pos(tile_pos);
 }
 
 void map::set_tile_resource(const QPoint &tile_pos, const resource *resource)
