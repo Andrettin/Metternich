@@ -63,6 +63,8 @@ void site_game_data::reset_non_map_data()
 	this->commodity_outputs.clear();
 	this->base_commodity_outputs.clear();
 	this->local_commodity_consumptions.clear();
+	this->output_modifier = 0;
+	this->commodity_output_modifiers.clear();
 	this->visiting_military_units.clear();
 
 	this->population = make_qunique<metternich::population>();
