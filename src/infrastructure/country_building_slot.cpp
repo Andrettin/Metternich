@@ -112,6 +112,11 @@ bool country_building_slot::can_have_building(const building_type *building) con
 		return false;
 	}
 
+	if (!building->get_resources().empty()) {
+		//resource buildings cannot be in a country building slot
+		return false;
+	}
+
 	return building_slot::can_have_building(building);
 }
 
