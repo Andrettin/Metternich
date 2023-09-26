@@ -2,7 +2,6 @@
 
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/military_unit.h"
-#include "util/number_util.h"
 
 namespace metternich {
 

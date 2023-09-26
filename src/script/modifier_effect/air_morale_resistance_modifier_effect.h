@@ -3,7 +3,6 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "script/modifier_effect/modifier_effect.h"
-#include "util/number_util.h"
 
 namespace metternich {
 

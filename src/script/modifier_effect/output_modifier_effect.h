@@ -1,11 +1,10 @@
 #pragma once
 
 #include "script/modifier_effect/modifier_effect.h"
-#include "util/number_util.h"
 
 namespace metternich {
 
-template <typename scope_type>  
+template <typename scope_type>
 class output_modifier_effect final : public modifier_effect<scope_type>
 {
 public:

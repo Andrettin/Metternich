@@ -5,7 +5,6 @@
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/country_building_slot.h"
 #include "script/modifier_effect/modifier_effect.h"
-#include "util/number_util.h"
 
 namespace metternich {
 

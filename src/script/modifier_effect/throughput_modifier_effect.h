@@ -1,7 +1,6 @@
 #pragma once
 
 #include "script/modifier_effect/modifier_effect.h"
-#include "util/number_util.h"
 
 namespace metternich {
 

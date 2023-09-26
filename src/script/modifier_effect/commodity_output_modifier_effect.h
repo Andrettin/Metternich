@@ -6,8 +6,6 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "script/modifier_effect/modifier_effect.h"
-#include "util/number_util.h"
-#include "util/number_util.h"
 
 namespace metternich {
 
