@@ -52,5 +52,6 @@ QString scripted_scoped_modifier<scope_type>::get_modifier_string(const scope_ty
 template class scripted_scoped_modifier<character>;
 template class scripted_scoped_modifier<country>;
 template class scripted_scoped_modifier<province>;
+template class scripted_scoped_modifier<site>;
 
 }

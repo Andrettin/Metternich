@@ -8,6 +8,7 @@
 #include "script/effect/effect.h"
 #include "script/scripted_character_modifier.h"
 #include "script/scripted_province_modifier.h"
+#include "script/scripted_site_modifier.h"
 
 namespace metternich {
 
@@ -15,7 +16,7 @@ template <typename scope_type>
 class scripted_modifiers_effect final : public effect<scope_type>
 {
 public:
-	using scripted_modifier_type = std::conditional_t<std::is_same_v<scope_type, const character>, scripted_character_modifier, std::conditional_t<std::is_same_v<scope_type, const province>, scripted_province_modifier, void>>;
+	using scripted_modifier_type = std::conditional_t<std::is_same_v<scope_type, const character>, scripted_character_modifier, std::conditional_t<std::is_same_v<scope_type, const province>, scripted_province_modifier, std::conditional_t<std::is_same_v<scope_type, const site>, scripted_site_modifier, void>>>;
 
 	explicit scripted_modifiers_effect(const gsml_operator effect_operator)
 		: effect<scope_type>(effect_operator)
@@ -86,12 +87,12 @@ public:
 
 	virtual std::string get_addition_string() const override
 	{
-		return "Gain the " + this->modifier->get_name() + " modifier for " + std::to_string(this->duration * defines::get()->get_months_per_turn()) + " months";
+		return std::format("Gain the {} modifier for {} months", string::highlight(this->modifier->get_name()), std::to_string(this->duration * defines::get()->get_months_per_turn()));
 	}
 
 	virtual std::string get_subtraction_string() const override
 	{
-		return "Lose the " + this->modifier->get_name() + " modifier";
+		return std::format("Lose the {} modifier", string::highlight(this->modifier->get_name()));
 	}
 
 private:

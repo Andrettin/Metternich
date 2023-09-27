@@ -9,6 +9,7 @@ namespace metternich {
 class character;
 class country;
 class province;
+class site;
 
 template <typename scope_type>
 class modifier;
@@ -37,5 +38,6 @@ private:
 extern template class scripted_scoped_modifier<character>;
 extern template class scripted_scoped_modifier<country>;
 extern template class scripted_scoped_modifier<province>;
+extern template class scripted_scoped_modifier<site>;
 
 }

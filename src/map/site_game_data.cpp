@@ -31,6 +31,7 @@
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/modifier.h"
+#include "script/scripted_site_modifier.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
@@ -84,6 +85,8 @@ void site_game_data::do_turn()
 
 		map::get()->set_tile_improvement(this->get_tile_pos(), nullptr);
 	}
+
+	this->decrement_scripted_modifiers();
 }
 
 void site_game_data::do_consumption()
@@ -681,6 +684,64 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 	}
 
 	emit improvement_changed();
+}
+
+QVariantList site_game_data::get_scripted_modifiers_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
+}
+
+bool site_game_data::has_scripted_modifier(const scripted_site_modifier *modifier) const
+{
+	return this->get_scripted_modifiers().contains(modifier);
+}
+
+void site_game_data::add_scripted_modifier(const scripted_site_modifier *modifier, const int duration)
+{
+	const read_only_context ctx(this->site);
+
+	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
+
+	if (modifier->get_modifier() != nullptr) {
+		modifier->get_modifier()->apply(this->site);
+	}
+
+	if (game::get()->is_running()) {
+		emit scripted_modifiers_changed();
+	}
+}
+
+void site_game_data::remove_scripted_modifier(const scripted_site_modifier *modifier)
+{
+	this->scripted_modifiers.erase(modifier);
+
+	if (modifier->get_modifier() != nullptr) {
+		modifier->get_modifier()->remove(this->site);
+	}
+
+	if (game::get()->is_running()) {
+		emit scripted_modifiers_changed();
+	}
+}
+
+void site_game_data::decrement_scripted_modifiers()
+{
+	if (this->scripted_modifiers.empty()) {
+		return;
+	}
+
+	std::vector<const scripted_site_modifier *> modifiers_to_remove;
+	for (auto &[modifier, duration] : this->scripted_modifiers) {
+		--duration;
+
+		if (duration == 0) {
+			modifiers_to_remove.push_back(modifier);
+		}
+	}
+
+	for (const scripted_site_modifier *modifier : modifiers_to_remove) {
+		this->remove_scripted_modifier(modifier);
+	}
 }
 
 void site_game_data::change_score(const int change)

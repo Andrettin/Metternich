@@ -2,6 +2,7 @@
 
 #include "economy/commodity_container.h"
 #include "infrastructure/building_slot_type_container.h"
+#include "script/scripted_modifier_container.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("country/country.h")
@@ -25,6 +26,7 @@ class population_unit;
 class province;
 class religion;
 class resource;
+class scripted_site_modifier;
 class settlement_building_slot;
 class settlement_type;
 class site;
@@ -41,6 +43,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(metternich::settlement_type* settlement_type READ get_settlement_type_unconst NOTIFY settlement_type_changed)
 	Q_PROPERTY(metternich::improvement* improvement READ get_improvement_unconst NOTIFY improvement_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
+	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(int housing READ get_housing NOTIFY housing_changed)
@@ -181,6 +184,17 @@ public:
 	void on_building_gained(const building_type *building, const int multiplier);
 	void on_wonder_gained(const wonder *wonder, const int multiplier);
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
+
+	const scripted_site_modifier_map<int> &get_scripted_modifiers() const
+	{
+		return this->scripted_modifiers;
+	}
+
+	QVariantList get_scripted_modifiers_qvariant_list() const;
+	bool has_scripted_modifier(const scripted_site_modifier *modifier) const;
+	void add_scripted_modifier(const scripted_site_modifier *modifier, const int duration);
+	void remove_scripted_modifier(const scripted_site_modifier *modifier);
+	void decrement_scripted_modifiers();
 
 	int get_score() const
 	{
@@ -358,6 +372,7 @@ signals:
 	void religion_changed();
 	void improvement_changed();
 	void settlement_type_changed();
+	void scripted_modifiers_changed();
 	void population_units_changed();
 	void housing_changed();
 	void commodity_outputs_changed();
@@ -370,6 +385,7 @@ private:
 	const metternich::settlement_type *settlement_type = nullptr;
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
 	building_slot_type_map<settlement_building_slot *> building_slot_map;
+	scripted_site_modifier_map<int> scripted_modifiers;
 	int score = 0;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
