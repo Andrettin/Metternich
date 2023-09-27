@@ -485,6 +485,7 @@ set(script_condition_HDRS
 	src/script/condition/has_building_class_condition.h
 	src/script/condition/has_building_condition.h
 	src/script/condition/has_population_culture_condition.h
+	src/script/condition/has_population_ideology_condition.h
 	src/script/condition/has_population_religion_condition.h
 	src/script/condition/has_population_type_condition.h
 	src/script/condition/has_resource_condition.h

@@ -45,6 +45,7 @@
 #include "script/condition/has_building_condition.h"
 #include "script/condition/has_building_class_condition.h"
 #include "script/condition/has_population_culture_condition.h"
+#include "script/condition/has_population_ideology_condition.h"
 #include "script/condition/has_population_religion_condition.h"
 #include "script/condition/has_population_type_condition.h"
 #include "script/condition/has_resource_condition.h"
@@ -219,6 +220,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<has_building_class_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_culture") {
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
+		} else if (key == "has_population_ideology") {
+			return std::make_unique<has_population_ideology_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_religion") {
 			return std::make_unique<has_population_religion_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_type") {
