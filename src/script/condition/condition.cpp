@@ -55,6 +55,7 @@
 #include "script/condition/housing_condition.h"
 #include "script/condition/ideology_condition.h"
 #include "script/condition/improvement_condition.h"
+#include "script/condition/independent_condition.h"
 #include "script/condition/infantry_condition.h"
 #include "script/condition/is_advisor_condition.h"
 #include "script/condition/is_ruler_condition.h"
@@ -138,6 +139,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<discovered_province_condition>(value, condition_operator);
 		} else if (key == "discovered_region") {
 			return std::make_unique<discovered_region_condition>(value, condition_operator);
+		} else if (key == "independent") {
+			return std::make_unique<independent_condition>(value, condition_operator);
 		} else if (key == "owns_province") {
 			return std::make_unique<owns_province_condition>(value, condition_operator);
 		} else if (key == "owns_site") {

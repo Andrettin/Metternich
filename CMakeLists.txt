@@ -495,6 +495,7 @@ set(script_condition_HDRS
 	src/script/condition/housing_condition.h
 	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h
+	src/script/condition/independent_condition.h
 	src/script/condition/infantry_condition.h
 	src/script/condition/is_advisor_condition.h
 	src/script/condition/is_ruler_condition.h

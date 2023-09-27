@@ -189,6 +189,11 @@ public:
 	bool is_secondary_power() const;
 	bool is_colony() const;
 
+	bool is_independent() const
+	{
+		return this->get_overlord() == nullptr;
+	}
+
 	std::string get_type_name() const;
 
 	QString get_type_name_qstring() const
