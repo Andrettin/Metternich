@@ -123,8 +123,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<is_advisor_condition>(value, condition_operator);
 		} else if (key == "is_ruler") {
 			return std::make_unique<is_ruler_condition>(value, condition_operator);
-		} else if (key == "scripted_modifier") {
-			return std::make_unique<scripted_modifier_condition<character>>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
 		}
@@ -198,6 +196,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country>) {
 		if (key == "war") {
 			return std::make_unique<war_condition<scope_type>>(value, condition_operator);
+		}
+	}
+	
+	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
+		if (key == "scripted_modifier") {
+			return std::make_unique<scripted_modifier_condition<scope_type>>(value, condition_operator);
 		}
 	}
 	

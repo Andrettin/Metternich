@@ -1,17 +1,17 @@
 #pragma once
 
-#include "character/character.h"
-#include "character/character_game_data.h"
 #include "script/condition/condition.h"
 #include "script/scripted_character_modifier.h"
+#include "script/scripted_province_modifier.h"
+#include "script/scripted_site_modifier.h"
 
 namespace metternich {
 
 template <typename scope_type>
-class scripted_modifier_condition final : public condition<character>
+class scripted_modifier_condition final : public condition<scope_type>
 {
 public:
-	using scripted_modifier_type = std::conditional_t<std::is_same_v<scope_type, character>, scripted_character_modifier, void>;
+	using scripted_modifier_type = std::conditional_t<std::is_same_v<scope_type, character>, scripted_character_modifier, std::conditional_t<std::is_same_v<scope_type, province>, scripted_province_modifier, std::conditional_t<std::is_same_v<scope_type, site>, scripted_site_modifier, void>>>;
 
 	explicit scripted_modifier_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<scope_type>(condition_operator)
@@ -25,7 +25,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual bool check_assignment(const character *scope, const read_only_context &ctx) const override
+	virtual bool check_assignment(const scope_type *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
@@ -36,7 +36,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return this->modifier->get_name() + " modifier";
+		return std::format("{} modifier", string::highlight(this->modifier->get_name()));
 	}
 
 private:
