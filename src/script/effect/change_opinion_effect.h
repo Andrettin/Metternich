@@ -5,6 +5,7 @@
 #include "script/target_variant.h"
 #include "util/assert_util.h"
 #include "util/number_util.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -36,6 +37,8 @@ public:
 			}
 		} else if (key == "value") {
 			this->value = std::stoi(value);
+		} else if (key == "mutual") {
+			this->mutual = string::to_bool(value);
 		} else {
 			assert_throw(false);
 		}
@@ -61,7 +64,17 @@ public:
 
 	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
 	{
-		scope->get_game_data()->change_base_opinion(this->get_target_scope(ctx), this->value);
+		const scope_type *target_scope = this->get_target_scope(ctx);
+
+		if (target_scope == nullptr) {
+			return;
+		}
+
+		scope->get_game_data()->change_base_opinion(target_scope, this->value);
+
+		if (this->mutual) {
+			target_scope->get_game_data()->change_base_opinion(scope, this->value);
+		}
 	}
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
@@ -70,12 +83,17 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return number::to_signed_string(this->value) + " Opinion towards " + this->get_target_name(ctx);
+		if (this->mutual) {
+			return std::format("{} mutual Opinion with {}", number::to_signed_string(this->value), string::highlight(this->get_target_name(ctx)));
+		} else {
+			return std::format("{} Opinion towards {}", number::to_signed_string(this->value), string::highlight(this->get_target_name(ctx)));
+		}
 	}
 
 private:
 	target_variant<scope_type> target;
 	int value = 0;
+	bool mutual = false;
 };
 
 }
