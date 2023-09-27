@@ -570,6 +570,7 @@ set(script_effect_HDRS
 	src/script/effect/population_scaled_commodity_effect.h
 	src/script/effect/provincial_capital_effect.h
 	src/script/effect/random_global_population_unit_effect.h
+	src/script/effect/random_known_country_effect.h
 	src/script/effect/random_list_effect.h
 	src/script/effect/random_neighbor_country_effect.h
 	src/script/effect/random_settlement_effect.h
