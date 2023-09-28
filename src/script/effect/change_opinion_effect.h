@@ -84,9 +84,9 @@ public:
 		Q_UNUSED(prefix);
 
 		if (this->mutual) {
-			return std::format("{} mutual Opinion with {}", number::to_signed_string(this->value), string::highlight(this->get_target_name(ctx)));
+			return std::format("{} mutual {} with {}", number::to_signed_string(this->value), string::highlight("Opinion"), string::highlight(this->get_target_name(ctx)));
 		} else {
-			return std::format("{} Opinion towards {}", number::to_signed_string(this->value), string::highlight(this->get_target_name(ctx)));
+			return std::format("{} {} towards {}", number::to_signed_string(this->value), string::highlight("Opinion"), string::highlight(this->get_target_name(ctx)));
 		}
 	}
 
