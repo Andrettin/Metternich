@@ -68,6 +68,26 @@
 
 using namespace metternich;
 
+static QCoro::Task<void> initialize()
+{
+	try {
+		co_await database::get()->load(true);
+		database::get()->load_defines();
+		co_await database::get()->load(false);
+
+		//load the preferences before initializing the database, so that is any initialization depends on the scale factor, it can work properly
+		preferences::get()->load();
+
+		database::get()->initialize();
+		engine_interface::get()->set_running(true);
+	} catch (...) {
+		exception::report(std::current_exception());
+		QMetaObject::invokeMethod(QApplication::instance(), [] {
+			QApplication::exit(EXIT_FAILURE);
+		}, Qt::QueuedConnection);
+	}
+}
+
 static void on_exit_cleanup()
 {
 	database::get()->clear();
@@ -166,24 +186,7 @@ int main(int argc, char **argv)
 				QCoreApplication::exit(-1);
 			}
 
-			event_loop::get()->co_spawn([argc, argv]() -> boost::asio::awaitable<void> {
-				try {
-					co_await database::get()->load(true);
-					database::get()->load_defines();
-					co_await database::get()->load(false);
-
-					//load the preferences before initializing the database, so that is any initialization depends on the scale factor, it can work properly
-					preferences::get()->load();
-
-					database::get()->initialize();
-					engine_interface::get()->set_running(true);
-				} catch (...) {
-					exception::report(std::current_exception());
-					QMetaObject::invokeMethod(QApplication::instance(), [] {
-						QApplication::exit(EXIT_FAILURE);
-					}, Qt::QueuedConnection);
-				}
-			});
+			initialize();
 		}, Qt::QueuedConnection);
 
 		engine.load(url);
