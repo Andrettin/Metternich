@@ -254,7 +254,7 @@ void game::start()
 
 void game::stop()
 {
-	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+	QTimer::singleShot(0, this, [this]() -> QCoro::Task<void> {
 		if (!this->is_running()) {
 			//already stopped
 			co_return;
@@ -1348,7 +1348,7 @@ void game::do_turn()
 
 void game::do_turn_async()
 {
-	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+	QTimer::singleShot(0, this, [this]() -> QCoro::Task<void> {
 		try {
 			this->do_turn();
 			co_return;
