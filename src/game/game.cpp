@@ -214,42 +214,40 @@ void game::setup_scenario(metternich::scenario *scenario)
 	}
 }
 
-void game::start()
+QCoro::Task<void> game::start_coro()
 {
-	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
-		if (this->is_running()) {
-			//already running
-			co_return;
+	if (this->is_running()) {
+		//already running
+		co_return;
+	}
+
+	map::get()->create_minimap_image();
+	co_await this->create_exploration_diplomatic_map_image();
+
+	this->adjust_food_production_for_country_populations();
+
+	for (const site *site : site::get_all()) {
+		if (!site->get_game_data()->is_on_map()) {
+			continue;
 		}
 
-		map::get()->create_minimap_image();
-		co_await this->create_exploration_diplomatic_map_image();
+		site->get_game_data()->calculate_commodity_outputs();
+	}
 
-		this->adjust_food_production_for_country_populations();
+	for (const country *country : this->get_countries()) {
+		country_game_data *country_game_data = country->get_game_data();
 
-		for (const site *site : site::get_all()) {
-			if (!site->get_game_data()->is_on_map()) {
-				continue;
-			}
-
-			site->get_game_data()->calculate_commodity_outputs();
+		for (population_unit *population_unit : country_game_data->get_population_units()) {
+			population_unit->choose_ideology();
 		}
 
-		for (const country *country : this->get_countries()) {
-			country_game_data *country_game_data = country->get_game_data();
+		country_game_data->check_ruler();
 
-			for (population_unit *population_unit : country_game_data->get_population_units()) {
-				population_unit->choose_ideology();
-			}
+		//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
+		country_game_data->check_journal_entries(true);
+	}
 
-			country_game_data->check_ruler();
-
-			//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
-			country_game_data->check_journal_entries(true);
-		}
-
-		this->set_running(true);
-	});
+	this->set_running(true);
 }
 
 void game::stop()
@@ -1178,7 +1176,10 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 void game::on_setup_finished()
 {
 	this->calculate_great_power_ranks();
-	this->create_diplomatic_map_image();
+
+	QtConcurrent::run([this]() -> QCoro::Task<void> {
+		co_await this->create_diplomatic_map_image();
+	}).waitForFinished();
 
 	emit countries_changed();
 
@@ -1332,9 +1333,9 @@ void game::do_turn()
 		}
 
 		if (this->exploration_changed) {
-			thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+			QtConcurrent::run([this]() -> QCoro::Task<void> {
 				co_await this->create_exploration_diplomatic_map_image();
-			});
+			}).waitForFinished();
 			this->exploration_changed = false;
 		}
 
@@ -1442,30 +1443,28 @@ void game::calculate_great_power_ranks()
 	}
 }
 
-void game::create_diplomatic_map_image()
+QCoro::Task<void> game::create_diplomatic_map_image()
 {
-	std::vector<boost::asio::awaitable<void>> awaitables;
+	std::vector<QCoro::Task<void>> tasks;
 
 	if (map::get()->get_ocean_diplomatic_map_image().isNull()) {
-		boost::asio::awaitable<void> awaitable = map::get()->create_ocean_diplomatic_map_image();
-		awaitables.push_back(std::move(awaitable));
+		QCoro::Task<void> task = map::get()->create_ocean_diplomatic_map_image();
+		tasks.push_back(std::move(task));
 	}
 
 	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
 
-		boost::asio::awaitable<void> awaitable = country_game_data->create_diplomatic_map_image();
-		awaitables.push_back(std::move(awaitable));
+		QCoro::Task<void> task = country_game_data->create_diplomatic_map_image();
+		tasks.push_back(std::move(task));
 	}
 
-	thread_pool::get()->co_spawn_sync([&awaitables]() -> boost::asio::awaitable<void> {
-		for (boost::asio::awaitable<void> &awaitable : awaitables) {
-			co_await std::move(awaitable);
-		}
-	});
+	for (QCoro::Task<void> &task : tasks) {
+		co_await std::move(task);
+	}
 }
 
-boost::asio::awaitable<void> game::create_exploration_diplomatic_map_image()
+QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 {
 	const map *map = map::get();
 
@@ -1494,8 +1493,8 @@ boost::asio::awaitable<void> game::create_exploration_diplomatic_map_image()
 
 	const centesimal_int final_scale_factor = tile_pixel_size * preferences::get()->get_scale_factor();
 
-	co_await thread_pool::get()->co_spawn_awaitable([this, final_scale_factor, &scaled_exploration_diplomatic_map_image]() -> boost::asio::awaitable<void> {
-		scaled_exploration_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->exploration_diplomatic_map_image, final_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([this, final_scale_factor, &scaled_exploration_diplomatic_map_image]() {
+		scaled_exploration_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->exploration_diplomatic_map_image, final_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});

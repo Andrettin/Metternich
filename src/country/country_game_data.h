@@ -482,7 +482,7 @@ public:
 	}
 
 	[[nodiscard]]
-	boost::asio::awaitable<void> create_diplomatic_map_image();
+	QCoro::Task<void> create_diplomatic_map_image();
 
 	const QRect &get_diplomatic_map_image_rect() const
 	{
@@ -505,7 +505,7 @@ public:
 	}
 
 	[[nodiscard]]
-	boost::asio::awaitable<void> create_diplomatic_map_mode_image(const diplomatic_map_mode mode, const std::optional<diplomacy_state> &diplomacy_state);
+	QCoro::Task<void> create_diplomatic_map_mode_image(const diplomatic_map_mode mode, const std::optional<diplomacy_state> &diplomacy_state);
 
 	const QImage &get_diplomacy_state_diplomatic_map_image(const diplomacy_state state) const
 	{

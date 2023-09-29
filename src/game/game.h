@@ -79,7 +79,13 @@ public:
 
 	Q_INVOKABLE void create_random_map(const QSize &map_size, metternich::era *era);
 	Q_INVOKABLE void setup_scenario(metternich::scenario *scenario);
-	Q_INVOKABLE void start();
+
+	Q_INVOKABLE QCoro::QmlTask start()
+	{
+		return this->start_coro();
+	}
+
+	QCoro::Task<void> start_coro();
 	Q_INVOKABLE void stop();
 
 	void clear();
@@ -151,7 +157,7 @@ public:
 		emit player_country_changed();
 	}
 
-	void create_diplomatic_map_image();
+	QCoro::Task<void> create_diplomatic_map_image();
 
 	const QImage &get_exploration_diplomatic_map_image() const
 	{
@@ -159,7 +165,7 @@ public:
 	}
 
 	[[nodiscard]]
-	boost::asio::awaitable<void> create_exploration_diplomatic_map_image();
+	QCoro::Task<void> create_exploration_diplomatic_map_image();
 
 	void set_exploration_changed()
 	{

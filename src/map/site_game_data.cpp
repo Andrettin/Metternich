@@ -276,9 +276,9 @@ void site_game_data::set_culture(const metternich::culture *culture)
 
 	if (game::get()->is_running()) {
 		if (this->get_owner() != nullptr) {
-			thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+			QtConcurrent::run([this]() -> QCoro::Task<void> {
 				co_await this->get_owner()->get_game_data()->create_diplomatic_map_mode_image(diplomatic_map_mode::cultural, {});
-			});
+			}).waitForFinished();
 		}
 	}
 
@@ -306,9 +306,9 @@ void site_game_data::set_religion(const metternich::religion *religion)
 
 	if (game::get()->is_running()) {
 		if (this->get_owner() != nullptr) {
-			thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+			QtConcurrent::run([this]() -> QCoro::Task<void> {
 				co_await this->get_owner()->get_game_data()->create_diplomatic_map_mode_image(diplomatic_map_mode::religious, {});
-			});
+			}).waitForFinished();
 		}
 	}
 

@@ -110,7 +110,7 @@ public:
 	}
 
 	[[nodiscard]]
-	boost::asio::awaitable<void> create_ocean_diplomatic_map_image();
+	QCoro::Task<void> create_ocean_diplomatic_map_image();
 
 	const QSize &get_diplomatic_map_image_size() const
 	{

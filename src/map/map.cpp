@@ -699,7 +699,7 @@ void map::initialize_diplomatic_map()
 	this->diplomatic_map_tile_pixel_size = std::max(relative_size.width(), relative_size.height());
 }
 
-boost::asio::awaitable<void> map::create_ocean_diplomatic_map_image()
+QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 {
 	const int tile_pixel_size = this->get_diplomatic_map_tile_pixel_size();
 
@@ -723,8 +723,8 @@ boost::asio::awaitable<void> map::create_ocean_diplomatic_map_image()
 
 	QImage scaled_ocean_diplomatic_map_image;
 
-	co_await thread_pool::get()->co_spawn_awaitable([this, tile_pixel_size, &scaled_ocean_diplomatic_map_image]() -> boost::asio::awaitable<void> {
-		scaled_ocean_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->ocean_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([this, tile_pixel_size, &scaled_ocean_diplomatic_map_image]() {
+		scaled_ocean_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->ocean_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
@@ -783,8 +783,8 @@ boost::asio::awaitable<void> map::create_ocean_diplomatic_map_image()
 
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 
-	co_await thread_pool::get()->co_spawn_awaitable([this, &scale_factor, &scaled_ocean_diplomatic_map_image]() -> boost::asio::awaitable<void> {
-		scaled_ocean_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->ocean_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([this, &scale_factor, &scaled_ocean_diplomatic_map_image]() {
+		scaled_ocean_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->ocean_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});

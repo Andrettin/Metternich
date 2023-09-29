@@ -18,7 +18,7 @@ private:
 public:
 	icon_image_provider();
 
-	virtual boost::asio::awaitable<void> load_image(const std::string &id) override;
+	virtual QCoro::Task<void> load_image(const std::string &id) override;
 };
 
 }

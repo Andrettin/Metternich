@@ -130,7 +130,7 @@ void terrain_type::initialize()
 		assign_to_biome(this->get_elevation_type(), this->get_temperature_type(), this->get_moisture_type(), this->get_forestation_type());
 	}
 
-	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+	QTimer::singleShot(0, this, [this]() -> QCoro::Task<void> {
 		co_await tile_image_provider::get()->load_image("terrain/" + this->get_identifier() + "/0");
 	});
 

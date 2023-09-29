@@ -27,7 +27,7 @@ tile_image_provider::tile_image_provider()
 	});
 }
 
-boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &id)
+QCoro::Task<void> tile_image_provider::load_image(const std::string &id)
 {
 	const std::vector<std::string> id_list = string::split(id, '/');
 
@@ -97,8 +97,8 @@ boost::asio::awaitable<void> tile_image_provider::load_image(const std::string &
 	assert_throw(!image.isNull());
 
 	if (image_scale_factor != scale_factor) {
-		co_await thread_pool::get()->co_spawn_awaitable([this, &image, &scale_factor, &image_scale_factor]() -> boost::asio::awaitable<void> {
-			image = co_await image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, defines::get()->get_tile_size() * image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		co_await QtConcurrent::run([this, &image, &scale_factor, &image_scale_factor]() {
+			image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, defines::get()->get_tile_size() * image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 			});
 		});

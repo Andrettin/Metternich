@@ -98,15 +98,9 @@ void defines::initialize()
 		province_event::add_trigger_none_random_weight(event_trigger, random_weight);
 	}
 
-	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+	QTimer::singleShot(0, this, [this]() -> QCoro::Task<void> {
 		co_await tile_image_provider::get()->load_image("borders/province_border");
-	});
-
-	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
 		co_await tile_image_provider::get()->load_image("river/0");
-	});
-
-	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
 		co_await tile_image_provider::get()->load_image("rivermouth/0");
 	});
 }

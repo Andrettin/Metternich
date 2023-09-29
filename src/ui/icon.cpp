@@ -9,7 +9,7 @@ namespace metternich {
 
 void icon::initialize()
 {
-	event_loop::get()->co_spawn([this]() -> boost::asio::awaitable<void> {
+	QTimer::singleShot(0, this, [this]() -> QCoro::Task<void> {
 		co_await icon_image_provider::get()->load_image(this->get_identifier());
 	});
 

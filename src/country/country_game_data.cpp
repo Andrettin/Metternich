@@ -1057,9 +1057,9 @@ void country_game_data::calculate_territory_rect()
 	this->calculate_text_rect();
 
 	if (game::get()->is_running()) {
-		thread_pool::get()->co_spawn_sync([this]() -> boost::asio::awaitable<void> {
+		QtConcurrent::run([this]() -> QCoro::Task<void> {
 			co_await this->create_diplomatic_map_image();
-		});
+		}).waitForFinished();
 	}
 }
 
@@ -1327,9 +1327,9 @@ void country_game_data::change_diplomacy_state_count(const diplomacy_state state
 
 	//if the change added the diplomacy state to the map, then we need to create the diplomatic map image for it
 	if (game::get()->is_running() && final_count == change && !is_vassalage_diplomacy_state(state) && !is_overlordship_diplomacy_state(state)) {
-		thread_pool::get()->co_spawn_sync([this, state]() -> boost::asio::awaitable<void> {
+		QtConcurrent::run([this, state]() -> QCoro::Task<void> {
 			co_await create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic, state);
-		});
+		}).waitForFinished();
 	}
 }
 
@@ -1493,7 +1493,7 @@ const QColor &country_game_data::get_diplomatic_map_color() const
 	return this->country->get_color();
 }
 
-boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
+QCoro::Task<void> country_game_data::create_diplomatic_map_image()
 {
 	const map *map = map::get();
 
@@ -1527,12 +1527,12 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 	QImage scaled_diplomatic_map_image;
 	QImage scaled_selected_diplomatic_map_image;
 
-	co_await thread_pool::get()->co_spawn_awaitable([this, tile_pixel_size, &scaled_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() -> boost::asio::awaitable<void> {
-		scaled_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([this, tile_pixel_size, &scaled_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() {
+		scaled_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 
-		scaled_selected_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		scaled_selected_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
@@ -1587,12 +1587,12 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 
-	co_await thread_pool::get()->co_spawn_awaitable([this, &scale_factor, &scaled_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() -> boost::asio::awaitable<void> {
-		scaled_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([this, &scale_factor, &scaled_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() {
+		scaled_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 
-		scaled_selected_diplomatic_map_image = co_await image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		scaled_selected_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
@@ -1618,7 +1618,7 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_image()
 	emit diplomatic_map_image_changed();
 }
 
-boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode, const std::optional<diplomacy_state> &diplomacy_state)
+QCoro::Task<void> country_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode, const std::optional<diplomacy_state> &diplomacy_state)
 {
 	static const QColor empty_color(Qt::black);
 	static constexpr QColor diplomatic_self_color(170, 148, 214);
@@ -1697,8 +1697,8 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image
 
 	QImage scaled_image;
 
-	co_await thread_pool::get()->co_spawn_awaitable([this, tile_pixel_size, &image, &scaled_image]() -> boost::asio::awaitable<void> {
-		scaled_image = co_await image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([this, tile_pixel_size, &image, &scaled_image]() {
+		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
@@ -1751,8 +1751,8 @@ boost::asio::awaitable<void> country_game_data::create_diplomatic_map_mode_image
 
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 
-	co_await thread_pool::get()->co_spawn_awaitable([this, &scale_factor, &image, &scaled_image]() -> boost::asio::awaitable<void> {
-		scaled_image = co_await image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([this, &scale_factor, &image, &scaled_image]() {
+		scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
