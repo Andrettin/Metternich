@@ -36,6 +36,7 @@
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/population_scaled_commodity_effect.h"
 #include "script/effect/provincial_capital_effect.h"
+#include "script/effect/random_effect.h"
 #include "script/effect/random_global_population_unit_effect.h"
 #include "script/effect/random_known_country_effect.h"
 #include "script/effect/random_list_effect.h"
@@ -190,6 +191,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		effect = std::make_unique<hidden_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "if") {
 		effect = std::make_unique<if_effect<scope_type>>(effect_operator);
+	} else if (effect_identifier == "random") {
+		effect = std::make_unique<random_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "random_global_population_unit") {
 		effect = std::make_unique<random_global_population_unit_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "random_list") {
