@@ -75,11 +75,11 @@ struct context_base
 
 		const auto find_iterator = saved_scopes.find(scope_name);
 
-		if (find_iterator == saved_scopes.end()) {
-			throw std::runtime_error(std::format("No saved scope found with name \"{}\".", scope_name));
+		if (find_iterator != saved_scopes.end()) {
+			return find_iterator->second;
 		}
 
-		return find_iterator->second;
+		return nullptr;
 	}
 
 	const scope_variant_type &get_special_target_scope_variant(const special_target_type special_target_type) const;

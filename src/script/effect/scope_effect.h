@@ -49,6 +49,11 @@ public:
 	virtual void do_assignment_effect(upper_scope_type *upper_scope, context &ctx) const override final
 	{
 		scope_type *new_scope = this->get_scope(upper_scope, ctx);
+
+		if (new_scope == nullptr) {
+			return;
+		}
+
 		this->do_scope_effect(new_scope, upper_scope, ctx);
 	}
 
