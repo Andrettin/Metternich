@@ -32,7 +32,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return this->ideology->get_name() + " ideology";
+		return string::highlight(this->ideology->get_name()) + " ideology";
 	}
 
 private:

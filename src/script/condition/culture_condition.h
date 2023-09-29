@@ -40,7 +40,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return this->culture->get_name() + " culture";
+		return string::highlight(this->culture->get_name()) + " culture";
 	}
 
 private:

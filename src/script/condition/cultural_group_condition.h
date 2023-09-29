@@ -45,7 +45,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return this->cultural_group->get_name() + " cultural group";
+		return string::highlight(this->cultural_group->get_name()) + " cultural group";
 	}
 
 private:
