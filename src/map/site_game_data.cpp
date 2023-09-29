@@ -492,7 +492,7 @@ bool site_game_data::has_building_class(const building_class *building_class) co
 	const building_type *building = this->get_slot_building(building_class->get_slot_type());
 
 	if (building == nullptr) {
-		false;
+		return false;
 	}
 
 	return building->get_building_class() == building_class;
