@@ -7,6 +7,7 @@
 #include "country/culture.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
+#include "map/province_map_data.h"
 #include "map/region.h"
 #include "map/site.h"
 #include "map/terrain_feature.h"
@@ -18,6 +19,7 @@ namespace metternich {
 
 province::province(const std::string &identifier) : named_data_entry(identifier)
 {
+	this->reset_map_data();
 	this->reset_game_data();
 }
 
@@ -89,6 +91,11 @@ data_entry_history *province::get_history_base()
 void province::reset_history()
 {
 	this->history = make_qunique<province_history>(this);
+}
+
+void province::reset_map_data()
+{
+	this->map_data = make_qunique<province_map_data>(this);
 }
 
 void province::reset_game_data()

@@ -268,9 +268,8 @@ void game::clear()
 	try {
 		this->clear_delayed_effects();
 
-		for (const province *province : province::get_all()) {
-			province_game_data *province_game_data = province->get_game_data();
-			province_game_data->reset_non_map_data();
+		for (province *province : province::get_all()) {
+			province->reset_game_data();
 		}
 
 		for (site *site : site::get_all()) {

@@ -7,6 +7,7 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("map/province_game_data.h")
+Q_MOC_INCLUDE("map/province_map_data.h")
 Q_MOC_INCLUDE("map/site.h")
 
 namespace metternich {
@@ -16,6 +17,7 @@ class cultural_group;
 class culture;
 class province_game_data;
 class province_history;
+class province_map_data;
 class region;
 class site;
 class terrain_feature;
@@ -31,6 +33,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_PROPERTY(bool water_zone READ is_water_zone NOTIFY changed)
 	Q_PROPERTY(metternich::site* default_provincial_capital MEMBER default_provincial_capital NOTIFY changed)
 	Q_PROPERTY(std::vector<metternich::region *> regions READ get_regions NOTIFY changed)
+	Q_PROPERTY(metternich::province_map_data* map_data READ get_map_data NOTIFY changed)
 	Q_PROPERTY(metternich::province_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
@@ -86,6 +89,13 @@ public:
 	}
 
 	virtual void reset_history() override;
+
+	void reset_map_data();
+
+	province_map_data *get_map_data() const
+	{
+		return this->map_data.get();
+	}
 
 	void reset_game_data();
 
@@ -192,6 +202,7 @@ private:
 	province_map<const terrain_feature *> border_rivers;
 	std::vector<const site *> sites; //sites located in this province, used for map generation
 	qunique_ptr<province_history> history;
+	qunique_ptr<province_map_data> map_data;
 	qunique_ptr<province_game_data> game_data;
 };
 

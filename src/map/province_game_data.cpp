@@ -19,6 +19,7 @@
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
+#include "map/province_map_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
@@ -46,27 +47,7 @@ namespace metternich {
 province_game_data::province_game_data(const metternich::province *province)
 	: province(province)
 {
-	this->reset_non_map_data();
-}
-
-province_game_data::~province_game_data()
-{
-}
-
-void province_game_data::reset_non_map_data()
-{
-	this->clear_population_units();
-	this->clear_military_units();
-	this->owner = nullptr;
-	this->culture = nullptr;
-	this->religion = nullptr;
-	this->settlement_count = 0;
-	this->provincial_capital = nullptr;
 	this->score = province::base_score;
-	this->output_modifier = 0;
-	this->commodity_output_modifiers.clear();
-	this->improved_resource_commodity_bonuses.clear();
-	this->commodity_bonuses_for_tile_thresholds.clear();
 
 	if (this->is_on_map()) {
 		this->reset_center_tile_pos();
@@ -77,15 +58,13 @@ void province_game_data::reset_non_map_data()
 	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::on_population_main_religion_changed);
 }
 
-void province_game_data::on_map_created()
+province_game_data::~province_game_data()
 {
-	this->calculate_territory_rect_center();
-	this->reset_center_tile_pos();
 }
 
 void province_game_data::do_turn()
 {
-	for (const site *site : this->sites) {
+	for (const site *site : this->get_sites()) {
 		site->get_game_data()->do_turn();
 	}
 
@@ -107,7 +86,7 @@ void province_game_data::do_ai_turn()
 {
 	//visit ruins (if any) with military units of this province's owner
 	if (this->get_owner() != nullptr && this->has_country_military_unit(this->get_owner())) {
-		for (const site *site : this->sites) {
+		for (const site *site : this->get_sites()) {
 			site_game_data *site_game_data = site->get_game_data();
 			if (site_game_data->get_improvement() == nullptr || !site_game_data->get_improvement()->is_ruins()) {
 				continue;
@@ -124,6 +103,11 @@ void province_game_data::do_ai_turn()
 			break;
 		}
 	}
+}
+
+bool province_game_data::is_on_map() const
+{
+	return this->province->get_map_data()->is_on_map();
 }
 
 void province_game_data::set_owner(const country *country)
@@ -150,7 +134,7 @@ void province_game_data::set_owner(const country *country)
 		}
 	}
 
-	for (const site *site : this->sites) {
+	for (const site *site : this->get_sites()) {
 		if (site->get_game_data()->get_owner() == old_owner) {
 			site->get_game_data()->set_owner(country);
 		}
@@ -260,7 +244,7 @@ void province_game_data::set_culture(const metternich::culture *culture)
 
 	emit culture_changed();
 
-	for (const site *site : this->sites) {
+	for (const site *site : this->get_sites()) {
 		if (!site->is_settlement()) {
 			site->get_game_data()->set_culture(culture);
 		}
@@ -325,28 +309,29 @@ const std::string &province_game_data::get_current_cultural_name() const
 	return this->province->get_cultural_name(this->get_culture());
 }
 
-void province_game_data::calculate_territory_rect_center()
+bool province_game_data::is_coastal() const
 {
-	const int tile_count = static_cast<int>(this->get_tiles().size());
-
-	assert_throw(tile_count > 0);
-
-	QPoint sum(0, 0);
-
-	for (const QPoint &tile_pos : this->get_tiles()) {
-		sum += tile_pos;
-	}
-
-	this->territory_rect_center = QPoint(sum.x() / tile_count, sum.y() / tile_count);
+	return this->province->get_map_data()->is_coastal();
 }
 
-void province_game_data::add_neighbor_province(const metternich::province *province)
+bool province_game_data::is_near_water() const
 {
-	this->neighbor_provinces.push_back(province);
+	return this->province->get_map_data()->is_near_water();
+}
 
-	if (province->is_sea() || province->is_bay()) {
-		this->coastal = true;
-	}
+const QRect &province_game_data::get_territory_rect() const
+{
+	return this->province->get_map_data()->get_territory_rect();
+}
+
+const QPoint &province_game_data::get_territory_rect_center() const
+{
+	return this->province->get_map_data()->get_territory_rect_center();
+}
+
+const std::vector<const metternich::province *> &province_game_data::get_neighbor_provinces() const
+{
+	return this->province->get_map_data()->get_neighbor_provinces();
 }
 
 bool province_game_data::is_country_border_province() const
@@ -366,60 +351,30 @@ void province_game_data::reset_center_tile_pos()
 	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_game_data()->get_province() == this->province) {
 		this->center_tile_pos = this->province->get_default_provincial_capital()->get_game_data()->get_tile_pos();
 	} else {
-		this->center_tile_pos = this->territory_rect_center;
+		this->center_tile_pos = this->get_territory_rect_center();
 	}
 
 	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
 }
 
-void province_game_data::add_tile(const QPoint &tile_pos)
+const std::vector<QPoint> &province_game_data::get_border_tiles() const
 {
-	this->tiles.push_back(tile_pos);
-
-	const tile *tile = map::get()->get_tile(tile_pos);
-
-	if (tile->get_resource() != nullptr) {
-		this->resource_tiles.push_back(tile_pos);
-		++this->resource_counts[tile->get_resource()];
-	}
-
-	if (tile->get_terrain() != nullptr) {
-		++this->tile_terrain_counts[tile->get_terrain()];
-	}
-
-	if (tile->has_river()) {
-		this->has_river = true;
-	}
-
-	if (tile->get_site() != nullptr) {
-		this->sites.push_back(tile->get_site());
-
-		if (tile->get_site()->is_settlement()) {
-			this->settlement_sites.push_back(tile->get_site());
-		}
-	}
+	return this->province->get_map_data()->get_border_tiles();
 }
 
-void province_game_data::add_border_tile(const QPoint &tile_pos)
+const std::vector<QPoint> &province_game_data::get_resource_tiles() const
 {
-	this->border_tiles.push_back(tile_pos);
+	return this->province->get_map_data()->get_resource_tiles();
+}
 
-	if (this->get_territory_rect().isNull()) {
-		this->territory_rect = QRect(tile_pos, QSize(1, 1));
-	} else {
-		if (tile_pos.x() < this->territory_rect.x()) {
-			this->territory_rect.setX(tile_pos.x());
-		} else if (tile_pos.x() > this->territory_rect.right()) {
-			this->territory_rect.setRight(tile_pos.x());
-		}
-		if (tile_pos.y() < this->territory_rect.y()) {
-			this->territory_rect.setY(tile_pos.y());
-		} else if (tile_pos.y() > this->territory_rect.bottom()) {
-			this->territory_rect.setBottom(tile_pos.y());
-		}
-	}
+const std::vector<const site *> &province_game_data::get_sites() const
+{
+	return this->province->get_map_data()->get_sites();
+}
 
-	emit territory_changed();
+const std::vector<const site *> &province_game_data::get_settlement_sites() const
+{
+	return this->province->get_map_data()->get_settlement_sites();
 }
 
 bool province_game_data::produces_commodity(const commodity *commodity) const
@@ -433,6 +388,16 @@ bool province_game_data::produces_commodity(const commodity *commodity) const
 	}
 
 	return false;
+}
+
+const resource_map<int> &province_game_data::get_resource_counts() const
+{
+	return this->province->get_map_data()->get_resource_counts();
+}
+
+const terrain_type_map<int> &province_game_data::get_tile_terrain_counts() const
+{
+	return this->province->get_map_data()->get_tile_terrain_counts();
 }
 
 void province_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
@@ -712,7 +677,7 @@ void province_game_data::change_improved_resource_commodity_bonus(const resource
 		}
 	}
 
-	for (const QPoint &tile_pos : this->resource_tiles) {
+	for (const QPoint &tile_pos : this->get_resource_tiles()) {
 		tile *tile = map::get()->get_tile(tile_pos);
 		if (tile->get_resource() != resource) {
 			continue;
@@ -746,7 +711,7 @@ void province_game_data::set_commodity_bonus_for_tile_threshold(const commodity 
 		this->commodity_bonuses_for_tile_thresholds[commodity][threshold] = value;
 	}
 
-	for (const QPoint &tile_pos : this->resource_tiles) {
+	for (const QPoint &tile_pos : this->get_resource_tiles()) {
 		tile *tile = map::get()->get_tile(tile_pos);
 		if (!tile->produces_commodity(commodity)) {
 			continue;
@@ -758,7 +723,7 @@ void province_game_data::set_commodity_bonus_for_tile_threshold(const commodity 
 
 bool province_game_data::can_produce_commodity(const commodity *commodity) const
 {
-	for (const QPoint &tile_pos : this->resource_tiles) {
+	for (const QPoint &tile_pos : this->get_resource_tiles()) {
 		const tile *tile = map::get()->get_tile(tile_pos);
 		const metternich::commodity *tile_resource_commodity = tile->get_resource()->get_commodity();
 

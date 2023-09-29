@@ -13,6 +13,7 @@
 #include "map/province.h"
 #include "map/province_container.h"
 #include "map/province_game_data.h"
+#include "map/province_map_data.h"
 #include "map/route.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
@@ -101,9 +102,9 @@ void map::initialize()
 
 				if (tile_province != adjacent_province) {
 					if (!is_border_tile) {
-						province_game_data *tile_province_game_data = tile_province->get_game_data();
-						if (adjacent_province != nullptr && !vector::contains(tile_province_game_data->get_neighbor_provinces(), adjacent_province)) {
-							tile_province_game_data->add_neighbor_province(adjacent_province);
+						province_map_data *tile_province_map_data = tile_province->get_map_data();
+						if (adjacent_province != nullptr && !vector::contains(tile_province_map_data->get_neighbor_provinces(), adjacent_province)) {
+							tile_province_map_data->add_neighbor_province(adjacent_province);
 						}
 
 						is_border_tile = true;
@@ -124,12 +125,12 @@ void map::initialize()
 				this->update_tile_terrain_tile(tile_pos);
 			}
 
-			tile_province->get_game_data()->add_tile(tile_pos);
+			tile_province->get_map_data()->add_tile(tile_pos);
 
 			if (is_border_tile) {
 				tile->sort_border_directions();
 
-				tile_province->get_game_data()->add_border_tile(tile_pos);
+				tile_province->get_map_data()->add_border_tile(tile_pos);
 			}
 
 			provinces.insert(tile_province);
@@ -139,7 +140,7 @@ void map::initialize()
 	this->provinces = container::to_vector(provinces);
 
 	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->on_map_created();
+		province->get_map_data()->on_map_created();
 	}
 
 	this->initialize_diplomatic_map();
@@ -150,7 +151,7 @@ void map::initialize()
 void map::clear()
 {
 	for (province *province : province::get_all()) {
-		province->reset_game_data();
+		province->reset_map_data();
 	}
 
 	for (site *site : site::get_all()) {

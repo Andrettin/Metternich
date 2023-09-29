@@ -47,8 +47,8 @@ class province_game_data final : public QObject
 	Q_PROPERTY(metternich::religion* religion READ get_religion_unconst NOTIFY religion_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
-	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
-	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos NOTIFY territory_changed)
+	Q_PROPERTY(QRect territory_rect READ get_territory_rect CONSTANT)
+	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos NOTIFY provincial_capital_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
@@ -58,18 +58,11 @@ public:
 	province_game_data(const province_game_data &other) = delete;
 	~province_game_data();
 
-	void reset_non_map_data();
-
-	void on_map_created();
-
 	void do_turn();
 	void do_events();
 	void do_ai_turn();
 
-	bool is_on_map() const
-	{
-		return !this->get_tiles().empty();
-	}
+	bool is_on_map() const;
 
 	const country *get_owner() const
 	{
@@ -135,34 +128,13 @@ public:
 		return QString::fromStdString(this->get_current_cultural_name());
 	}
 
-	bool is_coastal() const
-	{
-		return this->coastal;
-	}
+	bool is_coastal() const;
+	bool is_near_water() const;
 
-	bool is_near_water() const
-	{
-		return this->is_coastal() || this->has_river;
-	}
+	const QRect &get_territory_rect() const;
+	const QPoint &get_territory_rect_center() const;
+	const std::vector<const metternich::province *> &get_neighbor_provinces() const;
 
-	const QRect &get_territory_rect() const
-	{
-		return this->territory_rect;
-	}
-
-	const QPoint &get_territory_rect_center() const
-	{
-		return this->territory_rect_center;
-	}
-
-	void calculate_territory_rect_center();
-
-	const std::vector<const metternich::province *> &get_neighbor_provinces() const
-	{
-		return this->neighbor_provinces;
-	}
-
-	void add_neighbor_province(const metternich::province *province);
 	bool is_country_border_province() const;
 
 	const QPoint &get_center_tile_pos() const
@@ -172,29 +144,10 @@ public:
 
 	void reset_center_tile_pos();
 
-	const std::vector<QPoint> &get_tiles() const
-	{
-		return this->tiles;
-	}
-
-	void add_tile(const QPoint &tile_pos);
-
-	const std::vector<QPoint> &get_border_tiles() const
-	{
-		return this->border_tiles;
-	}
-
-	void add_border_tile(const QPoint &tile_pos);
-
-	const std::vector<QPoint> &get_resource_tiles() const
-	{
-		return this->resource_tiles;
-	}
-
-	const std::vector<const site *> &get_settlement_sites() const
-	{
-		return this->settlement_sites;
-	}
+	const std::vector<QPoint> &get_border_tiles() const;
+	const std::vector<QPoint> &get_resource_tiles() const;
+	const std::vector<const site *> &get_sites() const;
+	const std::vector<const site *> &get_settlement_sites() const;
 
 	int get_settlement_count() const
 	{
@@ -206,15 +159,8 @@ public:
 		this->settlement_count += change;
 	}
 
-	const resource_map<int> &get_resource_counts() const
-	{
-		return this->resource_counts;
-	}
-
-	const terrain_type_map<int> &get_tile_terrain_counts() const
-	{
-		return this->tile_terrain_counts;
-	}
+	const resource_map<int> &get_resource_counts() const;
+	const terrain_type_map<int> &get_tile_terrain_counts() const;
 
 	bool produces_commodity(const commodity *commodity) const;
 
@@ -435,7 +381,6 @@ signals:
 	void provincial_capital_changed();
 	void culture_changed();
 	void religion_changed();
-	void territory_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void military_units_changed();
@@ -446,21 +391,9 @@ private:
 	const country *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
-	bool coastal = false;
-	bool has_river = false;
-	QRect territory_rect;
-	QPoint territory_rect_center = QPoint(-1, -1);
-	std::vector<const metternich::province *> neighbor_provinces;
 	QPoint center_tile_pos = QPoint(-1, -1);
-	std::vector<QPoint> tiles;
-	std::vector<QPoint> border_tiles;
-	std::vector<QPoint> resource_tiles;
-	std::vector<const site *> sites;
-	std::vector<const site *> settlement_sites; //includes all settlements, even if unbuilt
 	int settlement_count = 0; //only includes built settlements
 	const site *provincial_capital = nullptr;
-	resource_map<int> resource_counts;
-	terrain_type_map<int> tile_terrain_counts;
 	scripted_province_modifier_map<int> scripted_modifiers;
 	int score = 0;
 	std::vector<population_unit *> population_units;

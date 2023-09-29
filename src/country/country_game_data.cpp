@@ -36,6 +36,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/province_map_data.h"
 #include "map/region.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
@@ -1073,13 +1074,13 @@ void country_game_data::calculate_territory_rect_center()
 	int tile_count = 0;
 
 	for (const province *province : this->get_provinces()) {
-		const province_game_data *province_game_data = province->get_game_data();
-		if (!this->get_main_contiguous_territory_rect().contains(province_game_data->get_territory_rect())) {
+		const province_map_data *province_map_data = province->get_map_data();
+		if (!this->get_main_contiguous_territory_rect().contains(province_map_data->get_territory_rect())) {
 			continue;
 		}
 
-		const int province_tile_count = static_cast<int>(province_game_data->get_tiles().size());
-		sum += province_game_data->get_territory_rect_center() * province_tile_count;
+		const int province_tile_count = static_cast<int>(province_map_data->get_tiles().size());
+		sum += province_map_data->get_territory_rect_center() * province_tile_count;
 		tile_count += province_tile_count;
 	}
 
@@ -3625,8 +3626,8 @@ bool country_game_data::is_tile_explored(const QPoint &tile_pos) const
 bool country_game_data::is_province_discovered(const province *province) const
 {
 	//get whether the province has been at least partially explored
-	const province_game_data *province_game_data = province->get_game_data();
-	if (!province_game_data->is_on_map()) {
+	const province_map_data *province_map_data = province->get_map_data();
+	if (!province_map_data->is_on_map()) {
 		return false;
 	}
 
@@ -3635,7 +3636,7 @@ bool country_game_data::is_province_discovered(const province *province) const
 	}
 
 	if (!this->explored_tiles.empty()) {
-		for (const QPoint &tile_pos : province_game_data->get_tiles()) {
+		for (const QPoint &tile_pos : province_map_data->get_tiles()) {
 			if (this->explored_tiles.contains(tile_pos)) {
 				return true;
 			}
@@ -3699,9 +3700,9 @@ void country_game_data::explore_tile(const QPoint &tile_pos)
 
 	if (tile->get_province() != nullptr) {
 		//add the tile's province to the explored provinces if all of its tiles have been explored
-		const province_game_data *province_game_data = tile->get_province()->get_game_data();
-		if (this->explored_tiles.size() >= province_game_data->get_tiles().size()) {
-			for (const QPoint &province_tile_pos : province_game_data->get_tiles()) {
+		const province_map_data *province_map_data = tile->get_province()->get_map_data();
+		if (this->explored_tiles.size() >= province_map_data->get_tiles().size()) {
+			for (const QPoint &province_tile_pos : province_map_data->get_tiles()) {
 				if (!this->explored_tiles.contains(province_tile_pos)) {
 					return;
 				}
@@ -3728,8 +3729,10 @@ void country_game_data::explore_province(const province *province)
 		this->add_known_country(province_owner);
 	}
 
+	const province_map_data *province_map_data = province->get_map_data();
+
 	if (!this->explored_tiles.empty()) {
-		for (const QPoint &tile_pos : province_game_data->get_tiles()) {
+		for (const QPoint &tile_pos : province_map_data->get_tiles()) {
 			if (this->explored_tiles.contains(tile_pos)) {
 				this->explored_tiles.erase(tile_pos);
 			}
@@ -3739,15 +3742,15 @@ void country_game_data::explore_province(const province *province)
 	this->explored_provinces.insert(province);
 
 	if (this->country == game::get()->get_player_country()) {
-		map::get()->update_minimap_rect(province_game_data->get_territory_rect());
+		map::get()->update_minimap_rect(province_map_data->get_territory_rect());
 		game::get()->set_exploration_changed();
 
-		for (const QPoint &tile_pos : province_game_data->get_tiles()) {
+		for (const QPoint &tile_pos : province_map_data->get_tiles()) {
 			emit map::get()->tile_exploration_changed(tile_pos);
 		}
 	}
 
-	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
+	for (const QPoint &tile_pos : province_map_data->get_resource_tiles()) {
 		const tile *tile = map::get()->get_tile(tile_pos);
 		const resource *tile_resource = tile->get_resource();
 
