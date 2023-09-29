@@ -458,6 +458,15 @@ void site_game_data::set_slot_building(const building_slot_type *slot_type, cons
 	assert_throw(false);
 }
 
+const building_type *site_game_data::get_building_class_type(const building_class *building_class) const
+{
+	if (this->get_culture() == nullptr) {
+		return nullptr;
+	}
+
+	return this->get_culture()->get_building_class_type(building_class);
+}
+
 bool site_game_data::has_building(const building_type *building) const
 {
 	return this->get_slot_building(building->get_slot_type()) == building;
@@ -487,6 +496,27 @@ bool site_game_data::has_building_class(const building_class *building_class) co
 	}
 
 	return building->get_building_class() == building_class;
+}
+
+bool site_game_data::can_gain_building(const building_type *building) const
+{
+	return this->get_building_slot(building->get_slot_type())->can_gain_building(building);
+}
+
+bool site_game_data::can_gain_building_class(const building_class *building_class) const
+{
+	const building_type *building = this->get_building_class_type(building_class);
+
+	if (building == nullptr) {
+		return false;
+	}
+
+	return this->can_gain_building(building);
+}
+
+void site_game_data::add_building(const building_type *building)
+{
+	this->get_building_slot(building->get_slot_type())->set_building(building);
 }
 
 void site_game_data::clear_buildings()

@@ -24,6 +24,7 @@
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/available_housing_condition.h"
 #include "script/condition/birth_year_condition.h"
+#include "script/condition/can_gain_building_class_condition.h"
 #include "script/condition/can_have_trait_condition.h"
 #include "script/condition/capital_condition.h"
 #include "script/condition/cavalry_condition.h"
@@ -183,7 +184,9 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<core_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, site>) {
-		if (key == "has_route") {
+		if (key == "can_gain_building_class") {
+			return std::make_unique<can_gain_building_class_condition>(value, condition_operator);
+		} else if (key == "has_route") {
 			return std::make_unique<has_route_condition<site>>(value, condition_operator);
 		} else if (key == "improvement") {
 			return std::make_unique<improvement_condition>(value, condition_operator);

@@ -464,6 +464,7 @@ set(script_condition_HDRS
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/available_housing_condition.h
 	src/script/condition/birth_year_condition.h
+	src/script/condition/can_gain_building_class_condition.h
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/capital_condition.h
 	src/script/condition/cavalry_condition.h
@@ -546,6 +547,7 @@ set(script_condition_HDRS
 source_group(script\\condition FILES ${script_condition_HDRS})
 
 set(script_effect_HDRS
+	src/script/effect/add_building_class_effect.h
 	src/script/effect/any_known_country_effect.h
 	src/script/effect/any_neighbor_country_effect.h
 	src/script/effect/any_population_unit_effect.h

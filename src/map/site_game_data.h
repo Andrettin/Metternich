@@ -172,9 +172,13 @@ public:
 
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
 	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
+	const building_type *get_building_class_type(const building_class *building_class) const;
 	bool has_building(const building_type *building) const;
 	bool has_building_or_better(const building_type *building) const;
 	bool has_building_class(const building_class *building_class) const;
+	bool can_gain_building(const building_type *building) const;
+	bool can_gain_building_class(const building_class *building_class) const;
+	void add_building(const building_type *building);
 	void clear_buildings();
 	void check_building_conditions();
 	void check_free_buildings();
