@@ -61,6 +61,8 @@
 #include "maskedmousearea.h"
 
 #pragma warning(push, 0)
+#include "qcoro/qml/qcoroqml.h"
+
 #include <QDir>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -132,6 +134,8 @@ int main(int argc, char **argv)
 		enum_converter<site_type>();
 		enum_converter<temperature_type>();
 		enum_converter<trait_type>();
+
+		QCoro::Qml::registerTypes();
 
 		qmlRegisterAnonymousType<building_type>("", 1);
 		qmlRegisterAnonymousType<character>("", 1);

@@ -46,13 +46,11 @@ void improvement::initialize()
 		this->required_technology->add_enabled_improvement(this);
 	}
 
-	QTimer::singleShot(0, this, [this]() -> QCoro::Task<void> {
-		co_await tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/0");
+	tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/0");
 
-		for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
-			co_await tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/" + terrain->get_identifier() + "/0");
-		}
-	});
+	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
+		tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/" + terrain->get_identifier() + "/0");
+	}
 
 	named_data_entry::initialize();
 }

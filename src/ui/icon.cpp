@@ -9,9 +9,7 @@ namespace metternich {
 
 void icon::initialize()
 {
-	QTimer::singleShot(0, this, [this]() -> QCoro::Task<void> {
-		co_await icon_image_provider::get()->load_image(this->get_identifier());
-	});
+	icon_image_provider::get()->load_image(this->get_identifier());
 
 	data_entry::initialize();
 }

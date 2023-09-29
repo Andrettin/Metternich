@@ -174,7 +174,7 @@ gsml_data game::to_gsml_data() const
 	return data;
 }
 
-void game::create_random_map(const QSize &map_size, metternich::era *era)
+QCoro::Task<void> game::create_random_map_coro(const QSize map_size, metternich::era *era)
 {
 	try {
 		this->clear();
@@ -185,14 +185,14 @@ void game::create_random_map(const QSize &map_size, metternich::era *era)
 
 		this->date = game::normalize_date(era->get_start_date());
 
-		this->on_setup_finished();
+		co_await this->on_setup_finished();
 	} catch (...) {
 		exception::report(std::current_exception());
 		std::terminate();
 	}
 }
 
-void game::setup_scenario(metternich::scenario *scenario)
+QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
 {
 	try {
 		const metternich::scenario *old_scenario = this->scenario;
@@ -207,7 +207,7 @@ void game::setup_scenario(metternich::scenario *scenario)
 		}
 
 		this->apply_history(scenario);
-		this->on_setup_finished();
+		co_await this->on_setup_finished();
 	} catch (...) {
 		exception::report(std::current_exception());
 		std::terminate();
@@ -252,17 +252,15 @@ QCoro::Task<void> game::start_coro()
 
 void game::stop()
 {
-	QTimer::singleShot(0, this, [this]() -> QCoro::Task<void> {
-		if (!this->is_running()) {
-			//already stopped
-			co_return;
-		}
+	if (!this->is_running()) {
+		//already stopped
+		return;
+	}
 
-		this->set_running(false);
-		this->clear();
-		map::get()->clear();
-		this->set_player_country(nullptr);
-	});
+	this->set_running(false);
+	this->clear();
+	map::get()->clear();
+	this->set_player_country(nullptr);
 }
 
 void game::clear()
@@ -1173,13 +1171,11 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 	return remaining_population;
 }
 
-void game::on_setup_finished()
+QCoro::Task<void> game::on_setup_finished()
 {
 	this->calculate_great_power_ranks();
 
-	QtConcurrent::run([this]() -> QCoro::Task<void> {
-		co_await this->create_diplomatic_map_image();
-	}).waitForFinished();
+	co_await this->create_diplomatic_map_image();
 
 	emit countries_changed();
 
@@ -1317,7 +1313,7 @@ void game::adjust_food_production_for_country_populations()
 	}
 }
 
-void game::do_turn()
+QCoro::Task<void> game::do_turn_coro()
 {
 	try {
 		this->process_delayed_effects();
@@ -1333,9 +1329,7 @@ void game::do_turn()
 		}
 
 		if (this->exploration_changed) {
-			QtConcurrent::run([this]() -> QCoro::Task<void> {
-				co_await this->create_exploration_diplomatic_map_image();
-			}).waitForFinished();
+			co_await this->create_exploration_diplomatic_map_image();
 			this->exploration_changed = false;
 		}
 
@@ -1343,21 +1337,10 @@ void game::do_turn()
 
 		this->increment_turn();
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Failed to process turn."));
+		exception::report(std::current_exception());
+		log::log_error("Failed to process turn.");
+		std::terminate();
 	}
-}
-
-void game::do_turn_async()
-{
-	QTimer::singleShot(0, this, [this]() -> QCoro::Task<void> {
-		try {
-			this->do_turn();
-			co_return;
-		} catch (...) {
-			exception::report(std::current_exception());
-			std::terminate();
-		}
-	});
 }
 
 QDateTime game::get_next_date() const

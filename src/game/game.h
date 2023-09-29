@@ -77,8 +77,19 @@ public:
 		emit running_changed();
 	}
 
-	Q_INVOKABLE void create_random_map(const QSize &map_size, metternich::era *era);
-	Q_INVOKABLE void setup_scenario(metternich::scenario *scenario);
+	Q_INVOKABLE QCoro::QmlTask create_random_map(const QSize &map_size, metternich::era *era)
+	{
+		return this->create_random_map_coro(map_size, era);
+	}
+
+	QCoro::Task<void> create_random_map_coro(const QSize map_size, metternich::era *era);
+
+	Q_INVOKABLE QCoro::QmlTask setup_scenario(metternich::scenario *scenario)
+	{
+		return this->setup_scenario_coro(scenario);
+	}
+
+	QCoro::Task<void> setup_scenario_coro(metternich::scenario *scenario);
 
 	Q_INVOKABLE QCoro::QmlTask start()
 	{
@@ -96,11 +107,15 @@ public:
 	void apply_population_history();
 	int64_t apply_historical_population_group_to_settlement(const population_group_key &group_key, const int population, const site *settlement);
 
-	void on_setup_finished();
+	QCoro::Task<void> on_setup_finished();
 	void adjust_food_production_for_country_populations();
 
-	void do_turn();
-	Q_INVOKABLE void do_turn_async();
+	Q_INVOKABLE QCoro::QmlTask do_turn()
+	{
+		return this->do_turn_coro();
+	}
+
+	QCoro::Task<void> do_turn_coro();
 
 	const QDateTime &get_date() const
 	{
@@ -157,6 +172,7 @@ public:
 		emit player_country_changed();
 	}
 
+	[[nodiscard]]
 	QCoro::Task<void> create_diplomatic_map_image();
 
 	const QImage &get_exploration_diplomatic_map_image() const

@@ -19,7 +19,7 @@ public:
 	tile_image_provider();
 
 	[[nodiscard]]
-	virtual QCoro::Task<void> load_image(const std::string &id) override;
+	virtual QCoro::Task<void> load_image(const std::string id) override;
 };
 
 }

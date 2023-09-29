@@ -21,7 +21,7 @@ interface_image_provider::interface_image_provider()
 	});
 }
 
-QCoro::Task<void> interface_image_provider::load_image(const std::string &id)
+QCoro::Task<void> interface_image_provider::load_image(const std::string id)
 {
 	const std::vector<std::string> id_list = string::split(id, '/');
 

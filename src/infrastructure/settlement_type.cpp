@@ -43,9 +43,7 @@ void settlement_type::process_gsml_scope(const gsml_data &scope)
 
 void settlement_type::initialize()
 {
-	QTimer::singleShot(0, this, [this]() -> QCoro::Task<void> {
-		co_await tile_image_provider::get()->load_image("settlement/" + this->get_identifier() + "/0");
-	});
+	tile_image_provider::get()->load_image("settlement/" + this->get_identifier() + "/0");
 
 	named_data_entry::initialize();
 }

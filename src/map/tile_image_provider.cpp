@@ -27,7 +27,7 @@ tile_image_provider::tile_image_provider()
 	});
 }
 
-QCoro::Task<void> tile_image_provider::load_image(const std::string &id)
+QCoro::Task<void> tile_image_provider::load_image(const std::string id)
 {
 	const std::vector<std::string> id_list = string::split(id, '/');
 

@@ -1502,10 +1502,10 @@ QCoro::Task<void> country_game_data::create_diplomatic_map_image()
 	assert_throw(this->territory_rect.width() > 0);
 	assert_throw(this->territory_rect.height() > 0);
 
-	this->diplomatic_map_image = QImage(this->territory_rect.size(), QImage::Format_RGBA8888);
-	this->diplomatic_map_image.fill(Qt::transparent);
+	QImage diplomatic_map_image = QImage(this->territory_rect.size(), QImage::Format_RGBA8888);
+	diplomatic_map_image.fill(Qt::transparent);
 
-	this->selected_diplomatic_map_image = this->diplomatic_map_image;
+	QImage selected_diplomatic_map_image = diplomatic_map_image;
 
 	const QColor &color = this->get_diplomatic_map_color();
 	const QColor &selected_color = defines::get()->get_selected_country_color();
@@ -1519,39 +1519,39 @@ QCoro::Task<void> country_game_data::create_diplomatic_map_image()
 				continue;
 			}
 
-			this->diplomatic_map_image.setPixelColor(relative_tile_pos, color);
-			this->selected_diplomatic_map_image.setPixelColor(relative_tile_pos, selected_color);
+			diplomatic_map_image.setPixelColor(relative_tile_pos, color);
+			selected_diplomatic_map_image.setPixelColor(relative_tile_pos, selected_color);
 		}
 	}
 
 	QImage scaled_diplomatic_map_image;
 	QImage scaled_selected_diplomatic_map_image;
 
-	co_await QtConcurrent::run([this, tile_pixel_size, &scaled_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() {
-		scaled_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([tile_pixel_size, &diplomatic_map_image, &scaled_diplomatic_map_image, &selected_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() {
+		scaled_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 
-		scaled_selected_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		scaled_selected_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(selected_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
 
-	this->diplomatic_map_image = std::move(scaled_diplomatic_map_image);
-	this->selected_diplomatic_map_image = std::move(scaled_selected_diplomatic_map_image);
+	diplomatic_map_image = std::move(scaled_diplomatic_map_image);
+	selected_diplomatic_map_image = std::move(scaled_selected_diplomatic_map_image);
 
 	std::vector<QPoint> border_pixels;
 
-	for (int x = 0; x < this->diplomatic_map_image.width(); ++x) {
-		for (int y = 0; y < this->diplomatic_map_image.height(); ++y) {
+	for (int x = 0; x < diplomatic_map_image.width(); ++x) {
+		for (int y = 0; y < diplomatic_map_image.height(); ++y) {
 			const QPoint pixel_pos(x, y);
-			const QColor pixel_color = this->diplomatic_map_image.pixelColor(pixel_pos);
+			const QColor pixel_color = diplomatic_map_image.pixelColor(pixel_pos);
 
 			if (pixel_color.alpha() == 0) {
 				continue;
 			}
 
-			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (this->diplomatic_map_image.width() - 1) || pixel_pos.y() == (this->diplomatic_map_image.height() - 1)) {
+			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (diplomatic_map_image.width() - 1) || pixel_pos.y() == (diplomatic_map_image.height() - 1)) {
 				border_pixels.push_back(pixel_pos);
 				continue;
 			}
@@ -1563,8 +1563,8 @@ QCoro::Task<void> country_game_data::create_diplomatic_map_image()
 			}
 
 			bool is_border_pixel = false;
-			point::for_each_cardinally_adjacent_until(pixel_pos, [this, &color, &is_border_pixel](const QPoint &adjacent_pos) {
-				if (this->diplomatic_map_image.pixelColor(adjacent_pos).alpha() != 0) {
+			point::for_each_cardinally_adjacent_until(pixel_pos, [&diplomatic_map_image, &color, &is_border_pixel](const QPoint &adjacent_pos) {
+				if (diplomatic_map_image.pixelColor(adjacent_pos).alpha() != 0) {
 					return false;
 				}
 
@@ -1581,18 +1581,18 @@ QCoro::Task<void> country_game_data::create_diplomatic_map_image()
 	const QColor &border_pixel_color = defines::get()->get_country_border_color();
 
 	for (const QPoint &border_pixel_pos : border_pixels) {
-		this->diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
-		this->selected_diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
+		diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
+		selected_diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
 
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 
-	co_await QtConcurrent::run([this, &scale_factor, &scaled_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() {
-		scaled_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([&scale_factor, &diplomatic_map_image, &scaled_diplomatic_map_image, &selected_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() {
+		scaled_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 
-		scaled_selected_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->selected_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		scaled_selected_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(selected_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
@@ -1630,9 +1630,7 @@ QCoro::Task<void> country_game_data::create_diplomatic_map_mode_image(const dipl
 	assert_throw(this->territory_rect.width() > 0);
 	assert_throw(this->territory_rect.height() > 0);
 
-	QImage &image = (mode == diplomatic_map_mode::diplomatic && diplomacy_state.has_value()) ? this->diplomacy_state_diplomatic_map_images[diplomacy_state.value()] : this->diplomatic_map_mode_images[mode];
-
-	image = QImage(this->territory_rect.size(), QImage::Format_RGBA8888);
+	QImage image(this->territory_rect.size(), QImage::Format_RGBA8888);
 	image.fill(Qt::transparent);
 
 	for (int x = 0; x < this->territory_rect.width(); ++x) {
@@ -1751,13 +1749,15 @@ QCoro::Task<void> country_game_data::create_diplomatic_map_mode_image(const dipl
 
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 
-	co_await QtConcurrent::run([this, &scale_factor, &image, &scaled_image]() {
+	co_await QtConcurrent::run([&scale_factor, &image, &scaled_image]() {
 		scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
 
-	image = std::move(scaled_image);
+
+	QImage &stored_image = (mode == diplomatic_map_mode::diplomatic && diplomacy_state.has_value()) ? this->diplomacy_state_diplomatic_map_images[diplomacy_state.value()] : this->diplomatic_map_mode_images[mode];
+	stored_image = std::move(scaled_image);
 }
 
 void country_game_data::change_score(const int change)
@@ -2672,8 +2672,12 @@ void country_game_data::gain_free_technology()
 		const technology *chosen_technology = this->get_ai_research_choice(research_choice_map);
 		this->gain_free_technology(chosen_technology);
 	} else {
-		const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
-		emit engine_interface::get()->free_technology_choosable(container::to_qvariant_list(potential_technologies));
+		if (this->get_current_research() != nullptr) {
+			this->gain_free_technology(this->get_current_research());
+		} else {
+			const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
+			emit engine_interface::get()->free_technology_choosable(container::to_qvariant_list(potential_technologies));
+		}
 	}
 }
 
