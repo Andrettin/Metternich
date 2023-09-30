@@ -108,6 +108,15 @@ const QColor &country::get_color() const
 	return this->color;
 }
 
+const population_class *country::get_default_population_class() const
+{
+	if (this->is_tribe()) {
+		return defines::get()->get_default_tribal_population_class();
+	} else {
+		return defines::get()->get_default_population_class();
+	}
+}
+
 bool country::can_declare_war() const
 {
 	return this->get_type() == country_type::great_power;

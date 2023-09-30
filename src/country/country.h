@@ -16,6 +16,7 @@ class country_game_data;
 class country_history;
 class culture;
 class era;
+class population_class;
 class province;
 class religion;
 class site;
@@ -101,6 +102,8 @@ public:
 	{
 		return this->core_provinces;
 	}
+
+	const population_class *get_default_population_class() const;
 
 	const std::vector<const character *> &get_rulers() const
 	{

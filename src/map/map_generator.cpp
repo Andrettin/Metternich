@@ -75,12 +75,7 @@ void map_generator::generate()
 		//add population
 		for (const site *settlement : province_game_data->get_settlement_sites()) {
 			const int population_unit_count = settlement->get_game_data()->is_capital() ? 4 : 1;
-			const population_class *population_class = nullptr;
-			if (country->is_tribe()) {
-				population_class = defines::get()->get_default_tribal_population_class();
-			} else {
-				population_class = defines::get()->get_default_population_class();
-			}
+			const population_class *population_class = country->get_default_population_class();
 
 			const culture *culture = country->get_culture();
 			const religion *religion = country->get_default_religion();

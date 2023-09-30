@@ -1850,7 +1850,7 @@ void country_game_data::grow_population()
 	const metternich::culture *culture = population_unit->get_culture();
 	const metternich::religion *religion = population_unit->get_religion();
 	const phenotype *phenotype = population_unit->get_phenotype();
-	const population_type *population_type = culture->get_population_class_type(defines::get()->get_default_population_class());
+	const population_type *population_type = culture->get_population_class_type(this->country->get_default_population_class());
 	const site *settlement = population_unit->get_settlement();
 
 	settlement->get_game_data()->create_population_unit(population_type, culture, religion, phenotype);
