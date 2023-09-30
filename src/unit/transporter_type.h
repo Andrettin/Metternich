@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/commodity_container.h"
 
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")
@@ -43,6 +44,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -99,6 +101,11 @@ public:
 		return this->required_technology;
 	}
 
+	const commodity_map<int> &get_commodity_costs() const
+	{
+		return this->commodity_costs;
+	}
+
 	int get_score() const
 	{
 		return this->get_defense() + this->get_resistance() / 4 + this->get_hit_points() + this->get_speed() + this->get_cargo();
@@ -118,6 +125,7 @@ private:
 	int speed = 0;
 	int cargo = 0;
 	technology *required_technology = nullptr;
+	commodity_map<int> commodity_costs;
 };
 
 }

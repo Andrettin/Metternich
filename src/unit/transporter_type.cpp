@@ -4,12 +4,27 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "economy/commodity.h"
 #include "technology/technology.h"
 #include "unit/transporter_category.h"
 #include "unit/transporter_class.h"
 #include "util/assert_util.h"
 
 namespace metternich {
+
+void transporter_type::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "commodity_costs") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->commodity_costs[commodity] = std::stoi(property.get_value());
+		});
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
+}
 
 void transporter_type::initialize()
 {
