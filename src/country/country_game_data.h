@@ -615,6 +615,11 @@ public:
 
 	int get_net_food_consumption() const;
 
+	int get_available_food() const
+	{
+		return this->get_stored_food() - this->get_net_food_consumption();
+	}
+
 	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
 

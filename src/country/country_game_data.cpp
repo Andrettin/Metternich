@@ -231,15 +231,12 @@ void country_game_data::do_population_growth()
 			return;
 		}
 
-		const int stored_food = this->get_stored_food();
+		const int available_food = this->get_available_food();
+		const int available_housing = std::max(0, this->get_available_housing());
 
 		int food_consumption = this->get_net_food_consumption();
 
-		const int net_food = stored_food - food_consumption;
-
-		const int available_housing = std::max(0, this->get_available_housing());
-
-		const int population_growth_change = std::min(net_food, available_housing);
+		const int population_growth_change = std::min(available_food, available_housing);
 		this->change_population_growth(population_growth_change);
 
 		if (population_growth_change > 0) {

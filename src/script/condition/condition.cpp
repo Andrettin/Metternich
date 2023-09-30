@@ -22,6 +22,7 @@
 #include "script/condition/any_settlement_condition.h"
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
+#include "script/condition/available_food_condition.h"
 #include "script/condition/available_housing_condition.h"
 #include "script/condition/birth_year_condition.h"
 #include "script/condition/can_gain_building_class_condition.h"
@@ -60,6 +61,7 @@
 #include "script/condition/independent_condition.h"
 #include "script/condition/infantry_condition.h"
 #include "script/condition/is_advisor_condition.h"
+#include "script/condition/is_military_unit_category_available_condition.h"
 #include "script/condition/is_ruler_condition.h"
 #include "script/condition/militancy_condition.h"
 #include "script/condition/military_unit_category_condition.h"
@@ -133,6 +135,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 
 		if (key == "advisor") {
 			return std::make_unique<advisor_condition>(value, condition_operator);
+		} else if (key == "available_food") {
+			return std::make_unique<available_food_condition>(value, condition_operator);
 		} else if (key == "country_type") {
 			return std::make_unique<country_type_condition>(value, condition_operator);
 		} else if (key == "discovered_province") {
@@ -143,6 +147,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<government_type_condition>(value, condition_operator);
 		} else if (key == "independent") {
 			return std::make_unique<independent_condition>(value, condition_operator);
+		} else if (key == "is_military_unit_category_available") {
+			return std::make_unique<is_military_unit_category_available_condition>(value, condition_operator);
 		} else if (key == "owns_province") {
 			return std::make_unique<owns_province_condition>(value, condition_operator);
 		} else if (key == "owns_site") {

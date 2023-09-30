@@ -464,6 +464,7 @@ set(script_condition_HDRS
 	src/script/condition/any_settlement_condition.h
 	src/script/condition/artillery_condition.h
 	src/script/condition/attacking_commander_condition.h
+	src/script/condition/available_food_condition.h
 	src/script/condition/available_housing_condition.h
 	src/script/condition/birth_year_condition.h
 	src/script/condition/can_gain_building_class_condition.h
