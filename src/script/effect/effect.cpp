@@ -152,6 +152,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<battle_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "change_opinion") {
 			effect = std::make_unique<change_opinion_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "create_military_unit") {
+			effect = std::make_unique<create_military_unit_effect>(effect_operator);
 		} else if (effect_identifier == "opinion_modifiers") {
 			effect = std::make_unique<opinion_modifiers_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "random_known_country") {
