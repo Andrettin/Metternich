@@ -916,10 +916,12 @@ void country_game_data::set_capital(const site *capital)
 
 	if (capital != nullptr) {
 		capital->get_game_data()->get_province()->get_game_data()->set_provincial_capital(capital);
+		capital->get_game_data()->calculate_commodity_outputs();
 		capital->get_game_data()->check_building_conditions();
 	}
 
 	if (old_capital != nullptr) {
+		old_capital->get_game_data()->calculate_commodity_outputs();
 		old_capital->get_game_data()->check_building_conditions();
 	}
 
@@ -3575,6 +3577,25 @@ void country_game_data::set_commodity_bonus_for_tile_threshold(const commodity *
 
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->change_commodity_bonus_for_tile_threshold(commodity, threshold, value - old_value);
+	}
+}
+
+void country_game_data::change_capital_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const centesimal_int count = (this->capital_commodity_bonuses_per_population[commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->capital_commodity_bonuses_per_population.erase(commodity);
+	}
+
+	if (this->get_capital() != nullptr) {
+		this->get_capital()->get_game_data()->calculate_commodity_outputs();
 	}
 }
 

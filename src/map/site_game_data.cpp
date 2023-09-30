@@ -793,6 +793,11 @@ void site_game_data::add_population_unit(qunique_ptr<population_unit> &&populati
 
 	this->population_units.push_back(std::move(population_unit));
 
+	if (this->is_capital()) {
+		//recalculate commodity outputs, because there could be a capital commodity population bonus
+		this->calculate_commodity_outputs();
+	}
+
 	if (game::get()->is_running()) {
 		emit population_units_changed();
 	}
@@ -808,6 +813,11 @@ qunique_ptr<population_unit> site_game_data::pop_population_unit(population_unit
 			population_unit->set_settlement(nullptr);
 
 			this->get_population()->on_population_unit_lost(population_unit);
+
+			if (this->is_capital()) {
+				//recalculate commodity outputs, because there could be a capital commodity population bonus
+				this->calculate_commodity_outputs();
+			}
 
 			if (game::get()->is_running()) {
 				emit population_units_changed();
@@ -915,6 +925,12 @@ void site_game_data::set_commodity_output(const commodity *commodity, const int 
 void site_game_data::calculate_commodity_outputs()
 {
 	commodity_map<int> outputs = this->base_commodity_outputs;
+
+	if (this->get_owner() != nullptr && this->is_capital()) {
+		for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_capital_commodity_bonuses_per_population()) {
+			outputs[commodity] += (value * this->get_population_unit_count()).to_int();
+		}
+	}
 
 	int output_modifier = this->get_output_modifier();
 	commodity_map<int> commodity_output_modifiers = this->get_commodity_output_modifiers();
