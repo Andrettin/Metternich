@@ -12,9 +12,8 @@ class building_capacity_modifier_effect final : public modifier_effect<const cou
 {
 public:
 	explicit building_capacity_modifier_effect(const metternich::building_slot_type *building_slot_type, const std::string &value)
-		: building_slot_type(building_slot_type)
+		: modifier_effect(value), building_slot_type(building_slot_type)
 	{
-		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -36,7 +35,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value * 10;
+		return (this->value * 10).to_int();
 	}
 
 private:

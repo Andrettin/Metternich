@@ -12,7 +12,7 @@ class gain_technologies_known_by_others_modifier_effect final : public modifier_
 public:
 	explicit gain_technologies_known_by_others_modifier_effect(const std::string &value)
 	{
-		this->value = static_cast<int>(string::to_bool(value));
+		this->value = centesimal_int(static_cast<int>(string::to_bool(value)));
 	}
 
 	virtual const std::string &get_identifier() const override

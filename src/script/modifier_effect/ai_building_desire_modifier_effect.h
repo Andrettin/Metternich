@@ -24,7 +24,7 @@ public:
 		if (key == "building") {
 			this->building = building_type::get(value);
 		} else if (key == "value") {
-			this->value = std::stoi(value);
+			this->value = centesimal_int(value);
 		} else {
 			modifier_effect::process_gsml_property(property);
 		}

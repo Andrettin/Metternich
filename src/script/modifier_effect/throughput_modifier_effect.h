@@ -8,9 +8,8 @@ template <typename scope_type>
 class throughput_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
-	explicit throughput_modifier_effect(const std::string &value)
+	explicit throughput_modifier_effect(const std::string &value) : modifier_effect<scope_type>(value)
 	{
-		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -36,7 +35,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value;
+		return this->value.to_int();
 	}
 };
 

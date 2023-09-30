@@ -10,9 +10,8 @@ namespace metternich {
 class housing_modifier_effect final : public modifier_effect<const site>
 {
 public:
-	explicit housing_modifier_effect(const std::string &value)
+	explicit housing_modifier_effect(const std::string &value) : modifier_effect(value)
 	{
-		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -33,11 +32,8 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value;
+		return this->value.to_int();
 	}
-
-private:
-	int value = 0;
 };
 
 }

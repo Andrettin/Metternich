@@ -14,9 +14,8 @@ class commodity_output_modifier_effect final : public modifier_effect<scope_type
 {
 public:
 	explicit commodity_output_modifier_effect(const metternich::commodity *commodity, const std::string &value)
-		: commodity(commodity)
+		: modifier_effect<scope_type>(value), commodity(commodity)
 	{
-		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -42,7 +41,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value;
+		return this->value.to_int();
 	}
 
 private:

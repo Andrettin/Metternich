@@ -16,7 +16,7 @@ public:
 	explicit free_building_class_modifier_effect(const std::string &value)
 	{
 		this->building_class = building_class::get(value);
-		this->value = 1;
+		this->value = centesimal_int(1);
 	}
 
 	virtual const std::string &get_identifier() const override

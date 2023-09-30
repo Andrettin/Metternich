@@ -12,9 +12,8 @@ class category_research_modifier_effect final : public modifier_effect<scope_typ
 {
 public:
 	explicit category_research_modifier_effect(const technology_category category, const std::string &value)
-		: category(category)
+		: modifier_effect<scope_type>(value), category(category)
 	{
-		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -40,7 +39,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value;
+		return this->value.to_int();
 	}
 
 private:

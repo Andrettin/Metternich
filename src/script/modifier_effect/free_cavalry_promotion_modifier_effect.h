@@ -15,7 +15,7 @@ public:
 	explicit free_cavalry_promotion_modifier_effect(const std::string &value)
 	{
 		this->promotion = promotion::get(value);
-		this->value = 1;
+		this->value = centesimal_int(1);
 	}
 
 	virtual const std::string &get_identifier() const override

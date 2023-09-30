@@ -8,9 +8,8 @@ namespace metternich {
 class damage_bonus_modifier_effect final : public modifier_effect<military_unit>
 {
 public:
-	explicit damage_bonus_modifier_effect(const std::string &value)
+	explicit damage_bonus_modifier_effect(const std::string &value) : modifier_effect(value)
 	{
-		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -31,7 +30,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value;
+		return this->value.to_int();
 	}
 };
 

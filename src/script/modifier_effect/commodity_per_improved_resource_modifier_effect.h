@@ -16,9 +16,8 @@ class commodity_per_improved_resource_modifier_effect final : public modifier_ef
 {
 public:
 	explicit commodity_per_improved_resource_modifier_effect(const metternich::commodity *commodity, const metternich::resource *resource, const std::string &value)
-		: commodity(commodity), resource(resource)
+		: modifier_effect<scope_type>(value), commodity(commodity), resource(resource)
 	{
-		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -39,7 +38,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value * 10;
+		return (this->value * 10).to_int();
 	}
 
 private:

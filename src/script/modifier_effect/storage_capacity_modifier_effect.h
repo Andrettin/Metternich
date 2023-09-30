@@ -9,9 +9,8 @@ namespace metternich {
 class storage_capacity_modifier_effect final : public modifier_effect<const country>
 {
 public:
-	explicit storage_capacity_modifier_effect(const std::string &value)
+	explicit storage_capacity_modifier_effect(const std::string &value) : modifier_effect(value)
 	{
-		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -32,7 +31,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value;
+		return this->value.to_int();
 	}
 };
 

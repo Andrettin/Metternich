@@ -1,5 +1,7 @@
 #pragma once
 
+#include "util/fractional_int.h"
+
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;
@@ -24,6 +26,14 @@ class modifier_effect
 public:
 	static std::unique_ptr<modifier_effect> from_gsml_property(const gsml_property &property);
 	static std::unique_ptr<modifier_effect> from_gsml_scope(const gsml_data &scope);
+
+	modifier_effect()
+	{
+	}
+
+	explicit modifier_effect(const std::string &value) : value(centesimal_int(value))
+	{
+	}
 
 	virtual ~modifier_effect()
 	{
@@ -63,7 +73,7 @@ public:
 	}
 
 protected:
-	int value = 0;
+	centesimal_int value;
 };
 
 extern template class modifier_effect<const character>;

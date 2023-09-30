@@ -11,9 +11,9 @@ class commodity_bonus_modifier_effect final : public modifier_effect<const site>
 {
 public:
 	explicit commodity_bonus_modifier_effect(const metternich::commodity *commodity, const int value)
-		: commodity(commodity)
+		 : commodity(commodity)
 	{
-		this->value = value;
+		this->value = centesimal_int(value);
 	}
 
 	explicit commodity_bonus_modifier_effect(const metternich::commodity *commodity, const std::string &value)
@@ -39,7 +39,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value;
+		return this->value.to_int();
 	}
 
 private:

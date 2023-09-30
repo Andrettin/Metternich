@@ -10,8 +10,8 @@ class diplomatic_penalty_for_expansion_modifier_effect final : public modifier_e
 {
 public:
 	explicit diplomatic_penalty_for_expansion_modifier_effect(const std::string &value)
+		: modifier_effect(value)
 	{
-		this->value = std::stoi(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -37,7 +37,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return -this->value;
+		return -this->value.to_int();
 	}
 };
 

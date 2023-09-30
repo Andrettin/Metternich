@@ -13,7 +13,7 @@ public:
 	explicit free_consulate_modifier_effect(const std::string &value)
 	{
 		this->consulate = consulate::get(value);
-		this->value = 1;
+		this->value = centesimal_int(1);
 	}
 
 	virtual const std::string &get_identifier() const override

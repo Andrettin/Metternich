@@ -17,7 +17,7 @@ public:
 		: commodity(commodity)
 	{
 		this->threshold = std::stoi(value);
-		this->value = 1;
+		this->value = centesimal_int(1);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -42,7 +42,7 @@ public:
 
 	virtual int get_score() const override
 	{
-		return this->value * 10 / this->threshold;
+		return (this->value * 10 / this->threshold).to_int();
 	}
 
 private:
