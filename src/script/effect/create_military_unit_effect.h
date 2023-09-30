@@ -145,6 +145,7 @@ public:
 			return scope->get_game_data()->get_best_military_unit_category_type(this->category);
 		} else {
 			assert_throw(false);
+			return nullptr;
 		}
 	}
 
