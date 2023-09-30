@@ -504,6 +504,7 @@ set(script_condition_HDRS
 	src/script/condition/independent_condition.h
 	src/script/condition/infantry_condition.h
 	src/script/condition/is_advisor_condition.h
+	src/script/condition/is_military_unit_category_available_condition.h
 	src/script/condition/is_ruler_condition.h
 	src/script/condition/militancy_condition.h
 	src/script/condition/military_unit_category_condition.h
