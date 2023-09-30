@@ -1809,6 +1809,8 @@ void country_game_data::on_population_type_count_changed(const population_type *
 
 		this->change_commodity_consumption(commodity, value * change);
 	}
+
+	this->change_food_consumption(change);
 }
 
 void country_game_data::set_population_growth(const int growth)
@@ -3267,11 +3269,14 @@ military_unit_type *country_game_data::get_next_leader_military_unit_type() cons
 
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
+	this->change_food_consumption(1);
 	this->civilian_units.push_back(std::move(civilian_unit));
 }
 
 void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 {
+	this->change_food_consumption(-1);
+
 	for (size_t i = 0; i < this->civilian_units.size(); ++i) {
 		if (this->civilian_units[i].get() == civilian_unit) {
 			this->civilian_units.erase(this->civilian_units.begin() + i);
@@ -3282,11 +3287,19 @@ void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 
 void country_game_data::add_military_unit(qunique_ptr<military_unit> &&military_unit)
 {
+	if (military_unit->get_character() != nullptr) {
+		this->change_food_consumption(1);
+	}
+
 	this->military_units.push_back(std::move(military_unit));
 }
 
 void country_game_data::remove_military_unit(military_unit *military_unit)
 {
+	if (military_unit->get_character() != nullptr) {
+		this->change_food_consumption(-1);
+	}
+
 	for (size_t i = 0; i < this->military_units.size(); ++i) {
 		if (this->military_units[i].get() == military_unit) {
 			this->military_units.erase(this->military_units.begin() + i);

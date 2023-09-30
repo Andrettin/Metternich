@@ -605,7 +605,12 @@ public:
 
 	int get_food_consumption() const
 	{
-		return this->get_total_unit_count();
+		return this->food_consumption;
+	}
+
+	void change_food_consumption(const int change)
+	{
+		this->food_consumption += change;
 	}
 
 	int get_net_food_consumption() const;
@@ -1673,6 +1678,7 @@ private:
 	qunique_ptr<metternich::population> population;
 	int population_growth = 0; //population growth counter
 	int housing = 0;
+	int food_consumption = 0;
 	std::vector<qunique_ptr<country_building_slot>> building_slots;
 	building_slot_type_map<country_building_slot *> building_slot_map;
 	building_type_map<int> settlement_building_counts;
