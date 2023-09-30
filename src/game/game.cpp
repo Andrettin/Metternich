@@ -1151,10 +1151,10 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 					settlement_game_data->create_population_unit(literate_population_type, culture, religion, phenotype);
 				}
 			}
-
-			const population_class *population_class = country->get_default_population_class();
-			population_type = culture->get_population_class_type(population_class);
 		}
+
+		const population_class *population_class = country->get_default_population_class();
+		population_type = culture->get_population_class_type(population_class);
 	}
 	assert_throw(population_type != nullptr);
 
