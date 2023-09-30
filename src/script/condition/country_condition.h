@@ -15,11 +15,7 @@ public:
 	explicit country_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<scope_type>(condition_operator)
 	{
-		if (enum_converter<special_target_type>::has_value(value)) {
-			this->country_target = enum_converter<special_target_type>::to_enum(value);
-		} else {
-			this->country_target = country::get(value);
-		}
+		this->country_target = string_to_target_variant<const country>(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -62,6 +58,8 @@ public:
 	{
 		if (std::holds_alternative<const country *>(this->country_target)) {
 			return std::get<const country *>(this->country_target);
+		} else if (std::holds_alternative<std::string>(this->country_target)) {
+			return ctx.get_saved_scope<const country>(std::get<std::string>(this->country_target));
 		} else if (std::holds_alternative<special_target_type>(this->country_target)) {
 			const special_target_type target_type = std::get<special_target_type>(this->country_target);
 			const read_only_context::scope_variant_type &target_scope_variant = ctx.get_special_target_scope_variant(target_type);
