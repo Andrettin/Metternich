@@ -132,6 +132,7 @@ public:
 			return score;
 		} else {
 			assert_throw(false);
+			return 0;
 		}
 	}
 
