@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/commodity_container.h"
 
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")
@@ -42,6 +43,8 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(int bonus_vs_artillery MEMBER bonus_vs_artillery READ get_bonus_vs_artillery NOTIFY changed)
 	Q_PROPERTY(int bonus_vs_fortifications MEMBER bonus_vs_fortifications READ get_bonus_vs_fortifications NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
+	Q_PROPERTY(int upkeep MEMBER upkeep READ get_upkeep NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "military_unit_type";
@@ -154,6 +157,21 @@ public:
 		return this->required_technology;
 	}
 
+	int get_wealth_cost() const
+	{
+		return this->wealth_cost;
+	}
+
+	int get_upkeep() const
+	{
+		return this->upkeep;
+	}
+
+	const commodity_map<int> &get_commodity_costs() const
+	{
+		return this->commodity_costs;
+	}
+
 	const std::vector<const promotion *> &get_free_promotions() const
 	{
 		return this->free_promotions;
@@ -186,6 +204,9 @@ private:
 	int bonus_vs_artillery = 0;
 	int bonus_vs_fortifications = 0;
 	technology *required_technology = nullptr;
+	int wealth_cost = 0;
+	commodity_map<int> commodity_costs;
+	int upkeep = 0; //wealth paid per turn as upkeep for the military unit
 	std::vector<const promotion *> free_promotions;
 };
 
