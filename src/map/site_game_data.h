@@ -37,11 +37,11 @@ class site_game_data final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos CONSTANT)
-	Q_PROPERTY(metternich::province* province READ get_province_unconst CONSTANT)
-	Q_PROPERTY(metternich::country* owner READ get_owner_unconst NOTIFY owner_changed)
+	Q_PROPERTY(const metternich::province* province READ get_province CONSTANT)
+	Q_PROPERTY(const metternich::country* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
-	Q_PROPERTY(metternich::settlement_type* settlement_type READ get_settlement_type_unconst NOTIFY settlement_type_changed)
-	Q_PROPERTY(metternich::improvement* improvement READ get_improvement_unconst NOTIFY improvement_changed)
+	Q_PROPERTY(const metternich::settlement_type* settlement_type READ get_settlement_type NOTIFY settlement_type_changed)
+	Q_PROPERTY(const metternich::improvement* improvement READ get_improvement NOTIFY improvement_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
@@ -72,14 +72,6 @@ public:
 
 	const province *get_province() const;
 
-private:
-	//for the Qt property (pointers there can't be const)
-	province *get_province_unconst() const
-	{
-		return const_cast<province *>(this->get_province());
-	}
-
-public:
 	bool is_provincial_capital() const;
 	bool is_capital() const;
 	bool can_be_capital() const;
@@ -89,14 +81,6 @@ public:
 		return this->owner;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	country *get_owner_unconst() const
-	{
-		return const_cast<country *>(this->get_owner());
-	}
-
-public:
 	void set_owner(const country *owner);
 
 	const metternich::culture *get_culture() const
@@ -127,14 +111,6 @@ public:
 		return this->settlement_type;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::settlement_type *get_settlement_type_unconst() const
-	{
-		return const_cast<metternich::settlement_type *>(this->get_settlement_type());
-	}
-
-public:
 	void set_settlement_type(const metternich::settlement_type *settlement_type);
 
 	bool is_built() const;
@@ -143,14 +119,6 @@ public:
 
 	const improvement *get_improvement() const;
 
-private:
-	//for the Qt property (pointers there can't be const)
-	improvement *get_improvement_unconst() const
-	{
-		return const_cast<improvement *>(this->get_improvement());
-	}
-
-public:
 	const std::vector<qunique_ptr<settlement_building_slot>> &get_building_slots() const
 	{
 		return this->building_slots;

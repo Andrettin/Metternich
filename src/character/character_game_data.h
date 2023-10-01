@@ -27,8 +27,8 @@ class character_game_data final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::portrait* portrait READ get_portrait_unconst NOTIFY portrait_changed)
-	Q_PROPERTY(metternich::country* country READ get_country_unconst NOTIFY country_changed)
+	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
+	Q_PROPERTY(const metternich::country* country READ get_country NOTIFY country_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
@@ -47,14 +47,6 @@ public:
 		return this->portrait;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::portrait *get_portrait_unconst() const
-	{
-		return const_cast<metternich::portrait *>(this->get_portrait());
-	}
-
-public:
 	bool is_current_portrait_valid() const;
 	void check_portrait();
 
@@ -63,14 +55,6 @@ public:
 		return this->country;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::country *get_country_unconst() const
-	{
-		return const_cast<metternich::country *>(this->get_country());
-	}
-
-public:
 	void set_country(const metternich::country *country);
 
 	int get_age() const;

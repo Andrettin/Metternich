@@ -61,14 +61,14 @@ class country_game_data final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::religion* religion READ get_religion_unconst NOTIFY religion_changed)
-	Q_PROPERTY(metternich::country* overlord READ get_overlord_unconst NOTIFY overlord_changed)
+	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
+	Q_PROPERTY(const metternich::country* overlord READ get_overlord NOTIFY overlord_changed)
 	Q_PROPERTY(bool true_great_power READ is_true_great_power NOTIFY rank_changed)
 	Q_PROPERTY(bool secondary_power READ is_secondary_power NOTIFY rank_changed)
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
 	Q_PROPERTY(QString vassalage_type_name READ get_vassalage_type_name_qstring NOTIFY vassalage_type_name_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
-	Q_PROPERTY(metternich::site* capital READ get_capital_unconst NOTIFY capital_changed)
+	Q_PROPERTY(const metternich::site* capital READ get_capital NOTIFY capital_changed)
 	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
 	Q_PROPERTY(bool anarchy READ is_under_anarchy NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
@@ -101,18 +101,18 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
-	Q_PROPERTY(metternich::technology* current_research READ get_current_research_unconst WRITE set_current_research NOTIFY current_research_changed)
+	Q_PROPERTY(const metternich::technology* current_research READ get_current_research WRITE set_current_research NOTIFY current_research_changed)
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
-	Q_PROPERTY(metternich::government_type* government_type READ get_government_type_unconst NOTIFY government_type_changed)
-	Q_PROPERTY(metternich::character* ruler READ get_ruler_unconst NOTIFY ruler_changed)
+	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
+	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
-	Q_PROPERTY(metternich::character* next_advisor READ get_next_advisor_unconst WRITE set_next_advisor NOTIFY next_advisor_changed)
+	Q_PROPERTY(const metternich::character* next_advisor READ get_next_advisor WRITE set_next_advisor NOTIFY next_advisor_changed)
 	Q_PROPERTY(QVariantList leaders READ get_leaders_qvariant_list NOTIFY leaders_changed)
 	Q_PROPERTY(int leader_cost READ get_leader_cost NOTIFY leaders_changed)
-	Q_PROPERTY(metternich::character* next_leader READ get_next_leader_unconst WRITE set_next_leader NOTIFY next_leader_changed)
-	Q_PROPERTY(metternich::military_unit_type* next_leader_military_unit_type READ get_next_leader_military_unit_type NOTIFY next_leader_changed)
+	Q_PROPERTY(const metternich::character* next_leader READ get_next_leader WRITE set_next_leader NOTIFY next_leader_changed)
+	Q_PROPERTY(const metternich::military_unit_type* next_leader_military_unit_type READ get_next_leader_military_unit_type NOTIFY next_leader_changed)
 	Q_PROPERTY(QVariantList bids READ get_bids_qvariant_list NOTIFY bids_changed)
 	Q_PROPERTY(QVariantList offers READ get_offers_qvariant_list NOTIFY offers_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier NOTIFY output_modifier_changed)
@@ -150,14 +150,6 @@ public:
 		return this->religion;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::religion *get_religion_unconst() const
-	{
-		return const_cast<metternich::religion *>(this->get_religion());
-	}
-
-public:
 	void set_religion(const metternich::religion *religion);
 
 	const metternich::country *get_overlord() const
@@ -165,14 +157,6 @@ public:
 		return this->overlord;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::country *get_overlord_unconst() const
-	{
-		return const_cast<metternich::country *>(this->get_overlord());
-	}
-
-public:
 	void set_overlord(const metternich::country *overlord);
 
 	bool is_vassal_of(const metternich::country *country) const;
@@ -230,14 +214,6 @@ public:
 		return this->capital;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	site *get_capital_unconst() const
-	{
-		return const_cast<site *>(this->get_capital());
-	}
-
-public:
 	void set_capital(const site *capital);
 	void choose_capital();
 
@@ -888,14 +864,6 @@ public:
 		return this->current_research;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	technology *get_current_research_unconst() const
-	{
-		return const_cast<technology *>(this->get_current_research());
-	}
-
-public:
 	void set_current_research(const technology *technology);
 	void choose_current_research();
 	void on_technology_researched(const technology *technology);
@@ -934,14 +902,6 @@ public:
 		return this->government_type;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::government_type *get_government_type_unconst() const
-	{
-		return const_cast<metternich::government_type *>(this->get_government_type());
-	}
-
-public:
 	void set_government_type(const metternich::government_type *government_type);
 
 	void check_characters();
@@ -951,14 +911,6 @@ public:
 		return this->ruler;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	character *get_ruler_unconst() const
-	{
-		return const_cast<character *>(this->get_ruler());
-	}
-
-public:
 	void set_ruler(const character *ruler);
 	void check_ruler();
 
@@ -994,14 +946,6 @@ public:
 		return this->next_advisor;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	character *get_next_advisor_unconst() const
-	{
-		return const_cast<character *>(this->get_next_advisor());
-	}
-
-public:
 	void set_next_advisor(const character *advisor)
 	{
 		if (advisor == this->get_next_advisor()) {
@@ -1047,14 +991,6 @@ public:
 		return this->next_leader;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	character *get_next_leader_unconst() const
-	{
-		return const_cast<character *>(this->get_next_leader());
-	}
-
-public:
 	void set_next_leader(const character *leader)
 	{
 		if (leader == this->get_next_leader()) {
@@ -1066,7 +1002,7 @@ public:
 	}
 
 	void choose_next_leader();
-	military_unit_type *get_next_leader_military_unit_type() const;
+	const military_unit_type *get_next_leader_military_unit_type() const;
 
 	const commodity_map<int> &get_bids() const
 	{

@@ -13,8 +13,8 @@ class settlement_building_slot final : public building_slot
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::wonder* wonder READ get_wonder_unconst NOTIFY wonder_changed)
-	Q_PROPERTY(metternich::wonder* under_construction_wonder READ get_under_construction_wonder_unconst WRITE set_under_construction_wonder NOTIFY under_construction_wonder_changed)
+	Q_PROPERTY(const metternich::wonder* wonder READ get_wonder NOTIFY wonder_changed)
+	Q_PROPERTY(const metternich::wonder* under_construction_wonder READ get_under_construction_wonder WRITE set_under_construction_wonder NOTIFY under_construction_wonder_changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string NOTIFY country_modifier_changed)
 
 public:
@@ -31,14 +31,6 @@ public:
 		return this->wonder;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	wonder *get_wonder_unconst() const
-	{
-		return const_cast<metternich::wonder *>(this->get_wonder());
-	}
-
-public:
 	void set_wonder(const wonder *wonder);
 
 	const wonder *get_under_construction_wonder() const
@@ -46,14 +38,6 @@ public:
 		return this->under_construction_wonder;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	wonder *get_under_construction_wonder_unconst() const
-	{
-		return const_cast<metternich::wonder *>(this->get_under_construction_wonder());
-	}
-
-public:
 	void set_under_construction_wonder(const wonder *wonder);
 
 	bool can_have_wonder(const wonder *wonder) const;

@@ -34,8 +34,8 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(int turn READ get_turn NOTIFY turn_changed)
 	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(QVariantList great_powers READ get_great_powers_qvariant_list NOTIFY countries_changed)
-	Q_PROPERTY(metternich::country* player_country READ get_player_country_unconst WRITE set_player_country NOTIFY player_country_changed)
-	Q_PROPERTY(metternich::game_rules* rules READ get_rules_unconst CONSTANT)
+	Q_PROPERTY(const metternich::country* player_country READ get_player_country WRITE set_player_country NOTIFY player_country_changed)
+	Q_PROPERTY(const metternich::game_rules* rules READ get_rules CONSTANT)
 
 public:
 	static QDateTime normalize_date(const QDateTime &date);
@@ -53,14 +53,6 @@ public:
 		return this->rules.get();
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	game_rules *get_rules_unconst() const
-	{
-		return const_cast<game_rules *>(this->get_rules());
-	}
-
-public:
 	bool is_running() const
 	{
 		return this->running;
@@ -154,15 +146,7 @@ public:
 		return this->player_country;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	country *get_player_country_unconst() const
-	{
-		return const_cast<country *>(this->get_player_country());
-	}
-
-public:
-	void set_player_country(country *country)
+	void set_player_country(const country *country)
 	{
 		if (country == this->get_player_country()) {
 			return;
@@ -231,7 +215,7 @@ private:
 	int turn = 1;
 	std::vector<const country *> countries; //the countries currently in the game, i.e. those with at least 1 province
 	std::vector<const country *> great_powers;
-	country *player_country = nullptr;
+	const country *player_country = nullptr;
 	QImage exploration_diplomatic_map_image;
 	bool exploration_changed = false;
 	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;

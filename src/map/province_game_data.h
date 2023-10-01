@@ -42,9 +42,9 @@ class province_game_data final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::country* owner READ get_owner_unconst NOTIFY owner_changed)
-	Q_PROPERTY(metternich::culture* culture READ get_culture_unconst NOTIFY culture_changed)
-	Q_PROPERTY(metternich::religion* religion READ get_religion_unconst NOTIFY religion_changed)
+	Q_PROPERTY(const metternich::country* owner READ get_owner NOTIFY owner_changed)
+	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
+	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect CONSTANT)
@@ -69,14 +69,6 @@ public:
 		return this->owner;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::country *get_owner_unconst() const
-	{
-		return const_cast<metternich::country *>(this->get_owner());
-	}
-
-public:
 	void set_owner(const country *country);
 
 	const site *get_provincial_capital() const
@@ -94,14 +86,6 @@ public:
 		return this->culture;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::culture *get_culture_unconst() const
-	{
-		return const_cast<metternich::culture *>(this->get_culture());
-	}
-
-public:
 	void set_culture(const metternich::culture *culture);
 	void on_population_main_culture_changed(const metternich::culture *culture);
 
@@ -110,14 +94,6 @@ public:
 		return this->religion;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::religion *get_religion_unconst() const
-	{
-		return const_cast<metternich::religion *>(this->get_religion());
-	}
-
-public:
 	void set_religion(const metternich::religion *religion);
 	void on_population_main_religion_changed(const metternich::religion *religion);
 

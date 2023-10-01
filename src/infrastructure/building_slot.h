@@ -15,10 +15,10 @@ class building_slot : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::building_slot_type* type READ get_type_unconst CONSTANT)
-	Q_PROPERTY(metternich::building_type* building READ get_building_unconst NOTIFY building_changed)
-	Q_PROPERTY(metternich::building_type* under_construction_building READ get_under_construction_building_unconst WRITE set_under_construction_building NOTIFY under_construction_building_changed)
-	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
+	Q_PROPERTY(const metternich::building_slot_type* type READ get_type CONSTANT)
+	Q_PROPERTY(const metternich::building_type* building READ get_building NOTIFY building_changed)
+	Q_PROPERTY(const metternich::building_type* under_construction_building READ get_under_construction_building WRITE set_under_construction_building NOTIFY under_construction_building_changed)
+	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
 
 public:
 	explicit building_slot(const building_slot_type *type);
@@ -28,24 +28,9 @@ public:
 		return this->type;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	building_slot_type *get_type_unconst() const
-	{
-		return const_cast<building_slot_type *>(this->get_type());
-	}
-
-public:
 	const building_type *get_building() const
 	{
 		return this->building;
-	}
-
-private:
-	//for the Qt property (pointers there can't be const)
-	building_type *get_building_unconst() const
-	{
-		return const_cast<building_type *>(this->get_building());
 	}
 
 protected:
@@ -57,14 +42,6 @@ public:
 		return this->under_construction_building;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	building_type *get_under_construction_building_unconst() const
-	{
-		return const_cast<building_type *>(this->get_under_construction_building());
-	}
-
-public:
 	void set_under_construction_building(const building_type *building);
 
 	virtual bool can_have_building(const building_type *building) const;
@@ -86,14 +63,6 @@ public:
 
 	virtual const metternich::country *get_country() const = 0;
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::country *get_country_unconst() const
-	{
-		return const_cast<metternich::country *>(this->get_country());
-	}
-
-public:
 	bool is_available() const;
 
 signals:

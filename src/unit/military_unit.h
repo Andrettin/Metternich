@@ -26,11 +26,11 @@ class military_unit final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY name_changed)
-	Q_PROPERTY(metternich::military_unit_type* type READ get_type_unconst NOTIFY type_changed)
-	Q_PROPERTY(metternich::icon* icon READ get_icon_unconst NOTIFY icon_changed)
-	Q_PROPERTY(metternich::country* country READ get_country_unconst CONSTANT)
+	Q_PROPERTY(const metternich::military_unit_type* type READ get_type NOTIFY type_changed)
+	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
+	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
-	Q_PROPERTY(metternich::site* site READ get_site_unconst NOTIFY site_changed)
+	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
 	Q_PROPERTY(QVariantList promotions READ get_promotions_qvariant_list NOTIFY promotions_changed)
 
 public:
@@ -75,14 +75,6 @@ public:
 		return this->type;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	military_unit_type *get_type_unconst() const
-	{
-		return const_cast<military_unit_type *>(this->get_type());
-	}
-
-public:
 	void set_type(const military_unit_type *type);
 
 	military_unit_category get_category() const;
@@ -90,27 +82,11 @@ public:
 
 	const icon *get_icon() const;
 
-private:
-	//for the Qt property (pointers there can't be const)
-	icon *get_icon_unconst() const
-	{
-		return const_cast<icon *>(this->get_icon());
-	}
-
-public:
 	const metternich::country *get_country() const
 	{
 		return this->country;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::country *get_country_unconst() const
-	{
-		return const_cast<metternich::country *>(this->get_country());
-	}
-
-public:
 	const metternich::population_type *get_population_type() const
 	{
 		return this->population_type;
@@ -177,14 +153,6 @@ public:
 		return this->site;
 	}
 
-private:
-	//for the Qt property (pointers there can't be const)
-	metternich::site *get_site_unconst() const
-	{
-		return const_cast<metternich::site *>(this->get_site());
-	}
-
-public:
 	void set_site(const metternich::site *site);
 	void visit_site(const metternich::site *site);
 
