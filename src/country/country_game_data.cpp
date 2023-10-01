@@ -2297,6 +2297,50 @@ void country_game_data::change_commodity_consumption(const commodity *commodity,
 	}
 }
 
+QVariantList country_game_data::get_bids_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_bids());
+}
+
+void country_game_data::set_bid(const commodity *commodity, const int value)
+{
+	if (value == this->get_bid(commodity)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->bids.erase(commodity);
+	} else {
+		this->bids[commodity] = value;
+	}
+
+	if (game::get()->is_running()) {
+		emit bids_changed();
+	}
+}
+
+QVariantList country_game_data::get_offers_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_offers());
+}
+
+void country_game_data::set_offer(const commodity *commodity, const int value)
+{
+	if (value == this->get_offer(commodity)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->offers.erase(commodity);
+	} else {
+		this->offers[commodity] = value;
+	}
+
+	if (game::get()->is_running()) {
+		emit offers_changed();
+	}
+}
+
 void country_game_data::assign_production()
 {
 	bool changed = true;

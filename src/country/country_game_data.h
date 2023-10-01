@@ -113,6 +113,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int leader_cost READ get_leader_cost NOTIFY leaders_changed)
 	Q_PROPERTY(metternich::character* next_leader READ get_next_leader_unconst WRITE set_next_leader NOTIFY next_leader_changed)
 	Q_PROPERTY(metternich::military_unit_type* next_leader_military_unit_type READ get_next_leader_military_unit_type NOTIFY next_leader_changed)
+	Q_PROPERTY(QVariantList bids READ get_bids_qvariant_list NOTIFY bids_changed)
+	Q_PROPERTY(QVariantList offers READ get_offers_qvariant_list NOTIFY offers_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier NOTIFY output_modifier_changed)
 	Q_PROPERTY(int resource_output_modifier READ get_resource_output_modifier NOTIFY resource_output_modifier_changed)
 	Q_PROPERTY(int industrial_output_modifier READ get_industrial_output_modifier NOTIFY industrial_output_modifier_changed)
@@ -1066,6 +1068,46 @@ public:
 	void choose_next_leader();
 	military_unit_type *get_next_leader_military_unit_type() const;
 
+	const commodity_map<int> &get_bids() const
+	{
+		return this->bids;
+	}
+
+	QVariantList get_bids_qvariant_list() const;
+
+	Q_INVOKABLE int get_bid(const commodity *commodity) const
+	{
+		const auto find_iterator = this->bids.find(commodity);
+
+		if (find_iterator != this->bids.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_bid(const commodity *commodity, const int value);
+
+	const commodity_map<int> &get_offers() const
+	{
+		return this->offers;
+	}
+
+	QVariantList get_offers_qvariant_list() const;
+
+	Q_INVOKABLE int get_offer(const commodity *commodity) const
+	{
+		const auto find_iterator = this->offers.find(commodity);
+
+		if (find_iterator != this->offers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_offer(const commodity *commodity, const int value);
+
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
 
@@ -1646,6 +1688,9 @@ signals:
 	void credit_limit_changed();
 	void stored_commodities_changed();
 	void storage_capacity_changed();
+	void commodity_inputs_changed();
+	void commodity_outputs_changed();
+	void commodity_consumptions_changed();
 	void technologies_changed();
 	void current_research_changed();
 	void technology_researched(QObject *technology);
@@ -1657,9 +1702,8 @@ signals:
 	void leaders_changed();
 	void next_leader_changed();
 	void leader_recruited(QObject *leader);
-	void commodity_inputs_changed();
-	void commodity_outputs_changed();
-	void commodity_consumptions_changed();
+	void bids_changed();
+	void offers_changed();
 	void output_modifier_changed();
 	void resource_output_modifier_changed();
 	void industrial_output_modifier_changed();
@@ -1724,6 +1768,8 @@ private:
 	const character *next_advisor = nullptr;
 	std::vector<const character *> leaders;
 	const character *next_leader = nullptr;
+	commodity_map<int> bids;
+	commodity_map<int> offers;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	int deployment_limit = country_game_data::base_deployment_limit;
