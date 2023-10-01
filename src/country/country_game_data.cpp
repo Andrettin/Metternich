@@ -3477,7 +3477,7 @@ void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 
 void country_game_data::add_military_unit(qunique_ptr<military_unit> &&military_unit)
 {
-	if (military_unit->get_character() != nullptr) {
+	if (military_unit->get_character() == nullptr) {
 		this->change_food_consumption(1);
 	}
 
