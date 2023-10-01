@@ -382,6 +382,19 @@ void country_game_data::do_consumption()
 	}
 
 	//FIXME: make population units which couldn't have their consumption fulfilled be unhappy/refuse to work for the turn (and possibly demote when demotion is implemented)
+
+	//for minor nations, consume commodities demanded by the population
+	//this is to prevent commodities bought by minor nations from infinitely stockpiling up
+	if (!this->country->is_great_power()) {
+		for (const auto &[commodity, demand] : this->get_commodity_demands()) {
+			const int demand_int = demand.to_int();
+			const int consumed_quantity = std::min(this->get_stored_commodity(commodity), demand_int);
+			if (consumed_quantity > 0) {
+				this->change_stored_commodity(commodity, -consumed_quantity);
+				this->change_wealth(consumed_quantity * commodity->get_base_price());
+			}
+		}
+	}
 }
 
 void country_game_data::do_cultural_change()
@@ -1900,6 +1913,13 @@ void country_game_data::on_population_type_count_changed(const population_type *
 		this->change_commodity_consumption(commodity, value * change);
 	}
 
+	//minor nations generate demand in the world market depending on population commodity demand
+	if (!this->country->is_great_power()) {
+		for (const auto &[commodity, value] : type->get_commodity_demands()) {
+			this->change_commodity_demand(commodity, value * change);
+		}
+	}
+
 	this->change_food_consumption(change);
 }
 
@@ -2404,6 +2424,21 @@ void country_game_data::change_commodity_consumption(const commodity *commodity,
 
 	if (game::get()->is_running()) {
 		emit commodity_consumptions_changed();
+	}
+}
+
+void country_game_data::change_commodity_demand(const commodity *commodity, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const centesimal_int count = (this->commodity_demands[commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->commodity_demands.erase(commodity);
 	}
 }
 
@@ -3437,7 +3472,13 @@ void country_game_data::set_offer(const commodity *commodity, const int value)
 
 void country_game_data::calculate_commodity_needs()
 {
-	//FIXME: implement
+	this->commodity_needs.clear();
+
+	if (!this->country->is_great_power()) {
+		for (const auto &[commodity, demand] : this->get_commodity_demands()) {
+			this->commodity_needs[commodity] += demand.to_int();
+		}
+	}
 }
 
 void country_game_data::assign_trade_orders()
@@ -3453,6 +3494,16 @@ void country_game_data::assign_trade_orders()
 
 		if (value > need) {
 			this->set_offer(commodity, value);
+		}
+	}
+
+	for (const auto &[commodity, demand] : this->get_commodity_demands()) {
+		if (!this->can_trade_commodity(commodity)) {
+			continue;
+		}
+
+		if (this->get_offer(commodity) == 0) {
+			this->set_bid(commodity, demand.to_int());
 		}
 	}
 }

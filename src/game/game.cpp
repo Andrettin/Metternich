@@ -1327,6 +1327,8 @@ QCoro::Task<void> game::do_turn_coro()
 		country_map<commodity_map<int>> old_offers;
 
 		for (const country *country : this->get_countries()) {
+			country->get_game_data()->calculate_commodity_needs();
+
 			if (country->get_game_data()->is_ai()) {
 				country->get_game_data()->do_ai_turn();
 			}

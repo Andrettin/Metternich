@@ -36,6 +36,15 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			const centesimal_int consumption(value);
 			this->consumed_commodities[commodity] = std::move(consumption);
 		});
+	} else if (tag == "commodity_demands") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const commodity *commodity = commodity::get(key);
+			const centesimal_int demand(value);
+			this->commodity_demands[commodity] = std::move(demand);
+		});
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
 		database::process_gsml_data(this->country_modifier, scope);
@@ -96,6 +105,12 @@ void population_type::check() const
 	if (this->get_country_modifier() == nullptr) {
 		assert_throw(this->get_output_commodity() != nullptr);
 		assert_throw(this->get_output_value() > 0);
+	}
+
+	for (const auto &[commodity, demand] : this->get_commodity_demands()) {
+		if (!commodity->is_tradeable()) {
+			throw std::runtime_error(std::format("Population type \"{}\" demands a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
+		}
 	}
 }
 

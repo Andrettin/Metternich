@@ -842,6 +842,25 @@ public:
 	Q_INVOKABLE int get_commodity_consumption(const QString &commodity_identifier) const;
 	void change_commodity_consumption(const commodity *commodity, const centesimal_int &change);
 
+	const commodity_map<centesimal_int> &get_commodity_demands() const
+	{
+		return this->commodity_demands;
+	}
+
+	const centesimal_int &get_commodity_demand(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_demands.find(commodity);
+
+		if (find_iterator != this->commodity_demands.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
+	void change_commodity_demand(const commodity *commodity, const centesimal_int &change);
+
 	void assign_production();
 	void decrease_wealth_consumption(const bool restore_inputs = true);
 	void decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs = true);
@@ -1766,6 +1785,7 @@ private:
 	commodity_map<int> commodity_inputs;
 	commodity_map<int> commodity_outputs;
 	commodity_map<centesimal_int> commodity_consumptions;
+	commodity_map<centesimal_int> commodity_demands;
 	technology_set technologies;
 	const technology *current_research = nullptr;
 	int free_technology_count = 0;
