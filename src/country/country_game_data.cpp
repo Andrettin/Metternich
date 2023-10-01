@@ -2152,11 +2152,6 @@ QVariantList country_game_data::get_stored_commodities_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_stored_commodities());
 }
 
-int country_game_data::get_stored_commodity(const QString &commodity_identifier) const
-{
-	return this->get_stored_commodity(commodity::get(commodity_identifier.toStdString()));
-}
-
 void country_game_data::set_stored_commodity(const commodity *commodity, const int value)
 {
 	if (value == this->get_stored_commodity(commodity)) {

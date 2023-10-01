@@ -743,7 +743,7 @@ public:
 
 	QVariantList get_stored_commodities_qvariant_list() const;
 
-	int get_stored_commodity(const commodity *commodity) const
+	Q_INVOKABLE int get_stored_commodity(const metternich::commodity *commodity) const
 	{
 		const auto find_iterator = this->stored_commodities.find(commodity);
 
@@ -754,7 +754,6 @@ public:
 		return 0;
 	}
 
-	Q_INVOKABLE int get_stored_commodity(const QString &commodity_identifier) const;
 	void set_stored_commodity(const commodity *commodity, const int value);
 
 	void change_stored_commodity(const commodity *commodity, const int value)
@@ -1041,7 +1040,7 @@ public:
 
 	QVariantList get_bids_qvariant_list() const;
 
-	Q_INVOKABLE int get_bid(const commodity *commodity) const
+	Q_INVOKABLE int get_bid(const metternich::commodity *commodity) const
 	{
 		const auto find_iterator = this->bids.find(commodity);
 
@@ -1061,7 +1060,7 @@ public:
 
 	QVariantList get_offers_qvariant_list() const;
 
-	Q_INVOKABLE int get_offer(const commodity *commodity) const
+	Q_INVOKABLE int get_offer(const metternich::commodity *commodity) const
 	{
 		const auto find_iterator = this->offers.find(commodity);
 
