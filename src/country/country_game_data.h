@@ -1053,6 +1053,11 @@ public:
 
 	Q_INVOKABLE void set_bid(const metternich::commodity *commodity, const int value);
 
+	Q_INVOKABLE void change_bid(const metternich::commodity *commodity, const int change)
+	{
+		this->set_bid(commodity, this->get_bid(commodity) + change);
+	}
+
 	const commodity_map<int> &get_offers() const
 	{
 		return this->offers;
@@ -1072,6 +1077,11 @@ public:
 	}
 
 	Q_INVOKABLE void set_offer(const metternich::commodity *commodity, const int value);
+
+	Q_INVOKABLE void change_offer(const metternich::commodity *commodity, const int change)
+	{
+		this->set_offer(commodity, this->get_offer(commodity) + change);
+	}
 
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
