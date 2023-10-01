@@ -2179,6 +2179,10 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 		this->stored_commodities[commodity] = value;
 	}
 
+	if (this->get_offer(commodity) > value) {
+		this->set_offer(commodity, value);
+	}
+
 	if (game::get()->is_running()) {
 		emit stored_commodities_changed();
 	}
