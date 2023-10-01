@@ -726,6 +726,11 @@ public:
 		emit tradeable_commodities_changed();
 	}
 
+	bool can_trade_commodity(const commodity *commodity) const
+	{
+		return this->get_tradeable_commodities().contains(commodity);
+	}
+
 	const commodity_map<int> &get_stored_commodities() const
 	{
 		return this->stored_commodities;

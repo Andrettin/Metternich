@@ -3445,7 +3445,7 @@ void country_game_data::assign_trade_orders()
 	assert_throw(this->is_ai());
 
 	for (const auto &[commodity, value] : this->get_stored_commodities()) {
-		if (!commodity->is_tradeable()) {
+		if (!this->can_trade_commodity(commodity)) {
 			continue;
 		}
 
