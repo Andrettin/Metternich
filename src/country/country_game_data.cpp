@@ -2362,6 +2362,11 @@ void country_game_data::set_offer(const commodity *commodity, const int value)
 		return;
 	}
 
+	if (value > this->get_stored_commodity(commodity)) {
+		this->set_offer(commodity, this->get_stored_commodity(commodity));
+		return;
+	}
+
 	if (value == 0) {
 		this->offers.erase(commodity);
 	} else {
