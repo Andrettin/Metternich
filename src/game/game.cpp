@@ -1323,14 +1323,35 @@ QCoro::Task<void> game::do_turn_coro()
 	try {
 		this->process_delayed_effects();
 
+		country_map<commodity_map<int>> old_bids;
+		country_map<commodity_map<int>> old_offers;
+
 		for (const country *country : this->get_countries()) {
 			if (country->get_game_data()->is_ai()) {
 				country->get_game_data()->do_ai_turn();
 			}
+
+			old_bids[country] = country->get_game_data()->get_bids();
+			old_offers[country] = country->get_game_data()->get_offers();
+		}
+
+		for (const country *country : this->get_countries()) {
+			country->get_game_data()->do_trade();
 		}
 
 		for (const country *country : this->get_countries()) {
 			country->get_game_data()->do_turn();
+		}
+
+		//restore old bids and offers, if possible
+		for (const country *country : this->get_countries()) {
+			for (const auto &[commodity, bid] : old_bids[country]) {
+				country->get_game_data()->set_bid(commodity, bid);
+			}
+
+			for (const auto &[commodity, offer] : old_offers[country]) {
+				country->get_game_data()->set_offer(commodity, offer);
+			}
 		}
 
 		if (this->exploration_changed) {

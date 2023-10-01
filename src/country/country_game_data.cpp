@@ -428,6 +428,61 @@ void country_game_data::do_construction()
 	}
 }
 
+void country_game_data::do_trade()
+{
+	try {
+		//get the known countries and sort them by priority
+		std::vector<const metternich::country *> countries = container::to_vector(this->get_known_countries());
+		std::sort(countries.begin(), countries.end(), [&](const metternich::country *lhs, const metternich::country *rhs) {
+			const int lhs_opinion = this->get_opinion_of(lhs);
+			const int rhs_opinion = this->get_opinion_of(rhs);
+
+			if (lhs_opinion != rhs_opinion) {
+				return lhs_opinion > rhs_opinion;
+			}
+
+			return lhs->get_identifier() < rhs->get_identifier();
+		});
+
+		commodity_map<int> offers = this->get_offers();
+		for (auto &[commodity, offer] : offers) {
+			for (const metternich::country *other_country : countries) {
+				const int bid = other_country->get_game_data()->get_bid(commodity);
+				if (bid == 0) {
+					continue;
+				}
+
+				int sold_quantity = std::min(offer, bid);
+				sold_quantity = std::min(sold_quantity, other_country->get_game_data()->get_wealth_with_credit() / commodity->get_base_price());
+
+				if (sold_quantity <= 0) {
+					continue;
+				}
+
+				this->change_stored_commodity(commodity, -sold_quantity);
+				this->change_wealth(commodity->get_base_price() * sold_quantity);
+
+				other_country->get_game_data()->change_stored_commodity(commodity, sold_quantity);
+				other_country->get_game_data()->change_wealth(-commodity->get_base_price() * sold_quantity);
+
+				offer -= sold_quantity;
+
+				other_country->get_game_data()->change_bid(commodity, -sold_quantity);
+
+				//improve relations between the two countries after they traded
+				this->change_base_opinion(other_country, 1);
+				other_country->get_game_data()->change_base_opinion(this->country, 1);
+
+				if (offer == 0) {
+					break;
+				}
+			}
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Error doing trade for country \"" + this->country->get_identifier() + "\"."));
+	}
+}
+
 void country_game_data::do_events()
 {
 	for (const province *province : this->get_provinces()) {
@@ -512,6 +567,8 @@ void country_game_data::do_ai_turn()
 			civilian_unit->disband();
 		}
 	}
+
+	this->assign_trade_orders();
 }
 
 bool country_game_data::is_ai() const
@@ -1242,7 +1299,6 @@ void country_game_data::add_known_country(const metternich::country *other_count
 {
 	this->known_countries.insert(other_country);
 
-
 	const consulate *current_consulate = this->get_consulate(other_country);
 
 	const consulate *best_free_consulate = nullptr;
@@ -1422,6 +1478,29 @@ int country_game_data::get_opinion_of(const metternich::country *other) const
 	opinion = std::clamp(opinion, country::min_opinion, country::max_opinion);
 
 	return opinion;
+}
+
+void country_game_data::set_base_opinion(const metternich::country *other, const int opinion)
+{
+	assert_throw(other != this->country);
+
+	if (opinion == this->get_base_opinion(other)) {
+		return;
+	}
+
+	if (opinion < country::min_opinion) {
+		this->set_base_opinion(other, country::min_opinion);
+		return;
+	} else if (opinion > country::max_opinion) {
+		this->set_base_opinion(other, country::max_opinion);
+		return;
+	}
+
+	if (opinion == 0) {
+		this->base_opinions.erase(other);
+	} else {
+		this->base_opinions[other] = opinion;
+	}
 }
 
 void country_game_data::add_opinion_modifier(const metternich::country *other, const opinion_modifier *modifier, const int duration)
@@ -2325,57 +2404,6 @@ void country_game_data::change_commodity_consumption(const commodity *commodity,
 
 	if (game::get()->is_running()) {
 		emit commodity_consumptions_changed();
-	}
-}
-
-QVariantList country_game_data::get_bids_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_bids());
-}
-
-void country_game_data::set_bid(const commodity *commodity, const int value)
-{
-	if (value == this->get_bid(commodity)) {
-		return;
-	}
-
-	if (value == 0) {
-		this->bids.erase(commodity);
-	} else {
-		this->set_offer(commodity, 0);
-		this->bids[commodity] = value;
-	}
-
-	if (game::get()->is_running()) {
-		emit bids_changed();
-	}
-}
-
-QVariantList country_game_data::get_offers_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_offers());
-}
-
-void country_game_data::set_offer(const commodity *commodity, const int value)
-{
-	if (value == this->get_offer(commodity)) {
-		return;
-	}
-
-	if (value > this->get_stored_commodity(commodity)) {
-		this->set_offer(commodity, this->get_stored_commodity(commodity));
-		return;
-	}
-
-	if (value == 0) {
-		this->offers.erase(commodity);
-	} else {
-		this->set_bid(commodity, 0);
-		this->offers[commodity] = value;
-	}
-
-	if (game::get()->is_running()) {
-		emit offers_changed();
 	}
 }
 
@@ -3354,6 +3382,79 @@ const military_unit_type *country_game_data::get_next_leader_military_unit_type(
 	}
 
 	return this->get_best_military_unit_category_type(this->get_next_leader()->get_military_unit_category(), this->get_next_leader()->get_culture());
+}
+
+QVariantList country_game_data::get_bids_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_bids());
+}
+
+void country_game_data::set_bid(const commodity *commodity, const int value)
+{
+	if (value == this->get_bid(commodity)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->bids.erase(commodity);
+	} else {
+		this->set_offer(commodity, 0);
+		this->bids[commodity] = value;
+	}
+
+	if (game::get()->is_running()) {
+		emit bids_changed();
+	}
+}
+
+QVariantList country_game_data::get_offers_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_offers());
+}
+
+void country_game_data::set_offer(const commodity *commodity, const int value)
+{
+	if (value == this->get_offer(commodity)) {
+		return;
+	}
+
+	if (value > this->get_stored_commodity(commodity)) {
+		this->set_offer(commodity, this->get_stored_commodity(commodity));
+		return;
+	}
+
+	if (value == 0) {
+		this->offers.erase(commodity);
+	} else {
+		this->set_bid(commodity, 0);
+		this->offers[commodity] = value;
+	}
+
+	if (game::get()->is_running()) {
+		emit offers_changed();
+	}
+}
+
+void country_game_data::calculate_commodity_needs()
+{
+	//FIXME: implement
+}
+
+void country_game_data::assign_trade_orders()
+{
+	assert_throw(this->is_ai());
+
+	for (const auto &[commodity, value] : this->get_stored_commodities()) {
+		if (!commodity->is_tradeable()) {
+			continue;
+		}
+
+		const int need = this->get_commodity_need(commodity);
+
+		if (value > need) {
+			this->set_offer(commodity, value);
+		}
+	}
 }
 
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)

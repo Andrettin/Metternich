@@ -144,6 +144,7 @@ public:
 	void do_consumption();
 	void do_cultural_change();
 	void do_construction();
+	void do_trade();
 	void do_events();
 	void do_ai_turn();
 
@@ -417,18 +418,7 @@ public:
 		return 0;
 	}
 
-	void set_base_opinion(const metternich::country *other, const int opinion)
-	{
-		if (opinion == this->get_base_opinion(other)) {
-			return;
-		}
-
-		if (opinion == 0) {
-			this->base_opinions.erase(other);
-		} else {
-			this->base_opinions[other] = opinion;
-		}
-	}
+	void set_base_opinion(const metternich::country *other, const int opinion);
 
 	void change_base_opinion(const metternich::country *other, const int change)
 	{
@@ -1082,6 +1072,39 @@ public:
 	{
 		this->set_offer(commodity, this->get_offer(commodity) + change);
 	}
+
+	const commodity_map<int> &get_commodity_needs() const
+	{
+		return this->commodity_needs;
+	}
+
+	int get_commodity_need(const metternich::commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_needs.find(commodity);
+
+		if (find_iterator != this->commodity_needs.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_commodity_need(const metternich::commodity *commodity, const int value)
+	{
+		if (value == this->get_commodity_need(commodity)) {
+			return;
+		}
+
+		if (value == 0) {
+			this->commodity_needs.erase(commodity);
+		} else {
+			this->commodity_needs[commodity] = value;
+		}
+	}
+
+	void calculate_commodity_needs();
+
+	void assign_trade_orders();
 
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
@@ -1749,6 +1772,7 @@ private:
 	const character *next_leader = nullptr;
 	commodity_map<int> bids;
 	commodity_map<int> offers;
+	commodity_map<int> commodity_needs;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	int deployment_limit = country_game_data::base_deployment_limit;
