@@ -59,7 +59,7 @@ public:
 
 	Q_INVOKABLE virtual void cancel_construction();
 
-	Q_INVOKABLE metternich::building_type *get_buildable_building() const;
+	Q_INVOKABLE const metternich::building_type *get_buildable_building() const;
 
 	virtual const metternich::country *get_country() const = 0;
 

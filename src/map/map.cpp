@@ -498,7 +498,7 @@ void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discov
 				country_game_data->add_technology(resource->get_discovery_technology());
 
 				if (game::get()->is_running()) {
-					emit country_game_data->technology_researched(const_cast<technology *>(resource->get_discovery_technology()));
+					emit country_game_data->technology_researched(resource->get_discovery_technology());
 				}
 			}
 		}

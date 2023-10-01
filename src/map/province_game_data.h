@@ -14,6 +14,7 @@ Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("population/population.h")
+Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
@@ -213,7 +214,7 @@ public:
 	bool has_country_military_unit(const country *country) const;
 	Q_INVOKABLE int get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::country *country) const;
 
-	Q_INVOKABLE QObject *get_military_unit_category_icon(const metternich::military_unit_category category) const;
+	Q_INVOKABLE const icon *get_military_unit_category_icon(const metternich::military_unit_category category) const;
 	Q_INVOKABLE QString get_military_unit_category_name(const metternich::military_unit_category category) const;
 
 	void calculate_settlement_commodity_outputs();

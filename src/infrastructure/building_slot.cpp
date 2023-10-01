@@ -158,7 +158,7 @@ void building_slot::cancel_construction()
 	this->set_under_construction_building(nullptr);
 }
 
-building_type *building_slot::get_buildable_building() const
+const building_type *building_slot::get_buildable_building() const
 {
 	for (const building_type *building : this->get_type()->get_building_types()) {
 		if (building->get_required_technology() != nullptr) {
@@ -175,7 +175,7 @@ building_type *building_slot::get_buildable_building() const
 			continue;
 		}
 
-		return const_cast<building_type *>(building);
+		return building;
 	}
 
 	return nullptr;

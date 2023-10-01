@@ -256,7 +256,7 @@ void settlement_building_slot::cancel_construction()
 	building_slot::cancel_construction();
 }
 
-wonder *settlement_building_slot::get_buildable_wonder() const
+const wonder *settlement_building_slot::get_buildable_wonder() const
 {
 	for (const metternich::wonder *wonder : this->get_type()->get_wonders()) {
 		if (wonder->get_required_technology() != nullptr) {
@@ -273,7 +273,7 @@ wonder *settlement_building_slot::get_buildable_wonder() const
 			continue;
 		}
 
-		return const_cast<metternich::wonder *>(wonder);
+		return wonder;
 	}
 
 	return nullptr;

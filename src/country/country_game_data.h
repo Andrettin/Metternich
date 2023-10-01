@@ -20,10 +20,12 @@
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("country/government_type.h")
+Q_MOC_INCLUDE("country/journal_entry.h")
 Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("technology/technology.h")
+Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/military_unit_type.h")
 
 namespace metternich {
@@ -553,7 +555,7 @@ public:
 	void decrease_population();
 	population_unit *choose_starvation_population_unit();
 
-	Q_INVOKABLE QObject *get_population_type_small_icon(metternich::population_type *type) const;
+	Q_INVOKABLE const icon *get_population_type_small_icon(const metternich::population_type *type) const;
 
 	int get_total_unit_count() const
 	{
@@ -1629,15 +1631,15 @@ signals:
 	void commodity_consumptions_changed();
 	void technologies_changed();
 	void current_research_changed();
-	void technology_researched(QObject *technology);
+	void technology_researched(const technology *technology);
 	void government_type_changed();
 	void ruler_changed();
 	void advisors_changed();
 	void next_advisor_changed();
-	void advisor_recruited(QObject *advisor);
+	void advisor_recruited(const character *advisor);
 	void leaders_changed();
 	void next_leader_changed();
-	void leader_recruited(QObject *leader);
+	void leader_recruited(const character *leader);
 	void bids_changed();
 	void offers_changed();
 	void output_modifier_changed();
@@ -1645,7 +1647,7 @@ signals:
 	void industrial_output_modifier_changed();
 	void throughput_modifier_changed();
 	void journal_entries_changed();
-	void journal_entry_completed(QObject *journal_entry);
+	void journal_entry_completed(const journal_entry *journal_entry);
 
 private:
 	metternich::country *country = nullptr;

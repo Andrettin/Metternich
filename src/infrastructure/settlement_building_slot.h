@@ -47,7 +47,7 @@ public:
 	void build_wonder(const wonder *wonder);
 	Q_INVOKABLE virtual void cancel_construction() override;
 
-	Q_INVOKABLE metternich::wonder *get_buildable_wonder() const;
+	Q_INVOKABLE const metternich::wonder *get_buildable_wonder() const;
 
 	const site *get_settlement() const
 	{

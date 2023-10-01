@@ -5,8 +5,10 @@
 
 Q_MOC_INCLUDE("database/defines.h")
 Q_MOC_INCLUDE("database/preferences.h")
+Q_MOC_INCLUDE("game/event_instance.h")
 Q_MOC_INCLUDE("game/game.h")
 Q_MOC_INCLUDE("map/map.h")
+Q_MOC_INCLUDE("map/map_template.h")
 
 namespace metternich {
 
@@ -14,6 +16,7 @@ class defines;
 class event_instance;
 class game;
 class map;
+class map_template;
 class military_unit;
 class preferences;
 class province;
@@ -60,14 +63,14 @@ public:
 	map *get_map() const;
 	preferences *get_preferences() const;
 
-	Q_INVOKABLE QObject *get_map_template(const QString &identifier) const;
+	Q_INVOKABLE const map_template *get_map_template(const QString &identifier) const;
 	Q_INVOKABLE QVariantList get_scenarios() const;
 	Q_INVOKABLE QVariantList get_eras() const;
 	Q_INVOKABLE QVariantList get_technologies() const;
 
 	void add_notification(const QString &title, const QObject *portrait_object, const QString &text)
 	{
-		emit notification_added(title, const_cast<QObject *>(portrait_object), text);
+		emit notification_added(title, portrait_object, text);
 	}
 
 	void add_notification(const std::string &title, const QObject *portrait_object, const std::string &text)
@@ -113,9 +116,9 @@ public:
 signals:
 	void running_changed();
 	void scale_factor_changed();
-	void notification_added(const QString &title, QObject *portrait_object, const QString &text);
-	void event_fired(QObject *event_instance);
-	void event_closed(QObject *event_instance);
+	void notification_added(const QString &title, const QObject *portrait_object, const QString &text);
+	void event_fired(const event_instance *event_instance);
+	void event_closed(const event_instance *event_instance);
 	void current_research_choosable(const QVariantList &potential_technologies);
 	void free_technology_choosable(const QVariantList &potential_technologies);
 	void next_advisor_choosable(const QVariantList &potential_advisors);

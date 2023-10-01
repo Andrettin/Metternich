@@ -580,7 +580,7 @@ int province_game_data::get_country_military_unit_category_count(const metternic
 	return count;
 }
 
-QObject *province_game_data::get_military_unit_category_icon(const military_unit_category category) const
+const icon *province_game_data::get_military_unit_category_icon(const military_unit_category category) const
 {
 	icon_map<int> icon_counts;
 
@@ -603,7 +603,7 @@ QObject *province_game_data::get_military_unit_category_icon(const military_unit
 
 	assert_throw(best_icon != nullptr);
 
-	return const_cast<icon *>(best_icon);
+	return best_icon;
 }
 
 QString province_game_data::get_military_unit_category_name(const military_unit_category category) const

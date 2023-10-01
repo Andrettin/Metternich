@@ -54,11 +54,3 @@ namespace metternich {
 	class wonder;
 	class world;
 }
-
-Q_DECLARE_OPAQUE_POINTER(metternich::advisor_type*)
-Q_DECLARE_OPAQUE_POINTER(metternich::dynasty*)
-Q_DECLARE_OPAQUE_POINTER(metternich::event*)
-Q_DECLARE_OPAQUE_POINTER(metternich::event_random_group*)
-Q_DECLARE_OPAQUE_POINTER(metternich::map*)
-Q_DECLARE_OPAQUE_POINTER(metternich::terrain_type*)
-Q_DECLARE_OPAQUE_POINTER(metternich::trait*)

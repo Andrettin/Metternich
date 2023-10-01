@@ -12,6 +12,7 @@
 #include "country/cultural_group_rank.h"
 #include "country/diplomacy_state.h"
 #include "country/government_type.h"
+#include "country/journal_entry.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -19,6 +20,7 @@
 #include "economy/production_type.h"
 #include "engine_interface.h"
 #include "game/event.h"
+#include "game/event_instance.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/game_rules.h"
@@ -32,6 +34,7 @@
 #include "map/forestation_type.h"
 #include "map/map.h"
 #include "map/map_grid_model.h"
+#include "map/map_template.h"
 #include "map/moisture_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -45,8 +48,10 @@
 #include "script/scripted_character_modifier.h"
 #include "technology/technology.h"
 #include "time/era.h"
+#include "ui/icon.h"
 #include "ui/icon_image_provider.h"
 #include "ui/interface_image_provider.h"
+#include "ui/portrait.h"
 #include "ui/portrait_image_provider.h"
 #include "unit/military_unit_domain.h"
 #include "util/empty_image_provider.h"
@@ -148,13 +153,18 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<dynasty>("", 1);
 		qmlRegisterAnonymousType<era>("", 1);
 		qmlRegisterAnonymousType<event>("", 1);
+		qmlRegisterAnonymousType<event_instance>("", 1);
 		qmlRegisterAnonymousType<game>("", 1);
 		qmlRegisterAnonymousType<game_rules>("", 1);
 		qmlRegisterAnonymousType<government_type>("", 1);
+		qmlRegisterAnonymousType<icon>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);
+		qmlRegisterAnonymousType<journal_entry>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
+		qmlRegisterAnonymousType<map_template>("", 1);
 		qmlRegisterAnonymousType<population>("", 1);
 		qmlRegisterAnonymousType<population_type>("", 1);
+		qmlRegisterAnonymousType<portrait>("", 1);
 		qmlRegisterAnonymousType<preferences>("", 1);
 		qmlRegisterAnonymousType<production_type>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);

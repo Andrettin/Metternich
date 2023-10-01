@@ -145,11 +145,11 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 					return QVariant::fromValue(nullptr);
 				}
 
-				return QVariant::fromValue(const_cast<site *>(tile->get_site()));
+				return QVariant::fromValue(tile->get_site());
 			case role::province:
-				return QVariant::fromValue(const_cast<province *>(tile->get_province()));
+				return QVariant::fromValue(tile->get_province());
 			case role::terrain:
-				return QVariant::fromValue(const_cast<terrain_type *>(tile->get_terrain()));
+				return QVariant::fromValue(tile->get_terrain());
 			case role::river:
 				return tile->has_river();
 			case role::resource:
@@ -157,11 +157,11 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 					return QVariant::fromValue(nullptr);
 				}
 
-				return QVariant::fromValue(const_cast<resource *>(tile->get_resource()));
+				return QVariant::fromValue(tile->get_resource());
 			case role::improvement:
-				return QVariant::fromValue(const_cast<improvement *>(tile->get_improvement()));
+				return QVariant::fromValue(tile->get_improvement());
 			case role::pathway:
-				return QVariant::fromValue(const_cast<pathway *>(tile->get_best_pathway()));
+				return QVariant::fromValue(tile->get_best_pathway());
 			case role::civilian_unit:
 				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
 					return QVariant::fromValue(nullptr);

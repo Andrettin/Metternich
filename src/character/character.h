@@ -7,6 +7,7 @@
 
 Q_MOC_INCLUDE("character/advisor_type.h")
 Q_MOC_INCLUDE("character/character_game_data.h")
+Q_MOC_INCLUDE("character/dynasty.h")
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("map/site.h")

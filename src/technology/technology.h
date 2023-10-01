@@ -358,7 +358,7 @@ public:
 		QVariantList secondary_tree_parents;
 
 		for (size_t i = 1; i < this->get_prerequisites().size(); ++i) {
-			secondary_tree_parents.push_back(QVariant::fromValue(const_cast<technology *>(this->get_prerequisites()[i])));
+			secondary_tree_parents.push_back(QVariant::fromValue(this->get_prerequisites()[i]));
 		}
 
 		return secondary_tree_parents;

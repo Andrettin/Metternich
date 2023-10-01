@@ -62,7 +62,7 @@ preferences *engine_interface::get_preferences() const
 	return preferences::get();
 }
 
-QObject *engine_interface::get_map_template(const QString &identifier) const
+const map_template *engine_interface::get_map_template(const QString &identifier) const
 {
 	return map_template::try_get(identifier.toStdString());
 }

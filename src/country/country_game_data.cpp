@@ -1935,7 +1935,7 @@ population_unit *country_game_data::choose_starvation_population_unit()
 	return vector::get_random(population_units);
 }
 
-QObject *country_game_data::get_population_type_small_icon(population_type *type) const
+const icon *country_game_data::get_population_type_small_icon(const population_type *type) const
 {
 	icon_map<int> icon_counts;
 
@@ -1956,7 +1956,7 @@ QObject *country_game_data::get_population_type_small_icon(population_type *type
 		}
 	}
 
-	return const_cast<icon *>(best_icon);
+	return best_icon;
 }
 
 int country_game_data::get_net_food_consumption() const
@@ -2638,7 +2638,7 @@ void country_game_data::on_technology_researched(const technology *technology)
 		}
 	}
 
-	emit technology_researched(const_cast<metternich::technology *>(technology));
+	emit technology_researched(technology);
 }
 
 std::map<technology_category, const technology *> country_game_data::get_research_choice_map() const
@@ -2956,7 +2956,7 @@ void country_game_data::check_advisors()
 					this->get_next_advisor()->get_advisor_effects()->do_effects(country, ctx);
 				}
 
-				emit advisor_recruited(const_cast<character *>(this->get_next_advisor()));
+				emit advisor_recruited(this->get_next_advisor());
 
 				this->set_next_advisor(nullptr);
 			}
@@ -3161,7 +3161,7 @@ void country_game_data::check_leaders()
 				this->add_leader(this->get_next_leader());
 				this->get_next_leader()->get_game_data()->deploy_to_province(this->get_capital_province());
 
-				emit leader_recruited(const_cast<character *>(this->get_next_leader()));
+				emit leader_recruited(this->get_next_leader());
 
 				this->set_next_leader(nullptr);
 			}
@@ -3768,7 +3768,7 @@ void country_game_data::explore_tile(const QPoint &tile_pos)
 			this->add_technology(tile_resource->get_discovery_technology());
 
 			if (game::get()->is_running()) {
-				emit technology_researched(const_cast<technology *>(tile_resource->get_discovery_technology()));
+				emit technology_researched(tile_resource->get_discovery_technology());
 			}
 		}
 	}
@@ -3834,7 +3834,7 @@ void country_game_data::explore_province(const province *province)
 				this->add_technology(tile_resource->get_discovery_technology());
 
 				if (game::get()->is_running()) {
-					emit technology_researched(const_cast<technology *>(tile_resource->get_discovery_technology()));
+					emit technology_researched(tile_resource->get_discovery_technology());
 				}
 			}
 		}
@@ -4003,7 +4003,7 @@ bool country_game_data::check_active_journal_entries(const read_only_context &ct
 				}
 
 				if (game::get()->is_running()) {
-					emit journal_entry_completed(const_cast<metternich::journal_entry *>(journal_entry));
+					emit journal_entry_completed(journal_entry);
 				}
 			}
 
