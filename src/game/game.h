@@ -92,6 +92,7 @@ public:
 	Q_INVOKABLE void stop();
 
 	void clear();
+	void reset_game_data();
 
 	void apply_history(const metternich::scenario *scenario);
 	void apply_sites();

@@ -204,6 +204,9 @@ QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
 		if (old_scenario == nullptr || old_scenario->get_map_template() != scenario->get_map_template()) {
 			scenario->get_map_template()->apply();
 			map::get()->initialize();
+
+			//reset the game data for provinces and sites, since their constructors rely on the map having been initialized before
+			this->reset_game_data();
 		}
 
 		this->apply_history(scenario);
@@ -268,23 +271,7 @@ void game::clear()
 	try {
 		this->clear_delayed_effects();
 
-		for (province *province : province::get_all()) {
-			province->reset_game_data();
-		}
-
-		for (site *site : site::get_all()) {
-			site->reset_game_data();
-		}
-
-		//clear data related to the game (i.e. the data determined by history), but not that related only to the map
-		//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
-		for (country *country : country::get_all()) {
-			country->reset_game_data();
-		}
-
-		for (character *character : character::get_all()) {
-			character->reset_game_data();
-		}
+		this->reset_game_data();
 
 		map::get()->clear_tile_game_data();
 
@@ -299,6 +286,27 @@ void game::clear()
 		this->exploration_changed = false;
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to clear the game."));
+	}
+}
+
+void game::reset_game_data()
+{
+	//clear data related to the game (i.e. the data determined by history), but not that related only to the map
+	//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
+	for (province *province : province::get_all()) {
+		province->reset_game_data();
+	}
+
+	for (site *site : site::get_all()) {
+		site->reset_game_data();
+	}
+
+	for (country *country : country::get_all()) {
+		country->reset_game_data();
+	}
+
+	for (character *character : character::get_all()) {
+		character->reset_game_data();
 	}
 }
 
