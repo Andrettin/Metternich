@@ -1051,7 +1051,7 @@ public:
 		return 0;
 	}
 
-	void set_bid(const commodity *commodity, const int value);
+	Q_INVOKABLE void set_bid(const metternich::commodity *commodity, const int value);
 
 	const commodity_map<int> &get_offers() const
 	{
@@ -1071,7 +1071,7 @@ public:
 		return 0;
 	}
 
-	void set_offer(const commodity *commodity, const int value);
+	Q_INVOKABLE void set_offer(const metternich::commodity *commodity, const int value);
 
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);

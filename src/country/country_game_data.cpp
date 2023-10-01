@@ -2338,6 +2338,7 @@ void country_game_data::set_bid(const commodity *commodity, const int value)
 	if (value == 0) {
 		this->bids.erase(commodity);
 	} else {
+		this->set_offer(commodity, 0);
 		this->bids[commodity] = value;
 	}
 
@@ -2360,6 +2361,7 @@ void country_game_data::set_offer(const commodity *commodity, const int value)
 	if (value == 0) {
 		this->offers.erase(commodity);
 	} else {
+		this->set_bid(commodity, 0);
 		this->offers[commodity] = value;
 	}
 
