@@ -95,6 +95,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int wealth_income READ get_wealth_income NOTIFY wealth_income_changed)
 	Q_PROPERTY(int credit_limit READ get_credit_limit NOTIFY credit_limit_changed)
+	Q_PROPERTY(QVariantList available_commodities READ get_available_commodities_qvariant_list NOTIFY available_commodities_changed)
+	Q_PROPERTY(QVariantList tradeable_commodities READ get_tradeable_commodities_qvariant_list NOTIFY tradeable_commodities_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(int storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
 	Q_PROPERTY(QVariantList commodity_inputs READ get_commodity_inputs_qvariant_list NOTIFY commodity_inputs_changed)
@@ -706,6 +708,32 @@ public:
 	int get_wealth_with_credit() const
 	{
 		return this->get_wealth() + this->get_credit_limit();
+	}
+
+	const commodity_set &get_available_commodities() const
+	{
+		return this->available_commodities;
+	}
+
+	QVariantList get_available_commodities_qvariant_list() const;
+
+	void add_available_commodity(const commodity *commodity)
+	{
+		this->available_commodities.insert(commodity);
+		emit available_commodities_changed();
+	}
+
+	const commodity_set &get_tradeable_commodities() const
+	{
+		return this->tradeable_commodities;
+	}
+
+	QVariantList get_tradeable_commodities_qvariant_list() const;
+
+	void add_tradeable_commodity(const commodity *commodity)
+	{
+		this->tradeable_commodities.insert(commodity);
+		emit tradeable_commodities_changed();
 	}
 
 	const commodity_map<int> &get_stored_commodities() const
@@ -1624,6 +1652,8 @@ signals:
 	void wealth_changed();
 	void wealth_income_changed();
 	void credit_limit_changed();
+	void available_commodities_changed();
+	void tradeable_commodities_changed();
 	void stored_commodities_changed();
 	void storage_capacity_changed();
 	void commodity_inputs_changed();
@@ -1692,6 +1722,8 @@ private:
 	int wealth = 0;
 	int wealth_income = 0;
 	int credit_limit = 0;
+	commodity_set available_commodities;
+	commodity_set tradeable_commodities;
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;
 	commodity_map<int> commodity_inputs;

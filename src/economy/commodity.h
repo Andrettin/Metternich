@@ -88,6 +88,11 @@ public:
 		return this->base_price;
 	}
 
+	bool is_tradeable() const
+	{
+		return !this->is_abstract() && this->is_storable() && !this->is_convertible_to_wealth();
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;

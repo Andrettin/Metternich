@@ -80,6 +80,18 @@ country_game_data::country_game_data(metternich::country *country) : country(cou
 {
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 
+	for (const commodity *commodity : commodity::get_all()) {
+		if (commodity->get_required_technology() != nullptr) {
+			continue;
+		}
+
+		this->add_available_commodity(commodity);
+
+		if (commodity->is_tradeable()) {
+			this->add_tradeable_commodity(commodity);
+		}
+	}
+
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::type_count_changed, this, &country_game_data::on_population_type_count_changed);
 }
@@ -2115,6 +2127,26 @@ void country_game_data::change_settlement_building_count(const building_type *bu
 	}
 }
 
+QVariantList country_game_data::get_available_commodities_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_available_commodities());
+}
+
+QVariantList country_game_data::get_tradeable_commodities_qvariant_list() const
+{
+	std::vector<const commodity *> tradeable_commodities = container::to_vector(this->get_tradeable_commodities());
+
+	std::sort(tradeable_commodities.begin(), tradeable_commodities.end(), [](const commodity *lhs, const commodity *rhs) {
+		if (lhs->get_base_price() != rhs->get_base_price()) {
+			return lhs->get_base_price() > rhs->get_base_price();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+
+	return container::to_qvariant_list(tradeable_commodities);
+}
+
 QVariantList country_game_data::get_stored_commodities_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_stored_commodities());
@@ -2470,6 +2502,14 @@ void country_game_data::add_technology(const technology *technology)
 
 	if (technology->get_modifier() != nullptr) {
 		technology->get_modifier()->apply(this->country, 1);
+	}
+
+	for (const commodity *enabled_commodity : technology->get_enabled_commodities()) {
+		this->add_available_commodity(enabled_commodity);
+
+		if (enabled_commodity->is_tradeable()) {
+			this->add_tradeable_commodity(enabled_commodity);
+		}
 	}
 
 	for (const resource *discovered_resource : technology->get_enabled_resources()) {
