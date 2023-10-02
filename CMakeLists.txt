@@ -456,6 +456,7 @@ set(script_condition_HDRS
 	src/script/condition/advisor_condition.h
 	src/script/condition/advisor_type_condition.h
 	src/script/condition/age_condition.h
+	src/script/condition/anarchy_condition.h
 	src/script/condition/and_condition.h
 	src/script/condition/any_global_population_unit_condition.h
 	src/script/condition/any_known_country_condition.h

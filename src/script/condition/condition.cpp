@@ -14,6 +14,7 @@
 #include "script/condition/advisor_condition.h"
 #include "script/condition/advisor_type_condition.h"
 #include "script/condition/age_condition.h"
+#include "script/condition/anarchy_condition.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/any_global_population_unit_condition.h"
 #include "script/condition/any_known_country_condition.h"
@@ -135,6 +136,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 
 		if (key == "advisor") {
 			return std::make_unique<advisor_condition>(value, condition_operator);
+		} else if (key == "anarchy") {
+			return std::make_unique<anarchy_condition>(value, condition_operator);
 		} else if (key == "available_food") {
 			return std::make_unique<available_food_condition>(value, condition_operator);
 		} else if (key == "country_type") {
