@@ -277,6 +277,7 @@ void game::clear()
 
 		this->scenario = nullptr;
 		this->countries.clear();
+		this->prices.clear();
 
 		this->date = game::normalize_date(defines::get()->get_default_start_date());
 		this->turn = 1;
@@ -1337,21 +1338,7 @@ QCoro::Task<void> game::do_turn_coro()
 			old_offers[country] = country->get_game_data()->get_offers();
 		}
 
-		std::vector<const metternich::country *> trade_countries = this->get_countries();
-		std::sort(trade_countries.begin(), trade_countries.end(), [&](const metternich::country *lhs, const metternich::country *rhs) {
-			//give trade priority by opinion-weighted prestige
-			const int lhs_prestige = lhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
-			const int rhs_prestige = rhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
-
-			if (lhs_prestige != rhs_prestige) {
-				return lhs_prestige > rhs_prestige;
-			}
-
-			return lhs->get_identifier() < rhs->get_identifier();
-		});
-		for (const country *country : trade_countries) {
-			country->get_game_data()->do_trade();
-		}
+		this->do_trade();
 
 		for (const country *country : this->get_countries()) {
 			country->get_game_data()->do_turn();
@@ -1380,6 +1367,46 @@ QCoro::Task<void> game::do_turn_coro()
 		exception::report(std::current_exception());
 		log::log_error("Failed to process turn.");
 		std::terminate();
+	}
+}
+
+void game::do_trade()
+{
+	std::vector<const metternich::country *> trade_countries = this->get_countries();
+
+	std::sort(trade_countries.begin(), trade_countries.end(), [&](const metternich::country *lhs, const metternich::country *rhs) {
+		//give trade priority by opinion-weighted prestige
+		const int lhs_prestige = lhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
+		const int rhs_prestige = rhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
+
+		if (lhs_prestige != rhs_prestige) {
+			return lhs_prestige > rhs_prestige;
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+
+	for (const country *country : trade_countries) {
+		country->get_game_data()->do_trade();
+	}
+
+	//change commodity prices based on whether there were unfulfilled bids/offers
+	commodity_map<int> remaining_demands;
+	for (const country *country : trade_countries) {
+		for (const auto &[commodity, bid] : country->get_game_data()->get_bids()) {
+			remaining_demands[commodity] += bid;
+		}
+
+		for (const auto &[commodity, offer] : country->get_game_data()->get_offers()) {
+			remaining_demands[commodity] -= offer;
+		}
+	}
+
+	for (const auto &[commodity, value] : remaining_demands) {
+		if (value != 0) {
+			//change the price by the extra quantity bid/offered
+			this->change_price(commodity, value);
+		}
 	}
 }
 
@@ -1463,6 +1490,35 @@ void game::calculate_great_power_ranks()
 
 	for (size_t i = 0; i < great_powers.size(); ++i) {
 		great_powers.at(i)->get_game_data()->set_rank(static_cast<int>(i));
+	}
+}
+
+int game::get_price(const commodity *commodity) const
+{
+	const auto find_iterator = this->prices.find(commodity);
+
+	if (find_iterator != this->prices.end()) {
+		return find_iterator->second;
+	}
+
+	return commodity->get_base_price();
+}
+
+void game::set_price(const commodity *commodity, const int value)
+{
+	if (value == this->get_price(commodity)) {
+		return;
+	}
+
+	if (value < 1) {
+		this->set_price(commodity, 1);
+		return;
+	}
+
+	if (value == commodity->get_base_price()) {
+		this->prices.erase(commodity);
+	} else {
+		this->prices[commodity] = value;
 	}
 }
 

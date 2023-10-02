@@ -391,7 +391,7 @@ void country_game_data::do_consumption()
 			const int consumed_quantity = std::min(this->get_stored_commodity(commodity), demand_int);
 			if (consumed_quantity > 0) {
 				this->change_stored_commodity(commodity, -consumed_quantity);
-				this->change_wealth(consumed_quantity * commodity->get_base_price());
+				this->change_wealth(consumed_quantity * game::get()->get_price(commodity));
 			}
 		}
 	}
@@ -472,6 +472,8 @@ void country_game_data::do_trade()
 
 		commodity_map<int> offers = this->get_offers();
 		for (auto &[commodity, offer] : offers) {
+			const int price = game::get()->get_price(commodity);
+
 			for (const metternich::country *other_country : countries) {
 				const int bid = other_country->get_game_data()->get_bid(commodity);
 				if (bid == 0) {
@@ -479,20 +481,21 @@ void country_game_data::do_trade()
 				}
 
 				int sold_quantity = std::min(offer, bid);
-				sold_quantity = std::min(sold_quantity, other_country->get_game_data()->get_wealth_with_credit() / commodity->get_base_price());
+				sold_quantity = std::min(sold_quantity, other_country->get_game_data()->get_wealth_with_credit() / price);
 
 				if (sold_quantity <= 0) {
 					continue;
 				}
 
 				this->change_stored_commodity(commodity, -sold_quantity);
-				this->change_wealth(commodity->get_base_price() * sold_quantity);
+				this->change_wealth(price * sold_quantity);
 
 				other_country->get_game_data()->change_stored_commodity(commodity, sold_quantity);
-				other_country->get_game_data()->change_wealth(-commodity->get_base_price() * sold_quantity);
+				other_country->get_game_data()->change_wealth(-price * sold_quantity);
 
 				offer -= sold_quantity;
 
+				this->change_offer(commodity, -sold_quantity);
 				other_country->get_game_data()->change_bid(commodity, -sold_quantity);
 
 				//improve relations between the two countries after they traded
@@ -3511,9 +3514,10 @@ void country_game_data::assign_trade_orders()
 {
 	assert_throw(this->is_ai());
 
+	this->bids.clear();
+	this->offers.clear();
+
 	if (this->is_under_anarchy()) {
-		this->bids.clear();
-		this->offers.clear();
 		return;
 	}
 
@@ -3534,9 +3538,24 @@ void country_game_data::assign_trade_orders()
 			continue;
 		}
 
-		if (this->get_offer(commodity) == 0) {
-			this->set_bid(commodity, demand.to_int());
+		if (this->get_offer(commodity) != 0) {
+			continue;
 		}
+
+		const int demand_int = demand.to_int();
+
+		if (demand_int == 0) {
+			continue;
+		}
+
+		//increase demand if prices are lower than the base price, or the inverse if they are higher
+		const int effective_demand = demand_int * commodity->get_base_price() / game::get()->get_price(commodity);
+
+		if (effective_demand == 0) {
+			continue;
+		}
+
+		this->set_bid(commodity, effective_demand);
 	}
 }
 

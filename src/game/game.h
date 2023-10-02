@@ -1,5 +1,6 @@
 #pragma once
 
+#include "economy/commodity_container.h"
 #include "util/qunique_ptr.h"
 #include "util/singleton.h"
 
@@ -109,6 +110,7 @@ public:
 	}
 
 	QCoro::Task<void> do_turn_coro();
+	void do_trade();
 
 	const QDateTime &get_date() const
 	{
@@ -155,6 +157,14 @@ public:
 
 		this->player_country = country;
 		emit player_country_changed();
+	}
+
+	Q_INVOKABLE int get_price(const metternich::commodity *commodity) const;
+	void set_price(const commodity *commodity, const int value);
+
+	void change_price(const commodity *commodity, const int value)
+	{
+		this->set_price(commodity, this->get_price(commodity) + value);
 	}
 
 	[[nodiscard]]
@@ -217,6 +227,7 @@ private:
 	std::vector<const country *> countries; //the countries currently in the game, i.e. those with at least 1 province
 	std::vector<const country *> great_powers;
 	const country *player_country = nullptr;
+	commodity_map<int> prices;
 	QImage exploration_diplomatic_map_image;
 	bool exploration_changed = false;
 	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;
