@@ -1403,10 +1403,22 @@ void game::do_trade()
 	}
 
 	for (const auto &[commodity, value] : remaining_demands) {
-		if (value != 0) {
-			//change the price by the extra quantity bid/offered
-			this->change_price(commodity, value);
+		//change the price by the extra quantity bid/offered
+		int change = value;
+
+		if (change < 0) {
+			if (this->get_price(commodity) > commodity->get_base_price()) {
+				change = std::max(commodity->get_base_price() - this->get_price(commodity), change);
+			} else {
+				change = -1;
+			}
 		}
+
+		if (change == 0) {
+			continue;
+		}
+
+		this->change_price(commodity, change);
 	}
 }
 
