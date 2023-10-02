@@ -3542,20 +3542,14 @@ void country_game_data::assign_trade_orders()
 			continue;
 		}
 
-		const int demand_int = demand.to_int();
-
-		if (demand_int == 0) {
-			continue;
-		}
-
 		//increase demand if prices are lower than the base price, or the inverse if they are higher
-		const int effective_demand = demand_int * commodity->get_base_price() / game::get()->get_price(commodity);
+		const centesimal_int effective_demand = demand * commodity->get_base_price() / game::get()->get_price(commodity);
 
 		if (effective_demand == 0) {
 			continue;
 		}
 
-		this->set_bid(commodity, effective_demand);
+		this->set_bid(commodity, effective_demand.to_int());
 	}
 }
 
