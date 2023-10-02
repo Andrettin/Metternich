@@ -440,6 +440,8 @@ public:
 	void add_opinion_modifier(const metternich::country *other, const opinion_modifier *modifier, const int duration);
 	void remove_opinion_modifier(const metternich::country *other, const opinion_modifier *modifier);
 
+	int get_opinion_weighted_prestige_for(const metternich::country *other) const;
+
 	std::vector<const metternich::country *> get_vassals() const;
 	QVariantList get_vassals_qvariant_list() const;
 	QVariantList get_colonies_qvariant_list() const;

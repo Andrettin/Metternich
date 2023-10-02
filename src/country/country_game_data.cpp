@@ -444,14 +444,27 @@ void country_game_data::do_construction()
 void country_game_data::do_trade()
 {
 	try {
+		if (this->is_under_anarchy()) {
+			return;
+		}
+
 		//get the known countries and sort them by priority
 		std::vector<const metternich::country *> countries = container::to_vector(this->get_known_countries());
 		std::sort(countries.begin(), countries.end(), [&](const metternich::country *lhs, const metternich::country *rhs) {
-			const int lhs_opinion = this->get_opinion_of(lhs);
-			const int rhs_opinion = this->get_opinion_of(rhs);
+			if (this->is_vassal_of(lhs) != this->is_vassal_of(rhs)) {
+				return this->is_vassal_of(lhs);
+			}
 
-			if (lhs_opinion != rhs_opinion) {
-				return lhs_opinion > rhs_opinion;
+			if (this->is_any_vassal_of(lhs) != this->is_any_vassal_of(rhs)) {
+				return this->is_any_vassal_of(lhs);
+			}
+
+			//give trade priority by opinion-weighted prestige
+			const int lhs_opinion_weighted_prestige = this->get_opinion_weighted_prestige_for(lhs);
+			const int rhs_opinion_weighted_prestige = this->get_opinion_weighted_prestige_for(rhs);
+
+			if (lhs_opinion_weighted_prestige != rhs_opinion_weighted_prestige) {
+				return lhs_opinion_weighted_prestige > rhs_opinion_weighted_prestige;
 			}
 
 			return lhs->get_identifier() < rhs->get_identifier();
@@ -500,6 +513,10 @@ void country_game_data::do_events()
 {
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->do_events();
+	}
+
+	if (this->is_under_anarchy()) {
+		return;
 	}
 
 	const bool is_last_turn_of_year = (game::get()->get_date().date().month() + defines::get()->get_months_per_turn()) > 12;
@@ -1529,6 +1546,15 @@ void country_game_data::remove_opinion_modifier(const metternich::country *other
 	if (opinion_modifiers.empty()) {
 		this->opinion_modifiers.erase(other);
 	}
+}
+
+int country_game_data::get_opinion_weighted_prestige_for(const metternich::country *other) const
+{
+	const int opinion = this->get_opinion_of(other);
+	const int prestige = std::max(1, other->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity()));
+
+	const int opinion_weighted_prestige = prestige * (opinion - country::min_opinion) / (country::max_opinion - country::min_opinion);
+	return opinion_weighted_prestige;
 }
 
 std::vector<const metternich::country *> country_game_data::get_vassals() const
@@ -3484,6 +3510,12 @@ void country_game_data::calculate_commodity_needs()
 void country_game_data::assign_trade_orders()
 {
 	assert_throw(this->is_ai());
+
+	if (this->is_under_anarchy()) {
+		this->bids.clear();
+		this->offers.clear();
+		return;
+	}
 
 	for (const auto &[commodity, value] : this->get_stored_commodities()) {
 		if (!this->can_trade_commodity(commodity)) {

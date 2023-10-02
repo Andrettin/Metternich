@@ -1337,7 +1337,19 @@ QCoro::Task<void> game::do_turn_coro()
 			old_offers[country] = country->get_game_data()->get_offers();
 		}
 
-		for (const country *country : this->get_countries()) {
+		std::vector<const metternich::country *> trade_countries = this->get_countries();
+		std::sort(trade_countries.begin(), trade_countries.end(), [&](const metternich::country *lhs, const metternich::country *rhs) {
+			//give trade priority by opinion-weighted prestige
+			const int lhs_prestige = lhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
+			const int rhs_prestige = rhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
+
+			if (lhs_prestige != rhs_prestige) {
+				return lhs_prestige > rhs_prestige;
+			}
+
+			return lhs->get_identifier() < rhs->get_identifier();
+		});
+		for (const country *country : trade_countries) {
 			country->get_game_data()->do_trade();
 		}
 
