@@ -14,6 +14,11 @@ class country_turn_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(int total_income READ get_total_income CONSTANT)
+	Q_PROPERTY(int total_expense READ get_total_expense CONSTANT)
+	Q_PROPERTY(QVariantList income_transactions READ get_income_transactions_qvariant_list CONSTANT)
+	Q_PROPERTY(QVariantList expense_transactions READ get_expense_transactions_qvariant_list CONSTANT)
+
 public:
 	explicit country_turn_data(metternich::country *country);
 	~country_turn_data();
@@ -28,8 +33,11 @@ public:
 		return this->total_expense;
 	}
 
-	void add_income_transaction(const income_transaction_type transaction_type, const commodity *commodity, const int amount);
-	void add_expense_transaction(const expense_transaction_type transaction_type, const commodity *commodity, const int amount);
+	QVariantList get_income_transactions_qvariant_list() const;
+	QVariantList get_expense_transactions_qvariant_list() const;
+
+	void add_income_transaction(const income_transaction_type transaction_type, const int amount, const commodity *commodity = nullptr, const int commodity_quantity = 0);
+	void add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const commodity *commodity = nullptr, const int commodity_quantity = 0);
 
 	std::map<income_transaction_type, int> get_income_transaction_type_percentages() const;
 

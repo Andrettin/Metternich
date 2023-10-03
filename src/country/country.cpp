@@ -94,6 +94,7 @@ void country::reset_game_data()
 void country::reset_turn_data()
 {
 	this->turn_data = make_qunique<country_turn_data>(this);
+	emit turn_data_changed();
 }
 
 bool country::is_great_power() const

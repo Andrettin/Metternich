@@ -11,8 +11,8 @@ class income_transaction final : public transaction
 	Q_OBJECT
 
 public:
-	explicit income_transaction(const income_transaction_type type, const metternich::commodity *commodity, const int amount)
-		: transaction(commodity, amount), type(type)
+	explicit income_transaction(const income_transaction_type type, const int amount, const metternich::commodity *commodity, const int commodity_quantity)
+		: transaction(amount, commodity, commodity_quantity), type(type)
 	{
 	}
 
@@ -20,6 +20,8 @@ public:
 	{
 		return this->type;
 	}
+
+	virtual QString get_description() const override;
 
 private:
 	income_transaction_type type{};

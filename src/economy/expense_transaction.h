@@ -11,8 +11,8 @@ class expense_transaction final : public transaction
 	Q_OBJECT
 
 public:
-	explicit expense_transaction(const expense_transaction_type type, const metternich::commodity *commodity, const int amount)
-		: transaction(commodity, amount), type(type)
+	explicit expense_transaction(const expense_transaction_type type, const int amount, const metternich::commodity *commodity, const int commodity_quantity)
+		: transaction(amount, commodity, commodity_quantity), type(type)
 	{
 	}
 
@@ -20,6 +20,8 @@ public:
 	{
 		return this->type;
 	}
+
+	virtual QString get_description() const override;
 
 private:
 	expense_transaction_type type{};

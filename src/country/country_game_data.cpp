@@ -493,12 +493,12 @@ void country_game_data::do_trade()
 				this->change_stored_commodity(commodity, -sold_quantity);
 				const int sale_income = price * sold_quantity;
 				this->change_wealth(sale_income);
-				this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, commodity, sale_income);
+				this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity);
 
 				other_country->get_game_data()->change_stored_commodity(commodity, sold_quantity);
 				const int purchase_expense = price * sold_quantity;
 				other_country->get_game_data()->change_wealth(-purchase_expense);
-				other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, commodity, purchase_expense);
+				other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity);
 
 				offer -= sold_quantity;
 
@@ -2301,7 +2301,7 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 		assert_throw(value > 0);
 		const int wealth_conversion_income = commodity->get_wealth_value() * value;
 		this->change_wealth(wealth_conversion_income);
-		this->country->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, commodity, wealth_conversion_income);
+		this->country->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, wealth_conversion_income, commodity, value);
 		return;
 	}
 

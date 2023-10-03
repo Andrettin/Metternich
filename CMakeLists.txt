@@ -64,7 +64,9 @@ set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
 set(economy_SRCS
 	src/economy/commodity.cpp
 	src/economy/commodity_container.cpp
+	src/economy/expense_transaction.cpp
 	src/economy/food_type.cpp
+	src/economy/income_transaction.cpp
 	src/economy/production_type.cpp
 	src/economy/resource.cpp
 	src/economy/resource_container.cpp

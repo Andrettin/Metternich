@@ -4,6 +4,7 @@
 
 #include "economy/expense_transaction.h"
 #include "economy/income_transaction.h"
+#include "util/container_util.h"
 
 namespace metternich {
 
@@ -15,7 +16,17 @@ country_turn_data::~country_turn_data()
 {
 }
 
-void country_turn_data::add_income_transaction(const income_transaction_type transaction_type, const commodity *commodity, const int amount)
+QVariantList country_turn_data::get_income_transactions_qvariant_list() const
+{
+	return container::to_qvariant_list(this->income_transactions);
+}
+
+QVariantList country_turn_data::get_expense_transactions_qvariant_list() const
+{
+	return container::to_qvariant_list(this->expense_transactions);
+}
+
+void country_turn_data::add_income_transaction(const income_transaction_type transaction_type, const int amount, const commodity *commodity, const int commodity_quantity)
 {
 	this->total_income += amount;
 
@@ -29,14 +40,15 @@ void country_turn_data::add_income_transaction(const income_transaction_type tra
 		}
 
 		transaction->change_amount(amount);
+		transaction->change_commodity_quantity(commodity_quantity);
 		return;
 	}
 
-	auto transaction = make_qunique<metternich::income_transaction>(transaction_type, commodity, amount);
+	auto transaction = make_qunique<metternich::income_transaction>(transaction_type, amount, commodity, commodity_quantity);
 	this->income_transactions.push_back(std::move(transaction));
 }
 
-void country_turn_data::add_expense_transaction(const expense_transaction_type transaction_type, const commodity *commodity, const int amount)
+void country_turn_data::add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const commodity *commodity, const int commodity_quantity)
 {
 	this->total_expense += amount;
 
@@ -50,10 +62,11 @@ void country_turn_data::add_expense_transaction(const expense_transaction_type t
 		}
 
 		transaction->change_amount(amount);
+		transaction->change_commodity_quantity(commodity_quantity);
 		return;
 	}
 
-	auto transaction = make_qunique<metternich::expense_transaction>(transaction_type, commodity, amount);
+	auto transaction = make_qunique<metternich::expense_transaction>(transaction_type, amount, commodity, commodity_quantity);
 	this->expense_transactions.push_back(std::move(transaction));
 }
 
