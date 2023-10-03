@@ -126,13 +126,13 @@ public:
 
 	void increment_turn();
 
-	const std::vector<const country *> &get_countries() const
+	const std::vector<country *> &get_countries() const
 	{
 		return this->countries;
 	}
 
 	QVariantList get_countries_qvariant_list() const;
-	void add_country(const country *country);
+	void add_country(country *country);
 	void remove_country(country *country);
 
 	const std::vector<const country *> &get_great_powers() const
@@ -224,7 +224,7 @@ private:
 	const metternich::scenario *scenario = nullptr;
 	QDateTime date; //the current date in the game
 	int turn = 1;
-	std::vector<const country *> countries; //the countries currently in the game, i.e. those with at least 1 province
+	std::vector<country *> countries; //the countries currently in the game, i.e. those with at least 1 province
 	std::vector<const country *> great_powers;
 	const country *player_country = nullptr;
 	commodity_map<int> prices;

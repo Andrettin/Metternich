@@ -35,6 +35,7 @@ set(country_SRCS
 	src/country/country_container.cpp
 	src/country/country_game_data.cpp
 	src/country/country_history.cpp
+	src/country/country_turn_data.cpp
 	src/country/country_type.cpp
 	src/country/cultural_group.cpp
 	src/country/cultural_group_rank.cpp
@@ -311,6 +312,7 @@ set(country_HDRS
 	src/country/country_container.h
 	src/country/country_game_data.h
 	src/country/country_history.h
+	src/country/country_turn_data.h
 	src/country/country_type.h
 	src/country/cultural_group.h
 	src/country/cultural_group_rank.h
@@ -338,10 +340,15 @@ source_group(database FILES ${database_HDRS})
 set(economy_HDRS
 	src/economy/commodity.h
 	src/economy/commodity_container.h
+	src/economy/expense_transaction.h
+	src/economy/expense_transaction_type.h
 	src/economy/food_type.h
+	src/economy/income_transaction.h
+	src/economy/income_transaction_type.h
 	src/economy/production_type.h
 	src/economy/resource.h
 	src/economy/resource_container.h
+	src/economy/transaction.h
 )
 source_group(economy FILES ${economy_HDRS})
 

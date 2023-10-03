@@ -4,6 +4,7 @@
 
 #include "country/country_game_data.h"
 #include "country/country_history.h"
+#include "country/country_turn_data.h"
 #include "country/country_type.h"
 #include "database/defines.h"
 #include "map/province.h"
@@ -85,8 +86,14 @@ void country::reset_history()
 void country::reset_game_data()
 {
 	this->game_data = make_qunique<country_game_data>(this);
-
 	this->get_game_data()->initialize_building_slots();
+
+	this->reset_turn_data();
+}
+
+void country::reset_turn_data()
+{
+	this->turn_data = make_qunique<country_turn_data>(this);
 }
 
 bool country::is_great_power() const

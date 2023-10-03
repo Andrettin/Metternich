@@ -9,6 +9,7 @@
 #include "character/trait.h"
 #include "country/consulate.h"
 #include "country/country.h"
+#include "country/country_turn_data.h"
 #include "country/country_type.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
@@ -18,6 +19,8 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
+#include "economy/expense_transaction_type.h"
+#include "economy/income_transaction_type.h"
 #include "economy/production_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
@@ -488,10 +491,14 @@ void country_game_data::do_trade()
 				}
 
 				this->change_stored_commodity(commodity, -sold_quantity);
-				this->change_wealth(price * sold_quantity);
+				const int sale_income = price * sold_quantity;
+				this->change_wealth(sale_income);
+				this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, commodity, sale_income);
 
 				other_country->get_game_data()->change_stored_commodity(commodity, sold_quantity);
-				other_country->get_game_data()->change_wealth(-price * sold_quantity);
+				const int purchase_expense = price * sold_quantity;
+				other_country->get_game_data()->change_wealth(-purchase_expense);
+				other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, commodity, purchase_expense);
 
 				offer -= sold_quantity;
 
@@ -2292,7 +2299,9 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 
 	if (commodity->is_convertible_to_wealth()) {
 		assert_throw(value > 0);
-		this->change_wealth(commodity->get_wealth_value() * value);
+		const int wealth_conversion_income = commodity->get_wealth_value() * value;
+		this->change_wealth(wealth_conversion_income);
+		this->country->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, commodity, wealth_conversion_income);
 		return;
 	}
 

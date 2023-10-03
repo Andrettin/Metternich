@@ -5,6 +5,7 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("country/country_game_data.h")
+Q_MOC_INCLUDE("country/country_turn_data.h")
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("map/site.h")
@@ -14,6 +15,7 @@ namespace metternich {
 class character;
 class country_game_data;
 class country_history;
+class country_turn_data;
 class culture;
 class era;
 class population_class;
@@ -68,6 +70,13 @@ public:
 		return this->game_data.get();
 	}
 
+	void reset_turn_data();
+
+	country_turn_data *get_turn_data() const
+	{
+		return this->turn_data.get();
+	}
+
 	country_type get_type() const
 	{
 		return this->type;
@@ -120,6 +129,7 @@ public:
 signals:
 	void changed();
 	void game_data_changed() const;
+	void turn_data_changed() const;
 
 private:
 	country_type type;
@@ -132,6 +142,7 @@ private:
 	std::vector<const character *> rulers;
 	qunique_ptr<country_history> history;
 	qunique_ptr<country_game_data> game_data;
+	qunique_ptr<country_turn_data> turn_data;
 };
 
 }

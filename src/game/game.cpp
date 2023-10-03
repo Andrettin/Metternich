@@ -1327,7 +1327,9 @@ QCoro::Task<void> game::do_turn_coro()
 		country_map<commodity_map<int>> old_bids;
 		country_map<commodity_map<int>> old_offers;
 
-		for (const country *country : this->get_countries()) {
+		for (country *country : this->get_countries()) {
+			country->reset_turn_data();
+
 			country->get_game_data()->calculate_commodity_needs();
 
 			if (country->get_game_data()->is_ai()) {
@@ -1372,7 +1374,7 @@ QCoro::Task<void> game::do_turn_coro()
 
 void game::do_trade()
 {
-	std::vector<const metternich::country *> trade_countries = this->get_countries();
+	std::vector<metternich::country *> trade_countries = this->get_countries();
 
 	std::sort(trade_countries.begin(), trade_countries.end(), [&](const metternich::country *lhs, const metternich::country *rhs) {
 		//give trade priority by opinion-weighted prestige
@@ -1435,7 +1437,7 @@ QVariantList game::get_countries_qvariant_list() const
 	return container::to_qvariant_list(this->get_countries());
 }
 
-void game::add_country(const country *country)
+void game::add_country(country *country)
 {
 	this->countries.push_back(country);
 
