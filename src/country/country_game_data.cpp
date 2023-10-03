@@ -115,6 +115,7 @@ void country_game_data::do_turn()
 		this->do_population_growth();
 		this->do_consumption();
 		this->do_construction();
+		this->do_inflation();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 			civilian_unit->do_turn();
@@ -478,13 +479,15 @@ void country_game_data::do_trade()
 			const int price = game::get()->get_price(commodity);
 
 			for (const metternich::country *other_country : countries) {
-				const int bid = other_country->get_game_data()->get_bid(commodity);
+				country_game_data *other_country_game_data = other_country->get_game_data();
+
+				const int bid = other_country_game_data->get_bid(commodity);
 				if (bid == 0) {
 					continue;
 				}
 
 				int sold_quantity = std::min(offer, bid);
-				sold_quantity = std::min(sold_quantity, other_country->get_game_data()->get_wealth_with_credit() / price);
+				sold_quantity = std::min(sold_quantity, other_country_game_data->get_wealth_with_credit() / price);
 
 				if (sold_quantity <= 0) {
 					continue;
@@ -495,19 +498,19 @@ void country_game_data::do_trade()
 				this->change_wealth(sale_income);
 				this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity);
 
-				other_country->get_game_data()->change_stored_commodity(commodity, sold_quantity);
-				const int purchase_expense = price * sold_quantity;
-				other_country->get_game_data()->change_wealth(-purchase_expense);
+				other_country_game_data->change_stored_commodity(commodity, sold_quantity);
+				const int purchase_expense = other_country_game_data->get_inflated_value(price * sold_quantity);
+				other_country_game_data->change_wealth(-purchase_expense);
 				other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity);
 
 				offer -= sold_quantity;
 
 				this->change_offer(commodity, -sold_quantity);
-				other_country->get_game_data()->change_bid(commodity, -sold_quantity);
+				other_country_game_data->change_bid(commodity, -sold_quantity);
 
 				//improve relations between the two countries after they traded
 				this->change_base_opinion(other_country, 1);
-				other_country->get_game_data()->change_base_opinion(this->country, 1);
+				other_country_game_data->change_base_opinion(this->country, 1);
 
 				if (offer == 0) {
 					break;
@@ -515,7 +518,22 @@ void country_game_data::do_trade()
 			}
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Error doing trade for country \"" + this->country->get_identifier() + "\"."));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing trade for country \"{}\".", this->country->get_identifier())));
+	}
+}
+
+
+void country_game_data::do_inflation()
+{
+	try {
+		if (this->is_under_anarchy()) {
+			return;
+		}
+
+		this->country->get_turn_data()->calculate_inflation();
+		this->change_inflation(this->country->get_turn_data()->get_total_inflation_change());
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error doing trade for country \"{}\".", this->country->get_identifier())));
 	}
 }
 
@@ -2260,6 +2278,46 @@ void country_game_data::change_settlement_building_count(const building_type *bu
 	if (game::get()->is_running()) {
 		emit settlement_building_counts_changed();
 	}
+}
+
+void country_game_data::set_inflation(const centesimal_int &inflation)
+{
+	if (inflation == this->get_inflation()) {
+		return;
+	}
+
+	if (inflation < 0) {
+		this->set_inflation(centesimal_int(0));
+		return;
+	}
+
+	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
+			if (production_type->get_input_wealth() == 0) {
+				continue;
+			}
+
+			const int input_wealth = building_slot->get_production_type_input_wealth(production_type);
+			this->change_wealth(input_wealth);
+			this->change_wealth_income(input_wealth);
+		}
+	}
+
+	this->inflation = inflation;
+
+	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
+		for (const production_type *production_type : building_slot->get_available_production_types()) {
+			if (production_type->get_input_wealth() == 0) {
+				continue;
+			}
+
+			const int input_wealth = building_slot->get_production_type_input_wealth(production_type);
+			this->change_wealth(-input_wealth);
+			this->change_wealth_income(-input_wealth);
+		}
+	}
+
+	emit inflation_changed();
 }
 
 QVariantList country_game_data::get_available_commodities_qvariant_list() const

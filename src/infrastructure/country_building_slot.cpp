@@ -284,7 +284,7 @@ int country_building_slot::get_production_type_input_wealth(const production_typ
 		return 0;
 	}
 
-	return production_type->get_input_wealth() * employed_capacity;
+	return this->get_country()->get_game_data()->get_inflated_value(production_type->get_input_wealth() * employed_capacity);
 }
 
 int country_building_slot::get_production_type_output(const production_type *production_type) const

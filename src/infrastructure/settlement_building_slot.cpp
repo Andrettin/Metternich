@@ -227,7 +227,7 @@ void settlement_building_slot::build_wonder(const metternich::wonder *wonder)
 
 	country_game_data *country_game_data = this->get_country()->get_game_data();
 	if (wonder->get_wealth_cost() > 0) {
-		country_game_data->change_wealth(-wonder->get_wealth_cost());
+		country_game_data->change_wealth_inflated(-wonder->get_wealth_cost());
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs()) {

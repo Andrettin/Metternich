@@ -4,6 +4,7 @@
 
 #include "economy/expense_transaction.h"
 #include "economy/income_transaction.h"
+#include "economy/income_transaction_type.h"
 #include "util/container_util.h"
 
 namespace metternich {
@@ -70,21 +71,26 @@ void country_turn_data::add_expense_transaction(const expense_transaction_type t
 	this->expense_transactions.push_back(std::move(transaction));
 }
 
-std::map<income_transaction_type, int> country_turn_data::get_income_transaction_type_percentages() const
+void country_turn_data::calculate_inflation()
 {
+	if (this->get_total_income() == 0) {
+		return;
+	}
+
 	std::map<income_transaction_type, int> amounts;
 
+	int liquidated_riches_amount = 0;
+
 	for (const qunique_ptr<income_transaction> &transaction : this->income_transactions) {
-		amounts[transaction->get_type()] += transaction->get_amount();
+		if (transaction->get_type() == income_transaction_type::liquidated_riches) {
+			const centesimal_int inflation_change = country_turn_data::base_inflation_change * transaction->get_amount() / this->get_total_income();
+			transaction->set_inflation_change(inflation_change);
+
+			liquidated_riches_amount += transaction->get_amount();
+		}
 	}
 
-	std::map<income_transaction_type, int> percentages;
-
-	for (const auto &[type, amount] : amounts) {
-		percentages[type] = amount * 100 / this->get_total_income();
-	}
-
-	return percentages;
+	this->total_inflation_change = country_turn_data::base_inflation_change * liquidated_riches_amount / this->get_total_income();
 }
 
 }

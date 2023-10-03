@@ -130,7 +130,7 @@ void building_slot::build_building(const building_type *building)
 
 	country_game_data *country_game_data = this->get_country()->get_game_data();
 	if (building->get_wealth_cost() > 0) {
-		country_game_data->change_wealth(-building->get_wealth_cost());
+		country_game_data->change_wealth_inflated(-building->get_wealth_cost());
 	}
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs()) {

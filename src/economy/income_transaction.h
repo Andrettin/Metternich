@@ -1,6 +1,7 @@
 #pragma once
 
 #include "economy/transaction.h"
+#include "util/fractional_int.h"
 
 namespace metternich {
 
@@ -21,10 +22,16 @@ public:
 		return this->type;
 	}
 
+	void set_inflation_change(const centesimal_int &inflation_change)
+	{
+		this->inflation_change = inflation_change;
+	}
+
 	virtual QString get_description() const override;
 
 private:
 	income_transaction_type type{};
+	centesimal_int inflation_change;
 };
 
 }

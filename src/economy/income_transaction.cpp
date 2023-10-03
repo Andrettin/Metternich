@@ -16,7 +16,7 @@ QString income_transaction::get_description() const
 			str = std::format("Sold {} {} for ${}", this->get_commodity_quantity(), this->get_commodity()->get_name(), this->get_amount());
 			break;
 		case income_transaction_type::liquidated_riches:
-			str = std::format("Converted {} {} into ${}", this->get_commodity_quantity(), this->get_commodity()->get_name(), this->get_amount());
+			str = std::format("Converted {} {} into ${}\n+{}% Inflation", this->get_commodity_quantity(), this->get_commodity()->get_name(), this->get_amount(), this->inflation_change.to_string());
 			break;
 	}
 
