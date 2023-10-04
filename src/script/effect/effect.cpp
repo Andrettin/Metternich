@@ -51,6 +51,7 @@
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
 #include "script/effect/wealth_effect.h"
+#include "script/effect/wealth_inflated_effect.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -80,6 +81,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<inflation_effect>(value, effect_operator);
 		} else if (key == "wealth") {
 			return std::make_unique<wealth_effect<scope_type>>(value, effect_operator);
+		} else if (key == "wealth_inflated") {
+			return std::make_unique<wealth_inflated_effect>(value, effect_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);
 		} else if (key.starts_with(population_scaled_commodity_prefix) && commodity::try_get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size())) != nullptr) {
