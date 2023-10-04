@@ -593,6 +593,7 @@ set(script_effect_HDRS
 	src/script/effect/migrate_to_effect.h
 	src/script/effect/militancy_effect.h
 	src/script/effect/opinion_modifiers_effect.h
+	src/script/effect/policy_effect.h
 	src/script/effect/population_scaled_commodity_effect.h
 	src/script/effect/provincial_capital_effect.h
 	src/script/effect/random_effect.h
