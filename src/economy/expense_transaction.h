@@ -11,8 +11,8 @@ class expense_transaction final : public transaction
 	Q_OBJECT
 
 public:
-	explicit expense_transaction(const expense_transaction_type type, const int amount, const metternich::commodity *commodity, const int commodity_quantity)
-		: transaction(amount, commodity, commodity_quantity), type(type)
+	explicit expense_transaction(const expense_transaction_type type, const int amount, const metternich::commodity *commodity, const int commodity_quantity, const metternich::country *country)
+		: transaction(amount, commodity, commodity_quantity, country), type(type)
 	{
 	}
 

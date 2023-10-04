@@ -27,7 +27,7 @@ QVariantList country_turn_data::get_expense_transactions_qvariant_list() const
 	return container::to_qvariant_list(this->expense_transactions);
 }
 
-void country_turn_data::add_income_transaction(const income_transaction_type transaction_type, const int amount, const commodity *commodity, const int commodity_quantity)
+void country_turn_data::add_income_transaction(const income_transaction_type transaction_type, const int amount, const commodity *commodity, const int commodity_quantity, const metternich::country *other_country)
 {
 	this->total_income += amount;
 
@@ -45,11 +45,11 @@ void country_turn_data::add_income_transaction(const income_transaction_type tra
 		return;
 	}
 
-	auto transaction = make_qunique<metternich::income_transaction>(transaction_type, amount, commodity, commodity_quantity);
+	auto transaction = make_qunique<metternich::income_transaction>(transaction_type, amount, commodity, commodity_quantity, other_country);
 	this->income_transactions.push_back(std::move(transaction));
 }
 
-void country_turn_data::add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const commodity *commodity, const int commodity_quantity)
+void country_turn_data::add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const commodity *commodity, const int commodity_quantity, const metternich::country *other_country)
 {
 	this->total_expense += amount;
 
@@ -67,7 +67,7 @@ void country_turn_data::add_expense_transaction(const expense_transaction_type t
 		return;
 	}
 
-	auto transaction = make_qunique<metternich::expense_transaction>(transaction_type, amount, commodity, commodity_quantity);
+	auto transaction = make_qunique<metternich::expense_transaction>(transaction_type, amount, commodity, commodity_quantity, other_country);
 	this->expense_transactions.push_back(std::move(transaction));
 }
 

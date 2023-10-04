@@ -496,12 +496,12 @@ void country_game_data::do_trade()
 				this->change_stored_commodity(commodity, -sold_quantity);
 				const int sale_income = price * sold_quantity;
 				this->change_wealth(sale_income);
-				this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity);
+				this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity, other_country);
 
 				other_country_game_data->change_stored_commodity(commodity, sold_quantity);
 				const int purchase_expense = other_country_game_data->get_inflated_value(price * sold_quantity);
 				other_country_game_data->change_wealth(-purchase_expense);
-				other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity);
+				other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->country);
 
 				offer -= sold_quantity;
 
@@ -2287,6 +2287,12 @@ void country_game_data::set_inflation(const centesimal_int &inflation)
 	}
 
 	if (inflation < 0) {
+		this->set_inflation(centesimal_int(0));
+		return;
+	}
+
+	if (!this->country->is_great_power()) {
+		//minor nations cannot be affected by inflation
 		this->set_inflation(centesimal_int(0));
 		return;
 	}

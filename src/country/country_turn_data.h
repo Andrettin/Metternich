@@ -50,8 +50,8 @@ public:
 	QVariantList get_income_transactions_qvariant_list() const;
 	QVariantList get_expense_transactions_qvariant_list() const;
 
-	void add_income_transaction(const income_transaction_type transaction_type, const int amount, const commodity *commodity = nullptr, const int commodity_quantity = 0);
-	void add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const commodity *commodity = nullptr, const int commodity_quantity = 0);
+	void add_income_transaction(const income_transaction_type transaction_type, const int amount, const commodity *commodity = nullptr, const int commodity_quantity = 0, const metternich::country *other_country = nullptr);
+	void add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const commodity *commodity = nullptr, const int commodity_quantity = 0, const metternich::country *other_country = nullptr);
 
 	void calculate_inflation();
 
