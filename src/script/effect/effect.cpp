@@ -30,6 +30,7 @@
 #include "script/effect/gain_spell_scroll_effect.h"
 #include "script/effect/hidden_effect.h"
 #include "script/effect/if_effect.h"
+#include "script/effect/inflation_effect.h"
 #include "script/effect/location_effect.h"
 #include "script/effect/migrate_to_effect.h"
 #include "script/effect/militancy_effect.h"
@@ -75,6 +76,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<free_technologies_effect>(value, effect_operator);
 		} else if (key == "gain_spell_scroll") {
 			return std::make_unique<gain_spell_scroll_effect>(value, effect_operator);
+		} else if (key == "inflation") {
+			return std::make_unique<inflation_effect>(value, effect_operator);
 		} else if (key == "wealth") {
 			return std::make_unique<wealth_effect<scope_type>>(value, effect_operator);
 		} else if (commodity::try_get(key) != nullptr) {

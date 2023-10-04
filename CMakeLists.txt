@@ -513,6 +513,7 @@ set(script_condition_HDRS
 	src/script/condition/improvement_condition.h
 	src/script/condition/independent_condition.h
 	src/script/condition/infantry_condition.h
+	src/script/condition/inflation_condition.h
 	src/script/condition/is_advisor_condition.h
 	src/script/condition/is_military_unit_category_available_condition.h
 	src/script/condition/is_ruler_condition.h
@@ -582,6 +583,7 @@ set(script_effect_HDRS
 	src/script/effect/gain_spell_scroll_effect.h
 	src/script/effect/hidden_effect.h
 	src/script/effect/if_effect.h
+	src/script/effect/inflation_effect.h
 	src/script/effect/location_effect.h
 	src/script/effect/migrate_to_effect.h
 	src/script/effect/militancy_effect.h
