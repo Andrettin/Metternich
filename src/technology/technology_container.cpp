@@ -15,14 +15,6 @@ bool technology_compare::operator()(const technology *lhs, const technology *rhs
 		return lhs_prerequisite_depth < rhs_prerequisite_depth;
 	}
 
-	if (lhs != rhs) {
-		if (lhs->requires_technology(rhs)) {
-			return true;
-		} else if (rhs->requires_technology(lhs)) {
-			return false;
-		}
-	}
-
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
