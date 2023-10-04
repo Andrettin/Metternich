@@ -7,6 +7,14 @@
 
 namespace metternich {
 
+policy::policy(const std::string &identifier) : data_entry(identifier)
+{
+}
+
+policy::~policy()
+{
+}
+
 void policy::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();

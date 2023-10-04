@@ -25,9 +25,8 @@ public:
 	static constexpr int min_level = -5;
 	static constexpr int max_level = 5;
 
-	explicit policy(const std::string &identifier) : data_entry(identifier)
-	{
-	}
+	explicit policy(const std::string &identifier);
+	~policy();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
