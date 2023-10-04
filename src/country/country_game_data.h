@@ -2,6 +2,7 @@
 
 #include "country/consulate_container.h"
 #include "country/country_container.h"
+#include "country/policy_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_class_container.h"
@@ -110,6 +111,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
+	Q_PROPERTY(QVariantList policy_values READ get_policy_values_qvariant_list NOTIFY policy_values_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
@@ -978,6 +980,31 @@ public:
 
 	void set_government_type(const metternich::government_type *government_type);
 
+	const policy_map<int> &get_policy_values() const
+	{
+		return this->policy_values;
+	}
+
+	QVariantList get_policy_values_qvariant_list() const;
+
+	Q_INVOKABLE int get_policy_value(const metternich::policy *policy) const
+	{
+		const auto find_iterator = this->get_policy_values().find(policy);
+
+		if (find_iterator != this->get_policy_values().end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_policy_value(const policy *policy, const int value);
+	
+	void change_policy_value(const policy *policy, const int change)
+	{
+		this->set_policy_value(policy, this->get_policy_value(policy) + change);
+	}
+
 	void check_characters();
 
 	const character *get_ruler() const
@@ -1761,6 +1788,7 @@ signals:
 	void current_research_changed();
 	void technology_researched(const technology *technology);
 	void government_type_changed();
+	void policy_values_changed();
 	void ruler_changed();
 	void advisors_changed();
 	void next_advisor_changed();
@@ -1833,6 +1861,7 @@ private:
 	const technology *current_research = nullptr;
 	int free_technology_count = 0;
 	const metternich::government_type *government_type = nullptr;
+	policy_map<int> policy_values;
 	const character *ruler = nullptr;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;

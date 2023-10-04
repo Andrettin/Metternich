@@ -15,6 +15,7 @@
 #include "country/diplomacy_state.h"
 #include "country/government_type.h"
 #include "country/journal_entry.h"
+#include "country/policy.h"
 #include "country/religion.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -2989,6 +2990,40 @@ void country_game_data::set_government_type(const metternich::government_type *g
 
 	if (game::get()->is_running()) {
 		emit government_type_changed();
+	}
+}
+
+QVariantList country_game_data::get_policy_values_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_policy_values());
+}
+
+void country_game_data::set_policy_value(const policy *policy, const int value)
+{
+	if (value == this->get_policy_value(policy)) {
+		return;
+	}
+
+	if (value < policy::min_value) {
+		this->set_policy_value(policy, policy::min_value);
+		return;
+	} else if (value > policy::max_value) {
+		this->set_policy_value(policy, policy::max_value);
+		return;
+	}
+
+	policy->apply_modifier(this->country, value, -1);
+
+	if (value == 0) {
+		this->policy_values.erase(policy);
+	} else {
+		this->policy_values[policy] = value;
+	}
+
+	policy->apply_modifier(this->country, value, 1);
+
+	if (game::get()->is_running()) {
+		emit policy_values_changed();
 	}
 }
 

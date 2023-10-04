@@ -2,6 +2,7 @@
 
 #include "engine_interface.h"
 
+#include "country/policy.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "game/event_instance.h"
@@ -85,6 +86,11 @@ QVariantList engine_interface::get_scenarios() const
 QVariantList engine_interface::get_eras() const
 {
 	return container::to_qvariant_list(era::get_all());
+}
+
+QVariantList engine_interface::get_policies() const
+{
+	return container::to_qvariant_list(policy::get_all());
 }
 
 QVariantList engine_interface::get_technologies() const

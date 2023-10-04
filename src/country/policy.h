@@ -22,8 +22,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::policy*";
 	static constexpr const char database_folder[] = "policies";
 
-	static constexpr int min_level = -5;
-	static constexpr int max_level = 5;
+	static constexpr int min_value = -5;
+	static constexpr int max_value = 5;
 
 	explicit policy(const std::string &identifier);
 	~policy();
@@ -76,8 +76,8 @@ public:
 		return this->right_modifier.get();
 	}
 
-	void apply_modifier(const country *country, const int level, const int multiplier);
-	Q_INVOKABLE QString get_modifier_string(const metternich::country *country, const int level) const;
+	void apply_modifier(const country *country, const int value, const int multiplier) const;
+	Q_INVOKABLE QString get_modifier_string(const metternich::country *country, const int value) const;
 
 signals:
 	void changed();

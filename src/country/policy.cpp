@@ -43,43 +43,43 @@ void policy::check() const
 	}
 }
 
-void policy::apply_modifier(const country *country, const int level, const int multiplier)
+void policy::apply_modifier(const country *country, const int value, const int multiplier) const
 {
 	if (this->get_modifier() != nullptr) {
-		this->get_modifier()->apply(country, level * multiplier);
+		this->get_modifier()->apply(country, value * multiplier);
 	}
 
-	if (this->get_left_modifier() != nullptr && level < 0) {
-		this->get_left_modifier()->apply(country, std::abs(level) * multiplier);
+	if (this->get_left_modifier() != nullptr && value < 0) {
+		this->get_left_modifier()->apply(country, std::abs(value) * multiplier);
 	}
 
-	if (this->get_right_modifier() != nullptr && level > 0) {
-		this->get_right_modifier()->apply(country, level * multiplier);
+	if (this->get_right_modifier() != nullptr && value > 0) {
+		this->get_right_modifier()->apply(country, value * multiplier);
 	}
 }
 
-QString policy::get_modifier_string(const country *country, const int level) const
+QString policy::get_modifier_string(const country *country, const int value) const
 {
 	std::string str;
 
 	if (this->get_modifier() != nullptr) {
-		str += this->get_modifier()->get_string(country, level);
+		str += this->get_modifier()->get_string(country, value);
 	}
 
-	if (this->get_left_modifier() != nullptr && level < 0) {
+	if (this->get_left_modifier() != nullptr && value < 0) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
-		str += this->get_left_modifier()->get_string(country, std::abs(level));
+		str += this->get_left_modifier()->get_string(country, std::abs(value));
 	}
 
-	if (this->get_right_modifier() != nullptr && level > 0) {
+	if (this->get_right_modifier() != nullptr && value > 0) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
-		str += this->get_right_modifier()->get_string(country, level);
+		str += this->get_right_modifier()->get_string(country, value);
 	}
 
 	return QString::fromStdString(str);
