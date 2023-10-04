@@ -1270,6 +1270,16 @@ public:
 		this->artillery_cost_modifier += change;
 	}
 
+	int get_warship_cost_modifier() const
+	{
+		return this->warship_cost_modifier;
+	}
+
+	void change_warship_cost_modifier(const int change)
+	{
+		this->warship_cost_modifier += change;
+	}
+
 	int get_unit_upgrade_cost_modifier() const
 	{
 		return this->unit_upgrade_cost_modifier;
@@ -1843,6 +1853,7 @@ private:
 	int infantry_cost_modifier = 0;
 	int cavalry_cost_modifier = 0;
 	int artillery_cost_modifier = 0;
+	int warship_cost_modifier = 0;
 	int unit_upgrade_cost_modifier = 0;
 	int output_modifier = 0;
 	int resource_output_modifier = 0;
