@@ -36,11 +36,6 @@ public:
 		return std::format("{} per Improved {}", this->commodity->get_name(), this->resource->get_name());
 	}
 
-	virtual int get_score() const override
-	{
-		return (this->value * 10).to_int();
-	}
-
 private:
 	const metternich::commodity *commodity = nullptr;
 	const metternich::resource *resource = nullptr;

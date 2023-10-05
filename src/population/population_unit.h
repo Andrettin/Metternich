@@ -37,7 +37,6 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::site* settlement READ get_settlement NOTIFY settlement_changed)
 
 public:
-	static constexpr int base_score = 1;
 	static constexpr int max_consciousness = 10;
 	static constexpr int max_militancy = 10;
 

@@ -35,9 +35,9 @@ public:
 		return true;
 	}
 
-	virtual int get_score() const override
+	virtual bool is_negative() const override
 	{
-		return -this->value.to_int();
+		return this->value > 0;
 	}
 };
 

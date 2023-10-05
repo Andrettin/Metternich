@@ -38,11 +38,6 @@ public:
 
 		return this->get_base_string();
 	}
-
-	virtual int get_score() const override
-	{
-		return 200;
-	}
 };
 
 }

@@ -182,18 +182,7 @@ bool settlement_building_slot::can_gain_wonder(const metternich::wonder *wonder)
 	}
 
 	if (this->get_wonder() != nullptr) {
-		if (wonder == this->get_wonder()) {
-			return false;
-		}
-
-		if (wonder->get_score() < this->get_wonder()->get_score()) {
-			return false;
-		}
-
-		if (wonder->get_score() == this->get_wonder()->get_score()) {
-			//the wonder must be better in some way
-			return false;
-		}
+		return false;
 	}
 
 	return true;

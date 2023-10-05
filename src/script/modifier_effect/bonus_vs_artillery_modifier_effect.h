@@ -27,11 +27,6 @@ public:
 	{
 		return "Bonus vs. Artillery";
 	}
-
-	virtual int get_score() const override
-	{
-		return this->value.to_int();
-	}
 };
 
 }

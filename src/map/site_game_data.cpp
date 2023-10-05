@@ -50,7 +50,6 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 
 	this->housing = defines::get()->get_base_housing();
 	this->free_food_consumption = site_game_data::base_free_food_consumption;
-	this->score = this->site->is_settlement() ? site_game_data::base_settlement_score : 0;
 
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::type_count_changed, this, &site_game_data::on_population_type_count_changed);
@@ -669,8 +668,6 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	assert_throw(multiplier != 0);
 	assert_throw(this->get_province() != nullptr);
 
-	this->change_score(building->get_score() * multiplier);
-
 	if (this->get_owner() != nullptr) {
 		country_game_data *country_game_data = this->get_owner()->get_game_data();
 		country_game_data->change_settlement_building_count(building, multiplier);
@@ -689,8 +686,6 @@ void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier
 {
 	assert_throw(wonder != nullptr);
 	assert_throw(multiplier != 0);
-
-	this->get_province()->get_game_data()->change_score(wonder->get_score() * multiplier);
 
 	if (this->get_owner() != nullptr && wonder->get_country_modifier() != nullptr) {
 		wonder->get_country_modifier()->apply(this->get_owner(), multiplier);
@@ -771,19 +766,6 @@ void site_game_data::decrement_scripted_modifiers()
 
 	for (const scripted_site_modifier *modifier : modifiers_to_remove) {
 		this->remove_scripted_modifier(modifier);
-	}
-}
-
-void site_game_data::change_score(const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->score += change;
-
-	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_score(change);
 	}
 }
 

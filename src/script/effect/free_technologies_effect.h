@@ -33,11 +33,6 @@ public:
 		return std::format("Gain {} Free {}", this->count, this->count > 1 ? "Technologies" : "Technology");
 	}
 
-	virtual int get_score() const override
-	{
-		return this->count * 50;
-	}
-
 private:
 	int count = 0;
 };

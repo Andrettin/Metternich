@@ -66,8 +66,6 @@ public:
 		return this->obsolescence_technology;
 	}
 
-	int get_score() const;
-
 	int get_wealth_cost() const
 	{
 		return this->wealth_cost;

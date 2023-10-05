@@ -32,8 +32,6 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::pathway*";
 	static constexpr const char database_folder[] = "pathways";
 
-	static constexpr int base_score = 10;
-
 	explicit pathway(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}
@@ -77,11 +75,6 @@ public:
 		}
 
 		return nullptr;
-	}
-
-	int get_score() const
-	{
-		return pathway::base_score * this->get_transport_level();
 	}
 
 	int get_wealth_cost() const

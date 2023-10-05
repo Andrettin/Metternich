@@ -41,11 +41,6 @@ public:
 		return this->get_base_string();
 	}
 
-	virtual int get_score() const override
-	{
-		return this->promotion->get_modifier()->get_score();
-	}
-
 private:
 	const metternich::promotion *promotion = nullptr;
 };

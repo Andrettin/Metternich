@@ -90,19 +90,4 @@ void wonder::check() const
 	}
 }
 
-int wonder::get_score() const
-{
-	int score = 0;
-
-	if (this->get_country_modifier() != nullptr) {
-		score += this->get_country_modifier()->get_score();
-	}
-
-	if (this->get_province_modifier() != nullptr) {
-		score += this->get_province_modifier()->get_score();
-	}
-
-	return score;
-}
-
 }

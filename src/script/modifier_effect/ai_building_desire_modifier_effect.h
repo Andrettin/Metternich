@@ -40,11 +40,6 @@ public:
 		return std::format("AI {} Building Desire", this->building->get_name());
 	}
 
-	virtual int get_score() const override
-	{
-		return 0;
-	}
-
 	virtual bool is_hidden() const override
 	{
 		return true;

@@ -45,11 +45,6 @@ public:
 		return std::format("Free Building: {}", building ? building->get_name() : this->building_class->get_name());
 	}
 
-	virtual int get_score() const override
-	{
-		return this->building_class->get_score();
-	}
-
 private:
 	const metternich::building_class *building_class = nullptr;
 };

@@ -14,13 +14,4 @@ void building_class::set_default_building_type(const building_type *building_typ
 	this->default_building_type = building_type;
 }
 
-int building_class::get_score() const
-{
-	if (this->get_default_building_type() != nullptr) {
-		return this->get_default_building_type()->get_score();
-	}
-
-	return 0;
-}
-
 }

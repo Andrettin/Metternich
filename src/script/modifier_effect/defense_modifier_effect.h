@@ -27,11 +27,6 @@ public:
 	{
 		return "Defense";
 	}
-
-	virtual int get_score() const override
-	{
-		return (this->value * 10).to_int();
-	}
 };
 
 }

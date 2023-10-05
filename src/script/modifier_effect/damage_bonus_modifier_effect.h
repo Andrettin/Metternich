@@ -27,11 +27,6 @@ public:
 	{
 		return "Damage Bonus";
 	}
-
-	virtual int get_score() const override
-	{
-		return this->value.to_int();
-	}
 };
 
 }

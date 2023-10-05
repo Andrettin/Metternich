@@ -31,11 +31,6 @@ public:
 		return std::format("Capital {} per Population", this->commodity->get_name());
 	}
 
-	virtual int get_score() const override
-	{
-		return (this->value * 10).to_int();
-	}
-
 private:
 	const metternich::commodity *commodity = nullptr;
 };

@@ -77,8 +77,6 @@ public:
 	static constexpr const char database_folder[] = "building_types";
 
 public:
-	static constexpr int base_score = 10;
-
 	explicit building_type(const std::string &identifier);
 	~building_type();
 
@@ -117,6 +115,13 @@ public:
 	{
 		return this->provincial;
 	}
+
+	int get_level() const
+	{
+		return this->level;
+	}
+
+	void calculate_level();
 
 	const std::vector<const settlement_type *> &get_settlement_types() const
 	{
@@ -227,8 +232,6 @@ public:
 		return this->required_technology;
 	}
 
-	int get_score() const;
-
 	int get_wealth_cost() const
 	{
 		return this->wealth_cost;
@@ -301,6 +304,7 @@ private:
 	metternich::portrait *portrait = nullptr;
 	metternich::icon *icon = nullptr;
 	bool provincial = false;
+	int level = 0;
 	std::vector<const settlement_type *> settlement_types;
 	int resource_level = 0;
 	std::vector<resource *> resources;

@@ -618,8 +618,6 @@ public:
 	bool has_building(const building_type *building) const;
 	void clear_buildings();
 
-	void on_building_gained(const building_type *building, const int multiplier);
-
 	int get_settlement_building_count(const building_type *building) const
 	{
 		const auto find_iterator = this->settlement_building_counts.find(building);

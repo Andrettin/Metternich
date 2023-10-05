@@ -308,8 +308,6 @@ public:
 		return this->get_advisor_type() != nullptr;
 	}
 
-	int get_advisor_score() const;
-
 	bool is_leader() const;
 	bool is_admiral() const;
 	std::string get_leader_type_name() const;

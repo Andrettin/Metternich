@@ -33,11 +33,6 @@ public:
 		return std::format("{} Capacity", this->building_slot_type->get_name());
 	}
 
-	virtual int get_score() const override
-	{
-		return (this->value * 10).to_int();
-	}
-
 private:
 	const metternich::building_slot_type *building_slot_type = nullptr;
 };

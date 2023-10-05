@@ -80,18 +80,6 @@ std::string modifier<scope_type>::get_string(const scope_type *scope, const int 
 }
 
 template <typename scope_type>
-int modifier<scope_type>::get_score() const
-{
-	int score = 0;
-
-	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {
-		score += modifier_effect->get_score();
-	}
-
-	return score;
-}
-
-template <typename scope_type>
 void modifier<scope_type>::add_modifier_effect(std::unique_ptr<modifier_effect<scope_type>> &&modifier_effect)
 {
 	this->modifier_effects.push_back(std::move(modifier_effect));

@@ -48,8 +48,6 @@ public:
 		this->building_types.push_back(building_type);
 	}
 
-	int get_score() const;
-
 signals:
 	void changed();
 

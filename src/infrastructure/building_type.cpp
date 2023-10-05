@@ -193,6 +193,8 @@ void building_type::initialize()
 		this->effects->add_effect(std::make_unique<provincial_capital_effect<const site>>(true));
 	}
 
+	this->calculate_level();
+
 	named_data_entry::initialize();
 }
 
@@ -277,34 +279,22 @@ const building_slot_type *building_type::get_slot_type() const
 	return this->get_building_class()->get_slot_type();
 }
 
+void building_type::calculate_level()
+{
+	if (this->required_building != nullptr) {
+		if (this->required_building->get_level() == 0) {
+			this->required_building->initialize();
+		}
+
+		this->level = this->required_building->get_level() + 1;
+	} else {
+		this->level = 1;
+	}
+}
+
 QVariantList building_type::get_production_types_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_production_types());
-}
-
-int building_type::get_score() const
-{
-	int score = building_type::base_score * std::max(1, this->get_base_capacity());
-
-	score += this->get_fort_level() * 10;
-
-	if (this->get_country_modifier() != nullptr) {
-		score += this->get_country_modifier()->get_score() / (this->is_provincial() ? 10 : 1);
-	}
-
-	if (this->get_stackable_country_modifier() != nullptr) {
-		score += this->get_stackable_country_modifier()->get_score();
-	}
-
-	if (this->get_settlement_modifier() != nullptr) {
-		score += this->get_settlement_modifier()->get_score();
-	}
-
-	if (this->get_province_modifier() != nullptr) {
-		score += this->get_province_modifier()->get_score();
-	}
-
-	return score;
 }
 
 QString building_type::get_effects_string(metternich::site *site) const

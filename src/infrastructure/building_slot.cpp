@@ -89,11 +89,11 @@ bool building_slot::can_gain_building(const building_type *building) const
 			return false;
 		}
 
-		if (building->get_score() < this->get_building()->get_score()) {
+		if (building->get_level() < this->get_building()->get_level()) {
 			return false;
 		}
 
-		if (building->get_score() == this->get_building()->get_score()) {
+		if (building->get_level() == this->get_building()->get_level()) {
 			//the building must be better in some way
 			return false;
 		}

@@ -51,7 +51,6 @@ class site_game_data final : public QObject
 
 public:
 	static constexpr int base_free_food_consumption = 1;
-	static constexpr int base_settlement_score = 10;
 
 	explicit site_game_data(const metternich::site *site);
 
@@ -167,13 +166,6 @@ public:
 	void add_scripted_modifier(const scripted_site_modifier *modifier, const int duration);
 	void remove_scripted_modifier(const scripted_site_modifier *modifier);
 	void decrement_scripted_modifiers();
-
-	int get_score() const
-	{
-		return this->score;
-	}
-
-	void change_score(const int change);
 
 	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
 	{
@@ -358,7 +350,6 @@ private:
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
 	building_slot_type_map<settlement_building_slot *> building_slot_map;
 	scripted_site_modifier_map<int> scripted_modifiers;
-	int score = 0;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
 	int housing = 0;

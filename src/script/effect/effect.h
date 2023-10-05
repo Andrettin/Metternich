@@ -132,11 +132,6 @@ public:
 		return this->get_subtraction_string();
 	}
 
-	virtual int get_score() const
-	{
-		return 0;
-	}
-
 	virtual bool is_hidden() const
 	{
 		return false;

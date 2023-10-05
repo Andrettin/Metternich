@@ -661,8 +661,6 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 	}
 
 	if (this->overlord != nullptr) {
-		this->overlord->get_game_data()->change_score(-this->get_score() * country::vassal_score_percent / 100);
-
 		for (const auto &[resource, count] : this->get_resource_counts()) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, -count);
 		}
@@ -671,8 +669,6 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 	this->overlord = overlord;
 
 	if (this->overlord != nullptr) {
-		this->overlord->get_game_data()->change_score(this->get_score() * country::vassal_score_percent / 100);
-
 		for (const auto &[resource, count] : this->get_resource_counts()) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, count);
 		}
@@ -966,8 +962,6 @@ void country_game_data::on_province_gained(const province *province, const int m
 {
 	province_game_data *province_game_data = province->get_game_data();
 
-	this->change_score(province_game_data->get_score() * multiplier);
-
 	if (province_game_data->is_coastal()) {
 		this->coastal_province_count += 1 * multiplier;
 	}
@@ -1010,7 +1004,6 @@ void country_game_data::on_province_gained(const province *province, const int m
 		}
 
 		this->change_housing(settlement->get_game_data()->get_housing() * multiplier);
-		this->change_score(settlement->get_game_data()->get_score() * multiplier);
 	}
 
 	for (const auto &[resource, commodity_map] : this->improved_resource_commodity_bonuses) {
@@ -1925,16 +1918,7 @@ void country_game_data::change_score(const int change)
 		return;
 	}
 
-	const int old_vassal_score = this->get_score() * country::vassal_score_percent / 100;
-
 	this->score += change;
-
-	const int new_vassal_score = this->get_score() * country::vassal_score_percent / 100;
-
-	if (this->get_overlord() != nullptr) {
-		const int vassal_score_change = new_vassal_score - old_vassal_score;
-		this->get_overlord()->get_game_data()->change_score(vassal_score_change);
-	}
 
 	emit score_changed();
 }
@@ -2208,13 +2192,6 @@ void country_game_data::clear_buildings()
 	}
 }
 
-void country_game_data::on_building_gained(const building_type *building, const int multiplier)
-{
-	assert_throw(building != nullptr);
-
-	this->change_score(building->get_score() * multiplier);
-}
-
 void country_game_data::change_settlement_building_count(const building_type *building, const int change)
 {
 	if (change == 0) {
@@ -2243,17 +2220,17 @@ void country_game_data::change_settlement_building_count(const building_type *bu
 			//get the best settlement building to replace the one that was lost (if any), and set it to the building slot
 
 			const building_type *best_building = nullptr;
-			int best_score = 0;
+			int best_level = 0;
 
 			for (const auto &[settlement_building, building_count] : this->settlement_building_counts) {
 				if (settlement_building->get_slot_type() != country_building_slot->get_type()) {
 					continue;
 				}
 
-				const int score = settlement_building->get_score();
-				if (score > best_score) {
+				const int level = settlement_building->get_level();
+				if (level > best_level) {
 					best_building = settlement_building;
-					best_score = score;
+					best_level = level;
 				}
 			}
 
@@ -3329,7 +3306,8 @@ void country_game_data::choose_next_advisor()
 
 		int best_desire = 0;
 		for (const auto &[category, advisor] : potential_advisor_map) {
-			int desire = advisor->get_advisor_score();
+			//consider advisors with special modifiers or effects to have maximum skill, for the purposes of preferring to select them
+			int desire = (advisor->get_skill() != 0 ? advisor->get_skill() : character::max_skill) * 100;
 
 			for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
 				if (vector::contains(journal_entry->get_recruited_advisors(), advisor)) {

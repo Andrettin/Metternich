@@ -141,8 +141,6 @@ public:
 
 	bool produces_commodity(const commodity *commodity) const;
 
-	void on_improvement_gained(const improvement *improvement, const int multiplier);
-
 	const scripted_province_modifier_map<int> &get_scripted_modifiers() const
 	{
 		return this->scripted_modifiers;
@@ -160,13 +158,6 @@ public:
 	{
 		this->apply_modifier(modifier, -1);
 	}
-
-	int get_score() const
-	{
-		return this->score;
-	}
-
-	void change_score(const int change);
 
 	const std::vector<population_unit *> &get_population_units() const
 	{
@@ -372,7 +363,6 @@ private:
 	int settlement_count = 0; //only includes built settlements
 	const site *provincial_capital = nullptr;
 	scripted_province_modifier_map<int> scripted_modifiers;
-	int score = 0;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
 	std::vector<military_unit *> military_units;

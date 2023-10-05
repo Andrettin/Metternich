@@ -47,8 +47,6 @@ namespace metternich {
 province_game_data::province_game_data(const metternich::province *province)
 	: province(province)
 {
-	this->score = province::base_score;
-
 	if (this->is_on_map()) {
 		this->reset_center_tile_pos();
 	}
@@ -400,13 +398,6 @@ const terrain_type_map<int> &province_game_data::get_tile_terrain_counts() const
 	return this->province->get_map_data()->get_tile_terrain_counts();
 }
 
-void province_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
-{
-	assert_throw(improvement != nullptr);
-
-	this->change_score(improvement->get_score() * multiplier);
-}
-
 QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
@@ -466,19 +457,6 @@ void province_game_data::apply_modifier(const modifier<const metternich::provinc
 	assert_throw(modifier != nullptr);
 
 	modifier->apply(this->province, multiplier);
-}
-
-void province_game_data::change_score(const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->score += change;
-
-	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_score(change);
-	}
 }
 
 void province_game_data::add_population_unit(population_unit *population_unit)

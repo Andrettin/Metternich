@@ -513,8 +513,6 @@ void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improv
 
 	const metternich::improvement *old_improvement = tile->get_improvement();
 	if (old_improvement != nullptr && tile->get_province() != nullptr) {
-		tile->get_province()->get_game_data()->on_improvement_gained(old_improvement, -1);
-
 		if (tile->get_site() != nullptr) {
 			tile->get_site()->get_game_data()->on_improvement_gained(old_improvement, -1);
 		}
@@ -523,8 +521,6 @@ void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improv
 	tile->set_improvement(improvement);
 
 	if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
-		tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
-
 		if (tile->get_site() != nullptr) {
 			tile->get_site()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
 		}

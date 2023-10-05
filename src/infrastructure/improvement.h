@@ -34,8 +34,6 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::improvement*";
 	static constexpr const char database_folder[] = "improvements";
 
-	static constexpr int base_score = 10;
-
 	explicit improvement(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}
@@ -101,15 +99,6 @@ public:
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
-	}
-
-	int get_score() const
-	{
-		if (this->is_ruins()) {
-			return 0;
-		}
-
-		return improvement::base_score * this->get_output_multiplier();
 	}
 
 	int get_wealth_cost() const

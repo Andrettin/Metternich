@@ -29,11 +29,6 @@ public:
 	{
 		return "Housing";
 	}
-
-	virtual int get_score() const override
-	{
-		return this->value.to_int();
-	}
 };
 
 }

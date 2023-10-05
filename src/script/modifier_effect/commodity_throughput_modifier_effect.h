@@ -37,11 +37,6 @@ public:
 		return true;
 	}
 
-	virtual int get_score() const override
-	{
-		return this->value.to_int();
-	}
-
 private:
 	const metternich::commodity *commodity = nullptr;
 };

@@ -101,41 +101,6 @@ public:
 		return std::format("Gain {} {} {}", this->count, string::highlight(type->get_name()), type->get_domain() == military_unit_domain::water ? "ship" : "regiment");
 	}
 
-	virtual int get_score() const override
-	{
-		if (this->type != nullptr) {
-			return this->type->get_score() * this->count;
-		} else if (this->unit_class != nullptr) {
-			return this->unit_class->get_default_unit_type()->get_score() * this->count;
-		} else if (this->category != military_unit_category::none) {
-			//return the lowest score for the military unit category, for its class default types
-			int score = 0;
-
-			for (const military_unit_class *military_unit_class : military_unit_class::get_all()) {
-				if (military_unit_class->get_category() != category) {
-					continue;
-				}
-
-				const military_unit_type *type = military_unit_class->get_default_unit_type();
-
-				if (type == nullptr) {
-					continue;
-				}
-
-				const int type_score = type->get_score();
-
-				if (type_score < score) {
-					score = type_score;
-				}
-			}
-
-			return score;
-		} else {
-			assert_throw(false);
-			return 0;
-		}
-	}
-
 	const military_unit_type *get_type(const country *scope) const
 	{
 		if (this->type != nullptr) {

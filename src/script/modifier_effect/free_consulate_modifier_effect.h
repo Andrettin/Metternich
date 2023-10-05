@@ -40,11 +40,6 @@ public:
 		return std::format("Free {} with every known country", this->consulate->get_name());
 	}
 
-	virtual int get_score() const override
-	{
-		return this->consulate->get_level() * 100;
-	}
-
 private:
 	const metternich::consulate *consulate = nullptr;
 };

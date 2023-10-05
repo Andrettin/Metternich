@@ -814,10 +814,6 @@ void game::apply_sites()
 					tile->get_owner()->get_game_data()->add_technology_with_prerequisites(tile->get_improvement()->get_required_technology());
 				}
 
-				if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
-					tile->get_province()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
-				}
-
 				site->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
 			}
 
@@ -907,7 +903,7 @@ void game::apply_site_buildings(const site *site)
 			slot_building = owner_game_data->get_slot_building(building_slot_type);
 		}
 
-		if (slot_building == nullptr || slot_building->get_score() < building->get_score()) {
+		if (slot_building == nullptr || slot_building->get_level() < building->get_level()) {
 			if (building->is_provincial()) {
 				settlement_game_data->set_slot_building(building_slot_type, building);
 			} else {

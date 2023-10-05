@@ -40,11 +40,6 @@ public:
 		}
 	}
 
-	virtual int get_score() const override
-	{
-		return (this->value * 10 / this->threshold).to_int();
-	}
-
 private:
 	const metternich::commodity *commodity = nullptr;
 	int threshold = 1;

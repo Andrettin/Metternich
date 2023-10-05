@@ -39,13 +39,9 @@ void country_building_slot::set_building(const building_type *building)
 		return;
 	}
 
-	country_game_data *country_game_data = this->get_country()->get_game_data();
-
 	const building_type *old_building = this->get_building();
 
 	if (old_building != nullptr && !old_building->is_provincial()) {
-		country_game_data->on_building_gained(old_building, -1);
-
 		if (old_building->get_country_modifier() != nullptr && this->get_country() != nullptr) {
 			old_building->get_country_modifier()->apply(this->get_country(), -this->get_level());
 		}
@@ -56,8 +52,6 @@ void country_building_slot::set_building(const building_type *building)
 	this->set_expanding(false);
 
 	if (this->get_building() != nullptr && !this->get_building()->is_provincial()) {
-		country_game_data->on_building_gained(this->get_building(), 1);
-
 		if (this->get_building()->get_country_modifier() != nullptr && this->get_country() != nullptr) {
 			this->get_building()->get_country_modifier()->apply(this->get_country(), this->get_level());
 		}
