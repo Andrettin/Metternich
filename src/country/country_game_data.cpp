@@ -3721,7 +3721,7 @@ void country_game_data::remove_military_unit(military_unit *military_unit)
 const military_unit_type *country_game_data::get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const
 {
 	const military_unit_type *best_type = nullptr;
-	int best_score = 0;
+	int best_score = -1;
 
 	for (const military_unit_class *military_unit_class : military_unit_class::get_all()) {
 		if (military_unit_class->get_category() != category) {
