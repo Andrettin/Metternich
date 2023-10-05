@@ -14,6 +14,7 @@
 #include "country/diplomacy_state.h"
 #include "country/government_type.h"
 #include "country/journal_entry.h"
+#include "country/policy.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -164,6 +165,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<journal_entry>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<map_template>("", 1);
+		qmlRegisterAnonymousType<policy>("", 1);
 		qmlRegisterAnonymousType<population>("", 1);
 		qmlRegisterAnonymousType<population_type>("", 1);
 		qmlRegisterAnonymousType<portrait>("", 1);
