@@ -1567,10 +1567,10 @@ public:
 	}
 
 	QVariantList get_finished_journal_entries_qvariant_list() const;
-	void check_journal_entries(const bool ignore_effects = false);
+	void check_journal_entries(const bool ignore_effects = false, const bool ignore_random_chance = false);
 	bool check_potential_journal_entries();
 	bool check_inactive_journal_entries();
-	bool check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects);
+	bool check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects, const bool ignore_random_chance);
 
 	int get_gain_technologies_known_by_others_count() const
 	{

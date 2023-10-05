@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "map/site_container.h"
+#include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("ui/portrait.h")
 
@@ -34,6 +35,7 @@ class journal_entry final : public named_data_entry, public data_type<journal_en
 
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int completion_random_chance MEMBER completion_random_chance READ get_completion_random_chance)
 
 public:
 	static constexpr const char class_identifier[] = "journal_entry";
@@ -72,8 +74,13 @@ public:
 
 	bool check_preconditions(const country *country) const;
 	bool check_conditions(const country *country) const;
-	bool check_completion_conditions(const country *country) const;
+	bool check_completion_conditions(const country *country, const bool ignore_random_chance) const;
 	Q_INVOKABLE QString get_completion_conditions_string() const;
+
+	const decimillesimal_int &get_completion_random_chance() const
+	{
+		return this->completion_random_chance;
+	}
 
 	const and_condition<country> *get_failure_conditions() const
 	{
@@ -144,6 +151,7 @@ private:
 	std::unique_ptr<const condition<country>> preconditions;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<const and_condition<country>> completion_conditions;
+	decimillesimal_int completion_random_chance;
 	std::unique_ptr<const and_condition<country>> failure_conditions;
 	std::unique_ptr<const effect_list<const country>> completion_effects;
 	std::unique_ptr<const effect_list<const country>> failure_effects;

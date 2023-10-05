@@ -16,6 +16,7 @@
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/random.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
@@ -200,9 +201,9 @@ bool journal_entry::check_conditions(const country *country) const
 	return true;
 }
 
-bool journal_entry::check_completion_conditions(const country *country) const
+bool journal_entry::check_completion_conditions(const country *country, const bool ignore_random_chance) const
 {
-	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_settlement_buildings().empty() && this->get_researched_technologies().empty() && this->get_recruited_advisors().empty() && this->get_recruited_leaders().empty()) {
+	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_settlement_buildings().empty() && this->get_researched_technologies().empty() && this->get_recruited_advisors().empty() && this->get_recruited_leaders().empty() && this->get_completion_random_chance() == 0) {
 		//no completion conditions at all, so the entry can't be completed normally
 		return false;
 	}
@@ -265,6 +266,13 @@ bool journal_entry::check_completion_conditions(const country *country) const
 
 	for (const character *leader : this->get_recruited_leaders()) {
 		if (!vector::contains(country_game_data->get_leaders(), leader)) {
+			return false;
+		}
+	}
+
+	if (this->get_completion_random_chance() != 0 && !ignore_random_chance) {
+		const int64_t random_number = random::get()->generate(decimillesimal_int::divisor * 100);
+		if (this->get_completion_random_chance().get_value() <= random_number) {
 			return false;
 		}
 	}
@@ -338,6 +346,14 @@ QString journal_entry::get_completion_conditions_string() const
 		}
 
 		str += std::format("Recruit {} ({})", leader->get_full_name(), leader->get_leader_type_name());
+	}
+
+	if (this->get_completion_random_chance() != 0) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("{}% chance", this->get_completion_random_chance().to_string());
 	}
 
 	return QString::fromStdString(str);

@@ -247,7 +247,7 @@ QCoro::Task<void> game::start_coro()
 		country_game_data->check_ruler();
 
 		//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
-		country_game_data->check_journal_entries(true);
+		country_game_data->check_journal_entries(true, true);
 	}
 
 	this->set_running(true);

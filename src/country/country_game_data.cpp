@@ -4272,7 +4272,7 @@ QVariantList country_game_data::get_finished_journal_entries_qvariant_list() con
 	return container::to_qvariant_list(this->get_finished_journal_entries());
 }
 
-void country_game_data::check_journal_entries(const bool ignore_effects)
+void country_game_data::check_journal_entries(const bool ignore_effects, const bool ignore_random_chance)
 {
 	const read_only_context ctx(this->country);
 
@@ -4287,7 +4287,7 @@ void country_game_data::check_journal_entries(const bool ignore_effects)
 		changed = true;
 	}
 
-	if (this->check_active_journal_entries(ctx, ignore_effects)) {
+	if (this->check_active_journal_entries(ctx, ignore_effects, ignore_random_chance)) {
 		changed = true;
 	}
 
@@ -4351,7 +4351,7 @@ bool country_game_data::check_inactive_journal_entries()
 	return changed;
 }
 
-bool country_game_data::check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects)
+bool country_game_data::check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects, const bool ignore_random_chance)
 {
 	bool changed = false;
 
@@ -4371,7 +4371,7 @@ bool country_game_data::check_active_journal_entries(const read_only_context &ct
 			continue;
 		}
 
-		if (journal_entry->check_completion_conditions(this->country)) {
+		if (journal_entry->check_completion_conditions(this->country, ignore_random_chance)) {
 			this->remove_active_journal_entry(journal_entry);
 			this->finished_journal_entries.push_back(journal_entry);
 			if (!ignore_effects) {
