@@ -3098,6 +3098,11 @@ void country_game_data::set_ruler(const character *ruler)
 
 void country_game_data::check_ruler()
 {
+	if (this->is_under_anarchy()) {
+		this->set_ruler(nullptr);
+		return;
+	}
+
 	//remove the ruler if they have become obsolete
 	if (this->get_ruler() != nullptr && this->get_ruler()->get_obsolescence_technology() != nullptr && this->has_technology(this->get_ruler()->get_obsolescence_technology())) {
 		if (game::get()->is_running()) {
