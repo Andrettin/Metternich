@@ -55,9 +55,9 @@ public:
 		return this->get_string(multiplier, ignore_decimals);
 	}
 
-	virtual bool is_negative() const
+	virtual bool is_negative(const centesimal_int &multiplier) const
 	{
-		return this->value < 0;
+		return (this->value * multiplier) < 0;
 	}
 
 	virtual bool is_percent() const

@@ -35,9 +35,9 @@ public:
 		return true;
 	}
 
-	virtual bool is_negative() const override
+	virtual bool is_negative(const centesimal_int &multiplier) const override
 	{
-		return this->value > 0;
+		return (this->value * multiplier) > 0;
 	}
 };
 
