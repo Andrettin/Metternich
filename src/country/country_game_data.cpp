@@ -2352,10 +2352,18 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 		return;
 	}
 
+	if (commodity == defines::get()->get_prestige_commodity()) {
+		this->change_score(-this->get_stored_commodity(commodity));
+	}
+
 	if (value <= 0) {
 		this->stored_commodities.erase(commodity);
 	} else {
 		this->stored_commodities[commodity] = value;
+	}
+
+	if (commodity == defines::get()->get_prestige_commodity()) {
+		this->change_score(value);
 	}
 
 	if (this->get_offer(commodity) > value) {
