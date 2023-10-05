@@ -5,10 +5,11 @@
 
 namespace metternich {
 
-class entrench_bonus_modifier_effect final : public modifier_effect<military_unit>
+template <typename scope_type>
+class entrench_bonus_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
-	explicit entrench_bonus_modifier_effect(const std::string &value) : modifier_effect(value)
+	explicit entrench_bonus_modifier_effect(const std::string &value) : modifier_effect<scope_type>(value)
 	{
 	}
 
@@ -18,14 +19,25 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(military_unit *scope, const centesimal_int &multiplier) const override
+	virtual void apply(scope_type *scope, const centesimal_int &multiplier) const override
 	{
-		scope->change_entrench_bonus_modifier((this->value * multiplier).to_int());
+		const int change = (this->value * multiplier).to_int();
+
+		if constexpr (std::is_same_v<scope_type, military_unit>) {
+			scope->change_entrench_bonus_modifier(change);
+		} else {
+			scope->get_game_data()->change_entrench_bonus_modifier(change);
+		}
 	}
 
 	virtual std::string get_base_string() const override
 	{
 		return "Entrenchment Bonus";
+	}
+
+	virtual bool is_percent() const override
+	{
+		return std::is_same_v<scope_type, const country>;
 	}
 };
 

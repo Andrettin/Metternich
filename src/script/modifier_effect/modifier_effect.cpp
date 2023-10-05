@@ -144,8 +144,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<damage_bonus_modifier_effect>(value);
 		} else if (key == "defense") {
 			return std::make_unique<defense_modifier_effect>(value);
-		} else if (key == "entrench_bonus_modifier") {
-			return std::make_unique<entrench_bonus_modifier_effect>(value);
 		} else if (key == "melee") {
 			return std::make_unique<melee_modifier_effect>(value);
 		}
@@ -159,6 +157,12 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
 
 			return std::make_unique<commodity_bonus_modifier_effect>(commodity, value);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, military_unit>) {
+		if (key == "entrench_bonus_modifier") {
+			return std::make_unique<entrench_bonus_modifier_effect<scope_type>>(value);
 		}
 	}
 
