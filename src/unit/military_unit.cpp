@@ -101,6 +101,10 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	assert_throw(this->get_home_settlement() != nullptr);
 
 	connect(this, &military_unit::type_changed, this, &military_unit::icon_changed);
+
+	this->get_country()->get_game_data()->change_score(this->get_score());
+
+	this->check_free_promotions();
 }
 
 military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::site *home_settlement)
@@ -188,6 +192,10 @@ void military_unit::set_type(const military_unit_type *type)
 
 	const military_unit_type *old_type = this->get_type();
 
+	if (this->get_country() != nullptr) {
+		this->get_country()->get_game_data()->change_score(-this->get_score());
+	}
+
 	const bool different_category = this->get_category() != type->get_category();
 	if (this->get_province() != nullptr && different_category) {
 		this->get_province()->get_game_data()->change_military_unit_category_count(this->get_category(), -1);
@@ -225,6 +233,10 @@ void military_unit::set_type(const military_unit_type *type)
 
 	if (type->get_bonus_vs_fortifications() != old_type->get_bonus_vs_fortifications()) {
 		this->change_bonus_vs_fortifications(type->get_bonus_vs_fortifications() - old_type->get_bonus_vs_fortifications());
+	}
+
+	if (this->get_country() != nullptr) {
+		this->get_country()->get_game_data()->change_score(this->get_score());
 	}
 
 	//check promotions in case any have been invalidated by the type change, or if new free promotions have been gained
@@ -435,7 +447,15 @@ void military_unit::add_promotion(const promotion *promotion)
 		return;
 	}
 
+	if (this->get_country() != nullptr) {
+		this->get_country()->get_game_data()->change_score(-this->get_score());
+	}
+
 	this->promotions.push_back(promotion);
+
+	if (this->get_country() != nullptr) {
+		this->get_country()->get_game_data()->change_score(this->get_score());
+	}
 
 	if (promotion->get_modifier() != nullptr) {
 		promotion->get_modifier()->apply(this);
@@ -448,7 +468,15 @@ void military_unit::add_promotion(const promotion *promotion)
 
 void military_unit::remove_promotion(const promotion *promotion)
 {
+	if (this->get_country() != nullptr) {
+		this->get_country()->get_game_data()->change_score(-this->get_score());
+	}
+
 	std::erase(this->promotions, promotion);
+
+	if (this->get_country() != nullptr) {
+		this->get_country()->get_game_data()->change_score(this->get_score());
+	}
 
 	if (promotion->get_modifier() != nullptr) {
 		promotion->get_modifier()->remove(this);
@@ -581,6 +609,7 @@ void military_unit::disband(const bool restore_population_unit)
 	}
 
 	if (this->get_country() != nullptr) {
+		this->get_country()->get_game_data()->change_score(-this->get_score());
 		this->get_country()->get_game_data()->remove_military_unit(this);
 
 		if (restore_population_unit) {
@@ -602,7 +631,7 @@ void military_unit::disband()
 
 int military_unit::get_score() const
 {
-	return this->get_type()->get_firepower() + this->get_melee() + this->get_type()->get_range() + this->get_defense() + this->get_type()->get_resistance() / 4 + this->get_hit_points() + this->get_type()->get_movement();
+	return this->get_type()->get_score() + static_cast<int>(this->get_promotions().size()) * 100;
 }
 
 }

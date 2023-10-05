@@ -106,11 +106,6 @@ public:
 		return this->commodity_costs;
 	}
 
-	int get_score() const
-	{
-		return this->get_defense() + this->get_resistance() / 4 + this->get_hit_points() + this->get_speed() + this->get_cargo();
-	}
-
 signals:
 	void changed();
 

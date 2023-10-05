@@ -177,10 +177,7 @@ public:
 		return this->free_promotions;
 	}
 
-	int get_score() const
-	{
-		return this->get_firepower() + this->get_melee() + this->get_range() + this->get_defense() + this->get_resistance() / 4 + this->get_hit_points() + this->get_movement();
-	}
+	int get_score() const;
 
 signals:
 	void changed();
