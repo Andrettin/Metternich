@@ -1,7 +1,7 @@
 #pragma once
 
-#include "database/data_entry.h"
 #include "database/data_type.h"
+#include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 
 namespace metternich {
@@ -11,7 +11,7 @@ class country;
 template <typename scope_type>
 class modifier;
 
-class policy final : public data_entry, public data_type<policy>
+class policy final : public named_data_entry, public data_type<policy>
 {
 	Q_OBJECT
 
@@ -31,6 +31,7 @@ public:
 	~policy();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const std::string &get_left_name() const

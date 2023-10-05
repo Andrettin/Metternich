@@ -8,7 +8,7 @@
 
 namespace metternich {
 
-policy::policy(const std::string &identifier) : data_entry(identifier)
+policy::policy(const std::string &identifier) : named_data_entry(identifier)
 {
 }
 
@@ -38,8 +38,15 @@ void policy::process_gsml_scope(const gsml_data &scope)
 		database::process_gsml_data(modifier, scope);
 		this->right_modifier = std::move(modifier);
 	} else {
-		data_entry::process_gsml_scope(scope);
+		named_data_entry::process_gsml_scope(scope);
 	}
+}
+
+void policy::initialize()
+{
+	this->set_name(std::format("{}/{}", this->get_left_name(), this->get_right_name()));
+
+	named_data_entry::initialize();
 }
 
 void policy::check() const
