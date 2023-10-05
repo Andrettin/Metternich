@@ -1488,6 +1488,10 @@ void game::calculate_great_power_ranks()
 	std::vector<const metternich::country *> great_powers = game::get()->get_great_powers();
 
 	std::sort(great_powers.begin(), great_powers.end(), [](const metternich::country *lhs, const metternich::country *rhs) {
+		if (lhs->get_game_data()->is_under_anarchy() != rhs->get_game_data()->is_under_anarchy()) {
+			return rhs->get_game_data()->is_under_anarchy();
+		}
+
 		return lhs->get_game_data()->get_score() > rhs->get_game_data()->get_score();
 	});
 
