@@ -2,6 +2,7 @@
 
 #include "database/data_entry.h"
 #include "database/data_type.h"
+#include "economy/commodity_container.h"
 
 namespace metternich {
 
@@ -16,6 +17,7 @@ class policy final : public data_entry, public data_type<policy>
 
 	Q_PROPERTY(QString left_name READ get_left_name_qstring NOTIFY changed)
 	Q_PROPERTY(QString right_name READ get_right_name_qstring NOTIFY changed)
+	Q_PROPERTY(QVariantList change_commodity_costs READ get_change_commodity_costs_qvariant_list NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "policy";
@@ -61,6 +63,13 @@ public:
 		return QString::fromStdString(this->get_right_name());
 	}
 
+	const commodity_map<int> &get_change_commodity_costs() const
+	{
+		return this->change_commodity_costs;
+	}
+
+	QVariantList get_change_commodity_costs_qvariant_list() const;
+
 	const metternich::modifier<const country> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -85,6 +94,7 @@ signals:
 private:
 	std::string left_name;
 	std::string right_name;
+	commodity_map<int> change_commodity_costs;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
 	std::unique_ptr<const metternich::modifier<const country>> left_modifier;
 	std::unique_ptr<const metternich::modifier<const country>> right_modifier;

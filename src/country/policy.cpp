@@ -2,8 +2,8 @@
 
 #include "country/policy.h"
 
+#include "economy/commodity.h"
 #include "script/modifier.h"
-#include "util/assert_util.h"
 
 namespace metternich {
 
@@ -19,7 +19,12 @@ void policy::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "modifier") {
+	if (tag == "change_commodity_costs") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->change_commodity_costs[commodity] = std::stoi(property.get_value());
+		});
+	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
 		this->modifier = std::move(modifier);
@@ -41,6 +46,11 @@ void policy::check() const
 	if (this->get_modifier() == nullptr) {
 		throw std::runtime_error(std::format("Policy \"{}\" has no modifier.", this->get_identifier()));
 	}
+}
+
+QVariantList policy::get_change_commodity_costs_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_change_commodity_costs());
 }
 
 void policy::apply_modifier(const country *country, const int value, const int multiplier) const
