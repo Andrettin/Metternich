@@ -2753,16 +2753,10 @@ bool country_game_data::is_technology_available(const technology *technology) co
 		return false;
 	}
 
-	bool has_prerequisites = true;
 	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
 		if (!this->has_technology(prerequisite)) {
-			has_prerequisites = false;
-			break;
+			return false;
 		}
-	}
-
-	if (!has_prerequisites) {
-		return false;
 	}
 
 	return true;

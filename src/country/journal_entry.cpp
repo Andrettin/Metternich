@@ -193,7 +193,7 @@ bool journal_entry::check_conditions(const country *country) const
 	const country_game_data *country_game_data = country->get_game_data();
 
 	for (const technology *technology : this->get_researched_technologies()) {
-		if (!technology->is_discovery() && !country_game_data->is_technology_available(technology)) {
+		if (!technology->is_discovery() && !country_game_data->is_technology_available(technology) && !country_game_data->has_technology(technology)) {
 			return false;
 		}
 	}
