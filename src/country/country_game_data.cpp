@@ -3027,6 +3027,33 @@ void country_game_data::set_policy_value(const policy *policy, const int value)
 	}
 }
 
+bool country_game_data::can_change_policy_value(const metternich::policy *policy, const int change) const
+{
+	const int new_value = this->get_policy_value(policy) + change;
+	if (new_value < policy::min_value) {
+		return false;
+	} else if (new_value > policy::max_value) {
+		return false;
+	}
+
+	for (const auto &[commodity, cost] : policy->get_change_commodity_costs()) {
+		if (this->get_stored_commodity(commodity) < cost) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void country_game_data::do_policy_value_change(const policy *policy, const int change)
+{
+	for (const auto &[commodity, cost] : policy->get_change_commodity_costs()) {
+		this->change_stored_commodity(commodity, -cost);
+	}
+
+	this->change_policy_value(policy, change);
+}
+
 void country_game_data::check_characters()
 {
 	this->check_ruler();

@@ -4,6 +4,7 @@
 
 #include "economy/commodity.h"
 #include "script/modifier.h"
+#include "util/map_util.h"
 
 namespace metternich {
 

@@ -22,6 +22,7 @@ Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("country/government_type.h")
 Q_MOC_INCLUDE("country/journal_entry.h")
+Q_MOC_INCLUDE("country/policy.h")
 Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
@@ -1004,6 +1005,9 @@ public:
 	{
 		this->set_policy_value(policy, this->get_policy_value(policy) + change);
 	}
+
+	Q_INVOKABLE bool can_change_policy_value(const metternich::policy *policy, const int change) const;
+	Q_INVOKABLE void do_policy_value_change(const metternich::policy *policy, const int change);
 
 	void check_characters();
 
