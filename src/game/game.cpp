@@ -277,6 +277,7 @@ void game::clear()
 
 		this->scenario = nullptr;
 		this->countries.clear();
+		this->great_powers.clear();
 		this->prices.clear();
 
 		this->date = game::normalize_date(defines::get()->get_default_start_date());
