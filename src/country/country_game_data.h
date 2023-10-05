@@ -674,7 +674,11 @@ public:
 			return;
 		}
 
+		this->change_score(-this->get_wealth_income());
+
 		this->wealth_income = income;
+
+		this->change_score(this->get_wealth_income());
 
 		emit wealth_income_changed();
 	}

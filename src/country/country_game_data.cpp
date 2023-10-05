@@ -2417,6 +2417,10 @@ void country_game_data::change_commodity_input(const commodity *commodity, const
 		this->commodity_inputs.erase(commodity);
 	}
 
+	if (commodity->get_base_price() != 0) {
+		this->change_score(-change * commodity->get_base_price());
+	}
+
 	if (game::get()->is_running()) {
 		emit commodity_inputs_changed();
 	}
@@ -2444,6 +2448,11 @@ void country_game_data::change_commodity_output(const commodity *commodity, cons
 
 	if (count == 0) {
 		this->commodity_outputs.erase(commodity);
+	}
+
+	if (commodity->get_base_price() != 0 || commodity->get_wealth_value() != 0) {
+		const int commodity_value = commodity->get_base_price() != 0 ? commodity->get_base_price() : commodity->get_wealth_value();
+		this->change_score(change * commodity_value);
 	}
 
 	if (game::get()->is_running()) {
