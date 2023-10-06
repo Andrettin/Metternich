@@ -7,6 +7,7 @@
 Q_MOC_INCLUDE("country/country_game_data.h")
 Q_MOC_INCLUDE("country/country_turn_data.h")
 Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("country/government_type.h")
 Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("map/site.h")
 
@@ -43,6 +44,7 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(metternich::country_tier max_tier MEMBER max_tier READ get_max_tier)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* default_religion MEMBER default_religion NOTIFY changed)
+	Q_PROPERTY(metternich::government_type* default_government_type MEMBER default_government_type NOTIFY changed)
 	Q_PROPERTY(metternich::site* default_capital MEMBER default_capital NOTIFY changed)
 	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
@@ -133,6 +135,11 @@ public:
 		return this->default_religion;
 	}
 
+	const government_type *get_default_government_type() const
+	{
+		return this->default_government_type;
+	}
+
 	const site *get_default_capital() const
 	{
 		return this->default_capital;
@@ -175,6 +182,7 @@ private:
 	country_tier max_tier{};
 	metternich::culture *culture = nullptr;
 	religion *default_religion = nullptr;
+	government_type *default_government_type = nullptr;
 	site *default_capital = nullptr;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	title_name_map title_names;
