@@ -23,6 +23,7 @@ class country_history;
 class country_turn_data;
 class culture;
 class era;
+class government_group;
 class government_type;
 class population_class;
 class province;
@@ -50,8 +51,9 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
 
 public:
-	using title_name_map = std::map<const government_type *, std::map<country_tier, std::string>>;
-	using ruler_title_name_map = std::map<const government_type *, std::map<country_tier, std::map<gender, std::string>>>;
+	using government_variant = std::variant<const government_type *, const government_group *>;
+	using title_name_map = std::map<government_variant, std::map<country_tier, std::string>>;
+	using ruler_title_name_map = std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>;
 
 	static constexpr const char class_identifier[] = "country";
 	static constexpr const char property_class_identifier[] = "metternich::country*";
@@ -122,6 +124,9 @@ public:
 		return this->max_tier;
 	}
 
+	using named_data_entry::get_name;
+
+	const std::string &get_name(const government_type *government_type, const country_tier tier) const;
 	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
 	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const;
 
@@ -185,6 +190,7 @@ private:
 	government_type *default_government_type = nullptr;
 	site *default_capital = nullptr;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
+	title_name_map short_names;
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;
 	std::vector<province *> core_provinces;

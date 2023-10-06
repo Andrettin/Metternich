@@ -66,6 +66,7 @@ class country_game_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString name READ get_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString ruler_title_name READ get_ruler_title_name_qstring NOTIFY ruler_title_name_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
@@ -164,6 +165,13 @@ public:
 	}
 
 	void set_tier(const country_tier tier);
+
+	const std::string &get_name() const;
+
+	QString get_name_qstring() const
+	{
+		return QString::fromStdString(this->get_name());
+	}
 
 	const std::string &get_title_name() const;
 

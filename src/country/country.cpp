@@ -7,6 +7,7 @@
 #include "country/country_tier.h"
 #include "country/country_turn_data.h"
 #include "country/country_type.h"
+#include "country/government_group.h"
 #include "country/government_type.h"
 #include "database/defines.h"
 #include "map/province.h"
@@ -21,10 +22,31 @@ namespace metternich {
 
 void country::process_title_names(title_name_map &title_names, const gsml_data &scope)
 {
-	scope.for_each_child([&](const gsml_data &child_scope) {
-		const government_type *government_type = government_type::get(child_scope.get_tag());
+	scope.for_each_property([&](const gsml_property &property) {
+		const std::string &key = property.get_key();
+		const std::string &value = property.get_value();
 
-		country::process_title_name_scope(title_names[government_type], child_scope);
+		government_variant government_variant{};
+		const government_group *government_group = government_group::try_get(key);
+		if (government_group != nullptr) {
+			government_variant = government_group;
+		} else {
+			government_variant = government_type::get(key);
+		}
+
+		title_names[government_variant][country_tier::none] = value;
+	});
+
+	scope.for_each_child([&](const gsml_data &child_scope) {
+		government_variant government_variant{};
+		const government_group *government_group = government_group::try_get(child_scope.get_tag());
+		if (government_group != nullptr) {
+			government_variant = government_group;
+		} else {
+			government_variant = government_type::get(child_scope.get_tag());
+		}
+
+		country::process_title_name_scope(title_names[government_variant], child_scope);
 	});
 }
 
@@ -41,9 +63,15 @@ void country::process_title_name_scope(std::map<country_tier, std::string> &titl
 void country::process_ruler_title_names(ruler_title_name_map &ruler_title_names, const gsml_data &scope)
 {
 	scope.for_each_child([&](const gsml_data &child_scope) {
-		const government_type *government_type = government_type::get(child_scope.get_tag());
+		government_variant government_variant{};
+		const government_group *government_group = government_group::try_get(child_scope.get_tag());
+		if (government_group != nullptr) {
+			government_variant = government_group;
+		} else {
+			government_variant = government_type::get(child_scope.get_tag());
+		}
 
-		country::process_ruler_title_name_scope(ruler_title_names[government_type], child_scope);
+		country::process_ruler_title_name_scope(ruler_title_names[government_variant], child_scope);
 	});
 }
 
@@ -92,6 +120,8 @@ void country::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->eras.push_back(era::get(value));
 		}
+	} else if (tag == "short_names") {
+		country::process_title_names(this->short_names, scope);
 	} else if (tag == "title_names") {
 		country::process_title_names(this->title_names, scope);
 	} else if (tag == "ruler_title_names") {
@@ -202,9 +232,34 @@ const QColor &country::get_color() const
 	return this->color;
 }
 
+const std::string &country::get_name(const government_type *government_type, const country_tier tier) const
+{
+	auto find_iterator = this->short_names.find(government_type);
+	if (find_iterator == this->short_names.end()) {
+		find_iterator = this->short_names.find(government_type->get_group());
+	}
+
+	if (find_iterator != this->short_names.end()) {
+		auto sub_find_iterator = find_iterator->second.find(tier);
+		if (sub_find_iterator == find_iterator->second.end()) {
+			sub_find_iterator = find_iterator->second.find(country_tier::none);
+		}
+
+		if (sub_find_iterator != find_iterator->second.end()) {
+			return sub_find_iterator->second;
+		}
+	}
+
+	return this->get_name();
+}
+
 const std::string &country::get_title_name(const government_type *government_type, const country_tier tier) const
 {
-	const auto find_iterator = this->title_names.find(government_type);
+	auto find_iterator = this->title_names.find(government_type);
+	if (find_iterator == this->title_names.end()) {
+		find_iterator = this->title_names.find(government_type->get_group());
+	}
+
 	if (find_iterator != this->title_names.end()) {
 		const auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator != find_iterator->second.end()) {
@@ -219,16 +274,19 @@ const std::string &country::get_title_name(const government_type *government_typ
 
 const std::string &country::get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const
 {
-	const auto find_iterator = this->ruler_title_names.find(government_type);
+	auto find_iterator = this->ruler_title_names.find(government_type);
+	if (find_iterator == this->ruler_title_names.end()) {
+		find_iterator = this->ruler_title_names.find(government_type->get_group());
+	}
+
 	if (find_iterator != this->ruler_title_names.end()) {
 		const auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator != find_iterator->second.end()) {
 			auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
-			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
-				return sub_sub_find_iterator->second;
+			if (sub_sub_find_iterator == sub_find_iterator->second.end()) {
+				sub_sub_find_iterator = sub_find_iterator->second.find(gender::none);
 			}
-
-			sub_sub_find_iterator = sub_find_iterator->second.find(gender::none);
+			
 			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
 				return sub_sub_find_iterator->second;
 			}
