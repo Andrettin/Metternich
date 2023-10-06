@@ -660,13 +660,13 @@ void country_game_data::set_tier(const country_tier tier)
 
 const std::string &country_game_data::get_title_name() const
 {
-	return this->country->get_title_name(this->tier);
+	return this->country->get_title_name(this->get_government_type(), this->get_tier());
 }
 
 const std::string &country_game_data::get_ruler_title_name() const
 {
 	const gender gender = this->get_ruler() != nullptr ? this->get_ruler()->get_gender() : gender::male;
-	return this->country->get_ruler_title_name(this->tier, gender);
+	return this->country->get_ruler_title_name(this->get_government_type(), this->get_tier(), gender);
 }
 
 void country_game_data::set_religion(const metternich::religion *religion)

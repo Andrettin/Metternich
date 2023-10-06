@@ -22,6 +22,7 @@ class country_history;
 class country_turn_data;
 class culture;
 class era;
+class government_type;
 class population_class;
 class province;
 class religion;
@@ -47,8 +48,8 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
 
 public:
-	using title_name_map = std::map<country_tier, std::string>;
-	using ruler_title_name_map = std::map<country_tier, std::map<gender, std::string>>;
+	using title_name_map = std::map<const government_type *, std::map<country_tier, std::string>>;
+	using ruler_title_name_map = std::map<const government_type *, std::map<country_tier, std::map<gender, std::string>>>;
 
 	static constexpr const char class_identifier[] = "country";
 	static constexpr const char property_class_identifier[] = "metternich::country*";
@@ -60,7 +61,9 @@ public:
 	static constexpr int max_opinion = 200;
 
 	static void process_title_names(title_name_map &title_names, const gsml_data &scope);
+	static void process_title_name_scope(std::map<country_tier, std::string> &title_names, const gsml_data &scope);
 	static void process_ruler_title_names(ruler_title_name_map &ruler_title_names, const gsml_data &scope);
+	static void process_ruler_title_name_scope(std::map<country_tier, std::map<gender, std::string>> &ruler_title_names, const gsml_data &scope);
 	static void process_ruler_title_name_scope(std::map<gender, std::string> &ruler_title_names, const gsml_data &scope);
 
 	explicit country(const std::string &identifier);
@@ -117,8 +120,8 @@ public:
 		return this->max_tier;
 	}
 
-	const std::string &get_title_name(const country_tier tier) const;
-	const std::string &get_ruler_title_name(const country_tier tier, const gender gender) const;
+	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
+	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const;
 
 	const metternich::culture *get_culture() const
 	{

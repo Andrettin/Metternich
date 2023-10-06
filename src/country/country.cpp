@@ -7,6 +7,7 @@
 #include "country/country_tier.h"
 #include "country/country_turn_data.h"
 #include "country/country_type.h"
+#include "country/government_type.h"
 #include "database/defines.h"
 #include "map/province.h"
 #include "map/site.h"
@@ -20,6 +21,15 @@ namespace metternich {
 
 void country::process_title_names(title_name_map &title_names, const gsml_data &scope)
 {
+	scope.for_each_child([&](const gsml_data &child_scope) {
+		const government_type *government_type = government_type::get(child_scope.get_tag());
+
+		country::process_title_name_scope(title_names[government_type], child_scope);
+	});
+}
+
+void country::process_title_name_scope(std::map<country_tier, std::string> &title_names, const gsml_data &scope)
+{
 	scope.for_each_property([&](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
@@ -29,6 +39,15 @@ void country::process_title_names(title_name_map &title_names, const gsml_data &
 }
 
 void country::process_ruler_title_names(ruler_title_name_map &ruler_title_names, const gsml_data &scope)
+{
+	scope.for_each_child([&](const gsml_data &child_scope) {
+		const government_type *government_type = government_type::get(child_scope.get_tag());
+
+		country::process_ruler_title_name_scope(ruler_title_names[government_type], child_scope);
+	});
+}
+
+void country::process_ruler_title_name_scope(std::map<country_tier, std::map<gender, std::string>> &ruler_title_names, const gsml_data &scope)
 {
 	scope.for_each_property([&](const gsml_property &property) {
 		const std::string &key = property.get_key();
@@ -179,97 +198,37 @@ const QColor &country::get_color() const
 	return this->color;
 }
 
-const std::string &country::get_title_name(const country_tier tier) const
+const std::string &country::get_title_name(const government_type *government_type, const country_tier tier) const
 {
-	const auto find_iterator = this->title_names.find(tier);
+	const auto find_iterator = this->title_names.find(government_type);
 	if (find_iterator != this->title_names.end()) {
-		return find_iterator->second;
-	}
-
-	switch (tier) {
-		case country_tier::barony: {
-			static const std::string str = "Barony";
-			return str;
-		}
-		case country_tier::county: {
-			static const std::string str = "County";
-			return str;
-		}
-		case country_tier::duchy: {
-			static const std::string str = "Duchy";
-			return str;
-		}
-		case country_tier::kingdom: {
-			static const std::string str = "Kingdom";
-			return str;
-		}
-		case country_tier::empire: {
-			static const std::string str = "Empire";
-			return str;
-		}
-		default:
-			break;
-	}
-
-	return string::empty_str;
-}
-
-const std::string &country::get_ruler_title_name(const country_tier tier, const gender gender) const
-{
-	const auto find_iterator = this->ruler_title_names.find(tier);
-	if (find_iterator != this->ruler_title_names.end()) {
-		const auto sub_find_iterator = find_iterator->second.find(gender);
+		const auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator != find_iterator->second.end()) {
 			return sub_find_iterator->second;
 		}
 	}
 
-	switch (tier) {
-		case country_tier::barony:
-			if (gender == gender::female) {
-				static const std::string str = "Baroness";
-				return str;
-			} else {
-				static const std::string str = "Baron";
-				return str;
+	assert_throw(government_type != nullptr);
+
+	return government_type->get_title_name(tier);
+}
+
+const std::string &country::get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const
+{
+	const auto find_iterator = this->ruler_title_names.find(government_type);
+	if (find_iterator != this->ruler_title_names.end()) {
+		const auto sub_find_iterator = find_iterator->second.find(tier);
+		if (sub_find_iterator != find_iterator->second.end()) {
+			const auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
+			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
+				return sub_sub_find_iterator->second;
 			}
-		case country_tier::county:
-			if (gender == gender::female) {
-				static const std::string str = "Countess";
-				return str;
-			} else {
-				static const std::string str = "Count";
-				return str;
-			}
-		case country_tier::duchy:
-			if (gender == gender::female) {
-				static const std::string str = "Duchess";
-				return str;
-			} else {
-				static const std::string str = "Duke";
-				return str;
-			}
-		case country_tier::kingdom:
-			if (gender == gender::female) {
-				static const std::string str = "Queen";
-				return str;
-			} else {
-				static const std::string str = "King";
-				return str;
-			}
-		case country_tier::empire:
-			if (gender == gender::female) {
-				static const std::string str = "Empress";
-				return str;
-			} else {
-				static const std::string str = "Emperor";
-				return str;
-			}
-		default:
-			break;
+		}
 	}
 
-	return string::empty_str;
+	assert_throw(government_type != nullptr);
+
+	return government_type->get_ruler_title_name(tier, gender);
 }
 
 const population_class *country::get_default_population_class() const
