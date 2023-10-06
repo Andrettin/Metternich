@@ -949,7 +949,7 @@ public:
 
 	int get_research_cost_modifier() const
 	{
-		return 100 + 10 * (this->get_province_count() - 1);
+		return 100 + (this->get_population_unit_count() - 1);
 	}
 
 	std::map<technology_category, const technology *> get_research_choice_map() const;
