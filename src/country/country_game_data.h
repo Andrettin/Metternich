@@ -1011,6 +1011,11 @@ public:
 	Q_INVOKABLE bool can_change_policy_value(const metternich::policy *policy, const int change) const;
 	Q_INVOKABLE void do_policy_value_change(const metternich::policy *policy, const int change);
 
+	Q_INVOKABLE int get_policy_value_change_cost_modifier() const
+	{
+		return 100 + (this->get_population_unit_count() - 1);
+	}
+
 	void check_characters();
 
 	const character *get_ruler() const

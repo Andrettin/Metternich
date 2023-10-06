@@ -3025,7 +3025,7 @@ bool country_game_data::can_change_policy_value(const metternich::policy *policy
 	}
 
 	for (const auto &[commodity, cost] : policy->get_change_commodity_costs()) {
-		if (this->get_stored_commodity(commodity) < cost) {
+		if (this->get_stored_commodity(commodity) < (cost * this->get_policy_value_change_cost_modifier() / 100)) {
 			return false;
 		}
 	}
@@ -3036,7 +3036,7 @@ bool country_game_data::can_change_policy_value(const metternich::policy *policy
 void country_game_data::do_policy_value_change(const policy *policy, const int change)
 {
 	for (const auto &[commodity, cost] : policy->get_change_commodity_costs()) {
-		this->change_stored_commodity(commodity, -cost);
+		this->change_stored_commodity(commodity, -cost * this->get_policy_value_change_cost_modifier() / 100);
 	}
 
 	this->change_policy_value(policy, change);
