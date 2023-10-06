@@ -13,6 +13,7 @@
 #include "country/culture.h"
 #include "country/culture_history.h"
 #include "country/diplomacy_state.h"
+#include "country/government_type.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
@@ -346,12 +347,15 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			if (country_history->get_religion() != nullptr) {
 				country_game_data->set_religion(country_history->get_religion());
-			} else {
-				country_game_data->set_religion(country->get_default_religion());
 			}
 
-			if (country_history->get_government_type() != nullptr) {
-				country_game_data->set_government_type(country_history->get_government_type());
+			const government_type *government_type = country_history->get_government_type();
+			if (government_type != nullptr) {
+				country_game_data->set_government_type(government_type);
+
+				if (government_type->get_required_technology() != nullptr) {
+					country_game_data->add_technology_with_prerequisites(government_type->get_required_technology());
+				}
 			}
 
 			const character *ruler = country_history->get_ruler();
@@ -362,7 +366,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					throw std::runtime_error(std::format("Cannot set \"{}\" as the ruler of \"{}\", as it is already assigned to another country.", ruler->get_identifier(), country->get_identifier()));
 				}
 
-				country_game_data->set_ruler(country_history->get_ruler());
+				country_game_data->set_ruler(ruler);
 
 				if (ruler->get_required_technology() != nullptr) {
 					country_game_data->add_technology_with_prerequisites(ruler->get_required_technology());

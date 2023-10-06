@@ -82,7 +82,7 @@
 namespace metternich {
 
 country_game_data::country_game_data(metternich::country *country)
-	: country(country), tier(country->get_default_tier())
+	: country(country), tier(country->get_default_tier()), religion(country->get_default_religion())
 {
 	connect(this, &country_game_data::tier_changed, this, &country_game_data::title_name_changed);
 	connect(this, &country_game_data::tier_changed, this, &country_game_data::ruler_title_name_changed);
