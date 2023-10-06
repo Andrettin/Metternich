@@ -253,6 +253,31 @@ const std::string &country::get_name(const government_type *government_type, con
 	return this->get_name();
 }
 
+const std::string &country::get_titled_name(const government_type *government_type, const country_tier tier) const
+{
+	auto find_iterator = this->short_names.find(government_type);
+	if (find_iterator == this->short_names.end()) {
+		find_iterator = this->short_names.find(government_type->get_group());
+	}
+
+	if (find_iterator != this->short_names.end()) {
+		auto sub_find_iterator = find_iterator->second.find(tier);
+		if (sub_find_iterator == find_iterator->second.end()) {
+			sub_find_iterator = find_iterator->second.find(country_tier::none);
+		}
+
+		if (sub_find_iterator != find_iterator->second.end()) {
+			return sub_find_iterator->second;
+		}
+	}
+
+	if (this->is_tribe()) {
+		return this->get_name();
+	}
+
+	return std::format("{} of {}", this->get_title_name(government_type, tier), this->get_name());
+}
+
 const std::string &country::get_title_name(const government_type *government_type, const country_tier tier) const
 {
 	auto find_iterator = this->title_names.find(government_type);
