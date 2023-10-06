@@ -47,6 +47,7 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(metternich::religion* default_religion MEMBER default_religion NOTIFY changed)
 	Q_PROPERTY(metternich::government_type* default_government_type MEMBER default_government_type NOTIFY changed)
 	Q_PROPERTY(metternich::site* default_capital MEMBER default_capital NOTIFY changed)
+	Q_PROPERTY(bool definite_article MEMBER definite_article NOTIFY changed)
 	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
 
@@ -127,7 +128,7 @@ public:
 	using named_data_entry::get_name;
 
 	const std::string &get_name(const government_type *government_type, const country_tier tier) const;
-	const std::string &get_titled_name(const government_type *government_type, const country_tier tier) const;
+	std::string get_titled_name(const government_type *government_type, const country_tier tier) const;
 	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
 	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const;
 
@@ -188,6 +189,7 @@ private:
 	religion *default_religion = nullptr;
 	government_type *default_government_type = nullptr;
 	site *default_capital = nullptr;
+	bool definite_article = false;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	title_name_map short_names;
 	title_name_map title_names;

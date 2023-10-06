@@ -253,7 +253,7 @@ const std::string &country::get_name(const government_type *government_type, con
 	return this->get_name();
 }
 
-const std::string &country::get_titled_name(const government_type *government_type, const country_tier tier) const
+std::string country::get_titled_name(const government_type *government_type, const country_tier tier) const
 {
 	auto find_iterator = this->short_names.find(government_type);
 	if (find_iterator == this->short_names.end()) {
@@ -275,7 +275,13 @@ const std::string &country::get_titled_name(const government_type *government_ty
 		return this->get_name();
 	}
 
-	return std::format("{} of {}", this->get_title_name(government_type, tier), this->get_name());
+	const std::string title_name = this->get_title_name(government_type, tier);
+	const std::string country_name = this->get_name();
+	if (this->definite_article) {
+		return std::format("{} of the {}", title_name, country_name);
+	} else {
+		return std::format("{} of {}", title_name, country_name);
+	}
 }
 
 const std::string &country::get_title_name(const government_type *government_type, const country_tier tier) const
