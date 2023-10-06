@@ -600,7 +600,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const population_type *population_type = historical_civilian_unit->get_population_type();
 			if (population_type == nullptr) {
-				population_type = culture->get_population_class_type(owner->get_default_population_class());
+				population_type = culture->get_population_class_type(owner->get_game_data()->get_default_population_class());
 			}
 			assert_throw(population_type != nullptr);
 
@@ -676,7 +676,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const population_type *population_type = historical_military_unit->get_population_type();
 			if (population_type == nullptr) {
-				population_type = culture->get_population_class_type(country->get_default_population_class());
+				population_type = culture->get_population_class_type(country->get_game_data()->get_default_population_class());
 			}
 			assert_throw(population_type != nullptr);
 
@@ -1146,7 +1146,7 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 
 	const population_type *population_type = group_key.type;
 	if (population_type == nullptr) {
-		if (!country->is_tribe()) {
+		if (!country->get_game_data()->is_tribal()) {
 			centesimal_int literacy_rate = settlement_history->get_literacy_rate();
 			if (literacy_rate == 0) {
 				literacy_rate = province_history->get_literacy_rate();
@@ -1168,7 +1168,7 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 			}
 		}
 
-		const population_class *population_class = country->get_default_population_class();
+		const population_class *population_class = country->get_game_data()->get_default_population_class();
 		population_type = culture->get_population_class_type(population_class);
 	}
 	assert_throw(population_type != nullptr);

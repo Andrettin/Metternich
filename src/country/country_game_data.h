@@ -47,6 +47,7 @@ class military_unit_type;
 class opinion_modifier;
 class phenotype;
 class population;
+class population_class;
 class population_type;
 class population_unit;
 class province;
@@ -550,6 +551,8 @@ public:
 
 	void change_score(const int change);
 
+	const population_class *get_default_population_class() const;
+
 	const std::vector<population_unit *> &get_population_units() const
 	{
 		return this->population_units;
@@ -1014,6 +1017,9 @@ public:
 	}
 
 	void set_government_type(const metternich::government_type *government_type);
+	bool can_change_to_government_type(const metternich::government_type *government_type) const;
+
+	bool is_tribal() const;
 
 	const policy_map<int> &get_policy_values() const
 	{

@@ -16,9 +16,8 @@ inline std::string get_country_type_name(const country_type type)
 		case country_type::great_power:
 			return "Great Power";
 		case country_type::minor_nation:
-			return "Minor Nation";
 		case country_type::tribe:
-			return "Tribe";
+			return "Minor Nation";
 		default:
 			break;
 	}

@@ -15,6 +15,8 @@ class government_group final : public named_data_entry, public data_type<governm
 {
 	Q_OBJECT
 
+	Q_PROPERTY(bool tribal MEMBER tribal READ is_tribal NOTIFY changed)
+
 public:
 	using title_name_map = std::map<country_tier, std::string>;
 	using ruler_title_name_map = std::map<country_tier, std::map<gender, std::string>>;
@@ -33,6 +35,11 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
+	bool is_tribal() const
+	{
+		return this->tribal;
+	}
+
 	const std::string &get_title_name(const country_tier tier) const;
 	const std::string &get_ruler_title_name(const country_tier tier, const gender gender) const;
 
@@ -40,6 +47,7 @@ signals:
 	void changed();
 
 private:
+	bool tribal = false; //tribal countries do not need to be declared war upon to be attacked, nor is war necessary for them to attack others
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;
 };

@@ -160,8 +160,6 @@ public:
 		return this->core_provinces;
 	}
 
-	const population_class *get_default_population_class() const;
-
 	const std::vector<const character *> &get_rulers() const
 	{
 		return this->rulers;

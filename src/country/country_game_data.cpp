@@ -13,6 +13,7 @@
 #include "country/country_type.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
+#include "country/government_group.h"
 #include "country/government_type.h"
 #include "country/journal_entry.h"
 #include "country/policy.h"
@@ -799,9 +800,8 @@ std::string country_game_data::get_type_name() const
 
 			return "Great Power";
 		case country_type::minor_nation:
-			return "Minor Nation";
 		case country_type::tribe:
-			return "Tribe";
+			return "Minor Nation";
 		default:
 			assert_throw(false);
 	}
@@ -1962,6 +1962,15 @@ void country_game_data::change_score(const int change)
 	emit score_changed();
 }
 
+const population_class *country_game_data::get_default_population_class() const
+{
+	if (this->is_tribal()) {
+		return defines::get()->get_default_tribal_population_class();
+	} else {
+		return defines::get()->get_default_population_class();
+	}
+}
+
 void country_game_data::add_population_unit(population_unit *population_unit)
 {
 	this->population_units.push_back(population_unit);
@@ -2038,7 +2047,7 @@ void country_game_data::grow_population()
 	const metternich::culture *culture = population_unit->get_culture();
 	const metternich::religion *religion = population_unit->get_religion();
 	const phenotype *phenotype = population_unit->get_phenotype();
-	const population_type *population_type = culture->get_population_class_type(this->country->get_default_population_class());
+	const population_type *population_type = culture->get_population_class_type(this->get_default_population_class());
 	const site *settlement = population_unit->get_settlement();
 
 	settlement->get_game_data()->create_population_unit(population_type, culture, religion, phenotype);
@@ -3018,6 +3027,21 @@ void country_game_data::set_government_type(const metternich::government_type *g
 	if (game::get()->is_running()) {
 		emit government_type_changed();
 	}
+}
+
+bool country_game_data::can_change_to_government_type(const metternich::government_type *government_type) const
+{
+	if (this->country->is_tribe() && !government_type->get_group()->is_tribal()) {
+		//if the country itself is marked as a tribe, it can only have tribal government types
+		return false;
+	}
+
+	return true;
+}
+
+bool country_game_data::is_tribal() const
+{
+	return this->get_government_type()->get_group()->is_tribal();
 }
 
 QVariantList country_game_data::get_policy_values_qvariant_list() const
