@@ -3,10 +3,10 @@
 #include "country/government_type.h"
 
 #include "country/country_tier.h"
+#include "country/government_group.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/gender.h"
-#include "util/string_util.h"
 
 namespace metternich {
 
@@ -82,6 +82,10 @@ void government_type::initialize()
 
 void government_type::check() const
 {
+	if (this->get_group() == nullptr) {
+		throw std::runtime_error(std::format("Government type \"{}\" has no government group.", this->get_identifier()));
+	}
+
 	if (this->get_modifier() == nullptr) {
 		throw std::runtime_error(std::format("Government type \"{}\" does not have a modifier.", this->get_identifier()));
 	}
@@ -94,32 +98,7 @@ const std::string &government_type::get_title_name(const country_tier tier) cons
 		return find_iterator->second;
 	}
 
-	switch (tier) {
-		case country_tier::barony: {
-			static const std::string str = "Barony";
-			return str;
-		}
-		case country_tier::county: {
-			static const std::string str = "County";
-			return str;
-		}
-		case country_tier::duchy: {
-			static const std::string str = "Duchy";
-			return str;
-		}
-		case country_tier::kingdom: {
-			static const std::string str = "Kingdom";
-			return str;
-		}
-		case country_tier::empire: {
-			static const std::string str = "Empire";
-			return str;
-		}
-		default:
-			break;
-	}
-
-	return string::empty_str;
+	return this->get_group()->get_title_name(tier);
 }
 
 const std::string &government_type::get_ruler_title_name(const country_tier tier, const gender gender) const
@@ -137,52 +116,7 @@ const std::string &government_type::get_ruler_title_name(const country_tier tier
 		}
 	}
 
-	switch (tier) {
-		case country_tier::barony:
-			if (gender == gender::female) {
-				static const std::string str = "Baroness";
-				return str;
-			} else {
-				static const std::string str = "Baron";
-				return str;
-			}
-		case country_tier::county:
-			if (gender == gender::female) {
-				static const std::string str = "Countess";
-				return str;
-			} else {
-				static const std::string str = "Count";
-				return str;
-			}
-		case country_tier::duchy:
-			if (gender == gender::female) {
-				static const std::string str = "Duchess";
-				return str;
-			} else {
-				static const std::string str = "Duke";
-				return str;
-			}
-		case country_tier::kingdom:
-			if (gender == gender::female) {
-				static const std::string str = "Queen";
-				return str;
-			} else {
-				static const std::string str = "King";
-				return str;
-			}
-		case country_tier::empire:
-			if (gender == gender::female) {
-				static const std::string str = "Empress";
-				return str;
-			} else {
-				static const std::string str = "Emperor";
-				return str;
-			}
-		default:
-			break;
-	}
-
-	return string::empty_str;
+	return this->get_group()->get_ruler_title_name(tier, gender);
 }
 
 QString government_type::get_modifier_string(metternich::country *country) const

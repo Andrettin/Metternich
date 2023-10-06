@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("country/government_group.h")
 Q_MOC_INCLUDE("technology/technology.h")
 
 namespace archimedes {
@@ -11,6 +12,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class government_group;
 class technology;
 enum class country_tier;
 
@@ -21,6 +23,7 @@ class government_type final : public named_data_entry, public data_type<governme
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::government_group* group MEMBER group READ get_group NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
@@ -45,6 +48,11 @@ public:
 	const std::string &get_title_name(const country_tier tier) const;
 	const std::string &get_ruler_title_name(const country_tier tier, const gender gender) const;
 
+	const government_group *get_group() const
+	{
+		return this->group;
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -61,6 +69,7 @@ signals:
 	void changed();
 
 private:
+	const government_group *group = nullptr;
 	technology *required_technology = nullptr;
 	std::unique_ptr<const modifier<const country>> modifier;
 	title_name_map title_names;
