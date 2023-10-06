@@ -4,13 +4,14 @@
 
 #include "country/consulate.h"
 #include "country/country.h"
+#include "country/country_tier.h"
 #include "country/diplomacy_state.h"
 #include "util/map_util.h"
 
 namespace metternich {
 
 country_history::country_history(const metternich::country *country)
-	: country(country)
+	: country(country), tier(country_tier::none)
 {
 }
 

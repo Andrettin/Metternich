@@ -8,6 +8,7 @@
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_tier.h"
 #include "country/country_turn_data.h"
 #include "country/country_type.h"
 #include "country/cultural_group_rank.h"
@@ -128,6 +129,7 @@ int main(int argc, char **argv)
 		QQmlApplicationEngine engine;
 
 		enum_converter<advisor_category>();
+		enum_converter<country_tier>();
 		enum_converter<country_type>();
 		enum_converter<cultural_group_rank>();
 		enum_converter<diplomacy_state>();

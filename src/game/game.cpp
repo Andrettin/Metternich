@@ -8,6 +8,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
+#include "country/country_tier.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "country/culture_history.h"
@@ -338,6 +339,10 @@ void game::apply_history(const metternich::scenario *scenario)
 		for (const country *country : this->get_countries()) {
 			const country_history *country_history = country->get_history();
 			country_game_data *country_game_data = country->get_game_data();
+
+			if (country_history->get_tier() != country_tier::none) {
+				country->get_game_data()->set_tier(country_history->get_tier());
+			}
 
 			if (country_history->get_religion() != nullptr) {
 				country_game_data->set_religion(country_history->get_religion());

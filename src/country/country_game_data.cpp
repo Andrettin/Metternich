@@ -66,6 +66,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/gender.h"
 #include "util/image_util.h"
 #include "util/map_util.h"
 #include "util/point_util.h"
@@ -80,8 +81,14 @@
 
 namespace metternich {
 
-country_game_data::country_game_data(metternich::country *country) : country(country)
+country_game_data::country_game_data(metternich::country *country)
+	: country(country), tier(country->get_default_tier())
 {
+	connect(this, &country_game_data::tier_changed, this, &country_game_data::title_name_changed);
+	connect(this, &country_game_data::tier_changed, this, &country_game_data::ruler_title_name_changed);
+	connect(this, &country_game_data::government_type_changed, this, &country_game_data::title_name_changed);
+	connect(this, &country_game_data::government_type_changed, this, &country_game_data::ruler_title_name_changed);
+	connect(this, &country_game_data::ruler_changed, this, &country_game_data::ruler_title_name_changed);
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 
 	for (const commodity *commodity : commodity::get_all()) {
@@ -633,6 +640,33 @@ void country_game_data::do_ai_turn()
 bool country_game_data::is_ai() const
 {
 	return this->country != game::get()->get_player_country();
+}
+
+void country_game_data::set_tier(const country_tier tier)
+{
+	if (tier == this->get_tier()) {
+		return;
+	}
+
+	assert_throw(tier >= this->country->get_min_tier());
+	assert_throw(tier <= this->country->get_max_tier());
+
+	this->tier = tier;
+
+	if (game::get()->is_running()) {
+		emit tier_changed();
+	}
+}
+
+const std::string &country_game_data::get_title_name() const
+{
+	return this->country->get_title_name(this->tier);
+}
+
+const std::string &country_game_data::get_ruler_title_name() const
+{
+	const gender gender = this->get_ruler() != nullptr ? this->get_ruler()->get_gender() : gender::male;
+	return this->country->get_ruler_title_name(this->tier, gender);
 }
 
 void country_game_data::set_religion(const metternich::religion *religion)

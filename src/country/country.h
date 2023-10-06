@@ -10,6 +10,10 @@ Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("map/site.h")
 
+namespace archimedes {
+	enum class gender;
+}
+
 namespace metternich {
 
 class character;
@@ -22,6 +26,7 @@ class population_class;
 class province;
 class religion;
 class site;
+enum class country_tier;
 enum class country_type;
 
 class country final : public named_data_entry, public data_type<country>
@@ -32,6 +37,9 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(bool great_power READ is_great_power NOTIFY changed)
 	Q_PROPERTY(bool tribe READ is_tribe NOTIFY changed)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
+	Q_PROPERTY(metternich::country_tier default_tier MEMBER default_tier READ get_default_tier)
+	Q_PROPERTY(metternich::country_tier min_tier MEMBER min_tier READ get_min_tier)
+	Q_PROPERTY(metternich::country_tier max_tier MEMBER max_tier READ get_max_tier)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* default_religion MEMBER default_religion NOTIFY changed)
 	Q_PROPERTY(metternich::site* default_capital MEMBER default_capital NOTIFY changed)
@@ -39,6 +47,9 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
 
 public:
+	using title_name_map = std::map<country_tier, std::string>;
+	using ruler_title_name_map = std::map<country_tier, std::map<gender, std::string>>;
+
 	static constexpr const char class_identifier[] = "country";
 	static constexpr const char property_class_identifier[] = "metternich::country*";
 	static constexpr const char database_folder[] = "countries";
@@ -47,6 +58,10 @@ public:
 	static constexpr size_t max_great_powers = 7; //maximum true great powers, all others are called secondary powers instead
 	static constexpr int min_opinion = -200;
 	static constexpr int max_opinion = 200;
+
+	static void process_title_names(title_name_map &title_names, const gsml_data &scope);
+	static void process_ruler_title_names(ruler_title_name_map &ruler_title_names, const gsml_data &scope);
+	static void process_ruler_title_name_scope(std::map<gender, std::string> &ruler_title_names, const gsml_data &scope);
 
 	explicit country(const std::string &identifier);
 	~country();
@@ -86,6 +101,24 @@ public:
 	bool is_tribe() const;
 
 	const QColor &get_color() const;
+
+	country_tier get_default_tier() const
+	{
+		return this->default_tier;
+	}
+
+	country_tier get_min_tier() const
+	{
+		return this->min_tier;
+	}
+
+	country_tier get_max_tier() const
+	{
+		return this->max_tier;
+	}
+
+	const std::string &get_title_name(const country_tier tier) const;
+	const std::string &get_ruler_title_name(const country_tier tier, const gender gender) const;
 
 	const metternich::culture *get_culture() const
 	{
@@ -132,12 +165,17 @@ signals:
 	void turn_data_changed() const;
 
 private:
-	country_type type;
+	country_type type{};
 	QColor color;
+	country_tier default_tier{};
+	country_tier min_tier{};
+	country_tier max_tier{};
 	metternich::culture *culture = nullptr;
 	religion *default_religion = nullptr;
 	site *default_capital = nullptr;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
+	title_name_map title_names;
+	ruler_title_name_map ruler_title_names;
 	std::vector<province *> core_provinces;
 	std::vector<const character *> rulers;
 	qunique_ptr<country_history> history;

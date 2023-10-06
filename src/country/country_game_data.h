@@ -54,6 +54,7 @@ class region;
 class religion;
 class site;
 class trait;
+enum class country_tier;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
 enum class event_trigger;
@@ -65,6 +66,8 @@ class country_game_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
+	Q_PROPERTY(QString ruler_title_name READ get_ruler_title_name_qstring NOTIFY ruler_title_name_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(const metternich::country* overlord READ get_overlord NOTIFY overlord_changed)
 	Q_PROPERTY(bool true_great_power READ is_true_great_power NOTIFY rank_changed)
@@ -154,6 +157,27 @@ public:
 	void do_ai_turn();
 
 	bool is_ai() const;
+
+	country_tier get_tier() const
+	{
+		return this->tier;
+	}
+
+	void set_tier(const country_tier tier);
+
+	const std::string &get_title_name() const;
+
+	QString get_title_name_qstring() const
+	{
+		return QString::fromStdString(this->get_title_name());
+	}
+
+	const std::string &get_ruler_title_name() const;
+
+	QString get_ruler_title_name_qstring() const
+	{
+		return QString::fromStdString(this->get_ruler_title_name());
+	}
 
 	const metternich::religion *get_religion() const
 	{
@@ -1778,6 +1802,9 @@ public:
 	}
 
 signals:
+	void tier_changed();
+	void title_name_changed();
+	void ruler_title_name_changed();
 	void religion_changed();
 	void overlord_changed();
 	void type_name_changed();
@@ -1828,6 +1855,7 @@ signals:
 
 private:
 	metternich::country *country = nullptr;
+	country_tier tier{};
 	const metternich::religion *religion = nullptr;
 	const metternich::country *overlord = nullptr;
 	std::vector<const province *> provinces;

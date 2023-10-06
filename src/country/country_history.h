@@ -16,12 +16,14 @@ class country;
 class government_type;
 class religion;
 class technology;
+enum class country_tier;
 enum class diplomacy_state;
 
 class country_history final : public data_entry_history
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::country_tier tier MEMBER tier)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(metternich::government_type* government_type MEMBER government_type)
 	Q_PROPERTY(metternich::character* ruler MEMBER ruler)
@@ -33,6 +35,11 @@ public:
 	explicit country_history(const metternich::country *country);
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+
+	country_tier get_tier() const
+	{
+		return this->tier;
+	}
 
 	const metternich::religion *get_religion() const
 	{
@@ -96,6 +103,7 @@ public:
 
 private:
 	const metternich::country *country = nullptr;
+	country_tier tier{};
 	metternich::religion *religion = nullptr;
 	metternich::government_type *government_type = nullptr;
 	character *ruler = nullptr;
