@@ -223,7 +223,12 @@ const std::string &country::get_ruler_title_name(const government_type *governme
 	if (find_iterator != this->ruler_title_names.end()) {
 		const auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator != find_iterator->second.end()) {
-			const auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
+			auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
+			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
+				return sub_sub_find_iterator->second;
+			}
+
+			sub_sub_find_iterator = sub_find_iterator->second.find(gender::none);
 			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
 				return sub_sub_find_iterator->second;
 			}
