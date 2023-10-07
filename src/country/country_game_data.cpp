@@ -3608,13 +3608,13 @@ void country_game_data::choose_next_leader()
 	if (this->is_ai()) {
 		std::vector<const character *> preferred_leaders;
 
-		int best_desire = 0;
+		int best_desire = -1;
 		for (const auto &[category, leader] : potential_leader_map) {
 			const military_unit_type *military_unit_type = this->get_best_military_unit_category_type(leader->get_military_unit_category(), leader->get_culture());
 			assert_throw(military_unit_type != nullptr);
 			const int leader_score = military_unit_type->get_score();
 
-			assert_throw(leader_score > 0);
+			assert_throw(leader_score >= 0);
 
 			int desire = leader_score;
 
@@ -3624,7 +3624,7 @@ void country_game_data::choose_next_leader()
 				}
 			}
 
-			assert_throw(desire > 0);
+			assert_throw(desire >= 0);
 
 			if (desire > best_desire) {
 				preferred_leaders.clear();
