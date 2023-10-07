@@ -6,6 +6,7 @@
 
 Q_MOC_INCLUDE("country/government_group.h")
 Q_MOC_INCLUDE("technology/technology.h")
+Q_MOC_INCLUDE("ui/icon.h")
 
 namespace archimedes {
 	enum class gender;
@@ -25,6 +26,7 @@ class government_type final : public named_data_entry, public data_type<governme
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::government_group* group MEMBER group READ get_group NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
@@ -54,6 +56,11 @@ public:
 		return this->group;
 	}
 
+	const icon *get_icon() const
+	{
+		return this->icon;
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -74,6 +81,7 @@ signals:
 
 private:
 	const government_group *group = nullptr;
+	const icon *icon = nullptr;
 	technology *required_technology = nullptr;
 	std::unique_ptr<const modifier<const country>> modifier;
 	title_name_map title_names;

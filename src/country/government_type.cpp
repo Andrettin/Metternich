@@ -108,6 +108,10 @@ void government_type::check() const
 		throw std::runtime_error(std::format("Government type \"{}\" has no government group.", this->get_identifier()));
 	}
 
+	if (this->get_icon() == nullptr) {
+		throw std::runtime_error(std::format("Government type \"{}\" has no icon.", this->get_identifier()));
+	}
+
 	if (this->get_modifier() == nullptr) {
 		throw std::runtime_error(std::format("Government type \"{}\" does not have a modifier.", this->get_identifier()));
 	}
