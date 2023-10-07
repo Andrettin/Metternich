@@ -65,12 +65,6 @@ public:
 	static constexpr int min_opinion = -200;
 	static constexpr int max_opinion = 200;
 
-	static void process_title_names(title_name_map &title_names, const gsml_data &scope);
-	static void process_title_name_scope(std::map<country_tier, std::string> &title_names, const gsml_data &scope);
-	static void process_ruler_title_names(ruler_title_name_map &ruler_title_names, const gsml_data &scope);
-	static void process_ruler_title_name_scope(std::map<country_tier, std::map<gender, std::string>> &ruler_title_names, const gsml_data &scope);
-	static void process_ruler_title_name_scope(std::map<gender, std::string> &ruler_title_names, const gsml_data &scope);
-
 	explicit country(const std::string &identifier);
 	~country();
 

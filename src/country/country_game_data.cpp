@@ -664,7 +664,7 @@ const std::string &country_game_data::get_name() const
 	return this->country->get_name(this->get_government_type(), this->get_tier());
 }
 
-const std::string &country_game_data::get_titled_name() const
+std::string country_game_data::get_titled_name() const
 {
 	return this->country->get_titled_name(this->get_government_type(), this->get_tier());
 }

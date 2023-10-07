@@ -11,16 +11,23 @@
 
 Q_MOC_INCLUDE("population/phenotype.h")
 
+namespace archimedes {
+	enum class gender;
+}
+
 namespace metternich {
 
 class building_type;
 class civilian_unit_type;
 class cultural_group;
 class culture_history;
+class government_group;
+class government_type;
 class military_unit_type;
 class phenotype;
 class population_type;
 class transporter_type;
+enum class country_tier;
 
 class culture_base : public named_data_entry
 {
@@ -31,6 +38,10 @@ class culture_base : public named_data_entry
 	Q_PROPERTY(metternich::phenotype* default_phenotype MEMBER default_phenotype)
 
 public:
+	using government_variant = std::variant<const government_type *, const government_group *>;
+	using title_name_map = std::map<government_variant, std::map<country_tier, std::string>>;
+	using ruler_title_name_map = std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>;
+
 	explicit culture_base(const std::string &identifier);
 	~culture_base();
 
@@ -55,6 +66,9 @@ public:
 	bool is_part_of_group(const cultural_group *group) const;
 
 	phenotype *get_default_phenotype() const;
+
+	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
+	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const;
 
 	const building_type *get_building_class_type(const building_class *building_class) const;
 
@@ -122,6 +136,8 @@ signals:
 private:
 	cultural_group *group = nullptr;
 	phenotype *default_phenotype = nullptr;
+	title_name_map title_names;
+	ruler_title_name_map ruler_title_names;
 	building_class_map<const building_type *> building_class_types;
 	population_class_map<const population_type *> population_class_types;
 	civilian_unit_class_map<const civilian_unit_type *> civilian_class_unit_types;

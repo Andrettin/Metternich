@@ -175,7 +175,7 @@ public:
 		return QString::fromStdString(this->get_name());
 	}
 
-	const std::string &get_titled_name() const;
+	std::string get_titled_name() const;
 
 	QString get_titled_name_qstring() const
 	{

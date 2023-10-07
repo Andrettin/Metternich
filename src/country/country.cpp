@@ -7,6 +7,7 @@
 #include "country/country_tier.h"
 #include "country/country_turn_data.h"
 #include "country/country_type.h"
+#include "country/culture.h"
 #include "country/government_group.h"
 #include "country/government_type.h"
 #include "database/defines.h"
@@ -19,87 +20,6 @@
 #include "util/string_util.h"
 
 namespace metternich {
-
-void country::process_title_names(title_name_map &title_names, const gsml_data &scope)
-{
-	scope.for_each_property([&](const gsml_property &property) {
-		const std::string &key = property.get_key();
-		const std::string &value = property.get_value();
-
-		government_variant government_variant{};
-		const government_group *government_group = government_group::try_get(key);
-		if (government_group != nullptr) {
-			government_variant = government_group;
-		} else {
-			government_variant = government_type::get(key);
-		}
-
-		title_names[government_variant][country_tier::none] = value;
-	});
-
-	scope.for_each_child([&](const gsml_data &child_scope) {
-		government_variant government_variant{};
-		const government_group *government_group = government_group::try_get(child_scope.get_tag());
-		if (government_group != nullptr) {
-			government_variant = government_group;
-		} else {
-			government_variant = government_type::get(child_scope.get_tag());
-		}
-
-		country::process_title_name_scope(title_names[government_variant], child_scope);
-	});
-}
-
-void country::process_title_name_scope(std::map<country_tier, std::string> &title_names, const gsml_data &scope)
-{
-	scope.for_each_property([&](const gsml_property &property) {
-		const std::string &key = property.get_key();
-		const std::string &value = property.get_value();
-		const country_tier tier = enum_converter<country_tier>::to_enum(key);
-		title_names[tier] = value;
-	});
-}
-
-void country::process_ruler_title_names(ruler_title_name_map &ruler_title_names, const gsml_data &scope)
-{
-	scope.for_each_child([&](const gsml_data &child_scope) {
-		government_variant government_variant{};
-		const government_group *government_group = government_group::try_get(child_scope.get_tag());
-		if (government_group != nullptr) {
-			government_variant = government_group;
-		} else {
-			government_variant = government_type::get(child_scope.get_tag());
-		}
-
-		country::process_ruler_title_name_scope(ruler_title_names[government_variant], child_scope);
-	});
-}
-
-void country::process_ruler_title_name_scope(std::map<country_tier, std::map<gender, std::string>> &ruler_title_names, const gsml_data &scope)
-{
-	scope.for_each_property([&](const gsml_property &property) {
-		const std::string &key = property.get_key();
-		const std::string &value = property.get_value();
-		const country_tier tier = enum_converter<country_tier>::to_enum(key);
-		ruler_title_names[tier][gender::none] = value;
-	});
-
-	scope.for_each_child([&](const gsml_data &child_scope) {
-		const country_tier tier = enum_converter<country_tier>::to_enum(child_scope.get_tag());
-
-		country::process_ruler_title_name_scope(ruler_title_names[tier], child_scope);
-	});
-}
-
-void country::process_ruler_title_name_scope(std::map<gender, std::string> &ruler_title_names, const gsml_data &scope)
-{
-	scope.for_each_property([&](const gsml_property &property) {
-		const std::string &key = property.get_key();
-		const std::string &value = property.get_value();
-		const gender gender = enum_converter<archimedes::gender>::to_enum(key);
-		ruler_title_names[gender] = value;
-	});
-}
 
 country::country(const std::string &identifier)
 	: named_data_entry(identifier), type(country_type::minor_nation), default_tier(country_tier::none), min_tier(country_tier::none), max_tier(country_tier::none)
@@ -121,11 +41,11 @@ void country::process_gsml_scope(const gsml_data &scope)
 			this->eras.push_back(era::get(value));
 		}
 	} else if (tag == "short_names") {
-		country::process_title_names(this->short_names, scope);
+		government_type::process_title_name_scope(this->short_names, scope);
 	} else if (tag == "title_names") {
-		country::process_title_names(this->title_names, scope);
+		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "ruler_title_names") {
-		country::process_ruler_title_names(this->ruler_title_names, scope);
+		government_type::process_ruler_title_name_scope(this->ruler_title_names, scope);
 	} else if (tag == "core_provinces") {
 		for (const std::string &value : values) {
 			this->core_provinces.push_back(province::get(value));
@@ -298,9 +218,7 @@ const std::string &country::get_title_name(const government_type *government_typ
 		}
 	}
 
-	assert_throw(government_type != nullptr);
-
-	return government_type->get_title_name(tier);
+	return this->get_culture()->get_title_name(government_type, tier);
 }
 
 const std::string &country::get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const
@@ -324,9 +242,7 @@ const std::string &country::get_ruler_title_name(const government_type *governme
 		}
 	}
 
-	assert_throw(government_type != nullptr);
-
-	return government_type->get_ruler_title_name(tier, gender);
+	return this->get_culture()->get_ruler_title_name(government_type, tier, gender);
 }
 
 bool country::can_declare_war() const

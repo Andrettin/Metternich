@@ -25,10 +25,6 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::government_group*";
 	static constexpr const char database_folder[] = "government_groups";
 
-	static void process_title_names(title_name_map &title_names, const gsml_data &scope);
-	static void process_ruler_title_names(ruler_title_name_map &ruler_title_names, const gsml_data &scope);
-	static void process_ruler_title_name_scope(std::map<gender, std::string> &ruler_title_names, const gsml_data &scope);
-
 	explicit government_group(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}

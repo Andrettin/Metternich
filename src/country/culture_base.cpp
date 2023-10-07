@@ -4,6 +4,7 @@
 
 #include "country/cultural_group.h"
 #include "country/culture_history.h"
+#include "country/government_type.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_type.h"
 #include "population/population_class.h"
@@ -15,6 +16,7 @@
 #include "unit/transporter_class.h"
 #include "unit/transporter_type.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 
 namespace metternich {
 
@@ -30,7 +32,11 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "building_class_types") {
+	if (tag == "title_names") {
+		government_type::process_title_name_scope(this->title_names, scope);
+	} else if (tag == "ruler_title_names") {
+		government_type::process_ruler_title_name_scope(this->ruler_title_names, scope);
+	} else if (tag == "building_class_types") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
@@ -135,6 +141,59 @@ bool culture_base::is_part_of_group(const cultural_group *group) const
 	}
 
 	return this->get_group()->is_part_of_group(group);
+}
+
+const std::string &culture_base::get_title_name(const government_type *government_type, const country_tier tier) const
+{
+	auto find_iterator = this->title_names.find(government_type);
+	if (find_iterator == this->title_names.end()) {
+		find_iterator = this->title_names.find(government_type->get_group());
+	}
+
+	if (find_iterator != this->title_names.end()) {
+		const auto sub_find_iterator = find_iterator->second.find(tier);
+		if (sub_find_iterator != find_iterator->second.end()) {
+			return sub_find_iterator->second;
+		}
+	}
+
+	if (this->get_group() != nullptr) {
+		return this->get_group()->get_title_name(government_type, tier);
+	}
+
+	assert_throw(government_type != nullptr);
+
+	return government_type->get_title_name(tier);
+}
+
+const std::string &culture_base::get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const
+{
+	auto find_iterator = this->ruler_title_names.find(government_type);
+	if (find_iterator == this->ruler_title_names.end()) {
+		find_iterator = this->ruler_title_names.find(government_type->get_group());
+	}
+
+	if (find_iterator != this->ruler_title_names.end()) {
+		const auto sub_find_iterator = find_iterator->second.find(tier);
+		if (sub_find_iterator != find_iterator->second.end()) {
+			auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
+			if (sub_sub_find_iterator == sub_find_iterator->second.end()) {
+				sub_sub_find_iterator = sub_find_iterator->second.find(gender::none);
+			}
+
+			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
+				return sub_sub_find_iterator->second;
+			}
+		}
+	}
+
+	if (this->get_group() != nullptr) {
+		return this->get_group()->get_ruler_title_name(government_type, tier, gender);
+	}
+
+	assert_throw(government_type != nullptr);
+
+	return government_type->get_ruler_title_name(tier, gender);
 }
 
 const building_type *culture_base::get_building_class_type(const building_class *building_class) const

@@ -30,6 +30,7 @@ class government_type final : public named_data_entry, public data_type<governme
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
+	using government_variant = std::variant<const government_type *, const government_group *>;
 	using title_name_map = std::map<country_tier, std::string>;
 	using ruler_title_name_map = std::map<country_tier, std::map<gender, std::string>>;
 
@@ -37,8 +38,10 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::government_type*";
 	static constexpr const char database_folder[] = "government_types";
 
-	static void process_title_names(title_name_map &title_names, const gsml_data &scope);
-	static void process_ruler_title_names(ruler_title_name_map &ruler_title_names, const gsml_data &scope);
+	static void process_title_name_scope(std::map<government_variant, title_name_map> &title_names, const gsml_data &scope);
+	static void process_title_name_scope(title_name_map &title_names, const gsml_data &scope);
+	static void process_ruler_title_name_scope(std::map<government_variant, ruler_title_name_map> &ruler_title_names, const gsml_data &scope);
+	static void process_ruler_title_name_scope(ruler_title_name_map &ruler_title_names, const gsml_data &scope);
 	static void process_ruler_title_name_scope(std::map<gender, std::string> &ruler_title_names, const gsml_data &scope);
 
 	explicit government_type(const std::string &identifier);
