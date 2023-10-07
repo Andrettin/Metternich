@@ -67,6 +67,7 @@ class country_game_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::country_tier tier READ get_tier NOTIFY tier_changed)
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)

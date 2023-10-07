@@ -20,6 +20,7 @@ class map_template;
 class military_unit;
 class preferences;
 class province;
+enum class country_tier;
 enum class military_unit_category;
 
 //interface for the engine, to be used in the context of QML
@@ -68,6 +69,7 @@ public:
 	Q_INVOKABLE QVariantList get_eras() const;
 	Q_INVOKABLE QVariantList get_policies() const;
 	Q_INVOKABLE QVariantList get_technologies() const;
+	Q_INVOKABLE QString get_country_tier_name(const metternich::country_tier tier) const;
 
 	void add_notification(const QString &title, const QObject *portrait_object, const QString &text)
 	{
