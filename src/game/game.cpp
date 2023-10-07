@@ -1218,7 +1218,7 @@ void game::adjust_food_production_for_country_populations()
 
 		for (const auto &[commodity, output] : country->get_game_data()->get_commodity_outputs()) {
 			if (commodity->is_food()) {
-				food_output += output;
+				food_output += output.to_int();
 			}
 		}
 

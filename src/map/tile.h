@@ -219,7 +219,7 @@ public:
 		this->civilian_unit = civilian_unit;
 	}
 
-	const commodity_map<int> &get_commodity_outputs() const;
+	const commodity_map<centesimal_int> &get_commodity_outputs() const;
 	void calculate_commodity_outputs();
 
 	bool produces_commodity(const commodity *commodity) const;

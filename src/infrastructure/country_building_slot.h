@@ -1,6 +1,7 @@
 #pragma once
 
 #include "infrastructure/building_slot.h"
+#include "util/fractional_int.h"
 
 namespace metternich {
 
@@ -110,12 +111,12 @@ public:
 		return this->get_production_type_input_wealth(const_production_type);
 	}
 
-	int get_production_type_output(const production_type *production_type) const;
+	centesimal_int get_production_type_output(const production_type *production_type) const;
 
 	Q_INVOKABLE int get_production_type_output(metternich::production_type *production_type) const
 	{
 		const metternich::production_type *const_production_type = production_type;
-		return this->get_production_type_output(const_production_type);
+		return this->get_production_type_output(const_production_type).to_int();
 	}
 
 	void change_production(const production_type *production_type, const int change, const bool change_input_storage = true);

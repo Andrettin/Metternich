@@ -871,14 +871,14 @@ public:
 	Q_INVOKABLE int get_commodity_input(const QString &commodity_identifier) const;
 	void change_commodity_input(const commodity *commodity, const int change);
 
-	const commodity_map<int> &get_commodity_outputs() const
+	const commodity_map<centesimal_int> &get_commodity_outputs() const
 	{
 		return this->commodity_outputs;
 	}
 
 	QVariantList get_commodity_outputs_qvariant_list() const;
 
-	int get_commodity_output(const commodity *commodity) const
+	const centesimal_int &get_commodity_output(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_outputs.find(commodity);
 
@@ -886,15 +886,16 @@ public:
 			return find_iterator->second;
 		}
 
-		return 0;
+		static constexpr centesimal_int zero;
+		return zero;
 	}
 
 	Q_INVOKABLE int get_commodity_output(const QString &commodity_identifier) const;
-	void change_commodity_output(const commodity *commodity, const int change);
+	void change_commodity_output(const commodity *commodity, const centesimal_int &change);
 
 	int get_net_commodity_output(const commodity *commodity) const
 	{
-		return this->get_commodity_output(commodity) - this->get_commodity_input(commodity);
+		return this->get_commodity_output(commodity).to_int() - this->get_commodity_input(commodity);
 	}
 
 	void calculate_settlement_commodity_outputs();
@@ -1929,7 +1930,7 @@ private:
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;
 	commodity_map<int> commodity_inputs;
-	commodity_map<int> commodity_outputs;
+	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<centesimal_int> commodity_consumptions;
 	commodity_map<centesimal_int> commodity_demands;
 	technology_set technologies;

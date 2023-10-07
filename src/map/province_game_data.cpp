@@ -667,7 +667,7 @@ void province_game_data::change_improved_resource_commodity_bonus(const resource
 
 		assert_throw(tile->get_site() != nullptr);
 
-		tile->get_site()->get_game_data()->change_base_commodity_output(commodity, change);
+		tile->get_site()->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
 	}
 }
 

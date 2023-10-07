@@ -109,7 +109,7 @@ void site_game_data::do_consumption()
 		assert_throw(commodity->is_local());
 		assert_throw(!commodity->is_storable());
 
-		const int effective_consumption = std::min(consumption.to_int(), this->get_commodity_output(commodity));
+		const int effective_consumption = std::min(consumption.to_int(), this->get_commodity_output(commodity).to_int());
 
 		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
 		if (remaining_consumption == 0) {
@@ -657,7 +657,7 @@ void site_game_data::on_settlement_built(const int multiplier)
 
 	if (this->get_province() != nullptr && this->get_resource() != nullptr) {
 		for (const auto &[commodity, value] : this->get_province()->get_game_data()->get_improved_resource_commodity_bonuses(this->get_resource())) {
-			this->change_base_commodity_output(commodity, value * multiplier);
+			this->change_base_commodity_output(commodity, centesimal_int(value) * multiplier);
 		}
 	}
 }
@@ -699,12 +699,12 @@ void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier
 void site_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
 {
 	if (improvement->get_output_commodity() != nullptr) {
-		this->change_base_commodity_output(improvement->get_output_commodity(), improvement->get_output_multiplier() * multiplier);
+		this->change_base_commodity_output(improvement->get_output_commodity(), centesimal_int(improvement->get_output_multiplier()) * multiplier);
 	}
 
 	if (this->get_province() != nullptr && this->get_resource() != nullptr) {
 		for (const auto &[commodity, value] : this->get_province()->get_game_data()->get_improved_resource_commodity_bonuses(this->get_resource())) {
-			this->change_base_commodity_output(commodity, value * multiplier);
+			this->change_base_commodity_output(commodity, centesimal_int(value) * multiplier);
 		}
 	}
 
@@ -835,7 +835,7 @@ void site_game_data::create_population_unit(const population_type *type, const m
 void site_game_data::on_population_type_count_changed(const population_type *type, const int change)
 {
 	if (type->get_output_commodity() != nullptr) {
-		this->change_base_commodity_output(type->get_output_commodity(), type->get_output_value() * change);
+		this->change_base_commodity_output(type->get_output_commodity(), centesimal_int(type->get_output_value()) * change);
 	}
 
 	for (const auto &[commodity, value] : type->get_consumed_commodities()) {
@@ -860,13 +860,13 @@ void site_game_data::change_housing(const int change)
 	emit housing_changed();
 }
 
-void site_game_data::change_base_commodity_output(const commodity *commodity, const int change)
+void site_game_data::change_base_commodity_output(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int count = (this->base_commodity_outputs[commodity] += change);
+	const centesimal_int &count = (this->base_commodity_outputs[commodity] += change);
 
 	assert_throw(count >= 0);
 
@@ -882,11 +882,11 @@ QVariantList site_game_data::get_commodity_outputs_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
 }
 
-void site_game_data::set_commodity_output(const commodity *commodity, const int output)
+void site_game_data::set_commodity_output(const commodity *commodity, const centesimal_int &output)
 {
 	assert_throw(output >= 0);
 
-	const int old_output = this->get_commodity_output(commodity);
+	const centesimal_int old_output = this->get_commodity_output(commodity);
 	if (output == old_output) {
 		return;
 	}
@@ -906,11 +906,11 @@ void site_game_data::set_commodity_output(const commodity *commodity, const int 
 
 void site_game_data::calculate_commodity_outputs()
 {
-	commodity_map<int> outputs = this->base_commodity_outputs;
+	commodity_map<centesimal_int> outputs = this->base_commodity_outputs;
 
 	if (this->get_owner() != nullptr && this->is_capital()) {
 		for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_capital_commodity_bonuses_per_population()) {
-			outputs[commodity] += (value * this->get_population_unit_count()).to_int();
+			outputs[commodity] += (value * this->get_population_unit_count());
 		}
 	}
 

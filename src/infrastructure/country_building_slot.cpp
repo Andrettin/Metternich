@@ -281,12 +281,12 @@ int country_building_slot::get_production_type_input_wealth(const production_typ
 	return this->get_country()->get_game_data()->get_inflated_value(production_type->get_input_wealth() * employed_capacity);
 }
 
-int country_building_slot::get_production_type_output(const production_type *production_type) const
+centesimal_int country_building_slot::get_production_type_output(const production_type *production_type) const
 {
-	int output = this->get_production_type_employed_capacity(production_type);
+	centesimal_int output(this->get_production_type_employed_capacity(production_type));
 
 	if (output == 0) {
-		return 0;
+		return centesimal_int(0);
 	}
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
@@ -300,7 +300,7 @@ int country_building_slot::get_production_type_output(const production_type *pro
 		output *= 100 + output_modifier;
 		output /= 100;
 
-		output = std::max(output, 0);
+		output = centesimal_int::max(output, centesimal_int(0));
 	}
 
 	return output;
@@ -308,7 +308,7 @@ int country_building_slot::get_production_type_output(const production_type *pro
 
 void country_building_slot::change_production(const production_type *production_type, const int multiplier, const bool change_input_storage)
 {
-	const int old_output = this->get_production_type_output(production_type);
+	const centesimal_int old_output = this->get_production_type_output(production_type);
 	const commodity_map<int> old_inputs = this->get_production_type_inputs(production_type);
 	const int old_input_wealth = this->get_production_type_input_wealth(production_type);
 
@@ -342,7 +342,7 @@ void country_building_slot::change_production(const production_type *production_
 	}
 	country_game_data->change_wealth_income(-input_wealth_change);
 
-	const int new_output = this->get_production_type_output(production_type);
+	const centesimal_int new_output = this->get_production_type_output(production_type);
 	country_game_data->change_commodity_output(production_type->get_output_commodity(), new_output - old_output);
 
 }

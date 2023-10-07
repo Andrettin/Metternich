@@ -206,37 +206,38 @@ public:
 		return this->free_food_consumption;
 	}
 
-	const commodity_map<int> &get_base_commodity_outputs() const
+	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
 	{
 		return this->base_commodity_outputs;
 	}
 
-	void change_base_commodity_output(const commodity *commodity, const int change);
+	void change_base_commodity_output(const commodity *commodity, const centesimal_int &change);
 
-	const commodity_map<int> &get_commodity_outputs() const
+	const commodity_map<centesimal_int> &get_commodity_outputs() const
 	{
 		return this->commodity_outputs;
 	}
 
 	QVariantList get_commodity_outputs_qvariant_list() const;
 
-	int get_commodity_output(const commodity *commodity) const
+	const centesimal_int &get_commodity_output(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_outputs.find(commodity);
 		if (find_iterator != this->commodity_outputs.end()) {
 			return find_iterator->second;
 		}
 
-		return 0;
+		static constexpr centesimal_int zero;
+		return zero;
 	}
 
 	Q_INVOKABLE int get_commodity_output(metternich::commodity *commodity)
 	{
 		const metternich::commodity *const_commodity = commodity;
-		return this->get_commodity_output(const_commodity);
+		return this->get_commodity_output(const_commodity).to_int();
 	}
 
-	void set_commodity_output(const commodity *commodity, const int output);
+	void set_commodity_output(const commodity *commodity, const centesimal_int &output);
 	void calculate_commodity_outputs();
 
 	const centesimal_int &get_local_commodity_consumption(const commodity *commodity) const
@@ -354,8 +355,8 @@ private:
 	qunique_ptr<metternich::population> population;
 	int housing = 0;
 	int free_food_consumption = 0;
-	commodity_map<int> base_commodity_outputs;
-	commodity_map<int> commodity_outputs;
+	commodity_map<centesimal_int> base_commodity_outputs;
+	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<centesimal_int> local_commodity_consumptions;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
