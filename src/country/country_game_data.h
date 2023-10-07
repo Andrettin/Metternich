@@ -1054,6 +1054,9 @@ public:
 		this->set_policy_value(policy, this->get_policy_value(policy) + change);
 	}
 
+	Q_INVOKABLE int get_min_policy_value(const metternich::policy *policy) const;
+	Q_INVOKABLE int get_max_policy_value(const metternich::policy *policy) const;
+
 	Q_INVOKABLE bool can_change_policy_value(const metternich::policy *policy, const int change) const;
 	Q_INVOKABLE void do_policy_value_change(const metternich::policy *policy, const int change);
 

@@ -3060,11 +3060,11 @@ void country_game_data::set_policy_value(const policy *policy, const int value)
 		return;
 	}
 
-	if (value < policy::min_value) {
-		this->set_policy_value(policy, policy::min_value);
+	if (value < this->get_min_policy_value(policy)) {
+		this->set_policy_value(policy, this->get_min_policy_value(policy));
 		return;
-	} else if (value > policy::max_value) {
-		this->set_policy_value(policy, policy::max_value);
+	} else if (value > this->get_max_policy_value(policy)) {
+		this->set_policy_value(policy, this->get_max_policy_value(policy));
 		return;
 	}
 
@@ -3083,12 +3083,22 @@ void country_game_data::set_policy_value(const policy *policy, const int value)
 	}
 }
 
+int country_game_data::get_min_policy_value(const metternich::policy *policy) const
+{
+	return this->get_government_type()->get_min_policy_value(policy);
+}
+
+int country_game_data::get_max_policy_value(const metternich::policy *policy) const
+{
+	return this->get_government_type()->get_max_policy_value(policy);
+}
+
 bool country_game_data::can_change_policy_value(const metternich::policy *policy, const int change) const
 {
 	const int new_value = this->get_policy_value(policy) + change;
-	if (new_value < policy::min_value) {
+	if (new_value < this->get_min_policy_value(policy)) {
 		return false;
-	} else if (new_value > policy::max_value) {
+	} else if (new_value > this->get_max_policy_value(policy)) {
 		return false;
 	}
 
