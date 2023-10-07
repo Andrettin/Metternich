@@ -190,7 +190,7 @@ QCoro::Task<void> game::create_random_map_coro(const QSize map_size, metternich:
 		co_await this->on_setup_finished();
 	} catch (...) {
 		exception::report(std::current_exception());
-		std::terminate();
+		QApplication::exit(EXIT_FAILURE);
 	}
 }
 
@@ -215,7 +215,7 @@ QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
 		co_await this->on_setup_finished();
 	} catch (...) {
 		exception::report(std::current_exception());
-		std::terminate();
+		QApplication::exit(EXIT_FAILURE);
 	}
 }
 
@@ -1374,7 +1374,7 @@ QCoro::Task<void> game::do_turn_coro()
 	} catch (...) {
 		exception::report(std::current_exception());
 		log::log_error("Failed to process turn.");
-		std::terminate();
+		QApplication::exit(EXIT_FAILURE);
 	}
 }
 

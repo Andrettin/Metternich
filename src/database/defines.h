@@ -19,7 +19,6 @@ class pathway;
 class population_class;
 class portrait;
 class terrain_type;
-enum class country_tier;
 enum class diplomacy_state;
 enum class event_trigger;
 
@@ -146,8 +145,6 @@ public:
 	{
 		return this->route_pathway;
 	}
-
-	Q_INVOKABLE const metternich::icon *get_country_tier_icon(const metternich::country_tier tier) const;
 
 	const population_class *get_default_population_class() const
 	{
@@ -310,7 +307,6 @@ private:
 	terrain_type *default_province_terrain = nullptr;
 	terrain_type *default_water_zone_terrain = nullptr;
 	pathway *route_pathway = nullptr;
-	std::map<country_tier, const icon *> country_tier_icons;
 	population_class *default_population_class = nullptr;
 	population_class *default_tribal_population_class = nullptr;
 	population_class *default_literate_population_class = nullptr;

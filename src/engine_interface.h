@@ -12,6 +12,7 @@ Q_MOC_INCLUDE("map/map_template.h")
 
 namespace metternich {
 
+class country_tier_data;
 class defines;
 class event_instance;
 class game;
@@ -69,7 +70,7 @@ public:
 	Q_INVOKABLE QVariantList get_eras() const;
 	Q_INVOKABLE QVariantList get_policies() const;
 	Q_INVOKABLE QVariantList get_technologies() const;
-	Q_INVOKABLE QString get_country_tier_name(const metternich::country_tier tier) const;
+	Q_INVOKABLE const metternich::country_tier_data *get_country_tier_data(const metternich::country_tier tier) const;
 
 	void add_notification(const QString &title, const QObject *portrait_object, const QString &text)
 	{

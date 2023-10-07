@@ -3,6 +3,7 @@
 #include "engine_interface.h"
 
 #include "country/country_tier.h"
+#include "country/country_tier_data.h"
 #include "country/policy.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -99,9 +100,15 @@ QVariantList engine_interface::get_technologies() const
 	return container::to_qvariant_list(technology::get_all());
 }
 
-QString engine_interface::get_country_tier_name(const metternich::country_tier tier) const
+const country_tier_data *engine_interface::get_country_tier_data(const metternich::country_tier tier) const
 {
-	return QString::fromStdString(metternich::get_country_tier_name(tier));
+	try {
+		return country_tier_data::get(tier);
+	} catch (...) {
+		exception::report(std::current_exception());
+		QApplication::exit(EXIT_FAILURE);
+		return nullptr;
+	}
 }
 
 void engine_interface::add_event_instance(qunique_ptr<event_instance> &&event_instance)

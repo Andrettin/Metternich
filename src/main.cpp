@@ -9,6 +9,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_tier.h"
+#include "country/country_tier_data.h"
 #include "country/country_turn_data.h"
 #include "country/country_type.h"
 #include "country/cultural_group_rank.h"
@@ -153,6 +154,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<country>("", 1);
 		qmlRegisterAnonymousType<country_building_slot>("", 1);
 		qmlRegisterAnonymousType<country_game_data>("", 1);
+		qmlRegisterAnonymousType<country_tier_data>("", 1);
 		qmlRegisterAnonymousType<country_turn_data>("", 1);
 		qmlRegisterAnonymousType<defines>("", 1);
 		qmlRegisterAnonymousType<dynasty>("", 1);

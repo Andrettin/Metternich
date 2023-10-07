@@ -30,14 +30,7 @@ void defines::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "country_tier_icons") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const country_tier tier = enum_converter<country_tier>::to_enum(property.get_key());
-			const icon *icon = icon::get(property.get_value());
-
-			this->country_tier_icons[tier] = icon;
-		});
-	} else if (tag == "diplomacy_state_colors") {
+	if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const diplomacy_state diplomacy_state = enum_converter<metternich::diplomacy_state>::to_enum(child_tag);
@@ -123,17 +116,6 @@ int defines::get_scaled_tile_width() const
 int defines::get_scaled_tile_height() const
 {
 	return (this->get_tile_height() * preferences::get()->get_scale_factor()).to_int();
-}
-
-const metternich::icon *defines::get_country_tier_icon(const metternich::country_tier tier) const
-{
-	const auto find_iterator = this->country_tier_icons.find(tier);
-	if (find_iterator != this->country_tier_icons.end()) {
-		return find_iterator->second;
-	}
-
-	log::log_error(std::format("Failed to get icon for country tier: {}.", static_cast<int>(tier)));
-	std::terminate();
 }
 
 void defines::set_river_image_filepath(const std::filesystem::path &filepath)
