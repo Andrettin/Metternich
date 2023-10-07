@@ -3079,7 +3079,8 @@ void country_game_data::set_policy_value(const policy *policy, const int value)
 		return;
 	}
 
-	policy->apply_modifier(this->country, value, -1);
+	const int old_value = this->get_policy_value(policy);
+	policy->apply_modifier(this->country, old_value, -1);
 
 	if (value == 0) {
 		this->policy_values.erase(policy);
