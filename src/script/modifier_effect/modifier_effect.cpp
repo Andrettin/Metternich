@@ -244,7 +244,7 @@ template <typename scope_type>
 std::string modifier_effect<scope_type>::get_string(const centesimal_int &multiplier, const bool ignore_decimals) const
 {
 	const centesimal_int value = this->get_multiplied_value(multiplier);
-	const std::string number_str = ignore_decimals ? number::to_signed_string(value.to_int()) : value.to_signed_string();
+	const std::string number_str = ignore_decimals && !this->are_decimals_relevant() ? number::to_signed_string(value.to_int()) : value.to_signed_string();
 	const QColor &number_color = this->is_negative(multiplier) ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
 	const std::string colored_number_str = string::colored(number_str + (this->is_percent() ? "%" : ""), number_color);
 

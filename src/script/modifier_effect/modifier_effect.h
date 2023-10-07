@@ -70,6 +70,11 @@ public:
 		return false;
 	}
 
+	virtual bool are_decimals_relevant() const
+	{
+		return false;
+	}
+
 protected:
 	centesimal_int value;
 };

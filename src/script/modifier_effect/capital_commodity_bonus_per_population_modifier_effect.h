@@ -31,6 +31,11 @@ public:
 		return std::format("Capital {} per Population", this->commodity->get_name());
 	}
 
+	virtual bool are_decimals_relevant() const override
+	{
+		return true;
+	}
+
 private:
 	const metternich::commodity *commodity = nullptr;
 };
