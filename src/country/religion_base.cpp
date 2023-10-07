@@ -2,6 +2,7 @@
 
 #include "country/religion_base.h"
 
+#include "country/country_tier.h"
 #include "country/government_type.h"
 #include "util/gender.h"
 #include "util/string_util.h"
@@ -29,7 +30,11 @@ const std::string &religion_base::get_title_name(const government_type *governme
 	}
 
 	if (find_iterator != this->title_names.end()) {
-		const auto sub_find_iterator = find_iterator->second.find(tier);
+		auto sub_find_iterator = find_iterator->second.find(tier);
+		if (sub_find_iterator == find_iterator->second.end()) {
+			sub_find_iterator = find_iterator->second.find(country_tier::none);
+		}
+
 		if (sub_find_iterator != find_iterator->second.end()) {
 			return sub_find_iterator->second;
 		}
@@ -46,7 +51,11 @@ const std::string &religion_base::get_ruler_title_name(const government_type *go
 	}
 
 	if (find_iterator != this->ruler_title_names.end()) {
-		const auto sub_find_iterator = find_iterator->second.find(tier);
+		auto sub_find_iterator = find_iterator->second.find(tier);
+		if (sub_find_iterator == find_iterator->second.end()) {
+			sub_find_iterator = find_iterator->second.find(country_tier::none);
+		}
+
 		if (sub_find_iterator != find_iterator->second.end()) {
 			auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
 			if (sub_sub_find_iterator == sub_find_iterator->second.end()) {

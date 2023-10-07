@@ -72,8 +72,13 @@ void government_type::process_ruler_title_name_scope(ruler_title_name_map &ruler
 	scope.for_each_property([&](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
-		const country_tier tier = enum_converter<country_tier>::to_enum(key);
-		ruler_title_names[tier][gender::none] = value;
+		if (enum_converter<country_tier>::has_value(key)) {
+			const country_tier tier = enum_converter<country_tier>::to_enum(key);
+			ruler_title_names[tier][gender::none] = value;
+		} else {
+			const gender gender = enum_converter<metternich::gender>::to_enum(key);
+			ruler_title_names[country_tier::none][gender] = value;
+		}
 	});
 
 	scope.for_each_child([&](const gsml_data &child_scope) {
