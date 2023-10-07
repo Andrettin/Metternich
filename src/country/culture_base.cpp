@@ -17,6 +17,7 @@
 #include "unit/transporter_type.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -161,9 +162,7 @@ const std::string &culture_base::get_title_name(const government_type *governmen
 		return this->get_group()->get_title_name(government_type, tier);
 	}
 
-	assert_throw(government_type != nullptr);
-
-	return government_type->get_title_name(tier);
+	return string::empty_str;
 }
 
 const std::string &culture_base::get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const
@@ -191,9 +190,7 @@ const std::string &culture_base::get_ruler_title_name(const government_type *gov
 		return this->get_group()->get_ruler_title_name(government_type, tier, gender);
 	}
 
-	assert_throw(government_type != nullptr);
-
-	return government_type->get_ruler_title_name(tier, gender);
+	return string::empty_str;
 }
 
 const building_type *culture_base::get_building_class_type(const building_class *building_class) const

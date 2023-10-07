@@ -10,6 +10,7 @@
 #include "country/culture.h"
 #include "country/government_group.h"
 #include "country/government_type.h"
+#include "country/religion.h"
 #include "database/defines.h"
 #include "map/province.h"
 #include "map/site.h"
@@ -173,7 +174,7 @@ const std::string &country::get_name(const government_type *government_type, con
 	return this->get_name();
 }
 
-std::string country::get_titled_name(const government_type *government_type, const country_tier tier) const
+std::string country::get_titled_name(const government_type *government_type, const country_tier tier, const religion *religion) const
 {
 	auto find_iterator = this->short_names.find(government_type);
 	if (find_iterator == this->short_names.end()) {
@@ -195,7 +196,7 @@ std::string country::get_titled_name(const government_type *government_type, con
 		return this->get_name();
 	}
 
-	const std::string title_name = this->get_title_name(government_type, tier);
+	const std::string title_name = this->get_title_name(government_type, tier, religion);
 	const std::string country_name = this->get_name();
 	if (this->definite_article) {
 		return std::format("{} of the {}", title_name, country_name);
@@ -204,7 +205,7 @@ std::string country::get_titled_name(const government_type *government_type, con
 	}
 }
 
-const std::string &country::get_title_name(const government_type *government_type, const country_tier tier) const
+const std::string &country::get_title_name(const government_type *government_type, const country_tier tier, const religion *religion) const
 {
 	auto find_iterator = this->title_names.find(government_type);
 	if (find_iterator == this->title_names.end()) {
@@ -218,10 +219,24 @@ const std::string &country::get_title_name(const government_type *government_typ
 		}
 	}
 
-	return this->get_culture()->get_title_name(government_type, tier);
+	if (government_type->get_group()->is_religious()) {
+		const std::string &religion_title_name = religion->get_title_name(government_type, tier);
+		if (!religion_title_name.empty()) {
+			return religion_title_name;
+		}
+	}
+
+	const std::string &culture_title_name = this->get_culture()->get_title_name(government_type, tier);
+	if (!culture_title_name.empty()) {
+		return culture_title_name;
+	}
+
+	assert_throw(government_type != nullptr);
+
+	return government_type->get_title_name(tier);
 }
 
-const std::string &country::get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const
+const std::string &country::get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender, const religion *religion) const
 {
 	auto find_iterator = this->ruler_title_names.find(government_type);
 	if (find_iterator == this->ruler_title_names.end()) {
@@ -242,7 +257,21 @@ const std::string &country::get_ruler_title_name(const government_type *governme
 		}
 	}
 
-	return this->get_culture()->get_ruler_title_name(government_type, tier, gender);
+	if (government_type->get_group()->is_religious()) {
+		const std::string &religion_ruler_title_name = religion->get_ruler_title_name(government_type, tier, gender);
+		if (!religion_ruler_title_name.empty()) {
+			return religion_ruler_title_name;
+		}
+	}
+
+	const std::string &culture_ruler_title_name = this->get_culture()->get_ruler_title_name(government_type, tier, gender);
+	if (!culture_ruler_title_name.empty()) {
+		return culture_ruler_title_name;
+	}
+
+	assert_throw(government_type != nullptr);
+
+	return government_type->get_ruler_title_name(tier, gender);
 }
 
 bool country::can_declare_war() const

@@ -55,6 +55,7 @@ set(country_SRCS
 	src/country/policy.cpp
 	src/country/policy_container.cpp
 	src/country/religion.cpp
+	src/country/religion_base.cpp
 	src/country/religion_container.cpp
 )
 source_group(country FILES ${country_SRCS})
@@ -340,6 +341,7 @@ set(country_HDRS
 	src/country/policy.h
 	src/country/policy_container.h
 	src/country/religion.h
+	src/country/religion_base.h
 	src/country/religion_container.h
 	src/country/religious_group.h
 )

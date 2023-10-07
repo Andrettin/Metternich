@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "country/religion_base.h"
 
 Q_MOC_INCLUDE("country/religious_group.h")
 
@@ -9,7 +10,7 @@ namespace metternich {
 
 class religious_group;
 
-class religion final : public named_data_entry, public data_type<religion>
+class religion final : public religion_base, public data_type<religion>
 {
 	Q_OBJECT
 
@@ -21,7 +22,7 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::religion*";
 	static constexpr const char database_folder[] = "religions";
 
-	explicit religion(const std::string &identifier) : named_data_entry(identifier)
+	explicit religion(const std::string &identifier) : religion_base(identifier)
 	{
 	}
 
@@ -37,6 +38,9 @@ public:
 	{
 		return this->color;
 	}
+
+	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
+	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const;
 
 signals:
 	void changed();

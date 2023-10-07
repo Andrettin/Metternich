@@ -122,9 +122,9 @@ public:
 	using named_data_entry::get_name;
 
 	const std::string &get_name(const government_type *government_type, const country_tier tier) const;
-	std::string get_titled_name(const government_type *government_type, const country_tier tier) const;
-	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
-	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const;
+	std::string get_titled_name(const government_type *government_type, const country_tier tier, const religion *religion) const;
+	const std::string &get_title_name(const government_type *government_type, const country_tier tier, const religion *religion) const;
+	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender, const religion *religion) const;
 
 	const metternich::culture *get_culture() const
 	{

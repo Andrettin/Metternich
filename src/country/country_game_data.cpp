@@ -91,6 +91,8 @@ country_game_data::country_game_data(metternich::country *country)
 	connect(this, &country_game_data::tier_changed, this, &country_game_data::ruler_title_name_changed);
 	connect(this, &country_game_data::government_type_changed, this, &country_game_data::title_name_changed);
 	connect(this, &country_game_data::government_type_changed, this, &country_game_data::ruler_title_name_changed);
+	connect(this, &country_game_data::religion_changed, this, &country_game_data::title_name_changed);
+	connect(this, &country_game_data::religion_changed, this, &country_game_data::ruler_title_name_changed);
 	connect(this, &country_game_data::ruler_changed, this, &country_game_data::ruler_title_name_changed);
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 
@@ -668,18 +670,18 @@ const std::string &country_game_data::get_name() const
 
 std::string country_game_data::get_titled_name() const
 {
-	return this->country->get_titled_name(this->get_government_type(), this->get_tier());
+	return this->country->get_titled_name(this->get_government_type(), this->get_tier(), this->get_religion());
 }
 
 const std::string &country_game_data::get_title_name() const
 {
-	return this->country->get_title_name(this->get_government_type(), this->get_tier());
+	return this->country->get_title_name(this->get_government_type(), this->get_tier(), this->get_religion());
 }
 
 const std::string &country_game_data::get_ruler_title_name() const
 {
 	const gender gender = this->get_ruler() != nullptr ? this->get_ruler()->get_gender() : gender::male;
-	return this->country->get_ruler_title_name(this->get_government_type(), this->get_tier(), gender);
+	return this->country->get_ruler_title_name(this->get_government_type(), this->get_tier(), gender, this->get_religion());
 }
 
 void country_game_data::set_religion(const metternich::religion *religion)
