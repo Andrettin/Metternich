@@ -303,7 +303,7 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 			}
 		}
 
-		if (!tile->get_river_directions().empty()) {
+		if (tile->has_river()) {
 			std::array<terrain_adjacency, 4> river_subtile_adjacencies;
 
 			for (size_t i = 0; i < direction_count; ++i) {
@@ -311,6 +311,68 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 
 				for (terrain_adjacency &subtile_adjacency : river_subtile_adjacencies) {
 					subtile_adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::other);
+				}
+			}
+
+			if (tile->has_inner_river()) {
+				terrain_adjacency river_adjacency;
+
+				for (size_t i = 0; i < direction_count; ++i) {
+					const direction direction = static_cast<archimedes::direction>(i);
+					const QPoint offset = direction_to_offset(direction);
+
+					const QPoint adjacent_tile_pos = tile_pos + offset;
+					terrain_adjacency_type adjacency_type = terrain_adjacency_type::other;
+
+					if (this->contains(adjacent_tile_pos)) {
+						const metternich::tile *adjacent_tile = this->get_tile(adjacent_tile_pos);
+
+						if (adjacent_tile->has_inner_river()) {
+							adjacency_type = terrain_adjacency_type::same;
+						} else {
+							adjacency_type = terrain_adjacency_type::other;
+						}
+					} else {
+						adjacency_type = terrain_adjacency_type::same;
+					}
+
+					river_adjacency.set_direction_adjacency_type(direction, adjacency_type);
+				}
+
+				if (river_adjacency.get_direction_adjacency_type(direction::north) == terrain_adjacency_type::same) {
+					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::east, terrain_adjacency_type::same);
+					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
+					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
+					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::west, terrain_adjacency_type::same);
+					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
+					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
+				}
+
+				if (river_adjacency.get_direction_adjacency_type(direction::south) == terrain_adjacency_type::same) {
+					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::east, terrain_adjacency_type::same);
+					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
+					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
+					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::west, terrain_adjacency_type::same);
+					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
+					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
+				}
+
+				if (river_adjacency.get_direction_adjacency_type(direction::west) == terrain_adjacency_type::same) {
+					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::south, terrain_adjacency_type::same);
+					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
+					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
+					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::north, terrain_adjacency_type::same);
+					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
+					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
+				}
+
+				if (river_adjacency.get_direction_adjacency_type(direction::east) == terrain_adjacency_type::same) {
+					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::south, terrain_adjacency_type::same);
+					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
+					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
+					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::north, terrain_adjacency_type::same);
+					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
+					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
 				}
 			}
 

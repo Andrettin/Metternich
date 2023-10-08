@@ -115,6 +115,16 @@ public:
 		return this->improvement_variation;
 	}
 
+	bool has_inner_river() const
+	{
+		return this->inner_river;
+	}
+
+	void set_inner_river(const bool value)
+	{
+		this->inner_river = value;
+	}
+
 	const std::vector<direction> &get_river_directions() const
 	{
 		return this->river_directions;
@@ -129,7 +139,7 @@ public:
 
 	bool has_river() const
 	{
-		return !this->get_river_directions().empty();
+		return this->has_inner_river() || !this->get_river_directions().empty();
 	}
 
 	bool is_river_crossing_direction(const direction direction) const;
@@ -252,6 +262,7 @@ private:
 	bool resource_discovered = false;
 	const metternich::improvement *improvement = nullptr;
 	int8_t improvement_variation = 0;
+	bool inner_river = false; //whether the tile has an in-tile river
 	std::vector<direction> river_directions;
 	std::array<short, 4> river_subtile_frames{ -1, -1, -1, -1 };
 	std::array<const pathway *, 8> direction_pathways{};
