@@ -77,6 +77,15 @@ QCoro::Task<void> tile_image_provider::load_image(const std::string id)
 	} else if (tile_image_type == "river") {
 		filepath = defines::get()->get_river_image_filepath();
 		is_frame_image = true;
+		is_subtile_image = true;
+
+		if (id_list.at(1) == "-1") {
+			//use a fully transparent image when the tile has no river
+			QImage image(defines::get()->get_scaled_tile_size(), QImage::Format_ARGB32);
+			image.fill(Qt::transparent);
+			this->set_image(id, std::move(image));
+			co_return;
+		}
 	} else if (tile_image_type == "rivermouth") {
 		filepath = defines::get()->get_rivermouth_image_filepath();
 		is_frame_image = true;

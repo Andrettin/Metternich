@@ -106,11 +106,13 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 			case role::underlay_image_sources: {
 				QStringList underlay_image_sources;
 
-				if (tile->has_river() && tile->get_terrain()->is_water() && tile->get_river_frame() != -1) {
-					QString river_image_source = "tile/";
-					river_image_source += "river";
-					river_image_source += "/" + QString::number(tile->get_river_frame());
-					underlay_image_sources.push_back(std::move(river_image_source));
+				if (tile->has_river() && tile->get_terrain()->is_water()) {
+					for (const short river_subtile_frame : tile->get_river_subtile_frames()) {
+						QString river_image_source = "tile/";
+						river_image_source += "river";
+						river_image_source += "/" + QString::number(river_subtile_frame);
+						underlay_image_sources.push_back(std::move(river_image_source));
+					}
 				}
 
 				return underlay_image_sources;
@@ -118,30 +120,37 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 			case role::overlay_image_sources: {
 				QStringList overlay_image_sources;
 
-				if (tile->has_river() && !tile->get_terrain()->is_water() && tile->get_river_frame() != -1) {
-					QString river_image_source = "tile/";
-					river_image_source += "river";
-					river_image_source += "/" + QString::number(tile->get_river_frame());
-					overlay_image_sources.push_back(std::move(river_image_source));
+				if (tile->has_river() && !tile->get_terrain()->is_water()) {
+					for (const short river_subtile_frame : tile->get_river_subtile_frames()) {
+						QString river_image_source = "tile/";
+						river_image_source += "river";
+						river_image_source += "/" + QString::number(river_subtile_frame);
+						overlay_image_sources.push_back(std::move(river_image_source));
+					}
 				}
+
+				return overlay_image_sources;
+			}
+			case role::object_image_sources: {
+				QStringList object_image_sources;
 
 				if (tile->has_route()) {
 					for (const auto &[pathway, frame] : tile->get_pathway_frames()) {
 						QString pathway_image_source = "tile/pathway/" + pathway->get_identifier_qstring();
 						pathway_image_source += "/" + QString::number(frame);
-						overlay_image_sources.push_back(std::move(pathway_image_source));
+						object_image_sources.push_back(std::move(pathway_image_source));
 					}
 				}
 
 				if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {
 					for (const direction direction : tile->get_border_directions()) {
-						overlay_image_sources.push_back("tile/borders/province_border/" + QString::number(static_cast<int>(direction)));
+						object_image_sources.push_back("tile/borders/province_border/" + QString::number(static_cast<int>(direction)));
 					}
 				}
 
 				if (tile->get_settlement_type() != nullptr) {
 					QString image_source = "tile/settlement/" + tile->get_settlement_type()->get_identifier_qstring() + "/0";
-					overlay_image_sources.push_back(std::move(image_source));
+					object_image_sources.push_back(std::move(image_source));
 				} else if (tile->get_improvement() != nullptr) {
 					QString image_source = "tile/improvement/" + tile->get_improvement()->get_identifier_qstring();
 
@@ -151,16 +160,16 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 
 					image_source += "/" + QString::number(tile->get_improvement_variation());
 
-					overlay_image_sources.push_back(std::move(image_source));
+					object_image_sources.push_back(std::move(image_source));
 				} else if (tile->get_resource() != nullptr && tile->is_resource_discovered()) {
-					overlay_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
+					object_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
 				}
 
 				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
-					overlay_image_sources.push_back(map_grid_model::build_image_source(defines::get()->get_unexplored_terrain(), 0));
+					object_image_sources.push_back(map_grid_model::build_image_source(defines::get()->get_unexplored_terrain(), 0));
 				}
 
-				return overlay_image_sources;
+				return object_image_sources;
 			}
 			case role::site:
 				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
@@ -241,7 +250,7 @@ void map_grid_model::on_tile_exploration_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
-		static_cast<int>(role::overlay_image_sources),
+		static_cast<int>(role::object_image_sources),
 		static_cast<int>(role::site),
 		static_cast<int>(role::civilian_unit),
 		static_cast<int>(role::upper_label)
@@ -252,7 +261,7 @@ void map_grid_model::on_tile_resource_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
-		static_cast<int>(role::overlay_image_sources),
+		static_cast<int>(role::object_image_sources),
 		static_cast<int>(role::resource)
 	});
 }
@@ -261,7 +270,7 @@ void map_grid_model::on_tile_settlement_type_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
-		static_cast<int>(role::overlay_image_sources)
+		static_cast<int>(role::object_image_sources)
 	});
 }
 
@@ -269,7 +278,7 @@ void map_grid_model::on_tile_improvement_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
-		static_cast<int>(role::overlay_image_sources),
+		static_cast<int>(role::object_image_sources),
 		static_cast<int>(role::improvement)
 	});
 }
@@ -278,7 +287,7 @@ void map_grid_model::on_tile_pathway_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
-		static_cast<int>(role::overlay_image_sources),
+		static_cast<int>(role::object_image_sources),
 		static_cast<int>(role::pathway)
 	});
 }

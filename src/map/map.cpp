@@ -304,21 +304,69 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 		}
 
 		if (!tile->get_river_directions().empty()) {
-			terrain_adjacency river_adjacency;
+			std::array<terrain_adjacency, 4> river_subtile_adjacencies;
 
 			for (size_t i = 0; i < direction_count; ++i) {
 				const direction direction = static_cast<archimedes::direction>(i);
-				river_adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::other);
+
+				for (terrain_adjacency &subtile_adjacency : river_subtile_adjacencies) {
+					subtile_adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::other);
+				}
 			}
 
 			for (const direction direction : tile->get_river_directions()) {
-				river_adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+				switch (direction) {
+					case direction::north:
+						river_subtile_adjacencies[0].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						river_subtile_adjacencies[0].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
+						river_subtile_adjacencies[1].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						river_subtile_adjacencies[1].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
+						break;
+					case direction::south:
+						river_subtile_adjacencies[2].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						river_subtile_adjacencies[2].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
+						river_subtile_adjacencies[3].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						river_subtile_adjacencies[3].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
+						break;
+					case direction::west:
+						river_subtile_adjacencies[0].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						river_subtile_adjacencies[0].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
+						river_subtile_adjacencies[2].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						river_subtile_adjacencies[2].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
+						break;
+					case direction::east:
+						river_subtile_adjacencies[1].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						river_subtile_adjacencies[1].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
+						river_subtile_adjacencies[3].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						river_subtile_adjacencies[3].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
+						break;
+					case direction::northwest:
+						river_subtile_adjacencies[0].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						break;
+					case direction::northeast:
+						river_subtile_adjacencies[1].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						break;
+					case direction::southwest:
+						river_subtile_adjacencies[2].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						break;
+					case direction::southeast:
+						river_subtile_adjacencies[3].set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+						break;
+					default:
+						break;
+				}
 			}
 
-			const int river_frame = defines::get()->get_river_adjacency_tile(river_adjacency);
+			for (size_t i = 0; i < river_subtile_adjacencies.size(); ++i) {
+				const std::vector<int> &river_subtiles = defines::get()->get_river_adjacency_subtiles(river_subtile_adjacencies.at(i));
 
-			if (river_frame != -1) {
-				tile->set_river_frame(river_frame);
+				if (river_subtiles.empty()) {
+					continue;
+				}
+
+				const short river_subtile = static_cast<short>(vector::get_random(river_subtiles));
+
+				tile->set_river_subtile_frame(i, river_subtile);
 			}
 		}
 

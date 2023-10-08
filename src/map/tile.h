@@ -132,17 +132,17 @@ public:
 		return !this->get_river_directions().empty();
 	}
 
-	short get_river_frame() const
-	{
-		return this->river_frame;
-	}
-
-	void set_river_frame(const short frame)
-	{
-		this->river_frame = frame;
-	}
-
 	bool is_river_crossing_direction(const direction direction) const;
+
+	const std::array<short, 4> &get_river_subtile_frames() const
+	{
+		return this->river_subtile_frames;
+	}
+
+	void set_river_subtile_frame(const size_t index, const short frame)
+	{
+		this->river_subtile_frames[index] = frame;
+	}
 
 	const pathway *get_direction_pathway(const direction direction) const
 	{
@@ -253,7 +253,7 @@ private:
 	const metternich::improvement *improvement = nullptr;
 	int8_t improvement_variation = 0;
 	std::vector<direction> river_directions;
-	short river_frame = -1;
+	std::array<short, 4> river_subtile_frames{ -1, -1, -1, -1 };
 	std::array<const pathway *, 8> direction_pathways{};
 	pathway_map<short> pathway_frames;
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
