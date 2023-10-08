@@ -317,6 +317,11 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 			if (tile->has_inner_river()) {
 				terrain_adjacency river_adjacency;
 
+				river_subtile_adjacencies[0].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
+				river_subtile_adjacencies[1].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
+				river_subtile_adjacencies[2].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
+				river_subtile_adjacencies[3].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
+
 				for (size_t i = 0; i < direction_count; ++i) {
 					const direction direction = static_cast<archimedes::direction>(i);
 					const QPoint offset = direction_to_offset(direction);
@@ -342,37 +347,29 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 				if (river_adjacency.get_direction_adjacency_type(direction::north) == terrain_adjacency_type::same) {
 					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::east, terrain_adjacency_type::same);
 					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
-					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
 					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::west, terrain_adjacency_type::same);
 					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
-					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
 				}
 
 				if (river_adjacency.get_direction_adjacency_type(direction::south) == terrain_adjacency_type::same) {
 					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::east, terrain_adjacency_type::same);
-					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
 					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
 					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::west, terrain_adjacency_type::same);
-					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
 					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
 				}
 
 				if (river_adjacency.get_direction_adjacency_type(direction::west) == terrain_adjacency_type::same) {
 					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::south, terrain_adjacency_type::same);
 					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
-					river_subtile_adjacencies[0].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
 					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::north, terrain_adjacency_type::same);
 					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
-					river_subtile_adjacencies[2].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
 				}
 
 				if (river_adjacency.get_direction_adjacency_type(direction::east) == terrain_adjacency_type::same) {
 					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::south, terrain_adjacency_type::same);
-					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::same);
 					river_subtile_adjacencies[1].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::same);
 					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::north, terrain_adjacency_type::same);
 					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::same);
-					river_subtile_adjacencies[3].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::same);
 				}
 			}
 
