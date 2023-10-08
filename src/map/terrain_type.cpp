@@ -3,6 +3,7 @@
 #include "map/terrain_type.h"
 
 #include "database/database.h"
+#include "database/defines.h"
 #include "map/direction.h"
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
@@ -11,7 +12,8 @@
 #include "map/temperature_type.h"
 #include "map/tile_image_provider.h"
 #include "util/assert_util.h"
-#include "util/event_loop.h"
+#include "util/image_util.h"
+#include "util/path_util.h"
 
 namespace metternich {
 
@@ -119,6 +121,10 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 
 			this->set_adjacency_tiles(adjacency, tiles);
 		});
+	} else if (tag == "subtiles") {
+		for (const std::string &value : values) {
+			this->subtiles.push_back(std::stoi(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -128,6 +134,57 @@ void terrain_type::initialize()
 {
 	if (this->get_elevation_type() != elevation_type::none) {
 		assign_to_biome(this->get_elevation_type(), this->get_temperature_type(), this->get_moisture_type(), this->get_forestation_type());
+	}
+
+	if (!this->get_subtiles().empty()) {
+		assert_throw(this->get_tiles().empty());
+		//generate tiles based on subtiles
+
+		assert_throw(!this->get_image_filepath().empty());
+		assert_throw(std::filesystem::exists(this->get_image_filepath()));
+		QImage image(path::to_qstring(this->get_image_filepath()));
+		assert_throw(!image.isNull());
+
+		if (image.format() != QImage::Format_RGBA8888) {
+			image = image.convertToFormat(QImage::Format_RGBA8888);
+		}
+
+		const QSize tile_size = defines::get()->get_tile_size();
+		const QSize subtile_size = tile_size / 2;
+
+		this->subtile_image = QImage(tile_size * 16, QImage::Format_RGBA8888);
+		this->subtile_image.fill(Qt::transparent);
+
+		int tile_index = 0;
+
+		for (const int subtile_1 : this->get_subtiles()) {
+			const QPoint subtile_1_pos = image::get_frame_pos(image, subtile_size, subtile_1);
+			const QImage subtile_1_image = image::get_frame(image, subtile_1_pos.x(), subtile_1_pos.y(), subtile_size);
+
+			for (const int subtile_2 : this->get_subtiles()) {
+				const QPoint subtile_2_pos = image::get_frame_pos(image, subtile_size, subtile_2);
+				const QImage subtile_2_image = image::get_frame(image, subtile_2_pos.x(), subtile_2_pos.y(), subtile_size);
+
+				for (const int subtile_3 : this->get_subtiles()) {
+					const QPoint subtile_3_pos = image::get_frame_pos(image, subtile_size, subtile_3);
+					const QImage subtile_3_image = image::get_frame(image, subtile_3_pos.x(), subtile_3_pos.y(), subtile_size);
+
+					for (const int subtile_4 : this->get_subtiles()) {
+						const QPoint subtile_4_pos = image::get_frame_pos(image, subtile_size, subtile_4);
+						const QImage subtile_4_image = image::get_frame(image, subtile_4_pos.x(), subtile_4_pos.y(), subtile_size);
+
+						image::copy_frame(subtile_1_image, QPoint(0, 0), this->subtile_image, tile_size, tile_index);
+						image::copy_frame(subtile_2_image, QPoint(1, 0), this->subtile_image, tile_size, tile_index);
+						image::copy_frame(subtile_3_image, QPoint(0, 1), this->subtile_image, tile_size, tile_index);
+						image::copy_frame(subtile_4_image, QPoint(1, 1), this->subtile_image, tile_size, tile_index);
+
+						this->tiles.push_back(tile_index);
+
+						++tile_index;
+					}
+				}
+			}
+		}
 	}
 
 	tile_image_provider::get()->load_image("terrain/" + this->get_identifier() + "/0");
@@ -140,8 +197,6 @@ void terrain_type::check() const
 	assert_throw(this->get_color().isValid());
 	assert_throw(!this->get_image_filepath().empty());
 	assert_throw(std::filesystem::exists(this->get_image_filepath()));
-
-
 
 	if (this->has_adjacency_tiles()) {
 		//check whether the terrain type has support for all possible adjacencies
@@ -158,7 +213,7 @@ void terrain_type::check() const
 
 		for (const terrain_adjacency &adjacency : possible_adjacencies) {
 			if (!this->adjacency_tiles.contains(adjacency)) {
-				throw std::runtime_error("No tiles provided for the adjacency for the \"" + this->get_identifier() + "\" terrain type:\n" + adjacency.to_string());
+				throw std::runtime_error(std::format("No tiles provided for the adjacency for the \"{}\" terrain type:\n{}.", this->get_identifier(), adjacency.to_string()));
 			}
 		}
 	}
@@ -201,6 +256,32 @@ void terrain_type::set_adjacency_tiles(const terrain_adjacency &adjacency, const
 	}
 
 	const auto result = this->adjacency_tiles.insert_or_assign(adjacency, tiles);
+
+	//if this is false, that means there was already a definition for the same adjacency data
+	//multiple adjacency definitions with the same adjacency data is an error
+	assert_throw(result.second); 
+}
+
+void terrain_type::set_adjacency_subtiles(const terrain_adjacency &adjacency, const std::vector<int> &subtiles)
+{
+	const std::array<terrain_adjacency_type, terrain_adjacency::direction_count> &adjacency_data = adjacency.get_data();
+
+	//convert "any" to both "same" and "other" adjacency types
+	//this works recursively: we change the adjacency type for only one direction, but each recursive call will change for other further direction, until no direction is set to "any"
+	for (size_t i = 0; i < adjacency_data.size(); ++i) {
+		if (adjacency_data[i] == terrain_adjacency_type::any) {
+			terrain_adjacency same_adjacency = adjacency;
+			same_adjacency.get_data()[i] = terrain_adjacency_type::same;
+			this->set_adjacency_subtiles(same_adjacency, subtiles);
+
+			terrain_adjacency other_adjacency = adjacency;
+			other_adjacency.get_data()[i] = terrain_adjacency_type::other;
+			this->set_adjacency_subtiles(other_adjacency, subtiles);
+			return;
+		}
+	}
+
+	const auto result = this->adjacency_subtiles.insert_or_assign(adjacency, subtiles);
 
 	//if this is false, that means there was already a definition for the same adjacency data
 	//multiple adjacency definitions with the same adjacency data is an error
