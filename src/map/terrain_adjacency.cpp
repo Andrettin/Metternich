@@ -57,6 +57,22 @@ std::array<terrain_adjacency, 4> terrain_adjacency::get_subtile_adjacencies() co
 		subtile_adjacencies[3].set_direction_adjacency_type(direction::east, terrain_adjacency_type::other);
 	}
 
+	if (this->get_direction_adjacency_type(direction::northwest) == terrain_adjacency_type::other) {
+		subtile_adjacencies[0].set_direction_adjacency_type(direction::northwest, terrain_adjacency_type::other);
+	}
+
+	if (this->get_direction_adjacency_type(direction::northeast) == terrain_adjacency_type::other) {
+		subtile_adjacencies[1].set_direction_adjacency_type(direction::northeast, terrain_adjacency_type::other);
+	}
+
+	if (this->get_direction_adjacency_type(direction::southwest) == terrain_adjacency_type::other) {
+		subtile_adjacencies[2].set_direction_adjacency_type(direction::southwest, terrain_adjacency_type::other);
+	}
+
+	if (this->get_direction_adjacency_type(direction::southeast) == terrain_adjacency_type::other) {
+		subtile_adjacencies[3].set_direction_adjacency_type(direction::southeast, terrain_adjacency_type::other);
+	}
+
 	return subtile_adjacencies;
 }
 
