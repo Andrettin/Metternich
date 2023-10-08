@@ -37,6 +37,7 @@
 #include "script/modifier_effect/housing_modifier_effect.h"
 #include "script/modifier_effect/industrial_output_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
+#include "script/modifier_effect/inflation_change_modifier_effect.h"
 #include "script/modifier_effect/land_damage_modifier_effect.h"
 #include "script/modifier_effect/land_morale_recovery_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
@@ -96,6 +97,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<industrial_output_modifier_effect<scope_type>>(value);
 		} else if (key == "infantry_cost_modifier") {
 			return std::make_unique<infantry_cost_modifier_effect>(value);
+		} else if (key == "inflation_change") {
+			return std::make_unique<inflation_change_modifier_effect>(value);
 		} else if (key == "land_damage_modifier") {
 			return std::make_unique<land_damage_modifier_effect>(value);
 		} else if (key == "land_morale_recovery_modifier") {

@@ -659,6 +659,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/housing_modifier_effect.h
 	src/script/modifier_effect/industrial_output_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
+	src/script/modifier_effect/inflation_change_modifier_effect.h
 	src/script/modifier_effect/land_damage_modifier_effect.h
 	src/script/modifier_effect/land_morale_recovery_modifier_effect.h
 	src/script/modifier_effect/land_morale_resistance_modifier_effect.h

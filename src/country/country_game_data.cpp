@@ -545,6 +545,8 @@ void country_game_data::do_inflation()
 
 		this->country->get_turn_data()->calculate_inflation();
 		this->change_inflation(this->country->get_turn_data()->get_total_inflation_change());
+
+		this->change_inflation(this->get_inflation_change());
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing trade for country \"{}\".", this->country->get_identifier())));
 	}
@@ -2359,6 +2361,15 @@ void country_game_data::set_inflation(const centesimal_int &inflation)
 	}
 
 	emit inflation_changed();
+}
+
+void country_game_data::set_inflation_change(const centesimal_int &inflation_change)
+{
+	if (inflation_change == this->get_inflation_change()) {
+		return;
+	}
+
+	this->inflation_change = inflation_change;
 }
 
 QVariantList country_game_data::get_available_commodities_qvariant_list() const

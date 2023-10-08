@@ -780,6 +780,18 @@ public:
 		return (value * (centesimal_int(100) + this->get_inflation()) / 100).to_int();
 	}
 
+	const centesimal_int &get_inflation_change() const
+	{
+		return this->inflation_change;
+	}
+
+	void set_inflation_change(const centesimal_int &inflation_change);
+
+	void change_inflation_change(const centesimal_int &change)
+	{
+		this->set_inflation_change(this->get_inflation_change() + change);
+	}
+
 	const commodity_set &get_available_commodities() const
 	{
 		return this->available_commodities;
@@ -1925,6 +1937,7 @@ private:
 	int wealth_income = 0;
 	int credit_limit = 0;
 	centesimal_int inflation;
+	centesimal_int inflation_change;
 	commodity_set available_commodities;
 	commodity_set tradeable_commodities;
 	commodity_map<int> stored_commodities;
