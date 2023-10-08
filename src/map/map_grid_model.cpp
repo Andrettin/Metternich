@@ -79,8 +79,19 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 		switch (model_role) {
 			case role::base_image_source:
 				return map_grid_model::build_image_source(defines::get()->get_default_base_terrain(), tile->get_base_tile());
-			case role::image_source:
-				return map_grid_model::build_image_source(tile->get_terrain(), tile->get_tile());
+			case role::image_sources: {
+				QStringList image_sources;
+
+				if (!tile->get_terrain()->get_subtiles().empty()) {
+					for (const short subtile : tile->get_subtiles()) {
+						image_sources.push_back(map_grid_model::build_image_source(tile->get_terrain(), subtile));
+					}
+				} else {
+					image_sources.push_back(map_grid_model::build_image_source(tile->get_terrain(), tile->get_tile()));
+				}
+
+				return image_sources;
+			}
 			case role::underlay_image_sources: {
 				QStringList underlay_image_sources;
 
@@ -208,7 +219,7 @@ void map_grid_model::on_tile_terrain_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
-		static_cast<int>(role::image_source),
+		static_cast<int>(role::image_sources),
 		static_cast<int>(role::underlay_image_sources),
 		static_cast<int>(role::overlay_image_sources),
 		static_cast<int>(role::terrain)

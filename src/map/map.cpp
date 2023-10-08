@@ -236,11 +236,9 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 	try {
 		tile *tile = this->get_tile(tile_pos);
 
-		const std::vector<int> *terrain_tiles = nullptr;
+		terrain_adjacency adjacency;
 
-		if (tile->get_terrain()->has_adjacency_tiles()) {
-			terrain_adjacency adjacency;
-
+		if (tile->get_terrain()->has_adjacency_tiles() || tile->get_terrain()->has_adjacency_subtiles()) {
 			for (size_t i = 0; i < direction_count; ++i) {
 				const direction direction = static_cast<archimedes::direction>(i);
 				const QPoint offset = direction_to_offset(direction);
@@ -262,29 +260,55 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 
 				adjacency.set_direction_adjacency_type(direction, adjacency_type);
 			}
-
-			terrain_tiles = &tile->get_terrain()->get_adjacency_tiles(adjacency);
-		} else {
-			terrain_tiles = &tile->get_terrain()->get_tiles();
 		}
 
-		const short terrain_tile = static_cast<short>(vector::get_random(*terrain_tiles));
+		if (!tile->get_terrain()->get_subtiles().empty()) {
+			std::array<const std::vector<int> *, 4> terrain_subtiles{};
 
-		tile->set_tile(terrain_tile);
+			if (tile->get_terrain()->has_adjacency_subtiles()) {
+				const std::array<terrain_adjacency, 4> subtile_adjacencies = adjacency.get_subtile_adjacencies();
+
+				for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
+					terrain_subtiles[i] = &tile->get_terrain()->get_adjacency_subtiles(subtile_adjacencies.at(i));
+				}
+			} else {
+				for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
+					terrain_subtiles[i] = &tile->get_terrain()->get_subtiles();
+				}
+			}
+
+			for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
+				const short terrain_subtile = static_cast<short>(vector::get_random(*terrain_subtiles[i]));
+
+				tile->set_subtile(i, terrain_subtile);
+			}
+		} else {
+			const std::vector<int> *terrain_tiles = nullptr;
+
+			if (tile->get_terrain()->has_adjacency_tiles()) {
+				terrain_tiles = &tile->get_terrain()->get_adjacency_tiles(adjacency);
+			} else {
+				terrain_tiles = &tile->get_terrain()->get_tiles();
+			}
+
+			const short terrain_tile = static_cast<short>(vector::get_random(*terrain_tiles));
+
+			tile->set_tile(terrain_tile);
+		}
 
 		if (!tile->get_river_directions().empty()) {
-			terrain_adjacency adjacency;
+			terrain_adjacency river_adjacency;
 
 			for (size_t i = 0; i < direction_count; ++i) {
 				const direction direction = static_cast<archimedes::direction>(i);
-				adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::other);
+				river_adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::other);
 			}
 
 			for (const direction direction : tile->get_river_directions()) {
-				adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::same);
+				river_adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::same);
 			}
 
-			const int river_frame = defines::get()->get_river_adjacency_tile(adjacency);
+			const int river_frame = defines::get()->get_river_adjacency_tile(river_adjacency);
 
 			if (river_frame != -1) {
 				tile->set_river_frame(river_frame);

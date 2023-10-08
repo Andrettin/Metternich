@@ -34,18 +34,18 @@ QCoro::Task<void> tile_image_provider::load_image(const std::string id)
 	const std::string &tile_image_type = id_list.at(0);
 	const std::string &identifier = id_list.at(1);
 	std::filesystem::path filepath;
-	QImage image;
 
+	bool is_subtile_image = false;
 	bool is_frame_image = false;
 
 	if (tile_image_type == "terrain") {
 		const terrain_type *terrain = terrain_type::get(identifier);
-		if (!terrain->get_subtiles().empty()) {
-			image = terrain->get_subtile_image();
-		} else {
-			filepath = terrain->get_image_filepath();
-		}
+		filepath = terrain->get_image_filepath();
 		is_frame_image = true;
+
+		if (!terrain->get_subtiles().empty()) {
+			is_subtile_image = true;
+		}
 	} else if (tile_image_type == "settlement") {
 		const settlement_type *settlement_type = settlement_type::get(identifier);
 		filepath = settlement_type->get_image_filepath();
@@ -87,35 +87,35 @@ QCoro::Task<void> tile_image_provider::load_image(const std::string id)
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 	centesimal_int image_scale_factor(1);
 
-	if (image.isNull()) {
-		assert_throw(!filepath.empty());
-		assert_throw(std::filesystem::exists(filepath));
+	assert_throw(!filepath.empty());
+	assert_throw(std::filesystem::exists(filepath));
 
-		const std::pair<std::filesystem::path, centesimal_int> scale_suffix_result = image::get_scale_suffixed_filepath(filepath, scale_factor);
+	const std::pair<std::filesystem::path, centesimal_int> scale_suffix_result = image::get_scale_suffixed_filepath(filepath, scale_factor);
 
-		if (!scale_suffix_result.first.empty()) {
-			filepath = scale_suffix_result.first;
-			image_scale_factor = scale_suffix_result.second;
-		}
-
-		image = QImage(path::to_qstring(filepath));
+	if (!scale_suffix_result.first.empty()) {
+		filepath = scale_suffix_result.first;
+		image_scale_factor = scale_suffix_result.second;
 	}
+
+	QImage image = QImage(path::to_qstring(filepath));
 
 	assert_throw(!image.isNull());
 
+	const QSize frame_size = is_subtile_image ? defines::get()->get_tile_size() / 2 : defines::get()->get_tile_size();
+
 	if (image_scale_factor != scale_factor) {
-		co_await QtConcurrent::run([this, &image, &scale_factor, &image_scale_factor]() {
-			image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, defines::get()->get_tile_size() * image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		co_await QtConcurrent::run([this, &image, &scale_factor, &image_scale_factor, frame_size]() {
+			image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, frame_size * image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 			});
 		});
 	}
 
 	if (is_frame_image) {
-		const QSize &frame_size = defines::get()->get_scaled_tile_size();
+		const QSize scaled_frame_size = frame_size * preferences::get()->get_scale_factor();
 
 		//load the entire image, and cache all frames
-		std::vector<QImage> frame_images = image::to_frames(image, frame_size);
+		std::vector<QImage> frame_images = image::to_frames(image, scaled_frame_size);
 
 		const std::string base_id = id.substr(0, id.find_last_of('/'));
 

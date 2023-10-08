@@ -96,11 +96,6 @@ public:
 
 	void set_image_filepath(const std::filesystem::path &filepath);
 
-	const QImage &get_subtile_image() const
-	{
-		return this->subtile_image;
-	}
-	
 	bool is_water() const
 	{
 		return this->water;
@@ -177,16 +172,12 @@ public:
 
 	void set_adjacency_subtiles(const terrain_adjacency &adjacency, const std::vector<int> &subtiles);
 
-	void create_subtile_image();
-	void create_tile_from_subtiles(const terrain_adjacency &adjacency, const QImage &source_image, int &tile_index);
-
 signals:
 	void changed();
 
 private:
 	QColor color;
 	std::filesystem::path image_filepath;
-	QImage subtile_image;
 	bool water = false;
 	metternich::elevation_type elevation_type;
 	metternich::temperature_type temperature_type;

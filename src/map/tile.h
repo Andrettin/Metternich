@@ -45,6 +45,16 @@ public:
 		this->tile_frame = tile;
 	}
 
+	const std::array<short, 4> &get_subtiles() const
+	{
+		return this->subtile_frames;
+	}
+
+	void set_subtile(const size_t index, const short subtile)
+	{
+		this->subtile_frames[index] = subtile;
+	}
+
 	const metternich::province *get_province() const
 	{
 		return this->province;
@@ -228,6 +238,7 @@ private:
 	const terrain_type *terrain = nullptr;
 	short base_tile_frame = 0;
 	short tile_frame = 0;
+	std::array<short, 4> subtile_frames;
 	const metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
 	const metternich::resource *resource = nullptr;
