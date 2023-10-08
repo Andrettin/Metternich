@@ -236,7 +236,7 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 	try {
 		tile *tile = this->get_tile(tile_pos);
 
-		if (tile->get_terrain() == defines::get()->get_default_base_terrain()) {
+		if (tile->get_terrain()->get_image_filepath() == defines::get()->get_default_base_terrain()->get_image_filepath()) {
 			tile->set_tile(tile->get_base_tile());
 			for (size_t i = 0; i < tile->get_base_subtiles().size(); ++i) {
 				tile->set_subtile(i, tile->get_base_subtiles().at(i));
