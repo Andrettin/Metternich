@@ -160,6 +160,26 @@ public:
 		return this->subtiles;
 	}
 
+	bool has_adjacency_subtiles() const
+	{
+		return !this->adjacency_subtiles.empty();
+	}
+
+	const std::vector<int> &get_adjacency_subtiles(const terrain_adjacency &adjacency) const
+	{
+		const auto find_iterator = this->adjacency_subtiles.find(adjacency);
+		if (find_iterator != this->adjacency_subtiles.end()) {
+			return find_iterator->second;
+		}
+
+		throw std::runtime_error(std::format("Failed to get adjacency subtiles for a given terrain adjacency for the \"{}\" terrain type.", this->get_identifier()));
+	}
+
+	void set_adjacency_subtiles(const terrain_adjacency &adjacency, const std::vector<int> &subtiles);
+
+	void create_subtile_image();
+	void create_tile_from_subtiles(const terrain_adjacency &adjacency, const QImage &source_image, int &tile_index);
+
 signals:
 	void changed();
 
@@ -176,6 +196,7 @@ private:
 	std::vector<int> tiles;
 	std::map<terrain_adjacency, std::vector<int>> adjacency_tiles;
 	std::vector<int> subtiles;
+	std::map<terrain_adjacency, std::vector<int>> adjacency_subtiles;
 };
 
 }

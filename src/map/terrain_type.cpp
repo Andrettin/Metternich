@@ -125,6 +125,31 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->subtiles.push_back(std::stoi(value));
 		}
+	} else if (tag == "adjacency_subtiles") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			std::vector<int> subtiles;
+			subtiles.push_back(std::stoi(child_scope.get_tag()));
+
+			terrain_adjacency adjacency;
+
+			child_scope.for_each_property([&](const gsml_property &property) {
+				const direction direction = string_to_direction(property.get_key());
+				const terrain_adjacency_type adjacency_type = string_to_terrain_adjacency_type(property.get_value());
+				adjacency.set_direction_adjacency_type(direction, adjacency_type);
+			});
+
+			child_scope.for_each_child([&](const gsml_data &grandchild_scope) {
+				if (grandchild_scope.get_tag() == "variations") {
+					for (const std::string &value : grandchild_scope.get_values()) {
+						subtiles.push_back(std::stoi(value));
+					}
+				} else {
+					assert_throw(false);
+				}
+			});
+
+			this->set_adjacency_subtiles(adjacency, subtiles);
+		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -137,54 +162,7 @@ void terrain_type::initialize()
 	}
 
 	if (!this->get_subtiles().empty()) {
-		assert_throw(this->get_tiles().empty());
-		//generate tiles based on subtiles
-
-		assert_throw(!this->get_image_filepath().empty());
-		assert_throw(std::filesystem::exists(this->get_image_filepath()));
-		QImage image(path::to_qstring(this->get_image_filepath()));
-		assert_throw(!image.isNull());
-
-		if (image.format() != QImage::Format_RGBA8888) {
-			image = image.convertToFormat(QImage::Format_RGBA8888);
-		}
-
-		const QSize tile_size = defines::get()->get_tile_size();
-		const QSize subtile_size = tile_size / 2;
-
-		this->subtile_image = QImage(tile_size * 16, QImage::Format_RGBA8888);
-		this->subtile_image.fill(Qt::transparent);
-
-		int tile_index = 0;
-
-		for (const int subtile_1 : this->get_subtiles()) {
-			const QPoint subtile_1_pos = image::get_frame_pos(image, subtile_size, subtile_1);
-			const QImage subtile_1_image = image::get_frame(image, subtile_1_pos.x(), subtile_1_pos.y(), subtile_size);
-
-			for (const int subtile_2 : this->get_subtiles()) {
-				const QPoint subtile_2_pos = image::get_frame_pos(image, subtile_size, subtile_2);
-				const QImage subtile_2_image = image::get_frame(image, subtile_2_pos.x(), subtile_2_pos.y(), subtile_size);
-
-				for (const int subtile_3 : this->get_subtiles()) {
-					const QPoint subtile_3_pos = image::get_frame_pos(image, subtile_size, subtile_3);
-					const QImage subtile_3_image = image::get_frame(image, subtile_3_pos.x(), subtile_3_pos.y(), subtile_size);
-
-					for (const int subtile_4 : this->get_subtiles()) {
-						const QPoint subtile_4_pos = image::get_frame_pos(image, subtile_size, subtile_4);
-						const QImage subtile_4_image = image::get_frame(image, subtile_4_pos.x(), subtile_4_pos.y(), subtile_size);
-
-						image::copy_frame(subtile_1_image, QPoint(0, 0), this->subtile_image, tile_size, tile_index);
-						image::copy_frame(subtile_2_image, QPoint(1, 0), this->subtile_image, tile_size, tile_index);
-						image::copy_frame(subtile_3_image, QPoint(0, 1), this->subtile_image, tile_size, tile_index);
-						image::copy_frame(subtile_4_image, QPoint(1, 1), this->subtile_image, tile_size, tile_index);
-
-						this->tiles.push_back(tile_index);
-
-						++tile_index;
-					}
-				}
-			}
-		}
+		this->create_subtile_image();
 	}
 
 	tile_image_provider::get()->load_image("terrain/" + this->get_identifier() + "/0");
@@ -213,7 +191,7 @@ void terrain_type::check() const
 
 		for (const terrain_adjacency &adjacency : possible_adjacencies) {
 			if (!this->adjacency_tiles.contains(adjacency)) {
-				throw std::runtime_error(std::format("No tiles provided for the adjacency for the \"{}\" terrain type:\n{}.", this->get_identifier(), adjacency.to_string()));
+				throw std::runtime_error(std::format("No tiles provided for the adjacency for the \"{}\" terrain type:\n{}", this->get_identifier(), adjacency.to_string()));
 			}
 		}
 	}
@@ -286,6 +264,119 @@ void terrain_type::set_adjacency_subtiles(const terrain_adjacency &adjacency, co
 	//if this is false, that means there was already a definition for the same adjacency data
 	//multiple adjacency definitions with the same adjacency data is an error
 	assert_throw(result.second); 
+}
+
+void terrain_type::create_subtile_image()
+{
+	//generate tiles based on subtiles
+	assert_throw(this->get_tiles().empty());
+	assert_throw(!this->has_adjacency_tiles());
+
+	assert_throw(!this->get_image_filepath().empty());
+	assert_throw(std::filesystem::exists(this->get_image_filepath()));
+	QImage image(path::to_qstring(this->get_image_filepath()));
+	assert_throw(!image.isNull());
+
+	if (image.format() != QImage::Format_RGBA8888) {
+		image = image.convertToFormat(QImage::Format_RGBA8888);
+	}
+
+	const QSize tile_size = defines::get()->get_tile_size();
+
+	this->subtile_image = QImage(tile_size * 16, QImage::Format_RGBA8888);
+	this->subtile_image.fill(Qt::transparent);
+
+	static constexpr terrain_adjacency solid_tile_adjacency;
+	this->adjacency_subtiles[solid_tile_adjacency] = this->get_subtiles();
+
+	int tile_index = 0;
+
+	const int old_tile_index = tile_index;
+	this->create_tile_from_subtiles(solid_tile_adjacency, image, tile_index);
+	for (int i = old_tile_index; i < tile_index; ++i) {
+		this->tiles.push_back(i);
+	}
+
+	//generate adjacency tiles
+	std::vector<terrain_adjacency> possible_adjacencies;
+	possible_adjacencies.emplace_back();
+
+	for (size_t i = 0; i < terrain_adjacency::direction_count; ++i) {
+		for (const terrain_adjacency &adjacency : possible_adjacencies) {
+			terrain_adjacency other_adjacency = adjacency;
+			other_adjacency.get_data()[i] = terrain_adjacency_type::other;
+			possible_adjacencies.push_back(std::move(other_adjacency));
+		}
+	}
+
+	for (const terrain_adjacency &adjacency : possible_adjacencies) {
+		const int start_tile_index = tile_index;
+
+		this->create_tile_from_subtiles(adjacency, image, tile_index);
+
+		for (int i = start_tile_index; i < tile_index; ++i) {
+			std::vector<int> &adjacency_tiles = this->adjacency_tiles[adjacency];
+			adjacency_tiles.push_back(i);
+		}
+	}
+}
+
+void terrain_type::create_tile_from_subtiles(const terrain_adjacency &adjacency, const QImage &source_image, int &tile_index)
+{
+	try {
+		const QSize tile_size = defines::get()->get_tile_size();
+		const QSize subtile_size = tile_size / 2;
+
+		const std::array<terrain_adjacency, 4> subtile_adjacencies = adjacency.get_subtile_adjacencies();
+
+		int max_tile_index = (this->subtile_image.width() / tile_size.width()) * (this->subtile_image.height() / tile_size.height()) - 1;
+
+		for (const int subtile_1 : this->get_adjacency_subtiles(subtile_adjacencies.at(0))) {
+			const QPoint subtile_1_pos = image::get_frame_pos(source_image, subtile_size, subtile_1);
+			const QImage subtile_1_image = image::get_frame(source_image, subtile_1_pos.x(), subtile_1_pos.y(), subtile_size);
+
+			for (const int subtile_2 : this->get_adjacency_subtiles(subtile_adjacencies.at(1))) {
+				const QPoint subtile_2_pos = image::get_frame_pos(source_image, subtile_size, subtile_2);
+				const QImage subtile_2_image = image::get_frame(source_image, subtile_2_pos.x(), subtile_2_pos.y(), subtile_size);
+
+				for (const int subtile_3 : this->get_adjacency_subtiles(subtile_adjacencies.at(2))) {
+					const QPoint subtile_3_pos = image::get_frame_pos(source_image, subtile_size, subtile_3);
+					const QImage subtile_3_image = image::get_frame(source_image, subtile_3_pos.x(), subtile_3_pos.y(), subtile_size);
+
+					for (const int subtile_4 : this->get_adjacency_subtiles(subtile_adjacencies.at(3))) {
+						const QPoint subtile_4_pos = image::get_frame_pos(source_image, subtile_size, subtile_4);
+						const QImage subtile_4_image = image::get_frame(source_image, subtile_4_pos.x(), subtile_4_pos.y(), subtile_size);
+
+						if (tile_index > max_tile_index) {
+							//increase the size of the subtile image if necessary
+							QImage previous_image = this->subtile_image;
+							this->subtile_image = QImage(QSize(this->subtile_image.width(), this->subtile_image.height() * 2), QImage::Format_RGBA8888);
+							this->subtile_image.fill(Qt::transparent);
+
+							QPainter painter(&this->subtile_image);
+							painter.drawImage(QPoint(0, 0), previous_image);
+							painter.end();
+
+							max_tile_index = (this->subtile_image.width() / tile_size.width()) * (this->subtile_image.height() / tile_size.height()) - 1;
+						}
+
+						if (tile_index > max_tile_index) {
+							throw std::runtime_error(std::format("Tile index {} is greater than the maximum tile index of {} for the subtile image.", tile_index, max_tile_index));
+						}
+
+						image::copy_frame(subtile_1_image, QPoint(0, 0), this->subtile_image, tile_size, tile_index);
+						image::copy_frame(subtile_2_image, QPoint(1, 0), this->subtile_image, tile_size, tile_index);
+						image::copy_frame(subtile_3_image, QPoint(0, 1), this->subtile_image, tile_size, tile_index);
+						image::copy_frame(subtile_4_image, QPoint(1, 1), this->subtile_image, tile_size, tile_index);
+
+						++tile_index;
+					}
+				}
+			}
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Failed to create tiles from subtiles for adjacency:\n{}", adjacency.to_string())));
+	}
 }
 
 }

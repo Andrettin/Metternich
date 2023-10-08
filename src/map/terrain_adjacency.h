@@ -13,6 +13,17 @@ class terrain_adjacency final
 public:
 	static constexpr size_t direction_count = 8;
 
+	constexpr terrain_adjacency()
+	{
+	}
+
+	terrain_adjacency(std::map<direction, terrain_adjacency_type> &&data)
+	{
+		for (const auto &[direction, adjacency_type] : data) {
+			this->set_direction_adjacency_type(direction, adjacency_type);
+		}
+	}
+
 	terrain_adjacency_type get_direction_adjacency_type(const direction direction) const
 	{
 		return this->direction_adjacency_types[static_cast<int>(direction)];
@@ -34,6 +45,13 @@ public:
 	}
 
 	std::string to_string() const;
+
+	std::array<terrain_adjacency, 4> get_subtile_adjacencies() const;
+
+	constexpr bool operator ==(const terrain_adjacency &other) const
+	{
+		return this->direction_adjacency_types == other.direction_adjacency_types;
+	}
 
 	constexpr bool operator <(const terrain_adjacency &other) const
 	{
