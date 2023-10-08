@@ -1,5 +1,6 @@
 #pragma once
 
+#include "economy/commodity_container.h"
 #include "infrastructure/pathway_container.h"
 
 namespace archimedes {
