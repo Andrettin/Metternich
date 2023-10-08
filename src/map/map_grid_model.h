@@ -14,7 +14,7 @@ class map_grid_model : public QAbstractItemModel
 
 public:
 	enum class role {
-		base_image_source = Qt::UserRole,
+		base_image_sources = Qt::UserRole,
 		image_sources,
 		underlay_image_sources,
 		overlay_image_sources,
@@ -55,7 +55,7 @@ public:
 	{
 		QHash<int, QByteArray> role_names;
 
-		role_names.insert(static_cast<int>(role::base_image_source), "base_image_source");
+		role_names.insert(static_cast<int>(role::base_image_sources), "base_image_sources");
 		role_names.insert(static_cast<int>(role::image_sources), "image_sources");
 		role_names.insert(static_cast<int>(role::underlay_image_sources), "underlay_image_sources");
 		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");

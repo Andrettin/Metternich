@@ -25,7 +25,21 @@ namespace metternich {
 
 tile::tile(const terrain_type *base_terrain, const terrain_type *terrain) : terrain(terrain)
 {
-	this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
+	if (!base_terrain->get_subtiles().empty()) {
+		std::array<const std::vector<int> *, 4> terrain_subtiles{};
+
+		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
+			terrain_subtiles[i] = &base_terrain->get_subtiles();
+		}
+
+		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
+			const short terrain_subtile = static_cast<short>(vector::get_random(*terrain_subtiles[i]));
+
+			this->base_subtile_frames[i] = terrain_subtile;
+		}
+	} else {
+		this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
+	}
 }
 
 void tile::set_terrain(const terrain_type *terrain)

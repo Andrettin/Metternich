@@ -77,8 +77,19 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 		const tile *tile = map::get()->get_tile(tile_pos);
 
 		switch (model_role) {
-			case role::base_image_source:
-				return map_grid_model::build_image_source(defines::get()->get_default_base_terrain(), tile->get_base_tile());
+			case role::base_image_sources: {
+				QStringList image_sources;
+
+				if (!defines::get()->get_default_base_terrain()->get_subtiles().empty()) {
+					for (const short subtile : tile->get_base_subtiles()) {
+						image_sources.push_back(map_grid_model::build_image_source(defines::get()->get_default_base_terrain(), subtile));
+					}
+				} else {
+					image_sources.push_back(map_grid_model::build_image_source(defines::get()->get_default_base_terrain(), tile->get_base_tile()));
+				}
+
+				return image_sources;
+			}
 			case role::image_sources: {
 				QStringList image_sources;
 
