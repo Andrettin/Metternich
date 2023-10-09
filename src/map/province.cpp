@@ -77,7 +77,7 @@ void province::check() const
 	}
 
 	for (const auto &[border_province, border_river] : this->border_rivers) {
-		if (!border_river->is_border_river()) {
+		if (!border_river->is_river() && !border_river->is_border_river()) {
 			throw std::runtime_error(std::format("Province \"{}\" has the terrain feature \"{}\" set as a border river, but the latter is not a river.", this->get_identifier(), border_river->get_identifier()));
 		}
 	}
