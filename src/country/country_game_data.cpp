@@ -9,6 +9,8 @@
 #include "character/trait.h"
 #include "country/consulate.h"
 #include "country/country.h"
+#include "country/country_tier.h"
+#include "country/country_tier_data.h"
 #include "country/country_turn_data.h"
 #include "country/country_type.h"
 #include "country/culture.h"
@@ -83,10 +85,8 @@
 namespace metternich {
 
 country_game_data::country_game_data(metternich::country *country)
-	: country(country), tier(country->get_default_tier()), religion(country->get_default_religion())
+	: country(country), tier(country_tier::none), religion(country->get_default_religion())
 {
-	this->set_government_type(country->get_default_government_type());
-
 	connect(this, &country_game_data::tier_changed, this, &country_game_data::title_name_changed);
 	connect(this, &country_game_data::tier_changed, this, &country_game_data::ruler_title_name_changed);
 	connect(this, &country_game_data::government_type_changed, this, &country_game_data::title_name_changed);
@@ -657,7 +657,15 @@ void country_game_data::set_tier(const country_tier tier)
 	assert_throw(tier >= this->country->get_min_tier());
 	assert_throw(tier <= this->country->get_max_tier());
 
+	if (this->get_tier() != country_tier::none) {
+		country_tier_data::get(this->get_tier())->get_modifier()->remove(this->country);
+	}
+
 	this->tier = tier;
+
+	if (this->get_tier() != country_tier::none) {
+		country_tier_data::get(this->get_tier())->get_modifier()->apply(this->country);
+	}
 
 	if (game::get()->is_running()) {
 		emit tier_changed();
