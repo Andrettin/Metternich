@@ -141,11 +141,10 @@ void country_game_data::do_turn()
 		this->decrement_scripted_modifiers();
 
 		this->check_journal_entries();
-		this->do_events();
 
 		this->check_characters();
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Failed to process turn for country \"" + this->country->get_identifier() + "\"."));
+		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->country->get_identifier())));
 	}
 }
 

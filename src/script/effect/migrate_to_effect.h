@@ -34,6 +34,8 @@ public:
 			return;
 		}
 
+		assert_throw(scope->get_settlement() != nullptr);
+
 		scope->migrate_to(settlement);
 	}
 
