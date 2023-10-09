@@ -4096,6 +4096,25 @@ void country_game_data::set_commodity_bonus_for_tile_threshold(const commodity *
 	}
 }
 
+void country_game_data::change_capital_commodity_bonus(const commodity *commodity, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const centesimal_int count = (this->capital_commodity_bonuses[commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->capital_commodity_bonuses.erase(commodity);
+	}
+
+	if (this->get_capital() != nullptr) {
+		this->get_capital()->get_game_data()->calculate_commodity_outputs();
+	}
+}
+
 void country_game_data::change_capital_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
