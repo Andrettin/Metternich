@@ -13,6 +13,8 @@
 #include "map/route_game_data.h"
 #include "map/site.h"
 #include "map/site_type.h"
+#include "map/terrain_adjacency.h"
+#include "map/terrain_adjacency_type.h"
 #include "map/terrain_feature.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
@@ -164,7 +166,7 @@ void map_template::write_terrain_image()
 		if (std::holds_alternative<const terrain_feature *>(terrain_variant)) {
 			const terrain_feature *terrain_feature = std::get<const metternich::terrain_feature *>(terrain_variant);
 
-			if (terrain_feature->is_river()) {
+			if (terrain_feature->is_river() || terrain_feature->is_border_river()) {
 				continue;
 			}
 
@@ -361,6 +363,96 @@ void map_template::write_river_image()
 	}
 }
 
+void map_template::set_border_river_image_filepath(const std::filesystem::path &filepath)
+{
+	if (filepath == this->get_border_river_image_filepath()) {
+		return;
+	}
+
+	this->border_river_image_filepath = database::get()->get_maps_path(this->get_module()) / filepath;
+}
+
+void map_template::write_border_river_image()
+{
+	try {
+		assert_throw(this->get_world() != nullptr);
+
+		terrain_geodata_map terrain_geodata_map = this->get_world()->parse_terrain_geojson_folder();
+
+		color_map<std::vector<std::unique_ptr<QGeoShape>>> geodata_map;
+
+		static const QColor river_color = QColor(Qt::blue);
+
+		for (auto &[terrain_variant, geoshapes] : terrain_geodata_map) {
+			QColor color;
+
+			if (std::holds_alternative<const terrain_feature *>(terrain_variant)) {
+				const terrain_feature *terrain_feature = std::get<const metternich::terrain_feature *>(terrain_variant);
+
+				if (!terrain_feature->is_border_river()) {
+					continue;
+				}
+
+				if (terrain_feature->is_hidden()) {
+					continue;
+				}
+
+				color = river_color;
+			} else {
+				continue;
+			}
+
+			if (!color.isValid()) {
+				throw std::runtime_error("Border river has no valid color.");
+			}
+
+			vector::merge(geodata_map[color], std::move(geoshapes));
+		}
+
+		assert_throw(this->map_projection != nullptr);
+
+		this->map_projection->validate_area(this->get_georectangle(), this->get_size());
+
+		QImage base_image(this->get_size(), QImage::Format_RGBA8888);
+		base_image.fill(Qt::transparent);
+
+		//write border river geoshapes
+		geoshape::write_to_image(base_image, geodata_map, this->get_georectangle(), this->map_projection, this->geocoordinate_x_offset);
+
+		QImage image;
+		if (!this->get_border_river_image_filepath().empty()) {
+			image = QImage(path::to_qstring(this->get_border_river_image_filepath()));
+			assert_throw(!image.isNull());
+		} else {
+			image = QImage(this->get_size() / 2, QImage::Format_RGBA8888);
+			image.fill(Qt::transparent);
+		}
+
+		for (int x = 0; x < base_image.width(); ++x) {
+			for (int y = 0; y < base_image.height(); ++y) {
+				const QPoint tile_pos(x, y);
+				const QColor tile_color = base_image.pixelColor(tile_pos);
+
+				if (tile_color != river_color) {
+					continue;
+				}
+
+				image.setPixelColor(x / 2, y / 2, tile_color);
+			}
+		}
+
+		std::filesystem::path output_filepath = this->get_border_river_image_filepath().filename();
+		if (output_filepath.empty()) {
+			output_filepath = "border_rivers.png";
+		}
+
+		image.save(path::to_qstring(output_filepath));
+	} catch (...) {
+		exception::report(std::current_exception());
+		QApplication::exit(EXIT_FAILURE);
+	}
+}
+
 void map_template::set_route_image_filepath(const std::filesystem::path &filepath)
 {
 	if (filepath == this->get_route_image_filepath()) {
@@ -477,6 +569,7 @@ void map_template::apply() const
 
 	this->apply_terrain();
 	this->apply_rivers();
+	this->apply_border_rivers();
 	this->apply_routes();
 	this->apply_provinces();
 }
@@ -557,6 +650,98 @@ void map_template::apply_rivers() const
 
 			tile *tile = map::get()->get_tile(tile_pos);
 			tile->set_inner_river(true);
+		}
+	}
+}
+
+void map_template::apply_border_rivers() const
+{
+	if (this->get_border_river_image_filepath().empty()) {
+		return;
+	}
+
+	const QImage border_river_image(path::to_qstring(this->get_border_river_image_filepath()));
+	const QRect border_river_image_rect = border_river_image.rect();
+
+	map *map = map::get();
+
+	static const QColor river_color = QColor(Qt::blue);
+
+	for (int x = 0; x < border_river_image.width(); ++x) {
+		for (int y = 0; y < border_river_image.height(); ++y) {
+			const QPoint pixel_pos(x, y);
+			const QColor pixel_color = border_river_image.pixelColor(pixel_pos);
+
+			if (pixel_color != river_color) {
+				continue;
+			}
+
+			const QPoint river_tile_pos_1(x * 2, y * 2);
+			const QPoint river_tile_pos_2 = river_tile_pos_1 + QPoint(1, 0);
+			const QPoint river_tile_pos_3 = river_tile_pos_1 + QPoint(0, 1);
+			const QPoint river_tile_pos_4 = river_tile_pos_1 + QPoint(1, 1);
+
+			tile *river_tile_1 = map->get_tile(river_tile_pos_1);
+			tile *river_tile_2 = map->get_tile(river_tile_pos_2);
+			tile *river_tile_3 = map->get_tile(river_tile_pos_3);
+			tile *river_tile_4 = map->get_tile(river_tile_pos_4);
+
+			terrain_adjacency river_adjacency;
+
+			river_tile_1->add_river_direction(direction::southeast);
+			river_tile_2->add_river_direction(direction::southwest);
+			river_tile_3->add_river_direction(direction::northeast);
+			river_tile_4->add_river_direction(direction::northwest);
+
+			static constexpr size_t direction_count = static_cast<size_t>(direction::count);
+
+			for (size_t i = 0; i < direction_count; ++i) {
+				const direction direction = static_cast<archimedes::direction>(i);
+				const QPoint offset = direction_to_offset(direction);
+
+				const QPoint adjacent_pixel_pos = pixel_pos + offset;
+				terrain_adjacency_type adjacency_type = terrain_adjacency_type::other;
+
+				if (border_river_image_rect.contains(adjacent_pixel_pos)) {
+					if (border_river_image.pixelColor(adjacent_pixel_pos) == river_color) {
+						adjacency_type = terrain_adjacency_type::same;
+					} else {
+						adjacency_type = terrain_adjacency_type::other;
+					}
+				} else {
+					adjacency_type = terrain_adjacency_type::same;
+				}
+
+				river_adjacency.set_direction_adjacency_type(direction, adjacency_type);
+			}
+
+			if (river_adjacency.get_direction_adjacency_type(direction::north) == terrain_adjacency_type::same) {
+				river_tile_1->add_river_direction(direction::east);
+				river_tile_1->add_river_direction(direction::northeast);
+				river_tile_2->add_river_direction(direction::west);
+				river_tile_2->add_river_direction(direction::northwest);
+			}
+
+			if (river_adjacency.get_direction_adjacency_type(direction::south) == terrain_adjacency_type::same) {
+				river_tile_3->add_river_direction(direction::east);
+				river_tile_3->add_river_direction(direction::southeast);
+				river_tile_4->add_river_direction(direction::west);
+				river_tile_4->add_river_direction(direction::southwest);
+			}
+
+			if (river_adjacency.get_direction_adjacency_type(direction::west) == terrain_adjacency_type::same) {
+				river_tile_1->add_river_direction(direction::south);
+				river_tile_1->add_river_direction(direction::southwest);
+				river_tile_3->add_river_direction(direction::north);
+				river_tile_3->add_river_direction(direction::northwest);
+			}
+
+			if (river_adjacency.get_direction_adjacency_type(direction::east) == terrain_adjacency_type::same) {
+				river_tile_2->add_river_direction(direction::south);
+				river_tile_2->add_river_direction(direction::southeast);
+				river_tile_4->add_river_direction(direction::north);
+				river_tile_4->add_river_direction(direction::northeast);
+			}
 		}
 	}
 }
