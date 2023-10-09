@@ -908,6 +908,11 @@ void site_game_data::calculate_commodity_outputs()
 {
 	commodity_map<centesimal_int> outputs = this->base_commodity_outputs;
 
+	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+		//ensure the current outputs are in the new map, so that they get removed if no longer present
+		outputs[commodity];
+	}
+
 	if (this->get_owner() != nullptr && this->is_capital()) {
 		for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_capital_commodity_bonuses()) {
 			outputs[commodity] += value;
