@@ -11,6 +11,7 @@
 #include "map/province_container.h"
 #include "map/site_container.h"
 #include "map/terrain_type_container.h"
+#include "population/population_type_container.h"
 #include "script/opinion_modifier_container.h"
 #include "technology/technology_container.h"
 #include "unit/promotion_container.h"
@@ -1599,6 +1600,25 @@ public:
 		this->set_category_research_modifier(category, this->get_category_research_modifier(category) + value);
 	}
 
+	Q_INVOKABLE const centesimal_int &get_population_type_modifier_multiplier(const population_type *type) const
+	{
+		const auto find_iterator = this->population_type_modifier_multipliers.find(type);
+
+		if (find_iterator != this->population_type_modifier_multipliers.end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr centesimal_int one(1);
+		return one;
+	}
+
+	void set_population_type_modifier_multiplier(const population_type *type, const centesimal_int &value);
+
+	void change_population_type_modifier_multiplier(const population_type *type, const centesimal_int &change)
+	{
+		this->set_population_type_modifier_multiplier(type, this->get_population_type_modifier_multiplier(type) + change);
+	}
+
 	int get_advisor_cost_modifier() const
 	{
 		return this->advisor_cost_modifier;
@@ -2005,6 +2025,7 @@ private:
 	commodity_map<centesimal_int> capital_commodity_bonuses_per_population;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	std::map<technology_category, int> category_research_modifiers;
+	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	int advisor_cost_modifier = 0;
 	int leader_cost_modifier = 0;
 	int diplomatic_penalty_for_expansion_modifier = 0;

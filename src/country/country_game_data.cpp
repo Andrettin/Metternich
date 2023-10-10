@@ -4155,6 +4155,23 @@ void country_game_data::set_category_research_modifier(const technology_category
 	}
 }
 
+void country_game_data::set_population_type_modifier_multiplier(const population_type *type, const centesimal_int &value)
+{
+	const centesimal_int old_value = this->get_population_type_modifier_multiplier(type);
+
+	if (value == old_value) {
+		return;
+	}
+
+	assert_throw(type->get_country_modifier() != nullptr);
+
+	if (value == 1) {
+		this->population_type_modifier_multipliers.erase(type);
+	} else {
+		this->population_type_modifier_multipliers[type] = value;
+	}
+}
+
 void country_game_data::decrement_scripted_modifiers()
 {
 	//decrement opinion modifiers
