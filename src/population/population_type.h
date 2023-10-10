@@ -36,6 +36,7 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(metternich::icon* small_icon MEMBER small_icon NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
+	Q_PROPERTY(archimedes::centesimal_int max_modifier_multiplier MEMBER max_modifier_multiplier READ get_max_modifier_multiplier NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "population_type";
@@ -147,6 +148,11 @@ public:
 		return this->output_value;
 	}
 
+	const centesimal_int &get_max_modifier_multiplier() const
+	{
+		return this->max_modifier_multiplier;
+	}
+
 	const modifier<const country> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
@@ -169,6 +175,7 @@ private:
 	commodity_map<centesimal_int> commodity_demands; //affects minor nation demand
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
+	centesimal_int max_modifier_multiplier = centesimal_int(0);
 	std::unique_ptr<modifier<const country>> country_modifier;
 };
 

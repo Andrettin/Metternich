@@ -102,7 +102,11 @@ void population_type::check() const
 	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_small_icon() != nullptr);
 
-	if (this->get_country_modifier() == nullptr) {
+	if (this->get_country_modifier() != nullptr) {
+		if (this->get_max_modifier_multiplier() == 0) {
+			throw std::runtime_error(std::format("Population type \"{}\" has a country modifier, but has no maximum modifier multiplier.", this->get_identifier()));
+		}
+	} else {
 		assert_throw(this->get_output_commodity() != nullptr);
 		assert_throw(this->get_output_value() > 0);
 	}
