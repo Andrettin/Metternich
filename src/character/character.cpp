@@ -324,12 +324,22 @@ QString character::get_advisor_effects_string(metternich::country *country) cons
 {
 	assert_throw(this->is_advisor());
 
+	std::string str;
+
 	if (this->advisor_modifier != nullptr) {
-		return QString::fromStdString(this->advisor_modifier->get_string(country));
+		str += this->advisor_modifier->get_string(country);
 	}
 
 	if (this->advisor_effects != nullptr) {
-		return QString::fromStdString(this->advisor_effects->get_effects_string(country, read_only_context(country)));
+		if (!str.empty()) {
+			str += '\n';
+		}
+
+		str += this->advisor_effects->get_effects_string(country, read_only_context(country));
+	}
+
+	if (!str.empty()) {
+		return QString::fromStdString(str);
 	}
 
 	if (this->get_advisor_type()->get_modifier() != nullptr) {
