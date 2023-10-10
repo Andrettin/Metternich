@@ -28,7 +28,11 @@ public:
 
 	virtual std::string get_base_string() const override
 	{
-		return std::format("Capital {} per Population", this->commodity->get_name());
+		if (this->commodity->is_storable()) {
+			return std::format("Capital {} Output per Population", this->commodity->get_name());
+		} else {
+			return std::format("Capital {} per Population", this->commodity->get_name());
+		}
 	}
 
 	virtual bool are_decimals_relevant() const override

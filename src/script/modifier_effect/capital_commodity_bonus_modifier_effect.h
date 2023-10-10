@@ -28,7 +28,11 @@ public:
 
 	virtual std::string get_base_string() const override
 	{
-		return std::format("Capital {}", this->commodity->get_name());
+		if (this->commodity->is_storable()) {
+			return std::format("Capital {} Output", this->commodity->get_name());
+		} else {
+			return std::format("Capital {}", this->commodity->get_name());
+		}
 	}
 
 private:
