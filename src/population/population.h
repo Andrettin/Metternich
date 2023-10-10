@@ -47,6 +47,17 @@ public:
 	}
 
 	QVariantList get_type_counts_qvariant_list() const;
+
+	int get_type_count(const population_type *type) const
+	{
+		const auto find_iterator = this->get_type_counts().find(type);
+		if (find_iterator != this->get_type_counts().end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
 	void change_type_count(const population_type *type, const int change);
 
 	const culture_map<int> &get_culture_counts() const
