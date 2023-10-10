@@ -158,6 +158,8 @@ public:
 		return this->country_modifier.get();
 	}
 
+	Q_INVOKABLE QString get_country_modifier_string(const metternich::country *country) const;
+
 signals:
 	void changed();
 

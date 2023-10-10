@@ -2026,6 +2026,16 @@ void country_game_data::on_population_type_count_changed(const population_type *
 	}
 
 	this->change_food_consumption(change);
+
+	if (type->get_country_modifier() != nullptr) {
+		const int population_type_count = this->get_population()->get_type_count(type);
+		const int old_population_type_count = population_type_count - change;
+		const centesimal_int &type_modifier_multiplier = this->get_population_type_modifier_multiplier(type);
+		const centesimal_int &max_total_modifier_multiplier = type->get_max_modifier_multiplier();
+
+		type->get_country_modifier()->apply(this->country, -centesimal_int::min(old_population_type_count * type_modifier_multiplier, max_total_modifier_multiplier));
+		type->get_country_modifier()->apply(this->country, centesimal_int::min(population_type_count * type_modifier_multiplier, max_total_modifier_multiplier));
+	}
 }
 
 void country_game_data::set_population_growth(const int growth)
@@ -4170,6 +4180,12 @@ void country_game_data::set_population_type_modifier_multiplier(const population
 	} else {
 		this->population_type_modifier_multipliers[type] = value;
 	}
+
+	const int population_type_count = this->get_population()->get_type_count(type);
+	const centesimal_int &max_modifier_multiplier = type->get_max_modifier_multiplier();
+
+	type->get_country_modifier()->apply(this->country, -centesimal_int::min(population_type_count * old_value, max_modifier_multiplier));
+	type->get_country_modifier()->apply(this->country, centesimal_int::min(population_type_count * value, max_modifier_multiplier));
 }
 
 void country_game_data::decrement_scripted_modifiers()

@@ -195,7 +195,7 @@ const std::string &government_type::get_ruler_title_name(const country_tier tier
 	return this->get_group()->get_ruler_title_name(tier, gender);
 }
 
-QString government_type::get_modifier_string(metternich::country *country) const
+QString government_type::get_modifier_string(const metternich::country *country) const
 {
 	return QString::fromStdString(this->get_modifier()->get_string(country));
 }

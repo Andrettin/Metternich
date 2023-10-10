@@ -74,7 +74,7 @@ public:
 		return this->modifier.get();
 	}
 
-	Q_INVOKABLE QString get_modifier_string(metternich::country *country) const;
+	Q_INVOKABLE QString get_modifier_string(const metternich::country *country) const;
 
 	int get_min_policy_value(const policy *policy) const;
 	int get_max_policy_value(const policy *policy) const;

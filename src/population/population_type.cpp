@@ -2,10 +2,13 @@
 
 #include "population/population_type.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "economy/commodity.h"
 #include "population/phenotype.h"
+#include "population/population.h"
 #include "population/population_class.h"
 #include "script/modifier.h"
 #include "ui/icon.h"
@@ -116,6 +119,16 @@ void population_type::check() const
 			throw std::runtime_error(std::format("Population type \"{}\" demands a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
 		}
 	}
+}
+
+QString population_type::get_country_modifier_string(const metternich::country *country) const
+{
+	if (this->get_country_modifier() == nullptr) {
+		return QString();
+	}
+
+	const country_game_data *country_game_data = country->get_game_data();
+	return QString::fromStdString(this->get_country_modifier()->get_string(country, centesimal_int::min(country_game_data->get_population()->get_type_count(this) * country_game_data->get_population_type_modifier_multiplier(this), this->get_max_modifier_multiplier())));
 }
 
 }

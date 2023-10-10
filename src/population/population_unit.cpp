@@ -126,20 +126,12 @@ void population_unit::set_country(const metternich::country *country)
 
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->remove_population_unit(this);
-
-		if (this->get_type()->get_country_modifier() != nullptr) {
-			this->get_type()->get_country_modifier()->remove(this->get_country());
-		}
 	}
 
 	this->country = country;
 
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->add_population_unit(this);
-
-		if (this->get_type()->get_country_modifier() != nullptr) {
-			this->get_type()->get_country_modifier()->apply(this->get_country());
-		}
 	}
 
 	emit country_changed();
