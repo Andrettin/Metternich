@@ -80,6 +80,7 @@
 #include "script/condition/produces_commodity_condition.h"
 #include "script/condition/promotion_condition.h"
 #include "script/condition/province_condition.h"
+#include "script/condition/province_count_condition.h"
 #include "script/condition/provincial_capital_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
@@ -160,6 +161,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<owns_province_condition>(value, condition_operator);
 		} else if (key == "owns_site") {
 			return std::make_unique<owns_site_condition>(value, condition_operator);
+		} else if (key == "province_count") {
+			return std::make_unique<province_count_condition>(value, condition_operator);
 		} else if (key == "ruler") {
 			return std::make_unique<ruler_condition>(value, condition_operator);
 		} else if (key == "wealth") {
