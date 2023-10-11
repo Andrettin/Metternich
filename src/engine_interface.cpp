@@ -4,6 +4,7 @@
 
 #include "country/country_tier.h"
 #include "country/country_tier_data.h"
+#include "country/law_group.h"
 #include "country/policy.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -88,6 +89,11 @@ QVariantList engine_interface::get_scenarios() const
 QVariantList engine_interface::get_eras() const
 {
 	return container::to_qvariant_list(era::get_all());
+}
+
+QVariantList engine_interface::get_law_groups() const
+{
+	return container::to_qvariant_list(law_group::get_all());
 }
 
 QVariantList engine_interface::get_policies() const

@@ -68,6 +68,7 @@ public:
 	Q_INVOKABLE const map_template *get_map_template(const QString &identifier) const;
 	Q_INVOKABLE QVariantList get_scenarios() const;
 	Q_INVOKABLE QVariantList get_eras() const;
+	Q_INVOKABLE QVariantList get_law_groups() const;
 	Q_INVOKABLE QVariantList get_policies() const;
 	Q_INVOKABLE QVariantList get_technologies() const;
 	Q_INVOKABLE const metternich::country_tier_data *get_country_tier_data(const metternich::country_tier tier) const;

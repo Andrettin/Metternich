@@ -16,6 +16,8 @@
 #include "country/diplomacy_state.h"
 #include "country/government_type.h"
 #include "country/journal_entry.h"
+#include "country/law.h"
+#include "country/law_group.h"
 #include "country/policy.h"
 #include "database/database.h"
 #include "database/defines.h"
@@ -167,6 +169,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<icon>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);
 		qmlRegisterAnonymousType<journal_entry>("", 1);
+		qmlRegisterAnonymousType<law>("", 1);
+		qmlRegisterAnonymousType<law_group>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<map_template>("", 1);
 		qmlRegisterAnonymousType<policy>("", 1);
