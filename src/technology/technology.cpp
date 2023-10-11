@@ -6,6 +6,7 @@
 #include "country/country.h"
 #include "country/culture.h"
 #include "country/government_type.h"
+#include "country/law.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
 #include "economy/resource.h"
@@ -248,6 +249,15 @@ void technology::add_enabled_government_type(const government_type *government_t
 	this->enabled_government_types.push_back(government_type);
 
 	std::sort(this->enabled_government_types.begin(), this->enabled_government_types.end(), [](const metternich::government_type *lhs, const metternich::government_type *rhs) {
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+}
+
+void technology::add_enabled_law(const law *law)
+{
+	this->enabled_laws.push_back(law);
+
+	std::sort(this->enabled_laws.begin(), this->enabled_laws.end(), [](const metternich::law *lhs, const metternich::law *rhs) {
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 }
@@ -580,6 +590,16 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} government type", government_type->get_name());
+		}
+	}
+
+	if (!this->get_enabled_laws().empty()) {
+		for (const law *law : this->get_enabled_laws()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} law", law->get_name());
 		}
 	}
 

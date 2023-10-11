@@ -4,6 +4,10 @@ project(metternich VERSION 1.0.0)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo" CACHE STRING "" FORCE)
 
+if(MSVC)
+	add_compile_options(/MP)
+endif()
+
 add_subdirectory(archimedes)
 
 include_directories(
@@ -52,6 +56,8 @@ set(country_SRCS
 	src/country/ideology.cpp
 	src/country/ideology_container.cpp
 	src/country/journal_entry.cpp
+	src/country/law.cpp
+	src/country/law_group.cpp
 	src/country/policy.cpp
 	src/country/policy_container.cpp
 	src/country/religion.cpp
@@ -338,6 +344,8 @@ set(country_HDRS
 	src/country/ideology.h
 	src/country/ideology_container.h
 	src/country/journal_entry.h
+	src/country/law.h
+	src/country/law_group.h
 	src/country/policy.h
 	src/country/policy_container.h
 	src/country/religion.h
@@ -827,7 +835,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_UNITY_BUILD ON)
 
 if(MSVC)
-	add_compile_options(/W4 /w44800 /wd4244 /wd4458 /bigobj /MP)
+	add_compile_options(/W4 /w44800 /wd4244 /wd4458 /bigobj)
 else()
 	add_compile_options(-Wall -Wno-unknown-pragmas)
 endif()

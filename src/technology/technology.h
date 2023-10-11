@@ -17,6 +17,7 @@ class culture;
 class government_type;
 class icon;
 class improvement;
+class law;
 class military_unit_type;
 class pathway;
 class portrait;
@@ -284,6 +285,13 @@ public:
 
 	void add_enabled_government_type(const government_type *government_type);
 
+	const std::vector<const law *> &get_enabled_laws() const
+	{
+		return this->enabled_laws;
+	}
+
+	void add_enabled_law(const law *law);
+
 	const std::vector<const character *> &get_enabled_rulers() const
 	{
 		return this->enabled_rulers;
@@ -412,6 +420,7 @@ private:
 	std::vector<const military_unit_type *> enabled_military_units;
 	std::vector<const transporter_type *> enabled_transporters;
 	std::vector<const government_type *> enabled_government_types;
+	std::vector<const law *> enabled_laws;
 	std::vector<const character *> enabled_rulers;
 	std::vector<const character *> retired_rulers;
 	std::vector<const character *> enabled_advisors;
