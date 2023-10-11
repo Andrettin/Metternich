@@ -225,7 +225,7 @@ void population_unit::set_consciousness(const centesimal_int &consciousness)
 	const centesimal_int change = consciousness - old_consciousness;
 	this->get_settlement()->get_game_data()->get_population()->change_total_consciousness(change);
 
-	if (game::get()->is_running() && change.to_int() > 0) {
+	if (game::get()->is_running() && consciousness.to_int() != old_consciousness.to_int()) {
 		this->choose_ideology();
 	}
 }
@@ -249,7 +249,7 @@ void population_unit::set_militancy(const centesimal_int &militancy)
 	const centesimal_int change = militancy - old_militancy;
 	this->get_settlement()->get_game_data()->get_population()->change_total_militancy(change);
 
-	if (game::get()->is_running() && change.to_int() > 0) {
+	if (game::get()->is_running() && militancy.to_int() != old_militancy.to_int()) {
 		this->choose_ideology();
 	}
 }
