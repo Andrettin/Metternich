@@ -4091,6 +4091,37 @@ void country_game_data::change_improved_resource_commodity_bonus(const resource 
 	}
 }
 
+void country_game_data::change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->building_commodity_bonuses[building][commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->building_commodity_bonuses[building].erase(commodity);
+
+		if (this->building_commodity_bonuses[building].empty()) {
+			this->building_commodity_bonuses.erase(building);
+		}
+	}
+
+	for (const province *province : this->get_provinces()) {
+		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+			if (!settlement->get_game_data()->is_built()) {
+				continue;
+			}
+
+			if (settlement->get_game_data()->has_building(building)) {
+				settlement->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
+			}
+		}
+	}
+}
+
 void country_game_data::set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
 {
 	const int old_value = this->get_commodity_bonus_for_tile_threshold(commodity, threshold);

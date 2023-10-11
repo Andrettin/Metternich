@@ -1520,6 +1520,40 @@ public:
 
 	void change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change);
 
+	const building_type_map<commodity_map<int>> &get_building_commodity_bonuses() const
+	{
+		return this->building_commodity_bonuses;
+	}
+
+	const commodity_map<int> &get_building_commodity_bonuses(const building_type *building) const
+	{
+		const auto find_iterator = this->building_commodity_bonuses.find(building);
+
+		if (find_iterator != this->building_commodity_bonuses.end()) {
+			return find_iterator->second;
+		}
+
+		static const commodity_map<int> empty_map;
+		return empty_map;
+	}
+
+	int get_building_commodity_bonus(const commodity *commodity, const building_type *building) const
+	{
+		const auto find_iterator = this->building_commodity_bonuses.find(building);
+
+		if (find_iterator != this->building_commodity_bonuses.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(commodity);
+
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+
+		return 0;
+	}
+
+	void change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change);
+
 	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
 	{
 		const auto find_iterator = this->commodity_bonuses_for_tile_thresholds.find(commodity);
@@ -2021,6 +2055,7 @@ private:
 	int throughput_modifier = 0;
 	commodity_map<int> commodity_throughput_modifiers;
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
+	building_type_map<commodity_map<int>> building_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses_per_population;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;

@@ -12,17 +12,17 @@
 namespace metternich {
 
 template <typename scope_type>
-class commodity_per_improved_resource_modifier_effect final : public modifier_effect<scope_type>
+class commodity_bonus_per_improved_resource_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
-	explicit commodity_per_improved_resource_modifier_effect(const metternich::commodity *commodity, const metternich::resource *resource, const std::string &value)
+	explicit commodity_bonus_per_improved_resource_modifier_effect(const metternich::commodity *commodity, const metternich::resource *resource, const std::string &value)
 		: modifier_effect<scope_type>(value), commodity(commodity), resource(resource)
 	{
 	}
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "commodity_per_improved_resource";
+		static const std::string identifier = "commodity_bonus_per_improved_resource";
 		return identifier;
 	}
 

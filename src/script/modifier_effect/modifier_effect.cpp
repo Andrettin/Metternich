@@ -21,7 +21,8 @@
 #include "script/modifier_effect/cavalry_cost_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h"
-#include "script/modifier_effect/commodity_per_improved_resource_modifier_effect.h"
+#include "script/modifier_effect/commodity_bonus_per_building_modifier_effect.h"
+#include "script/modifier_effect/commodity_bonus_per_improved_resource_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/commodity_throughput_modifier_effect.h"
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
@@ -70,6 +71,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		static const std::string building_capacity_modifier_suffix = "_capacity";
 		static const std::string capital_commodity_bonus_prefix = "capital_";
 		static const std::string capital_commodity_bonus_per_population_suffix = "_bonus_per_population";
+		static const std::string commodity_per_building_infix = "_per_";
 		static const std::string research_modifier_suffix = "_research_modifier";
 		static const std::string throughput_modifier_suffix = "_throughput_modifier";
 
@@ -145,6 +147,17 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 			return std::make_unique<population_type_bonus_modifier_effect>(population_type, value);
 		}
+		
+		const size_t find_pos = key.find(commodity_per_building_infix);
+		if (find_pos != std::string::npos && !key.starts_with(commodity_per_building_infix) && !key.ends_with(commodity_per_building_infix) && building_type::try_get(key.substr(find_pos + commodity_per_building_infix.size(), key.size() - commodity_per_building_infix.size() - find_pos)) != nullptr) {
+			const size_t infix_pos = find_pos;
+			const commodity *commodity = commodity::get(key.substr(0, infix_pos));
+
+			const size_t building_identifier_pos = infix_pos + commodity_per_building_infix.size();
+			const building_type *building = building_type::get(key.substr(building_identifier_pos, key.size() - building_identifier_pos));
+
+			return std::make_unique<commodity_bonus_per_building_modifier_effect<scope_type>>(commodity, building, value);
+		}
 	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
 		if (key == "bonus_vs_artillery") {
 			return std::make_unique<bonus_vs_artillery_modifier_effect>(value);
@@ -194,7 +207,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			const size_t resource_identifier_pos = infix_pos + commodity_per_improved_resource_infix.size();
 			const resource *resource = resource::get(key.substr(resource_identifier_pos, key.size() - resource_identifier_pos));
 
-			return std::make_unique<commodity_per_improved_resource_modifier_effect<scope_type>>(commodity, resource, value);
+			return std::make_unique<commodity_bonus_per_improved_resource_modifier_effect<scope_type>>(commodity, resource, value);
 		}
 	}
 
