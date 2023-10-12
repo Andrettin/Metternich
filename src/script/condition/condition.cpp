@@ -66,6 +66,7 @@
 #include "script/condition/is_advisor_condition.h"
 #include "script/condition/is_military_unit_category_available_condition.h"
 #include "script/condition/is_ruler_condition.h"
+#include "script/condition/law_condition.h"
 #include "script/condition/militancy_condition.h"
 #include "script/condition/military_unit_category_condition.h"
 #include "script/condition/military_unit_domain_condition.h"
@@ -302,6 +303,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		return std::make_unique<event_condition<scope_type>>(value, condition_operator);
 	} else if (key == "game_rule") {
 		return std::make_unique<game_rule_condition<scope_type>>(value, condition_operator);
+	} else if (key == "law") {
+		return std::make_unique<law_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religion") {
 		return std::make_unique<religion_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religious_group") {

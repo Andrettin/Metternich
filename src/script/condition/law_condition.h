@@ -2,25 +2,25 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/law.h"
 #include "script/condition/condition.h"
-#include "technology/technology.h"
 #include "util/string_util.h"
 
 namespace metternich {
 
 template <typename scope_type>
-class technology_condition final : public condition<scope_type>
+class law_condition final : public condition<scope_type>
 {
 public:
-	explicit technology_condition(const std::string &value, const gsml_operator condition_operator)
+	explicit law_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<scope_type>(condition_operator)
 	{
-		this->technology = technology::get(value);
+		this->law = law::get(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "technology";
+		static const std::string class_identifier = "law";
 		return class_identifier;
 	}
 
@@ -34,18 +34,18 @@ public:
 			return false;
 		}
 
-		return country->get_game_data()->has_technology(this->technology);
+		return country->get_game_data()->has_law(this->law);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
 
-		return std::format("{} technology", string::highlight(this->technology->get_name()));
+		return std::format("{} law", string::highlight(this->law->get_name()));
 	}
 
 private:
-	const metternich::technology *technology = nullptr;
+	const metternich::law *law = nullptr;
 };
 
 }
