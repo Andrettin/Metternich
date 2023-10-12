@@ -467,6 +467,7 @@ set(script_HDRS
 	src/script/context.h
 	src/script/factor.h
 	src/script/factor_modifier.h
+	src/script/flag.h
 	src/script/mean_time_to_happen.h
 	src/script/modifier.h
 	src/script/opinion_modifier.h
@@ -523,6 +524,7 @@ set(script_condition_HDRS
 	src/script/condition/government_type_condition.h
 	src/script/condition/has_building_class_condition.h
 	src/script/condition/has_building_condition.h
+	src/script/condition/has_flag_condition.h
 	src/script/condition/has_population_culture_condition.h
 	src/script/condition/has_population_ideology_condition.h
 	src/script/condition/has_population_religion_condition.h
@@ -593,6 +595,7 @@ set(script_effect_HDRS
 	src/script/effect/battle_effect.h
 	src/script/effect/capital_effect.h
 	src/script/effect/change_opinion_effect.h
+	src/script/effect/clear_flag_effect.h
 	src/script/effect/commodity_effect.h
 	src/script/effect/commodity_percent_effect.h
 	src/script/effect/consciousness_effect.h
@@ -628,6 +631,7 @@ set(script_effect_HDRS
 	src/script/effect/scripted_effect.h
 	src/script/effect/scripted_effect_effect.h
 	src/script/effect/scripted_modifiers_effect.h
+	src/script/effect/set_flag_effect.h
 	src/script/effect/source_site_effect.h
 	src/script/effect/tooltip_effect.h
 	src/script/effect/traits_effect.h

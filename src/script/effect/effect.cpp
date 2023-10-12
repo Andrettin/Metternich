@@ -20,6 +20,7 @@
 #include "script/effect/battle_effect.h"
 #include "script/effect/capital_effect.h"
 #include "script/effect/change_opinion_effect.h"
+#include "script/effect/clear_flag_effect.h"
 #include "script/effect/commodity_effect.h"
 #include "script/effect/commodity_percent_effect.h"
 #include "script/effect/consciousness_effect.h"
@@ -49,6 +50,7 @@
 #include "script/effect/saved_scope_effect.h"
 #include "script/effect/scripted_effect_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
+#include "script/effect/set_flag_effect.h"
 #include "script/effect/source_site_effect.h"
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
@@ -73,12 +75,16 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		static const std::string percent_suffix = "_percent";
 		static const std::string population_scaled_commodity_prefix = "population_scaled_";
 
-		if (key == "create_military_unit") {
+		if (key == "clear_flag") {
+			return std::make_unique<clear_flag_effect>(value, effect_operator);
+		} else if (key == "create_military_unit") {
 			return std::make_unique<create_military_unit_effect>(value, effect_operator);
 		} else if (key == "free_technologies") {
 			return std::make_unique<free_technologies_effect>(value, effect_operator);
 		} else if (key == "gain_spell_scroll") {
 			return std::make_unique<gain_spell_scroll_effect>(value, effect_operator);
+		} else if (key == "set_flag") {
+			return std::make_unique<set_flag_effect>(value, effect_operator);
 		} else if (key == "inflation") {
 			return std::make_unique<inflation_effect>(value, effect_operator);
 		} else if (key == "wealth") {

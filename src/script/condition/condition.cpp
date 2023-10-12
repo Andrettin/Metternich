@@ -49,6 +49,7 @@
 #include "script/condition/government_type_condition.h"
 #include "script/condition/has_building_condition.h"
 #include "script/condition/has_building_class_condition.h"
+#include "script/condition/has_flag_condition.h"
 #include "script/condition/has_population_culture_condition.h"
 #include "script/condition/has_population_ideology_condition.h"
 #include "script/condition/has_population_religion_condition.h"
@@ -151,6 +152,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<discovered_region_condition>(value, condition_operator);
 		} else if (key == "government_type") {
 			return std::make_unique<government_type_condition>(value, condition_operator);
+		} else if (key == "has_flag") {
+			return std::make_unique<has_flag_condition>(value, condition_operator);
 		} else if (key == "inflation") {
 			return std::make_unique<inflation_condition>(value, condition_operator);
 		} else if (key == "independent") {

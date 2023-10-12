@@ -41,6 +41,7 @@ class country;
 class country_building_slot;
 class culture;
 class event;
+class flag;
 class government_type;
 class journal_entry;
 class military_unit;
@@ -1848,6 +1849,21 @@ public:
 		this->set_free_consulate_count(consulate, this->get_free_consulate_count(consulate) + value);
 	}
 
+	bool has_flag(const flag *flag) const
+	{
+		return this->flags.contains(flag);
+	}
+
+	void set_flag(const flag *flag)
+	{
+		this->flags.insert(flag);
+	}
+
+	void clear_flag(const flag *flag)
+	{
+		this->flags.erase(flag);
+	}
+
 	int get_ai_building_desire_modifier(const building_type *building) const
 	{
 		const auto find_iterator = this->ai_building_desire_modifiers.find(building);
@@ -2075,6 +2091,7 @@ private:
 	promotion_map<int> free_cavalry_promotion_counts;
 	promotion_map<int> free_artillery_promotion_counts;
 	consulate_map<int> free_consulate_counts;
+	std::set<const flag *> flags;
 	building_type_map<int> ai_building_desire_modifiers;
 	site_map<building_type_map<int>> ai_settlement_building_desire_modifiers;
 };
