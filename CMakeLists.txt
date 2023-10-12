@@ -58,6 +58,7 @@ set(country_SRCS
 	src/country/journal_entry.cpp
 	src/country/law.cpp
 	src/country/law_group.cpp
+	src/country/law_group_container.cpp
 	src/country/policy.cpp
 	src/country/policy_container.cpp
 	src/country/religion.cpp
@@ -346,6 +347,7 @@ set(country_HDRS
 	src/country/journal_entry.h
 	src/country/law.h
 	src/country/law_group.h
+	src/country/law_group_container.h
 	src/country/policy.h
 	src/country/policy_container.h
 	src/country/religion.h

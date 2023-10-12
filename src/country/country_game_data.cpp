@@ -18,6 +18,8 @@
 #include "country/government_group.h"
 #include "country/government_type.h"
 #include "country/journal_entry.h"
+#include "country/law.h"
+#include "country/law_group.h"
 #include "country/policy.h"
 #include "country/religion.h"
 #include "database/defines.h"
@@ -2794,6 +2796,10 @@ void country_game_data::add_technology(const technology *technology)
 	}
 
 	if (game::get()->is_running()) {
+		if (!technology->get_enabled_laws().empty()) {
+			this->check_laws();
+		}
+
 		emit technologies_changed();
 	}
 }
@@ -3080,12 +3086,104 @@ bool country_game_data::can_change_to_government_type(const metternich::governme
 		return false;
 	}
 
+	if (government_type->get_required_technology() != nullptr && !this->has_technology(government_type->get_required_technology())) {
+		return false;
+	}
+
 	return true;
 }
 
 bool country_game_data::is_tribal() const
 {
 	return this->get_government_type()->get_group()->is_tribal();
+}
+
+QVariantList country_game_data::get_laws_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_laws());
+}
+
+void country_game_data::set_law(const law_group *law_group, const law *law)
+{
+	if (law == this->get_law(law_group)) {
+		return;
+	}
+
+	const metternich::law *old_law = this->get_law(law_group);
+	if (old_law != nullptr) {
+		old_law->get_modifier()->remove(this->country);
+	}
+
+	this->laws[law_group] = law;
+
+	if (law != nullptr) {
+		assert_throw(law->get_group() == law_group);
+
+		law->get_modifier()->apply(this->country);
+	}
+
+	if (game::get()->is_running()) {
+		emit laws_changed();
+	}
+}
+
+bool country_game_data::has_law(const law *law) const
+{
+	return this->get_law(law->get_group()) == law;
+}
+
+bool country_game_data::can_have_law(const metternich::law *law) const
+{
+	if (law->get_required_technology() != nullptr && !this->has_technology(law->get_required_technology())) {
+		return false;
+	}
+
+	if (law->get_conditions() != nullptr && !law->get_conditions()->check(this->country, read_only_context(this->country))) {
+		return false;
+	}
+
+	return true;
+}
+
+bool country_game_data::can_enact_law(const metternich::law *law) const
+{
+	if (!this->can_have_law(law)) {
+		return false;
+	}
+
+	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
+		if (this->get_stored_commodity(commodity) < (cost * this->get_law_cost_modifier() / 100)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void country_game_data::enact_law(const law *law)
+{
+	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
+		this->change_stored_commodity(commodity, -cost * this->get_law_cost_modifier() / 100);
+	}
+
+	this->set_law(law->get_group(), law);
+}
+
+void country_game_data::check_laws()
+{
+	for (const law_group *law_group : law_group::get_all()) {
+		const law *law = this->get_law(law_group);
+		if (law != nullptr && !this->can_have_law(law)) {
+			this->set_law(law_group, nullptr);
+			law = nullptr;
+		}
+
+		if (law == nullptr) {
+			if (this->can_have_law(law_group->get_default_law())) {
+				this->set_law(law_group, law_group->get_default_law());
+			}
+		}
+	}
 }
 
 QVariantList country_game_data::get_policy_values_qvariant_list() const

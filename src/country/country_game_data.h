@@ -2,6 +2,7 @@
 
 #include "country/consulate_container.h"
 #include "country/country_container.h"
+#include "country/law_group_container.h"
 #include "country/policy_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
@@ -23,6 +24,8 @@ Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("country/government_type.h")
 Q_MOC_INCLUDE("country/journal_entry.h")
+Q_MOC_INCLUDE("country/law.h")
+Q_MOC_INCLUDE("country/law_group.h")
 Q_MOC_INCLUDE("country/policy.h")
 Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("map/site.h")
@@ -44,6 +47,7 @@ class event;
 class flag;
 class government_type;
 class journal_entry;
+class law;
 class military_unit;
 class military_unit_type;
 class opinion_modifier;
@@ -121,6 +125,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
+	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY laws_changed)
 	Q_PROPERTY(QVariantList policy_values READ get_policy_values_qvariant_list NOTIFY policy_values_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
@@ -1045,6 +1050,37 @@ public:
 
 	bool is_tribal() const;
 
+	const law_group_map<const law *> &get_laws() const
+	{
+		return this->laws;
+	}
+
+	QVariantList get_laws_qvariant_list() const;
+
+	Q_INVOKABLE const metternich::law *get_law(const metternich::law_group *law_group) const
+	{
+		const auto find_iterator = this->get_laws().find(law_group);
+
+		if (find_iterator != this->get_laws().end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	void set_law(const law_group *law_group, const law *law);
+	bool has_law(const law *law) const;
+	Q_INVOKABLE bool can_have_law(const metternich::law *law) const;
+	Q_INVOKABLE bool can_enact_law(const metternich::law *law) const;
+	Q_INVOKABLE void enact_law(const metternich::law *law);
+
+	Q_INVOKABLE int get_law_cost_modifier() const
+	{
+		return 100 + (this->get_population_unit_count() - 1);
+	}
+
+	void check_laws();
+
 	const policy_map<int> &get_policy_values() const
 	{
 		return this->policy_values;
@@ -1965,6 +2001,7 @@ signals:
 	void current_research_changed();
 	void technology_researched(const technology *technology);
 	void government_type_changed();
+	void laws_changed();
 	void policy_values_changed();
 	void ruler_changed();
 	void advisors_changed();
@@ -2040,6 +2077,7 @@ private:
 	const technology *current_research = nullptr;
 	int free_technology_count = 0;
 	const metternich::government_type *government_type = nullptr;
+	law_group_map<const law *> laws;
 	policy_map<int> policy_values;
 	const character *ruler = nullptr;
 	std::vector<const character *> advisors;

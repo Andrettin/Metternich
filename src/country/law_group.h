@@ -12,6 +12,7 @@ class law_group final : public named_data_entry, public data_type<law_group>
 	Q_OBJECT
 
 	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY changed)
+	Q_PROPERTY(const metternich::law* default_law MEMBER default_law READ get_default_law NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "law_group";
@@ -36,11 +37,17 @@ public:
 		this->laws.push_back(law);
 	}
 
+	const law *get_default_law() const
+	{
+		return this->default_law;
+	}
+
 signals:
 	void changed();
 
 private:
 	std::vector<const law *> laws;
+	const law *default_law = nullptr;
 };
 
 }

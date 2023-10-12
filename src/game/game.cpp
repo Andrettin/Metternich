@@ -1192,6 +1192,7 @@ QCoro::Task<void> game::on_setup_finished()
 	emit countries_changed();
 
 	for (const country *country : this->get_countries()) {
+		country->get_game_data()->check_laws();
 		country->get_game_data()->check_ruler();
 
 		for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
