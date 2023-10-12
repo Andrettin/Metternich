@@ -6,6 +6,7 @@
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
+#include "population/profession.h"
 #include "script/modifier_effect/advisor_cost_modifier_effect.h"
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
 #include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
@@ -49,6 +50,7 @@
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
+#include "script/modifier_effect/profession_capacity_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
@@ -175,6 +177,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<melee_modifier_effect>(value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
+		static const std::string profession_capacity_prefix = "max_";
+
 		if (key == "housing") {
 			return std::make_unique<housing_modifier_effect>(value);
 		} else if (key.ends_with(bonus_suffix)) {
@@ -182,6 +186,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
 
 			return std::make_unique<commodity_bonus_modifier_effect>(commodity, value);
+		} else if (key.starts_with(profession_capacity_prefix) && profession::try_get(key.substr(profession_capacity_prefix.size(), key.size() - profession_capacity_prefix.size())) != nullptr) {
+			const profession *profession = profession::get(key.substr(profession_capacity_prefix.size(), key.size() - profession_capacity_prefix.size()));
+
+			return std::make_unique<profession_capacity_modifier_effect>(profession, value);
 		}
 	}
 

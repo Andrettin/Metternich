@@ -167,6 +167,7 @@ set(population_SRCS
 	src/population/population_type.cpp
 	src/population/population_type_container.cpp
 	src/population/population_unit.cpp
+	src/population/profession_container.cpp
 )
 source_group(population FILES ${population_SRCS})
 set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "population")
@@ -462,6 +463,8 @@ set(population_HDRS
 	src/population/population_type.h
 	src/population/population_type_container.h
 	src/population/population_unit.h
+	src/population/profession.h
+	src/population/profession_container.h
 )
 source_group(population FILES ${population_HDRS})
 
@@ -688,6 +691,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/naval_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h
+	src/script/modifier_effect/profession_capacity_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h
 	src/script/modifier_effect/storage_capacity_modifier_effect.h
 	src/script/modifier_effect/throughput_modifier_effect.h

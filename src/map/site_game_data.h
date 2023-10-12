@@ -2,6 +2,7 @@
 
 #include "economy/commodity_container.h"
 #include "infrastructure/building_slot_type_container.h"
+#include "population/profession_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/qunique_ptr.h"
 
@@ -23,6 +24,7 @@ class phenotype;
 class population;
 class population_type;
 class population_unit;
+class profession;
 class province;
 class religion;
 class resource;
@@ -189,6 +191,13 @@ public:
 
 	void on_population_type_count_changed(const population_type *type, const int change);
 
+	const profession_map<int> &get_profession_capacities() const
+	{
+		return this->profession_capacities;
+	}
+
+	void change_profession_capacity(const profession *profession, const int change);
+
 	int get_housing() const
 	{
 		return this->housing;
@@ -353,6 +362,7 @@ private:
 	scripted_site_modifier_map<int> scripted_modifiers;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
+	profession_map<int> profession_capacities;
 	int housing = 0;
 	int free_food_consumption = 0;
 	commodity_map<centesimal_int> base_commodity_outputs;
