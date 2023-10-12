@@ -5,6 +5,8 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
+#include "database/defines.h"
+#include "economy/commodity.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
@@ -16,6 +18,7 @@
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
+#include "util/string_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -327,6 +330,19 @@ QString settlement_building_slot::get_modifier_string() const
 		}
 
 		str += this->get_building()->get_settlement_modifier()->get_string(this->get_settlement());
+	}
+
+	const commodity_map<int> building_commodity_bonuses = this->get_country()->get_game_data()->get_building_commodity_bonuses(this->get_building());
+	for (const auto &[commodity, bonus] : building_commodity_bonuses) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		const std::string number_str = number::to_signed_string(bonus);
+		const QColor &number_color = bonus < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+		const std::string colored_number_str = string::colored(number_str, number_color);
+
+		str += std::format("{} Output: {}", commodity->get_name(), colored_number_str);
 	}
 
 	if (this->get_building()->get_province_modifier() != nullptr) {
