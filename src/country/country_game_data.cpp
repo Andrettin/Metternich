@@ -3280,11 +3280,7 @@ void country_game_data::do_policy_value_change(const policy *policy, const int c
 void country_game_data::check_characters()
 {
 	this->check_ruler();
-
-	if (game::get()->get_rules()->are_advisors_enabled() && this->can_have_advisors()) {
-		this->check_advisors();
-	}
-
+	this->check_advisors();
 	this->check_leaders();
 }
 
@@ -3471,7 +3467,6 @@ void country_game_data::check_advisors()
 
 void country_game_data::add_advisor(const character *advisor)
 {
-	assert_throw(game::get()->get_rules()->are_advisors_enabled());
 	assert_throw(this->can_have_advisors());
 
 	this->advisors.push_back(advisor);

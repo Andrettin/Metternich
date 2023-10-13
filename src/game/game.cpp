@@ -377,7 +377,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->add_technology_with_prerequisites(technology);
 			}
 
-			if (this->get_rules()->are_advisors_enabled() && country_game_data->can_have_advisors()) {
+			if (country_game_data->can_have_advisors()) {
 				for (const character *advisor : country_history->get_advisors()) {
 					//add prerequisites for the advisor to its country's researched technologies
 					if (advisor->get_required_technology() != nullptr) {
@@ -516,7 +516,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					character_game_data->set_dead(true);
 				} else {
 					if (character->is_advisor()) {
-						if (this->get_rules()->are_advisors_enabled() && country_game_data->can_have_advisors()) {
+						if (country_game_data->can_have_advisors()) {
 							country_game_data->add_advisor(character);
 						}
 					} else if (character->is_leader()) {

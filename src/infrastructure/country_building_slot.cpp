@@ -198,10 +198,6 @@ std::vector<const production_type *> country_building_slot::get_available_produc
 	std::vector<const production_type *> production_types;
 
 	for (const production_type *production_type : this->get_building()->get_production_types()) {
-		if (production_type->get_output_commodity() == defines::get()->get_advisor_commodity() && !game::get()->get_rules()->are_advisors_enabled()) {
-			continue;
-		}
-
 		if (production_type->get_required_technology() != nullptr && !this->country->get_game_data()->has_technology(production_type->get_required_technology())) {
 			continue;
 		}
