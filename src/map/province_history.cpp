@@ -42,7 +42,7 @@ void province_history::distribute_population()
 		}
 
 		int64_t remaining_population = population;
-		int unpopulated_settlement_count = 0;
+		int settlement_count = 0;
 
 		//subtract the predefined population of settlements in the province from that of the province
 		for (const site *settlement : this->province->get_game_data()->get_settlement_sites()) {
@@ -53,19 +53,19 @@ void province_history::distribute_population()
 			const site_history *settlement_history = settlement->get_history();
 			const int settlement_group_population = settlement_history->get_group_population(group_key);
 
-			if (settlement_group_population == 0) {
-				++unpopulated_settlement_count;
-			} else {
+			if (settlement_group_population != 0) {
 				remaining_population -= settlement_group_population;
 			}
+
+			++settlement_count;
 		}
 
-		if (remaining_population <= 0 || unpopulated_settlement_count == 0) {
+		if (remaining_population <= 0 || settlement_count == 0) {
 			return;
 		}
 
 		//apply the remaining population to settlements
-		const int64_t population_per_settlement = remaining_population / unpopulated_settlement_count;
+		const int64_t population_per_settlement = remaining_population / settlement_count;
 
 		for (const site *settlement : this->province->get_game_data()->get_settlement_sites()) {
 			if (!settlement->get_game_data()->is_built()) {
