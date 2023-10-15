@@ -1986,6 +1986,28 @@ void country_game_data::change_score(const int change)
 	emit score_changed();
 }
 
+void country_game_data::change_economic_score(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->economic_score += change;
+
+	this->change_score(change);
+}
+
+void country_game_data::change_military_score(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->military_score += change;
+
+	this->change_score(change);
+}
+
 const population_class *country_game_data::get_default_population_class() const
 {
 	if (this->is_tribal()) {
@@ -2532,7 +2554,7 @@ void country_game_data::change_commodity_input(const commodity *commodity, const
 	}
 
 	if (commodity->get_base_price() != 0) {
-		this->change_score(-change * commodity->get_base_price());
+		this->change_economic_score(-change * commodity->get_base_price());
 	}
 
 	if (game::get()->is_running()) {
@@ -2560,7 +2582,7 @@ void country_game_data::change_commodity_output(const commodity *commodity, cons
 
 	if (commodity->get_base_price() != 0 || commodity->get_wealth_value() != 0) {
 		const int commodity_value = commodity->get_base_price() != 0 ? commodity->get_base_price() : commodity->get_wealth_value();
-		this->change_score(-old_output.to_int() * commodity_value);
+		this->change_economic_score(-old_output.to_int() * commodity_value);
 	}
 
 	const centesimal_int &new_output = (this->commodity_outputs[commodity] += change);
@@ -2573,7 +2595,7 @@ void country_game_data::change_commodity_output(const commodity *commodity, cons
 
 	if (commodity->get_base_price() != 0 || commodity->get_wealth_value() != 0) {
 		const int commodity_value = commodity->get_base_price() != 0 ? commodity->get_base_price() : commodity->get_wealth_value();
-		this->change_score(new_output.to_int() * commodity_value);
+		this->change_economic_score(new_output.to_int() * commodity_value);
 	}
 
 	if (game::get()->is_running()) {

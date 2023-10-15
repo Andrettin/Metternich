@@ -102,7 +102,7 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 
 	connect(this, &military_unit::type_changed, this, &military_unit::icon_changed);
 
-	this->get_country()->get_game_data()->change_score(this->get_score());
+	this->get_country()->get_game_data()->change_military_score(this->get_score());
 
 	this->check_free_promotions();
 }
@@ -193,7 +193,7 @@ void military_unit::set_type(const military_unit_type *type)
 	const military_unit_type *old_type = this->get_type();
 
 	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->change_score(-this->get_score());
+		this->get_country()->get_game_data()->change_military_score(-this->get_score());
 	}
 
 	const bool different_category = this->get_category() != type->get_category();
@@ -236,7 +236,7 @@ void military_unit::set_type(const military_unit_type *type)
 	}
 
 	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->change_score(this->get_score());
+		this->get_country()->get_game_data()->change_military_score(this->get_score());
 	}
 
 	//check promotions in case any have been invalidated by the type change, or if new free promotions have been gained
@@ -448,13 +448,13 @@ void military_unit::add_promotion(const promotion *promotion)
 	}
 
 	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->change_score(-this->get_score());
+		this->get_country()->get_game_data()->change_military_score(-this->get_score());
 	}
 
 	this->promotions.push_back(promotion);
 
 	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->change_score(this->get_score());
+		this->get_country()->get_game_data()->change_military_score(this->get_score());
 	}
 
 	if (promotion->get_modifier() != nullptr) {
@@ -469,13 +469,13 @@ void military_unit::add_promotion(const promotion *promotion)
 void military_unit::remove_promotion(const promotion *promotion)
 {
 	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->change_score(-this->get_score());
+		this->get_country()->get_game_data()->change_military_score(-this->get_score());
 	}
 
 	std::erase(this->promotions, promotion);
 
 	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->change_score(this->get_score());
+		this->get_country()->get_game_data()->change_military_score(this->get_score());
 	}
 
 	if (promotion->get_modifier() != nullptr) {
@@ -609,7 +609,7 @@ void military_unit::disband(const bool restore_population_unit)
 	}
 
 	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->change_score(-this->get_score());
+		this->get_country()->get_game_data()->change_military_score(-this->get_score());
 		this->get_country()->get_game_data()->remove_military_unit(this);
 
 		if (restore_population_unit) {

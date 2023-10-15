@@ -568,6 +568,20 @@ public:
 
 	void change_score(const int change);
 
+	int get_economic_score() const
+	{
+		return this->economic_score;
+	}
+
+	void change_economic_score(const int change);
+
+	int get_military_score() const
+	{
+		return this->military_score;
+	}
+
+	void change_military_score(const int change);
+
 	const population_class *get_default_population_class() const;
 
 	const std::vector<population_unit *> &get_population_units() const
@@ -733,11 +747,11 @@ public:
 			return;
 		}
 
-		this->change_score(-this->get_wealth_income());
+		this->change_economic_score(-this->get_wealth_income());
 
 		this->wealth_income = income;
 
-		this->change_score(this->get_wealth_income());
+		this->change_economic_score(this->get_wealth_income());
 
 		emit wealth_income_changed();
 	}
@@ -2060,6 +2074,8 @@ private:
 	QRect diplomatic_map_image_rect;
 	int rank = 0;
 	int score = 0;
+	int economic_score = 0;
+	int military_score = 0;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
 	profession_map<int> profession_capacities;
