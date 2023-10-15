@@ -35,7 +35,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return this->country->get_name() + " exists";
+		return this->country->get_game_data()->get_name() + " exists";
 	}
 
 private:

@@ -84,6 +84,7 @@ set(economy_SRCS
 	src/economy/production_type.cpp
 	src/economy/resource.cpp
 	src/economy/resource_container.cpp
+	src/economy/transaction.cpp
 )
 source_group(economy FILES ${economy_SRCS})
 set_source_files_properties(${economy_SRCS} PROPERTIES UNITY_GROUP "economy")

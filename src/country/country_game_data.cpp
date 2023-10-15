@@ -130,7 +130,6 @@ void country_game_data::do_turn()
 		this->do_population_growth();
 		this->do_consumption();
 		this->do_construction();
-		this->do_inflation();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 			civilian_unit->do_turn();
@@ -509,7 +508,7 @@ void country_game_data::do_trade()
 
 				this->change_stored_commodity(commodity, -sold_quantity);
 				const int sale_income = price * sold_quantity;
-				this->change_wealth(sale_income);
+				this->add_taxable_wealth(sale_income, income_transaction_type::tariff);
 				this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity, other_country);
 
 				other_country_game_data->change_stored_commodity(commodity, sold_quantity);
@@ -535,7 +534,6 @@ void country_game_data::do_trade()
 		std::throw_with_nested(std::runtime_error(std::format("Error doing trade for country \"{}\".", this->country->get_identifier())));
 	}
 }
-
 
 void country_game_data::do_inflation()
 {
@@ -720,7 +718,9 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 		return;
 	}
 
-	if (this->overlord != nullptr) {
+	if (this->get_overlord() != nullptr) {
+		this->get_overlord()->get_game_data()->change_economic_score(-this->get_economic_score() * country_game_data::vassal_tax_rate / 100);
+
 		for (const auto &[resource, count] : this->get_resource_counts()) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, -count);
 		}
@@ -728,7 +728,9 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 
 	this->overlord = overlord;
 
-	if (this->overlord != nullptr) {
+	if (this->get_overlord() != nullptr) {
+		this->get_overlord()->get_game_data()->change_economic_score(this->get_economic_score() * country_game_data::vassal_tax_rate / 100);
+
 		for (const auto &[resource, count] : this->get_resource_counts()) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, count);
 		}
@@ -1992,9 +1994,17 @@ void country_game_data::change_economic_score(const int change)
 		return;
 	}
 
+	if (this->get_overlord() != nullptr) {
+		this->get_overlord()->get_game_data()->change_economic_score(-this->get_economic_score() * country_game_data::vassal_tax_rate / 100);
+	}
+
 	this->economic_score += change;
 
 	this->change_score(change);
+
+	if (this->get_overlord() != nullptr) {
+		this->get_overlord()->get_game_data()->change_economic_score(this->get_economic_score() * country_game_data::vassal_tax_rate / 100);
+	}
 }
 
 void country_game_data::change_military_score(const int change)
@@ -2377,6 +2387,33 @@ void country_game_data::change_settlement_building_count(const building_type *bu
 	}
 }
 
+void country_game_data::add_taxable_wealth(const int taxable_wealth, const income_transaction_type tax_income_type)
+{
+	assert_throw(taxable_wealth >= 0);
+	assert_throw(tax_income_type == income_transaction_type::tariff || tax_income_type == income_transaction_type::treasure_fleet);
+
+	if (taxable_wealth == 0) {
+		return;
+	}
+
+	if (this->get_overlord() == nullptr) {
+		this->change_wealth(taxable_wealth);
+		return;
+	}
+
+	const int tax = taxable_wealth * country_game_data::vassal_tax_rate / 100;
+	const int taxed_wealth = taxable_wealth - tax;
+
+	this->get_overlord()->get_game_data()->add_taxable_wealth(tax, tax_income_type);
+
+	this->change_wealth(taxed_wealth);
+
+	if (tax != 0) {
+		this->get_overlord()->get_turn_data()->add_income_transaction(tax_income_type, tax, nullptr, 0, this->country);
+		this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::tax, tax, nullptr, 0, this->get_overlord());
+	}
+}
+
 void country_game_data::set_inflation(const centesimal_int &inflation)
 {
 	if (inflation == this->get_inflation()) {
@@ -2470,7 +2507,7 @@ void country_game_data::set_stored_commodity(const commodity *commodity, const i
 	if (commodity->is_convertible_to_wealth()) {
 		assert_throw(value > 0);
 		const int wealth_conversion_income = commodity->get_wealth_value() * value;
-		this->change_wealth(wealth_conversion_income);
+		this->add_taxable_wealth(wealth_conversion_income, income_transaction_type::treasure_fleet);
 		this->country->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, wealth_conversion_income, commodity, value);
 		return;
 	}
@@ -3452,7 +3489,7 @@ void country_game_data::check_advisors()
 			if (this->country == game::get()->get_player_country()) {
 				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
-				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor {} has unfortunately decided to join {}, and is no longer available for recruitment.", this->get_next_advisor()->get_full_name(), this->get_next_advisor()->get_game_data()->get_country()->get_name()));
+				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor {} has unfortunately decided to join {}, and is no longer available for recruitment.", this->get_next_advisor()->get_full_name(), this->get_next_advisor()->get_game_data()->get_country()->get_game_data()->get_name()));
 			}
 
 			this->set_next_advisor(nullptr);
@@ -3656,7 +3693,7 @@ void country_game_data::check_leaders()
 
 				const std::string leader_type_name = this->get_next_leader()->get_leader_type_name();
 
-				engine_interface::get()->add_notification(std::format("{} Unavailable", leader_type_name), war_minister_portrait, std::format("Your Excellency, the {} {} has unfortunately decided to join {}, and is no longer available for recruitment.", string::lowered(leader_type_name), this->get_next_leader()->get_full_name(), this->get_next_leader()->get_game_data()->get_country()->get_name()));
+				engine_interface::get()->add_notification(std::format("{} Unavailable", leader_type_name), war_minister_portrait, std::format("Your Excellency, the {} {} has unfortunately decided to join {}, and is no longer available for recruitment.", string::lowered(leader_type_name), this->get_next_leader()->get_full_name(), this->get_next_leader()->get_game_data()->get_country()->get_game_data()->get_name()));
 			}
 
 			this->set_next_leader(nullptr);

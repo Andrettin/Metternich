@@ -9,12 +9,14 @@ Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("infrastructure/pathway.h")
 Q_MOC_INCLUDE("map/terrain_type.h")
 Q_MOC_INCLUDE("population/population_class.h")
+Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
 
 class building_class;
 class commodity;
+class icon;
 class pathway;
 class population_class;
 class portrait;
@@ -48,6 +50,9 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::commodity* piety_commodity MEMBER piety_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* advisor_commodity MEMBER advisor_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* leader_commodity MEMBER leader_commodity NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* tariff_icon MEMBER tariff_icon NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* treasure_fleet_icon MEMBER treasure_fleet_icon NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* military_upkeep_icon MEMBER military_upkeep_icon NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* interior_minister_portrait MEMBER interior_minister_portrait NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* war_minister_portrait MEMBER war_minister_portrait NOTIFY changed)
 	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color NOTIFY changed)
@@ -201,6 +206,21 @@ public:
 		return this->leader_commodity;
 	}
 
+	const icon *get_tariff_icon() const
+	{
+		return this->tariff_icon;
+	}
+
+	const icon *get_treasure_fleet_icon() const
+	{
+		return this->treasure_fleet_icon;
+	}
+
+	const icon *get_military_upkeep_icon() const
+	{
+		return this->military_upkeep_icon;
+	}
+
 	const portrait *get_interior_minister_portrait() const
 	{
 		return this->interior_minister_portrait;
@@ -318,6 +338,9 @@ private:
 	const commodity *piety_commodity = nullptr;
 	const commodity *advisor_commodity = nullptr;
 	const commodity *leader_commodity = nullptr;
+	const icon *tariff_icon = nullptr;
+	const icon *treasure_fleet_icon = nullptr;
+	const icon *military_upkeep_icon = nullptr;
 	portrait *interior_minister_portrait = nullptr;
 	portrait *war_minister_portrait = nullptr;
 	QColor minor_nation_color;

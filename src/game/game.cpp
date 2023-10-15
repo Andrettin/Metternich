@@ -1354,6 +1354,11 @@ QCoro::Task<void> game::do_turn_coro()
 		}
 
 		for (const country *country : this->get_countries()) {
+			//do inflation after processing the normal turn for all countries, since subjects can send treasure fleets to their overlords, causing inflation in the latter
+			country->get_game_data()->do_inflation();
+		}
+
+		for (const country *country : this->get_countries()) {
 			//do country events after processing the turn for each country, so that e.g. events won't refer to a population unit scope which no longer exists by the time the player gets to choose and option, because the population unit died due to starvation
 			country->get_game_data()->do_events();
 

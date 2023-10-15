@@ -6,6 +6,7 @@ namespace metternich {
 
 class commodity;
 class country;
+class icon;
 
 class transaction : public QObject
 {
@@ -15,6 +16,8 @@ class transaction : public QObject
 	Q_PROPERTY(int amount READ get_amount CONSTANT)
 	Q_PROPERTY(int commodity_quantity READ get_commodity_quantity CONSTANT)
 	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::icon* icon READ get_icon CONSTANT)
+	Q_PROPERTY(QString name READ get_name CONSTANT)
 	Q_PROPERTY(QString description READ get_description CONSTANT)
 
 public:
@@ -61,6 +64,8 @@ public:
 		return this->country;
 	}
 
+	virtual QString get_name() const;
+	virtual const icon *get_icon() const;
 	virtual QString get_description() const = 0;
 
 private:

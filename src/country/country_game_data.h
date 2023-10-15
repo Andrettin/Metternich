@@ -66,6 +66,7 @@ enum class country_tier;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
 enum class event_trigger;
+enum class income_transaction_type;
 enum class military_unit_category;
 enum class technology_category;
 struct read_only_context;
@@ -150,6 +151,7 @@ public:
 	static constexpr int base_advisor_cost = 80;
 	static constexpr int base_leader_cost = 80;
 	static constexpr int base_deployment_limit = 10;
+	static constexpr int vassal_tax_rate = 50;
 
 	explicit country_game_data(metternich::country *country);
 	~country_game_data();
@@ -735,6 +737,8 @@ public:
 	{
 		this->change_wealth(this->get_inflated_value(change));
 	}
+
+	void add_taxable_wealth(const int taxable_wealth, const income_transaction_type tax_income_type);
 
 	int get_wealth_income() const
 	{

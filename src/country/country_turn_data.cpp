@@ -82,7 +82,7 @@ void country_turn_data::calculate_inflation()
 	int liquidated_riches_amount = 0;
 
 	for (const qunique_ptr<income_transaction> &transaction : this->income_transactions) {
-		if (transaction->get_type() == income_transaction_type::liquidated_riches) {
+		if (transaction->get_type() == income_transaction_type::liquidated_riches || transaction->get_type() == income_transaction_type::treasure_fleet) {
 			const centesimal_int inflation_change = country_turn_data::base_inflation_change * transaction->get_amount() / this->get_total_income();
 			transaction->set_inflation_change(inflation_change);
 
