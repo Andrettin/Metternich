@@ -707,12 +707,18 @@ void map::calculate_tile_transport_level(const QPoint &tile_pos)
 	tile->set_transport_level(transport_level);
 	tile->set_sea_transport_level(sea_transport_level);
 
+	if (tile->get_site() != nullptr) {
+		tile->get_site()->get_game_data()->set_transport_level(std::max(transport_level, sea_transport_level));
+	}
+
 	emit tile_transport_level_changed(tile_pos);
 
 	if (transport_level > 0 || sea_transport_level > 0) {
 		for (size_t i = 0; i < static_cast<size_t>(direction::count); ++i) {
 			const direction direction = static_cast<archimedes::direction>(i);
-			if (tile->get_direction_pathway(direction) == nullptr) {
+			const pathway *direction_pathway = tile->get_direction_pathway(direction);
+
+			if (direction_pathway == nullptr) {
 				continue;
 			}
 
@@ -728,8 +734,11 @@ void map::calculate_tile_transport_level(const QPoint &tile_pos)
 				continue;
 			}
 
-			if (adjacent_tile->get_transport_level() != 0 || adjacent_tile->get_sea_transport_level() != 0) {
-				//already calculated
+			const int transitive_transport_level = std::min(tile->get_transport_level(), direction_pathway->get_transport_level());
+			const int transitive_sea_transport_level = std::min(tile->get_sea_transport_level(), direction_pathway->get_transport_level());
+
+			if (adjacent_tile->get_transport_level() >= transitive_transport_level && adjacent_tile->get_sea_transport_level() >= transitive_sea_transport_level) {
+				//already calculated, cannot be better than it already is via the connection with this tile
 				continue;
 			}
 
@@ -746,6 +755,10 @@ void map::clear_tile_transport_level(const QPoint &tile_pos)
 	tile->set_sea_transport_level(0);
 
 	emit tile_transport_level_changed(tile_pos);
+
+	if (tile->get_site() != nullptr) {
+		tile->get_site()->get_game_data()->set_transport_level(0);
+	}
 
 	for (size_t i = 0; i < static_cast<size_t>(direction::count); ++i) {
 		const direction direction = static_cast<archimedes::direction>(i);

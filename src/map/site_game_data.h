@@ -325,6 +325,20 @@ public:
 		return this->get_commodity_outputs().contains(commodity);
 	}
 
+	int get_transport_level() const
+	{
+		return this->transport_level;
+	}
+
+	void set_transport_level(const int level);
+
+	centesimal_int get_transportable_commodity_output(const commodity *commodity)
+	{
+		const centesimal_int &output = this->get_commodity_output(commodity);
+
+		return centesimal_int::min(output, centesimal_int(this->get_transport_level()));
+	}
+
 	const std::vector<military_unit *> &get_visiting_military_units() const
 	{
 		return this->visiting_military_units;
@@ -370,6 +384,7 @@ private:
 	commodity_map<centesimal_int> local_commodity_consumptions;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
+	int transport_level = 0;
 	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site
 };
 

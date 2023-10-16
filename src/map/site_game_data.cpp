@@ -937,6 +937,10 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		return;
 	}
 
+	if (this->get_owner() != nullptr && !commodity->is_local()) {
+		this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+	}
+
 	if (output == 0) {
 		this->commodity_outputs.erase(commodity);
 	} else {
@@ -944,7 +948,7 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 	}
 
 	if (this->get_owner() != nullptr && !commodity->is_local()) {
-		this->get_owner()->get_game_data()->change_commodity_output(commodity, output - old_output);
+		this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
 	}
 
 	emit commodity_outputs_changed();
@@ -1028,6 +1032,31 @@ void site_game_data::change_local_commodity_consumption(const commodity *commodi
 
 	if (count == 0) {
 		this->local_commodity_consumptions.erase(commodity);
+	}
+}
+
+void site_game_data::set_transport_level(const int level)
+{
+	if (level == this->get_transport_level()) {
+		return;
+	}
+
+	if (this->get_owner() != nullptr) {
+		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+			if (!commodity->is_local()) {
+				this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+			}
+		}
+	}
+
+	this->transport_level = level;
+
+	if (this->get_owner() != nullptr) {
+		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+			if (!commodity->is_local()) {
+				this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+			}
+		}
 	}
 }
 
