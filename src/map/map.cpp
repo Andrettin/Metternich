@@ -713,10 +713,12 @@ void map::calculate_tile_transport_level(const QPoint &tile_pos)
 
 	if (tile->get_site() != nullptr) {
 		site_game_data *site_game_data = tile->get_site()->get_game_data();
+		const int depot_level = site_game_data->is_capital() ? tile::max_transport_level : site_game_data->get_depot_level();
+		const int port_level = site_game_data->is_capital() ? tile::max_transport_level : site_game_data->get_port_level();
 
-		if (site_game_data->get_depot_level() != 0 || site_game_data->get_port_level() != 0) {
-			const int effective_transport_level = std::min(transport_level, site_game_data->get_depot_level());
-			const int effective_sea_transport_level = std::min(sea_transport_level, site_game_data->get_port_level());
+		if (depot_level != 0 || port_level != 0) {
+			const int effective_transport_level = std::min(transport_level, depot_level);
+			const int effective_sea_transport_level = std::min(sea_transport_level, port_level);
 
 			site_game_data->set_transport_level(std::max(site_game_data->get_transport_level(), effective_transport_level));
 			site_game_data->set_sea_transport_level(std::max(site_game_data->get_sea_transport_level(), effective_sea_transport_level));
@@ -793,7 +795,7 @@ void map::clear_tile_transport_level(const QPoint &tile_pos)
 		site_game_data->set_transport_level(0);
 		site_game_data->set_sea_transport_level(0);
 
-		if (site_game_data->get_depot_level() != 0 || site_game_data->get_port_level() != 0) {
+		if (site_game_data->get_depot_level() != 0 || site_game_data->get_port_level() != 0 || site_game_data->is_capital()) {
 			point::for_each_adjacent(tile_pos, [this, tile](const QPoint &adjacent_pos) {
 				if (!this->contains(adjacent_pos)) {
 					return;
