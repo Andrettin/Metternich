@@ -4,11 +4,13 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_turn_data.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/pathway.h"
 #include "map/direction.h"
 #include "map/province.h"
 #include "map/province_container.h"
@@ -653,9 +655,123 @@ void map::set_tile_direction_pathway(const QPoint &tile_pos, const direction dir
 
 	if (pathway != nullptr) {
 		tile->calculate_pathway_frame(pathway);
+
+		if (game::get()->is_running()) {
+			const country *owner = tile->get_owner();
+			if (owner != nullptr) {
+				owner->get_turn_data()->set_transport_level_recalculation_needed(true);
+			}
+		}
 	}
 
 	emit tile_pathway_changed(tile_pos);
+}
+
+void map::calculate_tile_transport_level(const QPoint &tile_pos)
+{
+	tile *tile = this->get_tile(tile_pos);
+
+	int transport_level = 0;
+	int sea_transport_level = 0;
+
+	const site *settlement = tile->get_settlement();
+	if (settlement != nullptr && settlement->get_game_data()->is_capital()) {
+		transport_level = tile::max_transport_level;
+		sea_transport_level = tile::max_transport_level;
+	} else {
+		for (size_t i = 0; i < static_cast<size_t>(direction::count); ++i) {
+			const direction direction = static_cast<archimedes::direction>(i);
+			const pathway *direction_pathway = tile->get_direction_pathway(direction);
+
+			if (direction_pathway == nullptr) {
+				continue;
+			}
+
+			const QPoint direction_offset = direction_to_offset(direction);
+			const QPoint adjacent_pos = tile_pos + direction_offset;
+
+			if (!this->contains(adjacent_pos)) {
+				continue;
+			}
+
+			const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+			if (adjacent_tile->get_owner() != tile->get_owner()) {
+				continue;
+			}
+
+			transport_level = std::max(transport_level, std::min(adjacent_tile->get_transport_level(), direction_pathway->get_transport_level()));
+			sea_transport_level = std::max(sea_transport_level, std::min(adjacent_tile->get_sea_transport_level(), direction_pathway->get_transport_level()));
+		}
+	}
+
+	tile->set_transport_level(transport_level);
+	tile->set_sea_transport_level(sea_transport_level);
+
+	emit tile_transport_level_changed(tile_pos);
+
+	if (transport_level > 0 || sea_transport_level > 0) {
+		for (size_t i = 0; i < static_cast<size_t>(direction::count); ++i) {
+			const direction direction = static_cast<archimedes::direction>(i);
+			if (tile->get_direction_pathway(direction) == nullptr) {
+				continue;
+			}
+
+			const QPoint direction_offset = direction_to_offset(direction);
+			const QPoint adjacent_pos = tile_pos + direction_offset;
+
+			if (!this->contains(adjacent_pos)) {
+				continue;
+			}
+
+			const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+			if (adjacent_tile->get_owner() != tile->get_owner()) {
+				continue;
+			}
+
+			if (adjacent_tile->get_transport_level() != 0 || adjacent_tile->get_sea_transport_level() != 0) {
+				//already calculated
+				continue;
+			}
+
+			this->calculate_tile_transport_level(adjacent_pos);
+		}
+	}
+}
+
+void map::clear_tile_transport_level(const QPoint &tile_pos)
+{
+	tile *tile = this->get_tile(tile_pos);
+
+	tile->set_transport_level(0);
+	tile->set_sea_transport_level(0);
+
+	emit tile_transport_level_changed(tile_pos);
+
+	for (size_t i = 0; i < static_cast<size_t>(direction::count); ++i) {
+		const direction direction = static_cast<archimedes::direction>(i);
+		if (tile->get_direction_pathway(direction) == nullptr) {
+			continue;
+		}
+
+		const QPoint direction_offset = direction_to_offset(direction);
+		const QPoint adjacent_pos = tile_pos + direction_offset;
+
+		if (!this->contains(adjacent_pos)) {
+			continue;
+		}
+
+		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+		if (adjacent_tile->get_owner() != tile->get_owner()) {
+			continue;
+		}
+
+		if (adjacent_tile->get_transport_level() == 0 && adjacent_tile->get_sea_transport_level() == 0) {
+			//already cleared
+			continue;
+		}
+
+		this->clear_tile_transport_level(adjacent_pos);
+	}
 }
 
 void map::set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)

@@ -49,6 +49,7 @@
 #include "map/region.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_map_data.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/phenotype.h"
@@ -1081,6 +1082,10 @@ void country_game_data::on_province_gained(const province *province, const int m
 		for (const auto &[threshold, value] : threshold_map) {
 			province_game_data->change_commodity_bonus_for_tile_threshold(commodity, threshold, value * multiplier);
 		}
+	}
+
+	if (game::get()->is_running()) {
+		this->country->get_turn_data()->set_transport_level_recalculation_needed(true);
 	}
 }
 
@@ -4897,6 +4902,27 @@ void country_game_data::set_free_consulate_count(const consulate *consulate, con
 			if (current_consulate == nullptr || current_consulate->get_level() < consulate->get_level()) {
 				this->set_consulate(known_country, consulate);
 			}
+		}
+	}
+}
+
+void country_game_data::calculate_tile_transport_levels()
+{
+	this->clear_tile_transport_levels();
+
+	const site *capital = this->get_capital();
+	if (capital == nullptr) {
+		return;
+	}
+
+	map::get()->calculate_tile_transport_level(capital->get_map_data()->get_tile_pos());
+}
+
+void country_game_data::clear_tile_transport_levels()
+{
+	for (const province *province : this->get_provinces()) {
+		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+			map::get()->clear_tile_transport_level(settlement->get_map_data()->get_tile_pos());
 		}
 	}
 }

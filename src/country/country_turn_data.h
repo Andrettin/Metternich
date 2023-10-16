@@ -55,6 +55,16 @@ public:
 
 	void calculate_inflation();
 
+	bool is_transport_level_recalculation_needed() const
+	{
+		return this->transport_level_recalculation_needed;
+	}
+
+	void set_transport_level_recalculation_needed(const bool value)
+	{
+		this->transport_level_recalculation_needed = value;
+	}
+
 private:
 	metternich::country *country = nullptr;
 	int total_income = 0;
@@ -62,6 +72,7 @@ private:
 	centesimal_int total_inflation_change;
 	std::vector<qunique_ptr<income_transaction>> income_transactions;
 	std::vector<qunique_ptr<expense_transaction>> expense_transactions;
+	bool transport_level_recalculation_needed = false;
 };
 
 }

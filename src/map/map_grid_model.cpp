@@ -34,6 +34,7 @@ map_grid_model::map_grid_model()
 	connect(map::get(), &map::tile_settlement_type_changed, this, &map_grid_model::on_tile_settlement_type_changed);
 	connect(map::get(), &map::tile_improvement_changed, this, &map_grid_model::on_tile_improvement_changed);
 	connect(map::get(), &map::tile_pathway_changed, this, &map_grid_model::on_tile_pathway_changed);
+	connect(map::get(), &map::tile_transport_level_changed, this, &map_grid_model::on_tile_transport_level_changed);
 	connect(map::get(), &map::tile_civilian_unit_changed, this, &map_grid_model::on_tile_civilian_unit_changed);
 }
 
@@ -193,6 +194,10 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return QVariant::fromValue(tile->get_improvement());
 			case role::pathway:
 				return QVariant::fromValue(tile->get_best_pathway());
+			case role::transport_level:
+				return QVariant::fromValue(tile->get_transport_level());
+			case role::sea_transport_level:
+				return QVariant::fromValue(tile->get_sea_transport_level());
 			case role::civilian_unit:
 				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
 					return QVariant::fromValue(nullptr);
@@ -289,6 +294,15 @@ void map_grid_model::on_tile_pathway_changed(const QPoint &tile_pos)
 	emit dataChanged(index, index, {
 		static_cast<int>(role::object_image_sources),
 		static_cast<int>(role::pathway)
+	});
+}
+
+void map_grid_model::on_tile_transport_level_changed(const QPoint &tile_pos)
+{
+	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
+	emit dataChanged(index, index, {
+		static_cast<int>(role::transport_level),
+		static_cast<int>(role::sea_transport_level)
 	});
 }
 

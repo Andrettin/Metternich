@@ -22,6 +22,8 @@ class terrain_type;
 class tile final
 {
 public:
+	static constexpr int max_transport_level = 4;
+
 	explicit tile(const terrain_type *base_terrain, const terrain_type *terrain);
 
 	const terrain_type *get_terrain() const
@@ -195,6 +197,26 @@ public:
 
 	const pathway *get_best_pathway() const;
 
+	int get_transport_level() const
+	{
+		return this->transport_level;
+	}
+
+	void set_transport_level(const int level)
+	{
+		this->transport_level = level;
+	}
+
+	int get_sea_transport_level() const
+	{
+		return this->sea_transport_level;
+	}
+
+	void set_sea_transport_level(const int level)
+	{
+		this->sea_transport_level = level;
+	}
+
 	const std::vector<direction> &get_border_directions() const
 	{
 		return this->border_directions;
@@ -267,6 +289,8 @@ private:
 	std::array<short, 4> river_subtile_frames{ -1, -1, -1, -1 };
 	std::array<const pathway *, 8> direction_pathways{};
 	pathway_map<short> pathway_frames;
+	int transport_level = 0;
+	int sea_transport_level = 0;
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 	std::vector<direction> country_border_directions;
 	metternich::civilian_unit *civilian_unit = nullptr;

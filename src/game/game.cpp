@@ -9,6 +9,7 @@
 #include "country/country_game_data.h"
 #include "country/country_history.h"
 #include "country/country_tier.h"
+#include "country/country_turn_data.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "country/culture_history.h"
@@ -241,6 +242,8 @@ QCoro::Task<void> game::start_coro()
 
 	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
+
+		country_game_data->calculate_tile_transport_levels();
 
 		for (population_unit *population_unit : country_game_data->get_population_units()) {
 			population_unit->choose_ideology();
@@ -1356,6 +1359,11 @@ QCoro::Task<void> game::do_turn_coro()
 		for (const country *country : this->get_countries()) {
 			//do inflation after processing the normal turn for all countries, since subjects can send treasure fleets to their overlords, causing inflation in the latter
 			country->get_game_data()->do_inflation();
+
+			if (country->get_turn_data()->is_transport_level_recalculation_needed()) {
+				country->get_game_data()->calculate_tile_transport_levels();
+				country->get_turn_data()->set_transport_level_recalculation_needed(false);
+			}
 		}
 
 		for (const country *country : this->get_countries()) {
