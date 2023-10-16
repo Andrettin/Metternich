@@ -29,6 +29,7 @@
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
 #include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
+#include "script/modifier_effect/depot_level_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
 #include "script/modifier_effect/entrench_bonus_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
@@ -50,6 +51,7 @@
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
+#include "script/modifier_effect/port_level_modifier_effect.h"
 #include "script/modifier_effect/profession_capacity_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
@@ -179,8 +181,12 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		static const std::string profession_capacity_prefix = "max_";
 
-		if (key == "housing") {
+		if (key == "depot_level") {
+			return std::make_unique<depot_level_modifier_effect>(value);
+		} else if (key == "housing") {
 			return std::make_unique<housing_modifier_effect>(value);
+		} else if (key == "port_level") {
+			return std::make_unique<port_level_modifier_effect>(value);
 		} else if (key.ends_with(bonus_suffix)) {
 			const size_t commodity_identifier_size = key.size() - bonus_suffix.size();
 			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));

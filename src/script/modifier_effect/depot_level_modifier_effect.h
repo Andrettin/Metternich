@@ -6,27 +6,27 @@
 
 namespace metternich {
 
-class housing_modifier_effect final : public modifier_effect<const site>
+class depot_level_modifier_effect final : public modifier_effect<const site>
 {
 public:
-	explicit housing_modifier_effect(const std::string &value) : modifier_effect(value)
+	explicit depot_level_modifier_effect(const std::string &value) : modifier_effect(value)
 	{
 	}
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "housing";
+		static const std::string identifier = "depot_level";
 		return identifier;
 	}
 
 	virtual void apply(const site *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_housing((this->value * multiplier).to_int());
+		scope->get_game_data()->change_depot_level((this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string() const override
 	{
-		return "Housing";
+		return "Depot Level";
 	}
 };
 

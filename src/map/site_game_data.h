@@ -50,6 +50,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(int housing READ get_housing NOTIFY housing_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
+	Q_PROPERTY(int transport_level READ get_best_transport_level NOTIFY transport_level_changed)
 
 public:
 	static constexpr int base_free_food_consumption = 1;
@@ -325,6 +326,30 @@ public:
 		return this->get_commodity_outputs().contains(commodity);
 	}
 
+	int get_depot_level() const
+	{
+		return this->depot_level;
+	}
+
+	void set_depot_level(const int level);
+
+	void change_depot_level(const int change)
+	{
+		this->set_depot_level(this->get_depot_level() + change);
+	}
+
+	int get_port_level() const
+	{
+		return this->port_level;
+	}
+
+	void set_port_level(const int level);
+
+	void change_port_level(const int change)
+	{
+		this->set_port_level(this->get_port_level() + change);
+	}
+
 	int get_transport_level() const
 	{
 		return this->transport_level;
@@ -332,11 +357,23 @@ public:
 
 	void set_transport_level(const int level);
 
+	int get_sea_transport_level() const
+	{
+		return this->sea_transport_level;
+	}
+
+	void set_sea_transport_level(const int level);
+
+	int get_best_transport_level() const
+	{
+		return std::max(this->get_transport_level(), this->get_sea_transport_level());
+	}
+
 	centesimal_int get_transportable_commodity_output(const commodity *commodity)
 	{
 		const centesimal_int &output = this->get_commodity_output(commodity);
 
-		return centesimal_int::min(output, centesimal_int(this->get_transport_level()));
+		return centesimal_int::min(output, centesimal_int(this->get_best_transport_level()));
 	}
 
 	const std::vector<military_unit *> &get_visiting_military_units() const
@@ -364,6 +401,7 @@ signals:
 	void population_units_changed();
 	void housing_changed();
 	void commodity_outputs_changed();
+	void transport_level_changed();
 
 private:
 	const metternich::site *site = nullptr;
@@ -384,7 +422,10 @@ private:
 	commodity_map<centesimal_int> local_commodity_consumptions;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
+	int depot_level = 0;
+	int port_level = 0;
 	int transport_level = 0;
+	int sea_transport_level = 0;
 	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site
 };
 

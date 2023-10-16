@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_turn_data.h"
 #include "country/culture.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
@@ -1035,6 +1036,36 @@ void site_game_data::change_local_commodity_consumption(const commodity *commodi
 	}
 }
 
+void site_game_data::set_depot_level(const int level)
+{
+	if (level == this->get_depot_level()) {
+		return;
+	}
+
+	this->depot_level = level;
+
+	if (game::get()->is_running()) {
+		if (this->get_owner() != nullptr) {
+			this->get_owner()->get_turn_data()->set_transport_level_recalculation_needed(true);
+		}
+	}
+}
+
+void site_game_data::set_port_level(const int level)
+{
+	if (level == this->get_port_level()) {
+		return;
+	}
+
+	this->port_level = level;
+
+	if (game::get()->is_running()) {
+		if (this->get_owner() != nullptr) {
+			this->get_owner()->get_turn_data()->set_transport_level_recalculation_needed(true);
+		}
+	}
+}
+
 void site_game_data::set_transport_level(const int level)
 {
 	if (level == this->get_transport_level()) {
@@ -1057,6 +1088,39 @@ void site_game_data::set_transport_level(const int level)
 				this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
 			}
 		}
+	}
+
+	if (game::get()->is_running()) {
+		emit transport_level_changed();
+	}
+}
+
+void site_game_data::set_sea_transport_level(const int level)
+{
+	if (level == this->get_sea_transport_level()) {
+		return;
+	}
+
+	if (this->get_owner() != nullptr) {
+		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+			if (!commodity->is_local()) {
+				this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+			}
+		}
+	}
+
+	this->transport_level = level;
+
+	if (this->get_owner() != nullptr) {
+		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+			if (!commodity->is_local()) {
+				this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+			}
+		}
+	}
+
+	if (game::get()->is_running()) {
+		emit transport_level_changed();
 	}
 }
 

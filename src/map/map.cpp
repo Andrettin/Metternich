@@ -679,6 +679,10 @@ void map::calculate_tile_transport_level(const QPoint &tile_pos)
 		transport_level = tile::max_transport_level;
 		sea_transport_level = tile::max_transport_level;
 	} else {
+		if (tile->get_site() != nullptr) {
+			sea_transport_level = tile->get_site()->get_game_data()->get_port_level();
+		}
+
 		for (size_t i = 0; i < static_cast<size_t>(direction::count); ++i) {
 			const direction direction = static_cast<archimedes::direction>(i);
 			const pathway *direction_pathway = tile->get_direction_pathway(direction);
@@ -708,7 +712,35 @@ void map::calculate_tile_transport_level(const QPoint &tile_pos)
 	tile->set_sea_transport_level(sea_transport_level);
 
 	if (tile->get_site() != nullptr) {
-		tile->get_site()->get_game_data()->set_transport_level(std::max(transport_level, sea_transport_level));
+		site_game_data *site_game_data = tile->get_site()->get_game_data();
+
+		if (site_game_data->get_depot_level() != 0 || site_game_data->get_port_level() != 0) {
+			const int effective_transport_level = std::min(transport_level, site_game_data->get_depot_level());
+			const int effective_sea_transport_level = std::min(sea_transport_level, site_game_data->get_port_level());
+
+			site_game_data->set_transport_level(std::max(site_game_data->get_transport_level(), effective_transport_level));
+			site_game_data->set_sea_transport_level(std::max(site_game_data->get_sea_transport_level(), effective_sea_transport_level));
+
+			point::for_each_adjacent(tile_pos, [this, tile, effective_transport_level, effective_sea_transport_level](const QPoint &adjacent_pos) {
+				if (!this->contains(adjacent_pos)) {
+					return;
+				}
+
+				const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+				if (adjacent_tile->get_owner() != tile->get_owner()) {
+					return;
+				}
+
+				const site *adjacent_site = adjacent_tile->get_site();
+				if (adjacent_site == nullptr) {
+					return;
+				}
+
+				metternich::site_game_data *adjacent_site_game_data = adjacent_site->get_game_data();
+				adjacent_site_game_data->set_transport_level(std::max(adjacent_site_game_data->get_transport_level(), effective_transport_level));
+				adjacent_site_game_data->set_sea_transport_level(std::max(adjacent_site_game_data->get_sea_transport_level(), effective_sea_transport_level));
+			});
+		}
 	}
 
 	emit tile_transport_level_changed(tile_pos);
@@ -757,7 +789,29 @@ void map::clear_tile_transport_level(const QPoint &tile_pos)
 	emit tile_transport_level_changed(tile_pos);
 
 	if (tile->get_site() != nullptr) {
-		tile->get_site()->get_game_data()->set_transport_level(0);
+		site_game_data *site_game_data = tile->get_site()->get_game_data();
+		site_game_data->set_transport_level(0);
+		site_game_data->set_sea_transport_level(0);
+
+		if (site_game_data->get_depot_level() != 0 || site_game_data->get_port_level() != 0) {
+			point::for_each_adjacent(tile_pos, [this, tile](const QPoint &adjacent_pos) {
+				if (!this->contains(adjacent_pos)) {
+					return;
+				}
+
+				const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+				if (adjacent_tile->get_owner() != tile->get_owner()) {
+					return;
+				}
+
+				if (adjacent_tile->get_transport_level() == 0 && adjacent_tile->get_sea_transport_level() == 0) {
+					//already cleared
+					return;
+				}
+
+				this->clear_tile_transport_level(adjacent_pos);
+			});
+		}
 	}
 
 	for (size_t i = 0; i < static_cast<size_t>(direction::count); ++i) {
