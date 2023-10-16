@@ -664,6 +664,10 @@ bool site_game_data::check_free_building(const building_type *building)
 		return false;
 	}
 
+	if (building->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_game_data()->has_technology(building->get_required_technology()))) {
+		return false;
+	}
+
 	building_slot->set_building(building);
 	return true;
 }
