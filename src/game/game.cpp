@@ -333,8 +333,11 @@ void game::apply_history(const metternich::scenario *scenario)
 				province_game_data->set_religion(province_history->get_religion());
 
 				const country *owner = province_history->get_owner();
-
 				province_game_data->set_owner(owner);
+
+				if (owner == nullptr) {
+					log::log_error(std::format("Province \"{}\" has no owner for scenario \"{}\".", province->get_identifier(), scenario->get_identifier()));
+				}
 			} catch (...) {
 				std::throw_with_nested(std::runtime_error("Failed to apply history for province \"" + province->get_identifier() + "\"."));
 			}
