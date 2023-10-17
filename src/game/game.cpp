@@ -329,6 +329,10 @@ void game::apply_history(const metternich::scenario *scenario)
 				const province_history *province_history = province->get_history();
 				province_game_data *province_game_data = province->get_game_data();
 
+				if (province->is_water_zone()) {
+					continue;
+				}
+
 				province_game_data->set_culture(province_history->get_culture());
 				province_game_data->set_religion(province_history->get_religion());
 
