@@ -37,8 +37,8 @@ class country final : public named_data_entry, public data_type<country>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country_type type MEMBER type READ get_type NOTIFY changed)
-	Q_PROPERTY(bool great_power READ is_great_power NOTIFY changed)
-	Q_PROPERTY(bool tribe READ is_tribe NOTIFY changed)
+	Q_PROPERTY(bool great_power READ is_great_power CONSTANT)
+	Q_PROPERTY(bool tribe READ is_tribe CONSTANT)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 	Q_PROPERTY(metternich::country_tier default_tier MEMBER default_tier READ get_default_tier)
 	Q_PROPERTY(metternich::country_tier min_tier MEMBER min_tier READ get_min_tier)
@@ -47,6 +47,7 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(metternich::religion* default_religion MEMBER default_religion NOTIFY changed)
 	Q_PROPERTY(metternich::government_type* default_government_type MEMBER default_government_type NOTIFY changed)
 	Q_PROPERTY(metternich::site* default_capital MEMBER default_capital NOTIFY changed)
+	Q_PROPERTY(bool short_name MEMBER short_name READ has_short_name NOTIFY changed)
 	Q_PROPERTY(bool definite_article MEMBER definite_article NOTIFY changed)
 	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
@@ -146,6 +147,11 @@ public:
 		return this->default_capital;
 	}
 
+	bool has_short_name() const
+	{
+		return this->short_name;
+	}
+
 	const std::vector<const era *> &get_eras() const
 	{
 		return this->eras;
@@ -183,6 +189,7 @@ private:
 	religion *default_religion = nullptr;
 	government_type *default_government_type = nullptr;
 	site *default_capital = nullptr;
+	bool short_name = false;
 	bool definite_article = false;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	title_name_map short_names;

@@ -66,6 +66,10 @@ void country::initialize()
 		this->max_tier = this->get_default_tier();
 	}
 
+	if (this->is_tribe()) {
+		this->short_name = true;
+	}
+
 	for (province *province : this->get_core_provinces()) {
 		province->add_core_country(this);
 	}
@@ -195,7 +199,7 @@ std::string country::get_titled_name(const government_type *government_type, con
 		}
 	}
 
-	if (this->is_tribe()) {
+	if (this->has_short_name()) {
 		return this->get_name();
 	}
 
