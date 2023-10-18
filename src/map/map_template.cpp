@@ -38,6 +38,27 @@ const std::set<std::string> map_template::database_dependencies = {
 	province::class_identifier
 };
 
+bool map_template::is_site_in_province(const site *site, const province *province, const province_geodata_map_type &province_geodata_map)
+{
+	const auto find_iterator = province_geodata_map.find(province);
+
+	if (find_iterator == province_geodata_map.end()) {
+		return false;
+	}
+
+	const std::vector<std::unique_ptr<QGeoShape>> &province_geoshapes = find_iterator->second;
+
+	const QGeoCoordinate qgeocoordinate = site->get_geocoordinate().to_qgeocoordinate();
+
+	for (const std::unique_ptr<QGeoShape> &geoshape : province_geoshapes) {
+		if (geoshape->contains(qgeocoordinate)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void map_template::initialize()
 {
 	const QRect map_rect(QPoint(0, 0), this->get_size());
@@ -45,7 +66,13 @@ void map_template::initialize()
 	if (!this->get_province_image_filepath().empty()) {
 		const QImage province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
 
+		const province_geodata_map_type province_geodata_map = this->get_world()->parse_provinces_geojson_folder();
+
 		for (const site *site : this->get_world()->get_sites()) {
+			if (site->get_type() == site_type::none) {
+				continue;
+			}
+
 			assert_throw(site->get_geocoordinate().is_valid());
 
 			if (site->get_geocoordinate().is_null()) {
@@ -62,8 +89,50 @@ void map_template::initialize()
 				continue;
 			}
 
+			const province *tile_province = province::try_get_by_color(province_image.pixelColor(tile_pos));
+			const province *site_province = tile_province;
+
+			if (site->get_province() != nullptr) {
+				site_province = site->get_province();
+			} else {
+				if (tile_province == nullptr || !map_template::is_site_in_province(site, tile_province, province_geodata_map)) {
+					province_set checked_provinces;
+					if (tile_province != nullptr) {
+						checked_provinces.insert(tile_province);
+					}
+
+					point::for_each_adjacent_until(tile_pos, [&site_province, &map_rect, &province_image, site, &province_geodata_map, &checked_provinces](const QPoint &adjacent_pos) {
+						if (!map_rect.contains(adjacent_pos)) {
+							return false;
+						}
+
+						const province *adjacent_province = province::try_get_by_color(province_image.pixelColor(adjacent_pos));
+
+						if (adjacent_province == nullptr) {
+							return false;
+						}
+
+						if (adjacent_province->is_water_zone()) {
+							return false;
+						}
+
+						if (checked_provinces.contains(adjacent_province)) {
+							return false;
+						}
+
+						if (map_template::is_site_in_province(site, adjacent_province, province_geodata_map)) {
+							site_province = adjacent_province;
+							return true;
+						} else {
+							checked_provinces.insert(adjacent_province);
+							return false;
+						}
+					});
+				}
+			}
+
 			//if the site is not placed in its province, nudge its position to be in the nearest point in its province
-			if (site->get_province() != nullptr && !province_image.isNull() && province::try_get_by_color(province_image.pixelColor(tile_pos)) != site->get_province()) {
+			if (site_province != tile_province && !province_image.isNull()) {
 				bool found_pos = false;
 				int64_t best_distance = std::numeric_limits<int64_t>::max();
 
@@ -84,7 +153,7 @@ void map_template::initialize()
 						checked_on_map = true;
 
 						const province *checked_province = province::try_get_by_color(province_image.pixelColor(checked_pos));
-						if (checked_province != site->get_province()) {
+						if (checked_province != site_province) {
 							return;
 						}
 
@@ -107,7 +176,7 @@ void map_template::initialize()
 				}
 
 				if (!found_pos) {
-					log::log_error(std::format("No position found for site \"{}\" in province \"{}\".", site->get_identifier(), site->get_province()->get_identifier()));
+					log::log_error(std::format("No position found for site \"{}\" in province \"{}\".", site->get_identifier(), site_province->get_identifier()));
 					continue;
 				}
 			}
@@ -519,8 +588,6 @@ void map_template::set_province_image_filepath(const std::filesystem::path &file
 
 void map_template::write_province_image()
 {
-	using province_geodata_map_type = province_map<std::vector<std::unique_ptr<QGeoShape>>>;
-
 	try {
 		assert_throw(this->get_world() != nullptr);
 

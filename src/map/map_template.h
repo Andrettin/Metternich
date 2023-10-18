@@ -2,12 +2,15 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "map/province_container.h"
 #include "util/fractional_int.h"
 #include "util/georectangle.h"
 #include "util/point_container.h"
 
 Q_MOC_INCLUDE("map/map_projection.h")
 Q_MOC_INCLUDE("map/world.h")
+
+class QGeoShape;
 
 namespace archimedes {
 	class map_projection;
@@ -37,11 +40,15 @@ class map_template final : public named_data_entry, public data_type<map_templat
 	Q_PROPERTY(std::filesystem::path province_image_filepath MEMBER province_image_filepath WRITE set_province_image_filepath)
 
 public:
+	using province_geodata_map_type = province_map<std::vector<std::unique_ptr<QGeoShape>>>;
+
 	static constexpr const char class_identifier[] = "map_template";
 	static constexpr const char property_class_identifier[] = "metternich::map_template*";
 	static constexpr const char database_folder[] = "map_templates";
 
 	static const std::set<std::string> database_dependencies;
+
+	static bool is_site_in_province(const site *site, const province *province, const province_geodata_map_type &province_geodata_map);
 
 	explicit map_template(const std::string &identifier) : named_data_entry(identifier)
 	{

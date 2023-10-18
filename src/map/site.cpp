@@ -81,12 +81,6 @@ void site::check() const
 			assert_throw(this->get_resource() == nullptr);
 			break;
 	}
-
-	if (this->get_type() == site_type::settlement || this->get_type() == site_type::resource) {
-		if (this->get_province() == nullptr && this->get_geocoordinate().is_valid()) {
-			log::log_error(std::format("Settlement or resource site \"{}\" has no province, but has a valid geocoordinate.", this->get_identifier()));
-		}
-	}
 }
 
 data_entry_history *site::get_history_base()
