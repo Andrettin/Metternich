@@ -243,8 +243,6 @@ QCoro::Task<void> game::start_coro()
 	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
 
-		country_game_data->calculate_tile_transport_levels();
-
 		for (population_unit *population_unit : country_game_data->get_population_units()) {
 			population_unit->choose_ideology();
 		}
@@ -1208,6 +1206,9 @@ QCoro::Task<void> game::on_setup_finished()
 		for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
 			map::get()->calculate_tile_country_border_directions(border_tile_pos);
 		}
+
+		//calculate it here rather than on start so that score is displayed properly
+		country->get_game_data()->calculate_tile_transport_levels();
 
 		emit country->game_data_changed();
 	}
