@@ -1297,6 +1297,10 @@ void game::adjust_food_production_for_country_populations()
 									continue;
 								}
 
+								if (settlement_type->get_build_conditions() != nullptr && !settlement_type->get_build_conditions()->check(settlement, read_only_context(settlement))) {
+									continue;
+								}
+
 								if (!potential_settlement_types.empty() && potential_settlement_types.at(0)->get_free_resource_building_level() > settlement_type->get_free_resource_building_level()) {
 									potential_settlement_types.clear();
 								}
