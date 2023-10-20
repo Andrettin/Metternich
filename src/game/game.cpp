@@ -1193,8 +1193,6 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 
 QCoro::Task<void> game::on_setup_finished()
 {
-	this->calculate_great_power_ranks();
-
 	co_await this->create_diplomatic_map_image();
 
 	emit countries_changed();
@@ -1229,6 +1227,8 @@ QCoro::Task<void> game::on_setup_finished()
 
 		emit country->game_data_changed();
 	}
+
+	this->calculate_great_power_ranks();
 
 	for (const character *character : character::get_all()) {
 		character->get_game_data()->on_setup_finished();
