@@ -612,10 +612,6 @@ void site_game_data::check_free_buildings()
 				continue;
 			}
 
-			if (building != this->get_culture()->get_building_class_type(building->get_building_class())) {
-				continue;
-			}
-
 			if (this->check_free_building(building)) {
 				changed = true;
 			}
@@ -625,10 +621,6 @@ void site_game_data::check_free_buildings()
 	if (this->is_capital()) {
 		for (const building_type *building : building_type::get_all()) {
 			if (!building->is_free_in_capital()) {
-				continue;
-			}
-
-			if (building != this->get_culture()->get_building_class_type(building->get_building_class())) {
 				continue;
 			}
 
@@ -646,6 +638,10 @@ void site_game_data::check_free_buildings()
 
 bool site_game_data::check_free_building(const building_type *building)
 {
+	if (building != this->get_culture()->get_building_class_type(building->get_building_class())) {
+		return false;
+	}
+
 	if (this->has_building_or_better(building)) {
 		return false;
 	}

@@ -1207,6 +1207,23 @@ QCoro::Task<void> game::on_setup_finished()
 			map::get()->calculate_tile_country_border_directions(border_tile_pos);
 		}
 
+		//build free on start buildings
+		for (const province *province : country->get_game_data()->get_provinces()) {
+			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+				if (!settlement->get_game_data()->is_built()) {
+					continue;
+				}
+
+				for (const building_type *building : building_type::get_all()) {
+					if (!building->is_free_on_start()) {
+						continue;
+					}
+
+					settlement->get_game_data()->check_free_building(building);
+				}
+			}
+		}
+
 		//calculate it here rather than on start so that score is displayed properly
 		country->get_game_data()->calculate_tile_transport_levels();
 

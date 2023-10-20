@@ -62,6 +62,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool provincial_capitol MEMBER provincial_capitol READ is_provincial_capitol NOTIFY changed)
 	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
 	Q_PROPERTY(bool free_in_capital MEMBER free_in_capital READ is_free_in_capital NOTIFY changed)
+	Q_PROPERTY(bool free_on_start MEMBER free_on_start READ is_free_on_start NOTIFY changed)
 	Q_PROPERTY(bool capital_only MEMBER capital_only READ is_capital_only NOTIFY changed)
 	Q_PROPERTY(bool provincial_capital_only MEMBER provincial_capital_only READ is_provincial_capital_only NOTIFY changed)
 	Q_PROPERTY(bool expandable MEMBER expandable READ is_expandable NOTIFY changed)
@@ -173,6 +174,11 @@ public:
 	bool is_free_in_capital() const
 	{
 		return this->free_in_capital;
+	}
+
+	bool is_free_on_start() const
+	{
+		return this->free_on_start;
 	}
 
 	bool is_capital_only() const
@@ -315,6 +321,7 @@ private:
 	bool provincial_capitol = false;
 	bool warehouse = false;
 	bool free_in_capital = false;
+	bool free_on_start = false;
 	bool capital_only = false;
 	bool provincial_capital_only = false;
 	bool expandable = false;
