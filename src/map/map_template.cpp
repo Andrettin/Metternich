@@ -95,39 +95,40 @@ void map_template::initialize()
 			if (site->get_province() != nullptr) {
 				site_province = site->get_province();
 			} else {
-				if (tile_province == nullptr || !map_template::is_site_in_province(site, tile_province, province_geodata_map)) {
-					province_set checked_provinces;
-					if (tile_province != nullptr) {
-						checked_provinces.insert(tile_province);
+				province_set adjacent_provinces;
+				point::for_each_adjacent(tile_pos, [&site_province, &map_rect, &province_image, site, &province_geodata_map, &adjacent_provinces, tile_province](const QPoint &adjacent_pos) {
+					if (!map_rect.contains(adjacent_pos)) {
+						return;
 					}
 
-					point::for_each_adjacent_until(tile_pos, [&site_province, &map_rect, &province_image, site, &province_geodata_map, &checked_provinces](const QPoint &adjacent_pos) {
-						if (!map_rect.contains(adjacent_pos)) {
-							return false;
-						}
+					const province *adjacent_province = province::try_get_by_color(province_image.pixelColor(adjacent_pos));
 
-						const province *adjacent_province = province::try_get_by_color(province_image.pixelColor(adjacent_pos));
+					if (adjacent_province == nullptr) {
+						return;
+					}
 
-						if (adjacent_province == nullptr) {
-							return false;
-						}
+					if (adjacent_province == tile_province) {
+						return;
+					}
 
-						if (adjacent_province->is_water_zone()) {
-							return false;
-						}
+					if (adjacent_province->is_water_zone()) {
+						return;
+					}
 
-						if (checked_provinces.contains(adjacent_province)) {
-							return false;
-						}
+					if (adjacent_provinces.contains(adjacent_province)) {
+						return;
+					}
 
+					adjacent_provinces.insert(adjacent_province);
+				});
+
+				if (!adjacent_provinces.empty() && (tile_province == nullptr || !map_template::is_site_in_province(site, tile_province, province_geodata_map))) {
+					for (const province *adjacent_province : adjacent_provinces) {
 						if (map_template::is_site_in_province(site, adjacent_province, province_geodata_map)) {
 							site_province = adjacent_province;
-							return true;
-						} else {
-							checked_provinces.insert(adjacent_province);
-							return false;
+							break;
 						}
-					});
+					}
 				}
 			}
 
