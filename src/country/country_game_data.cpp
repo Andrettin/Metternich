@@ -4916,6 +4916,16 @@ void country_game_data::calculate_tile_transport_levels()
 	}
 
 	map::get()->calculate_tile_transport_level(capital->get_map_data()->get_tile_pos());
+
+	for (const province *province : this->get_provinces()) {
+		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+			if (!settlement->get_game_data()->is_built()) {
+				continue;
+			}
+
+			map::get()->calculate_tile_transport_level(settlement->get_map_data()->get_tile_pos());
+		}
+	}
 }
 
 void country_game_data::clear_tile_transport_levels()
