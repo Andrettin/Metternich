@@ -1400,7 +1400,7 @@ void country_game_data::calculate_text_rect()
 
 QVariantList country_game_data::get_resource_counts_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_resource_counts());
+	return archimedes::map::to_value_sorted_qvariant_list(this->get_resource_counts());
 }
 
 QVariantList country_game_data::get_vassal_resource_counts_qvariant_list() const
