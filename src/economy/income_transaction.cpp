@@ -7,6 +7,7 @@
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/income_transaction_type.h"
+#include "util/number_util.h"
 
 namespace metternich {
 
@@ -38,18 +39,20 @@ QString income_transaction::get_description() const
 {
 	std::string str;
 
+	const std::string amount_str = number::to_formatted_string(this->get_amount());
+
 	switch (this->get_type()) {
 		case income_transaction_type::sale:
-			str = std::format("Sold {} {} to {} for ${}", this->get_commodity_quantity(), this->get_commodity()->get_name(), this->get_country() ? this->get_country()->get_game_data()->get_name() : "the domestic market", this->get_amount());
+			str = std::format("Sold {} {} to {} for ${}", number::to_formatted_string(this->get_commodity_quantity()), this->get_commodity()->get_name(), this->get_country() ? this->get_country()->get_game_data()->get_name() : "the domestic market", amount_str);
 			break;
 		case income_transaction_type::liquidated_riches:
-			str = std::format("Converted {} {} into ${}\n+{}% Inflation", this->get_commodity_quantity(), this->get_commodity()->get_name(), this->get_amount(), this->inflation_change.to_string());
+			str = std::format("Converted {} {} into ${}\n+{}% Inflation", number::to_formatted_string(this->get_commodity_quantity()), this->get_commodity()->get_name(), amount_str, this->inflation_change.to_string());
 			break;
 		case income_transaction_type::tariff:
-			str = std::format("Received ${} in tariffs from {}", this->get_amount(), this->get_country()->get_game_data()->get_name());
+			str = std::format("Received ${} in tariffs from {}", amount_str, this->get_country()->get_game_data()->get_name());
 			break;
 		case income_transaction_type::treasure_fleet:
-			str = std::format("Received treasure fleet worth ${} from {}\n+{}% Inflation", this->get_amount(), this->get_country()->get_game_data()->get_name(), this->inflation_change.to_string());
+			str = std::format("Received treasure fleet worth ${} from {}\n+{}% Inflation", amount_str, this->get_country()->get_game_data()->get_name(), this->inflation_change.to_string());
 			break;
 	}
 

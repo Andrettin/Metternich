@@ -38,15 +38,17 @@ QString expense_transaction::get_description() const
 {
 	std::string str;
 
+	const std::string amount_str = number::to_formatted_string(this->get_amount());
+
 	switch (this->get_type()) {
 		case expense_transaction_type::purchase:
-			str = std::format("Bought {} {} from {} for ${}", this->get_commodity_quantity(), this->get_commodity()->get_name(), this->get_country()->get_game_data()->get_name(), this->get_amount());
+			str = std::format("Bought {} {} from {} for ${}", number::to_formatted_string(this->get_commodity_quantity()), this->get_commodity()->get_name(), this->get_country()->get_game_data()->get_name(), amount_str);
 			break;
 		case expense_transaction_type::military_upkeep:
-			str = std::format("Paid ${} in military upkeep", this->get_amount());
+			str = std::format("Paid ${} in military upkeep", amount_str);
 			break;
 		case expense_transaction_type::tax:
-			str = std::format("Paid ${} in taxes to {}", this->get_amount(), this->get_country()->get_game_data()->get_name());
+			str = std::format("Paid ${} in taxes to {}", amount_str, this->get_country()->get_game_data()->get_name());
 			break;
 	}
 
