@@ -400,19 +400,6 @@ void country_game_data::do_consumption()
 	}
 
 	//FIXME: make population units which couldn't have their consumption fulfilled be unhappy/refuse to work for the turn (and possibly demote when demotion is implemented)
-
-	//for minor nations, consume commodities demanded by the population
-	//this is to prevent commodities bought by minor nations from infinitely stockpiling up
-	if (!this->country->is_great_power()) {
-		for (const auto &[commodity, demand] : this->get_commodity_demands()) {
-			const int demand_int = demand.to_int();
-			const int consumed_quantity = std::min(this->get_stored_commodity(commodity), demand_int);
-			if (consumed_quantity > 0) {
-				this->change_stored_commodity(commodity, -consumed_quantity);
-				this->change_wealth(consumed_quantity * game::get()->get_price(commodity));
-			}
-		}
-	}
 }
 
 void country_game_data::do_cultural_change()
@@ -459,7 +446,7 @@ void country_game_data::do_construction()
 	}
 }
 
-void country_game_data::do_trade()
+void country_game_data::do_trade(country_map<commodity_map<int>> &country_luxury_demands)
 {
 	try {
 		if (this->is_under_anarchy()) {
@@ -496,38 +483,35 @@ void country_game_data::do_trade()
 				country_game_data *other_country_game_data = other_country->get_game_data();
 
 				const int bid = other_country_game_data->get_bid(commodity);
-				if (bid == 0) {
-					continue;
+				if (bid != 0) {
+					int sold_quantity = std::min(offer, bid);
+					sold_quantity = std::min(sold_quantity, other_country_game_data->get_wealth_with_credit() / price);
+
+					if (sold_quantity > 0) {
+						this->do_sale(other_country, commodity, sold_quantity, true);
+
+						offer -= sold_quantity;
+
+						if (offer == 0) {
+							break;
+						}
+					}
 				}
 
-				int sold_quantity = std::min(offer, bid);
-				sold_quantity = std::min(sold_quantity, other_country_game_data->get_wealth_with_credit() / price);
+				int &demand = country_luxury_demands[other_country][commodity];
+				if (demand > 0) {
+					const int sold_quantity = std::min(offer, demand);
 
-				if (sold_quantity <= 0) {
-					continue;
-				}
+					if (sold_quantity > 0) {
+						this->do_sale(country, commodity, sold_quantity, false);
 
-				this->change_stored_commodity(commodity, -sold_quantity);
-				const int sale_income = price * sold_quantity;
-				this->add_taxable_wealth(sale_income, income_transaction_type::tariff);
-				this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity, other_country);
+						offer -= sold_quantity;
+						demand -= sold_quantity;
 
-				other_country_game_data->change_stored_commodity(commodity, sold_quantity);
-				const int purchase_expense = other_country_game_data->get_inflated_value(price * sold_quantity);
-				other_country_game_data->change_wealth(-purchase_expense);
-				other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->country);
-
-				offer -= sold_quantity;
-
-				this->change_offer(commodity, -sold_quantity);
-				other_country_game_data->change_bid(commodity, -sold_quantity);
-
-				//improve relations between the two countries after they traded
-				this->change_base_opinion(other_country, 1);
-				other_country_game_data->change_base_opinion(this->country, 1);
-
-				if (offer == 0) {
-					break;
+						if (offer == 0) {
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -2061,11 +2045,9 @@ void country_game_data::on_population_type_count_changed(const population_type *
 		this->change_commodity_consumption(commodity, value * change);
 	}
 
-	//minor nations generate demand in the world market depending on population commodity demand
-	if (!this->country->is_great_power()) {
-		for (const auto &[commodity, value] : type->get_commodity_demands()) {
-			this->change_commodity_demand(commodity, value * change);
-		}
+	//countries generate demand in the world market depending on population commodity demand
+	for (const auto &[commodity, value] : type->get_commodity_demands()) {
+		this->change_commodity_demand(commodity, value * change);
 	}
 
 	this->change_food_consumption(change);
@@ -3922,15 +3904,38 @@ void country_game_data::set_offer(const commodity *commodity, const int value)
 	}
 }
 
+void country_game_data::do_sale(const metternich::country *other_country, const commodity *commodity, const int sold_quantity, const bool state_purchase)
+{
+	this->change_stored_commodity(commodity, -sold_quantity);
+
+	const int price = game::get()->get_price(commodity);
+	const int sale_income = price * sold_quantity;
+	this->add_taxable_wealth(sale_income, income_transaction_type::tariff);
+	this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity, other_country != this->country ? other_country : nullptr);
+
+	this->change_offer(commodity, -sold_quantity);
+
+	country_game_data *other_country_game_data = other_country->get_game_data();
+
+	if (state_purchase) {
+		other_country_game_data->change_stored_commodity(commodity, sold_quantity);
+		const int purchase_expense = other_country_game_data->get_inflated_value(price * sold_quantity);
+		other_country_game_data->change_wealth(-purchase_expense);
+		other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->country);
+
+		other_country_game_data->change_bid(commodity, -sold_quantity);
+	}
+
+	//improve relations between the two countries after they traded (even if it was not a state purchase)
+	if (this->country != other_country) {
+		this->change_base_opinion(other_country, 1);
+		other_country_game_data->change_base_opinion(this->country, 1);
+	}
+}
+
 void country_game_data::calculate_commodity_needs()
 {
 	this->commodity_needs.clear();
-
-	if (!this->country->is_great_power()) {
-		for (const auto &[commodity, demand] : this->get_commodity_demands()) {
-			this->commodity_needs[commodity] += demand.to_int();
-		}
-	}
 }
 
 void country_game_data::assign_trade_orders()
@@ -3954,25 +3959,6 @@ void country_game_data::assign_trade_orders()
 		if (value > need) {
 			this->set_offer(commodity, value);
 		}
-	}
-
-	for (const auto &[commodity, demand] : this->get_commodity_demands()) {
-		if (!this->can_trade_commodity(commodity)) {
-			continue;
-		}
-
-		if (this->get_offer(commodity) != 0) {
-			continue;
-		}
-
-		//increase demand if prices are lower than the base price, or the inverse if they are higher
-		const centesimal_int effective_demand = demand * commodity->get_base_price() / game::get()->get_price(commodity);
-
-		if (effective_demand == 0) {
-			continue;
-		}
-
-		this->set_bid(commodity, effective_demand.to_int());
 	}
 }
 

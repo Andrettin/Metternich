@@ -1428,6 +1428,14 @@ void game::do_trade()
 {
 	std::vector<metternich::country *> trade_countries = this->get_countries();
 
+	std::erase_if(trade_countries, [this](const country *country) {
+		if (country->get_game_data()->is_under_anarchy()) {
+			return true;
+		}
+
+		return false;
+	});
+
 	std::sort(trade_countries.begin(), trade_countries.end(), [&](const metternich::country *lhs, const metternich::country *rhs) {
 		//give trade priority by opinion-weighted prestige
 		const int lhs_prestige = lhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
@@ -1440,8 +1448,52 @@ void game::do_trade()
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
+	country_map<commodity_map<int>> country_luxury_demands;
+	static constexpr int great_power_luxury_demand_divisor = 10;
+
 	for (const country *country : trade_countries) {
-		country->get_game_data()->do_trade();
+		country_game_data *country_game_data = country->get_game_data();
+
+		for (const auto &[commodity, demand] : country_game_data->get_commodity_demands()) {
+			if (!country_game_data->can_trade_commodity(commodity)) {
+				continue;
+			}
+
+			//increase demand if prices are lower than the base price, or the inverse if they are higher
+			const centesimal_int effective_demand = demand * commodity->get_base_price() / game::get()->get_price(commodity);
+
+			int effective_demand_int = effective_demand.to_int();
+			if (country->is_great_power()) {
+				effective_demand_int /= great_power_luxury_demand_divisor;
+			}
+
+			assert_throw(effective_demand_int >= 0);
+
+			if (effective_demand_int == 0) {
+				continue;
+			}
+
+			const int offer = country_game_data->get_offer(commodity);
+			if (offer > 0) {
+				const int sold_quantity = std::min(offer, effective_demand_int);
+
+				if (sold_quantity <= 0) {
+					continue;
+				}
+
+				country_game_data->do_sale(country, commodity, sold_quantity, false);
+
+				effective_demand_int -= sold_quantity;
+			}
+
+			if (effective_demand_int > 0) {
+				country_luxury_demands[country][commodity] = effective_demand_int;
+			}
+		}
+	}
+
+	for (const country *country : trade_countries) {
+		country->get_game_data()->do_trade(country_luxury_demands);
 	}
 
 	//change commodity prices based on whether there were unfulfilled bids/offers
@@ -1453,6 +1505,11 @@ void game::do_trade()
 
 		for (const auto &[commodity, offer] : country->get_game_data()->get_offers()) {
 			remaining_demands[commodity] -= offer;
+		}
+	}
+	for (const auto &[country, luxury_demands] : country_luxury_demands) {
+		for (const auto &[commodity, demand] : luxury_demands) {
+			remaining_demands[commodity] += demand;
 		}
 	}
 

@@ -165,7 +165,7 @@ public:
 	void do_consumption();
 	void do_cultural_change();
 	void do_construction();
-	void do_trade();
+	void do_trade(country_map<commodity_map<int>> &country_luxury_demands);
 	void do_inflation();
 	void do_events();
 	void do_ai_turn();
@@ -1292,6 +1292,8 @@ public:
 	{
 		this->set_offer(commodity, this->get_offer(commodity) + change);
 	}
+
+	void do_sale(const metternich::country *other_country, const commodity *commodity, const int sold_quantity, const bool state_purchase);
 
 	const commodity_map<int> &get_commodity_needs() const
 	{
