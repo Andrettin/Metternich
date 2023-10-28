@@ -131,6 +131,7 @@ void country_game_data::do_turn()
 		this->do_population_growth();
 		this->do_consumption();
 		this->do_construction();
+		this->do_cultural_change();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 			civilian_unit->do_turn();
