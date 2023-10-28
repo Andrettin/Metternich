@@ -405,7 +405,7 @@ void country_game_data::do_consumption()
 
 void country_game_data::do_cultural_change()
 {
-	static constexpr int cultural_derivation_chance = 1;
+	static constexpr int base_cultural_derivation_chance = 1;
 
 	for (population_unit *population_unit : this->population_units) {
 		const metternich::culture *current_culture = population_unit->get_culture();
@@ -422,9 +422,26 @@ void country_game_data::do_cultural_change()
 			potential_cultures.push_back(culture);
 		}
 
-		if (!potential_cultures.empty() && random::get()->generate(100) < cultural_derivation_chance) {
+		if (potential_cultures.empty()) {
+			continue;
+		}
+
+		vector::shuffle(potential_cultures);
+
+		for (const metternich::culture *culture : potential_cultures) {
+			int chance = base_cultural_derivation_chance;
+
+			if (this->country->get_culture() == culture) {
+				chance *= 2;
+			}
+
+			if (random::get()->generate(100) >= chance) {
+				continue;
+			}
+
 			const metternich::culture *new_culture = vector::get_random(potential_cultures);
 			population_unit->set_culture(new_culture);
+			break;
 		}
 	}
 }
