@@ -512,6 +512,11 @@ public:
 		return this->diplomatic_map_image;
 	}
 
+	QImage prepare_diplomatic_map_image() const;
+
+	[[nodiscard]]
+	QCoro::Task<QImage> finalize_diplomatic_map_image(QImage &&image) const;
+
 	[[nodiscard]]
 	QCoro::Task<void> create_diplomatic_map_image();
 
@@ -536,7 +541,7 @@ public:
 	}
 
 	[[nodiscard]]
-	QCoro::Task<void> create_diplomatic_map_mode_image(const diplomatic_map_mode mode, const std::optional<diplomacy_state> &diplomacy_state);
+	QCoro::Task<void> create_diplomatic_map_mode_image(const diplomatic_map_mode mode);
 
 	const QImage &get_diplomacy_state_diplomatic_map_image(const diplomacy_state state) const
 	{
@@ -547,6 +552,9 @@ public:
 
 		throw std::runtime_error("No diplomacy state diplomatic map image found for state " + std::to_string(static_cast<int>(state)) + ".");
 	}
+
+	[[nodiscard]]
+	QCoro::Task<void> create_diplomacy_state_diplomatic_map_image(const diplomacy_state state);
 
 	int get_rank() const
 	{

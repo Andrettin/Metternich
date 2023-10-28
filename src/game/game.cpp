@@ -1409,6 +1409,20 @@ QCoro::Task<void> game::do_turn_coro()
 			}
 		}
 
+		for (const country *country : this->get_countries()) {
+			if (country->get_turn_data()->is_diplomatic_map_dirty()) {
+				co_await country->get_game_data()->create_diplomatic_map_image();
+			} else {
+				for (const diplomatic_map_mode mode : country->get_turn_data()->get_dirty_diplomatic_map_modes()) {
+					co_await country->get_game_data()->create_diplomatic_map_mode_image(mode);
+				}
+
+				for (const diplomacy_state state : country->get_turn_data()->get_dirty_diplomatic_map_diplomacy_states()) {
+					co_await country->get_game_data()->create_diplomacy_state_diplomatic_map_image(state);
+				}
+			}
+		}
+
 		if (this->exploration_changed) {
 			co_await this->create_exploration_diplomatic_map_image();
 			this->exploration_changed = false;

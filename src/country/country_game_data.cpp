@@ -1232,9 +1232,7 @@ void country_game_data::calculate_territory_rect()
 	this->calculate_text_rect();
 
 	if (game::get()->is_running()) {
-		QtConcurrent::run([this]() -> QCoro::Task<void> {
-			co_await this->create_diplomatic_map_image();
-		}).waitForFinished();
+		this->country->get_turn_data()->set_diplomatic_map_dirty(true);
 	}
 }
 
@@ -1501,9 +1499,7 @@ void country_game_data::change_diplomacy_state_count(const diplomacy_state state
 
 	//if the change added the diplomacy state to the map, then we need to create the diplomatic map image for it
 	if (game::get()->is_running() && final_count == change && !is_vassalage_diplomacy_state(state) && !is_overlordship_diplomacy_state(state)) {
-		QtConcurrent::run([this, state]() -> QCoro::Task<void> {
-			co_await create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic, state);
-		}).waitForFinished();
+		this->country->get_turn_data()->set_diplomatic_map_diplomacy_state_dirty(state);
 	}
 }
 
@@ -1699,18 +1695,91 @@ const QColor &country_game_data::get_diplomatic_map_color() const
 	return this->country->get_color();
 }
 
+QImage country_game_data::prepare_diplomatic_map_image() const
+{
+	assert_throw(this->territory_rect.width() > 0);
+	assert_throw(this->territory_rect.height() > 0);
+
+	QImage image(this->territory_rect.size(), QImage::Format_RGBA8888);
+	image.fill(Qt::transparent);
+
+	return image;
+}
+
+QCoro::Task<QImage> country_game_data::finalize_diplomatic_map_image(QImage &&image) const
+{
+	QImage scaled_image;
+
+	const int tile_pixel_size = map::get()->get_diplomatic_map_tile_pixel_size();
+
+	co_await QtConcurrent::run([tile_pixel_size, &image, &scaled_image]() {
+		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	image = std::move(scaled_image);
+
+	std::vector<QPoint> border_pixels;
+
+	for (int x = 0; x < image.width(); ++x) {
+		for (int y = 0; y < image.height(); ++y) {
+			const QPoint pixel_pos(x, y);
+			const QColor pixel_color = image.pixelColor(pixel_pos);
+
+			if (pixel_color.alpha() == 0) {
+				continue;
+			}
+
+			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (image.width() - 1) || pixel_pos.y() == (image.height() - 1)) {
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			if (pixel_color.alpha() != 255) {
+				//blended color
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			bool is_border_pixel = false;
+			point::for_each_cardinally_adjacent_until(pixel_pos, [&image, &is_border_pixel](const QPoint &adjacent_pos) {
+				if (image.pixelColor(adjacent_pos).alpha() != 0) {
+					return false;
+				}
+
+				is_border_pixel = true;
+				return true;
+			});
+
+			if (is_border_pixel) {
+				border_pixels.push_back(pixel_pos);
+			}
+		}
+	}
+
+	const QColor &border_pixel_color = defines::get()->get_country_border_color();
+
+	for (const QPoint &border_pixel_pos : border_pixels) {
+		image.setPixelColor(border_pixel_pos, border_pixel_color);
+	}
+
+	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+
+	co_await QtConcurrent::run([&scale_factor, &image, &scaled_image]() {
+		scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	co_return scaled_image;
+}
+
 QCoro::Task<void> country_game_data::create_diplomatic_map_image()
 {
 	const map *map = map::get();
 
-	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
-
-	assert_throw(this->territory_rect.width() > 0);
-	assert_throw(this->territory_rect.height() > 0);
-
-	QImage diplomatic_map_image = QImage(this->territory_rect.size(), QImage::Format_RGBA8888);
-	diplomatic_map_image.fill(Qt::transparent);
-
+	QImage diplomatic_map_image = this->prepare_diplomatic_map_image();
 	QImage selected_diplomatic_map_image = diplomatic_map_image;
 
 	const QColor &color = this->get_diplomatic_map_color();
@@ -1730,114 +1799,36 @@ QCoro::Task<void> country_game_data::create_diplomatic_map_image()
 		}
 	}
 
-	QImage scaled_diplomatic_map_image;
-	QImage scaled_selected_diplomatic_map_image;
+	this->diplomatic_map_image = co_await this->finalize_diplomatic_map_image(std::move(diplomatic_map_image));
+	this->selected_diplomatic_map_image = co_await this->finalize_diplomatic_map_image(std::move(selected_diplomatic_map_image));
 
-	co_await QtConcurrent::run([tile_pixel_size, &diplomatic_map_image, &scaled_diplomatic_map_image, &selected_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() {
-		scaled_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
+	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
+	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->diplomatic_map_image.size());
 
-		scaled_selected_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(selected_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-	});
-
-	diplomatic_map_image = std::move(scaled_diplomatic_map_image);
-	selected_diplomatic_map_image = std::move(scaled_selected_diplomatic_map_image);
-
-	std::vector<QPoint> border_pixels;
-
-	for (int x = 0; x < diplomatic_map_image.width(); ++x) {
-		for (int y = 0; y < diplomatic_map_image.height(); ++y) {
-			const QPoint pixel_pos(x, y);
-			const QColor pixel_color = diplomatic_map_image.pixelColor(pixel_pos);
-
-			if (pixel_color.alpha() == 0) {
-				continue;
-			}
-
-			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (diplomatic_map_image.width() - 1) || pixel_pos.y() == (diplomatic_map_image.height() - 1)) {
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			if (pixel_color != color) {
-				//blended color
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			bool is_border_pixel = false;
-			point::for_each_cardinally_adjacent_until(pixel_pos, [&diplomatic_map_image, &color, &is_border_pixel](const QPoint &adjacent_pos) {
-				if (diplomatic_map_image.pixelColor(adjacent_pos).alpha() != 0) {
-					return false;
-				}
-
-				is_border_pixel = true;
-				return true;
-			});
-
-			if (is_border_pixel) {
-				border_pixels.push_back(pixel_pos);
-			}
-		}
-	}
-
-	const QColor &border_pixel_color = defines::get()->get_country_border_color();
-
-	for (const QPoint &border_pixel_pos : border_pixels) {
-		diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
-		selected_diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
-	}
-
-	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
-
-	co_await QtConcurrent::run([&scale_factor, &diplomatic_map_image, &scaled_diplomatic_map_image, &selected_diplomatic_map_image, &scaled_selected_diplomatic_map_image]() {
-		scaled_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-
-		scaled_selected_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(selected_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-	});
-
-	this->diplomatic_map_image = std::move(scaled_diplomatic_map_image);
-	this->selected_diplomatic_map_image = std::move(scaled_selected_diplomatic_map_image);
-
-	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * scale_factor, this->diplomatic_map_image.size());
-
-	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic, {});
-	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic, diplomacy_state::peace);
+	co_await this->create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic);
+	co_await this->create_diplomacy_state_diplomatic_map_image(diplomacy_state::peace);
 
 	for (const auto &[diplomacy_state, count] : this->get_diplomacy_state_counts()) {
 		if (!is_vassalage_diplomacy_state(diplomacy_state) && !is_overlordship_diplomacy_state(diplomacy_state)) {
-			co_await create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic, diplomacy_state);
+			co_await this->create_diplomacy_state_diplomatic_map_image(diplomacy_state);
 		}
 	}
 
-	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::terrain, {});
-	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::cultural, {});
-	co_await create_diplomatic_map_mode_image(diplomatic_map_mode::religious, {});
+	co_await this->create_diplomatic_map_mode_image(diplomatic_map_mode::terrain);
+	co_await this->create_diplomatic_map_mode_image(diplomatic_map_mode::cultural);
+	co_await this->create_diplomatic_map_mode_image(diplomatic_map_mode::religious);
 
 	emit diplomatic_map_image_changed();
 }
 
-QCoro::Task<void> country_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode, const std::optional<diplomacy_state> &diplomacy_state)
+QCoro::Task<void> country_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode)
 {
 	static const QColor empty_color(Qt::black);
 	static constexpr QColor diplomatic_self_color(170, 148, 214);
 
 	const map *map = map::get();
 
-	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
-
-	assert_throw(this->territory_rect.width() > 0);
-	assert_throw(this->territory_rect.height() > 0);
-
-	QImage image(this->territory_rect.size(), QImage::Format_RGBA8888);
-	image.fill(Qt::transparent);
+	QImage image = this->prepare_diplomatic_map_image();
 
 	for (int x = 0; x < this->territory_rect.width(); ++x) {
 		for (int y = 0; y < this->territory_rect.height(); ++y) {
@@ -1852,11 +1843,7 @@ QCoro::Task<void> country_game_data::create_diplomatic_map_mode_image(const dipl
 
 			switch (mode) {
 				case diplomatic_map_mode::diplomatic:
-					if (diplomacy_state.has_value()) {
-						color = &defines::get()->get_diplomacy_state_color(diplomacy_state.value());
-					} else {
-						color = &diplomatic_self_color;
-					}
+					color = &diplomatic_self_color;
 					break;
 				case diplomatic_map_mode::terrain:
 					color = &tile->get_terrain()->get_color();
@@ -1899,71 +1886,33 @@ QCoro::Task<void> country_game_data::create_diplomatic_map_mode_image(const dipl
 		}
 	}
 
-	QImage scaled_image;
+	this->diplomatic_map_mode_images[mode] = co_await this->finalize_diplomatic_map_image(std::move(image));
+}
 
-	co_await QtConcurrent::run([this, tile_pixel_size, &image, &scaled_image]() {
-		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-	});
+QCoro::Task<void> country_game_data::create_diplomacy_state_diplomatic_map_image(const diplomacy_state state)
+{
+	static const QColor empty_color(Qt::black);
 
-	image = std::move(scaled_image);
+	const map *map = map::get();
 
-	std::vector<QPoint> border_pixels;
+	QImage image = this->prepare_diplomatic_map_image();
 
-	for (int x = 0; x < image.width(); ++x) {
-		for (int y = 0; y < image.height(); ++y) {
-			const QPoint pixel_pos(x, y);
-			const QColor pixel_color = image.pixelColor(pixel_pos);
-			
-			if (pixel_color.alpha() == 0) {
+	for (int x = 0; x < this->territory_rect.width(); ++x) {
+		for (int y = 0; y < this->territory_rect.height(); ++y) {
+			const QPoint relative_tile_pos = QPoint(x, y);
+			const tile *tile = map->get_tile(this->territory_rect.topLeft() + relative_tile_pos);
+
+			if (tile->get_owner() != this->country) {
 				continue;
 			}
 
-			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (image.width() - 1) || pixel_pos.y() == (image.height() - 1)) {
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
+			const QColor &color = defines::get()->get_diplomacy_state_color(state);
 
-			if (pixel_color.alpha() != 255) {
-				//blended color
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			bool is_border_pixel = false;
-			point::for_each_cardinally_adjacent_until(pixel_pos, [this, &image, &is_border_pixel](const QPoint &adjacent_pos) {
-				if (image.pixelColor(adjacent_pos).alpha() != 0) {
-					return false;
-				}
-
-				is_border_pixel = true;
-				return true;
-			});
-
-			if (is_border_pixel) {
-				border_pixels.push_back(pixel_pos);
-			}
+			image.setPixelColor(relative_tile_pos, color);
 		}
 	}
 
-	const QColor &border_pixel_color = defines::get()->get_country_border_color();
-
-	for (const QPoint &border_pixel_pos : border_pixels) {
-		image.setPixelColor(border_pixel_pos, border_pixel_color);
-	}
-
-	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
-
-	co_await QtConcurrent::run([&scale_factor, &image, &scaled_image]() {
-		scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-	});
-
-
-	QImage &stored_image = (mode == diplomatic_map_mode::diplomatic && diplomacy_state.has_value()) ? this->diplomacy_state_diplomatic_map_images[diplomacy_state.value()] : this->diplomatic_map_mode_images[mode];
-	stored_image = std::move(scaled_image);
+	this->diplomacy_state_diplomatic_map_images[state] = co_await this->finalize_diplomatic_map_image(std::move(image));
 }
 
 void country_game_data::change_score(const int change)

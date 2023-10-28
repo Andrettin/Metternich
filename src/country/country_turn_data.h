@@ -8,6 +8,8 @@ namespace metternich {
 class country;
 class expense_transaction;
 class income_transaction;
+enum class diplomacy_state;
+enum class diplomatic_map_mode;
 enum class expense_transaction_type;
 enum class income_transaction_type;
 
@@ -65,6 +67,36 @@ public:
 		this->transport_level_recalculation_needed = value;
 	}
 
+	bool is_diplomatic_map_dirty() const
+	{
+		return this->diplomatic_map_dirty;
+	}
+
+	void set_diplomatic_map_dirty(const bool value)
+	{
+		this->diplomatic_map_dirty = value;
+	}
+
+	const std::set<diplomatic_map_mode> &get_dirty_diplomatic_map_modes() const
+	{
+		return this->dirty_diplomatic_map_modes;
+	}
+
+	void set_diplomatic_map_mode_dirty(const diplomatic_map_mode mode)
+	{
+		this->dirty_diplomatic_map_modes.insert(mode);
+	}
+
+	const std::set<diplomacy_state> &get_dirty_diplomatic_map_diplomacy_states() const
+	{
+		return this->dirty_diplomatic_map_diplomacy_states;
+	}
+
+	void set_diplomatic_map_diplomacy_state_dirty(const diplomacy_state state)
+	{
+		this->dirty_diplomatic_map_diplomacy_states.insert(state);
+	}
+
 private:
 	metternich::country *country = nullptr;
 	int total_income = 0;
@@ -73,6 +105,9 @@ private:
 	std::vector<qunique_ptr<income_transaction>> income_transactions;
 	std::vector<qunique_ptr<expense_transaction>> expense_transactions;
 	bool transport_level_recalculation_needed = false;
+	bool diplomatic_map_dirty = false;
+	std::set<diplomatic_map_mode> dirty_diplomatic_map_modes;
+	std::set<diplomacy_state> dirty_diplomatic_map_diplomacy_states;
 };
 
 }

@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_turn_data.h"
 #include "country/religion.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -234,9 +235,7 @@ void province_game_data::set_culture(const metternich::culture *culture)
 
 	if (game::get()->is_running()) {
 		if (this->get_owner() != nullptr) {
-			QtConcurrent::run([this]() -> QCoro::Task<void> {
-				co_await this->get_owner()->get_game_data()->create_diplomatic_map_mode_image(diplomatic_map_mode::cultural, {});
-			}).waitForFinished();
+			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::cultural);
 		}
 	}
 
@@ -282,9 +281,7 @@ void province_game_data::set_religion(const metternich::religion *religion)
 
 	if (game::get()->is_running()) {
 		if (this->get_owner() != nullptr) {
-			QtConcurrent::run([this]() -> QCoro::Task<void> {
-				co_await this->get_owner()->get_game_data()->create_diplomatic_map_mode_image(diplomatic_map_mode::religious, {});
-			}).waitForFinished();
+			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::religious);
 		}
 	}
 
