@@ -7,6 +7,7 @@
 #include "script/context.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
+#include "unit/army.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_type.h"
 #include "unit/military_unit_type_container.h"
@@ -80,12 +81,14 @@ public:
 			}
 		}
 
+		auto enemy_army = make_qunique<army>(enemy_units, std::monostate());
+
 		bool success = false;
 
 		if (this->attacker) {
-			success = game::get()->do_battle(ctx.attacking_military_units, enemy_units);
+			success = game::get()->do_battle(ctx.attacking_army, enemy_army.get());
 		} else {
-			success = !game::get()->do_battle(enemy_units, ctx.defending_military_units);
+			success = !game::get()->do_battle(enemy_army.get(), ctx.defending_army);
 		}
 
 		if (success) {

@@ -65,6 +65,7 @@
 #include "ui/icon.h"
 #include "ui/icon_container.h"
 #include "ui/portrait.h"
+#include "unit/army.h"
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
@@ -140,6 +141,12 @@ void country_game_data::do_turn()
 		for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
 			military_unit->do_turn();
 		}
+
+		for (const qunique_ptr<army> &army : this->armies) {
+			army->do_turn();
+		}
+
+		this->armies.clear();
 
 		this->decrement_scripted_modifiers();
 
@@ -3965,6 +3972,21 @@ void country_game_data::remove_military_unit(military_unit *military_unit)
 	for (size_t i = 0; i < this->military_units.size(); ++i) {
 		if (this->military_units[i].get() == military_unit) {
 			this->military_units.erase(this->military_units.begin() + i);
+			return;
+		}
+	}
+}
+
+void country_game_data::add_army(qunique_ptr<army> &&army)
+{
+	this->armies.push_back(std::move(army));
+}
+
+void country_game_data::remove_army(army *army)
+{
+	for (size_t i = 0; i < this->armies.size(); ++i) {
+		if (this->armies[i].get() == army) {
+			this->armies.erase(this->armies.begin() + i);
 			return;
 		}
 	}

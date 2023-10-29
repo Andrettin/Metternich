@@ -1,7 +1,7 @@
 #pragma once
 
 #include "script/condition/scope_condition.h"
-#include "unit/military_unit.h"
+#include "unit/army.h"
 
 namespace metternich {
 
@@ -26,11 +26,11 @@ public:
 	{
 		Q_UNUSED(upper_scope);
 
-		if (ctx.attacking_military_units.empty()) {
+		if (ctx.attacking_army == nullptr) {
 			return nullptr;
 		}
 
-		return military_unit::get_army_commander(ctx.attacking_military_units);
+		return ctx.attacking_army->get_commander();
 	}
 
 	virtual std::string get_scope_name() const override

@@ -13,11 +13,11 @@ namespace archimedes {
 
 namespace metternich {
 
+class army;
 class character;
 class country;
 class era;
 class game_rules;
-class military_unit;
 class province;
 class scenario;
 class site;
@@ -209,7 +209,7 @@ public:
 
 	void clear_delayed_effects();
 
-	bool do_battle(const std::vector<military_unit *> &attacker_units, const std::vector<military_unit *> &defender_units);
+	bool do_battle(army *attacking_army, army *defending_army);
 
 signals:
 	void running_changed();

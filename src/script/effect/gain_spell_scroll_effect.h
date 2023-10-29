@@ -7,6 +7,7 @@
 #include "script/context.h"
 #include "script/effect/effect.h"
 #include "spell/spell.h"
+#include "unit/army.h"
 #include "unit/military_unit.h"
 #include "util/string_util.h"
 
@@ -34,31 +35,35 @@ public:
 		//otherwise, try any of the country's characters
 		std::vector<const character *> potential_characters;
 
-		for (const military_unit *military_unit : ctx.attacking_military_units) {
-			if (military_unit->get_country() != scope) {
-				continue;
-			}
+		if (ctx.attacking_army != nullptr) {
+			for (const military_unit *military_unit : ctx.attacking_army->get_military_units()) {
+				if (military_unit->get_country() != scope) {
+					continue;
+				}
 
-			if (military_unit->get_character() == nullptr) {
-				continue;
-			}
+				if (military_unit->get_character() == nullptr) {
+					continue;
+				}
 
-			if (military_unit->get_character()->get_game_data()->can_learn_spell(this->spell)) {
-				potential_characters.push_back(military_unit->get_character());
+				if (military_unit->get_character()->get_game_data()->can_learn_spell(this->spell)) {
+					potential_characters.push_back(military_unit->get_character());
+				}
 			}
 		}
 
-		for (const military_unit *military_unit : ctx.defending_military_units) {
-			if (military_unit->get_country() != scope) {
-				continue;
-			}
+		if (ctx.defending_army != nullptr) {
+			for (const military_unit *military_unit : ctx.defending_army->get_military_units()) {
+				if (military_unit->get_country() != scope) {
+					continue;
+				}
 
-			if (military_unit->get_character() == nullptr) {
-				continue;
-			}
+				if (military_unit->get_character() == nullptr) {
+					continue;
+				}
 
-			if (military_unit->get_character()->get_game_data()->can_learn_spell(this->spell)) {
-				potential_characters.push_back(military_unit->get_character());
+				if (military_unit->get_character()->get_game_data()->can_learn_spell(this->spell)) {
+					potential_characters.push_back(military_unit->get_character());
+				}
 			}
 		}
 

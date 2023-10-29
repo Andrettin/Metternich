@@ -53,6 +53,7 @@
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
 #include "time/era.h"
+#include "unit/army.h"
 #include "unit/civilian_unit.h"
 #include "unit/historical_civilian_unit.h"
 #include "unit/historical_civilian_unit_history.h"
@@ -1743,16 +1744,16 @@ void game::clear_delayed_effects()
 	this->province_delayed_effects.clear();
 }
 
-bool game::do_battle(const std::vector<military_unit *> &attacker_units, const std::vector<military_unit *> &defender_units)
+bool game::do_battle(army *attacking_army, army *defending_army)
 {
 	//this function returns true if the attackers won, or false otherwise
 
-	const int attacker_score = military_unit::get_army_score(attacker_units);
-	const int defender_score = military_unit::get_army_score(defender_units);
+	const int attacker_score = attacking_army->get_score();
+	const int defender_score = defending_army->get_score();
 
 	if (attacker_score > defender_score) {
 		//destroy the defender units
-		for (military_unit *military_unit : defender_units) {
+		for (military_unit *military_unit : defending_army->get_military_units()) {
 			military_unit->disband(false);
 		}
 
@@ -1761,7 +1762,7 @@ bool game::do_battle(const std::vector<military_unit *> &attacker_units, const s
 
 	if (attacker_score < defender_score) {
 		//destroy the attacker units
-		for (military_unit *military_unit : attacker_units) {
+		for (military_unit *military_unit : attacking_army->get_military_units()) {
 			military_unit->disband(false);
 		}
 	}

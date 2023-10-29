@@ -37,6 +37,7 @@ Q_MOC_INCLUDE("unit/military_unit_type.h")
 
 namespace metternich {
 
+class army;
 class building_type;
 class character;
 class civilian_unit;
@@ -1339,8 +1340,11 @@ public:
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
 
-	void add_military_unit(qunique_ptr<military_unit> &&civilian_unit);
-	void remove_military_unit(military_unit *civilian_unit);
+	void add_military_unit(qunique_ptr<military_unit> &&military_unit);
+	void remove_military_unit(military_unit *military_unit);
+
+	void add_army(qunique_ptr<army> &&army);
+	void remove_army(army *army);
 
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const;
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category) const;
@@ -2131,6 +2135,7 @@ private:
 	commodity_map<int> commodity_needs;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
+	std::vector<qunique_ptr<army>> armies;
 	int deployment_limit = country_game_data::base_deployment_limit;
 	int land_damage_modifier = 0;
 	int land_recovery_modifier = 0; //the speed at which land units recover strength

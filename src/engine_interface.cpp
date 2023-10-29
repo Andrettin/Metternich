@@ -2,6 +2,8 @@
 
 #include "engine_interface.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/country_tier.h"
 #include "country/country_tier_data.h"
 #include "country/law_group.h"
@@ -20,10 +22,12 @@
 #include "map/tile.h"
 #include "technology/technology.h"
 #include "time/era.h"
+#include "unit/army.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
+#include "util/qunique_ptr.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -226,23 +230,32 @@ void engine_interface::move_selected_military_units_to(const QPoint &tile_pos)
 
 	const tile *tile = map::get()->get_tile(tile_pos);
 
+	army::target_variant target = std::monostate();
+
 	if (tile->get_province() != nullptr) {
 		if (tile->get_province() == this->get_selected_military_units().front()->get_province()) {
 			const site *site = tile->get_site();
 			assert_throw(site != nullptr);
 
-			for (military_unit *military_unit : this->get_selected_military_units()) {
-				military_unit->visit_site(site);
-			}
+			target = site;
 		} else {
+			bool can_move = true;
 			for (military_unit *military_unit : this->get_selected_military_units()) {
 				if (!military_unit->can_move_to(tile->get_province())) {
-					continue;
+					can_move = false;
+					break;
 				}
+			}
 
-				military_unit->move_to(tile->get_province());
+			if (can_move) {
+				target = tile->get_province();
 			}
 		}
+	}
+
+	if (!std::holds_alternative<std::monostate>(target)) {
+		auto army = make_qunique<metternich::army>(this->get_selected_military_units(), std::move(target));
+		this->get_selected_military_units().front()->get_country()->get_game_data()->add_army(std::move(army));
 	}
 
 	this->clear_selected_military_units();

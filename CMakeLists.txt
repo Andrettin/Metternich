@@ -251,6 +251,7 @@ source_group(ui FILES ${ui_SRCS})
 set_source_files_properties(${ui_SRCS} PROPERTIES UNITY_GROUP "ui")
 
 set(unit_SRCS
+	src/unit/army.cpp
 	src/unit/civilian_unit.cpp
 	src/unit/civilian_unit_class.cpp
 	src/unit/civilian_unit_class_container.cpp
@@ -739,6 +740,7 @@ set(ui_HDRS
 source_group(ui FILES ${ui_HDRS})
 
 set(unit_HDRS
+	src/unit/army.h
 	src/unit/civilian_unit.h
 	src/unit/civilian_unit_class.h
 	src/unit/civilian_unit_class_container.h

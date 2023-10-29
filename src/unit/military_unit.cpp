@@ -17,54 +17,18 @@
 #include "map/site_game_data.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
+#include "ui/icon.h"
+#include "unit/army.h"
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
 #include "unit/promotion.h"
 #include "unit/promotion_container.h"
-#include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
-
-const character *military_unit::get_army_commander(const std::vector<military_unit *> &military_units)
-{
-	for (const military_unit *military_unit : military_units) {
-		if (military_unit->get_character() == nullptr) {
-			continue;
-		}
-
-		return military_unit->get_character();
-	}
-
-	return nullptr;
-}
-
-const character *military_unit::get_army_commander(const std::vector<const military_unit *> &military_units)
-{
-	for (const military_unit *military_unit : military_units) {
-		if (military_unit->get_character() == nullptr) {
-			continue;
-		}
-
-		return military_unit->get_character();
-	}
-
-	return nullptr;
-}
-
-int military_unit::get_army_score(const std::vector<military_unit *> &military_units)
-{
-	int score = 0;
-
-	for (const military_unit *military_unit : military_units) {
-		score += military_unit->get_score();
-	}
-
-	return score;
-}
 
 military_unit::military_unit(const military_unit_type *type) : type(type)
 {
@@ -139,38 +103,6 @@ void military_unit::do_turn()
 		assert_throw(missing_morale >= 0);
 		if (missing_morale > 0) {
 			this->change_morale(std::min(military_unit::morale_recovery_per_turn, missing_morale));
-		}
-	}
-
-	if (this->is_moving() && this->get_site() == nullptr) {
-		this->set_original_province(nullptr);
-
-		if (this->get_province() != nullptr) {
-			this->get_province()->get_game_data()->add_military_unit(this);
-
-			//when ships move to a water zone, explore all adjacent water zones and coasts as well
-			if (this->get_province()->is_water_zone()) {
-				for (const metternich::province *neighbor_province : this->get_province()->get_game_data()->get_neighbor_provinces()) {
-					if (this->get_country()->get_game_data()->is_province_explored(neighbor_province)) {
-						continue;
-					}
-
-					if (neighbor_province->is_water_zone()) {
-						this->get_country()->get_game_data()->explore_province(neighbor_province);
-					} else {
-						//for coastal provinces bordering the water zone, explore all their tiles bordering it
-						for (const QPoint &coastal_tile_pos : neighbor_province->get_game_data()->get_border_tiles()) {
-							if (!map::get()->is_tile_on_province_border_with(coastal_tile_pos, this->get_province())) {
-								continue;
-							}
-
-							if (!this->get_country()->get_game_data()->is_tile_explored(coastal_tile_pos)) {
-								this->get_country()->get_game_data()->explore_tile(coastal_tile_pos);
-							}
-						}
-					}
-				}
-			}
 		}
 	}
 }
@@ -272,8 +204,7 @@ void military_unit::set_province(const metternich::province *province)
 
 	this->province = province;
 
-	if (this->get_province() != nullptr && this->get_original_province() == nullptr) {
-		//if the unit is moving, it will be added to the province when it finishes, otherwise add it now
+	if (this->get_province() != nullptr) {
 		this->get_province()->get_game_data()->add_military_unit(this);
 	}
 
@@ -318,54 +249,6 @@ bool military_unit::can_move_to(const metternich::province *province) const
 	}
 
 	return false;
-}
-
-void military_unit::move_to(const metternich::province *province)
-{
-	this->set_original_province(this->get_province());
-	this->set_province(province);
-}
-
-void military_unit::cancel_move()
-{
-	assert_throw(this->get_original_province() != nullptr);
-
-	this->set_province(this->get_original_province());
-	this->set_original_province(nullptr);
-}
-
-void military_unit::set_site(const metternich::site *site)
-{
-	if (site == this->get_site()) {
-		return;
-	}
-
-	if (this->get_site() != nullptr) {
-		this->get_site()->get_game_data()->remove_visiting_military_unit(this);
-	}
-
-	this->site = site;
-
-	if (this->get_site() != nullptr) {
-		this->get_site()->get_game_data()->add_visiting_military_unit(this);
-	}
-
-	emit site_changed();
-}
-
-void military_unit::visit_site(const metternich::site *site)
-{
-	assert_throw(site != nullptr);
-	assert_throw(site->get_game_data()->get_improvement() != nullptr);
-	assert_throw(site->get_game_data()->get_improvement()->is_ruins());
-
-	assert_throw(this->get_site() == nullptr);
-	assert_throw(this->get_original_province() == nullptr);
-	assert_throw(this->get_province() != nullptr);
-
-	this->set_original_province(this->get_province());
-	this->set_province(nullptr);
-	this->set_site(site);
 }
 
 void military_unit::set_hit_points(const int hit_points)
@@ -598,14 +481,12 @@ void military_unit::disband(const bool restore_population_unit)
 		character_game_data->set_dead(true);
 	}
 
-	if (this->is_moving()) {
-		if (this->get_site() != nullptr) {
-			this->get_site()->get_game_data()->remove_visiting_military_unit(this);
-		}
-	} else {
-		if (this->get_province() != nullptr) {
-			this->get_province()->get_game_data()->remove_military_unit(this);
-		}
+	if (this->get_army() != nullptr) {
+		this->army->remove_military_unit(this);
+	}
+
+	if (this->get_province() != nullptr) {
+		this->get_province()->get_game_data()->remove_military_unit(this);
 	}
 
 	if (this->get_country() != nullptr) {

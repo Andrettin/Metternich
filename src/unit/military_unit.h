@@ -7,6 +7,7 @@ Q_MOC_INCLUDE("unit/military_unit_type.h")
 
 namespace metternich {
 
+class army;
 class character;
 class country;
 class culture;
@@ -29,17 +30,12 @@ class military_unit final : public QObject
 	Q_PROPERTY(const metternich::military_unit_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
-	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
-	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
+	Q_PROPERTY(bool moving READ is_moving NOTIFY army_changed)
 	Q_PROPERTY(QVariantList promotions READ get_promotions_qvariant_list NOTIFY promotions_changed)
 
 public:
 	static constexpr int hit_point_recovery_per_turn = 10;
 	static constexpr int morale_recovery_per_turn = 20;
-
-	static const character *get_army_commander(const std::vector<military_unit *> &military_units);
-	static const character *get_army_commander(const std::vector<const military_unit *> &military_units);
-	static int get_army_score(const std::vector<military_unit *> &military_units);
 
 	explicit military_unit(const military_unit_type *type);
 	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::site *home_settlement);
@@ -124,37 +120,27 @@ public:
 
 	void set_province(const metternich::province *province);
 
-	const metternich::province *get_original_province() const
+	const metternich::army *get_army() const
 	{
-		return this->original_province;
+		return this->army;
 	}
 
-	void set_original_province(const metternich::province *province)
+	void set_army(metternich::army *army)
 	{
-		if (province == this->get_original_province()) {
+		if (army == this->get_army()) {
 			return;
 		}
 
-		this->original_province = province;
-		emit original_province_changed();
+		this->army = army;
+		emit army_changed();
 	}
 
 	bool can_move_to(const metternich::province *province) const;
-	void move_to(const metternich::province *province);
-	void cancel_move();
 
 	bool is_moving() const
 	{
-		return this->get_original_province() != nullptr;
+		return this->get_army() != nullptr;
 	}
-
-	const metternich::site *get_site() const
-	{
-		return this->site;
-	}
-
-	void set_site(const metternich::site *site);
-	void visit_site(const metternich::site *site);
 
 	int get_hit_points() const
 	{
@@ -390,8 +376,7 @@ signals:
 	void type_changed();
 	void icon_changed();
 	void province_changed();
-	void original_province_changed();
-	void site_changed();
+	void army_changed();
 	void promotions_changed();
 
 private:
@@ -405,8 +390,7 @@ private:
 	const metternich::site *home_settlement = nullptr;
 	const metternich::character *character = nullptr;
 	const metternich::province *province = nullptr; //the province the unit is in
-	const metternich::province *original_province = nullptr; //the province before moving
-	const metternich::site *site = nullptr; //the site the unit is visiting
+	metternich::army *army = nullptr; //the army to which the unit belongs
 	int hit_points = 0;
 	int max_hit_points = 0;
 	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat

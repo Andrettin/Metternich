@@ -33,7 +33,6 @@
 #include "script/context.h"
 #include "script/modifier.h"
 #include "script/scripted_site_modifier.h"
-#include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
@@ -63,29 +62,6 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 
 void site_game_data::do_turn()
 {
-	if (!this->get_visiting_military_units().empty()) {
-		assert_throw(this->get_improvement() != nullptr);
-		assert_throw(this->get_improvement()->is_ruins());
-
-		const country *country = this->get_visiting_military_units().front()->get_country();
-		context ctx(country);
-		ctx.source_scope = this->site;
-		ctx.attacking_military_units = this->get_visiting_military_units();
-		country_event::check_events_for_scope(country, event_trigger::ruins_explored, ctx);
-
-		//make the visiting units go back
-		std::vector<military_unit *> visiting_military_units = this->get_visiting_military_units();
-
-		for (military_unit *military_unit : visiting_military_units) {
-			const province *province = military_unit->get_original_province();
-			military_unit->set_original_province(nullptr);
-			military_unit->set_site(nullptr);
-			military_unit->set_province(province);
-		}
-
-		map::get()->set_tile_improvement(this->get_tile_pos(), nullptr);
-	}
-
 	this->decrement_scripted_modifiers();
 }
 

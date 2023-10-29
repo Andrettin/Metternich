@@ -19,7 +19,6 @@ class building_type;
 class country;
 class culture;
 class improvement;
-class military_unit;
 class phenotype;
 class population;
 class population_type;
@@ -376,21 +375,6 @@ public:
 		return centesimal_int::min(output, centesimal_int(this->get_best_transport_level()));
 	}
 
-	const std::vector<military_unit *> &get_visiting_military_units() const
-	{
-		return this->visiting_military_units;
-	}
-
-	void add_visiting_military_unit(military_unit *military_unit)
-	{
-		this->visiting_military_units.push_back(military_unit);
-	}
-
-	void remove_visiting_military_unit(const military_unit *military_unit)
-	{
-		std::erase(this->visiting_military_units, military_unit);
-	}
-
 signals:
 	void owner_changed();
 	void culture_changed();
@@ -426,7 +410,6 @@ private:
 	int port_level = 0;
 	int transport_level = 0;
 	int sea_transport_level = 0;
-	std::vector<military_unit *> visiting_military_units; //military units currently visiting the site
 };
 
 }

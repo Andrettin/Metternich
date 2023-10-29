@@ -31,6 +31,7 @@
 #include "script/scripted_province_modifier.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
+#include "unit/army.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_type.h"
@@ -91,13 +92,23 @@ void province_game_data::do_ai_turn()
 				continue;
 			}
 
-			const std::vector<military_unit *> military_units = this->get_military_units();
-			for (military_unit *military_unit : military_units) {
+			std::vector<military_unit *> military_units = this->get_military_units();
+
+			std::erase_if(military_units, [this](const military_unit *military_unit) {
 				if (military_unit->get_country() != this->get_owner()) {
-					continue;
+					return true;
 				}
 
-				military_unit->visit_site(site);
+				if (military_unit->is_moving()) {
+					return true;
+				}
+
+				return false;
+			});
+
+			if (!military_units.empty()) {
+				auto army = make_qunique<metternich::army>(military_units, site);
+				this->get_owner()->get_game_data()->add_army(std::move(army));
 			}
 			break;
 		}
