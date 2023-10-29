@@ -125,15 +125,7 @@ public:
 		return this->army;
 	}
 
-	void set_army(metternich::army *army)
-	{
-		if (army == this->get_army()) {
-			return;
-		}
-
-		this->army = army;
-		emit army_changed();
-	}
+	void set_army(metternich::army *army);
 
 	bool can_move_to(const metternich::province *province) const;
 

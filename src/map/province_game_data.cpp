@@ -494,7 +494,9 @@ void province_game_data::add_military_unit(military_unit *military_unit)
 {
 	this->military_units.push_back(military_unit);
 
-	this->change_military_unit_category_count(military_unit->get_category(), 1);
+	if (!military_unit->is_moving()) {
+		this->change_military_unit_category_count(military_unit->get_category(), 1);
+	}
 
 	if (game::get()->is_running()) {
 		emit military_units_changed();
@@ -505,7 +507,9 @@ void province_game_data::remove_military_unit(military_unit *military_unit)
 {
 	std::erase(this->military_units, military_unit);
 
-	this->change_military_unit_category_count(military_unit->get_category(), -1);
+	if (!military_unit->is_moving()) {
+		this->change_military_unit_category_count(military_unit->get_category(), -1);
+	}
 
 	if (game::get()->is_running()) {
 		emit military_units_changed();
@@ -558,7 +562,7 @@ int province_game_data::get_country_military_unit_category_count(const metternic
 	int count = 0;
 
 	for (const military_unit *military_unit : this->get_military_units()) {
-		if (military_unit->get_category() == category && military_unit->get_country() == country) {
+		if (military_unit->get_category() == category && military_unit->get_country() == country && !military_unit->is_moving()) {
 			++count;
 		}
 	}

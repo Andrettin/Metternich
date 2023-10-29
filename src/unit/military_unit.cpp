@@ -211,6 +211,29 @@ void military_unit::set_province(const metternich::province *province)
 	emit province_changed();
 }
 
+void military_unit::set_army(metternich::army *army)
+{
+	if (army == this->get_army()) {
+		return;
+	}
+
+	const metternich::army *old_army = this->get_army();
+
+	this->army = army;
+
+	if (this->get_province() != nullptr) {
+		if (army != nullptr && old_army == nullptr) {
+			this->get_province()->get_game_data()->change_military_unit_category_count(this->get_category(), -1);
+		} else if (army == nullptr && old_army != nullptr) {
+			this->get_province()->get_game_data()->change_military_unit_category_count(this->get_category(), 1);
+		}
+	}
+
+	if (game::get()->is_running()) {
+		emit army_changed();
+	}
+}
+
 bool military_unit::can_move_to(const metternich::province *province) const
 {
 	switch (this->get_domain()) {
