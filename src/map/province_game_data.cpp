@@ -622,6 +622,10 @@ QString province_game_data::get_military_unit_category_name(const military_unit_
 	return best_name;
 }
 
+QVariantList province_game_data::get_entering_armies_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_entering_armies());
+}
 
 void province_game_data::calculate_settlement_commodity_outputs()
 {

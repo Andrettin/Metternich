@@ -18,6 +18,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
+class army;
 class civilian_unit;
 class commodity;
 class country;
@@ -53,6 +54,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
+	Q_PROPERTY(QVariantList entering_armies READ get_entering_armies_qvariant_list NOTIFY entering_armies_changed)
 
 public:
 	explicit province_game_data(const metternich::province *province);
@@ -208,6 +210,25 @@ public:
 	Q_INVOKABLE const icon *get_military_unit_category_icon(const metternich::military_unit_category category) const;
 	Q_INVOKABLE QString get_military_unit_category_name(const metternich::military_unit_category category) const;
 
+	const std::vector<army *> &get_entering_armies() const
+	{
+		return this->entering_armies;
+	}
+
+	QVariantList get_entering_armies_qvariant_list() const;
+
+	void add_entering_army(army *army)
+	{
+		this->entering_armies.push_back(army);
+		emit entering_armies_changed();
+	}
+
+	void remove_entering_army(army *army)
+	{
+		std::erase(this->entering_armies, army);
+		emit entering_armies_changed();
+	}
+
 	void calculate_settlement_commodity_outputs();
 	void calculate_settlement_commodity_output(const commodity *commodity);
 
@@ -353,6 +374,7 @@ signals:
 	void population_units_changed();
 	void military_units_changed();
 	void military_unit_category_counts_changed();
+	void entering_armies_changed();
 
 private:
 	const metternich::province *province = nullptr;
@@ -367,6 +389,7 @@ private:
 	qunique_ptr<metternich::population> population;
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;
+	std::vector<army *> entering_armies; //armies entering this province
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;

@@ -32,11 +32,43 @@ army::army(const std::vector<military_unit *> &military_units, target_variant &&
 		military_unit->set_army(this);
 	}
 
-	const site *target_site = this->get_target_site();
-	if (target_site != nullptr) {
-		assert_throw(target_site->get_game_data()->get_improvement() != nullptr);
-		assert_throw(target_site->get_game_data()->get_improvement()->is_ruins());
+	std::visit([this](auto &&target_value) {
+		using target_type = std::decay_t<decltype(target_value)>;
+
+		static_assert(std::is_same_v<target_type, std::monostate> || std::is_same_v<target_type, const province *> || std::is_same_v<target_type, const site *>, "Invalid target variant type.");
+
+		if constexpr (std::is_same_v<target_type, const province *>) {
+			target_value->get_game_data()->add_entering_army(this);
+		} else if constexpr (std::is_same_v<target_type, const site *>) {
+			assert_throw(target_value->get_game_data()->get_improvement() != nullptr);
+			assert_throw(target_value->get_game_data()->get_improvement()->is_ruins());
+
+			target_value->get_game_data()->add_visiting_army(this);
+		}
+	}, this->target);
+}
+
+army::~army()
+{
+	for (military_unit *military_unit : this->get_military_units()) {
+		assert_throw(military_unit->get_army() == this);
+		military_unit->set_army(nullptr);
 	}
+
+	std::visit([this](auto &&target_value) {
+		using target_type = std::decay_t<decltype(target_value)>;
+
+		static_assert(std::is_same_v<target_type, std::monostate> || std::is_same_v<target_type, const province *> || std::is_same_v<target_type, const site *>, "Invalid target variant type.");
+
+		if constexpr (std::is_same_v<target_type, const province *>) {
+			target_value->get_game_data()->remove_entering_army(this);
+		} else if constexpr (std::is_same_v<target_type, const site *>) {
+			assert_throw(target_value->get_game_data()->get_improvement() != nullptr);
+			assert_throw(target_value->get_game_data()->get_improvement()->is_ruins());
+
+			target_value->get_game_data()->remove_visiting_army(this);
+		}
+	}, this->target);
 }
 
 void army::do_turn()
@@ -81,14 +113,6 @@ void army::do_turn()
 		country_event::check_events_for_scope(country, event_trigger::ruins_explored, ctx);
 
 		map::get()->set_tile_improvement(target_site_game_data->get_tile_pos(), nullptr);
-	}
-}
-
-army::~army()
-{
-	for (military_unit *military_unit : this->get_military_units()) {
-		assert_throw(military_unit->get_army() == this);
-		military_unit->set_army(nullptr);
 	}
 }
 

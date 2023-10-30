@@ -33,6 +33,7 @@
 #include "script/context.h"
 #include "script/modifier.h"
 #include "script/scripted_site_modifier.h"
+#include "unit/army.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
@@ -1094,6 +1095,11 @@ void site_game_data::set_sea_transport_level(const int level)
 	if (game::get()->is_running()) {
 		emit transport_level_changed();
 	}
+}
+
+QVariantList site_game_data::get_visiting_armies_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_visiting_armies());
 }
 
 }

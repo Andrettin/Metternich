@@ -14,6 +14,7 @@ Q_MOC_INCLUDE("population/population.h")
 
 namespace metternich {
 
+class army;
 class building_class;
 class building_type;
 class country;
@@ -50,6 +51,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(int housing READ get_housing NOTIFY housing_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(int transport_level READ get_best_transport_level NOTIFY transport_level_changed)
+	Q_PROPERTY(QVariantList visiting_armies READ get_visiting_armies_qvariant_list NOTIFY visiting_armies_changed)
 
 public:
 	static constexpr int base_free_food_consumption = 1;
@@ -375,6 +377,25 @@ public:
 		return centesimal_int::min(output, centesimal_int(this->get_best_transport_level()));
 	}
 
+	const std::vector<army *> &get_visiting_armies() const
+	{
+		return this->visiting_armies;
+	}
+
+	QVariantList get_visiting_armies_qvariant_list() const;
+
+	void add_visiting_army(army *army)
+	{
+		this->visiting_armies.push_back(army);
+		emit visiting_armies_changed();
+	}
+
+	void remove_visiting_army(army *army)
+	{
+		std::erase(this->visiting_armies, army);
+		emit visiting_armies_changed();
+	}
+
 signals:
 	void owner_changed();
 	void culture_changed();
@@ -386,6 +407,7 @@ signals:
 	void housing_changed();
 	void commodity_outputs_changed();
 	void transport_level_changed();
+	void visiting_armies_changed();
 
 private:
 	const metternich::site *site = nullptr;
@@ -410,6 +432,7 @@ private:
 	int port_level = 0;
 	int transport_level = 0;
 	int sea_transport_level = 0;
+	std::vector<army *> visiting_armies; //armies visiting this site
 };
 
 }
