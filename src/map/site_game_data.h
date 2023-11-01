@@ -377,6 +377,8 @@ public:
 		return centesimal_int::min(output, centesimal_int(this->get_best_transport_level()));
 	}
 
+	bool can_be_visited() const;
+
 	const std::vector<army *> &get_visiting_armies() const
 	{
 		return this->visiting_armies;

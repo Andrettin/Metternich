@@ -235,9 +235,9 @@ void engine_interface::move_selected_military_units_to(const QPoint &tile_pos)
 	if (tile->get_province() != nullptr) {
 		if (tile->get_province() == this->get_selected_military_units().front()->get_province()) {
 			const site *site = tile->get_site();
-			assert_throw(site != nullptr);
-
-			target = site;
+			if (site != nullptr && site->get_game_data()->can_be_visited()) {
+				target = site;
+			}
 		} else {
 			bool can_move = true;
 			for (military_unit *military_unit : this->get_selected_military_units()) {

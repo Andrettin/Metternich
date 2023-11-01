@@ -1113,6 +1113,11 @@ void site_game_data::set_sea_transport_level(const int level)
 	}
 }
 
+bool site_game_data::can_be_visited() const
+{
+	return this->get_improvement() != nullptr && this->get_improvement()->is_ruins();
+}
+
 QVariantList site_game_data::get_visiting_armies_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_visiting_armies());

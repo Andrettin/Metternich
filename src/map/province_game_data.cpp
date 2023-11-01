@@ -88,7 +88,7 @@ void province_game_data::do_ai_turn()
 	if (this->get_owner() != nullptr && this->has_country_military_unit(this->get_owner())) {
 		for (const site *site : this->get_sites()) {
 			site_game_data *site_game_data = site->get_game_data();
-			if (site_game_data->get_improvement() == nullptr || !site_game_data->get_improvement()->is_ruins()) {
+			if (!site_game_data->can_be_visited()) {
 				continue;
 			}
 

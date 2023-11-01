@@ -40,8 +40,7 @@ army::army(const std::vector<military_unit *> &military_units, target_variant &&
 		if constexpr (std::is_same_v<target_type, const province *>) {
 			target_value->get_game_data()->add_entering_army(this);
 		} else if constexpr (std::is_same_v<target_type, const site *>) {
-			assert_throw(target_value->get_game_data()->get_improvement() != nullptr);
-			assert_throw(target_value->get_game_data()->get_improvement()->is_ruins());
+			assert_throw(target_value->get_game_data()->can_be_visited());
 
 			target_value->get_game_data()->add_visiting_army(this);
 		}
@@ -63,8 +62,7 @@ army::~army()
 		if constexpr (std::is_same_v<target_type, const province *>) {
 			target_value->get_game_data()->remove_entering_army(this);
 		} else if constexpr (std::is_same_v<target_type, const site *>) {
-			assert_throw(target_value->get_game_data()->get_improvement() != nullptr);
-			assert_throw(target_value->get_game_data()->get_improvement()->is_ruins());
+			assert_throw(target_value->get_game_data()->can_be_visited());
 
 			target_value->get_game_data()->remove_visiting_army(this);
 		}
@@ -133,8 +131,7 @@ void army::do_turn()
 	} else if (this->get_target_site() != nullptr) {
 		const site *target_site = this->get_target_site();
 		site_game_data *target_site_game_data = target_site->get_game_data();
-		assert_throw(target_site_game_data->get_improvement() != nullptr);
-		assert_throw(target_site_game_data->get_improvement()->is_ruins());
+		assert_throw(target_site_game_data->can_be_visited());
 
 		context ctx(this->get_country());
 		ctx.source_scope = target_site;
