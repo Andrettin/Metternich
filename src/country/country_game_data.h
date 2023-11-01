@@ -272,6 +272,8 @@ public:
 		return static_cast<int>(this->get_provinces().size());
 	}
 
+	void on_site_gained(const site *site, const int multiplier);
+
 	const site *get_capital() const
 	{
 		return this->capital;

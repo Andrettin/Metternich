@@ -1045,40 +1045,8 @@ void country_game_data::on_province_gained(const province *province, const int m
 		}
 	}
 
-	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-
-		for (const auto &[commodity, output] : tile->get_commodity_outputs()) {
-			if (commodity->is_local()) {
-				continue;
-			}
-
-			this->change_commodity_output(commodity, output * multiplier);
-		}
-	}
-
 	for (const auto &[terrain, count] : province_game_data->get_tile_terrain_counts()) {
 		this->change_tile_terrain_count(terrain, count * multiplier);
-	}
-
-	for (const site *settlement : province_game_data->get_settlement_sites()) {
-		if (!settlement->get_game_data()->is_built()) {
-			continue;
-		}
-
-		for (const qunique_ptr<settlement_building_slot> &building_slot : settlement->get_game_data()->get_building_slots()) {
-			const building_type *building = building_slot->get_building();
-			if (building != nullptr) {
-				assert_throw(building->is_provincial());
-				this->change_settlement_building_count(building, 1 * multiplier);
-			}
-		}
-
-		for (const auto &[profession, capacity] : settlement->get_game_data()->get_profession_capacities()) {
-			this->change_profession_capacity(profession, capacity * multiplier);
-		}
-
-		this->change_housing(settlement->get_game_data()->get_housing() * multiplier);
 	}
 
 	for (const auto &[resource, commodity_map] : this->improved_resource_commodity_bonuses) {
@@ -1095,6 +1063,29 @@ void country_game_data::on_province_gained(const province *province, const int m
 
 	if (game::get()->is_running()) {
 		this->country->get_turn_data()->set_transport_level_recalculation_needed(true);
+	}
+}
+
+void country_game_data::on_site_gained(const site *site, const int multiplier)
+{
+	const site_game_data *site_game_data = site->get_game_data();
+
+	if (site->is_settlement() && site_game_data->is_built()) {
+		this->change_settlement_count(1 * multiplier);
+
+		for (const qunique_ptr<settlement_building_slot> &building_slot : site_game_data->get_building_slots()) {
+			const building_type *building = building_slot->get_building();
+			if (building != nullptr) {
+				assert_throw(building->is_provincial());
+				this->change_settlement_building_count(building, 1 * multiplier);
+			}
+		}
+
+		for (const auto &[profession, capacity] : site_game_data->get_profession_capacities()) {
+			this->change_profession_capacity(profession, capacity * multiplier);
+		}
+
+		this->change_housing(site_game_data->get_housing() * multiplier);
 	}
 }
 

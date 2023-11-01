@@ -370,7 +370,7 @@ public:
 		return std::max(this->get_transport_level(), this->get_sea_transport_level());
 	}
 
-	centesimal_int get_transportable_commodity_output(const commodity *commodity)
+	centesimal_int get_transportable_commodity_output(const commodity *commodity) const
 	{
 		const centesimal_int &output = this->get_commodity_output(commodity);
 
