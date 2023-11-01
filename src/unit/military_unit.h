@@ -134,6 +134,8 @@ public:
 		return this->get_army() != nullptr;
 	}
 
+	bool is_hostile_to(const metternich::country *country) const;
+
 	int get_hit_points() const
 	{
 		return this->hit_points;

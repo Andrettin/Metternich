@@ -7,6 +7,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
+#include "country/diplomacy_state.h"
 #include "country/religion.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
@@ -262,16 +263,26 @@ bool military_unit::can_move_to(const metternich::province *province) const
 		return true;
 	} else {
 		const metternich::country *province_owner = province->get_game_data()->get_owner();
-		if (province_owner == this->get_country()) {
-			return true;
-		}
 
 		if (province_owner != nullptr) {
-			return province_owner->get_game_data()->is_any_vassal_of(this->get_country());
+			if (province_owner == this->get_country()) {
+				return true;
+			}
+
+			if (province_owner->get_game_data()->is_any_vassal_of(this->get_country())) {
+				return true;
+			}
+
+			return this->get_country()->get_game_data()->can_attack(province_owner);
 		}
 	}
 
 	return false;
+}
+
+bool military_unit::is_hostile_to(const metternich::country *country) const
+{
+	return this->get_country()->get_game_data()->can_attack(country);
 }
 
 void military_unit::set_hit_points(const int hit_points)

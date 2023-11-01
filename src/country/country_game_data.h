@@ -425,6 +425,8 @@ public:
 
 	bool at_war() const;
 
+	bool can_attack(const metternich::country *other_country) const;
+
 	std::optional<diplomacy_state> get_offered_diplomacy_state(const metternich::country *other_country) const;
 
 	Q_INVOKABLE int get_offered_diplomacy_state_int(metternich::country *other_country) const

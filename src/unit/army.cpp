@@ -74,27 +74,56 @@ army::~army()
 void army::do_turn()
 {
 	if (this->get_target_province() != nullptr) {
-		for (military_unit *military_unit : this->get_military_units()) {
-			military_unit->set_province(this->get_target_province());
+		const province *target_province = this->get_target_province();
 
-			//when ships move to a water zone, explore all adjacent water zones and coasts as well
-			if (this->get_target_province()->is_water_zone()) {
-				for (const province *neighbor_province : this->get_target_province()->get_game_data()->get_neighbor_provinces()) {
-					if (this->get_country()->get_game_data()->is_province_explored(neighbor_province)) {
-						continue;
-					}
+		const std::vector<military_unit *> &province_military_units = target_province->get_game_data()->get_military_units();
 
-					if (neighbor_province->is_water_zone()) {
-						this->get_country()->get_game_data()->explore_province(neighbor_province);
-					} else {
-						//for coastal provinces bordering the water zone, explore all their tiles bordering it
-						for (const QPoint &coastal_tile_pos : neighbor_province->get_game_data()->get_border_tiles()) {
-							if (!map::get()->is_tile_on_province_border_with(coastal_tile_pos, this->get_target_province())) {
-								continue;
-							}
+		std::vector<military_unit *> garrison;
+		for (military_unit *military_unit : province_military_units) {
+			if (military_unit->is_hostile_to(this->get_country())) {
+				garrison.push_back(military_unit);
+			}
+		}
 
-							if (!this->get_country()->get_game_data()->is_tile_explored(coastal_tile_pos)) {
-								this->get_country()->get_game_data()->explore_tile(coastal_tile_pos);
+		bool success = true;
+		const bool can_conquer_province = this->get_country()->get_game_data()->can_attack(target_province->get_game_data()->get_owner());
+
+		if (!garrison.empty() || can_conquer_province) {
+			if (!garrison.empty()) {
+				auto defending_army = make_qunique<army>(garrison, std::monostate());
+				success = game::get()->do_battle(this, defending_army.get());
+			} else {
+				success = true;
+			}
+
+			if (success && can_conquer_province) {
+				target_province->get_game_data()->set_owner(this->get_country());
+			}
+		}
+
+		if (success) {
+			for (military_unit *military_unit : this->get_military_units()) {
+				military_unit->set_province(target_province);
+
+				//when ships move to a water zone, explore all adjacent water zones and coasts as well
+				if (target_province->is_water_zone()) {
+					for (const province *neighbor_province : target_province->get_game_data()->get_neighbor_provinces()) {
+						if (this->get_country()->get_game_data()->is_province_explored(neighbor_province)) {
+							continue;
+						}
+
+						if (neighbor_province->is_water_zone()) {
+							this->get_country()->get_game_data()->explore_province(neighbor_province);
+						} else {
+							//for coastal provinces bordering the water zone, explore all their tiles bordering it
+							for (const QPoint &coastal_tile_pos : neighbor_province->get_game_data()->get_border_tiles()) {
+								if (!map::get()->is_tile_on_province_border_with(coastal_tile_pos, target_province)) {
+									continue;
+								}
+
+								if (!this->get_country()->get_game_data()->is_tile_explored(coastal_tile_pos)) {
+									this->get_country()->get_game_data()->explore_tile(coastal_tile_pos);
+								}
 							}
 						}
 					}

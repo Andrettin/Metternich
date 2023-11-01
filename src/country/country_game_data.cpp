@@ -1542,6 +1542,41 @@ bool country_game_data::at_war() const
 	return this->diplomacy_state_counts.contains(diplomacy_state::war);
 }
 
+bool country_game_data::can_attack(const metternich::country *other_country) const
+{
+	if (other_country == nullptr) {
+		return false;
+	}
+
+	if (other_country == this->country) {
+		return false;
+	}
+
+	if (this->is_any_overlord_of(other_country)) {
+		return false;
+	}
+
+	switch (this->get_diplomacy_state(other_country)) {
+		case diplomacy_state::non_aggression_pact:
+		case diplomacy_state::alliance:
+			return false;
+		case diplomacy_state::war:
+			return true;
+		default:
+			break;
+	}
+
+	if (other_country->get_game_data()->is_tribal() || this->is_tribal()) {
+		return true;
+	}
+
+	if (other_country->get_game_data()->is_under_anarchy() || this->is_under_anarchy()) {
+		return true;
+	}
+
+	return false;
+}
+
 std::optional<diplomacy_state> country_game_data::get_offered_diplomacy_state(const metternich::country *other_country) const
 {
 	const auto find_iterator = this->offered_diplomacy_states.find(other_country);

@@ -127,22 +127,8 @@ void province_game_data::set_owner(const country *country)
 	}
 
 	const metternich::country *old_owner = this->owner;
-	if (old_owner != nullptr) {
-		old_owner->get_game_data()->remove_province(this->province);
-	}
 
 	this->owner = country;
-
-	if (this->owner != nullptr) {
-		this->owner->get_game_data()->add_province(this->province);
-	}
-
-	if (this->get_owner() == nullptr) {
-		//remove population if this province becomes unowned
-		for (population_unit *population_unit : this->population_units) {
-			population_unit->get_settlement()->get_game_data()->pop_population_unit(population_unit);
-		}
-	}
 
 	for (const site *site : this->get_sites()) {
 		if (site->get_game_data()->get_owner() == old_owner) {
@@ -150,13 +136,24 @@ void province_game_data::set_owner(const country *country)
 		}
 	}
 
+	if (old_owner != nullptr) {
+		old_owner->get_game_data()->remove_province(this->province);
+	}
+
 	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->add_province(this->province);
+
 		if (this->get_population()->get_main_culture() == nullptr) {
 			this->set_culture(this->get_owner()->get_culture());
 		}
 
 		if (this->get_population()->get_main_religion() == nullptr) {
 			this->set_religion(this->get_owner()->get_game_data()->get_religion());
+		}
+	} else {
+		//remove population if this province becomes unowned
+		for (population_unit *population_unit : this->population_units) {
+			population_unit->get_settlement()->get_game_data()->pop_population_unit(population_unit);
 		}
 	}
 
