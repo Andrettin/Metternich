@@ -121,6 +121,12 @@ set(infrastructure_SRCS
 source_group(infrastructure FILES ${infrastructure_SRCS})
 set_source_files_properties(${infrastructure_SRCS} PROPERTIES UNITY_GROUP "infrastructure")
 
+set(language_SRCS
+	src/language/fallback_name_generator.cpp
+)
+source_group(language FILES ${language_SRCS})
+set_source_files_properties(${language_SRCS} PROPERTIES UNITY_GROUP "language")
+
 set(map_SRCS
 	src/map/diplomatic_map_image_provider.cpp
 	src/map/elevation_type.cpp
@@ -294,6 +300,7 @@ set(metternich_SRCS
 	${economy_SRCS}
 	${game_SRCS}
 	${infrastructure_SRCS}
+	${language_SRCS}
 	${map_SRCS}
 	${population_SRCS}
 	${script_SRCS}
@@ -414,6 +421,11 @@ set(infrastructure_HDRS
 	src/infrastructure/wonder.h
 )
 source_group(infrastructure FILES ${infrastructure_HDRS})
+
+set(language_HDRS
+	src/language/fallback_name_generator.h
+)
+source_group(language FILES ${language_HDRS})
 
 set(map_HDRS
 	src/map/diplomatic_map_image_provider.h
@@ -784,6 +796,7 @@ set(metternich_HDRS
 	${economy_HDRS}
 	${game_HDRS}
 	${infrastructure_HDRS}
+	${language_HDRS}
 	${map_HDRS}
 	${population_HDRS}
 	${script_HDRS}

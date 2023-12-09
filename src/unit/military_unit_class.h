@@ -2,6 +2,11 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "unit/military_unit_class_container.h"
+
+namespace archimedes {
+	class name_generator;
+}
 
 namespace metternich {
 
@@ -22,6 +27,8 @@ public:
 	static constexpr const char database_folder[] = "military_unit_classes";
 
 public:
+	static void propagate_names(const military_unit_class_map<std::unique_ptr<name_generator>> &name_generators, std::unique_ptr<name_generator> &ship_name_generator);
+
 	explicit military_unit_class(const std::string &identifier);
 
 	virtual void check() const override;
@@ -37,6 +44,7 @@ public:
 	}
 
 	bool is_animal() const;
+	bool is_ship() const;
 
 	const military_unit_type *get_default_unit_type() const
 	{

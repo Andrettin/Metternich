@@ -66,13 +66,7 @@ transporter_category transporter_type::get_category() const
 
 bool transporter_type::is_ship() const
 {
-	switch (this->get_category()) {
-		case transporter_category::small_merchant_ship:
-		case transporter_category::large_merchant_ship:
-			return true;
-		default:
-			return false;
-	}
+	return this->get_transporter_class()->is_ship();
 }
 
 }

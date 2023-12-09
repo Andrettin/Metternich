@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "unit/transporter_class_container.h"
 
 namespace metternich {
 
@@ -20,6 +21,8 @@ public:
 	static constexpr const char database_folder[] = "transporter_classes";
 
 public:
+	static void propagate_names(const transporter_class_map<std::unique_ptr<name_generator>> &name_generators, std::unique_ptr<name_generator> &ship_name_generator);
+
 	explicit transporter_class(const std::string &identifier);
 
 	virtual void check() const override;
@@ -28,6 +31,8 @@ public:
 	{
 		return this->category;
 	}
+
+	bool is_ship() const;
 
 	const transporter_type *get_default_transporter_type() const
 	{

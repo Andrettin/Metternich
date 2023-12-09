@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "infrastructure/building_class_container.h"
+#include "language/name_variant.h"
 #include "population/population_class_container.h"
 #include "unit/civilian_unit_class_container.h"
 #include "unit/military_unit_class_container.h"
@@ -12,6 +13,8 @@
 Q_MOC_INCLUDE("population/phenotype.h")
 
 namespace archimedes {
+	class gendered_name_generator;
+	class name_generator;
 	enum class gender;
 }
 
@@ -46,6 +49,7 @@ public:
 	~culture_base();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 	virtual data_entry_history *get_history_base() override;
 
@@ -130,6 +134,22 @@ public:
 		this->transporter_class_types[transporter_class] = transporter_type;
 	}
 
+	const name_generator *get_personal_name_generator(const gender gender) const;
+	void add_personal_name(const gender gender, const name_variant &name);
+
+	const name_generator *get_surname_generator(const gender gender) const;
+	void add_surname(const gender gender, const name_variant &surname);
+
+	const name_generator *get_military_unit_class_name_generator(const military_unit_class *unit_class) const;
+	void add_military_unit_class_name(const military_unit_class *unit_class, const name_variant &name);
+
+	const name_generator *get_transporter_class_name_generator(const transporter_class *transporter_class) const;
+	void add_transporter_class_name(const transporter_class *transporter_class, const name_variant &name);
+
+	void add_ship_name(const name_variant &ship_name);
+
+	void add_names_from(const culture_base *other);
+
 signals:
 	void changed();
 
@@ -143,6 +163,11 @@ private:
 	civilian_unit_class_map<const civilian_unit_type *> civilian_class_unit_types;
 	military_unit_class_map<const military_unit_type *> military_class_unit_types;
 	transporter_class_map<const transporter_type *> transporter_class_types;
+	std::unique_ptr<gendered_name_generator> personal_name_generator;
+	std::unique_ptr<gendered_name_generator> surname_generator;
+	military_unit_class_map<std::unique_ptr<name_generator>> military_unit_class_name_generators;
+	transporter_class_map<std::unique_ptr<name_generator>> transporter_class_name_generators;
+	std::unique_ptr<name_generator> ship_name_generator;
 	qunique_ptr<culture_history> history;
 };
 
