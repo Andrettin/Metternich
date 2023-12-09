@@ -11,6 +11,7 @@
 #include "country/religion.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
+#include "language/name_generator.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -58,6 +59,11 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	this->religion = religion;
 	this->phenotype = phenotype;
 	this->home_settlement = home_settlement;
+
+	const name_generator *name_generator = this->get_culture()->get_military_unit_class_name_generator(this->get_type()->get_unit_class());
+	if (name_generator != nullptr) {
+		this->name = name_generator->generate_name();
+	}
 
 	assert_throw(this->get_country() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
