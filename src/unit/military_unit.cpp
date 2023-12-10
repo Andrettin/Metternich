@@ -92,6 +92,7 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	: military_unit(type, character->get_game_data()->get_country(), character->get_culture(), character->get_religion(), character->get_phenotype(), character->get_home_settlement())
 {
 	this->character = character;
+	this->name = character->get_full_name();
 
 	character->get_game_data()->apply_military_unit_modifier(this, 1);
 
