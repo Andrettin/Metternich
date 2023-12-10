@@ -45,7 +45,7 @@ void culture::initialize()
 		this->color = random::get()->generate_color();
 	}
 
-	named_data_entry::initialize();
+	culture_base::initialize();
 }
 
 void culture::check() const
