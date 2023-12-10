@@ -12,6 +12,10 @@ Q_MOC_INCLUDE("population/population_class.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
+namespace archimedes {
+	enum class log_level;
+}
+
 namespace metternich {
 
 class building_class;
@@ -28,6 +32,7 @@ class defines final : public defines_base, public singleton<defines>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(archimedes::log_level min_log_level MEMBER min_log_level READ get_min_log_level NOTIFY changed)
 	Q_PROPERTY(QColor green_text_color MEMBER green_text_color READ get_green_text_color NOTIFY changed)
 	Q_PROPERTY(QColor red_text_color MEMBER red_text_color READ get_red_text_color NOTIFY changed)
 	Q_PROPERTY(QSize tile_size MEMBER tile_size READ get_tile_size NOTIFY changed)
@@ -71,6 +76,11 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
+
+	log_level get_min_log_level() const
+	{
+		return this->min_log_level;
+	}
 
 	const QColor &get_green_text_color() const
 	{
@@ -317,6 +327,7 @@ signals:
 	void scaled_tile_size_changed();
 
 private:
+	log_level min_log_level;
 	QColor green_text_color;
 	QColor red_text_color;
 	QSize tile_size = QSize(64, 64);

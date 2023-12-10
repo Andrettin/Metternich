@@ -20,7 +20,7 @@
 
 namespace metternich {
 
-defines::defines()
+defines::defines() : min_log_level(log_level::warning)
 {
 	connect(this, &defines::changed, this, &defines::scaled_tile_size_changed);
 	connect(preferences::get(), &preferences::scale_factor_changed, this, &defines::scaled_tile_size_changed);
@@ -104,7 +104,9 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 void defines::initialize()
 {
-	for (const auto &[event_trigger, random_weight] : defines::get()->get_event_trigger_none_random_weights()) {
+	log::min_log_level = this->get_min_log_level();
+
+	for (const auto &[event_trigger, random_weight] : this->get_event_trigger_none_random_weights()) {
 		character_event::add_trigger_none_random_weight(event_trigger, random_weight);
 		country_event::add_trigger_none_random_weight(event_trigger, random_weight);
 		province_event::add_trigger_none_random_weight(event_trigger, random_weight);
