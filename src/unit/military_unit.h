@@ -66,6 +66,8 @@ public:
 		emit name_changed();
 	}
 
+	void generate_name();
+
 	const military_unit_type *get_type() const
 	{
 		return this->type;

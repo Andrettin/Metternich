@@ -107,6 +107,24 @@ inline bool is_ship_military_unit_category(const military_unit_category category
 	}
 }
 
+inline bool is_leader_military_unit_category(const military_unit_category category)
+{
+	switch (category) {
+		case military_unit_category::general:
+		case military_unit_category::alchemist:
+		case military_unit_category::bard:
+		case military_unit_category::cleric:
+		case military_unit_category::mage:
+		case military_unit_category::ranger:
+		case military_unit_category::rogue:
+		case military_unit_category::paladin:
+		case military_unit_category::warrior:
+			return true;
+		default:
+			return false;
+	}
+}
+
 }
 
 extern template class archimedes::enum_converter<metternich::military_unit_category>;

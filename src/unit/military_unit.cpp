@@ -21,12 +21,14 @@
 #include "script/modifier.h"
 #include "ui/icon.h"
 #include "unit/army.h"
+#include "unit/military_unit_class.h"
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
 #include "unit/promotion.h"
 #include "unit/promotion_container.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/gender.h"
 #include "util/log_util.h"
 #include "util/vector_util.h"
 
@@ -59,13 +61,7 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	this->phenotype = phenotype;
 	this->home_settlement = home_settlement;
 
-	const military_unit_class *unit_class = this->get_type()->get_unit_class();
-	const name_generator *name_generator = this->get_culture()->get_military_unit_class_name_generator(unit_class);
-	if (name_generator != nullptr) {
-		this->name = name_generator->generate_name();
-
-		log_trace(std::format("Generated name \"{}\" for military unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), this->get_culture()->get_identifier()));
-	}
+	this->generate_name();
 
 	assert_throw(this->get_country() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
@@ -124,6 +120,36 @@ void military_unit::do_ai_turn()
 	}
 
 	//FIXME: implement logic for upgrading military units, and for moving them to places in order to do combat or defend against attacks
+}
+
+void military_unit::generate_name()
+{
+	const military_unit_class *unit_class = this->get_type()->get_unit_class();
+
+	if (unit_class->is_leader()) {
+		const name_generator *name_generator = this->get_culture()->get_personal_name_generator(gender::male);
+		const archimedes::name_generator *surname_generator = this->get_culture()->get_surname_generator(gender::male);
+
+		if (name_generator == nullptr) {
+			return;
+		}
+
+		if (surname_generator != nullptr) {
+			this->name = std::format("{} {}", name_generator->generate_name(), surname_generator->generate_name());
+		} else {
+			this->name = name_generator->generate_name();
+		}
+	} else {
+		const name_generator *name_generator = this->get_culture()->get_military_unit_class_name_generator(unit_class);
+
+		if (name_generator == nullptr) {
+			return;
+		}
+
+		this->name = name_generator->generate_name();
+	}
+
+	log_trace(std::format("Generated name \"{}\" for military unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), this->get_culture()->get_identifier()));
 }
 
 void military_unit::set_type(const military_unit_type *type)
