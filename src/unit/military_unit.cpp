@@ -54,15 +54,17 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	: military_unit(type)
 {
 	this->country = country;
-	this->population_type = population_type;
 	this->culture = culture;
 	this->religion = religion;
 	this->phenotype = phenotype;
 	this->home_settlement = home_settlement;
 
-	const name_generator *name_generator = this->get_culture()->get_military_unit_class_name_generator(this->get_type()->get_unit_class());
+	const military_unit_class *unit_class = this->get_type()->get_unit_class();
+	const name_generator *name_generator = this->get_culture()->get_military_unit_class_name_generator(unit_class);
 	if (name_generator != nullptr) {
 		this->name = name_generator->generate_name();
+
+		log_trace(std::format("Generated name \"{}\" for military unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), this->get_culture()->get_identifier()));
 	}
 
 	assert_throw(this->get_country() != nullptr);
