@@ -94,6 +94,20 @@ void character::initialize()
 		this->surname += this->get_dynasty()->get_name();
 	}
 
+	if (this->get_culture() != nullptr) {
+		if (!this->get_culture()->is_initialized()) {
+			this->culture->initialize();
+		}
+
+		if (this->has_name_variant()) {
+			this->culture->add_personal_name(this->get_gender(), this->get_name_variant());
+		}
+
+		if (!this->get_surname().empty()) {
+			this->culture->add_surname(this->get_gender(), this->get_surname());
+		}
+	}
+
 	if (this->vital_date_calendar != nullptr) {
 		if (!this->vital_date_calendar->is_initialized()) {
 			this->vital_date_calendar->initialize();
