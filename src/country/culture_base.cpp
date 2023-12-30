@@ -376,6 +376,32 @@ const transporter_type *culture_base::get_transporter_class_type(const transport
 
 }
 
+std::string culture_base::generate_military_unit_name(const military_unit_type *type) const
+{
+	const military_unit_class *unit_class = type->get_unit_class();
+
+	if (unit_class->is_leader()) {
+		const name_generator *name_generator = this->get_personal_name_generator(gender::male);
+		const archimedes::name_generator *surname_generator = this->get_surname_generator(gender::male);
+
+		if (name_generator != nullptr) {
+			if (surname_generator != nullptr) {
+				return std::format("{} {}", name_generator->generate_name(), surname_generator->generate_name());
+			} else {
+				return name_generator->generate_name();
+			}
+		}
+	} else {
+		const name_generator *name_generator = this->get_military_unit_class_name_generator(unit_class);
+
+		if (name_generator != nullptr) {
+			return name_generator->generate_name();
+		}
+	}
+
+	return std::string();
+}
+
 const name_generator *culture_base::get_personal_name_generator(const gender gender) const
 {
 	const name_generator *name_generator = nullptr;

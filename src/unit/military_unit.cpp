@@ -124,32 +124,11 @@ void military_unit::do_ai_turn()
 
 void military_unit::generate_name()
 {
-	const military_unit_class *unit_class = this->get_type()->get_unit_class();
+	this->name = this->get_culture()->generate_military_unit_name(this->get_type());
 
-	if (unit_class->is_leader()) {
-		const name_generator *name_generator = this->get_culture()->get_personal_name_generator(gender::male);
-		const archimedes::name_generator *surname_generator = this->get_culture()->get_surname_generator(gender::male);
-
-		if (name_generator == nullptr) {
-			return;
-		}
-
-		if (surname_generator != nullptr) {
-			this->name = std::format("{} {}", name_generator->generate_name(), surname_generator->generate_name());
-		} else {
-			this->name = name_generator->generate_name();
-		}
-	} else {
-		const name_generator *name_generator = this->get_culture()->get_military_unit_class_name_generator(unit_class);
-
-		if (name_generator == nullptr) {
-			return;
-		}
-
-		this->name = name_generator->generate_name();
+	if (!this->get_name().empty()) {
+		log_trace(std::format("Generated name \"{}\" for military unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), this->get_culture()->get_identifier()));
 	}
-
-	log_trace(std::format("Generated name \"{}\" for military unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), this->get_culture()->get_identifier()));
 }
 
 void military_unit::set_type(const military_unit_type *type)
