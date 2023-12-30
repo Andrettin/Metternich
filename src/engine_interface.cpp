@@ -2,6 +2,7 @@
 
 #include "engine_interface.h"
 
+#include "country/consulate.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_tier.h"
@@ -138,6 +139,11 @@ const country_tier_data *engine_interface::get_country_tier_data(const metternic
 		QApplication::exit(EXIT_FAILURE);
 		return nullptr;
 	}
+}
+
+const consulate *engine_interface::get_consulate(const QString &identifier) const
+{
+	return consulate::try_get(identifier.toStdString());
 }
 
 void engine_interface::add_event_instance(qunique_ptr<event_instance> &&event_instance)
