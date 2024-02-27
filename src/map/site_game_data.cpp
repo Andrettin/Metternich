@@ -37,7 +37,6 @@
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
-#include "util/thread_pool.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 

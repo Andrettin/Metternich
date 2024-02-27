@@ -40,7 +40,6 @@
 #include "util/image_util.h"
 #include "util/map_util.h"
 #include "util/point_util.h"
-#include "util/thread_pool.h"
 
 #include "xbrz.h"
 

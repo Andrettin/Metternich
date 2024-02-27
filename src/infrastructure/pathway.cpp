@@ -9,7 +9,6 @@
 #include "map/tile_image_provider.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
-#include "util/event_loop.h"
 #include "util/vector_util.h"
 
 namespace metternich {

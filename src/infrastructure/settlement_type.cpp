@@ -4,7 +4,6 @@
 
 #include "map/tile_image_provider.h"
 #include "script/condition/and_condition.h"
-#include "util/event_loop.h"
 #include "util/vector_util.h"
 
 namespace metternich {

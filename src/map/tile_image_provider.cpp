@@ -12,7 +12,6 @@
 #include "util/image_util.h"
 #include "util/path_util.h"
 #include "util/string_util.h"
-#include "util/thread_pool.h"
 
 #include "xbrz.h"
 

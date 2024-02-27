@@ -80,7 +80,6 @@
 #include "util/rect_util.h"
 #include "util/size_util.h"
 #include "util/string_util.h"
-#include "util/thread_pool.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 

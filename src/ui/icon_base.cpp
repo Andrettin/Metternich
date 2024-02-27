@@ -4,7 +4,6 @@
 
 #include "ui/icon_image_provider.h"
 #include "util/assert_util.h"
-#include "util/event_loop.h"
 
 namespace metternich {
 

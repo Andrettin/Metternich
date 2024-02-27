@@ -65,12 +65,10 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
-#include "util/event_loop.h"
 #include "util/image_util.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
 #include "util/size_util.h"
-#include "util/thread_pool.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 

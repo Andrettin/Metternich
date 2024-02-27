@@ -4,7 +4,6 @@
 
 #include "script/condition/and_condition.h"
 #include "ui/portrait_image_provider.h"
-#include "util/event_loop.h"
 
 namespace metternich {
 

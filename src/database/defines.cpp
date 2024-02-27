@@ -14,7 +14,6 @@
 #include "map/tile_image_provider.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
-#include "util/event_loop.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
 

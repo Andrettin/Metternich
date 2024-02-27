@@ -61,13 +61,11 @@
 #include "ui/portrait_image_provider.h"
 #include "unit/military_unit_domain.h"
 #include "util/empty_image_provider.h"
-#include "util/event_loop.h"
 #include "util/exception_util.h"
 #include "util/gender.h"
 #include "util/log_output_handler.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
-#include "util/thread_pool.h"
 
 #include "maskedmousearea.h"
 
@@ -215,11 +213,6 @@ int main(int argc, char **argv)
 		}, Qt::QueuedConnection);
 
 		engine.load(url);
-
-		QObject::connect(&app, &QCoreApplication::aboutToQuit, &app, []() {
-			thread_pool::get()->stop();
-			event_loop::get()->stop();
-		});
 
 		const int result = app.exec();
 
