@@ -33,6 +33,7 @@ class historical_military_unit final : public named_data_entry, public data_type
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype)
+	Q_PROPERTY(int quantity MEMBER quantity READ get_quantity)
 
 public:
 	static constexpr const char class_identifier[] = "historical_military_unit";
@@ -88,6 +89,11 @@ public:
 		return this->phenotype;
 	}
 
+	int get_quantity() const
+	{
+		return this->quantity;
+	}
+
 private:
 	military_unit_type *type = nullptr;
 	metternich::country *country = nullptr;
@@ -96,6 +102,7 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	metternich::phenotype *phenotype = nullptr;
+	int quantity = 1;
 	qunique_ptr<historical_military_unit_history> history;
 };
 

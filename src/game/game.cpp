@@ -693,14 +693,16 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(phenotype != nullptr);
 
-			auto military_unit = make_qunique<metternich::military_unit>(historical_military_unit->get_type(), country, population_type, culture, religion, phenotype, home_settlement);
-			military_unit->set_province(province);
+			for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
+				auto military_unit = make_qunique<metternich::military_unit>(historical_military_unit->get_type(), country, population_type, culture, religion, phenotype, home_settlement);
+				military_unit->set_province(province);
 
-			for (const promotion *promotion : historical_military_unit_history->get_promotions()) {
-				military_unit->add_promotion(promotion);
+				for (const promotion *promotion : historical_military_unit_history->get_promotions()) {
+					military_unit->add_promotion(promotion);
+				}
+
+				country->get_game_data()->add_military_unit(std::move(military_unit));
 			}
-
-			country->get_game_data()->add_military_unit(std::move(military_unit));
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to apply history for scenario \"" + scenario->get_identifier() + "\"."));
