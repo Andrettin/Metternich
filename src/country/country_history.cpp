@@ -6,6 +6,7 @@
 #include "country/country.h"
 #include "country/country_tier.h"
 #include "country/diplomacy_state.h"
+#include "economy/commodity.h"
 #include "util/map_util.h"
 
 namespace metternich {
@@ -19,7 +20,12 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "diplomacy_state") {
+	if (tag == "commodities") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->commodities[commodity] = std::stoi(property.get_value());
+		});
+	} else if (tag == "diplomacy_state") {
 		const metternich::country *other_country = nullptr;
 		std::optional<diplomacy_state> state;
 

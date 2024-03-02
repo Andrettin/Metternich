@@ -401,6 +401,8 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 			}
 
+			country_game_data->set_wealth(country_history->get_wealth());
+
 			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
 				if (!other_country->get_game_data()->is_alive()) {
 					continue;
@@ -512,6 +514,13 @@ void game::apply_history(const metternich::scenario *scenario)
 				if (settlement_game_data->is_built()) {
 					settlement_game_data->check_free_buildings();
 				}
+			}
+		}
+
+		//set stored commodities from history after the initial buildings have been constructed, so that buildings granting storage capacity (e.g. warehouses) will already be present
+		for (const country *country : this->get_countries()) {
+			for (const auto &[commodity, quantity] : country->get_history()->get_commodities()) {
+				country->get_game_data()->set_stored_commodity(commodity, quantity);
 			}
 		}
 

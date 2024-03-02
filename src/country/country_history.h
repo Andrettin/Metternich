@@ -2,6 +2,7 @@
 
 #include "country/country_container.h"
 #include "database/data_entry_history.h"
+#include "economy/commodity_container.h"
 #include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("character/character.h")
@@ -30,6 +31,7 @@ class country_history final : public data_entry_history
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<metternich::technology *> technologies READ get_technologies)
 	Q_PROPERTY(std::vector<metternich::character *> advisor READ get_advisors)
+	Q_PROPERTY(int wealth MEMBER wealth READ get_wealth)
 
 public:
 	explicit country_history(const metternich::country *country);
@@ -91,6 +93,16 @@ public:
 		std::erase(this->advisors, advisor);
 	}
 
+	int get_wealth() const
+	{
+		return this->wealth;
+	}
+
+	const commodity_map<int> &get_commodities() const
+	{
+		return this->commodities;
+	}
+
 	const country_map<diplomacy_state> &get_diplomacy_states() const
 	{
 		return this->diplomacy_states;
@@ -110,6 +122,8 @@ private:
 	centesimal_int literacy_rate;
 	std::vector<technology *> technologies;
 	std::vector<character *> advisors;
+	int wealth = 0;
+	commodity_map<int> commodities;
 	country_map<diplomacy_state> diplomacy_states;
 	country_map<const consulate *> consulates;
 };
