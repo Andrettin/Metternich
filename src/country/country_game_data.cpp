@@ -71,6 +71,7 @@
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_class.h"
 #include "unit/military_unit_type.h"
+#include "unit/transporter.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/gender.h"
@@ -139,6 +140,10 @@ void country_game_data::do_turn()
 
 		for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
 			military_unit->do_turn();
+		}
+
+		for (const qunique_ptr<transporter> &transporter : this->transporters) {
+			transporter->do_turn();
 		}
 
 		for (const qunique_ptr<army> &army : this->armies) {
@@ -2169,6 +2174,15 @@ void country_game_data::decrease_population()
 		return;
 	}
 
+	//disband transporter, if possible
+	for (auto it = this->transporters.rbegin(); it != this->transporters.rend(); ++it) {
+		transporter *transporter = it->get();
+
+		transporter->disband(false);
+		this->change_population_growth(1);
+		return;
+	}
+
 	assert_throw(false);
 }
 
@@ -2796,6 +2810,32 @@ bool country_game_data::produces_commodity(const commodity *commodity) const
 	}
 
 	return false;
+}
+
+void country_game_data::set_land_transport_capacity(const int capacity)
+{
+	if (capacity == this->get_land_transport_capacity()) {
+		return;
+	}
+
+	this->land_transport_capacity = capacity;
+
+	if (game::get()->is_running()) {
+		emit land_transport_capacity_changed();
+	}
+}
+
+void country_game_data::set_sea_transport_capacity(const int capacity)
+{
+	if (capacity == this->get_sea_transport_capacity()) {
+		return;
+	}
+
+	this->sea_transport_capacity = capacity;
+
+	if (game::get()->is_running()) {
+		emit sea_transport_capacity_changed();
+	}
 }
 
 bool country_game_data::can_declare_war_on(const metternich::country *other_country) const
@@ -4012,6 +4052,37 @@ void country_game_data::remove_army(army *army)
 	for (size_t i = 0; i < this->armies.size(); ++i) {
 		if (this->armies[i].get() == army) {
 			this->armies.erase(this->armies.begin() + i);
+			return;
+		}
+	}
+}
+
+void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
+{
+	this->change_food_consumption(1);
+
+	if (transporter->is_ship()) {
+		this->change_sea_transport_capacity(transporter->get_cargo());
+	} else {
+		this->change_land_transport_capacity(transporter->get_cargo());
+	}
+
+	this->transporters.push_back(std::move(transporter));
+}
+
+void country_game_data::remove_transporter(transporter *transporter)
+{
+	this->change_food_consumption(-1);
+
+	if (transporter->is_ship()) {
+		this->change_sea_transport_capacity(-transporter->get_cargo());
+	} else {
+		this->change_land_transport_capacity(-transporter->get_cargo());
+	}
+
+	for (size_t i = 0; i < this->transporters.size(); ++i) {
+		if (this->transporters[i].get() == transporter) {
+			this->transporters.erase(this->transporters.begin() + i);
 			return;
 		}
 	}

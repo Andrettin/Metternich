@@ -33,6 +33,7 @@ class transporter_type final : public named_data_entry, public data_type<transpo
 	Q_PROPERTY(int speed MEMBER speed READ get_speed NOTIFY changed)
 	Q_PROPERTY(int cargo MEMBER cargo READ get_cargo NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "transporter_type";
@@ -101,10 +102,17 @@ public:
 		return this->required_technology;
 	}
 
+	int get_wealth_cost() const
+	{
+		return this->wealth_cost;
+	}
+
 	const commodity_map<int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
+
+	int get_score() const;
 
 signals:
 	void changed();
@@ -120,6 +128,7 @@ private:
 	int speed = 0;
 	int cargo = 0;
 	technology *required_technology = nullptr;
+	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
 };
 

@@ -62,7 +62,7 @@ class province;
 class region;
 class religion;
 class site;
-class trait;
+class transporter;
 enum class country_tier;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
@@ -121,6 +121,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList commodity_inputs READ get_commodity_inputs_qvariant_list NOTIFY commodity_inputs_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(QVariantList commodity_consumptions READ get_commodity_consumptions_qvariant_list NOTIFY commodity_consumptions_changed)
+	Q_PROPERTY(int land_transport_capacity READ get_land_transport_capacity NOTIFY land_transport_capacity_changed)
+	Q_PROPERTY(int sea_transport_capacity READ get_sea_transport_capacity NOTIFY sea_transport_capacity_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
@@ -646,7 +648,7 @@ public:
 
 	int get_total_unit_count() const
 	{
-		return this->get_population_unit_count() + static_cast<int>(this->civilian_units.size()) + static_cast<int>(this->military_units.size());
+		return this->get_population_unit_count() + static_cast<int>(this->civilian_units.size()) + static_cast<int>(this->military_units.size()) + static_cast<int>(this->transporters.size());
 	}
 
 	int get_housing() const
@@ -1006,6 +1008,30 @@ public:
 
 	bool produces_commodity(const commodity *commodity) const;
 
+	int get_land_transport_capacity() const
+	{
+		return this->land_transport_capacity;
+	}
+
+	void set_land_transport_capacity(const int capacity);
+
+	void change_land_transport_capacity(const int change)
+	{
+		this->set_land_transport_capacity(this->get_land_transport_capacity() + change);
+	}
+
+	int get_sea_transport_capacity() const
+	{
+		return this->sea_transport_capacity;
+	}
+
+	void set_sea_transport_capacity(const int capacity);
+
+	void change_sea_transport_capacity(const int change)
+	{
+		this->set_sea_transport_capacity(this->get_sea_transport_capacity() + change);
+	}
+
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
 	const technology_set &get_technologies() const
@@ -1349,6 +1375,9 @@ public:
 
 	void add_army(qunique_ptr<army> &&army);
 	void remove_army(army *army);
+
+	void add_transporter(qunique_ptr<transporter> &&transporter);
+	void remove_transporter(transporter *transporter);
 
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const;
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category) const;
@@ -2044,6 +2073,8 @@ signals:
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
 	void commodity_consumptions_changed();
+	void land_transport_capacity_changed();
+	void sea_transport_capacity_changed();
 	void technologies_changed();
 	void current_research_changed();
 	void technology_researched(const technology *technology);
@@ -2123,6 +2154,8 @@ private:
 	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<centesimal_int> commodity_consumptions;
 	commodity_map<centesimal_int> commodity_demands;
+	int land_transport_capacity = 0;
+	int sea_transport_capacity = 0;
 	technology_set technologies;
 	const technology *current_research = nullptr;
 	int free_technology_count = 0;
@@ -2140,6 +2173,7 @@ private:
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	std::vector<qunique_ptr<army>> armies;
+	std::vector<qunique_ptr<transporter>> transporters;
 	int deployment_limit = country_game_data::base_deployment_limit;
 	int land_damage_modifier = 0;
 	int land_recovery_modifier = 0; //the speed at which land units recover strength

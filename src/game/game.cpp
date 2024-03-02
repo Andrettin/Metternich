@@ -60,9 +60,13 @@
 #include "unit/historical_civilian_unit_history.h"
 #include "unit/historical_military_unit.h"
 #include "unit/historical_military_unit_history.h"
+#include "unit/historical_transporter.h"
+#include "unit/historical_transporter_history.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_type.h"
+#include "unit/transporter.h"
+#include "unit/transporter_type.h"
 #include "util/aggregate_exception.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -724,6 +728,78 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 
 				country_game_data->add_military_unit(std::move(military_unit));
+			}
+		}
+
+		for (const historical_transporter *historical_transporter : historical_transporter::get_all()) {
+			const historical_transporter_history *historical_transporter_history = historical_transporter->get_history();
+
+			if (!historical_transporter_history->is_active()) {
+				continue;
+			}
+
+			const country *country = historical_transporter->get_country();
+			assert_throw(country != nullptr);
+
+			country_game_data *country_game_data = country->get_game_data();
+
+			if (!country_game_data->is_alive()) {
+				continue;
+			}
+
+			const transporter_type *type = historical_transporter->get_type();
+			assert_throw(type != nullptr);
+
+			if (type->get_required_technology() != nullptr) {
+				country_game_data->add_technology_with_prerequisites(type->get_required_technology());
+			}
+
+			const site *home_settlement = historical_transporter->get_home_settlement();
+			if (home_settlement == nullptr) {
+				if (!country_game_data->is_under_anarchy()) {
+					home_settlement = country_game_data->get_capital();
+				} else {
+					continue;
+				}
+			}
+			assert_throw(home_settlement != nullptr);
+
+			const culture *culture = historical_transporter->get_culture();
+			if (culture == nullptr) {
+				if (home_settlement->get_game_data()->get_culture() != nullptr) {
+					culture = home_settlement->get_game_data()->get_culture();
+				} else {
+					culture = country->get_culture();
+				}
+			}
+			assert_throw(culture != nullptr);
+
+			const religion *religion = historical_transporter->get_religion();
+			if (religion == nullptr) {
+				if (home_settlement->get_game_data()->get_religion() != nullptr) {
+					religion = home_settlement->get_game_data()->get_religion();
+				} else {
+					religion = country_game_data->get_religion();
+				}
+			}
+			assert_throw(religion != nullptr);
+
+			const population_type *population_type = historical_transporter->get_population_type();
+			if (population_type == nullptr) {
+				population_type = culture->get_population_class_type(country_game_data->get_default_population_class());
+			}
+			assert_throw(population_type != nullptr);
+
+			const phenotype *phenotype = historical_transporter->get_phenotype();
+			if (phenotype == nullptr) {
+				phenotype = culture->get_default_phenotype();
+			}
+			assert_throw(phenotype != nullptr);
+
+			for (int i = 0; i < historical_transporter->get_quantity(); ++i) {
+				auto transporter = make_qunique<metternich::transporter>(type, country, population_type, culture, religion, phenotype, home_settlement);
+
+				country_game_data->add_transporter(std::move(transporter));
 			}
 		}
 	} catch (...) {

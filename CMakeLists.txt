@@ -264,6 +264,7 @@ set(unit_SRCS
 	src/unit/civilian_unit_type.cpp
 	src/unit/historical_civilian_unit.cpp
 	src/unit/historical_military_unit.cpp
+	src/unit/historical_transporter.cpp
 	src/unit/military_unit.cpp
 	src/unit/military_unit_class.cpp
 	src/unit/military_unit_class_container.cpp
@@ -273,6 +274,7 @@ set(unit_SRCS
 	src/unit/military_unit_type_container.cpp
 	src/unit/promotion.cpp
 	src/unit/promotion_container.cpp
+	src/unit/transporter.cpp
 	src/unit/transporter_category.cpp
 	src/unit/transporter_class.cpp
 	src/unit/transporter_class_container.cpp
@@ -761,6 +763,8 @@ set(unit_HDRS
 	src/unit/historical_civilian_unit_history.h
 	src/unit/historical_military_unit.h
 	src/unit/historical_military_unit_history.h
+	src/unit/historical_transporter.h
+	src/unit/historical_transporter_history.h
 	src/unit/military_unit.h
 	src/unit/military_unit_class.h
 	src/unit/military_unit_class_container.h
@@ -770,6 +774,7 @@ set(unit_HDRS
 	src/unit/military_unit_type_container.h
 	src/unit/promotion.h
 	src/unit/promotion_container.h
+	src/unit/transporter.h
 	src/unit/transporter_category.h
 	src/unit/transporter_class.h
 	src/unit/transporter_class_container.h
