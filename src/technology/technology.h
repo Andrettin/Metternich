@@ -11,6 +11,7 @@ namespace metternich {
 
 class building_type;
 class character;
+class civilian_unit_type;
 class commodity;
 class country;
 class culture;
@@ -49,6 +50,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_pathways READ get_enabled_pathways_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList enabled_civilian_units READ get_enabled_civilian_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_advisors READ get_enabled_advisors_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList retired_advisors READ get_retired_advisors_qvariant_list NOTIFY changed)
@@ -260,6 +262,15 @@ public:
 		this->enabled_pathway_terrains[pathway].push_back(terrain);
 	}
 
+	const std::vector<const civilian_unit_type *> &get_enabled_civilian_units() const
+	{
+		return this->enabled_civilian_units;
+	}
+
+	QVariantList get_enabled_civilian_units_qvariant_list() const;
+	std::vector<const civilian_unit_type *> get_enabled_civilian_units_for_culture(const culture *culture) const;
+	void add_enabled_civilian_unit(const civilian_unit_type *military_unit);
+
 	const std::vector<const military_unit_type *> &get_enabled_military_units() const
 	{
 		return this->enabled_military_units;
@@ -417,6 +428,7 @@ private:
 	std::vector<const pathway *> enabled_pathways;
 	std::vector<const pathway *> enabled_river_crossing_pathways;
 	pathway_map<std::vector<const terrain_type *>> enabled_pathway_terrains;
+	std::vector<const civilian_unit_type *> enabled_civilian_units;
 	std::vector<const military_unit_type *> enabled_military_units;
 	std::vector<const transporter_type *> enabled_transporters;
 	std::vector<const government_type *> enabled_government_types;

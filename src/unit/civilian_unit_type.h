@@ -5,6 +5,7 @@
 
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/civilian_unit_class.h")
 
@@ -14,6 +15,7 @@ class civilian_unit_class;
 class cultural_group;
 class culture;
 class icon;
+class technology;
 
 class civilian_unit_type final : public named_data_entry, public data_type<civilian_unit_type>
 {
@@ -24,6 +26,7 @@ class civilian_unit_type final : public named_data_entry, public data_type<civil
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(bool explorer MEMBER explorer READ is_explorer NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "civilian_unit_type";
@@ -63,6 +66,11 @@ public:
 		return this->explorer;
 	}
 
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
 signals:
 	void changed();
 
@@ -72,6 +80,7 @@ private:
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *icon = nullptr;
 	bool explorer = false;
+	technology *required_technology = nullptr;
 };
 
 }

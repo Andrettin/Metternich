@@ -19,6 +19,7 @@
 #include "script/modifier.h"
 #include "technology/technological_period.h"
 #include "technology/technology_category.h"
+#include "unit/civilian_unit_type.h"
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
 #include "unit/transporter_type.h"
@@ -172,6 +173,37 @@ QVariantList technology::get_enabled_improvements_qvariant_list() const
 QVariantList technology::get_enabled_pathways_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_enabled_pathways());
+}
+
+QVariantList technology::get_enabled_civilian_units_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_enabled_civilian_units());
+}
+
+std::vector<const civilian_unit_type *> technology::get_enabled_civilian_units_for_culture(const culture *culture) const
+{
+	std::vector<const civilian_unit_type *> civilian_units;
+
+	for (const civilian_unit_type *civilian_unit : this->get_enabled_civilian_units()) {
+		assert_throw(civilian_unit->get_unit_class() != nullptr);
+
+		if (civilian_unit != culture->get_civilian_class_unit_type(civilian_unit->get_unit_class())) {
+			continue;
+		}
+
+		civilian_units.push_back(civilian_unit);
+	}
+
+	return civilian_units;
+}
+
+void technology::add_enabled_civilian_unit(const civilian_unit_type *civilian_unit)
+{
+	this->enabled_civilian_units.push_back(civilian_unit);
+
+	std::sort(this->enabled_civilian_units.begin(), this->enabled_civilian_units.end(), [](const civilian_unit_type *lhs, const civilian_unit_type *rhs) {
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
 }
 
 QVariantList technology::get_enabled_military_units_qvariant_list() const
@@ -556,6 +588,18 @@ QString technology::get_effects_string(metternich::country *country) const
 
 				str += std::format("Enables {} in {}", pathway->get_name(), terrain->get_name());
 			}
+		}
+	}
+
+	const std::vector<const civilian_unit_type *> civilian_units = get_enabled_civilian_units_for_culture(country->get_culture());
+
+	if (!civilian_units.empty()) {
+		for (const civilian_unit_type *civilian_unit : civilian_units) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} civilian unit", civilian_unit->get_name());
 		}
 	}
 

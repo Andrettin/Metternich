@@ -4,6 +4,7 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "technology/technology.h"
 #include "unit/civilian_unit_class.h"
 #include "util/assert_util.h"
 
@@ -25,6 +26,11 @@ void civilian_unit_type::initialize()
 		this->cultural_group->set_civilian_class_unit_type(this->get_unit_class(), this);
 	} else {
 		this->unit_class->set_default_unit_type(this);
+	}
+
+	if (this->required_technology != nullptr) {
+		assert_throw(this->get_unit_class() != nullptr);
+		this->required_technology->add_enabled_civilian_unit(this);
 	}
 
 	named_data_entry::initialize();
