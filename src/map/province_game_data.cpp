@@ -553,6 +553,19 @@ bool province_game_data::has_country_military_unit(const country *country) const
 	return false;
 }
 
+QVariantList province_game_data::get_country_military_unit_category_counts(metternich::country *country) const
+{
+	std::map<military_unit_category, int> counts;
+
+	for (const military_unit *military_unit : this->get_military_units()) {
+		if (military_unit->get_country() == country && !military_unit->is_moving()) {
+			++counts[military_unit->get_category()];
+		}
+	}
+
+	return archimedes::map::to_qvariant_list(counts);
+}
+
 int province_game_data::get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::country *country) const
 {
 	int count = 0;
@@ -616,6 +629,30 @@ QString province_game_data::get_military_unit_category_name(const military_unit_
 	assert_throw(!best_name.isEmpty());
 
 	return best_name;
+}
+
+const icon *province_game_data::get_country_military_unit_icon(metternich::country *country) const
+{
+	icon_map<int> icon_counts;
+
+	for (const military_unit *military_unit : this->get_military_units()) {
+		if (military_unit->get_country() == country && !military_unit->is_moving()) {
+			++icon_counts[military_unit->get_icon()];
+		}
+	}
+
+	const icon *best_icon = nullptr;
+	int best_icon_count = 0;
+	for (const auto &[icon, count] : icon_counts) {
+		if (count > best_icon_count) {
+			best_icon = icon;
+			best_icon_count = count;
+		}
+	}
+
+	assert_throw(best_icon != nullptr);
+
+	return best_icon;
 }
 
 QVariantList province_game_data::get_entering_armies_qvariant_list() const

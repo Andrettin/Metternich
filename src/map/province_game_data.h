@@ -205,10 +205,12 @@ public:
 	void change_military_unit_category_count(const military_unit_category category, const int change);
 
 	bool has_country_military_unit(const country *country) const;
+	Q_INVOKABLE QVariantList get_country_military_unit_category_counts(metternich::country *country) const;
 	Q_INVOKABLE int get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::country *country) const;
 
 	Q_INVOKABLE const icon *get_military_unit_category_icon(const metternich::military_unit_category category) const;
 	Q_INVOKABLE QString get_military_unit_category_name(const metternich::military_unit_category category) const;
+	Q_INVOKABLE const icon *get_country_military_unit_icon(metternich::country *country) const;
 
 	const std::vector<army *> &get_entering_armies() const
 	{
