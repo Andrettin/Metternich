@@ -579,6 +579,30 @@ int province_game_data::get_country_military_unit_category_count(const metternic
 	return count;
 }
 
+const icon *province_game_data::get_military_unit_icon() const
+{
+	icon_map<int> icon_counts;
+
+	for (const military_unit *military_unit : this->get_military_units()) {
+		if (!military_unit->is_moving()) {
+			++icon_counts[military_unit->get_icon()];
+		}
+	}
+
+	const icon *best_icon = nullptr;
+	int best_icon_count = 0;
+	for (const auto &[icon, count] : icon_counts) {
+		if (count > best_icon_count) {
+			best_icon = icon;
+			best_icon_count = count;
+		}
+	}
+
+	assert_throw(best_icon != nullptr);
+
+	return best_icon;
+}
+
 const icon *province_game_data::get_military_unit_category_icon(const military_unit_category category) const
 {
 	icon_map<int> icon_counts;
