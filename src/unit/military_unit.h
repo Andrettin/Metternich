@@ -32,6 +32,9 @@ class military_unit final : public QObject
 	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY army_changed)
 	Q_PROPERTY(QVariantList promotions READ get_promotions_qvariant_list NOTIFY promotions_changed)
+	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
+	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
+	Q_PROPERTY(int morale READ get_morale NOTIFY morale_changed)
 
 public:
 	static constexpr int hit_point_recovery_per_turn = 10;
@@ -166,6 +169,8 @@ public:
 		if (this->get_hit_points() > this->get_max_hit_points()) {
 			this->set_hit_points(this->get_max_hit_points());
 		}
+
+		emit max_hit_points_changed();
 	}
 
 	void change_max_hit_points(const int change)
@@ -185,6 +190,8 @@ public:
 		}
 
 		this->morale = morale;
+
+		emit morale_changed();
 	}
 
 	void change_morale(const int change)
@@ -374,6 +381,9 @@ signals:
 	void province_changed();
 	void army_changed();
 	void promotions_changed();
+	void hit_points_changed();
+	void max_hit_points_changed();
+	void morale_changed();
 
 private:
 	std::string name;

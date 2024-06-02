@@ -315,6 +315,8 @@ void military_unit::set_hit_points(const int hit_points)
 
 	if (this->get_hit_points() <= 0) {
 		this->disband(false);
+	} else {
+		emit hit_points_changed();
 	}
 }
 
