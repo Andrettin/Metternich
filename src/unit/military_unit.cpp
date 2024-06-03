@@ -126,6 +126,17 @@ void military_unit::generate_name()
 {
 	this->name = this->get_culture()->generate_military_unit_name(this->get_type(), this->get_country() ? this->get_country()->get_game_data()->get_military_unit_names() : std::set<std::string>());
 
+	//if no name could be generated for the unit, give it a name along the patterns of "1st Regulars"
+	int ordinal_name_count = 1;
+	while (this->get_name().empty() && this->get_country() != nullptr) {
+		std::string ordinal_name = std::format("{}{} {}", ordinal_name_count, number::get_ordinal_number_suffix(ordinal_name_count), this->get_type()->get_name());
+		if (this->get_country()->get_game_data()->get_military_unit_names().contains(ordinal_name)) {
+			++ordinal_name_count;
+		} else {
+			this->name = std::move(ordinal_name);
+		}
+	}
+
 	if (!this->get_name().empty()) {
 		log_trace(std::format("Generated name \"{}\" for military unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), this->get_culture()->get_identifier()));
 	}
