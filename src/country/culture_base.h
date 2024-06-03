@@ -134,7 +134,7 @@ public:
 		this->transporter_class_types[transporter_class] = transporter_type;
 	}
 
-	std::string generate_military_unit_name(const military_unit_type *type) const;
+	std::string generate_military_unit_name(const military_unit_type *type, const std::set<std::string> &used_names) const;
 	std::string generate_transporter_name(const transporter_type *type) const;
 
 	const name_generator *get_personal_name_generator(const gender gender) const;

@@ -4025,6 +4025,7 @@ void country_game_data::add_military_unit(qunique_ptr<military_unit> &&military_
 		this->change_food_consumption(1);
 	}
 
+	this->military_unit_names.insert(military_unit->get_name());
 	this->military_units.push_back(std::move(military_unit));
 }
 
@@ -4033,6 +4034,8 @@ void country_game_data::remove_military_unit(military_unit *military_unit)
 	if (military_unit->get_character() == nullptr) {
 		this->change_food_consumption(-1);
 	}
+
+	this->military_unit_names.erase(military_unit->get_name());
 
 	for (size_t i = 0; i < this->military_units.size(); ++i) {
 		if (this->military_units[i].get() == military_unit) {

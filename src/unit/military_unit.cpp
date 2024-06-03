@@ -124,7 +124,7 @@ void military_unit::do_ai_turn()
 
 void military_unit::generate_name()
 {
-	this->name = this->get_culture()->generate_military_unit_name(this->get_type());
+	this->name = this->get_culture()->generate_military_unit_name(this->get_type(), this->get_country() ? this->get_country()->get_game_data()->get_military_unit_names() : std::set<std::string>());
 
 	if (!this->get_name().empty()) {
 		log_trace(std::format("Generated name \"{}\" for military unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), this->get_culture()->get_identifier()));

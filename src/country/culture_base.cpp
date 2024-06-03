@@ -376,7 +376,7 @@ const transporter_type *culture_base::get_transporter_class_type(const transport
 
 }
 
-std::string culture_base::generate_military_unit_name(const military_unit_type *type) const
+std::string culture_base::generate_military_unit_name(const military_unit_type *type, const std::set<std::string> &used_names) const
 {
 	const military_unit_class *unit_class = type->get_unit_class();
 
@@ -388,14 +388,14 @@ std::string culture_base::generate_military_unit_name(const military_unit_type *
 			if (surname_generator != nullptr) {
 				return std::format("{} {}", name_generator->generate_name(), surname_generator->generate_name());
 			} else {
-				return name_generator->generate_name();
+				return name_generator->generate_name(used_names);
 			}
 		}
 	} else {
 		const name_generator *name_generator = this->get_military_unit_class_name_generator(unit_class);
 
 		if (name_generator != nullptr) {
-			return name_generator->generate_name();
+			return name_generator->generate_name(used_names);
 		}
 	}
 

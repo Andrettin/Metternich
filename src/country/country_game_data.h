@@ -1373,6 +1373,11 @@ public:
 	void add_military_unit(qunique_ptr<military_unit> &&military_unit);
 	void remove_military_unit(military_unit *military_unit);
 
+	const std::set<std::string> &get_military_unit_names() const
+	{
+		return this->military_unit_names;
+	}
+
 	void add_army(qunique_ptr<army> &&army);
 	void remove_army(army *army);
 
@@ -2172,6 +2177,7 @@ private:
 	commodity_map<int> commodity_needs;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	std::vector<qunique_ptr<military_unit>> military_units;
+	std::set<std::string> military_unit_names;
 	std::vector<qunique_ptr<army>> armies;
 	std::vector<qunique_ptr<transporter>> transporters;
 	int deployment_limit = country_game_data::base_deployment_limit;
