@@ -486,6 +486,11 @@ void province_game_data::clear_population_units()
 	this->population_units.clear();
 }
 
+QVariantList province_game_data::get_military_units_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_military_units());
+}
+
 void province_game_data::add_military_unit(military_unit *military_unit)
 {
 	this->military_units.push_back(military_unit);

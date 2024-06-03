@@ -53,6 +53,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos NOTIFY provincial_capital_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
+	Q_PROPERTY(QVariantList military_units READ get_military_units_qvariant_list NOTIFY military_units_changed)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 	Q_PROPERTY(QVariantList entering_armies READ get_entering_armies_qvariant_list NOTIFY entering_armies_changed)
 
@@ -184,6 +185,8 @@ public:
 	{
 		return this->military_units;
 	}
+
+	QVariantList get_military_units_qvariant_list() const;
 
 	void add_military_unit(military_unit *military_unit);
 	void remove_military_unit(military_unit *military_unit);
