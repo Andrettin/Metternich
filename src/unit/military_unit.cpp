@@ -30,6 +30,7 @@
 #include "util/container_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
+#include "util/set_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -124,13 +125,15 @@ void military_unit::do_ai_turn()
 
 void military_unit::generate_name()
 {
-	this->name = this->get_culture()->generate_military_unit_name(this->get_type(), this->get_country() ? this->get_country()->get_game_data()->get_military_unit_names() : std::set<std::string>());
+	const std::set<std::string> &used_names = this->get_country() ? this->get_country()->get_game_data()->get_military_unit_names() : set::empty_string_set;
+
+	this->name = this->get_culture()->generate_military_unit_name(this->get_type(), used_names);
 
 	//if no name could be generated for the unit, give it a name along the patterns of "1st Regulars"
 	int ordinal_name_count = 1;
 	while (this->get_name().empty() && this->get_country() != nullptr) {
 		std::string ordinal_name = std::format("{}{} {}", ordinal_name_count, number::get_ordinal_number_suffix(ordinal_name_count), this->get_type()->get_name());
-		if (this->get_country()->get_game_data()->get_military_unit_names().contains(ordinal_name)) {
+		if (used_names.contains(ordinal_name)) {
 			++ordinal_name_count;
 		} else {
 			this->name = std::move(ordinal_name);
