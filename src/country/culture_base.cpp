@@ -386,7 +386,15 @@ std::string culture_base::generate_military_unit_name(const military_unit_type *
 
 		if (name_generator != nullptr) {
 			if (surname_generator != nullptr) {
-				return std::format("{} {}", name_generator->generate_name(), surname_generator->generate_name());
+				const size_t potential_full_name_count = name_generator->get_name_count() * surname_generator->get_name_count();
+
+				if (potential_full_name_count > used_names.size()) {
+					std::string full_name;
+					do {
+						full_name = std::format("{} {}", name_generator->generate_name(), surname_generator->generate_name());
+					} while (used_names.contains(full_name));
+					return full_name;
+				}
 			} else {
 				return name_generator->generate_name(used_names);
 			}
