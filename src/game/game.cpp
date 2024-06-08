@@ -1071,6 +1071,20 @@ void game::apply_site_buildings(const site *site)
 
 void game::apply_population_history()
 {
+	for (const province *province : map::get()->get_provinces()) {
+		if (province->is_water_zone()) {
+			continue;
+		}
+
+		province_game_data *province_game_data = province->get_game_data();
+
+		if (province_game_data->get_settlement_count() == 0) {
+			continue;
+		}
+
+		province->get_history()->initialize_population();
+	}
+
 	//distribute region populations
 	std::vector<region *> regions = region::get_all();
 

@@ -84,6 +84,7 @@ public:
 		}
 	}
 
+	void initialize_population();
 	void distribute_population();
 
 	const centesimal_int &get_literacy_rate() const

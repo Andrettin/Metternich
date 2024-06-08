@@ -34,6 +34,25 @@ void province_history::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void province_history::initialize_population()
+{
+	//use the sum of the site historical populations for population groups which are missing in the province's history
+	population_group_map<int> site_population_groups;
+
+	for (const site *site : this->province->get_game_data()->get_sites()) {
+		site_history *site_history = site->get_history();
+		for (const auto &[group_key, population] : site_history->get_population_groups()) {
+			site_population_groups[group_key] += population;
+		}
+	}
+
+	for (const auto &[group_key, population] : site_population_groups) {
+		if (!this->population_groups.contains(group_key)) {
+			this->population_groups[group_key] = population;
+		}
+	}
+}
+
 void province_history::distribute_population()
 {
 	for (const auto &[group_key, population] : this->population_groups) {
