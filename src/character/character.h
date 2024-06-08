@@ -62,7 +62,8 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
-	Q_PROPERTY(metternich::site* home_settlement MEMBER home_settlement NOTIFY changed)
+	Q_PROPERTY(const metternich::site* home_settlement MEMBER home_settlement NOTIFY changed)
+	Q_PROPERTY(const metternich::site* home_site MEMBER home_site NOTIFY changed)
 	Q_PROPERTY(archimedes::gender gender MEMBER gender NOTIFY changed)
 	Q_PROPERTY(metternich::character* father MEMBER father NOTIFY changed)
 	Q_PROPERTY(metternich::character* mother MEMBER mother NOTIFY changed)
@@ -333,7 +334,8 @@ private:
 	metternich::religion *religion = nullptr;
 	metternich::phenotype *phenotype = nullptr;
 	metternich::portrait *portrait = nullptr;
-	site *home_settlement = nullptr;
+	const site *home_settlement = nullptr;
+	const site *home_site = nullptr;
 	archimedes::gender gender;
 	character *father = nullptr;
 	character *mother = nullptr;

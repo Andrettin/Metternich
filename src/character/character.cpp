@@ -108,6 +108,22 @@ void character::initialize()
 		}
 	}
 
+	if (this->home_site != nullptr) {
+		if (this->home_site->is_settlement()) {
+			if (this->get_home_settlement() != nullptr) {
+				throw std::runtime_error(std::format("Character \"{}\" has both a home settlement and a home site.", this->get_identifier()));
+			}
+
+			this->home_settlement = this->home_site;
+		} else {
+			if (this->home_site->get_province() == nullptr) {
+				throw std::runtime_error(std::format("Character \"{}\" has a home site (\"{}\") which has no province.", this->get_identifier(), this->home_site->get_identifier()));
+			}
+
+			this->home_settlement = this->home_site->get_province()->get_default_provincial_capital();
+		}
+	}
+
 	if (this->vital_date_calendar != nullptr) {
 		if (!this->vital_date_calendar->is_initialized()) {
 			this->vital_date_calendar->initialize();
