@@ -73,6 +73,14 @@ void site::check() const
 			if (this->get_resource() == nullptr) {
 				log::log_error(std::format("Settlement or resource site \"{}\" has no resource.", this->get_identifier()));
 			}
+
+			if (this->get_province() != nullptr) {
+				if (this->get_province()->get_default_provincial_capital() != this) {
+					log::log_error(std::format("Settlement site \"{}\" is not the provincial capital of its province.", this->get_identifier()));
+				}
+			} else {
+				log::log_error(std::format("Settlement site \"{}\" has no province.", this->get_identifier()));
+			}
 			break;
 		case site_type::resource:
 			assert_throw(this->get_resource() != nullptr);
