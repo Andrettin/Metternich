@@ -6,6 +6,7 @@
 #include "map/terrain_type.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 	
@@ -49,6 +50,19 @@ const metternich::icon *resource::get_icon() const
 	}
 
 	return this->get_commodity()->get_icon();
+}
+
+const terrain_type *resource::get_fallback_terrain(const terrain_type *terrain) const
+{
+	const std::vector<const terrain_type *> &resource_terrains = this->get_terrain_types();
+
+	for (const terrain_type *fallback_terrain : terrain->get_fallback_terrains()) {
+		if (vector::contains(resource_terrains, fallback_terrain)) {
+			return fallback_terrain;
+		}
+	}
+
+	return nullptr;
 }
 
 }

@@ -73,6 +73,8 @@ public:
 		return this->terrain_types;
 	}
 
+	const terrain_type *get_fallback_terrain(const terrain_type *terrain) const;
+
 	const std::vector<const building_type *> &get_buildings() const
 	{
 		return this->buildings;

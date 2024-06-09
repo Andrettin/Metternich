@@ -677,12 +677,7 @@ void map_template::apply_terrain() const
 			const std::vector<const terrain_type *> &resource_terrains = site_resource->get_terrain_types();
 
 			if (tile_terrain != nullptr && !vector::contains(resource_terrains, tile_terrain)) {
-				for (const terrain_type *fallback_terrain : tile_terrain->get_fallback_terrains()) {
-					if (vector::contains(resource_terrains, fallback_terrain)) {
-						site_terrain = fallback_terrain;
-						break;
-					}
-				}
+				site_terrain = site_resource->get_fallback_terrain(tile_terrain);
 			}
 		}
 
