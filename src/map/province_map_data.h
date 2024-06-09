@@ -94,15 +94,6 @@ public:
 		return this->tile_terrain_counts;
 	}
 
-	void change_tile_terrain_count(const terrain_type *terrain, const int change)
-	{
-		const int count = (this->tile_terrain_counts[terrain] += change);
-
-		if (count == 0) {
-			this->tile_terrain_counts.erase(terrain);
-		}
-	}
-
 signals:
 	void territory_changed();
 
