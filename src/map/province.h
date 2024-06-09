@@ -2,7 +2,6 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
-#include "economy/resource_container.h"
 #include "map/province_container.h"
 #include "util/color_container.h"
 #include "util/qunique_ptr.h"
@@ -185,11 +184,6 @@ public:
 		this->sites.push_back(site);
 	}
 
-	const resource_map<int> &get_resource_counts() const
-	{
-		return this->resource_counts;
-	}
-
 signals:
 	void changed();
 
@@ -205,7 +199,6 @@ private:
 	std::vector<const country *> core_countries;
 	province_map<const terrain_feature *> border_rivers;
 	std::vector<const site *> sites; //sites located in this province, used for map generation
-	resource_map<int> resource_counts;
 	qunique_ptr<province_history> history;
 	qunique_ptr<province_map_data> map_data;
 	qunique_ptr<province_game_data> game_data;

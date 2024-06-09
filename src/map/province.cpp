@@ -5,7 +5,6 @@
 #include "country/country.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
-#include "economy/resource.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
 #include "map/province_map_data.h"
@@ -48,11 +47,6 @@ void province::process_gsml_scope(const gsml_data &scope)
 			const terrain_feature *border_river = terrain_feature::get(property.get_value());
 			this->border_rivers[border_province] = border_river;
 			border_province->border_rivers[this] = border_river;
-		});
-	} else if (tag == "resource_counts") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const resource *resource = resource::get(property.get_key());
-			this->resource_counts[resource] = std::stoi(property.get_value());
 		});
 	} else {
 		data_entry::process_gsml_scope(scope);
