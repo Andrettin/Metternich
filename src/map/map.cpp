@@ -546,7 +546,7 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 		log::log_error("Site \"" + site->get_identifier() + "\" was not placed within its province.");
 	}
 
-	switch (site->get_type()) {
+	switch (site->get_map_data()->get_type()) {
 		case site_type::settlement:
 			if (tile->get_province() == nullptr || (site->get_province() != nullptr && tile->get_province() != site->get_province())) {
 				log::log_error(std::format("Settlement \"{}\" {} was not placed within its province.", site->get_identifier(), point::to_string(tile_pos)));

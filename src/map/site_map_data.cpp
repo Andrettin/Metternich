@@ -6,7 +6,7 @@
 
 namespace metternich {
 
-site_map_data::site_map_data(const metternich::site *site) : site(site), resource(site->get_resource())
+site_map_data::site_map_data(const metternich::site *site) : site(site), type(site->get_type()), resource(site->get_resource())
 {
 }
 

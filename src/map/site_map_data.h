@@ -6,6 +6,7 @@ namespace metternich {
 
 class resource;
 class site;
+enum class site_type;
 
 class site_map_data final : public QObject
 {
@@ -24,6 +25,16 @@ public:
 
 	void set_tile_pos(const QPoint &tile_pos);
 
+	site_type get_type() const
+	{
+		return this->type;
+	}
+
+	void set_type(const site_type type)
+	{
+		this->type = type;
+	}
+
 	const metternich::resource *get_resource() const
 	{
 		return this->resource;
@@ -40,6 +51,7 @@ signals:
 private:
 	const metternich::site *site = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
+	site_type type;
 	const metternich::resource *resource = nullptr;
 };
 

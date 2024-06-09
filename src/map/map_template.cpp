@@ -685,7 +685,7 @@ void map_template::apply_terrain() const
 			continue;
 		}
 
-		assert_throw(site->get_type() == site_type::terrain || site->get_type() == site_type::resource || site->get_type() == site_type::settlement);
+		assert_throw(site->get_map_data()->get_type() == site_type::terrain || site->get_map_data()->get_type() == site_type::resource || site->get_map_data()->get_type() == site_type::settlement);
 
 		map->set_tile_terrain(tile_pos, site_terrain);
 	}
