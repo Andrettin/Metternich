@@ -176,10 +176,6 @@ void map::clear_tile_game_data()
 
 	try {
 		for (tile &tile : *this->tiles) {
-			if (tile.is_resource_discovered() && tile.get_resource()->get_required_technology() != nullptr) {
-				tile.get_site()->get_game_data()->set_resource_discovered(false);
-			}
-
 			if (tile.get_improvement() != nullptr) {
 				tile.set_improvement(nullptr);
 			}
@@ -556,12 +552,6 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 			if (resource == nullptr) {
 				log::log_error(std::format("Settlement or resource site \"{}\" {} has no resource.", site->get_identifier(), point::to_string(tile_pos)));
 				break;
-			}
-
-			if (resource == nullptr || resource->get_required_technology() != nullptr) {
-				site->get_game_data()->set_resource_discovered(false);
-			} else {
-				site->get_game_data()->set_resource_discovered(true);
 			}
 
 			if (tile->get_resource()->is_near_water() && !this->is_tile_near_water(tile_pos)) {

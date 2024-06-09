@@ -51,6 +51,13 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	this->housing = defines::get()->get_base_housing();
 	this->free_food_consumption = site_game_data::base_free_food_consumption;
 
+	const resource *resource = site->get_map_data()->get_resource();
+	if (resource == nullptr || resource->get_required_technology() != nullptr) {
+		this->set_resource_discovered(false);
+	} else {
+		this->set_resource_discovered(true);
+	}
+
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::type_count_changed, this, &site_game_data::on_population_type_count_changed);
 	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::on_population_main_culture_changed);
