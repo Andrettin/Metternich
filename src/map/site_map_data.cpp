@@ -2,9 +2,11 @@
 
 #include "map/site_map_data.h"
 
+#include "map/site.h"
+
 namespace metternich {
 
-site_map_data::site_map_data(const metternich::site *site) : site(site)
+site_map_data::site_map_data(const metternich::site *site) : site(site), resource(site->get_resource())
 {
 }
 

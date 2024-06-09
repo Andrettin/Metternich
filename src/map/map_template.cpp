@@ -12,6 +12,7 @@
 #include "map/route_container.h"
 #include "map/route_game_data.h"
 #include "map/site.h"
+#include "map/site_map_data.h"
 #include "map/site_type.h"
 #include "map/terrain_adjacency.h"
 #include "map/terrain_adjacency_type.h"
@@ -667,7 +668,7 @@ void map_template::apply_terrain() const
 	//apply site terrain
 	for (const auto &[tile_pos, site] : this->sites_by_position) {
 		const terrain_type *site_terrain = site->get_terrain_type();
-		const resource *site_resource = site->get_resource();
+		const resource *site_resource = site->get_map_data()->get_resource();
 
 		//use a fallback terrain if the tile's terrain doesn't match the site's resource
 		if (site_terrain == nullptr && site_resource != nullptr) {

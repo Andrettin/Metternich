@@ -551,14 +551,12 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 			}
 			[[fallthrough]];
 		case site_type::resource: {
-			const resource *resource = site->get_resource();
+			const resource *resource = site->get_map_data()->get_resource();
 
 			if (resource == nullptr) {
 				log::log_error(std::format("Settlement or resource site \"{}\" {} has no resource.", site->get_identifier(), point::to_string(tile_pos)));
 				break;
 			}
-
-			site->get_map_data()->set_resource(resource);
 
 			if (resource == nullptr || resource->get_required_technology() != nullptr) {
 				site->get_game_data()->set_resource_discovered(false);

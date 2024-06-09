@@ -16,6 +16,7 @@
 #include "map/region.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_map_data.h"
 #include "map/site_type.h"
 #include "map/temperature_type.h"
 #include "map/terrain_type.h"
@@ -789,7 +790,7 @@ bool map_generator::can_assign_province_to_province_index(const province *provin
 		}
 
 		for (const site *site : province->get_sites()) {
-			const resource *resource = site->get_resource();
+			const resource *resource = site->get_map_data()->get_resource();
 			if (resource == nullptr) {
 				continue;
 			}
@@ -845,7 +846,7 @@ void map_generator::generate_sites()
 				continue;
 			}
 
-			const resource *resource = site->get_resource();
+			const resource *resource = site->get_map_data()->get_resource();
 			const std::vector<const terrain_type *> &site_terrains = resource->get_terrain_types();
 
 			const terrain_type_map<std::vector<QPoint>> &province_tiles_by_terrain = resource->is_near_water() ? this->province_near_water_tiles_by_terrain[province_index] : this->province_tiles_by_terrain[province_index];

@@ -46,6 +46,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
+#include "map/site_map_data.h"
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
@@ -903,7 +904,7 @@ void game::apply_sites()
 			if (site_improvement == nullptr && site_history->is_developed() && site->get_type() == site_type::resource) {
 				//if the site is marked as developed, but has no specific improvement set for it, pick the most basic improvement for its resource
 				for (const improvement *improvement : improvement::get_all()) {
-					if (improvement->get_resource() != site->get_resource()) {
+					if (improvement->get_resource() != site->get_map_data()->get_resource()) {
 						continue;
 					}
 
