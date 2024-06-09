@@ -50,7 +50,8 @@ void province_map_data::add_tile(const QPoint &tile_pos)
 	const tile *tile = map::get()->get_tile(tile_pos);
 
 	if (tile->get_resource() != nullptr) {
-		this->on_resource_tile_added(tile_pos);
+		this->resource_tiles.push_back(tile_pos);
+		++this->resource_counts[tile->get_resource()];
 	}
 
 	if (tile->get_terrain() != nullptr) {
@@ -68,16 +69,6 @@ void province_map_data::add_tile(const QPoint &tile_pos)
 			this->settlement_sites.push_back(tile->get_site());
 		}
 	}
-}
-
-void province_map_data::on_resource_tile_added(const QPoint &tile_pos)
-{
-	const tile *tile = map::get()->get_tile(tile_pos);
-
-	assert_throw(tile->get_resource() != nullptr);
-
-	this->resource_tiles.push_back(tile_pos);
-	++this->resource_counts[tile->get_resource()];
 }
 
 void province_map_data::add_border_tile(const QPoint &tile_pos)
