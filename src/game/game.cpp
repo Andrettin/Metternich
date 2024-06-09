@@ -901,7 +901,7 @@ void game::apply_sites()
 			}
 
 			const improvement *site_improvement = site_history->get_improvement();
-			if (site_improvement == nullptr && site_history->is_developed() && site->get_map_data()->get_type() == site_type::resource) {
+			if (site_improvement == nullptr && site_history->is_developed() && site->get_type() == site_type::resource) {
 				//if the site is marked as developed, but has no specific improvement set for it, pick the most basic improvement for its resource
 				for (const improvement *improvement : improvement::get_all()) {
 					if (improvement->get_resource() != site->get_map_data()->get_resource()) {
@@ -921,7 +921,7 @@ void game::apply_sites()
 				assert_throw(site_improvement->get_resource() != nullptr || site_improvement->is_ruins());
 
 				if (site_improvement->get_resource() != nullptr) {
-					assert_throw(site->get_map_data()->get_type() == site_type::resource);
+					assert_throw(site->get_type() == site_type::resource);
 
 					if (tile->get_resource() == nullptr) {
 						throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as it has no resource.");
@@ -945,7 +945,7 @@ void game::apply_sites()
 			}
 
 			if (site_history->is_resource_discovered()) {
-				assert_throw(site->get_map_data()->get_type() == site_type::resource || site->is_settlement());
+				assert_throw(site->get_type() == site_type::resource || site->is_settlement());
 				map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 			}
 		} catch (...) {
