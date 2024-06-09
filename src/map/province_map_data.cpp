@@ -54,7 +54,7 @@ void province_map_data::add_tile(const QPoint &tile_pos)
 	}
 
 	if (tile->get_terrain() != nullptr) {
-		++this->tile_terrain_counts[tile->get_terrain()];
+		this->change_tile_terrain_count(tile->get_terrain(), 1);
 	}
 
 	if (tile->has_river()) {
