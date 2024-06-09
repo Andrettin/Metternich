@@ -209,17 +209,8 @@ void map::set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain)
 
 	if (game::get()->is_running()) {
 		//this tile and the surrounding ones need to have their displayed terrain tile updated, as adjacencies may have changed
-		for (int x_offset = -1; x_offset <= 1; ++x_offset) {
-			for (int y_offset = -1; y_offset <= 1; ++y_offset) {
-				const QPoint loop_tile_pos = tile_pos + QPoint(x_offset, y_offset);
-
-				if (!this->contains(loop_tile_pos)) {
-					continue;
-				}
-
-				this->update_tile_terrain_tile(loop_tile_pos);
-			}
-		}
+		const QRect tile_rect(tile_pos - QPoint(1, 1), tile_pos + QPoint(1, 1));
+		this->update_tile_rect_terrain_tile(tile_rect);
 
 		emit tile_terrain_changed(tile_pos);
 	}
@@ -429,6 +420,21 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 		tile->calculate_pathway_frames();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to update terrain tile for tile pos " + point::to_string(tile_pos) + "."));
+	}
+}
+
+void map::update_tile_rect_terrain_tile(const QRect &tile_rect)
+{
+	for (int x = tile_rect.x(); x <= tile_rect.right(); ++x) {
+		for (int y = tile_rect.y(); y <= tile_rect.bottom(); ++y) {
+			const QPoint tile_pos = QPoint(x, y);
+
+			if (!this->contains(tile_pos)) {
+				continue;
+			}
+
+			this->update_tile_terrain_tile(tile_pos);
+		}
 	}
 }
 
