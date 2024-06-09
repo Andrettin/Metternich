@@ -83,7 +83,9 @@ void site::check() const
 			}
 			break;
 		case site_type::resource:
-			assert_throw(this->get_resource() != nullptr);
+			if (this->get_resource() == nullptr) {
+				throw std::runtime_error(std::format("Resource site \"{}\" has no resource.", this->get_identifier()));
+			}
 			break;
 		default:
 			assert_throw(this->get_resource() == nullptr);
