@@ -60,6 +60,7 @@ public:
 	}
 
 	void add_tile(const QPoint &tile_pos);
+	void on_resource_tile_added(const QPoint &tile_pos);
 
 	const std::vector<QPoint> &get_border_tiles() const
 	{
