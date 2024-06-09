@@ -392,12 +392,7 @@ bool site_game_data::is_built() const
 
 const resource *site_game_data::get_resource() const
 {
-	const tile *tile = this->get_tile();
-	if (tile != nullptr) {
-		return tile->get_resource();
-	}
-
-	return nullptr;
+	return this->site->get_map_data()->get_resource();
 }
 
 const improvement *site_game_data::get_improvement() const

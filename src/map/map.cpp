@@ -177,7 +177,7 @@ void map::clear_tile_game_data()
 	try {
 		for (tile &tile : *this->tiles) {
 			if (tile.is_resource_discovered() && tile.get_resource()->get_required_technology() != nullptr) {
-				tile.set_resource_discovered(false);
+				tile.get_site()->get_game_data()->set_resource_discovered(false);
 			}
 
 			if (tile.get_improvement() != nullptr) {
@@ -550,13 +550,21 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 				log::log_error(std::format("Settlement \"{}\" {} was not placed within its province.", site->get_identifier(), point::to_string(tile_pos)));
 			}
 			[[fallthrough]];
-		case site_type::resource:
-			if (site->get_resource() == nullptr) {
+		case site_type::resource: {
+			const resource *resource = site->get_resource();
+
+			if (resource == nullptr) {
 				log::log_error(std::format("Settlement or resource site \"{}\" {} has no resource.", site->get_identifier(), point::to_string(tile_pos)));
 				break;
 			}
 
-			tile->set_resource(site->get_resource());
+			site->get_map_data()->set_resource(resource);
+
+			if (resource == nullptr || resource->get_required_technology() != nullptr) {
+				site->get_game_data()->set_resource_discovered(false);
+			} else {
+				site->get_game_data()->set_resource_discovered(true);
+			}
 
 			if (tile->get_resource()->is_near_water() && !this->is_tile_near_water(tile_pos)) {
 				log::log_error(std::format("Site \"{}\" {} has near water resource \"{}\", but is not near water.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier()));
@@ -570,19 +578,12 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 				log::log_error(std::format("Site \"{}\" {} has resource \"{}\", which doesn't match its \"{}\" terrain type.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier(), tile->get_terrain()->get_identifier()));
 			}
 			break;
+		}
 		default:
 			break;
 	}
 
 	site->get_map_data()->set_tile_pos(tile_pos);
-}
-
-void map::set_tile_resource(const QPoint &tile_pos, const resource *resource)
-{
-	tile *tile = this->get_tile(tile_pos);
-	tile->set_resource(resource);
-
-	emit tile_resource_changed(tile_pos);
 }
 
 void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered)
@@ -595,7 +596,8 @@ void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discov
 
 	const resource *resource = tile->get_resource();
 	assert_throw(resource != nullptr);
-	tile->set_resource_discovered(discovered);
+	assert_throw(tile->get_site() != nullptr);
+	tile->get_site()->get_game_data()->set_resource_discovered(discovered);
 
 	if (discovered && resource->get_discovery_technology() != nullptr && tile->get_owner() != nullptr) {
 		for (const country *country : game::get()->get_countries()) {

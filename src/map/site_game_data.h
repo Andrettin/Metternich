@@ -120,6 +120,16 @@ public:
 
 	const resource *get_resource() const;
 
+	bool is_resource_discovered() const
+	{
+		return this->resource_discovered;
+	}
+
+	void set_resource_discovered(const bool discovered)
+	{
+		this->resource_discovered = discovered;
+	}
+
 	const improvement *get_improvement() const;
 
 	const std::vector<qunique_ptr<settlement_building_slot>> &get_building_slots() const
@@ -417,6 +427,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::settlement_type *settlement_type = nullptr;
+	bool resource_discovered = false;
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
 	building_slot_type_map<settlement_building_slot *> building_slot_map;
 	scripted_site_modifier_map<int> scripted_modifiers;

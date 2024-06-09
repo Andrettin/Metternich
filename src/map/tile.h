@@ -88,22 +88,8 @@ public:
 	const metternich::site *get_settlement() const;
 	const settlement_type *get_settlement_type() const;
 
-	const metternich::resource *get_resource() const
-	{
-		return this->resource;
-	}
-
-	void set_resource(const metternich::resource *resource);
-
-	bool is_resource_discovered() const
-	{
-		return this->resource_discovered;
-	}
-
-	void set_resource_discovered(const bool discovered)
-	{
-		this->resource_discovered = discovered;
-	}
+	const metternich::resource *get_resource() const;
+	bool is_resource_discovered() const;
 
 	const metternich::improvement *get_improvement() const
 	{
@@ -280,8 +266,6 @@ private:
 	std::array<short, 4> subtile_frames;
 	const metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
-	const metternich::resource *resource = nullptr;
-	bool resource_discovered = false;
 	const metternich::improvement *improvement = nullptr;
 	int8_t improvement_variation = 0;
 	bool inner_river = false; //whether the tile has an in-tile river

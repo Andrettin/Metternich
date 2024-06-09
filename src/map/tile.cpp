@@ -13,6 +13,7 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_map_data.h"
 #include "map/site_type.h"
 #include "map/terrain_adjacency_type.h"
 #include "map/terrain_type.h"
@@ -79,19 +80,22 @@ const settlement_type *tile::get_settlement_type() const
 	return nullptr;
 }
 
-void tile::set_resource(const metternich::resource *resource)
+const metternich::resource *tile::get_resource() const
 {
-	if (resource == this->get_resource()) {
-		return;
+	if (this->get_site() != nullptr) {
+		return this->get_site()->get_map_data()->get_resource();
 	}
 
-	this->resource = resource;
+	return nullptr;
+}
 
-	if (resource == nullptr || resource->get_required_technology() != nullptr) {
-		this->set_resource_discovered(false);
-	} else {
-		this->set_resource_discovered(true);
+bool tile::is_resource_discovered() const
+{
+	if (this->get_site() != nullptr) {
+		return this->get_site()->get_game_data()->is_resource_discovered();
 	}
+
+	return false;
 }
 
 void tile::set_improvement(const metternich::improvement *improvement)
