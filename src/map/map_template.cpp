@@ -70,6 +70,10 @@ void map_template::initialize()
 		const province_geodata_map_type province_geodata_map = this->get_world()->parse_provinces_geojson_folder();
 
 		for (const site *site : this->get_world()->get_sites()) {
+			if (site->get_type() == site_type::none) {
+				continue;
+			}
+
 			assert_throw(site->get_geocoordinate().is_valid());
 
 			if (site->get_geocoordinate().is_null()) {
