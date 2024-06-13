@@ -12,6 +12,7 @@ namespace metternich {
 class building_type;
 class commodity;
 class icon;
+class improvement;
 class technology;
 class terrain_type;
 
@@ -75,6 +76,16 @@ public:
 
 	const terrain_type *get_fallback_terrain(const terrain_type *terrain) const;
 
+	const std::vector<const improvement *> &get_improvements() const
+	{
+		return this->improvements;
+	}
+
+	void add_improvement(const improvement *improvement)
+	{
+		this->improvements.push_back(improvement);
+	}
+
 	const std::vector<const building_type *> &get_buildings() const
 	{
 		return this->buildings;
@@ -96,6 +107,7 @@ private:
 	bool coastal = false;
 	bool near_water = false;
 	std::vector<const terrain_type *> terrain_types;
+	std::vector<const improvement *> improvements;
 	std::vector<const building_type *> buildings;
 };
 

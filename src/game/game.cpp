@@ -1364,7 +1364,7 @@ QCoro::Task<void> game::on_setup_finished()
 
 void game::adjust_food_production_for_country_populations()
 {
-	//increase food resource building levels to prevent starvation on game start to the extent possible
+	//increase food resource improvement and building levels to prevent starvation on game start to the extent possible
 	for (const country *country : this->get_countries()) {
 		int food_output = 0;
 
@@ -1384,6 +1384,48 @@ void game::adjust_food_production_for_country_populations()
 
 		for (int i = 1; i <= max_resource_level; ++i) {
 			for (const province *province : country->get_game_data()->get_provinces()) {
+				//construct food resource improvements
+				for (const QPoint &resource_tile_pos : province->get_game_data()->get_resource_tiles()) {
+					tile *resource_tile = map::get()->get_tile(resource_tile_pos);
+					const site *resource_site = resource_tile->get_site();
+
+					if (resource_site->get_type() != site_type::resource) {
+						continue;
+					}
+
+					const site_game_data *site_game_data = resource_site->get_game_data();
+
+					const resource *resource = resource_tile->get_resource();
+					assert_throw(resource != nullptr);
+
+					if (!resource->get_commodity()->is_food()) {
+						continue;
+					}
+
+					for (const improvement *improvement : resource->get_improvements()) {
+						if (improvement->get_output_multiplier() > i) {
+							continue;
+						}
+
+						if (!improvement->is_buildable_on_tile(resource_tile)) {
+							continue;
+						}
+
+						map::get()->set_tile_improvement(resource_tile_pos, improvement);
+						++net_food;
+						break;
+					}
+
+					if (net_food >= 0) {
+						break;
+					}
+				}
+
+				if (net_food >= 0) {
+					break;
+				}
+
+				//construct food resource buildings
 				for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
 					site_game_data *settlement_game_data = settlement->get_game_data();
 

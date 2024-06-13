@@ -45,6 +45,10 @@ void improvement::initialize()
 		this->required_technology->add_enabled_improvement(this);
 	}
 
+	if (this->get_resource() != nullptr) {
+		this->resource->add_improvement(this);
+	}
+
 	tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/0");
 
 	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
