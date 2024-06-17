@@ -64,6 +64,7 @@ set(country_SRCS
 	src/country/religion.cpp
 	src/country/religion_base.cpp
 	src/country/religion_container.cpp
+	src/country/subject_type.cpp
 )
 source_group(country FILES ${country_SRCS})
 set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
@@ -366,6 +367,7 @@ set(country_HDRS
 	src/country/religion_base.h
 	src/country/religion_container.h
 	src/country/religious_group.h
+	src/country/subject_type.h
 )
 source_group(country FILES ${country_HDRS})
 
@@ -526,7 +528,6 @@ set(script_condition_HDRS
 	src/script/condition/capital_condition.h
 	src/script/condition/cavalry_condition.h
 	src/script/condition/coastal_condition.h
-	src/script/condition/colony_condition.h
 	src/script/condition/commodity_condition.h
 	src/script/condition/condition.h
 	src/script/condition/consciousness_condition.h
@@ -598,6 +599,7 @@ set(script_condition_HDRS
 	src/script/condition/source_character_condition.h
 	src/script/condition/source_site_condition.h
 	src/script/condition/source_site_scope_condition.h
+	src/script/condition/subject_type_condition.h
 	src/script/condition/technology_condition.h
 	src/script/condition/terrain_condition.h
 	src/script/condition/tooltip_condition.h

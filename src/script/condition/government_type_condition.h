@@ -36,7 +36,7 @@ public:
 	}
 
 private:
-	metternich::government_type *government_type = nullptr;;
+	const metternich::government_type *government_type = nullptr;
 };
 
 }

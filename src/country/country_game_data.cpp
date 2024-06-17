@@ -748,6 +748,8 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 		for (const auto &[resource, count] : this->get_resource_counts()) {
 			this->get_overlord()->get_game_data()->change_vassal_resource_count(resource, count);
 		}
+	} else {
+		this->set_subject_type(nullptr);
 	}
 
 	if (game::get()->is_running()) {
@@ -813,15 +815,6 @@ bool country_game_data::is_secondary_power() const
 	return this->get_rank() >= country::max_great_powers;
 }
 
-bool country_game_data::is_colony() const
-{
-	if (this->get_overlord() == nullptr) {
-		return false;
-	}
-
-	return this->get_diplomacy_state(this->get_overlord()) == diplomacy_state::colony;
-}
-
 std::string country_game_data::get_type_name() const
 {
 	switch (this->country->get_type()) {
@@ -845,24 +838,18 @@ std::string country_game_data::get_type_name() const
 	return std::string();
 }
 
-std::string country_game_data::get_vassalage_type_name() const
+
+void country_game_data::set_subject_type(const metternich::subject_type *subject_type)
 {
-	if (this->get_overlord() == nullptr) {
-		return std::string();
+	if (subject_type == this->get_subject_type()) {
+		return;
 	}
 
-	switch (this->get_diplomacy_state(this->get_overlord())) {
-		case diplomacy_state::vassal:
-			return "Vassal";
-		case diplomacy_state::personal_union_subject:
-			return "Personal Union Subject";
-		case diplomacy_state::colony:
-			return "Colony";
-		default:
-			assert_throw(false);
-	}
+	this->subject_type = subject_type;
 
-	return std::string();
+	if (game::get()->is_running()) {
+		emit subject_type_changed();
+	}
 }
 
 QVariantList country_game_data::get_provinces_qvariant_list() const
@@ -1503,7 +1490,6 @@ void country_game_data::set_diplomacy_state(const metternich::country *other_cou
 
 		if (is_vassalage_diplomacy_state(state) || is_vassalage_diplomacy_state(old_state)) {
 			emit type_name_changed();
-			emit vassalage_type_name_changed();
 		}
 	}
 }
@@ -1702,17 +1688,23 @@ QVariantList country_game_data::get_vassals_qvariant_list() const
 	return container::to_qvariant_list(this->get_vassals());
 }
 
-QVariantList country_game_data::get_colonies_qvariant_list() const
+QVariantList country_game_data::get_subject_type_counts_qvariant_list() const
 {
-	std::vector<const metternich::country *> colonies;
+	std::map<const metternich::subject_type *, int> subject_type_counts;
 
 	for (const auto &[country, diplomacy_state] : this->diplomacy_states) {
-		if (diplomacy_state == diplomacy_state::colonial_overlord) {
-			colonies.push_back(country);
+		if (is_overlordship_diplomacy_state(diplomacy_state)) {
+			assert_throw(country->get_game_data()->get_subject_type() != nullptr);
+			++subject_type_counts[country->get_game_data()->get_subject_type()];
 		}
 	}
 
-	return container::to_qvariant_list(colonies);
+	QVariantList counts = archimedes::map::to_qvariant_list(subject_type_counts);
+	std::sort(counts.begin(), counts.end(), [](const QVariant &lhs, const QVariant &rhs) {
+		return lhs.toMap().value("value").toInt() > rhs.toMap().value("value").toInt();
+	});
+
+	return counts;
 }
 
 std::vector<const metternich::country *> country_game_data::get_neighbor_countries() const

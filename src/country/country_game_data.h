@@ -29,6 +29,7 @@ Q_MOC_INCLUDE("country/law.h")
 Q_MOC_INCLUDE("country/law_group.h")
 Q_MOC_INCLUDE("country/policy.h")
 Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("country/subject_type.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("technology/technology.h")
@@ -62,6 +63,7 @@ class province;
 class region;
 class religion;
 class site;
+class subject_type;
 class transporter;
 enum class country_tier;
 enum class diplomacy_state;
@@ -86,7 +88,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(bool true_great_power READ is_true_great_power NOTIFY rank_changed)
 	Q_PROPERTY(bool secondary_power READ is_secondary_power NOTIFY rank_changed)
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
-	Q_PROPERTY(QString vassalage_type_name READ get_vassalage_type_name_qstring NOTIFY vassalage_type_name_changed)
+	Q_PROPERTY(const metternich::subject_type* subject_type READ get_subject_type NOTIFY subject_type_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(const metternich::site* capital READ get_capital NOTIFY capital_changed)
 	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
@@ -100,7 +102,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList vassal_resource_counts READ get_vassal_resource_counts_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList tile_terrain_counts READ get_tile_terrain_counts_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList vassals READ get_vassals_qvariant_list NOTIFY diplomacy_states_changed)
-	Q_PROPERTY(QVariantList colonies READ get_colonies_qvariant_list NOTIFY diplomacy_states_changed)
+	Q_PROPERTY(QVariantList subject_type_counts READ get_subject_type_counts_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList consulates READ get_consulates_qvariant_list NOTIFY consulates_changed)
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
 	Q_PROPERTY(int rank READ get_rank NOTIFY rank_changed)
@@ -238,7 +240,6 @@ public:
 
 	bool is_true_great_power() const;
 	bool is_secondary_power() const;
-	bool is_colony() const;
 
 	bool is_independent() const
 	{
@@ -252,12 +253,12 @@ public:
 		return QString::fromStdString(this->get_type_name());
 	}
 
-	std::string get_vassalage_type_name() const;
-
-	QString get_vassalage_type_name_qstring() const
+	const metternich::subject_type *get_subject_type() const
 	{
-		return QString::fromStdString(this->get_vassalage_type_name());
+		return this->subject_type;
 	}
+
+	void set_subject_type(const metternich::subject_type *subject_type);
 
 	const std::vector<const province *> &get_provinces() const
 	{
@@ -508,7 +509,7 @@ public:
 
 	std::vector<const metternich::country *> get_vassals() const;
 	QVariantList get_vassals_qvariant_list() const;
-	QVariantList get_colonies_qvariant_list() const;
+	QVariantList get_subject_type_counts_qvariant_list() const;
 
 	std::vector<const metternich::country *> get_neighbor_countries() const;
 
@@ -2054,7 +2055,7 @@ signals:
 	void religion_changed();
 	void overlord_changed();
 	void type_name_changed();
-	void vassalage_type_name_changed();
+	void subject_type_changed();
 	void diplomacy_states_changed();
 	void offered_diplomacy_states_changed();
 	void consulates_changed();
@@ -2121,6 +2122,7 @@ private:
 	resource_map<int> resource_counts;
 	resource_map<int> vassal_resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
+	const metternich::subject_type *subject_type = nullptr;
 	country_set known_countries;
 	country_map<diplomacy_state> diplomacy_states;
 	std::map<diplomacy_state, int> diplomacy_state_counts;

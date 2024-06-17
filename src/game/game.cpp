@@ -372,6 +372,11 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 			}
 
+			const subject_type *subject_type = country_history->get_subject_type();
+			if (subject_type != nullptr) {
+				country_game_data->set_subject_type(subject_type);
+			}
+
 			const character *ruler = country_history->get_ruler();
 			if (ruler != nullptr) {
 				character_game_data *ruler_game_data = ruler->get_game_data();
@@ -420,6 +425,22 @@ void game::apply_history(const metternich::scenario *scenario)
 
 				country_game_data->set_consulate(other_country, consulate);
 				other_country->get_game_data()->set_consulate(country, consulate);
+			}
+		}
+
+		for (const country *country : this->get_countries()) {
+			country_game_data *country_game_data = country->get_game_data();
+
+			if (country_game_data->get_overlord() != nullptr) {
+				if (country_game_data->get_subject_type() == nullptr) {
+					throw std::runtime_error(std::format("Country \"{}\" is a vassal, but has no subject type.", country->get_identifier()));
+				}
+			} else {
+				if (country_game_data->get_subject_type() != nullptr) {
+					log::log_error(std::format("Country \"{}\" is not a vassal, but has a subject type.", country->get_identifier()));
+
+					country_game_data->set_subject_type(nullptr);
+				}
 			}
 		}
 
@@ -1392,8 +1413,6 @@ void game::adjust_food_production_for_country_populations()
 					if (resource_site->get_type() != site_type::resource) {
 						continue;
 					}
-
-					const site_game_data *site_game_data = resource_site->get_game_data();
 
 					const resource *resource = resource_tile->get_resource();
 					assert_throw(resource != nullptr);

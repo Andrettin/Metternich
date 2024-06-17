@@ -16,11 +16,7 @@ const std::map<std::string, metternich::diplomacy_state> enum_converter<metterni
 	{ "war", metternich::diplomacy_state::war },
 	{ "non_aggression_pact", metternich::diplomacy_state::non_aggression_pact },
 	{ "vassal", metternich::diplomacy_state::vassal },
-	{ "overlord", metternich::diplomacy_state::overlord },
-	{ "personal_union_subject", metternich::diplomacy_state::personal_union_subject },
-	{ "personal_union_overlord", metternich::diplomacy_state::personal_union_overlord },
-	{ "colony", metternich::diplomacy_state::colony },
-	{ "colonial_overlord", metternich::diplomacy_state::colonial_overlord }
+	{ "overlord", metternich::diplomacy_state::overlord }
 };
 
 template <>

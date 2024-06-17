@@ -16,6 +16,7 @@ class consulate;
 class country;
 class government_type;
 class religion;
+class subject_type;
 class technology;
 enum class country_tier;
 enum class diplomacy_state;
@@ -56,6 +57,11 @@ public:
 	const character *get_ruler() const
 	{
 		return this->ruler;
+	}
+
+	const metternich::subject_type *get_subject_type() const
+	{
+		return this->subject_type;
 	}
 
 	const centesimal_int &get_literacy_rate() const
@@ -108,6 +114,8 @@ public:
 		return this->diplomacy_states;
 	}
 
+	diplomacy_state get_diplomacy_state(const metternich::country *other_country) const;
+
 	const country_map<const consulate *> &get_consulates() const
 	{
 		return this->consulates;
@@ -119,6 +127,7 @@ private:
 	metternich::religion *religion = nullptr;
 	metternich::government_type *government_type = nullptr;
 	character *ruler = nullptr;
+	const metternich::subject_type *subject_type = nullptr;
 	centesimal_int literacy_rate;
 	std::vector<technology *> technologies;
 	std::vector<character *> advisors;

@@ -31,7 +31,6 @@
 #include "script/condition/capital_condition.h"
 #include "script/condition/cavalry_condition.h"
 #include "script/condition/coastal_condition.h"
-#include "script/condition/colony_condition.h"
 #include "script/condition/commodity_condition.h"
 #include "script/condition/consciousness_condition.h"
 #include "script/condition/core_condition.h"
@@ -98,6 +97,7 @@
 #include "script/condition/source_character_condition.h"
 #include "script/condition/source_site_condition.h"
 #include "script/condition/source_site_scope_condition.h"
+#include "script/condition/subject_type_condition.h"
 #include "script/condition/technology_condition.h"
 #include "script/condition/terrain_condition.h"
 #include "script/condition/tooltip_condition.h"
@@ -169,6 +169,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<province_count_condition>(value, condition_operator);
 		} else if (key == "ruler") {
 			return std::make_unique<ruler_condition>(value, condition_operator);
+		} else if (key == "subject_type") {
+			return std::make_unique<subject_type_condition>(value, condition_operator);
 		} else if (key == "wealth") {
 			return std::make_unique<wealth_condition<scope_type>>(value, condition_operator);
 		} else if (key == "wealth_inflated") {
@@ -234,9 +236,7 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	}
 	
 	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province>) {
-		if (key == "colony") {
-			return std::make_unique<colony_condition<scope_type>>(value, condition_operator);
-		} else if (key == "has_resource") {
+		if (key == "has_resource") {
 			return std::make_unique<has_resource_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_terrain") {
 			return std::make_unique<has_terrain_condition<scope_type>>(value, condition_operator);

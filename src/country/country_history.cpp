@@ -6,6 +6,7 @@
 #include "country/country.h"
 #include "country/country_tier.h"
 #include "country/diplomacy_state.h"
+#include "country/subject_type.h"
 #include "economy/commodity.h"
 #include "util/map_util.h"
 
@@ -28,6 +29,7 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "diplomacy_state") {
 		const metternich::country *other_country = nullptr;
 		std::optional<diplomacy_state> state;
+		const metternich::subject_type *subject_type = nullptr;
 
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -37,6 +39,9 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 				other_country = country::get(value);
 			} else if (key == "state") {
 				state = enum_converter<diplomacy_state>::to_enum(value);
+			} else if (key == "subject_type") {
+				subject_type = subject_type::get(value);
+				state = diplomacy_state::vassal;
 			} else {
 				throw std::runtime_error("Invalid diplomacy state property: \"" + key + "\".");
 			}
@@ -57,6 +62,20 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 			archimedes::map::remove_value_if(this->diplomacy_states, [](const diplomacy_state state) {
 				return is_vassalage_diplomacy_state(state);
 			});
+
+			if (subject_type == nullptr) {
+				throw std::runtime_error("Vassalage diplomacy state has no subject type.");
+			}
+
+			this->subject_type = subject_type;
+		} else {
+			if (subject_type != nullptr) {
+				throw std::runtime_error("Non-vassalage diplomacy state has a subject type.");
+			}
+
+			if (is_vassalage_diplomacy_state(this->get_diplomacy_state(other_country))) {
+				this->subject_type = nullptr;
+			}
 		}
 
 		this->diplomacy_states[other_country] = state.value();
@@ -85,6 +104,17 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry_history::process_gsml_scope(scope);
 	}
+}
+
+diplomacy_state country_history::get_diplomacy_state(const metternich::country *other_country) const
+{
+	const auto find_iterator = this->diplomacy_states.find(other_country);
+
+	if (find_iterator != this->diplomacy_states.end()) {
+		return find_iterator->second;
+	}
+
+	return diplomacy_state::peace;
 }
 
 }
