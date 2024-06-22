@@ -35,6 +35,7 @@ class religion;
 class site;
 class technology;
 class trait;
+enum class character_role;
 enum class military_unit_category;
 
 template <typename scope_type>
@@ -56,6 +57,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(std::string epithet MEMBER epithet NOTIFY changed)
 	Q_PROPERTY(QString full_name READ get_full_name_qstring NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
+	Q_PROPERTY(metternich::character_role role MEMBER role READ get_role NOTIFY changed)
 	Q_PROPERTY(metternich::advisor_type* advisor_type MEMBER advisor_type NOTIFY changed)
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
@@ -171,6 +173,11 @@ public:
 		return QString::fromStdString(this->get_description());
 	}
 
+	character_role get_role() const
+	{
+		return this->role;
+	}
+
 	const metternich::advisor_type *get_advisor_type() const
 	{
 		return this->advisor_type;
@@ -283,11 +290,6 @@ public:
 
 	void add_rulable_country(country *country);
 
-	bool is_ruler() const
-	{
-		return !this->get_rulable_countries().empty();
-	}
-
 	std::string get_ruler_modifier_string(const country *country) const;
 
 	Q_INVOKABLE QString get_ruler_modifier_qstring(metternich::country *country) const
@@ -304,12 +306,6 @@ public:
 
 	void apply_advisor_modifier(const country *country, const int multiplier) const;
 
-	bool is_advisor() const
-	{
-		return this->get_advisor_type() != nullptr;
-	}
-
-	bool is_leader() const;
 	bool is_admiral() const;
 	std::string get_leader_type_name() const;
 
@@ -328,6 +324,7 @@ private:
 	std::string nickname;
 	std::string epithet;
 	std::string description;
+	metternich::character_role role;
 	metternich::advisor_type *advisor_type = nullptr;
 	metternich::military_unit_category military_unit_category;
 	metternich::culture *culture = nullptr;

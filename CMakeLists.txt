@@ -25,6 +25,7 @@ set(character_SRCS
 	src/character/character.cpp
 	src/character/character_container.cpp
 	src/character/character_game_data.cpp
+	src/character/character_role.cpp
 	src/character/dynasty.cpp
 	src/character/trait.cpp
 	src/character/trait_type.cpp
@@ -328,6 +329,7 @@ set(character_HDRS
 	src/character/character_container.h
 	src/character/character_game_data.h
 	src/character/character_history.h
+	src/character/character_role.h
 	src/character/dynasty.h
 	src/character/trait.h
 	src/character/trait_type.h

@@ -3,6 +3,7 @@
 #include "technology/technology.h"
 
 #include "character/character.h"
+#include "character/character_role.h"
 #include "country/country.h"
 #include "country/culture.h"
 #include "country/government_type.h"
@@ -294,174 +295,58 @@ void technology::add_enabled_law(const law *law)
 	});
 }
 
-std::vector<const character *> technology::get_enabled_rulers_for_country(const country *country) const
+std::vector<const character *> technology::get_enabled_characters_for_country(const character_role role, const country *country) const
 {
-	std::vector<const character *> rulers;
+	std::vector<const character *> characters;
 
-	for (const character *ruler : this->get_enabled_rulers()) {
-		if (!vector::contains(country->get_rulers(), ruler)) {
+	for (const character *character : this->get_enabled_characters(role)) {
+		if (role == character_role::ruler && !vector::contains(country->get_rulers(), character)) {
 			continue;
 		}
 
-		if (ruler->get_conditions() != nullptr && !ruler->get_conditions()->check(country, read_only_context(country))) {
+		if (character->get_conditions() != nullptr && !character->get_conditions()->check(country, read_only_context(country))) {
 			continue;
 		}
 
-		rulers.push_back(ruler);
+		characters.push_back(character);
 	}
 
-	return rulers;
+	return characters;
 }
 
-void technology::add_enabled_ruler(const character *ruler)
+void technology::add_enabled_character(const character_role role, const character *character)
 {
-	this->enabled_rulers.push_back(ruler);
+	this->enabled_characters[role].push_back(character);
 
-	std::sort(this->enabled_rulers.begin(), this->enabled_rulers.end(), [](const character *lhs, const character *rhs) {
+	std::sort(this->enabled_characters[role].begin(), this->enabled_characters[role].end(), [](const metternich::character *lhs, const metternich::character *rhs) {
 		return lhs->get_full_name() < rhs->get_full_name();
 	});
 }
 
-std::vector<const character *> technology::get_retired_rulers_for_country(const country *country) const
+std::vector<const character *> technology::get_retired_characters_for_country(const character_role role, const country *country) const
 {
-	std::vector<const character *> rulers;
+	std::vector<const character *> characters;
 
-	for (const character *ruler : this->get_retired_rulers()) {
-		if (!vector::contains(country->get_rulers(), ruler)) {
+	for (const character *character : this->get_retired_characters(role)) {
+		if (role == character_role::ruler && !vector::contains(country->get_rulers(), character)) {
 			continue;
 		}
 
-		if (ruler->get_conditions() != nullptr && !ruler->get_conditions()->check(country, read_only_context(country))) {
+		if (character->get_conditions() != nullptr && !character->get_conditions()->check(country, read_only_context(country))) {
 			continue;
 		}
 
-		rulers.push_back(ruler);
+		characters.push_back(character);
 	}
 
-	return rulers;
+	return characters;
 }
 
-void technology::add_retired_ruler(const character *ruler)
+void technology::add_retired_character(const character_role role, const character *character)
 {
-	this->retired_rulers.push_back(ruler);
+	this->retired_characters[role].push_back(character);
 
-	std::sort(this->retired_rulers.begin(), this->retired_rulers.end(), [](const character *lhs, const character *rhs) {
-		return lhs->get_full_name() < rhs->get_full_name();
-	});
-}
-
-QVariantList technology::get_enabled_advisors_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_enabled_advisors());
-}
-
-std::vector<const character *> technology::get_enabled_advisors_for_country(const country *country) const
-{
-	std::vector<const character *> advisors;
-
-	for (const character *advisor : this->get_enabled_advisors()) {
-		if (advisor->get_conditions() != nullptr && !advisor->get_conditions()->check(country, read_only_context(country))) {
-			continue;
-		}
-
-		advisors.push_back(advisor);
-	}
-
-	return advisors;
-}
-
-void technology::add_enabled_advisor(const character *advisor)
-{
-	this->enabled_advisors.push_back(advisor);
-
-	std::sort(this->enabled_advisors.begin(), this->enabled_advisors.end(), [](const character *lhs, const character *rhs) {
-		return lhs->get_full_name() < rhs->get_full_name();
-	});
-}
-
-QVariantList technology::get_retired_advisors_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_retired_advisors());
-}
-
-std::vector<const character *> technology::get_retired_advisors_for_country(const country *country) const
-{
-	std::vector<const character *> advisors;
-
-	for (const character *advisor : this->get_retired_advisors()) {
-		if (advisor->get_conditions() != nullptr && !advisor->get_conditions()->check(country, read_only_context(country))) {
-			continue;
-		}
-
-		advisors.push_back(advisor);
-	}
-
-	return advisors;
-}
-
-void technology::add_retired_advisor(const character *advisor)
-{
-	this->retired_advisors.push_back(advisor);
-
-	std::sort(this->retired_advisors.begin(), this->retired_advisors.end(), [](const character *lhs, const character *rhs) {
-		return lhs->get_full_name() < rhs->get_full_name();
-	});
-}
-
-QVariantList technology::get_enabled_leaders_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_enabled_leaders());
-}
-
-std::vector<const character *> technology::get_enabled_leaders_for_country(const country *country) const
-{
-	std::vector<const character *> leaders;
-
-	for (const character *leader : this->get_enabled_leaders()) {
-		if (leader->get_conditions() != nullptr && !leader->get_conditions()->check(country, read_only_context(country))) {
-			continue;
-		}
-
-		leaders.push_back(leader);
-	}
-
-	return leaders;
-}
-
-void technology::add_enabled_leader(const character *leader)
-{
-	this->enabled_leaders.push_back(leader);
-
-	std::sort(this->enabled_leaders.begin(), this->enabled_leaders.end(), [](const character *lhs, const character *rhs) {
-		return lhs->get_full_name() < rhs->get_full_name();
-	});
-}
-
-QVariantList technology::get_retired_leaders_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_retired_leaders());
-}
-
-std::vector<const character *> technology::get_retired_leaders_for_country(const country *country) const
-{
-	std::vector<const character *> leaders;
-
-	for (const character *leader : this->get_retired_leaders()) {
-		if (leader->get_conditions() != nullptr && !leader->get_conditions()->check(country, read_only_context(country))) {
-			continue;
-		}
-
-		leaders.push_back(leader);
-	}
-
-	return leaders;
-}
-
-void technology::add_retired_leader(const character *leader)
-{
-	this->retired_leaders.push_back(leader);
-
-	std::sort(this->retired_leaders.begin(), this->retired_leaders.end(), [](const character *lhs, const character *rhs) {
+	std::sort(this->retired_characters[role].begin(), this->retired_characters[role].end(), [](const metternich::character *lhs, const metternich::character *rhs) {
 		return lhs->get_full_name() < rhs->get_full_name();
 	});
 }
@@ -647,79 +532,38 @@ QString technology::get_effects_string(metternich::country *country) const
 		}
 	}
 
-	const std::vector<const character *> enabled_rulers = get_enabled_rulers_for_country(country);
-
-	if (!enabled_rulers.empty()) {
-		for (const character *ruler : enabled_rulers) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Enables {} ruler", ruler->get_full_name());
-		}
-	}
-
-	const std::vector<const character *> retired_rulers = get_retired_rulers_for_country(country);
-
-	if (!retired_rulers.empty()) {
-		for (const character *ruler : retired_rulers) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Retires {} ruler", ruler->get_full_name());
-		}
-	}
-
-	const std::vector<const character *> enabled_advisors = get_enabled_advisors_for_country(country);
-
-	if (!enabled_advisors.empty()) {
-		for (const character *advisor : enabled_advisors) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Enables {} advisor", advisor->get_full_name());
-		}
-	}
-
-	const std::vector<const character *> retired_advisors = get_retired_advisors_for_country(country);
-
-	if (!retired_advisors.empty()) {
-		for (const character *advisor : retired_advisors) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Retires {} advisor", advisor->get_full_name());
-		}
-	}
-
-	const std::vector<const character *> enabled_leaders = get_enabled_leaders_for_country(country);
-
-	if (!enabled_leaders.empty()) {
-		for (const character *leader : enabled_leaders) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Enables {} leader", leader->get_full_name());
-		}
-	}
-
-	const std::vector<const character *> retired_leaders = get_retired_leaders_for_country(country);
-
-	if (!retired_leaders.empty()) {
-		for (const character *leader : retired_leaders) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Retires {} leader", leader->get_full_name());
-		}
-	}
+	this->write_character_effects_string(character_role::ruler, "ruler", country, str);
+	this->write_character_effects_string(character_role::advisor, "advisor", country, str);
+	this->write_character_effects_string(character_role::leader, "leader", country, str);
 
 	return QString::fromStdString(str);
+}
+
+void technology::write_character_effects_string(const character_role role, const std::string_view &role_name, const country *country, std::string &str) const
+{
+	const std::vector<const character *> enabled_characters = get_enabled_characters_for_country(role, country);
+
+	if (!enabled_characters.empty()) {
+		for (const character *character : enabled_characters) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} {}", character->get_full_name(), role_name);
+		}
+	}
+
+	const std::vector<const character *> retired_characters = get_retired_characters_for_country(role, country);
+
+	if (!retired_characters.empty()) {
+		for (const character *character : retired_characters) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Retires {} {}", character->get_full_name(), role_name);
+		}
+	}
 }
 
 }

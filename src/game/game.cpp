@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
+#include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
@@ -552,18 +553,18 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const country *country = character_history->get_country();
 
-			if ((character->is_advisor() || character->is_leader()) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
+			if ((character->get_role() == character_role::advisor || character->get_role() == character_role::leader) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
 				country_game_data *country_game_data = country->get_game_data();
 				const technology *obsolescence_technology = character->get_obsolescence_technology();
 
 				if (obsolescence_technology != nullptr && country_game_data->has_technology(obsolescence_technology)) {
 					character_game_data->set_dead(true);
 				} else {
-					if (character->is_advisor()) {
+					if (character->get_role() == character_role::advisor) {
 						if (country_game_data->can_have_advisors()) {
 							country_game_data->add_advisor(character);
 						}
-					} else if (character->is_leader()) {
+					} else if (character->get_role() == character_role::leader) {
 						const province *deployment_province = character_history->get_deployment_province();
 						if (deployment_province == nullptr && country_game_data->get_capital_province() != nullptr) {
 							deployment_province = country_game_data->get_capital_province();

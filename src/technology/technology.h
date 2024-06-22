@@ -28,6 +28,7 @@ class technological_period;
 class terrain_type;
 class transporter_type;
 class wonder;
+enum class character_role;
 enum class technology_category;
 
 template <typename scope_type>
@@ -52,10 +53,6 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList enabled_pathways READ get_enabled_pathways_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_civilian_units READ get_enabled_civilian_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
-	Q_PROPERTY(QVariantList enabled_advisors READ get_enabled_advisors_qvariant_list NOTIFY changed)
-	Q_PROPERTY(QVariantList retired_advisors READ get_retired_advisors_qvariant_list NOTIFY changed)
-	Q_PROPERTY(QVariantList enabled_leaders READ get_enabled_leaders_qvariant_list NOTIFY changed)
-	Q_PROPERTY(QVariantList retired_leaders READ get_retired_leaders_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QObject* tree_parent READ get_tree_parent CONSTANT)
 	Q_PROPERTY(QVariantList secondary_tree_parents READ get_secondary_tree_parents CONSTANT)
 
@@ -303,57 +300,35 @@ public:
 
 	void add_enabled_law(const law *law);
 
-	const std::vector<const character *> &get_enabled_rulers() const
+	const std::vector<const character *> &get_enabled_characters(const character_role role) const
 	{
-		return this->enabled_rulers;
+		static const std::vector<const character *> empty_vector;
+
+		const auto find_iterator = this->enabled_characters.find(role);
+		if (find_iterator != this->enabled_characters.end()) {
+			return find_iterator->second;
+		}
+
+		return empty_vector;
 	}
 
-	std::vector<const character *> get_enabled_rulers_for_country(const country *country) const;
-	void add_enabled_ruler(const character *ruler);
+	std::vector<const character *> get_enabled_characters_for_country(const character_role role, const country *country) const;
+	void add_enabled_character(const character_role role, const character *character);
 
-	const std::vector<const character *> &get_retired_rulers() const
+	const std::vector<const character *> &get_retired_characters(const character_role role) const
 	{
-		return this->retired_rulers;
+		static const std::vector<const character *> empty_vector;
+
+		const auto find_iterator = this->retired_characters.find(role);
+		if (find_iterator != this->retired_characters.end()) {
+			return find_iterator->second;
+		}
+
+		return empty_vector;
 	}
 
-	std::vector<const character *> get_retired_rulers_for_country(const country *country) const;
-	void add_retired_ruler(const character *ruler);
-
-	const std::vector<const character *> &get_enabled_advisors() const
-	{
-		return this->enabled_advisors;
-	}
-
-	QVariantList get_enabled_advisors_qvariant_list() const;
-	std::vector<const character *> get_enabled_advisors_for_country(const country *country) const;
-	void add_enabled_advisor(const character *advisor);
-
-	const std::vector<const character *> &get_retired_advisors() const
-	{
-		return this->retired_advisors;
-	}
-
-	QVariantList get_retired_advisors_qvariant_list() const;
-	std::vector<const character *> get_retired_advisors_for_country(const country *country) const;
-	void add_retired_advisor(const character *advisor);
-
-	const std::vector<const character *> &get_enabled_leaders() const
-	{
-		return this->enabled_leaders;
-	}
-
-	QVariantList get_enabled_leaders_qvariant_list() const;
-	std::vector<const character *> get_enabled_leaders_for_country(const country *country) const;
-	void add_enabled_leader(const character *leader);
-
-	const std::vector<const character *> &get_retired_leaders() const
-	{
-		return this->retired_leaders;
-	}
-
-	QVariantList get_retired_leaders_qvariant_list() const;
-	std::vector<const character *> get_retired_leaders_for_country(const country *country) const;
-	void add_retired_leader(const character *leader);
+	std::vector<const character *> get_retired_characters_for_country(const character_role role, const country *country) const;
+	void add_retired_character(const character_role role, const character *character);
 
 	const metternich::modifier<const country> *get_modifier() const
 	{
@@ -362,6 +337,7 @@ public:
 
 	std::string get_modifier_string(const country *country) const;
 	Q_INVOKABLE QString get_effects_string(metternich::country *country) const;
+	void write_character_effects_string(const character_role role, const std::string_view &role_name, const country *country, std::string &str) const;
 
 	virtual named_data_entry *get_tree_parent() const override
 	{
@@ -433,12 +409,8 @@ private:
 	std::vector<const transporter_type *> enabled_transporters;
 	std::vector<const government_type *> enabled_government_types;
 	std::vector<const law *> enabled_laws;
-	std::vector<const character *> enabled_rulers;
-	std::vector<const character *> retired_rulers;
-	std::vector<const character *> enabled_advisors;
-	std::vector<const character *> retired_advisors;
-	std::vector<const character *> enabled_leaders;
-	std::vector<const character *> retired_leaders;
+	std::map<character_role, std::vector<const character *>> enabled_characters;
+	std::map<character_role, std::vector<const character *>> retired_characters;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
 };
 

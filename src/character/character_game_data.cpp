@@ -4,6 +4,7 @@
 
 #include "character/advisor_type.h"
 #include "character/character.h"
+#include "character/character_role.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "country/country.h"
@@ -69,7 +70,7 @@ bool character_game_data::is_current_portrait_valid() const
 
 void character_game_data::check_portrait()
 {
-	if (!this->character->is_ruler() && !this->character->is_advisor()) {
+	if (this->character->get_role() != character_role::ruler && this->character->get_role() != character_role::advisor) {
 		//only rulers and advisors need portraits
 		return;
 	}

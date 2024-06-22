@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "infrastructure/building_type.h"
@@ -145,13 +146,13 @@ void journal_entry::check() const
 	}
 
 	for (const character *character : this->get_recruited_advisors()) {
-		if (!character->is_advisor()) {
+		if (character->get_role() != character_role::advisor) {
 			throw std::runtime_error(std::format("Journal entry \"{}\" requires recruiting \"{}\" as an advisor, but that character is not an advisor.", this->get_identifier(), character->get_identifier()));
 		}
 	}
 
 	for (const character *character : this->get_recruited_leaders()) {
-		if (!character->is_leader()) {
+		if (character->get_role() != character_role::leader) {
 			throw std::runtime_error(std::format("Journal entry \"{}\" requires recruiting \"{}\" as a leader, but that character is not a leader.", this->get_identifier(), character->get_identifier()));
 		}
 	}

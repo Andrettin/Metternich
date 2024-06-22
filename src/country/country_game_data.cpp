@@ -6,6 +6,7 @@
 #include "character/advisor_type.h"
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/character_role.h"
 #include "character/trait.h"
 #include "country/consulate.h"
 #include "country/country.h"
@@ -3434,7 +3435,7 @@ void country_game_data::check_ruler()
 		std::vector<const character *> potential_rulers;
 
 		for (const character *character : this->country->get_rulers()) {
-			assert_throw(character->is_ruler());
+			assert_throw(character->get_role() == character_role::ruler);
 
 			const character_game_data *character_game_data = character->get_game_data();
 			if (character_game_data->get_country() != nullptr) {
@@ -3581,7 +3582,7 @@ void country_game_data::choose_next_advisor()
 	std::map<advisor_category, std::vector<const character *>> potential_advisors_per_category;
 
 	for (const character *character : character::get_all()) {
-		if (!character->is_advisor()) {
+		if (character->get_role() != character_role::advisor) {
 			continue;
 		}
 
@@ -3782,7 +3783,7 @@ void country_game_data::choose_next_leader()
 	std::map<military_unit_category, std::vector<const character *>> potential_leaders_per_category;
 
 	for (const character *character : character::get_all()) {
-		if (!character->is_leader()) {
+		if (character->get_role() != character_role::leader) {
 			continue;
 		}
 
