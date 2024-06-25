@@ -93,7 +93,7 @@ void site_game_data::do_consumption()
 		assert_throw(commodity->is_local());
 		assert_throw(!commodity->is_storable());
 
-		const int effective_consumption = std::min(consumption.to_int(), this->get_commodity_output(commodity).to_int());
+		const int effective_consumption = std::min(consumption.to_int(), this->is_provincial_capital() ? this->get_province()->get_game_data()->get_local_commodity_output(commodity).to_int() : this->get_commodity_output(commodity).to_int());
 
 		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
 		if (remaining_consumption == 0) {
@@ -932,6 +932,10 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
 	}
 
+	if (this->get_province() != nullptr && commodity->is_local()) {
+		this->get_province()->get_game_data()->change_local_commodity_output(commodity, -this->get_commodity_output(commodity));
+	}
+
 	if (output == 0) {
 		this->commodity_outputs.erase(commodity);
 	} else {
@@ -940,6 +944,10 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 
 	if (this->get_owner() != nullptr && !commodity->is_local()) {
 		this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+	}
+
+	if (this->get_province() != nullptr && commodity->is_local()) {
+		this->get_province()->get_game_data()->change_local_commodity_output(commodity, this->get_commodity_output(commodity));
 	}
 
 	emit commodity_outputs_changed();

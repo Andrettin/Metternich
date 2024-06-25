@@ -238,6 +238,26 @@ public:
 	void calculate_settlement_commodity_outputs();
 	void calculate_settlement_commodity_output(const commodity *commodity);
 
+	const centesimal_int &get_local_commodity_output(const commodity *commodity) const
+	{
+		const auto find_iterator = this->local_commodity_outputs.find(commodity);
+		if (find_iterator != this->local_commodity_outputs.end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
+	}
+
+	void change_local_commodity_output(const commodity *commodity, const centesimal_int &change)
+	{
+		const centesimal_int &output = (this->local_commodity_outputs[commodity] += change);
+
+		if (output == 0) {
+			this->local_commodity_outputs.erase(commodity);
+		}
+	}
+
 	int get_output_modifier() const
 	{
 		return this->output_modifier;
@@ -396,6 +416,7 @@ private:
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;
 	std::vector<army *> entering_armies; //armies entering this province
+	commodity_map<centesimal_int> local_commodity_outputs;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
