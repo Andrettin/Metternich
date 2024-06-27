@@ -132,14 +132,9 @@ public:
 		return this->researched_technologies;
 	}
 
-	const std::vector<const character *> &get_recruited_advisors() const
+	const std::vector<const character *> &get_recruited_characters() const
 	{
-		return this->recruited_advisors;
-	}
-
-	const std::vector<const character *> &get_recruited_leaders() const
-	{
-		return this->recruited_leaders;
+		return this->recruited_characters;
 	}
 
 signals:
@@ -162,8 +157,7 @@ private:
 	std::vector<const building_type *> built_buildings;
 	site_map<std::vector<const building_type *>> built_settlement_buildings;
 	std::vector<const technology *> researched_technologies;
-	std::vector<const character *> recruited_advisors;
-	std::vector<const character *> recruited_leaders;
+	std::vector<const character *> recruited_characters;
 };
 
 }

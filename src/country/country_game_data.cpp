@@ -3640,7 +3640,7 @@ void country_game_data::choose_next_advisor()
 			int desire = (advisor->get_skill() != 0 ? advisor->get_skill() : character::max_skill) * 100;
 
 			for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
-				if (vector::contains(journal_entry->get_recruited_advisors(), advisor)) {
+				if (vector::contains(journal_entry->get_recruited_characters(), advisor)) {
 					desire += journal_entry::ai_advisor_desire_modifier;
 				}
 			}
@@ -3849,7 +3849,7 @@ void country_game_data::choose_next_leader()
 			int desire = leader_score;
 
 			for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
-				if (vector::contains(journal_entry->get_recruited_leaders(), leader)) {
+				if (vector::contains(journal_entry->get_recruited_characters(), leader)) {
 					desire += journal_entry::ai_leader_desire_modifier;
 				}
 			}

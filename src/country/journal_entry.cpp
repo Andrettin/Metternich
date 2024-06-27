@@ -96,13 +96,9 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->researched_technologies.push_back(technology::get(value));
 		}
-	} else if (tag == "recruited_advisors") {
+	} else if (tag == "recruited_characters") {
 		for (const std::string &value : values) {
-			this->recruited_advisors.push_back(character::get(value));
-		}
-	} else if (tag == "recruited_leaders") {
-		for (const std::string &value : values) {
-			this->recruited_leaders.push_back(character::get(value));
+			this->recruited_characters.push_back(character::get(value));
 		}
 	} else {
 		data_entry::process_gsml_scope(scope);
@@ -145,15 +141,13 @@ void journal_entry::check() const
 		}
 	}
 
-	for (const character *character : this->get_recruited_advisors()) {
-		if (character->get_role() != character_role::advisor) {
-			throw std::runtime_error(std::format("Journal entry \"{}\" requires recruiting \"{}\" as an advisor, but that character is not an advisor.", this->get_identifier(), character->get_identifier()));
-		}
-	}
-
-	for (const character *character : this->get_recruited_leaders()) {
-		if (character->get_role() != character_role::leader) {
-			throw std::runtime_error(std::format("Journal entry \"{}\" requires recruiting \"{}\" as a leader, but that character is not a leader.", this->get_identifier(), character->get_identifier()));
+	for (const character *character : this->get_recruited_characters()) {
+		switch (character->get_role()) {
+			case character_role::advisor:
+			case character_role::leader:
+				break;
+			default:
+				throw std::runtime_error(std::format("Journal entry \"{}\" requires the recruiting \"{}\" character, but that character does not have a recruitable role.", this->get_identifier(), character->get_identifier()));
 		}
 	}
 }
@@ -166,16 +160,9 @@ bool journal_entry::check_preconditions(const country *country) const
 		return false;
 	}
 
-	for (const character *advisor : this->get_recruited_advisors()) {
-		const metternich::country *advisor_country = advisor->get_game_data()->get_country();
-		if (advisor_country != nullptr && advisor_country != country) {
-			return false;
-		}
-	}
-
-	for (const character *leader : this->get_recruited_leaders()) {
-		const metternich::country *leader_country = leader->get_game_data()->get_country();
-		if (leader_country != nullptr && leader_country != country) {
+	for (const character *character : this->get_recruited_characters()) {
+		const metternich::country *character_country = character->get_game_data()->get_country();
+		if (character_country != nullptr && character_country != country) {
 			return false;
 		}
 	}
@@ -204,7 +191,7 @@ bool journal_entry::check_conditions(const country *country) const
 
 bool journal_entry::check_completion_conditions(const country *country, const bool ignore_random_chance) const
 {
-	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_settlement_buildings().empty() && this->get_researched_technologies().empty() && this->get_recruited_advisors().empty() && this->get_recruited_leaders().empty() && this->get_completion_random_chance() == 0) {
+	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_settlement_buildings().empty() && this->get_researched_technologies().empty() && this->get_recruited_characters().empty() && this->get_completion_random_chance() == 0) {
 		//no completion conditions at all, so the entry can't be completed normally
 		return false;
 	}
@@ -259,15 +246,20 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 		}
 	}
 
-	for (const character *advisor : this->get_recruited_advisors()) {
-		if (!vector::contains(country_game_data->get_advisors(), advisor)) {
-			return false;
-		}
-	}
-
-	for (const character *leader : this->get_recruited_leaders()) {
-		if (!vector::contains(country_game_data->get_leaders(), leader)) {
-			return false;
+	for (const character *character : this->get_recruited_characters()) {
+		switch (character->get_role()) {
+			case character_role::advisor:
+				if (!vector::contains(country_game_data->get_advisors(), character)) {
+					return false;
+				}
+				break;
+			case character_role::leader:
+				if (!vector::contains(country_game_data->get_leaders(), character)) {
+					return false;
+				}
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -333,20 +325,25 @@ QString journal_entry::get_completion_conditions_string() const
 		str += std::format("Research {}", technology->get_name());
 	}
 
-	for (const character *advisor : this->get_recruited_advisors()) {
+	for (const character *character : this->get_recruited_characters()) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
-		str += std::format("Recruit {} (Advisor)", advisor->get_full_name());
-	}
+		std::string character_type_name;
 
-	for (const character *leader : this->get_recruited_leaders()) {
-		if (!str.empty()) {
-			str += "\n";
+		switch (character->get_role()) {
+			case character_role::advisor:
+				character_type_name = "Advisor";
+				break;
+			case character_role::leader:
+				character_type_name = character->get_leader_type_name();
+				break;
+			default:
+				break;
 		}
 
-		str += std::format("Recruit {} ({})", leader->get_full_name(), leader->get_leader_type_name());
+		str += std::format("Recruit {} ({})", character->get_full_name(), character_type_name);
 	}
 
 	if (this->get_completion_random_chance() != 0) {
