@@ -406,7 +406,7 @@ bool character::is_admiral() const
 	return is_ship_military_unit_category(this->get_military_unit_category());
 }
 
-std::string character::get_leader_type_name() const
+std::string_view character::get_leader_type_name() const
 {
 	assert_throw(this->get_role() == character_role::leader);
 

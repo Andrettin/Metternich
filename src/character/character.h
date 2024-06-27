@@ -307,11 +307,11 @@ public:
 	void apply_advisor_modifier(const country *country, const int multiplier) const;
 
 	bool is_admiral() const;
-	std::string get_leader_type_name() const;
+	std::string_view get_leader_type_name() const;
 
 	QString get_leader_type_name_qstring() const
 	{
-		return QString::fromStdString(this->get_leader_type_name());
+		return QString::fromStdString(std::string(this->get_leader_type_name()));
 	}
 
 signals:

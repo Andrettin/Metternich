@@ -3687,7 +3687,7 @@ void country_game_data::check_leaders()
 			if (this->country == game::get()->get_player_country()) {
 				const portrait *war_minister_portrait = defines::get()->get_war_minister_portrait();
 
-				const std::string leader_type_name = leader->get_leader_type_name();
+				const std::string_view leader_type_name = leader->get_leader_type_name();
 
 				engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(leader_type_name), leader->get_full_name()));
 			}
@@ -3710,7 +3710,7 @@ void country_game_data::check_leaders()
 			if (this->country == game::get()->get_player_country()) {
 				const portrait *war_minister_portrait = defines::get()->get_war_minister_portrait();
 
-				const std::string leader_type_name = this->get_next_leader()->get_leader_type_name();
+				const std::string_view leader_type_name = this->get_next_leader()->get_leader_type_name();
 
 				engine_interface::get()->add_notification(std::format("{} Unavailable", leader_type_name), war_minister_portrait, std::format("Your Excellency, the {} {} has unfortunately decided to join {}, and is no longer available for recruitment.", string::lowered(leader_type_name), this->get_next_leader()->get_full_name(), this->get_next_leader()->get_game_data()->get_country()->get_game_data()->get_name()));
 			}
@@ -3723,7 +3723,7 @@ void country_game_data::check_leaders()
 			if (this->country == game::get()->get_player_country()) {
 				const portrait *war_minister_portrait = defines::get()->get_war_minister_portrait();
 
-				const std::string leader_type_name = this->get_next_leader()->get_leader_type_name();
+				const std::string_view leader_type_name = this->get_next_leader()->get_leader_type_name();
 
 				engine_interface::get()->add_notification(std::format("{} Unavailable", leader_type_name), war_minister_portrait, std::format("Your Excellency, the {} {} is no longer available for recruitment.", string::lowered(leader_type_name), this->get_next_leader()->get_full_name()));
 			}

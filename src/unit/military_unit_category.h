@@ -34,7 +34,7 @@ enum class military_unit_category {
 	heavy_warship
 };
 
-inline std::string get_military_unit_category_name(const military_unit_category category)
+inline std::string_view get_military_unit_category_name(const military_unit_category category)
 {
 	switch (category) {
 		case military_unit_category::beasts:

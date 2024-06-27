@@ -27,6 +27,7 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
+#include "util/string_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -549,7 +550,13 @@ void technology::write_character_effects_string(const character_role role, const
 				str += "\n";
 			}
 
-			str += std::format("Enables {} {}", character->get_full_name(), role_name);
+			std::string character_type_name = std::string(role_name);
+
+			if (role == character_role::leader) {
+				character_type_name = string::lowered(character->get_leader_type_name());
+			}
+
+			str += std::format("Enables {} {}", character->get_full_name(), character_type_name);
 		}
 	}
 
