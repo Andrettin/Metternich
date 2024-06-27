@@ -667,6 +667,11 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const QPoint tile_pos = site->get_game_data()->get_tile_pos();
 
+			if (map::get()->get_tile(tile_pos)->get_civilian_unit() != nullptr) {
+				//tile already occupied
+				continue;
+			}
+
 			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, population_type, culture, religion, phenotype, home_settlement);
 			civilian_unit->set_tile_pos(tile_pos);
 
