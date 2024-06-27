@@ -8,7 +8,8 @@ enum class character_role {
 	none,
 	ruler,
 	advisor,
-	leader
+	leader,
+	civilian
 };
 
 }

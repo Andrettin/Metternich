@@ -553,7 +553,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const country *country = character_history->get_country();
 
-			if ((character->get_role() == character_role::advisor || character->get_role() == character_role::leader) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
+			if ((character->get_role() == character_role::advisor || character->get_role() == character_role::leader || character->get_role() == character_role::civilian) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
 				country_game_data *country_game_data = country->get_game_data();
 				const technology *obsolescence_technology = character->get_obsolescence_technology();
 
@@ -578,6 +578,44 @@ void game::apply_history(const metternich::scenario *scenario)
 							assert_throw(character_game_data->get_country() != nullptr);
 							character_game_data->deploy_to_province(character_history->get_deployment_province());
 						}
+					} else if (character->get_role() == character_role::civilian) {
+						const site *deployment_site = character_history->get_deployment_site();
+						if (deployment_site == nullptr && country_game_data->get_capital() != nullptr) {
+							deployment_site = country_game_data->get_capital();
+						}
+
+						assert_throw(deployment_site != nullptr);
+
+						if (!deployment_site->get_game_data()->is_on_map()) {
+							continue;
+						}
+
+						if (deployment_site->get_game_data()->get_owner() != country) {
+							continue;
+							country_game_data->add_leader(character);
+
+							assert_throw(character_game_data->get_country() != nullptr);
+							character_game_data->deploy_to_province(character_history->get_deployment_province());
+						}
+
+						const civilian_unit_type *type = character->get_civilian_unit_type();
+						assert_throw(type != nullptr);
+
+						if (type->get_required_technology() != nullptr) {
+							country_game_data->add_technology_with_prerequisites(type->get_required_technology());
+						}
+
+						const QPoint tile_pos = deployment_site->get_game_data()->get_tile_pos();
+
+						if (map::get()->get_tile(tile_pos)->get_civilian_unit() != nullptr) {
+							log::log_error(std::format("Cannot deploy civilian character \"{}\" to site \"{}\", since that site's tile is already occupied by another civilian unit.", character->get_identifier(), deployment_site->get_identifier()));
+							continue;
+						}
+
+						auto civilian_unit = make_qunique<metternich::civilian_unit>(character, country);
+						civilian_unit->set_tile_pos(tile_pos);
+
+						country_game_data->add_civilian_unit(std::move(civilian_unit));
 					}
 				}
 

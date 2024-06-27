@@ -1283,6 +1283,10 @@ public:
 	void choose_next_leader();
 	const military_unit_type *get_next_leader_military_unit_type() const;
 
+	bool has_civilian_character(const character *character) const;
+	std::vector<const character *> get_civilian_characters() const;
+	void check_civilian_characters();
+
 	const commodity_map<int> &get_bids() const
 	{
 		return this->bids;

@@ -68,6 +68,7 @@
 #include "ui/portrait.h"
 #include "unit/army.h"
 #include "unit/civilian_unit.h"
+#include "unit/civilian_unit_type.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_class.h"
@@ -2139,6 +2140,11 @@ void country_game_data::decrease_population()
 	for (auto it = this->civilian_units.rbegin(); it != this->civilian_units.rend(); ++it) {
 		civilian_unit *civilian_unit = it->get();
 
+		if (civilian_unit->get_character() != nullptr) {
+			//character civilian units do not cost food, so disbanding them does nothing to help with starvation
+			continue;
+		}
+
 		if (
 			best_civilian_unit == nullptr
 			|| (best_civilian_unit->is_busy() && !civilian_unit->is_busy())
@@ -3360,6 +3366,7 @@ void country_game_data::check_characters()
 	this->check_ruler();
 	this->check_advisors();
 	this->check_leaders();
+	this->check_civilian_characters();
 }
 
 void country_game_data::set_ruler(const character *ruler)
@@ -3885,6 +3892,50 @@ const military_unit_type *country_game_data::get_next_leader_military_unit_type(
 	return this->get_best_military_unit_category_type(this->get_next_leader()->get_military_unit_category(), this->get_next_leader()->get_culture());
 }
 
+bool country_game_data::has_civilian_character(const character *character) const
+{
+	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
+		if (civilian_unit->get_character() == character) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+std::vector<const character *> country_game_data::get_civilian_characters() const
+{
+	std::vector<const character *> civilian_characters;
+
+	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
+		if (civilian_unit->get_character() != nullptr) {
+			civilian_characters.push_back(civilian_unit->get_character());
+		}
+	}
+
+	return civilian_characters;
+}
+
+void country_game_data::check_civilian_characters()
+{
+	//remove obsolete civilian characters
+	const std::vector<const character *> civilian_characters = this->get_civilian_characters();
+	for (const character *character : civilian_characters) {
+		if (character->get_obsolescence_technology() != nullptr && this->has_technology(character->get_obsolescence_technology())) {
+			if (this->country == game::get()->get_player_country()) {
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				const std::string &civilian_unit_type_name = character->get_civilian_unit_type()->get_name();
+
+				engine_interface::get()->add_notification(std::format("{} Retired", civilian_unit_type_name), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(civilian_unit_type_name), character->get_full_name()));
+			}
+
+			assert_throw(character->get_game_data()->get_civilian_unit() != nullptr);
+			this->remove_civilian_unit(character->get_game_data()->get_civilian_unit());
+		}
+	}
+}
+
 QVariantList country_game_data::get_bids_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_bids());
@@ -3996,13 +4047,24 @@ void country_game_data::assign_trade_orders()
 
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
-	this->change_food_consumption(1);
+	if (civilian_unit->get_character() != nullptr) {
+		civilian_unit->get_character()->get_game_data()->set_country(this->country);
+	} else {
+		this->change_food_consumption(1);
+	}
+
 	this->civilian_units.push_back(std::move(civilian_unit));
 }
 
 void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 {
-	this->change_food_consumption(-1);
+	assert_throw(civilian_unit != nullptr);
+
+	if (civilian_unit->get_character() != nullptr) {
+		civilian_unit->get_character()->get_game_data()->set_country(nullptr);
+	} else {
+		this->change_food_consumption(-1);
+	}
 
 	for (size_t i = 0; i < this->civilian_units.size(); ++i) {
 		if (this->civilian_units[i].get() == civilian_unit) {

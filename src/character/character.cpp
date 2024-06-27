@@ -222,6 +222,11 @@ void character::check() const
 				throw std::runtime_error(std::format("Character \"{}\" is a leader, but has no military unit category.", this->get_identifier()));
 			}
 			break;
+		case character_role::civilian:
+			if (this->get_civilian_unit_type() == nullptr) {
+				throw std::runtime_error(std::format("Character \"{}\" is a civilian, but has no civilian unit type.", this->get_identifier()));
+			}
+			break;
 		default:
 			break;
 	}
@@ -246,6 +251,10 @@ void character::check() const
 
 	if (this->get_role() != character_role::leader && this->get_military_unit_category() != military_unit_category::none) {
 		throw std::runtime_error(std::format("Character \"{}\" has a military unit category, but is not a leader.", this->get_identifier()));
+	}
+
+	if (this->get_role() != character_role::civilian && this->get_civilian_unit_type() != nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has a civilian unit type, but is not a civilian.", this->get_identifier()));
 	}
 
 	assert_throw(this->get_culture() != nullptr);

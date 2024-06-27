@@ -11,6 +11,7 @@ Q_MOC_INCLUDE("ui/portrait.h")
 namespace metternich {
 
 class character;
+class civilian_unit;
 class country;
 class military_unit;
 class portrait;
@@ -117,6 +118,20 @@ public:
 	void deploy_to_province(const province *province);
 	void undeploy();
 
+	metternich::civilian_unit *get_civilian_unit() const
+	{
+		return this->civilian_unit;
+	}
+
+	void set_civilian_unit(metternich::civilian_unit *civilian_unit)
+	{
+		if (civilian_unit == this->get_civilian_unit()) {
+			return;
+		}
+
+		this->civilian_unit = civilian_unit;
+	}
+
 	void apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier = 1);
 
 	void remove_modifier(const modifier<const metternich::character> *modifier)
@@ -177,6 +192,7 @@ private:
 	std::vector<const trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	metternich::military_unit *military_unit = nullptr;
+	metternich::civilian_unit *civilian_unit = nullptr;
 	spell_set spells;
 	spell_set item_spells;
 };

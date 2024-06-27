@@ -536,6 +536,7 @@ QString technology::get_effects_string(metternich::country *country) const
 	this->write_character_effects_string(character_role::ruler, "ruler", country, str);
 	this->write_character_effects_string(character_role::advisor, "advisor", country, str);
 	this->write_character_effects_string(character_role::leader, "leader", country, str);
+	this->write_character_effects_string(character_role::civilian, "civilian", country, str);
 
 	return QString::fromStdString(str);
 }
@@ -552,8 +553,13 @@ void technology::write_character_effects_string(const character_role role, const
 
 			std::string character_type_name = std::string(role_name);
 
-			if (role == character_role::leader) {
-				character_type_name = string::lowered(character->get_leader_type_name());
+			switch (role) {
+				case character_role::leader:
+					character_type_name = string::lowered(character->get_leader_type_name());
+					break;
+				case character_role::civilian:
+					character_type_name = string::lowered(character->get_civilian_unit_type()->get_name());
+					break;
 			}
 
 			str += std::format("Enables {} {}", character->get_full_name(), character_type_name);

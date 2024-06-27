@@ -8,6 +8,7 @@ Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 
 namespace metternich {
 
+class character;
 class civilian_unit_type;
 class country;
 class culture;
@@ -35,7 +36,9 @@ public:
 	static constexpr int improvement_construction_turns = 2;
 	static constexpr int exploration_turns = 1;
 
+	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement);
 	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement);
+	explicit civilian_unit(const metternich::character *character, const country *owner);
 
 	void do_turn();
 	void do_ai_turn();
@@ -85,6 +88,11 @@ public:
 	const site *get_home_settlement() const
 	{
 		return this->home_settlement;
+	}
+
+	const metternich::character *get_character() const
+	{
+		return this->character;
 	}
 
 	const QPoint &get_tile_pos() const
@@ -168,6 +176,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const site *home_settlement = nullptr;
+	const metternich::character *character = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	QPoint original_tile_pos = QPoint(-1, -1); //the tile position before moving
 	const improvement *improvement_under_construction = nullptr;

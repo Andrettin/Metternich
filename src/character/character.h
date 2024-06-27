@@ -15,6 +15,7 @@ Q_MOC_INCLUDE("population/phenotype.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("time/calendar.h")
 Q_MOC_INCLUDE("ui/portrait.h")
+Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 
 namespace archimedes {
 	class calendar;
@@ -26,6 +27,7 @@ namespace metternich {
 class advisor_type;
 class character_game_data;
 class character_history;
+class civilian_unit_type;
 class country;
 class culture;
 class dynasty;
@@ -60,6 +62,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::character_role role MEMBER role READ get_role NOTIFY changed)
 	Q_PROPERTY(metternich::advisor_type* advisor_type MEMBER advisor_type NOTIFY changed)
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
+	Q_PROPERTY(const metternich::civilian_unit_type* civilian_unit_type MEMBER civilian_unit_type NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
@@ -186,6 +189,11 @@ public:
 	metternich::military_unit_category get_military_unit_category() const
 	{
 		return this->military_unit_category;
+	}
+
+	const metternich::civilian_unit_type *get_civilian_unit_type() const
+	{
+		return this->civilian_unit_type;
 	}
 
 	const metternich::culture *get_culture() const
@@ -327,6 +335,7 @@ private:
 	metternich::character_role role;
 	metternich::advisor_type *advisor_type = nullptr;
 	metternich::military_unit_category military_unit_category;
+	const metternich::civilian_unit_type *civilian_unit_type = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	metternich::phenotype *phenotype = nullptr;

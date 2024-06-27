@@ -14,7 +14,8 @@ const std::map<std::string, metternich::character_role> enum_converter<metternic
 	{ "none", metternich::character_role::none },
 	{ "ruler", metternich::character_role::ruler },
 	{ "advisor", metternich::character_role::advisor },
-	{ "leader", metternich::character_role::leader }
+	{ "leader", metternich::character_role::leader },
+	{ "civilian", metternich::character_role::civilian }
 };
 
 template <>

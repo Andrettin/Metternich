@@ -16,6 +16,7 @@
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
+#include "unit/civilian_unit_type.h"
 #include "util/assert_util.h"
 #include "util/random.h"
 #include "util/string_util.h"
@@ -145,6 +146,7 @@ void journal_entry::check() const
 		switch (character->get_role()) {
 			case character_role::advisor:
 			case character_role::leader:
+			case character_role::civilian:
 				break;
 			default:
 				throw std::runtime_error(std::format("Journal entry \"{}\" requires the recruiting \"{}\" character, but that character does not have a recruitable role.", this->get_identifier(), character->get_identifier()));
@@ -258,6 +260,11 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 					return false;
 				}
 				break;
+			case character_role::civilian:
+				if (!country_game_data->has_civilian_character(character)) {
+					return false;
+				}
+				break;
 			default:
 				break;
 		}
@@ -338,6 +345,9 @@ QString journal_entry::get_completion_conditions_string() const
 				break;
 			case character_role::leader:
 				character_type_name = character->get_leader_type_name();
+				break;
+			case character_role::civilian:
+				character_type_name = character->get_civilian_unit_type()->get_name();
 				break;
 			default:
 				break;

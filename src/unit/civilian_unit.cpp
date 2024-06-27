@@ -2,6 +2,8 @@
 
 #include "unit/civilian_unit.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
@@ -22,12 +24,11 @@
 
 namespace metternich {
 
-civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement)
-	: type(type), owner(owner), population_type(population_type), culture(culture), religion(religion), phenotype(phenotype), home_settlement(home_settlement)
+civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement)
+	: type(type), owner(owner), culture(culture), religion(religion), phenotype(phenotype), home_settlement(home_settlement)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_owner() != nullptr);
-	assert_throw(this->get_population_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
@@ -38,6 +39,22 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owne
 	connect(this->get_owner()->get_game_data(), &country_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_game_data(), &country_game_data::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_game_data(), &country_game_data::technologies_changed, this, &civilian_unit::improvable_resources_changed);
+}
+
+civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement)
+	: civilian_unit(type, owner, culture, religion, phenotype, home_settlement)
+{
+	this->population_type = population_type;
+	assert_throw(this->get_population_type() != nullptr);
+}
+
+civilian_unit::civilian_unit(const metternich::character *character, const country *owner)
+	: civilian_unit(character->get_civilian_unit_type(), owner, character->get_culture(), character->get_religion(), character->get_phenotype(), character->get_home_settlement())
+{
+	this->character = character;
+
+	character_game_data *character_game_data = this->get_character()->get_game_data();
+	character_game_data->set_civilian_unit(this);
 }
 
 void civilian_unit::do_turn()
@@ -347,13 +364,19 @@ void civilian_unit::disband(const bool restore_population_unit)
 		this->cancel_work();
 	}
 
+	if (this->get_character() != nullptr) {
+		character_game_data *character_game_data = this->get_character()->get_game_data();
+		character_game_data->set_civilian_unit(nullptr);
+		character_game_data->set_dead(true);
+	}
+
 	tile *tile = this->get_tile();
 
 	assert_throw(tile != nullptr);
 
 	map::get()->set_tile_civilian_unit(this->get_tile_pos(), nullptr);
 
-	if (restore_population_unit) {
+	if (restore_population_unit && this->get_population_type() != nullptr) {
 		this->get_home_settlement()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
 	}
 
