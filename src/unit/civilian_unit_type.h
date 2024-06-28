@@ -102,6 +102,16 @@ public:
 		return this->get_improvable_resources().contains(resource);
 	}
 
+	const pathway_set &get_buildable_pathways() const
+	{
+		return this->buildable_pathways;
+	}
+
+	bool can_build_pathway(const pathway *pathway) const
+	{
+		return this->get_buildable_pathways().contains(pathway);
+	}
+
 signals:
 	void changed();
 
@@ -116,6 +126,7 @@ private:
 	bool spy = false;
 	technology *required_technology = nullptr;
 	resource_set improvable_resources;
+	pathway_set buildable_pathways;
 };
 
 }
