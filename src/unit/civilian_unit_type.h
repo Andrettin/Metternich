@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/resource_container.h"
 
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")
@@ -38,6 +39,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -71,6 +73,16 @@ public:
 		return this->required_technology;
 	}
 
+	const resource_set &get_improvable_resources() const
+	{
+		return this->improvable_resources;
+	}
+
+	bool can_improve_resource(const resource *resource) const
+	{
+		return this->get_improvable_resources().contains(resource);
+	}
+
 signals:
 	void changed();
 
@@ -81,6 +93,7 @@ private:
 	metternich::icon *icon = nullptr;
 	bool explorer = false;
 	technology *required_technology = nullptr;
+	resource_set improvable_resources;
 };
 
 }

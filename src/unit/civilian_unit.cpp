@@ -220,6 +220,10 @@ bool civilian_unit::can_build_improvement(const improvement *improvement) const
 		return false;
 	}
 
+	if (improvement->get_resource() != nullptr && !this->get_type()->can_improve_resource(improvement->get_resource())) {
+		return false;
+	}
+
 	if (improvement->get_wealth_cost() > 0 && improvement->get_wealth_cost() > country_game_data->get_wealth_with_credit()) {
 		return false;
 	}
@@ -286,10 +290,8 @@ const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(co
 		return nullptr;
 	}
 
-	for (const improvement *improvement : improvement::get_all()) {
-		if (improvement->get_resource() == nullptr) {
-			continue;
-		}
+	for (const improvement *improvement : tile->get_resource()->get_improvements()) {
+		assert_throw(improvement->get_resource() != nullptr);
 
 		if (!this->can_build_improvement_on_tile(improvement, tile_pos)) {
 			continue;
@@ -305,11 +307,19 @@ resource_map<std::vector<QPoint>> civilian_unit::get_improvable_resource_tiles()
 {
 	resource_map<std::vector<QPoint>> resource_tiles;
 
+	if (this->get_type()->get_improvable_resources().empty()) {
+		return resource_tiles;
+	}
+
 	for (const province *province : this->get_owner()->get_game_data()->get_provinces()) {
 		for (const QPoint &tile_pos : province->get_game_data()->get_resource_tiles()) {
 			const tile *tile = map::get()->get_tile(tile_pos);
 
 			if (tile->get_resource() == nullptr) {
+				continue;
+			}
+
+			if (!this->get_type()->can_improve_resource(tile->get_resource())) {
 				continue;
 			}
 

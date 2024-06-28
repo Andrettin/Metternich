@@ -4,11 +4,26 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "economy/resource.h"
 #include "technology/technology.h"
 #include "unit/civilian_unit_class.h"
 #include "util/assert_util.h"
 
 namespace metternich {
+
+void civilian_unit_type::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "improvable_resources") {
+		for (const std::string &value : values) {
+			this->improvable_resources.insert(resource::get(value));
+		}
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
+}
 
 void civilian_unit_type::initialize()
 {
