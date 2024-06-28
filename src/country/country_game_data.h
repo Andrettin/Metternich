@@ -45,6 +45,7 @@ class civilian_unit;
 class consulate;
 class country;
 class country_building_slot;
+class country_rank;
 class culture;
 class event;
 class flag;
@@ -85,8 +86,6 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QString ruler_title_name READ get_ruler_title_name_qstring NOTIFY ruler_title_name_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(const metternich::country* overlord READ get_overlord NOTIFY overlord_changed)
-	Q_PROPERTY(bool true_great_power READ is_true_great_power NOTIFY rank_changed)
-	Q_PROPERTY(bool secondary_power READ is_secondary_power NOTIFY rank_changed)
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
 	Q_PROPERTY(const metternich::subject_type* subject_type READ get_subject_type NOTIFY subject_type_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
@@ -105,8 +104,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList subject_type_counts READ get_subject_type_counts_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList consulates READ get_consulates_qvariant_list NOTIFY consulates_changed)
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
-	Q_PROPERTY(int rank READ get_rank NOTIFY rank_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
+	Q_PROPERTY(int score_rank READ get_score_rank NOTIFY score_rank_changed)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
@@ -237,9 +236,6 @@ public:
 
 	bool is_overlord_of(const metternich::country *country) const;
 	bool is_any_overlord_of(const metternich::country *country) const;
-
-	bool is_true_great_power() const;
-	bool is_secondary_power() const;
 
 	bool is_independent() const
 	{
@@ -564,21 +560,6 @@ public:
 	[[nodiscard]]
 	QCoro::Task<void> create_diplomacy_state_diplomatic_map_image(const diplomacy_state state);
 
-	int get_rank() const
-	{
-		return this->rank;
-	}
-
-	void set_rank(const int rank)
-	{
-		if (rank == this->get_rank()) {
-			return;
-		}
-
-		this->rank = rank;
-		emit rank_changed();
-	}
-
 	int get_score() const
 	{
 		return this->score;
@@ -599,6 +580,36 @@ public:
 	}
 
 	void change_military_score(const int change);
+
+	int get_score_rank() const
+	{
+		return this->score_rank;
+	}
+
+	void set_score_rank(const int score_rank)
+	{
+		if (score_rank == this->get_score_rank()) {
+			return;
+		}
+
+		this->score_rank = score_rank;
+		emit score_rank_changed();
+	}
+
+	const country_rank *get_rank() const
+	{
+		return this->rank;
+	}
+
+	void set_rank(const country_rank *rank)
+	{
+		if (rank == this->get_rank()) {
+			return;
+		}
+
+		this->rank = rank;
+		emit rank_changed();
+	}
 
 	const population_class *get_default_population_class() const;
 
@@ -2066,8 +2077,9 @@ signals:
 	void provinces_changed();
 	void capital_changed();
 	void diplomatic_map_image_changed();
-	void rank_changed();
 	void score_changed();
+	void score_rank_changed();
+	void rank_changed();
 	void population_units_changed();
 	void population_growth_changed();
 	void housing_changed();
@@ -2139,8 +2151,9 @@ private:
 	std::map<diplomatic_map_mode, QImage> diplomatic_map_mode_images;
 	std::map<diplomacy_state, QImage> diplomacy_state_diplomatic_map_images;
 	QRect diplomatic_map_image_rect;
-	int rank = 0;
 	int score = 0;
+	const country_rank *rank = nullptr;
+	int score_rank = 0;
 	int economic_score = 0;
 	int military_score = 0;
 	std::vector<population_unit *> population_units;

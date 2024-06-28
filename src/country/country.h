@@ -62,7 +62,6 @@ public:
 	static constexpr const char database_folder[] = "countries";
 	static constexpr bool history_enabled = true;
 
-	static constexpr size_t max_great_powers = 7; //maximum true great powers, all others are called secondary powers instead
 	static constexpr int min_opinion = -200;
 	static constexpr int max_opinion = 200;
 

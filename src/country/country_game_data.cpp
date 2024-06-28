@@ -10,6 +10,7 @@
 #include "character/trait.h"
 #include "country/consulate.h"
 #include "country/country.h"
+#include "country/country_rank.h"
 #include "country/country_tier.h"
 #include "country/country_tier_data.h"
 #include "country/country_turn_data.h"
@@ -798,25 +799,6 @@ bool country_game_data::is_any_overlord_of(const metternich::country *country) c
 	return false;
 }
 
-bool country_game_data::is_true_great_power() const
-{
-	if (this->country->get_type() != country_type::great_power) {
-		return false;
-	}
-
-	return this->get_rank() < country::max_great_powers;
-}
-
-bool country_game_data::is_secondary_power() const
-{
-	//a country is a secondary power if its type is great power, and it is not high-ranking enough to be considered a true great power
-	if (this->country->get_type() != country_type::great_power) {
-		return false;
-	}
-
-	return this->get_rank() >= country::max_great_powers;
-}
-
 std::string country_game_data::get_type_name() const
 {
 	switch (this->country->get_type()) {
@@ -825,8 +807,8 @@ std::string country_game_data::get_type_name() const
 				return "Subject Power";
 			}
 
-			if (this->is_secondary_power()) {
-				return "Secondary Power";
+			if (this->get_rank() != nullptr) {
+				return this->get_rank()->get_name();
 			}
 
 			return "Great Power";

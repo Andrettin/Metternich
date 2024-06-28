@@ -40,6 +40,7 @@ set(country_SRCS
 	src/country/country_container.cpp
 	src/country/country_game_data.cpp
 	src/country/country_history.cpp
+	src/country/country_rank.cpp
 	src/country/country_tier.cpp
 	src/country/country_tier_data.cpp
 	src/country/country_turn_data.cpp
@@ -343,6 +344,7 @@ set(country_HDRS
 	src/country/country_container.h
 	src/country/country_game_data.h
 	src/country/country_history.h
+	src/country/country_rank.h
 	src/country/country_tier.h
 	src/country/country_tier_data.h
 	src/country/country_turn_data.h

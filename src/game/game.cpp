@@ -9,6 +9,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
+#include "country/country_rank.h"
 #include "country/country_tier.h"
 #include "country/country_turn_data.h"
 #include "country/cultural_group.h"
@@ -1838,8 +1839,11 @@ QVariantList game::get_great_powers_qvariant_list() const
 
 void game::calculate_great_power_ranks()
 {
-	//here we rank countries by province amount, but in the future this should be done by score instead
 	std::vector<const metternich::country *> great_powers = game::get()->get_great_powers();
+
+	if (great_powers.empty()) {
+		return;
+	}
 
 	std::sort(great_powers.begin(), great_powers.end(), [](const metternich::country *lhs, const metternich::country *rhs) {
 		if (lhs->get_game_data()->is_under_anarchy() != rhs->get_game_data()->is_under_anarchy()) {
@@ -1849,8 +1853,36 @@ void game::calculate_great_power_ranks()
 		return lhs->get_game_data()->get_score() > rhs->get_game_data()->get_score();
 	});
 
+	int64_t average_score = 0;
+	int highest_score = great_powers.at(0)->get_game_data()->get_score();
+	
 	for (size_t i = 0; i < great_powers.size(); ++i) {
-		great_powers.at(i)->get_game_data()->set_rank(static_cast<int>(i));
+		const country *great_power = great_powers.at(i);
+		great_power->get_game_data()->set_score_rank(static_cast<int>(i));
+
+		average_score += great_power->get_game_data()->get_score();
+	}
+
+	average_score /= great_powers.size();
+
+	for (const country *great_power : great_powers) {
+		const country_rank *best_rank = nullptr;
+		for (const country_rank *rank : country_rank::get_all()) {
+			if (best_rank != nullptr && best_rank->get_priority() >= rank->get_priority()) {
+				continue;
+			}
+
+			const centesimal_int score(great_power->get_game_data()->get_score());
+			const centesimal_int average_score_threshold = rank->get_average_score_threshold() * average_score;
+			const centesimal_int relative_score_threshold = rank->get_relative_score_threshold() * highest_score;
+			if (score >= average_score_threshold || score >= relative_score_threshold) {
+				best_rank = rank;
+			}
+		}
+
+		if (best_rank != nullptr) {
+			great_power->get_game_data()->set_rank(best_rank);
+		}
 	}
 }
 
