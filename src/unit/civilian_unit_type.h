@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/resource_container.h"
+#include "infrastructure/pathway_container.h"
 
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")
@@ -27,6 +28,9 @@ class civilian_unit_type final : public named_data_entry, public data_type<civil
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(bool explorer MEMBER explorer READ is_explorer NOTIFY changed)
+	Q_PROPERTY(bool prospector MEMBER prospector READ is_prospector NOTIFY changed)
+	Q_PROPERTY(bool developer MEMBER developer READ is_developer NOTIFY changed)
+	Q_PROPERTY(bool spy MEMBER spy READ is_spy NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
@@ -68,6 +72,21 @@ public:
 		return this->explorer;
 	}
 
+	bool is_prospector() const
+	{
+		return this->prospector;
+	}
+
+	bool is_developer() const
+	{
+		return this->developer;
+	}
+
+	bool is_spy() const
+	{
+		return this->spy;
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -92,6 +111,9 @@ private:
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *icon = nullptr;
 	bool explorer = false;
+	bool prospector = false;
+	bool developer = false;
+	bool spy = false;
 	technology *required_technology = nullptr;
 	resource_set improvable_resources;
 };
