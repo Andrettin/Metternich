@@ -24,10 +24,11 @@ class resource final : public named_data_entry, public data_type<resource>
 
 	Q_PROPERTY(metternich::commodity* commodity MEMBER commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
-	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
-	Q_PROPERTY(metternich::technology* discovery_technology MEMBER discovery_technology NOTIFY changed)
 	Q_PROPERTY(bool coastal MEMBER coastal READ is_coastal NOTIFY changed)
 	Q_PROPERTY(bool near_water MEMBER near_water READ is_near_water NOTIFY changed)
+	Q_PROPERTY(bool prospectable MEMBER prospectable READ is_prospectable NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(metternich::technology* discovery_technology MEMBER discovery_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "resource";
@@ -49,16 +50,6 @@ public:
 
 	const metternich::icon *get_icon() const;
 
-	const technology *get_required_technology() const
-	{
-		return this->required_technology;
-	}
-
-	const technology *get_discovery_technology() const
-	{
-		return this->discovery_technology;
-	}
-
 	bool is_coastal() const
 	{
 		return this->coastal;
@@ -67,6 +58,21 @@ public:
 	bool is_near_water() const
 	{
 		return this->near_water;
+	}
+
+	bool is_prospectable() const
+	{
+		return this->prospectable;
+	}
+
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
+	const technology *get_discovery_technology() const
+	{
+		return this->discovery_technology;
 	}
 
 	const std::vector<const terrain_type *> &get_terrain_types() const
@@ -102,10 +108,11 @@ signals:
 private:
 	metternich::commodity *commodity = nullptr;
 	const metternich::icon *icon = nullptr;
-	technology *required_technology = nullptr; //technology which is required to see the resource on the tile
-	technology *discovery_technology = nullptr; //technology which is obtained when exploring this resource tile
 	bool coastal = false;
 	bool near_water = false;
+	bool prospectable = false;
+	technology *required_technology = nullptr; //technology which is required to see the resource on the tile
+	technology *discovery_technology = nullptr; //technology which is obtained when exploring this resource tile
 	std::vector<const terrain_type *> terrain_types;
 	std::vector<const improvement *> improvements;
 	std::vector<const building_type *> buildings;
