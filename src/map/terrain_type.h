@@ -5,8 +5,11 @@
 #include "map/terrain_adjacency.h"
 #include "util/color_container.h"
 
+Q_MOC_INCLUDE("ui/icon.h")
+
 namespace metternich {
 
+class icon;
 enum class elevation_type;
 enum class forestation_type;
 enum class moisture_type;
@@ -17,6 +20,7 @@ class terrain_type final : public named_data_entry, public data_type<terrain_typ
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(bool water MEMBER water READ is_water NOTIFY changed)
 	Q_PROPERTY(metternich::elevation_type elevation_type MEMBER elevation_type READ get_elevation_type NOTIFY changed)
@@ -87,6 +91,11 @@ public:
 
 		this->color = color;
 		terrain_type::terrain_types_by_color[color] = this;
+	}
+	
+	const metternich::icon *get_icon() const
+	{
+		return this->icon;
 	}
 
 	const std::filesystem::path &get_image_filepath() const
@@ -177,6 +186,7 @@ signals:
 
 private:
 	QColor color;
+	const metternich::icon *icon = nullptr;
 	std::filesystem::path image_filepath;
 	bool water = false;
 	metternich::elevation_type elevation_type;

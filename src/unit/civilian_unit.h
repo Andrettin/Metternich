@@ -1,6 +1,7 @@
 #pragma once
 
 #include "economy/resource_container.h"
+#include "map/terrain_type_container.h"
 
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -31,6 +32,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_tile_pos_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
 	Q_PROPERTY(QVariantList improvable_resource_tiles READ get_improvable_resource_tiles_qvariant_list NOTIFY improvable_resources_changed)
+	Q_PROPERTY(QVariantList prospectable_tiles READ get_prospectable_tiles_qvariant_list NOTIFY prospectable_tiles_changed)
 
 public:
 	static constexpr int improvement_construction_turns = 2;
@@ -147,7 +149,10 @@ public:
 	QVariantList get_improvable_resource_tiles_qvariant_list() const;
 
 	bool can_explore_tile(const QPoint &tile_pos) const;
+
 	bool can_prospect_tile(const QPoint &tile_pos) const;
+	terrain_type_map<std::vector<QPoint>> get_prospectable_tiles() const;
+	QVariantList get_prospectable_tiles_qvariant_list() const;
 
 	void set_task_completion_turns(const int turns)
 	{
@@ -168,6 +173,7 @@ signals:
 	void tile_pos_changed();
 	void original_tile_pos_changed();
 	void improvable_resources_changed();
+	void prospectable_tiles_changed();
 	void task_completion_turns_changed();
 
 private:

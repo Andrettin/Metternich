@@ -2124,6 +2124,7 @@ signals:
 	void resource_output_modifier_changed();
 	void industrial_output_modifier_changed();
 	void throughput_modifier_changed();
+	void prospected_tiles_changed();
 	void journal_entries_changed();
 	void journal_entry_completed(const journal_entry *journal_entry);
 

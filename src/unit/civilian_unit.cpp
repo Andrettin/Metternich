@@ -13,8 +13,10 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/province_map_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/terrain_type.h"
 #include "map/tile.h"
 #include "unit/civilian_unit_type.h"
 #include "ui/icon.h"
@@ -40,6 +42,10 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owne
 	connect(this->get_owner()->get_game_data(), &country_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_game_data(), &country_game_data::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_game_data(), &country_game_data::technologies_changed, this, &civilian_unit::improvable_resources_changed);
+
+	connect(this->get_owner()->get_game_data(), &country_game_data::provinces_changed, this, &civilian_unit::prospectable_tiles_changed);
+	connect(this->get_owner()->get_game_data(), &country_game_data::prospected_tiles_changed, this, &civilian_unit::prospectable_tiles_changed);
+	connect(this->get_owner()->get_game_data(), &country_game_data::technologies_changed, this, &civilian_unit::prospectable_tiles_changed);
 }
 
 civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement)
@@ -403,6 +409,10 @@ bool civilian_unit::can_prospect_tile(const QPoint &tile_pos) const
 
 	const tile *tile = map::get()->get_tile(tile_pos);
 
+	if (tile->is_resource_discovered()) {
+		return false;
+	}
+
 	for (const resource *resource : resource::get_all()) {
 		if (!resource->is_prospectable()) {
 			continue;
@@ -420,6 +430,60 @@ bool civilian_unit::can_prospect_tile(const QPoint &tile_pos) const
 	}
 
 	return false;
+}
+
+terrain_type_map<std::vector<QPoint>> civilian_unit::get_prospectable_tiles() const
+{
+	terrain_type_map<std::vector<QPoint>> prospectable_tiles;
+
+	if (!this->get_type()->is_prospector()) {
+		return prospectable_tiles;
+	}
+
+	terrain_type_set prospectable_terrains;
+
+	for (const resource *resource : resource::get_all()) {
+		if (!resource->is_prospectable()) {
+			continue;
+		}
+
+		if (resource->get_required_technology() != nullptr && !this->get_owner()->get_game_data()->has_technology(resource->get_required_technology())) {
+			continue;
+		}
+
+		for (const terrain_type *resource_terrain : resource->get_terrain_types()) {
+			prospectable_terrains.insert(resource_terrain);
+		}
+	}
+
+	for (const province *province : this->get_owner()->get_game_data()->get_provinces()) {
+		bool has_prospectable_terrain = false;
+		for (const terrain_type *prospectable_terrain : prospectable_terrains) {
+			if (province->get_game_data()->get_tile_terrain_counts().contains(prospectable_terrain)) {
+				has_prospectable_terrain = true;
+				break;
+			}
+		}
+		if (!has_prospectable_terrain) {
+			continue;
+		}
+
+		for (const QPoint &tile_pos : province->get_map_data()->get_tiles()) {
+			if (!this->can_prospect_tile(tile_pos)) {
+				continue;
+			}
+
+			const tile *tile = map::get()->get_tile(tile_pos);
+			prospectable_tiles[tile->get_terrain()].push_back(tile_pos);
+		}
+	}
+
+	return prospectable_tiles;
+}
+
+QVariantList civilian_unit::get_prospectable_tiles_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_prospectable_tiles());
 }
 
 void civilian_unit::disband(const bool restore_population_unit)

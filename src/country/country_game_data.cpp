@@ -4721,6 +4721,8 @@ void country_game_data::prospect_tile(const QPoint &tile_pos)
 		}
 	}
 
+	emit prospected_tiles_changed();
+
 	if (this->country == game::get()->get_player_country()) {
 		emit map::get()->tile_prospection_changed(tile_pos);
 	}
@@ -4729,6 +4731,8 @@ void country_game_data::prospect_tile(const QPoint &tile_pos)
 void country_game_data::reset_tile_prospection(const QPoint &tile_pos)
 {
 	this->prospected_tiles.erase(tile_pos);
+
+	emit prospected_tiles_changed();
 
 	if (this->country == game::get()->get_player_country()) {
 		emit map::get()->tile_prospection_changed(tile_pos);
