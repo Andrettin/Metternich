@@ -653,7 +653,7 @@ void country_game_data::do_ai_turn()
 			++i;
 		} else {
 			//if the civilian unit is idle, this means that nothing was found for it to do above; in that case, disband it
-			civilian_unit->disband();
+			civilian_unit->disband(false);
 		}
 	}
 
@@ -2136,7 +2136,7 @@ void country_game_data::decrease_population()
 	}
 
 	if (best_civilian_unit != nullptr) {
-		best_civilian_unit->disband(false);
+		best_civilian_unit->disband(true);
 		this->change_population_growth(1);
 		return;
 	}
@@ -2150,7 +2150,7 @@ void country_game_data::decrease_population()
 			continue;
 		}
 
-		military_unit->disband(false);
+		military_unit->disband(true);
 		this->change_population_growth(1);
 		return;
 	}
@@ -2159,7 +2159,7 @@ void country_game_data::decrease_population()
 	for (auto it = this->transporters.rbegin(); it != this->transporters.rend(); ++it) {
 		transporter *transporter = it->get();
 
-		transporter->disband(false);
+		transporter->disband(true);
 		this->change_population_growth(1);
 		return;
 	}
@@ -3698,7 +3698,7 @@ void country_game_data::check_leaders()
 				engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(leader_type_name), leader->get_full_name()));
 			}
 
-			leader->get_game_data()->get_military_unit()->disband();
+			leader->get_game_data()->get_military_unit()->disband(true);
 		}
 	}
 
@@ -3929,7 +3929,7 @@ void country_game_data::check_civilian_characters()
 			}
 
 			assert_throw(character->get_game_data()->get_civilian_unit() != nullptr);
-			character->get_game_data()->get_civilian_unit()->disband();
+			character->get_game_data()->get_civilian_unit()->disband(true);
 		}
 	}
 }

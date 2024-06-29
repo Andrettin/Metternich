@@ -2017,7 +2017,7 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 	if (attacker_score > defender_score) {
 		//destroy the defender units
 		for (military_unit *military_unit : defending_army->get_military_units()) {
-			military_unit->disband(false);
+			military_unit->disband(true);
 		}
 
 		return true;
@@ -2026,7 +2026,7 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 	if (attacker_score < defender_score) {
 		//destroy the attacker units
 		for (military_unit *military_unit : attacking_army->get_military_units()) {
-			military_unit->disband(false);
+			military_unit->disband(true);
 		}
 	}
 

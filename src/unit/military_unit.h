@@ -369,7 +369,7 @@ public:
 	void receive_damage(const int damage);
 	void heal(const int healing);
 
-	void disband(const bool restore_population_unit);
+	void disband(const bool dead);
 	Q_INVOKABLE void disband();
 
 	int get_score() const;

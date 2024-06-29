@@ -328,7 +328,7 @@ void military_unit::set_hit_points(const int hit_points)
 	}
 
 	if (this->get_hit_points() <= 0) {
-		this->disband(false);
+		this->disband(true);
 	} else {
 		emit hit_points_changed();
 	}
@@ -532,7 +532,7 @@ void military_unit::heal(const int healing)
 	this->change_hit_points(std::min(healing, missing_hit_points));
 }
 
-void military_unit::disband(const bool restore_population_unit)
+void military_unit::disband(const bool dead)
 {
 	if (this->get_character() != nullptr) {
 		character_game_data *character_game_data = this->get_character()->get_game_data();
@@ -542,7 +542,9 @@ void military_unit::disband(const bool restore_population_unit)
 			character_game_data->get_country()->get_game_data()->remove_leader(this->get_character());
 		}
 
-		character_game_data->set_dead(true);
+		if (dead) {
+			character_game_data->set_dead(true);
+		}
 	}
 
 	if (this->get_army() != nullptr) {
@@ -557,7 +559,7 @@ void military_unit::disband(const bool restore_population_unit)
 		this->get_country()->get_game_data()->change_military_score(-this->get_score());
 		this->get_country()->get_game_data()->remove_military_unit(this);
 
-		if (restore_population_unit) {
+		if (!dead) {
 			assert_throw(this->get_population_type() != nullptr);
 			assert_throw(this->get_culture() != nullptr);
 			assert_throw(this->get_religion() != nullptr);
@@ -571,7 +573,7 @@ void military_unit::disband(const bool restore_population_unit)
 
 void military_unit::disband()
 {
-	this->disband(true);
+	this->disband(false);
 }
 
 int military_unit::get_score() const

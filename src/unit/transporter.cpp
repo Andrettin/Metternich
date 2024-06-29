@@ -132,7 +132,7 @@ void transporter::set_hit_points(const int hit_points)
 	}
 
 	if (this->get_hit_points() <= 0) {
-		this->disband(false);
+		this->disband(true);
 	}
 }
 
@@ -165,12 +165,12 @@ void transporter::heal(const int healing)
 	this->change_hit_points(std::min(healing, missing_hit_points));
 }
 
-void transporter::disband(const bool restore_population_unit)
+void transporter::disband(const bool dead)
 {
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->remove_transporter(this);
 
-		if (restore_population_unit) {
+		if (!dead) {
 			assert_throw(this->get_population_type() != nullptr);
 			assert_throw(this->get_culture() != nullptr);
 			assert_throw(this->get_religion() != nullptr);
@@ -184,7 +184,7 @@ void transporter::disband(const bool restore_population_unit)
 
 void transporter::disband()
 {
-	this->disband(true);
+	this->disband(false);
 }
 
 int transporter::get_score() const

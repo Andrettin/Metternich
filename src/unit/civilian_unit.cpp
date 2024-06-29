@@ -486,7 +486,7 @@ QVariantList civilian_unit::get_prospectable_tiles_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_prospectable_tiles());
 }
 
-void civilian_unit::disband(const bool restore_population_unit)
+void civilian_unit::disband(const bool dead)
 {
 	if (this->is_working()) {
 		this->cancel_work();
@@ -495,7 +495,10 @@ void civilian_unit::disband(const bool restore_population_unit)
 	if (this->get_character() != nullptr) {
 		character_game_data *character_game_data = this->get_character()->get_game_data();
 		character_game_data->set_civilian_unit(nullptr);
-		character_game_data->set_dead(true);
+
+		if (dead) {
+			character_game_data->set_dead(true);
+		}
 	}
 
 	tile *tile = this->get_tile();
@@ -504,7 +507,7 @@ void civilian_unit::disband(const bool restore_population_unit)
 
 	map::get()->set_tile_civilian_unit(this->get_tile_pos(), nullptr);
 
-	if (restore_population_unit && this->get_population_type() != nullptr) {
+	if (!dead && this->get_population_type() != nullptr) {
 		this->get_home_settlement()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
 	}
 
@@ -513,7 +516,7 @@ void civilian_unit::disband(const bool restore_population_unit)
 
 void civilian_unit::disband()
 {
-	this->disband(true);
+	this->disband(false);
 }
 
 }
