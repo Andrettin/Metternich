@@ -28,6 +28,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(const metternich::civilian_unit_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::country* owner READ get_owner CONSTANT)
+	Q_PROPERTY(const metternich::character* character READ get_character CONSTANT)
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_tile_pos_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
