@@ -699,6 +699,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/free_cavalry_promotion_modifier_effect.h
 	src/script/modifier_effect/free_consulate_modifier_effect.h
 	src/script/modifier_effect/free_infantry_promotion_modifier_effect.h
+	src/script/modifier_effect/free_warship_promotion_modifier_effect.h
 	src/script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h
 	src/script/modifier_effect/housing_modifier_effect.h
 	src/script/modifier_effect/industrial_output_modifier_effect.h
@@ -711,6 +712,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/leader_cost_modifier_effect.h
 	src/script/modifier_effect/melee_modifier_effect.h
 	src/script/modifier_effect/modifier_effect.h
+	src/script/modifier_effect/movement_modifier_effect.h
 	src/script/modifier_effect/naval_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h

@@ -37,6 +37,7 @@
 #include "script/modifier_effect/free_cavalry_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_consulate_modifier_effect.h"
 #include "script/modifier_effect/free_infantry_promotion_modifier_effect.h"
+#include "script/modifier_effect/free_warship_promotion_modifier_effect.h"
 #include "script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h"
 #include "script/modifier_effect/housing_modifier_effect.h"
 #include "script/modifier_effect/industrial_output_modifier_effect.h"
@@ -48,6 +49,7 @@
 #include "script/modifier_effect/land_recovery_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
 #include "script/modifier_effect/melee_modifier_effect.h"
+#include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
@@ -101,6 +103,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<free_consulate_modifier_effect>(value);
 		} else if (key == "free_infantry_promotion") {
 			return std::make_unique<free_infantry_promotion_modifier_effect>(value);
+		} else if (key == "free_warship_promotion") {
+			return std::make_unique<free_warship_promotion_modifier_effect>(value);
 		} else if (key == "gain_technologies_known_by_others") {
 			return std::make_unique<gain_technologies_known_by_others_modifier_effect>(value);
 		} else if (key == "industrial_output_modifier") {
@@ -177,6 +181,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<defense_modifier_effect>(value);
 		} else if (key == "melee") {
 			return std::make_unique<melee_modifier_effect>(value);
+		} else if (key == "movement") {
+			return std::make_unique<movement_modifier_effect>(value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		static const std::string profession_capacity_prefix = "max_";

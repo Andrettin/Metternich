@@ -1969,6 +1969,29 @@ public:
 		this->set_free_artillery_promotion_count(promotion, this->get_free_artillery_promotion_count(promotion) + value);
 	}
 
+	const promotion_map<int> &get_free_warship_promotion_counts() const
+	{
+		return this->free_warship_promotion_counts;
+	}
+
+	int get_free_warship_promotion_count(const promotion *promotion) const
+	{
+		const auto find_iterator = this->free_warship_promotion_counts.find(promotion);
+
+		if (find_iterator != this->free_warship_promotion_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_free_warship_promotion_count(const promotion *promotion, const int value);
+
+	void change_free_warship_promotion_count(const promotion *promotion, const int value)
+	{
+		this->set_free_warship_promotion_count(promotion, this->get_free_warship_promotion_count(promotion) + value);
+	}
+
 	int get_free_consulate_count(const consulate *consulate) const
 	{
 		const auto find_iterator = this->free_consulate_counts.find(consulate);
@@ -2248,6 +2271,7 @@ private:
 	promotion_map<int> free_infantry_promotion_counts;
 	promotion_map<int> free_cavalry_promotion_counts;
 	promotion_map<int> free_artillery_promotion_counts;
+	promotion_map<int> free_warship_promotion_counts;
 	consulate_map<int> free_consulate_counts;
 	std::set<const flag *> flags;
 	building_type_map<int> ai_building_desire_modifiers;

@@ -120,6 +120,15 @@ bool military_unit_type::is_artillery() const
 	}
 }
 
+bool military_unit_type::is_ship() const
+{
+	if (this->get_unit_class() == nullptr) {
+		return false;
+	}
+
+	return this->get_unit_class()->is_ship();
+}
+
 int military_unit_type::get_score() const
 {
 	int score = this->get_wealth_cost();

@@ -5042,6 +5042,30 @@ void country_game_data::set_free_artillery_promotion_count(const promotion *prom
 	}
 }
 
+void country_game_data::set_free_warship_promotion_count(const promotion *promotion, const int value)
+{
+	const int old_value = this->get_free_warship_promotion_count(promotion);
+	if (value == old_value) {
+		return;
+	}
+
+	assert_throw(value >= 0);
+
+	if (value == 0) {
+		this->free_warship_promotion_counts.erase(promotion);
+	} else if (old_value == 0) {
+		this->free_warship_promotion_counts[promotion] = value;
+
+		for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
+			if (!military_unit->get_type()->is_ship()) {
+				continue;
+			}
+
+			military_unit->check_free_promotions();
+		}
+	}
+}
+
 void country_game_data::set_free_consulate_count(const consulate *consulate, const int value)
 {
 	const int old_value = this->get_free_consulate_count(consulate);

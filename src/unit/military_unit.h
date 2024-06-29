@@ -239,6 +239,25 @@ public:
 		this->set_defense(this->get_defense() + change);
 	}
 
+	int get_movement() const
+	{
+		return this->movement;
+	}
+
+	void set_movement(const int movement)
+	{
+		if (movement == this->get_movement()) {
+			return;
+		}
+
+		this->movement = movement;
+	}
+
+	void change_movement(const int change)
+	{
+		this->set_movement(this->get_movement() + change);
+	}
+
 	int get_damage_bonus() const
 	{
 		return this->damage_bonus;
@@ -402,6 +421,7 @@ private:
 	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat
 	int melee = 0;
 	int defense = 0;
+	int movement = 0;
 	int damage_bonus = 0;
 	int bonus_vs_infantry = 0;
 	int bonus_vs_cavalry = 0;

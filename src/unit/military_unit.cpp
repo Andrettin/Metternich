@@ -45,6 +45,7 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 
 	this->melee = type->get_melee();
 	this->defense = type->get_defense();
+	this->movement = type->get_movement();
 	this->bonus_vs_infantry = type->get_bonus_vs_infantry();
 	this->bonus_vs_cavalry = type->get_bonus_vs_cavalry();
 	this->bonus_vs_artillery = type->get_bonus_vs_artillery();
@@ -178,6 +179,10 @@ void military_unit::set_type(const military_unit_type *type)
 
 	if (type->get_defense() != old_type->get_defense()) {
 		this->change_defense(type->get_defense() - old_type->get_defense());
+	}
+
+	if (type->get_movement() != old_type->get_movement()) {
+		this->change_movement(type->get_movement() - old_type->get_movement());
 	}
 
 	if (type->get_bonus_vs_infantry() != old_type->get_bonus_vs_infantry()) {
@@ -487,6 +492,8 @@ void military_unit::check_free_promotions()
 			free_promotion_map = &this->get_country()->get_game_data()->get_free_cavalry_promotion_counts();
 		} else if (this->get_type()->is_artillery()) {
 			free_promotion_map = &this->get_country()->get_game_data()->get_free_artillery_promotion_counts();
+		} else if (this->get_type()->is_ship()) {
+			free_promotion_map = &this->get_country()->get_game_data()->get_free_warship_promotion_counts();
 		}
 	}
 
