@@ -3698,8 +3698,7 @@ void country_game_data::check_leaders()
 				engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(leader_type_name), leader->get_full_name()));
 			}
 
-			this->remove_leader(leader);
-			leader->get_game_data()->set_dead(true);
+			leader->get_game_data()->get_military_unit()->disband();
 		}
 	}
 
@@ -3930,7 +3929,7 @@ void country_game_data::check_civilian_characters()
 			}
 
 			assert_throw(character->get_game_data()->get_civilian_unit() != nullptr);
-			this->remove_civilian_unit(character->get_game_data()->get_civilian_unit());
+			character->get_game_data()->get_civilian_unit()->disband();
 		}
 	}
 }
@@ -4060,6 +4059,7 @@ void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 	assert_throw(civilian_unit != nullptr);
 
 	if (civilian_unit->get_character() != nullptr) {
+		assert_throw(civilian_unit->get_character()->get_game_data()->get_country() == this->country);
 		civilian_unit->get_character()->get_game_data()->set_country(nullptr);
 	} else {
 		this->change_food_consumption(-1);
