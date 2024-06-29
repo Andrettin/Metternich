@@ -907,6 +907,10 @@ void game::apply_sites()
 				}
 
 				site_game_data->set_settlement_type(site_history->get_settlement_type());
+
+				if (tile->get_resource() != nullptr) {
+					map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
+				}
 			}
 		}
 	}
