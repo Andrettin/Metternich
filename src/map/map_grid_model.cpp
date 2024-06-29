@@ -30,6 +30,7 @@ map_grid_model::map_grid_model()
 {
 	connect(map::get(), &map::tile_terrain_changed, this, &map_grid_model::on_tile_terrain_changed);
 	connect(map::get(), &map::tile_exploration_changed, this, &map_grid_model::on_tile_exploration_changed);
+	connect(map::get(), &map::tile_prospection_changed, this, &map_grid_model::on_tile_prospection_changed);
 	connect(map::get(), &map::tile_resource_changed, this, &map_grid_model::on_tile_resource_changed);
 	connect(map::get(), &map::tile_settlement_type_changed, this, &map_grid_model::on_tile_settlement_type_changed);
 	connect(map::get(), &map::tile_improvement_changed, this, &map_grid_model::on_tile_improvement_changed);
@@ -230,6 +231,8 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 
 				return QString();
 			}
+			case role::prospected:
+				return game::get()->get_player_country()->get_game_data()->is_tile_prospected(tile_pos);
 			default:
 				throw std::runtime_error("Invalid map grid model role: " + std::to_string(role) + ".");
 		}
@@ -259,6 +262,14 @@ void map_grid_model::on_tile_exploration_changed(const QPoint &tile_pos)
 		static_cast<int>(role::site),
 		static_cast<int>(role::civilian_unit),
 		static_cast<int>(role::upper_label)
+	});
+}
+
+void map_grid_model::on_tile_prospection_changed(const QPoint &tile_pos)
+{
+	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
+	emit dataChanged(index, index, {
+		static_cast<int>(role::prospected)
 	});
 }
 

@@ -29,7 +29,8 @@ public:
 		transport_level,
 		sea_transport_level,
 		civilian_unit,
-		upper_label
+		upper_label,
+		prospected
 	};
 
 	static QString build_image_source(const terrain_type *terrain, const short tile_frame);
@@ -74,12 +75,14 @@ public:
 		role_names.insert(static_cast<int>(role::sea_transport_level), "sea_transport_level");
 		role_names.insert(static_cast<int>(role::civilian_unit), "civilian_unit");
 		role_names.insert(static_cast<int>(role::upper_label), "upper_label");
+		role_names.insert(static_cast<int>(role::prospected), "prospected");
 
 		return role_names;
 	}
 
 	void on_tile_terrain_changed(const QPoint &tile_pos);
 	void on_tile_exploration_changed(const QPoint &tile_pos);
+	void on_tile_prospection_changed(const QPoint &tile_pos);
 	void on_tile_resource_changed(const QPoint &tile_pos);
 	void on_tile_settlement_type_changed(const QPoint &tile_pos);
 	void on_tile_improvement_changed(const QPoint &tile_pos);

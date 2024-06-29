@@ -35,6 +35,7 @@ class civilian_unit final : public QObject
 public:
 	static constexpr int improvement_construction_turns = 2;
 	static constexpr int exploration_turns = 1;
+	static constexpr int prospection_turns = 1;
 
 	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement);
 	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement);
@@ -146,6 +147,7 @@ public:
 	QVariantList get_improvable_resource_tiles_qvariant_list() const;
 
 	bool can_explore_tile(const QPoint &tile_pos) const;
+	bool can_prospect_tile(const QPoint &tile_pos) const;
 
 	void set_task_completion_turns(const int turns)
 	{
@@ -181,6 +183,7 @@ private:
 	QPoint original_tile_pos = QPoint(-1, -1); //the tile position before moving
 	const improvement *improvement_under_construction = nullptr;
 	bool exploring = false;
+	bool prospecting = false;
 	int task_completion_turns = 0; //the remaining turns for the current task to be complete
 };
 

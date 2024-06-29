@@ -857,7 +857,7 @@ void country_game_data::add_province(const province *province)
 		const resource *resource = tile->get_resource();
 
 		if (resource != nullptr) {
-			if (!tile->is_resource_discovered()) {
+			if (!tile->is_resource_discovered() && !resource->is_prospectable()) {
 				assert_throw(resource->get_required_technology() != nullptr);
 
 				if (this->has_technology(resource->get_required_technology())) {
@@ -2858,23 +2858,40 @@ void country_game_data::add_technology(const technology *technology)
 	}
 
 	for (const resource *discovered_resource : technology->get_enabled_resources()) {
-		for (const province *province : this->get_provinces()) {
-			const province_game_data *province_game_data = province->get_game_data();
-
-			if (!province_game_data->get_resource_counts().contains(discovered_resource)) {
-				continue;
-			}
-
-			for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
+		if (discovered_resource->is_prospectable()) {
+			const point_set prospected_tiles = this->prospected_tiles;
+			for (const QPoint &tile_pos : prospected_tiles) {
 				const tile *tile = map::get()->get_tile(tile_pos);
-				const resource *tile_resource = tile->get_resource();
 
-				if (tile_resource != discovered_resource) {
+				if (tile->is_resource_discovered()) {
 					continue;
 				}
 
-				if (!tile->is_resource_discovered()) {
-					map::get()->set_tile_resource_discovered(tile_pos, true);
+				if (!vector::contains(discovered_resource->get_terrain_types(), tile->get_terrain())) {
+					continue;
+				}
+
+				this->reset_tile_prospection(tile_pos);
+			}
+		} else {
+			for (const province *province : this->get_provinces()) {
+				const province_game_data *province_game_data = province->get_game_data();
+
+				if (!province_game_data->get_resource_counts().contains(discovered_resource)) {
+					continue;
+				}
+
+				for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
+					const tile *tile = map::get()->get_tile(tile_pos);
+					const resource *tile_resource = tile->get_resource();
+
+					if (tile_resource != discovered_resource) {
+						continue;
+					}
+
+					if (!tile->is_resource_discovered()) {
+						map::get()->set_tile_resource_discovered(tile_pos, true);
+					}
 				}
 			}
 		}
@@ -4688,6 +4705,33 @@ void country_game_data::explore_province(const province *province)
 				}
 			}
 		}
+	}
+}
+
+void country_game_data::prospect_tile(const QPoint &tile_pos)
+{
+	this->prospected_tiles.insert(tile_pos);
+
+	const tile *tile = map::get()->get_tile(tile_pos);
+	const resource *tile_resource = tile->get_resource();
+
+	if (tile_resource != nullptr) {
+		if (!tile->is_resource_discovered() && (tile_resource->get_required_technology() == nullptr || this->has_technology(tile_resource->get_required_technology()))) {
+			map::get()->set_tile_resource_discovered(tile_pos, true);
+		}
+	}
+
+	if (this->country == game::get()->get_player_country()) {
+		emit map::get()->tile_prospection_changed(tile_pos);
+	}
+}
+
+void country_game_data::reset_tile_prospection(const QPoint &tile_pos)
+{
+	this->prospected_tiles.erase(tile_pos);
+
+	if (this->country == game::get()->get_player_country()) {
+		emit map::get()->tile_prospection_changed(tile_pos);
 	}
 }
 

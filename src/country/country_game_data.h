@@ -1830,6 +1830,14 @@ public:
 	void explore_tile(const QPoint &tile_pos);
 	void explore_province(const province *province);
 
+	bool is_tile_prospected(const QPoint &tile_pos) const
+	{
+		return this->prospected_tiles.contains(tile_pos);
+	}
+
+	void prospect_tile(const QPoint &tile_pos);
+	void reset_tile_prospection(const QPoint &tile_pos);
+
 	const std::vector<const journal_entry *> &get_active_journal_entries() const
 	{
 		return this->active_journal_entries;
@@ -2230,6 +2238,7 @@ private:
 	int diplomatic_penalty_for_expansion_modifier = 0;
 	province_set explored_provinces;
 	point_set explored_tiles; //used for tiles in partially-explored provinces
+	point_set prospected_tiles;
 	std::vector<const journal_entry *> active_journal_entries;
 	std::vector<const journal_entry *> inactive_journal_entries;
 	std::vector<const journal_entry *> finished_journal_entries;

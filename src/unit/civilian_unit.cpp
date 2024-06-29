@@ -21,6 +21,7 @@
 #include "util/assert_util.h"
 #include "util/map_util.h"
 #include "util/point_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -80,7 +81,14 @@ void civilian_unit::do_turn()
 				});
 
 				this->exploring = false;
-			} else if (this->improvement_under_construction != nullptr) {
+			}
+			
+			if (this->prospecting) {
+				this->get_owner()->get_game_data()->prospect_tile(this->get_tile_pos());
+				this->prospecting = false;
+			}
+			
+			if (this->improvement_under_construction != nullptr) {
 				map::get()->set_tile_improvement(this->get_tile_pos(), this->improvement_under_construction);
 				this->improvement_under_construction = nullptr;
 			}
@@ -173,9 +181,23 @@ void civilian_unit::move_to(const QPoint &tile_pos)
 	this->set_original_tile_pos(this->get_tile_pos());
 	this->set_tile_pos(tile_pos);
 
+	if (this->get_type()->is_explorer() && this->can_explore_tile(tile_pos) && this->get_type()->is_prospector() && this->can_prospect_tile(tile_pos)) {
+		//explore and prospect at the same time
+		this->exploring = true;
+		this->prospecting = true;
+		this->set_task_completion_turns(std::max(civilian_unit::exploration_turns, civilian_unit::prospection_turns));
+		return;
+	}
+
 	if (this->get_type()->is_explorer() && this->can_explore_tile(tile_pos)) {
 		this->exploring = true;
 		this->set_task_completion_turns(civilian_unit::exploration_turns);
+		return;
+	}
+
+	if (this->get_type()->is_prospector() && this->can_prospect_tile(tile_pos)) {
+		this->prospecting = true;
+		this->set_task_completion_turns(civilian_unit::prospection_turns);
 		return;
 	}
 
@@ -280,6 +302,7 @@ void civilian_unit::cancel_work()
 	this->set_task_completion_turns(0);
 	this->improvement_under_construction = nullptr;
 	this->exploring = false;
+	this->prospecting = false;
 }
 
 const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(const QPoint &tile_pos) const
@@ -344,7 +367,6 @@ bool civilian_unit::can_explore_tile(const QPoint &tile_pos) const
 		return false;
 	}
 
-
 	if (!this->get_owner()->get_game_data()->is_tile_explored(tile_pos)) {
 		//can only explore already-explored tiles which border non-explored ones
 		return false;
@@ -366,6 +388,38 @@ bool civilian_unit::can_explore_tile(const QPoint &tile_pos) const
 	});
 
 	return adjacent_unexplored;
+}
+
+bool civilian_unit::can_prospect_tile(const QPoint &tile_pos) const
+{
+	if (!this->get_type()->is_prospector()) {
+		return false;
+	}
+
+	if (this->get_owner()->get_game_data()->is_tile_prospected(tile_pos)) {
+		//already prospected
+		return false;
+	}
+
+	const tile *tile = map::get()->get_tile(tile_pos);
+
+	for (const resource *resource : resource::get_all()) {
+		if (!resource->is_prospectable()) {
+			continue;
+		}
+
+		if (!vector::contains(resource->get_terrain_types(), tile->get_terrain())) {
+			continue;
+		}
+
+		if (resource->get_required_technology() != nullptr && !this->get_owner()->get_game_data()->has_technology(resource->get_required_technology())) {
+			continue;
+		}
+
+		return true;
+	}
+
+	return false;
 }
 
 void civilian_unit::disband(const bool restore_population_unit)

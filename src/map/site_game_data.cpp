@@ -52,7 +52,7 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	this->free_food_consumption = site_game_data::base_free_food_consumption;
 
 	const resource *resource = site->get_map_data()->get_resource();
-	if (resource == nullptr || resource->get_required_technology() != nullptr) {
+	if (resource == nullptr || resource->get_required_technology() != nullptr || resource->is_prospectable()) {
 		this->set_resource_discovered(false);
 	} else {
 		this->set_resource_discovered(true);
