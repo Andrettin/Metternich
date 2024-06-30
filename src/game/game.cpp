@@ -17,6 +17,7 @@
 #include "country/culture_history.h"
 #include "country/diplomacy_state.h"
 #include "country/government_type.h"
+#include "country/religion.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
@@ -52,6 +53,7 @@
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
+#include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
@@ -1293,6 +1295,8 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 		return 0;
 	}
 
+	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", group_key.type ? group_key.type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, settlement->get_identifier()));
+
 	site_history *settlement_history = settlement->get_history();
 	site_game_data *settlement_game_data = settlement->get_game_data();
 
@@ -1380,6 +1384,8 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 
 	int64_t remaining_population = population % defines::get()->get_population_per_unit();
 	remaining_population = std::max<int64_t>(0, remaining_population);
+
+	log_trace(std::format("Remaining population: {}.", remaining_population));
 
 	return remaining_population;
 }
