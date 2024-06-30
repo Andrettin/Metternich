@@ -69,7 +69,7 @@ bool population_group_key::operator<(const population_group_key &rhs) const
 			return this->culture != nullptr;
 		}
 
-		return this->culture->get_identifier() < this->culture->get_identifier();
+		return this->culture->get_identifier() < rhs.culture->get_identifier();
 	}
 
 	if (this->religion != rhs.religion) {
@@ -77,7 +77,7 @@ bool population_group_key::operator<(const population_group_key &rhs) const
 			return this->religion != nullptr;
 		}
 
-		return this->religion->get_identifier() < this->religion->get_identifier();
+		return this->religion->get_identifier() < rhs.religion->get_identifier();
 	}
 
 	if (this->phenotype != rhs.phenotype) {
@@ -85,7 +85,7 @@ bool population_group_key::operator<(const population_group_key &rhs) const
 			return this->phenotype != nullptr;
 		}
 
-		return this->phenotype->get_identifier() < this->phenotype->get_identifier();
+		return this->phenotype->get_identifier() < rhs.phenotype->get_identifier();
 	}
 
 	return false; //equal
