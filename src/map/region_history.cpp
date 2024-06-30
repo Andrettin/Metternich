@@ -93,7 +93,7 @@ void region_history::distribute_population()
 		}
 
 		if (remaining_population <= 0 || unpopulated_settlement_count == 0) {
-			return;
+			continue;
 		}
 
 		//apply the remaining population to provinces without a predefined population in history

@@ -80,11 +80,15 @@ void province_history::distribute_population()
 		}
 
 		if (remaining_population <= 0 || settlement_count == 0) {
-			return;
+			continue;
 		}
 
 		//apply the remaining population to settlements
 		const int64_t population_per_settlement = remaining_population / settlement_count;
+
+		if (population_per_settlement == 0) {
+			continue;
+		}
 
 		for (const site *settlement : this->province->get_game_data()->get_settlement_sites()) {
 			if (!settlement->get_game_data()->is_built()) {
