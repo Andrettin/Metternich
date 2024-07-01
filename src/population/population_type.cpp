@@ -6,6 +6,7 @@
 #include "country/country_game_data.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "database/defines.h"
 #include "economy/commodity.h"
 #include "population/phenotype.h"
 #include "population/population.h"
@@ -16,6 +17,7 @@
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/random.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -128,12 +130,31 @@ void population_type::check() const
 
 QString population_type::get_country_modifier_string(const metternich::country *country) const
 {
-	if (this->get_country_modifier() == nullptr) {
+	if (this->get_output_commodity() == nullptr && this->get_country_modifier() == nullptr) {
 		return QString();
 	}
 
 	const country_game_data *country_game_data = country->get_game_data();
-	return QString::fromStdString(this->get_country_modifier()->get_string(country, centesimal_int::min(country_game_data->get_population()->get_type_count(this) * country_game_data->get_population_type_modifier_multiplier(this), this->get_max_modifier_multiplier())));
+	const int population_type_count = country_game_data->get_population()->get_type_count(this);
+
+	std::string str;
+
+	if (this->get_output_commodity() != nullptr) {
+		str += std::format("{}: {}", this->get_output_commodity()->get_name(), string::colored(number::to_signed_string(population_type_count * this->get_output_value()), defines::get()->get_green_text_color()));
+	}
+
+	if (this->get_country_modifier() != nullptr) {
+		const std::string modifier_str = this->get_country_modifier()->get_string(country, centesimal_int::min(population_type_count * country_game_data->get_population_type_modifier_multiplier(this), this->get_max_modifier_multiplier()));
+		if (!modifier_str.empty()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += modifier_str;
+		}
+	}
+
+	return QString::fromStdString(str);
 }
 
 }
