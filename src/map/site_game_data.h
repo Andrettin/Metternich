@@ -380,12 +380,7 @@ public:
 		return std::max(this->get_transport_level(), this->get_sea_transport_level());
 	}
 
-	centesimal_int get_transportable_commodity_output(const commodity *commodity) const
-	{
-		const centesimal_int &output = this->get_commodity_output(commodity);
-
-		return centesimal_int::min(output, centesimal_int(this->get_best_transport_level()));
-	}
+	centesimal_int get_transportable_commodity_output(const commodity *commodity) const;
 
 	bool can_be_visited() const;
 

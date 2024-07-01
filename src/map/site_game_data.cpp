@@ -1122,6 +1122,17 @@ void site_game_data::set_sea_transport_level(const int level)
 	}
 }
 
+centesimal_int site_game_data::get_transportable_commodity_output(const commodity *commodity) const
+{
+	const centesimal_int &output = this->get_commodity_output(commodity);
+
+	if (commodity->is_abstract()) {
+		return output;
+	}
+
+	return centesimal_int::min(output, centesimal_int(this->get_best_transport_level()));
+}
+
 bool site_game_data::can_be_visited() const
 {
 	return this->get_improvement() != nullptr && this->get_improvement()->is_ruins();
