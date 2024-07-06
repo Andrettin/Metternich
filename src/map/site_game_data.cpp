@@ -1107,7 +1107,7 @@ void site_game_data::set_sea_transport_level(const int level)
 		}
 	}
 
-	this->transport_level = level;
+	this->sea_transport_level = level;
 
 	if (this->get_owner() != nullptr) {
 		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
