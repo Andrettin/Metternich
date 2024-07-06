@@ -928,12 +928,14 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		return;
 	}
 
-	if (this->get_owner() != nullptr && !commodity->is_local()) {
-		this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
-	}
-
-	if (this->get_province() != nullptr && commodity->is_local()) {
-		this->get_province()->get_game_data()->change_local_commodity_output(commodity, -this->get_commodity_output(commodity));
+	if (commodity->is_local()) {
+		if (this->get_province() != nullptr) {
+			this->get_province()->get_game_data()->change_local_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+		}
+	} else {
+		if (this->get_owner() != nullptr) {
+			this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+		}
 	}
 
 	if (output == 0) {
@@ -942,12 +944,14 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		this->commodity_outputs[commodity] = output;
 	}
 
-	if (this->get_owner() != nullptr && !commodity->is_local()) {
-		this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
-	}
-
-	if (this->get_province() != nullptr && commodity->is_local()) {
-		this->get_province()->get_game_data()->change_local_commodity_output(commodity, this->get_commodity_output(commodity));
+	if (commodity->is_local()) {
+		if (this->get_province() != nullptr) {
+			this->get_province()->get_game_data()->change_local_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+		}
+	} else {
+		if (this->get_owner() != nullptr) {
+			this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+		}
 	}
 
 	emit commodity_outputs_changed();
@@ -1070,9 +1074,13 @@ void site_game_data::set_transport_level(const int level)
 		return;
 	}
 
-	if (this->get_owner() != nullptr) {
-		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
-			if (!commodity->is_local()) {
+	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+		if (commodity->is_local()) {
+			if (this->get_province() != nullptr) {
+				this->get_province()->get_game_data()->change_local_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+			}
+		} else {
+			if (this->get_owner() != nullptr) {
 				this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
 			}
 		}
@@ -1080,9 +1088,13 @@ void site_game_data::set_transport_level(const int level)
 
 	this->transport_level = level;
 
-	if (this->get_owner() != nullptr) {
-		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
-			if (!commodity->is_local()) {
+	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+		if (commodity->is_local()) {
+			if (this->get_province() != nullptr) {
+				this->get_province()->get_game_data()->change_local_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+			}
+		} else {
+			if (this->get_owner() != nullptr) {
 				this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
 			}
 		}
@@ -1099,9 +1111,13 @@ void site_game_data::set_sea_transport_level(const int level)
 		return;
 	}
 
-	if (this->get_owner() != nullptr) {
-		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
-			if (!commodity->is_local()) {
+	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+		if (commodity->is_local()) {
+			if (this->get_province() != nullptr) {
+				this->get_province()->get_game_data()->change_local_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+			}
+		} else {
+			if (this->get_owner() != nullptr) {
 				this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
 			}
 		}
@@ -1109,9 +1125,13 @@ void site_game_data::set_sea_transport_level(const int level)
 
 	this->sea_transport_level = level;
 
-	if (this->get_owner() != nullptr) {
-		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
-			if (!commodity->is_local()) {
+	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+		if (commodity->is_local()) {
+			if (this->get_province() != nullptr) {
+				this->get_province()->get_game_data()->change_local_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+			}
+		} else {
+			if (this->get_owner() != nullptr) {
 				this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
 			}
 		}
