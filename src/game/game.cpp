@@ -261,6 +261,9 @@ QCoro::Task<void> game::start_coro()
 
 		//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
 		country_game_data->check_journal_entries(true, true);
+
+		//assign transport orders for countries on start
+		country_game_data->assign_transport_orders();
 	}
 
 	this->set_running(true);

@@ -120,6 +120,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(int storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
 	Q_PROPERTY(QVariantList commodity_inputs READ get_commodity_inputs_qvariant_list NOTIFY commodity_inputs_changed)
+	Q_PROPERTY(QVariantList transportable_commodity_outputs READ get_transportable_commodity_outputs_qvariant_list NOTIFY transportable_commodity_outputs_changed)
+	Q_PROPERTY(QVariantList transported_commodity_outputs READ get_transported_commodity_outputs_qvariant_list NOTIFY transported_commodity_outputs_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(QVariantList commodity_consumptions READ get_commodity_consumptions_qvariant_list NOTIFY commodity_consumptions_changed)
 	Q_PROPERTY(int land_transport_capacity READ get_land_transport_capacity NOTIFY land_transport_capacity_changed)
@@ -943,6 +945,48 @@ public:
 	Q_INVOKABLE int get_commodity_input(const QString &commodity_identifier) const;
 	void change_commodity_input(const commodity *commodity, const int change);
 
+	const commodity_map<centesimal_int> &get_transportable_commodity_outputs() const
+	{
+		return this->transportable_commodity_outputs;
+	}
+
+	QVariantList get_transportable_commodity_outputs_qvariant_list() const;
+
+	const centesimal_int &get_transportable_commodity_output(const commodity *commodity) const
+	{
+		const auto find_iterator = this->transportable_commodity_outputs.find(commodity);
+
+		if (find_iterator != this->transportable_commodity_outputs.end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
+	}
+
+	Q_INVOKABLE int get_transportable_commodity_output(const QString &commodity_identifier) const;
+	void change_transportable_commodity_output(const commodity *commodity, const centesimal_int &change);
+
+	const commodity_map<int> &get_transported_commodity_outputs() const
+	{
+		return this->transported_commodity_outputs;
+	}
+
+	QVariantList get_transported_commodity_outputs_qvariant_list() const;
+
+	Q_INVOKABLE int get_transported_commodity_output(const metternich::commodity *commodity) const
+	{
+		const auto find_iterator = this->transported_commodity_outputs.find(commodity);
+
+		if (find_iterator != this->transported_commodity_outputs.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	Q_INVOKABLE void change_transported_commodity_output(const metternich::commodity *commodity, const int change);
+
 	const commodity_map<centesimal_int> &get_commodity_outputs() const
 	{
 		return this->commodity_outputs;
@@ -1043,6 +1087,18 @@ public:
 	{
 		this->set_sea_transport_capacity(this->get_sea_transport_capacity() + change);
 	}
+
+	int get_available_transport_capacity() const
+	{
+		const int total_capacity = this->get_land_transport_capacity() + this->get_sea_transport_capacity();
+		int available_capacity = total_capacity;
+		for (const auto &[commodity, transported_output] : this->get_transported_commodity_outputs()) {
+			available_capacity -= transported_output;
+		}
+		return available_capacity;
+	}
+
+	void assign_transport_orders();
 
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
@@ -2124,6 +2180,8 @@ signals:
 	void stored_commodities_changed();
 	void storage_capacity_changed();
 	void commodity_inputs_changed();
+	void transportable_commodity_outputs_changed();
+	void transported_commodity_outputs_changed();
 	void commodity_outputs_changed();
 	void commodity_consumptions_changed();
 	void land_transport_capacity_changed();
@@ -2207,6 +2265,8 @@ private:
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;
 	commodity_map<int> commodity_inputs;
+	commodity_map<centesimal_int> transportable_commodity_outputs;
+	commodity_map<int> transported_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<centesimal_int> commodity_consumptions;
 	commodity_map<centesimal_int> commodity_demands;

@@ -657,6 +657,7 @@ void country_game_data::do_ai_turn()
 		}
 	}
 
+	this->assign_transport_orders();
 	this->assign_trade_orders();
 }
 
@@ -2580,6 +2581,72 @@ void country_game_data::change_commodity_input(const commodity *commodity, const
 	}
 }
 
+QVariantList country_game_data::get_transportable_commodity_outputs_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_transportable_commodity_outputs());
+}
+
+int country_game_data::get_transportable_commodity_output(const QString &commodity_identifier) const
+{
+	return this->get_transportable_commodity_output(commodity::get(commodity_identifier.toStdString())).to_int();
+}
+
+void country_game_data::change_transportable_commodity_output(const commodity *commodity, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	if (commodity->is_abstract()) {
+		this->change_commodity_output(commodity, change);
+		return;
+	}
+
+	const centesimal_int &new_output = (this->transportable_commodity_outputs[commodity] += change);
+
+	assert_throw(new_output >= 0);
+
+	if (new_output == 0) {
+		this->transportable_commodity_outputs.erase(commodity);
+	}
+
+	const int transported_output = this->get_transported_commodity_output(commodity);
+	if (new_output < transported_output) {
+		this->change_transported_commodity_output(commodity, new_output.to_int() - transported_output);
+	}
+
+	if (game::get()->is_running()) {
+		emit transportable_commodity_outputs_changed();
+	}
+}
+
+QVariantList country_game_data::get_transported_commodity_outputs_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_transported_commodity_outputs());
+}
+
+void country_game_data::change_transported_commodity_output(const commodity *commodity, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_output = (this->transported_commodity_outputs[commodity] += change);
+
+	assert_throw(new_output >= 0);
+	assert_throw(new_output <= this->get_transportable_commodity_output(commodity).to_int());
+
+	if (new_output == 0) {
+		this->transported_commodity_outputs.erase(commodity);
+	}
+
+	this->change_commodity_output(commodity, centesimal_int(change));
+
+	if (game::get()->is_running()) {
+		emit transported_commodity_outputs_changed();
+	}
+}
+
 QVariantList country_game_data::get_commodity_outputs_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
@@ -2816,6 +2883,28 @@ void country_game_data::set_sea_transport_capacity(const int capacity)
 
 	if (game::get()->is_running()) {
 		emit sea_transport_capacity_changed();
+	}
+}
+
+void country_game_data::assign_transport_orders()
+{
+	if (this->is_under_anarchy()) {
+		return;
+	}
+
+	for (const auto &[commodity, transportable_output] : this->get_transportable_commodity_outputs()) {
+		const int available_transportable_output = transportable_output.to_int() - this->get_transported_commodity_output(commodity);
+		assert_throw(available_transportable_output >= 0);
+		if (available_transportable_output == 0) {
+			continue;
+		}
+
+		const int available_transport_capacity = this->get_available_transport_capacity();
+		if (available_transport_capacity == 0) {
+			break;
+		}
+
+		this->change_transported_commodity_output(commodity, std::min(available_transportable_output, available_transport_capacity));
 	}
 }
 

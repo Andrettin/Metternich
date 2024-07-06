@@ -234,7 +234,7 @@ void site_game_data::set_owner(const country *owner)
 				continue;
 			}
 
-			old_owner->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+			old_owner->get_game_data()->change_transportable_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
 		}
 	}
 
@@ -250,7 +250,7 @@ void site_game_data::set_owner(const country *owner)
 				continue;
 			}
 
-			this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+			this->get_owner()->get_game_data()->change_transportable_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
 		}
 
 		if (this->site->is_settlement()) {
@@ -928,15 +928,7 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		return;
 	}
 
-	if (commodity->is_local()) {
-		if (this->get_province() != nullptr) {
-			this->get_province()->get_game_data()->change_local_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
-		}
-	} else {
-		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
-		}
-	}
+	const centesimal_int old_transportable_output = this->get_transportable_commodity_output(commodity);
 
 	if (output == 0) {
 		this->commodity_outputs.erase(commodity);
@@ -944,13 +936,16 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		this->commodity_outputs[commodity] = output;
 	}
 
+	const centesimal_int transportable_output = this->get_transportable_commodity_output(commodity);
+	const centesimal_int transportable_change = transportable_output - old_transportable_output;
+
 	if (commodity->is_local()) {
 		if (this->get_province() != nullptr) {
-			this->get_province()->get_game_data()->change_local_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+			this->get_province()->get_game_data()->change_local_commodity_output(commodity, transportable_change);
 		}
 	} else {
 		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+			this->get_owner()->get_game_data()->change_transportable_commodity_output(commodity, transportable_change);
 		}
 	}
 
@@ -1074,28 +1069,24 @@ void site_game_data::set_transport_level(const int level)
 		return;
 	}
 
-	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
-		if (commodity->is_local()) {
-			if (this->get_province() != nullptr) {
-				this->get_province()->get_game_data()->change_local_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
-			}
-		} else {
-			if (this->get_owner() != nullptr) {
-				this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
-			}
-		}
+	commodity_map<centesimal_int> old_transportable_outputs;
+	for (auto &[commodity, output] : this->get_commodity_outputs()) {
+		old_transportable_outputs[commodity] = this->get_transportable_commodity_output(commodity);
 	}
 
 	this->transport_level = level;
 
-	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+	for (const auto &[commodity, old_transportable_output] : old_transportable_outputs) {
+		const centesimal_int transportable_output = this->get_transportable_commodity_output(commodity);
+		const centesimal_int transportable_change = transportable_output - old_transportable_output;
+
 		if (commodity->is_local()) {
 			if (this->get_province() != nullptr) {
-				this->get_province()->get_game_data()->change_local_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+				this->get_province()->get_game_data()->change_local_commodity_output(commodity, transportable_change);
 			}
 		} else {
 			if (this->get_owner() != nullptr) {
-				this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+				this->get_owner()->get_game_data()->change_transportable_commodity_output(commodity, transportable_change);
 			}
 		}
 	}
@@ -1111,28 +1102,24 @@ void site_game_data::set_sea_transport_level(const int level)
 		return;
 	}
 
-	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
-		if (commodity->is_local()) {
-			if (this->get_province() != nullptr) {
-				this->get_province()->get_game_data()->change_local_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
-			}
-		} else {
-			if (this->get_owner() != nullptr) {
-				this->get_owner()->get_game_data()->change_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
-			}
-		}
+	commodity_map<centesimal_int> old_transportable_outputs;
+	for (auto &[commodity, output] : this->get_commodity_outputs()) {
+		old_transportable_outputs[commodity] = this->get_transportable_commodity_output(commodity);
 	}
 
 	this->sea_transport_level = level;
 
-	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+	for (const auto &[commodity, old_transportable_output] : old_transportable_outputs) {
+		const centesimal_int transportable_output = this->get_transportable_commodity_output(commodity);
+		const centesimal_int transportable_change = transportable_output - old_transportable_output;
+
 		if (commodity->is_local()) {
 			if (this->get_province() != nullptr) {
-				this->get_province()->get_game_data()->change_local_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+				this->get_province()->get_game_data()->change_local_commodity_output(commodity, transportable_change);
 			}
 		} else {
 			if (this->get_owner() != nullptr) {
-				this->get_owner()->get_game_data()->change_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+				this->get_owner()->get_game_data()->change_transportable_commodity_output(commodity, transportable_change);
 			}
 		}
 	}
