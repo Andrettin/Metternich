@@ -520,7 +520,7 @@ QString technology::get_effects_string(metternich::country *country) const
 				str += "\n";
 			}
 
-			str += std::format("Enables {} {}", military_unit->get_name(), military_unit->get_domain() == military_unit_domain::water ? "ship" : "regiment");
+			str += std::format("Enables {} {}", military_unit->get_name(), military_unit->get_domain() == military_unit_domain::water ? "warship" : "regiment");
 		}
 	}
 
@@ -532,7 +532,7 @@ QString technology::get_effects_string(metternich::country *country) const
 				str += "\n";
 			}
 
-			str += std::format("Enables {} {}", transporter->get_name(), transporter->is_ship() ? "ship" : "transporter");
+			str += std::format("Enables {} {}", transporter->get_name(), transporter->is_ship() ? "merchant ship" : "transporter");
 		}
 	}
 
