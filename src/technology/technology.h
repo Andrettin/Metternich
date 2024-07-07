@@ -119,7 +119,7 @@ public:
 		return (this->get_total_prerequisite_depth() + 1) * technology::base_cost;
 	}
 
-	int get_cost_for_country(const country *country) const;
+	Q_INVOKABLE int get_cost_for_country(const metternich::country *country) const;
 
 	const factor<country> *get_cost_factor() const
 	{
