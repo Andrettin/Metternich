@@ -7,6 +7,7 @@
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "script/condition/and_condition.h"
+#include "script/factor.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 
@@ -88,6 +89,32 @@ void wonder::check() const
 	if (this->get_province_conditions() != nullptr) {
 		this->get_province_conditions()->check_validity();
 	}
+}
+
+int wonder::get_wealth_cost_for_country(const country *country) const
+{
+	int cost = this->get_wealth_cost();
+
+	if (cost > 0 && this->get_cost_factor() != nullptr) {
+		cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+		cost = std::max(1, cost);
+	}
+
+	return cost;
+}
+
+commodity_map<int> wonder::get_commodity_costs_for_country(const country *country) const
+{
+	commodity_map<int> costs = this->get_commodity_costs();
+
+	for (auto &[commodity, cost] : costs) {
+		if (cost > 0 && this->get_cost_factor() != nullptr) {
+			cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+			cost = std::max(1, cost);
+		}
+	}
+
+	return costs;
 }
 
 }

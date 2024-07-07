@@ -243,10 +243,14 @@ public:
 		return this->wealth_cost;
 	}
 
+	int get_wealth_cost_for_country(const country *country) const;
+
 	const commodity_map<int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
+
+	commodity_map<int> get_commodity_costs_for_country(const country *country) const;
 
 	const factor<country> *get_cost_factor() const
 	{

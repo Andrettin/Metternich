@@ -109,11 +109,12 @@ bool building_slot::can_build_building(const building_type *building) const
 	}
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
-	if (building->get_wealth_cost() > 0 && building->get_wealth_cost() > country_game_data->get_wealth_with_credit()) {
+	const int wealth_cost = building->get_wealth_cost_for_country(this->get_country());
+	if (wealth_cost > 0 && country_game_data->get_inflated_value(wealth_cost) > country_game_data->get_wealth_with_credit()) {
 		return false;
 	}
 
-	for (const auto &[commodity, cost] : building->get_commodity_costs()) {
+	for (const auto &[commodity, cost] : building->get_commodity_costs_for_country(this->get_country())) {
 		if (cost > country_game_data->get_stored_commodity(commodity)) {
 			return false;
 		}
@@ -129,11 +130,12 @@ void building_slot::build_building(const building_type *building)
 	}
 
 	country_game_data *country_game_data = this->get_country()->get_game_data();
-	if (building->get_wealth_cost() > 0) {
-		country_game_data->change_wealth_inflated(-building->get_wealth_cost());
+	const int wealth_cost = building->get_wealth_cost_for_country(this->get_country());
+	if (wealth_cost > 0) {
+		country_game_data->change_wealth_inflated(-wealth_cost);
 	}
 
-	for (const auto &[commodity, cost] : building->get_commodity_costs()) {
+	for (const auto &[commodity, cost] : building->get_commodity_costs_for_country(this->get_country())) {
 		country_game_data->change_stored_commodity(commodity, -cost);
 	}
 
@@ -147,11 +149,12 @@ void building_slot::cancel_construction()
 	}
 
 	country_game_data *country_game_data = this->get_country()->get_game_data();
-	if (this->get_under_construction_building()->get_wealth_cost() > 0) {
-		country_game_data->change_wealth(this->get_under_construction_building()->get_wealth_cost());
+	const int wealth_cost = this->get_under_construction_building()->get_wealth_cost_for_country(this->get_country());
+	if (wealth_cost > 0) {
+		country_game_data->change_wealth(wealth_cost);
 	}
 
-	for (const auto &[commodity, cost] : this->get_under_construction_building()->get_commodity_costs()) {
+	for (const auto &[commodity, cost] : this->get_under_construction_building()->get_commodity_costs_for_country(this->get_country())) {
 		country_game_data->change_stored_commodity(commodity, cost);
 	}
 

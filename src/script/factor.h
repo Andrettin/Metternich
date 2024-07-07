@@ -36,6 +36,7 @@ public:
 		this->base_value = std::move(value);
 	}
 
+	centesimal_int calculate(const scope_type *scope, const centesimal_int &base_value) const;
 	centesimal_int calculate(const scope_type *scope) const;
 
 private:

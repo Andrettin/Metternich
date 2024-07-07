@@ -297,6 +297,32 @@ QVariantList building_type::get_production_types_qvariant_list() const
 	return container::to_qvariant_list(this->get_production_types());
 }
 
+int building_type::get_wealth_cost_for_country(const country *country) const
+{
+	int cost = this->get_wealth_cost();
+
+	if (cost > 0 && this->get_cost_factor() != nullptr) {
+		cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+		cost = std::max(1, cost);
+	}
+
+	return cost;
+}
+
+commodity_map<int> building_type::get_commodity_costs_for_country(const country *country) const
+{
+	commodity_map<int> costs = this->get_commodity_costs();
+
+	for (auto &[commodity, cost] : costs) {
+		if (cost > 0 && this->get_cost_factor() != nullptr) {
+			cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+			cost = std::max(1, cost);
+		}
+	}
+
+	return costs;
+}
+
 QString building_type::get_effects_string(metternich::site *site) const
 {
 	assert_throw(site->is_settlement());

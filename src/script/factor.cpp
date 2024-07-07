@@ -70,9 +70,9 @@ void factor<scope_type>::check() const
 }
 
 template <typename scope_type>
-centesimal_int factor<scope_type>::calculate(const scope_type *scope) const
+centesimal_int factor<scope_type>::calculate(const scope_type *scope, const centesimal_int &base_value) const
 {
-	centesimal_int value = this->base_value;
+	centesimal_int value = base_value;
 
 	if (scope != nullptr) {
 		for (const std::unique_ptr<factor_modifier<scope_type>> &modifier : this->modifiers) {
@@ -83,6 +83,12 @@ centesimal_int factor<scope_type>::calculate(const scope_type *scope) const
 	}
 
 	return value;
+}
+
+template <typename scope_type>
+centesimal_int factor<scope_type>::calculate(const scope_type *scope) const
+{
+	return this->calculate(scope, this->base_value);
 }
 
 template class factor<character>;
