@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_role.h"
 #include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/culture.h"
 #include "country/government_type.h"
 #include "country/law.h"
@@ -17,6 +18,7 @@
 #include "infrastructure/wonder.h"
 #include "map/terrain_type.h"
 #include "script/condition/condition.h"
+#include "script/factor.h"
 #include "script/modifier.h"
 #include "technology/technological_period.h"
 #include "technology/technology_category.h"
@@ -63,6 +65,10 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->prerequisites.push_back(technology::get(value));
 		}
+	} else if (tag == "cost_factor") {
+		auto factor = std::make_unique<metternich::factor<country>>(100);
+		database::process_gsml_data(factor, scope);
+		this->cost_factor = std::move(factor);
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
@@ -111,6 +117,23 @@ void technology::check() const
 	} else {
 		log::log_error(std::format("Technology \"{}\" has no period.", this->get_identifier()));
 	}
+}
+
+int technology::get_cost_for_country(const country *country) const
+{
+	centesimal_int cost(this->get_cost());
+
+	if (cost > 0) {
+		if (this->get_cost_factor() != nullptr) {
+			cost = this->get_cost_factor()->calculate(country, cost);
+		}
+
+		cost *= country->get_game_data()->get_research_cost_modifier();
+		cost /= 100;
+		cost = centesimal_int::max(centesimal_int(1), cost);
+	}
+
+	return cost.to_int();
 }
 
 QVariantList technology::get_prerequisites_qvariant_list() const

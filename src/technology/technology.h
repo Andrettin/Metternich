@@ -32,6 +32,9 @@ enum class character_role;
 enum class technology_category;
 
 template <typename scope_type>
+class factor;
+
+template <typename scope_type>
 class modifier;
 
 class technology final : public named_data_entry, public data_type<technology>
@@ -114,6 +117,13 @@ public:
 		}
 
 		return (this->get_total_prerequisite_depth() + 1) * technology::base_cost;
+	}
+
+	int get_cost_for_country(const country *country) const;
+
+	const factor<country> *get_cost_factor() const
+	{
+		return this->cost_factor.get();
 	}
 
 	bool is_discovery() const
@@ -388,6 +398,7 @@ private:
 	metternich::portrait *portrait = nullptr;
 	metternich::icon *icon = nullptr;
 	int cost = 0;
+	std::unique_ptr<const factor<country>> cost_factor;
 	bool discovery = false;
 	int year = 0; //the historical year that this technology was discovered
 	const technological_period *period = nullptr;
