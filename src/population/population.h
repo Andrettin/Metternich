@@ -25,6 +25,8 @@ class population final : public QObject
 	Q_PROPERTY(QVariantList ideology_counts READ get_ideology_counts_qvariant_list NOTIFY ideology_counts_changed)
 	Q_PROPERTY(int average_consciousness READ get_average_consciousness_int NOTIFY consciousness_changed)
 	Q_PROPERTY(int average_militancy READ get_average_militancy_int NOTIFY militancy_changed)
+	Q_PROPERTY(int literacy_rate READ get_literacy_rate NOTIFY type_counts_changed)
+	Q_PROPERTY(int literate_count READ get_literate_count NOTIFY type_counts_changed)
 
 public:
 	int get_population_unit_count() const
@@ -180,6 +182,20 @@ public:
 
 	void change_total_militancy(const centesimal_int &change);
 
+	int get_literate_count() const
+	{
+		return this->literate_count;
+	}
+
+	int get_literacy_rate() const
+	{
+		if (this->get_population_unit_count() == 0) {
+			return 0;
+		}
+
+		return this->get_literate_count() * 100 / this->get_population_unit_count();
+	}
+
 	void add_upper_population(population *upper_population)
 	{
 		if (upper_population != nullptr) {
@@ -260,6 +276,7 @@ private:
 	ideology_map<int> ideology_counts;
 	centesimal_int total_consciousness;
 	centesimal_int total_militancy;
+	int literate_count = 0;
 	std::vector<population *> upper_populations;
 };
 

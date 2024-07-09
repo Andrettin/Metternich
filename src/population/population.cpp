@@ -5,6 +5,7 @@
 #include "country/culture.h"
 #include "database/defines.h"
 #include "game/game.h"
+#include "population/population_type.h"
 #include "population/population_unit.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
@@ -62,6 +63,10 @@ void population::change_type_count(const population_type *type, const int change
 
 	if (count == 0) {
 		this->type_counts.erase(type);
+	}
+
+	if (type->is_literate()) {
+		this->literate_count += change;
 	}
 
 	for (population *upper_population : this->upper_populations) {
