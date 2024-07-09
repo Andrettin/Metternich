@@ -50,6 +50,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(bool discovery MEMBER discovery READ is_discovery NOTIFY changed)
 	Q_PROPERTY(int year MEMBER year READ get_year NOTIFY changed)
 	Q_PROPERTY(bool free_technology MEMBER free_technology READ grants_free_technology NOTIFY changed)
+	Q_PROPERTY(int shared_prestige MEMBER shared_prestige READ get_shared_prestige NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
@@ -145,6 +146,13 @@ public:
 	{
 		return this->free_technology;
 	}
+
+	int get_shared_prestige() const
+	{
+		return this->shared_prestige;
+	}
+
+	int get_shared_prestige_for_country(const country *country) const;
 
 	const std::vector<technology *> get_prerequisites() const
 	{
@@ -403,6 +411,7 @@ private:
 	int year = 0; //the historical year that this technology was discovered
 	const technological_period *period = nullptr;
 	bool free_technology = false; //grants free technology for first one to research
+	int shared_prestige = 0;
 	std::vector<technology *> prerequisites;
 	int total_prerequisite_depth = 0;
 	std::vector<const commodity *> enabled_commodities;

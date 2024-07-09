@@ -3127,6 +3127,10 @@ void country_game_data::on_technology_researched(const technology *technology)
 		}
 	}
 
+	if (technology->get_shared_prestige() > 0) {
+		this->change_stored_commodity(defines::get()->get_prestige_commodity(), technology->get_shared_prestige_for_country(this->country));
+	}
+
 	emit technology_researched(technology);
 }
 

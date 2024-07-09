@@ -9,9 +9,11 @@
 #include "country/culture.h"
 #include "country/government_type.h"
 #include "country/law.h"
+#include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
 #include "economy/resource.h"
+#include "game/game.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
@@ -134,6 +136,33 @@ int technology::get_cost_for_country(const country *country) const
 	}
 
 	return cost.to_int();
+}
+
+int technology::get_shared_prestige_for_country(const country *country) const
+{
+	int prestige = this->get_shared_prestige();
+
+	if (prestige <= 1) {
+		return prestige;
+	}
+
+	for (const metternich::country *loop_country : game::get()->get_countries()) {
+		if (loop_country == country) {
+			continue;
+		}
+
+		if (loop_country->get_game_data()->has_technology(this)) {
+			prestige /= 2;
+		}
+
+		prestige = std::max(prestige, 1);
+
+		if (prestige == 1) {
+			break;
+		}
+	}
+
+	return prestige;
 }
 
 QVariantList technology::get_prerequisites_qvariant_list() const
@@ -394,6 +423,15 @@ QString technology::get_effects_string(metternich::country *country) const
 		}
 
 		str += "Free technology for the first to research";
+	}
+
+	if (this->get_shared_prestige() > 0) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		const int prestige = this->get_shared_prestige_for_country(country);
+		str += std::format("+{} {}", prestige, defines::get()->get_prestige_commodity()->get_name());
 	}
 
 	if (!this->get_enabled_commodities().empty()) {
