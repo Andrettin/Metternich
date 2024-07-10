@@ -11,9 +11,8 @@ class profession_capacity_modifier_effect final : public modifier_effect<const s
 {
 public:
 	explicit profession_capacity_modifier_effect(const metternich::profession *profession, const std::string &value)
-		: profession(profession)
+		: modifier_effect(value), profession(profession)
 	{
-		this->value = centesimal_int(std::stoi(value));
 	}
 
 	virtual const std::string &get_identifier() const override
