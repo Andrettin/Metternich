@@ -38,6 +38,18 @@ population_unit::population_unit(const population_type *type, const metternich::
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
 }
 
+void population_unit::do_turn()
+{
+	if (this->get_country() != nullptr) {
+		const country_game_data *country_game_data = this->get_country()->get_game_data();
+
+		const centesimal_int &militancy_modifier = country_game_data->get_population_type_militancy_modifier(this->get_type());
+		if (militancy_modifier != 0) {
+			this->change_militancy(militancy_modifier);
+		}
+	}
+}
+
 std::string population_unit::get_scope_name() const
 {
 	return std::format("{} {}", this->get_culture()->get_name(), this->get_type()->get_name());

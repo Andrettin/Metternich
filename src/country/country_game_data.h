@@ -1840,6 +1840,25 @@ public:
 		this->set_population_type_modifier_multiplier(type, this->get_population_type_modifier_multiplier(type) + change);
 	}
 
+	const centesimal_int &get_population_type_militancy_modifier(const population_type *type) const
+	{
+		const auto find_iterator = this->population_type_militancy_modifiers.find(type);
+
+		if (find_iterator != this->population_type_militancy_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
+	}
+
+	void set_population_type_militancy_modifier(const population_type *type, const centesimal_int &value);
+
+	void change_population_type_militancy_modifier(const population_type *type, const centesimal_int &change)
+	{
+		this->set_population_type_militancy_modifier(type, this->get_population_type_militancy_modifier(type) + change);
+	}
+
 	int get_advisor_cost_modifier() const
 	{
 		return this->advisor_cost_modifier;
@@ -2317,6 +2336,7 @@ private:
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	std::map<technology_category, int> category_research_modifiers;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
+	population_type_map<centesimal_int> population_type_militancy_modifiers;
 	int advisor_cost_modifier = 0;
 	int leader_cost_modifier = 0;
 	int diplomatic_penalty_for_expansion_modifier = 0;

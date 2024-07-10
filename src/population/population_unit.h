@@ -42,6 +42,8 @@ public:
 
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *settlement);
 
+	void do_turn();
+
 	std::string get_scope_name() const;
 
 	const population_type *get_type() const

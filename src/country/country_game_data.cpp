@@ -4616,6 +4616,21 @@ void country_game_data::set_population_type_modifier_multiplier(const population
 	type->get_country_modifier()->apply(this->country, centesimal_int::min(population_type_count * value, max_modifier_multiplier));
 }
 
+void country_game_data::set_population_type_militancy_modifier(const population_type *type, const centesimal_int &value)
+{
+	const centesimal_int old_value = this->get_population_type_militancy_modifier(type);
+
+	if (value == old_value) {
+		return;
+	}
+
+	if (value == 0) {
+		this->population_type_militancy_modifiers.erase(type);
+	} else {
+		this->population_type_militancy_modifiers[type] = value;
+	}
+}
+
 void country_game_data::decrement_scripted_modifiers()
 {
 	//decrement opinion modifiers

@@ -69,6 +69,10 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 
 void site_game_data::do_turn()
 {
+	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
+		population_unit->do_turn();
+	}
+
 	this->decrement_scripted_modifiers();
 }
 

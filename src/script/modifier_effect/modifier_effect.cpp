@@ -53,6 +53,7 @@
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
+#include "script/modifier_effect/population_type_militancy_modifier_effect.h"
 #include "script/modifier_effect/port_level_modifier_effect.h"
 #include "script/modifier_effect/profession_capacity_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
@@ -78,6 +79,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		static const std::string capital_commodity_bonus_prefix = "capital_";
 		static const std::string capital_commodity_bonus_per_population_suffix = "_bonus_per_population";
 		static const std::string commodity_per_building_infix = "_per_";
+		static const std::string militancy_modifier_suffix = "_militancy_modifier";
 		static const std::string research_modifier_suffix = "_research_modifier";
 		static const std::string throughput_modifier_suffix = "_throughput_modifier";
 
@@ -154,6 +156,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			const population_type *population_type = population_type::get(key.substr(0, key.size() - bonus_suffix.size()));
 
 			return std::make_unique<population_type_bonus_modifier_effect>(population_type, value);
+		} else if (key.ends_with(militancy_modifier_suffix) && population_type::try_get(key.substr(0, key.size() - militancy_modifier_suffix.size())) != nullptr) {
+			const population_type *population_type = population_type::get(key.substr(0, key.size() - militancy_modifier_suffix.size()));
+
+			return std::make_unique<population_type_militancy_modifier_effect>(population_type, value);
 		}
 		
 		const size_t find_pos = key.find(commodity_per_building_infix);
