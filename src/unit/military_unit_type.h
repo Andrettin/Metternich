@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")
@@ -20,6 +21,7 @@ class promotion;
 class technology;
 enum class military_unit_category;
 enum class military_unit_domain;
+enum class military_unit_stat;
 
 class military_unit_type final : public named_data_entry, public data_type<military_unit_type>
 {
@@ -29,13 +31,7 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
-	Q_PROPERTY(int firepower MEMBER firepower READ get_firepower NOTIFY changed)
-	Q_PROPERTY(int melee MEMBER melee READ get_melee NOTIFY changed)
-	Q_PROPERTY(int range MEMBER range READ get_range NOTIFY changed)
-	Q_PROPERTY(int defense MEMBER defense READ get_defense NOTIFY changed)
-	Q_PROPERTY(int resistance MEMBER resistance READ get_resistance NOTIFY changed)
 	Q_PROPERTY(int hit_points MEMBER hit_points READ get_hit_points NOTIFY changed)
-	Q_PROPERTY(int movement MEMBER movement READ get_movement NOTIFY changed)
 	Q_PROPERTY(bool entrench MEMBER entrench READ can_entrench NOTIFY changed)
 	Q_PROPERTY(int entrench_bonus MEMBER entrench_bonus READ get_entrench_bonus NOTIFY changed)
 	Q_PROPERTY(int bonus_vs_infantry MEMBER bonus_vs_infantry READ get_bonus_vs_infantry NOTIFY changed)
@@ -88,39 +84,25 @@ public:
 		return this->icon;
 	}
 
-	int get_firepower() const
+	const std::map<military_unit_stat, centesimal_int> &get_stats() const
 	{
-		return this->firepower;
+		return this->stats;
 	}
 
-	int get_melee() const
+	const centesimal_int &get_stat(const military_unit_stat stat) const
 	{
-		return this->melee;
-	}
+		const auto find_iterator = this->get_stats().find(stat);
+		if (find_iterator != this->get_stats().end()) {
+			return find_iterator->second;
+		}
 
-	int get_range() const
-	{
-		return this->range;
-	}
-
-	int get_defense() const
-	{
-		return this->defense;
-	}
-
-	int get_resistance() const
-	{
-		return this->resistance;
+		static constexpr centesimal_int zero;
+		return zero;
 	}
 
 	int get_hit_points() const
 	{
 		return this->hit_points;
-	}
-
-	int get_movement() const
-	{
-		return this->movement;
 	}
 
 	bool can_entrench() const
@@ -188,13 +170,8 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *icon = nullptr;
-	int firepower = 0;
-	int melee = 0;
-	int range = 0;
-	int defense = 0;
-	int resistance = 0; //resistance to damage, in percent
+	std::map<military_unit_stat, centesimal_int> stats;
 	int hit_points = 25;
-	int movement = 0;
 	bool entrench = false;
 	int entrench_bonus = 1; //the entrenchment bonus to defense
 	int bonus_vs_infantry = 0;

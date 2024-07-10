@@ -273,6 +273,7 @@ set(unit_SRCS
 	src/unit/military_unit_class_container.cpp
 	src/unit/military_unit_domain.cpp
 	src/unit/military_unit_category.cpp
+	src/unit/military_unit_stat.cpp
 	src/unit/military_unit_type.cpp
 	src/unit/military_unit_type_container.cpp
 	src/unit/promotion.cpp
@@ -689,7 +690,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h
 	src/script/modifier_effect/damage_bonus_modifier_effect.h
-	src/script/modifier_effect/defense_modifier_effect.h
 	src/script/modifier_effect/deployment_limit_modifier_effect.h
 	src/script/modifier_effect/depot_level_modifier_effect.h
 	src/script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h
@@ -710,9 +710,8 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/land_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/land_recovery_modifier_effect.h
 	src/script/modifier_effect/leader_cost_modifier_effect.h
-	src/script/modifier_effect/melee_modifier_effect.h
+	src/script/modifier_effect/military_unit_stat_modifier_effect.h
 	src/script/modifier_effect/modifier_effect.h
-	src/script/modifier_effect/movement_modifier_effect.h
 	src/script/modifier_effect/naval_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h
@@ -779,6 +778,7 @@ set(unit_HDRS
 	src/unit/military_unit_class_container.h
 	src/unit/military_unit_domain.h
 	src/unit/military_unit_category.h
+	src/unit/military_unit_stat.h
 	src/unit/military_unit_type.h
 	src/unit/military_unit_type_container.h
 	src/unit/promotion.h

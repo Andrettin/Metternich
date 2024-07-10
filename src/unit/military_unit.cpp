@@ -23,6 +23,7 @@
 #include "unit/army.h"
 #include "unit/military_unit_class.h"
 #include "unit/military_unit_domain.h"
+#include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
 #include "unit/promotion.h"
 #include "unit/promotion_container.h"
@@ -43,9 +44,10 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	this->set_hit_points(this->get_max_hit_points());
 	this->set_morale(this->get_hit_points());
 
-	this->melee = type->get_melee();
-	this->defense = type->get_defense();
-	this->movement = type->get_movement();
+	for (const auto &[stat, value] : type->get_stats()) {
+		this->stats[stat] = value;
+	}
+
 	this->bonus_vs_infantry = type->get_bonus_vs_infantry();
 	this->bonus_vs_cavalry = type->get_bonus_vs_cavalry();
 	this->bonus_vs_artillery = type->get_bonus_vs_artillery();
@@ -173,16 +175,11 @@ void military_unit::set_type(const military_unit_type *type)
 		this->change_max_hit_points(type->get_hit_points() - old_type->get_hit_points());
 	}
 
-	if (type->get_melee() != old_type->get_melee()) {
-		this->change_melee(type->get_melee() - old_type->get_melee());
-	}
-
-	if (type->get_defense() != old_type->get_defense()) {
-		this->change_defense(type->get_defense() - old_type->get_defense());
-	}
-
-	if (type->get_movement() != old_type->get_movement()) {
-		this->change_movement(type->get_movement() - old_type->get_movement());
+	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
+		const military_unit_stat stat = static_cast<military_unit_stat>(i);
+		if (type->get_stat(stat) != old_type->get_stat(stat)) {
+			this->change_stat(stat, type->get_stat(stat) - old_type->get_stat(stat));
+		}
 	}
 
 	if (type->get_bonus_vs_infantry() != old_type->get_bonus_vs_infantry()) {

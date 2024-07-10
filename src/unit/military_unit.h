@@ -1,5 +1,7 @@
 #pragma once
 
+#include "util/fractional_int.h"
+
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -21,6 +23,7 @@ class religion;
 class site;
 enum class military_unit_category;
 enum class military_unit_domain;
+enum class military_unit_stat;
 
 class military_unit final : public QObject
 {
@@ -201,61 +204,33 @@ public:
 
 	int get_morale_resistance() const;
 
-	int get_melee() const
+	const centesimal_int &get_stat(const military_unit_stat stat) const
 	{
-		return this->melee;
+		const auto find_iterator = this->stats.find(stat);
+		if (find_iterator != this->stats.end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
 	}
 
-	void set_melee(const int melee)
+	void set_stat(const military_unit_stat stat, const centesimal_int &value)
 	{
-		if (melee == this->get_melee()) {
+		if (value == this->get_stat(stat)) {
 			return;
 		}
 
-		this->melee = melee;
-	}
-
-	void change_melee(const int change)
-	{
-		this->set_melee(this->get_melee() + change);
-	}
-
-	int get_defense() const
-	{
-		return this->defense;
-	}
-
-	void set_defense(const int defense)
-	{
-		if (defense == this->get_defense()) {
-			return;
+		if (value == 0) {
+			this->stats.erase(stat);
+		} else {
+			this->stats[stat] = value;
 		}
-
-		this->defense = defense;
 	}
 
-	void change_defense(const int change)
+	void change_stat(const military_unit_stat stat, const centesimal_int &change)
 	{
-		this->set_defense(this->get_defense() + change);
-	}
-
-	int get_movement() const
-	{
-		return this->movement;
-	}
-
-	void set_movement(const int movement)
-	{
-		if (movement == this->get_movement()) {
-			return;
-		}
-
-		this->movement = movement;
-	}
-
-	void change_movement(const int change)
-	{
-		this->set_movement(this->get_movement() + change);
+		this->set_stat(stat, this->get_stat(stat) + change);
 	}
 
 	int get_damage_bonus() const
@@ -419,9 +394,7 @@ private:
 	int hit_points = 0;
 	int max_hit_points = 0;
 	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat
-	int melee = 0;
-	int defense = 0;
-	int movement = 0;
+	std::map<military_unit_stat, centesimal_int> stats;
 	int damage_bonus = 0;
 	int bonus_vs_infantry = 0;
 	int bonus_vs_cavalry = 0;

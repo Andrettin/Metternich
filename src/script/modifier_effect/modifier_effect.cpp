@@ -27,7 +27,6 @@
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/commodity_throughput_modifier_effect.h"
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
-#include "script/modifier_effect/defense_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/depot_level_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
@@ -48,8 +47,7 @@
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/land_recovery_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
-#include "script/modifier_effect/melee_modifier_effect.h"
-#include "script/modifier_effect/movement_modifier_effect.h"
+#include "script/modifier_effect/military_unit_stat_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
@@ -183,12 +181,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<bonus_vs_infantry_modifier_effect>(value);
 		} else if (key == "damage_bonus") {
 			return std::make_unique<damage_bonus_modifier_effect>(value);
-		} else if (key == "defense") {
-			return std::make_unique<defense_modifier_effect>(value);
-		} else if (key == "melee") {
-			return std::make_unique<melee_modifier_effect>(value);
-		} else if (key == "movement") {
-			return std::make_unique<movement_modifier_effect>(value);
+		} else if (enum_converter<military_unit_stat>::has_value(key)) {
+			return std::make_unique<military_unit_stat_modifier_effect>(enum_converter<military_unit_stat>::to_enum(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		static const std::string profession_capacity_prefix = "max_";

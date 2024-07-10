@@ -20,7 +20,13 @@ void military_unit_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "commodity_costs") {
+	if (tag == "stats") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const military_unit_stat stat = enum_converter<military_unit_stat>::to_enum(property.get_key());
+			const centesimal_int stat_value(property.get_value());
+			this->stats[stat] = stat_value;
+		});
+	} else if (tag == "commodity_costs") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = std::stoi(property.get_value());
