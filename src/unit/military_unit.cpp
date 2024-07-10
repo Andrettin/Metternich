@@ -45,7 +45,7 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	this->set_morale(this->get_hit_points());
 
 	for (const auto &[stat, value] : type->get_stats()) {
-		this->stats[stat] = value;
+		this->set_stat(stat, value);
 	}
 
 	this->bonus_vs_infantry = type->get_bonus_vs_infantry();
@@ -74,6 +74,12 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	assert_throw(this->get_home_settlement() != nullptr);
 
 	connect(this, &military_unit::type_changed, this, &military_unit::icon_changed);
+
+	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
+		const military_unit_stat stat = static_cast<military_unit_stat>(i);
+		const centesimal_int type_stat_value = type->get_stat_for_country(stat, this->get_country());
+		this->change_stat(stat, type_stat_value - type->get_stat(stat));
+	}
 
 	this->get_country()->get_game_data()->change_military_score(this->get_score());
 
@@ -177,8 +183,10 @@ void military_unit::set_type(const military_unit_type *type)
 
 	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
 		const military_unit_stat stat = static_cast<military_unit_stat>(i);
-		if (type->get_stat(stat) != old_type->get_stat(stat)) {
-			this->change_stat(stat, type->get_stat(stat) - old_type->get_stat(stat));
+		const centesimal_int type_stat_value = type->get_stat_for_country(stat, this->get_country());
+		const centesimal_int old_type_stat_value = old_type->get_stat_for_country(stat, this->get_country());
+		if (type_stat_value != old_type_stat_value) {
+			this->change_stat(stat, type_stat_value - old_type_stat_value);
 		}
 	}
 

@@ -48,6 +48,7 @@
 #include "script/modifier_effect/land_recovery_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
+#include "script/modifier_effect/military_unit_type_stat_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
@@ -78,6 +79,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		static const std::string capital_commodity_bonus_per_population_suffix = "_bonus_per_population";
 		static const std::string commodity_per_building_infix = "_per_";
 		static const std::string militancy_modifier_suffix = "_militancy_modifier";
+		static const std::string military_unit_type_stat_modifier_infix = "_";
+		static const std::string military_unit_type_stat_modifier_suffix = "_modifier";
 		static const std::string research_modifier_suffix = "_research_modifier";
 		static const std::string throughput_modifier_suffix = "_throughput_modifier";
 
@@ -160,15 +163,26 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<population_type_militancy_modifier_effect>(population_type, value);
 		}
 		
-		const size_t find_pos = key.find(commodity_per_building_infix);
-		if (find_pos != std::string::npos && !key.starts_with(commodity_per_building_infix) && !key.ends_with(commodity_per_building_infix) && building_type::try_get(key.substr(find_pos + commodity_per_building_infix.size(), key.size() - commodity_per_building_infix.size() - find_pos)) != nullptr) {
-			const size_t infix_pos = find_pos;
+		size_t infix_pos = key.find(commodity_per_building_infix);
+		if (infix_pos != std::string::npos && !key.starts_with(commodity_per_building_infix) && !key.ends_with(commodity_per_building_infix) && building_type::try_get(key.substr(infix_pos + commodity_per_building_infix.size(), key.size() - commodity_per_building_infix.size() - infix_pos)) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, infix_pos));
 
 			const size_t building_identifier_pos = infix_pos + commodity_per_building_infix.size();
 			const building_type *building = building_type::get(key.substr(building_identifier_pos, key.size() - building_identifier_pos));
 
 			return std::make_unique<commodity_bonus_per_building_modifier_effect<scope_type>>(commodity, building, value);
+		}
+		
+		const size_t suffix_pos = key.rfind(military_unit_type_stat_modifier_suffix);
+		if (suffix_pos != std::string::npos && key.ends_with(military_unit_type_stat_modifier_suffix)) {
+			infix_pos = key.rfind(military_unit_type_stat_modifier_infix, suffix_pos - 1);
+			if (infix_pos != std::string::npos && enum_converter<military_unit_stat>::has_value(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1))) {
+				const military_unit_stat stat = enum_converter<military_unit_stat>::to_enum(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1));
+
+				const military_unit_type *military_unit_type = military_unit_type::get(key.substr(0, infix_pos));
+
+				return std::make_unique<military_unit_type_stat_modifier_effect>(military_unit_type, stat, value);
+			}
 		}
 	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
 		if (key == "bonus_vs_artillery") {

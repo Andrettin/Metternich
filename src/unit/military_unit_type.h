@@ -14,6 +14,7 @@ Q_MOC_INCLUDE("unit/military_unit_class.h")
 namespace metternich {
 
 class military_unit_class;
+class country;
 class cultural_group;
 class culture;
 class icon;
@@ -99,6 +100,8 @@ public:
 		static constexpr centesimal_int zero;
 		return zero;
 	}
+
+	centesimal_int get_stat_for_country(const military_unit_stat stat, const country *country) const;
 
 	int get_hit_points() const
 	{

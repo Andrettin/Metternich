@@ -16,6 +16,7 @@
 #include "population/profession_container.h"
 #include "script/opinion_modifier_container.h"
 #include "technology/technology_container.h"
+#include "unit/military_unit_type_container.h"
 #include "unit/promotion_container.h"
 #include "util/fractional_int.h"
 #include "util/point_container.h"
@@ -72,6 +73,7 @@ enum class diplomatic_map_mode;
 enum class event_trigger;
 enum class income_transaction_type;
 enum class military_unit_category;
+enum class military_unit_stat;
 enum class technology_category;
 struct read_only_context;
 
@@ -1539,6 +1541,29 @@ public:
 		this->entrench_bonus_modifier += change;
 	}
 
+	const centesimal_int &get_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const
+	{
+		const auto find_iterator = this->military_unit_type_stat_modifiers.find(type);
+
+		if (find_iterator != this->military_unit_type_stat_modifiers.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(stat);
+
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
+	}
+
+	void set_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value);
+
+	void change_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &change)
+	{
+		this->set_military_unit_type_stat_modifier(type, stat, this->get_military_unit_type_stat_modifier(type, stat) + change);
+	}
+
 	int get_infantry_cost_modifier() const
 	{
 		return this->infantry_cost_modifier;
@@ -2318,6 +2343,7 @@ private:
 	int naval_morale_resistance_modifier = 0;
 	int air_morale_resistance_modifier = 0;
 	int entrench_bonus_modifier = 0;
+	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> military_unit_type_stat_modifiers;
 	int infantry_cost_modifier = 0;
 	int cavalry_cost_modifier = 0;
 	int artillery_cost_modifier = 0;

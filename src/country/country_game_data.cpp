@@ -4273,6 +4273,35 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 	return this->get_best_military_unit_category_type(category, this->country->get_culture());
 }
 
+
+void country_game_data::set_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value)
+{
+	const centesimal_int old_value = this->get_military_unit_type_stat_modifier(type, stat);
+
+	if (value == old_value) {
+		return;
+	}
+
+	if (value == 0) {
+		this->military_unit_type_stat_modifiers[type].erase(stat);
+
+		if (this->military_unit_type_stat_modifiers[type].empty()) {
+			this->military_unit_type_stat_modifiers.erase(type);
+		}
+	} else {
+		this->military_unit_type_stat_modifiers[type][stat] = value;
+	}
+
+	const centesimal_int difference = value - old_value;
+	for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
+		if (military_unit->get_type() != type) {
+			continue;
+		}
+
+		military_unit->change_stat(stat, difference);
+	}
+}
+
 void country_game_data::set_output_modifier(const int value)
 {
 	if (value == this->get_output_modifier()) {

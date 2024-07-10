@@ -2,6 +2,7 @@
 
 #include "unit/military_unit_type.h"
 
+#include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
@@ -134,6 +135,13 @@ bool military_unit_type::is_ship() const
 	}
 
 	return this->get_unit_class()->is_ship();
+}
+
+centesimal_int military_unit_type::get_stat_for_country(const military_unit_stat stat, const country *country) const
+{
+	centesimal_int value = this->get_stat(stat);
+	value += country->get_game_data()->get_military_unit_type_stat_modifier(this, stat);
+	return value;
 }
 
 int military_unit_type::get_score() const
