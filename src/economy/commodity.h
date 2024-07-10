@@ -31,6 +31,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::commodity*";
 	static constexpr const char database_folder[] = "commodities";
 
+	static constexpr int abstract_commodity_value = 100; //used for e.g. score calculation
+
 	explicit commodity(const std::string &identifier);
 
 	virtual void initialize() override;
