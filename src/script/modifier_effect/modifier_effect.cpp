@@ -176,12 +176,30 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		const size_t suffix_pos = key.rfind(military_unit_type_stat_modifier_suffix);
 		if (suffix_pos != std::string::npos && key.ends_with(military_unit_type_stat_modifier_suffix)) {
 			infix_pos = key.rfind(military_unit_type_stat_modifier_infix, suffix_pos - 1);
-			if (infix_pos != std::string::npos && enum_converter<military_unit_stat>::has_value(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1))) {
-				const military_unit_stat stat = enum_converter<military_unit_stat>::to_enum(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1));
+			if (infix_pos != std::string::npos) {
+				if (
+					enum_converter<military_unit_stat>::has_value(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1))
+					&& military_unit_type::try_get(key.substr(0, infix_pos)) != nullptr
+				) {
+					const military_unit_stat stat = enum_converter<military_unit_stat>::to_enum(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1));
 
-				const military_unit_type *military_unit_type = military_unit_type::get(key.substr(0, infix_pos));
+					const military_unit_type *military_unit_type = military_unit_type::get(key.substr(0, infix_pos));
 
-				return std::make_unique<military_unit_type_stat_modifier_effect>(military_unit_type, stat, value);
+					return std::make_unique<military_unit_type_stat_modifier_effect>(military_unit_type, stat, value);
+				}
+
+				infix_pos = key.rfind(military_unit_type_stat_modifier_infix, infix_pos - 1);
+				if (
+					infix_pos != std::string::npos
+					&& enum_converter<military_unit_stat>::has_value(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1))
+					&& military_unit_type::try_get(key.substr(0, infix_pos)) != nullptr
+				) {
+					const military_unit_stat stat = enum_converter<military_unit_stat>::to_enum(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1));
+
+					const military_unit_type *military_unit_type = military_unit_type::get(key.substr(0, infix_pos));
+
+					return std::make_unique<military_unit_type_stat_modifier_effect>(military_unit_type, stat, value);
+				}
 			}
 		}
 	} else if constexpr (std::is_same_v<scope_type, military_unit>) {

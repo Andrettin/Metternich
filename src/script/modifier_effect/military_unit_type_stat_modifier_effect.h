@@ -38,6 +38,11 @@ public:
 		return true;
 	}
 
+	virtual bool is_percent() const override
+	{
+		return is_percent_military_unit_stat(this->stat);
+	}
+
 private:
 	const metternich::military_unit_type *military_unit_type = nullptr;
 	military_unit_stat stat{};

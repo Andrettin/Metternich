@@ -30,6 +30,16 @@ public:
 		return std::string(get_military_unit_stat_name(this->stat));
 	}
 
+	virtual bool are_decimals_relevant() const override
+	{
+		return true;
+	}
+
+	virtual bool is_percent() const override
+	{
+		return is_percent_military_unit_stat(this->stat);
+	}
+
 private:
 	military_unit_stat stat{};
 };

@@ -360,7 +360,7 @@ public:
 	void check_promotions();
 	void check_free_promotions();
 
-	void receive_damage(const int damage);
+	void receive_damage(const int damage, const int morale_damage_modifier);
 	void heal(const int healing);
 
 	void disband(const bool dead);

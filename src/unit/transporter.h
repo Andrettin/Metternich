@@ -172,7 +172,7 @@ public:
 
 	int get_cargo() const;
 
-	void receive_damage(const int damage);
+	void receive_damage(const int damage, const int morale_damage_modifier);
 	void heal(const int healing);
 
 	void disband(const bool dead);

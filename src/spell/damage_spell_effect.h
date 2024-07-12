@@ -40,7 +40,7 @@ public:
 
 	virtual void apply(military_unit *caster, military_unit *target) const override
 	{
-		target->receive_damage(this->get_damage(caster));
+		target->receive_damage(this->get_damage(caster), 0);
 	}
 
 	virtual std::string get_string(const military_unit *caster) const override

@@ -146,11 +146,16 @@ int transporter::get_cargo() const
 	return this->get_type()->get_cargo();
 }
 
-void transporter::receive_damage(const int damage)
+void transporter::receive_damage(const int damage, const int morale_damage_modifier)
 {
 	this->change_hit_points(-damage);
 
-	const int morale_damage = damage * (100 - this->get_morale_resistance()) / 100;
+	int morale_damage = damage;
+	morale_damage *= 100 + morale_damage_modifier;
+	morale_damage /= 100;
+	morale_damage *= 100 - this->get_morale_resistance();
+	morale_damage /= 100;
+
 	this->change_morale(-morale_damage);
 }
 

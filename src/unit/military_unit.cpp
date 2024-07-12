@@ -346,7 +346,7 @@ void military_unit::set_hit_points(const int hit_points)
 
 int military_unit::get_morale_resistance() const
 {
-	int morale_resistance = 0;
+	int morale_resistance = this->get_stat(military_unit_stat::morale_resistance).to_int();
 
 	if (this->get_country() != nullptr) {
 		const country_game_data *country_game_data = this->get_country()->get_game_data();
@@ -525,11 +525,16 @@ void military_unit::check_free_promotions()
 	}
 }
 
-void military_unit::receive_damage(const int damage)
+void military_unit::receive_damage(const int damage, const int morale_damage_modifier)
 {
 	this->change_hit_points(-damage);
 
-	const int morale_damage = damage * (100 - this->get_morale_resistance()) / 100;
+	int morale_damage = damage;
+	morale_damage *= 100 + morale_damage_modifier;
+	morale_damage /= 100;
+	morale_damage *= 100 - this->get_morale_resistance();
+	morale_damage /= 100;
+
 	this->change_morale(-morale_damage);
 }
 
