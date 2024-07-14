@@ -84,6 +84,10 @@ void technology::initialize()
 {
 	this->calculate_total_prerequisite_depth();
 
+	for (technology *prerequisite : this->get_prerequisites()) {
+		prerequisite->leads_to.push_back(this);
+	}
+
 	if (this->get_year() != 0) {
 		this->period = technological_period::get_by_year(this->get_year());
 	}
@@ -118,6 +122,35 @@ void technology::check() const
 		}
 	} else {
 		log::log_error(std::format("Technology \"{}\" has no period.", this->get_identifier()));
+	}
+
+	if (
+		this->get_modifier() == nullptr
+		&& !this->grants_free_technology()
+		&& this->get_shared_prestige() == 0
+		&& this->get_enabled_buildings().empty()
+		&& this->get_enabled_characters(character_role::ruler).empty()
+		&& this->get_enabled_characters(character_role::advisor).empty()
+		&& this->get_enabled_characters(character_role::leader).empty()
+		&& this->get_enabled_civilian_units().empty()
+		&& this->get_enabled_commodities().empty()
+		&& this->get_enabled_government_types().empty()
+		&& this->get_enabled_improvements().empty()
+		&& this->get_enabled_laws().empty()
+		&& this->get_enabled_military_units().empty()
+		&& this->get_enabled_pathway_terrains().empty()
+		&& this->get_enabled_pathways().empty()
+		&& this->get_enabled_production_types().empty()
+		&& this->get_enabled_resources().empty()
+		&& this->get_enabled_river_crossing_pathways().empty()
+		&& this->get_enabled_transporters().empty()
+		&& this->get_enabled_wonders().empty()
+	) {
+		log::log_error(std::format("Technology \"{}\" has no effects.", this->get_identifier()));
+	}
+
+	if (this->leads_to.empty() && this->get_period() != technological_period::get_all().back()) {
+		log::log_error(std::format("Technology \"{}\" is a dead end technology.", this->get_identifier()));
 	}
 }
 

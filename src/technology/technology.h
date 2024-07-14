@@ -414,6 +414,7 @@ private:
 	int shared_prestige = 0;
 	std::vector<technology *> prerequisites;
 	int total_prerequisite_depth = 0;
+	std::vector<const technology *> leads_to;
 	std::vector<const commodity *> enabled_commodities;
 	std::vector<const resource *> enabled_resources;
 	std::vector<const building_type *> enabled_buildings;
