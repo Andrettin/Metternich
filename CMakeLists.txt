@@ -137,6 +137,7 @@ set(map_SRCS
 	src/map/map.cpp
 	src/map/map_generator.cpp
 	src/map/map_grid_model.cpp
+	src/map/map_province_model.cpp
 	src/map/map_template.cpp
 	src/map/moisture_type.cpp
 	src/map/province.cpp
@@ -444,6 +445,7 @@ set(map_HDRS
 	src/map/map.h
 	src/map/map_generator.h
 	src/map/map_grid_model.h
+	src/map/map_province_model.h
 	src/map/map_template.h
 	src/map/moisture_type.h
 	src/map/province.h

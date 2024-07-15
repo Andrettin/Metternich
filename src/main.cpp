@@ -41,6 +41,7 @@
 #include "map/forestation_type.h"
 #include "map/map.h"
 #include "map/map_grid_model.h"
+#include "map/map_province_model.h"
 #include "map/map_template.h"
 #include "map/moisture_type.h"
 #include "map/province.h"
@@ -188,6 +189,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<wonder>("", 1);
 
 		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
+		qmlRegisterType<map_province_model>("map_province_model", 1, 0, "MapProvinceModel");
 		qmlRegisterType<MaskedMouseArea>("MaskedMouseArea", 1, 0, "MaskedMouseArea");
 
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
