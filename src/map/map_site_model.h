@@ -4,23 +4,21 @@
 #include <QAbstractListModel> 
 #pragma warning(pop)
 
-class QGeoPolygon;
-
 namespace metternich {
 
-class province;
+class site;
 
-class map_province_model : public QAbstractListModel
+class map_site_model : public QAbstractListModel
 {
 	Q_OBJECT
 
 public:
 	enum class role {
-		province,
-		geopolygon
+		site,
+		geocoordinate
 	};
 
-	map_province_model();
+	map_site_model();
 
 	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override final;
 	virtual QVariant data(const QModelIndex &index, int role) const override final;
@@ -29,14 +27,14 @@ public:
 	{
 		QHash<int, QByteArray> role_names;
 
-		role_names.insert(static_cast<int>(role::province), "province");
-		role_names.insert(static_cast<int>(role::geopolygon), "geopolygon");
+		role_names.insert(static_cast<int>(role::site), "site");
+		role_names.insert(static_cast<int>(role::geocoordinate), "geocoordinate");
 
 		return role_names;
 	}
 
 private:
-	std::vector<std::pair<const province *, std::unique_ptr<QGeoShape>>> province_geopolygons;
+	std::vector<std::pair<const site *, QGeoCoordinate>> site_geocoordinates;
 };
 
 }
