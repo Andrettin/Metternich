@@ -4,8 +4,6 @@
 #include <QAbstractListModel> 
 #pragma warning(pop)
 
-class QGeoPolygon;
-
 namespace metternich {
 
 class province;
@@ -33,6 +31,11 @@ public:
 		role_names.insert(static_cast<int>(role::geopolygon), "geopolygon");
 
 		return role_names;
+	}
+
+	const std::vector<std::pair<const province *, std::unique_ptr<QGeoShape>>> &get_province_geopolygons() const
+	{
+		return this->province_geopolygons;
 	}
 
 private:

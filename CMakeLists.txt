@@ -135,6 +135,7 @@ set(map_SRCS
 	src/map/elevation_type.cpp
 	src/map/forestation_type.cpp
 	src/map/map.cpp
+	src/map/map_country_model.cpp
 	src/map/map_generator.cpp
 	src/map/map_grid_model.cpp
 	src/map/map_province_model.cpp
@@ -444,6 +445,7 @@ set(map_HDRS
 	src/map/elevation_type.h
 	src/map/forestation_type.h
 	src/map/map.h
+	src/map/map_country_model.h
 	src/map/map_generator.h
 	src/map/map_grid_model.h
 	src/map/map_province_model.h

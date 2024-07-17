@@ -8,6 +8,7 @@
 #include "map/province.h"
 #include "map/world.h"
 #include "util/exception_util.h"
+#include "util/geopolygon_util.h"
 
 #include <QGeoPolygon>
 
@@ -19,6 +20,8 @@ map_province_model::map_province_model()
 
 	for (auto &[province, geoshapes] : province_geodata_map) {
 		for (auto &geoshape : geoshapes) {
+			geopolygon::simplify(*static_cast<QGeoPolygon *>(geoshape.get()));
+
 			this->province_geopolygons.emplace_back(province, std::move(geoshape));
 		}
 	}

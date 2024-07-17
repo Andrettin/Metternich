@@ -40,6 +40,7 @@
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
 #include "map/map.h"
+#include "map/map_country_model.h"
 #include "map/map_grid_model.h"
 #include "map/map_province_model.h"
 #include "map/map_site_model.h"
@@ -189,6 +190,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<technology>("", 1);
 		qmlRegisterAnonymousType<wonder>("", 1);
 
+		qmlRegisterType<map_country_model>("map_country_model", 1, 0, "MapCountryModel");
 		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
 		qmlRegisterType<map_province_model>("map_province_model", 1, 0, "MapProvinceModel");
 		qmlRegisterType<map_site_model>("map_site_model", 1, 0, "MapSiteModel");
