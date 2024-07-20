@@ -21,6 +21,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
+#include "map/world.h"
 #include "technology/technology.h"
 #include "time/era.h"
 #include "unit/army.h"
@@ -74,6 +75,11 @@ preferences *engine_interface::get_preferences() const
 const map_template *engine_interface::get_map_template(const QString &identifier) const
 {
 	return map_template::try_get(identifier.toStdString());
+}
+
+const world *engine_interface::get_world(const QString &identifier) const
+{
+	return world::try_get(identifier.toStdString());
 }
 
 QVariantList engine_interface::get_scenarios() const

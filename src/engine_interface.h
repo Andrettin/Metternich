@@ -9,6 +9,7 @@ Q_MOC_INCLUDE("game/event_instance.h")
 Q_MOC_INCLUDE("game/game.h")
 Q_MOC_INCLUDE("map/map.h")
 Q_MOC_INCLUDE("map/map_template.h")
+Q_MOC_INCLUDE("map/world.h")
 
 namespace metternich {
 
@@ -22,6 +23,7 @@ class map_template;
 class military_unit;
 class preferences;
 class province;
+class world;
 enum class country_tier;
 enum class military_unit_category;
 
@@ -67,6 +69,7 @@ public:
 	preferences *get_preferences() const;
 
 	Q_INVOKABLE const map_template *get_map_template(const QString &identifier) const;
+	Q_INVOKABLE const world *get_world(const QString &identifier) const;
 	Q_INVOKABLE QVariantList get_scenarios() const;
 	Q_INVOKABLE QVariantList get_major_scenarios() const;
 	Q_INVOKABLE QVariantList get_eras() const;
