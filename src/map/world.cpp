@@ -2,12 +2,19 @@
 
 #include "map/world.h"
 
+#include "map/equirectangular_map_projection.h"
 #include "map/province.h"
 #include "map/route.h"
 #include "map/site.h"
 #include "map/terrain_feature.h"
 #include "map/terrain_type.h"
+#include "util/assert_util.h"
+#include "util/exception_util.h"
 #include "util/geojson_util.h"
+#include "util/georectangle.h"
+#include "util/geoshape_util.h"
+#include "util/number_util.h"
+#include "util/path_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -72,7 +79,69 @@ route_map<std::vector<std::unique_ptr<QGeoShape>>> world::parse_routes_geojson_f
 	}, nullptr);
 }
 
-province_map<std::vector<std::unique_ptr<QGeoShape>>> world::parse_provinces_geojson_folder() const
+void world::set_province_image_filepath(const std::filesystem::path &filepath)
+{
+	if (filepath == this->get_province_image_filepath()) {
+		return;
+	}
+
+	this->province_image_filepath = database::get()->get_maps_path(this->get_module()) / filepath;
+}
+
+void world::write_province_image(const double min_geoshape_width, const double max_geoshape_width)
+{
+	try {
+		province_geodata_map_type province_geodata_map = this->parse_provinces_geojson_folder();
+
+		color_map<std::vector<std::unique_ptr<QGeoShape>>> geodata_map;
+
+		for (auto &[province, geoshapes] : province_geodata_map) {
+			const QColor color = province->get_color();
+			if (!color.isValid()) {
+				throw std::runtime_error("Province \"" + province->get_identifier() + "\" has no valid color.");
+			}
+
+			for (size_t i = 0; i < geoshapes.size();) {
+				const QGeoRectangle bounding_georectangle = geoshapes[i]->boundingGeoRectangle();
+				if (bounding_georectangle.width() < min_geoshape_width || bounding_georectangle.width() > max_geoshape_width) {
+					geoshapes.erase(geoshapes.begin() + i);
+				} else {
+					++i;
+				}
+			}
+
+			vector::merge(geodata_map[color], std::move(geoshapes));
+		}
+
+		const equirectangular_map_projection *map_projection = equirectangular_map_projection::get();
+
+		static constexpr archimedes::georectangle georectangle = georectangle::get_global_georectangle();
+
+		static constexpr int geocoordinate_size_multiplier = 25;
+		static constexpr QSize map_size(geocoordinate::longitude_size * geocoordinate_size_multiplier, geocoordinate::latitude_size * geocoordinate_size_multiplier);
+
+		map_projection->validate_area(georectangle, map_size);
+
+		QImage base_image;
+
+		if (!this->get_province_image_filepath().empty()) {
+			base_image = QImage(path::to_qstring(this->get_province_image_filepath()));
+			assert_throw(!base_image.isNull());
+		}
+
+		std::filesystem::path output_filepath = this->get_province_image_filepath().filename();
+		if (output_filepath.empty()) {
+			output_filepath = "provinces.png";
+		}
+
+		geoshape::write_image(output_filepath, geodata_map, georectangle, map_size, map_projection, base_image, 0);
+	} catch (...) {
+		exception::report(std::current_exception());
+		QApplication::exit(EXIT_FAILURE);
+	}
+}
+
+world::province_geodata_map_type world::parse_provinces_geojson_folder() const
 {
 	using province_geodata_map = province_map<std::vector<std::unique_ptr<QGeoShape>>>;
 
