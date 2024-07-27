@@ -52,7 +52,7 @@ void map_country_model::create_country_geopolygons(const country *country, const
 		country_polygons_changed = false;
 
 		for (size_t i = 0; i < country_polygons.size(); ++i) {
-			for (size_t j = i + 1; j < country_polygons.size(); ++j) {
+			for (size_t j = i + 1; j < country_polygons.size();) {
 				QPolygonF &country_polygon = country_polygons[i];
 				QPolygonF &other_country_polygon = country_polygons[j];
 
