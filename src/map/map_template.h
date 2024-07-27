@@ -67,6 +67,11 @@ public:
 		return this->world;
 	}
 
+	const metternich::map_projection *get_map_projection() const
+	{
+		return this->map_projection;
+	}
+
 	const archimedes::georectangle &get_georectangle() const
 	{
 		return this->georectangle;
