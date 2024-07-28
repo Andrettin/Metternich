@@ -38,10 +38,6 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
 		this->ruler_modifier = std::move(modifier);
-	} else if (tag == "advisor_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
-		database::process_gsml_data(modifier, scope);
-		this->advisor_modifier = std::move(modifier);
 	} else if (tag == "military_unit_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
 		database::process_gsml_data(modifier, scope);
@@ -78,15 +74,6 @@ QString trait::get_ruler_modifier_string(const metternich::country *country) con
 	}
 
 	return QString::fromStdString(this->get_ruler_modifier()->get_string(country));
-}
-
-QString trait::get_advisor_modifier_string(const metternich::country *country) const
-{
-	if (this->get_advisor_modifier() == nullptr) {
-		return QString();
-	}
-
-	return QString::fromStdString(this->get_advisor_modifier()->get_string(country));
 }
 
 QString trait::get_military_unit_modifier_string() const

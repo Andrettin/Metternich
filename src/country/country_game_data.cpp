@@ -3778,19 +3778,6 @@ bool country_game_data::can_recruit_advisor(const character *advisor) const
 		return false;
 	}
 
-	//only one advisor with the same advisor trait can be obtained
-	for (const trait *trait : advisor->get_traits()) {
-		if (trait->get_advisor_modifier() == nullptr) {
-			continue;
-		}
-
-		for (const character *other_advisor : this->get_advisors()) {
-			if (vector::contains(other_advisor->get_traits(), trait)) {
-				return false;
-			}
-		}
-	}
-
 	return true;
 }
 
