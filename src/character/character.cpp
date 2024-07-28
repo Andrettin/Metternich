@@ -208,11 +208,15 @@ void character::check() const
 				throw std::runtime_error(std::format("Character \"{}\" is a ruler, but has no rulable countries.", this->get_identifier()));
 			}
 
-			if (this->get_traits().size() < character::ruler_trait_count) {
-				log::log_error(std::format("Character \"{}\" is a ruler, but only has {} {}, instead of the expected {}.", this->get_identifier(), this->get_traits().size(), this->get_traits().size() == 1 ? "trait" : "traits", character::ruler_trait_count));
+			if (this->get_traits().size() != character::ruler_trait_count) {
+				log::log_error(std::format("Character \"{}\" is a ruler, but has {} {}, instead of the expected {}.", this->get_identifier(), this->get_traits().size(), this->get_traits().size() == 1 ? "trait" : "traits", character::ruler_trait_count));
 			}
 			break;
 		case character_role::advisor:
+			if (this->get_traits().size() < character::advisor_trait_count) {
+				log::log_error(std::format("Character \"{}\" is an advisor, but has {} {}, instead of the expected {}.", this->get_identifier(), this->get_traits().size(), this->get_traits().size() == 1 ? "trait" : "traits", character::advisor_trait_count));
+			}
+
 			if (this->get_advisor_type() == nullptr) {
 				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but has no advisor type.", this->get_identifier()));
 			}
@@ -384,6 +388,18 @@ QString character::get_advisor_effects_string(metternich::country *country) cons
 		str += this->advisor_effects->get_effects_string(country, read_only_context(country));
 	}
 
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_advisor_modifier() == nullptr) {
+			continue;
+		}
+
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += trait->get_advisor_modifier()->get_string(country);
+	}
+
 	if (!str.empty()) {
 		return QString::fromStdString(str);
 	}
@@ -405,7 +421,19 @@ void character::apply_advisor_modifier(const country *country, const int multipl
 
 	if (this->advisor_modifier != nullptr) {
 		this->advisor_modifier->apply(country, multiplier);
-	} else if (this->get_advisor_type()->get_modifier() != nullptr) {
+		return;
+	}
+
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_advisor_modifier() != nullptr) {
+			continue;
+		}
+
+		trait->get_advisor_modifier()->apply(country, multiplier);
+		return;
+	}
+
+	if (this->get_advisor_type()->get_modifier() != nullptr) {
 		this->get_advisor_type()->get_modifier()->apply(country, this->get_skill() * multiplier);
 	}
 }

@@ -71,7 +71,14 @@ public:
 		return this->ruler_modifier.get();
 	}
 
-	Q_INVOKABLE QString get_ruler_modifier_string(metternich::country *country) const;
+	Q_INVOKABLE QString get_ruler_modifier_string(const metternich::country *country) const;
+
+	const metternich::modifier<const country> *get_advisor_modifier() const
+	{
+		return this->advisor_modifier.get();
+	}
+
+	Q_INVOKABLE QString get_advisor_modifier_string(const metternich::country *country) const;
 
 	const metternich::modifier<military_unit> *get_military_unit_modifier() const
 	{
@@ -90,6 +97,7 @@ private:
 	std::unique_ptr<const condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	std::unique_ptr<const metternich::modifier<const country>> ruler_modifier;
+	std::unique_ptr<const metternich::modifier<const country>> advisor_modifier;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
 };
 

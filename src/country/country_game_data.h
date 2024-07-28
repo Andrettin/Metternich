@@ -1306,6 +1306,7 @@ public:
 
 	void choose_next_advisor();
 	bool can_have_advisors() const;
+	bool can_recruit_advisor(const character *advisor) const;
 
 	const std::vector<const character *> &get_leaders() const
 	{

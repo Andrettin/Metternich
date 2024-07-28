@@ -3685,24 +3685,7 @@ void country_game_data::choose_next_advisor()
 			continue;
 		}
 
-		const character_game_data *character_game_data = character->get_game_data();
-		if (character_game_data->get_country() != nullptr) {
-			continue;
-		}
-
-		if (character_game_data->is_dead()) {
-			continue;
-		}
-
-		if (character->get_required_technology() != nullptr && !this->has_technology(character->get_required_technology())) {
-			continue;
-		}
-
-		if (character->get_obsolescence_technology() != nullptr && this->has_technology(character->get_obsolescence_technology())) {
-			continue;
-		}
-
-		if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->country, read_only_context(this->country))) {
+		if (!this->can_recruit_advisor(character)) {
 			continue;
 		}
 
@@ -3770,6 +3753,45 @@ bool country_game_data::can_have_advisors() const
 {
 	//only great powers can have advisors
 	return this->country->get_type() == country_type::great_power;
+}
+
+bool country_game_data::can_recruit_advisor(const character *advisor) const
+{
+	const character_game_data *advisor_game_data = advisor->get_game_data();
+	if (advisor_game_data->get_country() != nullptr) {
+		return false;
+	}
+
+	if (advisor_game_data->is_dead()) {
+		return false;
+	}
+
+	if (advisor->get_required_technology() != nullptr && !this->has_technology(advisor->get_required_technology())) {
+		return false;
+	}
+
+	if (advisor->get_obsolescence_technology() != nullptr && this->has_technology(advisor->get_obsolescence_technology())) {
+		return false;
+	}
+
+	if (advisor->get_conditions() != nullptr && !advisor->get_conditions()->check(this->country, read_only_context(this->country))) {
+		return false;
+	}
+
+	//only one advisor with the same advisor trait can be obtained
+	for (const trait *trait : advisor->get_traits()) {
+		if (trait->get_advisor_modifier() == nullptr) {
+			continue;
+		}
+
+		for (const character *other_advisor : this->get_advisors()) {
+			if (vector::contains(other_advisor->get_traits(), trait)) {
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 QVariantList country_game_data::get_leaders_qvariant_list() const
