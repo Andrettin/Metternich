@@ -25,6 +25,9 @@ void advisor_type::process_gsml_scope(const gsml_data &scope)
 	if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(this->modifier, scope);
+	} else if (tag == "scaled_modifier") {
+		this->scaled_modifier = std::make_unique<metternich::modifier<const country>>();
+		database::process_gsml_data(this->scaled_modifier, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

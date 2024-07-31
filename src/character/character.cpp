@@ -389,7 +389,9 @@ QString character::get_advisor_effects_string(metternich::country *country) cons
 	}
 
 	if (this->get_advisor_type()->get_modifier() != nullptr) {
-		return QString::fromStdString(this->get_advisor_type()->get_modifier()->get_string(country, this->get_skill()));
+		return QString::fromStdString(this->get_advisor_type()->get_modifier()->get_string(country));
+	} else if (this->get_advisor_type()->get_scaled_modifier() != nullptr) {
+		return QString::fromStdString(this->get_advisor_type()->get_scaled_modifier()->get_string(country, this->get_skill()));
 	}
 
 	return QString();
@@ -406,7 +408,9 @@ void character::apply_advisor_modifier(const country *country, const int multipl
 	if (this->advisor_modifier != nullptr) {
 		this->advisor_modifier->apply(country, multiplier);
 	} else if (this->get_advisor_type()->get_modifier() != nullptr) {
-		this->get_advisor_type()->get_modifier()->apply(country, this->get_skill() * multiplier);
+		this->get_advisor_type()->get_modifier()->apply(country);
+	} else if (this->get_advisor_type()->get_scaled_modifier() != nullptr) {
+		this->get_advisor_type()->get_scaled_modifier()->apply(country, this->get_skill() * multiplier);
 	}
 }
 

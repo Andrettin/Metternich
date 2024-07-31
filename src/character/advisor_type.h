@@ -33,9 +33,14 @@ public:
 		return this->category;
 	}
 
-	const modifier<const country> *get_modifier() const
+	const metternich::modifier<const country> *get_modifier() const
 	{
 		return this->modifier.get();
+	}
+
+	const metternich::modifier<const country> *get_scaled_modifier() const
+	{
+		return this->scaled_modifier.get();
 	}
 
 signals:
@@ -43,7 +48,8 @@ signals:
 
 private:
 	advisor_category category;
-	std::unique_ptr<modifier<const country>> modifier;
+	std::unique_ptr<metternich::modifier<const country>> modifier;
+	std::unique_ptr<metternich::modifier<const country>> scaled_modifier;
 };
 
 }
