@@ -187,6 +187,16 @@ void character::initialize()
 		}
 	}
 
+	if (this->get_advisor_type() != nullptr) {
+		if (this->get_required_technology() == nullptr) {
+			this->required_technology = this->get_advisor_type()->get_required_technology();
+		}
+
+		if (this->get_obsolescence_technology() == nullptr) {
+			this->obsolescence_technology = this->get_advisor_type()->get_obsolescence_technology();
+		}
+	}
+
 	if (this->get_role() != character_role::none) {
 		if (this->required_technology != nullptr) {
 			this->required_technology->add_enabled_character(role, this);
