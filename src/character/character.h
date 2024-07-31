@@ -305,6 +305,11 @@ public:
 		return QString::fromStdString(this->get_ruler_modifier_string(country));
 	}
 
+	const modifier<const country> *get_advisor_modifier() const
+	{
+		return this->advisor_modifier.get();
+	}
+
 	Q_INVOKABLE QString get_advisor_effects_string(metternich::country *country) const;
 
 	const effect_list<const country> *get_advisor_effects() const

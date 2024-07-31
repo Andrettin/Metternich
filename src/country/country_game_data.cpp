@@ -3778,6 +3778,19 @@ bool country_game_data::can_recruit_advisor(const character *advisor) const
 		return false;
 	}
 
+	//only one advisor with the same advisor type can be obtained
+	if (advisor->get_advisor_modifier() == nullptr && advisor->get_advisor_effects() == nullptr) {
+		for (const character *other_advisor : this->get_advisors()) {
+			if (other_advisor->get_advisor_modifier() != nullptr || other_advisor->get_advisor_effects() != nullptr) {
+				continue;
+			}
+
+			if (other_advisor->get_advisor_type() == advisor->get_advisor_type()) {
+				return false;
+			}
+		}
+	}
+
 	return true;
 }
 
