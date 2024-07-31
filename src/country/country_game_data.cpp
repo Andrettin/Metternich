@@ -75,6 +75,8 @@
 #include "unit/military_unit_class.h"
 #include "unit/military_unit_type.h"
 #include "unit/transporter.h"
+#include "unit/transporter_class.h"
+#include "unit/transporter_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/gender.h"
@@ -4295,6 +4297,40 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 	return this->get_best_military_unit_category_type(category, this->country->get_culture());
 }
 
+const transporter_type *country_game_data::get_best_transporter_category_type(const transporter_category category, const culture *culture) const
+{
+	const transporter_type *best_type = nullptr;
+	int best_score = -1;
+
+	for (const transporter_class *transporter_class : transporter_class::get_all()) {
+		if (transporter_class->get_category() != category) {
+			continue;
+		}
+
+		const transporter_type *type = culture->get_transporter_class_type(transporter_class);
+
+		if (type == nullptr) {
+			continue;
+		}
+
+		if (type->get_required_technology() != nullptr && !this->has_technology(type->get_required_technology())) {
+			continue;
+		}
+
+		const int score = type->get_score();
+
+		if (score > best_score) {
+			best_type = type;
+		}
+	}
+
+	return best_type;
+}
+
+const transporter_type *country_game_data::get_best_transporter_category_type(const transporter_category category) const
+{
+	return this->get_best_transporter_category_type(category, this->country->get_culture());
+}
 
 void country_game_data::set_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value)
 {

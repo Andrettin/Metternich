@@ -10,7 +10,6 @@
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_class.h"
-#include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
@@ -98,7 +97,7 @@ public:
 			return std::string();
 		}
 
-		return std::format("Gain {} {} {}", this->count, string::highlight(type->get_name()), type->get_domain() == military_unit_domain::water ? "ship" : "regiment");
+		return std::format("Gain {} {} {}", this->count, string::highlight(type->get_name()), type->is_ship() ? "warship" : "regiment");
 	}
 
 	const military_unit_type *get_type(const country *scope) const

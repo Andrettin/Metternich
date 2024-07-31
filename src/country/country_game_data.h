@@ -67,6 +67,7 @@ class religion;
 class site;
 class subject_type;
 class transporter;
+class transporter_type;
 enum class country_tier;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
@@ -75,6 +76,7 @@ enum class income_transaction_type;
 enum class military_unit_category;
 enum class military_unit_stat;
 enum class technology_category;
+enum class transporter_category;
 struct read_only_context;
 
 class country_game_data final : public QObject
@@ -1461,6 +1463,9 @@ public:
 
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const;
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category) const;
+
+	const transporter_type *get_best_transporter_category_type(const transporter_category category, const culture *culture) const;
+	const transporter_type *get_best_transporter_category_type(const transporter_category category) const;
 
 	int get_deployment_limit() const
 	{
