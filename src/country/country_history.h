@@ -31,7 +31,6 @@ class country_history final : public data_entry_history
 	Q_PROPERTY(metternich::character* ruler MEMBER ruler)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<metternich::technology *> technologies READ get_technologies)
-	Q_PROPERTY(std::vector<metternich::character *> advisor READ get_advisors)
 	Q_PROPERTY(int wealth MEMBER wealth READ get_wealth)
 
 public:
@@ -84,21 +83,6 @@ public:
 		std::erase(this->technologies, technology);
 	}
 
-	const std::vector<character *> &get_advisors() const
-	{
-		return this->advisors;
-	}
-
-	Q_INVOKABLE void add_advisor(character *advisor)
-	{
-		this->advisors.push_back(advisor);
-	}
-
-	Q_INVOKABLE void remove_advisor(character *advisor)
-	{
-		std::erase(this->advisors, advisor);
-	}
-
 	int get_wealth() const
 	{
 		return this->wealth;
@@ -130,7 +114,6 @@ private:
 	const metternich::subject_type *subject_type = nullptr;
 	centesimal_int literacy_rate;
 	std::vector<technology *> technologies;
-	std::vector<character *> advisors;
 	int wealth = 0;
 	commodity_map<int> commodities;
 	country_map<diplomacy_state> diplomacy_states;

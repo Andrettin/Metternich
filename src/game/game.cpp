@@ -403,17 +403,6 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->add_technology_with_prerequisites(technology);
 			}
 
-			if (country_game_data->can_have_advisors()) {
-				for (const character *advisor : country_history->get_advisors()) {
-					//add prerequisites for the advisor to its country's researched technologies
-					if (advisor->get_required_technology() != nullptr) {
-						country_game_data->add_technology_with_prerequisites(advisor->get_required_technology());
-					}
-
-					country_game_data->add_advisor(advisor);
-				}
-			}
-
 			country_game_data->set_wealth(country_history->get_wealth());
 
 			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
@@ -567,7 +556,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					character_game_data->set_dead(true);
 				} else {
 					if (character->get_role() == character_role::advisor) {
-						if (country_game_data->can_have_advisors()) {
+						if (country_game_data->can_have_advisors() && !country_game_data->has_incompatible_advisor_to(character)) {
 							country_game_data->add_advisor(character);
 						}
 					} else if (character->get_role() == character_role::leader) {

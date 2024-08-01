@@ -10,6 +10,7 @@
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/culture.h"
 #include "country/religion.h"
 #include "map/province.h"
@@ -190,20 +191,20 @@ void character::initialize()
 	if (this->get_advisor_type() != nullptr) {
 		if (this->get_required_technology() == nullptr) {
 			this->required_technology = this->get_advisor_type()->get_required_technology();
-		}
 
-		if (this->get_obsolescence_technology() == nullptr) {
-			this->obsolescence_technology = this->get_advisor_type()->get_obsolescence_technology();
+			if (this->get_obsolescence_technology() == nullptr) {
+				this->obsolescence_technology = this->get_advisor_type()->get_obsolescence_technology();
+			}
 		}
 	}
 
 	if (this->get_role() != character_role::none) {
 		if (this->required_technology != nullptr) {
-			this->required_technology->add_enabled_character(role, this);
+			this->required_technology->add_enabled_character(this->get_role(), this);
 		}
 
 		if (this->obsolescence_technology != nullptr) {
-			this->obsolescence_technology->add_retired_character(role, this);
+			this->obsolescence_technology->add_retired_character(this->get_role(), this);
 		}
 	}
 
@@ -399,12 +400,23 @@ QString character::get_advisor_effects_string(metternich::country *country) cons
 	}
 
 	if (this->get_advisor_type()->get_modifier() != nullptr) {
-		return QString::fromStdString(this->get_advisor_type()->get_modifier()->get_string(country));
+		str = this->get_advisor_type()->get_modifier()->get_string(country);
 	} else if (this->get_advisor_type()->get_scaled_modifier() != nullptr) {
-		return QString::fromStdString(this->get_advisor_type()->get_scaled_modifier()->get_string(country, this->get_skill()));
+		str = this->get_advisor_type()->get_scaled_modifier()->get_string(country, this->get_skill());
 	}
 
-	return QString();
+	if (this->get_game_data()->get_country() != country) {
+		const character *replaced_advisor = country->get_game_data()->get_replaced_advisor_for(this);
+		if (replaced_advisor != nullptr) {
+			if (!str.empty()) {
+				str += '\n';
+			}
+
+			str += std::format("Replaces {}", replaced_advisor->get_full_name());
+		}
+	}
+
+	return QString::fromStdString(str);
 }
 
 void character::apply_advisor_modifier(const country *country, const int multiplier) const

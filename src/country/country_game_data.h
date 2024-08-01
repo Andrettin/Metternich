@@ -1309,6 +1309,8 @@ public:
 	void choose_next_advisor();
 	bool can_have_advisors() const;
 	bool can_recruit_advisor(const character *advisor) const;
+	bool has_incompatible_advisor_to(const character *advisor) const;
+	const character *get_replaced_advisor_for(const character *advisor) const;
 
 	const std::vector<const character *> &get_leaders() const
 	{

@@ -3648,6 +3648,11 @@ void country_game_data::add_advisor(const character *advisor)
 {
 	assert_throw(this->can_have_advisors());
 
+	const character *replaced_advisor = this->get_replaced_advisor_for(advisor);
+	if (replaced_advisor != nullptr) {
+		this->remove_advisor(replaced_advisor);
+	}
+
 	this->advisors.push_back(advisor);
 	advisor->get_game_data()->set_country(this->country);
 	advisor->apply_advisor_modifier(this->country, 1);
@@ -3780,20 +3785,59 @@ bool country_game_data::can_recruit_advisor(const character *advisor) const
 		return false;
 	}
 
-	//only one advisor with the same advisor type can be obtained
-	if (advisor->get_advisor_modifier() == nullptr && advisor->get_advisor_effects() == nullptr) {
-		for (const character *other_advisor : this->get_advisors()) {
-			if (other_advisor->get_advisor_modifier() != nullptr || other_advisor->get_advisor_effects() != nullptr) {
-				continue;
-			}
-
-			if (other_advisor->get_advisor_type() == advisor->get_advisor_type()) {
-				return false;
-			}
-		}
+	if (this->has_incompatible_advisor_to(advisor)) {
+		return false;
 	}
 
 	return true;
+}
+
+bool country_game_data::has_incompatible_advisor_to(const character *advisor) const
+{
+	if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr) {
+		return false;
+	}
+
+	//only one advisor with the same advisor type can be obtained (though advisors can be replaced with higher-skilled ones)
+	for (const character *other_advisor : this->get_advisors()) {
+		if (other_advisor->get_advisor_modifier() != nullptr || other_advisor->get_advisor_effects() != nullptr) {
+			continue;
+		}
+
+		if (other_advisor->get_advisor_type() != advisor->get_advisor_type()) {
+			continue;
+		}
+
+		if (advisor->get_advisor_type()->get_scaled_modifier() != nullptr && advisor->get_skill() > other_advisor->get_skill()) {
+			continue;
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+const character *country_game_data::get_replaced_advisor_for(const character *advisor) const
+{
+	if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr) {
+		return nullptr;
+	}
+
+	//only one advisor with the same advisor type can be obtained (though advisors can be replaced with higher-skilled ones)
+	for (const character *other_advisor : this->get_advisors()) {
+		if (other_advisor->get_advisor_modifier() != nullptr || other_advisor->get_advisor_effects() != nullptr) {
+			continue;
+		}
+
+		if (other_advisor->get_advisor_type() != advisor->get_advisor_type()) {
+			continue;
+		}
+
+		return other_advisor;
+	}
+
+	return nullptr;
 }
 
 QVariantList country_game_data::get_leaders_qvariant_list() const
