@@ -446,7 +446,12 @@ void character::apply_advisor_modifier(const country *country, const int multipl
 
 bool character::is_admiral() const
 {
-	return is_ship_military_unit_category(this->get_military_unit_category());
+	return this->get_military_unit_category() == military_unit_category::heavy_warship;
+}
+
+bool character::is_explorer() const
+{
+	return this->get_military_unit_category() == military_unit_category::light_warship;
 }
 
 std::string_view character::get_leader_type_name() const
@@ -455,6 +460,8 @@ std::string_view character::get_leader_type_name() const
 
 	if (this->is_admiral()) {
 		return "Admiral";
+	} else if (this->is_explorer()) {
+		return "Explorer";
 	}
 
 	return get_military_unit_category_name(this->get_military_unit_category());

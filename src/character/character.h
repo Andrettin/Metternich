@@ -320,6 +320,7 @@ public:
 	void apply_advisor_modifier(const country *country, const int multiplier) const;
 
 	bool is_admiral() const;
+	bool is_explorer() const;
 	std::string_view get_leader_type_name() const;
 
 	QString get_leader_type_name_qstring() const

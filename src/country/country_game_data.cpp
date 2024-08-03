@@ -3982,11 +3982,7 @@ void country_game_data::choose_next_leader()
 			continue;
 		}
 
-		military_unit_category leader_category = character->get_military_unit_category();
-		if (character->is_admiral()) {
-			//place all admirals in the same category, even if they have different kinds of ships
-			leader_category = military_unit_category::heavy_warship;
-		}
+		const military_unit_category leader_category = character->get_military_unit_category();
 
 		std::vector<const metternich::character *> &category_leaders = potential_leaders_per_category[leader_category];
 
