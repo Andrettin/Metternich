@@ -3630,6 +3630,9 @@ void country_game_data::check_advisors()
 				if (this->get_next_advisor()->get_advisor_effects() != nullptr) {
 					context ctx(country);
 					this->get_next_advisor()->get_advisor_effects()->do_effects(country, ctx);
+				} else if (this->get_next_advisor()->get_advisor_type()->get_effects() != nullptr) {
+					context ctx(country);
+					this->get_next_advisor()->get_advisor_type()->get_effects()->do_effects(country, ctx);
 				}
 
 				emit advisor_recruited(this->get_next_advisor());

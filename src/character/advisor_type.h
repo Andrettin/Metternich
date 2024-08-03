@@ -12,6 +12,9 @@ class technology;
 enum class advisor_category;
 
 template <typename scope_type>
+class effect_list;
+
+template <typename scope_type>
 class modifier;
 
 class advisor_type final : public named_data_entry, public data_type<advisor_type>
@@ -58,6 +61,11 @@ public:
 		return this->scaled_modifier.get();
 	}
 
+	const effect_list<const country> *get_effects() const
+	{
+		return this->effects.get();
+	}
+
 signals:
 	void changed();
 
@@ -67,6 +75,7 @@ private:
 	technology *obsolescence_technology = nullptr;
 	std::unique_ptr<metternich::modifier<const country>> modifier;
 	std::unique_ptr<metternich::modifier<const country>> scaled_modifier;
+	std::unique_ptr<const effect_list<const country>> effects;
 };
 
 }

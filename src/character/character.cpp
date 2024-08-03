@@ -404,6 +404,14 @@ QString character::get_advisor_effects_string(metternich::country *country) cons
 	} else if (this->get_advisor_type()->get_scaled_modifier() != nullptr) {
 		str = this->get_advisor_type()->get_scaled_modifier()->get_string(country, this->get_skill());
 	}
+	
+	if (this->get_advisor_type()->get_effects() != nullptr) {
+		if (!str.empty()) {
+			str += '\n';
+		}
+
+		str += this->get_advisor_type()->get_effects()->get_effects_string(country, read_only_context(country));
+	}
 
 	if (this->get_game_data()->get_country() != country) {
 		const character *replaced_advisor = country->get_game_data()->get_replaced_advisor_for(this);
