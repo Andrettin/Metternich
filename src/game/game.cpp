@@ -571,7 +571,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 						assert_throw(deployment_province != nullptr);
 
-						if (deployment_province->get_game_data()->get_owner() == country) {
+						if (deployment_province->is_water_zone() || deployment_province->get_game_data()->get_owner() == country) {
 							country_game_data->add_leader(character);
 
 							assert_throw(character_game_data->get_country() != nullptr);
