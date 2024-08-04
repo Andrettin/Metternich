@@ -571,7 +571,7 @@ void game::apply_history(const metternich::scenario *scenario)
 							country_game_data->add_leader(character);
 
 							assert_throw(character_game_data->get_country() != nullptr);
-							character_game_data->deploy_to_province(character_history->get_deployment_province());
+							character_game_data->deploy_to_province(deployment_province);
 						}
 					} else if (character->get_role() == character_role::civilian) {
 						const site *deployment_site = character_history->get_deployment_site();
