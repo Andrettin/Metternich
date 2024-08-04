@@ -552,6 +552,10 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data *country_game_data = country->get_game_data();
 				const technology *obsolescence_technology = character->get_obsolescence_technology();
 
+				if (character->get_required_technology() != nullptr) {
+					country_game_data->add_technology_with_prerequisites(character->get_required_technology());
+				}
+
 				if (obsolescence_technology != nullptr && country_game_data->has_technology(obsolescence_technology)) {
 					character_game_data->set_dead(true);
 				} else {
@@ -612,10 +616,6 @@ void game::apply_history(const metternich::scenario *scenario)
 
 						country_game_data->add_civilian_unit(std::move(civilian_unit));
 					}
-				}
-
-				if (character->get_required_technology() != nullptr) {
-					country_game_data->add_technology_with_prerequisites(character->get_required_technology());
 				}
 			}
 		}
