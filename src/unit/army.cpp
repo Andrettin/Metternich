@@ -102,30 +102,6 @@ void army::do_turn()
 		if (success) {
 			for (military_unit *military_unit : this->get_military_units()) {
 				military_unit->set_province(target_province);
-
-				//when ships move to a water zone, explore all adjacent water zones and coasts as well
-				if (target_province->is_water_zone()) {
-					for (const province *neighbor_province : target_province->get_game_data()->get_neighbor_provinces()) {
-						if (this->get_country()->get_game_data()->is_province_explored(neighbor_province)) {
-							continue;
-						}
-
-						if (neighbor_province->is_water_zone()) {
-							this->get_country()->get_game_data()->explore_province(neighbor_province);
-						} else {
-							//for coastal provinces bordering the water zone, explore all their tiles bordering it
-							for (const QPoint &coastal_tile_pos : neighbor_province->get_game_data()->get_border_tiles()) {
-								if (!map::get()->is_tile_on_province_border_with(coastal_tile_pos, target_province)) {
-									continue;
-								}
-
-								if (!this->get_country()->get_game_data()->is_tile_explored(coastal_tile_pos)) {
-									this->get_country()->get_game_data()->explore_tile(coastal_tile_pos);
-								}
-							}
-						}
-					}
-				}
 			}
 		}
 	} else if (this->get_target_site() != nullptr) {

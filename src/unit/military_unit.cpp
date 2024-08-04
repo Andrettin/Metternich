@@ -245,6 +245,30 @@ void military_unit::set_province(const metternich::province *province)
 
 	if (this->get_province() != nullptr) {
 		this->get_province()->get_game_data()->add_military_unit(this);
+
+		//when ships move to a water zone, explore all adjacent water zones and coasts as well
+		if (this->get_province()->is_water_zone()) {
+			for (const metternich::province *neighbor_province : this->get_province()->get_game_data()->get_neighbor_provinces()) {
+				if (this->get_country()->get_game_data()->is_province_explored(neighbor_province)) {
+					continue;
+				}
+
+				if (neighbor_province->is_water_zone()) {
+					this->get_country()->get_game_data()->explore_province(neighbor_province);
+				} else {
+					//for coastal provinces bordering the water zone, explore all their tiles bordering it
+					for (const QPoint &coastal_tile_pos : neighbor_province->get_game_data()->get_border_tiles()) {
+						if (!map::get()->is_tile_on_province_border_with(coastal_tile_pos, this->get_province())) {
+							continue;
+						}
+
+						if (!this->get_country()->get_game_data()->is_tile_explored(coastal_tile_pos)) {
+							this->get_country()->get_game_data()->explore_tile(coastal_tile_pos);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	emit province_changed();
