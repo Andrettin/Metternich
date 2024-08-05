@@ -3349,7 +3349,7 @@ bool country_game_data::can_enact_law(const metternich::law *law) const
 	}
 
 	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		if (this->get_stored_commodity(commodity) < (cost * this->get_law_cost_modifier() / 100)) {
+		if (this->get_stored_commodity(commodity) < (cost * this->get_total_law_cost_modifier() / 100)) {
 			return false;
 		}
 	}
@@ -3360,7 +3360,7 @@ bool country_game_data::can_enact_law(const metternich::law *law) const
 void country_game_data::enact_law(const law *law)
 {
 	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		this->change_stored_commodity(commodity, -cost * this->get_law_cost_modifier() / 100);
+		this->change_stored_commodity(commodity, -cost * this->get_total_law_cost_modifier() / 100);
 	}
 
 	this->set_law(law->get_group(), law);

@@ -46,6 +46,7 @@
 #include "script/modifier_effect/land_morale_recovery_modifier_effect.h"
 #include "script/modifier_effect/land_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/land_recovery_modifier_effect.h"
+#include "script/modifier_effect/law_cost_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
 #include "script/modifier_effect/military_unit_type_stat_modifier_effect.h"
@@ -124,6 +125,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<land_morale_resistance_modifier_effect>(value);
 		} else if (key == "land_recovery_modifier") {
 			return std::make_unique<land_recovery_modifier_effect>(value);
+		} else if (key == "law_cost_modifier") {
+			return std::make_unique<law_cost_modifier_effect>(value);
 		} else if (key == "leader_cost_modifier") {
 			return std::make_unique<leader_cost_modifier_effect>(value);
 		} else if (key == "naval_morale_resistance") {

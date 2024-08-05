@@ -1211,9 +1211,9 @@ public:
 	Q_INVOKABLE bool can_enact_law(const metternich::law *law) const;
 	Q_INVOKABLE void enact_law(const metternich::law *law);
 
-	Q_INVOKABLE int get_law_cost_modifier() const
+	Q_INVOKABLE int get_total_law_cost_modifier() const
 	{
-		return 100 + (this->get_population_unit_count() - 1);
+		return 100 + (this->get_population_unit_count() - 1) + this->get_law_cost_modifier();
 	}
 
 	void check_laws();
@@ -1892,6 +1892,16 @@ public:
 		this->set_population_type_militancy_modifier(type, this->get_population_type_militancy_modifier(type) + change);
 	}
 
+	int get_law_cost_modifier() const
+	{
+		return this->law_cost_modifier;
+	}
+
+	void change_law_cost_modifier(const int change)
+	{
+		this->law_cost_modifier += change;
+	}
+
 	int get_advisor_cost_modifier() const
 	{
 		return this->advisor_cost_modifier;
@@ -2371,6 +2381,7 @@ private:
 	std::map<technology_category, int> category_research_modifiers;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	population_type_map<centesimal_int> population_type_militancy_modifiers;
+	int law_cost_modifier = 0;
 	int advisor_cost_modifier = 0;
 	int leader_cost_modifier = 0;
 	int diplomatic_penalty_for_expansion_modifier = 0;
