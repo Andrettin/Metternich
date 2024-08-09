@@ -61,11 +61,11 @@ public:
 		} else if (key == "delay") {
 			this->delay = std::stoi(value);
 		} else if (key == "delay_days") {
-			this->delay = defines::get()->days_to_turns(std::stoi(value)).to_int();
+			this->delay_days = std::stoi(value);
 		} else if (key == "random_delay") {
 			this->random_delay = std::stoi(value);
 		} else if (key == "random_delay_days") {
-			this->random_delay = defines::get()->days_to_turns(std::stoi(value)).to_int();
+			this->random_delay_days = std::stoi(value);
 		} else {
 			effect<scope_type>::process_gsml_property(property);
 		}
@@ -80,9 +80,17 @@ public:
 
 	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
 	{
+		const int current_year = game::get()->get_year();
+
 		int delay = this->delay;
+		if (this->delay_days > 0) {
+			delay += defines::get()->days_to_turns(this->delay_days, current_year).to_int();
+		}
 		if (this->random_delay > 0) {
 			delay += random::get()->generate_in_range(0, this->random_delay);
+		}
+		if (this->random_delay_days > 0) {
+			delay += random::get()->generate_in_range(0, defines::get()->days_to_turns(this->random_delay_days, current_year).to_int());
 		}
 
 		delay = std::max(1, delay);
@@ -107,12 +115,12 @@ public:
 
 		if (this->delay > 0 || this->random_delay > 0) {
 			str = "In ";
-			if (this->delay > 0) {
-				if (this->random_delay > 0) {
+			if (this->delay > 0 || this->delay_days > 0) {
+				if (this->random_delay > 0 || this->random_delay_days > 0) {
 					str += "around ";
 				}
-				str += std::to_string(this->delay);
-			} else if (this->random_delay > 0) {
+				str += std::to_string(this->delay + defines::get()->days_to_turns(this->delay_days, game::get()->get_year()).to_int());
+			} else if (this->random_delay > 0 || this->random_delay_days > 0) {
 				str += "some";
 			}
 			str += " turns:\n";
@@ -137,7 +145,9 @@ private:
 	const scripted_effect_base<scope_type> *scripted_effect = nullptr;
 	const scoped_event_base<scope_type> *event = nullptr;
 	int delay = 0;
+	int delay_days = 0;
 	int random_delay = 0;
+	int random_delay_days = 0;
 };
 
 }

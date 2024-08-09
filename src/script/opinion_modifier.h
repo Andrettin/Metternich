@@ -11,6 +11,7 @@ class opinion_modifier final : public named_data_entry, public data_type<opinion
 
 	Q_PROPERTY(int value MEMBER value READ get_value)
 	Q_PROPERTY(int duration MEMBER duration READ get_duration)
+	Q_PROPERTY(int duration_days MEMBER duration_days READ get_duration_days)
 
 public:
 	static constexpr const char class_identifier[] = "opinion_modifier";
@@ -33,9 +34,15 @@ public:
 		return this->duration;
 	}
 
+	int get_duration_days() const
+	{
+		return this->duration_days;
+	}
+
 private:
 	int value = 0;
 	int duration = 0;
+	int duration_days = 0;
 };
 
 }

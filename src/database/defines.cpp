@@ -29,7 +29,14 @@ void defines::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "diplomacy_state_colors") {
+	if (tag == "months_per_turn_from_year") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const int threshold_year = std::stoi(property.get_key());
+			const int months_per_turn = std::stoi(property.get_value());
+
+			this->months_per_turn_from_year[threshold_year] = months_per_turn;
+		});
+	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const diplomacy_state diplomacy_state = enum_converter<metternich::diplomacy_state>::to_enum(child_tag);

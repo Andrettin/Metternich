@@ -580,7 +580,7 @@ void country_game_data::do_events()
 		return;
 	}
 
-	const bool is_last_turn_of_year = (game::get()->get_date().date().month() + defines::get()->get_months_per_turn()) > 12;
+	const bool is_last_turn_of_year = game::get()->get_year() != game::get()->get_next_date().date().year();
 
 	if (is_last_turn_of_year) {
 		country_event::check_events_for_scope(this->country, event_trigger::yearly_pulse);

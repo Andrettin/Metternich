@@ -43,26 +43,11 @@ public:
 		} else if (key == "duration") {
 			this->duration = std::stoi(value);
 		} else if (key == "days") {
-			const int value_int = std::stoi(value);
-			this->duration = defines::get()->days_to_turns(value_int).to_int();
-
-			if (value_int > 0) {
-				this->duration = std::max(1, duration);
-			}
+			this->months_duration = centesimal_int(value) / 30;
 		} else if (key == "months") {
-			const int value_int = std::stoi(value);
-			this->duration = defines::get()->months_to_turns(value_int).to_int();
-
-			if (value_int > 0) {
-				this->duration = std::max(1, duration);
-			}
+			this->months_duration = centesimal_int(value);
 		} else if (key == "years") {
-			const int value_int = std::stoi(value);
-			this->duration = defines::get()->years_to_turns(value_int).to_int();
-
-			if (value_int > 0) {
-				this->duration = std::max(1, duration);
-			}
+			this->months_duration = centesimal_int(value) * 12;
 		}
 	}
 
@@ -72,9 +57,30 @@ public:
 			throw std::runtime_error("Opinion modifier effect has no target.");
 		}
 
-		if (this->get_operator() == gsml_operator::addition && this->duration == 0) {
+		if (this->get_operator() == gsml_operator::addition && this->duration == 0 && this->months_duration == 0) {
 			throw std::runtime_error("Add opinion modifier effect has no duration.");
 		}
+	}
+
+	int get_duration() const
+	{
+		if (this->duration > 0) {
+			return this->duration;
+		}
+
+		if (this->months_duration > 0) {
+			return centesimal_int::max(defines::get()->months_to_turns(this->months_duration, game::get()->get_year()), 1).to_int();
+		}
+
+		if (this->modifier->get_duration() > 0) {
+			return this->modifier->get_duration();
+		}
+
+		if (this->modifier->get_duration_days() > 0) {
+			return centesimal_int::max(defines::get()->days_to_turns(this->modifier->get_duration_days(), game::get()->get_year()), 1).to_int();
+		}
+
+		return 0;
 	}
 
 	scope_type *get_target_scope(const context &ctx) const
@@ -90,7 +96,7 @@ public:
 
 	virtual void do_addition_effect(const scope_type *scope, context &ctx) const override
 	{
-		scope->get_game_data()->add_opinion_modifier(this->get_target_scope(ctx), this->modifier, this->duration ? this->duration : this->modifier->get_duration());
+		scope->get_game_data()->add_opinion_modifier(this->get_target_scope(ctx), this->modifier, this->get_duration());
 	}
 
 	virtual void do_subtraction_effect(const scope_type *scope, context &ctx) const override
@@ -102,7 +108,7 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return number::to_signed_string(this->modifier->get_value()) + " Opinion towards " + this->get_target_name(ctx) + " for " + std::to_string(this->duration * defines::get()->get_months_per_turn()) + " months";
+		return std::format("{} Opinion towards {} for {} turns", number::to_signed_string(this->modifier->get_value()), this->get_target_name(ctx), this->get_duration());
 	}
 
 	virtual std::string get_subtraction_string(const scope_type *scope, const read_only_context &ctx) const override
@@ -116,6 +122,7 @@ private:
 	const opinion_modifier *modifier = nullptr;
 	target_variant<scope_type> target;
 	int duration = 0;
+	centesimal_int months_duration;
 };
 
 }

@@ -24,7 +24,7 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return game::get()->get_date().date().year();
+		return game::get()->get_year();
 	}
 
 	virtual std::string get_value_name() const override

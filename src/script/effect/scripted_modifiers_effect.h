@@ -45,39 +45,37 @@ public:
 		} else if (key == "duration") {
 			this->duration = std::stoi(value);
 		} else if (key == "days") {
-			const int value_int = std::stoi(value);
-			this->duration = defines::get()->days_to_turns(value_int).to_int();
-
-			if (value_int > 0) {
-				this->duration = std::max(1, duration);
-			}
+			this->months_duration = centesimal_int(value) / 30;
 		} else if (key == "months") {
-			const int value_int = std::stoi(value);
-			this->duration = defines::get()->months_to_turns(value_int).to_int();
-
-			if (value_int > 0) {
-				this->duration = std::max(1, duration);
-			}
+			this->months_duration = centesimal_int(value);
 		} else if (key == "years") {
-			const int value_int = std::stoi(value);
-			this->duration = defines::get()->years_to_turns(value_int).to_int();
-
-			if (value_int > 0) {
-				this->duration = std::max(1, duration);
-			}
+			this->months_duration = centesimal_int(value) * 12;
 		}
 	}
 
 	virtual void check() const override
 	{
-		if (this->get_operator() == gsml_operator::addition && this->duration == 0) {
+		if (this->get_operator() == gsml_operator::addition && this->duration == 0 && this->months_duration == 0) {
 			throw std::runtime_error("Add scripted modifier effect has no duration.");
 		}
 	}
 
+	int get_duration() const
+	{
+		if (this->duration > 0) {
+			return this->duration;
+		}
+
+		if (this->months_duration > 0) {
+			return centesimal_int::max(defines::get()->months_to_turns(this->months_duration, game::get()->get_year()), 1).to_int();
+		}
+
+		return 0;
+	}
+
 	virtual void do_addition_effect(const scope_type *scope) const override
 	{
-		scope->get_game_data()->add_scripted_modifier(this->modifier, this->duration);
+		scope->get_game_data()->add_scripted_modifier(this->modifier, this->get_duration());
 	}
 
 	virtual void do_subtraction_effect(const scope_type *scope) const override
@@ -87,7 +85,7 @@ public:
 
 	virtual std::string get_addition_string() const override
 	{
-		return std::format("Gain the {} modifier for {} months", string::highlight(this->modifier->get_name()), std::to_string(this->duration * defines::get()->get_months_per_turn()));
+		return std::format("Gain the {} modifier for {} turns", string::highlight(this->modifier->get_name()), std::to_string(this->get_duration()));
 	}
 
 	virtual std::string get_subtraction_string() const override
@@ -98,6 +96,7 @@ public:
 private:
 	const scripted_modifier_type *modifier = nullptr;
 	int duration = 0;
+	centesimal_int months_duration;
 };
 
 }

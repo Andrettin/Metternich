@@ -14,18 +14,6 @@ event_random_group::event_random_group(const std::string &identifier)
 {
 }
 
-void event_random_group::process_gsml_property(const gsml_property &property)
-{
-	const std::string &key = property.get_key();
-	const std::string &value = property.get_value();
-
-	if (key == "delay_days") {
-		this->delay = defines::get()->days_to_turns(std::stoi(value)).to_int();
-	} else {
-		data_entry::process_gsml_property(property);
-	}
-}
-
 void event_random_group::initialize()
 {
 	event_random_group::groups_by_trigger[this->get_trigger()].push_back(this);
@@ -44,6 +32,19 @@ void event_random_group::initialize()
 void event_random_group::check() const
 {
 	assert_throw(this->get_trigger() != event_trigger::none);
+}
+
+int event_random_group::get_delay(const int current_year) const
+{
+	if (this->delay > 0) {
+		return this->delay;
+	}
+
+	if (this->delay_days > 0) {
+		return defines::get()->days_to_turns(this->delay_days, current_year).to_int();
+	}
+
+	return 0;
 }
 
 }

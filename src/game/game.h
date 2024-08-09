@@ -122,6 +122,11 @@ public:
 		return this->date;
 	}
 
+	int get_year() const
+	{
+		return this->get_date().date().year();
+	}
+
 	QDateTime get_next_date() const;
 
 	int get_turn() const

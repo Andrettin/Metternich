@@ -124,7 +124,7 @@ void scoped_event_base<scope_type>::check_random_event_groups_for_scope(const sc
 			continue;
 		}
 
-		scoped_event_base::check_random_events_for_scope(scope, ctx, potential_events, random_group->get_delay());
+		scoped_event_base::check_random_events_for_scope(scope, ctx, potential_events, random_group->get_delay(game::get()->get_year()));
 	}
 }
 
@@ -138,7 +138,7 @@ void scoped_event_base<scope_type>::check_mtth_events_for_scope(const scope_type
 			continue;
 		}
 
-		const centesimal_int mtth = event->get_mean_time_to_happen()->calculate(scope);
+		const centesimal_int mtth = event->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
 		bool should_fire = false;
 
 		if (mtth <= 1) {

@@ -98,7 +98,9 @@ QDateTime game::normalize_date(const QDateTime &date)
 		underlying_date.setDate(underlying_date.year(), underlying_date.month(), 1);
 	}
 
-	const int month_rest = (underlying_date.month() - 1) % defines::get()->get_months_per_turn();
+	const int months_per_turn = defines::get()->get_months_per_turn(date.date().year());
+
+	const int month_rest = (underlying_date.month() - 1) % months_per_turn;
 	if (month_rest != 0) {
 		underlying_date.setDate(underlying_date.year(), underlying_date.month() - month_rest, underlying_date.day());
 	}
@@ -1772,7 +1774,7 @@ void game::do_trade()
 
 QDateTime game::get_next_date() const
 {
-	return this->get_date().addMonths(defines::get()->get_months_per_turn());
+	return this->get_date().addMonths(defines::get()->get_months_per_turn(this->get_year()));
 }
 
 void game::increment_turn()

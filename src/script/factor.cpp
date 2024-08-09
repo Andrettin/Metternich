@@ -60,10 +60,6 @@ void factor<scope_type>::process_gsml_scope(const gsml_data &scope)
 template <typename scope_type>
 void factor<scope_type>::check() const
 {
-	if (this->base_value == 0) {
-		throw std::runtime_error("Factor has a base value of 0.");
-	}
-
 	for (const std::unique_ptr<factor_modifier<scope_type>> &modifier : this->modifiers) {
 		modifier->check_validity();
 	}

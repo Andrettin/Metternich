@@ -26,11 +26,11 @@ void mean_time_to_happen<scope_type>::process_gsml_property(const gsml_property 
 	const std::string &value = property.get_value();
 
 	if (key == "days") {
-		this->factor->set_base_value(defines::get()->days_to_turns(std::stoi(value)));
+		this->months = centesimal_int(value) / 30;
 	} else if (key == "months") {
-		this->factor->set_base_value(defines::get()->months_to_turns(std::stoi(value)));
+		this->months = centesimal_int(value);
 	} else if (key == "years") {
-		this->factor->set_base_value(defines::get()->years_to_turns(std::stoi(value)));
+		this->months = centesimal_int(value) * 12;
 	} else {
 		this->factor->process_gsml_property(property);
 	}
@@ -49,9 +49,9 @@ void mean_time_to_happen<scope_type>::check() const
 }
 
 template <typename scope_type>
-centesimal_int mean_time_to_happen<scope_type>::calculate(const scope_type *scope) const
+centesimal_int mean_time_to_happen<scope_type>::calculate(const scope_type *scope, const int current_year) const
 {
-	return this->factor->calculate(scope);
+	return this->factor->calculate(scope, defines::get()->months_to_turns(this->months, current_year));
 }
 
 template class mean_time_to_happen<character>;
