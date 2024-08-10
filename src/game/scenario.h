@@ -21,6 +21,7 @@ class scenario final : public named_data_entry, public data_type<scenario>
 	Q_OBJECT
 
 	Q_PROPERTY(QDate start_date MEMBER start_date READ get_start_date NOTIFY changed)
+	Q_PROPERTY(int start_year READ get_start_year NOTIFY changed)
 	Q_PROPERTY(archimedes::calendar* start_date_calendar MEMBER start_date_calendar)
 	Q_PROPERTY(archimedes::timeline* timeline MEMBER timeline NOTIFY changed)
 	Q_PROPERTY(metternich::map_template* map_template MEMBER map_template NOTIFY changed)
@@ -47,6 +48,11 @@ public:
 	const QDate &get_start_date() const
 	{
 		return this->start_date;
+	}
+
+	int get_start_year() const
+	{
+		return this->get_start_date().year();
 	}
 
 	const archimedes::timeline *get_timeline() const

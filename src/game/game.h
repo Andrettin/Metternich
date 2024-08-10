@@ -32,6 +32,7 @@ class game final : public QObject, public singleton<game>
 
 	Q_PROPERTY(bool running READ is_running NOTIFY running_changed)
 	Q_PROPERTY(QDate date READ get_date NOTIFY turn_changed)
+	Q_PROPERTY(int year READ get_year NOTIFY turn_changed)
 	Q_PROPERTY(int turn READ get_turn NOTIFY turn_changed)
 	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(QVariantList great_powers READ get_great_powers_qvariant_list NOTIFY countries_changed)
