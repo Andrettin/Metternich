@@ -20,7 +20,7 @@ class scenario final : public named_data_entry, public data_type<scenario>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QDateTime start_date MEMBER start_date READ get_start_date NOTIFY changed)
+	Q_PROPERTY(QDate start_date MEMBER start_date READ get_start_date NOTIFY changed)
 	Q_PROPERTY(archimedes::calendar* start_date_calendar MEMBER start_date_calendar)
 	Q_PROPERTY(archimedes::timeline* timeline MEMBER timeline NOTIFY changed)
 	Q_PROPERTY(metternich::map_template* map_template MEMBER map_template NOTIFY changed)
@@ -44,7 +44,7 @@ public:
 	virtual void initialize() override;
 	virtual void check() const override;
 
-	const QDateTime &get_start_date() const
+	const QDate &get_start_date() const
 	{
 		return this->start_date;
 	}
@@ -90,7 +90,7 @@ signals:
 	void changed();
 
 private:
-	QDateTime start_date;
+	QDate start_date;
 	calendar *start_date_calendar = nullptr; //the calendar for the start date
 	archimedes::timeline *timeline = nullptr; //the timeline in which the scenario is set
 	metternich::map_template *map_template = nullptr;

@@ -31,7 +31,7 @@ class game final : public QObject, public singleton<game>
 	Q_OBJECT
 
 	Q_PROPERTY(bool running READ is_running NOTIFY running_changed)
-	Q_PROPERTY(QDateTime date READ get_date NOTIFY turn_changed)
+	Q_PROPERTY(QDate date READ get_date NOTIFY turn_changed)
 	Q_PROPERTY(int turn READ get_turn NOTIFY turn_changed)
 	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(QVariantList great_powers READ get_great_powers_qvariant_list NOTIFY countries_changed)
@@ -39,7 +39,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(const metternich::game_rules* rules READ get_rules CONSTANT)
 
 public:
-	static QDateTime normalize_date(const QDateTime &date);
+	static QDate normalize_date(const QDate &date);
 
 	game();
 	~game();
@@ -117,17 +117,17 @@ public:
 	QCoro::Task<void> do_turn_coro();
 	void do_trade();
 
-	const QDateTime &get_date() const
+	const QDate &get_date() const
 	{
 		return this->date;
 	}
 
 	int get_year() const
 	{
-		return this->get_date().date().year();
+		return this->get_date().year();
 	}
 
-	QDateTime get_next_date() const;
+	QDate get_next_date() const;
 
 	int get_turn() const
 	{
@@ -232,7 +232,7 @@ private:
 	qunique_ptr<game_rules> rules;
 	bool running = false;
 	const metternich::scenario *scenario = nullptr;
-	QDateTime date; //the current date in the game
+	QDate date; //the current date in the game
 	int turn = 1;
 	std::vector<country *> countries; //the countries currently in the game, i.e. those with at least 1 province
 	std::vector<const country *> great_powers;

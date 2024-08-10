@@ -115,8 +115,8 @@ void character_game_data::set_country(const metternich::country *country)
 
 int character_game_data::get_age() const
 {
-	const QDate birth_date = this->character->get_birth_date().date();
-	const QDate current_date = game::get()->get_date().date();
+	const QDate &birth_date = this->character->get_birth_date();
+	const QDate &current_date = game::get()->get_date();
 
 	int age = current_date.year() - birth_date.year() - 1;
 

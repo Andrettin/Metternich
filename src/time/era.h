@@ -9,7 +9,7 @@ class era final : public named_data_entry, public data_type<era>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QDateTime start_date MEMBER start_date READ get_start_date)
+	Q_PROPERTY(QDate start_date MEMBER start_date READ get_start_date)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
 
 public:
@@ -25,7 +25,7 @@ public:
 
 	virtual void check() const override;
 
-	const QDateTime &get_start_date() const
+	const QDate &get_start_date() const
 	{
 		return this->start_date;
 	}
@@ -39,7 +39,7 @@ signals:
 	void changed();
 
 private:
-	QDateTime start_date;
+	QDate start_date;
 	bool hidden = false;
 };
 

@@ -22,7 +22,7 @@ public:
 
 	virtual int get_scope_value(const character *scope) const override
 	{
-		return scope->get_birth_date().date().year();
+		return scope->get_birth_date().year();
 	}
 
 	virtual std::string get_value_name() const override

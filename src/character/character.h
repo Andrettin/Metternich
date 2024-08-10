@@ -72,10 +72,10 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(archimedes::gender gender MEMBER gender NOTIFY changed)
 	Q_PROPERTY(metternich::character* father MEMBER father NOTIFY changed)
 	Q_PROPERTY(metternich::character* mother MEMBER mother NOTIFY changed)
-	Q_PROPERTY(QDateTime start_date MEMBER start_date READ get_start_date NOTIFY changed)
-	Q_PROPERTY(QDateTime end_date MEMBER end_date READ get_end_date NOTIFY changed)
-	Q_PROPERTY(QDateTime birth_date MEMBER birth_date READ get_birth_date NOTIFY changed)
-	Q_PROPERTY(QDateTime death_date MEMBER death_date READ get_death_date NOTIFY changed)
+	Q_PROPERTY(QDate start_date MEMBER start_date READ get_start_date NOTIFY changed)
+	Q_PROPERTY(QDate end_date MEMBER end_date READ get_end_date NOTIFY changed)
+	Q_PROPERTY(QDate birth_date MEMBER birth_date READ get_birth_date NOTIFY changed)
+	Q_PROPERTY(QDate death_date MEMBER death_date READ get_death_date NOTIFY changed)
 	Q_PROPERTY(archimedes::calendar* vital_date_calendar MEMBER vital_date_calendar)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
@@ -236,22 +236,22 @@ public:
 		return this->mother;
 	}
 
-	const QDateTime &get_start_date() const
+	const QDate &get_start_date() const
 	{
 		return this->start_date;
 	}
 
-	const QDateTime &get_end_date() const
+	const QDate &get_end_date() const
 	{
 		return this->end_date;
 	}
 
-	const QDateTime &get_birth_date() const
+	const QDate &get_birth_date() const
 	{
 		return this->birth_date;
 	}
 
-	const QDateTime &get_death_date() const
+	const QDate &get_death_date() const
 	{
 		return this->death_date;
 	}
@@ -351,10 +351,10 @@ private:
 	archimedes::gender gender;
 	character *father = nullptr;
 	character *mother = nullptr;
-	QDateTime start_date;
-	QDateTime end_date;
-	QDateTime birth_date;
-	QDateTime death_date;
+	QDate start_date;
+	QDate end_date;
+	QDate birth_date;
+	QDate death_date;
 	calendar *vital_date_calendar = nullptr; //the calendar for the birth, death, start and end dates
 	int skill = 1;
 	std::vector<const country *> rulable_countries;

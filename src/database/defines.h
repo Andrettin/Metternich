@@ -38,7 +38,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QSize tile_size MEMBER tile_size READ get_tile_size NOTIFY changed)
 	Q_PROPERTY(QSize scaled_tile_size READ get_scaled_tile_size NOTIFY scaled_tile_size_changed)
 	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn NOTIFY changed)
-	Q_PROPERTY(QDateTime default_start_date MEMBER default_start_date READ get_default_start_date)
+	Q_PROPERTY(QDate default_start_date MEMBER default_start_date READ get_default_start_date)
 	Q_PROPERTY(metternich::terrain_type* default_base_terrain MEMBER default_base_terrain)
 	Q_PROPERTY(metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
@@ -144,7 +144,7 @@ public:
 		return this->months_to_turns(years * 12, current_year);
 	}
 
-	const QDateTime &get_default_start_date() const
+	const QDate &get_default_start_date() const
 	{
 		return this->default_start_date;
 	}
@@ -346,7 +346,7 @@ private:
 	QSize tile_size = QSize(64, 64);
 	int default_months_per_turn = 3;
 	std::map<int, int> months_per_turn_from_year;
-	QDateTime default_start_date;
+	QDate default_start_date;
 	terrain_type *default_base_terrain = nullptr;
 	terrain_type *unexplored_terrain = nullptr;
 	terrain_type *default_province_terrain = nullptr;

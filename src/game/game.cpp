@@ -87,25 +87,20 @@
 
 namespace metternich {
 
-QDateTime game::normalize_date(const QDateTime &date)
+QDate game::normalize_date(const QDate &date)
 {
-	QDateTime normalized_date = date;
-	normalized_date.setTime(QTime(12, 0, 0));
+	QDate normalized_date = date;
 
-	QDate underlying_date = normalized_date.date();
-
-	if (underlying_date.day() != 1) {
-		underlying_date.setDate(underlying_date.year(), underlying_date.month(), 1);
+	if (normalized_date.day() != 1) {
+		normalized_date.setDate(normalized_date.year(), normalized_date.month(), 1);
 	}
 
-	const int months_per_turn = defines::get()->get_months_per_turn(date.date().year());
+	const int months_per_turn = defines::get()->get_months_per_turn(date.year());
 
-	const int month_rest = (underlying_date.month() - 1) % months_per_turn;
+	const int month_rest = (normalized_date.month() - 1) % months_per_turn;
 	if (month_rest != 0) {
-		underlying_date.setDate(underlying_date.year(), underlying_date.month() - month_rest, underlying_date.day());
+		normalized_date.setDate(normalized_date.year(), normalized_date.month() - month_rest, normalized_date.day());
 	}
-
-	normalized_date.setDate(underlying_date);
 
 	return normalized_date;
 }
@@ -1772,14 +1767,14 @@ void game::do_trade()
 	}
 }
 
-QDateTime game::get_next_date() const
+QDate game::get_next_date() const
 {
 	return this->get_date().addMonths(defines::get()->get_months_per_turn(this->get_year()));
 }
 
 void game::increment_turn()
 {
-	const QDateTime old_date = this->get_date();
+	const QDate old_date = this->get_date();
 	this->date = this->get_next_date();
 	assert_throw(this->get_date() != old_date);
 
