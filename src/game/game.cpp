@@ -75,6 +75,7 @@
 #include "util/aggregate_exception.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/date_util.h"
 #include "util/exception_util.h"
 #include "util/image_util.h"
 #include "util/log_util.h"
@@ -1781,6 +1782,15 @@ void game::increment_turn()
 	++this->turn;
 
 	emit turn_changed();
+}
+
+std::string game::get_date_string() const
+{
+	if (defines::get()->get_months_per_turn(this->get_year()) % 12 != 0) {
+		return std::format("{}, {}", date::get_month_season_string(this->get_date().month()), date::year_to_labeled_string(this->get_year()));
+	} else {
+		return date::year_to_labeled_string(this->get_year());
+	}
 }
 
 QVariantList game::get_countries_qvariant_list() const
