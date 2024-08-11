@@ -13,6 +13,8 @@ template <>
 const std::map<std::string, metternich::military_unit_category> enum_converter<metternich::military_unit_category>::string_to_enum_map = {
 	{ "beasts", metternich::military_unit_category::beasts },
 	{ "colossal_beasts", metternich::military_unit_category::colossal_beasts },
+	{ "sea_beasts", metternich::military_unit_category::sea_beasts },
+	{ "colossal_sea_beasts", metternich::military_unit_category::colossal_sea_beasts },
 	{ "flying_beasts", metternich::military_unit_category::flying_beasts },
 	{ "colossal_flying_beasts", metternich::military_unit_category::colossal_flying_beasts },
 	{ "militia", metternich::military_unit_category::militia },
