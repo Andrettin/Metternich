@@ -4329,6 +4329,24 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 			continue;
 		}
 
+		bool upgrade_is_available = false;
+		for (const military_unit_type *upgrade : type->get_upgrades()) {
+			if (culture->get_military_class_unit_type(upgrade->get_unit_class()) != upgrade) {
+				continue;
+			}
+
+			if (upgrade->get_required_technology() != nullptr && !this->has_technology(upgrade->get_required_technology())) {
+				continue;
+			}
+
+			upgrade_is_available = true;
+			break;
+		}
+
+		if (upgrade_is_available) {
+			continue;
+		}
+
 		const int score = type->get_score();
 
 		if (score > best_score) {

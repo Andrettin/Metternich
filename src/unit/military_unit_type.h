@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "unit/military_unit_type_container.h"
 #include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/cultural_group.h")
@@ -163,6 +164,11 @@ public:
 		return this->free_promotions;
 	}
 
+	const military_unit_type_set &get_upgrades() const
+	{
+		return this->upgrades;
+	}
+
 	int get_score() const;
 
 signals:
@@ -186,6 +192,7 @@ private:
 	commodity_map<int> commodity_costs;
 	int upkeep = 0; //wealth paid per turn as upkeep for the military unit
 	std::vector<const promotion *> free_promotions;
+	military_unit_type_set upgrades;
 };
 
 }

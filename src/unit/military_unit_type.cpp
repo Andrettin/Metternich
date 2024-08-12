@@ -36,6 +36,10 @@ void military_unit_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->free_promotions.push_back(promotion::get(value));
 		}
+	} else if (tag == "upgrades") {
+		for (const std::string &value : values) {
+			this->upgrades.insert(military_unit_type::get(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
