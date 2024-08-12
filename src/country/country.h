@@ -49,6 +49,7 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(metternich::site* default_capital MEMBER default_capital NOTIFY changed)
 	Q_PROPERTY(bool short_name MEMBER short_name READ has_short_name NOTIFY changed)
 	Q_PROPERTY(bool definite_article MEMBER definite_article NOTIFY changed)
+	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY changed)
 	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
 
@@ -172,6 +173,9 @@ public:
 	}
 
 	bool can_declare_war() const;
+
+	std::vector<const technology *> get_available_technologies() const;
+	QVariantList get_available_technologies_qvariant_list() const;
 
 signals:
 	void changed();

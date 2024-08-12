@@ -1,5 +1,6 @@
 #pragma once
 
+#include "country/culture_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "infrastructure/pathway_container.h"
@@ -14,6 +15,7 @@ class character;
 class civilian_unit_type;
 class commodity;
 class country;
+class cultural_group;
 class culture;
 class government_type;
 class icon;
@@ -110,6 +112,8 @@ public:
 	{
 		return this->icon;
 	}
+
+	bool is_available_for_country(const country *country) const;
 
 	int get_cost() const
 	{
@@ -405,6 +409,8 @@ private:
 	technology_category category;
 	metternich::portrait *portrait = nullptr;
 	metternich::icon *icon = nullptr;
+	culture_set cultures;
+	std::vector<const cultural_group *> cultural_groups;
 	int cost = 0;
 	std::unique_ptr<const factor<country>> cost_factor;
 	bool discovery = false;

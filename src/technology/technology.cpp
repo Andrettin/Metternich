@@ -6,6 +6,7 @@
 #include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/cultural_group.h"
 #include "country/culture.h"
 #include "country/government_type.h"
 #include "country/law.h"
@@ -63,7 +64,15 @@ void technology::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "prerequisites") {
+	if (tag == "cultures") {
+		for (const std::string &value : values) {
+			this->cultures.insert(culture::get(value));
+		}
+	} else if (tag == "cultural_groups") {
+		for (const std::string &value : values) {
+			this->cultural_groups.push_back(cultural_group::get(value));
+		}
+	} else if (tag == "prerequisites") {
 		for (const std::string &value : values) {
 			this->prerequisites.push_back(technology::get(value));
 		}
@@ -152,6 +161,25 @@ void technology::check() const
 	if (this->leads_to.empty() && this->get_period() != technological_period::get_all().back()) {
 		log::log_error(std::format("Technology \"{}\" is a dead end technology.", this->get_identifier()));
 	}
+}
+
+bool technology::is_available_for_country(const country *country) const
+{
+	if (!this->cultures.empty() || !this->cultural_groups.empty()) {
+		if (this->cultures.contains(country->get_culture())) {
+			return true;
+		}
+
+		for (const cultural_group *cultural_group : this->cultural_groups) {
+			if (country->get_culture()->is_part_of_group(cultural_group)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	return true;
 }
 
 int technology::get_cost_for_country(const country *country) const

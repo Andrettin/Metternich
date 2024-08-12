@@ -3030,6 +3030,10 @@ QVariantList country_game_data::get_available_technologies_qvariant_list() const
 
 bool country_game_data::is_technology_available(const technology *technology) const
 {
+	if (!technology->is_available_for_country(this->country)) {
+		return false;
+	}
+
 	if (technology->is_discovery()) {
 		return false;
 	}

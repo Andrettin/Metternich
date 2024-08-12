@@ -14,8 +14,10 @@
 #include "database/defines.h"
 #include "map/province.h"
 #include "map/site.h"
+#include "technology/technology.h"
 #include "time/era.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/string_util.h"
@@ -292,6 +294,28 @@ const std::string &country::get_ruler_title_name(const government_type *governme
 bool country::can_declare_war() const
 {
 	return this->get_type() == country_type::great_power;
+}
+
+std::vector<const technology *> country::get_available_technologies() const
+{
+	std::vector<const technology *> technologies;
+
+	for (const technology *technology : technology::get_all()) {
+		if (!technology->is_available_for_country(this)) {
+			continue;
+		}
+
+		technologies.push_back(technology);
+	}
+
+	std::sort(technologies.begin(), technologies.end(), technology_compare());
+
+	return technologies;
+}
+
+QVariantList country::get_available_technologies_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_available_technologies());
 }
 
 }
