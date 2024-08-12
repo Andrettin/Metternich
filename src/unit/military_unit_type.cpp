@@ -99,6 +99,9 @@ bool military_unit_type::is_infantry() const
 {
 	switch (this->get_category()) {
 		case military_unit_category::militia:
+		case military_unit_category::mace_infantry:
+		case military_unit_category::spear_infantry:
+		case military_unit_category::blade_infantry:
 		case military_unit_category::light_infantry:
 		case military_unit_category::regular_infantry:
 		case military_unit_category::heavy_infantry:
