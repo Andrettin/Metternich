@@ -5,6 +5,7 @@
 #include "language/name_generator.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_domain.h"
+#include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 
@@ -63,7 +64,9 @@ bool military_unit_class::is_leader() const
 
 void military_unit_class::set_default_unit_type(const military_unit_type *unit_type)
 {
-	assert_throw(this->get_default_unit_type() == nullptr);
+	if (this->get_default_unit_type() != nullptr) {
+		throw std::runtime_error(std::format("Cannot set \"{}\" as the default military unit type of class \"{}\", as it already has \"{}\" as its default type.", unit_type->get_identifier(), this->get_identifier(), this->get_default_unit_type()->get_identifier()));
+	}
 
 	this->default_unit_type = unit_type;
 }

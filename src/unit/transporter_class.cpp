@@ -4,6 +4,7 @@
 
 #include "language/name_generator.h"
 #include "unit/transporter_category.h"
+#include "unit/transporter_type.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 
@@ -47,7 +48,9 @@ bool transporter_class::is_ship() const
 
 void transporter_class::set_default_transporter_type(const transporter_type *transporter_type)
 {
-	assert_throw(this->get_default_transporter_type() == nullptr);
+	if (this->get_default_transporter_type() != nullptr) {
+		throw std::runtime_error(std::format("Cannot set \"{}\" as the default transporter type of class \"{}\", as it already has \"{}\" as its default type.", transporter_type->get_identifier(), this->get_identifier(), this->get_default_transporter_type()->get_identifier()));
+	}
 
 	this->default_transporter_type = transporter_type;
 }

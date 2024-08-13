@@ -112,6 +112,11 @@ public:
 		return this->commodity_costs;
 	}
 
+	const std::vector<const transporter_type *> &get_upgrades() const
+	{
+		return this->upgrades;
+	}
+
 	int get_score() const;
 
 signals:
@@ -130,6 +135,7 @@ private:
 	technology *required_technology = nullptr;
 	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
+	std::vector<const transporter_type *> upgrades;
 };
 
 }

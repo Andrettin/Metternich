@@ -15,12 +15,17 @@ namespace metternich {
 void transporter_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "commodity_costs") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = std::stoi(property.get_value());
 		});
+	} else if (tag == "upgrades") {
+		for (const std::string &value : values) {
+			this->upgrades.push_back(transporter_type::get(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
