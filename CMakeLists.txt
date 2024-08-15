@@ -597,6 +597,7 @@ set(script_condition_HDRS
 	src/script/condition/religion_condition.h
 	src/script/condition/religious_group_condition.h
 	src/script/condition/resource_condition.h
+	src/script/condition/river_condition.h
 	src/script/condition/root_character_condition.h
 	src/script/condition/ruler_condition.h
 	src/script/condition/ruler_scope_condition.h

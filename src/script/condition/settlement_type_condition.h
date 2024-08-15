@@ -33,7 +33,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return this->settlement_type->get_name() + " settlement type";
+		return std::format("{} settlement type", this->settlement_type->get_name());
 	}
 
 private:
