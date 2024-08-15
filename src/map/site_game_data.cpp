@@ -48,7 +48,13 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 		this->initialize_building_slots();
 	}
 
+	const tile *tile = this->get_tile();
+
 	this->housing = defines::get()->get_base_housing();
+	if (tile != nullptr && tile->has_river()) {
+		this->housing += defines::get()->get_river_housing();
+	}
+
 	this->free_food_consumption = site_game_data::base_free_food_consumption;
 
 	const resource *resource = site->get_map_data()->get_resource();

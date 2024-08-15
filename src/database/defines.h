@@ -50,6 +50,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(int population_per_unit MEMBER population_per_unit READ get_population_per_unit)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
 	Q_PROPERTY(int base_housing MEMBER base_housing READ get_base_housing NOTIFY changed)
+	Q_PROPERTY(int river_housing MEMBER river_housing READ get_river_housing NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* research_commodity MEMBER research_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* prestige_commodity MEMBER prestige_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* piety_commodity MEMBER piety_commodity NOTIFY changed)
@@ -202,6 +203,11 @@ public:
 	int get_base_housing() const
 	{
 		return this->base_housing;
+	}
+
+	int get_river_housing() const
+	{
+		return this->river_housing;
 	}
 
 	const commodity *get_research_commodity() const
@@ -358,6 +364,7 @@ private:
 	int population_per_unit = 10000;
 	int population_growth_threshold = 100;
 	int base_housing = 0;
+	int river_housing = 0;
 	const commodity *research_commodity = nullptr;
 	const commodity *prestige_commodity = nullptr;
 	const commodity *piety_commodity = nullptr;
