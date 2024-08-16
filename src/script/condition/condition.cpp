@@ -25,7 +25,7 @@
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/available_food_condition.h"
-#include "script/condition/available_housing_condition.h"
+#include "script/condition/available_health_condition.h"
 #include "script/condition/birth_year_condition.h"
 #include "script/condition/can_gain_building_class_condition.h"
 #include "script/condition/can_have_trait_condition.h"
@@ -57,7 +57,7 @@
 #include "script/condition/has_resource_condition.h"
 #include "script/condition/has_route_condition.h"
 #include "script/condition/has_terrain_condition.h"
-#include "script/condition/housing_condition.h"
+#include "script/condition/health_condition.h"
 #include "script/condition/ideology_condition.h"
 #include "script/condition/improvement_condition.h"
 #include "script/condition/independent_condition.h"
@@ -274,10 +274,10 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	}
 
 	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, site>) {
-		if (key == "available_housing") {
-			return std::make_unique<available_housing_condition<scope_type>>(value, condition_operator);
-		} else if (key == "housing") {
-			return std::make_unique<housing_condition<scope_type>>(value, condition_operator);
+		if (key == "available_health") {
+			return std::make_unique<available_health_condition<scope_type>>(value, condition_operator);
+		} else if (key == "health") {
+			return std::make_unique<health_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

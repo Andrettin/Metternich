@@ -280,11 +280,11 @@ void country_game_data::do_population_growth()
 		}
 
 		const int available_food = this->get_available_food();
-		const int available_housing = std::max(0, this->get_available_housing());
+		const int available_health = std::max(0, this->get_available_health().to_int());
 
 		int food_consumption = this->get_net_food_consumption();
 
-		const int population_growth_change = std::min(available_food, available_housing);
+		const int population_growth_change = std::min(available_food, available_health);
 		this->change_population_growth(population_growth_change);
 
 		if (population_growth_change > 0) {
@@ -1131,7 +1131,7 @@ void country_game_data::on_site_gained(const site *site, const int multiplier)
 			this->change_profession_capacity(profession, capacity * multiplier);
 		}
 
-		this->change_housing(site_game_data->get_housing() * multiplier);
+		this->change_health(site_game_data->get_health() * multiplier);
 	}
 }
 
@@ -2164,7 +2164,7 @@ void country_game_data::grow_population()
 	std::vector<population_unit *> potential_base_population_units = this->population_units;
 
 	std::erase_if(potential_base_population_units, [this](const population_unit *population_unit) {
-		if (population_unit->get_settlement()->get_game_data()->get_available_housing() <= 0) {
+		if (population_unit->get_settlement()->get_game_data()->get_available_health() <= 0) {
 			return true;
 		}
 

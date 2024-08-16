@@ -5,6 +5,7 @@
 #include "country/diplomacy_state.h"
 #include "database/database.h"
 #include "database/preferences.h"
+#include "economy/commodity.h"
 #include "game/character_event.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
@@ -35,6 +36,20 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			const int months_per_turn = std::stoi(property.get_value());
 
 			this->months_per_turn_from_year[threshold_year] = months_per_turn;
+		});
+	} else if (tag == "settlement_commodity_bonuses") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			const int bonus = std::stoi(property.get_value());
+
+			this->settlement_commodity_bonuses[commodity] = bonus;
+		});
+	} else if (tag == "river_settlement_commodity_bonuses") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			const int bonus = std::stoi(property.get_value());
+
+			this->river_settlement_commodity_bonuses[commodity] = bonus;
 		});
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([&](const gsml_data &child_scope) {

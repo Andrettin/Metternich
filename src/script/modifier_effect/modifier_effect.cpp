@@ -38,7 +38,6 @@
 #include "script/modifier_effect/free_infantry_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_warship_promotion_modifier_effect.h"
 #include "script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h"
-#include "script/modifier_effect/housing_modifier_effect.h"
 #include "script/modifier_effect/industrial_output_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
 #include "script/modifier_effect/inflation_change_modifier_effect.h"
@@ -224,8 +223,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 		if (key == "depot_level") {
 			return std::make_unique<depot_level_modifier_effect>(value);
-		} else if (key == "housing") {
-			return std::make_unique<housing_modifier_effect>(value);
 		} else if (key == "port_level") {
 			return std::make_unique<port_level_modifier_effect>(value);
 		} else if (key.ends_with(bonus_suffix)) {

@@ -533,7 +533,7 @@ set(script_condition_HDRS
 	src/script/condition/artillery_condition.h
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/available_food_condition.h
-	src/script/condition/available_housing_condition.h
+	src/script/condition/available_health_condition.h
 	src/script/condition/birth_year_condition.h
 	src/script/condition/can_gain_building_class_condition.h
 	src/script/condition/can_have_trait_condition.h
@@ -566,7 +566,7 @@ set(script_condition_HDRS
 	src/script/condition/has_resource_condition.h
 	src/script/condition/has_route_condition.h
 	src/script/condition/has_terrain_condition.h
-	src/script/condition/housing_condition.h
+	src/script/condition/health_condition.h
 	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h
 	src/script/condition/independent_condition.h
@@ -710,7 +710,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/free_infantry_promotion_modifier_effect.h
 	src/script/modifier_effect/free_warship_promotion_modifier_effect.h
 	src/script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h
-	src/script/modifier_effect/housing_modifier_effect.h
 	src/script/modifier_effect/industrial_output_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
 	src/script/modifier_effect/inflation_change_modifier_effect.h

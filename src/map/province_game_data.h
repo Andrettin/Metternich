@@ -249,14 +249,7 @@ public:
 		return zero;
 	}
 
-	void change_local_commodity_output(const commodity *commodity, const centesimal_int &change)
-	{
-		const centesimal_int &output = (this->local_commodity_outputs[commodity] += change);
-
-		if (output == 0) {
-			this->local_commodity_outputs.erase(commodity);
-		}
-	}
+	void change_local_commodity_output(const commodity *commodity, const centesimal_int &change);
 
 	int get_output_modifier() const
 	{

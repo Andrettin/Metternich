@@ -48,7 +48,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
-	Q_PROPERTY(int housing READ get_housing NOTIFY housing_changed)
+	Q_PROPERTY(int health READ get_health_int NOTIFY health_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(int transport_level READ get_best_transport_level NOTIFY transport_level_changed)
 	Q_PROPERTY(QVariantList visiting_armies READ get_visiting_armies_qvariant_list NOTIFY visiting_armies_changed)
@@ -211,16 +211,21 @@ public:
 
 	void change_profession_capacity(const profession *profession, const int change);
 
-	int get_housing() const
+	const centesimal_int &get_health() const
 	{
-		return this->housing;
+		return this->health;
 	}
 
-	void change_housing(const int change);
-
-	int get_available_housing() const
+	int get_health_int() const
 	{
-		return this->get_housing() - this->get_population_unit_count();
+		return this->get_health().to_int();
+	}
+
+	void change_health(const centesimal_int &change);
+
+	centesimal_int get_available_health() const
+	{
+		return this->get_health() - this->get_population_unit_count();
 	}
 
 	int get_free_food_consumption() const
@@ -426,7 +431,7 @@ signals:
 	void settlement_type_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
-	void housing_changed();
+	void health_changed();
 	void commodity_outputs_changed();
 	void transport_level_changed();
 	void visiting_armies_changed();
@@ -444,7 +449,7 @@ private:
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
 	profession_map<int> profession_capacities;
-	int housing = 0;
+	centesimal_int health;
 	int free_food_consumption = 0;
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;

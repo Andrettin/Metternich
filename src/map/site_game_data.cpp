@@ -48,13 +48,6 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 		this->initialize_building_slots();
 	}
 
-	const tile *tile = this->get_tile();
-
-	this->housing = defines::get()->get_base_housing();
-	if (tile != nullptr && tile->has_river()) {
-		this->housing += defines::get()->get_river_housing();
-	}
-
 	this->free_food_consumption = site_game_data::base_free_food_consumption;
 
 	const resource *resource = site->get_map_data()->get_resource();
@@ -722,6 +715,17 @@ void site_game_data::on_settlement_built(const int multiplier)
 	}
 
 	if (this->get_province() != nullptr && this->get_resource() != nullptr) {
+		for (const auto &[commodity, bonus] : defines::get()->get_settlement_commodity_bonuses()) {
+			this->change_base_commodity_output(commodity, centesimal_int(bonus));
+		}
+
+		const tile *tile = this->get_tile();
+		if (tile != nullptr && tile->has_river()) {
+			for (const auto &[commodity, bonus] : defines::get()->get_river_settlement_commodity_bonuses()) {
+				this->change_base_commodity_output(commodity, centesimal_int(bonus));
+			}
+		}
+
 		for (const auto &[commodity, value] : this->get_province()->get_game_data()->get_improved_resource_commodity_bonuses(this->get_resource())) {
 			this->change_base_commodity_output(commodity, centesimal_int(value) * multiplier);
 		}
@@ -943,19 +947,19 @@ void site_game_data::change_profession_capacity(const profession *profession, co
 	}
 }
 
-void site_game_data::change_housing(const int change)
+void site_game_data::change_health(const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	this->housing += change;
+	this->health += change;
 
 	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_housing(change);
+		this->get_owner()->get_game_data()->change_health(change);
 	}
 
-	emit housing_changed();
+	emit health_changed();
 }
 
 void site_game_data::change_base_commodity_output(const commodity *commodity, const centesimal_int &change)

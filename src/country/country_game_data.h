@@ -113,7 +113,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
-	Q_PROPERTY(int housing READ get_housing NOTIFY housing_changed)
+	Q_PROPERTY(int health READ get_health_int NOTIFY health_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int wealth_income READ get_wealth_income NOTIFY wealth_income_changed)
@@ -671,25 +671,30 @@ public:
 		return this->get_population_unit_count() + static_cast<int>(this->civilian_units.size()) + static_cast<int>(this->military_units.size()) + static_cast<int>(this->transporters.size());
 	}
 
-	int get_housing() const
+	const centesimal_int &get_health() const
 	{
-		return this->housing;
+		return this->health;
 	}
 
-	void change_housing(const int change)
+	int get_health_int() const
+	{
+		return this->get_health().to_int();
+	}
+
+	void change_health(const centesimal_int &change)
 	{
 		if (change == 0) {
 			return;
 		}
 
-		this->housing += change;
+		this->health += change;
 
-		emit housing_changed();
+		emit health_changed();
 	}
 
-	int get_available_housing() const
+	centesimal_int get_available_health() const
 	{
-		return this->get_housing() - this->get_population_unit_count();
+		return this->get_health() - this->get_population_unit_count();
 	}
 
 	int get_food_consumption() const
@@ -2255,7 +2260,7 @@ signals:
 	void rank_changed();
 	void population_units_changed();
 	void population_growth_changed();
-	void housing_changed();
+	void health_changed();
 	void settlement_building_counts_changed();
 	void wealth_changed();
 	void wealth_income_changed();
@@ -2337,7 +2342,7 @@ private:
 	qunique_ptr<metternich::population> population;
 	profession_map<int> profession_capacities;
 	int population_growth = 0; //population growth counter
-	int housing = 0;
+	centesimal_int health;
 	int food_consumption = 0;
 	std::vector<qunique_ptr<country_building_slot>> building_slots;
 	building_slot_type_map<country_building_slot *> building_slot_map;

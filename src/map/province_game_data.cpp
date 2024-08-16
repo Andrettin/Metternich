@@ -185,9 +185,16 @@ void province_game_data::set_provincial_capital(const site *provincial_capital)
 
 	if (old_provincial_capital != nullptr) {
 		old_provincial_capital->get_game_data()->check_building_conditions();
+		old_provincial_capital->get_game_data()->change_health(-old_provincial_capital->get_game_data()->get_health());
 	}
 
 	if (provincial_capital != nullptr) {
+		for (const auto &[commodity, output] : this->local_commodity_outputs) {
+			if (commodity->is_health()) {
+				provincial_capital->get_game_data()->change_health(output);
+			}
+		}
+
 		this->center_tile_pos = provincial_capital->get_game_data()->get_tile_pos();
 		provincial_capital->get_game_data()->check_building_conditions();
 	}
@@ -712,6 +719,23 @@ void province_game_data::calculate_settlement_commodity_output(const commodity *
 		}
 
 		settlement->get_game_data()->calculate_commodity_outputs();
+	}
+}
+
+void province_game_data::change_local_commodity_output(const commodity *commodity, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const centesimal_int &output = (this->local_commodity_outputs[commodity] += change);
+
+	if (output == 0) {
+		this->local_commodity_outputs.erase(commodity);
+	}
+
+	if (commodity->is_health() && this->get_provincial_capital() != nullptr) {
+		this->get_provincial_capital()->get_game_data()->change_health(change);
 	}
 }
 
