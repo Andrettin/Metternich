@@ -135,7 +135,8 @@ void country_game_data::do_turn()
 		this->do_production();
 		this->do_research();
 		this->do_population_growth();
-		this->do_consumption();
+		this->do_everyday_consumption();
+		this->do_luxury_consumption();
 		this->do_construction();
 		this->do_cultural_change();
 
@@ -349,7 +350,7 @@ void country_game_data::do_starvation()
 	}
 }
 
-void country_game_data::do_consumption()
+void country_game_data::do_everyday_consumption()
 {
 	if (this->get_population_units().empty()) {
 		return;
@@ -401,12 +402,12 @@ void country_game_data::do_consumption()
 				continue;
 			}
 
-			settlement->get_game_data()->do_consumption();
+			settlement->get_game_data()->do_everyday_consumption();
 		}
 	}
 
-	static const centesimal_int militancy_change_for_unfulfilled_consumption(0.1);
-	static const centesimal_int militancy_change_for_fulfilled_consumption(-0.1);
+	static const centesimal_int militancy_change_for_unfulfilled_consumption("0.1");
+	static const centesimal_int militancy_change_for_fulfilled_consumption("-0.1");
 
 	for (population_unit *population_unit : population_units) {
 		if (population_unit->is_everyday_consumption_fulfilled()) {
@@ -417,6 +418,73 @@ void country_game_data::do_consumption()
 	}
 
 	//FIXME: make population units which couldn't have their consumption fulfilled be unhappy/refuse to work for the turn (and possibly demote when demotion is implemented)
+}
+
+void country_game_data::do_luxury_consumption()
+{
+	if (this->get_population_units().empty()) {
+		return;
+	}
+
+	const std::vector<population_unit *> population_units = vector::shuffled(this->get_population_units());
+
+	for (population_unit *population_unit : population_units) {
+		population_unit->set_luxury_consumption_fulfilled(true);
+	}
+
+	for (const auto &[commodity, consumption] : this->get_luxury_consumption()) {
+		//local consumption is handled separately
+		assert_throw(!commodity->is_local());
+
+		int effective_consumption = 0;
+
+		if (commodity->is_storable()) {
+			effective_consumption = std::min(consumption.to_int(), this->get_stored_commodity(commodity));
+			this->change_stored_commodity(commodity, -effective_consumption);
+		} else {
+			effective_consumption = std::min(consumption.to_int(), this->get_net_commodity_output(commodity));
+		}
+
+		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
+		if (remaining_consumption == 0) {
+			continue;
+		}
+
+		//go through population units belonging to the country in random order, set whether their consumption was fulfilled
+		for (population_unit *population_unit : population_units) {
+			const centesimal_int pop_consumption = population_unit->get_type()->get_luxury_consumption(commodity);
+			if (pop_consumption == 0) {
+				continue;
+			}
+
+			population_unit->set_luxury_consumption_fulfilled(false);
+			remaining_consumption -= pop_consumption;
+
+			if (remaining_consumption <= 0) {
+				break;
+			}
+		}
+	}
+
+	for (const province *province : this->get_provinces()) {
+		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+			if (!settlement->get_game_data()->is_built()) {
+				continue;
+			}
+
+			settlement->get_game_data()->do_luxury_consumption();
+		}
+	}
+
+	static const centesimal_int consciousness_change_for_fulfilled_consumption("0.1");
+	static const centesimal_int militancy_change_for_fulfilled_consumption("-0.2");
+
+	for (population_unit *population_unit : population_units) {
+		if (population_unit->is_luxury_consumption_fulfilled()) {
+			population_unit->change_consciousness(consciousness_change_for_fulfilled_consumption);
+			population_unit->change_militancy(militancy_change_for_fulfilled_consumption);
+		}
+	}
 }
 
 void country_game_data::do_cultural_change()
@@ -2028,6 +2096,15 @@ void country_game_data::on_population_type_count_changed(const population_type *
 		this->change_everyday_consumption(commodity, value * change);
 	}
 
+	for (const auto &[commodity, value] : type->get_luxury_consumption()) {
+		if (commodity->is_local()) {
+			//handled at the settlement level
+			continue;
+		}
+
+		this->change_luxury_consumption(commodity, value * change);
+	}
+
 	//countries generate demand in the world market depending on population commodity demand
 	for (const auto &[commodity, value] : type->get_commodity_demands()) {
 		this->change_commodity_demand(commodity, value * change);
@@ -2743,6 +2820,41 @@ void country_game_data::change_everyday_consumption(const commodity *commodity, 
 
 	if (game::get()->is_running()) {
 		emit everyday_consumption_changed();
+	}
+}
+
+QVariantList country_game_data::get_luxury_consumption_qvariant_list() const
+{
+	commodity_map<int> int_luxury_consumption;
+
+	for (const auto &[commodity, consumption] : this->get_luxury_consumption()) {
+		int_luxury_consumption[commodity] = consumption.to_int();
+	}
+
+	return archimedes::map::to_qvariant_list(int_luxury_consumption);
+}
+
+int country_game_data::get_luxury_consumption(const QString &commodity_identifier) const
+{
+	return this->get_luxury_consumption(commodity::get(commodity_identifier.toStdString())).to_int();
+}
+
+void country_game_data::change_luxury_consumption(const commodity *commodity, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const centesimal_int count = (this->luxury_consumption[commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->luxury_consumption.erase(commodity);
+	}
+
+	if (game::get()->is_running()) {
+		emit luxury_consumption_changed();
 	}
 }
 

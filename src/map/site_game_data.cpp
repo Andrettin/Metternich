@@ -82,7 +82,7 @@ void site_game_data::do_turn()
 	this->decrement_scripted_modifiers();
 }
 
-void site_game_data::do_consumption()
+void site_game_data::do_everyday_consumption()
 {
 	std::vector<population_unit *> shuffled_population_units;
 	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
@@ -118,6 +118,51 @@ void site_game_data::do_consumption()
 			}
 
 			population_unit->set_everyday_consumption_fulfilled(false);
+			remaining_consumption -= pop_consumption;
+
+			if (remaining_consumption <= 0) {
+				break;
+			}
+		}
+	}
+}
+
+void site_game_data::do_luxury_consumption()
+{
+	std::vector<population_unit *> shuffled_population_units;
+	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
+		shuffled_population_units.push_back(population_unit.get());
+	}
+	vector::shuffle(shuffled_population_units);
+
+	std::vector<population_unit *> population_units;
+	for (population_unit *population_unit : shuffled_population_units) {
+		if (population_unit->is_luxury_consumption_fulfilled()) {
+			population_units.push_back(population_unit);
+		} else {
+			population_units.insert(population_units.begin(), population_unit);
+		}
+	}
+
+	for (const auto &[commodity, consumption] : this->local_luxury_consumption) {
+		assert_throw(commodity->is_local());
+		assert_throw(!commodity->is_storable());
+
+		const int effective_consumption = std::min(consumption.to_int(), this->is_provincial_capital() ? this->get_province()->get_game_data()->get_local_commodity_output(commodity).to_int() : this->get_commodity_output(commodity).to_int());
+
+		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
+		if (remaining_consumption == 0) {
+			continue;
+		}
+
+		//go through population units belonging to the settlement in random order, and cause the effects of them not being able to have their consumption fulfilled
+		for (population_unit *population_unit : population_units) {
+			const centesimal_int pop_consumption = population_unit->get_type()->get_luxury_consumption(commodity);
+			if (pop_consumption == 0) {
+				continue;
+			}
+
+			population_unit->set_luxury_consumption_fulfilled(false);
 			remaining_consumption -= pop_consumption;
 
 			if (remaining_consumption <= 0) {
@@ -868,6 +913,12 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 			this->change_local_everyday_consumption(commodity, value * change);
 		}
 	}
+
+	for (const auto &[commodity, value] : type->get_luxury_consumption()) {
+		if (commodity->is_local()) {
+			this->change_local_luxury_consumption(commodity, value * change);
+		}
+	}
 }
 
 void site_game_data::change_profession_capacity(const profession *profession, const int change)
@@ -1030,16 +1081,35 @@ void site_game_data::change_local_everyday_consumption(const commodity *commodit
 		return;
 	}
 
-	log_trace(std::format("Changing local consumption in settlement {} of commodity {} (currently {}) by {}.", this->site->get_identifier(), commodity->get_identifier(), this->get_local_everyday_consumption(commodity).to_string(), change.to_string()));
+	log_trace(std::format("Changing local everyday consumption in settlement {} of commodity {} (currently {}) by {}.", this->site->get_identifier(), commodity->get_identifier(), this->get_local_everyday_consumption(commodity).to_string(), change.to_string()));
 
 	const centesimal_int count = (this->local_everyday_consumption[commodity] += change);
 
-	log_trace(std::format("Changed local consumption in settlement {} of commodity {} by {}, making it now {}.", this->site->get_identifier(), commodity->get_identifier(), change.to_string(), this->get_local_everyday_consumption(commodity).to_string()));
+	log_trace(std::format("Changed local everyday consumption in settlement {} of commodity {} by {}, making it now {}.", this->site->get_identifier(), commodity->get_identifier(), change.to_string(), this->get_local_everyday_consumption(commodity).to_string()));
 
 	assert_throw(count >= 0);
 
 	if (count == 0) {
 		this->local_everyday_consumption.erase(commodity);
+	}
+}
+
+void site_game_data::change_local_luxury_consumption(const commodity *commodity, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	log_trace(std::format("Changing local luxury consumption in settlement {} of commodity {} (currently {}) by {}.", this->site->get_identifier(), commodity->get_identifier(), this->get_local_luxury_consumption(commodity).to_string(), change.to_string()));
+
+	const centesimal_int count = (this->local_luxury_consumption[commodity] += change);
+
+	log_trace(std::format("Changed local luxury consumption in settlement {} of commodity {} by {}, making it now {}.", this->site->get_identifier(), commodity->get_identifier(), change.to_string(), this->get_local_luxury_consumption(commodity).to_string()));
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->local_luxury_consumption.erase(commodity);
 	}
 }
 

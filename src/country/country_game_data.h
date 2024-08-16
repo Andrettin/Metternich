@@ -128,6 +128,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList transported_commodity_outputs READ get_transported_commodity_outputs_qvariant_list NOTIFY transported_commodity_outputs_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(QVariantList everyday_consumption READ get_everyday_consumption_qvariant_list NOTIFY everyday_consumption_changed)
+	Q_PROPERTY(QVariantList luxury_consumption READ get_luxury_consumption_qvariant_list NOTIFY luxury_consumption_changed)
 	Q_PROPERTY(int land_transport_capacity READ get_land_transport_capacity NOTIFY land_transport_capacity_changed)
 	Q_PROPERTY(int sea_transport_capacity READ get_sea_transport_capacity NOTIFY sea_transport_capacity_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
@@ -172,7 +173,8 @@ public:
 	void do_population_growth();
 	void do_food_consumption(const int food_consumption);
 	void do_starvation();
-	void do_consumption();
+	void do_everyday_consumption();
+	void do_luxury_consumption();
 	void do_cultural_change();
 	void do_construction();
 	void do_trade(country_map<commodity_map<int>> &country_luxury_demands);
@@ -1042,6 +1044,28 @@ public:
 
 	Q_INVOKABLE int get_everyday_consumption(const QString &commodity_identifier) const;
 	void change_everyday_consumption(const commodity *commodity, const centesimal_int &change);
+
+	const commodity_map<centesimal_int> &get_luxury_consumption() const
+	{
+		return this->luxury_consumption;
+	}
+
+	QVariantList get_luxury_consumption_qvariant_list() const;
+
+	const centesimal_int &get_luxury_consumption(const commodity *commodity) const
+	{
+		const auto find_iterator = this->luxury_consumption.find(commodity);
+
+		if (find_iterator != this->luxury_consumption.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
+	Q_INVOKABLE int get_luxury_consumption(const QString &commodity_identifier) const;
+	void change_luxury_consumption(const commodity *commodity, const centesimal_int &change);
 
 	const commodity_map<centesimal_int> &get_commodity_demands() const
 	{
@@ -2246,6 +2270,7 @@ signals:
 	void transported_commodity_outputs_changed();
 	void commodity_outputs_changed();
 	void everyday_consumption_changed();
+	void luxury_consumption_changed();
 	void land_transport_capacity_changed();
 	void sea_transport_capacity_changed();
 	void technologies_changed();
@@ -2331,6 +2356,7 @@ private:
 	commodity_map<int> transported_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<centesimal_int> everyday_consumption;
+	commodity_map<centesimal_int> luxury_consumption;
 	commodity_map<centesimal_int> commodity_demands;
 	int land_transport_capacity = 0;
 	int sea_transport_capacity = 0;

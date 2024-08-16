@@ -130,6 +130,22 @@ public:
 		return zero;
 	}
 
+	const commodity_map<centesimal_int> &get_luxury_consumption() const
+	{
+		return this->luxury_consumption;
+	}
+
+	const centesimal_int &get_luxury_consumption(const commodity *commodity) const
+	{
+		const auto find_iterator = this->get_luxury_consumption().find(commodity);
+		if (find_iterator != this->get_luxury_consumption().end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
 	const commodity_map<centesimal_int> &get_commodity_demands() const
 	{
 		return this->commodity_demands;
@@ -183,6 +199,7 @@ private:
 	phenotype_map<const metternich::icon *> phenotype_icons;
 	phenotype_map<const metternich::icon *> phenotype_small_icons;
 	commodity_map<centesimal_int> everyday_consumption;
+	commodity_map<centesimal_int> luxury_consumption;
 	commodity_map<centesimal_int> commodity_demands; //affects minor nation demand
 	commodity *output_commodity = nullptr;
 	int output_value = 1;

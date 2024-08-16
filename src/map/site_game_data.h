@@ -59,7 +59,8 @@ public:
 	explicit site_game_data(const metternich::site *site);
 
 	void do_turn();
-	void do_consumption();
+	void do_everyday_consumption();
+	void do_luxury_consumption();
 
 	const QPoint &get_tile_pos() const;
 	tile *get_tile() const;
@@ -275,6 +276,20 @@ public:
 
 	void change_local_everyday_consumption(const commodity *commodity, const centesimal_int &change);
 
+	const centesimal_int &get_local_luxury_consumption(const commodity *commodity) const
+	{
+		const auto find_iterator = this->local_luxury_consumption.find(commodity);
+
+		if (find_iterator != this->local_luxury_consumption.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
+	void change_local_luxury_consumption(const commodity *commodity, const centesimal_int &change);
+
 	int get_output_modifier() const
 	{
 		return this->output_modifier;
@@ -434,6 +449,7 @@ private:
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<centesimal_int> local_everyday_consumption;
+	commodity_map<centesimal_int> local_luxury_consumption;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
 	int depot_level = 0;

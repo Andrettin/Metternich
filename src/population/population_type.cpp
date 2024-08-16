@@ -42,6 +42,15 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			const centesimal_int consumption(value);
 			this->everyday_consumption[commodity] = std::move(consumption);
 		});
+	} else if (tag == "luxury_consumption") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const commodity *commodity = commodity::get(key);
+			const centesimal_int consumption(value);
+			this->luxury_consumption[commodity] = std::move(consumption);
+		});
 	} else if (tag == "commodity_demands") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();

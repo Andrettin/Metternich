@@ -139,6 +139,20 @@ public:
 		this->everyday_consumption_fulfilled = value;
 	}
 
+	bool is_luxury_consumption_fulfilled() const
+	{
+		return this->luxury_consumption_fulfilled;
+	}
+
+	void set_luxury_consumption_fulfilled(const bool value)
+	{
+		if (value == this->is_luxury_consumption_fulfilled()) {
+			return;
+		}
+
+		this->luxury_consumption_fulfilled = value;
+	}
+
 	void migrate_to(const site *settlement);
 
 signals:
@@ -162,6 +176,7 @@ private:
 	centesimal_int consciousness;
 	centesimal_int militancy;
 	bool everyday_consumption_fulfilled = true;
+	bool luxury_consumption_fulfilled = true;
 };
 
 }
