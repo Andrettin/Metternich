@@ -99,7 +99,7 @@ void site_game_data::do_consumption()
 		}
 	}
 
-	for (const auto &[commodity, consumption] : this->local_commodity_consumptions) {
+	for (const auto &[commodity, consumption] : this->local_everyday_consumption) {
 		assert_throw(commodity->is_local());
 		assert_throw(!commodity->is_storable());
 
@@ -112,7 +112,7 @@ void site_game_data::do_consumption()
 
 		//go through population units belonging to the settlement in random order, and cause the effects of them not being able to have their consumption fulfilled
 		for (population_unit *population_unit : population_units) {
-			const centesimal_int pop_consumption = population_unit->get_type()->get_commodity_consumption(commodity);
+			const centesimal_int pop_consumption = population_unit->get_type()->get_everyday_consumption(commodity);
 			if (pop_consumption == 0) {
 				continue;
 			}
@@ -865,7 +865,7 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 
 	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
 		if (commodity->is_local()) {
-			this->change_local_commodity_consumption(commodity, value * change);
+			this->change_local_everyday_consumption(commodity, value * change);
 		}
 	}
 }
@@ -1024,22 +1024,22 @@ void site_game_data::calculate_commodity_outputs()
 	}
 }
 
-void site_game_data::change_local_commodity_consumption(const commodity *commodity, const centesimal_int &change)
+void site_game_data::change_local_everyday_consumption(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	log_trace(std::format("Changing local consumption in settlement {} of commodity {} (currently {}) by {}.", this->site->get_identifier(), commodity->get_identifier(), this->get_local_commodity_consumption(commodity).to_string(), change.to_string()));
+	log_trace(std::format("Changing local consumption in settlement {} of commodity {} (currently {}) by {}.", this->site->get_identifier(), commodity->get_identifier(), this->get_local_everyday_consumption(commodity).to_string(), change.to_string()));
 
-	const centesimal_int count = (this->local_commodity_consumptions[commodity] += change);
+	const centesimal_int count = (this->local_everyday_consumption[commodity] += change);
 
-	log_trace(std::format("Changed local consumption in settlement {} of commodity {} by {}, making it now {}.", this->site->get_identifier(), commodity->get_identifier(), change.to_string(), this->get_local_commodity_consumption(commodity).to_string()));
+	log_trace(std::format("Changed local consumption in settlement {} of commodity {} by {}, making it now {}.", this->site->get_identifier(), commodity->get_identifier(), change.to_string(), this->get_local_everyday_consumption(commodity).to_string()));
 
 	assert_throw(count >= 0);
 
 	if (count == 0) {
-		this->local_commodity_consumptions.erase(commodity);
+		this->local_everyday_consumption.erase(commodity);
 	}
 }
 

@@ -261,11 +261,11 @@ public:
 	void set_commodity_output(const commodity *commodity, const centesimal_int &output);
 	void calculate_commodity_outputs();
 
-	const centesimal_int &get_local_commodity_consumption(const commodity *commodity) const
+	const centesimal_int &get_local_everyday_consumption(const commodity *commodity) const
 	{
-		const auto find_iterator = this->local_commodity_consumptions.find(commodity);
+		const auto find_iterator = this->local_everyday_consumption.find(commodity);
 
-		if (find_iterator != this->local_commodity_consumptions.end()) {
+		if (find_iterator != this->local_everyday_consumption.end()) {
 			return find_iterator->second;
 		}
 
@@ -273,7 +273,7 @@ public:
 		return zero;
 	}
 
-	void change_local_commodity_consumption(const commodity *commodity, const centesimal_int &change);
+	void change_local_everyday_consumption(const commodity *commodity, const centesimal_int &change);
 
 	int get_output_modifier() const
 	{
@@ -433,7 +433,7 @@ private:
 	int free_food_consumption = 0;
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
-	commodity_map<centesimal_int> local_commodity_consumptions;
+	commodity_map<centesimal_int> local_everyday_consumption;
 	int output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
 	int depot_level = 0;

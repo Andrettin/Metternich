@@ -127,7 +127,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList transportable_commodity_outputs READ get_transportable_commodity_outputs_qvariant_list NOTIFY transportable_commodity_outputs_changed)
 	Q_PROPERTY(QVariantList transported_commodity_outputs READ get_transported_commodity_outputs_qvariant_list NOTIFY transported_commodity_outputs_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
-	Q_PROPERTY(QVariantList commodity_consumptions READ get_commodity_consumptions_qvariant_list NOTIFY commodity_consumptions_changed)
+	Q_PROPERTY(QVariantList everyday_consumption READ get_everyday_consumption_qvariant_list NOTIFY everyday_consumption_changed)
 	Q_PROPERTY(int land_transport_capacity READ get_land_transport_capacity NOTIFY land_transport_capacity_changed)
 	Q_PROPERTY(int sea_transport_capacity READ get_sea_transport_capacity NOTIFY sea_transport_capacity_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
@@ -1021,18 +1021,18 @@ public:
 	void calculate_settlement_commodity_outputs();
 	void calculate_settlement_commodity_output(const commodity *commodity);
 
-	const commodity_map<centesimal_int> &get_commodity_consumptions() const
+	const commodity_map<centesimal_int> &get_everyday_consumption() const
 	{
-		return this->commodity_consumptions;
+		return this->everyday_consumption;
 	}
 
-	QVariantList get_commodity_consumptions_qvariant_list() const;
+	QVariantList get_everyday_consumption_qvariant_list() const;
 
-	const centesimal_int &get_commodity_consumption(const commodity *commodity) const
+	const centesimal_int &get_everyday_consumption(const commodity *commodity) const
 	{
-		const auto find_iterator = this->commodity_consumptions.find(commodity);
+		const auto find_iterator = this->everyday_consumption.find(commodity);
 
-		if (find_iterator != this->commodity_consumptions.end()) {
+		if (find_iterator != this->everyday_consumption.end()) {
 			return find_iterator->second;
 		}
 
@@ -1040,8 +1040,8 @@ public:
 		return zero;
 	}
 
-	Q_INVOKABLE int get_commodity_consumption(const QString &commodity_identifier) const;
-	void change_commodity_consumption(const commodity *commodity, const centesimal_int &change);
+	Q_INVOKABLE int get_everyday_consumption(const QString &commodity_identifier) const;
+	void change_everyday_consumption(const commodity *commodity, const centesimal_int &change);
 
 	const commodity_map<centesimal_int> &get_commodity_demands() const
 	{
@@ -2245,7 +2245,7 @@ signals:
 	void transportable_commodity_outputs_changed();
 	void transported_commodity_outputs_changed();
 	void commodity_outputs_changed();
-	void commodity_consumptions_changed();
+	void everyday_consumption_changed();
 	void land_transport_capacity_changed();
 	void sea_transport_capacity_changed();
 	void technologies_changed();
@@ -2330,7 +2330,7 @@ private:
 	commodity_map<centesimal_int> transportable_commodity_outputs;
 	commodity_map<int> transported_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
-	commodity_map<centesimal_int> commodity_consumptions;
+	commodity_map<centesimal_int> everyday_consumption;
 	commodity_map<centesimal_int> commodity_demands;
 	int land_transport_capacity = 0;
 	int sea_transport_capacity = 0;

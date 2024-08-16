@@ -361,7 +361,7 @@ void country_game_data::do_consumption()
 		population_unit->set_consumption_fulfilled(true);
 	}
 
-	for (const auto &[commodity, consumption] : this->get_commodity_consumptions()) {
+	for (const auto &[commodity, consumption] : this->get_everyday_consumption()) {
 		//local consumption is handled separately
 		assert_throw(!commodity->is_local());
 
@@ -381,7 +381,7 @@ void country_game_data::do_consumption()
 
 		//go through population units belonging to the country in random order, set whether their consumption was fulfilled
 		for (population_unit *population_unit : population_units) {
-			const centesimal_int pop_consumption = population_unit->get_type()->get_commodity_consumption(commodity);
+			const centesimal_int pop_consumption = population_unit->get_type()->get_everyday_consumption(commodity);
 			if (pop_consumption == 0) {
 				continue;
 			}
@@ -2025,7 +2025,7 @@ void country_game_data::on_population_type_count_changed(const population_type *
 			continue;
 		}
 
-		this->change_commodity_consumption(commodity, value * change);
+		this->change_everyday_consumption(commodity, value * change);
 	}
 
 	//countries generate demand in the world market depending on population commodity demand
@@ -2711,38 +2711,38 @@ void country_game_data::calculate_settlement_commodity_output(const commodity *c
 	}
 }
 
-QVariantList country_game_data::get_commodity_consumptions_qvariant_list() const
+QVariantList country_game_data::get_everyday_consumption_qvariant_list() const
 {
-	commodity_map<int> int_commodity_consumptions;
+	commodity_map<int> int_everyday_consumption;
 
-	for (const auto &[commodity, consumption] : this->get_commodity_consumptions()) {
-		int_commodity_consumptions[commodity] = consumption.to_int();
+	for (const auto &[commodity, consumption] : this->get_everyday_consumption()) {
+		int_everyday_consumption[commodity] = consumption.to_int();
 	}
 
-	return archimedes::map::to_qvariant_list(int_commodity_consumptions);
+	return archimedes::map::to_qvariant_list(int_everyday_consumption);
 }
 
-int country_game_data::get_commodity_consumption(const QString &commodity_identifier) const
+int country_game_data::get_everyday_consumption(const QString &commodity_identifier) const
 {
-	return this->get_commodity_consumption(commodity::get(commodity_identifier.toStdString())).to_int();
+	return this->get_everyday_consumption(commodity::get(commodity_identifier.toStdString())).to_int();
 }
 
-void country_game_data::change_commodity_consumption(const commodity *commodity, const centesimal_int &change)
+void country_game_data::change_everyday_consumption(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const centesimal_int count = (this->commodity_consumptions[commodity] += change);
+	const centesimal_int count = (this->everyday_consumption[commodity] += change);
 
 	assert_throw(count >= 0);
 
 	if (count == 0) {
-		this->commodity_consumptions.erase(commodity);
+		this->everyday_consumption.erase(commodity);
 	}
 
 	if (game::get()->is_running()) {
-		emit commodity_consumptions_changed();
+		emit everyday_consumption_changed();
 	}
 }
 

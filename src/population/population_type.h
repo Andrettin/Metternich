@@ -119,7 +119,7 @@ public:
 		return this->everyday_consumption;
 	}
 
-	const centesimal_int &get_commodity_consumption(const commodity *commodity) const
+	const centesimal_int &get_everyday_consumption(const commodity *commodity) const
 	{
 		const auto find_iterator = this->get_everyday_consumption().find(commodity);
 		if (find_iterator != this->get_everyday_consumption().end()) {
