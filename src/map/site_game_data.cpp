@@ -92,7 +92,7 @@ void site_game_data::do_consumption()
 
 	std::vector<population_unit *> population_units;
 	for (population_unit *population_unit : shuffled_population_units) {
-		if (population_unit->is_consumption_fulfilled()) {
+		if (population_unit->is_everyday_consumption_fulfilled()) {
 			population_units.push_back(population_unit);
 		} else {
 			population_units.insert(population_units.begin(), population_unit);
@@ -117,7 +117,7 @@ void site_game_data::do_consumption()
 				continue;
 			}
 
-			population_unit->set_consumption_fulfilled(false);
+			population_unit->set_everyday_consumption_fulfilled(false);
 			remaining_consumption -= pop_consumption;
 
 			if (remaining_consumption <= 0) {

@@ -125,18 +125,18 @@ public:
 		this->set_militancy(this->get_militancy() + change);
 	}
 
-	bool is_consumption_fulfilled() const
+	bool is_everyday_consumption_fulfilled() const
 	{
-		return this->consumption_fulfilled;
+		return this->everyday_consumption_fulfilled;
 	}
 
-	void set_consumption_fulfilled(const bool value)
+	void set_everyday_consumption_fulfilled(const bool value)
 	{
-		if (value == this->is_consumption_fulfilled()) {
+		if (value == this->is_everyday_consumption_fulfilled()) {
 			return;
 		}
 
-		this->consumption_fulfilled = value;
+		this->everyday_consumption_fulfilled = value;
 	}
 
 	void migrate_to(const site *settlement);
@@ -161,7 +161,7 @@ private:
 	const metternich::ideology *ideology = nullptr;
 	centesimal_int consciousness;
 	centesimal_int militancy;
-	bool consumption_fulfilled = true;
+	bool everyday_consumption_fulfilled = true;
 };
 
 }

@@ -358,7 +358,7 @@ void country_game_data::do_consumption()
 	const std::vector<population_unit *> population_units = vector::shuffled(this->get_population_units());
 
 	for (population_unit *population_unit : population_units) {
-		population_unit->set_consumption_fulfilled(true);
+		population_unit->set_everyday_consumption_fulfilled(true);
 	}
 
 	for (const auto &[commodity, consumption] : this->get_everyday_consumption()) {
@@ -386,7 +386,7 @@ void country_game_data::do_consumption()
 				continue;
 			}
 
-			population_unit->set_consumption_fulfilled(false);
+			population_unit->set_everyday_consumption_fulfilled(false);
 			remaining_consumption -= pop_consumption;
 
 			if (remaining_consumption <= 0) {
@@ -409,7 +409,7 @@ void country_game_data::do_consumption()
 	static const centesimal_int militancy_change_for_fulfilled_consumption(-0.1);
 
 	for (population_unit *population_unit : population_units) {
-		if (population_unit->is_consumption_fulfilled()) {
+		if (population_unit->is_everyday_consumption_fulfilled()) {
 			population_unit->change_militancy(militancy_change_for_fulfilled_consumption);
 		} else {
 			population_unit->change_militancy(militancy_change_for_unfulfilled_consumption);
