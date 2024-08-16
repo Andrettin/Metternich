@@ -60,6 +60,11 @@ bool settlement_building_slot::can_have_building(const building_type *building) 
 	}
 
 	const site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
+
+	if (settlement_game_data->get_culture()->get_building_class_type(building->get_building_class()) != building) {
+		return false;
+	}
+
 	if (!vector::contains(building->get_settlement_types(), settlement_game_data->get_settlement_type())) {
 		return false;
 	}
