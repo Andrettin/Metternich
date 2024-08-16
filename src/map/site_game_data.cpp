@@ -863,7 +863,7 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 		this->change_base_commodity_output(type->get_output_commodity(), centesimal_int(type->get_output_value()) * change);
 	}
 
-	for (const auto &[commodity, value] : type->get_consumed_commodities()) {
+	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
 		if (commodity->is_local()) {
 			this->change_local_commodity_consumption(commodity, value * change);
 		}

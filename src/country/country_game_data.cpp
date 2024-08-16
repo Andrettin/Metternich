@@ -2019,7 +2019,7 @@ void country_game_data::remove_population_unit(population_unit *population_unit)
 
 void country_game_data::on_population_type_count_changed(const population_type *type, const int change)
 {
-	for (const auto &[commodity, value] : type->get_consumed_commodities()) {
+	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
 		if (commodity->is_local()) {
 			//handled at the settlement level
 			continue;

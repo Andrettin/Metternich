@@ -114,15 +114,15 @@ public:
 		return this->get_small_icon();
 	}
 
-	const commodity_map<centesimal_int> &get_consumed_commodities() const
+	const commodity_map<centesimal_int> &get_everyday_consumption() const
 	{
-		return this->consumed_commodities;
+		return this->everyday_consumption;
 	}
 
 	const centesimal_int &get_commodity_consumption(const commodity *commodity) const
 	{
-		const auto find_iterator = this->get_consumed_commodities().find(commodity);
-		if (find_iterator != this->get_consumed_commodities().end()) {
+		const auto find_iterator = this->get_everyday_consumption().find(commodity);
+		if (find_iterator != this->get_everyday_consumption().end()) {
 			return find_iterator->second;
 		}
 
@@ -182,7 +182,7 @@ private:
 	metternich::icon *small_icon = nullptr;
 	phenotype_map<const metternich::icon *> phenotype_icons;
 	phenotype_map<const metternich::icon *> phenotype_small_icons;
-	commodity_map<centesimal_int> consumed_commodities;
+	commodity_map<centesimal_int> everyday_consumption;
 	commodity_map<centesimal_int> commodity_demands; //affects minor nation demand
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
