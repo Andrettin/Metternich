@@ -280,6 +280,36 @@ std::vector<const building_type *> technology::get_enabled_buildings_for_culture
 	return buildings;
 }
 
+std::vector<const wonder *> technology::get_enabled_wonders_for_country(const country *country) const
+{
+	std::vector<const wonder *> wonders;
+
+	for (const wonder *wonder : this->get_enabled_wonders()) {
+		if (wonder->get_conditions() != nullptr && !wonder->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		wonders.push_back(wonder);
+	}
+
+	return wonders;
+}
+
+std::vector<const wonder *> technology::get_disabled_wonders_for_country(const country *country) const
+{
+	std::vector<const wonder *> wonders;
+
+	for (const wonder *wonder : this->get_disabled_wonders()) {
+		if (wonder->get_conditions() != nullptr && !wonder->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		wonders.push_back(wonder);
+	}
+
+	return wonders;
+}
+
 QVariantList technology::get_enabled_improvements_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_enabled_improvements());
@@ -515,7 +545,7 @@ QString technology::get_effects_string(metternich::country *country) const
 		}
 	}
 
-	const std::vector<const building_type *> buildings = get_enabled_buildings_for_culture(country->get_culture());
+	const std::vector<const building_type *> buildings = this->get_enabled_buildings_for_culture(country->get_culture());
 
 	if (!buildings.empty()) {
 		for (const building_type *building : buildings) {
@@ -527,8 +557,10 @@ QString technology::get_effects_string(metternich::country *country) const
 		}
 	}
 
-	if (!this->get_enabled_wonders().empty()) {
-		for (const wonder *wonder : this->get_enabled_wonders()) {
+	const std::vector<const wonder *> enabled_wonders = this->get_enabled_wonders_for_country(country);
+
+	if (!enabled_wonders.empty()) {
+		for (const wonder *wonder : enabled_wonders) {
 			if (!str.empty()) {
 				str += "\n";
 			}
@@ -537,8 +569,10 @@ QString technology::get_effects_string(metternich::country *country) const
 		}
 	}
 
-	if (!this->get_disabled_wonders().empty()) {
-		for (const wonder *wonder : this->get_disabled_wonders()) {
+	const std::vector<const wonder *> disabled_wonders = this->get_disabled_wonders_for_country(country);
+
+	if (!disabled_wonders.empty()) {
+		for (const wonder *wonder : disabled_wonders) {
 			if (!str.empty()) {
 				str += "\n";
 			}
@@ -599,7 +633,7 @@ QString technology::get_effects_string(metternich::country *country) const
 		}
 	}
 
-	const std::vector<const civilian_unit_type *> civilian_units = get_enabled_civilian_units_for_culture(country->get_culture());
+	const std::vector<const civilian_unit_type *> civilian_units = this->get_enabled_civilian_units_for_culture(country->get_culture());
 
 	if (!civilian_units.empty()) {
 		for (const civilian_unit_type *civilian_unit : civilian_units) {

@@ -212,6 +212,8 @@ public:
 		return this->enabled_wonders;
 	}
 
+	std::vector<const wonder *> get_enabled_wonders_for_country(const country *country) const;
+
 	void add_enabled_wonder(const wonder *wonder)
 	{
 		this->enabled_wonders.push_back(wonder);
@@ -221,6 +223,8 @@ public:
 	{
 		return this->disabled_wonders;
 	}
+
+	std::vector<const wonder *> get_disabled_wonders_for_country(const country *country) const;
 
 	void add_disabled_wonder(const wonder *wonder)
 	{
