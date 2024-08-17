@@ -245,6 +245,7 @@ QCoro::Task<void> game::start_coro()
 			continue;
 		}
 
+		site->get_game_data()->check_settlement_type();
 		site->get_game_data()->calculate_commodity_outputs();
 	}
 

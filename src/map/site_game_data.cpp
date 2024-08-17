@@ -421,6 +421,31 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 	}
 }
 
+void site_game_data::check_settlement_type()
+{
+	if (this->get_settlement_type() == nullptr) {
+		return;
+	}
+
+	if (this->get_settlement_type()->get_conditions() == nullptr || this->get_settlement_type()->get_conditions()->check(this->site, read_only_context(this->site))) {
+		return;
+	}
+
+	std::vector<const metternich::settlement_type *> potential_settlement_types;
+
+	for (const metternich::settlement_type *base_settlement_type : this->get_settlement_type()->get_base_settlement_types()) {
+		if (base_settlement_type->get_conditions() != nullptr && !base_settlement_type->get_conditions()->check(this->site, read_only_context(this->site))) {
+			continue;
+		}
+
+		potential_settlement_types.push_back(base_settlement_type);
+	}
+
+	if (!potential_settlement_types.empty()) {
+		this->set_settlement_type(vector::get_random(potential_settlement_types));
+	}
+}
+
 bool site_game_data::is_built() const
 {
 	assert_throw(this->site->is_settlement());

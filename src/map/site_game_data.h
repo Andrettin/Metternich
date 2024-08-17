@@ -116,6 +116,7 @@ public:
 	}
 
 	void set_settlement_type(const metternich::settlement_type *settlement_type);
+	void check_settlement_type();
 
 	bool is_built() const;
 
