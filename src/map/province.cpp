@@ -55,10 +55,10 @@ void province::process_gsml_scope(const gsml_data &scope)
 
 void province::initialize()
 {
-	if (this->get_default_provincial_capital() != nullptr) {
-		assert_throw(this->get_default_provincial_capital()->get_province() == nullptr || this->get_default_provincial_capital()->get_province() == this);
+	if (this->get_provincial_capital() != nullptr) {
+		assert_throw(this->get_provincial_capital()->get_province() == nullptr || this->get_provincial_capital()->get_province() == this);
 
-		this->default_provincial_capital->set_province(this);
+		this->provincial_capital->set_province(this);
 	}
 
 	named_data_entry::initialize();
@@ -66,14 +66,14 @@ void province::initialize()
 
 void province::check() const
 {
-	if (this->get_default_provincial_capital() == nullptr && !this->is_water_zone()) {
-		throw std::runtime_error(std::format("Province \"{}\" has no default provincial capital.", this->get_identifier()));
-	} else if (this->get_default_provincial_capital() != nullptr && this->is_water_zone()) {
-		throw std::runtime_error("Water zone \"" + this->get_identifier() + "\" has a default provincial capital.");
+	if (this->get_provincial_capital() == nullptr && !this->is_water_zone()) {
+		throw std::runtime_error(std::format("Province \"{}\" has no provincial capital.", this->get_identifier()));
+	} else if (this->get_provincial_capital() != nullptr && this->is_water_zone()) {
+		throw std::runtime_error("Water zone \"" + this->get_identifier() + "\" has a provincial capital.");
 	}
 
-	if (this->get_default_provincial_capital() != nullptr && !this->get_default_provincial_capital()->is_settlement()) {
-		throw std::runtime_error(std::format("Province \"{}\" has a default provincial capital (\"{}\") which is not a settlement.", this->get_identifier(), this->get_default_provincial_capital()->get_identifier()));
+	if (this->get_provincial_capital() != nullptr && !this->get_provincial_capital()->is_settlement()) {
+		throw std::runtime_error(std::format("Province \"{}\" has a provincial capital (\"{}\") which is not a settlement.", this->get_identifier(), this->get_provincial_capital()->get_identifier()));
 	}
 
 	for (const auto &[border_province, border_river] : this->border_rivers) {

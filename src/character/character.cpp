@@ -122,7 +122,7 @@ void character::initialize()
 				throw std::runtime_error(std::format("Character \"{}\" has a home site (\"{}\") which has no province.", this->get_identifier(), this->home_site->get_identifier()));
 			}
 
-			this->home_settlement = this->home_site->get_province()->get_default_provincial_capital();
+			this->home_settlement = this->home_site->get_province()->get_provincial_capital();
 		}
 	}
 

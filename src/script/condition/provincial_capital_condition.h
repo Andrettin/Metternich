@@ -40,7 +40,7 @@ public:
 		Q_UNUSED(ctx);
 
 		if constexpr (std::is_same_v<scope_type, province>) {
-			return scope->get_game_data()->get_provincial_capital() == this->value;
+			return scope->get_provincial_capital() == this->value;
 		} else {
 			return scope->get_game_data()->is_provincial_capital();
 		}

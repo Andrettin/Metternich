@@ -40,7 +40,6 @@
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/policy_effect.h"
 #include "script/effect/population_scaled_commodity_effect.h"
-#include "script/effect/provincial_capital_effect.h"
 #include "script/effect/random_effect.h"
 #include "script/effect/random_global_population_unit_effect.h"
 #include "script/effect/random_known_country_effect.h"
@@ -135,12 +134,6 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const site>) {
 		if (key == "capital") {
 			return std::make_unique<capital_effect<scope_type>>(value, effect_operator);
-		}
-	}
-
-	if constexpr (std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
-		if (key == "provincial_capital") {
-			return std::make_unique<provincial_capital_effect<scope_type>>(value, effect_operator);
 		}
 	}
 

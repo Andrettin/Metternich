@@ -25,6 +25,11 @@ public:
 		return !this->get_tiles().empty();
 	}
 
+	const QPoint &get_center_tile_pos() const
+	{
+		return this->center_tile_pos;
+	}
+
 	bool is_coastal() const
 	{
 		return this->coastal;
@@ -98,6 +103,7 @@ signals:
 
 private:
 	const metternich::province *province = nullptr;
+	QPoint center_tile_pos = QPoint(-1, -1);
 	bool coastal = false;
 	bool has_river = false;
 	QRect territory_rect;

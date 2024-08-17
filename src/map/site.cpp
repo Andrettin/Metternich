@@ -75,7 +75,7 @@ void site::check() const
 			}
 
 			if (this->get_province() != nullptr) {
-				if (this->get_province()->get_default_provincial_capital() != this) {
+				if (this->get_province()->get_provincial_capital() != this) {
 					log::log_error(std::format("Settlement site \"{}\" is not the provincial capital of its province.", this->get_identifier()));
 				}
 			} else {

@@ -19,7 +19,6 @@
 #include "script/condition/resource_condition.h"
 #include "script/effect/capital_effect.h"
 #include "script/effect/effect_list.h"
-#include "script/effect/provincial_capital_effect.h"
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
@@ -185,12 +184,6 @@ void building_type::initialize()
 
 	if (this->is_provincial_capitol()) {
 		this->provincial_capital_only = true;
-
-		if (this->get_effects() == nullptr) {
-			this->effects = std::make_unique<metternich::effect_list<const site>>();
-		}
-
-		this->effects->add_effect(std::make_unique<provincial_capital_effect<const site>>(true));
 	}
 
 	this->calculate_level();

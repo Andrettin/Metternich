@@ -1191,7 +1191,6 @@ void country_game_data::set_capital(const site *capital)
 	this->capital = capital;
 
 	if (capital != nullptr) {
-		capital->get_game_data()->get_province()->get_game_data()->set_provincial_capital(capital);
 		capital->get_game_data()->calculate_commodity_outputs();
 		capital->get_game_data()->check_building_conditions();
 	}

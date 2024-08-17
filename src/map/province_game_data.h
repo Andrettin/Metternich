@@ -50,7 +50,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect CONSTANT)
-	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos NOTIFY provincial_capital_changed)
+	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(QVariantList military_units READ get_military_units_qvariant_list NOTIFY military_units_changed)
@@ -74,14 +74,6 @@ public:
 	}
 
 	void set_owner(const country *country);
-
-	const site *get_provincial_capital() const
-	{
-		return this->provincial_capital;
-	}
-
-	void set_provincial_capital(const site *provincial_capital);
-	void choose_provincial_capital();
 
 	bool is_capital() const;
 
@@ -117,12 +109,7 @@ public:
 
 	bool is_country_border_province() const;
 
-	const QPoint &get_center_tile_pos() const
-	{
-		return this->center_tile_pos;
-	}
-
-	void reset_center_tile_pos();
+	const QPoint &get_center_tile_pos() const;
 
 	const std::vector<QPoint> &get_border_tiles() const;
 	const std::vector<QPoint> &get_resource_tiles() const;
@@ -386,7 +373,6 @@ public:
 
 signals:
 	void owner_changed();
-	void provincial_capital_changed();
 	void culture_changed();
 	void religion_changed();
 	void scripted_modifiers_changed();
@@ -400,9 +386,7 @@ private:
 	const country *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
-	QPoint center_tile_pos = QPoint(-1, -1);
 	int settlement_count = 0; //only includes built settlements
-	const site *provincial_capital = nullptr;
 	scripted_province_modifier_map<int> scripted_modifiers;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;

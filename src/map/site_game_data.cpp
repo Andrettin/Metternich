@@ -172,11 +172,7 @@ const QPoint &site_game_data::get_tile_pos() const
 
 tile *site_game_data::get_tile() const
 {
-	if (this->get_tile_pos() != QPoint(-1, -1)) {
-		return map::get()->get_tile(this->get_tile_pos());
-	}
-
-	return nullptr;
+	return this->site->get_map_data()->get_tile();
 }
 
 bool site_game_data::is_coastal() const
@@ -210,12 +206,7 @@ bool site_game_data::has_route() const
 
 const province *site_game_data::get_province() const
 {
-	const tile *tile = this->get_tile();
-	if (tile != nullptr) {
-		return tile->get_province();
-	}
-
-	return nullptr;
+	return this->site->get_map_data()->get_province();
 }
 
 bool site_game_data::is_provincial_capital() const
@@ -224,7 +215,7 @@ bool site_game_data::is_provincial_capital() const
 		return false;
 	}
 
-	return this->get_province()->get_game_data()->get_provincial_capital() == this->site;
+	return this->get_province()->get_provincial_capital() == this->site;
 }
 
 bool site_game_data::is_capital() const
@@ -409,10 +400,6 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 				this->get_owner()->get_game_data()->set_capital(this->site);
 			}
 		}
-
-		if (this->get_province()->get_game_data()->get_provincial_capital() == nullptr) {
-			this->get_province()->get_game_data()->set_provincial_capital(this->site);
-		}
 	} else if (old_settlement_type != nullptr && this->get_settlement_type() == nullptr) {
 		this->on_settlement_built(-1);
 
@@ -420,10 +407,6 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 			if (this->get_owner()->get_game_data()->get_capital() == this->site) {
 				this->get_owner()->get_game_data()->choose_capital();
 			}
-		}
-
-		if (this->get_province()->get_game_data()->get_provincial_capital() == this->site) {
-			this->get_province()->get_game_data()->choose_provincial_capital();
 		}
 	}
 

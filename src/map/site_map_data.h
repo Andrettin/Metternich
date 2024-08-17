@@ -24,6 +24,8 @@ public:
 
 	void set_tile_pos(const QPoint &tile_pos);
 
+	tile *get_tile() const;
+
 	const metternich::resource *get_resource() const
 	{
 		return this->resource;
@@ -33,6 +35,8 @@ public:
 	{
 		this->resource = resource;
 	}
+
+	const province *get_province() const;
 
 signals:
 	void tile_pos_changed();

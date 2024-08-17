@@ -48,10 +48,6 @@ namespace metternich {
 province_game_data::province_game_data(const metternich::province *province)
 	: province(province)
 {
-	if (this->is_on_map()) {
-		this->reset_center_tile_pos();
-	}
-
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::main_culture_changed, this, &province_game_data::on_population_main_culture_changed);
 	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::on_population_main_religion_changed);
@@ -165,69 +161,6 @@ void province_game_data::set_owner(const country *country)
 
 		emit owner_changed();
 	}
-}
-
-void province_game_data::set_provincial_capital(const site *provincial_capital)
-{
-	if (provincial_capital == this->get_provincial_capital()) {
-		return;
-	}
-
-	if (provincial_capital != nullptr) {
-		assert_throw(provincial_capital->is_settlement());
-		assert_throw(provincial_capital->get_game_data()->get_province() == this->province);
-		assert_throw(provincial_capital->get_game_data()->is_built());
-	}
-
-	const site *old_provincial_capital = this->get_provincial_capital();
-
-	this->provincial_capital = provincial_capital;
-
-	if (old_provincial_capital != nullptr) {
-		old_provincial_capital->get_game_data()->check_building_conditions();
-		old_provincial_capital->get_game_data()->change_health(-old_provincial_capital->get_game_data()->get_health());
-	}
-
-	if (provincial_capital != nullptr) {
-		for (const auto &[commodity, output] : this->local_commodity_outputs) {
-			if (commodity->is_health()) {
-				provincial_capital->get_game_data()->change_health(output);
-			}
-		}
-
-		this->center_tile_pos = provincial_capital->get_game_data()->get_tile_pos();
-		provincial_capital->get_game_data()->check_building_conditions();
-	}
-
-	emit provincial_capital_changed();
-}
-
-void province_game_data::choose_provincial_capital()
-{
-	if (this->province->get_default_provincial_capital()->get_game_data()->is_built()) {
-		this->set_provincial_capital(this->province->get_default_provincial_capital());
-		return;
-	}
-
-	const site *best_provincial_capital = nullptr;
-
-	for (const site *settlement : this->get_settlement_sites()) {
-		const site_game_data *settlement_game_data = settlement->get_game_data();
-
-		if (!settlement_game_data->is_built()) {
-			continue;
-		}
-
-		if (best_provincial_capital != nullptr) {
-			if (best_provincial_capital->get_game_data()->get_settlement_type()->get_free_resource_building_level() >= settlement_game_data->get_settlement_type()->get_free_resource_building_level()) {
-				continue;
-			}
-		}
-
-		best_provincial_capital = settlement;
-	}
-
-	this->set_provincial_capital(best_provincial_capital);
 }
 
 bool province_game_data::is_capital() const
@@ -355,15 +288,9 @@ bool province_game_data::is_country_border_province() const
 	return false;
 }
 
-void province_game_data::reset_center_tile_pos()
+const QPoint &province_game_data::get_center_tile_pos() const
 {
-	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_game_data()->get_province() == this->province) {
-		this->center_tile_pos = this->province->get_default_provincial_capital()->get_game_data()->get_tile_pos();
-	} else {
-		this->center_tile_pos = this->get_territory_rect_center();
-	}
-
-	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
+	return this->province->get_map_data()->get_center_tile_pos();
 }
 
 const std::vector<QPoint> &province_game_data::get_border_tiles() const
@@ -734,8 +661,8 @@ void province_game_data::change_local_commodity_output(const commodity *commodit
 		this->local_commodity_outputs.erase(commodity);
 	}
 
-	if (commodity->is_health() && this->get_provincial_capital() != nullptr) {
-		this->get_provincial_capital()->get_game_data()->change_health(change);
+	if (commodity->is_health()) {
+		this->province->get_provincial_capital()->get_game_data()->change_health(change);
 	}
 }
 

@@ -509,14 +509,6 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 		}
 
-		for (const province *province : map::get()->get_provinces()) {
-			if (province->is_water_zone()) {
-				continue;
-			}
-
-			province->get_game_data()->choose_provincial_capital();
-		}
-
 		for (const country *country : this->get_countries()) {
 			country->get_game_data()->set_capital(nullptr);
 			country->get_game_data()->choose_capital();
@@ -745,8 +737,8 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const site *home_settlement = historical_military_unit->get_home_settlement();
 			if (home_settlement == nullptr) {
-				if (province->get_game_data()->get_owner() == country && province->get_game_data()->get_provincial_capital() != nullptr) {
-					home_settlement = province->get_game_data()->get_provincial_capital();
+				if (province->get_game_data()->get_owner() == country) {
+					home_settlement = province->get_provincial_capital();
 				} else if (!country_game_data->is_under_anarchy()) {
 					home_settlement = country_game_data->get_capital();
 				} else {
@@ -907,16 +899,16 @@ void game::apply_sites()
 		}
 	}
 
-	//ensure country default capitals always have a settlement
-	for (const country *country : this->get_countries()) {
-		const site *default_capital = country->get_default_capital();
-		site_game_data *default_capital_game_data = default_capital->get_game_data();
-
-		if (default_capital_game_data->get_owner() != country) {
+	//ensure provincial capitals always have a settlement
+	for (const province *province : map::get()->get_provinces()) {
+		if (province->is_water_zone()) {
 			continue;
 		}
 
-		if (default_capital_game_data->is_built()) {
+		const site *provincial_capital = province->get_provincial_capital();
+		site_game_data *provincial_capital_game_data = provincial_capital->get_game_data();
+
+		if (provincial_capital_game_data->is_built()) {
 			continue;
 		}
 
@@ -926,11 +918,11 @@ void game::apply_sites()
 				continue;
 			}
 
-			if (settlement_type->get_conditions() != nullptr && !settlement_type->get_conditions()->check(default_capital, read_only_context(default_capital))) {
+			if (settlement_type->get_conditions() != nullptr && !settlement_type->get_conditions()->check(provincial_capital, read_only_context(provincial_capital))) {
 				continue;
 			}
 
-			if (settlement_type->get_build_conditions() != nullptr && !settlement_type->get_build_conditions()->check(default_capital, read_only_context(default_capital))) {
+			if (settlement_type->get_build_conditions() != nullptr && !settlement_type->get_build_conditions()->check(provincial_capital, read_only_context(provincial_capital))) {
 				continue;
 			}
 
@@ -939,7 +931,7 @@ void game::apply_sites()
 		}
 
 		assert_throw(best_settlement_type != nullptr);
-		default_capital_game_data->set_settlement_type(best_settlement_type);
+		provincial_capital_game_data->set_settlement_type(best_settlement_type);
 	}
 
 	for (const site *site : site::get_all()) {
@@ -1026,7 +1018,7 @@ void game::apply_site_buildings(const site *site)
 		site_province = tile->get_province();
 	}
 
-	const metternich::site *settlement = site->is_settlement() && tile != nullptr ? site : site_province->get_game_data()->get_provincial_capital();
+	const metternich::site *settlement = site->is_settlement() && tile != nullptr ? site : site_province->get_provincial_capital();
 
 	if (settlement == nullptr) {
 		return;

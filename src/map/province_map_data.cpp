@@ -5,6 +5,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/site.h"
+#include "map/site_map_data.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
 
@@ -17,6 +18,14 @@ province_map_data::province_map_data(const metternich::province *province) : pro
 void province_map_data::on_map_created()
 {
 	this->calculate_territory_rect_center();
+
+	if (this->province->get_provincial_capital() != nullptr && this->province->get_provincial_capital()->get_map_data()->get_province() == this->province) {
+		this->center_tile_pos = this->province->get_provincial_capital()->get_game_data()->get_tile_pos();
+	} else {
+		this->center_tile_pos = this->get_territory_rect_center();
+	}
+
+	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
 }
 
 void province_map_data::calculate_territory_rect_center()
