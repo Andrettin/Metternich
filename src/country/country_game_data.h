@@ -1028,6 +1028,13 @@ public:
 	void calculate_settlement_commodity_outputs();
 	void calculate_settlement_commodity_output(const commodity *commodity);
 
+	int get_everyday_wealth_consumption() const
+	{
+		return this->everyday_wealth_consumption;
+	}
+
+	void change_everyday_wealth_consumption(const int change);
+
 	const commodity_map<centesimal_int> &get_everyday_consumption() const
 	{
 		return this->everyday_consumption;
@@ -2274,6 +2281,7 @@ signals:
 	void transportable_commodity_outputs_changed();
 	void transported_commodity_outputs_changed();
 	void commodity_outputs_changed();
+	void everyday_wealth_consumption_changed();
 	void everyday_consumption_changed();
 	void luxury_consumption_changed();
 	void land_transport_capacity_changed();
@@ -2360,6 +2368,7 @@ private:
 	commodity_map<centesimal_int> transportable_commodity_outputs;
 	commodity_map<int> transported_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
+	int everyday_wealth_consumption = 0;
 	commodity_map<centesimal_int> everyday_consumption;
 	commodity_map<centesimal_int> luxury_consumption;
 	commodity_map<centesimal_int> commodity_demands;

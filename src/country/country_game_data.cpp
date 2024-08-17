@@ -362,6 +362,45 @@ void country_game_data::do_everyday_consumption()
 		population_unit->set_everyday_consumption_fulfilled(true);
 	}
 
+	const int inflated_everyday_wealth_consumption = this->get_inflated_value(this->get_everyday_wealth_consumption());
+
+	if (inflated_everyday_wealth_consumption > 0) {
+		const int effective_consumption = std::max(0, std::min(inflated_everyday_wealth_consumption, this->get_wealth_with_credit()));
+
+		if (effective_consumption > 0) {
+			this->change_wealth(-effective_consumption);
+
+			for (const auto &[population_type, count] : this->get_population()->get_type_counts()) {
+				if (population_type->get_everyday_wealth_consumption() == 0) {
+					continue;
+				}
+
+				const int population_type_consumption = this->get_inflated_value(population_type->get_everyday_wealth_consumption() * count);
+				this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::population_upkeep, population_type_consumption, population_type, count);
+			}
+
+			int remaining_consumption = inflated_everyday_wealth_consumption - effective_consumption;
+			if (remaining_consumption != 0) {
+				for (population_unit *population_unit : population_units) {
+					const int pop_consumption = this->get_inflated_value(population_unit->get_type()->get_everyday_wealth_consumption());
+					if (pop_consumption == 0) {
+						continue;
+					}
+
+					population_unit->set_everyday_consumption_fulfilled(false);
+					const int remaining_consumption_change = std::min(remaining_consumption, pop_consumption);
+					remaining_consumption -= remaining_consumption_change;
+
+					this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::population_upkeep, -remaining_consumption_change, population_unit->get_type(), -1);
+
+					if (remaining_consumption <= 0) {
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	for (const auto &[commodity, consumption] : this->get_everyday_consumption()) {
 		//local consumption is handled separately
 		assert_throw(!commodity->is_local());
@@ -2087,6 +2126,8 @@ void country_game_data::remove_population_unit(population_unit *population_unit)
 
 void country_game_data::on_population_type_count_changed(const population_type *type, const int change)
 {
+	this->change_everyday_wealth_consumption(type->get_everyday_wealth_consumption() * change);
+
 	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
 		if (commodity->is_local()) {
 			//handled at the settlement level
@@ -2785,6 +2826,19 @@ void country_game_data::calculate_settlement_commodity_output(const commodity *c
 {
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->calculate_settlement_commodity_output(commodity);
+	}
+}
+
+void country_game_data::change_everyday_wealth_consumption(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->everyday_wealth_consumption += change;
+
+	if (game::get()->is_running()) {
+		emit everyday_wealth_consumption_changed();
 	}
 }
 

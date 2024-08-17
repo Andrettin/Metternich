@@ -37,6 +37,7 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(bool literate MEMBER literate READ is_literate NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::icon* small_icon MEMBER small_icon NOTIFY changed)
+	Q_PROPERTY(int everyday_wealth_consumption MEMBER everyday_wealth_consumption READ get_everyday_wealth_consumption NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int max_modifier_multiplier MEMBER max_modifier_multiplier READ get_max_modifier_multiplier NOTIFY changed)
@@ -112,6 +113,11 @@ public:
 		}
 
 		return this->get_small_icon();
+	}
+
+	int get_everyday_wealth_consumption() const
+	{
+		return this->everyday_wealth_consumption;
 	}
 
 	const commodity_map<centesimal_int> &get_everyday_consumption() const
@@ -198,6 +204,7 @@ private:
 	metternich::icon *small_icon = nullptr;
 	phenotype_map<const metternich::icon *> phenotype_icons;
 	phenotype_map<const metternich::icon *> phenotype_small_icons;
+	int everyday_wealth_consumption = 0;
 	commodity_map<centesimal_int> everyday_consumption;
 	commodity_map<centesimal_int> luxury_consumption;
 	commodity_map<centesimal_int> commodity_demands; //affects minor nation demand

@@ -42,7 +42,10 @@ QString expense_transaction::get_description() const
 
 	switch (this->get_type()) {
 		case expense_transaction_type::purchase:
-			str = std::format("Bought {} {} from {} for ${}", number::to_formatted_string(this->get_commodity_quantity()), this->get_commodity()->get_name(), this->get_country()->get_game_data()->get_name(), amount_str);
+			str = std::format("Bought {} {} from {} for ${}", number::to_formatted_string(this->get_object_quantity()), this->get_object_name(), this->get_country()->get_game_data()->get_name(), amount_str);
+			break;
+		case expense_transaction_type::population_upkeep:
+			str = std::format("Supported {} {} for ${}", number::to_formatted_string(this->get_object_quantity()), this->get_object_name(), amount_str);
 			break;
 		case expense_transaction_type::military_upkeep:
 			str = std::format("Paid ${} in military upkeep", amount_str);

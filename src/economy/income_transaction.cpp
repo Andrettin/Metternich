@@ -43,10 +43,10 @@ QString income_transaction::get_description() const
 
 	switch (this->get_type()) {
 		case income_transaction_type::sale:
-			str = std::format("Sold {} {} to {} for ${}", number::to_formatted_string(this->get_commodity_quantity()), this->get_commodity()->get_name(), this->get_country() ? this->get_country()->get_game_data()->get_name() : "the domestic market", amount_str);
+			str = std::format("Sold {} {} to {} for ${}", number::to_formatted_string(this->get_object_quantity()), std::get<const commodity *>(this->get_object())->get_name(), this->get_country() ? this->get_country()->get_game_data()->get_name() : "the domestic market", amount_str);
 			break;
 		case income_transaction_type::liquidated_riches:
-			str = std::format("Converted {} {} into ${}\n+{}% Inflation", number::to_formatted_string(this->get_commodity_quantity()), this->get_commodity()->get_name(), amount_str, this->inflation_change.to_string());
+			str = std::format("Converted {} {} into ${}\n+{}% Inflation", number::to_formatted_string(this->get_object_quantity()), std::get<const commodity *>(this->get_object())->get_name(), amount_str, this->inflation_change.to_string());
 			break;
 		case income_transaction_type::tariff:
 			str = std::format("Received ${} in tariffs from {}", amount_str, this->get_country()->get_game_data()->get_name());
