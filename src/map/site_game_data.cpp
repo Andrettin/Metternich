@@ -822,8 +822,6 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 			this->change_base_commodity_output(commodity, centesimal_int(value) * multiplier);
 		}
 	}
-
-	emit improvements_changed();
 }
 
 QVariantList site_game_data::get_scripted_modifiers_qvariant_list() const
