@@ -42,8 +42,8 @@ void resource::check() const
 		throw std::runtime_error(std::format("Resource \"{}\" has no tiny icon.", this->get_identifier()));
 	}
 
-	if (this->get_commodity() != nullptr && this->get_buildings().empty()) {
-		throw std::runtime_error(std::format("Resource \"{}\" has a commodity, but no buildings to produce it.", this->get_identifier()));
+	if (this->get_commodity() != nullptr && this->get_improvements().empty()) {
+		throw std::runtime_error(std::format("Resource \"{}\" has a commodity, but no improvements to produce it.", this->get_identifier()));
 	}
 }
 

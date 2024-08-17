@@ -1448,7 +1448,7 @@ void game::adjust_food_production_for_country_populations()
 					tile *resource_tile = map::get()->get_tile(resource_tile_pos);
 					const site *resource_site = resource_tile->get_site();
 
-					if (resource_site->get_type() != site_type::resource) {
+					if (resource_site->get_type() != site_type::resource && resource_site->get_type() != site_type::settlement) {
 						continue;
 					}
 
@@ -1469,96 +1469,6 @@ void game::adjust_food_production_for_country_populations()
 						}
 
 						resource_site->get_game_data()->set_improvement(improvement->get_slot(), improvement);
-						++net_food;
-						break;
-					}
-
-					if (net_food >= 0) {
-						break;
-					}
-				}
-
-				if (net_food >= 0) {
-					break;
-				}
-
-				//construct food resource buildings
-				for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-					site_game_data *settlement_game_data = settlement->get_game_data();
-
-					if (!settlement_game_data->is_built()) {
-						continue;
-					}
-
-					const resource *resource = settlement_game_data->get_resource();
-					if (resource == nullptr) {
-						continue;
-					}
-
-					if (!resource->get_commodity()->is_food()) {
-						continue;
-					}
-
-					for (const building_type *building : resource->get_buildings()) {
-						if (building->get_resource_level() > i) {
-							continue;
-						}
-
-						if (building != settlement_game_data->get_culture()->get_building_class_type(building->get_building_class())) {
-							continue;
-						}
-
-						if (settlement_game_data->has_building_or_better(building)) {
-							continue;
-						}
-
-						settlement_building_slot *building_slot = settlement_game_data->get_building_slot(building->get_slot_type());
-
-						if (building_slot == nullptr) {
-							continue;
-						}
-
-						if (!vector::contains(building->get_settlement_types(), settlement_game_data->get_settlement_type())) {
-							//build a settlement type capable of constructing the building
-							std::vector<const settlement_type *> potential_settlement_types;
-
-							for (const settlement_type *settlement_type : building->get_settlement_types()) {
-								if (settlement_game_data->get_settlement_type()->get_free_resource_building_level() >= settlement_type->get_free_resource_building_level()) {
-									continue;
-								}
-
-								if (!potential_settlement_types.empty() && settlement_type->get_free_resource_building_level() > potential_settlement_types.at(0)->get_free_resource_building_level()) {
-									//pick a suitable settlement type with the smallest free resource building level possible
-									continue;
-								}
-
-								if (settlement_type->get_conditions() != nullptr && !settlement_type->get_conditions()->check(settlement, read_only_context(settlement))) {
-									continue;
-								}
-
-								if (settlement_type->get_build_conditions() != nullptr && !settlement_type->get_build_conditions()->check(settlement, read_only_context(settlement))) {
-									continue;
-								}
-
-								if (!potential_settlement_types.empty() && potential_settlement_types.at(0)->get_free_resource_building_level() > settlement_type->get_free_resource_building_level()) {
-									potential_settlement_types.clear();
-								}
-
-								potential_settlement_types.push_back(settlement_type);
-							}
-
-							if (potential_settlement_types.empty()) {
-								continue;
-							}
-
-							settlement_game_data->set_settlement_type(vector::get_random(potential_settlement_types));
-						}
-
-						if (!building_slot->can_gain_building(building)) {
-							continue;
-						}
-
-						building_slot->set_building(building);
 						++net_food;
 						break;
 					}

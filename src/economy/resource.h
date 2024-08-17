@@ -9,7 +9,6 @@ Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
-class building_type;
 class commodity;
 class icon;
 class improvement;
@@ -98,16 +97,6 @@ public:
 		this->improvements.push_back(improvement);
 	}
 
-	const std::vector<const building_type *> &get_buildings() const
-	{
-		return this->buildings;
-	}
-
-	void add_building(const building_type *building)
-	{
-		this->buildings.push_back(building);
-	}
-
 signals:
 	void changed();
 
@@ -122,7 +111,6 @@ private:
 	technology *discovery_technology = nullptr; //technology which is obtained when exploring this resource tile
 	std::vector<const terrain_type *> terrain_types;
 	std::vector<const improvement *> improvements;
-	std::vector<const building_type *> buildings;
 };
 
 }

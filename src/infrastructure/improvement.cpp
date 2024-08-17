@@ -77,8 +77,12 @@ void improvement::check() const
 		throw std::runtime_error(std::format("Improvement \"{}\" is ruins, but is not a main improvement.", this->get_identifier()));
 	}
 
-	if (this->get_output_commodity() != nullptr) {
-		assert_throw(this->get_output_multiplier() > 0);
+	if (this->get_output_commodity() != nullptr && this->get_output_multiplier() == 0) {
+		throw std::runtime_error(std::format("Improvement \"{}\" has an output commodity, but no output multiplier.", this->get_identifier()));
+	}
+
+	if (this->get_output_multiplier() > 0 && this->get_output_commodity() == nullptr) {
+		throw std::runtime_error(std::format("Improvement \"{}\" has an output multiplier, but no output commodity.", this->get_identifier()));
 	}
 
 	if (this->get_image_filepath().empty()) {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "map/site.h"
+#include "map/site_game_data.h"
 #include "script/effect/effect.h"
 #include "util/string_util.h"
 

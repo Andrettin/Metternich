@@ -16,7 +16,6 @@
 #include "script/condition/capital_condition.h"
 #include "script/condition/or_condition.h"
 #include "script/condition/provincial_capital_condition.h"
-#include "script/condition/resource_condition.h"
 #include "script/effect/capital_effect.h"
 #include "script/effect/effect_list.h"
 #include "script/factor.h"
@@ -45,10 +44,6 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	if (tag == "settlement_types") {
 		for (const std::string &value : values) {
 			this->settlement_types.push_back(settlement_type::get(value));
-		}
-	} else if (tag == "resources") {
-		for (const std::string &value : values) {
-			this->resources.push_back(resource::get(value));
 		}
 	} else if (tag == "production_types") {
 		for (const std::string &value : values) {
@@ -126,36 +121,6 @@ void building_type::initialize()
 		this->required_technology->add_enabled_building(this);
 	}
 
-	if (!this->get_resources().empty()) {
-		for (resource *resource : this->get_resources()) {
-			resource->add_building(this);
-		}
-
-		if (this->get_settlement_conditions() == nullptr) {
-			this->settlement_conditions = std::make_unique<and_condition<site>>();
-		}
-
-		if (this->get_resources().size() > 1) {
-			std::vector<std::unique_ptr<const condition<site>>> resource_conditions;
-
-			for (const resource *resource : this->get_resources()) {
-				resource_conditions.push_back(std::make_unique<resource_condition>(resource));
-			}
-
-			auto or_condition = std::make_unique<metternich::or_condition<site>>(std::move(resource_conditions));
-			this->settlement_conditions->add_condition(std::move(or_condition));
-		} else {
-			this->settlement_conditions->add_condition(std::make_unique<resource_condition>(this->get_resources().at(0)));
-		}
-
-		if (this->get_settlement_modifier() == nullptr) {
-			this->settlement_modifier = std::make_unique<modifier<const site>>();
-		}
-
-		const commodity *resource_commodity = this->get_resources().at(0)->get_commodity();
-		this->settlement_modifier->add_modifier_effect(std::make_unique<commodity_bonus_modifier_effect>(resource_commodity, this->get_resource_level()));
-	}
-
 	if (this->is_capital_only()) {
 		if (this->get_settlement_conditions() == nullptr) {
 			this->settlement_conditions = std::make_unique<and_condition<site>>();
@@ -222,24 +187,6 @@ void building_type::check() const
 
 	if (!this->is_provincial() && !this->get_settlement_types().empty()) {
 		throw std::runtime_error(std::format("Building type \"{}\" is not provincial, but does have settlement types listed for it.", this->get_identifier()));
-	}
-
-	if (this->get_resource_level() > 0 && this->get_resources().empty()) {
-		throw std::runtime_error(std::format("Building type \"{}\" has a resource level, but no resources listed for it.", this->get_identifier()));
-	}
-
-	if (!this->get_resources().empty() && this->get_resource_level() == 0) {
-		throw std::runtime_error(std::format("Building type \"{}\" has resources listed for it, but no resource level.", this->get_identifier()));
-	}
-
-	if (this->get_resources().size() > 1) {
-		const commodity *resource_commodity = this->get_resources().at(0)->get_commodity();
-
-		for (const resource *resource : this->get_resources()) {
-			if (resource->get_commodity() != resource_commodity) {
-				throw std::runtime_error(std::format("Building type \"{}\" has resources which pertain to different commodities.", this->get_identifier()));
-			}
-		}
 	}
 
 	if (!this->get_production_types().empty() && !this->is_provincial()) {

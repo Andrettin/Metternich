@@ -684,14 +684,15 @@ void site_game_data::check_free_buildings()
 	}
 
 	const resource *resource = this->get_resource();
-	const int free_resource_building_level = this->get_settlement_type()->get_free_resource_building_level();
-	if (resource != nullptr && free_resource_building_level > 0) {
-		for (const building_type *building : resource->get_buildings()) {
-			if (building->get_resource_level() > free_resource_building_level) {
+	const int free_resource_improvement_level = this->get_settlement_type()->get_free_resource_improvement_level();
+	if (resource != nullptr && free_resource_improvement_level > 0) {
+		for (const improvement *improvement : resource->get_improvements()) {
+			if (improvement->get_output_multiplier() > free_resource_improvement_level) {
 				continue;
 			}
 
-			if (this->check_free_building(building)) {
+			if (improvement->is_buildable_on_site(this->site)) {
+				this->set_improvement(improvement_slot::resource, improvement);
 				changed = true;
 			}
 		}
