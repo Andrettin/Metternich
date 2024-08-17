@@ -95,7 +95,7 @@ void civilian_unit::do_turn()
 			}
 			
 			if (this->improvement_under_construction != nullptr) {
-				map::get()->set_tile_improvement(this->get_tile_pos(), this->improvement_under_construction);
+				this->get_tile()->get_site()->get_game_data()->set_improvement(this->improvement_under_construction->get_slot(), this->improvement_under_construction);
 				this->improvement_under_construction = nullptr;
 			}
 		}
@@ -272,7 +272,13 @@ bool civilian_unit::can_build_improvement_on_tile(const improvement *improvement
 	}
 
 	const tile *tile = map::get()->get_tile(tile_pos);
-	return improvement->is_buildable_on_tile(tile);
+	const site *site = tile->get_site();
+
+	if (site == nullptr) {
+		return false;
+	}
+
+	return improvement->is_buildable_on_site(site);
 }
 
 void civilian_unit::build_improvement(const improvement *improvement)

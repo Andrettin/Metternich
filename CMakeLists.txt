@@ -115,6 +115,7 @@ set(infrastructure_SRCS
 	src/infrastructure/building_type_container.cpp
 	src/infrastructure/country_building_slot.cpp
 	src/infrastructure/improvement.cpp
+	src/infrastructure/improvement_slot.cpp
 	src/infrastructure/pathway.cpp
 	src/infrastructure/pathway_container.cpp
 	src/infrastructure/settlement_building_slot.cpp
@@ -426,6 +427,7 @@ set(infrastructure_HDRS
 	src/infrastructure/building_type_container.h
 	src/infrastructure/country_building_slot.h
 	src/infrastructure/improvement.h
+	src/infrastructure/improvement_slot.h
 	src/infrastructure/pathway.h
 	src/infrastructure/pathway_container.h
 	src/infrastructure/settlement_building_slot.h

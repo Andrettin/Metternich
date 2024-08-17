@@ -989,14 +989,14 @@ void game::apply_sites()
 					map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 				}
 
-				tile->set_improvement(site_improvement);
+				site_game_data->set_improvement(site_improvement->get_slot(), site_improvement);
 
 				//add prerequisites for the tile's improvement to its owner's researched technologies
-				if (tile->get_improvement()->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
-					tile->get_owner()->get_game_data()->add_technology_with_prerequisites(tile->get_improvement()->get_required_technology());
+				if (site_improvement->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
+					tile->get_owner()->get_game_data()->add_technology_with_prerequisites(site_improvement->get_required_technology());
 				}
 
-				site->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
+				site->get_game_data()->on_improvement_gained(site_improvement, 1);
 			}
 
 			if (site_history->is_resource_discovered()) {
@@ -1464,11 +1464,11 @@ void game::adjust_food_production_for_country_populations()
 							continue;
 						}
 
-						if (!improvement->is_buildable_on_tile(resource_tile)) {
+						if (!improvement->is_buildable_on_site(resource_site)) {
 							continue;
 						}
 
-						map::get()->set_tile_improvement(resource_tile_pos, improvement);
+						resource_site->get_game_data()->set_improvement(improvement->get_slot(), improvement);
 						++net_food;
 						break;
 					}

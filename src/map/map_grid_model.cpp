@@ -153,10 +153,10 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				if (tile->get_settlement_type() != nullptr) {
 					QString image_source = "tile/settlement/" + tile->get_settlement_type()->get_identifier_qstring() + "/0";
 					object_image_sources.push_back(std::move(image_source));
-				} else if (tile->get_improvement() != nullptr) {
-					QString image_source = "tile/improvement/" + tile->get_improvement()->get_identifier_qstring();
+				} else if (tile->get_site() != nullptr && tile->get_site()->get_game_data()->get_main_improvement() != nullptr) {
+					QString image_source = "tile/improvement/" + tile->get_site()->get_game_data()->get_main_improvement()->get_identifier_qstring();
 
-					if (tile->get_improvement()->has_terrain_image_filepath(tile->get_terrain())) {
+					if (tile->get_site()->get_game_data()->get_main_improvement()->has_terrain_image_filepath(tile->get_terrain())) {
 						image_source += "/" + tile->get_terrain()->get_identifier_qstring();
 					}
 
@@ -192,7 +192,11 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 
 				return QVariant::fromValue(tile->get_resource());
 			case role::improvement:
-				return QVariant::fromValue(tile->get_improvement());
+				if (tile->get_site() == nullptr) {
+					return QVariant::fromValue(nullptr);
+				}
+
+				return QVariant::fromValue(tile->get_site()->get_game_data()->get_main_improvement());
 			case role::pathway:
 				return QVariant::fromValue(tile->get_best_pathway());
 			case role::transport_level:

@@ -690,11 +690,11 @@ void province_game_data::change_improved_resource_commodity_bonus(const resource
 			continue;
 		}
 
-		if (tile->get_improvement() == nullptr && tile->get_settlement_type() == nullptr) {
+		assert_throw(tile->get_site() != nullptr);
+
+		if (tile->get_site()->get_game_data()->get_resource_improvement() == nullptr && tile->get_settlement_type() == nullptr) {
 			continue;
 		}
-
-		assert_throw(tile->get_site() != nullptr);
 
 		tile->get_site()->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
 	}

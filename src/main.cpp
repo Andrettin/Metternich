@@ -35,6 +35,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/country_building_slot.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/improvement_slot.h"
 #include "infrastructure/wonder.h"
 #include "map/diplomatic_map_image_provider.h"
 #include "map/elevation_type.h"
@@ -142,6 +143,7 @@ int main(int argc, char **argv)
 		enum_converter<food_type>();
 		enum_converter<forestation_type>();
 		enum_converter<gender>();
+		enum_converter<improvement_slot>();
 		enum_converter<log_level>();
 		enum_converter<military_unit_domain>();
 		enum_converter<moisture_type>();

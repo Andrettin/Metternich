@@ -4,6 +4,9 @@
 
 #include "economy/commodity.h"
 #include "economy/resource.h"
+#include "infrastructure/improvement_slot.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "map/tile_image_provider.h"
@@ -62,6 +65,18 @@ void improvement::check() const
 {
 	assert_throw(this->get_resource() != nullptr || !this->get_terrain_types().empty());
 
+	if (this->get_slot() == improvement_slot::none) {
+		throw std::runtime_error(std::format("Improvement \"{}\" has no slot.", this->get_identifier()));
+	}
+
+	if (this->get_resource() != nullptr && this->get_slot() != improvement_slot::resource) {
+		throw std::runtime_error(std::format("Improvement \"{}\" has a resource, but is not a resource improvement.", this->get_identifier()));
+	}
+
+	if (this->is_ruins() && this->get_slot() != improvement_slot::main) {
+		throw std::runtime_error(std::format("Improvement \"{}\" is ruins, but is not a main improvement.", this->get_identifier()));
+	}
+
 	if (this->get_output_commodity() != nullptr) {
 		assert_throw(this->get_output_multiplier() > 0);
 	}
@@ -97,30 +112,36 @@ const commodity *improvement::get_output_commodity() const
 	return nullptr;
 }
 
-bool improvement::is_buildable_on_tile(const tile *tile) const
+bool improvement::is_buildable_on_site(const site *site) const
 {
-	if (tile->get_settlement() != nullptr) {
+	const site_game_data *site_game_data = site->get_game_data();
+
+	if (site->is_settlement()) {
+		if (this->get_resource() == nullptr) {
+			return false;
+		}
+	}
+
+	if (this->get_resource() != nullptr && this->get_resource() != site_game_data->get_resource()) {
 		return false;
 	}
 
-	if (this->get_resource() != nullptr && this->get_resource() != tile->get_resource()) {
+	const improvement *current_improvement = site_game_data->get_improvement(this->get_slot());
+
+	if (this->get_required_improvement() != nullptr && current_improvement != this->get_required_improvement()) {
 		return false;
 	}
 
-	if (this->get_required_improvement() != nullptr && tile->get_improvement() != this->get_required_improvement()) {
-		return false;
-	}
-
-	if (tile->get_improvement() != nullptr) {
-		if (this == tile->get_improvement()) {
+	if (current_improvement != nullptr) {
+		if (this == current_improvement) {
 			return false;
 		}
 
-		if (this->get_output_multiplier() < tile->get_improvement()->get_output_multiplier()) {
+		if (this->get_output_multiplier() < current_improvement->get_output_multiplier()) {
 			return false;
 		}
 
-		if (this->get_output_multiplier() == tile->get_improvement()->get_output_multiplier()) {
+		if (this->get_output_multiplier() == current_improvement->get_output_multiplier()) {
 			//the improvement must be better in some way
 			return false;
 		}

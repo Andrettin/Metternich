@@ -83,7 +83,6 @@ public:
 	void set_tile_province(const QPoint &tile_pos, const province *province);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	void set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
-	void set_tile_improvement(const QPoint &tile_pos, const improvement *improvement);
 	void set_tile_direction_pathway(const QPoint &tile_pos, const direction direction, const pathway *pathway);
 	void calculate_tile_transport_level(const QPoint &tile_pos);
 	void clear_tile_transport_level(const QPoint &tile_pos);

@@ -91,16 +91,16 @@ public:
 	const metternich::resource *get_resource() const;
 	bool is_resource_discovered() const;
 
-	const metternich::improvement *get_improvement() const
-	{
-		return this->improvement;
-	}
-
-	void set_improvement(const metternich::improvement *improvement);
+	void on_main_improvement_changed();
 
 	short get_improvement_variation() const
 	{
 		return this->improvement_variation;
+	}
+
+	void clear_improvement_variation()
+	{
+		this->improvement_variation = 0;
 	}
 
 	bool has_inner_river() const
@@ -266,7 +266,6 @@ private:
 	std::array<short, 4> subtile_frames;
 	const metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
-	const metternich::improvement *improvement = nullptr;
 	int8_t improvement_variation = 0;
 	bool inner_river = false; //whether the tile has an in-tile river
 	std::vector<direction> river_directions;

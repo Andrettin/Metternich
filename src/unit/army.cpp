@@ -8,6 +8,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/improvement_slot.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -114,7 +115,7 @@ void army::do_turn()
 		ctx.attacking_army = this;
 		country_event::check_events_for_scope(country, event_trigger::ruins_explored, ctx);
 
-		map::get()->set_tile_improvement(target_site_game_data->get_tile_pos(), nullptr);
+		target_site_game_data->set_improvement(improvement_slot::main, nullptr);
 	}
 }
 

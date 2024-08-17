@@ -33,6 +33,7 @@ class settlement_building_slot;
 class settlement_type;
 class site;
 class tile;
+enum class improvement_slot;
 
 class site_game_data final : public QObject
 {
@@ -43,7 +44,8 @@ class site_game_data final : public QObject
 	Q_PROPERTY(const metternich::country* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::settlement_type* settlement_type READ get_settlement_type NOTIFY settlement_type_changed)
-	Q_PROPERTY(const metternich::improvement* improvement READ get_improvement NOTIFY improvement_changed)
+	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
+	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
@@ -132,7 +134,21 @@ public:
 		this->resource_discovered = discovered;
 	}
 
-	const improvement *get_improvement() const;
+	const improvement *get_improvement(const improvement_slot slot) const
+	{
+		const auto find_iterator = this->improvements.find(slot);
+
+		if (find_iterator != this->improvements.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	const improvement *get_main_improvement() const;
+	const improvement *get_resource_improvement() const;
+
+	void set_improvement(const improvement_slot slot, const improvement *improvement);
 
 	const std::vector<qunique_ptr<settlement_building_slot>> &get_building_slots() const
 	{
@@ -428,7 +444,7 @@ signals:
 	void owner_changed();
 	void culture_changed();
 	void religion_changed();
-	void improvement_changed();
+	void improvements_changed();
 	void settlement_type_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
@@ -443,6 +459,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::settlement_type *settlement_type = nullptr;
+	std::map<improvement_slot, const improvement *> improvements;
 	bool resource_discovered = false;
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
 	building_slot_type_map<settlement_building_slot *> building_slot_map;

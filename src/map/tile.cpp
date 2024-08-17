@@ -98,19 +98,13 @@ bool tile::is_resource_discovered() const
 	return false;
 }
 
-void tile::set_improvement(const metternich::improvement *improvement)
+void tile::on_main_improvement_changed()
 {
-	if (improvement == this->get_improvement()) {
-		return;
-	}
+	const improvement *main_improvement = this->get_site()->get_game_data()->get_main_improvement();
 
-	this->improvement = improvement;
-
-	if (improvement != nullptr) {
-		assert_throw(this->get_resource() == improvement->get_resource() || improvement->is_ruins());
-
-		if (improvement->get_variation_count() > 1) {
-			this->improvement_variation = random::get()->generate(improvement->get_variation_count());
+	if (main_improvement != nullptr) {
+		if (main_improvement->get_variation_count() > 1) {
+			this->improvement_variation = random::get()->generate(main_improvement->get_variation_count());
 		} else {
 			this->improvement_variation = 0;
 		}

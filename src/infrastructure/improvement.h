@@ -16,12 +16,14 @@ class resource;
 class technology;
 class terrain_type;
 class tile;
+enum class improvement_slot;
 
 //tile improvement
 class improvement final : public named_data_entry, public data_type<improvement>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::improvement_slot slot MEMBER slot READ get_slot NOTIFY changed)
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(bool ruins MEMBER ruins READ is_ruins NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
@@ -44,6 +46,11 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
+
+	improvement_slot get_slot() const
+	{
+		return this->slot;
+	}
 
 	const metternich::resource *get_resource() const
 	{
@@ -119,12 +126,13 @@ public:
 		return this->commodity_costs;
 	}
 
-	bool is_buildable_on_tile(const tile *tile) const;
+	bool is_buildable_on_site(const site *site) const;
 
 signals:
 	void changed();
 
 private:
+	improvement_slot slot{};
 	metternich::resource *resource = nullptr; //the resource for which this improvement can be built
 	bool ruins = false; //if true, this improvement can be explored by troops, yielding some bonus (or malus)
 	const metternich::icon *icon = nullptr;

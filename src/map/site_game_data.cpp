@@ -16,6 +16,7 @@
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/improvement_slot.h"
 #include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/settlement_type.h"
 #include "infrastructure/wonder.h"
@@ -458,14 +459,46 @@ const resource *site_game_data::get_resource() const
 	return this->site->get_map_data()->get_resource();
 }
 
-const improvement *site_game_data::get_improvement() const
+const improvement *site_game_data::get_main_improvement() const
 {
-	const tile *tile = this->get_tile();
-	if (tile != nullptr) {
-		return tile->get_improvement();
+	const improvement *main_improvement = this->get_improvement(improvement_slot::main);
+
+	if (main_improvement != nullptr) {
+		return main_improvement;
 	}
 
-	return nullptr;
+	return this->get_improvement(improvement_slot::resource);
+}
+
+const improvement *site_game_data::get_resource_improvement() const
+{
+	return this->get_improvement(improvement_slot::resource);
+}
+
+void site_game_data::set_improvement(const improvement_slot slot, const improvement *improvement)
+{
+	const metternich::improvement *old_improvement = this->get_improvement(slot);
+
+	if (old_improvement == improvement) {
+		return;
+	}
+
+	if (old_improvement != nullptr) {
+		this->on_improvement_gained(old_improvement, -1);
+	}
+
+	this->improvements[slot] = improvement;
+
+	if (improvement != nullptr) {
+		this->on_improvement_gained(improvement, 1);
+	}
+
+	if (slot == improvement_slot::main || (slot == improvement_slot::resource && this->get_improvement(improvement_slot::main) == nullptr)) {
+		this->get_tile()->on_main_improvement_changed();
+	}
+
+	emit improvements_changed();
+	emit map::get()->tile_improvement_changed(this->get_tile_pos());
 }
 
 QVariantList site_game_data::get_building_slots_qvariant_list() const
@@ -790,7 +823,7 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 		}
 	}
 
-	emit improvement_changed();
+	emit improvements_changed();
 }
 
 QVariantList site_game_data::get_scripted_modifiers_qvariant_list() const
@@ -1234,7 +1267,8 @@ centesimal_int site_game_data::get_transportable_commodity_output(const commodit
 
 bool site_game_data::can_be_visited() const
 {
-	return this->get_improvement() != nullptr && this->get_improvement()->is_ruins();
+	const improvement *improvement = this->get_improvement(improvement_slot::main);
+	return improvement != nullptr && improvement->is_ruins();
 }
 
 QVariantList site_game_data::get_visiting_armies_qvariant_list() const

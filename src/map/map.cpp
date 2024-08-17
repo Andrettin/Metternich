@@ -176,9 +176,7 @@ void map::clear_tile_game_data()
 
 	try {
 		for (tile &tile : *this->tiles) {
-			if (tile.get_improvement() != nullptr) {
-				tile.set_improvement(nullptr);
-			}
+			tile.clear_improvement_variation();
 
 			if (tile.get_civilian_unit() != nullptr) {
 				tile.set_civilian_unit(nullptr);
@@ -612,28 +610,6 @@ void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discov
 	}
 
 	emit tile_resource_changed(tile_pos);
-}
-
-void map::set_tile_improvement(const QPoint &tile_pos, const improvement *improvement)
-{
-	tile *tile = this->get_tile(tile_pos);
-
-	const metternich::improvement *old_improvement = tile->get_improvement();
-	if (old_improvement != nullptr && tile->get_province() != nullptr) {
-		if (tile->get_site() != nullptr) {
-			tile->get_site()->get_game_data()->on_improvement_gained(old_improvement, -1);
-		}
-	}
-
-	tile->set_improvement(improvement);
-
-	if (tile->get_improvement() != nullptr && tile->get_province() != nullptr) {
-		if (tile->get_site() != nullptr) {
-			tile->get_site()->get_game_data()->on_improvement_gained(tile->get_improvement(), 1);
-		}
-	}
-
-	emit tile_improvement_changed(tile_pos);
 }
 
 void map::set_tile_direction_pathway(const QPoint &tile_pos, const direction direction, const pathway *pathway)
