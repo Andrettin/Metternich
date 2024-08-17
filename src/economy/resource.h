@@ -24,6 +24,7 @@ class resource final : public named_data_entry, public data_type<resource>
 
 	Q_PROPERTY(metternich::commodity* commodity MEMBER commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* tiny_icon MEMBER tiny_icon READ get_tiny_icon NOTIFY changed)
 	Q_PROPERTY(bool coastal MEMBER coastal READ is_coastal NOTIFY changed)
 	Q_PROPERTY(bool near_water MEMBER near_water READ is_near_water NOTIFY changed)
 	Q_PROPERTY(bool prospectable MEMBER prospectable READ is_prospectable NOTIFY changed)
@@ -49,6 +50,11 @@ public:
 	}
 
 	const metternich::icon *get_icon() const;
+
+	const metternich::icon *get_tiny_icon() const
+	{
+		return this->tiny_icon;
+	}
 
 	bool is_coastal() const
 	{
@@ -108,6 +114,7 @@ signals:
 private:
 	metternich::commodity *commodity = nullptr;
 	const metternich::icon *icon = nullptr;
+	const metternich::icon *tiny_icon = nullptr;
 	bool coastal = false;
 	bool near_water = false;
 	bool prospectable = false;

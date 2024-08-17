@@ -6,10 +6,12 @@
 
 Q_MOC_INCLUDE("economy/resource.h")
 Q_MOC_INCLUDE("technology/technology.h")
+Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
 class commodity;
+class icon;
 class resource;
 class technology;
 class terrain_type;
@@ -22,6 +24,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(bool ruins MEMBER ruins READ is_ruins NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
@@ -50,6 +53,11 @@ public:
 	bool is_ruins() const
 	{
 		return this->ruins;
+	}
+
+	const metternich::icon *get_icon() const
+	{
+		return this->icon;
 	}
 
 	const std::filesystem::path &get_image_filepath() const
@@ -119,9 +127,10 @@ signals:
 private:
 	metternich::resource *resource = nullptr; //the resource for which this improvement can be built
 	bool ruins = false; //if true, this improvement can be explored by troops, yielding some bonus (or malus)
+	const metternich::icon *icon = nullptr;
 	std::filesystem::path image_filepath;
 	std::map<const terrain_type *, std::filesystem::path> terrain_image_filepaths;
-	int output_multiplier;
+	int output_multiplier = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
 	int variation_count = 1;
 	improvement *required_improvement = nullptr;

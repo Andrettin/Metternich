@@ -38,6 +38,10 @@ void resource::check() const
 	assert_throw(this->get_commodity() != nullptr);
 	assert_throw(this->get_icon() != nullptr);
 
+	if (this->get_tiny_icon() == nullptr) {
+		throw std::runtime_error(std::format("Resource \"{}\" has no tiny icon.", this->get_identifier()));
+	}
+
 	if (this->get_commodity() != nullptr && this->get_buildings().empty()) {
 		throw std::runtime_error(std::format("Resource \"{}\" has a commodity, but no buildings to produce it.", this->get_identifier()));
 	}

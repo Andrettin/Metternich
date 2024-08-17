@@ -73,6 +73,10 @@ void improvement::check() const
 	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
 		assert_throw(vector::contains(this->get_terrain_types(), terrain) || vector::contains(this->get_resource()->get_terrain_types(), terrain));
 	}
+
+	if (this->get_resource() != nullptr && this->icon == nullptr) {
+		throw std::runtime_error(std::format("Resource improvement \"{}\" has no icon.", this->get_identifier()));
+	}
 }
 
 void improvement::set_image_filepath(const std::filesystem::path &filepath)
