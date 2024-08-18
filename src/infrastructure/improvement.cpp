@@ -77,8 +77,6 @@ void improvement::initialize()
 
 void improvement::check() const
 {
-	assert_throw(this->get_resource() != nullptr || !this->get_terrain_types().empty());
-
 	if (this->get_slot() == improvement_slot::none) {
 		throw std::runtime_error(std::format("Improvement \"{}\" has no slot.", this->get_identifier()));
 	}
@@ -99,16 +97,16 @@ void improvement::check() const
 		throw std::runtime_error(std::format("Improvement \"{}\" has an output multiplier, but no output commodity.", this->get_identifier()));
 	}
 
-	if (this->get_image_filepath().empty()) {
-		throw std::runtime_error(std::format("Improvement \"{}\" has no image filepath.", this->get_identifier()));
+	if ((this->get_slot() == improvement_slot::main || this->get_slot() == improvement_slot::resource) && this->get_image_filepath().empty()) {
+		throw std::runtime_error(std::format("Main or resource improvement \"{}\" has no image filepath.", this->get_identifier()));
 	}
 
 	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
 		assert_throw(vector::contains(this->get_terrain_types(), terrain) || vector::contains(this->get_resource()->get_terrain_types(), terrain));
 	}
 
-	if (this->get_resource() != nullptr && this->icon == nullptr) {
-		throw std::runtime_error(std::format("Resource improvement \"{}\" has no icon.", this->get_identifier()));
+	if ((this->get_slot() == improvement_slot::resource || this->get_slot() == improvement_slot::depot || this->get_slot() == improvement_slot::port) && this->icon == nullptr) {
+		throw std::runtime_error(std::format("Non-main improvement \"{}\" has no icon.", this->get_identifier()));
 	}
 }
 
