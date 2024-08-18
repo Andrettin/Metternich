@@ -853,6 +853,10 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 			this->change_base_commodity_output(commodity, centesimal_int(value) * multiplier);
 		}
 	}
+
+	if (improvement->get_modifier() != nullptr) {
+		improvement->get_modifier()->apply(this->site, multiplier);
+	}
 }
 
 QVariantList site_game_data::get_scripted_modifiers_qvariant_list() const

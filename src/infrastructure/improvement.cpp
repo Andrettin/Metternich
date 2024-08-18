@@ -10,12 +10,21 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "map/tile_image_provider.h"
+#include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
 	
+improvement::improvement(const std::string &identifier) : named_data_entry(identifier)
+{
+}
+
+improvement::~improvement()
+{
+}
+
 void improvement::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
@@ -37,6 +46,9 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = std::stoi(property.get_value());
 		});
+	} else if (tag == "modifier") {
+		this->modifier = std::make_unique<metternich::modifier<const site>>();
+		database::process_gsml_data(this->modifier, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
