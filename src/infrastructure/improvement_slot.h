@@ -7,7 +7,9 @@ namespace metternich {
 enum class improvement_slot {
 	none,
 	main,
-	resource
+	resource,
+	depot,
+	port
 };
 
 }

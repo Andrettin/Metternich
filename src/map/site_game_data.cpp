@@ -495,6 +495,16 @@ const improvement *site_game_data::get_resource_improvement() const
 	return this->get_improvement(improvement_slot::resource);
 }
 
+const improvement *site_game_data::get_depot_improvement() const
+{
+	return this->get_improvement(improvement_slot::depot);
+}
+
+const improvement *site_game_data::get_port_improvement() const
+{
+	return this->get_improvement(improvement_slot::port);
+}
+
 void site_game_data::set_improvement(const improvement_slot slot, const improvement *improvement)
 {
 	const metternich::improvement *old_improvement = this->get_improvement(slot);

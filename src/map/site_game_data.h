@@ -46,6 +46,8 @@ class site_game_data final : public QObject
 	Q_PROPERTY(const metternich::settlement_type* settlement_type READ get_settlement_type NOTIFY settlement_type_changed)
 	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
+	Q_PROPERTY(const metternich::improvement* depot_improvement READ get_depot_improvement NOTIFY improvements_changed)
+	Q_PROPERTY(const metternich::improvement* port_improvement READ get_port_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
@@ -147,6 +149,8 @@ public:
 
 	const improvement *get_main_improvement() const;
 	const improvement *get_resource_improvement() const;
+	const improvement *get_depot_improvement() const;
+	const improvement *get_port_improvement() const;
 
 	void set_improvement(const improvement_slot slot, const improvement *improvement);
 

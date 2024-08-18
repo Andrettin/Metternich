@@ -13,7 +13,9 @@ template <>
 const std::map<std::string, metternich::improvement_slot> enum_converter<metternich::improvement_slot>::string_to_enum_map = {
 	{ "none", metternich::improvement_slot::none },
 	{ "main", metternich::improvement_slot::main },
-	{ "resource", metternich::improvement_slot::resource }
+	{ "resource", metternich::improvement_slot::resource },
+	{ "depot", metternich::improvement_slot::depot },
+	{ "port", metternich::improvement_slot::port }
 };
 
 template <>
