@@ -56,6 +56,7 @@
 #include "script/modifier_effect/port_level_modifier_effect.h"
 #include "script/modifier_effect/profession_capacity_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
+#include "script/modifier_effect/ship_stat_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
 #include "script/modifier_effect/unit_upgrade_cost_modifier_effect.h"
@@ -82,6 +83,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		static const std::string military_unit_type_stat_modifier_infix = "_";
 		static const std::string military_unit_type_stat_modifier_suffix = "_modifier";
 		static const std::string research_modifier_suffix = "_research_modifier";
+		static const std::string ship_stat_modifier_prefix = "ship_";
 		static const std::string throughput_modifier_suffix = "_throughput_modifier";
 
 		if (key == "advisor_cost_modifier") {
@@ -177,6 +179,12 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		
 		const size_t suffix_pos = key.rfind(military_unit_type_stat_modifier_suffix);
 		if (suffix_pos != std::string::npos && key.ends_with(military_unit_type_stat_modifier_suffix)) {
+			if (key.starts_with(ship_stat_modifier_prefix)) {
+				const std::string stat_name = key.substr(ship_stat_modifier_prefix.size(), key.size() - ship_stat_modifier_prefix.size() - military_unit_type_stat_modifier_suffix.size());
+
+				return std::make_unique<ship_stat_modifier_effect>(stat_name, value);
+			}
+
 			infix_pos = key.rfind(military_unit_type_stat_modifier_infix, suffix_pos - 1);
 			if (infix_pos != std::string::npos) {
 				if (
