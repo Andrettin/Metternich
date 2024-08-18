@@ -2,12 +2,15 @@
 
 #include "unit/transporter_type.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "economy/commodity.h"
 #include "technology/technology.h"
 #include "unit/transporter_category.h"
 #include "unit/transporter_class.h"
+#include "unit/transporter_stat.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -17,7 +20,13 @@ void transporter_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "commodity_costs") {
+	if (tag == "stats") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const transporter_stat stat = enum_converter<transporter_stat>::to_enum(property.get_key());
+			const centesimal_int stat_value(property.get_value());
+			this->stats[stat] = stat_value;
+		});
+	} else if (tag == "commodity_costs") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = std::stoi(property.get_value());
@@ -72,6 +81,13 @@ transporter_category transporter_type::get_category() const
 bool transporter_type::is_ship() const
 {
 	return this->get_transporter_class()->is_ship();
+}
+
+centesimal_int transporter_type::get_stat_for_country(const transporter_stat stat, const country *country) const
+{
+	centesimal_int value = this->get_stat(stat);
+	value += country->get_game_data()->get_transporter_type_stat_modifier(this, stat);
+	return value;
 }
 
 int transporter_type::get_score() const

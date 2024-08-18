@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")
@@ -18,6 +19,7 @@ class icon;
 class technology;
 class transporter_class;
 enum class transporter_category;
+enum class transporter_stat;
 
 class transporter_type final : public named_data_entry, public data_type<transporter_type>
 {
@@ -27,10 +29,7 @@ class transporter_type final : public named_data_entry, public data_type<transpo
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
-	Q_PROPERTY(int defense MEMBER defense READ get_defense NOTIFY changed)
-	Q_PROPERTY(int resistance MEMBER resistance READ get_resistance NOTIFY changed)
 	Q_PROPERTY(int hit_points MEMBER hit_points READ get_hit_points NOTIFY changed)
-	Q_PROPERTY(int speed MEMBER speed READ get_speed NOTIFY changed)
 	Q_PROPERTY(int cargo MEMBER cargo READ get_cargo NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
@@ -72,24 +71,27 @@ public:
 		return this->icon;
 	}
 
-	int get_defense() const
+	const std::map<transporter_stat, centesimal_int> &get_stats() const
 	{
-		return this->defense;
+		return this->stats;
 	}
 
-	int get_resistance() const
+	const centesimal_int &get_stat(const transporter_stat stat) const
 	{
-		return this->resistance;
+		const auto find_iterator = this->get_stats().find(stat);
+		if (find_iterator != this->get_stats().end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
 	}
+
+	centesimal_int get_stat_for_country(const transporter_stat stat, const country *country) const;
 
 	int get_hit_points() const
 	{
 		return this->hit_points;
-	}
-
-	int get_speed() const
-	{
-		return this->speed;
 	}
 
 	int get_cargo() const
@@ -127,10 +129,8 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *icon = nullptr;
-	int defense = 0;
-	int resistance = 0; //resistance to damage, in percent
+	std::map<transporter_stat, centesimal_int> stats;
 	int hit_points = 25;
-	int speed = 0;
 	int cargo = 0;
 	technology *required_technology = nullptr;
 	int wealth_cost = 0;

@@ -18,6 +18,7 @@
 #include "technology/technology_container.h"
 #include "unit/military_unit_type_container.h"
 #include "unit/promotion_container.h"
+#include "unit/transporter_type_container.h"
 #include "util/fractional_int.h"
 #include "util/point_container.h"
 #include "util/qunique_ptr.h"
@@ -77,6 +78,7 @@ enum class military_unit_category;
 enum class military_unit_stat;
 enum class technology_category;
 enum class transporter_category;
+enum class transporter_stat;
 struct read_only_context;
 
 class country_game_data final : public QObject
@@ -1608,6 +1610,29 @@ public:
 		this->set_military_unit_type_stat_modifier(type, stat, this->get_military_unit_type_stat_modifier(type, stat) + change);
 	}
 
+	const centesimal_int &get_transporter_type_stat_modifier(const transporter_type *type, const transporter_stat stat) const
+	{
+		const auto find_iterator = this->transporter_type_stat_modifiers.find(type);
+
+		if (find_iterator != this->transporter_type_stat_modifiers.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(stat);
+
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
+	}
+
+	void set_transporter_type_stat_modifier(const transporter_type *type, const transporter_stat stat, const centesimal_int &value);
+
+	void change_transporter_type_stat_modifier(const transporter_type *type, const transporter_stat stat, const centesimal_int &change)
+	{
+		this->set_transporter_type_stat_modifier(type, stat, this->get_transporter_type_stat_modifier(type, stat) + change);
+	}
+
 	int get_infantry_cost_modifier() const
 	{
 		return this->infantry_cost_modifier;
@@ -2402,6 +2427,7 @@ private:
 	int air_morale_resistance_modifier = 0;
 	int entrench_bonus_modifier = 0;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> military_unit_type_stat_modifiers;
+	transporter_type_map<std::map<transporter_stat, centesimal_int>> transporter_type_stat_modifiers;
 	int infantry_cost_modifier = 0;
 	int cavalry_cost_modifier = 0;
 	int artillery_cost_modifier = 0;

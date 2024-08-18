@@ -1,5 +1,7 @@
 #pragma once
 
+#include "util/fractional_int.h"
+
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/transporter_type.h")
@@ -15,6 +17,7 @@ class religion;
 class site;
 class transporter_type;
 enum class transporter_category;
+enum class transporter_stat;
 
 class transporter final : public QObject
 {
@@ -149,26 +152,36 @@ public:
 		this->set_morale(this->get_morale() + change);
 	}
 
-	int get_morale_resistance() const;
-
-	int get_defense() const
+	const centesimal_int &get_stat(const transporter_stat stat) const
 	{
-		return this->defense;
+		const auto find_iterator = this->stats.find(stat);
+		if (find_iterator != this->stats.end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
 	}
 
-	void set_defense(const int defense)
+	void set_stat(const transporter_stat stat, const centesimal_int &value)
 	{
-		if (defense == this->get_defense()) {
+		if (value == this->get_stat(stat)) {
 			return;
 		}
 
-		this->defense = defense;
+		if (value == 0) {
+			this->stats.erase(stat);
+		} else {
+			this->stats[stat] = value;
+		}
 	}
 
-	void change_defense(const int change)
+	void change_stat(const transporter_stat stat, const centesimal_int &change)
 	{
-		this->set_defense(this->get_defense() + change);
+		this->set_stat(stat, this->get_stat(stat) + change);
 	}
+
+	int get_morale_resistance() const;
 
 	int get_cargo() const;
 
@@ -197,7 +210,7 @@ private:
 	int hit_points = 0;
 	int max_hit_points = 0;
 	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat
-	int defense = 0;
+	std::map<transporter_stat, centesimal_int> stats;
 };
 
 }

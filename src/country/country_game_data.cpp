@@ -4609,6 +4609,34 @@ void country_game_data::set_military_unit_type_stat_modifier(const military_unit
 	}
 }
 
+void country_game_data::set_transporter_type_stat_modifier(const transporter_type *type, const transporter_stat stat, const centesimal_int &value)
+{
+	const centesimal_int old_value = this->get_transporter_type_stat_modifier(type, stat);
+
+	if (value == old_value) {
+		return;
+	}
+
+	if (value == 0) {
+		this->transporter_type_stat_modifiers[type].erase(stat);
+
+		if (this->transporter_type_stat_modifiers[type].empty()) {
+			this->transporter_type_stat_modifiers.erase(type);
+		}
+	} else {
+		this->transporter_type_stat_modifiers[type][stat] = value;
+	}
+
+	const centesimal_int difference = value - old_value;
+	for (const qunique_ptr<transporter> &transporter : this->transporters) {
+		if (transporter->get_type() != type) {
+			continue;
+		}
+
+		transporter->change_stat(stat, difference);
+	}
+}
+
 void country_game_data::set_output_modifier(const int value)
 {
 	if (value == this->get_output_modifier()) {

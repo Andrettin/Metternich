@@ -12,6 +12,7 @@
 #include "ui/icon.h"
 #include "unit/military_unit.h" //for the hit point and morale recovery constants
 #include "unit/transporter_class.h"
+#include "unit/transporter_stat.h"
 #include "unit/transporter_type.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
@@ -33,7 +34,11 @@ transporter::transporter(const transporter_type *type, const metternich::country
 	this->set_hit_points(this->get_max_hit_points());
 	this->set_morale(this->get_hit_points());
 
-	this->defense = type->get_defense();
+	for (int i = 0; i < static_cast<int>(transporter_stat::count); ++i) {
+		const transporter_stat stat = static_cast<transporter_stat>(i);
+		const centesimal_int type_stat_value = type->get_stat_for_country(stat, this->get_country());
+		this->change_stat(stat, type_stat_value - type->get_stat(stat));
+	}
 
 	this->generate_name();
 
@@ -87,8 +92,13 @@ void transporter::set_type(const transporter_type *type)
 		this->change_max_hit_points(type->get_hit_points() - old_type->get_hit_points());
 	}
 
-	if (type->get_defense() != old_type->get_defense()) {
-		this->change_defense(type->get_defense() - old_type->get_defense());
+	for (int i = 0; i < static_cast<int>(transporter_stat::count); ++i) {
+		const transporter_stat stat = static_cast<transporter_stat>(i);
+		const centesimal_int type_stat_value = type->get_stat_for_country(stat, this->get_country());
+		const centesimal_int old_type_stat_value = old_type->get_stat_for_country(stat, this->get_country());
+		if (type_stat_value != old_type_stat_value) {
+			this->change_stat(stat, type_stat_value - old_type_stat_value);
+		}
 	}
 
 	if (this->get_country() != nullptr) {
