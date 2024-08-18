@@ -14,6 +14,7 @@
 #include "map/site_game_data.h"
 #include "population/population_unit.h"
 #include "script/effect/add_building_class_effect.h"
+#include "script/effect/add_improvement_effect.h"
 #include "script/effect/any_known_country_effect.h"
 #include "script/effect/any_neighbor_country_effect.h"
 #include "script/effect/any_population_unit_effect.h"
@@ -115,6 +116,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (key == "add_building_class") {
 			return std::make_unique<add_building_class_effect>(value, effect_operator);
+		} else if (key == "add_improvement") {
+			return std::make_unique<add_improvement_effect>(value, effect_operator);
 		}
 	}
 
