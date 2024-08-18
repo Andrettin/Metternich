@@ -186,6 +186,7 @@ public:
 	void check_building_conditions();
 	void check_free_buildings();
 	bool check_free_building(const building_type *building);
+	bool check_free_improvement(const improvement *improvement);
 
 	void on_settlement_built(const int multiplier);
 	void on_building_gained(const building_type *building, const int multiplier);

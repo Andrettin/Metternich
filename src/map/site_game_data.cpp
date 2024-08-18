@@ -721,8 +721,7 @@ void site_game_data::check_free_buildings()
 				continue;
 			}
 
-			if (improvement->is_buildable_on_site(this->site)) {
-				this->set_improvement(improvement_slot::resource, improvement);
+			if (this->check_free_improvement(improvement)) {
 				changed = true;
 			}
 		}
@@ -735,6 +734,17 @@ void site_game_data::check_free_buildings()
 			}
 
 			if (this->check_free_building(building)) {
+				changed = true;
+			}
+		}
+
+		//capitals get the highest level of depot and port improvements for free
+		for (const improvement *improvement : improvement::get_all()) {
+			if (improvement->get_slot() != improvement_slot::depot && improvement->get_slot() != improvement_slot::port) {
+				continue;
+			}
+
+			if (this->check_free_improvement(improvement)) {
 				changed = true;
 			}
 		}
@@ -775,6 +785,21 @@ bool site_game_data::check_free_building(const building_type *building)
 	}
 
 	building_slot->set_building(building);
+	return true;
+}
+
+bool site_game_data::check_free_improvement(const improvement *improvement)
+{
+	if (improvement->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_game_data()->has_technology(improvement->get_required_technology()))) {
+		return false;
+	}
+
+	if (!improvement->is_buildable_on_site(this->site)) {
+		return false;
+	}
+
+	this->set_improvement(improvement->get_slot(), improvement);
+
 	return true;
 }
 
