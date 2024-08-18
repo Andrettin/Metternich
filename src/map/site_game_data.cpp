@@ -32,6 +32,7 @@
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
+#include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "script/scripted_site_modifier.h"
 #include "unit/army.h"
@@ -850,6 +851,11 @@ void site_game_data::on_building_gained(const building_type *building, const int
 
 	if (building->get_settlement_modifier() != nullptr) {
 		building->get_settlement_modifier()->apply(this->site, multiplier);
+	}
+
+	if (multiplier > 0 && building->get_effects() != nullptr) {
+		context effects_ctx(this->site);
+		building->get_effects()->do_effects(this->site, effects_ctx);
 	}
 }
 
