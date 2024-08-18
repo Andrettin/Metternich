@@ -52,6 +52,13 @@ public:
 		return this->slot;
 	}
 
+	int get_level() const
+	{
+		return this->level;
+	}
+
+	void calculate_level();
+
 	const metternich::resource *get_resource() const
 	{
 		return this->resource;
@@ -133,6 +140,7 @@ signals:
 
 private:
 	improvement_slot slot{};
+	int level = 0;
 	metternich::resource *resource = nullptr; //the resource for which this improvement can be built
 	bool ruins = false; //if true, this improvement can be explored by troops, yielding some bonus (or malus)
 	const metternich::icon *icon = nullptr;

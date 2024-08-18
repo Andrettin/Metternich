@@ -58,6 +58,8 @@ void improvement::initialize()
 		tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/" + terrain->get_identifier() + "/0");
 	}
 
+	this->calculate_level();
+
 	named_data_entry::initialize();
 }
 
@@ -95,6 +97,19 @@ void improvement::check() const
 
 	if (this->get_resource() != nullptr && this->icon == nullptr) {
 		throw std::runtime_error(std::format("Resource improvement \"{}\" has no icon.", this->get_identifier()));
+	}
+}
+
+void improvement::calculate_level()
+{
+	if (this->required_improvement != nullptr) {
+		if (this->required_improvement->get_level() == 0) {
+			this->required_improvement->initialize();
+		}
+
+		this->level = this->required_improvement->get_level() + 1;
+	} else {
+		this->level = 1;
 	}
 }
 
@@ -145,7 +160,11 @@ bool improvement::is_buildable_on_site(const site *site) const
 			return false;
 		}
 
-		if (this->get_output_multiplier() == current_improvement->get_output_multiplier()) {
+		if (this->get_level() < current_improvement->get_level()) {
+			return false;
+		}
+
+		if (this->get_output_multiplier() == current_improvement->get_output_multiplier() && this->get_level() == current_improvement->get_level()) {
 			//the improvement must be better in some way
 			return false;
 		}
