@@ -41,6 +41,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/country_building_slot.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/improvement_slot.h"
 #include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/settlement_type.h"
 #include "map/diplomatic_map_mode.h"
@@ -5543,13 +5544,19 @@ void country_game_data::calculate_tile_transport_levels()
 
 	map::get()->calculate_tile_transport_level(capital->get_map_data()->get_tile_pos());
 
+	//calculate transport levels beginning from sites with ports
 	for (const province *province : this->get_provinces()) {
-		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-			if (!settlement->get_game_data()->is_built()) {
+		for (const site *site : province->get_game_data()->get_sites()) {
+			if (site == capital) {
+				//already calculated
 				continue;
 			}
 
-			map::get()->calculate_tile_transport_level(settlement->get_map_data()->get_tile_pos());
+			if (site->get_game_data()->get_improvement(improvement_slot::port) == nullptr) {
+				continue;
+			}
+
+			map::get()->calculate_tile_transport_level(site->get_map_data()->get_tile_pos());
 		}
 	}
 }
