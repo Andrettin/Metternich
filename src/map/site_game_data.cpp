@@ -434,9 +434,29 @@ void site_game_data::check_settlement_type()
 
 	std::vector<const metternich::settlement_type *> potential_settlement_types;
 
+	int best_preserved_building_count = 0;
+
 	for (const metternich::settlement_type *base_settlement_type : this->get_settlement_type()->get_base_settlement_types()) {
 		if (base_settlement_type->get_conditions() != nullptr && !base_settlement_type->get_conditions()->check(this->site, read_only_context(this->site))) {
 			continue;
+		}
+
+		int preserved_building_count = 0;
+		for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
+			if (building_slot->get_building() == nullptr) {
+				continue;
+			}
+
+			if (vector::contains(building_slot->get_building()->get_settlement_types(), base_settlement_type)) {
+				++preserved_building_count;
+			}
+		}
+
+		if (preserved_building_count < best_preserved_building_count) {
+			continue;
+		} else if (preserved_building_count > best_preserved_building_count) {
+			potential_settlement_types.clear();
+			best_preserved_building_count = preserved_building_count;
 		}
 
 		potential_settlement_types.push_back(base_settlement_type);
