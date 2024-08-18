@@ -145,10 +145,24 @@ bool improvement::is_buildable_on_site(const site *site) const
 {
 	const site_game_data *site_game_data = site->get_game_data();
 
-	if (site->is_settlement()) {
-		if (this->get_resource() == nullptr) {
-			return false;
-		}
+	switch (this->get_slot()) {
+		case improvement_slot::main:
+			if (site->is_settlement()) {
+				return false;
+			}
+			break;
+		case improvement_slot::depot:
+			if (!site_game_data->has_route()) {
+				return false;
+			}
+			break;
+		case improvement_slot::port:
+			if (!site_game_data->is_near_water()) {
+				return false;
+			}
+			break;
+		default:
+			break;
 	}
 
 	if (this->get_resource() != nullptr && this->get_resource() != site_game_data->get_resource()) {
