@@ -30,6 +30,7 @@
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/settlement_type.h"
@@ -955,48 +956,43 @@ void game::apply_sites()
 				continue;
 			}
 
-			const improvement *site_improvement = site_history->get_improvement();
-			if (site_improvement == nullptr && site_history->is_developed() && site->get_type() == site_type::resource) {
-				//if the site is marked as developed, but has no specific improvement set for it, pick the most basic improvement for its resource
-				for (const improvement *improvement : improvement::get_all()) {
-					if (improvement->get_resource() != site->get_map_data()->get_resource()) {
-						continue;
-					}
+			std::map<improvement_slot, const improvement *> site_improvements = site_history->get_improvements();
 
+			if (!site_improvements.contains(improvement_slot::resource) && site_history->is_developed() && site->get_map_data()->get_resource() != nullptr) {
+				//if the site is marked as developed, but has no specific improvement set for it, pick the most basic improvement for its resource
+				for (const improvement *improvement : site->get_map_data()->get_resource()->get_improvements()) {
 					if (improvement->get_required_improvement() != nullptr) {
 						continue;
 					}
 
-					site_improvement = improvement;
+					site_improvements[improvement_slot::resource] = improvement;
 					break;
 				}
 			}
 
-			if (site_improvement != nullptr) {
-				assert_throw(site_improvement->get_resource() != nullptr || site_improvement->is_ruins());
+			for (const auto &[improvement_slot, improvement] : site_history->get_improvements()) {
+				if (improvement != nullptr) {
+					if (improvement->get_resource() != nullptr) {
+						assert_throw(site->get_type() == site_type::resource || site->get_type() == site_type::settlement);
 
-				if (site_improvement->get_resource() != nullptr) {
-					assert_throw(site->get_type() == site_type::resource);
+						if (tile->get_resource() == nullptr) {
+							throw std::runtime_error("Failed to set resource improvement for tile for site \"" + site->get_identifier() + "\", as it has no resource.");
+						}
 
-					if (tile->get_resource() == nullptr) {
-						throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as it has no resource.");
+						if (tile->get_resource() != improvement->get_resource()) {
+							throw std::runtime_error("Failed to set resource improvement for tile for site \"" + site->get_identifier() + "\", as its resource is different than that of the improvement.");
+						}
+
+						map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 					}
 
-					if (tile->get_resource() != site_improvement->get_resource()) {
-						throw std::runtime_error("Failed to set resource improvement for tile for resource site \"" + site->get_identifier() + "\", as its resource is different than that of the improvement.");
+					site_game_data->set_improvement(improvement->get_slot(), improvement);
+
+					//add prerequisites for the tile's improvement to its owner's researched technologies
+					if (improvement->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
+						tile->get_owner()->get_game_data()->add_technology_with_prerequisites(improvement->get_required_technology());
 					}
-
-					map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 				}
-
-				site_game_data->set_improvement(site_improvement->get_slot(), site_improvement);
-
-				//add prerequisites for the tile's improvement to its owner's researched technologies
-				if (site_improvement->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
-					tile->get_owner()->get_game_data()->add_technology_with_prerequisites(site_improvement->get_required_technology());
-				}
-
-				site->get_game_data()->on_improvement_gained(site_improvement, 1);
 			}
 
 			if (site_history->is_resource_discovered()) {

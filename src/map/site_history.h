@@ -6,7 +6,6 @@
 
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("country/religion.h")
-Q_MOC_INCLUDE("infrastructure/improvement.h")
 Q_MOC_INCLUDE("infrastructure/settlement_type.h")
 
 namespace metternich {
@@ -16,6 +15,7 @@ class improvement;
 class settlement_type;
 class site;
 class wonder;
+enum class improvement_slot;
 
 class site_history final : public data_entry_history
 {
@@ -23,7 +23,6 @@ class site_history final : public data_entry_history
 
 	Q_PROPERTY(bool resource_discovered MEMBER resource_discovered READ is_resource_discovered)
 	Q_PROPERTY(bool developed MEMBER developed)
-	Q_PROPERTY(metternich::improvement* improvement MEMBER improvement)
 	Q_PROPERTY(metternich::settlement_type* settlement_type MEMBER settlement_type)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
@@ -45,17 +44,27 @@ public:
 
 	bool is_developed() const
 	{
-		return this->developed || this->get_improvement() != nullptr || this->get_settlement_type() != nullptr || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
-	}
-
-	const metternich::improvement *get_improvement() const
-	{
-		return this->improvement;
+		return this->developed || this->get_settlement_type() != nullptr || !this->get_improvements().empty() || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
 	}
 
 	const metternich::settlement_type *get_settlement_type() const
 	{
 		return this->settlement_type;
+	}
+
+	const std::map<improvement_slot, const improvement *> &get_improvements() const
+	{
+		return this->improvements;
+	}
+
+	const improvement *get_improvement(const improvement_slot slot) const
+	{
+		const auto find_iterator = this->improvements.find(slot);
+		if (find_iterator != this->improvements.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
 	}
 
 	const building_slot_type_map<const building_type *> &get_buildings() const
@@ -169,10 +178,10 @@ private:
 	const metternich::site *site = nullptr;
 	bool resource_discovered = false;
 	bool developed = false;
-	metternich::improvement *improvement = nullptr;
 	metternich::settlement_type *settlement_type = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
+	std::map<improvement_slot, const improvement *> improvements;
 	building_slot_type_map<const building_type *> buildings;
 	building_slot_type_map<const wonder *> wonders;
 	population_group_map<int> population_groups;
