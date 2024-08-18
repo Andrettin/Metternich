@@ -668,6 +668,8 @@ void site_game_data::check_building_conditions()
 			continue;
 		}
 
+		const int building_level = building->get_level();
+
 		//if the building fails its conditions, try to replace it with one of its required buildings, if valid
 		while (building != nullptr) {
 			if (building_slot->can_maintain_building(building)) {
@@ -675,6 +677,48 @@ void site_game_data::check_building_conditions()
 			}
 
 			building = building->get_required_building();
+		}
+
+		//try to place a building of equivalent level for the same slot which has its conditions fulfilled
+		if (building == nullptr) {
+			std::vector<const building_type *> potential_buildings;
+
+			for (const building_type *slot_building : building_slot->get_type()->get_building_types()) {
+				if (slot_building->get_required_building() != nullptr) {
+					continue;
+				}
+
+				if (!building_slot->can_maintain_building(slot_building)) {
+					continue;
+				}
+
+				potential_buildings.push_back(slot_building);
+			}
+
+			if (!potential_buildings.empty()) {
+				building = vector::get_random(potential_buildings);
+			}
+		}
+
+		if (building != nullptr && building->get_level() < building_level) {
+			for (int i = building->get_level() + 1; i <= building_level; ++i) {
+				std::vector<const building_type *> potential_buildings;
+
+				for (const building_type *requiring_building : building->get_requiring_buildings()) {
+					if (!building_slot->can_maintain_building(requiring_building)) {
+						continue;
+					}
+
+					potential_buildings.push_back(requiring_building);
+				}
+
+				if (potential_buildings.empty()) {
+					break;
+				}
+
+				building = vector::get_random(potential_buildings);
+				assert_throw(building->get_level() == i);
+			}
 		}
 
 		if (building != building_slot->get_building()) {
