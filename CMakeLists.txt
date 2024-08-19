@@ -687,10 +687,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/ai_building_desire_modifier_effect.h
 	src/script/modifier_effect/air_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/artillery_cost_modifier_effect.h
-	src/script/modifier_effect/bonus_vs_artillery_modifier_effect.h
-	src/script/modifier_effect/bonus_vs_cavalry_modifier_effect.h
-	src/script/modifier_effect/bonus_vs_fortifications_modifier_effect.h
-	src/script/modifier_effect/bonus_vs_infantry_modifier_effect.h
 	src/script/modifier_effect/building_capacity_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h
@@ -702,7 +698,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/commodity_bonus_per_improved_resource_modifier_effect.h
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h
-	src/script/modifier_effect/damage_bonus_modifier_effect.h
 	src/script/modifier_effect/deployment_limit_modifier_effect.h
 	src/script/modifier_effect/depot_level_modifier_effect.h
 	src/script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h

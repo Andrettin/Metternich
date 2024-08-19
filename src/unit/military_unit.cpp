@@ -48,11 +48,6 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 		this->set_stat(stat, value);
 	}
 
-	this->bonus_vs_infantry = type->get_bonus_vs_infantry();
-	this->bonus_vs_cavalry = type->get_bonus_vs_cavalry();
-	this->bonus_vs_artillery = type->get_bonus_vs_artillery();
-	this->bonus_vs_fortifications = type->get_bonus_vs_fortifications();
-
 	this->check_free_promotions();
 }
 
@@ -188,22 +183,6 @@ void military_unit::set_type(const military_unit_type *type)
 		if (type_stat_value != old_type_stat_value) {
 			this->change_stat(stat, type_stat_value - old_type_stat_value);
 		}
-	}
-
-	if (type->get_bonus_vs_infantry() != old_type->get_bonus_vs_infantry()) {
-		this->change_bonus_vs_infantry(type->get_bonus_vs_infantry() - old_type->get_bonus_vs_infantry());
-	}
-
-	if (type->get_bonus_vs_cavalry() != old_type->get_bonus_vs_cavalry()) {
-		this->change_bonus_vs_cavalry(type->get_bonus_vs_cavalry() - old_type->get_bonus_vs_cavalry());
-	}
-
-	if (type->get_bonus_vs_artillery() != old_type->get_bonus_vs_artillery()) {
-		this->change_bonus_vs_artillery(type->get_bonus_vs_artillery() - old_type->get_bonus_vs_artillery());
-	}
-
-	if (type->get_bonus_vs_fortifications() != old_type->get_bonus_vs_fortifications()) {
-		this->change_bonus_vs_fortifications(type->get_bonus_vs_fortifications() - old_type->get_bonus_vs_fortifications());
 	}
 
 	if (this->get_country() != nullptr) {

@@ -233,120 +233,6 @@ public:
 		this->set_stat(stat, this->get_stat(stat) + change);
 	}
 
-	int get_damage_bonus() const
-	{
-		return this->damage_bonus;
-	}
-
-	void set_damage_bonus(const int bonus)
-	{
-		if (bonus == this->get_damage_bonus()) {
-			return;
-		}
-
-		this->damage_bonus = bonus;
-	}
-
-	void change_damage_bonus(const int change)
-	{
-		this->set_damage_bonus(this->get_damage_bonus() + change);
-	}
-
-	int get_bonus_vs_infantry() const
-	{
-		return this->bonus_vs_infantry;
-	}
-
-	void set_bonus_vs_infantry(const int bonus)
-	{
-		if (bonus == this->get_bonus_vs_infantry()) {
-			return;
-		}
-
-		this->bonus_vs_infantry = bonus;
-	}
-
-	void change_bonus_vs_infantry(const int change)
-	{
-		this->set_bonus_vs_infantry(this->get_bonus_vs_infantry() + change);
-	}
-
-	int get_bonus_vs_cavalry() const
-	{
-		return this->bonus_vs_cavalry;
-	}
-
-	void set_bonus_vs_cavalry(const int bonus)
-	{
-		if (bonus == this->get_bonus_vs_cavalry()) {
-			return;
-		}
-
-		this->bonus_vs_cavalry = bonus;
-	}
-
-	void change_bonus_vs_cavalry(const int change)
-	{
-		this->set_bonus_vs_cavalry(this->get_bonus_vs_cavalry() + change);
-	}
-
-	int get_bonus_vs_artillery() const
-	{
-		return this->bonus_vs_artillery;
-	}
-
-	void set_bonus_vs_artillery(const int bonus)
-	{
-		if (bonus == this->get_bonus_vs_artillery()) {
-			return;
-		}
-
-		this->bonus_vs_artillery = bonus;
-	}
-
-	void change_bonus_vs_artillery(const int change)
-	{
-		this->set_bonus_vs_artillery(this->get_bonus_vs_artillery() + change);
-	}
-
-	int get_bonus_vs_fortifications() const
-	{
-		return this->bonus_vs_fortifications;
-	}
-
-	void set_bonus_vs_fortifications(const int bonus)
-	{
-		if (bonus == this->get_bonus_vs_fortifications()) {
-			return;
-		}
-
-		this->bonus_vs_fortifications = bonus;
-	}
-
-	void change_bonus_vs_fortifications(const int change)
-	{
-		this->set_bonus_vs_fortifications(this->get_bonus_vs_fortifications() + change);
-	}
-
-	int get_entrench_bonus_modifier() const
-	{
-		return this->entrench_bonus_modifier;
-	}
-
-	void set_entrench_bonus_modifier(const int bonus)
-	{
-		if (bonus == this->get_entrench_bonus_modifier()) {
-			return;
-		}
-
-		this->entrench_bonus_modifier = bonus;
-	}
-
-	void change_entrench_bonus_modifier(const int change)
-	{
-		this->set_entrench_bonus_modifier(this->get_entrench_bonus_modifier() + change);
-	}
-
 	const std::vector<const promotion *> &get_promotions() const
 	{
 		return this->promotions;
@@ -395,12 +281,6 @@ private:
 	int max_hit_points = 0;
 	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat
 	std::map<military_unit_stat, centesimal_int> stats;
-	int damage_bonus = 0;
-	int bonus_vs_infantry = 0;
-	int bonus_vs_cavalry = 0;
-	int bonus_vs_artillery = 0;
-	int bonus_vs_fortifications = 0;
-	int entrench_bonus_modifier = 0;
 	std::vector<const promotion *> promotions;
 };
 
