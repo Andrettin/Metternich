@@ -692,7 +692,7 @@ void province_game_data::change_improved_resource_commodity_bonus(const resource
 
 		assert_throw(tile->get_site() != nullptr);
 
-		if (tile->get_site()->get_game_data()->get_resource_improvement() == nullptr && tile->get_settlement_type() == nullptr) {
+		if (tile->get_site()->get_game_data()->get_resource_improvement() == nullptr) {
 			continue;
 		}
 
