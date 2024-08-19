@@ -723,6 +723,8 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/land_recovery_modifier_effect.h
 	src/script/modifier_effect/law_cost_modifier_effect.h
 	src/script/modifier_effect/leader_cost_modifier_effect.h
+	src/script/modifier_effect/merchant_ship_stat_modifier_effect.h
+	src/script/modifier_effect/military_unit_category_stat_modifier_effect.h
 	src/script/modifier_effect/military_unit_stat_modifier_effect.h
 	src/script/modifier_effect/military_unit_type_stat_modifier_effect.h
 	src/script/modifier_effect/modifier_effect.h

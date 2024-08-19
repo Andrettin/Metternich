@@ -47,6 +47,8 @@
 #include "script/modifier_effect/land_recovery_modifier_effect.h"
 #include "script/modifier_effect/law_cost_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
+#include "script/modifier_effect/merchant_ship_stat_modifier_effect.h"
+#include "script/modifier_effect/military_unit_category_stat_modifier_effect.h"
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
 #include "script/modifier_effect/military_unit_type_stat_modifier_effect.h"
 #include "script/modifier_effect/naval_morale_resistance_modifier_effect.h"
@@ -79,6 +81,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		static const std::string capital_commodity_bonus_prefix = "capital_";
 		static const std::string capital_commodity_bonus_per_population_suffix = "_bonus_per_population";
 		static const std::string commodity_per_building_infix = "_per_";
+		static const std::string merchant_ship_stat_modifier_prefix = "merchant_ship_";
 		static const std::string militancy_modifier_suffix = "_militancy_modifier";
 		static const std::string military_unit_type_stat_modifier_infix = "_";
 		static const std::string military_unit_type_stat_modifier_suffix = "_modifier";
@@ -183,6 +186,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 				const std::string stat_name = key.substr(ship_stat_modifier_prefix.size(), key.size() - ship_stat_modifier_prefix.size() - military_unit_type_stat_modifier_suffix.size());
 
 				return std::make_unique<ship_stat_modifier_effect>(stat_name, value);
+			} else if (key.starts_with(merchant_ship_stat_modifier_prefix)) {
+				const std::string stat_name = key.substr(merchant_ship_stat_modifier_prefix.size(), key.size() - merchant_ship_stat_modifier_prefix.size() - military_unit_type_stat_modifier_suffix.size());
+
+				return std::make_unique<merchant_ship_stat_modifier_effect>(enum_converter<transporter_stat>::to_enum(stat_name), value);
 			}
 
 			infix_pos = key.rfind(military_unit_type_stat_modifier_infix, suffix_pos - 1);
@@ -295,6 +302,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const country>) {
 		if (tag == "ai_building_desire") {
 			modifier_effect = std::make_unique<ai_building_desire_modifier_effect>();
+		} else if (tag == "military_unit_category_stat_modifier") {
+			modifier_effect = std::make_unique<military_unit_category_stat_modifier_effect>();
 		}
 	}
 
