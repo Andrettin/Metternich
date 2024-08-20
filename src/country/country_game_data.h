@@ -1748,6 +1748,29 @@ public:
 		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + value);
 	}
 
+	const commodity_map<int> &get_capital_commodity_output_modifiers() const
+	{
+		return this->capital_commodity_output_modifiers;
+	}
+
+	int get_capital_commodity_output_modifier(const commodity *commodity) const
+	{
+		const auto find_iterator = this->capital_commodity_output_modifiers.find(commodity);
+
+		if (find_iterator != this->capital_commodity_output_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_capital_commodity_output_modifier(const commodity *commodity, const int value);
+
+	void change_capital_commodity_output_modifier(const commodity *commodity, const int value)
+	{
+		this->set_capital_commodity_output_modifier(commodity, this->get_capital_commodity_output_modifier(commodity) + value);
+	}
+
 	int get_throughput_modifier() const
 	{
 		return this->throughput_modifier;
@@ -2437,6 +2460,7 @@ private:
 	int resource_output_modifier = 0;
 	int industrial_output_modifier = 0;
 	commodity_map<int> commodity_output_modifiers;
+	commodity_map<int> capital_commodity_output_modifiers;
 	int throughput_modifier = 0;
 	commodity_map<int> commodity_throughput_modifiers;
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;

@@ -4747,6 +4747,23 @@ void country_game_data::set_commodity_output_modifier(const commodity *commodity
 	this->calculate_settlement_commodity_output(commodity);
 }
 
+void country_game_data::set_capital_commodity_output_modifier(const commodity *commodity, const int value)
+{
+	if (value == this->get_capital_commodity_output_modifier(commodity)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->capital_commodity_output_modifiers.erase(commodity);
+	} else {
+		this->capital_commodity_output_modifiers[commodity] = value;
+	}
+
+	if (this->get_capital() != nullptr) {
+		this->get_capital()->get_game_data()->calculate_commodity_outputs();
+	}
+}
+
 void country_game_data::set_throughput_modifier(const int value)
 {
 	if (value == this->get_throughput_modifier()) {

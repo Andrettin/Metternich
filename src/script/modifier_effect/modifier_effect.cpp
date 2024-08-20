@@ -14,6 +14,7 @@
 #include "script/modifier_effect/building_capacity_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h"
+#include "script/modifier_effect/capital_commodity_output_modifier_effect.h"
 #include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/cavalry_cost_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
@@ -80,6 +81,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		static const std::string militancy_modifier_suffix = "_militancy_modifier";
 		static const std::string military_unit_type_stat_modifier_infix = "_";
 		static const std::string military_unit_type_stat_modifier_suffix = "_modifier";
+		static const std::string output_modifier_suffix = "_output_modifier";
 		static const std::string research_modifier_suffix = "_research_modifier";
 		static const std::string ship_stat_modifier_prefix = "ship_";
 		static const std::string throughput_modifier_suffix = "_throughput_modifier";
@@ -151,6 +153,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (key.starts_with(capital_commodity_bonus_prefix) && key.ends_with(capital_commodity_bonus_per_population_suffix) && commodity::try_get(key.substr(capital_commodity_bonus_prefix.size(), key.size() - capital_commodity_bonus_prefix.size() - capital_commodity_bonus_per_population_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(capital_commodity_bonus_prefix.size(), key.size() - capital_commodity_bonus_prefix.size() - capital_commodity_bonus_per_population_suffix.size()));
 			return std::make_unique<capital_commodity_bonus_per_population_modifier_effect>(commodity, value);
+		} else if (key.starts_with(capital_commodity_bonus_prefix) && key.ends_with(output_modifier_suffix) && commodity::try_get(key.substr(capital_commodity_bonus_prefix.size(), key.size() - capital_commodity_bonus_prefix.size() - output_modifier_suffix.size())) != nullptr) {
+			const commodity *commodity = commodity::get(key.substr(capital_commodity_bonus_prefix.size(), key.size() - capital_commodity_bonus_prefix.size() - output_modifier_suffix.size()));
+			return std::make_unique<capital_commodity_output_modifier_effect>(commodity, value);
 		} else if (key.ends_with(throughput_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - throughput_modifier_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - throughput_modifier_suffix.size()));
 			return std::make_unique<commodity_throughput_modifier_effect<scope_type>>(commodity, value);

@@ -1171,6 +1171,9 @@ void site_game_data::calculate_commodity_outputs()
 		outputs[commodity];
 	}
 
+	int output_modifier = this->get_output_modifier();
+	commodity_map<int> commodity_output_modifiers = this->get_commodity_output_modifiers();
+
 	if (this->get_owner() != nullptr && this->is_capital()) {
 		for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_capital_commodity_bonuses()) {
 			outputs[commodity] += value;
@@ -1179,10 +1182,11 @@ void site_game_data::calculate_commodity_outputs()
 		for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_capital_commodity_bonuses_per_population()) {
 			outputs[commodity] += (value * this->get_population_unit_count());
 		}
-	}
 
-	int output_modifier = this->get_output_modifier();
-	commodity_map<int> commodity_output_modifiers = this->get_commodity_output_modifiers();
+		for (const auto &[commodity, modifier] : this->get_owner()->get_game_data()->get_capital_commodity_output_modifiers()) {
+			commodity_output_modifiers[commodity] += modifier;
+		}
+	}
 
 	const province *province = this->get_province();
 	if (province != nullptr) {
