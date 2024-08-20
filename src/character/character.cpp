@@ -296,8 +296,14 @@ void character::check() const
 
 	assert_throw(this->get_start_date().isValid());
 	assert_throw(this->get_end_date().isValid());
-	assert_throw(this->get_birth_date().isValid());
-	assert_throw(this->get_death_date().isValid());
+
+	if (!this->get_birth_date().isValid()) {
+		throw std::runtime_error(std::format("Character \"{}\" has no birth date.", this->get_identifier()));
+	}
+
+	if (!this->get_death_date().isValid()) {
+		throw std::runtime_error(std::format("Character \"{}\" has no birth date.", this->get_identifier()));
+	}
 
 	assert_throw(this->get_start_date() >= this->get_birth_date());
 	assert_throw(this->get_start_date() <= this->get_end_date());
