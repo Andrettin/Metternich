@@ -25,7 +25,6 @@ public:
 	virtual bool can_maintain_building(const building_type *building) const override;
 	virtual bool can_build_building(const building_type *building) const override;
 
-public:
 	const wonder *get_wonder() const
 	{
 		return this->wonder;
@@ -40,7 +39,7 @@ public:
 
 	void set_under_construction_wonder(const wonder *wonder);
 
-	bool can_have_wonder(const wonder *wonder) const;
+	virtual bool can_have_wonder(const wonder *wonder) const override;
 	bool can_gain_wonder(const wonder *wonder) const;
 	bool can_build_wonder(const wonder *wonder) const;
 

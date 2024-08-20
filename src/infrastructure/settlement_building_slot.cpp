@@ -158,20 +158,6 @@ void settlement_building_slot::set_under_construction_wonder(const metternich::w
 
 bool settlement_building_slot::can_have_wonder(const metternich::wonder *wonder) const
 {
-	if (this->get_wonder() != nullptr) {
-		return false;
-	}
-
-	if (wonder->get_conditions() != nullptr) {
-		if (this->get_country() == nullptr) {
-			return false;
-		}
-
-		if (!wonder->get_conditions()->check(this->get_country(), read_only_context(this->get_country()))) {
-			return false;
-		}
-	}
-
 	const site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
 
 	if (wonder->get_province_conditions() != nullptr) {
@@ -180,18 +166,24 @@ bool settlement_building_slot::can_have_wonder(const metternich::wonder *wonder)
 		}
 	}
 
-	return this->can_have_building(wonder->get_building());
+	return building_slot::can_have_wonder(wonder);
 }
 
 bool settlement_building_slot::can_gain_wonder(const metternich::wonder *wonder) const
 {
+	if (this->get_wonder() != nullptr) {
+		return false;
+	}
+
 	if (!this->can_have_wonder(wonder)) {
 		return false;
 	}
 
-	if (this->get_wonder() != nullptr) {
+	if (wonder->get_obsolescence_technology() != nullptr && this->get_country() != nullptr && this->get_country()->get_game_data()->has_technology(wonder->get_obsolescence_technology())) {
 		return false;
 	}
+
+	//FIXME: should check whether any other country has the wonder; if so, the wonder cannot be gained
 
 	return true;
 }

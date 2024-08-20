@@ -10,6 +10,7 @@ namespace metternich {
 class building_slot_type;
 class building_type;
 class country;
+class wonder;
 
 class building_slot : public QObject
 {
@@ -48,6 +49,8 @@ public:
 	virtual bool can_maintain_building(const building_type *building) const;
 	virtual bool can_gain_building(const building_type *building) const;
 	virtual bool can_build_building(const building_type *building) const;
+
+	virtual bool can_have_wonder(const wonder *wonder) const;
 
 	void build_building(const building_type *building);
 

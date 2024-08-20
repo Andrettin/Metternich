@@ -9,6 +9,7 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/wonder.h"
 #include "script/condition/condition.h"
 #include "util/assert_util.h"
 
@@ -72,6 +73,11 @@ bool building_slot::can_maintain_building(const building_type *building) const
 
 bool building_slot::can_gain_building(const building_type *building) const
 {
+	if (building->is_wonder_only()) {
+		//cannot gain the building directly, only via the construction of a wonder
+		return false;
+	}
+
 	if (!this->can_have_building(building)) {
 		return false;
 	}
@@ -121,6 +127,21 @@ bool building_slot::can_build_building(const building_type *building) const
 	}
 
 	return this->can_gain_building(building);
+}
+
+bool building_slot::can_have_wonder(const wonder *wonder) const
+{
+	if (wonder->get_conditions() != nullptr) {
+		if (this->get_country() == nullptr) {
+			return false;
+		}
+
+		if (!wonder->get_conditions()->check(this->get_country(), read_only_context(this->get_country()))) {
+			return false;
+		}
+	}
+
+	return this->can_have_building(wonder->get_building());
 }
 
 void building_slot::build_building(const building_type *building)
@@ -197,6 +218,33 @@ bool building_slot::is_available() const
 
 		if (!this->can_have_building(building)) {
 			continue;
+		}
+
+		if (building->is_wonder_only()) {
+			bool can_have_wonder = false;
+
+			for (const wonder *wonder : this->get_type()->get_wonders()) {
+				if (wonder->get_building() != building) {
+					continue;
+				}
+
+				if (wonder->get_obsolescence_technology() != nullptr && this->get_country() != nullptr && this->get_country()->get_game_data()->has_technology(wonder->get_obsolescence_technology())) {
+					continue;
+				}
+
+				//FIXME: should check whether any other country has the wonder; if so, the wonder cannot be gained and as such it should not be counted for the purposes of building slot availability
+
+				if (!this->can_have_wonder(wonder)) {
+					continue;
+				}
+
+				can_have_wonder = true;
+				break;
+			}
+
+			if (!can_have_wonder) {
+				continue;
+			}
 		}
 
 		return true;
