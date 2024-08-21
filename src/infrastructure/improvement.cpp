@@ -64,7 +64,9 @@ void improvement::initialize()
 		this->resource->add_improvement(this);
 	}
 
-	tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/0");
+	if (!this->get_image_filepath().empty()) {
+		tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/0");
+	}
 
 	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
 		tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/" + terrain->get_identifier() + "/0");
