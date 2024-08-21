@@ -69,6 +69,7 @@ class site;
 class subject_type;
 class transporter;
 class transporter_type;
+class wonder;
 enum class country_tier;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
@@ -753,6 +754,8 @@ public:
 	}
 
 	void change_settlement_building_count(const building_type *building, const int change);
+
+	void on_wonder_gained(const wonder *wonder, const int multiplier);
 
 	int get_wealth() const
 	{

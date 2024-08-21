@@ -21,6 +21,7 @@ class game_rules;
 class province;
 class scenario;
 class site;
+class wonder;
 struct population_group_key;
 
 template <typename scope_type>
@@ -202,6 +203,30 @@ public:
 		this->exploration_changed = true;
 	}
 
+	const country *get_wonder_country(const wonder *wonder) const
+	{
+		const auto find_iterator = this->wonder_countries.find(wonder);
+
+		if (find_iterator != this->wonder_countries.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	void set_wonder_country(const wonder *wonder, const country *country)
+	{
+		if (country == this->get_wonder_country(wonder)) {
+			return;
+		}
+
+		if (country == nullptr) {
+			this->wonder_countries.erase(wonder);
+		} else {
+			this->wonder_countries[wonder] = country;
+		}
+	}
+
 	void process_delayed_effects();
 
 private:
@@ -249,6 +274,7 @@ private:
 	commodity_map<int> prices;
 	QImage exploration_diplomatic_map_image;
 	bool exploration_changed = false;
+	std::map<const wonder *, const country *> wonder_countries;
 	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const country>>> country_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const province>>> province_delayed_effects;

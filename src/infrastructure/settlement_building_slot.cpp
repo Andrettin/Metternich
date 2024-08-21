@@ -183,7 +183,9 @@ bool settlement_building_slot::can_gain_wonder(const metternich::wonder *wonder)
 		return false;
 	}
 
-	//FIXME: should check whether any other country has the wonder; if so, the wonder cannot be gained
+	if (game::get()->get_wonder_country(wonder) != nullptr) {
+		return false;
+	}
 
 	return true;
 }

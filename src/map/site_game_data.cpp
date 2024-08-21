@@ -904,8 +904,8 @@ void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier
 	assert_throw(wonder != nullptr);
 	assert_throw(multiplier != 0);
 
-	if (this->get_owner() != nullptr && wonder->get_country_modifier() != nullptr) {
-		wonder->get_country_modifier()->apply(this->get_owner(), multiplier);
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->on_wonder_gained(wonder, multiplier);
 	}
 
 	if (wonder->get_province_modifier() != nullptr) {

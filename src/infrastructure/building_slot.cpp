@@ -232,6 +232,9 @@ bool building_slot::is_available() const
 					continue;
 				}
 
+				if (game::get()->get_wonder_country(wonder) != nullptr) {
+					continue;
+				}
 				//FIXME: should check whether any other country has the wonder; if so, the wonder cannot be gained and as such it should not be counted for the purposes of building slot availability
 
 				if (!this->can_have_wonder(wonder)) {

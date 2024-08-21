@@ -44,6 +44,7 @@
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/settlement_type.h"
+#include "infrastructure/wonder.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -1164,6 +1165,11 @@ void country_game_data::on_site_gained(const site *site, const int multiplier)
 			if (building != nullptr) {
 				assert_throw(building->is_provincial());
 				this->change_settlement_building_count(building, 1 * multiplier);
+			}
+
+			const wonder *wonder = building_slot->get_wonder();
+			if (wonder != nullptr) {
+				this->on_wonder_gained(wonder, multiplier);
 			}
 		}
 
@@ -2486,6 +2492,19 @@ void country_game_data::change_settlement_building_count(const building_type *bu
 
 	if (game::get()->is_running()) {
 		emit settlement_building_counts_changed();
+	}
+}
+
+void country_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)
+{
+	if (wonder->get_country_modifier() != nullptr) {
+		wonder->get_country_modifier()->apply(this->country, multiplier);
+	}
+
+	if (multiplier > 0) {
+		game::get()->set_wonder_country(wonder, this->country);
+	} else if (multiplier < 0 && game::get()->get_wonder_country(wonder) == this->country) {
+		game::get()->set_wonder_country(wonder, nullptr);
 	}
 }
 
