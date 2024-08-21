@@ -3173,6 +3173,59 @@ void country_game_data::add_technology(const technology *technology)
 		}
 	}
 
+	//check if any discoveries can now be triggered, if they required this technology
+	bool leads_to_discovery = false;
+	for (const metternich::technology *requiring_technology : technology->get_leads_to()) {
+		if (requiring_technology->is_discovery()) {
+			leads_to_discovery = true;
+			break;
+		}
+	}
+
+	if (leads_to_discovery) {
+		for (const province *province : this->explored_provinces) {
+			const province_game_data *province_game_data = province->get_game_data();
+
+			for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
+				const tile *tile = map::get()->get_tile(tile_pos);
+				const resource *tile_resource = tile->get_resource();
+
+				if (!tile->is_resource_discovered()) {
+					continue;
+				}
+
+				if (this->can_gain_technology(tile_resource->get_discovery_technology())) {
+					this->add_technology(tile_resource->get_discovery_technology());
+
+					if (game::get()->is_running()) {
+						emit technology_researched(tile_resource->get_discovery_technology());
+					}
+				}
+			}
+		}
+
+		for (const QPoint &tile_pos : this->explored_tiles) {
+			const tile *tile = map::get()->get_tile(tile_pos);
+			const resource *tile_resource = tile->get_resource();
+
+			if (tile_resource == nullptr) {
+				continue;
+			}
+
+			if (!tile->is_resource_discovered()) {
+				continue;
+			}
+
+			if (this->can_gain_technology(tile_resource->get_discovery_technology())) {
+				this->add_technology(tile_resource->get_discovery_technology());
+
+				if (game::get()->is_running()) {
+					emit technology_researched(tile_resource->get_discovery_technology());
+				}
+			}
+		}
+	}
+
 	if (game::get()->is_running()) {
 		if (!technology->get_enabled_laws().empty()) {
 			this->check_laws();
@@ -3189,6 +3242,25 @@ void country_game_data::add_technology_with_prerequisites(const technology *tech
 	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
 		this->add_technology_with_prerequisites(prerequisite);
 	}
+}
+
+bool country_game_data::can_gain_technology(const technology *technology) const
+{
+	if (!technology->is_available_for_country(this->country)) {
+		return false;
+	}
+
+	if (this->has_technology(technology)) {
+		return false;
+	}
+
+	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
+		if (!this->has_technology(prerequisite)) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 std::vector<const technology *> country_game_data::get_available_technologies() const
@@ -3215,25 +3287,11 @@ QVariantList country_game_data::get_available_technologies_qvariant_list() const
 
 bool country_game_data::is_technology_available(const technology *technology) const
 {
-	if (!technology->is_available_for_country(this->country)) {
-		return false;
-	}
-
 	if (technology->is_discovery()) {
 		return false;
 	}
 
-	if (this->has_technology(technology)) {
-		return false;
-	}
-
-	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
-		if (!this->has_technology(prerequisite)) {
-			return false;
-		}
-	}
-
-	return true;
+	return this->can_gain_technology(technology);
 }
 
 QVariantList country_game_data::get_future_technologies_qvariant_list() const
@@ -5139,7 +5197,7 @@ void country_game_data::explore_tile(const QPoint &tile_pos)
 	}
 
 	if (tile_resource != nullptr && tile->is_resource_discovered() && tile_resource->get_discovery_technology() != nullptr) {
-		if (!this->has_technology(tile_resource->get_discovery_technology())) {
+		if (this->can_gain_technology(tile_resource->get_discovery_technology())) {
 			this->add_technology(tile_resource->get_discovery_technology());
 
 			if (game::get()->is_running()) {
@@ -5205,7 +5263,7 @@ void country_game_data::explore_province(const province *province)
 		const resource *tile_resource = tile->get_resource();
 
 		if (tile_resource != nullptr && tile->is_resource_discovered() && tile_resource->get_discovery_technology() != nullptr) {
-			if (!this->has_technology(tile_resource->get_discovery_technology())) {
+			if (this->can_gain_technology(tile_resource->get_discovery_technology())) {
 				this->add_technology(tile_resource->get_discovery_technology());
 
 				if (game::get()->is_running()) {

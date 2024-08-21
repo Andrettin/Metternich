@@ -599,7 +599,7 @@ void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discov
 				continue;
 			}
 
-			if (!country_game_data->has_technology(resource->get_discovery_technology())) {
+			if (country_game_data->can_gain_technology(resource->get_discovery_technology())) {
 				country_game_data->add_technology(resource->get_discovery_technology());
 
 				if (game::get()->is_running()) {

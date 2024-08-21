@@ -1168,6 +1168,8 @@ public:
 	void add_technology(const technology *technology);
 	void add_technology_with_prerequisites(const technology *technology);
 
+	bool can_gain_technology(const technology *technology) const;
+
 	std::vector<const technology *> get_available_technologies() const;
 	QVariantList get_available_technologies_qvariant_list() const;
 	bool is_technology_available(const technology *technology) const;

@@ -174,6 +174,11 @@ public:
 
 	void calculate_total_prerequisite_depth();
 
+	const std::vector<const technology *> &get_leads_to() const
+	{
+		return this->leads_to;
+	}
+
 	const std::vector<const commodity *> &get_enabled_commodities() const
 	{
 		return this->enabled_commodities;
