@@ -20,6 +20,16 @@ enum class military_unit_stat {
 	bonus_vs_fortifications,
 	ranged_defense_modifier,
 	entrenchment_bonus_modifier,
+	desert_attack_modifier,
+	desert_defense_modifier,
+	forest_attack_modifier,
+	forest_defense_modifier,
+	hills_attack_modifier,
+	hills_defense_modifier,
+	mountains_attack_modifier,
+	mountains_defense_modifier,
+	wetland_attack_modifier,
+	wetland_defense_modifier,
 
 	count
 };
@@ -57,6 +67,26 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 			return "Ranged Defense";
 		case military_unit_stat::entrenchment_bonus_modifier:
 			return "Entrenchment Bonus Modifier";
+		case military_unit_stat::desert_attack_modifier:
+			return "Desert Attack Modifier";
+		case military_unit_stat::desert_defense_modifier:
+			return "Desert Defense Modifier";
+		case military_unit_stat::forest_attack_modifier:
+			return "Forest Attack Modifier";
+		case military_unit_stat::forest_defense_modifier:
+			return "Forest Defense Modifier";
+		case military_unit_stat::hills_attack_modifier:
+			return "Hills Attack Modifier";
+		case military_unit_stat::hills_defense_modifier:
+			return "Hills Defense Modifier";
+		case military_unit_stat::mountains_attack_modifier:
+			return "Mountains Attack Modifier";
+		case military_unit_stat::mountains_defense_modifier:
+			return "Mountains Defense Modifier";
+		case military_unit_stat::wetland_attack_modifier:
+			return "Wetland Attack Modifier";
+		case military_unit_stat::wetland_defense_modifier:
+			return "Wetland Defense Modifier";
 		default:
 			break;
 	}
@@ -77,6 +107,16 @@ inline bool is_percent_military_unit_stat(const military_unit_stat stat)
 		case military_unit_stat::bonus_vs_fortifications:
 		case military_unit_stat::ranged_defense_modifier:
 		case military_unit_stat::entrenchment_bonus_modifier:
+		case military_unit_stat::desert_attack_modifier:
+		case military_unit_stat::desert_defense_modifier:
+		case military_unit_stat::forest_attack_modifier:
+		case military_unit_stat::forest_defense_modifier:
+		case military_unit_stat::hills_attack_modifier:
+		case military_unit_stat::hills_defense_modifier:
+		case military_unit_stat::mountains_attack_modifier:
+		case military_unit_stat::mountains_defense_modifier:
+		case military_unit_stat::wetland_attack_modifier:
+		case military_unit_stat::wetland_defense_modifier:
 			return true;
 		default:
 			return false;
