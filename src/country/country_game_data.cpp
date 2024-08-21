@@ -3194,6 +3194,10 @@ void country_game_data::add_technology(const technology *technology)
 					continue;
 				}
 
+				if (tile_resource->get_discovery_technology() == nullptr) {
+					continue;
+				}
+
 				if (this->can_gain_technology(tile_resource->get_discovery_technology())) {
 					this->add_technology(tile_resource->get_discovery_technology());
 
@@ -3213,6 +3217,10 @@ void country_game_data::add_technology(const technology *technology)
 			}
 
 			if (!tile->is_resource_discovered()) {
+				continue;
+			}
+
+			if (tile_resource->get_discovery_technology() == nullptr) {
 				continue;
 			}
 
@@ -3246,6 +3254,8 @@ void country_game_data::add_technology_with_prerequisites(const technology *tech
 
 bool country_game_data::can_gain_technology(const technology *technology) const
 {
+	assert_throw(technology != nullptr);
+
 	if (!technology->is_available_for_country(this->country)) {
 		return false;
 	}
