@@ -562,8 +562,8 @@ void military_unit::attack(military_unit *target, const bool ranged, const bool 
 		defense /= 100;
 	}
 	if (target_entrenched) {
-		int entrenchment_bonus = target->get_type()->get_entrench_bonus();
-		entrenchment_bonus *= 100 + target->get_stat(military_unit_stat::entrench_bonus_modifier).to_int();
+		int entrenchment_bonus = target->get_type()->get_entrenchment_bonus();
+		entrenchment_bonus *= 100 + target->get_stat(military_unit_stat::entrenchment_bonus_modifier).to_int();
 		entrenchment_bonus /= 100;
 		defense += entrenchment_bonus;
 	}

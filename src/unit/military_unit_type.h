@@ -35,7 +35,7 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(int hit_points MEMBER hit_points READ get_hit_points NOTIFY changed)
 	Q_PROPERTY(bool entrench MEMBER entrench READ can_entrench NOTIFY changed)
-	Q_PROPERTY(int entrench_bonus MEMBER entrench_bonus READ get_entrench_bonus NOTIFY changed)
+	Q_PROPERTY(int entrenchment_bonus MEMBER entrenchment_bonus READ get_entrenchment_bonus NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 	Q_PROPERTY(int upkeep MEMBER upkeep READ get_upkeep NOTIFY changed)
@@ -110,9 +110,9 @@ public:
 		return this->entrench;
 	}
 
-	int get_entrench_bonus() const
+	int get_entrenchment_bonus() const
 	{
-		return this->entrench_bonus;
+		return this->entrenchment_bonus;
 	}
 
 	const technology *get_required_technology() const
@@ -158,7 +158,7 @@ private:
 	std::map<military_unit_stat, centesimal_int> stats;
 	int hit_points = 25;
 	bool entrench = false;
-	int entrench_bonus = 1; //the entrenchment bonus to defense
+	int entrenchment_bonus = 1; //the entrenchment bonus to defense
 	technology *required_technology = nullptr;
 	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;

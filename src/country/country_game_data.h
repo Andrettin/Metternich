@@ -1582,14 +1582,14 @@ public:
 		this->air_morale_resistance_modifier += change;
 	}
 
-	int get_entrench_bonus_modifier() const
+	int get_entrenchment_bonus_modifier() const
 	{
-		return this->entrench_bonus_modifier;
+		return this->entrenchment_bonus_modifier;
 	}
 
-	void change_entrench_bonus_modifier(const int change)
+	void change_entrenchment_bonus_modifier(const int change)
 	{
-		this->entrench_bonus_modifier += change;
+		this->entrenchment_bonus_modifier += change;
 	}
 
 	const centesimal_int &get_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const
@@ -2453,7 +2453,7 @@ private:
 	int land_morale_resistance_modifier = 0;
 	int naval_morale_resistance_modifier = 0;
 	int air_morale_resistance_modifier = 0;
-	int entrench_bonus_modifier = 0;
+	int entrenchment_bonus_modifier = 0;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> military_unit_type_stat_modifiers;
 	transporter_type_map<std::map<transporter_stat, centesimal_int>> transporter_type_stat_modifiers;
 	int infantry_cost_modifier = 0;

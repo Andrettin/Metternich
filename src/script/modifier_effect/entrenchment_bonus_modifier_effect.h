@@ -5,16 +5,16 @@
 
 namespace metternich {
 
-class entrench_bonus_modifier_effect final : public modifier_effect<const country>
+class entrenchment_bonus_modifier_effect final : public modifier_effect<const country>
 {
 public:
-	explicit entrench_bonus_modifier_effect(const std::string &value) : modifier_effect(value)
+	explicit entrenchment_bonus_modifier_effect(const std::string &value) : modifier_effect(value)
 	{
 	}
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "entrench_bonus_modifier";
+		static const std::string identifier = "entrenchment_bonus_modifier";
 		return identifier;
 	}
 
@@ -22,7 +22,7 @@ public:
 	{
 		const int change = (this->value * multiplier).to_int();
 
-		scope->get_game_data()->change_entrench_bonus_modifier(change);
+		scope->get_game_data()->change_entrenchment_bonus_modifier(change);
 	}
 
 	virtual std::string get_base_string() const override

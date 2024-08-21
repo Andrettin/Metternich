@@ -25,7 +25,7 @@ const std::map<std::string, metternich::military_unit_stat> enum_converter<mette
 	{ "bonus_vs_artillery", metternich::military_unit_stat::bonus_vs_artillery },
 	{ "bonus_vs_fortifications", metternich::military_unit_stat::bonus_vs_fortifications },
 	{ "ranged_defense_modifier", metternich::military_unit_stat::ranged_defense_modifier },
-	{ "entrench_bonus_modifier", metternich::military_unit_stat::entrench_bonus_modifier }
+	{ "entrenchment_bonus_modifier", metternich::military_unit_stat::entrenchment_bonus_modifier }
 };
 
 template <>

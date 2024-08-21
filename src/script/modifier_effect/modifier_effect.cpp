@@ -26,7 +26,7 @@
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/depot_level_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
-#include "script/modifier_effect/entrench_bonus_modifier_effect.h"
+#include "script/modifier_effect/entrenchment_bonus_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_building_class_modifier_effect.h"
 #include "script/modifier_effect/free_cavalry_promotion_modifier_effect.h"
@@ -98,8 +98,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<deployment_limit_modifier_effect>(value);
 		} else if (key == "diplomatic_penalty_for_expansion_modifier") {
 			return std::make_unique<diplomatic_penalty_for_expansion_modifier_effect>(value);
-		} else if (key == "entrench_bonus_modifier") {
-			return std::make_unique<entrench_bonus_modifier_effect>(value);
+		} else if (key == "entrenchment_bonus_modifier") {
+			return std::make_unique<entrenchment_bonus_modifier_effect>(value);
 		} else if (key == "free_artillery_promotion") {
 			return std::make_unique<free_artillery_promotion_modifier_effect>(value);
 		} else if (key == "free_building_class") {
