@@ -98,6 +98,10 @@ bool settlement_building_slot::can_maintain_building(const building_type *buildi
 		return false;
 	}
 
+	if (building->is_wonder_only() && this->get_wonder() == nullptr) {
+		return false;
+	}
+
 	return building_slot::can_maintain_building(building);
 }
 

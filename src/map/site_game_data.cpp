@@ -670,6 +670,11 @@ void site_game_data::check_building_conditions()
 
 		const int building_level = building->get_level();
 
+		const wonder *wonder = building_slot->get_wonder();
+		if (wonder != nullptr && !building_slot->can_have_wonder(wonder)) {
+			building_slot->set_wonder(nullptr);
+		}
+
 		//if the building fails its conditions, try to replace it with one of its required buildings, if valid
 		while (building != nullptr) {
 			if (building_slot->can_maintain_building(building)) {
