@@ -574,6 +574,8 @@ void military_unit::attack(military_unit *target, const bool ranged, const bool 
 	damage *= 100 + target->get_stat(military_unit_stat::resistance).to_int();
 	damage /= 100;
 
+	damage = centesimal_int::max(damage, 1);
+
 	target->receive_damage(damage.to_int(), this->get_stat(military_unit_stat::shock).to_int());
 }
 
