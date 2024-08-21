@@ -246,6 +246,7 @@ public:
 	void check_promotions();
 	void check_free_promotions();
 
+	void attack(military_unit *target, const bool ranged, const bool target_entrenched);
 	void receive_damage(const int damage, const int morale_damage_modifier);
 	void heal(const int healing);
 

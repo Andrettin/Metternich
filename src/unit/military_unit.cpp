@@ -528,6 +528,55 @@ void military_unit::check_free_promotions()
 	}
 }
 
+void military_unit::attack(military_unit *target, const bool ranged, const bool target_entrenched)
+{
+	assert_throw(target != nullptr);
+
+	centesimal_int attack;
+	if (ranged) {
+		attack = this->get_stat(military_unit_stat::firepower);
+	} else {
+		attack = this->get_stat(military_unit_stat::melee);
+	}
+	int attack_modifier = 0;
+	attack_modifier += this->get_stat(military_unit_stat::damage_bonus).to_int();
+	if (target->get_type()->is_infantry()) {
+		attack_modifier += this->get_stat(military_unit_stat::bonus_vs_infantry).to_int();
+	} else if (target->get_type()->is_cavalry()) {
+		attack_modifier += this->get_stat(military_unit_stat::bonus_vs_cavalry).to_int();
+	} else if (target->get_type()->is_artillery()) {
+		attack_modifier += this->get_stat(military_unit_stat::bonus_vs_artillery).to_int();
+	}
+	if (attack_modifier != 0) {
+		attack *= 100 + attack_modifier;
+		attack /= 100;
+	}
+
+	centesimal_int defense = target->get_stat(military_unit_stat::defense);
+	int defense_modifier = 0;
+	if (ranged) {
+		defense_modifier += target->get_stat(military_unit_stat::ranged_defense_modifier).to_int();
+	}
+	if (defense_modifier != 0) {
+		defense *= 100 + defense_modifier;
+		defense /= 100;
+	}
+	if (target_entrenched) {
+		int entrenchment_bonus = target->get_type()->get_entrench_bonus();
+		entrenchment_bonus *= 100 + target->get_stat(military_unit_stat::entrench_bonus_modifier).to_int();
+		entrenchment_bonus /= 100;
+		defense += entrenchment_bonus;
+	}
+
+	centesimal_int damage = attack * 2 - defense;
+	damage /= 2;
+
+	damage *= 100 + target->get_stat(military_unit_stat::resistance).to_int();
+	damage /= 100;
+
+	target->receive_damage(damage.to_int(), this->get_stat(military_unit_stat::shock).to_int());
+}
+
 void military_unit::receive_damage(const int damage, const int morale_damage_modifier)
 {
 	this->change_hit_points(-damage);
