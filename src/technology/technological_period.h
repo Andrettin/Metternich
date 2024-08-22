@@ -26,6 +26,11 @@ public:
 	virtual void initialize() override;
 	virtual void check() const override;
 
+	const std::vector<const technological_period *> &get_child_periods() const
+	{
+		return this->child_periods;
+	}
+
 	int get_index() const
 	{
 		return this->index;
@@ -46,6 +51,7 @@ signals:
 
 private:
 	technological_period *parent_period = nullptr;
+	std::vector<const technological_period *> child_periods;
 	int index = -1;
 	int start_year = 0;
 	int end_year = 0;

@@ -16,6 +16,8 @@ void technological_period::initialize()
 			this->parent_period->initialize();
 		}
 
+		this->parent_period->child_periods.push_back(this);
+
 		this->index = this->parent_period->get_index() + 1;
 	} else {
 		this->index = 0;
