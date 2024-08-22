@@ -17,6 +17,8 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/terrain_type.h"
+#include "map/tile.h"
 #include "script/condition/condition.h"
 #include "script/modifier.h"
 #include "ui/icon.h"
@@ -532,6 +534,12 @@ void military_unit::attack(military_unit *target, const bool ranged, const bool 
 {
 	assert_throw(target != nullptr);
 
+	const metternich::province *province = target->get_province();
+	const terrain_type *terrain = nullptr;
+	if (province != nullptr) {
+		terrain = province->get_provincial_capital()->get_game_data()->get_tile()->get_terrain();
+	}
+
 	centesimal_int attack;
 	if (ranged) {
 		attack = this->get_stat(military_unit_stat::firepower);
@@ -547,6 +555,19 @@ void military_unit::attack(military_unit *target, const bool ranged, const bool 
 	} else if (target->get_type()->is_artillery()) {
 		attack_modifier += this->get_stat(military_unit_stat::bonus_vs_artillery).to_int();
 	}
+	if (terrain != nullptr) {
+		if (terrain->is_desert()) {
+			attack_modifier += this->get_stat(military_unit_stat::desert_attack_modifier).to_int();
+		} else if (terrain->is_forest()) {
+			attack_modifier += this->get_stat(military_unit_stat::forest_attack_modifier).to_int();
+		} else if (terrain->is_hills()) {
+			attack_modifier += this->get_stat(military_unit_stat::hills_attack_modifier).to_int();
+		} else if (terrain->is_mountains()) {
+			attack_modifier += this->get_stat(military_unit_stat::mountains_attack_modifier).to_int();
+		} else if (terrain->is_wetland()) {
+			attack_modifier += this->get_stat(military_unit_stat::wetland_attack_modifier).to_int();
+		}
+	}
 	if (attack_modifier != 0) {
 		attack *= 100 + attack_modifier;
 		attack /= 100;
@@ -556,6 +577,19 @@ void military_unit::attack(military_unit *target, const bool ranged, const bool 
 	int defense_modifier = 0;
 	if (ranged) {
 		defense_modifier += target->get_stat(military_unit_stat::ranged_defense_modifier).to_int();
+	}
+	if (terrain != nullptr) {
+		if (terrain->is_desert()) {
+			defense_modifier += target->get_stat(military_unit_stat::desert_defense_modifier).to_int();
+		} else if (terrain->is_forest()) {
+			defense_modifier += target->get_stat(military_unit_stat::forest_defense_modifier).to_int();
+		} else if (terrain->is_hills()) {
+			defense_modifier += target->get_stat(military_unit_stat::hills_defense_modifier).to_int();
+		} else if (terrain->is_mountains()) {
+			defense_modifier += target->get_stat(military_unit_stat::mountains_defense_modifier).to_int();
+		} else if (terrain->is_wetland()) {
+			defense_modifier += target->get_stat(military_unit_stat::wetland_defense_modifier).to_int();
+		}
 	}
 	if (defense_modifier != 0) {
 		defense *= 100 + defense_modifier;

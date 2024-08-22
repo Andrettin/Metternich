@@ -23,6 +23,11 @@ class terrain_type final : public named_data_entry, public data_type<terrain_typ
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(bool water MEMBER water READ is_water NOTIFY changed)
+	Q_PROPERTY(bool desert MEMBER desert READ is_desert NOTIFY changed)
+	Q_PROPERTY(bool forest MEMBER forest READ is_forest NOTIFY changed)
+	Q_PROPERTY(bool hills MEMBER hills READ is_hills NOTIFY changed)
+	Q_PROPERTY(bool mountains MEMBER mountains READ is_mountains NOTIFY changed)
+	Q_PROPERTY(bool wetland MEMBER wetland READ is_wetland NOTIFY changed)
 	Q_PROPERTY(metternich::elevation_type elevation_type MEMBER elevation_type READ get_elevation_type NOTIFY changed)
 	Q_PROPERTY(metternich::temperature_type temperature_type MEMBER temperature_type READ get_temperature_type NOTIFY changed)
 	Q_PROPERTY(metternich::moisture_type moisture_type MEMBER moisture_type READ get_moisture_type NOTIFY changed)
@@ -110,6 +115,31 @@ public:
 		return this->water;
 	}
 
+	bool is_desert() const
+	{
+		return this->desert;
+	}
+
+	bool is_forest() const
+	{
+		return this->forest;
+	}
+
+	bool is_hills() const
+	{
+		return this->hills;
+	}
+
+	bool is_mountains() const
+	{
+		return this->mountains;
+	}
+
+	bool is_wetland() const
+	{
+		return this->wetland;
+	}
+
 	elevation_type get_elevation_type() const
 	{
 		return this->elevation_type;
@@ -189,6 +219,11 @@ private:
 	const metternich::icon *icon = nullptr;
 	std::filesystem::path image_filepath;
 	bool water = false;
+	bool desert = false;
+	bool forest = false;
+	bool hills = false;
+	bool mountains = false;
+	bool wetland = false;
 	metternich::elevation_type elevation_type;
 	metternich::temperature_type temperature_type;
 	metternich::moisture_type moisture_type;
