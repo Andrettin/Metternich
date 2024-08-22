@@ -9,6 +9,7 @@ class technological_period final : public data_entry, public data_type<technolog
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::technological_period* parent_period MEMBER parent_period NOTIFY changed)
 	Q_PROPERTY(int start_year MEMBER start_year READ get_start_year NOTIFY changed)
 	Q_PROPERTY(int end_year MEMBER end_year READ get_end_year NOTIFY changed)
 
@@ -16,22 +17,6 @@ public:
 	static constexpr const char class_identifier[] = "technological_period";
 	static constexpr const char property_class_identifier[] = "metternich::technological_period*";
 	static constexpr const char database_folder[] = "technological_periods";
-
-	static void initialize_all();
-
-	static const technological_period *get_by_year(const int year)
-	{
-		auto find_iterator = technological_period::periods_by_year.upper_bound(year);
-		if (find_iterator != technological_period::periods_by_year.begin()) {
-			--find_iterator;
-			return find_iterator->second;
-		}
-
-		throw std::runtime_error(std::format("No technological period found for year {}.", year));
-	}
-
-private:
-	static inline std::map<int, const technological_period *> periods_by_year;
 
 public:
 	explicit technological_period(const std::string &identifier) : data_entry(identifier)
@@ -60,6 +45,7 @@ signals:
 	void changed();
 
 private:
+	technological_period *parent_period = nullptr;
 	int index = -1;
 	int start_year = 0;
 	int end_year = 0;

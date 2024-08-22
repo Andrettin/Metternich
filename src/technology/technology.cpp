@@ -97,10 +97,6 @@ void technology::initialize()
 		prerequisite->leads_to.push_back(this);
 	}
 
-	if (this->get_year() != 0) {
-		this->period = technological_period::get_by_year(this->get_year());
-	}
-
 	std::sort(this->enabled_pathways.begin(), this->enabled_pathways.end(), pathway_compare());
 	std::sort(this->enabled_river_crossing_pathways.begin(), this->enabled_river_crossing_pathways.end(), pathway_compare());
 
@@ -126,8 +122,14 @@ void technology::check() const
 	}
 
 	if (this->get_period() != nullptr) {
+		if (this->get_year() != 0) {
+			if (this->get_year() < this->get_period()->get_start_year() || this->get_year() > this->get_period()->get_end_year()) {
+				log::log_error(std::format("The year for technology \"{}\" ({}) does not match its period (\"{}\", {}-{}).", this->get_identifier(), this->get_year(), this->get_period()->get_identifier(), this->get_period()->get_start_year(), this->get_period()->get_end_year(), this->get_period()->get_index()));
+			}
+		}
+
 		if (this->get_period()->get_index() != this->get_total_prerequisite_depth()) {
-			log::log_error(std::format("The period for technology \"{}\" ({}-{}, index {}) does not match its total prerequisite depth ({}).", this->get_identifier(), this->get_period()->get_start_year(), this->get_period()->get_end_year(), this->get_period()->get_index(), this->get_total_prerequisite_depth()));
+			log::log_error(std::format("The period for technology \"{}\" (\"{}\", {}-{}, index {}) does not match its total prerequisite depth ({}).", this->get_identifier(), this->get_period()->get_identifier(), this->get_period()->get_start_year(), this->get_period()->get_end_year(), this->get_period()->get_index(), this->get_total_prerequisite_depth()));
 		}
 	} else {
 		log::log_error(std::format("Technology \"{}\" has no period.", this->get_identifier()));

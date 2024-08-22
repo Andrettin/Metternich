@@ -119,7 +119,7 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			this->set_route_adjacency_tile(adjacency, tile);
 		});
 	} else {
-		database::get()->process_gsml_scope_for_object(this, scope);
+		defines_base::process_gsml_scope(scope);
 	}
 }
 

@@ -7,37 +7,30 @@
 
 namespace metternich {
 	
-void technological_period::initialize_all()
-{
-	data_type::initialize_all();
-
-	technological_period::sort_instances([](const technological_period *lhs, const technological_period *rhs) {
-		assert_throw(lhs->get_start_year() != rhs->get_start_year());
-		return lhs->get_start_year() < rhs->get_start_year();
-	});
-
-	for (size_t i = 0; i < technological_period::get_all().size(); ++i) {
-		technological_period *period = technological_period::get_all().at(i);
-
-		period->index = static_cast<int>(i);
-
-		if (i > 0) {
-			const technological_period *previous_period = technological_period::get_all().at(i - 1);
-			assert_throw(period->get_start_year() == previous_period->get_end_year());
-		}
-	}
-}
-
 void technological_period::initialize()
 {
-	assert_throw(!technological_period::periods_by_year.contains(this->get_start_year()));
-	technological_period::periods_by_year[this->get_start_year()] = this;
+	if (this->parent_period != nullptr) {
+		assert_throw(this->parent_period != this);
+
+		if (!this->parent_period->is_initialized()) {
+			this->parent_period->initialize();
+		}
+
+		this->index = this->parent_period->get_index() + 1;
+	} else {
+		this->index = 0;
+	}
 
 	data_entry::initialize();
 }
 
 void technological_period::check() const
 {
+	if (this->parent_period != nullptr) {
+		assert_throw(this->get_start_year() == this->parent_period->get_end_year());
+	}
+
+	assert_throw(this->get_index() != -1);
 	assert_throw(this->get_start_year() != 0);
 	assert_throw(this->get_end_year() != 0);
 	assert_throw(this->get_end_year() > this->get_start_year());
