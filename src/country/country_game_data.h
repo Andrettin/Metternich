@@ -9,6 +9,7 @@
 #include "infrastructure/building_class_container.h"
 #include "infrastructure/building_type_container.h"
 #include "infrastructure/building_slot_type_container.h"
+#include "infrastructure/improvement_container.h"
 #include "map/province_container.h"
 #include "map/site_container.h"
 #include "map/terrain_type_container.h"
@@ -1829,6 +1830,41 @@ public:
 
 	void change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change);
 
+	const improvement_map<commodity_map<centesimal_int>> &get_improvement_commodity_bonuses() const
+	{
+		return this->improvement_commodity_bonuses;
+	}
+
+	const commodity_map<centesimal_int> &get_improvement_commodity_bonuses(const improvement *improvement) const
+	{
+		const auto find_iterator = this->improvement_commodity_bonuses.find(improvement);
+
+		if (find_iterator != this->improvement_commodity_bonuses.end()) {
+			return find_iterator->second;
+		}
+
+		static const commodity_map<centesimal_int> empty_map;
+		return empty_map;
+	}
+
+	const centesimal_int &get_improvement_commodity_bonus(const commodity *commodity, const improvement *improvement) const
+	{
+		const auto find_iterator = this->improvement_commodity_bonuses.find(improvement);
+
+		if (find_iterator != this->improvement_commodity_bonuses.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(commodity);
+
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
+	}
+
+	void change_improvement_commodity_bonus(const improvement *improvement, const commodity *commodity, const centesimal_int &change);
+
 	const building_type_map<commodity_map<int>> &get_building_commodity_bonuses() const
 	{
 		return this->building_commodity_bonuses;
@@ -2469,6 +2505,7 @@ private:
 	int throughput_modifier = 0;
 	commodity_map<int> commodity_throughput_modifiers;
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
+	improvement_map<commodity_map<centesimal_int>> improvement_commodity_bonuses;
 	building_type_map<commodity_map<int>> building_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses_per_population;

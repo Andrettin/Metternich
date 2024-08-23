@@ -115,6 +115,7 @@ set(infrastructure_SRCS
 	src/infrastructure/building_type_container.cpp
 	src/infrastructure/country_building_slot.cpp
 	src/infrastructure/improvement.cpp
+	src/infrastructure/improvement_container.cpp
 	src/infrastructure/improvement_slot.cpp
 	src/infrastructure/pathway.cpp
 	src/infrastructure/pathway_container.cpp
@@ -429,6 +430,7 @@ set(infrastructure_HDRS
 	src/infrastructure/building_type_container.h
 	src/infrastructure/country_building_slot.h
 	src/infrastructure/improvement.h
+	src/infrastructure/improvement_container.h
 	src/infrastructure/improvement_slot.h
 	src/infrastructure/pathway.h
 	src/infrastructure/pathway_container.h
@@ -697,6 +699,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_building_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_improved_resource_modifier_effect.h
+	src/script/modifier_effect/commodity_bonus_per_improvement_modifier_effect.h
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h
 	src/script/modifier_effect/deployment_limit_modifier_effect.h

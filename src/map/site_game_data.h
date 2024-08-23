@@ -151,7 +151,7 @@ public:
 	const improvement *get_resource_improvement() const;
 	const improvement *get_depot_improvement() const;
 	const improvement *get_port_improvement() const;
-
+	bool has_improvement(const improvement *improvement) const;
 	void set_improvement(const improvement_slot slot, const improvement *improvement);
 
 	const std::vector<qunique_ptr<settlement_building_slot>> &get_building_slots() const

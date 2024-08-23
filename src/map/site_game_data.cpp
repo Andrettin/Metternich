@@ -257,6 +257,16 @@ void site_game_data::set_owner(const country *owner)
 		if (this->site->is_settlement()) {
 			this->population->remove_upper_population(old_owner->get_game_data()->get_population());
 
+			for (const auto &[improvement, commodity_bonuses] : old_owner->get_game_data()->get_improvement_commodity_bonuses()) {
+				if (!this->has_improvement(improvement)) {
+					continue;
+				}
+
+				for (const auto &[commodity, bonus] : commodity_bonuses) {
+					this->change_base_commodity_output(commodity, -bonus);
+				}
+			}
+
 			for (const auto &[building, commodity_bonuses] : old_owner->get_game_data()->get_building_commodity_bonuses()) {
 				if (!this->has_building(building)) {
 					continue;
@@ -296,6 +306,16 @@ void site_game_data::set_owner(const country *owner)
 
 		if (this->site->is_settlement()) {
 			this->population->add_upper_population(this->get_owner()->get_game_data()->get_population());
+
+			for (const auto &[improvement, commodity_bonuses] : this->get_owner()->get_game_data()->get_improvement_commodity_bonuses()) {
+				if (!this->has_improvement(improvement)) {
+					continue;
+				}
+
+				for (const auto &[commodity, bonus] : commodity_bonuses) {
+					this->change_base_commodity_output(commodity, bonus);
+				}
+			}
 
 			for (const auto &[building, commodity_bonuses] : this->get_owner()->get_game_data()->get_building_commodity_bonuses()) {
 				if (!this->has_building(building)) {
@@ -504,6 +524,13 @@ const improvement *site_game_data::get_depot_improvement() const
 const improvement *site_game_data::get_port_improvement() const
 {
 	return this->get_improvement(improvement_slot::port);
+}
+
+bool site_game_data::has_improvement(const improvement *improvement) const
+{
+	assert_throw(improvement != nullptr);
+
+	return this->get_improvement(improvement->get_slot()) == improvement;
 }
 
 void site_game_data::set_improvement(const improvement_slot slot, const improvement *improvement)
@@ -927,6 +954,14 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 	if (this->get_province() != nullptr && this->get_resource() != nullptr && improvement->get_slot() == improvement_slot::resource) {
 		for (const auto &[commodity, value] : this->get_province()->get_game_data()->get_improved_resource_commodity_bonuses(this->get_resource())) {
 			this->change_base_commodity_output(commodity, centesimal_int(value) * multiplier);
+		}
+	}
+
+	if (this->get_owner() != nullptr) {
+		const country_game_data *country_game_data = this->get_owner()->get_game_data();
+
+		for (const auto &[commodity, bonus] : country_game_data->get_improvement_commodity_bonuses(improvement)) {
+			this->change_base_commodity_output(commodity, bonus * multiplier);
 		}
 	}
 

@@ -21,6 +21,7 @@
 #include "script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_building_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_improved_resource_modifier_effect.h"
+#include "script/modifier_effect/commodity_bonus_per_improvement_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/commodity_throughput_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
@@ -288,6 +289,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const country>) {
 		if (tag == "ai_building_desire") {
 			modifier_effect = std::make_unique<ai_building_desire_modifier_effect>();
+		} else if (tag == "commodity_bonus_per_improvement") {
+			modifier_effect = std::make_unique<commodity_bonus_per_improvement_modifier_effect<scope_type>>();
 		} else if (tag == "military_unit_category_stat_modifier") {
 			modifier_effect = std::make_unique<military_unit_category_stat_modifier_effect>();
 		}

@@ -4956,6 +4956,36 @@ void country_game_data::change_improved_resource_commodity_bonus(const resource 
 	}
 }
 
+void country_game_data::change_improvement_commodity_bonus(const improvement *improvement, const commodity *commodity, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const centesimal_int &count = (this->improvement_commodity_bonuses[improvement][commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->improvement_commodity_bonuses[improvement].erase(commodity);
+
+		if (this->improvement_commodity_bonuses[improvement].empty()) {
+			this->improvement_commodity_bonuses.erase(improvement);
+		}
+	}
+
+	for (const province *province : this->get_provinces()) {
+		for (const QPoint &tile_pos : province->get_game_data()->get_resource_tiles()) {
+			const tile *tile = map::get()->get_tile(tile_pos);
+			const site *site = tile->get_site();
+
+			if (site->get_game_data()->has_improvement(improvement)) {
+				site->get_game_data()->change_base_commodity_output(commodity, change);
+			}
+		}
+	}
+}
+
 void country_game_data::change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change)
 {
 	if (change == 0) {
