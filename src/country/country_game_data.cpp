@@ -24,6 +24,8 @@
 #include "country/law_group.h"
 #include "country/policy.h"
 #include "country/religion.h"
+#include "country/tradition.h"
+#include "country/tradition_group_container.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
@@ -164,6 +166,7 @@ void country_game_data::do_turn()
 
 		this->check_journal_entries();
 
+		this->check_traditions();
 		this->check_characters();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->country->get_identifier())));
@@ -3710,6 +3713,156 @@ void country_game_data::do_policy_value_change(const policy *policy, const int c
 	}
 
 	this->change_policy_value(policy, change);
+}
+
+bool country_game_data::can_have_tradition(const tradition *tradition) const
+{
+	assert_throw(tradition != nullptr);
+
+	if (tradition->get_required_technology() != nullptr && !this->has_technology(tradition->get_required_technology())) {
+		return false;
+	}
+
+	for (const metternich::tradition *prerequisite : tradition->get_prerequisites()) {
+		if (!this->has_tradition(prerequisite)) {
+			return false;
+		}
+	}
+
+	if (tradition->get_conditions() != nullptr && !tradition->get_conditions()->check(this->country, read_only_context(this->country))) {
+		return false;
+	}
+
+	return true;
+}
+
+void country_game_data::gain_tradition(const tradition *tradition, const int multiplier)
+{
+	assert_throw(tradition != nullptr);
+
+	if (this->has_tradition(tradition) == (multiplier > 0)) {
+		return;
+	}
+
+	if (multiplier > 0) {
+		this->traditions.insert(tradition);
+	} else {
+		this->traditions.erase(tradition);
+	}
+
+	if (tradition->get_modifier() != nullptr) {
+		tradition->get_modifier()->apply(this->country, multiplier);
+	}
+
+	if (game::get()->is_running()) {
+		emit traditions_changed();
+	}
+
+	this->check_traditions();
+}
+
+void country_game_data::check_traditions()
+{
+	//remove traditions which can no longer be had
+	const tradition_set traditions = this->get_traditions();
+	for (const tradition *tradition : traditions) {
+		if (!this->can_have_tradition(tradition)) {
+			this->gain_tradition(tradition, -1);
+		}
+	}
+
+	if (this->is_under_anarchy()) {
+		if (this->get_next_tradition() != nullptr) {
+			this->set_next_tradition(nullptr);
+		}
+
+		return;
+	}
+
+	if (this->get_next_tradition() != nullptr) {
+		if (!this->can_have_tradition(this->get_next_tradition())) {
+			if (this->country == game::get()->get_player_country()) {
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification("Tradition Unavailable", interior_minister_portrait, std::format("Your Excellency, the {} tradition is no longer available for acquisition.", this->get_next_tradition()->get_name()));
+			}
+
+			this->set_next_tradition(nullptr);
+		} else {
+			if (this->get_stored_commodity(defines::get()->get_tradition_commodity()) >= this->get_tradition_cost()) {
+				this->change_stored_commodity(defines::get()->get_tradition_commodity(), -this->get_tradition_cost());
+
+				this->gain_tradition(this->get_next_tradition(), 1);
+
+				emit tradition_acquired(this->get_next_tradition());
+
+				this->set_next_tradition(nullptr);
+			}
+		}
+	} else {
+		if (this->get_commodity_output(defines::get()->get_tradition_commodity()).to_int() > 0 || this->get_stored_commodity(defines::get()->get_tradition_commodity()) > 0) {
+			this->choose_next_tradition();
+		}
+	}
+}
+
+void country_game_data::choose_next_tradition()
+{
+	tradition_group_map<std::vector<const tradition *>> potential_traditions_per_group;
+
+	for (const tradition *tradition : tradition::get_all()) {
+		if (!this->can_have_tradition(tradition)) {
+			continue;
+		}
+
+		std::vector<const metternich::tradition *> &group_traditions = potential_traditions_per_group[tradition->get_group()];
+
+		group_traditions.push_back(tradition);
+	}
+
+	if (potential_traditions_per_group.empty()) {
+		return;
+	}
+
+	tradition_group_map<const tradition *> potential_tradition_map;
+
+	for (const auto &[group, group_traditions] : potential_traditions_per_group) {
+		potential_tradition_map[group] = vector::get_random(group_traditions);
+	}
+
+	if (this->is_ai()) {
+		std::vector<const tradition *> preferred_traditions;
+
+		int best_desire = 0;
+		for (const auto &[group, tradition] : potential_tradition_map) {
+			int desire = 100;
+
+			for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
+				if (vector::contains(journal_entry->get_acquired_traditions(), tradition)) {
+					desire += journal_entry::ai_tradition_desire_modifier;
+				}
+			}
+
+			assert_throw(desire > 0);
+
+			if (desire > best_desire) {
+				preferred_traditions.clear();
+				best_desire = desire;
+			}
+
+			if (desire >= best_desire) {
+				preferred_traditions.push_back(tradition);
+			}
+		}
+
+		assert_throw(!preferred_traditions.empty());
+
+		const tradition *chosen_tradition = vector::get_random(preferred_traditions);
+		this->set_next_tradition(chosen_tradition);
+	} else {
+		const std::vector<const tradition *> potential_traditions = archimedes::map::get_values(potential_tradition_map);
+		emit engine_interface::get()->next_tradition_choosable(container::to_qvariant_list(potential_traditions));
+	}
 }
 
 void country_game_data::check_characters()

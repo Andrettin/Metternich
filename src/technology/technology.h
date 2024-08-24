@@ -28,6 +28,7 @@ class production_type;
 class resource;
 class technological_period;
 class terrain_type;
+class tradition;
 class transporter_type;
 class wonder;
 enum class character_role;
@@ -332,6 +333,14 @@ public:
 
 	void add_enabled_law(const law *law);
 
+	const std::vector<const tradition *> &get_enabled_traditions() const
+	{
+		return this->enabled_traditions;
+	}
+
+	std::vector<const tradition *> get_enabled_traditions_for_country(const country *country) const;
+	void add_enabled_tradition(const tradition *tradition);
+
 	const std::vector<const character *> &get_enabled_characters(const character_role role) const
 	{
 		static const std::vector<const character *> empty_vector;
@@ -446,6 +455,7 @@ private:
 	std::vector<const transporter_type *> enabled_transporters;
 	std::vector<const government_type *> enabled_government_types;
 	std::vector<const law *> enabled_laws;
+	std::vector<const tradition *> enabled_traditions;
 	std::map<character_role, std::vector<const character *>> enabled_characters;
 	std::map<character_role, std::vector<const character *>> retired_characters;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;

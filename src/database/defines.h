@@ -53,6 +53,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::commodity* research_commodity MEMBER research_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* prestige_commodity MEMBER prestige_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* piety_commodity MEMBER piety_commodity NOTIFY changed)
+	Q_PROPERTY(const metternich::commodity* tradition_commodity MEMBER tradition_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* advisor_commodity MEMBER advisor_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* leader_commodity MEMBER leader_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* tariff_icon MEMBER tariff_icon NOTIFY changed)
@@ -224,6 +225,11 @@ public:
 		return this->piety_commodity;
 	}
 
+	const commodity *get_tradition_commodity() const
+	{
+		return this->tradition_commodity;
+	}
+
 	const commodity *get_advisor_commodity() const
 	{
 		return this->advisor_commodity;
@@ -367,6 +373,7 @@ private:
 	const commodity *research_commodity = nullptr;
 	const commodity *prestige_commodity = nullptr;
 	const commodity *piety_commodity = nullptr;
+	const commodity *tradition_commodity = nullptr;
 	const commodity *advisor_commodity = nullptr;
 	const commodity *leader_commodity = nullptr;
 	const icon *tariff_icon = nullptr;

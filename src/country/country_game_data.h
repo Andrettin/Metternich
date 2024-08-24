@@ -4,6 +4,7 @@
 #include "country/country_container.h"
 #include "country/law_group_container.h"
 #include "country/policy_container.h"
+#include "country/tradition_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_class_container.h"
@@ -33,6 +34,7 @@ Q_MOC_INCLUDE("country/law_group.h")
 Q_MOC_INCLUDE("country/policy.h")
 Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("country/subject_type.h")
+Q_MOC_INCLUDE("country/tradition.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("technology/technology.h")
@@ -68,6 +70,7 @@ class region;
 class religion;
 class site;
 class subject_type;
+class tradition;
 class transporter;
 class transporter_type;
 class wonder;
@@ -144,6 +147,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
 	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY laws_changed)
 	Q_PROPERTY(QVariantList policy_values READ get_policy_values_qvariant_list NOTIFY policy_values_changed)
+	Q_PROPERTY(int tradition_cost READ get_tradition_cost NOTIFY traditions_changed)
+	Q_PROPERTY(const metternich::tradition* next_tradition READ get_next_tradition WRITE set_next_tradition NOTIFY next_tradition_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
@@ -1298,6 +1303,54 @@ public:
 		return 100 + (this->get_population_unit_count() - 1);
 	}
 
+	const tradition_set &get_traditions() const
+	{
+		return this->traditions;
+	}
+
+	Q_INVOKABLE bool has_tradition(const metternich::tradition *tradition) const
+	{
+		return this->get_traditions().contains(tradition);
+	}
+
+	bool can_have_tradition(const tradition *tradition) const;
+	void gain_tradition(const tradition *tradition, const int multiplier);
+	void check_traditions();
+
+	Q_INVOKABLE int get_total_tradition_cost_modifier() const
+	{
+		return 100 + (10 * (this->get_province_count() - 1)) + this->get_tradition_cost_modifier();
+	}
+
+	int get_tradition_cost() const
+	{
+		int cost = 3 * static_cast<int>(this->get_traditions().size()) + 25;
+		cost *= 100 + (10 * (this->get_province_count() - 1));
+		cost /= 100;
+
+		cost *= 100 + this->get_tradition_cost_modifier();
+		cost /= 100;
+
+		return std::max(0, cost);
+	}
+
+	const tradition *get_next_tradition() const
+	{
+		return this->next_tradition;
+	}
+
+	void set_next_tradition(const tradition *tradition)
+	{
+		if (tradition == this->get_next_tradition()) {
+			return;
+		}
+
+		this->next_tradition = tradition;
+		emit next_tradition_changed();
+	}
+
+	void choose_next_tradition();
+
 	void check_characters();
 
 	const character *get_ruler() const
@@ -2027,6 +2080,16 @@ public:
 		this->law_cost_modifier += change;
 	}
 
+	int get_tradition_cost_modifier() const
+	{
+		return this->tradition_cost_modifier;
+	}
+
+	void change_tradition_cost_modifier(const int change)
+	{
+		this->tradition_cost_modifier += change;
+	}
+
 	int get_advisor_cost_modifier() const
 	{
 		return this->advisor_cost_modifier;
@@ -2381,6 +2444,9 @@ signals:
 	void government_type_changed();
 	void laws_changed();
 	void policy_values_changed();
+	void traditions_changed();
+	void next_tradition_changed();
+	void tradition_acquired(const tradition *tradition);
 	void ruler_changed();
 	void advisors_changed();
 	void next_advisor_changed();
@@ -2469,6 +2535,8 @@ private:
 	const metternich::government_type *government_type = nullptr;
 	law_group_map<const law *> laws;
 	policy_map<int> policy_values;
+	tradition_set traditions;
+	const tradition *next_tradition = nullptr;
 	const character *ruler = nullptr;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;
@@ -2514,6 +2582,7 @@ private:
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	population_type_map<centesimal_int> population_type_militancy_modifiers;
 	int law_cost_modifier = 0;
+	int tradition_cost_modifier = 0;
 	int advisor_cost_modifier = 0;
 	int leader_cost_modifier = 0;
 	int diplomatic_penalty_for_expansion_modifier = 0;

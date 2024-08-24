@@ -16,6 +16,7 @@ class portrait;
 class province;
 class site;
 class technology;
+class tradition;
 
 template <typename scope_type>
 class and_condition;
@@ -45,6 +46,7 @@ public:
 	static constexpr int ai_technology_desire_modifier = 100;
 	static constexpr int ai_advisor_desire_modifier = 1000;
 	static constexpr int ai_leader_desire_modifier = 1000;
+	static constexpr int ai_tradition_desire_modifier = 100;
 
 	explicit journal_entry(const std::string &identifier);
 	~journal_entry();
@@ -132,6 +134,11 @@ public:
 		return this->researched_technologies;
 	}
 
+	const std::vector<const tradition *> &get_acquired_traditions() const
+	{
+		return this->acquired_traditions;
+	}
+
 	const std::vector<const character *> &get_recruited_characters() const
 	{
 		return this->recruited_characters;
@@ -157,6 +164,7 @@ private:
 	std::vector<const building_type *> built_buildings;
 	site_map<std::vector<const building_type *>> built_settlement_buildings;
 	std::vector<const technology *> researched_technologies;
+	std::vector<const tradition *> acquired_traditions;
 	std::vector<const character *> recruited_characters;
 };
 

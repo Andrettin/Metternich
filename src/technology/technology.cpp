@@ -10,6 +10,7 @@
 #include "country/culture.h"
 #include "country/government_type.h"
 #include "country/law.h"
+#include "country/tradition.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
@@ -152,6 +153,7 @@ void technology::check() const
 		&& this->get_enabled_government_types().empty()
 		&& this->get_enabled_improvements().empty()
 		&& this->get_enabled_laws().empty()
+		&& this->get_enabled_traditions().empty()
 		&& this->get_enabled_military_units().empty()
 		&& this->get_enabled_pathway_terrains().empty()
 		&& this->get_enabled_pathways().empty()
@@ -441,6 +443,30 @@ void technology::add_enabled_law(const law *law)
 	});
 }
 
+std::vector<const tradition *> technology::get_enabled_traditions_for_country(const country *country) const
+{
+	std::vector<const tradition *> traditions;
+
+	for (const tradition *tradition : this->get_enabled_traditions()) {
+		if (tradition->get_conditions() != nullptr && !tradition->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		traditions.push_back(tradition);
+	}
+
+	return traditions;
+}
+
+void technology::add_enabled_tradition(const tradition *tradition)
+{
+	this->enabled_traditions.push_back(tradition);
+
+	std::sort(this->enabled_traditions.begin(), this->enabled_traditions.end(), [](const metternich::tradition *lhs, const metternich::tradition *rhs) {
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+}
+
 std::vector<const character *> technology::get_enabled_characters_for_country(const character_role role, const country *country) const
 {
 	std::vector<const character *> characters;
@@ -548,7 +574,6 @@ QString technology::get_effects_string(metternich::country *country) const
 	}
 
 	const std::vector<const building_type *> buildings = this->get_enabled_buildings_for_culture(country->get_culture());
-
 	if (!buildings.empty()) {
 		for (const building_type *building : buildings) {
 			if (!str.empty()) {
@@ -560,7 +585,6 @@ QString technology::get_effects_string(metternich::country *country) const
 	}
 
 	const std::vector<const wonder *> enabled_wonders = this->get_enabled_wonders_for_country(country);
-
 	if (!enabled_wonders.empty()) {
 		for (const wonder *wonder : enabled_wonders) {
 			if (!str.empty()) {
@@ -572,7 +596,6 @@ QString technology::get_effects_string(metternich::country *country) const
 	}
 
 	const std::vector<const wonder *> disabled_wonders = this->get_disabled_wonders_for_country(country);
-
 	if (!disabled_wonders.empty()) {
 		for (const wonder *wonder : disabled_wonders) {
 			if (!str.empty()) {
@@ -636,7 +659,6 @@ QString technology::get_effects_string(metternich::country *country) const
 	}
 
 	const std::vector<const civilian_unit_type *> civilian_units = this->get_enabled_civilian_units_for_culture(country->get_culture());
-
 	if (!civilian_units.empty()) {
 		for (const civilian_unit_type *civilian_unit : civilian_units) {
 			if (!str.empty()) {
@@ -648,7 +670,6 @@ QString technology::get_effects_string(metternich::country *country) const
 	}
 
 	const std::vector<const military_unit_type *> military_units = get_enabled_military_units_for_culture(country->get_culture());
-
 	if (!military_units.empty()) {
 		for (const military_unit_type *military_unit : military_units) {
 			if (!str.empty()) {
@@ -660,7 +681,6 @@ QString technology::get_effects_string(metternich::country *country) const
 	}
 
 	const std::vector<const transporter_type *> transporters = get_enabled_transporters_for_culture(country->get_culture());
-
 	if (!transporters.empty()) {
 		for (const transporter_type *transporter : transporters) {
 			if (!str.empty()) {
@@ -688,6 +708,17 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} law", law->get_name());
+		}
+	}
+
+	const std::vector<const tradition *> enabled_traditions = this->get_enabled_traditions_for_country(country);
+	if (!enabled_traditions.empty()) {
+		for (const tradition *tradition : enabled_traditions) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} tradition", tradition->get_name());
 		}
 	}
 

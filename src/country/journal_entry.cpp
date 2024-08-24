@@ -7,6 +7,7 @@
 #include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/tradition.h"
 #include "infrastructure/building_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -96,6 +97,10 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "researched_technologies") {
 		for (const std::string &value : values) {
 			this->researched_technologies.push_back(technology::get(value));
+		}
+	} else if (tag == "acquired_traditions") {
+		for (const std::string &value : values) {
+			this->acquired_traditions.push_back(tradition::get(value));
 		}
 	} else if (tag == "recruited_characters") {
 		for (const std::string &value : values) {
@@ -188,12 +193,18 @@ bool journal_entry::check_conditions(const country *country) const
 		}
 	}
 
+	for (const tradition *tradition : this->get_acquired_traditions()) {
+		if (!country_game_data->can_have_tradition(tradition)) {
+			return false;
+		}
+	}
+
 	return true;
 }
 
 bool journal_entry::check_completion_conditions(const country *country, const bool ignore_random_chance) const
 {
-	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_settlement_buildings().empty() && this->get_researched_technologies().empty() && this->get_recruited_characters().empty() && this->get_completion_random_chance() == 0) {
+	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_settlement_buildings().empty() && this->get_researched_technologies().empty() && this->get_acquired_traditions().empty() && this->get_recruited_characters().empty() && this->get_completion_random_chance() == 0) {
 		//no completion conditions at all, so the entry can't be completed normally
 		return false;
 	}
@@ -244,6 +255,12 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 
 	for (const technology *technology : this->get_researched_technologies()) {
 		if (!country_game_data->has_technology(technology)) {
+			return false;
+		}
+	}
+
+	for (const tradition *tradition : this->get_acquired_traditions()) {
+		if (!country_game_data->has_tradition(tradition)) {
 			return false;
 		}
 	}
@@ -330,6 +347,14 @@ QString journal_entry::get_completion_conditions_string() const
 		}
 
 		str += std::format("Research {}", technology->get_name());
+	}
+
+	for (const tradition *tradition : this->get_acquired_traditions()) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("Acquire {} (tradition)", tradition->get_name());
 	}
 
 	for (const character *character : this->get_recruited_characters()) {

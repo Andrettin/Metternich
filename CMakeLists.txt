@@ -67,6 +67,10 @@ set(country_SRCS
 	src/country/religion_base.cpp
 	src/country/religion_container.cpp
 	src/country/subject_type.cpp
+	src/country/tradition.cpp
+	src/country/tradition_container.cpp
+	src/country/tradition_group.cpp
+	src/country/tradition_group_container.cpp
 )
 source_group(country FILES ${country_SRCS})
 set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
@@ -380,6 +384,10 @@ set(country_HDRS
 	src/country/religion_container.h
 	src/country/religious_group.h
 	src/country/subject_type.h
+	src/country/tradition.h
+	src/country/tradition_container.h
+	src/country/tradition_group.h
+	src/country/tradition_group_container.h
 )
 source_group(country FILES ${country_HDRS})
 
