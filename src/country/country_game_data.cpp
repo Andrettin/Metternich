@@ -5273,6 +5273,31 @@ void country_game_data::set_commodity_bonus_for_tile_threshold(const commodity *
 	}
 }
 
+void country_game_data::change_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const centesimal_int count = (this->commodity_bonuses_per_population[commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->commodity_bonuses_per_population.erase(commodity);
+	}
+
+	for (const province *province : this->get_provinces()) {
+		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
+			if (!settlement->get_game_data()->is_built()) {
+				continue;
+			}
+
+			settlement->get_game_data()->calculate_commodity_outputs();
+		}
+	}
+}
+
 void country_game_data::change_capital_commodity_bonus(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {

@@ -710,6 +710,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/commodity_bonus_per_building_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_improved_resource_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_improvement_modifier_effect.h
+	src/script/modifier_effect/commodity_bonus_per_population_modifier_effect.h
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h
 	src/script/modifier_effect/deployment_limit_modifier_effect.h

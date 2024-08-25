@@ -1975,6 +1975,26 @@ public:
 		this->set_commodity_bonus_for_tile_threshold(commodity, threshold, this->get_commodity_bonus_for_tile_threshold(commodity, threshold) + value);
 	}
 
+	const commodity_map<centesimal_int> &get_commodity_bonuses_per_population() const
+	{
+		return this->commodity_bonuses_per_population;
+	}
+
+	const centesimal_int &get_commodity_bonus_per_population(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_bonuses_per_population.find(commodity);
+
+		if (find_iterator != this->commodity_bonuses_per_population.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+
+		return zero;
+	}
+
+	void change_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change);
+
 	const commodity_map<centesimal_int> &get_capital_commodity_bonuses() const
 	{
 		return this->capital_commodity_bonuses;
@@ -2596,9 +2616,10 @@ private:
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	improvement_map<commodity_map<centesimal_int>> improvement_commodity_bonuses;
 	building_type_map<commodity_map<int>> building_commodity_bonuses;
+	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
+	commodity_map<centesimal_int> commodity_bonuses_per_population;
 	commodity_map<centesimal_int> capital_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses_per_population;
-	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	std::map<technology_category, int> category_research_modifiers;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	population_type_map<centesimal_int> population_type_militancy_modifiers;

@@ -1214,17 +1214,23 @@ void site_game_data::calculate_commodity_outputs()
 	int output_modifier = this->get_output_modifier();
 	commodity_map<int> commodity_output_modifiers = this->get_commodity_output_modifiers();
 
-	if (this->get_owner() != nullptr && this->is_capital()) {
-		for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_capital_commodity_bonuses()) {
-			outputs[commodity] += value;
-		}
-
-		for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_capital_commodity_bonuses_per_population()) {
+	if (this->get_owner() != nullptr) {
+		for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_commodity_bonuses_per_population()) {
 			outputs[commodity] += (value * this->get_population_unit_count());
 		}
 
-		for (const auto &[commodity, modifier] : this->get_owner()->get_game_data()->get_capital_commodity_output_modifiers()) {
-			commodity_output_modifiers[commodity] += modifier;
+		if (this->is_capital()) {
+			for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_capital_commodity_bonuses()) {
+				outputs[commodity] += value;
+			}
+
+			for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_capital_commodity_bonuses_per_population()) {
+				outputs[commodity] += (value * this->get_population_unit_count());
+			}
+
+			for (const auto &[commodity, modifier] : this->get_owner()->get_game_data()->get_capital_commodity_output_modifiers()) {
+				commodity_output_modifiers[commodity] += modifier;
+			}
 		}
 	}
 
