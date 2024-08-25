@@ -438,7 +438,7 @@ std::vector<const tradition *> technology::get_enabled_traditions_for_country(co
 	std::vector<const tradition *> traditions;
 
 	for (const tradition *tradition : this->get_enabled_traditions()) {
-		if (tradition->get_conditions() != nullptr && !tradition->get_conditions()->check(country, read_only_context(country))) {
+		if (tradition->get_preconditions() != nullptr && !tradition->get_preconditions()->check(country, read_only_context(country))) {
 			continue;
 		}
 
