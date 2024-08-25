@@ -438,7 +438,7 @@ std::vector<const tradition *> technology::get_enabled_traditions_for_country(co
 	std::vector<const tradition *> traditions;
 
 	for (const tradition *tradition : this->get_enabled_traditions()) {
-		if (tradition->get_preconditions() != nullptr && !tradition->get_preconditions()->check(country, read_only_context(country))) {
+		if (!tradition->is_available_for_country(country)) {
 			continue;
 		}
 
@@ -746,6 +746,11 @@ void technology::write_character_effects_string(const character_role role, const
 			str += std::format("Retires {} {}", character->get_full_name(), role_name);
 		}
 	}
+}
+
+bool technology::is_hidden_in_tree() const
+{
+	return !this->is_available_for_country(game::get()->get_player_country());
 }
 
 }

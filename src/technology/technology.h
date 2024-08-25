@@ -413,6 +413,8 @@ public:
 		return top_tree_elements;
 	}
 
+	virtual bool is_hidden_in_tree() const override;
+
 signals:
 	void changed();
 

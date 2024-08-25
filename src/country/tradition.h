@@ -98,6 +98,8 @@ public:
 
 	Q_INVOKABLE QString get_modifier_string(const metternich::country *country) const;
 
+	bool is_available_for_country(const country *country) const;
+
 	virtual named_data_entry *get_tree_parent() const override
 	{
 		if (!this->get_prerequisites().empty()) {
@@ -137,6 +139,8 @@ public:
 
 		return top_tree_elements;
 	}
+
+	virtual bool is_hidden_in_tree() const override;
 
 signals:
 	void changed();

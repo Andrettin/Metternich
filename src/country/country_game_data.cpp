@@ -3757,7 +3757,7 @@ std::vector<const tradition *> country_game_data::get_available_traditions() con
 	std::vector<const tradition *> traditions;
 
 	for (const tradition *tradition : tradition::get_all()) {
-		if (tradition->get_preconditions() != nullptr && !tradition->get_preconditions()->check(this->country, read_only_context(this->country))) {
+		if (!tradition->is_available_for_country(this->country)) {
 			continue;
 		}
 
@@ -3778,6 +3778,10 @@ bool country_game_data::can_have_tradition(const tradition *tradition) const
 {
 	assert_throw(tradition != nullptr);
 
+	if (!tradition->is_available_for_country(this->country)) {
+		return false;
+	}
+
 	if (tradition->get_required_technology() != nullptr && !this->has_technology(tradition->get_required_technology())) {
 		return false;
 	}
@@ -3786,10 +3790,6 @@ bool country_game_data::can_have_tradition(const tradition *tradition) const
 		if (!this->has_tradition(prerequisite)) {
 			return false;
 		}
-	}
-
-	if (tradition->get_preconditions() != nullptr && !tradition->get_preconditions()->check(this->country, read_only_context(this->country))) {
-		return false;
 	}
 
 	if (tradition->get_conditions() != nullptr && !tradition->get_conditions()->check(this->country, read_only_context(this->country))) {

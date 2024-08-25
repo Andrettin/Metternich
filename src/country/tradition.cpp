@@ -3,6 +3,7 @@
 #include "country/tradition.h"
 
 #include "country/tradition_group.h"
+#include "game/game.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
@@ -108,6 +109,20 @@ void tradition::calculate_total_prerequisite_depth()
 QString tradition::get_modifier_string(const metternich::country *country) const
 {
 	return QString::fromStdString(this->get_modifier()->get_string(country));
+}
+
+bool tradition::is_available_for_country(const country *country) const
+{
+	if (this->get_preconditions() != nullptr && !this->get_preconditions()->check(country, read_only_context(country))) {
+		return false;
+	}
+
+	return true;
+}
+
+bool tradition::is_hidden_in_tree() const
+{
+	return !this->is_available_for_country(game::get()->get_player_country());
 }
 
 }
