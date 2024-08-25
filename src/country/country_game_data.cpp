@@ -3545,15 +3545,13 @@ void country_game_data::set_government_type(const metternich::government_type *g
 		return;
 	}
 
-	if (this->get_government_type() != nullptr) {
-		this->get_government_type()->get_modifier()->remove(this->country);
+	if (government_type != nullptr) {
+		if (this->country->is_tribe() && !government_type->get_group()->is_tribal()) {
+			throw std::runtime_error(std::format("Tried to set a non-tribal government type (\"{}\") for a tribal country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
+		}
 	}
 
 	this->government_type = government_type;
-
-	if (this->get_government_type() != nullptr) {
-		this->get_government_type()->get_modifier()->apply(this->country);
-	}
 
 	if (game::get()->is_running()) {
 		emit government_type_changed();
@@ -3562,8 +3560,7 @@ void country_game_data::set_government_type(const metternich::government_type *g
 
 bool country_game_data::can_change_to_government_type(const metternich::government_type *government_type) const
 {
-	if (this->country->is_tribe() && !government_type->get_group()->is_tribal()) {
-		//if the country itself is marked as a tribe, it can only have tribal government types
+	if (government_type->get_conditions() != nullptr && !government_type->get_conditions()->check(this->country, read_only_context(this->country))) {
 		return false;
 	}
 

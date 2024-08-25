@@ -5,8 +5,8 @@
 #include "country/country_tier.h"
 #include "country/government_group.h"
 #include "country/policy.h"
-#include "script/modifier.h"
 #include "technology/technology.h"
+#include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
 
@@ -110,10 +110,8 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
-		database::process_gsml_data(modifier, scope);
-		this->modifier = std::move(modifier);
+	if (tag == "conditions") {
+		auto conditions = std::make_unique<and_condition<country>>();
 	} else if (tag == "title_names") {
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "ruler_title_names") {
@@ -162,8 +160,6 @@ void government_type::check() const
 		throw std::runtime_error(std::format("Government type \"{}\" has no icon.", this->get_identifier()));
 	}
 
-	if (this->get_modifier() == nullptr) {
-		throw std::runtime_error(std::format("Government type \"{}\" does not have a modifier.", this->get_identifier()));
 	}
 }
 
@@ -195,9 +191,6 @@ const std::string &government_type::get_ruler_title_name(const country_tier tier
 	return this->get_group()->get_ruler_title_name(tier, gender);
 }
 
-QString government_type::get_modifier_string(const metternich::country *country) const
-{
-	return QString::fromStdString(this->get_modifier()->get_string(country));
 }
 
 int government_type::get_min_policy_value(const policy *policy) const

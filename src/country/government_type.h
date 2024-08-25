@@ -69,12 +69,10 @@ public:
 		return this->required_technology;
 	}
 
-	const modifier<const country> *get_modifier() const
+	const condition<country> *get_conditions() const
 	{
-		return this->modifier.get();
+		return this->conditions.get();
 	}
-
-	Q_INVOKABLE QString get_modifier_string(const metternich::country *country) const;
 
 	int get_min_policy_value(const policy *policy) const;
 	int get_max_policy_value(const policy *policy) const;
@@ -86,7 +84,7 @@ private:
 	const government_group *group = nullptr;
 	const icon *icon = nullptr;
 	technology *required_technology = nullptr;
-	std::unique_ptr<const modifier<const country>> modifier;
+	std::unique_ptr<const condition<country>> conditions;
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;
 	policy_map<int> min_policy_values;
