@@ -630,6 +630,7 @@ set(script_condition_HDRS
 	src/script/condition/technology_condition.h
 	src/script/condition/terrain_condition.h
 	src/script/condition/tooltip_condition.h
+	src/script/condition/tradition_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
 	src/script/condition/wealth_condition.h
