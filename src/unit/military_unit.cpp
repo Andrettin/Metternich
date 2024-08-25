@@ -619,9 +619,7 @@ void military_unit::receive_damage(const int damage, const int morale_damage_mod
 
 	int morale_damage = damage;
 	morale_damage *= 100 + morale_damage_modifier;
-	morale_damage /= 100;
-	morale_damage *= 100 - this->get_morale_resistance();
-	morale_damage /= 100;
+	morale_damage /= 100 + this->get_morale_resistance();
 
 	this->change_morale(-morale_damage);
 }
