@@ -14,10 +14,10 @@ namespace metternich {
 class character;
 class consulate;
 class country;
-class government_type;
 class religion;
 class subject_type;
 class technology;
+class tradition;
 enum class country_tier;
 enum class diplomacy_state;
 
@@ -27,10 +27,10 @@ class country_history final : public data_entry_history
 
 	Q_PROPERTY(metternich::country_tier tier MEMBER tier)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
-	Q_PROPERTY(metternich::government_type* government_type MEMBER government_type)
 	Q_PROPERTY(metternich::character* ruler MEMBER ruler)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
-	Q_PROPERTY(std::vector<metternich::technology *> technologies READ get_technologies)
+	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
+	Q_PROPERTY(std::vector<const metternich::tradition *> traditions READ get_traditions)
 	Q_PROPERTY(int wealth MEMBER wealth READ get_wealth)
 
 public:
@@ -48,11 +48,6 @@ public:
 		return this->religion;
 	}
 
-	const metternich::government_type *get_government_type() const
-	{
-		return this->government_type;
-	}
-
 	const character *get_ruler() const
 	{
 		return this->ruler;
@@ -68,19 +63,34 @@ public:
 		return this->literacy_rate;
 	}
 
-	const std::vector<technology *> &get_technologies() const
+	const std::vector<const technology *> &get_technologies() const
 	{
 		return this->technologies;
 	}
 
-	Q_INVOKABLE void add_technology(technology *technology)
+	Q_INVOKABLE void add_technology(const technology *technology)
 	{
 		this->technologies.push_back(technology);
 	}
 
-	Q_INVOKABLE void remove_technology(technology *technology)
+	Q_INVOKABLE void remove_technology(const technology *technology)
 	{
 		std::erase(this->technologies, technology);
+	}
+
+	const std::vector<const tradition *> &get_traditions() const
+	{
+		return this->traditions;
+	}
+
+	Q_INVOKABLE void add_tradition(const tradition *tradition)
+	{
+		this->traditions.push_back(tradition);
+	}
+
+	Q_INVOKABLE void remove_tradition(const tradition *tradition)
+	{
+		std::erase(this->traditions, tradition);
 	}
 
 	int get_wealth() const
@@ -109,11 +119,11 @@ private:
 	const metternich::country *country = nullptr;
 	country_tier tier{};
 	metternich::religion *religion = nullptr;
-	metternich::government_type *government_type = nullptr;
 	character *ruler = nullptr;
 	const metternich::subject_type *subject_type = nullptr;
 	centesimal_int literacy_rate;
-	std::vector<technology *> technologies;
+	std::vector<const technology *> technologies;
+	std::vector<const tradition *> traditions;
 	int wealth = 0;
 	commodity_map<int> commodities;
 	country_map<diplomacy_state> diplomacy_states;

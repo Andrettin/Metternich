@@ -5,7 +5,6 @@
 #include "country/policy_container.h"
 
 Q_MOC_INCLUDE("country/government_group.h")
-Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace archimedes {
@@ -15,7 +14,6 @@ namespace archimedes {
 namespace metternich {
 
 class government_group;
-class technology;
 enum class country_tier;
 
 template <typename scope_type>
@@ -30,7 +28,6 @@ class government_type final : public named_data_entry, public data_type<governme
 
 	Q_PROPERTY(const metternich::government_group* group MEMBER group READ get_group NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
-	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
@@ -51,7 +48,6 @@ public:
 	~government_type();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
-	virtual void initialize() override;
 	virtual void check() const override;
 
 	const std::string &get_title_name(const country_tier tier) const;
@@ -65,11 +61,6 @@ public:
 	const icon *get_icon() const
 	{
 		return this->icon;
-	}
-
-	const technology *get_required_technology() const
-	{
-		return this->required_technology;
 	}
 
 	const condition<country> *get_conditions() const
@@ -86,7 +77,6 @@ signals:
 private:
 	const government_group *group = nullptr;
 	const icon *icon = nullptr;
-	technology *required_technology = nullptr;
 	std::unique_ptr<const condition<country>> conditions;
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;

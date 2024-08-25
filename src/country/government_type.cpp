@@ -5,7 +5,6 @@
 #include "country/country_tier.h"
 #include "country/government_group.h"
 #include "country/policy.h"
-#include "technology/technology.h"
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
@@ -141,15 +140,6 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
-}
-
-void government_type::initialize()
-{
-	if (this->required_technology != nullptr) {
-		this->required_technology->add_enabled_government_type(this);
-	}
-
-	named_data_entry::initialize();
 }
 
 void government_type::check() const

@@ -1233,7 +1233,8 @@ public:
 	}
 
 	void set_government_type(const metternich::government_type *government_type);
-	bool can_change_to_government_type(const metternich::government_type *government_type) const;
+	bool can_have_government_type(const metternich::government_type *government_type) const;
+	void check_government_type();
 
 	bool is_tribal() const;
 
@@ -1319,6 +1320,7 @@ public:
 
 	Q_INVOKABLE bool can_have_tradition(const metternich::tradition *tradition) const;
 	void gain_tradition(const tradition *tradition, const int multiplier);
+	void gain_tradition_with_prerequisites(const tradition *tradition);
 	void check_traditions();
 
 	Q_INVOKABLE int get_total_tradition_cost_modifier() const

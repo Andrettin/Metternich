@@ -18,6 +18,7 @@
 #include "country/diplomacy_state.h"
 #include "country/government_type.h"
 #include "country/religion.h"
+#include "country/tradition.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
@@ -370,15 +371,6 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->set_religion(country_history->get_religion());
 			}
 
-			const government_type *government_type = country_history->get_government_type() ? country_history->get_government_type() : country->get_default_government_type();
-			if (government_type != nullptr) {
-				country_game_data->set_government_type(government_type);
-
-				if (government_type->get_required_technology() != nullptr) {
-					country_game_data->add_technology_with_prerequisites(government_type->get_required_technology());
-				}
-			}
-
 			const subject_type *subject_type = country_history->get_subject_type();
 			if (subject_type != nullptr) {
 				country_game_data->set_subject_type(subject_type);
@@ -401,6 +393,10 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			for (const technology *technology : country_history->get_technologies()) {
 				country_game_data->add_technology_with_prerequisites(technology);
+			}
+
+			for (const tradition *tradition : country_history->get_traditions()) {
+				country_game_data->gain_tradition_with_prerequisites(tradition);
 			}
 
 			country_game_data->set_wealth(country_history->get_wealth());
@@ -1376,6 +1372,7 @@ QCoro::Task<void> game::on_setup_finished()
 	emit countries_changed();
 
 	for (const country *country : this->get_countries()) {
+		country->get_game_data()->check_government_type();
 		country->get_game_data()->check_laws();
 		country->get_game_data()->check_ruler();
 

@@ -167,6 +167,7 @@ void country_game_data::do_turn()
 		this->check_journal_entries();
 
 		this->check_traditions();
+		this->check_government_type();
 		this->check_characters();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->country->get_identifier())));
@@ -3558,17 +3559,32 @@ void country_game_data::set_government_type(const metternich::government_type *g
 	}
 }
 
-bool country_game_data::can_change_to_government_type(const metternich::government_type *government_type) const
+bool country_game_data::can_have_government_type(const metternich::government_type *government_type) const
 {
 	if (government_type->get_conditions() != nullptr && !government_type->get_conditions()->check(this->country, read_only_context(this->country))) {
 		return false;
 	}
 
-	if (government_type->get_required_technology() != nullptr && !this->has_technology(government_type->get_required_technology())) {
-		return false;
+	return true;
+}
+
+void country_game_data::check_government_type()
+{
+	if (this->get_government_type() != nullptr && this->can_have_government_type(this->get_government_type())) {
+		return;
 	}
 
-	return true;
+	std::vector<const metternich::government_type *> potential_government_types;
+
+	for (const metternich::government_type *government_type : government_type::get_all()) {
+		if (this->can_have_government_type(government_type)) {
+			potential_government_types.push_back(government_type);
+		}
+	}
+
+	assert_throw(!potential_government_types.empty());
+
+	this->set_government_type(vector::get_random(potential_government_types));
 }
 
 bool country_game_data::is_tribal() const
@@ -3806,6 +3822,19 @@ void country_game_data::gain_tradition(const tradition *tradition, const int mul
 	}
 
 	this->check_traditions();
+}
+
+void country_game_data::gain_tradition_with_prerequisites(const tradition *tradition)
+{
+	for (const metternich::tradition *prerequisite : tradition->get_prerequisites()) {
+		this->gain_tradition_with_prerequisites(prerequisite);
+	}
+
+	if (tradition->get_required_technology() != nullptr) {
+		this->add_technology_with_prerequisites(tradition->get_required_technology());
+	}
+
+	this->gain_tradition(tradition, 1);
 }
 
 void country_game_data::check_traditions()
