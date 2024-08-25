@@ -147,6 +147,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
 	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY laws_changed)
 	Q_PROPERTY(QVariantList policy_values READ get_policy_values_qvariant_list NOTIFY policy_values_changed)
+	Q_PROPERTY(QVariantList available_traditions READ get_available_traditions_qvariant_list NOTIFY traditions_changed)
 	Q_PROPERTY(int tradition_cost READ get_tradition_cost NOTIFY traditions_changed)
 	Q_PROPERTY(const metternich::tradition* next_tradition READ get_next_tradition WRITE set_next_tradition NOTIFY next_tradition_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
@@ -1313,7 +1314,10 @@ public:
 		return this->get_traditions().contains(tradition);
 	}
 
-	bool can_have_tradition(const tradition *tradition) const;
+	std::vector<const tradition *> get_available_traditions() const;
+	QVariantList get_available_traditions_qvariant_list() const;
+
+	Q_INVOKABLE bool can_have_tradition(const metternich::tradition *tradition) const;
 	void gain_tradition(const tradition *tradition, const int multiplier);
 	void check_traditions();
 

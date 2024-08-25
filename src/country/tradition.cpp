@@ -26,6 +26,10 @@ void tradition::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->prerequisites.push_back(tradition::get(value));
 		}
+	} else if (tag == "preconditions") {
+		auto preconditions = std::make_unique<and_condition<country>>();
+		database::process_gsml_data(preconditions, scope);
+		this->preconditions = std::move(preconditions);
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
 		database::process_gsml_data(conditions, scope);
@@ -70,6 +74,10 @@ void tradition::check() const
 
 	if (this->get_modifier() == nullptr) {
 		throw std::runtime_error(std::format("Tradition \"{}\" has no modifier.", this->get_identifier()));
+	}
+
+	if (this->get_preconditions() != nullptr) {
+		this->get_preconditions()->check_validity();
 	}
 
 	if (this->get_conditions() != nullptr) {

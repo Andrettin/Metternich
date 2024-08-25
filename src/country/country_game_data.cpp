@@ -3715,6 +3715,28 @@ void country_game_data::do_policy_value_change(const policy *policy, const int c
 	this->change_policy_value(policy, change);
 }
 
+std::vector<const tradition *> country_game_data::get_available_traditions() const
+{
+	std::vector<const tradition *> traditions;
+
+	for (const tradition *tradition : tradition::get_all()) {
+		if (tradition->get_preconditions() != nullptr && !tradition->get_preconditions()->check(this->country, read_only_context(this->country))) {
+			continue;
+		}
+
+		traditions.push_back(tradition);
+	}
+
+	std::sort(traditions.begin(), traditions.end(), tradition_compare());
+
+	return traditions;
+}
+
+QVariantList country_game_data::get_available_traditions_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_available_traditions());
+}
+
 bool country_game_data::can_have_tradition(const tradition *tradition) const
 {
 	assert_throw(tradition != nullptr);
@@ -3727,6 +3749,10 @@ bool country_game_data::can_have_tradition(const tradition *tradition) const
 		if (!this->has_tradition(prerequisite)) {
 			return false;
 		}
+	}
+
+	if (tradition->get_preconditions() != nullptr && !tradition->get_preconditions()->check(this->country, read_only_context(this->country))) {
+		return false;
 	}
 
 	if (tradition->get_conditions() != nullptr && !tradition->get_conditions()->check(this->country, read_only_context(this->country))) {
@@ -3810,7 +3836,7 @@ void country_game_data::choose_next_tradition()
 {
 	tradition_group_map<std::vector<const tradition *>> potential_traditions_per_group;
 
-	for (const tradition *tradition : tradition::get_all()) {
+	for (const tradition *tradition : this->get_available_traditions()) {
 		if (!this->can_have_tradition(tradition)) {
 			continue;
 		}

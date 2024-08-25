@@ -76,6 +76,11 @@ public:
 
 	void calculate_total_prerequisite_depth();
 
+	const condition<country> *get_preconditions() const
+	{
+		return this->preconditions.get();
+	}
+
 	const condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -138,6 +143,7 @@ private:
 	technology *required_technology = nullptr;
 	std::vector<tradition *> prerequisites;
 	int total_prerequisite_depth = 0;
+	std::unique_ptr<const condition<country>> preconditions;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<const modifier<const country>> modifier;
 };
