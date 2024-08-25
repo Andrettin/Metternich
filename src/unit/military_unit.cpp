@@ -349,31 +349,31 @@ void military_unit::set_hit_points(const int hit_points)
 	}
 }
 
-int military_unit::get_morale_resistance() const
+int military_unit::get_discipline() const
 {
-	int morale_resistance = this->get_stat(military_unit_stat::morale_resistance).to_int();
+	int discipline = this->get_stat(military_unit_stat::discipline).to_int();
 
 	if (this->get_country() != nullptr) {
 		const country_game_data *country_game_data = this->get_country()->get_game_data();
 
 		switch (this->get_domain()) {
 			case military_unit_domain::land:
-				morale_resistance += country_game_data->get_land_morale_resistance_modifier();
+				discipline += country_game_data->get_land_discipline_modifier();
 				break;
 			case military_unit_domain::water:
-				morale_resistance += country_game_data->get_naval_morale_resistance_modifier();
+				discipline += country_game_data->get_naval_discipline_modifier();
 				break;
 			case military_unit_domain::air:
-				morale_resistance += country_game_data->get_air_morale_resistance_modifier();
+				discipline += country_game_data->get_air_discipline_modifier();
 				break;
 			default:
 				break;
 		}
 	}
 
-	//FIXME: add morale resistance from commander
+	//FIXME: add discipline from commander
 
-	return morale_resistance;
+	return discipline;
 }
 
 QVariantList military_unit::get_promotions_qvariant_list() const
@@ -619,7 +619,7 @@ void military_unit::receive_damage(const int damage, const int morale_damage_mod
 
 	int morale_damage = damage;
 	morale_damage *= 100 + morale_damage_modifier;
-	morale_damage /= 100 + this->get_morale_resistance();
+	morale_damage /= 100 + this->get_discipline();
 
 	this->change_morale(-morale_damage);
 }

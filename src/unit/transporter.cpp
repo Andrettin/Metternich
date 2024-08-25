@@ -146,7 +146,7 @@ void transporter::set_hit_points(const int hit_points)
 	}
 }
 
-int transporter::get_morale_resistance() const
+int transporter::get_discipline() const
 {
 	return 0;
 }
@@ -162,9 +162,7 @@ void transporter::receive_damage(const int damage, const int morale_damage_modif
 
 	int morale_damage = damage;
 	morale_damage *= 100 + morale_damage_modifier;
-	morale_damage /= 100;
-	morale_damage *= 100 - this->get_morale_resistance();
-	morale_damage /= 100;
+	morale_damage /= 100 + this->get_discipline();
 
 	this->change_morale(-morale_damage);
 }

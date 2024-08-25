@@ -6,27 +6,27 @@
 
 namespace metternich {
 
-class land_morale_resistance_modifier_effect final : public modifier_effect<const country>
+class land_discipline_modifier_effect final : public modifier_effect<const country>
 {
 public:
-	explicit land_morale_resistance_modifier_effect(const std::string &value) : modifier_effect(value)
+	explicit land_discipline_modifier_effect(const std::string &value) : modifier_effect(value)
 	{
 	}
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "land_morale_resistance";
+		static const std::string identifier = "land_discipline";
 		return identifier;
 	}
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_land_morale_resistance_modifier((this->value * multiplier).to_int());
+		scope->get_game_data()->change_land_discipline_modifier((this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string() const override
 	{
-		return "Land Morale Resistance";
+		return "Land Discipline";
 	}
 
 	virtual bool is_percent() const override

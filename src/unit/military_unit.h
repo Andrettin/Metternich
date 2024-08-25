@@ -202,7 +202,7 @@ public:
 		this->set_morale(this->get_morale() + change);
 	}
 
-	int get_morale_resistance() const;
+	int get_discipline() const;
 
 	const centesimal_int &get_stat(const military_unit_stat stat) const
 	{

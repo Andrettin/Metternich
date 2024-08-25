@@ -181,7 +181,7 @@ public:
 		this->set_stat(stat, this->get_stat(stat) + change);
 	}
 
-	int get_morale_resistance() const;
+	int get_discipline() const;
 
 	int get_cargo() const;
 

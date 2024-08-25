@@ -17,7 +17,7 @@ const std::map<std::string, metternich::military_unit_stat> enum_converter<mette
 	{ "range", metternich::military_unit_stat::range },
 	{ "defense", metternich::military_unit_stat::defense },
 	{ "resistance", metternich::military_unit_stat::resistance },
-	{ "morale_resistance", metternich::military_unit_stat::morale_resistance },
+	{ "discipline", metternich::military_unit_stat::discipline },
 	{ "movement", metternich::military_unit_stat::movement },
 	{ "damage_bonus", metternich::military_unit_stat::damage_bonus },
 	{ "bonus_vs_infantry", metternich::military_unit_stat::bonus_vs_infantry },

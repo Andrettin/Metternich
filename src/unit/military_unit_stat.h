@@ -11,7 +11,7 @@ enum class military_unit_stat {
 	range,
 	defense,
 	resistance, //resistance to damage
-	morale_resistance, //resistance to morale damage
+	discipline, //resistance to morale damage
 	movement,
 	damage_bonus,
 	bonus_vs_infantry,
@@ -49,8 +49,8 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 			return "Defense";
 		case military_unit_stat::resistance:
 			return "Resistance";
-		case military_unit_stat::morale_resistance:
-			return "Morale Resistance";
+		case military_unit_stat::discipline:
+			return "Discipline";
 		case military_unit_stat::movement:
 			return "Movement";
 		case military_unit_stat::damage_bonus:
@@ -99,7 +99,7 @@ inline bool is_percent_military_unit_stat(const military_unit_stat stat)
 	switch (stat) {
 		case military_unit_stat::shock:
 		case military_unit_stat::resistance:
-		case military_unit_stat::morale_resistance:
+		case military_unit_stat::discipline:
 		case military_unit_stat::damage_bonus:
 		case military_unit_stat::bonus_vs_infantry:
 		case military_unit_stat::bonus_vs_cavalry:
