@@ -12,6 +12,7 @@
 #include "script/modifier_effect/air_morale_resistance_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
 #include "script/modifier_effect/building_capacity_modifier_effect.h"
+#include "script/modifier_effect/building_cost_efficiency_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_output_modifier_effect.h"
@@ -60,6 +61,7 @@
 #include "script/modifier_effect/throughput_modifier_effect.h"
 #include "script/modifier_effect/unit_upgrade_cost_modifier_effect.h"
 #include "script/modifier_effect/warship_cost_modifier_effect.h"
+#include "script/modifier_effect/wonder_cost_efficiency_modifier_effect.h"
 #include "util/number_util.h"
 #include "util/string_util.h"
 
@@ -93,6 +95,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<air_morale_resistance_modifier_effect>(value);
 		} else if (key == "artillery_cost_modifier") {
 			return std::make_unique<artillery_cost_modifier_effect>(value);
+		} else if (key == "building_cost_efficiency") {
+			return std::make_unique<building_cost_efficiency_modifier_effect>(value);
 		} else if (key == "cavalry_cost_modifier") {
 			return std::make_unique<cavalry_cost_modifier_effect>(value);
 		} else if (key == "deployment_limit") {
@@ -145,6 +149,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<unit_upgrade_cost_modifier_effect>(value);
 		} else if (key == "warship_cost_modifier") {
 			return std::make_unique<warship_cost_modifier_effect>(value);
+		} else if (key == "wonder_cost_efficiency") {
+			return std::make_unique<wonder_cost_efficiency_modifier_effect>(value);
 		} else if (key.ends_with(building_capacity_modifier_suffix) && building_slot_type::try_get(key.substr(0, key.size() - building_capacity_modifier_suffix.size())) != nullptr) {
 			const building_slot_type *building_slot_type = building_slot_type::get(key.substr(0, key.size() - building_capacity_modifier_suffix.size()));
 			return std::make_unique<building_capacity_modifier_effect>(building_slot_type, value);

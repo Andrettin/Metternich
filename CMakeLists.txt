@@ -699,6 +699,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/air_morale_resistance_modifier_effect.h
 	src/script/modifier_effect/artillery_cost_modifier_effect.h
 	src/script/modifier_effect/building_capacity_modifier_effect.h
+	src/script/modifier_effect/building_cost_efficiency_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_output_modifier_effect.h
@@ -748,6 +749,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/throughput_modifier_effect.h
 	src/script/modifier_effect/unit_upgrade_cost_modifier_effect.h
 	src/script/modifier_effect/warship_cost_modifier_effect.h
+	src/script/modifier_effect/wonder_cost_efficiency_modifier_effect.h
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})
 

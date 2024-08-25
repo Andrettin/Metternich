@@ -1323,11 +1323,6 @@ public:
 	void gain_tradition_with_prerequisites(const tradition *tradition);
 	void check_traditions();
 
-	Q_INVOKABLE int get_total_tradition_cost_modifier() const
-	{
-		return 100 + (10 * (this->get_province_count() - 1)) + this->get_tradition_cost_modifier();
-	}
-
 	int get_tradition_cost() const
 	{
 		int cost = 3 * static_cast<int>(this->get_traditions().size()) + 25;
@@ -2116,6 +2111,26 @@ public:
 		this->leader_cost_modifier += change;
 	}
 
+	int get_building_cost_efficiency_modifier() const
+	{
+		return this->building_cost_efficiency_modifier;
+	}
+
+	void change_building_cost_efficiency_modifier(const int change)
+	{
+		this->building_cost_efficiency_modifier += change;
+	}
+
+	int get_wonder_cost_efficiency_modifier() const
+	{
+		return this->wonder_cost_efficiency_modifier;
+	}
+
+	void change_wonder_cost_efficiency_modifier(const int change)
+	{
+		this->wonder_cost_efficiency_modifier += change;
+	}
+
 	int get_diplomatic_penalty_for_expansion_modifier() const
 	{
 		return this->diplomatic_penalty_for_expansion_modifier;
@@ -2591,6 +2606,8 @@ private:
 	int tradition_cost_modifier = 0;
 	int advisor_cost_modifier = 0;
 	int leader_cost_modifier = 0;
+	int building_cost_efficiency_modifier = 0;
+	int wonder_cost_efficiency_modifier = 0;
 	int diplomatic_penalty_for_expansion_modifier = 0;
 	province_set explored_provinces;
 	point_set explored_tiles; //used for tiles in partially-explored provinces

@@ -2,6 +2,8 @@
 
 #include "infrastructure/wonder.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "economy/commodity.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
@@ -108,8 +110,16 @@ commodity_map<int> wonder::get_commodity_costs_for_country(const country *countr
 	commodity_map<int> costs = this->get_commodity_costs();
 
 	for (auto &[commodity, cost] : costs) {
-		if (cost > 0 && this->get_cost_factor() != nullptr) {
-			cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+		if (cost > 0) {
+			if (country->get_game_data()->get_wonder_cost_efficiency_modifier() != 0) {
+				cost *= 100;
+				cost /= 100 + country->get_game_data()->get_wonder_cost_efficiency_modifier();
+			}
+
+			if (this->get_cost_factor() != nullptr) {
+				cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+			}
+
 			cost = std::max(1, cost);
 		}
 	}
