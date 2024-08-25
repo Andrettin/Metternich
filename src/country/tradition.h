@@ -29,6 +29,8 @@ class tradition final : public named_data_entry, public data_type<tradition>
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(const QObject* tree_parent READ get_tree_parent CONSTANT)
+	Q_PROPERTY(QVariantList secondary_tree_parents READ get_secondary_tree_parents CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "tradition";
@@ -62,10 +64,17 @@ public:
 		return this->required_technology;
 	}
 
-	const std::vector<const tradition *> get_prerequisites() const
+	const std::vector<tradition *> get_prerequisites() const
 	{
 		return this->prerequisites;
 	}
+
+	int get_total_prerequisite_depth() const
+	{
+		return this->total_prerequisite_depth;
+	}
+
+	void calculate_total_prerequisite_depth();
 
 	const condition<country> *get_conditions() const
 	{
@@ -79,6 +88,46 @@ public:
 
 	Q_INVOKABLE QString get_modifier_string(const metternich::country *country) const;
 
+	virtual named_data_entry *get_tree_parent() const override
+	{
+		if (!this->get_prerequisites().empty()) {
+			return this->get_prerequisites().front();
+		}
+
+		return nullptr;
+	}
+
+	QVariantList get_secondary_tree_parents() const
+	{
+		QVariantList secondary_tree_parents;
+
+		for (size_t i = 1; i < this->get_prerequisites().size(); ++i) {
+			secondary_tree_parents.push_back(QVariant::fromValue(this->get_prerequisites()[i]));
+		}
+
+		return secondary_tree_parents;
+	}
+
+	virtual int get_tree_y() const override
+	{
+		return this->get_total_prerequisite_depth();
+	}
+
+	virtual std::vector<const named_data_entry *> get_top_tree_elements() const override
+	{
+		std::vector<const named_data_entry *> top_tree_elements;
+
+		for (const tradition *tradition : tradition::get_all()) {
+			if (!tradition->get_prerequisites().empty()) {
+				continue;
+			}
+
+			top_tree_elements.push_back(tradition);
+		}
+
+		return top_tree_elements;
+	}
+
 signals:
 	void changed();
 
@@ -87,7 +136,8 @@ private:
 	const portrait *portrait = nullptr;
 	const icon *icon = nullptr;
 	technology *required_technology = nullptr;
-	std::vector<const tradition *> prerequisites;
+	std::vector<tradition *> prerequisites;
+	int total_prerequisite_depth = 0;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<const modifier<const country>> modifier;
 };

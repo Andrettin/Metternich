@@ -41,6 +41,8 @@ void tradition::process_gsml_scope(const gsml_data &scope)
 
 void tradition::initialize()
 {
+	this->calculate_total_prerequisite_depth();
+
 	if (this->group != nullptr) {
 		this->group->add_tradition(this);
 	}
@@ -73,6 +75,22 @@ void tradition::check() const
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
 	}
+}
+
+void tradition::calculate_total_prerequisite_depth()
+{
+	if (this->total_prerequisite_depth != 0 || this->get_prerequisites().empty()) {
+		return;
+	}
+
+	int depth = 0;
+
+	for (tradition *prerequisite : this->get_prerequisites()) {
+		prerequisite->calculate_total_prerequisite_depth();
+		depth = std::max(depth, prerequisite->get_total_prerequisite_depth() + 1);
+	}
+
+	this->total_prerequisite_depth = depth;
 }
 
 QString tradition::get_modifier_string(const metternich::country *country) const

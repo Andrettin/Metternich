@@ -61,7 +61,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList enabled_pathways READ get_enabled_pathways_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_civilian_units READ get_enabled_civilian_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
-	Q_PROPERTY(QObject* tree_parent READ get_tree_parent CONSTANT)
+	Q_PROPERTY(const QObject* tree_parent READ get_tree_parent CONSTANT)
 	Q_PROPERTY(QVariantList secondary_tree_parents READ get_secondary_tree_parents CONSTANT)
 
 public:
@@ -383,7 +383,7 @@ public:
 	virtual named_data_entry *get_tree_parent() const override
 	{
 		if (!this->get_prerequisites().empty()) {
-			return const_cast<technology *>(this->get_prerequisites().front());
+			return this->get_prerequisites().front();
 		}
 
 		return nullptr;
