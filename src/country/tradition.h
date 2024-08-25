@@ -64,7 +64,7 @@ public:
 		return this->required_technology;
 	}
 
-	const std::vector<tradition *> get_prerequisites() const
+	const std::vector<tradition *> &get_prerequisites() const
 	{
 		return this->prerequisites;
 	}
@@ -75,6 +75,11 @@ public:
 	}
 
 	void calculate_total_prerequisite_depth();
+
+	const std::vector<const tradition *> &get_incompatible_traditions() const
+	{
+		return this->incompatible_traditions;
+	}
 
 	const condition<country> *get_preconditions() const
 	{
@@ -143,6 +148,7 @@ private:
 	technology *required_technology = nullptr;
 	std::vector<tradition *> prerequisites;
 	int total_prerequisite_depth = 0;
+	std::vector<const tradition *> incompatible_traditions;
 	std::unique_ptr<const condition<country>> preconditions;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<const modifier<const country>> modifier;

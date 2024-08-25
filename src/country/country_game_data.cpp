@@ -3817,6 +3817,14 @@ void country_game_data::gain_tradition(const tradition *tradition, const int mul
 		tradition->get_modifier()->apply(this->country, multiplier);
 	}
 
+	if (multiplier > 0) {
+		for (const metternich::tradition *incompatible_tradition : tradition->get_incompatible_traditions()) {
+			if (this->has_tradition(incompatible_tradition)) {
+				this->gain_tradition(incompatible_tradition, -1);
+			}
+		}
+	}
+
 	if (game::get()->is_running()) {
 		emit traditions_changed();
 	}
@@ -3892,6 +3900,17 @@ void country_game_data::choose_next_tradition()
 		}
 
 		if (!this->can_have_tradition(tradition)) {
+			continue;
+		}
+
+		bool has_incompatible_tradition = false;
+		for (const metternich::tradition *incompatible_tradition : tradition->get_incompatible_traditions()) {
+			if (this->has_tradition(incompatible_tradition)) {
+				has_incompatible_tradition = true;
+				break;
+			}
+		}
+		if (has_incompatible_tradition) {
 			continue;
 		}
 

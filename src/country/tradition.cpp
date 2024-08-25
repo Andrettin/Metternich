@@ -26,6 +26,10 @@ void tradition::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->prerequisites.push_back(tradition::get(value));
 		}
+	} else if (tag == "incompatible_traditions") {
+		for (const std::string &value : values) {
+			this->incompatible_traditions.push_back(tradition::get(value));
+		}
 	} else if (tag == "preconditions") {
 		auto preconditions = std::make_unique<and_condition<country>>();
 		database::process_gsml_data(preconditions, scope);
