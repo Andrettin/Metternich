@@ -112,6 +112,8 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
+		database::process_gsml_data(conditions, scope);
+		this->conditions = std::move(conditions);
 	} else if (tag == "title_names") {
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "ruler_title_names") {
@@ -160,6 +162,8 @@ void government_type::check() const
 		throw std::runtime_error(std::format("Government type \"{}\" has no icon.", this->get_identifier()));
 	}
 
+	if (this->get_conditions() != nullptr) {
+		this->get_conditions()->check_validity();
 	}
 }
 
@@ -189,8 +193,6 @@ const std::string &government_type::get_ruler_title_name(const country_tier tier
 	}
 
 	return this->get_group()->get_ruler_title_name(tier, gender);
-}
-
 }
 
 int government_type::get_min_policy_value(const policy *policy) const

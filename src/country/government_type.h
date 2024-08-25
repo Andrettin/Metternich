@@ -19,6 +19,9 @@ class technology;
 enum class country_tier;
 
 template <typename scope_type>
+class condition;
+
+template <typename scope_type>
 class modifier;
 
 class government_type final : public named_data_entry, public data_type<government_type>
