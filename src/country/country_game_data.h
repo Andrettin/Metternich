@@ -2450,7 +2450,7 @@ signals:
 	void policy_values_changed();
 	void traditions_changed();
 	void next_tradition_changed();
-	void tradition_acquired(const tradition *tradition);
+	void tradition_adopted(const tradition *tradition);
 	void ruler_changed();
 	void advisors_changed();
 	void next_advisor_changed();

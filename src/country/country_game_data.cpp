@@ -3831,7 +3831,7 @@ void country_game_data::check_traditions()
 			if (this->country == game::get()->get_player_country()) {
 				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
-				engine_interface::get()->add_notification("Tradition Unavailable", interior_minister_portrait, std::format("Your Excellency, the {} tradition is no longer available for acquisition.", this->get_next_tradition()->get_name()));
+				engine_interface::get()->add_notification("Tradition Unavailable", interior_minister_portrait, std::format("Your Excellency, the {} tradition is no longer available for adoption.", this->get_next_tradition()->get_name()));
 			}
 
 			this->set_next_tradition(nullptr);
@@ -3841,7 +3841,7 @@ void country_game_data::check_traditions()
 
 				this->gain_tradition(this->get_next_tradition(), 1);
 
-				emit tradition_acquired(this->get_next_tradition());
+				emit tradition_adopted(this->get_next_tradition());
 
 				this->set_next_tradition(nullptr);
 			}
@@ -3889,7 +3889,7 @@ void country_game_data::choose_next_tradition()
 			int desire = 100;
 
 			for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
-				if (vector::contains(journal_entry->get_acquired_traditions(), tradition)) {
+				if (vector::contains(journal_entry->get_adopted_traditions(), tradition)) {
 					desire += journal_entry::ai_tradition_desire_modifier;
 				}
 			}

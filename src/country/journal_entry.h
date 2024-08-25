@@ -134,9 +134,9 @@ public:
 		return this->researched_technologies;
 	}
 
-	const std::vector<const tradition *> &get_acquired_traditions() const
+	const std::vector<const tradition *> &get_adopted_traditions() const
 	{
-		return this->acquired_traditions;
+		return this->adopted_traditions;
 	}
 
 	const std::vector<const character *> &get_recruited_characters() const
@@ -164,7 +164,7 @@ private:
 	std::vector<const building_type *> built_buildings;
 	site_map<std::vector<const building_type *>> built_settlement_buildings;
 	std::vector<const technology *> researched_technologies;
-	std::vector<const tradition *> acquired_traditions;
+	std::vector<const tradition *> adopted_traditions;
 	std::vector<const character *> recruited_characters;
 };
 
