@@ -3280,7 +3280,7 @@ std::vector<const technology *> country_game_data::get_available_technologies() 
 {
 	std::vector<const technology *> available_technologies;
 
-	for (const technology *technology : technology::get_all()) {
+	for (const technology *technology : this->country->get_available_technologies()) {
 		if (!this->is_technology_available(technology)) {
 			continue;
 		}
@@ -3309,7 +3309,7 @@ bool country_game_data::is_technology_available(const technology *technology) co
 
 QVariantList country_game_data::get_future_technologies_qvariant_list() const
 {
-	std::vector<technology *> future_technologies = technology::get_all();
+	std::vector<const technology *> future_technologies = this->country->get_available_technologies();
 	std::erase_if(future_technologies, [this](const technology *technology) {
 		if (this->has_technology(technology)) {
 			return true;
