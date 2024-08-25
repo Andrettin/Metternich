@@ -2221,12 +2221,36 @@ void country_game_data::grow_population()
 		return false;
 	});
 
+	if (potential_base_population_units.empty()) {
+		//this could happen if the settlements with available health have no population
+		potential_base_population_units = this->population_units;
+	}
+
+	assert_throw(!potential_base_population_units.empty());
+
 	const population_unit *population_unit = vector::get_random(potential_base_population_units);
 	const metternich::culture *culture = population_unit->get_culture();
 	const metternich::religion *religion = population_unit->get_religion();
 	const phenotype *phenotype = population_unit->get_phenotype();
 	const population_type *population_type = culture->get_population_class_type(this->get_default_population_class());
+
 	const site *settlement = population_unit->get_settlement();
+	if (settlement->get_game_data()->get_available_health() <= 0) {
+		//if the population unit's settlement has no available health, but there are empty settlements, grow the population in one of them
+		std::vector<const province *> potential_settlement_provinces = this->get_provinces();
+
+		std::erase_if(potential_settlement_provinces, [this](const province *province) {
+			if (province->get_provincial_capital()->get_game_data()->get_available_health() <= 0) {
+				return true;
+			}
+
+			return false;
+		});
+
+		assert_throw(!potential_settlement_provinces.empty());
+
+		settlement = vector::get_random(potential_settlement_provinces)->get_provincial_capital();
+	}
 
 	settlement->get_game_data()->create_population_unit(population_type, culture, religion, phenotype);
 
@@ -3837,6 +3861,10 @@ void country_game_data::choose_next_tradition()
 	tradition_group_map<std::vector<const tradition *>> potential_traditions_per_group;
 
 	for (const tradition *tradition : this->get_available_traditions()) {
+		if (this->has_tradition(tradition)) {
+			continue;
+		}
+
 		if (!this->can_have_tradition(tradition)) {
 			continue;
 		}
