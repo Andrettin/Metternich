@@ -14,6 +14,7 @@ class icon;
 class portrait;
 class technology;
 class tradition_group;
+enum class tradition_category;
 
 template <typename scope_type>
 class condition;
@@ -25,6 +26,7 @@ class tradition final : public named_data_entry, public data_type<tradition>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::tradition_category category MEMBER category READ get_category NOTIFY changed)
 	Q_PROPERTY(metternich::tradition_group* group MEMBER group NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
@@ -43,6 +45,11 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
+
+	tradition_category get_category() const
+	{
+		return this->category;
+	}
 
 	const tradition_group *get_group() const
 	{
@@ -146,6 +153,7 @@ signals:
 	void changed();
 
 private:
+	tradition_category category{};
 	tradition_group *group = nullptr;
 	const portrait *portrait = nullptr;
 	const icon *icon = nullptr;

@@ -25,6 +25,7 @@
 #include "country/policy.h"
 #include "country/religion.h"
 #include "country/tradition.h"
+#include "country/tradition_category.h"
 #include "country/tradition_group_container.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -3855,6 +3856,8 @@ void country_game_data::check_traditions()
 		}
 	}
 
+	this->check_beliefs();
+
 	if (this->is_under_anarchy()) {
 		if (this->get_next_tradition() != nullptr) {
 			this->set_next_tradition(nullptr);
@@ -3890,11 +3893,52 @@ void country_game_data::check_traditions()
 	}
 }
 
+void country_game_data::check_beliefs()
+{
+	if (this->is_under_anarchy()) {
+		if (this->get_next_belief() != nullptr) {
+			this->set_next_belief(nullptr);
+		}
+
+		return;
+	}
+
+	if (this->get_next_belief() != nullptr) {
+		if (!this->can_have_tradition(this->get_next_belief())) {
+			if (this->country == game::get()->get_player_country()) {
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification("Belief Unavailable", interior_minister_portrait, std::format("Your Excellency, the {} belief is no longer available for adoption.", this->get_next_belief()->get_name()));
+			}
+
+			this->set_next_belief(nullptr);
+		} else {
+			if (this->get_stored_commodity(defines::get()->get_piety_commodity()) >= this->get_tradition_cost()) {
+				this->change_stored_commodity(defines::get()->get_piety_commodity(), -this->get_tradition_cost());
+
+				this->gain_tradition(this->get_next_belief(), 1);
+
+				emit belief_adopted(this->get_next_belief());
+
+				this->set_next_belief(nullptr);
+			}
+		}
+	} else {
+		if (this->get_commodity_output(defines::get()->get_piety_commodity()).to_int() > 0 || this->get_stored_commodity(defines::get()->get_piety_commodity()) > 0) {
+			this->choose_next_belief();
+		}
+	}
+}
+
 void country_game_data::choose_next_tradition()
 {
 	tradition_group_map<std::vector<const tradition *>> potential_traditions_per_group;
 
 	for (const tradition *tradition : this->get_available_traditions()) {
+		if (tradition->get_category() != tradition_category::tradition) {
+			continue;
+		}
+
 		if (this->has_tradition(tradition)) {
 			continue;
 		}
@@ -3961,6 +4005,84 @@ void country_game_data::choose_next_tradition()
 	} else {
 		const std::vector<const tradition *> potential_traditions = archimedes::map::get_values(potential_tradition_map);
 		emit engine_interface::get()->next_tradition_choosable(container::to_qvariant_list(potential_traditions));
+	}
+}
+
+void country_game_data::choose_next_belief()
+{
+	tradition_group_map<std::vector<const tradition *>> potential_beliefs_per_group;
+
+	for (const tradition *tradition : this->get_available_traditions()) {
+		if (tradition->get_category() != tradition_category::belief) {
+			continue;
+		}
+
+		if (this->has_tradition(tradition)) {
+			continue;
+		}
+
+		if (!this->can_have_tradition(tradition)) {
+			continue;
+		}
+
+		bool has_incompatible_tradition = false;
+		for (const metternich::tradition *incompatible_tradition : tradition->get_incompatible_traditions()) {
+			if (this->has_tradition(incompatible_tradition)) {
+				has_incompatible_tradition = true;
+				break;
+			}
+		}
+		if (has_incompatible_tradition) {
+			continue;
+		}
+
+		std::vector<const metternich::tradition *> &group_beliefs = potential_beliefs_per_group[tradition->get_group()];
+
+		group_beliefs.push_back(tradition);
+	}
+
+	if (potential_beliefs_per_group.empty()) {
+		return;
+	}
+
+	tradition_group_map<const tradition *> potential_belief_map;
+
+	for (const auto &[group, group_beliefs] : potential_beliefs_per_group) {
+		potential_belief_map[group] = vector::get_random(group_beliefs);
+	}
+
+	if (this->is_ai()) {
+		std::vector<const tradition *> preferred_beliefs;
+
+		int best_desire = 0;
+		for (const auto &[group, belief] : potential_belief_map) {
+			int desire = 100;
+
+			for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
+				if (vector::contains(journal_entry->get_adopted_traditions(), belief)) {
+					desire += journal_entry::ai_tradition_desire_modifier;
+				}
+			}
+
+			assert_throw(desire > 0);
+
+			if (desire > best_desire) {
+				preferred_beliefs.clear();
+				best_desire = desire;
+			}
+
+			if (desire >= best_desire) {
+				preferred_beliefs.push_back(belief);
+			}
+		}
+
+		assert_throw(!preferred_beliefs.empty());
+
+		const tradition *chosen_belief = vector::get_random(preferred_beliefs);
+		this->set_next_belief(chosen_belief);
+	} else {
+		const std::vector<const tradition *> potential_beliefs = archimedes::map::get_values(potential_belief_map);
+		emit engine_interface::get()->next_belief_choosable(container::to_qvariant_list(potential_beliefs));
 	}
 }
 

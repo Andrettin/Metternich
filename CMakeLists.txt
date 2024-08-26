@@ -68,6 +68,7 @@ set(country_SRCS
 	src/country/religion_container.cpp
 	src/country/subject_type.cpp
 	src/country/tradition.cpp
+	src/country/tradition_category.cpp
 	src/country/tradition_container.cpp
 	src/country/tradition_group.cpp
 	src/country/tradition_group_container.cpp
@@ -385,6 +386,7 @@ set(country_HDRS
 	src/country/religious_group.h
 	src/country/subject_type.h
 	src/country/tradition.h
+	src/country/tradition_category.h
 	src/country/tradition_container.h
 	src/country/tradition_group.h
 	src/country/tradition_group_container.h

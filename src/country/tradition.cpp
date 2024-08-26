@@ -2,6 +2,7 @@
 
 #include "country/tradition.h"
 
+#include "country/tradition_category.h"
 #include "country/tradition_group.h"
 #include "game/game.h"
 #include "script/condition/and_condition.h"
@@ -65,6 +66,10 @@ void tradition::initialize()
 
 void tradition::check() const
 {
+	if (this->get_category() == tradition_category::none) {
+		throw std::runtime_error(std::format("Tradition \"{}\" has no tradition category.", this->get_identifier()));
+	}
+
 	if (this->get_group() == nullptr) {
 		throw std::runtime_error(std::format("Tradition \"{}\" has no tradition group.", this->get_identifier()));
 	}

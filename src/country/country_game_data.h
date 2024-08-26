@@ -150,6 +150,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList available_traditions READ get_available_traditions_qvariant_list NOTIFY traditions_changed)
 	Q_PROPERTY(int tradition_cost READ get_tradition_cost NOTIFY traditions_changed)
 	Q_PROPERTY(const metternich::tradition* next_tradition READ get_next_tradition WRITE set_next_tradition NOTIFY next_tradition_changed)
+	Q_PROPERTY(const metternich::tradition* next_belief READ get_next_belief WRITE set_next_belief NOTIFY next_belief_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
@@ -1322,6 +1323,7 @@ public:
 	void gain_tradition(const tradition *tradition, const int multiplier);
 	void gain_tradition_with_prerequisites(const tradition *tradition);
 	void check_traditions();
+	void check_beliefs();
 
 	int get_tradition_cost() const
 	{
@@ -1351,6 +1353,23 @@ public:
 	}
 
 	void choose_next_tradition();
+
+	const tradition *get_next_belief() const
+	{
+		return this->next_belief;
+	}
+
+	void set_next_belief(const tradition *belief)
+	{
+		if (belief == this->get_next_belief()) {
+			return;
+		}
+
+		this->next_belief = belief;
+		emit next_belief_changed();
+	}
+
+	void choose_next_belief();
 
 	void check_characters();
 
@@ -2488,6 +2507,8 @@ signals:
 	void traditions_changed();
 	void next_tradition_changed();
 	void tradition_adopted(const tradition *tradition);
+	void next_belief_changed();
+	void belief_adopted(const tradition *belief);
 	void ruler_changed();
 	void advisors_changed();
 	void next_advisor_changed();
@@ -2578,6 +2599,7 @@ private:
 	policy_map<int> policy_values;
 	tradition_set traditions;
 	const tradition *next_tradition = nullptr;
+	const tradition *next_belief = nullptr;
 	const character *ruler = nullptr;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;

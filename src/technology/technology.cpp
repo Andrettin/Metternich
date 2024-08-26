@@ -11,6 +11,7 @@
 #include "country/government_type.h"
 #include "country/law.h"
 #include "country/tradition.h"
+#include "country/tradition_category.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
@@ -698,7 +699,7 @@ QString technology::get_effects_string(metternich::country *country) const
 				str += "\n";
 			}
 
-			str += std::format("Enables {} tradition", tradition->get_name());
+			str += std::format("Enables {} {}", tradition->get_name(), string::lowered(get_tradition_category_name(tradition->get_category())));
 		}
 	}
 

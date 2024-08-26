@@ -8,6 +8,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/tradition.h"
+#include "country/tradition_category.h"
 #include "infrastructure/building_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -354,7 +355,7 @@ QString journal_entry::get_completion_conditions_string() const
 			str += "\n";
 		}
 
-		str += std::format("Adopt {} (tradition)", tradition->get_name());
+		str += std::format("Adopt {} ({})", tradition->get_name(), get_tradition_category_name(tradition->get_category()));
 	}
 
 	for (const character *character : this->get_recruited_characters()) {
