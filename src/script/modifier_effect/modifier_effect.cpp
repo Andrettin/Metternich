@@ -20,6 +20,7 @@
 #include "script/modifier_effect/cavalry_cost_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h"
+#include "script/modifier_effect/commodity_bonus_per_adjacent_terrain_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_building_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_improved_resource_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_improvement_modifier_effect.h"
@@ -303,6 +304,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<commodity_bonus_per_improvement_modifier_effect<scope_type>>();
 		} else if (tag == "military_unit_category_stat_modifier") {
 			modifier_effect = std::make_unique<military_unit_category_stat_modifier_effect>();
+		}
+	} else if constexpr (std::is_same_v<scope_type, const site>) {
+		if (tag == "commodity_bonus_per_adjacent_terrain") {
+			modifier_effect = std::make_unique<commodity_bonus_per_adjacent_terrain_modifier_effect>();
 		}
 	}
 
