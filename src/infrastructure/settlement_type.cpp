@@ -4,6 +4,7 @@
 
 #include "map/tile_image_provider.h"
 #include "script/condition/and_condition.h"
+#include "script/modifier.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -35,6 +36,9 @@ void settlement_type::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<site>>();
 		database::process_gsml_data(conditions, scope);
 		this->build_conditions = std::move(conditions);
+	} else if (tag == "modifier") {
+		this->modifier = std::make_unique<metternich::modifier<const site>>();
+		database::process_gsml_data(this->modifier, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

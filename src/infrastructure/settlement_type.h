@@ -10,6 +10,9 @@ class site;
 template <typename scope_type>
 class condition;
 
+template <typename scope_type>
+class modifier;
+
 class settlement_type final : public named_data_entry, public data_type<settlement_type>
 {
 	Q_OBJECT
@@ -61,6 +64,11 @@ public:
 		return this->build_conditions.get();
 	}
 
+	const modifier<const site> *get_modifier() const
+	{
+		return this->modifier.get();
+	}
+
 signals:
 	void changed();
 
@@ -71,6 +79,7 @@ private:
 	int free_resource_improvement_level = 0;
 	std::unique_ptr<const condition<site>> conditions;
 	std::unique_ptr<const condition<site>> build_conditions;
+	std::unique_ptr<modifier<const site>> modifier;
 };
 
 }

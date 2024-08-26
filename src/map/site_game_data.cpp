@@ -404,6 +404,12 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 
 	const metternich::settlement_type *old_settlement_type = this->get_settlement_type();
 
+	if (old_settlement_type != nullptr) {
+		if (old_settlement_type->get_modifier() != nullptr) {
+			old_settlement_type->get_modifier()->apply(this->site, -1);
+		}
+	}
+
 	this->settlement_type = settlement_type;
 
 	if (old_settlement_type == nullptr && this->get_settlement_type() != nullptr) {
@@ -425,6 +431,10 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 	}
 
 	if (this->get_settlement_type() != nullptr) {
+		if (this->get_settlement_type()->get_modifier() != nullptr) {
+			this->get_settlement_type()->get_modifier()->apply(this->site, 1);
+		}
+
 		this->check_building_conditions();
 		this->check_free_buildings();
 	}
