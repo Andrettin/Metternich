@@ -11,6 +11,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "population/population_unit.h"
+#include "script/condition/adjacent_terrain_condition.h"
 #include "script/condition/advisor_condition.h"
 #include "script/condition/advisor_category_condition.h"
 #include "script/condition/advisor_type_condition.h"
@@ -213,7 +214,9 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<core_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, site>) {
-		if (key == "can_gain_building_class") {
+		if (key == "adjacent_terrain") {
+			return std::make_unique<adjacent_terrain_condition>(value, condition_operator);
+		} else if (key == "can_gain_building_class") {
 			return std::make_unique<can_gain_building_class_condition>(value, condition_operator);
 		} else if (key == "has_route") {
 			return std::make_unique<has_route_condition<site>>(value, condition_operator);

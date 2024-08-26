@@ -1,7 +1,7 @@
 #pragma once
 
 #include "map/site.h"
-#include "map/site_game_data.h"
+#include "map/site_map_data.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "script/condition/condition.h"
@@ -9,10 +9,10 @@
 
 namespace metternich {
 
-class terrain_condition final : public condition<site>
+class adjacent_terrain_condition final : public condition<site>
 {
 public:
-	explicit terrain_condition(const std::string &value, const gsml_operator condition_operator)
+	explicit adjacent_terrain_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<site>(condition_operator)
 	{
 		this->terrain = terrain_type::get(value);
@@ -20,7 +20,7 @@ public:
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "terrain";
+		static const std::string class_identifier = "adjacent_terrain";
 		return class_identifier;
 	}
 
@@ -28,18 +28,18 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		if (!scope->get_game_data()->is_on_map()) {
+		if (!scope->get_map_data()->is_on_map()) {
 			return false;
 		}
 
-		return scope->get_game_data()->get_tile()->get_terrain() == this->terrain;
+		return scope->get_map_data()->get_adjacent_terrain_count(this->terrain) > 0;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
 
-		return std::format("{} terrain", string::highlight(this->terrain->get_name()));
+		return std::format("{} adjacent terrain", string::highlight(this->terrain->get_name()));
 	}
 
 private:
