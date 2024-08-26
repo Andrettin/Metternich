@@ -179,20 +179,12 @@ tile *site_game_data::get_tile() const
 
 bool site_game_data::is_coastal() const
 {
-	if (!this->is_on_map()) {
-		return false;
-	}
-
-	return map::get()->is_tile_coastal(this->get_tile_pos());
+	return this->site->get_map_data()->is_coastal();
 }
 
 bool site_game_data::is_near_water() const
 {
-	if (!this->is_on_map()) {
-		return false;
-	}
-
-	return map::get()->is_tile_near_water(this->get_tile_pos());
+	return this->site->get_map_data()->is_near_water();
 }
 
 bool site_game_data::has_route() const
