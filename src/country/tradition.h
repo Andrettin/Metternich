@@ -27,6 +27,7 @@ class tradition final : public named_data_entry, public data_type<tradition>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::tradition_category category MEMBER category READ get_category NOTIFY changed)
+	Q_PROPERTY(QString category_name READ get_category_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::tradition_group* group MEMBER group NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
@@ -50,6 +51,8 @@ public:
 	{
 		return this->category;
 	}
+
+	QString get_category_name_qstring() const;
 
 	const tradition_group *get_group() const
 	{
@@ -97,6 +100,8 @@ public:
 	{
 		return this->conditions.get();
 	}
+
+	Q_INVOKABLE QString get_requirements_string(const metternich::country *country) const;
 
 	const modifier<const country> *get_modifier() const
 	{

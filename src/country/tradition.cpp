@@ -2,6 +2,8 @@
 
 #include "country/tradition.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/tradition_category.h"
 #include "country/tradition_group.h"
 #include "game/game.h"
@@ -95,6 +97,11 @@ void tradition::check() const
 	}
 }
 
+QString tradition::get_category_name_qstring() const
+{
+	return QString::fromUtf8(get_tradition_category_name(this->get_category()).data());
+}
+
 void tradition::calculate_total_prerequisite_depth()
 {
 	if (this->total_prerequisite_depth != 0 || this->get_prerequisites().empty()) {
@@ -109,6 +116,50 @@ void tradition::calculate_total_prerequisite_depth()
 	}
 
 	this->total_prerequisite_depth = depth;
+}
+
+QString tradition::get_requirements_string(const metternich::country *country) const
+{
+	std::string str;
+
+	if (!this->get_incompatible_traditions().empty()) {
+		str += "Incompatible with: ";
+
+		bool first = true;
+		for (const tradition *tradition : this->get_incompatible_traditions()) {
+			if (!tradition->is_available_for_country(country)) {
+				continue;
+			}
+
+			if (first) {
+				first = false;
+			} else {
+				str += ", ";
+			}
+
+			str += tradition->get_name();
+		}
+	}
+
+	if (!country->get_game_data()->has_tradition(this)) {
+		if (this->get_required_technology() != nullptr && !country->get_game_data()->has_technology(this->get_required_technology())) {
+			if (!str.empty()) {
+				str += "\n\n";
+			}
+
+			str += std::format("Required Technology: {}", this->get_required_technology()->get_name());
+		}
+
+		if (this->get_conditions() != nullptr && !this->get_conditions()->check(country, read_only_context(country))) {
+			if (!str.empty()) {
+				str += "\n\n";
+			}
+
+			str += this->get_conditions()->get_string(0);
+		}
+	}
+
+	return QString::fromStdString(str);
 }
 
 QString tradition::get_modifier_string(const metternich::country *country) const

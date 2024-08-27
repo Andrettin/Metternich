@@ -36,7 +36,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return "Has " + this->resource->get_name() + " resource";
+		return std::format("Has {} resource", this->resource->get_name());
 	}
 
 private:
