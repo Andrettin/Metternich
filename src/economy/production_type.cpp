@@ -3,6 +3,7 @@
 #include "economy/production_type.h"
 
 #include "economy/commodity.h"
+#include "population/population_type.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
@@ -12,6 +13,7 @@ namespace metternich {
 void production_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "input_commodities") {
 		scope.for_each_property([&](const gsml_property &property) {
@@ -23,6 +25,10 @@ void production_type::process_gsml_scope(const gsml_data &scope)
 
 			this->input_commodities[commodity] = value_int;
 		});
+	} else if (tag == "employees") {
+		for (const std::string &value : values) {
+			this->employees.insert(population_type::get(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

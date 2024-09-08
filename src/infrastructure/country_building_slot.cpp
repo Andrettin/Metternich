@@ -11,6 +11,7 @@
 #include "game/game.h"
 #include "game/game_rules.h"
 #include "infrastructure/building_type.h"
+#include "population/population_unit.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -272,6 +273,21 @@ int country_building_slot::get_production_type_input_wealth(const production_typ
 	return this->get_country()->get_game_data()->get_inflated_value(production_type->get_input_wealth() * employed_capacity);
 }
 
+int country_building_slot::get_production_type_input_labor(const production_type *production_type) const
+{
+	if (production_type->get_input_labor() == 0) {
+		return 0;
+	}
+
+	const int employed_capacity = this->get_production_type_employed_capacity(production_type);
+
+	if (employed_capacity == 0) {
+		return 0;
+	}
+
+	return this->get_country()->get_game_data()->get_inflated_value(production_type->get_input_wealth() * employed_capacity);
+}
+
 centesimal_int country_building_slot::get_production_type_output(const production_type *production_type) const
 {
 	centesimal_int output(this->get_production_type_employed_capacity(production_type));
@@ -302,6 +318,7 @@ void country_building_slot::change_production(const production_type *production_
 	const centesimal_int old_output = this->get_production_type_output(production_type);
 	const commodity_map<int> old_inputs = this->get_production_type_inputs(production_type);
 	const int old_input_wealth = this->get_production_type_input_wealth(production_type);
+	const int old_input_labor = this->get_production_type_input_labor(production_type);
 
 	const int change = production_type->get_output_value() * multiplier;
 	this->employed_capacity += change;
@@ -332,6 +349,10 @@ void country_building_slot::change_production(const production_type *production_
 		country_game_data->change_wealth(-input_wealth_change);
 	}
 	country_game_data->change_wealth_income(-input_wealth_change);
+
+	const int new_input_labor = this->get_production_type_input_labor(production_type);
+	const int input_labor_change = new_input_labor - old_input_labor;
+	this->change_available_labor(-input_labor_change);
 
 	const centesimal_int new_output = this->get_production_type_output(production_type);
 	country_game_data->change_commodity_output(production_type->get_output_commodity(), new_output - old_output);
@@ -364,6 +385,23 @@ bool country_building_slot::can_increase_production(const production_type *produ
 
 	if (production_type->get_input_wealth() != 0 && country_game_data->get_wealth_with_credit() < production_type->get_input_wealth()) {
 		return false;
+	}
+
+	if (production_type->get_input_labor() != 0 && this->get_available_labor() < production_type->get_input_labor()) {
+		int potentially_available_labor = this->get_available_labor();
+
+		for (const population_unit *population_unit : country_game_data->get_unemployed_population_units()) {
+			if (this->can_employ(population_unit)) {
+				potentially_available_labor += this->get_employee_labor(population_unit);
+				if (potentially_available_labor >= production_type->get_input_labor()) {
+					break;
+				}
+			}
+		}
+
+		if (potentially_available_labor < production_type->get_input_labor()) {
+			return false;
+		}
 	}
 
 	return true;
@@ -405,6 +443,39 @@ void country_building_slot::decrease_production(const production_type *productio
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error decreasing production of \"" + production_type->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\"."));
 	}
+}
+
+bool country_building_slot::can_employ(const population_unit *population_unit) const
+{
+	if (this->get_building() == nullptr) {
+		return false;
+	}
+
+	for (const production_type *production_type : this->get_building()->get_production_types()) {
+		if (production_type->can_employ(population_unit->get_type())) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void country_building_slot::employ(population_unit *population_unit, const int multiplier)
+{
+	assert_throw(multiplier != 0);
+
+	this->change_available_labor(this->get_employee_labor(population_unit) * multiplier);
+
+	if (multiplier > 0) {
+		this->employees.push_back(population_unit);
+	} else {
+		std::erase(this->employees, population_unit);
+	}
+}
+
+int country_building_slot::get_employee_labor(const population_unit *population_unit) const
+{
+	return 1;
 }
 
 QString country_building_slot::get_country_modifier_string() const

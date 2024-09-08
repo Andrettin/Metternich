@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "population/population_type_container.h"
 
 Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("technology/technology.h")
@@ -18,6 +19,7 @@ class production_type final : public named_data_entry, public data_type<producti
 
 	Q_PROPERTY(QVariantList input_commodities READ get_input_commodities_qvariant_list NOTIFY changed)
 	Q_PROPERTY(int input_wealth MEMBER input_wealth READ get_input_wealth NOTIFY changed)
+	Q_PROPERTY(int input_labor MEMBER input_labor READ get_input_labor NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -48,6 +50,11 @@ public:
 		return this->input_wealth;
 	}
 
+	int get_input_labor() const
+	{
+		return this->input_labor;
+	}
+
 	const commodity *get_output_commodity() const
 	{
 		return this->output_commodity;
@@ -68,16 +75,23 @@ public:
 		return this->industrial;
 	}
 
+	bool can_employ(const population_type *population_type) const
+	{
+		this->employees.contains(population_type);
+	}
+
 signals:
 	void changed();
 
 private:
 	commodity_map<int> input_commodities;
 	int input_wealth = 0;
+	int input_labor = 0;
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
 	technology *required_technology = nullptr;
 	bool industrial = false;
+	population_type_set employees;
 };
 
 }
