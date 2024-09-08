@@ -5,7 +5,6 @@
 
 namespace metternich {
 
-class population_unit;
 class production_type;
 
 class country_building_slot final : public building_slot
@@ -105,7 +104,6 @@ public:
 	commodity_map<int> get_production_type_inputs(const production_type *production_type) const;
 	Q_INVOKABLE QVariantList get_production_type_inputs(metternich::production_type *production_type) const;
 	int get_production_type_input_wealth(const production_type *production_type) const;
-	int get_production_type_input_labor(const production_type *production_type) const;
 
 	Q_INVOKABLE int get_production_type_input_wealth(metternich::production_type *production_type) const
 	{
@@ -155,21 +153,6 @@ public:
 		this->decrease_production(const_production_type, true);
 	}
 
-	int get_available_labor() const
-	{
-		return this->available_labor;
-	}
-
-	void change_available_labor(const int change)
-	{
-		this->available_labor += change;
-	}
-
-	bool can_employ(const population_unit *population_unit) const;
-	void employ(population_unit *population_unit, const int multiplier);
-
-	int get_employee_labor(const population_unit *population_unit) const;
-
 	QString get_country_modifier_string() const;
 
 signals:
@@ -185,8 +168,6 @@ private:
 	int capacity = 0;
 	int employed_capacity = 0;
 	std::map<const production_type *, int> production_type_employed_capacities;
-	int available_labor = 0;
-	std::vector<population_unit *> employees;
 	bool expanding = false;
 };
 
