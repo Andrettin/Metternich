@@ -3,6 +3,7 @@
 #include "infrastructure/improvement.h"
 
 #include "economy/commodity.h"
+#include "economy/employment_type.h"
 #include "economy/resource.h"
 #include "infrastructure/improvement_slot.h"
 #include "map/site.h"
@@ -99,6 +100,13 @@ void improvement::check() const
 		throw std::runtime_error(std::format("Improvement \"{}\" has an output multiplier, but no output commodity.", this->get_identifier()));
 	}
 
+	if (this->get_employment_type() != nullptr && this->get_employment_capacity() == 0) {
+		throw std::runtime_error(std::format("Improvement \"{}\" has an employment type, but no employment capacity.", this->get_identifier()));
+	}
+
+	if (this->get_employment_capacity() > 0 && this->get_employment_type() == nullptr) {
+		throw std::runtime_error(std::format("Improvement \"{}\" has an employment capacity, but no employment type.", this->get_identifier()));
+	}
 	if ((this->get_slot() == improvement_slot::main || this->get_slot() == improvement_slot::resource) && this->get_image_filepath().empty()) {
 		throw std::runtime_error(std::format("Main or resource improvement \"{}\" has no image filepath.", this->get_identifier()));
 	}
@@ -136,6 +144,10 @@ void improvement::set_image_filepath(const std::filesystem::path &filepath)
 
 const commodity *improvement::get_output_commodity() const
 {
+	if (this->get_employment_type() != nullptr) {
+		return this->get_employment_type()->get_output_commodity();
+	}
+
 	if (this->get_resource() != nullptr) {
 		return this->get_resource()->get_commodity();
 	}

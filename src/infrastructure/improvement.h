@@ -4,6 +4,7 @@
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 
+Q_MOC_INCLUDE("economy/employment_type.h")
 Q_MOC_INCLUDE("economy/resource.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -11,6 +12,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 namespace metternich {
 
 class commodity;
+class employment_type;
 class icon;
 class resource;
 class technology;
@@ -32,6 +34,8 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
+	Q_PROPERTY(const metternich::employment_type* employment_type MEMBER employment_type READ get_employment_type NOTIFY changed)
+	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
 	Q_PROPERTY(metternich::improvement* required_improvement MEMBER required_improvement NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -105,6 +109,16 @@ public:
 		return this->output_multiplier;
 	}
 
+	const metternich::employment_type *get_employment_type() const
+	{
+		return this->employment_type;
+	}
+
+	int get_employment_capacity() const
+	{
+		return this->employment_capacity;
+	}
+
 	const std::vector<const terrain_type *> &get_terrain_types() const
 	{
 		return this->terrain_types;
@@ -154,6 +168,8 @@ private:
 	std::filesystem::path image_filepath;
 	std::map<const terrain_type *, std::filesystem::path> terrain_image_filepaths;
 	int output_multiplier = 0;
+	const metternich::employment_type *employment_type = nullptr;
+	int employment_capacity = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
 	int variation_count = 1;
 	improvement *required_improvement = nullptr;
