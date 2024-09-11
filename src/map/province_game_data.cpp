@@ -10,6 +10,7 @@
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/commodity_container.h"
+#include "economy/employment_type.h"
 #include "economy/production_type.h"
 #include "economy/resource.h"
 #include "game/event_trigger.h"
@@ -62,6 +63,8 @@ void province_game_data::do_turn()
 	for (const site *site : this->get_sites()) {
 		site->get_game_data()->do_turn();
 	}
+
+	this->check_employment();
 
 	this->decrement_scripted_modifiers();
 }
@@ -740,6 +743,48 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 	}
 
 	return false;
+}
+
+void province_game_data::check_employment()
+{
+	std::vector<population_unit *> unemployed_population_units;
+
+	for (population_unit *population_unit : this->population_units) {
+		if (population_unit->is_unemployed()) {
+			unemployed_population_units.push_back(population_unit);
+		}
+	}
+
+	for (const QPoint &tile_pos : this->get_resource_tiles()) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+		const site *resource_site = tile->get_site();
+		site_game_data *resource_site_game_data = resource_site->get_game_data();
+
+		int available_resource_employment_capacity = resource_site_game_data->get_available_resource_employment_capacity();
+		assert_throw(available_resource_employment_capacity >= 0);
+		if (available_resource_employment_capacity == 0) {
+			continue;
+		}
+
+		const employment_type *employment_type = resource_site_game_data->get_resource_employment_type();
+		assert_throw(employment_type != nullptr);
+
+		for (size_t i = 0; i < unemployed_population_units.size();) {
+			population_unit *population_unit = unemployed_population_units[i];
+			if (!employment_type->can_employ(population_unit->get_type())) {
+				++i;
+				continue;
+			}
+
+			population_unit->set_employment_location(resource_site);
+			--available_resource_employment_capacity;
+			unemployed_population_units.erase(unemployed_population_units.begin() + i);
+
+			if (available_resource_employment_capacity == 0) {
+				break;
+			}
+		}
+	}
 }
 
 }

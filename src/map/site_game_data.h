@@ -19,6 +19,7 @@ class building_class;
 class building_type;
 class country;
 class culture;
+class employment_type;
 class improvement;
 class phenotype;
 class population;
@@ -232,6 +233,48 @@ public:
 	}
 
 	void change_profession_capacity(const profession *profession, const int change);
+
+	const employment_type *get_resource_employment_type() const;
+
+	int get_resource_employee_count() const
+	{
+		return static_cast<int>(this->get_resource_employees().size());
+	}
+
+	const std::vector<population_unit *> &get_resource_employees() const
+	{
+		return this->resource_employees;
+	}
+
+	void add_resource_employee(population_unit *employee)
+	{
+		this->resource_employees.push_back(employee);
+
+		this->on_resource_employee_added(employee, 1);
+	}
+
+	void remove_resource_employee(population_unit *employee)
+	{
+		std::erase(this->resource_employees, employee);
+
+		this->on_resource_employee_added(employee, -1);
+	}
+
+	void on_resource_employee_added(population_unit *employee, const int multiplier);
+
+	int get_resource_employment_capacity() const
+	{
+		return this->resource_employment_capacity;
+	}
+
+	void change_resource_employment_capacity(const int change);
+
+	int get_available_resource_employment_capacity() const
+	{
+		return this->get_resource_employment_capacity() - this->get_resource_employee_count();
+	}
+
+	void check_excess_resource_employment();
 
 	const centesimal_int &get_health() const
 	{
@@ -472,6 +515,8 @@ private:
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
 	profession_map<int> profession_capacities;
+	std::vector<population_unit *> resource_employees;
+	int resource_employment_capacity = 0;
 	centesimal_int health;
 	int free_food_consumption = 0;
 	commodity_map<centesimal_int> base_commodity_outputs;

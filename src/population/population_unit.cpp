@@ -8,6 +8,7 @@
 #include "country/ideology.h"
 #include "country/religion.h"
 #include "economy/commodity.h"
+#include "economy/employment_type.h"
 #include "game/game.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -71,6 +72,18 @@ void population_unit::set_type(const population_type *type)
 	this->type = type;
 
 	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), 1);
+
+	if (!this->is_unemployed()) {
+		if (std::holds_alternative<const site *>(this->get_employment_location())) {
+			const site *employment_site = std::get<const site *>(this->get_employment_location());
+			assert_throw(employment_site != nullptr);
+			const employment_type *employment_type = employment_site->get_game_data()->get_resource_employment_type();
+			assert_throw(employment_type != nullptr);
+			if (!employment_type->can_employ(type)) {
+				this->set_employment_location(std::monostate());
+			}
+		}
+	}
 
 	emit type_changed();
 }
@@ -263,6 +276,27 @@ void population_unit::set_militancy(const centesimal_int &militancy)
 
 	if (game::get()->is_running() && militancy.to_int() != old_militancy.to_int()) {
 		this->choose_ideology();
+	}
+}
+
+void population_unit::set_employment_location(employment_location_variant &&employment_location)
+{
+	if (employment_location == this->get_employment_location()) {
+		return;
+	}
+
+	if (std::holds_alternative<const site *>(this->get_employment_location())) {
+		const site *employment_site = std::get<const site *>(this->get_employment_location());
+		assert_throw(employment_site != nullptr);
+		employment_site->get_game_data()->remove_resource_employee(this);
+	}
+
+	this->employment_location = employment_location;
+
+	if (std::holds_alternative<const site *>(this->get_employment_location())) {
+		const site *employment_site = std::get<const site *>(this->get_employment_location());
+		assert_throw(employment_site != nullptr);
+		employment_site->get_game_data()->add_resource_employee(this);
 	}
 }
 

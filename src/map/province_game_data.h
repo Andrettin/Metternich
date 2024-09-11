@@ -369,6 +369,8 @@ public:
 
 	bool can_produce_commodity(const commodity *commodity) const;
 
+	void check_employment();
+
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:

@@ -13,6 +13,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
+class building_slot;
 class country;
 class culture;
 class icon;
@@ -37,6 +38,8 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::site* settlement READ get_settlement NOTIFY settlement_changed)
 
 public:
+	using employment_location_variant = std::variant<std::monostate, const site *>;
+
 	static constexpr int max_consciousness = 10;
 	static constexpr int max_militancy = 10;
 
@@ -125,6 +128,18 @@ public:
 		this->set_militancy(this->get_militancy() + change);
 	}
 
+	const employment_location_variant &get_employment_location() const
+	{
+		return this->employment_location;
+	}
+
+	bool is_unemployed() const
+	{
+		return std::holds_alternative<std::monostate>(this->get_employment_location());
+	}
+
+	void set_employment_location(employment_location_variant &&employment_location);
+
 	bool is_everyday_consumption_fulfilled() const
 	{
 		return this->everyday_consumption_fulfilled;
@@ -175,6 +190,7 @@ private:
 	const metternich::ideology *ideology = nullptr;
 	centesimal_int consciousness;
 	centesimal_int militancy;
+	employment_location_variant employment_location;
 	bool everyday_consumption_fulfilled = true;
 	bool luxury_consumption_fulfilled = true;
 };
