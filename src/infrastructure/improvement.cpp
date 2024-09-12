@@ -11,6 +11,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "map/tile_image_provider.h"
+#include "population/population_type.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
@@ -209,6 +210,25 @@ bool improvement::is_buildable_on_site(const site *site) const
 	}
 
 	return true;
+}
+
+centesimal_int improvement::get_employee_output(const population_type *population_type) const
+{
+	assert_throw(population_type != nullptr);
+	assert_throw(this->get_employment_type() != nullptr);
+
+	const commodity *output_commodity = this->get_employment_type()->get_output_commodity();
+
+	centesimal_int employee_output(this->get_employment_type()->get_output_value());
+	employee_output *= this->get_output_multiplier();
+
+	employee_output += population_type->get_commodity_output_bonus(output_commodity);
+	employee_output += population_type->get_resource_output_bonus();
+
+	employee_output *= 100 + population_type->get_commodity_output_modifier(output_commodity);
+	employee_output /= 100;
+
+	return employee_output;
 }
 
 }

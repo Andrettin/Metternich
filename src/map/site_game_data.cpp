@@ -1152,20 +1152,26 @@ const employment_type *site_game_data::get_resource_employment_type() const
 	return nullptr;
 }
 
+void site_game_data::add_resource_employee(population_unit *employee)
+{
+	const employment_type *employment_type = this->get_resource_employment_type();
+	assert_throw(employment_type != nullptr);
+	assert_throw(employment_type->can_employ(employee->get_type()));
+
+	this->resource_employees.push_back(employee);
+
+	this->on_resource_employee_added(employee, 1);
+
+	assert_throw(this->get_available_resource_employment_capacity() >= 0);
+}
+
 void site_game_data::on_resource_employee_added(population_unit *employee, const int multiplier)
 {
 	const employment_type *employment_type = this->get_resource_employment_type();
 	assert_throw(employment_type != nullptr);
 
-	centesimal_int employee_output(employment_type->get_output_value());
-	employee_output *= this->get_resource_improvement()->get_output_multiplier();
-	employee_output += employee->get_type()->get_commodity_output_bonus(employment_type->get_output_commodity());
-	employee_output += employee->get_type()->get_resource_output_bonus();
-	employee_output *= 100 + employee->get_type()->get_commodity_output_modifier(employment_type->get_output_commodity());
-	employee_output /= 100;
+	const centesimal_int employee_output = this->get_resource_improvement()->get_employee_output(employee->get_type());
 	this->change_base_commodity_output(employment_type->get_output_commodity(), employee_output * multiplier);
-
-	assert_throw(this->get_available_resource_employment_capacity() >= 0);
 }
 
 void site_game_data::change_resource_employment_capacity(const int change)

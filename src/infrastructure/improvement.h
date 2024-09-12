@@ -14,6 +14,7 @@ namespace metternich {
 class commodity;
 class employment_type;
 class icon;
+class population_type;
 class resource;
 class technology;
 class terrain_type;
@@ -155,6 +156,8 @@ public:
 	}
 
 	bool is_buildable_on_site(const site *site) const;
+
+	centesimal_int get_employee_output(const population_type *population_type) const;
 
 signals:
 	void changed();

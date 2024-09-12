@@ -246,12 +246,7 @@ public:
 		return this->resource_employees;
 	}
 
-	void add_resource_employee(population_unit *employee)
-	{
-		this->resource_employees.push_back(employee);
-
-		this->on_resource_employee_added(employee, 1);
-	}
+	void add_resource_employee(population_unit *employee);
 
 	void remove_resource_employee(population_unit *employee)
 	{
