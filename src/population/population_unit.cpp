@@ -69,6 +69,14 @@ void population_unit::set_type(const population_type *type)
 
 	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), -1);
 
+	if (!this->is_unemployed()) {
+		if (std::holds_alternative<const site *>(this->get_employment_location())) {
+			const site *employment_site = std::get<const site *>(this->get_employment_location());
+			assert_throw(employment_site != nullptr);
+			employment_site->get_game_data()->on_resource_employee_added(this, -1);
+		}
+	}
+
 	this->type = type;
 
 	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), 1);
@@ -77,6 +85,9 @@ void population_unit::set_type(const population_type *type)
 		if (std::holds_alternative<const site *>(this->get_employment_location())) {
 			const site *employment_site = std::get<const site *>(this->get_employment_location());
 			assert_throw(employment_site != nullptr);
+
+			employment_site->get_game_data()->on_resource_employee_added(this, 1);
+
 			const employment_type *employment_type = employment_site->get_game_data()->get_resource_employment_type();
 			assert_throw(employment_type != nullptr);
 			if (!employment_type->can_employ(type)) {

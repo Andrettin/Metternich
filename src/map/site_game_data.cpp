@@ -1156,7 +1156,6 @@ void site_game_data::on_resource_employee_added(population_unit *employee, const
 {
 	const employment_type *employment_type = this->get_resource_employment_type();
 	assert_throw(employment_type != nullptr);
-	assert_throw(employment_type->can_employ(employee->get_type()));
 
 	centesimal_int employee_output(employment_type->get_output_value());
 	employee_output *= this->get_resource_improvement()->get_output_multiplier();
