@@ -24,6 +24,7 @@
 #include "map/province_map_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_type.h"
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_unit.h"
@@ -626,29 +627,29 @@ QVariantList province_game_data::get_entering_armies_qvariant_list() const
 	return container::to_qvariant_list(this->get_entering_armies());
 }
 
-void province_game_data::calculate_settlement_commodity_outputs()
+void province_game_data::calculate_site_commodity_outputs()
 {
-	for (const site *settlement : this->get_settlement_sites()) {
-		if (!settlement->get_game_data()->is_built()) {
+	for (const site *site : this->get_sites()) {
+		if (site->get_type() != site_type::settlement && site->get_type() != site_type::resource) {
 			continue;
 		}
 
-		settlement->get_game_data()->calculate_commodity_outputs();
+		site->get_game_data()->calculate_commodity_outputs();
 	}
 }
 
-void province_game_data::calculate_settlement_commodity_output(const commodity *commodity)
+void province_game_data::calculate_site_commodity_output(const commodity *commodity)
 {
-	for (const site *settlement : this->get_settlement_sites()) {
-		if (!settlement->get_game_data()->is_built()) {
+	for (const site *site : this->get_sites()) {
+		if (site->get_type() != site_type::settlement && site->get_type() != site_type::resource) {
 			continue;
 		}
 
-		if (!settlement->get_game_data()->produces_commodity(commodity) && !settlement->get_game_data()->get_base_commodity_outputs().contains(commodity)) {
+		if (!site->get_game_data()->produces_commodity(commodity) && !site->get_game_data()->get_base_commodity_outputs().contains(commodity)) {
 			continue;
 		}
 
-		settlement->get_game_data()->calculate_commodity_outputs();
+		site->get_game_data()->calculate_commodity_outputs();
 	}
 }
 

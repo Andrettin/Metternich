@@ -222,8 +222,8 @@ public:
 		emit entering_armies_changed();
 	}
 
-	void calculate_settlement_commodity_outputs();
-	void calculate_settlement_commodity_output(const commodity *commodity);
+	void calculate_site_commodity_outputs();
+	void calculate_site_commodity_output(const commodity *commodity);
 
 	const centesimal_int &get_local_commodity_output(const commodity *commodity) const
 	{
@@ -251,7 +251,7 @@ public:
 
 		this->output_modifier = value;
 
-		this->calculate_settlement_commodity_outputs();
+		this->calculate_site_commodity_outputs();
 	}
 
 	void change_output_modifier(const int value)
@@ -287,7 +287,7 @@ public:
 			this->commodity_output_modifiers[commodity] = value;
 		}
 
-		this->calculate_settlement_commodity_output(commodity);
+		this->calculate_site_commodity_output(commodity);
 	}
 
 	void change_commodity_output_modifier(const commodity *commodity, const int value)

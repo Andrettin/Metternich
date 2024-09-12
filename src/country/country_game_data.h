@@ -1038,8 +1038,8 @@ public:
 		return this->get_commodity_output(commodity).to_int() - this->get_commodity_input(commodity);
 	}
 
-	void calculate_settlement_commodity_outputs();
-	void calculate_settlement_commodity_output(const commodity *commodity);
+	void calculate_site_commodity_outputs();
+	void calculate_site_commodity_output(const commodity *commodity);
 
 	int get_everyday_wealth_consumption() const
 	{

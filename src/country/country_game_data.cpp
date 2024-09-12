@@ -2864,17 +2864,17 @@ void country_game_data::change_commodity_output(const commodity *commodity, cons
 	}
 }
 
-void country_game_data::calculate_settlement_commodity_outputs()
+void country_game_data::calculate_site_commodity_outputs()
 {
 	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->calculate_settlement_commodity_outputs();
+		province->get_game_data()->calculate_site_commodity_outputs();
 	}
 }
 
-void country_game_data::calculate_settlement_commodity_output(const commodity *commodity)
+void country_game_data::calculate_site_commodity_output(const commodity *commodity)
 {
 	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->calculate_settlement_commodity_output(commodity);
+		province->get_game_data()->calculate_site_commodity_output(commodity);
 	}
 }
 
@@ -5119,7 +5119,7 @@ void country_game_data::set_output_modifier(const int value)
 		}
 	}
 
-	this->calculate_settlement_commodity_outputs();
+	this->calculate_site_commodity_outputs();
 
 	if (game::get()->is_running()) {
 		emit output_modifier_changed();
@@ -5134,7 +5134,7 @@ void country_game_data::set_resource_output_modifier(const int value)
 
 	this->resource_output_modifier = value;
 
-	this->calculate_settlement_commodity_outputs();
+	this->calculate_site_commodity_outputs();
 
 	if (game::get()->is_running()) {
 		emit resource_output_modifier_changed();
@@ -5206,7 +5206,7 @@ void country_game_data::set_commodity_output_modifier(const commodity *commodity
 		}
 	}
 
-	this->calculate_settlement_commodity_output(commodity);
+	this->calculate_site_commodity_output(commodity);
 }
 
 void country_game_data::set_capital_commodity_output_modifier(const commodity *commodity, const int value)
