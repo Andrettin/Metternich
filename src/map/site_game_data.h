@@ -293,6 +293,11 @@ public:
 		return this->free_food_consumption;
 	}
 
+	void change_free_food_consumption(const int change)
+	{
+		this->free_food_consumption += change;
+	}
+
 	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
 	{
 		return this->base_commodity_outputs;

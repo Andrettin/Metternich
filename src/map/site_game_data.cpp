@@ -1172,6 +1172,11 @@ void site_game_data::on_resource_employee_added(population_unit *employee, const
 
 	const centesimal_int employee_output = this->get_resource_improvement()->get_employee_output(employee->get_type());
 	this->change_base_commodity_output(employment_type->get_output_commodity(), employee_output * multiplier);
+
+	if (employment_type->get_output_commodity()->is_food()) {
+		//workers employed in resource food production do not need food themselves
+		this->change_free_food_consumption(1 * multiplier);
+	}
 }
 
 void site_game_data::change_resource_employment_capacity(const int change)
