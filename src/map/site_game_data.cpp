@@ -1160,6 +1160,9 @@ void site_game_data::on_resource_employee_added(population_unit *employee, const
 
 	centesimal_int employee_output(employment_type->get_output_value());
 	employee_output *= this->get_resource_improvement()->get_output_multiplier();
+	employee_output += employee->get_type()->get_commodity_output_bonus(employment_type->get_output_commodity());
+	employee_output *= 100 + employee->get_type()->get_commodity_output_modifier(employment_type->get_output_commodity());
+	employee_output /= 100;
 	this->change_base_commodity_output(employment_type->get_output_commodity(), employee_output * multiplier);
 
 	assert_throw(this->get_available_resource_employment_capacity() >= 0);

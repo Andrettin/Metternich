@@ -178,6 +178,37 @@ public:
 		return this->output_value;
 	}
 
+	const commodity_map<centesimal_int> &get_commodity_output_bonuses() const
+	{
+		return this->commodity_output_bonuses;
+	}
+
+	const centesimal_int &get_commodity_output_bonus(const commodity *commodity) const
+	{
+		const auto find_iterator = this->get_commodity_output_bonuses().find(commodity);
+		if (find_iterator != this->get_commodity_output_bonuses().end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
+	const commodity_map<int> &get_commodity_output_modifiers() const
+	{
+		return this->commodity_output_modifiers;
+	}
+
+	int get_commodity_output_modifier(const commodity *commodity) const
+	{
+		const auto find_iterator = this->get_commodity_output_modifiers().find(commodity);
+		if (find_iterator != this->get_commodity_output_modifiers().end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
 	const centesimal_int &get_max_modifier_multiplier() const
 	{
 		return this->max_modifier_multiplier;
@@ -210,6 +241,8 @@ private:
 	commodity_map<centesimal_int> commodity_demands; //affects minor nation demand
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
+	commodity_map<centesimal_int> commodity_output_bonuses;
+	commodity_map<int> commodity_output_modifiers;
 	centesimal_int max_modifier_multiplier = centesimal_int(0);
 	std::unique_ptr<modifier<const country>> country_modifier;
 };

@@ -60,6 +60,24 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			const centesimal_int demand(value);
 			this->commodity_demands[commodity] = std::move(demand);
 		});
+	} else if (tag == "commodity_output_bonuses") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const commodity *commodity = commodity::get(key);
+			const centesimal_int output_bonus(value);
+			this->commodity_output_bonuses[commodity] = std::move(output_bonus);
+		});
+	} else if (tag == "commodity_output_modifiers") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			const commodity *commodity = commodity::get(key);
+			const int output_modifier = std::stoi(value);
+			this->commodity_output_modifiers[commodity] = output_modifier;
+		});
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
 		database::process_gsml_data(this->country_modifier, scope);
