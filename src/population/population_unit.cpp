@@ -311,6 +311,27 @@ void population_unit::set_employment_location(employment_location_variant &&empl
 	}
 }
 
+const employment_type *population_unit::get_employment_type() const
+{
+	if (std::holds_alternative<const site *>(this->get_employment_location())) {
+		const site *employment_site = std::get<const site *>(this->get_employment_location());
+		assert_throw(employment_site != nullptr);
+		return employment_site->get_game_data()->get_resource_employment_type();
+	}
+
+	return nullptr;
+}
+
+bool population_unit::is_food_producer() const
+{
+	const employment_type *employment_type = this->get_employment_type();
+	if (employment_type != nullptr) {
+		return employment_type->get_output_commodity()->is_food();
+	}
+
+	return false;
+}
+
 void population_unit::migrate_to(const site *settlement)
 {
 	assert_throw(settlement != nullptr);

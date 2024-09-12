@@ -16,6 +16,7 @@ namespace metternich {
 class building_slot;
 class country;
 class culture;
+class employment_type;
 class icon;
 class ideology;
 class phenotype;
@@ -139,6 +140,9 @@ public:
 	}
 
 	void set_employment_location(employment_location_variant &&employment_location);
+
+	const employment_type *get_employment_type() const;
+	bool is_food_producer() const;
 
 	bool is_everyday_consumption_fulfilled() const
 	{

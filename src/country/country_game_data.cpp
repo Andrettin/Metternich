@@ -2335,11 +2335,12 @@ population_unit *country_game_data::choose_starvation_population_unit()
 
 		if (
 			population_units.empty()
-			|| population_units.at(0)->get_type()->get_output_value() > population_unit->get_type()->get_output_value()
+			|| population_units.at(0)->is_food_producer() && !population_unit->is_food_producer()
+			|| (population_units.at(0)->is_food_producer() == population_unit->is_food_producer() && population_units.at(0)->get_type()->get_output_value() > population_unit->get_type()->get_output_value())
 		) {
 			population_units.clear();
 			population_units.push_back(population_unit);
-		} else if (population_units.at(0)->get_type()->get_output_value() == population_unit->get_type()->get_output_value()) {
+		} else if (population_units.at(0)->is_food_producer() == population_unit->is_food_producer() && population_units.at(0)->get_type()->get_output_value() == population_unit->get_type()->get_output_value()) {
 			population_units.push_back(population_unit);
 		}
 	}
