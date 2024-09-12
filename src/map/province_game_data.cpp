@@ -784,6 +784,10 @@ void province_game_data::check_employment()
 				break;
 			}
 		}
+
+		if (unemployed_population_units.empty()) {
+			break;
+		}
 	}
 }
 
