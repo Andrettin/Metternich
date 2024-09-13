@@ -7,6 +7,7 @@
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "economy/commodity.h"
+#include "economy/employment_type.h"
 #include "economy/production_type.h"
 #include "economy/resource.h"
 #include "infrastructure/building_class.h"
@@ -191,6 +192,14 @@ void building_type::check() const
 		throw std::runtime_error(std::format("Building type \"{}\" is not provincial, but does have settlement types listed for it.", this->get_identifier()));
 	}
 
+	if (this->get_employment_type() != nullptr && this->get_employment_capacity() == 0) {
+		throw std::runtime_error(std::format("Building type \"{}\" has an employment type, but no employment capacity.", this->get_identifier()));
+	}
+
+	if (this->get_employment_capacity() > 0 && this->get_employment_type() == nullptr) {
+		throw std::runtime_error(std::format("Building type \"{}\" has an employment capacity, but no employment type.", this->get_identifier()));
+	}
+
 	if (!this->get_production_types().empty() && !this->is_provincial()) {
 		assert_throw(this->get_base_capacity() > 0);
 	}
@@ -282,6 +291,23 @@ QString building_type::get_effects_string(metternich::site *site) const
 	}
 
 	return QString();
+}
+
+centesimal_int building_type::get_employee_output(const population_type *population_type) const
+{
+	assert_throw(population_type != nullptr);
+	assert_throw(this->get_employment_type() != nullptr);
+
+	const commodity *output_commodity = this->get_employment_type()->get_output_commodity();
+
+	centesimal_int employee_output = this->get_employment_type()->get_output_value();
+
+	employee_output += population_type->get_commodity_output_bonus(output_commodity);
+
+	employee_output *= 100 + population_type->get_commodity_output_modifier(output_commodity);
+	employee_output /= 100;
+
+	return employee_output;
 }
 
 }

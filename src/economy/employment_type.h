@@ -4,6 +4,7 @@
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 #include "population/population_type_container.h"
+#include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("economy/commodity.h")
 
@@ -18,7 +19,7 @@ class employment_type final : public named_data_entry, public data_type<employme
 	Q_PROPERTY(QVariantList input_commodities READ get_input_commodities_qvariant_list NOTIFY changed)
 	Q_PROPERTY(int input_wealth MEMBER input_wealth READ get_input_wealth NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
-	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
+	Q_PROPERTY(archimedes::centesimal_int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(bool industrial READ is_industrial CONSTANT)
 
 public:
@@ -51,7 +52,7 @@ public:
 		return this->output_commodity;
 	}
 
-	int get_output_value() const
+	const centesimal_int &get_output_value() const
 	{
 		return this->output_value;
 	}
@@ -73,7 +74,7 @@ private:
 	commodity_map<int> input_commodities;
 	int input_wealth = 0;
 	commodity *output_commodity = nullptr;
-	int output_value = 1;
+	centesimal_int output_value = centesimal_int(1);
 	population_type_set employees;
 	bool industrial = false;
 };

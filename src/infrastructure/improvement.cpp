@@ -108,6 +108,7 @@ void improvement::check() const
 	if (this->get_employment_capacity() > 0 && this->get_employment_type() == nullptr) {
 		throw std::runtime_error(std::format("Improvement \"{}\" has an employment capacity, but no employment type.", this->get_identifier()));
 	}
+
 	if ((this->get_slot() == improvement_slot::main || this->get_slot() == improvement_slot::resource) && this->get_image_filepath().empty()) {
 		throw std::runtime_error(std::format("Main or resource improvement \"{}\" has no image filepath.", this->get_identifier()));
 	}
@@ -219,7 +220,7 @@ centesimal_int improvement::get_employee_output(const population_type *populatio
 
 	const commodity *output_commodity = this->get_employment_type()->get_output_commodity();
 
-	centesimal_int employee_output(this->get_employment_type()->get_output_value());
+	centesimal_int employee_output = this->get_employment_type()->get_output_value();
 	employee_output *= this->get_output_multiplier();
 
 	employee_output += population_type->get_commodity_output_bonus(output_commodity);
