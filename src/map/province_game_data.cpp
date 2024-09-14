@@ -775,29 +775,25 @@ void province_game_data::check_employment()
 		const improvement *resource_improvement = resource_site_game_data->get_resource_improvement();
 		assert_throw(resource_improvement != nullptr);
 
-		std::sort(unemployed_population_units.begin(), unemployed_population_units.end(), [&](const population_unit *lhs, const population_unit *rhs) {
-			if (lhs->get_type() != rhs->get_type()) {
-				const centesimal_int lhs_output = resource_improvement->get_employee_output(lhs->get_type());
-				const centesimal_int rhs_output = resource_improvement->get_employee_output(rhs->get_type());
-
-				if (lhs_output != rhs_output) {
-					return lhs_output > rhs_output;
-				}
-			}
-
-			return lhs < rhs;
-		});
-
-		for (size_t i = 0; i < unemployed_population_units.size();) {
-			population_unit *population_unit = unemployed_population_units[i];
+		std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;
+		for (population_unit *population_unit : unemployed_population_units) {
 			if (!employment_type->can_employ(population_unit->get_type())) {
-				++i;
 				continue;
 			}
 
-			population_unit->set_employment_location(resource_site);
-			--available_resource_employment_capacity;
-			unemployed_population_units.erase(unemployed_population_units.begin() + i);
+			unemployed_population_units_by_output[resource_improvement->get_employee_output(population_unit->get_type())].push_back(population_unit);
+		}
+
+		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
+			for (population_unit *population_unit : output_population_units) {
+				population_unit->set_employment_location(resource_site);
+				--available_resource_employment_capacity;
+				std::erase(unemployed_population_units, population_unit);
+
+				if (available_resource_employment_capacity == 0) {
+					break;
+				}
+			}
 
 			if (available_resource_employment_capacity == 0) {
 				break;
@@ -807,6 +803,10 @@ void province_game_data::check_employment()
 		if (unemployed_population_units.empty()) {
 			break;
 		}
+	}
+
+	if (unemployed_population_units.empty()) {
+		return;
 	}
 
 	const site_game_data *provincial_capital_game_data = this->province->get_provincial_capital()->get_game_data();
@@ -821,29 +821,25 @@ void province_game_data::check_employment()
 		const employment_type *employment_type = building_slot->get_employment_type();
 		assert_throw(employment_type != nullptr);
 
-		std::sort(unemployed_population_units.begin(), unemployed_population_units.end(), [&](const population_unit *lhs, const population_unit *rhs) {
-			if (lhs->get_type() != rhs->get_type()) {
-				const centesimal_int lhs_output = building_slot->get_building()->get_employee_output(lhs->get_type());
-				const centesimal_int rhs_output = building_slot->get_building()->get_employee_output(rhs->get_type());
-
-				if (lhs_output != rhs_output) {
-					return lhs_output > rhs_output;
-				}
-			}
-
-			return lhs < rhs;
-		});
-
-		for (size_t i = 0; i < unemployed_population_units.size();) {
-			population_unit *population_unit = unemployed_population_units[i];
+		std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;
+		for (population_unit *population_unit : unemployed_population_units) {
 			if (!employment_type->can_employ(population_unit->get_type())) {
-				++i;
 				continue;
 			}
 
-			population_unit->set_employment_location(building_slot.get());
-			--available_employment_capacity;
-			unemployed_population_units.erase(unemployed_population_units.begin() + i);
+			unemployed_population_units_by_output[building_slot->get_building()->get_employee_output(population_unit->get_type())].push_back(population_unit);
+		}
+
+		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
+			for (population_unit *population_unit : output_population_units) {
+				population_unit->set_employment_location(building_slot.get());
+				--available_employment_capacity;
+				std::erase(unemployed_population_units, population_unit);
+
+				if (available_employment_capacity == 0) {
+					break;
+				}
+			}
 
 			if (available_employment_capacity == 0) {
 				break;

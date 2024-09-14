@@ -304,8 +304,11 @@ centesimal_int building_type::get_employee_output(const population_type *populat
 
 	employee_output += population_type->get_commodity_output_bonus(output_commodity);
 
-	employee_output *= 100 + population_type->get_commodity_output_modifier(output_commodity);
-	employee_output /= 100;
+	int output_modifier = population_type->get_commodity_output_modifier(output_commodity);
+	if (output_modifier != 0) {
+		employee_output *= 100 + output_modifier;
+		employee_output /= 100;
+	}
 
 	return employee_output;
 }
