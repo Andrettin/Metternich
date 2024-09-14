@@ -1,16 +1,16 @@
 #pragma once
 
+#include "economy/employment_location.h"
 #include "infrastructure/building_slot.h"
 
 Q_MOC_INCLUDE("infrastructure/wonder.h")
 
 namespace metternich {
 
-class employment_type;
 class site;
 class wonder;
 
-class settlement_building_slot final : public building_slot
+class settlement_building_slot final : public building_slot, public employment_location
 {
 	Q_OBJECT
 
@@ -59,42 +59,8 @@ public:
 
 	QString get_modifier_string() const;
 
-	const employment_type *get_employment_type() const;
-
-	int get_employee_count() const
-	{
-		return static_cast<int>(this->get_employees().size());
-	}
-
-	const std::vector<population_unit *> &get_employees() const
-	{
-		return this->employees;
-	}
-
-	void add_employee(population_unit *employee);
-
-	void remove_employee(population_unit *employee)
-	{
-		std::erase(this->employees, employee);
-
-		this->on_employee_added(employee, -1);
-	}
-
-	void on_employee_added(population_unit *employee, const int multiplier);
-
-	int get_employment_capacity() const
-	{
-		return this->employment_capacity;
-	}
-
-	void change_employment_capacity(const int change);
-
-	int get_available_employment_capacity() const
-	{
-		return this->get_employment_capacity() - this->get_employee_count();
-	}
-
-	void check_excess_employment();
+	virtual const employment_type *get_employment_type() const override;
+	virtual void on_employee_added(population_unit *employee, const int multiplier) override;
 
 signals:
 	void wonder_changed();
@@ -105,8 +71,6 @@ private:
 	const site *settlement = nullptr;
 	const metternich::wonder *wonder = nullptr;
 	const metternich::wonder *under_construction_wonder = nullptr;
-	std::vector<population_unit *> employees;
-	int employment_capacity = 0;
 };
 
 }

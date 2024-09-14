@@ -422,19 +422,6 @@ const employment_type *settlement_building_slot::get_employment_type() const
 	return nullptr;
 }
 
-void settlement_building_slot::add_employee(population_unit *employee)
-{
-	const employment_type *employment_type = this->get_employment_type();
-	assert_throw(employment_type != nullptr);
-	assert_throw(employment_type->can_employ(employee->get_type()));
-
-	this->employees.push_back(employee);
-
-	this->on_employee_added(employee, 1);
-
-	assert_throw(this->get_available_employment_capacity() >= 0);
-}
-
 void settlement_building_slot::on_employee_added(population_unit *employee, const int multiplier)
 {
 	const employment_type *employment_type = this->get_employment_type();
@@ -442,28 +429,6 @@ void settlement_building_slot::on_employee_added(population_unit *employee, cons
 
 	const centesimal_int employee_output = this->get_building()->get_employee_output(employee->get_type());
 	this->get_settlement()->get_game_data()->change_base_commodity_output(employment_type->get_output_commodity(), employee_output * multiplier);
-}
-
-void settlement_building_slot::change_employment_capacity(const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->employment_capacity += change;
-
-	if (this->get_available_employment_capacity() < 0) {
-		this->check_excess_employment();
-	}
-}
-
-void settlement_building_slot::check_excess_employment()
-{
-	//remove employees in excess of capacity
-	while (this->get_available_employment_capacity() < 0) {
-		assert_throw(this->get_employees().size() > 0);
-		this->get_employees().back()->set_employment_location(std::monostate());
-	}
 }
 
 }

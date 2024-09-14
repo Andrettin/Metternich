@@ -763,13 +763,13 @@ void province_game_data::check_employment()
 		const site *resource_site = tile->get_site();
 		site_game_data *resource_site_game_data = resource_site->get_game_data();
 
-		int available_resource_employment_capacity = resource_site_game_data->get_available_resource_employment_capacity();
+		int available_resource_employment_capacity = resource_site_game_data->get_available_employment_capacity();
 		assert_throw(available_resource_employment_capacity >= 0);
 		if (available_resource_employment_capacity == 0) {
 			continue;
 		}
 
-		const employment_type *employment_type = resource_site_game_data->get_resource_employment_type();
+		const employment_type *employment_type = resource_site_game_data->get_employment_type();
 		assert_throw(employment_type != nullptr);
 
 		const improvement *resource_improvement = resource_site_game_data->get_resource_improvement();
@@ -786,7 +786,7 @@ void province_game_data::check_employment()
 
 		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
 			for (population_unit *population_unit : output_population_units) {
-				population_unit->set_employment_location(resource_site);
+				population_unit->set_employment_location(resource_site_game_data);
 				--available_resource_employment_capacity;
 				std::erase(unemployed_population_units, population_unit);
 

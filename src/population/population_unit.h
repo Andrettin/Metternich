@@ -15,6 +15,7 @@ namespace metternich {
 
 class country;
 class culture;
+class employment_location;
 class employment_type;
 class icon;
 class ideology;
@@ -39,8 +40,6 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::site* settlement READ get_settlement NOTIFY settlement_changed)
 
 public:
-	using employment_location_variant = std::variant<std::monostate, const site *, settlement_building_slot *>;
-
 	static constexpr int max_consciousness = 10;
 	static constexpr int max_militancy = 10;
 
@@ -129,17 +128,17 @@ public:
 		this->set_militancy(this->get_militancy() + change);
 	}
 
-	const employment_location_variant &get_employment_location() const
+	metternich::employment_location *get_employment_location() const
 	{
 		return this->employment_location;
 	}
 
 	bool is_unemployed() const
 	{
-		return std::holds_alternative<std::monostate>(this->get_employment_location());
+		return this->get_employment_location() == nullptr;
 	}
 
-	void set_employment_location(employment_location_variant &&employment_location);
+	void set_employment_location(metternich::employment_location *employment_location);
 
 	const employment_type *get_employment_type() const;
 	bool is_food_producer() const;
@@ -194,7 +193,7 @@ private:
 	const metternich::ideology *ideology = nullptr;
 	centesimal_int consciousness;
 	centesimal_int militancy;
-	employment_location_variant employment_location;
+	metternich::employment_location *employment_location = nullptr;
 	bool everyday_consumption_fulfilled = true;
 	bool luxury_consumption_fulfilled = true;
 };

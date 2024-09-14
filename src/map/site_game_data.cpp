@@ -953,7 +953,7 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 	if (improvement->get_output_commodity() != nullptr) {
 		if (improvement->get_employment_type() != nullptr) {
 			assert_throw(improvement->get_slot() == improvement_slot::resource);
-			this->change_resource_employment_capacity(improvement->get_employment_capacity() * multiplier);
+			this->change_employment_capacity(improvement->get_employment_capacity() * multiplier);
 		} else {
 			this->change_base_commodity_output(improvement->get_output_commodity(), centesimal_int(improvement->get_output_multiplier()) * multiplier);
 		}
@@ -1059,7 +1059,7 @@ qunique_ptr<population_unit> site_game_data::pop_population_unit(population_unit
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
 			this->population_units.erase(this->population_units.begin() + i);
 
-			population_unit->set_employment_location(std::monostate());
+			population_unit->set_employment_location(nullptr);
 			population_unit->set_settlement(nullptr);
 
 			this->get_population()->on_population_unit_lost(population_unit);
@@ -1141,7 +1141,7 @@ void site_game_data::change_profession_capacity(const profession *profession, co
 	}
 }
 
-const employment_type *site_game_data::get_resource_employment_type() const
+const employment_type *site_game_data::get_employment_type() const
 {
 	const improvement *resource_improvement = this->get_resource_improvement();
 
@@ -1152,22 +1152,9 @@ const employment_type *site_game_data::get_resource_employment_type() const
 	return nullptr;
 }
 
-void site_game_data::add_resource_employee(population_unit *employee)
+void site_game_data::on_employee_added(population_unit *employee, const int multiplier)
 {
-	const employment_type *employment_type = this->get_resource_employment_type();
-	assert_throw(employment_type != nullptr);
-	assert_throw(employment_type->can_employ(employee->get_type()));
-
-	this->resource_employees.push_back(employee);
-
-	this->on_resource_employee_added(employee, 1);
-
-	assert_throw(this->get_available_resource_employment_capacity() >= 0);
-}
-
-void site_game_data::on_resource_employee_added(population_unit *employee, const int multiplier)
-{
-	const employment_type *employment_type = this->get_resource_employment_type();
+	const employment_type *employment_type = this->get_employment_type();
 	assert_throw(employment_type != nullptr);
 
 	const centesimal_int employee_output = this->get_resource_improvement()->get_employee_output(employee->get_type());
@@ -1176,28 +1163,6 @@ void site_game_data::on_resource_employee_added(population_unit *employee, const
 	if (employment_type->get_output_commodity()->is_food()) {
 		//workers employed in resource food production do not need food themselves
 		this->change_free_food_consumption(1 * multiplier);
-	}
-}
-
-void site_game_data::change_resource_employment_capacity(const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->resource_employment_capacity += change;
-
-	if (this->get_available_resource_employment_capacity() < 0) {
-		this->check_excess_resource_employment();
-	}
-}
-
-void site_game_data::check_excess_resource_employment()
-{
-	//remove employees in excess of capacity
-	while (this->get_available_resource_employment_capacity() < 0) {
-		assert_throw(this->get_resource_employees().size() > 0);
-		this->get_resource_employees().back()->set_employment_location(std::monostate());
 	}
 }
 

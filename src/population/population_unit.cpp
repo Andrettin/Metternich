@@ -8,6 +8,7 @@
 #include "country/ideology.h"
 #include "country/religion.h"
 #include "economy/commodity.h"
+#include "economy/employment_location.h"
 #include "economy/employment_type.h"
 #include "game/game.h"
 #include "infrastructure/settlement_building_slot.h"
@@ -70,45 +71,21 @@ void population_unit::set_type(const population_type *type)
 
 	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), -1);
 
-	if (!this->is_unemployed()) {
-		if (std::holds_alternative<const site *>(this->get_employment_location())) {
-			const site *employment_site = std::get<const site *>(this->get_employment_location());
-			assert_throw(employment_site != nullptr);
-			employment_site->get_game_data()->on_resource_employee_added(this, -1);
-		} else if (std::holds_alternative<settlement_building_slot *>(this->get_employment_location())) {
-			settlement_building_slot *building_slot = std::get<settlement_building_slot *>(this->get_employment_location());
-			assert_throw(building_slot != nullptr);
-			building_slot->on_employee_added(this, -1);
-		}
+	if (this->get_employment_location() != nullptr) {
+		this->get_employment_location()->on_employee_added(this, -1);
 	}
 
 	this->type = type;
 
 	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), 1);
 
-	if (!this->is_unemployed()) {
-		if (std::holds_alternative<const site *>(this->get_employment_location())) {
-			const site *employment_site = std::get<const site *>(this->get_employment_location());
-			assert_throw(employment_site != nullptr);
+	if (this->get_employment_location() != nullptr) {
+		this->get_employment_location()->on_employee_added(this, 1);
 
-			employment_site->get_game_data()->on_resource_employee_added(this, 1);
-
-			const employment_type *employment_type = employment_site->get_game_data()->get_resource_employment_type();
-			assert_throw(employment_type != nullptr);
-			if (!employment_type->can_employ(type)) {
-				this->set_employment_location(std::monostate());
-			}
-		} else if (std::holds_alternative<settlement_building_slot *>(this->get_employment_location())) {
-			settlement_building_slot *building_slot = std::get<settlement_building_slot *>(this->get_employment_location());
-			assert_throw(building_slot != nullptr);
-
-			building_slot->on_employee_added(this, 1);
-
-			const employment_type *employment_type = building_slot->get_employment_type();
-			assert_throw(employment_type != nullptr);
-			if (!employment_type->can_employ(type)) {
-				this->set_employment_location(std::monostate());
-			}
+		const employment_type *employment_type = this->get_employment_location()->get_employment_type();
+		assert_throw(employment_type != nullptr);
+		if (!employment_type->can_employ(type)) {
+			this->set_employment_location(nullptr);
 		}
 	}
 
@@ -306,45 +283,27 @@ void population_unit::set_militancy(const centesimal_int &militancy)
 	}
 }
 
-void population_unit::set_employment_location(employment_location_variant &&employment_location)
+void population_unit::set_employment_location(metternich::employment_location *employment_location)
 {
 	if (employment_location == this->get_employment_location()) {
 		return;
 	}
 
-	if (std::holds_alternative<const site *>(this->get_employment_location())) {
-		const site *employment_site = std::get<const site *>(this->get_employment_location());
-		assert_throw(employment_site != nullptr);
-		employment_site->get_game_data()->remove_resource_employee(this);
-	} else if (std::holds_alternative<settlement_building_slot *>(this->get_employment_location())) {
-		settlement_building_slot *building_slot = std::get<settlement_building_slot *>(this->get_employment_location());
-		assert_throw(building_slot != nullptr);
-		building_slot->remove_employee(this);
+	if (this->get_employment_location() != nullptr) {
+		this->get_employment_location()->remove_employee(this);
 	}
 
 	this->employment_location = employment_location;
 
-	if (std::holds_alternative<const site *>(this->get_employment_location())) {
-		const site *employment_site = std::get<const site *>(this->get_employment_location());
-		assert_throw(employment_site != nullptr);
-		employment_site->get_game_data()->add_resource_employee(this);
-	} else if (std::holds_alternative<settlement_building_slot *>(this->get_employment_location())) {
-		settlement_building_slot *building_slot = std::get<settlement_building_slot *>(this->get_employment_location());
-		assert_throw(building_slot != nullptr);
-		building_slot->add_employee(this);
+	if (this->get_employment_location() != nullptr) {
+		this->get_employment_location()->add_employee(this);
 	}
 }
 
 const employment_type *population_unit::get_employment_type() const
 {
-	if (std::holds_alternative<const site *>(this->get_employment_location())) {
-		const site *employment_site = std::get<const site *>(this->get_employment_location());
-		assert_throw(employment_site != nullptr);
-		return employment_site->get_game_data()->get_resource_employment_type();
-	} else if (std::holds_alternative<settlement_building_slot *>(this->get_employment_location())) {
-		const settlement_building_slot *building_slot = std::get<settlement_building_slot *>(this->get_employment_location());
-		assert_throw(building_slot != nullptr);
-		return building_slot->get_employment_type();
+	if (this->get_employment_location() != nullptr) {
+		return this->get_employment_location()->get_employment_type();
 	}
 
 	return nullptr;
