@@ -13,7 +13,6 @@ Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
-class building_slot;
 class country;
 class culture;
 class employment_type;
@@ -23,6 +22,7 @@ class phenotype;
 class population_type;
 class province;
 class religion;
+class settlement_building_slot;
 class site;
 
 class population_unit final : public QObject
@@ -39,7 +39,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::site* settlement READ get_settlement NOTIFY settlement_changed)
 
 public:
-	using employment_location_variant = std::variant<std::monostate, const site *>;
+	using employment_location_variant = std::variant<std::monostate, const site *, settlement_building_slot *>;
 
 	static constexpr int max_consciousness = 10;
 	static constexpr int max_militancy = 10;

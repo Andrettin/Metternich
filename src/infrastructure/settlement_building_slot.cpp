@@ -7,6 +7,7 @@
 #include "country/culture.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
+#include "economy/employment_type.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
@@ -15,6 +16,7 @@
 #include "infrastructure/wonder.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -38,18 +40,16 @@ void settlement_building_slot::set_building(const building_type *building)
 		return;
 	}
 
-	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
-
 	const building_type *old_building = this->get_building();
 
 	if (old_building != nullptr) {
-		settlement_game_data->on_building_gained(old_building, -1);
+		this->on_building_gained(old_building, -1);
 	}
 
 	building_slot::set_building(building);
 
 	if (this->get_building() != nullptr) {
-		settlement_game_data->on_building_gained(this->get_building(), 1);
+		this->on_building_gained(this->get_building(), 1);
 	}
 }
 
@@ -114,6 +114,16 @@ bool settlement_building_slot::can_build_building(const building_type *building)
 	}
 
 	return building_slot::can_build_building(building);
+}
+
+void settlement_building_slot::on_building_gained(const building_type *building, const int multiplier)
+{
+	if (building->get_employment_type() != nullptr) {
+		this->change_employment_capacity(building->get_employment_capacity() * multiplier);
+	}
+
+	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
+	settlement_game_data->on_building_gained(building, multiplier);
 }
 
 void settlement_building_slot::set_wonder(const metternich::wonder *wonder)
@@ -381,6 +391,59 @@ QString settlement_building_slot::get_modifier_string() const
 	}
 
 	return QString::fromStdString(str);
+}
+
+const employment_type *settlement_building_slot::get_employment_type() const
+{
+	if (this->get_building() != nullptr) {
+		return this->get_building()->get_employment_type();
+	}
+
+	return nullptr;
+}
+
+void settlement_building_slot::add_employee(population_unit *employee)
+{
+	const employment_type *employment_type = this->get_employment_type();
+	assert_throw(employment_type != nullptr);
+	assert_throw(employment_type->can_employ(employee->get_type()));
+
+	this->employees.push_back(employee);
+
+	this->on_employee_added(employee, 1);
+
+	assert_throw(this->get_available_employment_capacity() >= 0);
+}
+
+void settlement_building_slot::on_employee_added(population_unit *employee, const int multiplier)
+{
+	const employment_type *employment_type = this->get_employment_type();
+	assert_throw(employment_type != nullptr);
+
+	const centesimal_int employee_output = this->get_building()->get_employee_output(employee->get_type());
+	this->get_settlement()->get_game_data()->change_base_commodity_output(employment_type->get_output_commodity(), employee_output * multiplier);
+}
+
+void settlement_building_slot::change_employment_capacity(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->employment_capacity += change;
+
+	if (this->get_available_employment_capacity() < 0) {
+		this->check_excess_employment();
+	}
+}
+
+void settlement_building_slot::check_excess_employment()
+{
+	//remove employees in excess of capacity
+	while (this->get_available_employment_capacity() < 0) {
+		assert_throw(this->get_employees().size() > 0);
+		this->get_employees().back()->set_employment_location(std::monostate());
+	}
 }
 
 }

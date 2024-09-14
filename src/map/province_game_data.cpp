@@ -17,6 +17,7 @@
 #include "game/game.h"
 #include "game/province_event.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/settlement_type.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -782,6 +783,39 @@ void province_game_data::check_employment()
 			unemployed_population_units.erase(unemployed_population_units.begin() + i);
 
 			if (available_resource_employment_capacity == 0) {
+				break;
+			}
+		}
+
+		if (unemployed_population_units.empty()) {
+			break;
+		}
+	}
+
+	const site_game_data *provincial_capital_game_data = this->province->get_provincial_capital()->get_game_data();
+
+	for (const qunique_ptr<settlement_building_slot> &building_slot : provincial_capital_game_data->get_building_slots()) {
+		int available_employment_capacity = building_slot->get_available_employment_capacity();
+		assert_throw(available_employment_capacity >= 0);
+		if (available_employment_capacity == 0) {
+			continue;
+		}
+
+		const employment_type *employment_type = building_slot->get_employment_type();
+		assert_throw(employment_type != nullptr);
+
+		for (size_t i = 0; i < unemployed_population_units.size();) {
+			population_unit *population_unit = unemployed_population_units[i];
+			if (!employment_type->can_employ(population_unit->get_type())) {
+				++i;
+				continue;
+			}
+
+			population_unit->set_employment_location(building_slot.get());
+			--available_employment_capacity;
+			unemployed_population_units.erase(unemployed_population_units.begin() + i);
+
+			if (available_employment_capacity == 0) {
 				break;
 			}
 		}
