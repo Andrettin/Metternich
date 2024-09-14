@@ -16,6 +16,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/province_event.h"
+#include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/settlement_type.h"
@@ -771,6 +772,22 @@ void province_game_data::check_employment()
 		const employment_type *employment_type = resource_site_game_data->get_resource_employment_type();
 		assert_throw(employment_type != nullptr);
 
+		const improvement *resource_improvement = resource_site_game_data->get_resource_improvement();
+		assert_throw(resource_improvement != nullptr);
+
+		std::sort(unemployed_population_units.begin(), unemployed_population_units.end(), [&](const population_unit *lhs, const population_unit *rhs) {
+			if (lhs->get_type() != rhs->get_type()) {
+				const centesimal_int lhs_output = resource_improvement->get_employee_output(lhs->get_type());
+				const centesimal_int rhs_output = resource_improvement->get_employee_output(rhs->get_type());
+
+				if (lhs_output != rhs_output) {
+					return lhs_output > rhs_output;
+				}
+			}
+
+			return lhs < rhs;
+		});
+
 		for (size_t i = 0; i < unemployed_population_units.size();) {
 			population_unit *population_unit = unemployed_population_units[i];
 			if (!employment_type->can_employ(population_unit->get_type())) {
@@ -803,6 +820,19 @@ void province_game_data::check_employment()
 
 		const employment_type *employment_type = building_slot->get_employment_type();
 		assert_throw(employment_type != nullptr);
+
+		std::sort(unemployed_population_units.begin(), unemployed_population_units.end(), [&](const population_unit *lhs, const population_unit *rhs) {
+			if (lhs->get_type() != rhs->get_type()) {
+				const centesimal_int lhs_output = building_slot->get_building()->get_employee_output(lhs->get_type());
+				const centesimal_int rhs_output = building_slot->get_building()->get_employee_output(rhs->get_type());
+
+				if (lhs_output != rhs_output) {
+					return lhs_output > rhs_output;
+				}
+			}
+
+			return lhs < rhs;
+		});
 
 		for (size_t i = 0; i < unemployed_population_units.size();) {
 			population_unit *population_unit = unemployed_population_units[i];
