@@ -75,7 +75,7 @@ private:
 	int input_wealth = 0;
 	commodity *output_commodity = nullptr;
 	centesimal_int output_value = centesimal_int(1);
-	population_type_set employees;
+	std::set<const population_type *> employees;
 	bool industrial = false;
 };
 
