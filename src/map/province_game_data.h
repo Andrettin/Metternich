@@ -23,6 +23,7 @@ class civilian_unit;
 class commodity;
 class country;
 class culture;
+class employment_location;
 class icon;
 class improvement;
 class military_unit;
