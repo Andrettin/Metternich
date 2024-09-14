@@ -322,6 +322,26 @@ QString settlement_building_slot::get_modifier_string() const
 		}
 	}
 
+	if (this->get_employment_type() != nullptr && this->get_employee_count() > 0) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		const commodity *commodity = this->get_employment_type()->get_output_commodity();
+		const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
+
+		centesimal_int output;
+		for (const population_unit *employee : this->get_employees()) {
+			output += this->get_building()->get_employee_output(employee->get_type());
+		}
+
+		const std::string number_str = output.to_signed_string();
+		const QColor &number_color = output < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+		const std::string colored_number_str = string::colored(number_str, number_color);
+
+		str += base_string + colored_number_str;
+	}
+
 	if (this->get_building()->get_country_modifier() != nullptr) {
 		if (!str.empty()) {
 			str += "\n";
