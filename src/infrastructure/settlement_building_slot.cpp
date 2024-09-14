@@ -332,7 +332,7 @@ QString settlement_building_slot::get_modifier_string() const
 
 		centesimal_int output;
 		for (const population_unit *employee : this->get_employees()) {
-			output += this->get_building()->get_employee_output(employee->get_type());
+			output += this->get_employee_output(employee->get_type());
 		}
 
 		const std::string number_str = output.to_signed_string();
@@ -427,8 +427,16 @@ void settlement_building_slot::on_employee_added(population_unit *employee, cons
 	const employment_type *employment_type = this->get_employment_type();
 	assert_throw(employment_type != nullptr);
 
-	const centesimal_int employee_output = this->get_building()->get_employee_output(employee->get_type());
+	const centesimal_int employee_output = this->get_employee_output(employee->get_type());
 	this->get_settlement()->get_game_data()->change_base_commodity_output(employment_type->get_output_commodity(), employee_output * multiplier);
+}
+
+centesimal_int settlement_building_slot::get_employee_output(const population_type *population_type) const
+{
+	assert_throw(this->get_employment_type() != nullptr);
+	assert_throw(this->get_building() != nullptr);
+
+	return this->get_building()->get_employee_output(population_type);
 }
 
 }

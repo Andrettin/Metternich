@@ -3,6 +3,7 @@
 namespace metternich {
 
 class employment_type;
+class population_type;
 class population_unit;
 
 class employment_location
@@ -42,6 +43,8 @@ public:
 	{
 		return this->get_employment_capacity() - this->get_employee_count();
 	}
+
+	virtual centesimal_int get_employee_output(const population_type *population_type) const = 0;
 
 	void check_excess_employment();
 

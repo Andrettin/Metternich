@@ -1157,13 +1157,21 @@ void site_game_data::on_employee_added(population_unit *employee, const int mult
 	const employment_type *employment_type = this->get_employment_type();
 	assert_throw(employment_type != nullptr);
 
-	const centesimal_int employee_output = this->get_resource_improvement()->get_employee_output(employee->get_type());
+	const centesimal_int employee_output = this->get_employee_output(employee->get_type());
 	this->change_base_commodity_output(employment_type->get_output_commodity(), employee_output * multiplier);
 
 	if (employment_type->get_output_commodity()->is_food()) {
 		//workers employed in resource food production do not need food themselves
 		this->change_free_food_consumption(1 * multiplier);
 	}
+}
+
+centesimal_int site_game_data::get_employee_output(const population_type *population_type) const
+{
+	assert_throw(this->get_employment_type() != nullptr);
+	assert_throw(this->get_resource_improvement() != nullptr);
+
+	return this->get_resource_improvement()->get_employee_output(population_type);
 }
 
 void site_game_data::change_health(const centesimal_int &change)

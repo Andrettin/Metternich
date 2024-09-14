@@ -61,6 +61,7 @@ public:
 
 	virtual const employment_type *get_employment_type() const override;
 	virtual void on_employee_added(population_unit *employee, const int multiplier) override;
+	virtual centesimal_int get_employee_output(const population_type *population_type) const override;
 
 signals:
 	void wonder_changed();

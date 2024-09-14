@@ -748,8 +748,36 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 	return false;
 }
 
+std::vector<employment_location *> province_game_data::get_employment_locations() const
+{
+	std::vector<employment_location *> employment_locations;
+
+	for (const QPoint &tile_pos : this->get_resource_tiles()) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+		const site *resource_site = tile->get_site();
+		site_game_data *resource_site_game_data = resource_site->get_game_data();
+
+		if (resource_site_game_data->get_employment_capacity() > 0) {
+			employment_locations.push_back(resource_site_game_data);
+		}
+	}
+
+	const site_game_data *provincial_capital_game_data = this->province->get_provincial_capital()->get_game_data();
+
+	for (const qunique_ptr<settlement_building_slot> &building_slot : provincial_capital_game_data->get_building_slots()) {
+		if (building_slot->get_employment_capacity() > 0) {
+			employment_locations.push_back(building_slot.get());
+		}
+	}
+
+	return employment_locations;
+}
+
 void province_game_data::check_employment()
 {
+	const std::vector<employment_location *> employment_locations = this->get_employment_locations();
+
+
 	std::vector<population_unit *> unemployed_population_units;
 
 	for (population_unit *population_unit : this->population_units) {
@@ -758,67 +786,14 @@ void province_game_data::check_employment()
 		}
 	}
 
-	for (const QPoint &tile_pos : this->get_resource_tiles()) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-		const site *resource_site = tile->get_site();
-		site_game_data *resource_site_game_data = resource_site->get_game_data();
-
-		int available_resource_employment_capacity = resource_site_game_data->get_available_employment_capacity();
-		assert_throw(available_resource_employment_capacity >= 0);
-		if (available_resource_employment_capacity == 0) {
-			continue;
-		}
-
-		const employment_type *employment_type = resource_site_game_data->get_employment_type();
-		assert_throw(employment_type != nullptr);
-
-		const improvement *resource_improvement = resource_site_game_data->get_resource_improvement();
-		assert_throw(resource_improvement != nullptr);
-
-		std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;
-		for (population_unit *population_unit : unemployed_population_units) {
-			if (!employment_type->can_employ(population_unit->get_type())) {
-				continue;
-			}
-
-			unemployed_population_units_by_output[resource_improvement->get_employee_output(population_unit->get_type())].push_back(population_unit);
-		}
-
-		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
-			for (population_unit *population_unit : output_population_units) {
-				population_unit->set_employment_location(resource_site_game_data);
-				--available_resource_employment_capacity;
-				std::erase(unemployed_population_units, population_unit);
-
-				if (available_resource_employment_capacity == 0) {
-					break;
-				}
-			}
-
-			if (available_resource_employment_capacity == 0) {
-				break;
-			}
-		}
-
-		if (unemployed_population_units.empty()) {
-			break;
-		}
-	}
-
-	if (unemployed_population_units.empty()) {
-		return;
-	}
-
-	const site_game_data *provincial_capital_game_data = this->province->get_provincial_capital()->get_game_data();
-
-	for (const qunique_ptr<settlement_building_slot> &building_slot : provincial_capital_game_data->get_building_slots()) {
-		int available_employment_capacity = building_slot->get_available_employment_capacity();
+	for (employment_location *employment_location : employment_locations) {
+		int available_employment_capacity = employment_location->get_available_employment_capacity();
 		assert_throw(available_employment_capacity >= 0);
 		if (available_employment_capacity == 0) {
 			continue;
 		}
 
-		const employment_type *employment_type = building_slot->get_employment_type();
+		const employment_type *employment_type = employment_location->get_employment_type();
 		assert_throw(employment_type != nullptr);
 
 		std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;
@@ -827,12 +802,12 @@ void province_game_data::check_employment()
 				continue;
 			}
 
-			unemployed_population_units_by_output[building_slot->get_building()->get_employee_output(population_unit->get_type())].push_back(population_unit);
+			unemployed_population_units_by_output[employment_location->get_employee_output(population_unit->get_type())].push_back(population_unit);
 		}
 
 		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
 			for (population_unit *population_unit : output_population_units) {
-				population_unit->set_employment_location(building_slot.get());
+				population_unit->set_employment_location(employment_location);
 				--available_employment_capacity;
 				std::erase(unemployed_population_units, population_unit);
 
