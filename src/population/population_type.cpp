@@ -143,9 +143,6 @@ void population_type::check() const
 		if (this->get_max_modifier_multiplier() == 0) {
 			throw std::runtime_error(std::format("Population type \"{}\" has a country modifier, but has no maximum modifier multiplier.", this->get_identifier()));
 		}
-	} else {
-		assert_throw(this->get_output_commodity() != nullptr);
-		assert_throw(this->get_output_value() > 0);
 	}
 
 	for (const auto &[commodity, demand] : this->get_commodity_demands()) {
