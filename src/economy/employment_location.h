@@ -45,6 +45,7 @@ public:
 	}
 
 	virtual centesimal_int get_employee_output(const population_type *population_type) const = 0;
+	centesimal_int get_total_employee_output() const;
 
 	void check_excess_employment();
 

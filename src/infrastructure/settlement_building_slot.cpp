@@ -330,10 +330,7 @@ QString settlement_building_slot::get_modifier_string() const
 		const commodity *commodity = this->get_employment_type()->get_output_commodity();
 		const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
 
-		centesimal_int output;
-		for (const population_unit *employee : this->get_employees()) {
-			output += this->get_employee_output(employee->get_type());
-		}
+		const centesimal_int output = this->get_total_employee_output();
 
 		const std::string number_str = output.to_signed_string();
 		const QColor &number_color = output < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();

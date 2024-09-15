@@ -34,6 +34,15 @@ void employment_location::change_employment_capacity(const int change)
 	}
 }
 
+centesimal_int employment_location::get_total_employee_output() const
+{
+	centesimal_int output;
+	for (const population_unit *employee : this->get_employees()) {
+		output += this->get_employee_output(employee->get_type());
+	}
+	return output;
+}
+
 void employment_location::check_excess_employment()
 {
 	//remove employees in excess of capacity
