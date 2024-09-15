@@ -777,7 +777,6 @@ void province_game_data::check_employment()
 {
 	const std::vector<employment_location *> employment_locations = this->get_employment_locations();
 
-
 	std::vector<population_unit *> unemployed_population_units;
 
 	for (population_unit *population_unit : this->population_units) {
@@ -786,6 +785,22 @@ void province_game_data::check_employment()
 		}
 	}
 
+	std::vector<employment_location *> food_employment_locations = employment_locations;
+	std::erase_if(food_employment_locations, [this](const employment_location *employment_location) {
+		return !employment_location->get_employment_type()->get_output_commodity()->is_food();
+	});
+
+	std::vector<employment_location *> non_food_employment_locations = employment_locations;
+	std::erase_if(non_food_employment_locations, [this](const employment_location *employment_location) {
+		return employment_location->get_employment_type()->get_output_commodity()->is_food();
+	});
+
+	this->check_available_employment(food_employment_locations, unemployed_population_units);
+	this->check_available_employment(non_food_employment_locations, unemployed_population_units);
+}
+
+void province_game_data::check_available_employment(const std::vector<employment_location *> &employment_locations, std::vector<population_unit *> &unemployed_population_units)
+{
 	for (employment_location *employment_location : employment_locations) {
 		int available_employment_capacity = employment_location->get_available_employment_capacity();
 		assert_throw(available_employment_capacity >= 0);
