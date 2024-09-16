@@ -10,17 +10,15 @@ Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("population/population_class.h")
-Q_MOC_INCLUDE("population/profession.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
-class population_class;
 class cultural_group;
 class culture;
 class icon;
 class phenotype;
-class profession;
+class population_class;
 
 template <typename scope_type>
 class modifier;
@@ -32,7 +30,6 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(metternich::population_class* population_class MEMBER population_class NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
-	Q_PROPERTY(metternich::profession* profession MEMBER profession NOTIFY changed)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 	Q_PROPERTY(bool literate MEMBER literate READ is_literate NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
@@ -69,11 +66,6 @@ public:
 	const metternich::cultural_group *get_cultural_group() const
 	{
 		return this->cultural_group;
-	}
-
-	const profession *get_profession() const
-	{
-		return this->profession;
 	}
 
 	const QColor &get_color() const
@@ -234,7 +226,6 @@ private:
 	population_class *population_class = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
-	metternich::profession *profession = nullptr;
 	QColor color;
 	bool literate = false;
 	metternich::icon *icon = nullptr;

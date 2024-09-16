@@ -15,7 +15,6 @@
 #include "map/site_container.h"
 #include "map/terrain_type_container.h"
 #include "population/population_type_container.h"
-#include "population/profession_container.h"
 #include "script/opinion_modifier_container.h"
 #include "technology/technology_container.h"
 #include "unit/military_unit_type_container.h"
@@ -651,13 +650,6 @@ public:
 	}
 
 	void on_population_type_count_changed(const population_type *type, const int change);
-
-	const profession_map<int> &get_profession_capacities() const
-	{
-		return this->profession_capacities;
-	}
-
-	void change_profession_capacity(const profession *profession, const int change);
 
 	int get_population_growth() const
 	{
@@ -2565,7 +2557,6 @@ private:
 	int military_score = 0;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
-	profession_map<int> profession_capacities;
 	int population_growth = 0; //population growth counter
 	centesimal_int health;
 	int food_consumption = 0;

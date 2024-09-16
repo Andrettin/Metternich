@@ -1178,10 +1178,6 @@ void country_game_data::on_site_gained(const site *site, const int multiplier)
 			}
 		}
 
-		for (const auto &[profession, capacity] : site_game_data->get_profession_capacities()) {
-			this->change_profession_capacity(profession, capacity * multiplier);
-		}
-
 		this->change_health(site_game_data->get_health() * multiplier);
 	}
 }
@@ -2172,21 +2168,6 @@ void country_game_data::on_population_type_count_changed(const population_type *
 
 		type->get_country_modifier()->apply(this->country, -centesimal_int::min(old_population_type_count * type_modifier_multiplier, max_total_modifier_multiplier));
 		type->get_country_modifier()->apply(this->country, centesimal_int::min(population_type_count * type_modifier_multiplier, max_total_modifier_multiplier));
-	}
-}
-
-void country_game_data::change_profession_capacity(const profession *profession, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->profession_capacities[profession] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->profession_capacities.erase(profession);
 	}
 }
 

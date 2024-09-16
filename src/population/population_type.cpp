@@ -11,7 +11,6 @@
 #include "population/phenotype.h"
 #include "population/population.h"
 #include "population/population_class.h"
-#include "population/profession.h"
 #include "script/modifier.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
@@ -108,10 +107,6 @@ void population_type::initialize()
 {
 	assert_throw(this->population_class != nullptr);
 	this->population_class->add_population_type(this);
-
-	if (this->get_profession() != nullptr) {
-		this->profession->add_population_type(this);
-	}
 
 	if (!this->color.isValid()) {
 		log::log_error("Population type \"" + this->get_identifier() + "\" has no color. A random one will be generated for it.");

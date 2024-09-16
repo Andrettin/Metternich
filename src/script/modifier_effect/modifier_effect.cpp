@@ -6,7 +6,6 @@
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
-#include "population/profession.h"
 #include "script/modifier_effect/advisor_cost_modifier_effect.h"
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
 #include "script/modifier_effect/air_discipline_modifier_effect.h"
@@ -56,7 +55,6 @@
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
 #include "script/modifier_effect/population_type_militancy_modifier_effect.h"
 #include "script/modifier_effect/port_level_modifier_effect.h"
-#include "script/modifier_effect/profession_capacity_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
 #include "script/modifier_effect/ship_stat_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
@@ -238,8 +236,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<military_unit_stat_modifier_effect>(enum_converter<military_unit_stat>::to_enum(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
-		static const std::string profession_capacity_prefix = "max_";
-
 		if (key == "depot_level") {
 			return std::make_unique<depot_level_modifier_effect>(value);
 		} else if (key == "port_level") {
@@ -249,10 +245,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
 
 			return std::make_unique<commodity_bonus_modifier_effect>(commodity, value);
-		} else if (key.starts_with(profession_capacity_prefix) && profession::try_get(key.substr(profession_capacity_prefix.size(), key.size() - profession_capacity_prefix.size())) != nullptr) {
-			const profession *profession = profession::get(key.substr(profession_capacity_prefix.size(), key.size() - profession_capacity_prefix.size()));
-
-			return std::make_unique<profession_capacity_modifier_effect>(profession, value);
 		}
 	}
 

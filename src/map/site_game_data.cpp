@@ -1119,28 +1119,6 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 	}
 }
 
-void site_game_data::change_profession_capacity(const profession *profession, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	assert_throw(this->site->is_settlement());
-	assert_throw(this->is_built());
-
-	const int count = (this->profession_capacities[profession] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->profession_capacities.erase(profession);
-	}
-
-	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_profession_capacity(profession, change);
-	}
-}
-
 const employment_type *site_game_data::get_employment_type() const
 {
 	const improvement *resource_improvement = this->get_resource_improvement();
