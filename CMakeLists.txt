@@ -189,7 +189,6 @@ set(population_SRCS
 	src/population/population_type.cpp
 	src/population/population_type_container.cpp
 	src/population/population_unit.cpp
-	src/population/profession_container.cpp
 )
 source_group(population FILES ${population_SRCS})
 set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "population")
@@ -512,8 +511,6 @@ set(population_HDRS
 	src/population/population_type.h
 	src/population/population_type_container.h
 	src/population/population_unit.h
-	src/population/profession.h
-	src/population/profession_container.h
 )
 source_group(population FILES ${population_HDRS})
 
