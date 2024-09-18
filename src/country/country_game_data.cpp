@@ -5373,6 +5373,31 @@ void country_game_data::change_building_commodity_bonus(const building_type *bui
 	}
 }
 
+void country_game_data::change_employee_output_bonus(const employment_type *employment_type, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const centesimal_int &count = (this->employee_output_bonuses[employment_type] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->employee_output_bonuses.erase(employment_type);
+	}
+
+	for (const province *province : this->get_provinces()) {
+		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+			if (employment_location->get_employee_count() == 0) {
+				continue;
+			}
+
+			employment_location->calculate_total_employee_output();
+		}
+	}
+}
+
 void country_game_data::set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
 {
 	const int old_value = this->get_commodity_bonus_for_tile_threshold(commodity, threshold);

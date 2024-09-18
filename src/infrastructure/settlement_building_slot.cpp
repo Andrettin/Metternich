@@ -410,6 +410,11 @@ QString settlement_building_slot::get_modifier_string() const
 	return QString::fromStdString(str);
 }
 
+const site *settlement_building_slot::get_employment_site() const
+{
+	return this->get_settlement();
+}
+
 const employment_type *settlement_building_slot::get_employment_type() const
 {
 	if (this->get_building() != nullptr) {
@@ -417,15 +422,6 @@ const employment_type *settlement_building_slot::get_employment_type() const
 	}
 
 	return nullptr;
-}
-
-void settlement_building_slot::on_employee_added(population_unit *employee, const int multiplier)
-{
-	const employment_type *employment_type = this->get_employment_type();
-	assert_throw(employment_type != nullptr);
-
-	const centesimal_int employee_output = this->get_employee_output(employee->get_type());
-	this->get_settlement()->get_game_data()->change_base_commodity_output(employment_type->get_output_commodity(), employee_output * multiplier);
 }
 
 }

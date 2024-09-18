@@ -225,6 +225,7 @@ public:
 
 	void on_population_type_count_changed(const population_type *type, const int change);
 
+	virtual const site *get_employment_site() const override;
 	virtual const employment_type *get_employment_type() const override;
 	virtual void on_employee_added(population_unit *employee, const int multiplier) override;
 	virtual centesimal_int get_employee_output(const population_type *population_type) const override;

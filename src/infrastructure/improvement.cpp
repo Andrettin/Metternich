@@ -213,26 +213,4 @@ bool improvement::is_buildable_on_site(const site *site) const
 	return true;
 }
 
-centesimal_int improvement::get_employee_output(const population_type *population_type) const
-{
-	assert_throw(population_type != nullptr);
-	assert_throw(this->get_employment_type() != nullptr);
-
-	const commodity *output_commodity = this->get_employment_type()->get_output_commodity();
-
-	centesimal_int employee_output = this->get_employment_type()->get_output_value();
-	employee_output *= this->get_output_multiplier();
-
-	employee_output += population_type->get_commodity_output_bonus(output_commodity);
-	employee_output += population_type->get_resource_output_bonus();
-
-	int output_modifier = population_type->get_commodity_output_modifier(output_commodity);
-	if (output_modifier != 0) {
-		employee_output *= 100 + output_modifier;
-		employee_output /= 100;
-	}
-
-	return employee_output;
-}
-
 }

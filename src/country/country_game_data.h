@@ -51,6 +51,7 @@ class country;
 class country_building_slot;
 class country_rank;
 class culture;
+class employment_type;
 class event;
 class flag;
 class government_type;
@@ -1964,6 +1965,25 @@ public:
 
 	void change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change);
 
+	const std::map<const employment_type *, centesimal_int> &get_employee_output_bonuses() const
+	{
+		return this->employee_output_bonuses;
+	}
+
+	const centesimal_int &get_employee_output_bonus(const employment_type *employment_type) const
+	{
+		const auto find_iterator = this->employee_output_bonuses.find(employment_type);
+
+		if (find_iterator != this->employee_output_bonuses.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
+	void change_employee_output_bonus(const employment_type *employment_type, const centesimal_int &change);
+
 	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
 	{
 		const auto find_iterator = this->commodity_bonuses_for_tile_thresholds.find(commodity);
@@ -2629,6 +2649,7 @@ private:
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	improvement_map<commodity_map<centesimal_int>> improvement_commodity_bonuses;
 	building_type_map<commodity_map<int>> building_commodity_bonuses;
+	std::map<const employment_type *, centesimal_int> employee_output_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	commodity_map<centesimal_int> commodity_bonuses_per_population;
 	commodity_map<centesimal_int> capital_commodity_bonuses;
