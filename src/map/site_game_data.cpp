@@ -1144,7 +1144,7 @@ void site_game_data::on_employee_added(population_unit *employee, const int mult
 
 	if (employment_type->get_output_commodity()->is_food()) {
 		//workers employed in resource food production do not need food themselves
-		this->change_free_food_consumption(1 * multiplier);
+		this->get_province()->get_provincial_capital()->get_game_data()->change_free_food_consumption(1 * multiplier);
 	}
 }
 
