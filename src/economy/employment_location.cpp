@@ -34,6 +34,26 @@ void employment_location::change_employment_capacity(const int change)
 	}
 }
 
+centesimal_int employment_location::get_employee_output(const population_type *population_type) const
+{
+	assert_throw(population_type != nullptr);
+	assert_throw(this->get_employment_type() != nullptr);
+
+	const commodity *output_commodity = this->get_employment_type()->get_output_commodity();
+
+	centesimal_int employee_output = this->get_employment_type()->get_output_value();
+
+	employee_output += population_type->get_commodity_output_bonus(output_commodity);
+
+	int output_modifier = population_type->get_commodity_output_modifier(output_commodity);
+	if (output_modifier != 0) {
+		employee_output *= 100 + output_modifier;
+		employee_output /= 100;
+	}
+
+	return employee_output;
+}
+
 centesimal_int employment_location::get_total_employee_output() const
 {
 	centesimal_int output;

@@ -44,7 +44,7 @@ public:
 		return this->get_employment_capacity() - this->get_employee_count();
 	}
 
-	virtual centesimal_int get_employee_output(const population_type *population_type) const = 0;
+	virtual centesimal_int get_employee_output(const population_type *population_type) const;
 	centesimal_int get_total_employee_output() const;
 
 	void check_excess_employment();

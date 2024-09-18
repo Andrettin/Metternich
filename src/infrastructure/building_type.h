@@ -312,8 +312,6 @@ public:
 		return this->effects.get();
 	}
 
-	centesimal_int get_employee_output(const population_type *population_type) const;
-
 signals:
 	void changed();
 
