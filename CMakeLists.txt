@@ -744,6 +744,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/military_unit_type_stat_modifier_effect.h
 	src/script/modifier_effect/modifier_effect.h
 	src/script/modifier_effect/naval_discipline_modifier_effect.h
+	src/script/modifier_effect/output_bonus_per_employee_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h
 	src/script/modifier_effect/population_type_militancy_modifier_effect.h

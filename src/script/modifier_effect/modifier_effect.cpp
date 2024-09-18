@@ -51,6 +51,7 @@
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
 #include "script/modifier_effect/military_unit_type_stat_modifier_effect.h"
 #include "script/modifier_effect/naval_discipline_modifier_effect.h"
+#include "script/modifier_effect/output_bonus_per_employee_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
 #include "script/modifier_effect/population_type_militancy_modifier_effect.h"
@@ -296,6 +297,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<commodity_bonus_per_improvement_modifier_effect<scope_type>>();
 		} else if (tag == "military_unit_category_stat_modifier") {
 			modifier_effect = std::make_unique<military_unit_category_stat_modifier_effect>();
+		} else if (tag == "output_bonus_per_employee") {
+			modifier_effect = std::make_unique<output_bonus_per_employee_modifier_effect<scope_type>>();
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (tag == "commodity_bonus_per_adjacent_terrain") {
