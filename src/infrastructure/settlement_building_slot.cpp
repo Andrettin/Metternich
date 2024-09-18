@@ -428,12 +428,4 @@ void settlement_building_slot::on_employee_added(population_unit *employee, cons
 	this->get_settlement()->get_game_data()->change_base_commodity_output(employment_type->get_output_commodity(), employee_output * multiplier);
 }
 
-centesimal_int settlement_building_slot::get_employee_output(const population_type *population_type) const
-{
-	assert_throw(this->get_employment_type() != nullptr);
-	assert_throw(this->get_building() != nullptr);
-
-	return this->get_building()->get_employee_output(population_type);
-}
-
 }
