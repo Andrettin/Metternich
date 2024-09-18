@@ -39,7 +39,7 @@ public:
 
 	virtual std::string get_base_string() const override
 	{
-		return std::format("{} per {}", this->employment_type->get_output_commodity()->get_name(), this->employment_type->get_name());
+		return std::format("{} per {} Employee", this->employment_type->get_output_commodity()->get_name(), this->employment_type->get_name());
 	}
 
 	virtual std::string get_string(const scope_type *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
