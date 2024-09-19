@@ -6,6 +6,7 @@
 #include "country/policy_container.h"
 #include "country/tradition_container.h"
 #include "economy/commodity_container.h"
+#include "economy/employment_type_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_class_container.h"
 #include "infrastructure/building_type_container.h"
@@ -1965,7 +1966,7 @@ public:
 
 	void change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change);
 
-	const std::map<const employment_type *, centesimal_int> &get_employee_output_bonuses() const
+	const employment_type_map<centesimal_int> &get_employee_output_bonuses() const
 	{
 		return this->employee_output_bonuses;
 	}
@@ -2649,7 +2650,7 @@ private:
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	improvement_map<commodity_map<centesimal_int>> improvement_commodity_bonuses;
 	building_type_map<commodity_map<int>> building_commodity_bonuses;
-	std::map<const employment_type *, centesimal_int> employee_output_bonuses;
+	employment_type_map<centesimal_int> employee_output_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	commodity_map<centesimal_int> commodity_bonuses_per_population;
 	commodity_map<centesimal_int> capital_commodity_bonuses;
