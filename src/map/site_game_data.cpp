@@ -8,7 +8,6 @@
 #include "country/culture.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
-#include "economy/employment_type.h"
 #include "economy/resource.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
@@ -31,6 +30,7 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "population/profession.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/effect_list.h"
@@ -951,7 +951,7 @@ void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier
 void site_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
 {
 	if (improvement->get_output_commodity() != nullptr) {
-		if (improvement->get_employment_type() != nullptr) {
+		if (improvement->get_employment_profession() != nullptr) {
 			assert_throw(improvement->get_slot() == improvement_slot::resource);
 			this->change_employment_capacity(improvement->get_employment_capacity() * multiplier);
 		} else {
@@ -1124,12 +1124,12 @@ const site *site_game_data::get_employment_site() const
 	return this->site;
 }
 
-const employment_type *site_game_data::get_employment_type() const
+const profession *site_game_data::get_employment_profession() const
 {
 	const improvement *resource_improvement = this->get_resource_improvement();
 
 	if (resource_improvement != nullptr) {
-		return resource_improvement->get_employment_type();
+		return resource_improvement->get_employment_profession();
 	}
 
 	return nullptr;
@@ -1139,10 +1139,10 @@ void site_game_data::on_employee_added(population_unit *employee, const int mult
 {
 	employment_location::on_employee_added(employee, multiplier);
 
-	const employment_type *employment_type = this->get_employment_type();
-	assert_throw(employment_type != nullptr);
+	const profession *profession = this->get_employment_profession();
+	assert_throw(profession != nullptr);
 
-	if (employment_type->get_output_commodity()->is_food()) {
+	if (profession->get_output_commodity()->is_food()) {
 		//workers employed in resource food production do not need food themselves
 		this->get_province()->get_provincial_capital()->get_game_data()->change_free_food_consumption(1 * multiplier);
 	}
@@ -1151,12 +1151,12 @@ void site_game_data::on_employee_added(population_unit *employee, const int mult
 centesimal_int site_game_data::get_employee_output(const population_type *population_type) const
 {
 	assert_throw(population_type != nullptr);
-	assert_throw(this->get_employment_type() != nullptr);
+	assert_throw(this->get_employment_profession() != nullptr);
 	assert_throw(this->get_resource_improvement() != nullptr);
 
-	const commodity *output_commodity = this->get_employment_type()->get_output_commodity();
+	const commodity *output_commodity = this->get_employment_profession()->get_output_commodity();
 
-	centesimal_int employee_output = this->get_employment_type()->get_output_value();
+	centesimal_int employee_output = this->get_employment_profession()->get_output_value();
 	employee_output *= this->get_resource_improvement()->get_output_multiplier();
 
 	employee_output += population_type->get_commodity_output_bonus(output_commodity);
@@ -1164,7 +1164,7 @@ centesimal_int site_game_data::get_employee_output(const population_type *popula
 
 	const country *employment_country = this->get_employment_country();
 	if (employment_country != nullptr) {
-		employee_output += employment_country->get_game_data()->get_employee_output_bonus(this->get_employment_type());
+		employee_output += employment_country->get_game_data()->get_profession_output_bonus(this->get_employment_profession());
 	}
 
 	int output_modifier = population_type->get_commodity_output_modifier(output_commodity);

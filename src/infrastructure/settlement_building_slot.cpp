@@ -7,7 +7,6 @@
 #include "country/culture.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
-#include "economy/employment_type.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
@@ -17,6 +16,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "population/population_unit.h"
+#include "population/profession.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -118,7 +118,7 @@ bool settlement_building_slot::can_build_building(const building_type *building)
 
 void settlement_building_slot::on_building_gained(const building_type *building, const int multiplier)
 {
-	if (building->get_employment_type() != nullptr) {
+	if (building->get_employment_profession() != nullptr) {
 		this->change_employment_capacity(building->get_employment_capacity() * multiplier);
 	}
 
@@ -322,12 +322,12 @@ QString settlement_building_slot::get_modifier_string() const
 		}
 	}
 
-	if (this->get_employment_type() != nullptr && this->get_employee_count() > 0) {
+	if (this->get_employment_profession() != nullptr && this->get_employee_count() > 0) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
-		const commodity *commodity = this->get_employment_type()->get_output_commodity();
+		const commodity *commodity = this->get_employment_profession()->get_output_commodity();
 		const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
 
 		const centesimal_int output = this->get_total_employee_output();
@@ -415,10 +415,10 @@ const site *settlement_building_slot::get_employment_site() const
 	return this->get_settlement();
 }
 
-const employment_type *settlement_building_slot::get_employment_type() const
+const profession *settlement_building_slot::get_employment_profession() const
 {
 	if (this->get_building() != nullptr) {
-		return this->get_building()->get_employment_type();
+		return this->get_building()->get_employment_profession();
 	}
 
 	return nullptr;

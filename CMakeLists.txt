@@ -87,8 +87,6 @@ set(economy_SRCS
 	src/economy/commodity.cpp
 	src/economy/commodity_container.cpp
 	src/economy/employment_location.cpp
-	src/economy/employment_type.cpp
-	src/economy/employment_type_container.cpp
 	src/economy/expense_transaction.cpp
 	src/economy/food_type.cpp
 	src/economy/income_transaction.cpp
@@ -190,6 +188,8 @@ set(population_SRCS
 	src/population/population_type.cpp
 	src/population/population_type_container.cpp
 	src/population/population_unit.cpp
+	src/population/profession.cpp
+	src/population/profession_container.cpp
 )
 source_group(population FILES ${population_SRCS})
 set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "population")
@@ -405,8 +405,6 @@ set(economy_HDRS
 	src/economy/commodity.h
 	src/economy/commodity_container.h
 	src/economy/employment_location.h
-	src/economy/employment_type.h
-	src/economy/employment_type_container.h
 	src/economy/expense_transaction.h
 	src/economy/expense_transaction_type.h
 	src/economy/food_type.h
@@ -513,6 +511,8 @@ set(population_HDRS
 	src/population/population_type.h
 	src/population/population_type_container.h
 	src/population/population_unit.h
+	src/population/profession.h
+	src/population/profession_container.h
 )
 source_group(population FILES ${population_HDRS})
 
@@ -746,11 +746,11 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/military_unit_type_stat_modifier_effect.h
 	src/script/modifier_effect/modifier_effect.h
 	src/script/modifier_effect/naval_discipline_modifier_effect.h
-	src/script/modifier_effect/output_bonus_per_employee_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h
 	src/script/modifier_effect/population_type_militancy_modifier_effect.h
 	src/script/modifier_effect/port_level_modifier_effect.h
+	src/script/modifier_effect/profession_output_bonus_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h
 	src/script/modifier_effect/ship_stat_modifier_effect.h
 	src/script/modifier_effect/storage_capacity_modifier_effect.h

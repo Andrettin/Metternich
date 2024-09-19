@@ -16,11 +16,11 @@ namespace metternich {
 class country;
 class culture;
 class employment_location;
-class employment_type;
 class icon;
 class ideology;
 class phenotype;
 class population_type;
+class profession;
 class province;
 class religion;
 class settlement_building_slot;
@@ -140,7 +140,7 @@ public:
 
 	void set_employment_location(metternich::employment_location *employment_location);
 
-	const employment_type *get_employment_type() const;
+	const profession *get_profession() const;
 	bool is_food_producer() const;
 
 	bool is_everyday_consumption_fulfilled() const

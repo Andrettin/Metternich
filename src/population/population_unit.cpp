@@ -9,7 +9,6 @@
 #include "country/religion.h"
 #include "economy/commodity.h"
 #include "economy/employment_location.h"
-#include "economy/employment_type.h"
 #include "game/game.h"
 #include "infrastructure/settlement_building_slot.h"
 #include "map/province.h"
@@ -18,6 +17,7 @@
 #include "map/site_game_data.h"
 #include "population/population.h"
 #include "population/population_type.h"
+#include "population/profession.h"
 #include "script/condition/condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
@@ -82,9 +82,9 @@ void population_unit::set_type(const population_type *type)
 	if (this->get_employment_location() != nullptr) {
 		this->get_employment_location()->on_employee_added(this, 1);
 
-		const employment_type *employment_type = this->get_employment_location()->get_employment_type();
-		assert_throw(employment_type != nullptr);
-		if (!employment_type->can_employ(type)) {
+		const profession *profession = this->get_employment_location()->get_employment_profession();
+		assert_throw(profession != nullptr);
+		if (!profession->can_employ(type)) {
 			this->set_employment_location(nullptr);
 		}
 	}
@@ -300,10 +300,10 @@ void population_unit::set_employment_location(metternich::employment_location *e
 	}
 }
 
-const employment_type *population_unit::get_employment_type() const
+const profession *population_unit::get_profession() const
 {
 	if (this->get_employment_location() != nullptr) {
-		return this->get_employment_location()->get_employment_type();
+		return this->get_employment_location()->get_employment_profession();
 	}
 
 	return nullptr;
@@ -311,9 +311,9 @@ const employment_type *population_unit::get_employment_type() const
 
 bool population_unit::is_food_producer() const
 {
-	const employment_type *employment_type = this->get_employment_type();
-	if (employment_type != nullptr) {
-		return employment_type->get_output_commodity()->is_food();
+	const profession *profession = this->get_profession();
+	if (profession != nullptr) {
+		return profession->get_output_commodity()->is_food();
 	}
 
 	return false;

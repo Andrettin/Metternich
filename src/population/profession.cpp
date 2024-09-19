@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "economy/employment_type.h"
+#include "population/profession.h"
 
 #include "economy/commodity.h"
 #include "population/population_type.h"
@@ -9,7 +9,7 @@
 
 namespace metternich {
 
-void employment_type::process_gsml_scope(const gsml_data &scope)
+void profession::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
@@ -33,7 +33,7 @@ void employment_type::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-void employment_type::initialize()
+void profession::initialize()
 {
 	//set whether this production type is industrial
 	for (const auto &[commodity, input] : this->get_input_commodities()) {
@@ -46,14 +46,14 @@ void employment_type::initialize()
 	named_data_entry::initialize();
 }
 
-void employment_type::check() const
+void profession::check() const
 {
 	assert_throw(!this->employees.empty());
 	assert_throw(this->get_output_commodity() != nullptr);
 	assert_throw(this->get_output_value() > 0);
 }
 
-QVariantList employment_type::get_input_commodities_qvariant_list() const
+QVariantList profession::get_input_commodities_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_input_commodities());
 }

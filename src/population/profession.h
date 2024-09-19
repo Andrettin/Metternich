@@ -12,7 +12,7 @@ namespace metternich {
 
 class commodity;
 
-class employment_type final : public named_data_entry, public data_type<employment_type>
+class profession final : public named_data_entry, public data_type<profession>
 {
 	Q_OBJECT
 
@@ -23,11 +23,11 @@ class employment_type final : public named_data_entry, public data_type<employme
 	Q_PROPERTY(bool industrial READ is_industrial CONSTANT)
 
 public:
-	static constexpr const char class_identifier[] = "employment_type";
-	static constexpr const char property_class_identifier[] = "metternich::employment_type*";
-	static constexpr const char database_folder[] = "employment_types";
+	static constexpr const char class_identifier[] = "profession";
+	static constexpr const char property_class_identifier[] = "metternich::profession*";
+	static constexpr const char database_folder[] = "professions";
 
-	explicit employment_type(const std::string &identifier) : named_data_entry(identifier)
+	explicit profession(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}
 

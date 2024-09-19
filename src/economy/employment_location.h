@@ -6,9 +6,9 @@
 namespace metternich {
 
 class country;
-class employment_type;
 class population_type;
 class population_unit;
+class profession;
 class site;
 
 class employment_location
@@ -16,7 +16,7 @@ class employment_location
 public:
 	virtual const site *get_employment_site() const = 0;
 	const country *get_employment_country() const;
-	virtual const employment_type *get_employment_type() const = 0;
+	virtual const profession *get_employment_profession() const = 0;
 
 	int get_employee_count() const
 	{

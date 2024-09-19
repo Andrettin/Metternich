@@ -7,8 +7,8 @@
 
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")
-Q_MOC_INCLUDE("economy/employment_type.h")
 Q_MOC_INCLUDE("infrastructure/building_class.h")
+Q_MOC_INCLUDE("population/profession.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
@@ -20,11 +20,11 @@ class building_slot_type;
 class country;
 class cultural_group;
 class culture;
-class employment_type;
 class icon;
 class population_unit;
 class portrait;
 class production_type;
+class profession;
 class province;
 class settlement_type;
 class site;
@@ -55,7 +55,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
-	Q_PROPERTY(const metternich::employment_type* employment_type MEMBER employment_type READ get_employment_type NOTIFY changed)
+	Q_PROPERTY(const metternich::profession* employment_profession MEMBER employment_profession READ get_employment_profession NOTIFY changed)
 	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
 	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
@@ -132,9 +132,9 @@ public:
 		return this->settlement_types;
 	}
 
-	const metternich::employment_type *get_employment_type() const
+	const profession *get_employment_profession() const
 	{
-		return this->employment_type;
+		return this->employment_profession;
 	}
 
 	int get_employment_capacity() const
@@ -324,7 +324,7 @@ private:
 	bool provincial = false;
 	int level = 0;
 	std::vector<const settlement_type *> settlement_types;
-	const metternich::employment_type *employment_type = nullptr;
+	const profession *employment_profession = nullptr;
 	int employment_capacity = 0;
 	std::vector<const production_type *> production_types;
 	int base_capacity = 0;

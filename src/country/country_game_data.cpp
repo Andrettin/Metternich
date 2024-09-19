@@ -5373,18 +5373,18 @@ void country_game_data::change_building_commodity_bonus(const building_type *bui
 	}
 }
 
-void country_game_data::change_employee_output_bonus(const employment_type *employment_type, const centesimal_int &change)
+void country_game_data::change_profession_output_bonus(const profession *profession, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const centesimal_int &count = (this->employee_output_bonuses[employment_type] += change);
+	const centesimal_int &count = (this->profession_output_bonuses[profession] += change);
 
 	assert_throw(count >= 0);
 
 	if (count == 0) {
-		this->employee_output_bonuses.erase(employment_type);
+		this->profession_output_bonuses.erase(profession);
 	}
 
 	for (const province *province : this->get_provinces()) {

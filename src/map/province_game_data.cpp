@@ -10,7 +10,6 @@
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/commodity_container.h"
-#include "economy/employment_type.h"
 #include "economy/production_type.h"
 #include "economy/resource.h"
 #include "game/event_trigger.h"
@@ -30,6 +29,7 @@
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_unit.h"
+#include "population/profession.h"
 #include "script/context.h"
 #include "script/modifier.h"
 #include "script/scripted_province_modifier.h"
@@ -787,12 +787,12 @@ void province_game_data::check_employment()
 
 	std::vector<employment_location *> food_employment_locations = employment_locations;
 	std::erase_if(food_employment_locations, [this](const employment_location *employment_location) {
-		return !employment_location->get_employment_type()->get_output_commodity()->is_food();
+		return !employment_location->get_employment_profession()->get_output_commodity()->is_food();
 	});
 
 	std::vector<employment_location *> non_food_employment_locations = employment_locations;
 	std::erase_if(non_food_employment_locations, [this](const employment_location *employment_location) {
-		return employment_location->get_employment_type()->get_output_commodity()->is_food();
+		return employment_location->get_employment_profession()->get_output_commodity()->is_food();
 	});
 
 	this->check_available_employment(food_employment_locations, unemployed_population_units);
@@ -808,12 +808,12 @@ void province_game_data::check_available_employment(const std::vector<employment
 			continue;
 		}
 
-		const employment_type *employment_type = employment_location->get_employment_type();
-		assert_throw(employment_type != nullptr);
+		const profession *profession = employment_location->get_employment_profession();
+		assert_throw(profession != nullptr);
 
 		std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;
 		for (population_unit *population_unit : unemployed_population_units) {
-			if (!employment_type->can_employ(population_unit->get_type())) {
+			if (!profession->can_employ(population_unit->get_type())) {
 				continue;
 			}
 

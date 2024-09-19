@@ -6,7 +6,6 @@
 #include "country/policy_container.h"
 #include "country/tradition_container.h"
 #include "economy/commodity_container.h"
-#include "economy/employment_type_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_class_container.h"
 #include "infrastructure/building_type_container.h"
@@ -16,6 +15,7 @@
 #include "map/site_container.h"
 #include "map/terrain_type_container.h"
 #include "population/population_type_container.h"
+#include "population/profession_container.h"
 #include "script/opinion_modifier_container.h"
 #include "technology/technology_container.h"
 #include "unit/military_unit_type_container.h"
@@ -52,7 +52,6 @@ class country;
 class country_building_slot;
 class country_rank;
 class culture;
-class employment_type;
 class event;
 class flag;
 class government_type;
@@ -66,6 +65,7 @@ class population;
 class population_class;
 class population_type;
 class population_unit;
+class profession;
 class province;
 class region;
 class religion;
@@ -1966,16 +1966,16 @@ public:
 
 	void change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change);
 
-	const employment_type_map<centesimal_int> &get_employee_output_bonuses() const
+	const profession_map<centesimal_int> &get_profession_output_bonuses() const
 	{
-		return this->employee_output_bonuses;
+		return this->profession_output_bonuses;
 	}
 
-	const centesimal_int &get_employee_output_bonus(const employment_type *employment_type) const
+	const centesimal_int &get_profession_output_bonus(const profession *profession) const
 	{
-		const auto find_iterator = this->employee_output_bonuses.find(employment_type);
+		const auto find_iterator = this->profession_output_bonuses.find(profession);
 
-		if (find_iterator != this->employee_output_bonuses.end()) {
+		if (find_iterator != this->profession_output_bonuses.end()) {
 			return find_iterator->second;
 		}
 
@@ -1983,7 +1983,7 @@ public:
 		return zero;
 	}
 
-	void change_employee_output_bonus(const employment_type *employment_type, const centesimal_int &change);
+	void change_profession_output_bonus(const profession *profession, const centesimal_int &change);
 
 	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
 	{
@@ -2650,7 +2650,7 @@ private:
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	improvement_map<commodity_map<centesimal_int>> improvement_commodity_bonuses;
 	building_type_map<commodity_map<int>> building_commodity_bonuses;
-	employment_type_map<centesimal_int> employee_output_bonuses;
+	profession_map<centesimal_int> profession_output_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	commodity_map<centesimal_int> commodity_bonuses_per_population;
 	commodity_map<centesimal_int> capital_commodity_bonuses;

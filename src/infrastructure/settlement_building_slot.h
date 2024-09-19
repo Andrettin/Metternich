@@ -60,7 +60,7 @@ public:
 	QString get_modifier_string() const;
 
 	virtual const site *get_employment_site() const override;
-	virtual const employment_type *get_employment_type() const override;
+	virtual const profession *get_employment_profession() const override;
 
 signals:
 	void wonder_changed();
