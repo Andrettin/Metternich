@@ -90,15 +90,16 @@ commodity_map<centesimal_int> employment_location::get_employee_commodity_output
 	}
 
 	const country *employment_country = this->get_employment_country();
+	if (employment_country != nullptr) {
+		const commodity_map<centesimal_int> &commodity_bonuses = employment_country->get_game_data()->get_profession_commodity_bonuses(profession);
+		for (auto &[commodity, bonus] : commodity_bonuses) {
+			outputs[commodity] += bonus;
+		}
+	}
 
 	const int output_modifier = population_type->get_profession_output_modifier(profession);
-
-	for (auto &[commodity, output] : outputs) {
-		if (employment_country != nullptr) {
-			output += employment_country->get_game_data()->get_profession_commodity_bonus(profession, commodity);
-		}
-
-		if (output_modifier != 0) {
+	if (output_modifier != 0) {
+		for (auto &[commodity, output] : outputs) {
 			output *= 100 + output_modifier;
 			output /= 100;
 		}
