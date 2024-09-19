@@ -44,8 +44,10 @@ void employment_location::on_employee_added(population_unit *employee, const int
 	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
 
-	const centesimal_int employee_output = this->get_employee_output(employee->get_type());
-	this->change_total_employee_output(employee_output * multiplier);
+	const commodity_map<centesimal_int> employee_outputs = this->get_employee_commodity_outputs(employee->get_type());
+	for (const auto &[commodity, output] : employee_outputs) {
+		this->change_total_employee_commodity_output(commodity, output * multiplier);
+	}
 
 	if (profession->get_output_commodity()->is_food() && this->is_resource_employment()) {
 		//workers employed in resource food production do not need food themselves
@@ -66,58 +68,81 @@ void employment_location::change_employment_capacity(const int change)
 	}
 }
 
-centesimal_int employment_location::get_employee_output(const population_type *population_type) const
+commodity_map<centesimal_int> employment_location::get_employee_commodity_outputs(const population_type *population_type) const
 {
 	assert_throw(population_type != nullptr);
 
 	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
 
-	centesimal_int employee_output = profession->get_output_value();
-	employee_output *= this->get_employment_output_multiplier();
+	commodity_map<centesimal_int> outputs;
 
-	employee_output += population_type->get_profession_output_bonus(profession);
+	const commodity *main_output_commodity = profession->get_output_commodity();
+	centesimal_int &main_output = outputs[main_output_commodity];
+
+	main_output = profession->get_output_value();
+	main_output *= this->get_employment_output_multiplier();
+
+	main_output += population_type->get_profession_output_bonus(profession);
 
 	if (this->is_resource_employment()) {
-		employee_output += population_type->get_resource_output_bonus();
+		main_output += population_type->get_resource_output_bonus();
 	}
 
 	const country *employment_country = this->get_employment_country();
 	if (employment_country != nullptr) {
-		employee_output += employment_country->get_game_data()->get_profession_output_bonus(profession);
+		main_output += employment_country->get_game_data()->get_profession_output_bonus(profession);
 	}
 
 	int output_modifier = population_type->get_profession_output_modifier(profession);
 	if (output_modifier != 0) {
-		employee_output *= 100 + output_modifier;
-		employee_output /= 100;
+		for (auto &[commodity, output] : outputs) {
+			output *= 100 + output_modifier;
+			output /= 100;
+		}
 	}
 
-	return employee_output;
+	return outputs;
 }
 
-void employment_location::change_total_employee_output(const centesimal_int &change)
+void employment_location::change_total_employee_commodity_output(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	this->total_employee_output += change;
+	const centesimal_int &count = (this->total_employee_commodity_outputs[commodity] += change);
 
-	this->get_employment_site()->get_game_data()->change_base_commodity_output(this->get_employment_profession()->get_output_commodity(), change);
-}
+	assert_throw(count >= 0);
 
-void employment_location::calculate_total_employee_output()
-{
-	centesimal_int old_output = this->get_total_employee_output();
-
-	centesimal_int new_output;
-	for (const population_unit *employee : this->get_employees()) {
-		new_output += this->get_employee_output(employee->get_type());
+	if (count == 0) {
+		this->total_employee_commodity_outputs.erase(commodity);
 	}
 
-	const centesimal_int output_change = new_output - old_output;
-	this->change_total_employee_output(output_change);
+	this->get_employment_site()->get_game_data()->change_base_commodity_output(commodity, change);
+}
+
+void employment_location::calculate_total_employee_commodity_outputs()
+{
+	commodity_map<centesimal_int> old_outputs = this->get_total_employee_commodity_outputs();
+
+	commodity_map<centesimal_int> new_outputs;
+	for (const auto &[commodity, output] : old_outputs) {
+		new_outputs[commodity] = centesimal_int(0);
+	}
+
+	for (const population_unit *employee : this->get_employees()) {
+		const commodity_map<centesimal_int> employee_outputs = this->get_employee_commodity_outputs(employee->get_type());
+
+		for (const auto &[commodity, output] : employee_outputs) {
+			new_outputs[commodity] += output;
+		}
+	}
+
+	for (const auto &[commodity, output] : new_outputs) {
+		const centesimal_int output_change = output - old_outputs[commodity];
+		this->change_total_employee_commodity_output(commodity, output_change);
+	}
 }
 
 void employment_location::check_excess_employment()

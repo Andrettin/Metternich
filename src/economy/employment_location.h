@@ -63,22 +63,22 @@ public:
 		return this->get_employment_capacity() - this->get_employee_count();
 	}
 
-	centesimal_int get_employee_output(const population_type *population_type) const;
+	commodity_map<centesimal_int> get_employee_commodity_outputs(const population_type *population_type) const;
 
-	const centesimal_int &get_total_employee_output() const
+	const commodity_map<centesimal_int> &get_total_employee_commodity_outputs() const
 	{
-		return this->total_employee_output;
+		return this->total_employee_commodity_outputs;
 	}
 
-	void change_total_employee_output(const centesimal_int &change);
-	void calculate_total_employee_output();
+	void change_total_employee_commodity_output(const commodity *commodity, const centesimal_int &change);
+	void calculate_total_employee_commodity_outputs();
 
 	void check_excess_employment();
 
 private:
 	std::vector<population_unit *> employees;
 	int employment_capacity = 0;
-	centesimal_int total_employee_output;
+	commodity_map<centesimal_int> total_employee_commodity_outputs;
 };
 
 }

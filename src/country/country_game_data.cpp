@@ -5393,7 +5393,7 @@ void country_game_data::change_profession_output_bonus(const profession *profess
 				continue;
 			}
 
-			employment_location->calculate_total_employee_output();
+			employment_location->calculate_total_employee_commodity_outputs();
 		}
 	}
 }
