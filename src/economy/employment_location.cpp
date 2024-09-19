@@ -73,12 +73,11 @@ centesimal_int employment_location::get_employee_output(const population_type *p
 	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
 
-	const commodity *output_commodity = profession->get_output_commodity();
-
 	centesimal_int employee_output = profession->get_output_value();
 	employee_output *= this->get_employment_output_multiplier();
 
-	employee_output += population_type->get_commodity_output_bonus(output_commodity);
+	employee_output += population_type->get_profession_output_bonus(profession);
+
 	if (this->is_resource_employment()) {
 		employee_output += population_type->get_resource_output_bonus();
 	}
@@ -88,7 +87,7 @@ centesimal_int employment_location::get_employee_output(const population_type *p
 		employee_output += employment_country->get_game_data()->get_profession_output_bonus(profession);
 	}
 
-	int output_modifier = population_type->get_commodity_output_modifier(output_commodity);
+	int output_modifier = population_type->get_profession_output_modifier(profession);
 	if (output_modifier != 0) {
 		employee_output *= 100 + output_modifier;
 		employee_output /= 100;
