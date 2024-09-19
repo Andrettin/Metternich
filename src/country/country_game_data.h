@@ -1966,24 +1966,40 @@ public:
 
 	void change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change);
 
-	const profession_map<centesimal_int> &get_profession_output_bonuses() const
+	const profession_map<commodity_map<centesimal_int>> &get_profession_commodity_bonuses() const
 	{
-		return this->profession_output_bonuses;
+		return this->profession_commodity_bonuses;
 	}
 
-	const centesimal_int &get_profession_output_bonus(const profession *profession) const
+	const commodity_map<centesimal_int> &get_profession_commodity_bonuses(const profession *profession) const
 	{
-		const auto find_iterator = this->profession_output_bonuses.find(profession);
+		const auto find_iterator = this->profession_commodity_bonuses.find(profession);
 
-		if (find_iterator != this->profession_output_bonuses.end()) {
+		if (find_iterator != this->profession_commodity_bonuses.end()) {
 			return find_iterator->second;
 		}
 
-		static const centesimal_int zero;
+		static const commodity_map<centesimal_int> empty_map;
+		return empty_map;
+	}
+
+	const centesimal_int &get_profession_commodity_bonus(const profession *profession, const commodity *commodity) const
+	{
+		const auto find_iterator = this->profession_commodity_bonuses.find(profession);
+
+		if (find_iterator != this->profession_commodity_bonuses.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(commodity);
+
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+
+		static constexpr centesimal_int zero;
 		return zero;
 	}
 
-	void change_profession_output_bonus(const profession *profession, const centesimal_int &change);
+	void change_profession_commodity_bonus(const profession *profession, const commodity *commodity, const centesimal_int &change);
 
 	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
 	{
@@ -2650,7 +2666,7 @@ private:
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	improvement_map<commodity_map<centesimal_int>> improvement_commodity_bonuses;
 	building_type_map<commodity_map<int>> building_commodity_bonuses;
-	profession_map<centesimal_int> profession_output_bonuses;
+	profession_map<commodity_map<centesimal_int>> profession_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	commodity_map<centesimal_int> commodity_bonuses_per_population;
 	commodity_map<centesimal_int> capital_commodity_bonuses;

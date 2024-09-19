@@ -9,12 +9,12 @@
 namespace metternich {
 
 template <typename scope_type>
-class profession_output_bonus_modifier_effect final : public modifier_effect<scope_type>
+class profession_commodity_bonus_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "profession_output_bonus";
+		static const std::string identifier = "profession_commodity_bonus";
 		return identifier;
 	}
 
@@ -25,6 +25,8 @@ public:
 
 		if (key == "profession") {
 			this->profession = profession::get(value);
+		} else if (key == "commodity") {
+			this->commodity = commodity::get(value);
 		} else if (key == "value") {
 			this->value = centesimal_int(value);
 		} else {
@@ -34,12 +36,12 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_profession_output_bonus(this->profession, (this->value * multiplier));
+		scope->get_game_data()->change_profession_commodity_bonus(this->profession, this->commodity, (this->value * multiplier));
 	}
 
 	virtual std::string get_base_string() const override
 	{
-		return std::format("{} per {}", this->profession->get_output_commodity()->get_name(), this->profession->get_name());
+		return std::format("{} {} Output", this->profession->get_name(), this->commodity->get_name());
 	}
 
 	virtual std::string get_string(const scope_type *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
@@ -56,6 +58,7 @@ public:
 
 private:
 	const metternich::profession *profession = nullptr;
+	const metternich::commodity *commodity = nullptr;
 };
 
 }
