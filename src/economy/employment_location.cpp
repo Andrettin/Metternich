@@ -4,6 +4,8 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "economy/commodity.h"
+#include "map/province.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "population/population_type.h"
@@ -16,6 +18,11 @@ namespace metternich {
 const country *employment_location::get_employment_country() const
 {
 	return this->get_employment_site()->get_game_data()->get_owner();
+}
+
+const province *employment_location::get_employment_province() const
+{
+	return this->get_employment_site()->get_game_data()->get_province();
 }
 
 void employment_location::add_employee(population_unit *employee)
@@ -39,6 +46,11 @@ void employment_location::on_employee_added(population_unit *employee, const int
 
 	const centesimal_int employee_output = this->get_employee_output(employee->get_type());
 	this->change_total_employee_output(employee_output * multiplier);
+
+	if (profession->get_output_commodity()->is_food() && this->is_resource_employment()) {
+		//workers employed in resource food production do not need food themselves
+		this->get_employment_province()->get_provincial_capital()->get_game_data()->change_free_food_consumption(1 * multiplier);
+	}
 }
 
 void employment_location::change_employment_capacity(const int change)
@@ -57,17 +69,23 @@ void employment_location::change_employment_capacity(const int change)
 centesimal_int employment_location::get_employee_output(const population_type *population_type) const
 {
 	assert_throw(population_type != nullptr);
-	assert_throw(this->get_employment_profession() != nullptr);
 
-	const commodity *output_commodity = this->get_employment_profession()->get_output_commodity();
+	const profession *profession = this->get_employment_profession();
+	assert_throw(profession != nullptr);
 
-	centesimal_int employee_output = this->get_employment_profession()->get_output_value();
+	const commodity *output_commodity = profession->get_output_commodity();
+
+	centesimal_int employee_output = profession->get_output_value();
+	employee_output *= this->get_employment_output_multiplier();
 
 	employee_output += population_type->get_commodity_output_bonus(output_commodity);
+	if (this->is_resource_employment()) {
+		employee_output += population_type->get_resource_output_bonus();
+	}
 
 	const country *employment_country = this->get_employment_country();
 	if (employment_country != nullptr) {
-		employee_output += employment_country->get_game_data()->get_profession_output_bonus(this->get_employment_profession());
+		employee_output += employment_country->get_game_data()->get_profession_output_bonus(profession);
 	}
 
 	int output_modifier = population_type->get_commodity_output_modifier(output_commodity);

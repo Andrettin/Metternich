@@ -227,8 +227,13 @@ public:
 
 	virtual const site *get_employment_site() const override;
 	virtual const profession *get_employment_profession() const override;
-	virtual void on_employee_added(population_unit *employee, const int multiplier) override;
-	virtual centesimal_int get_employee_output(const population_type *population_type) const override;
+
+	virtual bool is_resource_employment() const override
+	{
+		return true;
+	}
+
+	virtual int get_employment_output_multiplier() const override;
 
 	const centesimal_int &get_health() const
 	{

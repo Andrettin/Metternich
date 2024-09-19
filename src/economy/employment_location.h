@@ -9,14 +9,26 @@ class country;
 class population_type;
 class population_unit;
 class profession;
+class province;
 class site;
 
 class employment_location
 {
 public:
 	virtual const site *get_employment_site() const = 0;
+	const province *get_employment_province() const;
 	const country *get_employment_country() const;
 	virtual const profession *get_employment_profession() const = 0;
+
+	virtual bool is_resource_employment() const
+	{
+		return false;
+	}
+
+	virtual int get_employment_output_multiplier() const
+	{
+		return 1;
+	}
 
 	int get_employee_count() const
 	{
@@ -37,7 +49,7 @@ public:
 		this->on_employee_added(employee, -1);
 	}
 
-	virtual void on_employee_added(population_unit *employee, const int multiplier);
+	void on_employee_added(population_unit *employee, const int multiplier);
 
 	int get_employment_capacity() const
 	{
@@ -51,7 +63,7 @@ public:
 		return this->get_employment_capacity() - this->get_employee_count();
 	}
 
-	virtual centesimal_int get_employee_output(const population_type *population_type) const;
+	centesimal_int get_employee_output(const population_type *population_type) const;
 
 	const centesimal_int &get_total_employee_output() const
 	{

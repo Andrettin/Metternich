@@ -1135,45 +1135,10 @@ const profession *site_game_data::get_employment_profession() const
 	return nullptr;
 }
 
-void site_game_data::on_employee_added(population_unit *employee, const int multiplier)
+int site_game_data::get_employment_output_multiplier() const
 {
-	employment_location::on_employee_added(employee, multiplier);
-
-	const profession *profession = this->get_employment_profession();
-	assert_throw(profession != nullptr);
-
-	if (profession->get_output_commodity()->is_food()) {
-		//workers employed in resource food production do not need food themselves
-		this->get_province()->get_provincial_capital()->get_game_data()->change_free_food_consumption(1 * multiplier);
-	}
-}
-
-centesimal_int site_game_data::get_employee_output(const population_type *population_type) const
-{
-	assert_throw(population_type != nullptr);
-	assert_throw(this->get_employment_profession() != nullptr);
 	assert_throw(this->get_resource_improvement() != nullptr);
-
-	const commodity *output_commodity = this->get_employment_profession()->get_output_commodity();
-
-	centesimal_int employee_output = this->get_employment_profession()->get_output_value();
-	employee_output *= this->get_resource_improvement()->get_output_multiplier();
-
-	employee_output += population_type->get_commodity_output_bonus(output_commodity);
-	employee_output += population_type->get_resource_output_bonus();
-
-	const country *employment_country = this->get_employment_country();
-	if (employment_country != nullptr) {
-		employee_output += employment_country->get_game_data()->get_profession_output_bonus(this->get_employment_profession());
-	}
-
-	int output_modifier = population_type->get_commodity_output_modifier(output_commodity);
-	if (output_modifier != 0) {
-		employee_output *= 100 + output_modifier;
-		employee_output /= 100;
-	}
-
-	return employee_output;
+	return this->get_resource_improvement()->get_output_multiplier();
 }
 
 void site_game_data::change_health(const centesimal_int &change)
