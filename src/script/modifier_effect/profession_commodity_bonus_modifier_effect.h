@@ -41,7 +41,11 @@ public:
 
 	virtual std::string get_base_string() const override
 	{
-		return std::format("{} {} Output", this->profession->get_name(), this->commodity->get_name());
+		if (this->commodity == this->profession->get_output_commodity()) {
+			return std::format("{} Output", this->profession->get_name());
+		} else {
+			return std::format("{} {} Output", this->profession->get_name(), this->commodity->get_name());
+		}
 	}
 
 	virtual std::string get_string(const scope_type *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
