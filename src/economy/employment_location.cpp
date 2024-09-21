@@ -75,15 +75,15 @@ commodity_map<centesimal_int> employment_location::get_employee_commodity_output
 	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
 
-	commodity_map<centesimal_int> outputs;
+	commodity_map<decimillesimal_int> outputs;
 
 	const commodity *main_output_commodity = profession->get_output_commodity();
-	centesimal_int &main_output = outputs[main_output_commodity];
+	decimillesimal_int &main_output = outputs[main_output_commodity];
 
-	main_output = profession->get_output_value();
+	main_output = decimillesimal_int(profession->get_output_value());
 	main_output *= this->get_employment_output_multiplier();
 
-	main_output += population_type->get_profession_output_bonus(profession);
+	main_output += decimillesimal_int(population_type->get_profession_output_bonus(profession));
 
 	if (this->is_resource_employment()) {
 		main_output += population_type->get_resource_output_bonus();
@@ -91,7 +91,7 @@ commodity_map<centesimal_int> employment_location::get_employee_commodity_output
 
 	const country *employment_country = this->get_employment_country();
 	if (employment_country != nullptr) {
-		const commodity_map<centesimal_int> &commodity_bonuses = employment_country->get_game_data()->get_profession_commodity_bonuses(profession);
+		const commodity_map<decimillesimal_int> &commodity_bonuses = employment_country->get_game_data()->get_profession_commodity_bonuses(profession);
 		for (auto &[commodity, bonus] : commodity_bonuses) {
 			outputs[commodity] += bonus;
 		}
@@ -105,7 +105,12 @@ commodity_map<centesimal_int> employment_location::get_employee_commodity_output
 		}
 	}
 
-	return outputs;
+	commodity_map<centesimal_int> ret_outputs;
+	for (const auto &[commodity, output] : outputs) {
+		ret_outputs[commodity] = centesimal_int(output);
+	}
+
+	return ret_outputs;
 }
 
 void employment_location::change_total_employee_commodity_output(const commodity *commodity, const centesimal_int &change)
