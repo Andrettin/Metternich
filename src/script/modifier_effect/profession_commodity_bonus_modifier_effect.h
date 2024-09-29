@@ -53,7 +53,9 @@ public:
 		Q_UNUSED(scope);
 
 		const decimillesimal_int value = this->value * multiplier;
-		const std::string number_str = ignore_decimals && !this->are_decimals_relevant() ? number::to_signed_string(value.to_int()) : value.to_signed_string();
+
+		std::string number_str = ignore_decimals && !this->are_decimals_relevant() ? number::to_signed_string(value.to_int()) : value.to_signed_string(true);
+
 		const QColor &number_color = this->is_negative(multiplier) ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
 		const std::string colored_number_str = string::colored(number_str + (this->is_percent() ? "%" : ""), number_color);
 
