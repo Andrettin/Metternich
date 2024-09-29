@@ -20,6 +20,9 @@ template <typename scope_type>
 class condition;
 
 template <typename scope_type>
+class effect_list;
+
+template <typename scope_type>
 class modifier;
 
 class tradition final : public named_data_entry, public data_type<tradition>
@@ -108,6 +111,11 @@ public:
 		return this->modifier.get();
 	}
 
+	const effect_list<const country> *get_effects() const
+	{
+		return this->effects.get();
+	}
+
 	Q_INVOKABLE QString get_modifier_string(const metternich::country *country) const;
 
 	bool is_available_for_country(const country *country) const;
@@ -169,6 +177,7 @@ private:
 	std::unique_ptr<const condition<country>> preconditions;
 	std::unique_ptr<const condition<country>> conditions;
 	std::unique_ptr<const modifier<const country>> modifier;
+	std::unique_ptr<const effect_list<const country>> effects;
 };
 
 }

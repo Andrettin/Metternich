@@ -8,6 +8,7 @@
 #include "country/tradition_group.h"
 #include "game/game.h"
 #include "script/condition/and_condition.h"
+#include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 
@@ -46,6 +47,10 @@ void tradition::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "effects") {
+		auto effect_list = std::make_unique<metternich::effect_list<const country>>();
+		database::process_gsml_data(effect_list, scope);
+		this->effects = std::move(effect_list);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -84,8 +89,8 @@ void tradition::check() const
 		throw std::runtime_error(std::format("Tradition \"{}\" has no icon.", this->get_identifier()));
 	}
 
-	if (this->get_modifier() == nullptr) {
-		throw std::runtime_error(std::format("Tradition \"{}\" has no modifier.", this->get_identifier()));
+	if (this->get_modifier() == nullptr && this->get_effects() == nullptr) {
+		throw std::runtime_error(std::format("Tradition \"{}\" has neither a modifier nor effects.", this->get_identifier()));
 	}
 
 	if (this->get_preconditions() != nullptr) {
@@ -94,6 +99,10 @@ void tradition::check() const
 
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
+	}
+
+	if (this->get_effects() != nullptr) {
+		this->get_effects()->check();
 	}
 }
 
@@ -122,18 +131,6 @@ QString tradition::get_requirements_string(const metternich::country *country) c
 {
 	std::string str;
 
-	if (!this->get_incompatible_traditions().empty()) {
-		str += "Incompatible with:";
-
-		for (const tradition *tradition : this->get_incompatible_traditions()) {
-			if (!tradition->is_available_for_country(country)) {
-				continue;
-			}
-
-			str += "\n\t" + tradition->get_name();
-		}
-	}
-
 	if (!country->get_game_data()->has_tradition(this)) {
 		if (this->get_required_technology() != nullptr && !country->get_game_data()->has_technology(this->get_required_technology())) {
 			if (!str.empty()) {
@@ -152,12 +149,42 @@ QString tradition::get_requirements_string(const metternich::country *country) c
 		}
 	}
 
+	if (!this->get_incompatible_traditions().empty()) {
+		if (!str.empty()) {
+			str += "\n\n";
+		}
+
+		str += "Incompatible with:";
+
+		for (const tradition *tradition : this->get_incompatible_traditions()) {
+			if (!tradition->is_available_for_country(country)) {
+				continue;
+			}
+
+			str += "\n\t" + tradition->get_name();
+		}
+	}
+
 	return QString::fromStdString(str);
 }
 
 QString tradition::get_modifier_string(const metternich::country *country) const
 {
-	return QString::fromStdString(this->get_modifier()->get_string(country));
+	std::string str;
+	
+	if (this->get_modifier() != nullptr) {
+		str = this->get_modifier()->get_string(country);
+	}
+
+	if (this->get_effects() != nullptr) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += this->get_effects()->get_effects_string(country, read_only_context(country));
+	}
+
+	return QString::fromStdString(str);
 }
 
 bool tradition::is_available_for_country(const country *country) const

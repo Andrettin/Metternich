@@ -3800,6 +3800,11 @@ void country_game_data::gain_tradition(const tradition *tradition, const int mul
 		tradition->get_modifier()->apply(this->country, multiplier);
 	}
 
+	if (tradition->get_effects() != nullptr && multiplier > 0 && game::get()->is_running()) {
+		context ctx(this->country);
+		tradition->get_effects()->do_effects(this->country, ctx);
+	}
+
 	if (multiplier > 0) {
 		for (const metternich::tradition *incompatible_tradition : tradition->get_incompatible_traditions()) {
 			if (this->has_tradition(incompatible_tradition)) {
@@ -4241,10 +4246,10 @@ void country_game_data::check_advisors()
 				this->add_advisor(this->get_next_advisor());
 
 				if (this->get_next_advisor()->get_advisor_effects() != nullptr) {
-					context ctx(country);
+					context ctx(this->country);
 					this->get_next_advisor()->get_advisor_effects()->do_effects(country, ctx);
 				} else if (this->get_next_advisor()->get_advisor_type()->get_effects() != nullptr) {
-					context ctx(country);
+					context ctx(this->country);
 					this->get_next_advisor()->get_advisor_type()->get_effects()->do_effects(country, ctx);
 				}
 
