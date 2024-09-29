@@ -951,6 +951,8 @@ void country_game_data::set_subject_type(const metternich::subject_type *subject
 	if (game::get()->is_running()) {
 		emit subject_type_changed();
 	}
+
+	this->check_government_type();
 }
 
 QVariantList country_game_data::get_provinces_qvariant_list() const
@@ -3818,6 +3820,7 @@ void country_game_data::gain_tradition(const tradition *tradition, const int mul
 	}
 
 	this->check_traditions();
+	this->check_government_type();
 }
 
 void country_game_data::gain_tradition_with_prerequisites(const tradition *tradition)
