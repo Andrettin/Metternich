@@ -123,21 +123,14 @@ QString tradition::get_requirements_string(const metternich::country *country) c
 	std::string str;
 
 	if (!this->get_incompatible_traditions().empty()) {
-		str += "Incompatible with: ";
+		str += "Incompatible with:";
 
-		bool first = true;
 		for (const tradition *tradition : this->get_incompatible_traditions()) {
 			if (!tradition->is_available_for_country(country)) {
 				continue;
 			}
 
-			if (first) {
-				first = false;
-			} else {
-				str += ", ";
-			}
-
-			str += tradition->get_name();
+			str += "\n\t" + tradition->get_name();
 		}
 	}
 
