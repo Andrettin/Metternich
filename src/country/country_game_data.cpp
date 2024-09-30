@@ -3813,6 +3813,12 @@ void country_game_data::gain_tradition(const tradition *tradition, const int mul
 				this->gain_tradition(incompatible_tradition, -1);
 			}
 		}
+	} else if (multiplier < 0) {
+		for (const metternich::tradition *requiring_tradition : tradition->get_requiring_traditions()) {
+			if (this->has_tradition(requiring_tradition)) {
+				this->gain_tradition(requiring_tradition, -1);
+			}
+		}
 	}
 
 	if (game::get()->is_running()) {

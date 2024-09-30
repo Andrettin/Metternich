@@ -64,6 +64,10 @@ void tradition::initialize()
 		this->group->add_tradition(this);
 	}
 
+	for (tradition *tradition : this->get_prerequisites()) {
+		tradition->requiring_traditions.push_back(this);
+	}
+
 	if (this->required_technology != nullptr) {
 		this->required_technology->add_enabled_tradition(this);
 	}
