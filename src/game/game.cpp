@@ -363,6 +363,30 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 		}
 
+		for (const cultural_group *cultural_group : cultural_group::get_all()) {
+			const culture_history *culture_history = cultural_group->get_history();
+
+			for (const country *country : this->get_countries()) {
+				if (!country->get_culture()->is_part_of_group(cultural_group)) {
+					continue;
+				}
+
+				culture_history->apply_to_country(country);
+			}
+		}
+
+		for (const culture *culture : culture::get_all()) {
+			const culture_history *culture_history = culture->get_history();
+
+			for (const country *country : this->get_countries()) {
+				if (country->get_culture() != culture) {
+					continue;
+				}
+
+				culture_history->apply_to_country(country);
+			}
+		}
+
 		for (const country *country : this->get_countries()) {
 			const country_history *country_history = country->get_history();
 			country_game_data *country_game_data = country->get_game_data();
@@ -437,30 +461,6 @@ void game::apply_history(const metternich::scenario *scenario)
 
 					country_game_data->set_subject_type(nullptr);
 				}
-			}
-		}
-
-		for (const culture *culture : culture::get_all()) {
-			const culture_history *culture_history = culture->get_history();
-
-			for (const country *country : this->get_countries()) {
-				if (country->get_culture() != culture) {
-					continue;
-				}
-
-				culture_history->apply_to_country(country);
-			}
-		}
-
-		for (const cultural_group *cultural_group : cultural_group::get_all()) {
-			const culture_history *culture_history = cultural_group->get_history();
-
-			for (const country *country : this->get_countries()) {
-				if (!country->get_culture()->is_part_of_group(cultural_group)) {
-					continue;
-				}
-
-				culture_history->apply_to_country(country);
 			}
 		}
 
