@@ -2043,6 +2043,26 @@ public:
 
 	void change_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change);
 
+	const commodity_map<centesimal_int> &get_settlement_commodity_bonuses() const
+	{
+		return this->settlement_commodity_bonuses;
+	}
+
+	const centesimal_int &get_settlement_commodity_bonus(const commodity *commodity) const
+	{
+		const auto find_iterator = this->settlement_commodity_bonuses.find(commodity);
+
+		if (find_iterator != this->settlement_commodity_bonuses.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+
+		return zero;
+	}
+
+	void change_settlement_commodity_bonus(const commodity *commodity, const centesimal_int &change);
+
 	const commodity_map<centesimal_int> &get_capital_commodity_bonuses() const
 	{
 		return this->capital_commodity_bonuses;
@@ -2669,6 +2689,7 @@ private:
 	profession_map<commodity_map<decimillesimal_int>> profession_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	commodity_map<centesimal_int> commodity_bonuses_per_population;
+	commodity_map<centesimal_int> settlement_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses_per_population;
 	std::map<technology_category, int> category_research_modifiers;
