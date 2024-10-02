@@ -18,6 +18,7 @@ enum class military_unit_stat {
 	bonus_vs_cavalry,
 	bonus_vs_artillery,
 	bonus_vs_fortifications,
+	defense_modifier,
 	ranged_defense_modifier,
 	entrenchment_bonus_modifier,
 	desert_attack_modifier,
@@ -63,6 +64,8 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 			return "Bonus vs. Artillery";
 		case military_unit_stat::bonus_vs_fortifications:
 			return "Bonus vs. Fortifications";
+		case military_unit_stat::defense_modifier:
+			return "Defense";
 		case military_unit_stat::ranged_defense_modifier:
 			return "Ranged Defense";
 		case military_unit_stat::entrenchment_bonus_modifier:
@@ -105,6 +108,7 @@ inline bool is_percent_military_unit_stat(const military_unit_stat stat)
 		case military_unit_stat::bonus_vs_cavalry:
 		case military_unit_stat::bonus_vs_artillery:
 		case military_unit_stat::bonus_vs_fortifications:
+		case military_unit_stat::defense_modifier:
 		case military_unit_stat::ranged_defense_modifier:
 		case military_unit_stat::entrenchment_bonus_modifier:
 		case military_unit_stat::desert_attack_modifier:

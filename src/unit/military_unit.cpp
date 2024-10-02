@@ -574,7 +574,7 @@ void military_unit::attack(military_unit *target, const bool ranged, const bool 
 	}
 
 	centesimal_int defense = target->get_stat(military_unit_stat::defense);
-	int defense_modifier = 0;
+	int defense_modifier = target->get_stat(military_unit_stat::defense_modifier).to_int();
 	if (ranged) {
 		defense_modifier += target->get_stat(military_unit_stat::ranged_defense_modifier).to_int();
 	}
