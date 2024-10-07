@@ -13,6 +13,7 @@
 #include "country/country_game_data.h"
 #include "country/culture.h"
 #include "country/religion.h"
+#include "database/defines.h"
 #include "map/province.h"
 #include "map/site.h"
 #include "map/site_type.h"
@@ -214,15 +215,26 @@ void character::initialize()
 void character::check() const
 {
 	switch (this->get_role()) {
-		case character_role::ruler:
+		case character_role::ruler: {
 			if (this->get_rulable_countries().empty()) {
 				throw std::runtime_error(std::format("Character \"{}\" is a ruler, but has no rulable countries.", this->get_identifier()));
 			}
 
-			if (this->get_traits().size() < character::ruler_trait_count) {
-				log::log_error(std::format("Character \"{}\" is a ruler, but only has {} {}, instead of the expected {}.", this->get_identifier(), this->get_traits().size(), this->get_traits().size() == 1 ? "trait" : "traits", character::ruler_trait_count));
+			std::vector<const trait *> ruler_traits = this->get_traits();
+			std::erase_if(ruler_traits, [](const trait *trait) {
+				return trait->get_type() != trait_type::ruler;
+			});
+			const int ruler_trait_count = static_cast<int>(ruler_traits.size());
+			const int min_ruler_traits = defines::get()->get_min_traits_for_type(trait_type::ruler);
+			const int max_ruler_traits = defines::get()->get_max_traits_for_type(trait_type::ruler);
+
+			if (ruler_trait_count < min_ruler_traits) {
+				log::log_error(std::format("Ruler character \"{}\" only has {} ruler {}, less than the expected minimum of {}.", this->get_identifier(), ruler_trait_count, ruler_trait_count == 1 ? "trait" : "traits", min_ruler_traits));
+			} else if (ruler_trait_count > max_ruler_traits) {
+				log::log_error(std::format("Ruler character \"{}\" has {} ruler {}, more than the expected maximum of {}.", this->get_identifier(), ruler_trait_count, ruler_trait_count == 1 ? "trait" : "traits", max_ruler_traits));
 			}
 			break;
+		}
 		case character_role::advisor:
 			if (this->get_advisor_type() == nullptr) {
 				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but has no advisor type.", this->get_identifier()));

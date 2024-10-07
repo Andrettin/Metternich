@@ -28,6 +28,7 @@ class portrait;
 class terrain_type;
 enum class diplomacy_state;
 enum class event_trigger;
+enum class trait_type;
 
 class defines final : public defines_base, public singleton<defines>
 {
@@ -255,6 +256,26 @@ public:
 		return this->military_upkeep_icon;
 	}
 
+	int get_min_traits_for_type(const trait_type type) const
+	{
+		const auto find_iterator = this->min_traits_per_type.find(type);
+		if (find_iterator != this->min_traits_per_type.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	int get_max_traits_for_type(const trait_type type) const
+	{
+		const auto find_iterator = this->max_traits_per_type.find(type);
+		if (find_iterator != this->max_traits_per_type.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
 	const portrait *get_interior_minister_portrait() const
 	{
 		return this->interior_minister_portrait;
@@ -379,6 +400,8 @@ private:
 	const icon *tariff_icon = nullptr;
 	const icon *treasure_fleet_icon = nullptr;
 	const icon *military_upkeep_icon = nullptr;
+	std::map<trait_type, int> min_traits_per_type;
+	std::map<trait_type, int> max_traits_per_type;
 	portrait *interior_minister_portrait = nullptr;
 	portrait *war_minister_portrait = nullptr;
 	QColor minor_nation_color;
