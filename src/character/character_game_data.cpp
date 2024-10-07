@@ -50,30 +50,20 @@ void character_game_data::on_setup_finished()
 
 	bool success = true;
 	while (this->get_trait_count_for_type(trait_type::background) < defines::get()->get_min_traits_for_type(trait_type::background) && success) {
-		if (this->character->get_role() == character_role::advisor && this->character->get_skill() > 0) {
-			const character_attribute advisor_attribute = this->character->get_advisor_type()->get_attribute();
-			const int skill_difference = this->character->get_skill() - this->get_attribute_value(advisor_attribute);
-			if (skill_difference > 0) {
-				success = this->generate_trait(trait_type::background, advisor_attribute, skill_difference);
-				continue;
-			}
-		} else {
-			success = this->generate_trait(trait_type::background);
-		}
+		const character_attribute target_attribute = this->character->get_skill_attribute();
+		const int target_attribute_value = this->character->get_skill();
+		const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
+
+		success = this->generate_trait(trait_type::background, target_attribute, target_attribute_bonus);
 	}
 
 	success = true;
 	while (this->get_trait_count_for_type(trait_type::personality) < defines::get()->get_min_traits_for_type(trait_type::personality) && success) {
-		if (this->character->get_role() == character_role::advisor && this->character->get_skill() > 0) {
-			const character_attribute advisor_attribute = this->character->get_advisor_type()->get_attribute();
-			const int skill_difference = this->character->get_skill() - this->get_attribute_value(advisor_attribute);
-			if (skill_difference > 0) {
-				success = this->generate_trait(trait_type::personality, advisor_attribute, skill_difference);
-				continue;
-			}
-		}
+		const character_attribute target_attribute = this->character->get_skill_attribute();
+		const int target_attribute_value = this->character->get_skill();
+		const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
 
-		success = this->generate_trait(trait_type::personality);
+		success = this->generate_trait(trait_type::personality, target_attribute, target_attribute_bonus);
 	}
 
 	if (this->character->get_role() == character_role::advisor && this->get_advisor_skill() == 0 && this->character->get_advisor_modifier() == nullptr && this->character->get_advisor_effects() == nullptr && this->character->get_advisor_type()->get_modifier() == nullptr && this->character->get_advisor_type()->get_scaled_modifier() != nullptr) {
@@ -332,7 +322,7 @@ bool character_game_data::generate_trait(const trait_type trait_type, const char
 			continue;
 		}
 
-		if (target_attribute != character_attribute::none && target_attribute_bonus != 0) {
+		if (target_attribute != character_attribute::none) {
 			const int trait_attribute_bonus = trait->get_attribute_bonus(target_attribute);
 			if (trait_attribute_bonus > target_attribute_bonus) {
 				continue;

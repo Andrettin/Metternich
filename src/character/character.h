@@ -37,6 +37,7 @@ class religion;
 class site;
 class technology;
 class trait;
+enum class character_attribute;
 enum class character_role;
 enum class military_unit_category;
 
@@ -254,6 +255,8 @@ public:
 	{
 		return this->death_date;
 	}
+
+	character_attribute get_skill_attribute() const;
 
 	int get_skill() const
 	{

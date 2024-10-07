@@ -3,6 +3,7 @@
 #include "character/character.h"
 
 #include "character/advisor_type.h"
+#include "character/character_attribute.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
 #include "character/character_role.h"
@@ -365,6 +366,25 @@ std::string character::get_full_name() const
 	}
 
 	return full_name;
+}
+
+character_attribute character::get_skill_attribute() const
+{
+	switch (this->get_role()) {
+		case character_role::ruler:
+			for (const trait *trait : this->get_traits()) {
+				if (trait->get_type() == trait_type::ruler && trait->get_attribute() != character_attribute::none) {
+					return trait->get_attribute();
+				}
+			}
+			break;
+		case character_role::advisor:
+			return this->get_advisor_type()->get_attribute();
+		default:
+			break;
+	}
+
+	return character_attribute::none;
 }
 
 void character::add_rulable_country(country *country)
