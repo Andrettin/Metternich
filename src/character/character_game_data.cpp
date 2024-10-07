@@ -15,6 +15,7 @@
 #include "game/game.h"
 #include "map/province.h"
 #include "script/condition/condition.h"
+#include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "script/scripted_character_modifier.h"
 #include "spell/spell.h"
@@ -26,6 +27,7 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -305,6 +307,106 @@ void character_game_data::decrement_scripted_modifiers()
 bool character_game_data::is_ruler() const
 {
 	return this->get_country() != nullptr && this->get_country()->get_game_data()->get_ruler() == this->character;
+}
+
+std::string character_game_data::get_ruler_modifier_string(const metternich::country *country) const
+{
+	assert_throw(this->character->get_role() == character_role::ruler);
+
+	std::string str;
+
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_ruler_modifier() == nullptr) {
+			continue;
+		}
+
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += string::highlight(trait->get_name());
+		str += "\n" + trait->get_ruler_modifier()->get_string(country, 1, 1);
+	}
+
+	return str;
+}
+
+void character_game_data::apply_ruler_modifier(const metternich::country *country, const int multiplier) const
+{
+	assert_throw(this->character->get_role() == character_role::ruler);
+
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_ruler_modifier() != nullptr) {
+			trait->get_ruler_modifier()->apply(country, multiplier);
+		}
+	}
+}
+
+QString character_game_data::get_advisor_effects_string(const metternich::country *country) const
+{
+	assert_throw(this->character->get_role() == character_role::advisor);
+
+	std::string str;
+
+	if (this->character->get_advisor_modifier() != nullptr) {
+		str += this->character->get_advisor_modifier()->get_string(country);
+	}
+
+	if (this->character->get_advisor_effects() != nullptr) {
+		if (!str.empty()) {
+			str += '\n';
+		}
+
+		str += this->character->get_advisor_effects()->get_effects_string(country, read_only_context(country));
+	}
+
+	if (!str.empty()) {
+		return QString::fromStdString(str);
+	}
+
+	if (this->character->get_advisor_type()->get_modifier() != nullptr) {
+		str = this->character->get_advisor_type()->get_modifier()->get_string(country);
+	} else if (this->character->get_advisor_type()->get_scaled_modifier() != nullptr) {
+		str = this->character->get_advisor_type()->get_scaled_modifier()->get_string(country, this->character->get_skill());
+	}
+
+	if (this->character->get_advisor_type()->get_effects() != nullptr) {
+		if (!str.empty()) {
+			str += '\n';
+		}
+
+		str += this->character->get_advisor_type()->get_effects()->get_effects_string(country, read_only_context(country));
+	}
+
+	if (this->get_country() != country) {
+		const metternich::character *replaced_advisor = country->get_game_data()->get_replaced_advisor_for(this->character);
+		if (replaced_advisor != nullptr) {
+			if (!str.empty()) {
+				str += '\n';
+			}
+
+			str += std::format("Replaces {}", replaced_advisor->get_full_name());
+		}
+	}
+
+	return QString::fromStdString(str);
+}
+
+void character_game_data::apply_advisor_modifier(const metternich::country *country, const int multiplier) const
+{
+	assert_throw(this->character->get_role() == character_role::advisor);
+
+	if (this->character->get_advisor_effects() != nullptr) {
+		return;
+	}
+
+	if (this->character->get_advisor_modifier() != nullptr) {
+		this->character->get_advisor_modifier()->apply(country, multiplier);
+	} else if (this->character->get_advisor_type()->get_modifier() != nullptr) {
+		this->character->get_advisor_type()->get_modifier()->apply(country);
+	} else if (this->character->get_advisor_type()->get_scaled_modifier() != nullptr) {
+		this->character->get_advisor_type()->get_scaled_modifier()->apply(country, this->character->get_skill() * multiplier);
+	}
 }
 
 bool character_game_data::is_deployable() const

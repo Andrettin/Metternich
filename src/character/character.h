@@ -298,26 +298,15 @@ public:
 
 	void add_rulable_country(country *country);
 
-	std::string get_ruler_modifier_string(const country *country) const;
-
-	Q_INVOKABLE QString get_ruler_modifier_qstring(metternich::country *country) const
-	{
-		return QString::fromStdString(this->get_ruler_modifier_string(country));
-	}
-
 	const modifier<const country> *get_advisor_modifier() const
 	{
 		return this->advisor_modifier.get();
 	}
 
-	Q_INVOKABLE QString get_advisor_effects_string(metternich::country *country) const;
-
 	const effect_list<const country> *get_advisor_effects() const
 	{
 		return this->advisor_effects.get();
 	}
-
-	void apply_advisor_modifier(const country *country, const int multiplier) const;
 
 	bool is_admiral() const;
 	bool is_explorer() const;
