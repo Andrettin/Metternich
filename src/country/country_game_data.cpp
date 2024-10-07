@@ -4346,7 +4346,12 @@ void country_game_data::choose_next_advisor()
 		int best_desire = 0;
 		for (const auto &[category, advisor] : potential_advisor_map) {
 			//consider advisors with special modifiers or effects to have maximum skill, for the purposes of preferring to select them
-			int desire = (advisor->get_skill() != 0 ? advisor->get_skill() : character::max_skill) * 100;
+			int advisor_skill = advisor->get_game_data()->get_advisor_skill();
+			if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr || (advisor->get_advisor_type()->get_modifier() != nullptr && advisor->get_advisor_type()->get_scaled_modifier() == nullptr)) {
+				advisor_skill = character::max_skill;
+			}
+
+			int desire = advisor_skill * 100;
 
 			for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
 				if (vector::contains(journal_entry->get_recruited_characters(), advisor)) {
@@ -4428,7 +4433,7 @@ bool country_game_data::has_incompatible_advisor_to(const character *advisor) co
 			continue;
 		}
 
-		if (advisor->get_advisor_type()->get_scaled_modifier() != nullptr && advisor->get_skill() > other_advisor->get_skill()) {
+		if (advisor->get_advisor_type()->get_scaled_modifier() != nullptr && advisor->get_game_data()->get_advisor_skill() > other_advisor->get_game_data()->get_advisor_skill()) {
 			continue;
 		}
 

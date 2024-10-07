@@ -11,6 +11,7 @@ class character;
 class country;
 class icon;
 class military_unit;
+enum class character_attribute;
 enum class trait_type;
 
 template <typename scope_type>
@@ -47,6 +48,21 @@ public:
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	const std::map<character_attribute, int> &get_attribute_bonuses() const
+	{
+		return this->attribute_bonuses;
+	}
+
+	int get_attribute_bonus(const character_attribute attribute) const
+	{
+		const auto find_iterator = this->get_attribute_bonuses().find(attribute);
+		if (find_iterator != this->get_attribute_bonuses().end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
 	}
 
 	const condition<character> *get_conditions() const
@@ -86,6 +102,7 @@ signals:
 private:
 	trait_type type;
 	metternich::icon *icon = nullptr;
+	std::map<character_attribute, int> attribute_bonuses;
 	std::unique_ptr<const condition<character>> conditions;
 	std::unique_ptr<const condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;

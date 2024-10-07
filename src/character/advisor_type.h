@@ -10,6 +10,7 @@ namespace metternich {
 class country;
 class technology;
 enum class advisor_category;
+enum class character_attribute;
 
 template <typename scope_type>
 class effect_list;
@@ -22,6 +23,7 @@ class advisor_type final : public named_data_entry, public data_type<advisor_typ
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::advisor_category category MEMBER category NOTIFY changed)
+	Q_PROPERTY(metternich::character_attribute attribute MEMBER attribute NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
 
@@ -39,6 +41,11 @@ public:
 	advisor_category get_category() const
 	{
 		return this->category;
+	}
+
+	character_attribute get_attribute() const
+	{
+		return this->attribute;
 	}
 
 	technology *get_required_technology() const
@@ -71,6 +78,7 @@ signals:
 
 private:
 	advisor_category category;
+	character_attribute attribute;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
 	std::unique_ptr<metternich::modifier<const country>> modifier;

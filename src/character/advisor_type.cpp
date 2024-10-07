@@ -3,6 +3,7 @@
 #include "character/advisor_type.h"
 
 #include "character/advisor_category.h"
+#include "character/character_attribute.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "ui/portrait.h"
@@ -11,7 +12,7 @@
 namespace metternich {
 
 advisor_type::advisor_type(const std::string &identifier)
-	: named_data_entry(identifier), category(advisor_category::none)
+	: named_data_entry(identifier), category(advisor_category::none), attribute(character_attribute::none)
 {
 }
 
@@ -41,6 +42,10 @@ void advisor_type::process_gsml_scope(const gsml_data &scope)
 void advisor_type::check() const
 {
 	assert_throw(this->get_category() != advisor_category::none);
+
+	if (this->get_attribute() == character_attribute::none) {
+		throw std::runtime_error(std::format("Advisor type \"{}\" has no attribute.", this->get_identifier()));
+	}
 }
 
 }

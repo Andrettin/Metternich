@@ -92,7 +92,7 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
-	static constexpr int max_skill = 10;
+	static constexpr int max_skill = 6;
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 

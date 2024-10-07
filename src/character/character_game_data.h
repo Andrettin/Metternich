@@ -19,6 +19,7 @@ class province;
 class scripted_character_modifier;
 class spell;
 class trait;
+enum class character_attribute;
 enum class trait_type;
 
 template <typename scope_type>
@@ -68,17 +69,39 @@ public:
 	void set_dead(const bool dead);
 	void die();
 
+	int get_attribute_value(const character_attribute attribute) const
+	{
+		const auto find_iterator = this->attribute_values.find(attribute);
+		if (find_iterator != this->attribute_values.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_attribute_value(const character_attribute attribute, const int change);
+
 	const std::vector<const trait *> &get_traits() const
 	{
 		return this->traits;
 	}
 
 	QVariantList get_traits_qvariant_list() const;
+
 	std::vector<const trait *> get_traits_of_type(const trait_type trait_type) const;
+	Q_INVOKABLE QVariantList get_traits_of_type(const QString &trait_type_str) const;
+
+	int get_trait_count_for_type(const trait_type trait_type) const
+	{
+		return static_cast<int>(this->get_traits_of_type(trait_type).size());
+	}
+
 	bool can_have_trait(const trait *trait) const;
 	bool has_trait(const trait *trait) const;
 	void add_trait(const trait *trait);
 	void remove_trait(const trait *trait);
+	void on_trait_gained(const trait *trait, const int multiplier);
+	[[nodiscard]] bool generate_trait(const trait_type trait_type, const character_attribute target_attribute = {}, const int target_attribute_bonus = 0);
 	void sort_traits();
 
 	const scripted_character_modifier_map<int> &get_scripted_modifiers() const
@@ -93,7 +116,6 @@ public:
 	void decrement_scripted_modifiers();
 
 	bool is_ruler() const;
-
 	std::string get_ruler_modifier_string(const metternich::country *country) const;
 	void apply_ruler_modifier(const metternich::country *country, const int multiplier) const;
 
@@ -102,6 +124,8 @@ public:
 		return QString::fromStdString(this->get_ruler_modifier_string(country));
 	}
 
+	bool is_advisor() const;
+	int get_advisor_skill() const;
 	Q_INVOKABLE QString get_advisor_effects_string(const metternich::country *country) const;
 	void apply_advisor_modifier(const metternich::country *country, const int multiplier) const;
 
@@ -143,13 +167,7 @@ public:
 		this->civilian_unit = civilian_unit;
 	}
 
-	void apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier = 1);
-
-	void remove_modifier(const modifier<const metternich::character> *modifier)
-	{
-		this->apply_modifier(modifier, -1);
-	}
-
+	void apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier);
 	void apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
 
 	const spell_set &get_spells() const
@@ -200,6 +218,7 @@ private:
 	const metternich::portrait *portrait = nullptr;
 	const metternich::country *country = nullptr;
 	bool dead = false;
+	std::map<character_attribute, int> attribute_values;
 	std::vector<const trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	metternich::military_unit *military_unit = nullptr;

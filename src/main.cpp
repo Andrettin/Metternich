@@ -2,6 +2,7 @@
 
 #include "character/advisor_category.h"
 #include "character/character.h"
+#include "character/character_attribute.h"
 #include "character/character_game_data.h"
 #include "character/character_role.h"
 #include "character/dynasty.h"
@@ -133,6 +134,7 @@ int main(int argc, char **argv)
 		QQmlApplicationEngine engine;
 
 		enum_converter<advisor_category>();
+		enum_converter<character_attribute>();
 		enum_converter<character_role>();
 		enum_converter<country_tier>();
 		enum_converter<country_type>();

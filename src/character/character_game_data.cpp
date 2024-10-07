@@ -4,6 +4,7 @@
 
 #include "character/advisor_type.h"
 #include "character/character.h"
+#include "character/character_attribute.h"
 #include "character/character_role.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
@@ -45,6 +46,38 @@ void character_game_data::on_setup_finished()
 {
 	for (const trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);
+	}
+
+	bool success = true;
+	while (this->get_trait_count_for_type(trait_type::background) < defines::get()->get_min_traits_for_type(trait_type::background) && success) {
+		if (this->character->get_role() == character_role::advisor && this->character->get_skill() > 0) {
+			const character_attribute advisor_attribute = this->character->get_advisor_type()->get_attribute();
+			const int skill_difference = this->character->get_skill() - this->get_attribute_value(advisor_attribute);
+			if (skill_difference > 0) {
+				success = this->generate_trait(trait_type::background, advisor_attribute, skill_difference);
+				continue;
+			}
+		} else {
+			success = this->generate_trait(trait_type::background);
+		}
+	}
+
+	success = true;
+	while (this->get_trait_count_for_type(trait_type::personality) < defines::get()->get_min_traits_for_type(trait_type::personality) && success) {
+		if (this->character->get_role() == character_role::advisor && this->character->get_skill() > 0) {
+			const character_attribute advisor_attribute = this->character->get_advisor_type()->get_attribute();
+			const int skill_difference = this->character->get_skill() - this->get_attribute_value(advisor_attribute);
+			if (skill_difference > 0) {
+				success = this->generate_trait(trait_type::personality, advisor_attribute, skill_difference);
+				continue;
+			}
+		}
+
+		success = this->generate_trait(trait_type::personality);
+	}
+
+	if (this->character->get_role() == character_role::advisor && this->get_advisor_skill() == 0 && this->character->get_advisor_modifier() == nullptr && this->character->get_advisor_effects() == nullptr && this->character->get_advisor_type()->get_modifier() == nullptr && this->character->get_advisor_type()->get_scaled_modifier() != nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" is an advisor with a scaled modifier, but has an initial advisor skill of zero.", this->character->get_identifier()));
 	}
 
 	this->check_portrait();
@@ -149,6 +182,36 @@ void character_game_data::die()
 	this->set_dead(true);
 }
 
+
+void character_game_data::change_attribute_value(const character_attribute attribute, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	if (this->is_ruler()) {
+		this->apply_ruler_modifier(this->get_country(), -1);
+	}
+	if (this->is_advisor() && attribute == this->character->get_advisor_type()->get_attribute()) {
+		this->apply_advisor_modifier(this->get_country(), -1);
+	}
+
+	const int new_value = (this->attribute_values[attribute] += change);
+
+	assert_throw(new_value >= 0);
+
+	if (new_value == 0) {
+		this->attribute_values.erase(attribute);
+	}
+
+	if (this->is_ruler()) {
+		this->apply_ruler_modifier(this->get_country(), 1);
+	}
+	if (this->is_advisor() && attribute == this->character->get_advisor_type()->get_attribute()) {
+		this->apply_advisor_modifier(this->get_country(), 1);
+	}
+}
+
 QVariantList character_game_data::get_traits_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_traits());
@@ -167,6 +230,12 @@ std::vector<const trait *> character_game_data::get_traits_of_type(const trait_t
 	}
 
 	return traits;
+}
+
+QVariantList character_game_data::get_traits_of_type(const QString &trait_type_str) const
+{
+	const trait_type type = enum_converter<trait_type>::to_enum(trait_type_str.toStdString());
+	return container::to_qvariant_list(this->get_traits_of_type(type));
 }
 
 bool character_game_data::can_have_trait(const trait *trait) const
@@ -199,13 +268,12 @@ void character_game_data::add_trait(const trait *trait)
 
 	this->traits.push_back(trait);
 
-	if (trait->get_modifier() != nullptr) {
-		this->apply_modifier(trait->get_modifier());
+	if (trait->get_ruler_modifier() != nullptr && this->is_ruler()) {
+		assert_throw(this->get_country() != nullptr);
+		trait->get_ruler_modifier()->apply(this->get_country());
 	}
 
-	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
-		this->apply_military_unit_modifier(this->get_military_unit(), 1);
-	}
+	this->on_trait_gained(trait, 1);
 
 	this->sort_traits();
 
@@ -219,24 +287,76 @@ void character_game_data::remove_trait(const trait *trait)
 	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the trait change can affect them
 	std::erase(this->traits, trait);
 
-	if (trait->get_modifier() != nullptr) {
-		this->remove_modifier(trait->get_modifier());
-	}
-
-	if (trait->get_ruler_modifier() != nullptr && this->is_ruler()) {
-		assert_throw(this->get_country() != nullptr);
-		trait->get_ruler_modifier()->remove(this->get_country());
-	}
-
-	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
-		trait->get_military_unit_modifier()->remove(this->get_military_unit());
-	}
+	this->on_trait_gained(trait, -1);
 
 	this->sort_traits();
 
 	if (game::get()->is_running()) {
 		emit traits_changed();
 	}
+}
+
+void character_game_data::on_trait_gained(const trait *trait, const int multiplier)
+{
+	if (trait->get_ruler_modifier() != nullptr && this->is_ruler()) {
+		assert_throw(this->get_country() != nullptr);
+		trait->get_ruler_modifier()->apply(this->get_country(), multiplier);
+	}
+
+	for (const auto &[attribute, bonus] : trait->get_attribute_bonuses()) {
+		this->change_attribute_value(attribute, bonus * multiplier);
+	}
+
+	if (trait->get_modifier() != nullptr) {
+		this->apply_modifier(trait->get_modifier(), multiplier);
+	}
+
+	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
+		this->apply_military_unit_modifier(this->get_military_unit(), multiplier);
+	}
+}
+
+bool character_game_data::generate_trait(const trait_type trait_type, const character_attribute target_attribute, const int target_attribute_bonus)
+{
+	std::vector<const trait *> potential_traits;
+	int best_attribute_bonus = 0;
+
+	for (const trait *trait : trait::get_all()) {
+		if (trait->get_type() != trait_type) {
+			continue;
+		}
+
+		if (this->has_trait(trait)) {
+			continue;
+		}
+
+		if (!this->can_have_trait(trait)) {
+			continue;
+		}
+
+		if (target_attribute != character_attribute::none && target_attribute_bonus != 0) {
+			const int trait_attribute_bonus = trait->get_attribute_bonus(target_attribute);
+			if (trait_attribute_bonus > target_attribute_bonus) {
+				continue;
+			}
+
+			if (trait_attribute_bonus < best_attribute_bonus) {
+				continue;
+			} else if (trait_attribute_bonus > best_attribute_bonus) {
+				potential_traits.clear();
+				best_attribute_bonus = trait_attribute_bonus;
+			}
+		}
+
+		potential_traits.push_back(trait);
+	}
+
+	if (potential_traits.empty()) {
+		return false;
+	}
+
+	this->add_trait(vector::get_random(potential_traits));
+	return true;
 }
 
 void character_game_data::sort_traits()
@@ -267,7 +387,7 @@ void character_game_data::add_scripted_modifier(const scripted_character_modifie
 	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
 
 	if (modifier->get_modifier() != nullptr) {
-		this->apply_modifier(modifier->get_modifier());
+		this->apply_modifier(modifier->get_modifier(), 1);
 	}
 
 	if (game::get()->is_running()) {
@@ -280,7 +400,7 @@ void character_game_data::remove_scripted_modifier(const scripted_character_modi
 	this->scripted_modifiers.erase(modifier);
 
 	if (modifier->get_modifier() != nullptr) {
-		this->remove_modifier(modifier->get_modifier());
+		this->apply_modifier(modifier->get_modifier(), -1);
 	}
 
 	if (game::get()->is_running()) {
@@ -309,6 +429,18 @@ bool character_game_data::is_ruler() const
 	return this->get_country() != nullptr && this->get_country()->get_game_data()->get_ruler() == this->character;
 }
 
+bool character_game_data::is_advisor() const
+{
+	return this->get_country() != nullptr && vector::contains(this->get_country()->get_game_data()->get_advisors(), this->character);
+}
+
+int character_game_data::get_advisor_skill() const
+{
+	assert_throw(this->character->get_role() == character_role::advisor);
+
+	return this->get_attribute_value(this->character->get_advisor_type()->get_attribute());
+}
+
 std::string character_game_data::get_ruler_modifier_string(const metternich::country *country) const
 {
 	assert_throw(this->character->get_role() == character_role::ruler);
@@ -334,6 +466,7 @@ std::string character_game_data::get_ruler_modifier_string(const metternich::cou
 void character_game_data::apply_ruler_modifier(const metternich::country *country, const int multiplier) const
 {
 	assert_throw(this->character->get_role() == character_role::ruler);
+	assert_throw(country != nullptr);
 
 	for (const trait *trait : this->get_traits()) {
 		if (trait->get_ruler_modifier() != nullptr) {
@@ -367,7 +500,7 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 	if (this->character->get_advisor_type()->get_modifier() != nullptr) {
 		str = this->character->get_advisor_type()->get_modifier()->get_string(country);
 	} else if (this->character->get_advisor_type()->get_scaled_modifier() != nullptr) {
-		str = this->character->get_advisor_type()->get_scaled_modifier()->get_string(country, this->character->get_skill());
+		str = this->character->get_advisor_type()->get_scaled_modifier()->get_string(country, this->get_advisor_skill());
 	}
 
 	if (this->character->get_advisor_type()->get_effects() != nullptr) {
@@ -395,6 +528,7 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 void character_game_data::apply_advisor_modifier(const metternich::country *country, const int multiplier) const
 {
 	assert_throw(this->character->get_role() == character_role::advisor);
+	assert_throw(country != nullptr);
 
 	if (this->character->get_advisor_effects() != nullptr) {
 		return;
@@ -405,7 +539,7 @@ void character_game_data::apply_advisor_modifier(const metternich::country *coun
 	} else if (this->character->get_advisor_type()->get_modifier() != nullptr) {
 		this->character->get_advisor_type()->get_modifier()->apply(country);
 	} else if (this->character->get_advisor_type()->get_scaled_modifier() != nullptr) {
-		this->character->get_advisor_type()->get_scaled_modifier()->apply(country, this->character->get_skill() * multiplier);
+		this->character->get_advisor_type()->get_scaled_modifier()->apply(country, this->get_advisor_skill() * multiplier);
 	}
 }
 
