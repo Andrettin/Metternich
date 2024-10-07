@@ -118,6 +118,7 @@ public:
 	bool is_ruler() const;
 	std::string get_ruler_modifier_string(const metternich::country *country) const;
 	void apply_ruler_modifier(const metternich::country *country, const int multiplier) const;
+	void apply_trait_ruler_modifier(const trait *trait, const metternich::country *country, const int multiplier) const;
 
 	Q_INVOKABLE QString get_ruler_modifier_qstring(const metternich::country *country) const
 	{

@@ -26,6 +26,7 @@ class trait final : public named_data_entry, public data_type<trait>
 
 	Q_PROPERTY(metternich::trait_type type MEMBER type NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(metternich::character_attribute attribute MEMBER attribute READ get_attribute NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
 
@@ -48,6 +49,11 @@ public:
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	character_attribute get_attribute() const
+	{
+		return this->attribute;
 	}
 
 	const std::map<character_attribute, int> &get_attribute_bonuses() const
@@ -87,7 +93,10 @@ public:
 		return this->ruler_modifier.get();
 	}
 
-	Q_INVOKABLE QString get_ruler_modifier_string(const metternich::country *country) const;
+	const metternich::modifier<const country> *get_scaled_ruler_modifier() const
+	{
+		return this->scaled_ruler_modifier.get();
+	}
 
 	const metternich::modifier<military_unit> *get_military_unit_modifier() const
 	{
@@ -102,11 +111,13 @@ signals:
 private:
 	trait_type type;
 	metternich::icon *icon = nullptr;
+	character_attribute attribute{};
 	std::map<character_attribute, int> attribute_bonuses;
 	std::unique_ptr<const condition<character>> conditions;
 	std::unique_ptr<const condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	std::unique_ptr<const metternich::modifier<const country>> ruler_modifier;
+	std::unique_ptr<const metternich::modifier<const country>> scaled_ruler_modifier;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
 };
 

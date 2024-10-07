@@ -268,11 +268,6 @@ void character_game_data::add_trait(const trait *trait)
 
 	this->traits.push_back(trait);
 
-	if (trait->get_ruler_modifier() != nullptr && this->is_ruler()) {
-		assert_throw(this->get_country() != nullptr);
-		trait->get_ruler_modifier()->apply(this->get_country());
-	}
-
 	this->on_trait_gained(trait, 1);
 
 	this->sort_traits();
@@ -298,9 +293,12 @@ void character_game_data::remove_trait(const trait *trait)
 
 void character_game_data::on_trait_gained(const trait *trait, const int multiplier)
 {
-	if (trait->get_ruler_modifier() != nullptr && this->is_ruler()) {
+	if (this->is_ruler()) {
 		assert_throw(this->get_country() != nullptr);
-		trait->get_ruler_modifier()->apply(this->get_country(), multiplier);
+
+		if (trait->get_ruler_modifier() != nullptr || trait->get_scaled_ruler_modifier() != nullptr) {
+			this->apply_trait_ruler_modifier(trait, this->get_country(), multiplier);
+		}
 	}
 
 	for (const auto &[attribute, bonus] : trait->get_attribute_bonuses()) {
@@ -448,7 +446,7 @@ std::string character_game_data::get_ruler_modifier_string(const metternich::cou
 	std::string str;
 
 	for (const trait *trait : this->get_traits()) {
-		if (trait->get_ruler_modifier() == nullptr) {
+		if (trait->get_ruler_modifier() == nullptr && trait->get_scaled_ruler_modifier() == nullptr) {
 			continue;
 		}
 
@@ -457,7 +455,12 @@ std::string character_game_data::get_ruler_modifier_string(const metternich::cou
 		}
 
 		str += string::highlight(trait->get_name());
-		str += "\n" + trait->get_ruler_modifier()->get_string(country, 1, 1);
+		if (trait->get_ruler_modifier() != nullptr) {
+			str += "\n" + trait->get_ruler_modifier()->get_string(country, 1, 1);
+		}
+		if (trait->get_scaled_ruler_modifier() != nullptr) {
+			str += "\n" + trait->get_scaled_ruler_modifier()->get_string(country, this->get_attribute_value(trait->get_attribute()), 1);
+		}
 	}
 
 	return str;
@@ -469,9 +472,18 @@ void character_game_data::apply_ruler_modifier(const metternich::country *countr
 	assert_throw(country != nullptr);
 
 	for (const trait *trait : this->get_traits()) {
-		if (trait->get_ruler_modifier() != nullptr) {
-			trait->get_ruler_modifier()->apply(country, multiplier);
-		}
+		this->apply_trait_ruler_modifier(trait, country, multiplier);
+	}
+}
+
+void character_game_data::apply_trait_ruler_modifier(const trait *trait, const metternich::country *country, const int multiplier) const
+{
+	if (trait->get_ruler_modifier() != nullptr) {
+		trait->get_ruler_modifier()->apply(country, multiplier);
+	}
+
+	if (trait->get_scaled_ruler_modifier() != nullptr) {
+		trait->get_scaled_ruler_modifier()->apply(country, this->get_attribute_value(trait->get_attribute()) * multiplier);
 	}
 }
 
