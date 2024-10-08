@@ -11,6 +11,7 @@ class character;
 class country;
 class icon;
 class military_unit;
+class province;
 enum class character_attribute;
 enum class trait_type;
 
@@ -98,6 +99,16 @@ public:
 		return this->scaled_ruler_modifier.get();
 	}
 
+	const metternich::modifier<const province> *get_governor_modifier() const
+	{
+		return this->governor_modifier.get();
+	}
+
+	const metternich::modifier<const province> *get_scaled_governor_modifier() const
+	{
+		return this->scaled_governor_modifier.get();
+	}
+
 	const metternich::modifier<military_unit> *get_military_unit_modifier() const
 	{
 		return this->military_unit_modifier.get();
@@ -118,6 +129,8 @@ private:
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	std::unique_ptr<const metternich::modifier<const country>> ruler_modifier;
 	std::unique_ptr<const metternich::modifier<const country>> scaled_ruler_modifier;
+	std::unique_ptr<const metternich::modifier<const province>> governor_modifier;
+	std::unique_ptr<const metternich::modifier<const province>> scaled_governor_modifier;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
 };
 

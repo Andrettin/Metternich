@@ -50,6 +50,14 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
 		this->scaled_ruler_modifier = std::move(modifier);
+	} else if (tag == "governor_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const province>>();
+		database::process_gsml_data(modifier, scope);
+		this->governor_modifier = std::move(modifier);
+	} else if (tag == "scaled_governor_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const province>>();
+		database::process_gsml_data(modifier, scope);
+		this->scaled_governor_modifier = std::move(modifier);
 	} else if (tag == "military_unit_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
 		database::process_gsml_data(modifier, scope);
