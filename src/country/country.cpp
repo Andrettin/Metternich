@@ -160,6 +160,10 @@ const QColor &country::get_color() const
 
 const std::string &country::get_name(const government_type *government_type, const country_tier tier) const
 {
+	if (government_type == nullptr) {
+		return this->get_name();
+	}
+
 	auto find_iterator = this->short_names.find(government_type);
 	if (find_iterator == this->short_names.end()) {
 		find_iterator = this->short_names.find(government_type->get_group());
