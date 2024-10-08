@@ -188,8 +188,6 @@ void character_game_data::change_attribute_value(const character_attribute attri
 
 	const int new_value = (this->attribute_values[attribute] += change);
 
-	assert_throw(new_value >= 0);
-
 	if (new_value == 0) {
 		this->attribute_values.erase(attribute);
 	}

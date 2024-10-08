@@ -73,7 +73,7 @@ public:
 	{
 		const auto find_iterator = this->attribute_values.find(attribute);
 		if (find_iterator != this->attribute_values.end()) {
-			return find_iterator->second;
+			return std::max(0, find_iterator->second);
 		}
 
 		return 0;
