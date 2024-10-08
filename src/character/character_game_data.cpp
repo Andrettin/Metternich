@@ -288,6 +288,13 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 			this->apply_trait_ruler_modifier(trait, this->get_country(), multiplier);
 		}
 	}
+	if (this->is_advisor()) {
+		assert_throw(this->get_country() != nullptr);
+
+		if (trait->get_advisor_modifier() != nullptr || trait->get_scaled_advisor_modifier() != nullptr) {
+			this->apply_trait_advisor_modifier(trait, this->get_country(), multiplier);
+		}
+	}
 
 	for (const auto &[attribute, bonus] : trait->get_attribute_bonuses()) {
 		this->change_attribute_value(attribute, bonus * multiplier);
@@ -511,6 +518,28 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 		str += this->character->get_advisor_type()->get_effects()->get_effects_string(country, read_only_context(country));
 	}
 
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_advisor_modifier() == nullptr && trait->get_scaled_advisor_modifier() == nullptr) {
+			continue;
+		}
+
+		if (trait->get_advisor_modifier() != nullptr) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += trait->get_advisor_modifier()->get_string(country);
+		}
+
+		if (trait->get_scaled_advisor_modifier() != nullptr) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += trait->get_scaled_advisor_modifier()->get_string(country, this->get_attribute_value(trait->get_attribute()));
+		}
+	}
+
 	if (this->get_country() != country) {
 		const metternich::character *replaced_advisor = country->get_game_data()->get_replaced_advisor_for(this->character);
 		if (replaced_advisor != nullptr) {
@@ -540,6 +569,22 @@ void character_game_data::apply_advisor_modifier(const metternich::country *coun
 		this->character->get_advisor_type()->get_modifier()->apply(country);
 	} else if (this->character->get_advisor_type()->get_scaled_modifier() != nullptr) {
 		this->character->get_advisor_type()->get_scaled_modifier()->apply(country, this->get_advisor_skill() * multiplier);
+	}
+
+	for (const trait *trait : this->get_traits()) {
+		this->apply_trait_advisor_modifier(trait, country, multiplier);
+	}
+}
+
+
+void character_game_data::apply_trait_advisor_modifier(const trait *trait, const metternich::country *country, const int multiplier) const
+{
+	if (trait->get_advisor_modifier() != nullptr) {
+		trait->get_advisor_modifier()->apply(country, multiplier);
+	}
+
+	if (trait->get_scaled_advisor_modifier() != nullptr) {
+		trait->get_scaled_advisor_modifier()->apply(country, this->get_attribute_value(trait->get_attribute()) * multiplier);
 	}
 }
 
