@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "character/advisor_type.h"
+#include "character/character_type.h"
 
 #include "character/advisor_category.h"
 #include "character/character_attribute.h"
@@ -11,16 +11,16 @@
 
 namespace metternich {
 
-advisor_type::advisor_type(const std::string &identifier)
-	: named_data_entry(identifier), category(advisor_category::none), attribute(character_attribute::none)
+character_type::character_type(const std::string &identifier)
+	: named_data_entry(identifier), advisor_category(advisor_category::none), attribute(character_attribute::none)
 {
 }
 
-advisor_type::~advisor_type()
+character_type::~character_type()
 {
 }
 
-void advisor_type::process_gsml_scope(const gsml_data &scope)
+void character_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
@@ -39,12 +39,12 @@ void advisor_type::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-void advisor_type::check() const
+void character_type::check() const
 {
-	assert_throw(this->get_category() != advisor_category::none);
+	assert_throw(this->get_advisor_category() != advisor_category::none);
 
 	if (this->get_attribute() == character_attribute::none) {
-		throw std::runtime_error(std::format("Advisor type \"{}\" has no attribute.", this->get_identifier()));
+		throw std::runtime_error(std::format("Character type \"{}\" has no attribute.", this->get_identifier()));
 	}
 }
 

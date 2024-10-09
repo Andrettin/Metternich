@@ -5,7 +5,6 @@
 namespace metternich {
 	using namespace archimedes;
 
-	class advisor_type;
 	class building_class;
 	class building_slot_type;
 	class building_type;

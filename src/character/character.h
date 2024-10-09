@@ -5,8 +5,8 @@
 #include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
 
-Q_MOC_INCLUDE("character/advisor_type.h")
 Q_MOC_INCLUDE("character/character_game_data.h")
+Q_MOC_INCLUDE("character/character_type.h")
 Q_MOC_INCLUDE("character/dynasty.h")
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("country/religion.h")
@@ -24,9 +24,9 @@ namespace archimedes {
 
 namespace metternich {
 
-class advisor_type;
 class character_game_data;
 class character_history;
+class character_type;
 class civilian_unit_type;
 class country;
 class culture;
@@ -61,7 +61,7 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(QString full_name READ get_full_name_qstring NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_role role MEMBER role READ get_role NOTIFY changed)
-	Q_PROPERTY(metternich::advisor_type* advisor_type MEMBER advisor_type NOTIFY changed)
+	Q_PROPERTY(const metternich::character_type* character_type MEMBER character_type READ get_character_type NOTIFY changed)
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(const metternich::civilian_unit_type* civilian_unit_type MEMBER civilian_unit_type NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
@@ -181,9 +181,9 @@ public:
 		return this->role;
 	}
 
-	const metternich::advisor_type *get_advisor_type() const
+	const metternich::character_type *get_character_type() const
 	{
-		return this->advisor_type;
+		return this->character_type;
 	}
 
 	metternich::military_unit_category get_military_unit_category() const
@@ -330,7 +330,7 @@ private:
 	std::string epithet;
 	std::string description;
 	metternich::character_role role;
-	metternich::advisor_type *advisor_type = nullptr;
+	const metternich::character_type *character_type = nullptr;
 	metternich::military_unit_category military_unit_category;
 	const metternich::civilian_unit_type *civilian_unit_type = nullptr;
 	metternich::culture *culture = nullptr;

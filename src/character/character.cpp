@@ -2,11 +2,11 @@
 
 #include "character/character.h"
 
-#include "character/advisor_type.h"
 #include "character/character_attribute.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
 #include "character/character_role.h"
+#include "character/character_type.h"
 #include "character/dynasty.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
@@ -190,12 +190,12 @@ void character::initialize()
 		}
 	}
 
-	if (this->get_advisor_type() != nullptr) {
+	if (this->get_character_type() != nullptr) {
 		if (this->get_required_technology() == nullptr) {
-			this->required_technology = this->get_advisor_type()->get_required_technology();
+			this->required_technology = this->get_character_type()->get_required_technology();
 
 			if (this->get_obsolescence_technology() == nullptr) {
-				this->obsolescence_technology = this->get_advisor_type()->get_obsolescence_technology();
+				this->obsolescence_technology = this->get_character_type()->get_obsolescence_technology();
 			}
 		}
 	}
@@ -236,11 +236,6 @@ void character::check() const
 			}
 			break;
 		}
-		case character_role::advisor:
-			if (this->get_advisor_type() == nullptr) {
-				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but has no advisor type.", this->get_identifier()));
-			}
-			break;
 		case character_role::leader:
 			if (this->get_military_unit_category() == military_unit_category::none) {
 				throw std::runtime_error(std::format("Character \"{}\" is a leader, but has no military unit category.", this->get_identifier()));
@@ -255,15 +250,17 @@ void character::check() const
 			break;
 	}
 
+	if (this->get_role() == character_role::ruler || this->get_role() == character_role::advisor) {
+		if (this->get_character_type() == nullptr) {
+			throw std::runtime_error(std::format("Character \"{}\" is a ruler or advisor, but has no character type.", this->get_identifier()));
+		}
+	}
+
 	if (this->get_role() != character_role::ruler && !this->get_rulable_countries().empty()) {
 		throw std::runtime_error(std::format("Character \"{}\" has rulable countries, but is not a ruler.", this->get_identifier()));
 	}
 
 	if (this->get_role() != character_role::advisor) {
-		if (this->get_advisor_type() != nullptr) {
-			throw std::runtime_error(std::format("Character \"{}\" has an advisor type, but is not an advisor.", this->get_identifier()));
-		}
-
 		if (this->advisor_modifier != nullptr) {
 			throw std::runtime_error(std::format("Character \"{}\" has an advisor modifier, but is not an advisor.", this->get_identifier()));
 		}
@@ -370,18 +367,8 @@ std::string character::get_full_name() const
 
 character_attribute character::get_skill_attribute() const
 {
-	switch (this->get_role()) {
-		case character_role::ruler:
-			for (const trait *trait : this->get_traits()) {
-				if (trait->get_type() == trait_type::ruler && trait->get_attribute() != character_attribute::none) {
-					return trait->get_attribute();
-				}
-			}
-			break;
-		case character_role::advisor:
-			return this->get_advisor_type()->get_attribute();
-		default:
-			break;
+	if (this->get_character_type() != nullptr) {
+		return this->get_character_type()->get_attribute();
 	}
 
 	return character_attribute::none;

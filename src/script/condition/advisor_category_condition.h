@@ -1,8 +1,8 @@
 #pragma once
 
 #include "character/advisor_category.h"
-#include "character/advisor_type.h"
 #include "character/character.h"
+#include "character/character_type.h"
 #include "script/condition/condition.h"
 
 namespace metternich {
@@ -26,11 +26,11 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		if (scope->get_advisor_type() == nullptr) {
+		if (scope->get_character_type() == nullptr) {
 			return false;
 		}
 
-		return scope->get_advisor_type()->get_category() == this->advisor_category;
+		return scope->get_character_type()->get_advisor_category() == this->advisor_category;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

@@ -3,10 +3,10 @@
 #include "country/country_game_data.h"
 
 #include "character/advisor_category.h"
-#include "character/advisor_type.h"
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/character_role.h"
+#include "character/character_type.h"
 #include "character/trait.h"
 #include "country/consulate.h"
 #include "country/country.h"
@@ -4247,9 +4247,9 @@ void country_game_data::check_advisors()
 				if (this->get_next_advisor()->get_advisor_effects() != nullptr) {
 					context ctx(this->country);
 					this->get_next_advisor()->get_advisor_effects()->do_effects(country, ctx);
-				} else if (this->get_next_advisor()->get_advisor_type()->get_effects() != nullptr) {
+				} else if (this->get_next_advisor()->get_character_type()->get_effects() != nullptr) {
 					context ctx(this->country);
-					this->get_next_advisor()->get_advisor_type()->get_effects()->do_effects(country, ctx);
+					this->get_next_advisor()->get_character_type()->get_effects()->do_effects(country, ctx);
 				}
 
 				emit advisor_recruited(this->get_next_advisor());
@@ -4322,7 +4322,7 @@ void country_game_data::choose_next_advisor()
 			weight += 4;
 		}
 
-		std::vector<const metternich::character *> &category_advisors = potential_advisors_per_category[character->get_advisor_type()->get_category()];
+		std::vector<const metternich::character *> &category_advisors = potential_advisors_per_category[character->get_character_type()->get_advisor_category()];
 
 		for (int i = 0; i < weight; ++i) {
 			category_advisors.push_back(character);
@@ -4347,7 +4347,7 @@ void country_game_data::choose_next_advisor()
 		for (const auto &[category, advisor] : potential_advisor_map) {
 			//consider advisors with special modifiers or effects to have maximum skill, for the purposes of preferring to select them
 			int advisor_skill = advisor->get_game_data()->get_advisor_skill();
-			if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr || (advisor->get_advisor_type()->get_modifier() != nullptr && advisor->get_advisor_type()->get_scaled_modifier() == nullptr)) {
+			if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr || (advisor->get_character_type()->get_modifier() != nullptr && advisor->get_character_type()->get_scaled_modifier() == nullptr)) {
 				advisor_skill = character::max_skill;
 			}
 
@@ -4429,11 +4429,11 @@ bool country_game_data::has_incompatible_advisor_to(const character *advisor) co
 			continue;
 		}
 
-		if (other_advisor->get_advisor_type() != advisor->get_advisor_type()) {
+		if (other_advisor->get_character_type() != advisor->get_character_type()) {
 			continue;
 		}
 
-		if (advisor->get_advisor_type()->get_scaled_modifier() != nullptr && advisor->get_game_data()->get_advisor_skill() > other_advisor->get_game_data()->get_advisor_skill()) {
+		if (advisor->get_character_type()->get_scaled_modifier() != nullptr && advisor->get_game_data()->get_advisor_skill() > other_advisor->get_game_data()->get_advisor_skill()) {
 			continue;
 		}
 
@@ -4455,7 +4455,7 @@ const character *country_game_data::get_replaced_advisor_for(const character *ad
 			continue;
 		}
 
-		if (other_advisor->get_advisor_type() != advisor->get_advisor_type()) {
+		if (other_advisor->get_character_type() != advisor->get_character_type()) {
 			continue;
 		}
 
