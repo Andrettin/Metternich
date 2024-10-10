@@ -4348,7 +4348,7 @@ void country_game_data::choose_next_advisor()
 			//consider advisors with special modifiers or effects to have maximum skill, for the purposes of preferring to select them
 			int advisor_skill = advisor->get_game_data()->get_primary_attribute_value();
 			if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr || (advisor->get_character_type()->get_advisor_modifier() != nullptr && advisor->get_character_type()->get_scaled_advisor_modifier() == nullptr)) {
-				advisor_skill = character::max_skill;
+				advisor_skill = defines::get()->get_max_character_skill();;
 			}
 
 			int desire = advisor_skill * 100;

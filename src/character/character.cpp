@@ -383,6 +383,18 @@ character_attribute character::get_skill_attribute() const
 	return character_attribute::none;
 }
 
+centesimal_int character::get_skill_multiplier() const
+{
+	assert_throw(defines::get()->get_max_character_skill() > 0);
+	return centesimal_int(this->get_skill()) / defines::get()->get_max_character_skill();
+}
+
+void character::set_skill_multiplier(const centesimal_int &skill_multiplier)
+{
+	assert_throw(defines::get()->get_max_character_skill() > 0);
+	this->skill = (skill_multiplier * defines::get()->get_max_character_skill()).to_int();
+}
+
 void character::add_rulable_country(country *country)
 {
 	this->rulable_countries.push_back(country);

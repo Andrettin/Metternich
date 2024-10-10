@@ -93,8 +93,6 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
-	static constexpr int max_skill = 6;
-
 	static bool skill_compare(const character *lhs, const character *rhs);
 
 	explicit character(const std::string &identifier);
@@ -263,15 +261,8 @@ public:
 		return this->skill;
 	}
 
-	centesimal_int get_skill_multiplier() const
-	{
-		return centesimal_int(this->get_skill()) / character::max_skill;
-	}
-
-	void set_skill_multiplier(const centesimal_int &skill_multiplier)
-	{
-		this->skill = (skill_multiplier * character::max_skill).to_int();
-	}
+	centesimal_int get_skill_multiplier() const;
+	void set_skill_multiplier(const centesimal_int &skill_multiplier);
 
 	const std::vector<const trait *> &get_traits() const
 	{
