@@ -2,6 +2,7 @@
 
 #include "character/advisor_category.h"
 #include "character/character.h"
+#include "character/character_role.h"
 #include "character/character_type.h"
 #include "script/condition/condition.h"
 
@@ -27,6 +28,10 @@ public:
 		Q_UNUSED(ctx);
 
 		if (scope->get_character_type() == nullptr) {
+			return false;
+		}
+
+		if (scope->get_role() != character_role::advisor) {
 			return false;
 		}
 
