@@ -80,6 +80,7 @@ public:
 	}
 
 	void change_attribute_value(const character_attribute attribute, const int change);
+	int get_primary_attribute_value() const;
 
 	const std::vector<const trait *> &get_traits() const
 	{
@@ -126,7 +127,6 @@ public:
 	void apply_ruler_modifier(const metternich::country *country, const int multiplier) const;
 	void apply_trait_ruler_modifier(const trait *trait, const metternich::country *country, const int multiplier) const;
 	bool is_advisor() const;
-	int get_advisor_skill() const;
 	Q_INVOKABLE QString get_advisor_effects_string(const metternich::country *country) const;
 	void apply_advisor_modifier(const metternich::country *country, const int multiplier) const;
 	void apply_trait_advisor_modifier(const trait *trait, const metternich::country *country, const int multiplier) const;

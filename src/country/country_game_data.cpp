@@ -4247,9 +4247,9 @@ void country_game_data::check_advisors()
 				if (this->get_next_advisor()->get_advisor_effects() != nullptr) {
 					context ctx(this->country);
 					this->get_next_advisor()->get_advisor_effects()->do_effects(country, ctx);
-				} else if (this->get_next_advisor()->get_character_type()->get_effects() != nullptr) {
+				} else if (this->get_next_advisor()->get_character_type()->get_advisor_effects() != nullptr) {
 					context ctx(this->country);
-					this->get_next_advisor()->get_character_type()->get_effects()->do_effects(country, ctx);
+					this->get_next_advisor()->get_character_type()->get_advisor_effects()->do_effects(country, ctx);
 				}
 
 				emit advisor_recruited(this->get_next_advisor());
@@ -4346,8 +4346,8 @@ void country_game_data::choose_next_advisor()
 		int best_desire = 0;
 		for (const auto &[category, advisor] : potential_advisor_map) {
 			//consider advisors with special modifiers or effects to have maximum skill, for the purposes of preferring to select them
-			int advisor_skill = advisor->get_game_data()->get_advisor_skill();
-			if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr || (advisor->get_character_type()->get_modifier() != nullptr && advisor->get_character_type()->get_scaled_modifier() == nullptr)) {
+			int advisor_skill = advisor->get_game_data()->get_primary_attribute_value();
+			if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr || (advisor->get_character_type()->get_advisor_modifier() != nullptr && advisor->get_character_type()->get_scaled_advisor_modifier() == nullptr)) {
 				advisor_skill = character::max_skill;
 			}
 
@@ -4433,7 +4433,7 @@ bool country_game_data::has_incompatible_advisor_to(const character *advisor) co
 			continue;
 		}
 
-		if (advisor->get_character_type()->get_scaled_modifier() != nullptr && advisor->get_game_data()->get_advisor_skill() > other_advisor->get_game_data()->get_advisor_skill()) {
+		if (advisor->get_character_type()->get_scaled_advisor_modifier() != nullptr && advisor->get_game_data()->get_primary_attribute_value() > other_advisor->get_game_data()->get_primary_attribute_value()) {
 			continue;
 		}
 

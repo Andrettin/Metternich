@@ -215,10 +215,20 @@ void character::initialize()
 
 void character::check() const
 {
+	if (this->get_role() == character_role::ruler || this->get_role() == character_role::advisor) {
+		if (this->get_character_type() == nullptr) {
+			throw std::runtime_error(std::format("Character \"{}\" is a ruler or advisor, but has no character type.", this->get_identifier()));
+		}
+	}
+
 	switch (this->get_role()) {
 		case character_role::ruler: {
 			if (this->get_rulable_countries().empty()) {
 				throw std::runtime_error(std::format("Character \"{}\" is a ruler, but has no rulable countries.", this->get_identifier()));
+			}
+
+			if (this->get_character_type()->get_ruler_modifier() == nullptr && this->get_character_type()->get_scaled_ruler_modifier() == nullptr) {
+				throw std::runtime_error(std::format("Character \"{}\" is a ruler, but its character type (\"{}\") has no ruler modifier.", this->get_identifier(), this->get_character_type()->get_identifier()));
 			}
 
 			std::vector<const trait *> ruler_traits = this->get_traits();
@@ -236,6 +246,11 @@ void character::check() const
 			}
 			break;
 		}
+		case character_role::advisor:
+			if (this->get_character_type()->get_advisor_modifier() == nullptr && this->get_character_type()->get_scaled_advisor_modifier() == nullptr && this->get_character_type()->get_advisor_effects() == nullptr) {
+				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but its character type (\"{}\") has no advisor modifier or effects.", this->get_identifier(), this->get_character_type()->get_identifier()));
+			}
+			break;
 		case character_role::leader:
 			if (this->get_military_unit_category() == military_unit_category::none) {
 				throw std::runtime_error(std::format("Character \"{}\" is a leader, but has no military unit category.", this->get_identifier()));
@@ -248,12 +263,6 @@ void character::check() const
 			break;
 		default:
 			break;
-	}
-
-	if (this->get_role() == character_role::ruler || this->get_role() == character_role::advisor) {
-		if (this->get_character_type() == nullptr) {
-			throw std::runtime_error(std::format("Character \"{}\" is a ruler or advisor, but has no character type.", this->get_identifier()));
-		}
 	}
 
 	if (this->get_role() != character_role::ruler && !this->get_rulable_countries().empty()) {

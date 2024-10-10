@@ -58,19 +58,29 @@ public:
 		return this->obsolescence_technology;
 	}
 
-	const metternich::modifier<const country> *get_modifier() const
+	const modifier<const country> *get_ruler_modifier() const
 	{
-		return this->modifier.get();
+		return this->ruler_modifier.get();
 	}
 
-	const metternich::modifier<const country> *get_scaled_modifier() const
+	const modifier<const country> *get_scaled_ruler_modifier() const
 	{
-		return this->scaled_modifier.get();
+		return this->scaled_ruler_modifier.get();
 	}
 
-	const effect_list<const country> *get_effects() const
+	const modifier<const country> *get_advisor_modifier() const
 	{
-		return this->effects.get();
+		return this->advisor_modifier.get();
+	}
+
+	const modifier<const country> *get_scaled_advisor_modifier() const
+	{
+		return this->scaled_advisor_modifier.get();
+	}
+
+	const effect_list<const country> *get_advisor_effects() const
+	{
+		return this->advisor_effects.get();
 	}
 
 signals:
@@ -81,9 +91,11 @@ private:
 	character_attribute attribute;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
-	std::unique_ptr<metternich::modifier<const country>> modifier;
-	std::unique_ptr<metternich::modifier<const country>> scaled_modifier;
-	std::unique_ptr<const effect_list<const country>> effects;
+	std::unique_ptr<modifier<const country>> ruler_modifier;
+	std::unique_ptr<modifier<const country>> scaled_ruler_modifier;
+	std::unique_ptr<modifier<const country>> advisor_modifier;
+	std::unique_ptr<modifier<const country>> scaled_advisor_modifier;
+	std::unique_ptr<const effect_list<const country>> advisor_effects;
 };
 
 }
