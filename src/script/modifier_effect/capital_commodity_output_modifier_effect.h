@@ -23,12 +23,17 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_capital_commodity_output_modifier(this->commodity, (this->value * multiplier).to_int());
+		scope->get_game_data()->change_capital_commodity_output_modifier(this->commodity, this->value * multiplier);
 	}
 
 	virtual std::string get_base_string() const override
 	{
 		return std::format("Capital {} Output", this->commodity->get_name());
+	}
+
+	virtual bool are_decimals_relevant() const override
+	{
+		return true;
 	}
 
 	virtual bool is_percent() const override

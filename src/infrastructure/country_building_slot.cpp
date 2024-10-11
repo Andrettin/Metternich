@@ -282,13 +282,13 @@ centesimal_int country_building_slot::get_production_type_output(const productio
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
 
-	int output_modifier = country_game_data->get_output_modifier() + country_game_data->get_commodity_output_modifier(production_type->get_output_commodity());
+	centesimal_int output_modifier = country_game_data->get_output_modifier() + country_game_data->get_commodity_output_modifier(production_type->get_output_commodity());
 	if (production_type->is_industrial()) {
 		output_modifier += country_game_data->get_industrial_output_modifier();
 	}
 
 	if (output_modifier != 0) {
-		output *= 100 + output_modifier;
+		output *= centesimal_int(100) + output_modifier;
 		output /= 100;
 
 		output = centesimal_int::max(output, centesimal_int(0));

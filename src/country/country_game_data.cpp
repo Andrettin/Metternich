@@ -5089,7 +5089,7 @@ void country_game_data::set_transporter_type_stat_modifier(const transporter_typ
 	}
 }
 
-void country_game_data::set_output_modifier(const int value)
+void country_game_data::set_output_modifier(const centesimal_int &value)
 {
 	if (value == this->get_output_modifier()) {
 		return;
@@ -5164,7 +5164,7 @@ void country_game_data::set_industrial_output_modifier(const int value)
 	}
 }
 
-void country_game_data::set_commodity_output_modifier(const commodity *commodity, const int value)
+void country_game_data::set_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
 {
 	if (value == this->get_commodity_output_modifier(commodity)) {
 		return;
@@ -5199,7 +5199,7 @@ void country_game_data::set_commodity_output_modifier(const commodity *commodity
 	this->calculate_site_commodity_output(commodity);
 }
 
-void country_game_data::set_capital_commodity_output_modifier(const commodity *commodity, const int value)
+void country_game_data::set_capital_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
 {
 	if (value == this->get_capital_commodity_output_modifier(commodity)) {
 		return;

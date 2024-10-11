@@ -239,12 +239,12 @@ public:
 
 	void change_local_commodity_output(const commodity *commodity, const centesimal_int &change);
 
-	int get_output_modifier() const
+	const centesimal_int &get_output_modifier() const
 	{
 		return this->output_modifier;
 	}
 
-	void set_output_modifier(const int value)
+	void set_output_modifier(const centesimal_int &value)
 	{
 		if (value == this->get_output_modifier()) {
 			return;
@@ -255,17 +255,17 @@ public:
 		this->calculate_site_commodity_outputs();
 	}
 
-	void change_output_modifier(const int value)
+	void change_output_modifier(const centesimal_int &change)
 	{
-		this->set_output_modifier(this->get_output_modifier() + value);
+		this->set_output_modifier(this->get_output_modifier() + change);
 	}
 
-	const commodity_map<int> &get_commodity_output_modifiers() const
+	const commodity_map<centesimal_int> &get_commodity_output_modifiers() const
 	{
 		return this->commodity_output_modifiers;
 	}
 
-	int get_commodity_output_modifier(const commodity *commodity) const
+	const centesimal_int &get_commodity_output_modifier(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_output_modifiers.find(commodity);
 
@@ -273,10 +273,11 @@ public:
 			return find_iterator->second;
 		}
 
-		return 0;
+		static constexpr centesimal_int zero;
+		return zero;
 	}
 
-	void set_commodity_output_modifier(const commodity *commodity, const int value)
+	void set_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
 	{
 		if (value == this->get_commodity_output_modifier(commodity)) {
 			return;
@@ -291,9 +292,9 @@ public:
 		this->calculate_site_commodity_output(commodity);
 	}
 
-	void change_commodity_output_modifier(const commodity *commodity, const int value)
+	void change_commodity_output_modifier(const commodity *commodity, const centesimal_int &change)
 	{
-		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + value);
+		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + change);
 	}
 
 	const resource_map<commodity_map<int>> &get_improved_resource_commodity_bonuses() const
@@ -399,8 +400,8 @@ private:
 	std::map<military_unit_category, int> military_unit_category_counts;
 	std::vector<army *> entering_armies; //armies entering this province
 	commodity_map<centesimal_int> local_commodity_outputs;
-	int output_modifier = 0;
-	commodity_map<int> commodity_output_modifiers;
+	centesimal_int output_modifier;
+	commodity_map<centesimal_int> commodity_output_modifiers;
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 };

@@ -1234,8 +1234,8 @@ void site_game_data::calculate_commodity_outputs()
 		outputs[commodity];
 	}
 
-	int output_modifier = this->get_output_modifier();
-	commodity_map<int> commodity_output_modifiers = this->get_commodity_output_modifiers();
+	centesimal_int output_modifier = this->get_output_modifier();
+	commodity_map<centesimal_int> commodity_output_modifiers = this->get_commodity_output_modifiers();
 
 	if (this->get_owner() != nullptr) {
 		for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_commodity_bonuses_per_population()) {
@@ -1286,10 +1286,10 @@ void site_game_data::calculate_commodity_outputs()
 	}
 
 	for (auto &[commodity, output] : outputs) {
-		const int modifier = output_modifier + commodity_output_modifiers[commodity];
+		const centesimal_int modifier = output_modifier + commodity_output_modifiers[commodity];
 
 		if (modifier != 0) {
-			output *= 100 + modifier;
+			output *= centesimal_int(100) + modifier;
 			output /= 100;
 		}
 
