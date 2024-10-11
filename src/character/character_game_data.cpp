@@ -50,7 +50,7 @@ void character_game_data::on_setup_finished()
 
 	bool success = true;
 	while (this->get_trait_count_for_type(trait_type::background) < defines::get()->get_min_traits_for_type(trait_type::background) && success) {
-		const character_attribute target_attribute = this->character->get_skill_attribute();
+		const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_skill_attribute() : character_attribute::none;
 		const int target_attribute_value = this->character->get_skill();
 		const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
 
@@ -59,7 +59,7 @@ void character_game_data::on_setup_finished()
 
 	success = true;
 	while (this->get_trait_count_for_type(trait_type::personality) < defines::get()->get_min_traits_for_type(trait_type::personality) && success) {
-		const character_attribute target_attribute = this->character->get_skill_attribute();
+		const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_skill_attribute() : character_attribute::none;
 		const int target_attribute_value = this->character->get_skill();
 		const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
 

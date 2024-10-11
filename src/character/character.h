@@ -338,7 +338,7 @@ private:
 	QDate birth_date;
 	QDate death_date;
 	calendar *vital_date_calendar = nullptr; //the calendar for the birth, death, start and end dates
-	int skill = 1;
+	int skill = 0;
 	std::vector<const country *> rulable_countries;
 	std::vector<const trait *> traits;
 	technology *required_technology = nullptr;
