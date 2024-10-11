@@ -1590,66 +1590,6 @@ public:
 		this->deployment_limit += change;
 	}
 
-	int get_land_damage_modifier() const
-	{
-		return this->land_damage_modifier;
-	}
-
-	void change_land_damage_modifier(const int change)
-	{
-		this->land_damage_modifier += change;
-	}
-
-	int get_land_recovery_modifier() const
-	{
-		return this->land_recovery_modifier;
-	}
-
-	void change_land_recovery_modifier(const int change)
-	{
-		this->land_recovery_modifier += change;
-	}
-
-	int get_land_morale_recovery_modifier() const
-	{
-		return this->land_morale_recovery_modifier;
-	}
-
-	void change_land_morale_recovery_modifier(const int change)
-	{
-		this->land_morale_recovery_modifier += change;
-	}
-
-	int get_land_discipline_modifier() const
-	{
-		return this->land_discipline_modifier;
-	}
-
-	void change_land_discipline_modifier(const int change)
-	{
-		this->land_discipline_modifier += change;
-	}
-
-	int get_naval_discipline_modifier() const
-	{
-		return this->naval_discipline_modifier;
-	}
-
-	void change_naval_discipline_modifier(const int change)
-	{
-		this->naval_discipline_modifier += change;
-	}
-
-	int get_air_discipline_modifier() const
-	{
-		return this->air_discipline_modifier;
-	}
-
-	void change_air_discipline_modifier(const int change)
-	{
-		this->air_discipline_modifier += change;
-	}
-
 	int get_entrenchment_bonus_modifier() const
 	{
 		return this->entrenchment_bonus_modifier;
@@ -2662,12 +2602,6 @@ private:
 	std::vector<qunique_ptr<army>> armies;
 	std::vector<qunique_ptr<transporter>> transporters;
 	int deployment_limit = country_game_data::base_deployment_limit;
-	int land_damage_modifier = 0;
-	int land_recovery_modifier = 0; //the speed at which land units recover strength
-	int land_morale_recovery_modifier = 0;
-	int land_discipline_modifier = 0;
-	int naval_discipline_modifier = 0;
-	int air_discipline_modifier = 0;
 	int entrenchment_bonus_modifier = 0;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> military_unit_type_stat_modifiers;
 	transporter_type_map<std::map<transporter_stat, centesimal_int>> transporter_type_stat_modifiers;

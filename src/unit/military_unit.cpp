@@ -109,13 +109,13 @@ void military_unit::do_turn()
 		assert_throw(missing_hit_points >= 0);
 		if (missing_hit_points > 0) {
 			//recover unit HP if it is not moving
-			this->change_hit_points(std::min(military_unit::hit_point_recovery_per_turn, missing_hit_points));
+			this->change_hit_points(std::min(this->get_hit_point_recovery_per_turn(), missing_hit_points));
 		}
 
 		const int missing_morale = this->get_hit_points() - this->get_morale();
 		assert_throw(missing_morale >= 0);
 		if (missing_morale > 0) {
-			this->change_morale(std::min(military_unit::morale_recovery_per_turn, missing_morale));
+			this->change_morale(std::min(this->get_morale_recovery_per_turn(), missing_morale));
 		}
 	}
 }
@@ -353,27 +353,19 @@ int military_unit::get_discipline() const
 {
 	int discipline = this->get_stat(military_unit_stat::discipline).to_int();
 
-	if (this->get_country() != nullptr) {
-		const country_game_data *country_game_data = this->get_country()->get_game_data();
-
-		switch (this->get_domain()) {
-			case military_unit_domain::land:
-				discipline += country_game_data->get_land_discipline_modifier();
-				break;
-			case military_unit_domain::water:
-				discipline += country_game_data->get_naval_discipline_modifier();
-				break;
-			case military_unit_domain::air:
-				discipline += country_game_data->get_air_discipline_modifier();
-				break;
-			default:
-				break;
-		}
-	}
-
 	//FIXME: add discipline from commander
 
 	return discipline;
+}
+
+int military_unit::get_hit_point_recovery_per_turn() const
+{
+	return military_unit::hit_point_recovery_per_turn * (100 + this->get_stat(military_unit_stat::recovery_modifier).to_int()) / 100;
+}
+
+int military_unit::get_morale_recovery_per_turn() const
+{
+	return military_unit::morale_recovery_per_turn * (100 + this->get_stat(military_unit_stat::morale_recovery_modifier).to_int()) / 100;
 }
 
 QVariantList military_unit::get_promotions_qvariant_list() const
@@ -597,7 +589,7 @@ void military_unit::attack(military_unit *target, const bool ranged, const bool 
 	}
 	if (target_entrenched) {
 		int entrenchment_bonus = target->get_type()->get_entrenchment_bonus();
-		entrenchment_bonus *= 100 + target->get_stat(military_unit_stat::entrenchment_bonus_modifier).to_int();
+		entrenchment_bonus *= 100 + target->get_stat(military_unit_stat::entrenchment_bonus_modifier).to_int() + (target->get_country() ? target->get_country()->get_game_data()->get_entrenchment_bonus_modifier() : 0);
 		entrenchment_bonus /= 100;
 		defense += entrenchment_bonus;
 	}

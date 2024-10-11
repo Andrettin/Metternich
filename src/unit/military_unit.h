@@ -203,6 +203,8 @@ public:
 	}
 
 	int get_discipline() const;
+	int get_hit_point_recovery_per_turn() const;
+	int get_morale_recovery_per_turn() const;
 
 	const centesimal_int &get_stat(const military_unit_stat stat) const
 	{
