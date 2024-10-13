@@ -274,7 +274,7 @@ public:
 			return find_iterator->second;
 		}
 
-		return 0;
+		return std::numeric_limits<int>::max();
 	}
 
 	int get_max_character_skill() const
