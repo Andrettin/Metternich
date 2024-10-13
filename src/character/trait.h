@@ -27,6 +27,7 @@ class trait final : public named_data_entry, public data_type<trait>
 
 	Q_PROPERTY(metternich::trait_type type MEMBER type NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(metternich::character_attribute attribute MEMBER attribute READ get_attribute NOTIFY changed)
 	Q_PROPERTY(int max_scaling MEMBER max_scaling READ get_max_scaling NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
@@ -51,6 +52,11 @@ public:
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	int get_level() const
+	{
+		return this->level;
 	}
 
 	character_attribute get_attribute() const
@@ -138,6 +144,7 @@ signals:
 private:
 	trait_type type;
 	metternich::icon *icon = nullptr;
+	int level = 1;
 	character_attribute attribute{};
 	int max_scaling = std::numeric_limits<int>::max();
 	std::map<character_attribute, int> attribute_bonuses;
