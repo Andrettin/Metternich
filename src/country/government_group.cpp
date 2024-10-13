@@ -3,6 +3,7 @@
 #include "country/government_group.h"
 
 #include "country/country_tier.h"
+#include "country/country_tier_data.h"
 #include "country/government_type.h"
 #include "util/gender.h"
 #include "util/string_util.h"
@@ -29,32 +30,7 @@ const std::string &government_group::get_title_name(const country_tier tier) con
 		return find_iterator->second;
 	}
 
-	switch (tier) {
-		case country_tier::barony: {
-			static const std::string str = "Barony";
-			return str;
-		}
-		case country_tier::county: {
-			static const std::string str = "County";
-			return str;
-		}
-		case country_tier::duchy: {
-			static const std::string str = "Duchy";
-			return str;
-		}
-		case country_tier::kingdom: {
-			static const std::string str = "Kingdom";
-			return str;
-		}
-		case country_tier::empire: {
-			static const std::string str = "Empire";
-			return str;
-		}
-		default:
-			break;
-	}
-
-	return string::empty_str;
+	return country_tier_data::get(tier)->get_name();
 }
 
 const std::string &government_group::get_ruler_title_name(const country_tier tier, const gender gender) const

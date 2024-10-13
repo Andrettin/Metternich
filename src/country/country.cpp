@@ -5,6 +5,7 @@
 #include "country/country_game_data.h"
 #include "country/country_history.h"
 #include "country/country_tier.h"
+#include "country/country_tier_data.h"
 #include "country/country_turn_data.h"
 #include "country/country_type.h"
 #include "country/culture.h"
@@ -216,6 +217,10 @@ std::string country::get_titled_name(const government_type *government_type, con
 
 const std::string &country::get_title_name(const government_type *government_type, const country_tier tier, const religion *religion) const
 {
+	if (government_type == nullptr) {
+		return country_tier_data::get(tier)->get_name();
+	}
+
 	auto find_iterator = this->title_names.find(government_type);
 	if (find_iterator == this->title_names.end()) {
 		find_iterator = this->title_names.find(government_type->get_group());
