@@ -131,6 +131,16 @@ public:
 		return this->scaled_governor_modifier.get();
 	}
 
+	const metternich::modifier<military_unit> *get_commander_modifier() const
+	{
+		return this->commander_modifier.get();
+	}
+
+	const metternich::modifier<military_unit> *get_scaled_commander_modifier() const
+	{
+		return this->scaled_commander_modifier.get();
+	}
+
 	const metternich::modifier<military_unit> *get_military_unit_modifier() const
 	{
 		return this->military_unit_modifier.get();
@@ -157,6 +167,8 @@ private:
 	std::unique_ptr<const metternich::modifier<const country>> scaled_advisor_modifier;
 	std::unique_ptr<const metternich::modifier<const province>> governor_modifier;
 	std::unique_ptr<const metternich::modifier<const province>> scaled_governor_modifier;
+	std::unique_ptr<const metternich::modifier<military_unit>> commander_modifier;
+	std::unique_ptr<const metternich::modifier<military_unit>> scaled_commander_modifier;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
 };
 

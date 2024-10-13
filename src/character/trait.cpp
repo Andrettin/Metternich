@@ -66,6 +66,14 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const province>>();
 		database::process_gsml_data(modifier, scope);
 		this->scaled_governor_modifier = std::move(modifier);
+	} else if (tag == "commander_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
+		database::process_gsml_data(modifier, scope);
+		this->commander_modifier = std::move(modifier);
+	} else if (tag == "scaled_commander_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
+		database::process_gsml_data(modifier, scope);
+		this->scaled_commander_modifier = std::move(modifier);
 	} else if (tag == "military_unit_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
 		database::process_gsml_data(modifier, scope);
@@ -95,6 +103,10 @@ void trait::check() const
 
 	if (this->get_scaled_governor_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
 		throw std::runtime_error(std::format("Trait \"{}\" with scaled governor modifier has no attribute.", this->get_identifier()));
+	}
+
+	if (this->get_scaled_commander_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
+		throw std::runtime_error(std::format("Trait \"{}\" with scaled commander modifier has no attribute.", this->get_identifier()));
 	}
 }
 
