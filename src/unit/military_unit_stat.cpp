@@ -27,6 +27,7 @@ const std::map<std::string, metternich::military_unit_stat> enum_converter<mette
 	{ "defense_modifier", metternich::military_unit_stat::defense_modifier },
 	{ "ranged_defense_modifier", metternich::military_unit_stat::ranged_defense_modifier },
 	{ "entrenchment_bonus_modifier", metternich::military_unit_stat::entrenchment_bonus_modifier },
+	{ "movement_modifier", metternich::military_unit_stat::movement_modifier },
 	{ "recovery_modifier", metternich::military_unit_stat::recovery_modifier },
 	{ "morale_recovery_modifier", metternich::military_unit_stat::morale_recovery_modifier },
 	{ "desert_attack_modifier", metternich::military_unit_stat::desert_attack_modifier },
