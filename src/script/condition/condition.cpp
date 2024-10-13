@@ -194,8 +194,6 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<cavalry_condition>(value, condition_operator);
 		} else if (key == "infantry") {
 			return std::make_unique<infantry_condition>(value, condition_operator);
-		} else if (key == "military_unit_category") {
-			return std::make_unique<military_unit_category_condition>(value, condition_operator);
 		} else if (key == "military_unit_domain") {
 			return std::make_unique<military_unit_domain_condition>(value, condition_operator);
 		} else if (key == "military_unit_type") {
@@ -236,6 +234,12 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country>) {
 		if (key == "war") {
 			return std::make_unique<war_condition<scope_type>>(value, condition_operator);
+		}
+	}
+	
+	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, military_unit>) {
+		if (key == "military_unit_category") {
+			return std::make_unique<military_unit_category_condition<scope_type>>(value, condition_operator);
 		}
 	}
 	
