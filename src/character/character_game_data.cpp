@@ -464,7 +464,7 @@ std::string character_game_data::get_ruler_modifier_string(const metternich::cou
 			str += "\n" + trait->get_ruler_modifier()->get_string(country, 1, 1);
 		}
 		if (trait->get_scaled_ruler_modifier() != nullptr) {
-			str += "\n" + trait->get_scaled_ruler_modifier()->get_string(country, this->get_attribute_value(trait->get_attribute()), 1);
+			str += "\n" + trait->get_scaled_ruler_modifier()->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), 1);
 		}
 	}
 
@@ -495,7 +495,7 @@ void character_game_data::apply_trait_ruler_modifier(const trait *trait, const m
 	}
 
 	if (trait->get_scaled_ruler_modifier() != nullptr) {
-		trait->get_scaled_ruler_modifier()->apply(country, this->get_attribute_value(trait->get_attribute()) * multiplier);
+		trait->get_scaled_ruler_modifier()->apply(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
 	}
 }
 
@@ -553,7 +553,7 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 				str += "\n";
 			}
 
-			str += trait->get_scaled_advisor_modifier()->get_string(country, this->get_attribute_value(trait->get_attribute()));
+			str += trait->get_scaled_advisor_modifier()->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
 		}
 	}
 
@@ -601,7 +601,7 @@ void character_game_data::apply_trait_advisor_modifier(const trait *trait, const
 	}
 
 	if (trait->get_scaled_advisor_modifier() != nullptr) {
-		trait->get_scaled_advisor_modifier()->apply(country, this->get_attribute_value(trait->get_attribute()) * multiplier);
+		trait->get_scaled_advisor_modifier()->apply(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
 	}
 }
 
