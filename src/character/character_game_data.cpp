@@ -51,6 +51,14 @@ void character_game_data::on_setup_finished()
 	static constexpr std::array generated_trait_types{ trait_type::background, trait_type::personality, trait_type::expertise };
 
 	bool success = true;
+	for (const trait_type trait_type : generated_trait_types) {
+		success = true;
+		while (this->get_trait_count_for_type(trait_type) < defines::get()->get_min_traits_for_type(trait_type) && success) {
+			success = this->generate_initial_trait(trait_type);
+		}
+	}
+
+	success = true;
 	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_skill_attribute() : character_attribute::none;
 	const int target_attribute_value = this->character->get_skill();
 	while (target_attribute != character_attribute::none && success) {
@@ -65,13 +73,6 @@ void character_game_data::on_setup_finished()
 			if (this->get_trait_count_for_type(trait_type) < defines::get()->get_max_traits_for_type(trait_type)) {
 				success = this->generate_initial_trait(trait_type);
 			}
-		}
-	}
-
-	for (const trait_type trait_type : generated_trait_types) {
-		success = true;
-		while (this->get_trait_count_for_type(trait_type) < defines::get()->get_min_traits_for_type(trait_type) && success) {
-			success = this->generate_initial_trait(trait_type);
 		}
 	}
 
