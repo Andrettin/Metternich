@@ -8,12 +8,13 @@
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "ui/portrait.h"
+#include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 
 namespace metternich {
 
 character_type::character_type(const std::string &identifier)
-	: named_data_entry(identifier), advisor_category(advisor_category::none), attribute(character_attribute::none)
+	: named_data_entry(identifier), advisor_category(advisor_category::none), attribute(character_attribute::none), military_unit_category(military_unit_category::none)
 {
 }
 

@@ -23,6 +23,7 @@
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "time/calendar.h"
+#include "unit/civilian_unit_class.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
@@ -45,7 +46,7 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
-character::character(const std::string &identifier) : named_data_entry(identifier), role(character_role::none), military_unit_category(military_unit_category::none), gender(gender::none)
+character::character(const std::string &identifier) : named_data_entry(identifier), role(character_role::none), gender(gender::none)
 {
 	this->reset_game_data();
 }
@@ -257,8 +258,12 @@ void character::check() const
 			}
 			break;
 		case character_role::civilian:
+			if (this->get_civilian_unit_class() == nullptr) {
+				throw std::runtime_error(std::format("Character \"{}\" is a civilian, but has no civilian unit class.", this->get_identifier()));
+			}
+
 			if (this->get_civilian_unit_type() == nullptr) {
-				throw std::runtime_error(std::format("Character \"{}\" is a civilian, but has no civilian unit type.", this->get_identifier()));
+				throw std::runtime_error(std::format("Character \"{}\" is a civilian, but its culture (\"{}\") has no civilian unit type for its civilian unit class (\"{}\").", this->get_identifier(), this->get_culture()->get_identifier(), this->get_civilian_unit_class()->get_identifier()));
 			}
 			break;
 		default:
@@ -277,14 +282,6 @@ void character::check() const
 		if (this->advisor_effects != nullptr) {
 			throw std::runtime_error(std::format("Character \"{}\" has advisor effects, but is not an advisor.", this->get_identifier()));
 		}
-	}
-
-	if (this->get_role() != character_role::leader && this->get_military_unit_category() != military_unit_category::none) {
-		throw std::runtime_error(std::format("Character \"{}\" has a military unit category, but is not a leader.", this->get_identifier()));
-	}
-
-	if (this->get_role() != character_role::civilian && this->get_civilian_unit_type() != nullptr) {
-		throw std::runtime_error(std::format("Character \"{}\" has a civilian unit type, but is not a civilian.", this->get_identifier()));
 	}
 
 	assert_throw(this->get_culture() != nullptr);
@@ -372,6 +369,34 @@ std::string character::get_full_name() const
 	}
 
 	return full_name;
+}
+
+const military_unit_category character::get_military_unit_category() const
+{
+	if (this->get_character_type() != nullptr) {
+		return this->get_character_type()->get_military_unit_category();
+	}
+
+	return military_unit_category::none;
+}
+
+const civilian_unit_class *character::get_civilian_unit_class() const
+{
+	if (this->get_character_type() != nullptr) {
+		return this->get_character_type()->get_civilian_unit_class();
+	}
+
+	return nullptr;
+}
+
+const civilian_unit_type *character::get_civilian_unit_type() const
+{
+	const civilian_unit_class *civilian_unit_class = this->get_civilian_unit_class();
+	if (civilian_unit_class != nullptr) {
+		return this->get_culture()->get_civilian_class_unit_type(civilian_unit_class);
+	}
+
+	return nullptr;
 }
 
 character_attribute character::get_primary_attribute() const
