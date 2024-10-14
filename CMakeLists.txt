@@ -560,6 +560,7 @@ set(script_condition_HDRS
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/capital_condition.h
 	src/script/condition/cavalry_condition.h
+	src/script/condition/character_role_condition.h
 	src/script/condition/character_type_condition.h
 	src/script/condition/coastal_condition.h
 	src/script/condition/commodity_condition.h
@@ -611,6 +612,7 @@ set(script_condition_HDRS
 	src/script/condition/population_scaled_commodity_condition.h
 	src/script/condition/population_type_condition.h
 	src/script/condition/population_unit_count_condition.h
+	src/script/condition/primary_attribute_condition.h
 	src/script/condition/produces_commodity_condition.h
 	src/script/condition/promotion_condition.h
 	src/script/condition/province_condition.h

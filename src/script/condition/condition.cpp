@@ -31,6 +31,7 @@
 #include "script/condition/can_have_trait_condition.h"
 #include "script/condition/capital_condition.h"
 #include "script/condition/cavalry_condition.h"
+#include "script/condition/character_role_condition.h"
 #include "script/condition/character_type_condition.h"
 #include "script/condition/coastal_condition.h"
 #include "script/condition/commodity_condition.h"
@@ -81,6 +82,7 @@
 #include "script/condition/population_type_condition.h"
 #include "script/condition/population_unit_count_condition.h"
 #include "script/condition/produces_commodity_condition.h"
+#include "script/condition/primary_attribute_condition.h"
 #include "script/condition/promotion_condition.h"
 #include "script/condition/province_condition.h"
 #include "script/condition/province_count_condition.h"
@@ -131,6 +133,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<birth_year_condition>(value, condition_operator);
 		} else if (key == "can_have_trait") {
 			return std::make_unique<can_have_trait_condition>(value, condition_operator);
+		} else if (key == "character_role") {
+			return std::make_unique<character_role_condition>(value, condition_operator);
 		} else if (key == "character_type") {
 			return std::make_unique<character_type_condition>(value, condition_operator);
 		} else if (key == "gender") {
@@ -139,6 +143,8 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 			return std::make_unique<is_advisor_condition>(value, condition_operator);
 		} else if (key == "is_ruler") {
 			return std::make_unique<is_ruler_condition>(value, condition_operator);
+		} else if (key == "primary_attribute") {
+			return std::make_unique<primary_attribute_condition>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
 		}

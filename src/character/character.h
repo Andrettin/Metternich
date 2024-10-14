@@ -254,7 +254,7 @@ public:
 		return this->death_date;
 	}
 
-	character_attribute get_skill_attribute() const;
+	character_attribute get_primary_attribute() const;
 
 	int get_skill() const
 	{

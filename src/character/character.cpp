@@ -374,7 +374,7 @@ std::string character::get_full_name() const
 	return full_name;
 }
 
-character_attribute character::get_skill_attribute() const
+character_attribute character::get_primary_attribute() const
 {
 	if (this->get_character_type() != nullptr) {
 		return this->get_character_type()->get_attribute();

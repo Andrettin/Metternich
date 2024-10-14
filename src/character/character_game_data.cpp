@@ -59,7 +59,7 @@ void character_game_data::on_setup_finished()
 	}
 
 	success = true;
-	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_skill_attribute() : character_attribute::none;
+	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : character_attribute::none;
 	const int target_attribute_value = this->character->get_skill();
 	while (target_attribute != character_attribute::none && success) {
 		for (const trait_type trait_type : generated_trait_types) {
@@ -194,7 +194,7 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	if (this->is_ruler()) {
 		this->apply_ruler_modifier(this->get_country(), -1);
 	}
-	if (this->is_advisor() && attribute == this->character->get_character_type()->get_attribute()) {
+	if (this->is_advisor() && attribute == this->character->get_primary_attribute()) {
 		this->apply_advisor_modifier(this->get_country(), -1);
 	}
 
@@ -207,7 +207,7 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	if (this->is_ruler()) {
 		this->apply_ruler_modifier(this->get_country(), 1);
 	}
-	if (this->is_advisor() && attribute == this->character->get_character_type()->get_attribute()) {
+	if (this->is_advisor() && attribute == this->character->get_primary_attribute()) {
 		this->apply_advisor_modifier(this->get_country(), 1);
 	}
 }
@@ -217,7 +217,7 @@ int character_game_data::get_primary_attribute_value() const
 	assert_throw(this->character->get_character_type() != nullptr);
 	assert_throw(this->character->get_role() == character_role::ruler || this->character->get_role() == character_role::advisor);
 
-	return this->get_attribute_value(this->character->get_character_type()->get_attribute());
+	return this->get_attribute_value(this->character->get_primary_attribute());
 }
 
 QVariantList character_game_data::get_traits_qvariant_list() const
@@ -374,7 +374,7 @@ bool character_game_data::generate_trait(const trait_type trait_type, const char
 
 bool character_game_data::generate_initial_trait(const trait_type trait_type)
 {
-	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_skill_attribute() : character_attribute::none;
+	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : character_attribute::none;
 	const int target_attribute_value = this->character->get_skill();
 	const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
 
