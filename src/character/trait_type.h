@@ -8,7 +8,8 @@ enum class trait_type {
 	none,
 	ruler,
 	background,
-	personality
+	personality,
+	expertise
 };
 
 }

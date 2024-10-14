@@ -102,7 +102,8 @@ public:
 	void add_trait(const trait *trait);
 	void remove_trait(const trait *trait);
 	void on_trait_gained(const trait *trait, const int multiplier);
-	[[nodiscard]] bool generate_trait(const trait_type trait_type, const character_attribute target_attribute = {}, const int target_attribute_bonus = 0);
+	[[nodiscard]] bool generate_trait(const trait_type trait_type, const character_attribute target_attribute, const int target_attribute_bonus);
+	[[nodiscard]] bool generate_initial_trait(const trait_type trait_type);
 	void sort_traits();
 
 	const scripted_character_modifier_map<int> &get_scripted_modifiers() const

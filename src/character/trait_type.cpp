@@ -14,7 +14,8 @@ const std::map<std::string, metternich::trait_type> enum_converter<metternich::t
 	{ "none", metternich::trait_type::none },
 	{ "ruler", metternich::trait_type::ruler },
 	{ "background", metternich::trait_type::background },
-	{ "personality", metternich::trait_type::personality }
+	{ "personality", metternich::trait_type::personality },
+	{ "expertise", metternich::trait_type::expertise }
 };
 
 template <>

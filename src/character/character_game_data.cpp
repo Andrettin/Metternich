@@ -48,22 +48,31 @@ void character_game_data::on_setup_finished()
 		this->add_trait(trait);
 	}
 
-	bool success = true;
-	while (this->get_trait_count_for_type(trait_type::background) < defines::get()->get_min_traits_for_type(trait_type::background) && success) {
-		const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_skill_attribute() : character_attribute::none;
-		const int target_attribute_value = this->character->get_skill();
-		const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
+	static constexpr std::array generated_trait_types{ trait_type::background, trait_type::personality, trait_type::expertise };
 
-		success = this->generate_trait(trait_type::background, target_attribute, target_attribute_bonus);
+	bool success = true;
+	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_skill_attribute() : character_attribute::none;
+	const int target_attribute_value = this->character->get_skill();
+	while (target_attribute != character_attribute::none && success) {
+		for (const trait_type trait_type : generated_trait_types) {
+			const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
+			if (target_attribute_bonus == 0) {
+				break;
+			}
+
+			success = false;
+
+			if (this->get_trait_count_for_type(trait_type) < defines::get()->get_max_traits_for_type(trait_type)) {
+				success = this->generate_initial_trait(trait_type);
+			}
+		}
 	}
 
-	success = true;
-	while (this->get_trait_count_for_type(trait_type::personality) < defines::get()->get_min_traits_for_type(trait_type::personality) && success) {
-		const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_skill_attribute() : character_attribute::none;
-		const int target_attribute_value = this->character->get_skill();
-		const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
-
-		success = this->generate_trait(trait_type::personality, target_attribute, target_attribute_bonus);
+	for (const trait_type trait_type : generated_trait_types) {
+		success = true;
+		while (this->get_trait_count_for_type(trait_type) < defines::get()->get_min_traits_for_type(trait_type) && success) {
+			success = this->generate_initial_trait(trait_type);
+		}
 	}
 
 	if (this->character->get_role() == character_role::ruler && this->get_primary_attribute_value() == 0 && this->character->get_character_type()->get_ruler_modifier() == nullptr && this->character->get_character_type()->get_scaled_ruler_modifier() != nullptr) {
@@ -360,6 +369,15 @@ bool character_game_data::generate_trait(const trait_type trait_type, const char
 
 	this->add_trait(vector::get_random(potential_traits));
 	return true;
+}
+
+bool character_game_data::generate_initial_trait(const trait_type trait_type)
+{
+	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_skill_attribute() : character_attribute::none;
+	const int target_attribute_value = this->character->get_skill();
+	const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
+
+	return this->generate_trait(trait_type, target_attribute, target_attribute_bonus);
 }
 
 void character_game_data::sort_traits()
