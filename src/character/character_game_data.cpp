@@ -194,8 +194,15 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	if (this->is_ruler()) {
 		this->apply_ruler_modifier(this->get_country(), -1);
 	}
-	if (this->is_advisor() && attribute == this->character->get_primary_attribute()) {
+	if (this->is_advisor()) {
 		this->apply_advisor_modifier(this->get_country(), -1);
+	}
+	if (this->character->get_role() == character_role::leader) {
+		for (const trait *trait : this->get_traits()) {
+			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
+				this->apply_modifier(trait->get_scaled_leader_modifier(), -std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
+			}
+		}
 	}
 
 	const int new_value = (this->attribute_values[attribute] += change);
@@ -207,8 +214,15 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	if (this->is_ruler()) {
 		this->apply_ruler_modifier(this->get_country(), 1);
 	}
-	if (this->is_advisor() && attribute == this->character->get_primary_attribute()) {
+	if (this->is_advisor()) {
 		this->apply_advisor_modifier(this->get_country(), 1);
+	}
+	if (this->character->get_role() == character_role::leader) {
+		for (const trait *trait : this->get_traits()) {
+			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
+				this->apply_modifier(trait->get_scaled_leader_modifier(), std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
+			}
+		}
 	}
 }
 
@@ -322,6 +336,16 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 
 	if (trait->get_modifier() != nullptr) {
 		this->apply_modifier(trait->get_modifier(), multiplier);
+	}
+
+	if (this->character->get_role() == character_role::leader) {
+		if (trait->get_leader_modifier() != nullptr) {
+			this->apply_modifier(trait->get_leader_modifier(), multiplier);
+		}
+
+		if (trait->get_scaled_leader_modifier() != nullptr) {
+			this->apply_modifier(trait->get_scaled_leader_modifier(), std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
+		}
 	}
 
 	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
@@ -696,6 +720,40 @@ bool character_game_data::can_learn_spell(const spell *spell) const
 void character_game_data::learn_spell(const spell *spell)
 {
 	this->add_spell(spell);
+}
+
+void character_game_data::set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value)
+{
+	const centesimal_int old_value = this->get_commanded_military_unit_stat_modifier(stat);
+
+	if (value == old_value) {
+		return;
+	}
+
+	if (value == 0) {
+		this->commanded_military_unit_stat_modifiers.erase(stat);
+	} else {
+		this->commanded_military_unit_stat_modifiers[stat] = value;
+	}
+}
+
+void character_game_data::set_commanded_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value)
+{
+	const centesimal_int old_value = this->get_commanded_military_unit_type_stat_modifier(type, stat);
+
+	if (value == old_value) {
+		return;
+	}
+
+	if (value == 0) {
+		this->commanded_military_unit_type_stat_modifiers[type].erase(stat);
+
+		if (this->commanded_military_unit_type_stat_modifiers[type].empty()) {
+			this->commanded_military_unit_type_stat_modifiers.erase(type);
+		}
+	} else {
+		this->commanded_military_unit_type_stat_modifiers[type][stat] = value;
+	}
 }
 
 }

@@ -134,6 +134,7 @@ public:
 	}
 
 	void set_army(metternich::army *army);
+	const metternich::character *get_commander() const;
 
 	bool can_move_to(const metternich::province *province) const;
 
@@ -202,7 +203,6 @@ public:
 		this->set_morale(this->get_morale() + change);
 	}
 
-	int get_discipline() const;
 	int get_hit_point_recovery_per_turn() const;
 	int get_morale_recovery_per_turn() const;
 
@@ -234,6 +234,8 @@ public:
 	{
 		this->set_stat(stat, this->get_stat(stat) + change);
 	}
+
+	centesimal_int get_effective_stat(const military_unit_stat stat) const;
 
 	const std::vector<const promotion *> &get_promotions() const
 	{

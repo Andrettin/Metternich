@@ -3,6 +3,7 @@
 #include "character/character_container.h"
 #include "script/scripted_modifier_container.h"
 #include "spell/spell_container.h"
+#include "unit/military_unit_type_container.h"
 #include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/country.h")
@@ -14,12 +15,14 @@ class character;
 class civilian_unit;
 class country;
 class military_unit;
+class military_unit_type;
 class portrait;
 class province;
 class scripted_character_modifier;
 class spell;
 class trait;
 enum class character_attribute;
+enum class military_unit_stat;
 enum class trait_type;
 
 template <typename scope_type>
@@ -206,6 +209,48 @@ public:
 
 	void learn_spell(const spell *spell);
 
+	const centesimal_int &get_commanded_military_unit_stat_modifier(const military_unit_stat stat) const
+	{
+		const auto find_iterator = this->commanded_military_unit_stat_modifiers.find(stat);
+
+		if (find_iterator != this->commanded_military_unit_stat_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
+	}
+
+	void set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value);
+
+	void change_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &change)
+	{
+		this->set_commanded_military_unit_stat_modifier(stat, this->get_commanded_military_unit_stat_modifier(stat) + change);
+	}
+
+	const centesimal_int &get_commanded_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const
+	{
+		const auto find_iterator = this->commanded_military_unit_type_stat_modifiers.find(type);
+
+		if (find_iterator != this->commanded_military_unit_type_stat_modifiers.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(stat);
+
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
+	}
+
+	void set_commanded_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value);
+
+	void change_commanded_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &change)
+	{
+		this->set_commanded_military_unit_type_stat_modifier(type, stat, this->get_commanded_military_unit_type_stat_modifier(type, stat) + change);
+	}
+
 signals:
 	void portrait_changed();
 	void country_changed();
@@ -228,6 +273,8 @@ private:
 	metternich::civilian_unit *civilian_unit = nullptr;
 	spell_set spells;
 	spell_set item_spells;
+	std::map<military_unit_stat, centesimal_int> commanded_military_unit_stat_modifiers;
+	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> commanded_military_unit_type_stat_modifiers;
 };
 
 }
