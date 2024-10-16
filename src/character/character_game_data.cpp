@@ -229,7 +229,6 @@ void character_game_data::change_attribute_value(const character_attribute attri
 int character_game_data::get_primary_attribute_value() const
 {
 	assert_throw(this->character->get_character_type() != nullptr);
-	assert_throw(this->character->get_role() == character_role::ruler || this->character->get_role() == character_role::advisor);
 
 	return this->get_attribute_value(this->character->get_primary_attribute());
 }
@@ -264,6 +263,15 @@ bool character_game_data::can_have_trait(const trait *trait) const
 {
 	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, read_only_context(this->character))) {
 		return false;
+	}
+
+	// characters cannot gain a trait which would reduce their primary attribute below 1
+	const character_attribute primary_attribute = this->character->get_primary_attribute();
+	if (primary_attribute != character_attribute::none) {
+		const int trait_primary_attribute_bonus = trait->get_attribute_bonus(primary_attribute);
+		if (trait_primary_attribute_bonus < 0 && (this->get_primary_attribute_value() + trait_primary_attribute_bonus) <= 0) {
+			return false;
+		}
 	}
 
 	return true;
