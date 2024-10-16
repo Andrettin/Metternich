@@ -63,12 +63,12 @@ void character_game_data::on_setup_finished()
 	const int target_attribute_value = this->character->get_skill();
 	while (target_attribute != character_attribute::none && success) {
 		for (const trait_type trait_type : generated_trait_types) {
+			success = false;
+
 			const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
 			if (target_attribute_bonus == 0) {
 				break;
 			}
-
-			success = false;
 
 			if (this->get_trait_count_for_type(trait_type) < defines::get()->get_max_traits_for_type(trait_type)) {
 				success = this->generate_initial_trait(trait_type);
