@@ -183,7 +183,8 @@ void terrain_type::check() const
 		possible_adjacencies.emplace_back();
 
 		for (size_t i = 0; i < terrain_adjacency::direction_count; ++i) {
-			for (const terrain_adjacency &adjacency : possible_adjacencies) {
+			const std::vector<terrain_adjacency> possible_adjacencies_copy = possible_adjacencies;
+			for (const terrain_adjacency &adjacency : possible_adjacencies_copy) {
 				terrain_adjacency other_adjacency = adjacency;
 				other_adjacency.get_data()[i] = terrain_adjacency_type::other;
 				possible_adjacencies.push_back(std::move(other_adjacency));
