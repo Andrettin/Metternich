@@ -22,7 +22,7 @@
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "map/terrain_type.h"
-#include "script/condition/condition.h"
+#include "script/condition/and_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "technology/technological_period.h"

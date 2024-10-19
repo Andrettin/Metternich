@@ -6,11 +6,11 @@
 
 namespace metternich {
 
-class province_count_condition final : public numerical_condition<country>
+class province_count_condition final : public numerical_condition<country, read_only_context>
 {
 public:
 	explicit province_count_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<country>(value, condition_operator)
+		: numerical_condition<country, read_only_context>(value, condition_operator)
 	{
 	}
 

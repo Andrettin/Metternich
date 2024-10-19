@@ -8,11 +8,11 @@
 
 namespace metternich {
 
-class population_scaled_commodity_condition final : public numerical_condition<country, centesimal_int>
+class population_scaled_commodity_condition final : public numerical_condition<country, read_only_context, centesimal_int>
 {
 public:
 	explicit population_scaled_commodity_condition(const metternich::commodity *commodity, const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<country, centesimal_int>(value, condition_operator), commodity(commodity)
+		: numerical_condition<country, read_only_context, centesimal_int>(value, condition_operator), commodity(commodity)
 	{
 	}
 

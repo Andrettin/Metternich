@@ -17,7 +17,7 @@ class government_group;
 enum class country_tier;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 template <typename scope_type>
 class modifier;
@@ -63,7 +63,7 @@ public:
 		return this->icon;
 	}
 
-	const condition<country> *get_conditions() const
+	const and_condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -77,7 +77,7 @@ signals:
 private:
 	const government_group *group = nullptr;
 	const icon *icon = nullptr;
-	std::unique_ptr<const condition<country>> conditions;
+	std::unique_ptr<const and_condition<country>> conditions;
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;
 	policy_map<int> min_policy_values;

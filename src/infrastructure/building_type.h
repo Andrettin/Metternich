@@ -34,9 +34,6 @@ template <typename scope_type>
 class and_condition;
 
 template <typename scope_type>
-class condition;
-
-template <typename scope_type>
 class effect_list;
 
 template <typename scope_type>
@@ -265,7 +262,7 @@ public:
 		return this->cost_factor.get();
 	}
 
-	const condition<country> *get_conditions() const
+	const and_condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -275,12 +272,12 @@ public:
 		return this->settlement_conditions.get();
 	}
 
-	const condition<province> *get_province_conditions() const
+	const and_condition<province> *get_province_conditions() const
 	{
 		return this->province_conditions.get();
 	}
 
-	const condition<site> *get_build_conditions() const
+	const and_condition<site> *get_build_conditions() const
 	{
 		return this->build_conditions.get();
 	}
@@ -346,10 +343,10 @@ private:
 	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
 	std::unique_ptr<const factor<country>> cost_factor;
-	std::unique_ptr<const condition<country>> conditions;
+	std::unique_ptr<const and_condition<country>> conditions;
 	std::unique_ptr<and_condition<site>> settlement_conditions;
-	std::unique_ptr<const condition<province>> province_conditions;
-	std::unique_ptr<const condition<site>> build_conditions;
+	std::unique_ptr<const and_condition<province>> province_conditions;
+	std::unique_ptr<const and_condition<site>> build_conditions;
 	std::unique_ptr<modifier<const site>> settlement_modifier;
 	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const country>> country_modifier;

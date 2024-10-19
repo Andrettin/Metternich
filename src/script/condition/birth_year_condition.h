@@ -6,11 +6,11 @@
 
 namespace metternich {
 
-class birth_year_condition final : public numerical_condition<character>
+class birth_year_condition final : public numerical_condition<character, read_only_context>
 {
 public:
 	explicit birth_year_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<character>(value, condition_operator)
+		: numerical_condition<character, read_only_context>(value, condition_operator)
 	{
 	}
 

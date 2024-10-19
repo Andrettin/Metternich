@@ -3,6 +3,7 @@
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;
+	enum class special_target_type;
 }
 
 namespace metternich {
@@ -14,7 +15,6 @@ class military_unit;
 class population_unit;
 class province;
 class site;
-enum class special_target_type;
 
 //script context for e.g. events
 template <bool read_only>

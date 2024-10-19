@@ -2,6 +2,7 @@
 
 #include "database/data_entry.h"
 #include "database/data_type.h"
+#include "script/condition/scripted_condition_base.h"
 
 namespace metternich {
 
@@ -10,32 +11,9 @@ class country;
 class population_unit;
 class province;
 class site;
+struct read_only_context;
 
-template <typename scope_type>
-class and_condition;
-
-//the class for a predefined, reusable scripted condition
-template <typename scope_type>
-class scripted_condition_base
-{
-public:
-	explicit scripted_condition_base();
-	~scripted_condition_base();
-
-	void process_gsml_property(const gsml_property &property);
-	void process_gsml_scope(const gsml_data &scope);
-	void check() const;
-
-	const and_condition<scope_type> *get_conditions() const
-	{
-		return this->conditions.get();
-	}
-
-private:
-	std::unique_ptr<and_condition<scope_type>> conditions;
-};
-
-class character_scripted_condition final : public data_entry, public data_type<character_scripted_condition>, public scripted_condition_base<character>
+class character_scripted_condition final : public data_entry, public data_type<character_scripted_condition>, public scripted_condition_base<character, read_only_context>
 {
 	Q_OBJECT
 
@@ -64,7 +42,7 @@ public:
 	}
 };
 
-class country_scripted_condition final : public data_entry, public data_type<country_scripted_condition>, public scripted_condition_base<country>
+class country_scripted_condition final : public data_entry, public data_type<country_scripted_condition>, public scripted_condition_base<country, read_only_context>
 {
 	Q_OBJECT
 
@@ -93,7 +71,7 @@ public:
 	}
 };
 
-class military_unit_scripted_condition final : public data_entry, public data_type<military_unit_scripted_condition>, public scripted_condition_base<military_unit>
+class military_unit_scripted_condition final : public data_entry, public data_type<military_unit_scripted_condition>, public scripted_condition_base<military_unit, read_only_context>
 {
 	Q_OBJECT
 
@@ -122,7 +100,7 @@ public:
 	}
 };
 
-class population_unit_scripted_condition final : public data_entry, public data_type<population_unit_scripted_condition>, public scripted_condition_base<population_unit>
+class population_unit_scripted_condition final : public data_entry, public data_type<population_unit_scripted_condition>, public scripted_condition_base<population_unit, read_only_context>
 {
 	Q_OBJECT
 
@@ -151,7 +129,7 @@ public:
 	}
 };
 
-class province_scripted_condition final : public data_entry, public data_type<province_scripted_condition>, public scripted_condition_base<province>
+class province_scripted_condition final : public data_entry, public data_type<province_scripted_condition>, public scripted_condition_base<province, read_only_context>
 {
 	Q_OBJECT
 
@@ -180,7 +158,7 @@ public:
 	}
 };
 
-class site_scripted_condition final : public data_entry, public data_type<site_scripted_condition>, public scripted_condition_base<site>
+class site_scripted_condition final : public data_entry, public data_type<site_scripted_condition>, public scripted_condition_base<site, read_only_context>
 {
 	Q_OBJECT
 
@@ -208,11 +186,5 @@ public:
 		scripted_condition_base::check();
 	}
 };
-
-extern template class scripted_condition_base<character>;
-extern template class scripted_condition_base<country>;
-extern template class scripted_condition_base<population_unit>;
-extern template class scripted_condition_base<province>;
-extern template class scripted_condition_base<site>;
 
 }

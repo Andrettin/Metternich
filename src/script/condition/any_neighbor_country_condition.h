@@ -6,11 +6,11 @@
 
 namespace metternich {
 
-class any_neighbor_country_condition final : public scope_condition_base<country, country>
+class any_neighbor_country_condition final : public scope_condition_base<country, country, read_only_context>
 {
 public:
 	explicit any_neighbor_country_condition(const gsml_operator condition_operator)
-		: scope_condition_base<country, country>(condition_operator)
+		: scope_condition_base<country, country, read_only_context>(condition_operator)
 	{
 	}
 

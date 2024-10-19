@@ -19,7 +19,7 @@
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
-#include "script/condition/condition.h"
+#include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "ui/icon.h"
 #include "unit/army.h"

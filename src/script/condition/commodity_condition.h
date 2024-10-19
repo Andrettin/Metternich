@@ -7,11 +7,11 @@
 
 namespace metternich {
 
-class commodity_condition final : public numerical_condition<country>
+class commodity_condition final : public numerical_condition<country, read_only_context>
 {
 public:
 	explicit commodity_condition(const metternich::commodity *commodity, const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<country>(value, condition_operator), commodity(commodity)
+		: numerical_condition<country, read_only_context>(value, condition_operator), commodity(commodity)
 	{
 	}
 

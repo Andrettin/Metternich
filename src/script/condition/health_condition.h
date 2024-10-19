@@ -5,11 +5,11 @@
 namespace metternich {
 
 template <typename scope_type>
-class health_condition final : public numerical_condition<scope_type>
+class health_condition final : public numerical_condition<scope_type, read_only_context>
 {
 public:
 	explicit health_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<scope_type>(value, condition_operator)
+		: numerical_condition<scope_type, read_only_context>(value, condition_operator)
 	{
 	}
 

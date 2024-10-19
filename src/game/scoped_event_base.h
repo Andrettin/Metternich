@@ -14,7 +14,7 @@ struct context;
 struct read_only_context;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 template <typename scope_type>
 class effect_list;
@@ -119,7 +119,7 @@ public:
 
 	virtual bool fires_only_once() const = 0;
 
-	const condition<std::remove_const_t<scope_type>> *get_conditions() const
+	const and_condition<std::remove_const_t<scope_type>> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -154,7 +154,7 @@ public:
 private:
 	std::unique_ptr<factor<std::remove_const_t<scope_type>>> random_weight_factor;
 	std::unique_ptr<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>> mean_time_to_happen;
-	std::unique_ptr<const condition<std::remove_const_t<scope_type>>> conditions;
+	std::unique_ptr<const and_condition<std::remove_const_t<scope_type>>> conditions;
 	std::unique_ptr<effect_list<scope_type>> immediate_effects;
 	std::vector<std::unique_ptr<event_option<scope_type>>> options;
 };

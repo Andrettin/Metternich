@@ -5,11 +5,11 @@
 namespace metternich {
 
 template <typename scope_type>
-class wealth_condition final : public numerical_condition<scope_type>
+class wealth_condition final : public numerical_condition<scope_type, read_only_context>
 {
 public:
 	explicit wealth_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<scope_type>(value, condition_operator)
+		: numerical_condition<scope_type, read_only_context>(value, condition_operator)
 	{
 	}
 

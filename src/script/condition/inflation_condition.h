@@ -6,11 +6,11 @@
 
 namespace metternich {
 
-class inflation_condition final : public numerical_condition<country, centesimal_int>
+class inflation_condition final : public numerical_condition<country, read_only_context, centesimal_int>
 {
 public:
 	explicit inflation_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<country, centesimal_int>(value, condition_operator)
+		: numerical_condition<country, read_only_context, centesimal_int>(value, condition_operator)
 	{
 	}
 

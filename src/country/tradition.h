@@ -17,7 +17,7 @@ class tradition_group;
 enum class tradition_category;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 template <typename scope_type>
 class effect_list;
@@ -99,12 +99,12 @@ public:
 		return this->incompatible_traditions;
 	}
 
-	const condition<country> *get_preconditions() const
+	const and_condition<country> *get_preconditions() const
 	{
 		return this->preconditions.get();
 	}
 
-	const condition<country> *get_conditions() const
+	const and_condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -180,8 +180,8 @@ private:
 	std::vector<const tradition *> requiring_traditions;
 	int total_prerequisite_depth = 0;
 	std::vector<const tradition *> incompatible_traditions;
-	std::unique_ptr<const condition<country>> preconditions;
-	std::unique_ptr<const condition<country>> conditions;
+	std::unique_ptr<const and_condition<country>> preconditions;
+	std::unique_ptr<const and_condition<country>> conditions;
 	std::unique_ptr<const modifier<const country>> modifier;
 	std::unique_ptr<const effect_list<const country>> effects;
 };

@@ -16,7 +16,7 @@ enum class character_attribute;
 enum class trait_type;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 template <typename scope_type>
 class modifier;
@@ -84,12 +84,12 @@ public:
 		return 0;
 	}
 
-	const condition<character> *get_conditions() const
+	const and_condition<character> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
 
-	const condition<character> *get_generation_conditions() const
+	const and_condition<character> *get_generation_conditions() const
 	{
 		return this->generation_conditions.get();
 	}
@@ -158,8 +158,8 @@ private:
 	character_attribute attribute{};
 	int max_scaling = std::numeric_limits<int>::max();
 	std::map<character_attribute, int> attribute_bonuses;
-	std::unique_ptr<const condition<character>> conditions;
-	std::unique_ptr<const condition<character>> generation_conditions;
+	std::unique_ptr<const and_condition<character>> conditions;
+	std::unique_ptr<const and_condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	std::unique_ptr<const metternich::modifier<const country>> ruler_modifier;
 	std::unique_ptr<const metternich::modifier<const country>> scaled_ruler_modifier;

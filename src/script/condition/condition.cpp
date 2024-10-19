@@ -35,6 +35,7 @@
 #include "script/condition/character_type_condition.h"
 #include "script/condition/coastal_condition.h"
 #include "script/condition/commodity_condition.h"
+#include "script/condition/condition_base.ipp"
 #include "script/condition/consciousness_condition.h"
 #include "script/condition/core_condition.h"
 #include "script/condition/country_condition.h"
@@ -74,8 +75,6 @@
 #include "script/condition/military_unit_domain_condition.h"
 #include "script/condition/military_unit_type_condition.h"
 #include "script/condition/near_water_condition.h"
-#include "script/condition/not_condition.h"
-#include "script/condition/or_condition.h"
 #include "script/condition/owns_province_condition.h"
 #include "script/condition/owns_site_condition.h"
 #include "script/condition/population_scaled_commodity_condition.h"
@@ -105,7 +104,6 @@
 #include "script/condition/subject_type_condition.h"
 #include "script/condition/technology_condition.h"
 #include "script/condition/terrain_condition.h"
-#include "script/condition/tooltip_condition.h"
 #include "script/condition/tradition_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
@@ -118,7 +116,7 @@
 namespace metternich {
 
 template <typename scope_type>
-std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_property(const gsml_property &property)
+std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<scope_type>::from_gsml_property(const gsml_property &property)
 {
 	const std::string &key = property.get_key();
 	const gsml_operator condition_operator = property.get_operator();
@@ -345,23 +343,15 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_pr
 		return std::make_unique<year_condition<scope_type>>(value, condition_operator);
 	}
 
-	throw std::runtime_error(std::format("Invalid condition property: \"{}\".", key));
+	return condition_base<scope_type, read_only_context>::from_gsml_property(property);
 }
 
 template <typename scope_type>
-std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_scope(const gsml_data &scope)
+std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<scope_type>::from_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const gsml_operator condition_operator = scope.get_operator();
-	std::unique_ptr<condition<scope_type>> condition;
-
-	if (tag == "and") {
-		condition = std::make_unique<and_condition<scope_type>>(condition_operator);
-	} else if (tag == "or") {
-		condition = std::make_unique<or_condition<scope_type>>(condition_operator);
-	} else if (tag == "not") {
-		condition = std::make_unique<not_condition<scope_type>>(condition_operator);
-	}
+	std::unique_ptr<condition_base<scope_type, read_only_context>> condition;
 
 	if constexpr (std::is_same_v<scope_type, country>) {
 		if (tag == "any_known_country") {
@@ -402,26 +392,23 @@ std::unique_ptr<const condition<scope_type>> condition<scope_type>::from_gsml_sc
 	} else if (tag == "country") {
 		condition = std::make_unique<country_scope_condition<scope_type>>(condition_operator);
 	} else if (tag == "saved_character_scope") {
-		condition = std::make_unique<saved_scope_condition<scope_type, character>>(condition_operator);
+		condition = std::make_unique<saved_scope_condition<scope_type, character, read_only_context>>(condition_operator);
 	} else if (tag == "saved_country_scope") {
-		condition = std::make_unique<saved_scope_condition<scope_type, country>>(condition_operator);
+		condition = std::make_unique<saved_scope_condition<scope_type, country, read_only_context>>(condition_operator);
 	} else if (tag == "saved_province_scope") {
-		condition = std::make_unique<saved_scope_condition<scope_type, province>>(condition_operator);
+		condition = std::make_unique<saved_scope_condition<scope_type, province, read_only_context>>(condition_operator);
 	} else if (tag == "saved_site_scope") {
-		condition = std::make_unique<saved_scope_condition<scope_type, site>>(condition_operator);
+		condition = std::make_unique<saved_scope_condition<scope_type, site, read_only_context>>(condition_operator);
 	} else if (tag == "source_site") {
 		condition = std::make_unique<source_site_scope_condition<scope_type>>(condition_operator);
-	} else if (tag == "tooltip") {
-		condition = std::make_unique<tooltip_condition<scope_type>>(condition_operator);
 	}
 
-	if (condition == nullptr) {
-		throw std::runtime_error("Invalid condition scope: \"" + tag + "\".");
+	if (condition != nullptr) {
+		database::process_gsml_data(condition, scope);
+		return condition;
 	}
 
-	database::process_gsml_data(condition, scope);
-
-	return condition;
+	return condition_base<scope_type, read_only_context>::from_gsml_scope(scope);
 }
 
 template <typename scope_type>

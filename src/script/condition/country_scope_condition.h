@@ -7,11 +7,11 @@ namespace metternich {
 class country;
 
 template <typename upper_scope_type>
-class country_scope_condition final : public scope_condition<upper_scope_type, country>
+class country_scope_condition final : public scope_condition<upper_scope_type, country, read_only_context>
 {
 public:
 	explicit country_scope_condition(const gsml_operator condition_operator)
-		: scope_condition<upper_scope_type, country>(condition_operator)
+		: scope_condition<upper_scope_type, country, read_only_context>(condition_operator)
 	{
 	}
 

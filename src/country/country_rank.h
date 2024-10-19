@@ -9,7 +9,7 @@ namespace metternich {
 class country;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 class country_rank final : public named_data_entry, public data_type<country_rank>
 {
@@ -45,7 +45,7 @@ public:
 		return this->relative_score_threshold;
 	}
 
-	const condition<country> *get_conditions() const
+	const and_condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -57,7 +57,7 @@ private:
 	int priority = 0;
 	centesimal_int average_score_threshold;
 	centesimal_int relative_score_threshold;
-	std::unique_ptr<const condition<country>> conditions;
+	std::unique_ptr<const and_condition<country>> conditions;
 };
 
 }

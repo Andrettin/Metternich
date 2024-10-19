@@ -8,7 +8,7 @@ namespace metternich {
 class population_unit;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 template <typename scope_type>
 class factor;
@@ -36,7 +36,7 @@ public:
 		return this->color;
 	}
 
-	const condition<population_unit> *get_conditions() const
+	const and_condition<population_unit> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -51,7 +51,7 @@ signals:
 
 private:
 	QColor color;
-	std::unique_ptr<const condition<population_unit>> conditions;
+	std::unique_ptr<const and_condition<population_unit>> conditions;
 	std::unique_ptr<const factor<population_unit>> weight_factor;
 };
 

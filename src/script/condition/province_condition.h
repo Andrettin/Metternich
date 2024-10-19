@@ -7,11 +7,11 @@ namespace metternich {
 class province;
 
 template <typename upper_scope_type>
-class province_condition final : public scope_condition<upper_scope_type, province>
+class province_condition final : public scope_condition<upper_scope_type, province, read_only_context>
 {
 public:
 	explicit province_condition(const gsml_operator condition_operator)
-		: scope_condition<upper_scope_type, province>(condition_operator)
+		: scope_condition<upper_scope_type, province, read_only_context>(condition_operator)
 	{
 	}
 

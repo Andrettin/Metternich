@@ -15,7 +15,7 @@ struct context;
 struct read_only_context;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 template <typename scope_type>
 class effect_list;
@@ -43,7 +43,7 @@ public:
 		return this->ai_weight;
 	}
 
-	const condition<std::remove_const_t<scope_type>> *get_conditions() const
+	const and_condition<std::remove_const_t<scope_type>> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -56,7 +56,7 @@ private:
 	std::string tooltip;
 	const trait *tooltip_info_trait = nullptr;
 	int ai_weight = 1;
-	std::unique_ptr<condition<std::remove_const_t<scope_type>>> conditions;
+	std::unique_ptr<and_condition<std::remove_const_t<scope_type>>> conditions;
 	std::unique_ptr<effect_list<scope_type>> effects;
 };
 

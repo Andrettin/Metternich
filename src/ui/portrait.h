@@ -8,7 +8,7 @@ namespace metternich {
 class character;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 class portrait final : public icon_base, public data_type<portrait>
 {
@@ -35,7 +35,7 @@ public:
 	virtual void initialize() override;
 	virtual void check() const override;
 
-	const condition<character> *get_character_conditions() const
+	const and_condition<character> *get_character_conditions() const
 	{
 		return this->character_conditions.get();
 	}
@@ -46,7 +46,7 @@ public:
 	}
 
 private:
-	std::unique_ptr<const condition<character>> character_conditions;
+	std::unique_ptr<const and_condition<character>> character_conditions;
 };
 
 }

@@ -6,11 +6,11 @@
 
 namespace metternich {
 
-class wealth_inflated_condition final : public numerical_condition<country>
+class wealth_inflated_condition final : public numerical_condition<country, read_only_context>
 {
 public:
 	explicit wealth_inflated_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<country>(value, condition_operator)
+		: numerical_condition<country, read_only_context>(value, condition_operator)
 	{
 	}
 

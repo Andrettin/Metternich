@@ -18,7 +18,7 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/profession.h"
-#include "script/condition/condition.h"
+#include "script/condition/and_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "ui/icon.h"

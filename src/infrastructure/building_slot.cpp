@@ -10,7 +10,7 @@
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/wonder.h"
-#include "script/condition/condition.h"
+#include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 
 namespace metternich {

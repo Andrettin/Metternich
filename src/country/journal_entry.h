@@ -22,9 +22,6 @@ template <typename scope_type>
 class and_condition;
 
 template <typename scope_type>
-class condition;
-
-template <typename scope_type>
 class effect_list;
 
 template <typename scope_type>
@@ -150,8 +147,8 @@ signals:
 private:
 	metternich::portrait *portrait = nullptr;
 	std::string description;
-	std::unique_ptr<const condition<country>> preconditions;
-	std::unique_ptr<const condition<country>> conditions;
+	std::unique_ptr<const and_condition<country>> preconditions;
+	std::unique_ptr<const and_condition<country>> conditions;
 	std::unique_ptr<const and_condition<country>> completion_conditions;
 	decimillesimal_int completion_random_chance;
 	std::unique_ptr<const and_condition<country>> failure_conditions;

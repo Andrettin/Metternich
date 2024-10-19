@@ -8,7 +8,7 @@ namespace metternich {
 class site;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 template <typename scope_type>
 class modifier;
@@ -54,12 +54,12 @@ public:
 		return this->free_resource_improvement_level;
 	}
 
-	const condition<site> *get_conditions() const
+	const and_condition<site> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
 
-	const condition<site> *get_build_conditions() const
+	const and_condition<site> *get_build_conditions() const
 	{
 		return this->build_conditions.get();
 	}
@@ -77,8 +77,8 @@ private:
 	std::vector<const settlement_type *> base_settlement_types;
 	std::vector<const settlement_type *> upgraded_settlement_types;
 	int free_resource_improvement_level = 0;
-	std::unique_ptr<const condition<site>> conditions;
-	std::unique_ptr<const condition<site>> build_conditions;
+	std::unique_ptr<const and_condition<site>> conditions;
+	std::unique_ptr<const and_condition<site>> build_conditions;
 	std::unique_ptr<modifier<const site>> modifier;
 };
 

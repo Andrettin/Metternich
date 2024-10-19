@@ -8,11 +8,11 @@ namespace metternich {
 class character;
 
 template <typename upper_scope_type>
-class attacking_commander_condition final : public scope_condition<upper_scope_type, character>
+class attacking_commander_condition final : public scope_condition<upper_scope_type, character, read_only_context>
 {
 public:
 	explicit attacking_commander_condition(const gsml_operator condition_operator)
-		: scope_condition<upper_scope_type, character>(condition_operator)
+		: scope_condition<upper_scope_type, character, read_only_context>(condition_operator)
 	{
 	}
 

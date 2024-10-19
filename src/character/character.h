@@ -42,7 +42,7 @@ enum class character_role;
 enum class military_unit_category;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 template <typename scope_type>
 class effect_list;
@@ -271,7 +271,7 @@ public:
 		return this->obsolescence_technology;
 	}
 
-	const condition<country> *get_conditions() const
+	const and_condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -333,7 +333,7 @@ private:
 	std::vector<const trait *> traits;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
-	std::unique_ptr<const condition<country>> conditions;
+	std::unique_ptr<const and_condition<country>> conditions;
 	std::unique_ptr<const modifier<const country>> advisor_modifier;
 	std::unique_ptr<const effect_list<const country>> advisor_effects;
 	qunique_ptr<character_history> history;

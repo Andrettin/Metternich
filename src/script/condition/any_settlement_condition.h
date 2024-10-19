@@ -11,11 +11,11 @@
 namespace metternich {
 
 template <typename upper_scope_type>
-class any_settlement_condition final : public scope_condition_base<upper_scope_type, site>
+class any_settlement_condition final : public scope_condition_base<upper_scope_type, site, read_only_context>
 {
 public:
 	explicit any_settlement_condition(const gsml_operator condition_operator)
-		: scope_condition_base<upper_scope_type, site>(condition_operator)
+		: scope_condition_base<upper_scope_type, site, read_only_context>(condition_operator)
 	{
 	}
 

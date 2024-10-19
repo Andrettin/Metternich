@@ -9,11 +9,11 @@
 namespace metternich {
 
 template <typename scope_type>
-class any_global_population_unit_condition final : public scope_condition_base<scope_type, population_unit>
+class any_global_population_unit_condition final : public scope_condition_base<scope_type, population_unit, read_only_context>
 {
 public:
 	explicit any_global_population_unit_condition(const gsml_operator condition_operator)
-		: scope_condition_base<scope_type, population_unit>(condition_operator)
+		: scope_condition_base<scope_type, population_unit, read_only_context>(condition_operator)
 	{
 	}
 

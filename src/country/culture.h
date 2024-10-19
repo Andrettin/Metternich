@@ -9,7 +9,7 @@ class cultural_group;
 class population_unit;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 class culture final : public culture_base, public data_type<culture>
 {
@@ -42,7 +42,7 @@ public:
 		return this->derived_cultures;
 	}
 
-	const condition<population_unit> *get_derivation_conditions() const
+	const and_condition<population_unit> *get_derivation_conditions() const
 	{
 		return this->derivation_conditions.get();
 	}
@@ -53,7 +53,7 @@ signals:
 private:
 	QColor color;
 	std::vector<const culture *> derived_cultures;
-	std::unique_ptr<const condition<population_unit>> derivation_conditions;
+	std::unique_ptr<const and_condition<population_unit>> derivation_conditions;
 };
 
 }

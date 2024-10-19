@@ -205,7 +205,6 @@ set(script_SRCS
 	src/script/opinion_modifier_container.cpp
 	src/script/scripted_modifier_container.cpp
 	src/script/scripted_scoped_modifier.cpp
-	src/script/special_target_type.cpp
 	src/script/text_processor.cpp
 )
 source_group(script FILES ${script_SRCS})
@@ -214,9 +213,6 @@ set_source_files_properties(${script_SRCS} PROPERTIES UNITY_GROUP "script")
 set(script_condition_SRCS
 	src/script/condition/and_condition.cpp
 	src/script/condition/condition.cpp
-	src/script/condition/not_condition.cpp
-	src/script/condition/or_condition.cpp
-	src/script/condition/scripted_condition.cpp
 )
 source_group(script\\condition FILES ${script_condition_SRCS})
 set_source_files_properties(${script_condition_SRCS} PROPERTIES UNITY_GROUP "script_condition")
@@ -526,8 +522,6 @@ set(script_HDRS
 	src/script/scripted_province_modifier.h
 	src/script/scripted_scoped_modifier.h
 	src/script/scripted_site_modifier.h
-	src/script/special_target_type.h
-	src/script/target_variant.h
 	src/script/text_processor.h
 )
 source_group(script FILES ${script_HDRS})
@@ -597,9 +591,6 @@ set(script_condition_HDRS
 	src/script/condition/military_unit_domain_condition.h
 	src/script/condition/military_unit_type_condition.h
 	src/script/condition/near_water_condition.h
-	src/script/condition/not_condition.h
-	src/script/condition/numerical_condition.h
-	src/script/condition/or_condition.h
 	src/script/condition/owns_province_condition.h
 	src/script/condition/owns_site_condition.h
 	src/script/condition/population_scaled_commodity_condition.h
@@ -618,12 +609,9 @@ set(script_condition_HDRS
 	src/script/condition/root_character_condition.h
 	src/script/condition/ruler_condition.h
 	src/script/condition/ruler_scope_condition.h
-	src/script/condition/saved_scope_condition.h
-	src/script/condition/scripted_modifier_condition.h
-	src/script/condition/scope_condition.h
-	src/script/condition/scope_condition_base.h
 	src/script/condition/scripted_condition.h
 	src/script/condition/scripted_condition_condition.h
+	src/script/condition/scripted_modifier_condition.h
 	src/script/condition/settlement_condition.h
 	src/script/condition/settlement_type_condition.h
 	src/script/condition/source_character_condition.h
@@ -632,7 +620,6 @@ set(script_condition_HDRS
 	src/script/condition/subject_type_condition.h
 	src/script/condition/technology_condition.h
 	src/script/condition/terrain_condition.h
-	src/script/condition/tooltip_condition.h
 	src/script/condition/tradition_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h

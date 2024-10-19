@@ -14,7 +14,7 @@ class law_group;
 class technology;
 
 template <typename scope_type>
-class condition;
+class and_condition;
 
 template <typename scope_type>
 class modifier;
@@ -62,7 +62,7 @@ public:
 
 	QVariantList get_commodity_costs_qvariant_list() const;
 
-	const condition<country> *get_conditions() const
+	const and_condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -82,7 +82,7 @@ private:
 	const icon *icon = nullptr;
 	technology *required_technology = nullptr;
 	commodity_map<int> commodity_costs;
-	std::unique_ptr<const condition<country>> conditions;
+	std::unique_ptr<const and_condition<country>> conditions;
 	std::unique_ptr<const modifier<const country>> modifier;
 };
 

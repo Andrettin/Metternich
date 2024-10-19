@@ -281,7 +281,7 @@ void scoped_event_base<scope_type>::do_immediate_effects(scope_type *scope, cont
 template <typename scope_type>
 bool scoped_event_base<scope_type>::is_option_available(const int option_index, const read_only_context &ctx) const
 {
-	const condition<std::remove_const_t<scope_type>> *conditions = this->get_options().at(option_index)->get_conditions();
+	const and_condition<std::remove_const_t<scope_type>> *conditions = this->get_options().at(option_index)->get_conditions();
 
 	if (conditions == nullptr) {
 		return true;
