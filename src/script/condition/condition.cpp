@@ -392,13 +392,13 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	} else if (tag == "country") {
 		condition = std::make_unique<country_scope_condition<scope_type>>(condition_operator);
 	} else if (tag == "saved_character_scope") {
-		condition = std::make_unique<saved_scope_condition<scope_type, character, read_only_context>>(condition_operator);
+		condition = std::make_unique<saved_scope_condition<scope_type, character, read_only_context, metternich::condition<character>>>(condition_operator);
 	} else if (tag == "saved_country_scope") {
-		condition = std::make_unique<saved_scope_condition<scope_type, country, read_only_context>>(condition_operator);
+		condition = std::make_unique<saved_scope_condition<scope_type, country, read_only_context, metternich::condition<country>>>(condition_operator);
 	} else if (tag == "saved_province_scope") {
-		condition = std::make_unique<saved_scope_condition<scope_type, province, read_only_context>>(condition_operator);
+		condition = std::make_unique<saved_scope_condition<scope_type, province, read_only_context, metternich::condition<province>>>(condition_operator);
 	} else if (tag == "saved_site_scope") {
-		condition = std::make_unique<saved_scope_condition<scope_type, site, read_only_context>>(condition_operator);
+		condition = std::make_unique<saved_scope_condition<scope_type, site, read_only_context, metternich::condition<site>>>(condition_operator);
 	} else if (tag == "source_site") {
 		condition = std::make_unique<source_site_scope_condition<scope_type>>(condition_operator);
 	}
@@ -408,7 +408,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return condition;
 	}
 
-	return condition_base<scope_type, read_only_context>::from_gsml_scope(scope);
+	return condition_base<scope_type, read_only_context>::from_gsml_scope<metternich::condition<scope_type>>(scope);
 }
 
 template <typename scope_type>

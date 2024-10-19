@@ -7,11 +7,11 @@ namespace metternich {
 
 class site;
 
-class settlement_condition final : public scope_condition<population_unit, site, read_only_context>
+class settlement_condition final : public scope_condition<population_unit, site, read_only_context, condition<site>>
 {
 public:
 	explicit settlement_condition(const gsml_operator condition_operator)
-		: scope_condition<population_unit, site, read_only_context>(condition_operator)
+		: scope_condition<population_unit, site, read_only_context, condition<site>>(condition_operator)
 	{
 	}
 

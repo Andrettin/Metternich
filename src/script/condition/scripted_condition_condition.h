@@ -9,7 +9,7 @@ template <typename scope_type>
 class scripted_condition_condition final : public condition<scope_type>
 {
 public:
-	static const scripted_condition_base<scope_type, read_only_context> *get_scripted_condition(const std::string &identifier)
+	static const scripted_condition_base<scope_type, read_only_context, condition<scope_type>> *get_scripted_condition(const std::string &identifier)
 	{
 		if constexpr (std::is_same_v<scope_type, character>) {
 			return character_scripted_condition::get(identifier);
@@ -49,7 +49,7 @@ public:
 	}
 
 private:
-	const scripted_condition_base<scope_type, read_only_context> *scripted_condition = nullptr;
+	const scripted_condition_base<scope_type, read_only_context, condition<scope_type>> *scripted_condition = nullptr;
 };
 
 }

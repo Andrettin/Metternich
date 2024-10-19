@@ -2,6 +2,7 @@
 
 #include "database/data_entry.h"
 #include "database/data_type.h"
+#include "script/condition/condition.h"
 #include "script/condition/scripted_condition_base.h"
 
 namespace metternich {
@@ -13,7 +14,7 @@ class province;
 class site;
 struct read_only_context;
 
-class character_scripted_condition final : public data_entry, public data_type<character_scripted_condition>, public scripted_condition_base<character, read_only_context>
+class character_scripted_condition final : public data_entry, public data_type<character_scripted_condition>, public scripted_condition_base<character, read_only_context, condition<character>>
 {
 	Q_OBJECT
 
@@ -42,7 +43,7 @@ public:
 	}
 };
 
-class country_scripted_condition final : public data_entry, public data_type<country_scripted_condition>, public scripted_condition_base<country, read_only_context>
+class country_scripted_condition final : public data_entry, public data_type<country_scripted_condition>, public scripted_condition_base<country, read_only_context, condition<country>>
 {
 	Q_OBJECT
 
@@ -71,7 +72,7 @@ public:
 	}
 };
 
-class military_unit_scripted_condition final : public data_entry, public data_type<military_unit_scripted_condition>, public scripted_condition_base<military_unit, read_only_context>
+class military_unit_scripted_condition final : public data_entry, public data_type<military_unit_scripted_condition>, public scripted_condition_base<military_unit, read_only_context, condition<military_unit>>
 {
 	Q_OBJECT
 
@@ -100,7 +101,7 @@ public:
 	}
 };
 
-class population_unit_scripted_condition final : public data_entry, public data_type<population_unit_scripted_condition>, public scripted_condition_base<population_unit, read_only_context>
+class population_unit_scripted_condition final : public data_entry, public data_type<population_unit_scripted_condition>, public scripted_condition_base<population_unit, read_only_context, condition<population_unit>>
 {
 	Q_OBJECT
 
@@ -129,7 +130,7 @@ public:
 	}
 };
 
-class province_scripted_condition final : public data_entry, public data_type<province_scripted_condition>, public scripted_condition_base<province, read_only_context>
+class province_scripted_condition final : public data_entry, public data_type<province_scripted_condition>, public scripted_condition_base<province, read_only_context, condition<province>>
 {
 	Q_OBJECT
 
@@ -158,7 +159,7 @@ public:
 	}
 };
 
-class site_scripted_condition final : public data_entry, public data_type<site_scripted_condition>, public scripted_condition_base<site, read_only_context>
+class site_scripted_condition final : public data_entry, public data_type<site_scripted_condition>, public scripted_condition_base<site, read_only_context, condition<site>>
 {
 	Q_OBJECT
 
