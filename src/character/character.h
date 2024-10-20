@@ -1,7 +1,7 @@
 #pragma once
 
+#include "character/character_base.h"
 #include "database/data_type.h"
-#include "database/named_data_entry.h"
 #include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
 
@@ -13,7 +13,6 @@ Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/phenotype.h")
 Q_MOC_INCLUDE("technology/technology.h")
-Q_MOC_INCLUDE("time/calendar.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace archimedes {
@@ -50,16 +49,11 @@ class effect_list;
 template <typename scope_type>
 class modifier;
 
-class character final : public named_data_entry, public data_type<character>
+class character final : public character_base, public data_type<character>
 {
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::dynasty* dynasty MEMBER dynasty NOTIFY changed)
-	Q_PROPERTY(QString surname READ get_surname_qstring NOTIFY changed)
-	Q_PROPERTY(std::string nickname MEMBER nickname NOTIFY changed)
-	Q_PROPERTY(std::string epithet MEMBER epithet NOTIFY changed)
-	Q_PROPERTY(QString full_name READ get_full_name_qstring NOTIFY changed)
-	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_role role MEMBER role READ get_role NOTIFY changed)
 	Q_PROPERTY(const metternich::character_type* character_type MEMBER character_type READ get_character_type NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
@@ -68,14 +62,8 @@ class character final : public named_data_entry, public data_type<character>
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_settlement MEMBER home_settlement NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_site MEMBER home_site NOTIFY changed)
-	Q_PROPERTY(archimedes::gender gender MEMBER gender NOTIFY changed)
-	Q_PROPERTY(metternich::character* father MEMBER father NOTIFY changed)
-	Q_PROPERTY(metternich::character* mother MEMBER mother NOTIFY changed)
-	Q_PROPERTY(QDate start_date MEMBER start_date READ get_start_date NOTIFY changed)
-	Q_PROPERTY(QDate end_date MEMBER end_date READ get_end_date NOTIFY changed)
-	Q_PROPERTY(QDate birth_date MEMBER birth_date READ get_birth_date NOTIFY changed)
-	Q_PROPERTY(QDate death_date MEMBER death_date READ get_death_date NOTIFY changed)
-	Q_PROPERTY(archimedes::calendar* vital_date_calendar MEMBER vital_date_calendar)
+	Q_PROPERTY(const metternich::character* father READ get_father WRITE set_father NOTIFY changed)
+	Q_PROPERTY(const metternich::character* mother READ get_mother WRITE set_mother NOTIFY changed)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -115,61 +103,9 @@ public:
 		return this->game_data.get();
 	}
 
-	virtual std::string get_scope_name() const override
-	{
-		return this->get_full_name();
-	}
-
 	const dynasty *get_dynasty() const
 	{
 		return this->dynasty;
-	}
-
-	const std::string &get_surname() const
-	{
-		return this->surname;
-	}
-
-	Q_INVOKABLE void set_surname(const std::string &surname)
-	{
-		this->surname = surname;
-	}
-
-	QString get_surname_qstring() const
-	{
-		return QString::fromStdString(this->get_surname());
-	}
-
-	const std::string &get_nickname() const
-	{
-		return this->nickname;
-	}
-
-	const std::string &get_epithet() const
-	{
-		return this->epithet;
-	}
-
-	std::string get_full_name() const;
-
-	QString get_full_name_qstring() const
-	{
-		return QString::fromStdString(this->get_full_name());
-	}
-
-	const std::string &get_description() const
-	{
-		return this->description;
-	}
-
-	Q_INVOKABLE void set_description(const std::string &description)
-	{
-		this->description = description;
-	}
-
-	QString get_description_qstring() const
-	{
-		return QString::fromStdString(this->get_description());
 	}
 
 	character_role get_role() const
@@ -211,39 +147,14 @@ public:
 		return this->home_settlement;
 	}
 
-	gender get_gender() const
-	{
-		return this->gender;
-	}
-
 	const character *get_father() const
 	{
-		return this->father;
+		return static_cast<const character *>(character_base::get_father());
 	}
 
 	const character *get_mother() const
 	{
-		return this->mother;
-	}
-
-	const QDate &get_start_date() const
-	{
-		return this->start_date;
-	}
-
-	const QDate &get_end_date() const
-	{
-		return this->end_date;
-	}
-
-	const QDate &get_birth_date() const
-	{
-		return this->birth_date;
-	}
-
-	const QDate &get_death_date() const
-	{
-		return this->death_date;
+		return static_cast<const character *>(character_base::get_mother());
 	}
 
 	character_attribute get_primary_attribute() const;
@@ -308,10 +219,6 @@ signals:
 
 private:
 	metternich::dynasty *dynasty = nullptr;
-	std::string surname;
-	std::string nickname;
-	std::string epithet;
-	std::string description;
 	metternich::character_role role;
 	const metternich::character_type *character_type = nullptr;
 	metternich::culture *culture = nullptr;
@@ -320,14 +227,6 @@ private:
 	metternich::portrait *portrait = nullptr;
 	const site *home_settlement = nullptr;
 	const site *home_site = nullptr;
-	archimedes::gender gender;
-	character *father = nullptr;
-	character *mother = nullptr;
-	QDate start_date;
-	QDate end_date;
-	QDate birth_date;
-	QDate death_date;
-	calendar *vital_date_calendar = nullptr; //the calendar for the birth, death, start and end dates
 	int skill = 0;
 	std::vector<const country *> rulable_countries;
 	std::vector<const trait *> traits;

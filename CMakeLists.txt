@@ -542,7 +542,6 @@ set(script_condition_HDRS
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/available_food_condition.h
 	src/script/condition/available_health_condition.h
-	src/script/condition/birth_year_condition.h
 	src/script/condition/can_gain_building_class_condition.h
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/capital_condition.h
@@ -564,7 +563,6 @@ set(script_condition_HDRS
 	src/script/condition/discovered_region_condition.h
 	src/script/condition/event_condition.h
 	src/script/condition/game_rule_condition.h
-	src/script/condition/gender_condition.h
 	src/script/condition/government_type_condition.h
 	src/script/condition/has_building_class_condition.h
 	src/script/condition/has_building_condition.h
