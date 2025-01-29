@@ -2,6 +2,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "database/defines.h"
 #include "economy/commodity.h"
 #include "population/profession.h"
 #include "script/modifier_effect/modifier_effect.h"

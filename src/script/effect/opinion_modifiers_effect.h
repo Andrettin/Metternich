@@ -104,9 +104,10 @@ public:
 		scope->get_game_data()->remove_opinion_modifier(this->get_target_scope(ctx), this->modifier);
 	}
 
-	virtual std::string get_addition_string(const scope_type *scope, const read_only_context &ctx) const override
+	virtual std::string get_addition_string(const scope_type *scope, const read_only_context &ctx, const size_t indent) const override
 	{
 		Q_UNUSED(scope);
+		Q_UNUSED(indent);
 
 		return std::format("{} Opinion towards {} for {} turns", number::to_signed_string(this->modifier->get_value()), this->get_target_name(ctx), this->get_duration());
 	}

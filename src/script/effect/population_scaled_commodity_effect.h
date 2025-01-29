@@ -73,9 +73,10 @@ public:
 		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), std::to_string(this->get_quantity(scope)));
 	}
 
-	virtual std::string get_addition_string(const country *scope, const read_only_context &ctx) const override
+	virtual std::string get_addition_string(const country *scope, const read_only_context &ctx, const size_t indent) const override
 	{
 		Q_UNUSED(ctx);
+		Q_UNUSED(indent);
 
 		return std::format("Gain {} {}", std::to_string(this->get_quantity(scope)), string::highlight(this->commodity->get_name()));
 	}

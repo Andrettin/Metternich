@@ -75,6 +75,8 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
 
 public:
+	using singleton<defines>::get;
+
 	defines();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;

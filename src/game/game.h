@@ -7,6 +7,7 @@
 Q_MOC_INCLUDE("country/country.h")
 
 namespace archimedes {
+	class era;
 	class gsml_data;
 	class gsml_property;
 }
@@ -16,7 +17,6 @@ namespace metternich {
 class army;
 class character;
 class country;
-class era;
 class game_rules;
 class province;
 class scenario;

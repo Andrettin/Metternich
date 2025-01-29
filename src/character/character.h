@@ -62,8 +62,8 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_settlement MEMBER home_settlement NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_site MEMBER home_site NOTIFY changed)
-	Q_PROPERTY(const metternich::character* father READ get_father WRITE set_father NOTIFY changed)
-	Q_PROPERTY(const metternich::character* mother READ get_mother WRITE set_mother NOTIFY changed)
+	Q_PROPERTY(metternich::character* father READ get_father WRITE set_father NOTIFY changed)
+	Q_PROPERTY(metternich::character* mother READ get_mother WRITE set_mother NOTIFY changed)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -137,6 +137,11 @@ public:
 		return this->phenotype;
 	}
 
+	virtual bool is_immortal() const override
+	{
+		return false;
+	}
+
 	const metternich::portrait *get_portrait() const
 	{
 		return this->portrait;
@@ -147,14 +152,14 @@ public:
 		return this->home_settlement;
 	}
 
-	const character *get_father() const
+	character *get_father() const
 	{
-		return static_cast<const character *>(character_base::get_father());
+		return static_cast<character *>(character_base::get_father());
 	}
 
-	const character *get_mother() const
+	character *get_mother() const
 	{
-		return static_cast<const character *>(character_base::get_mother());
+		return static_cast<character *>(character_base::get_mother());
 	}
 
 	character_attribute get_primary_attribute() const;

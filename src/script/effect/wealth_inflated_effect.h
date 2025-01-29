@@ -43,9 +43,10 @@ public:
 		return std::format("Set {} to {}", string::highlight("Wealth"), scope->get_game_data()->get_inflated_value(this->quantity));
 	}
 
-	virtual std::string get_addition_string(const country *scope, const read_only_context &ctx) const override
+	virtual std::string get_addition_string(const country *scope, const read_only_context &ctx, const size_t indent) const override
 	{
 		Q_UNUSED(ctx);
+		Q_UNUSED(indent);
 
 		return std::format("Gain {} {}", scope->get_game_data()->get_inflated_value(this->quantity), string::highlight("Wealth"));
 	}

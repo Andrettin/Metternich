@@ -250,12 +250,6 @@ set(technology_SRCS
 source_group(technology FILES ${technology_SRCS})
 set_source_files_properties(${technology_SRCS} PROPERTIES UNITY_GROUP "technology")
 
-set(time_SRCS
-	src/time/era.cpp
-)
-source_group(time FILES ${time_SRCS})
-set_source_files_properties(${time_SRCS} PROPERTIES UNITY_GROUP "time")
-
 set(ui_SRCS
 	src/ui/icon.cpp
 	src/ui/icon_base.cpp
@@ -321,7 +315,6 @@ set(metternich_SRCS
 	${script_modifier_effect_SRCS}
 	${spell_SRCS}
 	${technology_SRCS}
-	${time_SRCS}
 	${ui_SRCS}
 	${unit_SRCS}
 	${xbrz_SRCS}
@@ -758,11 +751,6 @@ set(technology_HDRS
 )
 source_group(technology FILES ${technology_HDRS})
 
-set(time_HDRS
-	src/time/era.h
-)
-source_group(time FILES ${time_HDRS})
-
 set(ui_HDRS
 	src/ui/icon.h
 	src/ui/icon_base.h
@@ -830,7 +818,6 @@ set(metternich_HDRS
 	${script_modifier_effect_HDRS}
 	${spell_HDRS}
 	${technology_HDRS}
-	${time_HDRS}
 	${ui_HDRS}
 	${unit_HDRS}
 	${xbrz_HDRS}
@@ -920,6 +907,16 @@ target_link_libraries(metternich PUBLIC archimedes)
 
 target_precompile_headers(metternich_main REUSE_FROM archimedes)
 target_precompile_headers(metternich_test REUSE_FROM archimedes)
+
+if(WIN32)
+	set_target_properties(metternich_main 
+		PROPERTIES VS_DEBUGGER_ENVIRONMENT "PATH=%PATH%;${Qt6_DIR}/../../../bin;"
+	)
+	
+	set_target_properties(metternich_main 
+		PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir).."
+	)
+endif()
 
 set_target_properties(metternich_main PROPERTIES OUTPUT_NAME "metternich")
 

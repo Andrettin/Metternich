@@ -3,10 +3,13 @@
 #include "map/province_container.h"
 #include "map/terrain_type_container.h"
 
+namespace archimedes {
+	class era;
+}
+
 namespace metternich {
 
 class country;
-class era;
 class region;
 enum class elevation_type;
 enum class forestation_type;
