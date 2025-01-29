@@ -3,9 +3,6 @@
 #include "script/modifier_effect/modifier_effect.h"
 
 #include "character/character.h"
-#include "database/defines.h"
-#include "database/gsml_data.h"
-#include "database/gsml_property.h"
 #include "script/modifier_effect/advisor_cost_modifier_effect.h"
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
@@ -59,8 +56,6 @@
 #include "script/modifier_effect/unit_upgrade_cost_modifier_effect.h"
 #include "script/modifier_effect/warship_cost_modifier_effect.h"
 #include "script/modifier_effect/wonder_cost_efficiency_modifier_effect.h"
-#include "util/number_util.h"
-#include "util/string_util.h"
 
 namespace metternich {
 
@@ -307,35 +302,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	database::process_gsml_data(modifier_effect, scope);
 
 	return modifier_effect;
-}
-
-template <typename scope_type>
-void modifier_effect<scope_type>::process_gsml_property(const gsml_property &property)
-{
-	throw std::runtime_error(std::format("Invalid property for \"{}\" effect: \"{}\".", this->get_identifier(), property.get_key()));
-}
-
-template <typename scope_type>
-void modifier_effect<scope_type>::process_gsml_scope(const gsml_data &scope)
-{
-	throw std::runtime_error(std::format("Invalid scope for \"{}\" effect: \"{}\".", this->get_identifier(), scope.get_tag()));
-}
-
-template <typename scope_type>
-centesimal_int modifier_effect<scope_type>::get_multiplied_value(const centesimal_int &multiplier) const
-{
-	return this->value * multiplier;
-}
-
-template <typename scope_type>
-std::string modifier_effect<scope_type>::get_string(const centesimal_int &multiplier, const bool ignore_decimals) const
-{
-	const centesimal_int value = this->get_multiplied_value(multiplier);
-	const std::string number_str = ignore_decimals && !this->are_decimals_relevant() ? number::to_signed_string(value.to_int()) : value.to_signed_string();
-	const QColor &number_color = this->is_negative(multiplier) ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
-	const std::string colored_number_str = string::colored(number_str + (this->is_percent() ? "%" : ""), number_color);
-
-	return std::format("{}: {}", this->get_base_string(), colored_number_str);
 }
 
 template class modifier_effect<const character>;
