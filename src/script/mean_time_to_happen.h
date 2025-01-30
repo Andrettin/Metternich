@@ -15,6 +15,7 @@ namespace metternich {
 class character;
 class country;
 class province;
+class site;
 
 template <typename scope_type>
 class factor;
@@ -40,5 +41,6 @@ private:
 extern template class mean_time_to_happen<character>;
 extern template class mean_time_to_happen<country>;
 extern template class mean_time_to_happen<province>;
+extern template class mean_time_to_happen<site>;
 
 }
