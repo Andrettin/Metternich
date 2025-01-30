@@ -29,6 +29,7 @@
 #include "script/effect/create_military_unit_effect.h"
 #include "script/effect/create_transporter_effect.h"
 #include "script/effect/delayed_effect.h"
+#include "script/effect/else_effect.h"
 #include "script/effect/event_effect.h"
 #include "script/effect/free_technologies_effect.h"
 #include "script/effect/gain_spell_scroll_effect.h"
@@ -148,11 +149,11 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		return std::make_unique<tooltip_effect<scope_type>>(value, effect_operator);
 	}
 
-	throw std::runtime_error("Invalid property effect: \"" + key + "\".");
+	throw std::runtime_error(std::format("Invalid property effect: \"{}\".", key));
 }
 
 template <typename scope_type>
-std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gsml_data &scope)
+std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gsml_data &scope, const effect *previous_effect)
 {
 	const std::string &effect_identifier = scope.get_tag();
 	const gsml_operator effect_operator = scope.get_operator();
@@ -210,6 +211,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		effect = std::make_unique<hidden_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "if") {
 		effect = std::make_unique<if_effect<scope_type>>(effect_operator);
+	} else if (effect_identifier == "else") {
+		effect = std::make_unique<else_effect<scope_type>>(effect_operator, previous_effect);
 	} else if (effect_identifier == "random") {
 		effect = std::make_unique<random_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "random_global_population_unit") {
@@ -233,7 +236,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	}
 
 	if (effect == nullptr) {
-		throw std::runtime_error("Invalid scope effect: \"" + effect_identifier + "\".");
+		throw std::runtime_error(std::format("Invalid scope effect: \"{}\".", effect_identifier));
 	}
 
 	database::process_gsml_data(effect, scope);

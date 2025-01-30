@@ -27,7 +27,8 @@ void effect_list<scope_type>::process_gsml_property(const gsml_property &propert
 template <typename scope_type>
 void effect_list<scope_type>::process_gsml_scope(const gsml_data &scope)
 {
-	this->effects.push_back(effect<scope_type>::from_gsml_scope(scope));
+	const effect<scope_type> *previous_effect = this->effects.empty() ? nullptr : this->effects.back().get();
+	this->effects.push_back(effect<scope_type>::from_gsml_scope(scope, previous_effect));
 }
 
 template <typename scope_type>
