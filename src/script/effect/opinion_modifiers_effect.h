@@ -116,7 +116,7 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return "Lose the " + this->modifier->get_name() + " opinion modifier towards " + this->get_target_name(ctx);
+		return std::format("Lose the {} opinion modifier towards {}", this->modifier->get_name(), this->get_target_name(ctx));
 	}
 
 private:
