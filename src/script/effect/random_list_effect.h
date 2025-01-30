@@ -44,9 +44,9 @@ public:
 		this->effects->do_effects(scope, ctx);
 	}
 
-	std::string get_effects_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const
+	std::string get_effects_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix, const bool indent_first_line) const
 	{
-		std::string effects_string = this->effects->get_effects_string(scope, ctx, indent, prefix);
+		std::string effects_string = this->effects->get_effects_string(scope, ctx, indent, prefix, indent_first_line);
 
 		if (!effects_string.empty()) {
 			return effects_string;
@@ -111,7 +111,7 @@ public:
 		if (total_weight == 0) {
 			return std::string();
 		} else if (entry_weights.size() == 1) {
-			return (*entry_weights.begin()).first->get_effects_string(scope, ctx, indent, prefix);
+			return (*entry_weights.begin()).first->get_effects_string(scope, ctx, indent, prefix, false);
 		}
 
 		std::string str = "One of these will occur:\n";
@@ -130,7 +130,7 @@ public:
 			str += std::string(indent + 1, '\t');
 
 			const int chance = weight * 100 / total_weight;
-			const std::string effects_string = entry->get_effects_string(scope, ctx, indent + 2, prefix);
+			const std::string effects_string = entry->get_effects_string(scope, ctx, indent + 2, prefix, true);
 			str += std::to_string(chance) + "% chance of:\n" + effects_string;
 		}
 
