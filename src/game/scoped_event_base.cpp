@@ -247,6 +247,10 @@ void scoped_event_base<scope_type>::check() const
 		this->get_conditions()->check_validity();
 	}
 
+	if (this->immediate_effects != nullptr) {
+		this->immediate_effects->check();
+	}
+
 	for (const std::unique_ptr<event_option<scope_type>> &option : this->get_options()) {
 		option->check();
 	}
