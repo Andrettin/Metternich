@@ -10,6 +10,7 @@
 #include "game/character_event.h"
 #include "game/country_event.h"
 #include "game/province_event.h"
+#include "game/site_event.h"
 #include "script/effect/scripted_effect.h"
 #include "util/assert_util.h"
 
@@ -50,6 +51,8 @@ void delayed_effect_instance<scope_type>::process_gsml_property(const gsml_prope
 			this->scripted_effect = population_unit_scripted_effect::get(value);
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
 			this->scripted_effect = province_scripted_effect::get(value);
+		} else if constexpr (std::is_same_v<scope_type, const site>) {
+			this->scripted_effect = site_scripted_effect::get(value);
 		} else {
 			assert_throw(false);
 		}
@@ -60,6 +63,8 @@ void delayed_effect_instance<scope_type>::process_gsml_property(const gsml_prope
 			this->event = country_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
 			this->event = province_event::get(value);
+		} else if constexpr (std::is_same_v<scope_type, const site>) {
+			this->event = site_event::get(value);
 		} else {
 			assert_throw(false);
 		}
@@ -121,5 +126,6 @@ void delayed_effect_instance<scope_type>::do_effects()
 template class delayed_effect_instance<const character>;
 template class delayed_effect_instance<const country>;
 template class delayed_effect_instance<const province>;
+template class delayed_effect_instance<const site>;
 
 }

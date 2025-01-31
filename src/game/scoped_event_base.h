@@ -9,6 +9,7 @@ namespace metternich {
 class character;
 class country;
 class province;
+class site;
 enum class event_trigger;
 struct context;
 struct read_only_context;
@@ -162,5 +163,6 @@ private:
 extern template class scoped_event_base<const character>;
 extern template class scoped_event_base<const country>;
 extern template class scoped_event_base<const province>;
+extern template class scoped_event_base<const site>;
 
 }

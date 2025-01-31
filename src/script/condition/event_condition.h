@@ -3,6 +3,7 @@
 #include "game/character_event.h"
 #include "game/country_event.h"
 #include "game/province_event.h"
+#include "game/site_event.h"
 #include "script/condition/condition.h"
 #include "util/assert_util.h"
 
@@ -21,6 +22,8 @@ public:
 			this->event = country_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, province>) {
 			this->event = province_event::get(value);
+		} else if constexpr (std::is_same_v<scope_type, site>) {
+			this->event = site_event::get(value);
 		} else {
 			assert_throw(false);
 		}

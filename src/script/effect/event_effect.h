@@ -3,6 +3,7 @@
 #include "game/character_event.h"
 #include "game/country_event.h"
 #include "game/province_event.h"
+#include "game/site_event.h"
 #include "script/effect/effect.h"
 #include "util/assert_util.h"
 
@@ -20,6 +21,8 @@ public:
 			this->event = country_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
 			this->event = province_event::get(value);
+		} else if constexpr (std::is_same_v<scope_type, const site>) {
+			this->event = site_event::get(value);
 		} else {
 			assert_throw(false);
 		}
@@ -34,7 +37,7 @@ public:
 	virtual void check() const override
 	{
 		if (this->event == nullptr) {
-			throw std::runtime_error("\"" + this->get_class_identifier() + "\" effect has no event set for it.");
+			throw std::runtime_error(std::format("\"{}\" effect has no event set for it.", this->get_class_identifier()));
 		}
 	}
 
@@ -54,7 +57,7 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return "Trigger the " + this->event->get_name() + " event";
+		return std::format("Trigger the {} event", this->event->get_name());
 	}
 
 private:

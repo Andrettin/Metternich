@@ -11,6 +11,7 @@ class character;
 class country;
 class province;
 class trait;
+class site;
 struct context;
 struct read_only_context;
 
@@ -63,5 +64,6 @@ private:
 extern template class event_option<const character>;
 extern template class event_option<const country>;
 extern template class event_option<const province>;
+extern template class event_option<const site>;
 
 }

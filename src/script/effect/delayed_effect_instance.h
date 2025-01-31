@@ -63,5 +63,6 @@ private:
 extern template class delayed_effect_instance<const character>;
 extern template class delayed_effect_instance<const country>;
 extern template class delayed_effect_instance<const province>;
+extern template class delayed_effect_instance<const site>;
 
 }

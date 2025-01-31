@@ -104,6 +104,8 @@ std::string event_option<scope_type>::get_effects_string(const read_only_context
 			scope = std::get<const country *>(ctx.root_scope);
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
 			scope = std::get<const province *>(ctx.root_scope);
+		} else if constexpr (std::is_same_v<scope_type, const site>) {
+			scope = std::get<const site *>(ctx.root_scope);
 		} else {
 			assert_throw(false);
 		}
@@ -133,5 +135,6 @@ void event_option<scope_type>::do_effects(scope_type *scope, context &ctx) const
 template class event_option<const character>;
 template class event_option<const country>;
 template class event_option<const province>;
+template class event_option<const site>;
 
 }

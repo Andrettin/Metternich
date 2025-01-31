@@ -415,6 +415,7 @@ set(game_HDRS
 	src/game/province_event.h
 	src/game/scenario.h
 	src/game/scoped_event_base.h
+	src/game/site_event.h
 )
 source_group(game FILES ${game_HDRS})
 

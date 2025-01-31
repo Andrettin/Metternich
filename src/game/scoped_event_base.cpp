@@ -12,6 +12,8 @@
 #include "game/game.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/delayed_effect_instance.h"
@@ -33,6 +35,8 @@ const scope_type *scoped_event_base<scope_type>::get_scope_from_context(const re
 		return std::get<const country *>(ctx.root_scope);
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
 		return std::get<const province *>(ctx.root_scope);
+	} else if constexpr (std::is_same_v<scope_type, const site>) {
+		return std::get<const site *>(ctx.root_scope);
 	}
 }
 
@@ -44,6 +48,8 @@ bool scoped_event_base<scope_type>::is_player_scope(const scope_type *scope)
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		return scope == game::get()->get_player_country();
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
+		return scope->get_game_data()->get_owner() == game::get()->get_player_country();
+	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		return scope->get_game_data()->get_owner() == game::get()->get_player_country();
 	}
 }
@@ -349,5 +355,6 @@ void scoped_event_base<scope_type>::fire(const scope_type *scope, const context 
 template class scoped_event_base<const character>;
 template class scoped_event_base<const country>;
 template class scoped_event_base<const province>;
+template class scoped_event_base<const site>;
 
 }

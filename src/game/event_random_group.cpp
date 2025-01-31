@@ -23,6 +23,7 @@ void event_random_group::initialize()
 			this->character_events.push_back(nullptr);
 			this->country_events.push_back(nullptr);
 			this->province_events.push_back(nullptr);
+			this->site_events.push_back(nullptr);
 		}
 	}
 

@@ -69,6 +69,8 @@ public:
 			return this->country_events;
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
 			return this->province_events;
+		} else if constexpr (std::is_same_v<scope_type, const site>) {
+			return this->site_events;
 		}
 	}
 
@@ -87,6 +89,11 @@ public:
 		this->province_events.push_back(event);
 	}
 
+	void add_event(const scoped_event_base<const site> *event)
+	{
+		this->site_events.push_back(event);
+	}
+
 private:
 	event_trigger trigger;
 	int none_weight = 0;
@@ -95,6 +102,7 @@ private:
 	std::vector<const scoped_event_base<const character> *> character_events;
 	std::vector<const scoped_event_base<const country> *> country_events;
 	std::vector<const scoped_event_base<const province> *> province_events;
+	std::vector<const scoped_event_base<const site> *> site_events;
 };
 
 }
