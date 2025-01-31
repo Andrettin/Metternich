@@ -8,6 +8,7 @@
 #include "game/game.h"
 #include "script/context.h"
 #include "util/assert_util.h"
+#include "util/exception_util.h"
 
 namespace metternich {
 
@@ -33,12 +34,16 @@ event_instance::event_instance(const metternich::event *event, const QString &na
 
 void event_instance::choose_option(const int displayed_option_index)
 {
-	if (this->event->get_option_count() > 0) {
-		const int option_index = this->option_indexes.at(displayed_option_index);
-		this->event->do_option_effects(option_index, this->ctx);
-	}
+	try {
+		if (this->event->get_option_count() > 0) {
+			const int option_index = this->option_indexes.at(displayed_option_index);
+			this->event->do_option_effects(option_index, this->ctx);
+		}
 
-	engine_interface::get()->remove_event_instance(this);
+		engine_interface::get()->remove_event_instance(this);
+	} catch (...) {
+		exception::report(std::current_exception());
+	}
 }
 
 }
