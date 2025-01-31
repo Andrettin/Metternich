@@ -118,6 +118,7 @@ public:
 		return this->mean_time_to_happen.get();
 	}
 
+	virtual bool is_hidden() const = 0;
 	virtual bool fires_only_once() const = 0;
 
 	const and_condition<std::remove_const_t<scope_type>> *get_conditions() const

@@ -24,6 +24,7 @@ class event : public named_data_entry
 	Q_PROPERTY(metternich::event_trigger trigger MEMBER trigger READ get_trigger)
 	Q_PROPERTY(metternich::event_random_group* random_group MEMBER random_group)
 	Q_PROPERTY(bool random READ is_random WRITE set_random)
+	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden)
 	Q_PROPERTY(bool only_once MEMBER only_once READ fires_only_once)
 
 public:
@@ -82,6 +83,11 @@ public:
 
 	virtual void set_random_weight(const int weight) = 0;
 
+	bool is_hidden() const
+	{
+		return this->hidden;
+	}
+
 	bool fires_only_once() const
 	{
 		return this->only_once;
@@ -104,6 +110,7 @@ private:
 	std::string description;
 	event_trigger trigger;
 	event_random_group *random_group = nullptr;
+	bool hidden = false;
 	bool only_once = false;
 };
 

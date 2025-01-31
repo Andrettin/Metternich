@@ -330,7 +330,7 @@ void scoped_event_base<scope_type>::fire(const scope_type *scope, const context 
 
 	this->do_immediate_effects(scope, event_ctx);
 
-	if (scoped_event_base::is_player_scope(scope)) {
+	if (scoped_event_base::is_player_scope(scope) && !this->is_hidden()) {
 		this->create_instance(event_ctx);
 	} else {
 		//the event doesn't need to be displayed for AIs; instead, it is processed immediately

@@ -75,6 +75,11 @@ public:
 		scoped_event_base::set_random_weight(weight);
 	}
 
+	virtual bool is_hidden() const override
+	{
+		return event::is_hidden();
+	}
+
 	virtual bool fires_only_once() const override
 	{
 		return event::fires_only_once();
