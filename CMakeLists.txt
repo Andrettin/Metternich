@@ -105,7 +105,6 @@ set(game_SRCS
 	src/game/event_instance.cpp
 	src/game/event_option.cpp
 	src/game/event_random_group.cpp
-	src/game/event_trigger.cpp
 	src/game/game.cpp
 	src/game/game_rules.cpp
 	src/game/scenario.cpp

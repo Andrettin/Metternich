@@ -1,19 +1,39 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class event_trigger {
 	none,
+	per_turn_pulse,
 	quarterly_pulse,
 	yearly_pulse,
 	ruler_death,
-	ruins_explored
+	site_visited,
+	area_visited
 };
 
+inline std::string_view get_event_trigger_name(const event_trigger event_trigger)
+{
+	switch (event_trigger) {
+		case event_trigger::per_turn_pulse:
+			return "Per Turn Pulse";
+		case event_trigger::quarterly_pulse:
+			return "Quarterly Pulse";
+		case event_trigger::yearly_pulse:
+			return "Yearly Pulse";
+		case event_trigger::ruler_death:
+			return "Ruler Death";
+		case event_trigger::site_visited:
+			return "Site Visited";
+		case event_trigger::area_visited:
+			return "Area Visited";
+		default:
+			break;
+	}
+
+	throw std::runtime_error(std::format("Invalid event trigger: \"{}\".", static_cast<int>(event_trigger)));
 }
 
-extern template class archimedes::enum_converter<metternich::event_trigger>;
+}
 
 Q_DECLARE_METATYPE(metternich::event_trigger)

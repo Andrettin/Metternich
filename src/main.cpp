@@ -153,6 +153,8 @@ int main(int argc, char **argv)
 		enum_converter<temperature_type>();
 		enum_converter<trait_type>();
 
+		database::get()->register_enum<event_trigger>();
+
 		QCoro::Qml::registerTypes();
 
 		qmlRegisterAnonymousType<building_type>("", 1);

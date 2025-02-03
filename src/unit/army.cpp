@@ -113,7 +113,7 @@ void army::do_turn()
 		context ctx(this->get_country());
 		ctx.source_scope = target_site;
 		ctx.attacking_army = this;
-		country_event::check_events_for_scope(country, event_trigger::ruins_explored, ctx);
+		country_event::check_events_for_scope(country, event_trigger::site_visited, ctx);
 
 		target_site_game_data->set_improvement(improvement_slot::main, nullptr);
 	}
