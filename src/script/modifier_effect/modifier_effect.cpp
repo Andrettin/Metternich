@@ -13,6 +13,7 @@
 #include "script/modifier_effect/capital_commodity_output_modifier_effect.h"
 #include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/cavalry_cost_modifier_effect.h"
+#include "script/modifier_effect/character_attribute_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_adjacent_terrain_modifier_effect.h"
@@ -57,6 +58,8 @@
 #include "script/modifier_effect/warship_cost_modifier_effect.h"
 #include "script/modifier_effect/wonder_cost_efficiency_modifier_effect.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 template <typename scope_type>
@@ -69,6 +72,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 	if constexpr (std::is_same_v<scope_type, const country>) {
 		static const std::string building_capacity_modifier_suffix = "_capacity";
+		} else if (magic_enum::enum_cast<character_attribute>(key).has_value()) {
+			return std::make_unique<character_attribute_modifier_effect>(magic_enum::enum_cast<character_attribute>(key).value(), value);
 		static const std::string capital_commodity_bonus_prefix = "capital_";
 		static const std::string commodity_bonus_per_population_suffix = "_bonus_per_population";
 		static const std::string commodity_per_building_infix = "_per_";
