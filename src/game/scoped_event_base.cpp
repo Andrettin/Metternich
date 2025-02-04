@@ -70,7 +70,7 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 	scoped_event_base::check_random_events_for_scope(scope, ctx, scoped_event_base::get_trigger_random_events(trigger), 0);
 	scoped_event_base::check_random_event_groups_for_scope(scope, trigger, ctx);
 
-	if (trigger == event_trigger::quarterly_pulse) {
+	if (trigger == event_trigger::per_turn_pulse) {
 		scoped_event_base::check_mtth_events_for_scope(scope);
 	}
 }

@@ -75,12 +75,14 @@ void province_game_data::do_turn()
 void province_game_data::do_events()
 {
 	const bool is_last_turn_of_year = game::get()->get_year() != game::get()->get_next_date().year();
-
 	if (is_last_turn_of_year) {
 		province_event::check_events_for_scope(this->province, event_trigger::yearly_pulse);
 	}
 
-	province_event::check_events_for_scope(this->province, event_trigger::quarterly_pulse);
+	const bool is_last_turn_of_quarter = is_last_turn_of_year || (game::get()->get_date().month() - 1) / 4 != (game::get()->get_next_date().month() - 1) / 4;
+	if (is_last_turn_of_quarter) {
+		province_event::check_events_for_scope(this->province, event_trigger::quarterly_pulse);
+	}
 }
 
 void province_game_data::do_ai_turn()
