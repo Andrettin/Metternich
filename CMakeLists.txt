@@ -541,6 +541,7 @@ set(script_condition_HDRS
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/capital_condition.h
 	src/script/condition/cavalry_condition.h
+	src/script/condition/character_attribute_condition.h
 	src/script/condition/character_role_condition.h
 	src/script/condition/character_type_condition.h
 	src/script/condition/coastal_condition.h

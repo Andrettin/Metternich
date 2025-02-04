@@ -30,6 +30,7 @@
 #include "script/condition/can_have_trait_condition.h"
 #include "script/condition/capital_condition.h"
 #include "script/condition/cavalry_condition.h"
+#include "script/condition/character_attribute_condition.h"
 #include "script/condition/character_role_condition.h"
 #include "script/condition/character_type_condition.h"
 #include "script/condition/coastal_condition.h"
@@ -111,6 +112,8 @@
 #include "unit/military_unit.h"
 #include "util/string_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 template <typename scope_type>
@@ -139,6 +142,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<primary_attribute_condition>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
+		} else if (magic_enum::enum_cast<character_attribute>(key).has_value()) {
+			return std::make_unique<character_attribute_condition>(magic_enum::enum_cast<character_attribute>(key).value(), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, country>) {
 		static const std::string population_scaled_commodity_prefix = "population_scaled_";
