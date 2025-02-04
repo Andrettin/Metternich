@@ -511,6 +511,7 @@ set(script_HDRS
 	src/script/opinion_modifier.h
 	src/script/opinion_modifier_container.h
 	src/script/scripted_character_modifier.h
+	src/script/scripted_country_modifier.h
 	src/script/scripted_modifier.h
 	src/script/scripted_modifier_container.h
 	src/script/scripted_province_modifier.h

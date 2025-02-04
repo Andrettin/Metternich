@@ -6,7 +6,9 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "script/effect/effect.h"
+#include "script/modifier.h"
 #include "script/scripted_character_modifier.h"
+#include "script/scripted_country_modifier.h"
 #include "script/scripted_province_modifier.h"
 #include "script/scripted_site_modifier.h"
 
@@ -16,7 +18,7 @@ template <typename scope_type>
 class scripted_modifiers_effect final : public effect<scope_type>
 {
 public:
-	using scripted_modifier_type = std::conditional_t<std::is_same_v<scope_type, const character>, scripted_character_modifier, std::conditional_t<std::is_same_v<scope_type, const province>, scripted_province_modifier, std::conditional_t<std::is_same_v<scope_type, const site>, scripted_site_modifier, void>>>;
+	using scripted_modifier_type = std::conditional_t<std::is_same_v<scope_type, const character>, scripted_character_modifier, std::conditional_t<std::is_same_v<scope_type, const country>, scripted_country_modifier, std::conditional_t<std::is_same_v<scope_type, const province>, scripted_province_modifier, std::conditional_t<std::is_same_v<scope_type, const site>, scripted_site_modifier, void>>>>;
 
 	explicit scripted_modifiers_effect(const gsml_operator effect_operator)
 		: effect<scope_type>(effect_operator)
@@ -83,9 +85,15 @@ public:
 		scope->get_game_data()->remove_scripted_modifier(this->modifier);
 	}
 
-	virtual std::string get_addition_string() const override
+	virtual std::string get_addition_string(const scope_type *scope, const read_only_context &ctx, const size_t indent) const override
 	{
-		return std::format("Gain the {} modifier for {} turns", string::highlight(this->modifier->get_name()), std::to_string(this->get_duration()));
+		Q_UNUSED(ctx);
+
+		const int duration = this->get_duration();
+
+		std::string str = std::format("Gain the {} modifier for {} {}:\n", string::highlight(this->modifier->get_name()), duration, duration > 1 ? "turns" : "turn");
+		str += this->modifier->get_modifier()->get_string(scope, 1, indent + 1);
+		return str;
 	}
 
 	virtual std::string get_subtraction_string() const override

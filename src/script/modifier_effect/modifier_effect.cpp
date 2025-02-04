@@ -296,7 +296,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	}
 
 	if (modifier_effect == nullptr) {
-		throw std::runtime_error("Invalid scope modifier effect: \"" + tag + "\".");
+		throw std::runtime_error(std::format("Invalid scope modifier effect: \"{}\".", tag));
 	}
 
 	database::process_gsml_data(modifier_effect, scope);

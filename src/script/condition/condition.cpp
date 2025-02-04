@@ -241,7 +241,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		}
 	}
 	
-	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
+	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
 		if (key == "scripted_modifier") {
 			return std::make_unique<scripted_modifier_condition<scope_type>>(value, condition_operator);
 		}
