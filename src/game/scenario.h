@@ -20,6 +20,7 @@ class scenario final : public named_data_entry, public data_type<scenario>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::scenario* parent_scenario MEMBER parent_scenario NOTIFY changed)
 	Q_PROPERTY(QDate start_date MEMBER start_date READ get_start_date NOTIFY changed)
 	Q_PROPERTY(int start_year READ get_start_year NOTIFY changed)
 	Q_PROPERTY(archimedes::calendar* start_date_calendar MEMBER start_date_calendar)
@@ -37,6 +38,15 @@ public:
 
 	static void initialize_all();
 
+	static const std::vector<const scenario *> &get_top_level_scenarios()
+	{
+		return scenario::top_level_scenarios;
+	}
+
+private:
+	static inline std::vector<const scenario *> top_level_scenarios;
+
+public:
 	explicit scenario(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}
@@ -44,6 +54,16 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
+
+	const scenario *get_parent_scenario() const
+	{
+		return this->parent_scenario;
+	}
+
+	const std::vector<const scenario *> &get_child_scenarios() const
+	{
+		return this->child_scenarios;
+	}
 
 	const QDate &get_start_date() const
 	{
@@ -96,6 +116,8 @@ signals:
 	void changed();
 
 private:
+	scenario *parent_scenario = nullptr;
+	std::vector<const scenario *> child_scenarios;
 	QDate start_date;
 	calendar *start_date_calendar = nullptr; //the calendar for the start date
 	archimedes::timeline *timeline = nullptr; //the timeline in which the scenario is set

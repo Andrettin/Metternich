@@ -13,13 +13,22 @@ void scenario::initialize_all()
 {
 	data_type::initialize_all();
 
-	scenario::sort_instances([](const scenario *a, const scenario *b) {
+	const auto sort_function = [](const scenario *a, const scenario *b) {
 		if (a->get_start_date() != b->get_start_date()) {
 			return a->get_start_date() < b->get_start_date();
 		} else {
 			return a->get_identifier() < b->get_identifier();
 		}
-	});
+	};
+
+	scenario::sort_instances(sort_function);
+	std::sort(scenario::top_level_scenarios.begin(), scenario::top_level_scenarios.end(), sort_function);
+
+	for (scenario *scenario : scenario::get_all()) {
+		if (!scenario->child_scenarios.empty()) {
+			std::sort(scenario->child_scenarios.begin(), scenario->child_scenarios.end(), sort_function);
+		}
+	}
 }
 
 void scenario::process_gsml_scope(const gsml_data &scope)
@@ -38,6 +47,14 @@ void scenario::process_gsml_scope(const gsml_data &scope)
 
 void scenario::initialize()
 {
+	if (!this->is_hidden()) {
+		if (this->get_parent_scenario() != nullptr) {
+			this->parent_scenario->child_scenarios.push_back(this);
+		} else {
+			scenario::top_level_scenarios.push_back(this);
+		}
+	}
+
 	if (this->start_date_calendar != nullptr) {
 		if (!this->start_date_calendar->is_initialized()) {
 			this->start_date_calendar->initialize();
