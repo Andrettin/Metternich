@@ -4112,6 +4112,10 @@ void country_game_data::set_ruler(const character *ruler)
 		this->get_ruler()->get_game_data()->set_country(this->country);
 	}
 
+	if (this->country == game::get()->get_player_country()) {
+		game::get()->set_player_character(ruler);
+	}
+
 	if (game::get()->is_running()) {
 		emit ruler_changed();
 

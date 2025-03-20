@@ -44,7 +44,7 @@ template <typename scope_type>
 bool scoped_event_base<scope_type>::is_player_scope(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		return false;
+		return scope == game::get()->get_player_character();
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		return scope == game::get()->get_player_country();
 	} else if constexpr (std::is_same_v<scope_type, const province>) {

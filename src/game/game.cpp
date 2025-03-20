@@ -223,6 +223,7 @@ QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
 		}
 
 		this->apply_history(scenario);
+
 		co_await this->on_setup_finished();
 	} catch (...) {
 		exception::report(std::current_exception());
@@ -284,6 +285,7 @@ void game::stop()
 	this->set_running(false);
 	this->clear();
 	map::get()->clear();
+	this->set_player_character(nullptr);
 	this->set_player_country(nullptr);
 }
 
