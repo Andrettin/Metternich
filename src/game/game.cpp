@@ -1697,7 +1697,11 @@ void game::increment_turn()
 std::string game::get_date_string() const
 {
 	if (defines::get()->get_months_per_turn(this->get_year()) % 12 != 0) {
-		return std::format("{}, {}", date::get_month_season_string(this->get_date().month()), date::year_to_labeled_string(this->get_year()));
+		if (defines::get()->get_months_per_turn(this->get_year()) == 3) {
+			return std::format("{}, {}", date::get_month_season_string(this->get_date().month()), date::year_to_labeled_string(this->get_year()));
+		} else {
+			return std::format("{}, {}", date::get_month_name(this->get_date().month()), date::year_to_labeled_string(this->get_year()));
+		}
 	} else {
 		return date::year_to_labeled_string(this->get_year());
 	}
