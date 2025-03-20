@@ -873,7 +873,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Failed to apply history for scenario \"" + scenario->get_identifier() + "\"."));
+		std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for scenario \"{}\".", scenario->get_identifier())));
 	}
 }
 
@@ -981,7 +981,7 @@ void game::apply_sites()
 			for (const auto &[improvement_slot, improvement] : site_history->get_improvements()) {
 				if (improvement != nullptr) {
 					if (improvement->get_resource() != nullptr) {
-						assert_throw(site->get_type() == site_type::resource || site->get_type() == site_type::settlement);
+						assert_throw(site->get_type() == site_type::resource || site->is_settlement());
 
 						if (tile->get_resource() == nullptr) {
 							throw std::runtime_error("Failed to set resource improvement for tile for site \"" + site->get_identifier() + "\", as it has no resource.");
@@ -1535,7 +1535,7 @@ QCoro::Task<void> game::do_turn_coro()
 		}
 
 		for (const country *country : this->get_countries()) {
-			//do country events after processing the turn for each country, so that e.g. events won't refer to a population unit scope which no longer exists by the time the player gets to choose and option, because the population unit died due to starvation
+			//do country events after processing the turn for each country, so that e.g. events won't refer to a scope which no longer exists by the time the player gets to choose an option
 			country->get_game_data()->do_events();
 
 			//restore old bids and offers, if possible
