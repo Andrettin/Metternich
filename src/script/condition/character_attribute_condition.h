@@ -28,7 +28,7 @@ public:
 
 	virtual std::string get_value_name() const override
 	{
-		return this->attribute->get_name();
+		return std::string(get_character_attribute_name(this->attribute));
 	}
 
 private:

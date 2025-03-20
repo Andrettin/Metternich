@@ -141,7 +141,6 @@ int main(int argc, char **argv)
 		enum_converter<cultural_group_rank>();
 		enum_converter<diplomacy_state>();
 		enum_converter<elevation_type>();
-		enum_converter<event_trigger>();
 		enum_converter<food_type>();
 		enum_converter<forestation_type>();
 		enum_converter<gender>();

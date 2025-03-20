@@ -185,17 +185,7 @@ public:
 		return this->player_country;
 	}
 
-	void set_player_country(const country *country)
-	{
-		if (country == this->get_player_country()) {
-			return;
-		}
-
-		this->player_country = country;
-		emit player_country_changed();
-
-		this->set_player_character(country ? country->get_game_data()->get_ruler() : nullptr);
-	}
+	void set_player_country(const country *country);
 
 	Q_INVOKABLE int get_price(const metternich::commodity *commodity) const;
 	void set_price(const commodity *commodity, const int value);

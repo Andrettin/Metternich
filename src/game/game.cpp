@@ -1809,6 +1809,18 @@ void game::calculate_great_power_ranks()
 	}
 }
 
+void game::set_player_country(const country *country)
+{
+	if (country == this->get_player_country()) {
+		return;
+	}
+
+	this->player_country = country;
+	emit player_country_changed();
+
+	this->set_player_character(country ? country->get_game_data()->get_ruler() : nullptr);
+}
+
 int game::get_price(const commodity *commodity) const
 {
 	const auto find_iterator = this->prices.find(commodity);

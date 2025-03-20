@@ -68,6 +68,7 @@
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "script/opinion_modifier.h"
+#include "script/scripted_country_modifier.h"
 #include "technology/technology.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
@@ -4084,6 +4085,91 @@ void country_game_data::choose_next_belief()
 	}
 }
 
+QVariantList country_game_data::get_scripted_modifiers_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
+}
+
+bool country_game_data::has_scripted_modifier(const scripted_country_modifier *modifier) const
+{
+	return this->get_scripted_modifiers().contains(modifier);
+}
+
+void country_game_data::add_scripted_modifier(const scripted_country_modifier *modifier, const int duration)
+{
+	const read_only_context ctx(this->country);
+
+	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
+
+	if (modifier->get_modifier() != nullptr) {
+		this->apply_modifier(modifier->get_modifier(), 1);
+	}
+
+	if (game::get()->is_running()) {
+		emit scripted_modifiers_changed();
+	}
+}
+
+void country_game_data::remove_scripted_modifier(const scripted_country_modifier *modifier)
+{
+	this->scripted_modifiers.erase(modifier);
+
+	if (modifier->get_modifier() != nullptr) {
+		this->apply_modifier(modifier->get_modifier(), -1);
+	}
+
+	if (game::get()->is_running()) {
+		emit scripted_modifiers_changed();
+	}
+}
+
+void country_game_data::decrement_scripted_modifiers()
+{
+	std::vector<const scripted_country_modifier *> modifiers_to_remove;
+	for (auto &[modifier, duration] : this->scripted_modifiers) {
+		--duration;
+
+		if (duration == 0) {
+			modifiers_to_remove.push_back(modifier);
+		}
+	}
+
+	for (const scripted_country_modifier *modifier : modifiers_to_remove) {
+		this->remove_scripted_modifier(modifier);
+	}
+
+	//decrement opinion modifiers
+	country_map<std::vector<const opinion_modifier *>> opinion_modifiers_to_remove;
+
+	for (auto &[country, opinion_modifier_map] : this->opinion_modifiers) {
+		for (auto &[modifier, duration] : opinion_modifier_map) {
+			if (duration == -1) {
+				//eternal
+				continue;
+			}
+
+			--duration;
+
+			if (duration == 0) {
+				opinion_modifiers_to_remove[country].push_back(modifier);
+			}
+		}
+	}
+
+	for (const auto &[country, opinion_modifiers] : opinion_modifiers_to_remove) {
+		for (const opinion_modifier *modifier : opinion_modifiers) {
+			this->remove_opinion_modifier(country, modifier);
+		}
+	}
+}
+
+void country_game_data::apply_modifier(const modifier<const metternich::country> *modifier, const int multiplier)
+{
+	assert_throw(modifier != nullptr);
+
+	modifier->apply(this->country, multiplier);
+}
+
 void country_game_data::check_characters()
 {
 	this->check_ruler();
@@ -5580,33 +5666,6 @@ void country_game_data::set_population_type_militancy_modifier(const population_
 		this->population_type_militancy_modifiers.erase(type);
 	} else {
 		this->population_type_militancy_modifiers[type] = value;
-	}
-}
-
-void country_game_data::decrement_scripted_modifiers()
-{
-	//decrement opinion modifiers
-	country_map<std::vector<const opinion_modifier *>> opinion_modifiers_to_remove;
-
-	for (auto &[country, opinion_modifier_map] : this->opinion_modifiers) {
-		for (auto &[modifier, duration] : opinion_modifier_map) {
-			if (duration == -1) {
-				//eternal
-				continue;
-			}
-
-			--duration;
-
-			if (duration == 0) {
-				opinion_modifiers_to_remove[country].push_back(modifier);
-			}
-		}
-	}
-
-	for (const auto &[country, opinion_modifiers] : opinion_modifiers_to_remove) {
-		for (const opinion_modifier *modifier : opinion_modifiers) {
-			this->remove_opinion_modifier(country, modifier);
-		}
 	}
 }
 

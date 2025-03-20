@@ -17,6 +17,7 @@
 #include "population/population_type_container.h"
 #include "population/profession_container.h"
 #include "script/opinion_modifier_container.h"
+#include "script/scripted_modifier_container.h"
 #include "technology/technology_container.h"
 #include "unit/military_unit_type_container.h"
 #include "unit/promotion_container.h"
@@ -69,6 +70,7 @@ class profession;
 class province;
 class region;
 class religion;
+class scripted_country_modifier;
 class site;
 class subject_type;
 class tradition;
@@ -86,6 +88,9 @@ enum class technology_category;
 enum class transporter_category;
 enum class transporter_stat;
 struct read_only_context;
+
+template <typename scope_type>
+class modifier;
 
 class country_game_data final : public QObject
 {
@@ -152,6 +157,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int tradition_cost READ get_tradition_cost NOTIFY traditions_changed)
 	Q_PROPERTY(const metternich::tradition* next_tradition READ get_next_tradition WRITE set_next_tradition NOTIFY next_tradition_changed)
 	Q_PROPERTY(const metternich::tradition* next_belief READ get_next_belief WRITE set_next_belief NOTIFY next_belief_changed)
+	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
@@ -1365,6 +1371,24 @@ public:
 
 	void choose_next_belief();
 
+	const scripted_country_modifier_map<int> &get_scripted_modifiers() const
+	{
+		return this->scripted_modifiers;
+	}
+
+	QVariantList get_scripted_modifiers_qvariant_list() const;
+	bool has_scripted_modifier(const scripted_country_modifier *modifier) const;
+	void add_scripted_modifier(const scripted_country_modifier *modifier, const int duration);
+	void remove_scripted_modifier(const scripted_country_modifier *modifier);
+	void decrement_scripted_modifiers();
+
+	void apply_modifier(const modifier<const metternich::country> *modifier, const int multiplier = 1);
+
+	void remove_modifier(const modifier<const metternich::country> *modifier)
+	{
+		this->apply_modifier(modifier, -1);
+	}
+
 	void check_characters();
 
 	const character *get_ruler() const
@@ -2176,8 +2200,6 @@ public:
 		this->diplomatic_penalty_for_expansion_modifier += change;
 	}
 
-	void decrement_scripted_modifiers();
-
 	Q_INVOKABLE bool is_tile_explored(const QPoint &tile_pos) const;
 	bool is_province_discovered(const province *province) const;
 
@@ -2505,6 +2527,7 @@ signals:
 	void tradition_adopted(const tradition *tradition);
 	void next_belief_changed();
 	void belief_adopted(const tradition *belief);
+	void scripted_modifiers_changed();
 	void ruler_changed();
 	void advisors_changed();
 	void next_advisor_changed();
@@ -2595,6 +2618,7 @@ private:
 	tradition_set traditions;
 	const tradition *next_tradition = nullptr;
 	const tradition *next_belief = nullptr;
+	scripted_country_modifier_map<int> scripted_modifiers;
 	const character *ruler = nullptr;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;
