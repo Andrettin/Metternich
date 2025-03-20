@@ -149,6 +149,12 @@ void game::process_gsml_scope(const gsml_data &scope)
 			database::process_gsml_data(delayed_effect, delayed_effect_data);
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
+	} else if (tag == "site_delayed_effects") {
+		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
+			auto delayed_effect = std::make_unique<delayed_effect_instance<const site>>();
+			database::process_gsml_data(delayed_effect, delayed_effect_data);
+			this->add_delayed_effect(std::move(delayed_effect));
+		});
 	} else {
 		throw std::runtime_error("Invalid game data scope: \"" + scope.get_tag() + "\".");
 	}
