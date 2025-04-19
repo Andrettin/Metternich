@@ -25,6 +25,8 @@ namespace metternich {
 
 defines::defines() : min_log_level(log_level::warning)
 {
+	defines_base::instance = this;
+
 	connect(this, &defines::changed, this, &defines::scaled_tile_size_changed);
 	connect(preferences::get(), &preferences::scale_factor_changed, this, &defines::scaled_tile_size_changed);
 }
