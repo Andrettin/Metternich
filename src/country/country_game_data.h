@@ -3,7 +3,6 @@
 #include "country/consulate_container.h"
 #include "country/country_container.h"
 #include "country/law_group_container.h"
-#include "country/policy_container.h"
 #include "country/tradition_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
@@ -32,7 +31,6 @@ Q_MOC_INCLUDE("country/government_type.h")
 Q_MOC_INCLUDE("country/journal_entry.h")
 Q_MOC_INCLUDE("country/law.h")
 Q_MOC_INCLUDE("country/law_group.h")
-Q_MOC_INCLUDE("country/policy.h")
 Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("country/subject_type.h")
 Q_MOC_INCLUDE("country/tradition.h")
@@ -152,7 +150,6 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
 	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY laws_changed)
-	Q_PROPERTY(QVariantList policy_values READ get_policy_values_qvariant_list NOTIFY policy_values_changed)
 	Q_PROPERTY(QVariantList available_traditions READ get_available_traditions_qvariant_list NOTIFY traditions_changed)
 	Q_PROPERTY(int tradition_cost READ get_tradition_cost NOTIFY traditions_changed)
 	Q_PROPERTY(const metternich::tradition* next_tradition READ get_next_tradition WRITE set_next_tradition NOTIFY next_tradition_changed)
@@ -1269,42 +1266,6 @@ public:
 	}
 
 	void check_laws();
-
-	const policy_map<int> &get_policy_values() const
-	{
-		return this->policy_values;
-	}
-
-	QVariantList get_policy_values_qvariant_list() const;
-
-	Q_INVOKABLE int get_policy_value(const metternich::policy *policy) const
-	{
-		const auto find_iterator = this->get_policy_values().find(policy);
-
-		if (find_iterator != this->get_policy_values().end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void set_policy_value(const policy *policy, const int value);
-	
-	void change_policy_value(const policy *policy, const int change)
-	{
-		this->set_policy_value(policy, this->get_policy_value(policy) + change);
-	}
-
-	Q_INVOKABLE int get_min_policy_value(const metternich::policy *policy) const;
-	Q_INVOKABLE int get_max_policy_value(const metternich::policy *policy) const;
-
-	Q_INVOKABLE bool can_change_policy_value(const metternich::policy *policy, const int change) const;
-	Q_INVOKABLE void do_policy_value_change(const metternich::policy *policy, const int change);
-
-	Q_INVOKABLE int get_policy_value_change_cost_modifier() const
-	{
-		return 100 + (this->get_population_unit_count() - 1);
-	}
 
 	const tradition_set &get_traditions() const
 	{
@@ -2521,7 +2482,6 @@ signals:
 	void technology_researched(const technology *technology);
 	void government_type_changed();
 	void laws_changed();
-	void policy_values_changed();
 	void traditions_changed();
 	void next_tradition_changed();
 	void tradition_adopted(const tradition *tradition);
@@ -2614,7 +2574,6 @@ private:
 	int free_technology_count = 0;
 	const metternich::government_type *government_type = nullptr;
 	law_group_map<const law *> laws;
-	policy_map<int> policy_values;
 	tradition_set traditions;
 	const tradition *next_tradition = nullptr;
 	const tradition *next_belief = nullptr;

@@ -22,7 +22,6 @@
 #include "country/journal_entry.h"
 #include "country/law.h"
 #include "country/law_group.h"
-#include "country/policy.h"
 #include "country/religion.h"
 #include "country/tradition.h"
 #include "country/tradition_category.h"
@@ -3666,78 +3665,6 @@ void country_game_data::check_laws()
 			}
 		}
 	}
-}
-
-QVariantList country_game_data::get_policy_values_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_policy_values());
-}
-
-void country_game_data::set_policy_value(const policy *policy, const int value)
-{
-	if (value == this->get_policy_value(policy)) {
-		return;
-	}
-
-	if (value < this->get_min_policy_value(policy)) {
-		this->set_policy_value(policy, this->get_min_policy_value(policy));
-		return;
-	} else if (value > this->get_max_policy_value(policy)) {
-		this->set_policy_value(policy, this->get_max_policy_value(policy));
-		return;
-	}
-
-	const int old_value = this->get_policy_value(policy);
-	policy->apply_modifier(this->country, old_value, -1);
-
-	if (value == 0) {
-		this->policy_values.erase(policy);
-	} else {
-		this->policy_values[policy] = value;
-	}
-
-	policy->apply_modifier(this->country, value, 1);
-
-	if (game::get()->is_running()) {
-		emit policy_values_changed();
-	}
-}
-
-int country_game_data::get_min_policy_value(const metternich::policy *policy) const
-{
-	return this->get_government_type()->get_min_policy_value(policy);
-}
-
-int country_game_data::get_max_policy_value(const metternich::policy *policy) const
-{
-	return this->get_government_type()->get_max_policy_value(policy);
-}
-
-bool country_game_data::can_change_policy_value(const metternich::policy *policy, const int change) const
-{
-	const int new_value = this->get_policy_value(policy) + change;
-	if (new_value < this->get_min_policy_value(policy)) {
-		return false;
-	} else if (new_value > this->get_max_policy_value(policy)) {
-		return false;
-	}
-
-	for (const auto &[commodity, cost] : policy->get_change_commodity_costs()) {
-		if (this->get_stored_commodity(commodity) < (cost * this->get_policy_value_change_cost_modifier() / 100)) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-void country_game_data::do_policy_value_change(const policy *policy, const int change)
-{
-	for (const auto &[commodity, cost] : policy->get_change_commodity_costs()) {
-		this->change_stored_commodity(commodity, -cost * this->get_policy_value_change_cost_modifier() / 100);
-	}
-
-	this->change_policy_value(policy, change);
 }
 
 std::vector<const tradition *> country_game_data::get_available_traditions() const

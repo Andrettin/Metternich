@@ -63,8 +63,6 @@ set(country_SRCS
 	src/country/law.cpp
 	src/country/law_group.cpp
 	src/country/law_group_container.cpp
-	src/country/policy.cpp
-	src/country/policy_container.cpp
 	src/country/religion.cpp
 	src/country/religion_base.cpp
 	src/country/religion_container.cpp
@@ -364,8 +362,6 @@ set(country_HDRS
 	src/country/law.h
 	src/country/law_group.h
 	src/country/law_group_container.h
-	src/country/policy.h
-	src/country/policy_container.h
 	src/country/religion.h
 	src/country/religion_base.h
 	src/country/religion_container.h
@@ -655,7 +651,6 @@ set(script_effect_HDRS
 	src/script/effect/migrate_to_effect.h
 	src/script/effect/militancy_effect.h
 	src/script/effect/opinion_modifiers_effect.h
-	src/script/effect/policy_effect.h
 	src/script/effect/population_scaled_commodity_effect.h
 	src/script/effect/random_effect.h
 	src/script/effect/random_global_population_unit_effect.h

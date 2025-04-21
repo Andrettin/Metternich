@@ -2,7 +2,6 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
-#include "country/policy_container.h"
 
 Q_MOC_INCLUDE("country/government_group.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -68,9 +67,6 @@ public:
 		return this->conditions.get();
 	}
 
-	int get_min_policy_value(const policy *policy) const;
-	int get_max_policy_value(const policy *policy) const;
-
 signals:
 	void changed();
 
@@ -80,8 +76,6 @@ private:
 	std::unique_ptr<const and_condition<country>> conditions;
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;
-	policy_map<int> min_policy_values;
-	policy_map<int> max_policy_values;
 };
 
 }

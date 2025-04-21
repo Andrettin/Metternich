@@ -6,7 +6,6 @@
 #include "character/character_game_data.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
-#include "country/policy.h"
 #include "database/database.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -40,7 +39,6 @@
 #include "script/effect/migrate_to_effect.h"
 #include "script/effect/militancy_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
-#include "script/effect/policy_effect.h"
 #include "script/effect/population_scaled_commodity_effect.h"
 #include "script/effect/random_effect.h"
 #include "script/effect/random_global_population_unit_effect.h"
@@ -97,8 +95,6 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<wealth_inflated_effect>(value, effect_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);
-		} else if (policy::try_get(key) != nullptr) {
-			return std::make_unique<policy_effect>(policy::get(key), value, effect_operator);
 		} else if (key.starts_with(population_scaled_commodity_prefix) && commodity::try_get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size()));
 			return std::make_unique<population_scaled_commodity_effect>(commodity, value, effect_operator);

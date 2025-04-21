@@ -20,7 +20,6 @@
 #include "country/journal_entry.h"
 #include "country/law.h"
 #include "country/law_group.h"
-#include "country/policy.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -180,7 +179,6 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<law_group>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<map_template>("", 1);
-		qmlRegisterAnonymousType<policy>("", 1);
 		qmlRegisterAnonymousType<population>("", 1);
 		qmlRegisterAnonymousType<population_type>("", 1);
 		qmlRegisterAnonymousType<portrait>("", 1);

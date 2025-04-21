@@ -4,7 +4,6 @@
 
 #include "country/country_tier.h"
 #include "country/government_group.h"
-#include "country/policy.h"
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
@@ -117,26 +116,6 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "ruler_title_names") {
 		government_type::process_ruler_title_name_scope(this->ruler_title_names, scope);
-	} else if (tag == "min_policy_values") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			const policy *policy = policy::get(key);
-			const int value_int = std::stoi(value);
-			assert_throw(value_int >= policy::min_value);
-			this->min_policy_values[policy] = value_int;
-		});
-	} else if (tag == "max_policy_values") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			const policy *policy = policy::get(key);
-			const int value_int = std::stoi(value);
-			assert_throw(value_int <= policy::max_value);
-			this->max_policy_values[policy] = value_int;
-		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -183,26 +162,6 @@ const std::string &government_type::get_ruler_title_name(const country_tier tier
 	}
 
 	return this->get_group()->get_ruler_title_name(tier, gender);
-}
-
-int government_type::get_min_policy_value(const policy *policy) const
-{
-	const auto find_iterator = this->min_policy_values.find(policy);
-	if (find_iterator != this->min_policy_values.end()) {
-		return find_iterator->second;
-	}
-
-	return policy::min_value;
-}
-
-int government_type::get_max_policy_value(const policy *policy) const
-{
-	const auto find_iterator = this->max_policy_values.find(policy);
-	if (find_iterator != this->max_policy_values.end()) {
-		return find_iterator->second;
-	}
-
-	return policy::max_value;
 }
 
 }
