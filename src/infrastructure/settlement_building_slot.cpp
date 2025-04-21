@@ -344,6 +344,20 @@ QString settlement_building_slot::get_modifier_string() const
 	for (const auto &[commodity, bonus] : building_commodity_bonuses) {
 		const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
 
+		const size_t find_pos = settlement_modifier_str.find(base_string);
+		if (find_pos != std::string::npos) {
+			const size_t number_start_pos = settlement_modifier_str.find('>', find_pos) + 2;
+			const size_t number_end_pos = settlement_modifier_str.find('<', number_start_pos);
+
+			if (settlement_modifier_str.at(number_end_pos - 1) != '%') {
+				const std::string number_str = settlement_modifier_str.substr(number_start_pos, number_end_pos - number_start_pos);
+				const int new_number = std::stoi(number_str) + bonus;
+				settlement_modifier_str.replace(number_start_pos, number_end_pos - number_start_pos, std::to_string(new_number));
+
+				continue;
+			}
+		}
+
 		if (!settlement_modifier_str.empty()) {
 			settlement_modifier_str += "\n";
 		}
