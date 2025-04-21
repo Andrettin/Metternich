@@ -947,10 +947,14 @@ void map::initialize_diplomatic_map()
 {
 	const int min_tile_scale = defines::get()->get_min_diplomatic_map_tile_scale();
 
-	QSize image_size = map::min_diplomatic_map_image_size * preferences::get()->get_scale_factor();
+	const QSize min_diplomatic_map_image_size = map::min_diplomatic_map_image_size * preferences::get()->get_scale_factor();
 	const QSize min_scaled_map_size = this->get_size() * min_tile_scale;
-	if (min_scaled_map_size.width() > image_size.width() || min_scaled_map_size.height() > image_size.height()) {
-		image_size = min_scaled_map_size;
+
+	QSize image_size = min_scaled_map_size;
+	int tile_scale = min_tile_scale;
+	while (image_size.width() < min_diplomatic_map_image_size.width() || image_size.height() < min_diplomatic_map_image_size.height()) {
+		++tile_scale;
+		image_size = this->get_size() * tile_scale;
 	}
 
 	if (image_size != this->diplomatic_map_image_size) {
