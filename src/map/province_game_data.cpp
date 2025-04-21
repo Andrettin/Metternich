@@ -328,6 +328,10 @@ bool province_game_data::produces_commodity(const commodity *commodity) const
 		}
 	}
 
+	if (this->province->get_provincial_capital() != nullptr && this->province->get_provincial_capital()->get_game_data()->produces_commodity(commodity)) {
+		return true;
+	}
+
 	return false;
 }
 
@@ -737,7 +741,8 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 {
 	for (const QPoint &tile_pos : this->get_resource_tiles()) {
 		const tile *tile = map::get()->get_tile(tile_pos);
-		const metternich::commodity *tile_resource_commodity = tile->get_resource()->get_commodity();
+		const metternich::resource *tile_resource = tile->get_resource();
+		const metternich::commodity *tile_resource_commodity = tile_resource->get_commodity();
 
 		if (tile_resource_commodity == commodity) {
 			return true;

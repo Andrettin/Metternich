@@ -18,7 +18,7 @@ public:
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "commodity";
+		static const std::string class_identifier = "produces_commodity";
 		return class_identifier;
 	}
 
