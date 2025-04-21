@@ -35,8 +35,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_OBJECT
 
 	Q_PROPERTY(archimedes::log_level min_log_level MEMBER min_log_level READ get_min_log_level NOTIFY changed)
-	Q_PROPERTY(QColor green_text_color MEMBER green_text_color READ get_green_text_color NOTIFY changed)
-	Q_PROPERTY(QColor red_text_color MEMBER red_text_color READ get_red_text_color NOTIFY changed)
 	Q_PROPERTY(QSize tile_size MEMBER tile_size READ get_tile_size NOTIFY changed)
 	Q_PROPERTY(QSize scaled_tile_size READ get_scaled_tile_size NOTIFY scaled_tile_size_changed)
 	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn NOTIFY changed)
@@ -85,16 +83,6 @@ public:
 	log_level get_min_log_level() const
 	{
 		return this->min_log_level;
-	}
-
-	const QColor &get_green_text_color() const
-	{
-		return this->green_text_color;
-	}
-
-	const QColor &get_red_text_color() const
-	{
-		return this->red_text_color;
 	}
 
 	const QSize &get_tile_size() const
@@ -381,8 +369,6 @@ signals:
 
 private:
 	log_level min_log_level;
-	QColor green_text_color;
-	QColor red_text_color;
 	QSize tile_size = QSize(64, 64);
 	int default_months_per_turn = 3;
 	std::map<int, int> months_per_turn_from_year;
