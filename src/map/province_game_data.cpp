@@ -29,7 +29,6 @@
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_unit.h"
-#include "population/profession.h"
 #include "script/context.h"
 #include "script/modifier.h"
 #include "script/scripted_province_modifier.h"
@@ -66,8 +65,6 @@ void province_game_data::do_turn()
 	for (const site *site : this->get_sites()) {
 		site->get_game_data()->do_turn();
 	}
-
-	this->check_employment();
 
 	this->decrement_scripted_modifiers();
 }
@@ -748,102 +745,6 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 	}
 
 	return false;
-}
-
-std::vector<employment_location *> province_game_data::get_employment_locations() const
-{
-	std::vector<employment_location *> employment_locations;
-
-	for (const QPoint &tile_pos : this->get_resource_tiles()) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-		const site *resource_site = tile->get_site();
-		site_game_data *resource_site_game_data = resource_site->get_game_data();
-
-		if (resource_site_game_data->get_employment_capacity() > 0) {
-			employment_locations.push_back(resource_site_game_data);
-		}
-	}
-
-	const site_game_data *provincial_capital_game_data = this->province->get_provincial_capital()->get_game_data();
-
-	for (const qunique_ptr<settlement_building_slot> &building_slot : provincial_capital_game_data->get_building_slots()) {
-		if (building_slot->get_employment_capacity() > 0) {
-			employment_locations.push_back(building_slot.get());
-		}
-	}
-
-	return employment_locations;
-}
-
-void province_game_data::check_employment()
-{
-	const std::vector<employment_location *> employment_locations = this->get_employment_locations();
-
-	std::vector<population_unit *> unemployed_population_units;
-
-	for (population_unit *population_unit : this->population_units) {
-		if (population_unit->is_unemployed()) {
-			unemployed_population_units.push_back(population_unit);
-		}
-	}
-
-	std::vector<employment_location *> food_employment_locations = employment_locations;
-	std::erase_if(food_employment_locations, [this](const employment_location *employment_location) {
-		return !employment_location->get_employment_profession()->get_output_commodity()->is_food();
-	});
-
-	std::vector<employment_location *> non_food_employment_locations = employment_locations;
-	std::erase_if(non_food_employment_locations, [this](const employment_location *employment_location) {
-		return employment_location->get_employment_profession()->get_output_commodity()->is_food();
-	});
-
-	this->check_available_employment(food_employment_locations, unemployed_population_units);
-	this->check_available_employment(non_food_employment_locations, unemployed_population_units);
-}
-
-void province_game_data::check_available_employment(const std::vector<employment_location *> &employment_locations, std::vector<population_unit *> &unemployed_population_units)
-{
-	for (employment_location *employment_location : employment_locations) {
-		int available_employment_capacity = employment_location->get_available_employment_capacity();
-		assert_throw(available_employment_capacity >= 0);
-		if (available_employment_capacity == 0) {
-			continue;
-		}
-
-		const profession *profession = employment_location->get_employment_profession();
-		assert_throw(profession != nullptr);
-
-		const commodity *output_commodity = profession->get_output_commodity();
-
-		std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;
-		for (population_unit *population_unit : unemployed_population_units) {
-			if (!profession->can_employ(population_unit->get_type())) {
-				continue;
-			}
-
-			unemployed_population_units_by_output[employment_location->get_employee_commodity_outputs(population_unit->get_type())[output_commodity]].push_back(population_unit);
-		}
-
-		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
-			for (population_unit *population_unit : output_population_units) {
-				population_unit->set_employment_location(employment_location);
-				--available_employment_capacity;
-				std::erase(unemployed_population_units, population_unit);
-
-				if (available_employment_capacity == 0) {
-					break;
-				}
-			}
-
-			if (available_employment_capacity == 0) {
-				break;
-			}
-		}
-
-		if (unemployed_population_units.empty()) {
-			break;
-		}
-	}
 }
 
 }

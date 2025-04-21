@@ -16,7 +16,6 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "population/population_unit.h"
-#include "population/profession.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -118,10 +117,6 @@ bool settlement_building_slot::can_build_building(const building_type *building)
 
 void settlement_building_slot::on_building_gained(const building_type *building, const int multiplier)
 {
-	if (building->get_employment_profession() != nullptr) {
-		this->change_employment_capacity(building->get_employment_capacity() * multiplier);
-	}
-
 	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
 	settlement_game_data->on_building_gained(building, multiplier);
 }
@@ -322,24 +317,6 @@ QString settlement_building_slot::get_modifier_string() const
 		}
 	}
 
-	if (this->get_employment_profession() != nullptr && this->get_employee_count() > 0) {
-		const commodity_map<centesimal_int> commodity_outputs = this->get_total_employee_commodity_outputs();
-
-		for (const auto &[commodity, output] : commodity_outputs) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
-
-			const std::string number_str = output.to_signed_string();
-			const QColor &number_color = output < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
-			const std::string colored_number_str = string::colored(number_str, number_color);
-
-			str += base_string + colored_number_str;
-		}
-	}
-
 	if (this->get_building()->get_country_modifier() != nullptr) {
 		if (!str.empty()) {
 			str += "\n";
@@ -366,20 +343,6 @@ QString settlement_building_slot::get_modifier_string() const
 	const commodity_map<int> building_commodity_bonuses = this->get_country()->get_game_data()->get_building_commodity_bonuses(this->get_building());
 	for (const auto &[commodity, bonus] : building_commodity_bonuses) {
 		const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
-
-		const size_t find_pos = settlement_modifier_str.find(base_string);
-		if (find_pos != std::string::npos) {
-			const size_t number_start_pos = settlement_modifier_str.find('>', find_pos) + 2;
-			const size_t number_end_pos = settlement_modifier_str.find('<', number_start_pos);
-
-			if (settlement_modifier_str.at(number_end_pos - 1) != '%') {
-				const std::string number_str = settlement_modifier_str.substr(number_start_pos, number_end_pos - number_start_pos);
-				const int new_number = std::stoi(number_str) + bonus;
-				settlement_modifier_str.replace(number_start_pos, number_end_pos - number_start_pos, std::to_string(new_number));
-
-				continue;
-			}
-		}
 
 		if (!settlement_modifier_str.empty()) {
 			settlement_modifier_str += "\n";
@@ -409,20 +372,6 @@ QString settlement_building_slot::get_modifier_string() const
 	}
 
 	return QString::fromStdString(str);
-}
-
-const site *settlement_building_slot::get_employment_site() const
-{
-	return this->get_settlement();
-}
-
-const profession *settlement_building_slot::get_employment_profession() const
-{
-	if (this->get_building() != nullptr) {
-		return this->get_building()->get_employment_profession();
-	}
-
-	return nullptr;
 }
 
 }

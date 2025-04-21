@@ -4,7 +4,6 @@
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 #include "population/phenotype_container.h"
-#include "population/profession_container.h"
 #include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/cultural_group.h")
@@ -177,37 +176,6 @@ public:
 		return this->resource_output_bonus;
 	}
 
-	const profession_map<centesimal_int> &get_profession_output_bonuses() const
-	{
-		return this->profession_output_bonuses;
-	}
-
-	const centesimal_int &get_profession_output_bonus(const profession *profession) const
-	{
-		const auto find_iterator = this->get_profession_output_bonuses().find(profession);
-		if (find_iterator != this->get_profession_output_bonuses().end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	const profession_map<int> &get_profession_output_modifiers() const
-	{
-		return this->profession_output_modifiers;
-	}
-
-	int get_profession_output_modifier(const profession *profession) const
-	{
-		const auto find_iterator = this->get_profession_output_modifiers().find(profession);
-		if (find_iterator != this->get_profession_output_modifiers().end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
 	const centesimal_int &get_max_modifier_multiplier() const
 	{
 		return this->max_modifier_multiplier;
@@ -240,8 +208,6 @@ private:
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
 	int resource_output_bonus = 0;
-	profession_map<centesimal_int> profession_output_bonuses;
-	profession_map<int> profession_output_modifiers;
 	centesimal_int max_modifier_multiplier = centesimal_int(0);
 	std::unique_ptr<modifier<const country>> country_modifier;
 };

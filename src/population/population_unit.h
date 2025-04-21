@@ -15,12 +15,10 @@ namespace metternich {
 
 class country;
 class culture;
-class employment_location;
 class icon;
 class ideology;
 class phenotype;
 class population_type;
-class profession;
 class province;
 class religion;
 class settlement_building_slot;
@@ -128,19 +126,6 @@ public:
 		this->set_militancy(this->get_militancy() + change);
 	}
 
-	metternich::employment_location *get_employment_location() const
-	{
-		return this->employment_location;
-	}
-
-	bool is_unemployed() const
-	{
-		return this->get_employment_location() == nullptr;
-	}
-
-	void set_employment_location(metternich::employment_location *employment_location);
-
-	const profession *get_profession() const;
 	bool is_food_producer() const;
 
 	bool is_everyday_consumption_fulfilled() const
@@ -193,7 +178,6 @@ private:
 	const metternich::ideology *ideology = nullptr;
 	centesimal_int consciousness;
 	centesimal_int militancy;
-	metternich::employment_location *employment_location = nullptr;
 	bool everyday_consumption_fulfilled = true;
 	bool luxury_consumption_fulfilled = true;
 };

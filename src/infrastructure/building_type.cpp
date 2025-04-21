@@ -14,7 +14,6 @@
 #include "infrastructure/settlement_type.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
-#include "population/profession.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/capital_condition.h"
 #include "script/condition/or_condition.h"
@@ -190,14 +189,6 @@ void building_type::check() const
 
 	if (!this->is_provincial() && !this->get_settlement_types().empty()) {
 		throw std::runtime_error(std::format("Building type \"{}\" is not provincial, but does have settlement types listed for it.", this->get_identifier()));
-	}
-
-	if (this->get_employment_profession() != nullptr && this->get_employment_capacity() == 0) {
-		throw std::runtime_error(std::format("Building type \"{}\" has an employment profession, but no employment capacity.", this->get_identifier()));
-	}
-
-	if (this->get_employment_capacity() > 0 && this->get_employment_profession() == nullptr) {
-		throw std::runtime_error(std::format("Building type \"{}\" has an employment capacity, but no employment profession.", this->get_identifier()));
 	}
 
 	if (!this->get_production_types().empty() && !this->is_provincial()) {

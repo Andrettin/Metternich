@@ -261,10 +261,6 @@ QCoro::Task<void> game::start_coro()
 	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
 
-		for (const province *province : country_game_data->get_provinces()) {
-			province->get_game_data()->check_employment();
-		}
-
 		for (population_unit *population_unit : country_game_data->get_population_units()) {
 			population_unit->choose_ideology();
 		}
@@ -1407,8 +1403,6 @@ QCoro::Task<void> game::on_setup_finished()
 					settlement->get_game_data()->check_free_building(building);
 				}
 			}
-
-			province->get_game_data()->check_employment();
 		}
 
 		//calculate it here rather than on start so that score is displayed properly

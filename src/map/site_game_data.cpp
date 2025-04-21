@@ -30,7 +30,6 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
-#include "population/profession.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/effect_list.h"
@@ -965,12 +964,7 @@ void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier
 void site_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
 {
 	if (improvement->get_output_commodity() != nullptr) {
-		if (improvement->get_employment_profession() != nullptr) {
-			assert_throw(improvement->get_slot() == improvement_slot::resource);
-			this->change_employment_capacity(improvement->get_employment_capacity() * multiplier);
-		} else {
-			this->change_base_commodity_output(improvement->get_output_commodity(), centesimal_int(improvement->get_output_multiplier()) * multiplier);
-		}
+		this->change_base_commodity_output(improvement->get_output_commodity(), centesimal_int(improvement->get_output_multiplier()) * multiplier);
 	}
 
 	if (this->get_province() != nullptr && this->get_resource() != nullptr && improvement->get_slot() == improvement_slot::resource) {
@@ -1073,7 +1067,6 @@ qunique_ptr<population_unit> site_game_data::pop_population_unit(population_unit
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
 			this->population_units.erase(this->population_units.begin() + i);
 
-			population_unit->set_employment_location(nullptr);
 			population_unit->set_settlement(nullptr);
 
 			this->get_population()->on_population_unit_lost(population_unit);
@@ -1131,28 +1124,6 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 			this->change_local_luxury_consumption(commodity, value * change);
 		}
 	}
-}
-
-const site *site_game_data::get_employment_site() const
-{
-	return this->site;
-}
-
-const profession *site_game_data::get_employment_profession() const
-{
-	const improvement *resource_improvement = this->get_resource_improvement();
-
-	if (resource_improvement != nullptr) {
-		return resource_improvement->get_employment_profession();
-	}
-
-	return nullptr;
-}
-
-int site_game_data::get_employment_output_multiplier() const
-{
-	assert_throw(this->get_resource_improvement() != nullptr);
-	return this->get_resource_improvement()->get_output_multiplier();
 }
 
 void site_game_data::change_health(const centesimal_int &change)

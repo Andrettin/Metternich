@@ -1,7 +1,6 @@
 #pragma once
 
 #include "economy/commodity_container.h"
-#include "economy/employment_location.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/qunique_ptr.h"
@@ -34,7 +33,7 @@ class site;
 class tile;
 enum class improvement_slot;
 
-class site_game_data final : public QObject, public employment_location
+class site_game_data final : public QObject
 {
 	Q_OBJECT
 
@@ -224,16 +223,6 @@ public:
 	}
 
 	void on_population_type_count_changed(const population_type *type, const int change);
-
-	virtual const site *get_employment_site() const override;
-	virtual const profession *get_employment_profession() const override;
-
-	virtual bool is_resource_employment() const override
-	{
-		return true;
-	}
-
-	virtual int get_employment_output_multiplier() const override;
 
 	const centesimal_int &get_health() const
 	{

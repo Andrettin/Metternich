@@ -1,6 +1,5 @@
 #pragma once
 
-#include "economy/employment_location.h"
 #include "infrastructure/building_slot.h"
 
 Q_MOC_INCLUDE("infrastructure/wonder.h")
@@ -10,7 +9,7 @@ namespace metternich {
 class site;
 class wonder;
 
-class settlement_building_slot final : public building_slot, public employment_location
+class settlement_building_slot final : public building_slot
 {
 	Q_OBJECT
 
@@ -58,9 +57,6 @@ public:
 	virtual const country *get_country() const override;
 
 	QString get_modifier_string() const;
-
-	virtual const site *get_employment_site() const override;
-	virtual const profession *get_employment_profession() const override;
 
 signals:
 	void wonder_changed();

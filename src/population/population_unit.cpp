@@ -8,7 +8,6 @@
 #include "country/ideology.h"
 #include "country/religion.h"
 #include "economy/commodity.h"
-#include "economy/employment_location.h"
 #include "game/game.h"
 #include "infrastructure/settlement_building_slot.h"
 #include "map/province.h"
@@ -17,7 +16,6 @@
 #include "map/site_game_data.h"
 #include "population/population.h"
 #include "population/population_type.h"
-#include "population/profession.h"
 #include "script/condition/and_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
@@ -71,23 +69,9 @@ void population_unit::set_type(const population_type *type)
 
 	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), -1);
 
-	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->on_employee_added(this, -1);
-	}
-
 	this->type = type;
 
 	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), 1);
-
-	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->on_employee_added(this, 1);
-
-		const profession *profession = this->get_employment_location()->get_employment_profession();
-		assert_throw(profession != nullptr);
-		if (!profession->can_employ(type)) {
-			this->set_employment_location(nullptr);
-		}
-	}
 
 	emit type_changed();
 }
@@ -283,37 +267,10 @@ void population_unit::set_militancy(const centesimal_int &militancy)
 	}
 }
 
-void population_unit::set_employment_location(metternich::employment_location *employment_location)
-{
-	if (employment_location == this->get_employment_location()) {
-		return;
-	}
-
-	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->remove_employee(this);
-	}
-
-	this->employment_location = employment_location;
-
-	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->add_employee(this);
-	}
-}
-
-const profession *population_unit::get_profession() const
-{
-	if (this->get_employment_location() != nullptr) {
-		return this->get_employment_location()->get_employment_profession();
-	}
-
-	return nullptr;
-}
-
 bool population_unit::is_food_producer() const
 {
-	const profession *profession = this->get_profession();
-	if (profession != nullptr) {
-		return profession->get_output_commodity()->is_food();
+	if (this->get_type()->get_output_commodity() != nullptr) {
+		return this->get_type()->get_output_commodity()->is_food();
 	}
 
 	return false;
