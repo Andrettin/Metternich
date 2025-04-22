@@ -737,7 +737,9 @@ public:
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
 	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
 	bool has_building(const building_type *building) const;
+	bool has_building_or_better(const building_type *building) const;
 	void clear_buildings();
+	bool check_free_building(const building_type *building);
 
 	int get_settlement_building_count(const building_type *building) const
 	{

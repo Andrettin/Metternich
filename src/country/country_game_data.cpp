@@ -2380,7 +2380,7 @@ int country_game_data::get_net_food_consumption() const
 
 QVariantList country_game_data::get_building_slots_qvariant_list() const
 {
-	std::vector<const country_building_slot *> available_building_slots;
+	std::vector<country_building_slot *> available_building_slots;
 
 	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
 		if (!building_slot->is_available()) {
@@ -2437,11 +2437,61 @@ bool country_game_data::has_building(const building_type *building) const
 	return this->get_slot_building(building->get_slot_type()) == building;
 }
 
+bool country_game_data::has_building_or_better(const building_type *building) const
+{
+	if (this->has_building(building)) {
+		return true;
+	}
+
+	for (const building_type *requiring_building : building->get_requiring_buildings()) {
+		if (this->has_building_or_better(requiring_building)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void country_game_data::clear_buildings()
 {
 	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
 		building_slot->set_building(nullptr);
 	}
+}
+
+
+bool country_game_data::check_free_building(const building_type *building)
+{
+	assert_throw(!building->is_provincial());
+
+	if (building != this->country->get_culture()->get_building_class_type(building->get_building_class())) {
+		return false;
+	}
+
+	if (this->has_building_or_better(building)) {
+		return false;
+	}
+
+	country_building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+
+	if (building_slot == nullptr) {
+		return false;
+	}
+
+	if (!building_slot->can_gain_building(building)) {
+		return false;
+	}
+
+	if (building->get_required_building() != nullptr && building_slot->get_building() != building->get_required_building()) {
+		return false;
+	}
+
+	if (building->get_required_technology() != nullptr && !this->has_technology(building->get_required_technology())) {
+		return false;
+	}
+
+	building_slot->set_building(building);
+	return true;
 }
 
 void country_game_data::change_settlement_building_count(const building_type *building, const int change)

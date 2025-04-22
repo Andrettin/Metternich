@@ -1396,6 +1396,10 @@ QCoro::Task<void> game::on_setup_finished()
 				}
 
 				for (const building_type *building : building_type::get_all()) {
+					if (!building->is_provincial()) {
+						continue;
+					}
+
 					if (!building->is_free_on_start()) {
 						continue;
 					}
@@ -1403,6 +1407,18 @@ QCoro::Task<void> game::on_setup_finished()
 					settlement->get_game_data()->check_free_building(building);
 				}
 			}
+		}
+
+		for (const building_type *building : building_type::get_all()) {
+			if (building->is_provincial()) {
+				continue;
+			}
+
+			if (!building->is_free_on_start()) {
+				continue;
+			}
+
+			country->get_game_data()->check_free_building(building);
 		}
 
 		//calculate it here rather than on start so that score is displayed properly
