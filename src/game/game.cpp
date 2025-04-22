@@ -974,7 +974,7 @@ void game::apply_sites()
 				}
 			}
 
-			for (const auto &[improvement_slot, improvement] : site_history->get_improvements()) {
+			for (const auto &[improvement_slot, improvement] : site_improvements) {
 				if (improvement != nullptr) {
 					if (improvement->get_resource() != nullptr) {
 						assert_throw(site->get_type() == site_type::resource || site->is_settlement());
