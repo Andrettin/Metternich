@@ -84,6 +84,21 @@ public:
 		}
 	}
 
+	const population_group_map<int> &get_site_population_groups() const
+	{
+		return this->site_population_groups;
+	}
+
+	int get_site_group_population(const population_group_key &group_key) const
+	{
+		const auto find_iterator = this->site_population_groups.find(group_key);
+		if (find_iterator != this->site_population_groups.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
 	void initialize_population();
 	void distribute_population();
 
@@ -103,6 +118,7 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	population_group_map<int> population_groups;
+	population_group_map<int> site_population_groups;
 	centesimal_int literacy_rate;
 };
 
