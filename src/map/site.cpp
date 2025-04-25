@@ -71,10 +71,6 @@ void site::check() const
 
 	switch (this->get_type()) {
 		case site_type::settlement:
-			if (this->get_resource() == nullptr) {
-				log::log_error(std::format("Settlement site \"{}\" has no resource.", this->get_identifier()));
-			}
-
 			if (this->get_province() != nullptr) {
 				if (this->get_province()->get_provincial_capital() != this) {
 					log::log_error(std::format("Settlement site \"{}\" is not the provincial capital of its province.", this->get_identifier()));
