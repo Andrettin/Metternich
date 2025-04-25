@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/resource_container.h"
 #include "map/province_container.h"
 #include "util/color_container.h"
 #include "util/qunique_ptr.h"
@@ -149,6 +150,11 @@ public:
 	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture *culture) const;
 
+	const resource_map<int> &get_resource_counts() const
+	{
+		return this->resource_counts;
+	}
+
 	const std::vector<region *> &get_regions() const
 	{
 		return this->regions;
@@ -195,6 +201,7 @@ private:
 	site *provincial_capital = nullptr;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
+	resource_map<int> resource_counts;
 	std::vector<region *> regions; //regions where this province is located
 	std::vector<const country *> core_countries;
 	province_map<const terrain_feature *> border_rivers;

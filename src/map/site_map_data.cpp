@@ -4,6 +4,7 @@
 
 #include "map/map.h"
 #include "map/site.h"
+#include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
@@ -11,7 +12,8 @@
 
 namespace metternich {
 
-site_map_data::site_map_data(const metternich::site *site) : site(site), resource(site->get_resource())
+site_map_data::site_map_data(const metternich::site *site)
+	: site(site), type(site->get_type()), resource(site->get_resource())
 {
 }
 
@@ -34,6 +36,16 @@ tile *site_map_data::get_tile() const
 	}
 
 	return nullptr;
+}
+
+void site_map_data::set_type(const site_type type)
+{
+	if (type == this->get_type()) {
+		return;
+	}
+
+	assert_throw(type != site_type::settlement);
+	this->type = type;
 }
 
 const province *site_map_data::get_province() const

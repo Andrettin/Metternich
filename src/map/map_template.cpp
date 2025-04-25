@@ -4,6 +4,7 @@
 
 #include "database/defines.h"
 #include "economy/resource.h"
+#include "economy/resource_container.h"
 #include "map/direction.h"
 #include "map/map.h"
 #include "map/map_projection.h"
@@ -27,6 +28,7 @@
 #include "util/path_util.h"
 #include "util/point_util.h"
 #include "util/rect_util.h"
+#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -70,10 +72,6 @@ void map_template::initialize()
 		const province_geodata_map_type province_geodata_map = this->get_world()->parse_provinces_geojson_folder();
 
 		for (const site *site : this->get_world()->get_sites()) {
-			if (site->get_type() == site_type::none) {
-				continue;
-			}
-
 			assert_throw(site->get_geocoordinate().is_valid());
 
 			if (site->get_geocoordinate().is_null()) {
@@ -638,6 +636,8 @@ void map_template::apply() const
 	map->create_tiles();
 
 	this->apply_terrain();
+	this->generate_resource_sites();
+	this->apply_site_terrain();
 	this->apply_rivers();
 	this->apply_border_rivers();
 	this->apply_routes();
@@ -665,8 +665,12 @@ void map_template::apply_terrain() const
 			map->set_tile_terrain(tile_pos, terrain);
 		}
 	}
+}
 
-	//apply site terrain
+void map_template::apply_site_terrain() const
+{
+	map *map = map::get();
+
 	for (const auto &[tile_pos, site] : this->sites_by_position) {
 		const terrain_type *site_terrain = site->get_terrain_type();
 		const resource *site_resource = site->get_map_data()->get_resource();
@@ -686,7 +690,7 @@ void map_template::apply_terrain() const
 			continue;
 		}
 
-		assert_throw(site->get_type() == site_type::terrain || site->get_type() == site_type::resource || site->get_type() == site_type::settlement);
+		assert_throw(site->get_map_data()->get_type() == site_type::terrain || site->get_map_data()->get_type() == site_type::resource || site->get_map_data()->get_type() == site_type::settlement);
 
 		map->set_tile_terrain(tile_pos, site_terrain);
 	}
@@ -886,6 +890,76 @@ void map_template::apply_provinces() const
 	//apply tile sites
 	for (const auto &[tile_pos, site] : this->sites_by_position) {
 		map->set_tile_site(tile_pos, site);
+	}
+}
+
+void map_template::generate_resource_sites() const
+{
+	province_map<std::vector<const site *>> available_sites_per_province;
+	province_map<resource_map<int>> province_placed_resource_counts;
+	std::map<const site *, QPoint> site_positions;
+	const map *map = map::get();
+
+	for (const auto &[tile_pos, site] : this->sites_by_position) {
+		if (site->get_province() == nullptr) {
+			continue;
+		}
+
+		if (site->get_type() == site_type::none) {
+			available_sites_per_province[site->get_province()].push_back(site);
+			site_positions[site] = tile_pos;
+		} else if (site->get_resource() != nullptr) {
+			++province_placed_resource_counts[site->get_province()][site->get_resource()];
+		}
+	}
+
+	for (auto &[province, available_sites] : available_sites_per_province) {
+		resource_map<int> resources_to_generate = province->get_resource_counts();
+
+		for (const auto &[resource, count] : province_placed_resource_counts[province]) {
+			if (!resources_to_generate.contains(resource)) {
+				continue;
+			}
+
+			resources_to_generate[resource] -= count;
+		}
+
+		for (const auto &[resource, count] : resources_to_generate) {
+			if (count <= 0) {
+				continue;
+			}
+
+			for (int i = 0; i < count; ++i) {
+				std::vector<const site *> potential_sites;
+				bool found_site_with_suitable_terrain = false;
+
+				for (const site *site : available_sites) {
+					assert_throw(site->get_map_data()->get_type() == site_type::none);
+
+					const terrain_type *tile_terrain = map->get_tile(site_positions[site])->get_terrain();
+					const bool has_suitable_terrain = vector::contains(resource->get_terrain_types(), tile_terrain);
+
+					if (!has_suitable_terrain && found_site_with_suitable_terrain) {
+						continue;
+					} else if (has_suitable_terrain && !found_site_with_suitable_terrain) {
+						potential_sites.clear();
+						found_site_with_suitable_terrain = true;
+					}
+
+					potential_sites.push_back(site);
+				}
+
+				if (potential_sites.empty()) {
+					log::log_error(std::format("No site available for generating resource \"{}\" for province \"{}\".", resource->get_identifier(), province->get_identifier()));
+					break;
+				}
+
+				const site *chosen_site = vector::get_random(potential_sites);
+				chosen_site->get_map_data()->set_type(site_type::resource);
+				chosen_site->get_map_data()->set_resource(resource);
+				std::erase(available_sites, chosen_site);
+			}
+		}
 	}
 }
 

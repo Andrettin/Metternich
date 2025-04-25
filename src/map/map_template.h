@@ -162,10 +162,12 @@ public:
 
 	void apply() const;
 	void apply_terrain() const;
+	void apply_site_terrain() const;
 	void apply_rivers() const;
 	void apply_border_rivers() const;
 	void apply_routes() const;
 	void apply_provinces() const;
+	void generate_resource_sites() const;
 
 private:
 	QSize size = QSize(0, 0);

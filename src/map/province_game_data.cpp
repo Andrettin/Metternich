@@ -25,6 +25,7 @@
 #include "map/province_map_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_map_data.h"
 #include "map/site_type.h"
 #include "map/tile.h"
 #include "population/population.h"
@@ -635,7 +636,7 @@ QVariantList province_game_data::get_entering_armies_qvariant_list() const
 void province_game_data::calculate_site_commodity_outputs()
 {
 	for (const site *site : this->get_sites()) {
-		if (site->get_type() != site_type::settlement && site->get_type() != site_type::resource) {
+		if (site->get_map_data()->get_type() != site_type::settlement && site->get_map_data()->get_type() != site_type::resource) {
 			continue;
 		}
 
@@ -646,7 +647,7 @@ void province_game_data::calculate_site_commodity_outputs()
 void province_game_data::calculate_site_commodity_output(const commodity *commodity)
 {
 	for (const site *site : this->get_sites()) {
-		if (site->get_type() != site_type::settlement && site->get_type() != site_type::resource) {
+		if (site->get_map_data()->get_type() != site_type::settlement && site->get_map_data()->get_type() != site_type::resource) {
 			continue;
 		}
 
