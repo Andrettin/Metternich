@@ -55,7 +55,7 @@ void province::process_gsml_scope(const gsml_data &scope)
 			border_province->border_rivers[this] = border_river;
 		});
 	} else {
-		data_entry::process_gsml_scope(scope);
+		named_data_entry::process_gsml_scope(scope);
 	}
 }
 

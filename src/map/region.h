@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/resource_container.h"
 #include "util/qunique_ptr.h"
 
 namespace metternich {
@@ -26,6 +27,7 @@ public:
 	explicit region(const std::string &identifier);
 	~region();
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual data_entry_history *get_history_base() override;
 
@@ -72,11 +74,17 @@ public:
 
 	bool is_part_of(const region *other_region) const;
 
+	const resource_map<int> &get_resource_counts() const
+	{
+		return this->resource_counts;
+	}
+
 private:
 	bool ocean = false;
 	std::vector<province *> provinces; //provinces located in the region
 	std::vector<region *> subregions; //subregions of this region
 	std::vector<region *> superregions; //regions for which this region is a subregion
+	resource_map<int> resource_counts;
 	qunique_ptr<region_history> history;
 };
 
