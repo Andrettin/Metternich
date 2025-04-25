@@ -81,7 +81,7 @@ void region_history::distribute_population()
 			}
 
 			const province_history *province_history = province->get_history();
-			const int province_group_population = std::max(std::max(province_history->get_group_population(group_key), province_history->get_site_group_population(group_key)), province_total_settlement_group_population);
+			const int province_group_population = std::max(std::max(province_history->get_group_population(group_key), province_history->get_lower_bound_group_population(group_key)), province_total_settlement_group_population);
 
 			if (province_group_population != 0) {
 				remaining_population -= province_group_population;
@@ -112,8 +112,6 @@ void region_history::distribute_population()
 
 			if (province_history->get_group_population(group_key) == 0) {
 				int group_population = population_per_settlement * province->get_game_data()->get_settlement_count();
-				group_population += province_history->get_site_group_population(group_key);
-
 				province_history->set_group_population(group_key, group_population);
 			}
 		}
