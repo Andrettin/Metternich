@@ -1169,7 +1169,10 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 	}
 
 	site_game_data *settlement_game_data = settlement->get_game_data();
-	assert_throw(settlement_game_data->get_settlement_type() != nullptr);
+
+	if (settlement_game_data->get_settlement_type() == nullptr) {
+		return population;
+	}
 
 	if (group_key.type != nullptr && !settlement_game_data->get_settlement_type()->can_have_population_type(group_key.type)) {
 		return population;
