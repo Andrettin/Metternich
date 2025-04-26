@@ -119,6 +119,7 @@ public:
 
 	void set_settlement_type(const metternich::settlement_type *settlement_type);
 	void check_settlement_type();
+	std::vector<const metternich::settlement_type *> get_best_settlement_types(const std::vector<const metternich::settlement_type *> &settlement_types) const;
 
 	bool is_built() const;
 

@@ -463,11 +463,19 @@ void site_game_data::check_settlement_type()
 		return;
 	}
 
+	const std::vector<const metternich::settlement_type *> potential_settlement_types = this->get_best_settlement_types(this->get_settlement_type()->get_base_settlement_types());
+
+	assert_throw(!potential_settlement_types.empty());
+	this->set_settlement_type(vector::get_random(potential_settlement_types));
+}
+
+std::vector<const metternich::settlement_type *> site_game_data::get_best_settlement_types(const std::vector<const metternich::settlement_type *> &settlement_types) const
+{
 	std::vector<const metternich::settlement_type *> potential_settlement_types;
 
 	int best_preserved_building_count = 0;
 
-	for (const metternich::settlement_type *base_settlement_type : this->get_settlement_type()->get_base_settlement_types()) {
+	for (const metternich::settlement_type *base_settlement_type : settlement_types) {
 		if (base_settlement_type->get_conditions() != nullptr && !base_settlement_type->get_conditions()->check(this->site, read_only_context(this->site))) {
 			continue;
 		}
@@ -493,9 +501,21 @@ void site_game_data::check_settlement_type()
 		potential_settlement_types.push_back(base_settlement_type);
 	}
 
-	if (!potential_settlement_types.empty()) {
-		this->set_settlement_type(vector::get_random(potential_settlement_types));
+	if (potential_settlement_types.empty()) {
+		std::vector<const metternich::settlement_type *> base_settlement_types;
+
+		for (const metternich::settlement_type *settlement_type : settlement_types) {
+			for (const metternich::settlement_type *base_settlement_type : settlement_type->get_base_settlement_types()) {
+				if (!vector::contains(base_settlement_types, base_settlement_type)) {
+					base_settlement_types.push_back(base_settlement_type);
+				}
+			}
+		}
+
+		return this->get_best_settlement_types(base_settlement_types);
 	}
+
+	return potential_settlement_types;
 }
 
 bool site_game_data::is_built() const
