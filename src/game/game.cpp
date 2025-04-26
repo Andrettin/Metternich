@@ -650,41 +650,9 @@ void game::apply_history(const metternich::scenario *scenario)
 				owner_game_data->add_technology_with_prerequisites(type->get_required_technology());
 			}
 
-			const metternich::site *home_settlement = historical_civilian_unit->get_home_settlement();
-			if (home_settlement == nullptr) {
-				if (site->get_game_data()->get_owner() == owner && site->is_settlement() && site->get_game_data()->is_built()) {
-					home_settlement = site;
-				} else if (!owner_game_data->is_under_anarchy()) {
-					home_settlement = owner_game_data->get_capital();
-				} else {
-					continue;
-				}
-			}
-			assert_throw(home_settlement != nullptr);
-
-			const culture *culture = historical_civilian_unit->get_culture();
-			if (culture == nullptr) {
-				if (home_settlement->get_game_data()->get_culture() != nullptr) {
-					culture = home_settlement->get_game_data()->get_culture();
-				} else {
-					culture = owner->get_culture();
-				}
-			}
-			assert_throw(culture != nullptr);
-
-			const religion *religion = historical_civilian_unit->get_religion();
-			if (religion == nullptr) {
-				if (home_settlement->get_game_data()->get_religion() != nullptr) {
-					religion = home_settlement->get_game_data()->get_religion();
-				} else {
-					religion = owner_game_data->get_religion();
-				}
-			}
-			assert_throw(religion != nullptr);
-
 			const phenotype *phenotype = historical_civilian_unit->get_phenotype();
 			if (phenotype == nullptr) {
-				phenotype = culture->get_default_phenotype();
+				phenotype = owner->get_culture()->get_default_phenotype();
 			}
 			assert_throw(phenotype != nullptr);
 
@@ -695,7 +663,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				continue;
 			}
 
-			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, culture, religion, phenotype);
+			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, phenotype);
 			civilian_unit->set_tile_pos(tile_pos);
 
 			owner_game_data->add_civilian_unit(std::move(civilian_unit));
@@ -735,46 +703,14 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->add_technology_with_prerequisites(type->get_required_technology());
 			}
 
-			const site *home_settlement = historical_military_unit->get_home_settlement();
-			if (home_settlement == nullptr) {
-				if (province->get_game_data()->get_owner() == country) {
-					home_settlement = province->get_provincial_capital();
-				} else if (!country_game_data->is_under_anarchy()) {
-					home_settlement = country_game_data->get_capital();
-				} else {
-					continue;
-				}
-			}
-			assert_throw(home_settlement != nullptr);
-
-			const culture *culture = historical_military_unit->get_culture();
-			if (culture == nullptr) {
-				if (home_settlement->get_game_data()->get_culture() != nullptr) {
-					culture = home_settlement->get_game_data()->get_culture();
-				} else {
-					culture = country->get_culture();
-				}
-			}
-			assert_throw(culture != nullptr);
-
-			const religion *religion = historical_military_unit->get_religion();
-			if (religion == nullptr) {
-				if (home_settlement->get_game_data()->get_religion() != nullptr) {
-					religion = home_settlement->get_game_data()->get_religion();
-				} else {
-					religion = country_game_data->get_religion();
-				}
-			}
-			assert_throw(religion != nullptr);
-
 			const phenotype *phenotype = historical_military_unit->get_phenotype();
 			if (phenotype == nullptr) {
-				phenotype = culture->get_default_phenotype();
+				phenotype = country->get_culture()->get_default_phenotype();
 			}
 			assert_throw(phenotype != nullptr);
 
 			for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
-				auto military_unit = make_qunique<metternich::military_unit>(type, country, culture, religion, phenotype);
+				auto military_unit = make_qunique<metternich::military_unit>(type, country, phenotype);
 				military_unit->set_province(province);
 
 				for (const promotion *promotion : historical_military_unit_history->get_promotions()) {
@@ -808,44 +744,14 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->add_technology_with_prerequisites(type->get_required_technology());
 			}
 
-			const site *home_settlement = historical_transporter->get_home_settlement();
-			if (home_settlement == nullptr) {
-				if (!country_game_data->is_under_anarchy()) {
-					home_settlement = country_game_data->get_capital();
-				} else {
-					continue;
-				}
-			}
-			assert_throw(home_settlement != nullptr);
-
-			const culture *culture = historical_transporter->get_culture();
-			if (culture == nullptr) {
-				if (home_settlement->get_game_data()->get_culture() != nullptr) {
-					culture = home_settlement->get_game_data()->get_culture();
-				} else {
-					culture = country->get_culture();
-				}
-			}
-			assert_throw(culture != nullptr);
-
-			const religion *religion = historical_transporter->get_religion();
-			if (religion == nullptr) {
-				if (home_settlement->get_game_data()->get_religion() != nullptr) {
-					religion = home_settlement->get_game_data()->get_religion();
-				} else {
-					religion = country_game_data->get_religion();
-				}
-			}
-			assert_throw(religion != nullptr);
-
 			const phenotype *phenotype = historical_transporter->get_phenotype();
 			if (phenotype == nullptr) {
-				phenotype = culture->get_default_phenotype();
+				phenotype = country->get_culture()->get_default_phenotype();
 			}
 			assert_throw(phenotype != nullptr);
 
 			for (int i = 0; i < historical_transporter->get_quantity(); ++i) {
-				auto transporter = make_qunique<metternich::transporter>(type, country, culture, religion, phenotype);
+				auto transporter = make_qunique<metternich::transporter>(type, country, phenotype);
 
 				country_game_data->add_transporter(std::move(transporter));
 			}

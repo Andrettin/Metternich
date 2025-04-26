@@ -12,11 +12,9 @@ namespace metternich {
 class character;
 class civilian_unit_type;
 class country;
-class culture;
 class icon;
 class improvement;
 class phenotype;
-class religion;
 class tile;
 
 class civilian_unit final : public QObject
@@ -38,7 +36,7 @@ public:
 	static constexpr int exploration_turns = 1;
 	static constexpr int prospection_turns = 1;
 
-	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
+	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::phenotype *phenotype);
 	explicit civilian_unit(const metternich::character *character, const country *owner);
 
 	void do_turn();
@@ -64,16 +62,6 @@ public:
 	const country *get_owner() const
 	{
 		return this->owner;
-	}
-
-	const metternich::culture *get_culture() const
-	{
-		return this->culture;
-	}
-
-	const metternich::religion *get_religion() const
-	{
-		return this->religion;
 	}
 
 	const metternich::phenotype *get_phenotype() const
@@ -167,8 +155,6 @@ signals:
 private:
 	const civilian_unit_type *type = nullptr;
 	const country *owner = nullptr;
-	const metternich::culture *culture = nullptr;
-	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::character *character = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);

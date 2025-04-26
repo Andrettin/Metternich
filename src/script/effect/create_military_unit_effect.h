@@ -73,10 +73,7 @@ public:
 		assert_throw(province != nullptr);
 		assert_throw(province->get_game_data()->is_on_map());
 
-		const culture *culture = scope->get_culture();
-		assert_throw(culture != nullptr);
-
-		auto military_unit = make_qunique<metternich::military_unit>(type, scope, culture, scope->get_game_data()->get_religion(), culture->get_default_phenotype());
+		auto military_unit = make_qunique<metternich::military_unit>(type, scope, scope->get_culture()->get_default_phenotype());
 		military_unit->set_province(province);
 
 		scope->get_game_data()->add_military_unit(std::move(military_unit));

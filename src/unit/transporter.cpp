@@ -4,8 +4,8 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/cultural_group.h"
 #include "country/culture.h"
-#include "country/religion.h"
 #include "language/name_generator.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
@@ -19,13 +19,11 @@
 
 namespace metternich {
 
-transporter::transporter(const transporter_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
-	: type(type), country(country), culture(culture), religion(religion), phenotype(phenotype)
+transporter::transporter(const transporter_type *type, const metternich::country *country, const metternich::phenotype *phenotype)
+	: type(type), country(country), phenotype(phenotype)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_country() != nullptr);
-	assert_throw(this->get_culture() != nullptr);
-	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
 
 	this->max_hit_points = type->get_hit_points();
@@ -61,10 +59,16 @@ void transporter::do_turn()
 
 void transporter::generate_name()
 {
-	this->name = this->get_culture()->generate_transporter_name(this->get_type());
+	const culture_base *culture = this->get_culture();
+
+	if (culture == nullptr) {
+		return;
+	}
+
+	this->name = culture->generate_transporter_name(this->get_type());
 
 	if (!this->get_name().empty()) {
-		log_trace(std::format("Generated name \"{}\" for transporter of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), this->get_culture()->get_identifier()));
+		log_trace(std::format("Generated name \"{}\" for transporter of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), culture->get_identifier()));
 	}
 }
 
@@ -123,6 +127,23 @@ bool transporter::is_ship() const
 const icon *transporter::get_icon() const
 {
 	return this->get_type()->get_icon();
+}
+
+const metternich::culture_base *transporter::get_culture() const
+{
+	if (this->get_country() != nullptr) {
+		return this->get_country()->get_culture();
+	}
+
+	if (this->get_type()->get_culture() != nullptr) {
+		return this->get_type()->get_culture();
+	}
+
+	if (this->get_type()->get_cultural_group() != nullptr) {
+		return this->get_type()->get_cultural_group();
+	}
+
+	return nullptr;
 }
 
 void transporter::set_hit_points(const int hit_points)

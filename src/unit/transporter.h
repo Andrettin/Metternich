@@ -9,10 +9,9 @@ Q_MOC_INCLUDE("unit/transporter_type.h")
 namespace metternich {
 
 class country;
-class culture;
+class culture_base;
 class icon;
 class phenotype;
-class religion;
 class transporter_type;
 enum class transporter_category;
 enum class transporter_stat;
@@ -27,7 +26,7 @@ class transporter final : public QObject
 	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
 
 public:
-	explicit transporter(const transporter_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
+	explicit transporter(const transporter_type *type, const metternich::country *country, const metternich::phenotype *phenotype);
 
 	void do_turn();
 
@@ -71,15 +70,7 @@ public:
 		return this->country;
 	}
 
-	const metternich::culture *get_culture() const
-	{
-		return this->culture;
-	}
-
-	const metternich::religion *get_religion() const
-	{
-		return this->religion;
-	}
+	const metternich::culture_base *get_culture() const;
 
 	const metternich::phenotype *get_phenotype() const
 	{
@@ -190,8 +181,6 @@ private:
 	std::string name;
 	const transporter_type *type = nullptr;
 	const metternich::country *country = nullptr;
-	const metternich::culture *culture = nullptr;
-	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	int hit_points = 0;
 	int max_hit_points = 0;

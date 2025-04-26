@@ -6,9 +6,9 @@
 #include "character/character_game_data.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/cultural_group.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
-#include "country/religion.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
 #include "language/name_generator.h"
@@ -53,19 +53,15 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	this->check_free_promotions();
 }
 
-military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
+military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::phenotype *phenotype)
 	: military_unit(type)
 {
 	this->country = country;
-	this->culture = culture;
-	this->religion = religion;
 	this->phenotype = phenotype;
 
 	this->generate_name();
 
 	assert_throw(this->get_country() != nullptr);
-	assert_throw(this->get_culture() != nullptr);
-	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
 
 	connect(this, &military_unit::type_changed, this, &military_unit::icon_changed);
@@ -82,7 +78,7 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 }
 
 military_unit::military_unit(const military_unit_type *type, const metternich::character *character)
-	: military_unit(type, character->get_game_data()->get_country(), character->get_culture(), character->get_religion(), character->get_phenotype())
+	: military_unit(type, character->get_game_data()->get_country(), character->get_phenotype())
 {
 	this->character = character;
 	this->name = character->get_full_name();
@@ -123,7 +119,16 @@ void military_unit::generate_name()
 {
 	const std::set<std::string> &used_names = this->get_country() ? this->get_country()->get_game_data()->get_military_unit_names() : set::empty_string_set;
 
-	this->name = this->get_culture()->generate_military_unit_name(this->get_type(), used_names);
+	const culture_base *culture = this->get_culture();
+	if (culture == nullptr) {
+		culture = this->get_cultural_group();
+	}
+
+	if (culture == nullptr) {
+		return;
+	}
+
+	this->name = culture->generate_military_unit_name(this->get_type(), used_names);
 
 	//if no name could be generated for the unit, give it a name along the patterns of "1st Regulars"
 	int ordinal_name_count = 1;
@@ -137,7 +142,7 @@ void military_unit::generate_name()
 	}
 
 	if (!this->get_name().empty()) {
-		log_trace(std::format("Generated name \"{}\" for military unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), this->get_culture()->get_identifier()));
+		log_trace(std::format("Generated name \"{}\" for military unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), culture->get_identifier()));
 	}
 }
 
@@ -200,6 +205,42 @@ military_unit_domain military_unit::get_domain() const
 const icon *military_unit::get_icon() const
 {
 	return this->get_type()->get_icon();
+}
+
+const metternich::culture *military_unit::get_culture() const
+{
+	if (this->get_country() != nullptr) {
+		return this->get_country()->get_culture();
+	}
+
+	if (this->get_type()->get_culture() != nullptr) {
+		return this->get_type()->get_culture();
+	}
+
+	return nullptr;
+}
+
+const metternich::cultural_group *military_unit::get_cultural_group() const
+{
+	const culture *culture = this->get_culture();
+	if (culture != nullptr) {
+		return culture->get_group();
+	}
+
+	if (this->get_type()->get_cultural_group() != nullptr) {
+		return this->get_type()->get_cultural_group();
+	}
+
+	return nullptr;
+}
+
+const metternich::religion *military_unit::get_religion() const
+{
+	if (this->get_country() != nullptr) {
+		return this->get_country()->get_game_data()->get_religion();
+	}
+
+	return nullptr;
 }
 
 void military_unit::set_province(const metternich::province *province)

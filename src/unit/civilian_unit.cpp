@@ -6,8 +6,6 @@
 #include "character/character_game_data.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
-#include "country/culture.h"
-#include "country/religion.h"
 #include "economy/resource.h"
 #include "infrastructure/improvement.h"
 #include "map/map.h"
@@ -27,13 +25,11 @@
 
 namespace metternich {
 
-civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
-	: type(type), owner(owner), culture(culture), religion(religion), phenotype(phenotype)
+civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::phenotype *phenotype)
+	: type(type), owner(owner), phenotype(phenotype)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_owner() != nullptr);
-	assert_throw(this->get_culture() != nullptr);
-	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
 
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
@@ -48,7 +44,7 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owne
 }
 
 civilian_unit::civilian_unit(const metternich::character *character, const country *owner)
-	: civilian_unit(character->get_civilian_unit_type(), owner, character->get_culture(), character->get_religion(), character->get_phenotype())
+	: civilian_unit(character->get_civilian_unit_type(), owner, character->get_phenotype())
 {
 	this->character = character;
 

@@ -66,10 +66,7 @@ public:
 			return;
 		}
 
-		const culture *culture = scope->get_culture();
-		assert_throw(culture != nullptr);
-
-		auto transporter = make_qunique<metternich::transporter>(type, scope, culture, scope->get_game_data()->get_religion(), culture->get_default_phenotype());
+		auto transporter = make_qunique<metternich::transporter>(type, scope, scope->get_culture()->get_default_phenotype());
 
 		scope->get_game_data()->add_transporter(std::move(transporter));
 	}

@@ -11,6 +11,7 @@ namespace metternich {
 class army;
 class character;
 class country;
+class cultural_group;
 class culture;
 class icon;
 class military_unit_type;
@@ -41,7 +42,7 @@ public:
 	static constexpr int morale_recovery_per_turn = 20;
 
 	explicit military_unit(const military_unit_type *type);
-	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
+	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::phenotype *phenotype);
 	explicit military_unit(const military_unit_type *type, const character *character);
 
 	void do_turn();
@@ -87,15 +88,9 @@ public:
 		return this->country;
 	}
 
-	const metternich::culture *get_culture() const
-	{
-		return this->culture;
-	}
-
-	const metternich::religion *get_religion() const
-	{
-		return this->religion;
-	}
+	const metternich::culture *get_culture() const;
+	const metternich::cultural_group *get_cultural_group() const;
+	const metternich::religion *get_religion() const;
 
 	const metternich::phenotype *get_phenotype() const
 	{
@@ -260,8 +255,6 @@ private:
 	std::string name;
 	const military_unit_type *type = nullptr;
 	const metternich::country *country = nullptr;
-	const metternich::culture *culture = nullptr;
-	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::character *character = nullptr;
 	const metternich::province *province = nullptr; //the province the unit is in

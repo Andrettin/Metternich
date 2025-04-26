@@ -665,6 +665,21 @@ bool site_game_data::has_building_class(const building_class *building_class) co
 	return building->get_building_class() == building_class;
 }
 
+bool site_game_data::has_building_class_or_better(const building_class *building_class) const
+{
+	const building_type *slot_building = this->get_slot_building(building_class->get_slot_type());
+
+	while (slot_building != nullptr) {
+		if (slot_building->get_building_class() == building_class) {
+			return true;
+		}
+
+		slot_building = slot_building->get_required_building();
+	}
+
+	return false;
+}
+
 bool site_game_data::can_gain_building(const building_type *building) const
 {
 	return this->get_building_slot(building->get_slot_type())->can_gain_building(building);
