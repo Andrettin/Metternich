@@ -2257,54 +2257,6 @@ void country_game_data::decrease_population()
 		}
 	}
 
-	//disband civilian unit, if possible
-	civilian_unit *best_civilian_unit = nullptr;
-
-	for (auto it = this->civilian_units.rbegin(); it != this->civilian_units.rend(); ++it) {
-		civilian_unit *civilian_unit = it->get();
-
-		if (civilian_unit->get_character() != nullptr) {
-			//character civilian units do not cost food, so disbanding them does nothing to help with starvation
-			continue;
-		}
-
-		if (
-			best_civilian_unit == nullptr
-			|| (best_civilian_unit->is_busy() && !civilian_unit->is_busy())
-		) {
-			best_civilian_unit = civilian_unit;
-		}
-	}
-
-	if (best_civilian_unit != nullptr) {
-		best_civilian_unit->disband(true);
-		this->change_population_growth(1);
-		return;
-	}
-
-	//disband military unit, if possible
-	for (auto it = this->military_units.rbegin(); it != this->military_units.rend(); ++it) {
-		military_unit *military_unit = it->get();
-
-		if (military_unit->get_character() != nullptr) {
-			//character military units do not cost food, so disbanding them does nothing to help with starvation
-			continue;
-		}
-
-		military_unit->disband(true);
-		this->change_population_growth(1);
-		return;
-	}
-
-	//disband transporter, if possible
-	for (auto it = this->transporters.rbegin(); it != this->transporters.rend(); ++it) {
-		transporter *transporter = it->get();
-
-		transporter->disband(true);
-		this->change_population_growth(1);
-		return;
-	}
-
 	assert_throw(false);
 }
 
@@ -4898,8 +4850,6 @@ void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_
 {
 	if (civilian_unit->get_character() != nullptr) {
 		civilian_unit->get_character()->get_game_data()->set_country(this->country);
-	} else {
-		this->change_food_consumption(1);
 	}
 
 	this->civilian_units.push_back(std::move(civilian_unit));
@@ -4912,8 +4862,6 @@ void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 	if (civilian_unit->get_character() != nullptr) {
 		assert_throw(civilian_unit->get_character()->get_game_data()->get_country() == this->country);
 		civilian_unit->get_character()->get_game_data()->set_country(nullptr);
-	} else {
-		this->change_food_consumption(-1);
 	}
 
 	for (size_t i = 0; i < this->civilian_units.size(); ++i) {
@@ -4926,20 +4874,12 @@ void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 
 void country_game_data::add_military_unit(qunique_ptr<military_unit> &&military_unit)
 {
-	if (military_unit->get_character() == nullptr) {
-		this->change_food_consumption(1);
-	}
-
 	this->military_unit_names.insert(military_unit->get_name());
 	this->military_units.push_back(std::move(military_unit));
 }
 
 void country_game_data::remove_military_unit(military_unit *military_unit)
 {
-	if (military_unit->get_character() == nullptr) {
-		this->change_food_consumption(-1);
-	}
-
 	this->military_unit_names.erase(military_unit->get_name());
 
 	for (size_t i = 0; i < this->military_units.size(); ++i) {
@@ -4967,8 +4907,6 @@ void country_game_data::remove_army(army *army)
 
 void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
 {
-	this->change_food_consumption(1);
-
 	if (transporter->is_ship()) {
 		this->change_sea_transport_capacity(transporter->get_cargo());
 	} else {
@@ -4980,8 +4918,6 @@ void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
 
 void country_game_data::remove_transporter(transporter *transporter)
 {
-	this->change_food_consumption(-1);
-
 	if (transporter->is_ship()) {
 		this->change_sea_transport_capacity(-transporter->get_cargo());
 	} else {

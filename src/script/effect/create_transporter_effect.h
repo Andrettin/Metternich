@@ -69,10 +69,7 @@ public:
 		const culture *culture = scope->get_culture();
 		assert_throw(culture != nullptr);
 
-		const population_type *population_type = culture->get_population_class_type(scope->get_game_data()->get_default_population_class());
-		assert_throw(population_type != nullptr);
-
-		auto transporter = make_qunique<metternich::transporter>(type, scope, population_type, culture, scope->get_game_data()->get_religion(), culture->get_default_phenotype(), scope->get_game_data()->get_capital());
+		auto transporter = make_qunique<metternich::transporter>(type, scope, culture, scope->get_game_data()->get_religion(), culture->get_default_phenotype());
 
 		scope->get_game_data()->add_transporter(std::move(transporter));
 	}

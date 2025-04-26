@@ -682,12 +682,6 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(religion != nullptr);
 
-			const population_type *population_type = historical_civilian_unit->get_population_type();
-			if (population_type == nullptr) {
-				population_type = culture->get_population_class_type(owner_game_data->get_default_population_class());
-			}
-			assert_throw(population_type != nullptr);
-
 			const phenotype *phenotype = historical_civilian_unit->get_phenotype();
 			if (phenotype == nullptr) {
 				phenotype = culture->get_default_phenotype();
@@ -701,7 +695,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				continue;
 			}
 
-			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, population_type, culture, religion, phenotype, home_settlement);
+			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, culture, religion, phenotype);
 			civilian_unit->set_tile_pos(tile_pos);
 
 			owner_game_data->add_civilian_unit(std::move(civilian_unit));
@@ -773,12 +767,6 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(religion != nullptr);
 
-			const population_type *population_type = historical_military_unit->get_population_type();
-			if (population_type == nullptr) {
-				population_type = culture->get_population_class_type(country_game_data->get_default_population_class());
-			}
-			assert_throw(population_type != nullptr);
-
 			const phenotype *phenotype = historical_military_unit->get_phenotype();
 			if (phenotype == nullptr) {
 				phenotype = culture->get_default_phenotype();
@@ -786,7 +774,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			assert_throw(phenotype != nullptr);
 
 			for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
-				auto military_unit = make_qunique<metternich::military_unit>(type, country, population_type, culture, religion, phenotype, home_settlement);
+				auto military_unit = make_qunique<metternich::military_unit>(type, country, culture, religion, phenotype);
 				military_unit->set_province(province);
 
 				for (const promotion *promotion : historical_military_unit_history->get_promotions()) {
@@ -850,12 +838,6 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(religion != nullptr);
 
-			const population_type *population_type = historical_transporter->get_population_type();
-			if (population_type == nullptr) {
-				population_type = culture->get_population_class_type(country_game_data->get_default_population_class());
-			}
-			assert_throw(population_type != nullptr);
-
 			const phenotype *phenotype = historical_transporter->get_phenotype();
 			if (phenotype == nullptr) {
 				phenotype = culture->get_default_phenotype();
@@ -863,7 +845,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			assert_throw(phenotype != nullptr);
 
 			for (int i = 0; i < historical_transporter->get_quantity(); ++i) {
-				auto transporter = make_qunique<metternich::transporter>(type, country, population_type, culture, religion, phenotype, home_settlement);
+				auto transporter = make_qunique<metternich::transporter>(type, country, culture, religion, phenotype);
 
 				country_game_data->add_transporter(std::move(transporter));
 			}

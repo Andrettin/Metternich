@@ -12,9 +12,7 @@ class country;
 class culture;
 class icon;
 class phenotype;
-class population_type;
 class religion;
-class site;
 class transporter_type;
 enum class transporter_category;
 enum class transporter_stat;
@@ -29,7 +27,7 @@ class transporter final : public QObject
 	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
 
 public:
-	explicit transporter(const transporter_type *type, const metternich::country *country, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::site *home_settlement);
+	explicit transporter(const transporter_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
 
 	void do_turn();
 
@@ -73,11 +71,6 @@ public:
 		return this->country;
 	}
 
-	const metternich::population_type *get_population_type() const
-	{
-		return this->population_type;
-	}
-
 	const metternich::culture *get_culture() const
 	{
 		return this->culture;
@@ -91,11 +84,6 @@ public:
 	const metternich::phenotype *get_phenotype() const
 	{
 		return this->phenotype;
-	}
-
-	const metternich::site *get_home_settlement() const
-	{
-		return this->home_settlement;
 	}
 
 	int get_hit_points() const
@@ -202,11 +190,9 @@ private:
 	std::string name;
 	const transporter_type *type = nullptr;
 	const metternich::country *country = nullptr;
-	const metternich::population_type *population_type = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
-	const metternich::site *home_settlement = nullptr;
 	int hit_points = 0;
 	int max_hit_points = 0;
 	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat

@@ -16,9 +16,7 @@ class culture;
 class icon;
 class improvement;
 class phenotype;
-class population_type;
 class religion;
-class site;
 class tile;
 
 class civilian_unit final : public QObject
@@ -40,8 +38,7 @@ public:
 	static constexpr int exploration_turns = 1;
 	static constexpr int prospection_turns = 1;
 
-	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement);
-	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *home_settlement);
+	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
 	explicit civilian_unit(const metternich::character *character, const country *owner);
 
 	void do_turn();
@@ -69,11 +66,6 @@ public:
 		return this->owner;
 	}
 
-	const metternich::population_type *get_population_type() const
-	{
-		return this->population_type;
-	}
-
 	const metternich::culture *get_culture() const
 	{
 		return this->culture;
@@ -87,11 +79,6 @@ public:
 	const metternich::phenotype *get_phenotype() const
 	{
 		return this->phenotype;
-	}
-
-	const site *get_home_settlement() const
-	{
-		return this->home_settlement;
 	}
 
 	const metternich::character *get_character() const
@@ -180,11 +167,9 @@ signals:
 private:
 	const civilian_unit_type *type = nullptr;
 	const country *owner = nullptr;
-	const metternich::population_type *population_type = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
-	const site *home_settlement = nullptr;
 	const metternich::character *character = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	QPoint original_tile_pos = QPoint(-1, -1); //the tile position before moving

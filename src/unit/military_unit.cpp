@@ -53,14 +53,13 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	this->check_free_promotions();
 }
 
-military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::site *home_settlement)
+military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
 	: military_unit(type)
 {
 	this->country = country;
 	this->culture = culture;
 	this->religion = religion;
 	this->phenotype = phenotype;
-	this->home_settlement = home_settlement;
 
 	this->generate_name();
 
@@ -68,7 +67,6 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
-	assert_throw(this->get_home_settlement() != nullptr);
 
 	connect(this, &military_unit::type_changed, this, &military_unit::icon_changed);
 
@@ -83,16 +81,8 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	this->check_free_promotions();
 }
 
-military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::site *home_settlement)
-	: military_unit(type, country, culture, religion, phenotype, home_settlement)
-{
-	this->population_type = population_type;
-
-	assert_throw(this->get_population_type() != nullptr);
-}
-
 military_unit::military_unit(const military_unit_type *type, const metternich::character *character)
-	: military_unit(type, character->get_game_data()->get_country(), character->get_culture(), character->get_religion(), character->get_phenotype(), character->get_home_settlement())
+	: military_unit(type, character->get_game_data()->get_country(), character->get_culture(), character->get_religion(), character->get_phenotype())
 {
 	this->character = character;
 	this->name = character->get_full_name();
@@ -666,16 +656,6 @@ void military_unit::disband(const bool dead)
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->change_military_score(-this->get_score());
 		this->get_country()->get_game_data()->remove_military_unit(this);
-
-		if (!dead) {
-			assert_throw(this->get_population_type() != nullptr);
-			assert_throw(this->get_culture() != nullptr);
-			assert_throw(this->get_religion() != nullptr);
-			assert_throw(this->get_phenotype() != nullptr);
-			assert_throw(this->get_home_settlement() != nullptr);
-
-			this->get_home_settlement()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
-		}
 	}
 }
 

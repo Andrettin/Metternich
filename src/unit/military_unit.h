@@ -3,7 +3,6 @@
 #include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/country.h")
-Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/military_unit_type.h")
 
@@ -16,11 +15,9 @@ class culture;
 class icon;
 class military_unit_type;
 class phenotype;
-class population_type;
 class promotion;
 class province;
 class religion;
-class site;
 enum class military_unit_category;
 enum class military_unit_domain;
 enum class military_unit_stat;
@@ -44,8 +41,7 @@ public:
 	static constexpr int morale_recovery_per_turn = 20;
 
 	explicit military_unit(const military_unit_type *type);
-	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::site *home_settlement);
-	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::site *home_settlement);
+	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype);
 	explicit military_unit(const military_unit_type *type, const character *character);
 
 	void do_turn();
@@ -91,11 +87,6 @@ public:
 		return this->country;
 	}
 
-	const metternich::population_type *get_population_type() const
-	{
-		return this->population_type;
-	}
-
 	const metternich::culture *get_culture() const
 	{
 		return this->culture;
@@ -109,11 +100,6 @@ public:
 	const metternich::phenotype *get_phenotype() const
 	{
 		return this->phenotype;
-	}
-
-	const metternich::site *get_home_settlement() const
-	{
-		return this->home_settlement;
 	}
 
 	const metternich::character *get_character() const
@@ -274,11 +260,9 @@ private:
 	std::string name;
 	const military_unit_type *type = nullptr;
 	const metternich::country *country = nullptr;
-	const metternich::population_type *population_type = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
-	const metternich::site *home_settlement = nullptr;
 	const metternich::character *character = nullptr;
 	const metternich::province *province = nullptr; //the province the unit is in
 	metternich::army *army = nullptr; //the army to which the unit belongs

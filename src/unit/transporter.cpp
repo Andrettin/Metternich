@@ -19,16 +19,14 @@
 
 namespace metternich {
 
-transporter::transporter(const transporter_type *type, const metternich::country *country, const metternich::population_type *population_type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::site *home_settlement)
-	: type(type), country(country), culture(culture), religion(religion), phenotype(phenotype), home_settlement(home_settlement), population_type(population_type)
+transporter::transporter(const transporter_type *type, const metternich::country *country, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype)
+	: type(type), country(country), culture(culture), religion(religion), phenotype(phenotype)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_country() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
-	assert_throw(this->get_home_settlement() != nullptr);
-	assert_throw(this->get_population_type() != nullptr);
 
 	this->max_hit_points = type->get_hit_points();
 	this->set_hit_points(this->get_max_hit_points());
@@ -180,18 +178,10 @@ void transporter::heal(const int healing)
 
 void transporter::disband(const bool dead)
 {
+	Q_UNUSED(dead);
+
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->remove_transporter(this);
-
-		if (!dead) {
-			assert_throw(this->get_population_type() != nullptr);
-			assert_throw(this->get_culture() != nullptr);
-			assert_throw(this->get_religion() != nullptr);
-			assert_throw(this->get_phenotype() != nullptr);
-			assert_throw(this->get_home_settlement() != nullptr);
-
-			this->get_home_settlement()->get_game_data()->create_population_unit(this->get_population_type(), this->get_culture(), this->get_religion(), this->get_phenotype());
-		}
 	}
 }
 

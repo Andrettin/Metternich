@@ -76,10 +76,7 @@ public:
 		const culture *culture = scope->get_culture();
 		assert_throw(culture != nullptr);
 
-		const population_type *population_type = culture->get_population_class_type(scope->get_game_data()->get_default_population_class());
-		assert_throw(population_type != nullptr);
-
-		auto military_unit = make_qunique<metternich::military_unit>(type, scope, population_type, culture, scope->get_game_data()->get_religion(), culture->get_default_phenotype(), scope->get_game_data()->get_capital());
+		auto military_unit = make_qunique<metternich::military_unit>(type, scope, culture, scope->get_game_data()->get_religion(), culture->get_default_phenotype());
 		military_unit->set_province(province);
 
 		scope->get_game_data()->add_military_unit(std::move(military_unit));
