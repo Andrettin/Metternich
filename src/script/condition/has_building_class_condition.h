@@ -38,7 +38,7 @@ public:
 						continue;
 					}
 
-					if (settlement->get_game_data()->has_building_class(this->building_class)) {
+					if (settlement->get_game_data()->has_building_class_or_better(this->building_class)) {
 						return true;
 					}
 				}
@@ -51,14 +51,14 @@ public:
 					continue;
 				}
 
-				if (settlement->get_game_data()->has_building_class(this->building_class)) {
+				if (settlement->get_game_data()->has_building_class_or_better(this->building_class)) {
 					return true;
 				}
 			}
 
 			return false;
 		} else if constexpr (std::is_same_v<scope_type, site>) {
-			return scope->get_game_data()->has_building_class(this->building_class);
+			return scope->get_game_data()->has_building_class_or_better(this->building_class);
 		}
 	}
 

@@ -32,21 +32,21 @@ public:
 		Q_UNUSED(ctx);
 
 		if constexpr (std::is_same_v<scope_type, country>) {
-			return scope->get_game_data()->get_settlement_building_count(this->building) > 0;
+			return scope->get_game_data()->has_building_or_better(this->building);
 		} else if constexpr (std::is_same_v<scope_type, province>) {
 			for (const site *settlement : scope->get_game_data()->get_settlement_sites()) {
 				if (!settlement->get_game_data()->is_built()) {
 					continue;
 				}
 
-				if (settlement->get_game_data()->has_building(this->building)) {
+				if (settlement->get_game_data()->has_building_or_better(this->building)) {
 					return true;
 				}
 			}
 
 			return false;
 		} else if constexpr (std::is_same_v<scope_type, site>) {
-			return scope->get_game_data()->has_building(this->building);
+			return scope->get_game_data()->has_building_or_better(this->building);
 		}
 	}
 
