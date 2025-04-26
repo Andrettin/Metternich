@@ -3,8 +3,11 @@
 #include "infrastructure/settlement_type.h"
 
 #include "map/tile_image_provider.h"
+#include "population/population_class.h"
+#include "population/population_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
+#include "util/assert_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -27,6 +30,11 @@ void settlement_type::process_gsml_scope(const gsml_data &scope)
 			settlement_type *settlement_type = settlement_type::get(value);
 			this->base_settlement_types.push_back(settlement_type);
 			settlement_type->upgraded_settlement_types.push_back(this);
+		}
+	} else if (tag == "population_classes") {
+		for (const std::string &value : values) {
+			const population_class *population_class = population_class::get(value);
+			this->population_classes.push_back(population_class);
 		}
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
@@ -77,6 +85,13 @@ void settlement_type::set_image_filepath(const std::filesystem::path &filepath)
 	}
 
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
+}
+
+bool settlement_type::can_have_population_type(const population_type *population_type) const
+{
+	assert_throw(population_type != nullptr);
+
+	return vector::contains(this->get_population_classes(), population_type->get_population_class());
 }
 
 }

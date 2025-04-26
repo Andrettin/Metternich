@@ -1247,7 +1247,9 @@ void game::apply_population_history()
 			if (remaining_population > 0 && !group_key.is_empty()) {
 				population_group_key group_key_copy = group_key;
 
-				if (group_key.phenotype != nullptr) {
+				if (group_key.type != nullptr && !capital->get_game_data()->get_settlement_type()->can_have_population_type(group_key.type)) {
+					group_key_copy.type = nullptr;
+				} else if (group_key.phenotype != nullptr) {
 					group_key_copy.phenotype = nullptr;
 				} else if (group_key.religion != nullptr) {
 					group_key_copy.religion = nullptr;
@@ -1278,10 +1280,16 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 		return 0;
 	}
 
+	site_game_data *settlement_game_data = settlement->get_game_data();
+	assert_throw(settlement_game_data->get_settlement_type() != nullptr);
+
+	if (group_key.type != nullptr && !settlement_game_data->get_settlement_type()->can_have_population_type(group_key.type)) {
+		return population;
+	}
+
 	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", group_key.type ? group_key.type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, settlement->get_identifier()));
 
 	site_history *settlement_history = settlement->get_history();
-	site_game_data *settlement_game_data = settlement->get_game_data();
 
 	const province *province = settlement->get_game_data()->get_province();
 	province_history *province_history = province->get_history();

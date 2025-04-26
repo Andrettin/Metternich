@@ -12,7 +12,6 @@ namespace metternich {
 
 class commodity;
 class icon;
-class population_type;
 class resource;
 class technology;
 class terrain_type;

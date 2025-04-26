@@ -5,6 +5,8 @@
 
 namespace metternich {
 
+class population_class;
+class population_type;
 class site;
 
 template <typename scope_type>
@@ -54,6 +56,13 @@ public:
 		return this->free_resource_improvement_level;
 	}
 
+	const std::vector<const population_class *> &get_population_classes() const
+	{
+		return this->population_classes;
+	}
+
+	bool can_have_population_type(const population_type *population_type) const;
+
 	const and_condition<site> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -77,6 +86,7 @@ private:
 	std::vector<const settlement_type *> base_settlement_types;
 	std::vector<const settlement_type *> upgraded_settlement_types;
 	int free_resource_improvement_level = 0;
+	std::vector<const population_class *> population_classes;
 	std::unique_ptr<const and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;
 	std::unique_ptr<modifier<const site>> modifier;
