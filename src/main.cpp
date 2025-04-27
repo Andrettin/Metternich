@@ -146,12 +146,12 @@ int main(int argc, char **argv)
 		enum_converter<log_level>();
 		enum_converter<military_unit_domain>();
 		enum_converter<moisture_type>();
-		enum_converter<site_type>();
 		enum_converter<temperature_type>();
 		enum_converter<trait_type>();
 
 		database::get()->register_enum<event_trigger>();
 		database::get()->register_enum<improvement_slot>();
+		database::get()->register_enum<site_type>();
 
 		QCoro::Qml::registerTypes();
 

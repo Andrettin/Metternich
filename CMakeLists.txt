@@ -161,7 +161,6 @@ set(map_SRCS
 	src/map/site_game_data.cpp
 	src/map/site_history.cpp
 	src/map/site_map_data.cpp
-	src/map/site_type.cpp
 	src/map/temperature_type.cpp
 	src/map/terrain_adjacency.cpp
 	src/map/terrain_feature.cpp
