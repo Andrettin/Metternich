@@ -12,6 +12,8 @@
 #include "map/site.h"
 #include "util/assert_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 void site_history::process_gsml_property(const gsml_property &property)
@@ -87,7 +89,7 @@ void site_history::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			const improvement_slot slot = enum_converter<improvement_slot>::to_enum(key);
+			const improvement_slot slot = magic_enum::enum_cast<improvement_slot>(key).value();
 			const improvement *improvement = improvement::get(value);
 
 			if (improvement == nullptr) {
