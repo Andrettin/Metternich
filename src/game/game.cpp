@@ -1371,7 +1371,7 @@ void game::adjust_food_production_for_country_populations()
 					const resource *resource = resource_tile->get_resource();
 					assert_throw(resource != nullptr);
 
-					if (!resource->get_commodity()->is_food()) {
+					if (resource->get_commodity() != nullptr && !resource->get_commodity()->is_food()) {
 						continue;
 					}
 

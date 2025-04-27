@@ -57,7 +57,6 @@ void resource::initialize()
 
 void resource::check() const
 {
-	assert_throw(this->get_commodity() != nullptr);
 	assert_throw(this->get_icon() != nullptr);
 
 	if (this->get_tiny_icon() == nullptr) {
@@ -79,7 +78,11 @@ const metternich::icon *resource::get_icon() const
 		return this->icon;
 	}
 
-	return this->get_commodity()->get_icon();
+	if (this->get_commodity() != nullptr) {
+		return this->get_commodity()->get_icon();
+	}
+
+	return nullptr;
 }
 
 const terrain_type *resource::get_fallback_terrain(const terrain_type *terrain) const
