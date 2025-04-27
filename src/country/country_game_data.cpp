@@ -1237,7 +1237,7 @@ void country_game_data::choose_capital()
 					continue;
 				}
 
-				if (best_capital->get_game_data()->get_settlement_type()->get_free_resource_improvement_level() >= settlement_game_data->get_settlement_type()->get_free_resource_improvement_level()) {
+				if (best_capital->get_game_data()->get_settlement_type()->get_level() >= settlement_game_data->get_settlement_type()->get_level()) {
 					continue;
 				}
 			}

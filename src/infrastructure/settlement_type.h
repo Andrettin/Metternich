@@ -51,6 +51,13 @@ public:
 		return this->upgraded_settlement_types;
 	}
 
+	int get_level() const
+	{
+		return this->level;
+	}
+
+	void calculate_level();
+
 	int get_free_resource_improvement_level() const
 	{
 		return this->free_resource_improvement_level;
@@ -85,6 +92,7 @@ private:
 	std::filesystem::path image_filepath;
 	std::vector<const settlement_type *> base_settlement_types;
 	std::vector<const settlement_type *> upgraded_settlement_types;
+	int level = 0;
 	int free_resource_improvement_level = 0;
 	std::vector<const population_class *> population_classes;
 	std::unique_ptr<const and_condition<site>> conditions;

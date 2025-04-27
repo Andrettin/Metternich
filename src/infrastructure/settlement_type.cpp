@@ -56,6 +56,8 @@ void settlement_type::initialize()
 {
 	tile_image_provider::get()->load_image("settlement/" + this->get_identifier() + "/0");
 
+	this->calculate_level();
+
 	named_data_entry::initialize();
 }
 
@@ -85,6 +87,23 @@ void settlement_type::set_image_filepath(const std::filesystem::path &filepath)
 	}
 
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
+}
+
+void settlement_type::calculate_level()
+{
+	if (this->get_level() != 0) {
+		return;
+	}
+
+	if (!this->get_base_settlement_types().empty()) {
+		for (const settlement_type *base_settlement_type : this->get_base_settlement_types()) {
+			const_cast<settlement_type *>(base_settlement_type)->calculate_level();
+
+			this->level = std::max(this->level, base_settlement_type->get_level() + 1);
+		}
+	} else {
+		this->level = 1;
+	}
 }
 
 bool settlement_type::can_have_population_type(const population_type *population_type) const
