@@ -52,7 +52,7 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 
 	this->free_food_consumption = site_game_data::base_free_food_consumption;
 
-	const resource *resource = site->get_map_data()->get_resource();
+	const resource *resource = this->get_resource();
 	if (resource == nullptr || resource->get_required_technology() != nullptr || resource->is_prospectable()) {
 		this->set_resource_discovered(false);
 	} else {
@@ -65,6 +65,18 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::on_population_main_religion_changed);
 	if (this->get_province() != nullptr) {
 		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
+	}
+}
+
+void site_game_data::initialize_resource()
+{
+	const resource *resource = this->get_resource();
+	if (resource == nullptr) {
+		return;
+	}
+
+	if (resource->get_modifier() != nullptr) {
+		resource->get_modifier()->apply(this->site);
 	}
 }
 
@@ -1014,6 +1026,10 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 		for (const auto &[commodity, bonus] : country_game_data->get_improvement_commodity_bonuses(improvement)) {
 			this->change_base_commodity_output(commodity, bonus * multiplier);
 		}
+	}
+
+	if (this->get_resource() != nullptr && this->get_resource()->get_improved_modifier() != nullptr && improvement->get_slot() == improvement_slot::resource) {
+		this->get_resource()->get_improved_modifier()->apply(this->site, multiplier);
 	}
 
 	if (improvement->get_modifier() != nullptr) {

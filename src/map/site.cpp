@@ -108,6 +108,7 @@ void site::reset_map_data()
 void site::reset_game_data()
 {
 	this->game_data = make_qunique<site_game_data>(this);
+	this->get_game_data()->initialize_resource();
 }
 
 bool site::is_settlement() const

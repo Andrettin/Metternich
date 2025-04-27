@@ -4,12 +4,21 @@
 
 #include "economy/commodity.h"
 #include "map/terrain_type.h"
+#include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
 	
+resource::resource(const std::string &identifier) : named_data_entry(identifier)
+{
+}
+
+resource::~resource()
+{
+}
+
 void resource::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
@@ -19,6 +28,12 @@ void resource::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->terrain_types.push_back(terrain_type::get(value));
 		}
+	} else if (tag == "modifier") {
+		this->modifier = std::make_unique<metternich::modifier<const site>>();
+		database::process_gsml_data(this->modifier, scope);
+	} else if (tag == "improved_modifier") {
+		this->improved_modifier = std::make_unique<metternich::modifier<const site>>();
+		database::process_gsml_data(this->improved_modifier, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

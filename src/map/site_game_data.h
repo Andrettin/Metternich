@@ -60,6 +60,7 @@ public:
 
 	explicit site_game_data(const metternich::site *site);
 
+	void initialize_resource();
 	void do_turn();
 	void do_everyday_consumption();
 	void do_luxury_consumption();
