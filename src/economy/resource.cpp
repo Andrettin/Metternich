@@ -3,11 +3,14 @@
 #include "economy/resource.h"
 
 #include "economy/commodity.h"
+#include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 	
@@ -27,6 +30,10 @@ void resource::process_gsml_scope(const gsml_data &scope)
 	if (tag == "terrain_types") {
 		for (const std::string &value : values) {
 			this->terrain_types.push_back(terrain_type::get(value));
+		}
+	} else if (tag == "site_types") {
+		for (const std::string &value : values) {
+			this->site_types.insert(magic_enum::enum_cast<site_type>(value).value());
 		}
 	} else if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const site>>();
@@ -59,6 +66,10 @@ void resource::check() const
 
 	if (this->get_commodity() != nullptr && this->get_improvements().empty()) {
 		throw std::runtime_error(std::format("Resource \"{}\" has a commodity, but no improvements to produce it.", this->get_identifier()));
+	}
+
+	if (this->get_site_types().empty()) {
+		throw std::runtime_error(std::format("Resource \"{}\" has no site types.", this->get_identifier()));
 	}
 }
 

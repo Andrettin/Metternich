@@ -11,6 +11,7 @@
 #include "map/province_map_data.h"
 #include "map/region.h"
 #include "map/site.h"
+#include "map/site_type.h"
 #include "map/terrain_feature.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
@@ -85,6 +86,12 @@ void province::check() const
 	for (const auto &[border_province, border_river] : this->border_rivers) {
 		if (!border_river->is_river() && !border_river->is_border_river()) {
 			throw std::runtime_error(std::format("Province \"{}\" has the terrain feature \"{}\" set as a border river, but the latter is not a river.", this->get_identifier(), border_river->get_identifier()));
+		}
+	}
+
+	for (const auto &[resource, count] : this->get_resource_counts()) {
+		if (!resource->get_site_types().contains(site_type::resource)) {
+			throw std::runtime_error(std::format("Province \"{}\" has resource \"{}\" in its resources list, but that resource cannot be set for resource sites.", this->get_identifier(), resource->get_identifier()));
 		}
 	}
 }

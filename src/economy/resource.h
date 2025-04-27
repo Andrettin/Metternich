@@ -14,6 +14,7 @@ class icon;
 class improvement;
 class technology;
 class terrain_type;
+enum class site_type;
 
 template <typename scope_type>
 class modifier;
@@ -87,6 +88,11 @@ public:
 		return this->terrain_types;
 	}
 
+	const std::set<site_type> &get_site_types() const
+	{
+		return this->site_types;
+	}
+
 	const terrain_type *get_fallback_terrain(const terrain_type *terrain) const;
 
 	const std::vector<const improvement *> &get_improvements() const
@@ -122,6 +128,7 @@ private:
 	technology *required_technology = nullptr; //technology which is required to see the resource on the tile
 	technology *discovery_technology = nullptr; //technology which is obtained when exploring this resource tile
 	std::vector<const terrain_type *> terrain_types;
+	std::set<site_type> site_types;
 	std::vector<const improvement *> improvements;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
 	std::unique_ptr<metternich::modifier<const site>> improved_modifier;

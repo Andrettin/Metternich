@@ -4,6 +4,7 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "economy/resource.h"
 #include "map/province.h"
 #include "map/province_history.h"
 #include "map/site_game_data.h"
@@ -14,6 +15,8 @@
 #include "map/world.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -67,6 +70,10 @@ void site::check() const
 			//resource and settlement sites can also have a terrain type
 			assert_throw(this->get_terrain_type() == nullptr);
 		}
+	}
+
+	if (this->get_resource() != nullptr && !this->get_resource()->get_site_types().contains(this->get_type())) {
+		throw std::runtime_error(std::format("Site \"{}\" has resource \"{}\", but the latter cannot be set for the site's type (\"{}\").", this->get_identifier(), this->get_resource()->get_identifier(), magic_enum::enum_name(this->get_type())));
 	}
 
 	switch (this->get_type()) {
