@@ -2264,22 +2264,52 @@ population_unit *country_game_data::choose_starvation_population_unit()
 {
 	std::vector<population_unit *> population_units;
 
+	bool found_non_food_producer = false;
+	bool found_producer = false;
+	bool found_labor_producer = false;
+	int lowest_output_value = std::numeric_limits<int>::max();
 	for (population_unit *population_unit : this->get_population_units()) {
 		if (population_unit->get_settlement()->get_game_data()->get_population_unit_count() == 1) {
 			//do not remove a settlement's last population unit
 			continue;
 		}
 
-		if (
-			population_units.empty()
-			|| population_units.at(0)->is_food_producer() && !population_unit->is_food_producer()
-			|| (population_units.at(0)->is_food_producer() == population_unit->is_food_producer() && population_units.at(0)->get_type()->get_output_value() > population_unit->get_type()->get_output_value())
-		) {
+		const bool is_non_food_producer = !population_unit->is_food_producer();
+		if (found_non_food_producer && !is_non_food_producer) {
+			continue;
+		} else if (!found_non_food_producer && is_non_food_producer) {
+			found_non_food_producer = true;
 			population_units.clear();
-			population_units.push_back(population_unit);
-		} else if (population_units.at(0)->is_food_producer() == population_unit->is_food_producer() && population_units.at(0)->get_type()->get_output_value() == population_unit->get_type()->get_output_value()) {
-			population_units.push_back(population_unit);
 		}
+
+		const bool is_producer = population_unit->get_type()->get_output_commodity() != nullptr;
+		if (found_producer && !is_producer) {
+			continue;
+		} else if (!found_producer && is_producer) {
+			found_producer = true;
+			lowest_output_value = population_unit->get_type()->get_output_value();
+			population_units.clear();
+		}
+
+		const bool is_labor_producer = population_unit->get_type()->get_output_commodity() != nullptr && population_unit->get_type()->get_output_commodity()->is_labor();
+		if (found_labor_producer && !is_labor_producer) {
+			continue;
+		} else if (!found_labor_producer && is_labor_producer) {
+			found_labor_producer = true;
+			lowest_output_value = population_unit->get_type()->get_output_value();
+			population_units.clear();
+		}
+
+		if (population_unit->get_type()->get_output_commodity() != nullptr) {
+			if (population_unit->get_type()->get_output_value() > lowest_output_value) {
+				continue;
+			} else if (population_unit->get_type()->get_output_value() < lowest_output_value) {
+				lowest_output_value = population_unit->get_type()->get_output_value();
+				population_units.clear();
+			}
+		}
+
+		population_units.push_back(population_unit);
 	}
 
 	if (population_units.empty()) {
