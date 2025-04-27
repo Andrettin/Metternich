@@ -143,7 +143,6 @@ int main(int argc, char **argv)
 		enum_converter<food_type>();
 		enum_converter<forestation_type>();
 		enum_converter<gender>();
-		enum_converter<improvement_slot>();
 		enum_converter<log_level>();
 		enum_converter<military_unit_domain>();
 		enum_converter<moisture_type>();
@@ -152,6 +151,7 @@ int main(int argc, char **argv)
 		enum_converter<trait_type>();
 
 		database::get()->register_enum<event_trigger>();
+		database::get()->register_enum<improvement_slot>();
 
 		QCoro::Qml::registerTypes();
 
