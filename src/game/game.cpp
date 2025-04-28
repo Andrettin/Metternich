@@ -1078,6 +1078,11 @@ void game::apply_population_history()
 					country_populations[settlement_game_data->get_owner()][group_key] += remaining_population;
 				}
 			}
+
+			if (settlement_game_data->is_provincial_capital() && settlement_game_data->get_population_units().empty()) {
+				//ensure provincial capital settlements have at least one population unit
+				this->apply_historical_population_units_to_settlement(population_group_key(), 1, settlement);
+			}
 		}
 	}
 
@@ -1180,6 +1185,43 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 
 	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", group_key.type ? group_key.type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, settlement->get_identifier()));
 
+	const province *province = settlement->get_game_data()->get_province();
+	const country *country = settlement_game_data->get_owner();
+
+	if (country == nullptr) {
+		return 0;
+	}
+
+	const int population_unit_count = population / defines::get()->get_population_per_unit();
+
+	this->apply_historical_population_units_to_settlement(group_key, population_unit_count, settlement);
+
+	int64_t remaining_population = population % defines::get()->get_population_per_unit();
+	remaining_population = std::max<int64_t>(0, remaining_population);
+
+	log_trace(std::format("Remaining population: {}.", remaining_population));
+
+	return remaining_population;
+}
+
+void game::apply_historical_population_units_to_settlement(const population_group_key &group_key, int population_unit_count, const site *settlement)
+{
+	if (population_unit_count <= 0) {
+		return;
+	}
+
+	site_game_data *settlement_game_data = settlement->get_game_data();
+
+	if (settlement_game_data->get_settlement_type() == nullptr) {
+		return;
+	}
+
+	const population_type *population_type = group_key.type;
+
+	if (population_type != nullptr && !settlement_game_data->get_settlement_type()->can_have_population_type(population_type)) {
+		return;
+	}
+
 	site_history *settlement_history = settlement->get_history();
 
 	const province *province = settlement->get_game_data()->get_province();
@@ -1188,7 +1230,7 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 	const country *country = settlement_game_data->get_owner();
 
 	if (country == nullptr) {
-		return 0;
+		return;
 	}
 
 	const culture *settlement_culture = settlement_history->get_culture();
@@ -1202,7 +1244,7 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 			culture = province_culture;
 		} else {
 			log::log_error(std::format("Province \"{}\" has no culture.", province->get_identifier()));
-			return 0;
+			return;
 		}
 	}
 	assert_throw(culture != nullptr);
@@ -1218,7 +1260,7 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 			religion = province_religion;
 		} else {
 			log::log_error(std::format("Province \"{}\" has no religion.", province->get_identifier()));
-			return 0;
+			return;
 		}
 	}
 	assert_throw(religion != nullptr);
@@ -1229,9 +1271,6 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 	}
 	assert_throw(phenotype != nullptr);
 
-	int population_unit_count = population / defines::get()->get_population_per_unit();
-
-	const population_type *population_type = group_key.type;
 	if (population_type == nullptr) {
 		if (!country->get_game_data()->is_tribal()) {
 			centesimal_int literacy_rate = settlement_history->get_literacy_rate();
@@ -1263,13 +1302,6 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 	for (int i = 0; i < population_unit_count; ++i) {
 		settlement_game_data->create_population_unit(population_type, culture, religion, phenotype);
 	}
-
-	int64_t remaining_population = population % defines::get()->get_population_per_unit();
-	remaining_population = std::max<int64_t>(0, remaining_population);
-
-	log_trace(std::format("Remaining population: {}.", remaining_population));
-
-	return remaining_population;
 }
 
 QCoro::Task<void> game::on_setup_finished()

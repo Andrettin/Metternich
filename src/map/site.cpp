@@ -72,10 +72,6 @@ void site::check() const
 		}
 	}
 
-	if (this->get_resource() != nullptr && !this->get_resource()->get_site_types().contains(this->get_type())) {
-		throw std::runtime_error(std::format("Site \"{}\" has resource \"{}\", but the latter cannot be set for the site's type (\"{}\").", this->get_identifier(), this->get_resource()->get_identifier(), magic_enum::enum_name(this->get_type())));
-	}
-
 	switch (this->get_type()) {
 		case site_type::settlement:
 			if (this->get_province() != nullptr) {
@@ -94,6 +90,10 @@ void site::check() const
 		default:
 			assert_throw(this->get_resource() == nullptr);
 			break;
+	}
+
+	if (this->get_resource() != nullptr && !this->get_resource()->get_site_types().contains(this->get_type())) {
+		throw std::runtime_error(std::format("Site \"{}\" has resource \"{}\", but the latter cannot be set for the site's type (\"{}\").", this->get_identifier(), this->get_resource()->get_identifier(), magic_enum::enum_name(this->get_type())));
 	}
 }
 
