@@ -144,19 +144,19 @@ public:
 		return zero;
 	}
 
-	const commodity_map<centesimal_int> &get_commodity_demands() const
+	const commodity_map<decimillesimal_int> &get_commodity_demands() const
 	{
 		return this->commodity_demands;
 	}
 
-	const centesimal_int &get_commodity_demand(const commodity *commodity) const
+	const decimillesimal_int &get_commodity_demand(const commodity *commodity) const
 	{
 		const auto find_iterator = this->get_commodity_demands().find(commodity);
 		if (find_iterator != this->get_commodity_demands().end()) {
 			return find_iterator->second;
 		}
 
-		static const centesimal_int zero;
+		static const decimillesimal_int zero;
 		return zero;
 	}
 
@@ -198,7 +198,7 @@ private:
 	int everyday_wealth_consumption = 0;
 	commodity_map<centesimal_int> everyday_consumption;
 	commodity_map<centesimal_int> luxury_consumption;
-	commodity_map<centesimal_int> commodity_demands; //affects minor nation demand
+	commodity_map<decimillesimal_int> commodity_demands;
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
 	centesimal_int max_modifier_multiplier = centesimal_int(0);

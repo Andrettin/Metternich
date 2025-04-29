@@ -56,7 +56,7 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			const commodity *commodity = commodity::get(key);
-			const centesimal_int demand(value);
+			const decimillesimal_int demand(value);
 			this->commodity_demands[commodity] = std::move(demand);
 		});
 	} else if (tag == "country_modifier") {

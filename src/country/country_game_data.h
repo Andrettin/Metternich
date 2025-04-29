@@ -1089,12 +1089,12 @@ public:
 	Q_INVOKABLE int get_luxury_consumption(const QString &commodity_identifier) const;
 	void change_luxury_consumption(const commodity *commodity, const centesimal_int &change);
 
-	const commodity_map<centesimal_int> &get_commodity_demands() const
+	const commodity_map<decimillesimal_int> &get_commodity_demands() const
 	{
 		return this->commodity_demands;
 	}
 
-	const centesimal_int &get_commodity_demand(const commodity *commodity) const
+	const decimillesimal_int &get_commodity_demand(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_demands.find(commodity);
 
@@ -1102,11 +1102,11 @@ public:
 			return find_iterator->second;
 		}
 
-		static const centesimal_int zero;
+		static const decimillesimal_int zero;
 		return zero;
 	}
 
-	void change_commodity_demand(const commodity *commodity, const centesimal_int &change);
+	void change_commodity_demand(const commodity *commodity, const decimillesimal_int &change);
 
 	void assign_production();
 	void decrease_wealth_consumption(const bool restore_inputs = true);
@@ -2531,7 +2531,7 @@ private:
 	int everyday_wealth_consumption = 0;
 	commodity_map<centesimal_int> everyday_consumption;
 	commodity_map<centesimal_int> luxury_consumption;
-	commodity_map<centesimal_int> commodity_demands;
+	commodity_map<decimillesimal_int> commodity_demands;
 	int land_transport_capacity = 0;
 	int sea_transport_capacity = 0;
 	technology_set technologies;

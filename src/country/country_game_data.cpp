@@ -2978,13 +2978,13 @@ void country_game_data::change_luxury_consumption(const commodity *commodity, co
 	}
 }
 
-void country_game_data::change_commodity_demand(const commodity *commodity, const centesimal_int &change)
+void country_game_data::change_commodity_demand(const commodity *commodity, const decimillesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const centesimal_int count = (this->commodity_demands[commodity] += change);
+	const decimillesimal_int count = (this->commodity_demands[commodity] += change);
 
 	assert_throw(count >= 0);
 

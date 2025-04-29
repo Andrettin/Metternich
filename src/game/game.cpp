@@ -1185,7 +1185,6 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 
 	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", group_key.type ? group_key.type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, settlement->get_identifier()));
 
-	const province *province = settlement->get_game_data()->get_province();
 	const country *country = settlement_game_data->get_owner();
 
 	if (country == nullptr) {
@@ -1554,12 +1553,12 @@ void game::do_trade()
 			}
 
 			//increase demand if prices are lower than the base price, or the inverse if they are higher
-			const centesimal_int effective_demand = demand * commodity->get_base_price() / game::get()->get_price(commodity);
+			decimillesimal_int effective_demand = demand * commodity->get_base_price() / game::get()->get_price(commodity);
+			if (country->is_great_power()) {
+				effective_demand /= great_power_luxury_demand_divisor;
+			}
 
 			int effective_demand_int = effective_demand.to_int();
-			if (country->is_great_power()) {
-				effective_demand_int /= great_power_luxury_demand_divisor;
-			}
 
 			assert_throw(effective_demand_int >= 0);
 
