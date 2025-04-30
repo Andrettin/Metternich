@@ -1203,6 +1203,30 @@ void site_game_data::change_housing(const centesimal_int &change)
 	emit housing_changed();
 }
 
+void site_game_data::change_profession_capacity(const profession *profession, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->profession_capacities[profession] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->profession_capacities.erase(profession);
+	}
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_profession_capacity(profession, change);
+	}
+}
+
+int site_game_data::get_available_profession_capacity(const profession *profession) const
+{
+	return this->get_profession_capacity(profession) - this->get_population()->get_profession_count(profession);
+}
+
 void site_game_data::change_base_commodity_output(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {

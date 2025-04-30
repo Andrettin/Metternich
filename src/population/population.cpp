@@ -65,6 +65,10 @@ void population::change_type_count(const population_type *type, const int change
 		this->type_counts.erase(type);
 	}
 
+	if (type->get_profession() != nullptr) {
+		this->change_profession_count(type->get_profession(), change);
+	}
+
 	if (type->is_literate()) {
 		this->literate_count += change;
 	}
@@ -77,6 +81,25 @@ void population::change_type_count(const population_type *type, const int change
 
 	if (game::get()->is_running()) {
 		emit type_counts_changed();
+	}
+}
+
+void population::change_profession_count(const profession *profession, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->profession_counts[profession] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->profession_counts.erase(profession);
+	}
+
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_profession_count(profession, change);
 	}
 }
 

@@ -1183,6 +1183,10 @@ void country_game_data::on_site_gained(const site *site, const int multiplier)
 		}
 
 		this->change_housing(site_game_data->get_housing() * multiplier);
+
+		for (const auto &[profession, capacity] : site_game_data->get_profession_capacities()) {
+			this->change_profession_capacity(profession, capacity * multiplier);
+		}
 	}
 }
 
@@ -2358,6 +2362,26 @@ int country_game_data::get_net_food_consumption() const
 	}
 
 	return food_consumption;
+}
+
+void country_game_data::change_profession_capacity(const profession *profession, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->profession_capacities[profession] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->profession_capacities.erase(profession);
+	}
+}
+
+int country_game_data::get_available_profession_capacity(const profession *profession) const
+{
+	return this->get_profession_capacity(profession) - this->get_population()->get_profession_count(profession);
 }
 
 QVariantList country_game_data::get_building_slots_qvariant_list() const

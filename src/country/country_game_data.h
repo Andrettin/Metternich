@@ -63,6 +63,7 @@ class population;
 class population_class;
 class population_type;
 class population_unit;
+class profession;
 class province;
 class region;
 class religion;
@@ -719,6 +720,19 @@ public:
 	{
 		return this->get_stored_food() - this->get_net_food_consumption();
 	}
+
+	int get_profession_capacity(const profession *profession) const
+	{
+		const auto find_iterator = this->profession_capacities.find(profession);
+		if (find_iterator != this->profession_capacities.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_profession_capacity(const profession *profession, const int change);
+	int get_available_profession_capacity(const profession *profession) const;
 
 	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
@@ -2512,6 +2526,7 @@ private:
 	int population_growth = 0; //population growth counter
 	centesimal_int housing;
 	int food_consumption = 0;
+	std::map<const profession *, int> profession_capacities;
 	std::vector<qunique_ptr<country_building_slot>> building_slots;
 	building_slot_type_map<country_building_slot *> building_slot_map;
 	building_type_map<int> settlement_building_counts;

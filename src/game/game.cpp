@@ -1191,11 +1191,14 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 		return 0;
 	}
 
-	const int population_unit_count = population / defines::get()->get_population_per_unit();
+	int population_unit_count = population / defines::get()->get_population_per_unit();
+	if (group_key.type != nullptr && group_key.type->get_profession() != nullptr) {
+		population_unit_count = std::min(population_unit_count, settlement_game_data->get_available_profession_capacity(group_key.type->get_profession()));
+	}
 
 	this->apply_historical_population_units_to_settlement(group_key, population_unit_count, settlement);
 
-	int64_t remaining_population = population % defines::get()->get_population_per_unit();
+	int64_t remaining_population = population - (population_unit_count * defines::get()->get_population_per_unit());
 	remaining_population = std::max<int64_t>(0, remaining_population);
 
 	log_trace(std::format("Remaining population: {}.", remaining_population));

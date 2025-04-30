@@ -23,6 +23,7 @@ class phenotype;
 class population;
 class population_type;
 class population_unit;
+class profession;
 class province;
 class religion;
 class resource;
@@ -256,6 +257,24 @@ public:
 		this->free_food_consumption += change;
 	}
 
+	const std::map<const profession *, int> &get_profession_capacities() const
+	{
+		return this->profession_capacities;
+	}
+
+	int get_profession_capacity(const profession *profession) const
+	{
+		const auto find_iterator = this->profession_capacities.find(profession);
+		if (find_iterator != this->profession_capacities.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_profession_capacity(const profession *profession, const int change);
+	int get_available_profession_capacity(const profession *profession) const;
+
 	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
 	{
 		return this->base_commodity_outputs;
@@ -475,6 +494,7 @@ private:
 	qunique_ptr<metternich::population> population;
 	centesimal_int housing;
 	int free_food_consumption = 0;
+	std::map<const profession *, int> profession_capacities;
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<centesimal_int> local_everyday_consumption;
