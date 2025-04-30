@@ -10,14 +10,8 @@ namespace metternich {
 class commodity_bonus_modifier_effect final : public modifier_effect<const site>
 {
 public:
-	explicit commodity_bonus_modifier_effect(const metternich::commodity *commodity, const int value)
-		 : commodity(commodity)
-	{
-		this->value = centesimal_int(value);
-	}
-
 	explicit commodity_bonus_modifier_effect(const metternich::commodity *commodity, const std::string &value)
-		: commodity_bonus_modifier_effect(commodity, std::stoi(value))
+		: modifier_effect(value), commodity(commodity)
 	{
 	}
 
@@ -39,6 +33,11 @@ public:
 		} else {
 			return this->commodity->get_name();
 		}
+	}
+
+	virtual bool are_decimals_relevant() const override
+	{
+		return true;
 	}
 
 private:
