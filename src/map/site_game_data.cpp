@@ -1188,19 +1188,19 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 	}
 }
 
-void site_game_data::change_health(const centesimal_int &change)
+void site_game_data::change_housing(const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	this->health += change;
+	this->housing += change;
 
 	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_health(change);
+		this->get_owner()->get_game_data()->change_housing(change);
 	}
 
-	emit health_changed();
+	emit housing_changed();
 }
 
 void site_game_data::change_base_commodity_output(const commodity *commodity, const centesimal_int &change)

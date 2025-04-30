@@ -671,8 +671,8 @@ void province_game_data::change_local_commodity_output(const commodity *commodit
 		this->local_commodity_outputs.erase(commodity);
 	}
 
-	if (commodity->is_health()) {
-		this->province->get_provincial_capital()->get_game_data()->change_health(change);
+	if (commodity->is_housing()) {
+		this->province->get_provincial_capital()->get_game_data()->change_housing(change);
 	}
 }
 

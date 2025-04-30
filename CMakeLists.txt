@@ -524,7 +524,7 @@ set(script_condition_HDRS
 	src/script/condition/artillery_condition.h
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/available_food_condition.h
-	src/script/condition/available_health_condition.h
+	src/script/condition/available_housing_condition.h
 	src/script/condition/can_gain_building_class_condition.h
 	src/script/condition/can_have_trait_condition.h
 	src/script/condition/capital_condition.h
@@ -558,7 +558,7 @@ set(script_condition_HDRS
 	src/script/condition/has_resource_condition.h
 	src/script/condition/has_route_condition.h
 	src/script/condition/has_terrain_condition.h
-	src/script/condition/health_condition.h
+	src/script/condition/housing_condition.h
 	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h
 	src/script/condition/independent_condition.h

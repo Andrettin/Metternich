@@ -287,11 +287,11 @@ void country_game_data::do_population_growth()
 		}
 
 		const int available_food = this->get_available_food();
-		const int available_health = std::max(0, this->get_available_health().to_int());
+		const int available_housing = std::max(0, this->get_available_housing().to_int());
 
 		int food_consumption = this->get_net_food_consumption();
 
-		const int population_growth_change = std::min(available_food, available_health);
+		const int population_growth_change = std::min(available_food, available_housing);
 		this->change_population_growth(population_growth_change);
 
 		if (population_growth_change > 0) {
@@ -1182,7 +1182,7 @@ void country_game_data::on_site_gained(const site *site, const int multiplier)
 			}
 		}
 
-		this->change_health(site_game_data->get_health() * multiplier);
+		this->change_housing(site_game_data->get_housing() * multiplier);
 	}
 }
 
@@ -2201,7 +2201,7 @@ void country_game_data::grow_population()
 	std::vector<population_unit *> potential_base_population_units = this->population_units;
 
 	std::erase_if(potential_base_population_units, [this](const population_unit *population_unit) {
-		if (population_unit->get_settlement()->get_game_data()->get_available_health() <= 0) {
+		if (population_unit->get_settlement()->get_game_data()->get_available_housing() <= 0) {
 			return true;
 		}
 
@@ -2209,7 +2209,7 @@ void country_game_data::grow_population()
 	});
 
 	if (potential_base_population_units.empty()) {
-		//this could happen if the settlements with available health have no population
+		//this could happen if the settlements with available housing have no population
 		potential_base_population_units = this->population_units;
 	}
 
@@ -2222,12 +2222,12 @@ void country_game_data::grow_population()
 	const population_type *population_type = culture->get_population_class_type(this->get_default_population_class());
 
 	const site *settlement = population_unit->get_settlement();
-	if (settlement->get_game_data()->get_available_health() <= 0) {
-		//if the population unit's settlement has no available health, but there are empty settlements, grow the population in one of them
+	if (settlement->get_game_data()->get_available_housing() <= 0) {
+		//if the population unit's settlement has no available housing, but there are empty settlements, grow the population in one of them
 		std::vector<const province *> potential_settlement_provinces = this->get_provinces();
 
 		std::erase_if(potential_settlement_provinces, [this](const province *province) {
-			if (province->get_provincial_capital()->get_game_data()->get_available_health() <= 0) {
+			if (province->get_provincial_capital()->get_game_data()->get_available_housing() <= 0) {
 				return true;
 			}
 
