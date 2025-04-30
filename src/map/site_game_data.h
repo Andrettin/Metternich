@@ -205,6 +205,8 @@ public:
 	void remove_scripted_modifier(const scripted_site_modifier *modifier);
 	void decrement_scripted_modifiers();
 
+	bool can_have_population() const;
+
 	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
 	{
 		return this->population_units;

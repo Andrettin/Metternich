@@ -195,7 +195,7 @@ void province_game_data::set_culture(const metternich::culture *culture)
 	emit culture_changed();
 
 	for (const site *site : this->get_sites()) {
-		if (!site->is_settlement()) {
+		if (!site->get_game_data()->can_have_population()) {
 			site->get_game_data()->set_culture(culture);
 		}
 	}

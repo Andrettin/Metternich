@@ -14,7 +14,7 @@ public:
 	explicit migrate_to_effect(const std::string &value, const gsml_operator effect_operator)
 		: effect<population_unit>(effect_operator)
 	{
-		this->settlement_target = string_to_target_variant<const site>(value);
+		this->site_target = string_to_target_variant<const site>(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -27,16 +27,16 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const site *settlement = this->get_settlement(ctx);
-		assert_throw(settlement->is_settlement());
+		const site *site = this->get_site(ctx);
+		assert_throw(site->get_game_data()->can_have_population());
 
-		if (!settlement->get_game_data()->is_built()) {
+		if (!site->get_game_data()->is_built()) {
 			return;
 		}
 
 		assert_throw(scope->get_settlement() != nullptr);
 
-		scope->migrate_to(settlement);
+		scope->migrate_to(site);
 	}
 
 	virtual std::string get_assignment_string(const population_unit *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
@@ -45,19 +45,19 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		const site *settlement = this->get_settlement(ctx);
+		const site *site = this->get_site(ctx);
 
-		return std::format("Migrate to {}", string::highlight(settlement->get_game_data()->get_current_cultural_name()));
+		return std::format("Migrate to {}", string::highlight(site->get_game_data()->get_current_cultural_name()));
 	}
 
-	const site *get_settlement(const read_only_context &ctx) const
+	const site *get_site(const read_only_context &ctx) const
 	{
-		if (std::holds_alternative<const site *>(this->settlement_target)) {
-			return std::get<const site *>(this->settlement_target);
-		} else if (std::holds_alternative<std::string>(this->settlement_target)) {
-			return ctx.get_saved_scope<const site>(std::get<std::string>(this->settlement_target));
-		} else if (std::holds_alternative<special_target_type>(this->settlement_target)) {
-			const special_target_type target_type = std::get<special_target_type>(this->settlement_target);
+		if (std::holds_alternative<const site *>(this->site_target)) {
+			return std::get<const site *>(this->site_target);
+		} else if (std::holds_alternative<std::string>(this->site_target)) {
+			return ctx.get_saved_scope<const site>(std::get<std::string>(this->site_target));
+		} else if (std::holds_alternative<special_target_type>(this->site_target)) {
+			const special_target_type target_type = std::get<special_target_type>(this->site_target);
 			const read_only_context::scope_variant_type &target_scope_variant = ctx.get_special_target_scope_variant(target_type);
 
 			return std::visit([](auto &&target_scope) -> const site * {
@@ -77,7 +77,7 @@ public:
 	}
 
 private:
-	target_variant<const site> settlement_target;
+	target_variant<const site> site_target;
 };
 
 }

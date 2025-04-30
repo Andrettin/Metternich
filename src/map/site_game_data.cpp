@@ -268,9 +268,11 @@ void site_game_data::set_owner(const country *owner)
 			}
 		}
 
-		if (this->site->is_settlement()) {
+		if (this->can_have_population()) {
 			this->population->remove_upper_population(old_owner->get_game_data()->get_population());
+		}
 
+		if (this->site->is_settlement()) {
 			for (const auto &[commodity, bonus] : old_owner->get_game_data()->get_settlement_commodity_bonuses()) {
 				this->change_base_commodity_output(commodity, -bonus);
 			}
@@ -322,9 +324,11 @@ void site_game_data::set_owner(const country *owner)
 			}
 		}
 
-		if (this->site->is_settlement()) {
+		if (this->can_have_population()) {
 			this->population->add_upper_population(this->get_owner()->get_game_data()->get_population());
+		}
 
+		if (this->site->is_settlement()) {
 			for (const auto &[commodity, bonus] : this->get_owner()->get_game_data()->get_settlement_commodity_bonuses()) {
 				this->change_base_commodity_output(commodity, bonus);
 			}
@@ -532,9 +536,11 @@ std::vector<const metternich::settlement_type *> site_game_data::get_best_settle
 
 bool site_game_data::is_built() const
 {
-	assert_throw(this->site->is_settlement());
-
-	return this->get_settlement_type() != nullptr;
+	if (this->site->is_settlement()) {
+		return this->get_settlement_type() != nullptr;
+	} else {
+		return this->get_main_improvement() != nullptr && !this->get_main_improvement()->is_ruins();
+	}
 }
 
 const resource *site_game_data::get_resource() const
@@ -1075,6 +1081,11 @@ void site_game_data::remove_scripted_modifier(const scripted_site_modifier *modi
 	}
 }
 
+bool site_game_data::can_have_population() const
+{
+	return this->site->is_settlement();
+}
+
 void site_game_data::decrement_scripted_modifiers()
 {
 	if (this->scripted_modifiers.empty()) {
@@ -1149,7 +1160,7 @@ void site_game_data::clear_population_units()
 
 void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype)
 {
-	assert_throw(this->site->is_settlement());
+	assert_throw(this->can_have_population());
 	assert_throw(this->is_built());
 
 	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, this->site);
