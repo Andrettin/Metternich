@@ -230,7 +230,9 @@ bool site_game_data::is_capital() const
 		return false;
 	}
 
-	return this->get_owner()->get_game_data()->get_capital() == this->site;
+	const metternich::site *owner_capital = this->get_owner()->get_game_data()->get_capital();
+	const bool is_capital = owner_capital == this->site;
+	return is_capital;
 }
 
 bool site_game_data::can_be_capital() const

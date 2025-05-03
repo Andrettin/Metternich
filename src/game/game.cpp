@@ -521,11 +521,6 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 		}
 
-		for (const country *country : this->get_countries()) {
-			country->get_game_data()->set_capital(nullptr);
-			country->get_game_data()->choose_capital();
-		}
-
 		this->apply_population_history();
 
 		for (const province *province : map::get()->get_provinces()) {
@@ -828,6 +823,12 @@ void game::apply_sites()
 
 		assert_throw(best_settlement_type != nullptr);
 		provincial_capital_game_data->set_settlement_type(best_settlement_type);
+	}
+
+	//set the capitals here, so that building requirements that require a capital can be fulfilled
+	for (const country *country : this->get_countries()) {
+		country->get_game_data()->set_capital(nullptr);
+		country->get_game_data()->choose_capital();
 	}
 
 	for (const site *site : site::get_all()) {

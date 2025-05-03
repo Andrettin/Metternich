@@ -42,7 +42,8 @@ public:
 		if constexpr (std::is_same_v<scope_type, country>) {
 			return scope->get_game_data()->get_capital() == this->value;
 		} else {
-			return scope->get_game_data()->is_capital();
+			const bool is_capital = scope->get_game_data()->is_capital();
+			return is_capital;
 		}
 	}
 
