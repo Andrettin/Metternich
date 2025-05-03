@@ -27,8 +27,6 @@ inline diplomacy_state get_diplomacy_state_counterpart(const diplomacy_state sta
 		default:
 			return state;
 	}
-
-	throw std::runtime_error("Invalid diplomacy state: \"" + std::to_string(static_cast<int>(state)) + "\".");
 }
 
 inline std::string get_diplomacy_state_name(const diplomacy_state state)

@@ -587,10 +587,6 @@ void game::apply_history(const metternich::scenario *scenario)
 
 						if (deployment_site->get_game_data()->get_owner() != country) {
 							continue;
-							country_game_data->add_leader(character);
-
-							assert_throw(character_game_data->get_country() != nullptr);
-							character_game_data->deploy_to_province(character_history->get_deployment_province());
 						}
 
 						const civilian_unit_type *type = character->get_civilian_unit_type();
