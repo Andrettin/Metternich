@@ -2812,7 +2812,7 @@ void country_game_data::change_transportable_commodity_output(const commodity *c
 		return;
 	}
 
-	const centesimal_int &new_output = (this->transportable_commodity_outputs[commodity] += change);
+	const centesimal_int new_output = (this->transportable_commodity_outputs[commodity] += change);
 
 	assert_throw(new_output >= 0);
 
