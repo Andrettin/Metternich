@@ -239,42 +239,48 @@ QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
 
 QCoro::Task<void> game::start_coro()
 {
-	if (this->is_running()) {
-		//already running
-		co_return;
-	}
-
-	map::get()->create_minimap_image();
-	co_await this->create_exploration_diplomatic_map_image();
-
-	this->adjust_food_production_for_country_populations();
-
-	for (const site *site : site::get_all()) {
-		if (!site->get_game_data()->is_on_map()) {
-			continue;
+	try {
+		if (this->is_running()) {
+			//already running
+			co_return;
 		}
 
-		site->get_game_data()->check_settlement_type();
-		site->get_game_data()->calculate_commodity_outputs();
-	}
+		map::get()->create_minimap_image();
+		co_await this->create_exploration_diplomatic_map_image();
 
-	for (const country *country : this->get_countries()) {
-		country_game_data *country_game_data = country->get_game_data();
+		this->adjust_food_production_for_country_populations();
 
-		for (population_unit *population_unit : country_game_data->get_population_units()) {
-			population_unit->choose_ideology();
+		for (const site *site : site::get_all()) {
+			if (!site->get_game_data()->is_on_map()) {
+				continue;
+			}
+
+			site->get_game_data()->check_settlement_type();
+			site->get_game_data()->calculate_commodity_outputs();
 		}
 
-		country_game_data->check_ruler();
+		for (const country *country : this->get_countries()) {
+			country_game_data *country_game_data = country->get_game_data();
 
-		//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
-		country_game_data->check_journal_entries(true, true);
+			for (population_unit *population_unit : country_game_data->get_population_units()) {
+				population_unit->choose_ideology();
+			}
 
-		//assign transport orders for countries on start
-		country_game_data->assign_transport_orders();
+			country_game_data->check_ruler();
+
+			//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
+			country_game_data->check_journal_entries(true, true);
+
+			//assign transport orders for countries on start
+			country_game_data->assign_transport_orders();
+		}
+
+		this->set_running(true);
+	} catch (...) {
+		exception::report(std::current_exception());
+		log::log_error("Failed to start game.");
+		QApplication::exit(EXIT_FAILURE);
 	}
-
-	this->set_running(true);
 }
 
 void game::stop()
