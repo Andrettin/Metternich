@@ -410,7 +410,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return condition;
 	}
 
-	return condition_base<scope_type, read_only_context>::from_gsml_scope<metternich::condition<scope_type>>(scope);
+	return condition_base<scope_type, read_only_context>::template from_gsml_scope<metternich::condition<scope_type>>(scope);
 }
 
 template <typename scope_type>
