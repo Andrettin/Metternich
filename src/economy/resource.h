@@ -25,6 +25,7 @@ class resource final : public named_data_entry, public data_type<resource>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString plural_name READ get_plural_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* commodity MEMBER commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* tiny_icon MEMBER tiny_icon READ get_tiny_icon NOTIFY changed)
@@ -45,6 +46,21 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
+
+	const std::string &get_plural_name() const
+	{
+		return this->plural_name;
+	}
+
+	Q_INVOKABLE void set_plural_name(const std::string &plural_name)
+	{
+		this->plural_name = plural_name;
+	}
+
+	QString get_plural_name_qstring() const
+	{
+		return QString::fromStdString(this->get_plural_name());
+	}
 
 	const metternich::commodity *get_commodity() const
 	{
@@ -119,6 +135,7 @@ signals:
 	void changed();
 
 private:
+	std::string plural_name;
 	metternich::commodity *commodity = nullptr;
 	const metternich::icon *icon = nullptr;
 	const metternich::icon *tiny_icon = nullptr;
