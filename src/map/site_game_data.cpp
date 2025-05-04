@@ -107,10 +107,10 @@ void site_game_data::do_everyday_consumption()
 	}
 
 	for (const auto &[commodity, consumption] : this->local_everyday_consumption) {
-		assert_throw(commodity->is_local());
+		assert_throw(commodity->is_local() && !commodity->is_provincial());
 		assert_throw(!commodity->is_storable());
 
-		const int effective_consumption = std::min(consumption.to_int(), this->is_provincial_capital() ? this->get_province()->get_game_data()->get_local_commodity_output(commodity).to_int() : this->get_commodity_output(commodity).to_int());
+		const int effective_consumption = std::min(consumption.to_int(), this->get_commodity_output(commodity).to_int());
 
 		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
 		if (remaining_consumption == 0) {
@@ -152,10 +152,10 @@ void site_game_data::do_luxury_consumption()
 	}
 
 	for (const auto &[commodity, consumption] : this->local_luxury_consumption) {
-		assert_throw(commodity->is_local());
+		assert_throw(commodity->is_local() && !commodity->is_provincial());
 		assert_throw(!commodity->is_storable());
 
-		const int effective_consumption = std::min(consumption.to_int(), this->is_provincial_capital() ? this->get_province()->get_game_data()->get_local_commodity_output(commodity).to_int() : this->get_commodity_output(commodity).to_int());
+		const int effective_consumption = std::min(consumption.to_int(), this->get_commodity_output(commodity).to_int());
 
 		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
 		if (remaining_consumption == 0) {
@@ -1178,13 +1178,13 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 	}
 
 	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
-		if (commodity->is_local()) {
+		if (commodity->is_local() && !commodity->is_provincial()) {
 			this->change_local_everyday_consumption(commodity, value * change);
 		}
 	}
 
 	for (const auto &[commodity, value] : type->get_luxury_consumption()) {
-		if (commodity->is_local()) {
+		if (commodity->is_local() && !commodity->is_provincial()) {
 			this->change_local_luxury_consumption(commodity, value * change);
 		}
 	}
@@ -1272,7 +1272,7 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 	const centesimal_int transportable_change = transportable_output - old_transportable_output;
 
 	if (commodity->is_local()) {
-		if (this->get_province() != nullptr) {
+		if (commodity->is_provincial() && this->get_province() != nullptr) {
 			this->get_province()->get_game_data()->change_local_commodity_output(commodity, transportable_change);
 		}
 	} else {
@@ -1442,7 +1442,7 @@ void site_game_data::set_transport_level(const int level)
 		const centesimal_int transportable_change = transportable_output - old_transportable_output;
 
 		if (commodity->is_local()) {
-			if (this->get_province() != nullptr) {
+			if (commodity->is_provincial() && this->get_province() != nullptr) {
 				this->get_province()->get_game_data()->change_local_commodity_output(commodity, transportable_change);
 			}
 		} else {
@@ -1475,7 +1475,7 @@ void site_game_data::set_sea_transport_level(const int level)
 		const centesimal_int transportable_change = transportable_output - old_transportable_output;
 
 		if (commodity->is_local()) {
-			if (this->get_province() != nullptr) {
+			if (commodity->is_provincial() && this->get_province() != nullptr) {
 				this->get_province()->get_game_data()->change_local_commodity_output(commodity, transportable_change);
 			}
 		} else {

@@ -443,6 +443,8 @@ void country_game_data::do_everyday_consumption()
 	}
 
 	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->do_everyday_consumption();
+
 		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
 			if (!settlement->get_game_data()->is_built()) {
 				continue;
@@ -513,6 +515,8 @@ void country_game_data::do_luxury_consumption()
 	}
 
 	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->do_luxury_consumption();
+
 		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
 			if (!settlement->get_game_data()->is_built()) {
 				continue;
@@ -2145,7 +2149,7 @@ void country_game_data::on_population_type_count_changed(const population_type *
 
 	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
 		if (commodity->is_local()) {
-			//handled at the settlement level
+			//handled at the site or province level
 			continue;
 		}
 
@@ -2154,7 +2158,7 @@ void country_game_data::on_population_type_count_changed(const population_type *
 
 	for (const auto &[commodity, value] : type->get_luxury_consumption()) {
 		if (commodity->is_local()) {
-			//handled at the settlement level
+			//handled at the site or province level
 			continue;
 		}
 

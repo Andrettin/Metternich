@@ -63,6 +63,8 @@ public:
 	~province_game_data();
 
 	void do_turn();
+	void do_everyday_consumption();
+	void do_luxury_consumption();
 	void do_events();
 	void do_ai_turn();
 
@@ -168,6 +170,8 @@ public:
 		return this->population.get();
 	}
 
+	void on_population_type_count_changed(const population_type *type, const int change);
+
 	const std::vector<military_unit *> &get_military_units() const
 	{
 		return this->military_units;
@@ -237,6 +241,34 @@ public:
 	}
 
 	void change_local_commodity_output(const commodity *commodity, const centesimal_int &change);
+
+	const centesimal_int &get_local_everyday_consumption(const commodity *commodity) const
+	{
+		const auto find_iterator = this->local_everyday_consumption.find(commodity);
+
+		if (find_iterator != this->local_everyday_consumption.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
+	void change_local_everyday_consumption(const commodity *commodity, const centesimal_int &change);
+
+	const centesimal_int &get_local_luxury_consumption(const commodity *commodity) const
+	{
+		const auto find_iterator = this->local_luxury_consumption.find(commodity);
+
+		if (find_iterator != this->local_luxury_consumption.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
+	void change_local_luxury_consumption(const commodity *commodity, const centesimal_int &change);
 
 	const centesimal_int &get_output_modifier() const
 	{
@@ -395,6 +427,8 @@ private:
 	std::map<military_unit_category, int> military_unit_category_counts;
 	std::vector<army *> entering_armies; //armies entering this province
 	commodity_map<centesimal_int> local_commodity_outputs;
+	commodity_map<centesimal_int> local_everyday_consumption;
+	commodity_map<centesimal_int> local_luxury_consumption;
 	centesimal_int output_modifier;
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;

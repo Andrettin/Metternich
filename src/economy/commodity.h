@@ -20,6 +20,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(bool abstract MEMBER abstract READ is_abstract NOTIFY changed)
 	Q_PROPERTY(bool storable MEMBER storable READ is_storable NOTIFY changed)
 	Q_PROPERTY(bool local MEMBER local READ is_local NOTIFY changed)
+	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(bool negative_allowed MEMBER negative_allowed READ is_negative_allowed NOTIFY changed)
 	Q_PROPERTY(bool labor MEMBER labor READ is_labor NOTIFY changed)
 	Q_PROPERTY(bool housing MEMBER housing READ is_housing NOTIFY changed)
@@ -64,6 +65,11 @@ public:
 	bool is_local() const
 	{
 		return this->local;
+	}
+
+	bool is_provincial() const
+	{
+		return this->provincial;
 	}
 
 	bool is_negative_allowed() const
@@ -115,6 +121,7 @@ private:
 	bool abstract = false;
 	bool storable = true;
 	bool local = false;
+	bool provincial = false;
 	bool negative_allowed = false;
 	bool labor = false;
 	bool housing = false;

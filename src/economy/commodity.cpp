@@ -19,6 +19,10 @@ void commodity::initialize()
 		this->required_technology->add_enabled_commodity(this);
 	}
 
+	if (this->is_provincial()) {
+		this->local = true;
+	}
+
 	named_data_entry::initialize();
 }
 
@@ -35,6 +39,10 @@ void commodity::check() const
 		if (this->is_storable()) {
 			throw std::runtime_error(std::format("Commodity \"{}\" is both local and storable, which is not supported.", this->get_identifier()));
 		}
+	}
+
+	if (this->is_provincial() && !this->is_local()) {
+		throw std::runtime_error(std::format("Commodity \"{}\" is provincial but not local.", this->get_identifier()));
 	}
 
 	if (!this->is_abstract() && this->is_storable() && this->get_base_price() == 0 && this->get_wealth_value() == 0) {
