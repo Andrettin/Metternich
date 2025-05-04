@@ -1063,8 +1063,15 @@ void game::apply_population_history()
 
 		province->get_history()->distribute_population();
 
+		population_group_map<int> remaining_province_populations;
+
 		for (const site *site : province_game_data->get_sites()) {
 			site_game_data *site_game_data = site->get_game_data();
+
+			if (!site_game_data->can_have_population()) {
+				continue;
+			}
+
 			site_history *site_history = site->get_history();
 
 			site_history->initialize_population();
@@ -1077,15 +1084,31 @@ void game::apply_population_history()
 				const int64_t remaining_population = this->apply_historical_population_group_to_site(group_key, population, site);
 
 				if (remaining_population != 0 && site_game_data->get_owner() != nullptr) {
-					//add the remaining population to remaining population data for the owner
-					country_populations[site_game_data->get_owner()][group_key] += remaining_population;
+					//add the remaining population to remaining population data for the province
+					remaining_province_populations[group_key] += remaining_population;
 				}
 			}
+		}
 
-			if (site_game_data->is_provincial_capital() && site_game_data->get_population_units().empty()) {
-				//ensure provincial capital settlements have at least one population unit
-				this->apply_historical_population_units_to_site(population_group_key(), 1, site);
+		const site *provincial_capital = province->get_provincial_capital();
+		assert_throw(provincial_capital != nullptr);
+
+		for (const auto &[group_key, population] : remaining_province_populations) {
+			if (population <= 0) {
+				continue;
 			}
+
+			const int64_t remaining_population = this->apply_historical_population_group_to_site(group_key, population, provincial_capital);
+
+			if (remaining_population != 0 && provincial_capital->get_game_data()->get_owner() != nullptr) {
+				//add the remaining population to remaining population data for the owner
+				country_populations[provincial_capital->get_game_data()->get_owner()][group_key] += remaining_population;
+			}
+		}
+
+		if (provincial_capital->get_game_data()->get_population_units().empty()) {
+			//ensure provincial capital settlements have at least one population unit
+			this->apply_historical_population_units_to_site(population_group_key(), 1, provincial_capital);
 		}
 	}
 
