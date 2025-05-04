@@ -1189,6 +1189,16 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 		this->change_base_commodity_output(type->get_output_commodity(), centesimal_int(type->get_output_value()) * change);
 	}
 
+	if (type->get_resource_output_value() > 0 && this->site->get_map_data()->get_type() == site_type::resource) {
+		assert_throw(this->get_resource_improvement() != nullptr);
+		assert_throw(this->get_resource() != nullptr);
+		assert_throw(this->get_resource()->get_commodity() != nullptr);
+		this->change_base_commodity_output(this->get_resource()->get_commodity(), centesimal_int(type->get_resource_output_value()) * change);
+
+		//resource workers do not cost food
+		this->change_free_food_consumption(change);
+	}
+
 	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
 		if (commodity->is_local() && !commodity->is_provincial()) {
 			this->change_local_everyday_consumption(commodity, value * change);

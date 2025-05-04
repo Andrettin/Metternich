@@ -8,11 +8,14 @@
 #include "country/ideology.h"
 #include "country/religion.h"
 #include "economy/commodity.h"
+#include "economy/resource.h"
 #include "game/game.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_map_data.h"
+#include "map/site_type.h"
 #include "population/population.h"
 #include "population/population_type.h"
 #include "script/condition/and_condition.h"
@@ -270,6 +273,12 @@ bool population_unit::is_food_producer() const
 {
 	if (this->get_type()->get_output_commodity() != nullptr) {
 		return this->get_type()->get_output_commodity()->is_food();
+	}
+
+	if (this->get_type()->get_resource_output_value() > 0 && this->get_site() != nullptr && this->get_site()->get_map_data()->get_type() == site_type::resource) {
+		assert_throw(this->get_site()->get_resource() != nullptr);
+		assert_throw(this->get_site()->get_resource()->get_commodity() != nullptr);
+		return this->get_site()->get_resource()->get_commodity()->is_food();
 	}
 
 	return false;
