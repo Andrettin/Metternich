@@ -294,9 +294,13 @@ void province_game_data::set_culture(const metternich::culture *culture)
 		}
 	}
 
-	for (const site *settlement : this->get_settlement_sites()) {
-		if (settlement->get_game_data()->get_population()->get_main_culture() == nullptr) {
-			settlement->get_game_data()->set_culture(this->get_culture());
+	for (const site *site : this->get_sites()) {
+		if (!site->get_game_data()->can_have_population()) {
+			continue;
+		}
+
+		if (site->get_game_data()->get_population()->get_main_culture() == nullptr) {
+			site->get_game_data()->set_culture(this->get_culture());
 		}
 	}
 }
@@ -320,9 +324,13 @@ void province_game_data::set_religion(const metternich::religion *religion)
 
 	this->religion = religion;
 
-	for (const site *settlement : this->get_settlement_sites()) {
-		if (settlement->get_game_data()->get_population()->get_main_religion() == nullptr) {
-			settlement->get_game_data()->set_religion(this->get_religion());
+	for (const site *site : this->get_sites()) {
+		if (!site->get_game_data()->can_have_population()) {
+			continue;
+		}
+
+		if (site->get_game_data()->get_population()->get_main_religion() == nullptr) {
+			site->get_game_data()->set_religion(this->get_religion());
 		}
 	}
 
@@ -779,10 +787,6 @@ void province_game_data::change_local_commodity_output(const commodity *commodit
 
 	if (output == 0) {
 		this->local_commodity_outputs.erase(commodity);
-	}
-
-	if (commodity->is_housing()) {
-		this->province->get_provincial_capital()->get_game_data()->change_housing(change);
 	}
 }
 

@@ -58,7 +58,8 @@ void region_history::distribute_population()
 		}
 
 		int64_t remaining_population = population;
-		int unpopulated_settlement_count = 0;
+		int unpopulated_site_count = 0;
+		province_map<int> populatable_site_counts_by_province;
 
 		//subtract the predefined population of provinces in the region from that of the region
 		for (const province *province : this->region->get_provinces()) {
@@ -66,52 +67,57 @@ void region_history::distribute_population()
 				continue;
 			}
 
-			if (province->get_game_data()->get_settlement_count() == 0) {
-				continue;
-			}
+			int province_populatable_site_count = 0;
+			int province_total_populatable_site_group_population = 0;
 
-			int province_total_settlement_group_population = 0;
-
-			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-				if (!settlement->get_game_data()->is_built()) {
+			for (const site *site : province->get_game_data()->get_sites()) {
+				if (!site->get_game_data()->can_have_population() || !site->get_game_data()->is_built()) {
 					continue;
 				}
 
-				province_total_settlement_group_population += settlement->get_history()->get_group_population(group_key);
+				province_total_populatable_site_group_population += site->get_history()->get_group_population(group_key);
+				++province_populatable_site_count;
+			}
+
+			populatable_site_counts_by_province[province] = province_populatable_site_count;
+
+			if (province_populatable_site_count == 0) {
+				continue;
 			}
 
 			const province_history *province_history = province->get_history();
-			const int province_group_population = std::max(std::max(province_history->get_group_population(group_key), province_history->get_lower_bound_group_population(group_key)), province_total_settlement_group_population);
+			const int province_group_population = std::max(std::max(province_history->get_group_population(group_key), province_history->get_lower_bound_group_population(group_key)), province_total_populatable_site_group_population);
 
 			if (province_group_population != 0) {
 				remaining_population -= province_group_population;
 			}
 			
 			if (province_history->get_group_population(group_key) == 0) {
-				unpopulated_settlement_count += province->get_game_data()->get_settlement_count();
+				unpopulated_site_count += province_populatable_site_count;
 			}
 		}
 
-		if (remaining_population <= 0 || unpopulated_settlement_count == 0) {
+		if (remaining_population <= 0 || unpopulated_site_count == 0) {
 			continue;
 		}
 
 		//apply the remaining population to provinces without a predefined population in history
-		const int64_t population_per_settlement = remaining_population / unpopulated_settlement_count;
+		const int64_t population_per_site = remaining_population / unpopulated_site_count;
 
 		for (const province *province : this->region->get_provinces()) {
 			if (province->is_water_zone()) {
 				continue;
 			}
 
-			if (province->get_game_data()->get_settlement_count() == 0) {
+			const int province_populatable_site_count = populatable_site_counts_by_province[province];
+			if (province_populatable_site_count == 0) {
 				continue;
 			}
 
 			province_history *province_history = province->get_history();
 
 			if (province_history->get_group_population(group_key) == 0) {
-				int group_population = population_per_settlement * province->get_game_data()->get_settlement_count();
+				const int group_population = population_per_site * province_populatable_site_count;
 				province_history->set_group_population(group_key, group_population);
 			}
 		}

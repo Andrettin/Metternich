@@ -26,6 +26,7 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_map_data.h"
+#include "map/site_type.h"
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
@@ -48,9 +49,8 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 {
 	if (site->is_settlement()) {
 		this->initialize_building_slots();
+		this->free_food_consumption = site_game_data::settlement_base_free_food_consumption;
 	}
-
-	this->free_food_consumption = site_game_data::base_free_food_consumption;
 
 	const resource *resource = this->get_resource();
 	if (resource == nullptr || resource->get_required_technology() != nullptr || resource->is_prospectable()) {
@@ -1085,7 +1085,7 @@ void site_game_data::remove_scripted_modifier(const scripted_site_modifier *modi
 
 bool site_game_data::can_have_population() const
 {
-	return this->site->is_settlement();
+	return this->site->is_settlement() || this->site->get_map_data()->get_type() == site_type::resource;
 }
 
 void site_game_data::decrement_scripted_modifiers()
@@ -1279,6 +1279,10 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_game_data()->change_transportable_commodity_output(commodity, transportable_change);
 		}
+	}
+
+	if (commodity->is_housing()) {
+		this->change_housing(transportable_change);
 	}
 
 	emit commodity_outputs_changed();

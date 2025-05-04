@@ -57,7 +57,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QVariantList visiting_armies READ get_visiting_armies_qvariant_list NOTIFY visiting_armies_changed)
 
 public:
-	static constexpr int base_free_food_consumption = 1;
+	static constexpr int settlement_base_free_food_consumption = 1;
 
 	explicit site_game_data(const metternich::site *site);
 
@@ -123,7 +123,7 @@ public:
 	void check_settlement_type();
 	std::vector<const metternich::settlement_type *> get_best_settlement_types(const std::vector<const metternich::settlement_type *> &settlement_types) const;
 
-	bool is_built() const;
+	Q_INVOKABLE bool is_built() const;
 
 	const resource *get_resource() const;
 
@@ -206,7 +206,7 @@ public:
 	void remove_scripted_modifier(const scripted_site_modifier *modifier);
 	void decrement_scripted_modifiers();
 
-	bool can_have_population() const;
+	Q_INVOKABLE bool can_have_population() const;
 
 	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
 	{

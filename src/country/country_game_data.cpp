@@ -445,12 +445,12 @@ void country_game_data::do_everyday_consumption()
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->do_everyday_consumption();
 
-		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-			if (!settlement->get_game_data()->is_built()) {
+		for (const site *site : province->get_game_data()->get_sites()) {
+			if (!site->get_game_data()->can_have_population() || !site->get_game_data()->is_built()) {
 				continue;
 			}
 
-			settlement->get_game_data()->do_everyday_consumption();
+			site->get_game_data()->do_everyday_consumption();
 		}
 	}
 
@@ -517,12 +517,12 @@ void country_game_data::do_luxury_consumption()
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->do_luxury_consumption();
 
-		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-			if (!settlement->get_game_data()->is_built()) {
+		for (const site *site : province->get_game_data()->get_sites()) {
+			if (!site->get_game_data()->can_have_population() || !site->get_game_data()->is_built()) {
 				continue;
 			}
 
-			settlement->get_game_data()->do_luxury_consumption();
+			site->get_game_data()->do_luxury_consumption();
 		}
 	}
 
@@ -5483,12 +5483,12 @@ void country_game_data::change_commodity_bonus_per_population(const commodity *c
 	}
 
 	for (const province *province : this->get_provinces()) {
-		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-			if (!settlement->get_game_data()->is_built()) {
+		for (const site *site : province->get_game_data()->get_sites()) {
+			if (!site->get_game_data()->can_have_population() || !site->get_game_data()->is_built()) {
 				continue;
 			}
 
-			settlement->get_game_data()->calculate_commodity_outputs();
+			site->get_game_data()->calculate_commodity_outputs();
 		}
 	}
 }

@@ -63,43 +63,43 @@ void province_history::distribute_population()
 		}
 
 		int64_t remaining_population = population;
-		int settlement_count = 0;
+		int populatable_site_count = 0;
 
-		//subtract the predefined population of settlements in the province from that of the province
-		for (const site *settlement : this->province->get_game_data()->get_settlement_sites()) {
-			if (!settlement->get_game_data()->is_built()) {
+		//subtract the predefined population of populatable sites in the province from that of the province
+		for (const site *site : this->province->get_game_data()->get_sites()) {
+			if (!site->get_game_data()->can_have_population() || !site->get_game_data()->is_built()) {
 				continue;
 			}
 
-			const site_history *settlement_history = settlement->get_history();
-			const int settlement_group_population = settlement_history->get_group_population(group_key);
+			const site_history *site_history = site->get_history();
+			const int site_group_population = site_history->get_group_population(group_key);
 
-			if (settlement_group_population != 0) {
-				remaining_population -= settlement_group_population;
+			if (site_group_population != 0) {
+				remaining_population -= site_group_population;
 			}
 
-			++settlement_count;
+			++populatable_site_count;
 		}
 
-		if (remaining_population <= 0 || settlement_count == 0) {
+		if (remaining_population <= 0 || populatable_site_count == 0) {
 			continue;
 		}
 
 		//apply the remaining population to settlements
-		const int64_t population_per_settlement = remaining_population / settlement_count;
+		const int64_t population_per_settlement = remaining_population / populatable_site_count;
 
 		if (population_per_settlement == 0) {
 			continue;
 		}
 
-		for (const site *settlement : this->province->get_game_data()->get_settlement_sites()) {
-			if (!settlement->get_game_data()->is_built()) {
+		for (const site *site : this->province->get_game_data()->get_sites()) {
+			if (!site->get_game_data()->can_have_population() || !site->get_game_data()->is_built()) {
 				continue;
 			}
 
-			site_history *settlement_history = settlement->get_history();
-			const int settlement_group_population = settlement_history->get_group_population(group_key);
-			settlement_history->set_group_population(group_key, population_per_settlement + settlement_group_population);
+			site_history *site_history = site->get_history();
+			const int site_group_population = site_history->get_group_population(group_key);
+			site_history->set_group_population(group_key, population_per_settlement + site_group_population);
 		}
 	}
 }

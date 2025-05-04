@@ -1063,28 +1063,28 @@ void game::apply_population_history()
 
 		province->get_history()->distribute_population();
 
-		for (const site *settlement : province_game_data->get_settlement_sites()) {
-			site_game_data *settlement_game_data = settlement->get_game_data();
-			site_history *settlement_history = settlement->get_history();
+		for (const site *site : province_game_data->get_sites()) {
+			site_game_data *site_game_data = site->get_game_data();
+			site_history *site_history = site->get_history();
 
-			settlement_history->initialize_population();
+			site_history->initialize_population();
 
-			for (const auto &[group_key, population] : settlement_history->get_population_groups()) {
+			for (const auto &[group_key, population] : site_history->get_population_groups()) {
 				if (population <= 0) {
 					continue;
 				}
 
-				const int64_t remaining_population = this->apply_historical_population_group_to_settlement(group_key, population, settlement);
+				const int64_t remaining_population = this->apply_historical_population_group_to_site(group_key, population, site);
 
-				if (remaining_population != 0 && settlement_game_data->get_owner() != nullptr) {
+				if (remaining_population != 0 && site_game_data->get_owner() != nullptr) {
 					//add the remaining population to remaining population data for the owner
-					country_populations[settlement_game_data->get_owner()][group_key] += remaining_population;
+					country_populations[site_game_data->get_owner()][group_key] += remaining_population;
 				}
 			}
 
-			if (settlement_game_data->is_provincial_capital() && settlement_game_data->get_population_units().empty()) {
+			if (site_game_data->is_provincial_capital() && site_game_data->get_population_units().empty()) {
 				//ensure provincial capital settlements have at least one population unit
-				this->apply_historical_population_units_to_settlement(population_group_key(), 1, settlement);
+				this->apply_historical_population_units_to_site(population_group_key(), 1, site);
 			}
 		}
 	}
@@ -1137,7 +1137,7 @@ void game::apply_population_history()
 				continue;
 			}
 
-			const int64_t remaining_population = this->apply_historical_population_group_to_settlement(group_key, population, capital);
+			const int64_t remaining_population = this->apply_historical_population_group_to_site(group_key, population, capital);
 
 			//add the remaining population to broader groups
 			if (remaining_population > 0 && !group_key.is_empty()) {
@@ -1170,25 +1170,25 @@ void game::apply_population_history()
 	}
 }
 
-int64_t game::apply_historical_population_group_to_settlement(const population_group_key &group_key, const int population, const site *settlement)
+int64_t game::apply_historical_population_group_to_site(const population_group_key &group_key, const int population, const site *site)
 {
 	if (population <= 0) {
 		return 0;
 	}
 
-	site_game_data *settlement_game_data = settlement->get_game_data();
+	site_game_data *site_game_data = site->get_game_data();
 
-	if (settlement_game_data->get_settlement_type() == nullptr) {
+	if (!site_game_data->is_built()) {
 		return population;
 	}
 
-	if (group_key.type != nullptr && !settlement_game_data->get_settlement_type()->can_have_population_type(group_key.type)) {
+	if (group_key.type != nullptr && site->is_settlement() && !site_game_data->get_settlement_type()->can_have_population_type(group_key.type)) {
 		return population;
 	}
 
-	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", group_key.type ? group_key.type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, settlement->get_identifier()));
+	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", group_key.type ? group_key.type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, site->get_identifier()));
 
-	const country *country = settlement_game_data->get_owner();
+	const country *country = site_game_data->get_owner();
 
 	if (country == nullptr) {
 		return 0;
@@ -1196,10 +1196,10 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 
 	int population_unit_count = population / defines::get()->get_population_per_unit();
 	if (group_key.type != nullptr && group_key.type->get_profession() != nullptr) {
-		population_unit_count = std::min(population_unit_count, settlement_game_data->get_available_profession_capacity(group_key.type->get_profession()));
+		population_unit_count = std::min(population_unit_count, site_game_data->get_available_profession_capacity(group_key.type->get_profession()));
 	}
 
-	this->apply_historical_population_units_to_settlement(group_key, population_unit_count, settlement);
+	this->apply_historical_population_units_to_site(group_key, population_unit_count, site);
 
 	int64_t remaining_population = population - (population_unit_count * defines::get()->get_population_per_unit());
 	remaining_population = std::max<int64_t>(0, remaining_population);
@@ -1209,42 +1209,42 @@ int64_t game::apply_historical_population_group_to_settlement(const population_g
 	return remaining_population;
 }
 
-void game::apply_historical_population_units_to_settlement(const population_group_key &group_key, int population_unit_count, const site *settlement)
+void game::apply_historical_population_units_to_site(const population_group_key &group_key, int population_unit_count, const site *site)
 {
 	if (population_unit_count <= 0) {
 		return;
 	}
 
-	site_game_data *settlement_game_data = settlement->get_game_data();
+	site_game_data *site_game_data = site->get_game_data();
 
-	if (settlement_game_data->get_settlement_type() == nullptr) {
+	if (!site_game_data->is_built()) {
 		return;
 	}
 
 	const population_type *population_type = group_key.type;
 
-	if (population_type != nullptr && !settlement_game_data->get_settlement_type()->can_have_population_type(population_type)) {
+	if (population_type != nullptr && site->is_settlement() && !site_game_data->get_settlement_type()->can_have_population_type(population_type)) {
 		return;
 	}
 
-	site_history *settlement_history = settlement->get_history();
+	site_history *site_history = site->get_history();
 
-	const province *province = settlement->get_game_data()->get_province();
+	const province *province = site->get_game_data()->get_province();
 	province_history *province_history = province->get_history();
 
-	const country *country = settlement_game_data->get_owner();
+	const country *country = site_game_data->get_owner();
 
 	if (country == nullptr) {
 		return;
 	}
 
-	const culture *settlement_culture = settlement_history->get_culture();
+	const culture *site_culture = site_history->get_culture();
 	const culture *province_culture = province_history->get_culture();
 
 	const culture *culture = group_key.culture;
 	if (culture == nullptr) {
-		if (settlement_culture != nullptr) {
-			culture = settlement_culture;
+		if (site_culture != nullptr) {
+			culture = site_culture;
 		} else if (province_culture != nullptr) {
 			culture = province_culture;
 		} else {
@@ -1254,13 +1254,13 @@ void game::apply_historical_population_units_to_settlement(const population_grou
 	}
 	assert_throw(culture != nullptr);
 
-	const religion *settlement_religion = settlement_history->get_religion();
+	const religion *site_religion = site_history->get_religion();
 	const religion *province_religion = province_history->get_religion();
 
 	const religion *religion = group_key.religion;
 	if (religion == nullptr) {
-		if (settlement_religion != nullptr) {
-			religion = settlement_religion;
+		if (site_religion != nullptr) {
+			religion = site_religion;
 		} else if (province_religion != nullptr) {
 			religion = province_religion;
 		} else {
@@ -1278,7 +1278,7 @@ void game::apply_historical_population_units_to_settlement(const population_grou
 
 	if (population_type == nullptr) {
 		if (!country->get_game_data()->is_tribal()) {
-			centesimal_int literacy_rate = settlement_history->get_literacy_rate();
+			centesimal_int literacy_rate = site_history->get_literacy_rate();
 			if (literacy_rate == 0) {
 				literacy_rate = province_history->get_literacy_rate();
 			}
@@ -1294,7 +1294,7 @@ void game::apply_historical_population_units_to_settlement(const population_grou
 				const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
 
 				for (int i = 0; i < literate_population_unit_count; ++i) {
-					settlement_game_data->create_population_unit(literate_population_type, culture, religion, phenotype);
+					site_game_data->create_population_unit(literate_population_type, culture, religion, phenotype);
 				}
 			}
 		}
@@ -1305,7 +1305,7 @@ void game::apply_historical_population_units_to_settlement(const population_grou
 	assert_throw(population_type != nullptr);
 
 	for (int i = 0; i < population_unit_count; ++i) {
-		settlement_game_data->create_population_unit(population_type, culture, religion, phenotype);
+		site_game_data->create_population_unit(population_type, culture, religion, phenotype);
 	}
 }
 
