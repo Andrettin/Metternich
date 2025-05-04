@@ -2362,12 +2362,16 @@ int country_game_data::get_net_food_consumption() const
 	int food_consumption = this->get_food_consumption();
 
 	for (const province *province : this->get_provinces()) {
-		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-			if (!settlement->get_game_data()->is_built()) {
+		for (const site *site : province->get_game_data()->get_sites()) {
+			if (!site->get_game_data()->can_have_population()) {
 				continue;
 			}
 
-			food_consumption -= settlement->get_game_data()->get_free_food_consumption();
+			if (!site->get_game_data()->is_built()) {
+				continue;
+			}
+
+			food_consumption -= site->get_game_data()->get_free_food_consumption();
 		}
 	}
 
