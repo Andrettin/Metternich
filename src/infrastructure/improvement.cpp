@@ -10,6 +10,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "map/tile_image_provider.h"
+#include "population/population_class.h"
 #include "population/population_type.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
@@ -42,6 +43,11 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 
 			this->terrain_image_filepaths[terrain_type::get(key)] = database::get()->get_graphics_path(this->get_module()) / value;
 		});
+	} else if (tag == "population_classes") {
+		for (const std::string &value : values) {
+			const population_class *population_class = population_class::get(value);
+			this->population_classes.push_back(population_class);
+		}
 	} else if (tag == "commodity_costs") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
@@ -111,6 +117,10 @@ void improvement::check() const
 	if ((this->get_slot() == improvement_slot::resource || this->get_slot() == improvement_slot::depot || this->get_slot() == improvement_slot::port) && this->icon == nullptr) {
 		throw std::runtime_error(std::format("Non-main improvement \"{}\" has no icon.", this->get_identifier()));
 	}
+
+	if (this->get_default_population_class() != nullptr) {
+		assert_throw(vector::contains(this->get_population_classes(), this->get_default_population_class()));
+	}
 }
 
 void improvement::calculate_level()
@@ -142,6 +152,13 @@ const commodity *improvement::get_output_commodity() const
 	}
 
 	return nullptr;
+}
+
+bool improvement::can_have_population_type(const population_type *population_type) const
+{
+	assert_throw(population_type != nullptr);
+
+	return vector::contains(this->get_population_classes(), population_type->get_population_class());
 }
 
 bool improvement::is_buildable_on_site(const site *site) const

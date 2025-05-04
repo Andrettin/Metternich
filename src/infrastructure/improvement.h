@@ -5,6 +5,7 @@
 #include "economy/commodity_container.h"
 
 Q_MOC_INCLUDE("economy/resource.h")
+Q_MOC_INCLUDE("population/population_class.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
@@ -12,6 +13,7 @@ namespace metternich {
 
 class commodity;
 class icon;
+class population_class;
 class resource;
 class technology;
 class terrain_type;
@@ -33,6 +35,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(int output_multiplier MEMBER output_multiplier READ get_output_multiplier NOTIFY changed)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
+	Q_PROPERTY(const metternich::population_class* default_population_class MEMBER default_population_class READ get_default_population_class NOTIFY changed)
 	Q_PROPERTY(metternich::improvement* required_improvement MEMBER required_improvement NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
@@ -115,6 +118,18 @@ public:
 		return this->variation_count;
 	}
 
+	const population_class *get_default_population_class() const
+	{
+		return this->default_population_class;
+	}
+
+	const std::vector<const population_class *> &get_population_classes() const
+	{
+		return this->population_classes;
+	}
+
+	bool can_have_population_type(const population_type *population_type) const;
+
 	const improvement *get_required_improvement() const
 	{
 		return this->required_improvement;
@@ -156,6 +171,8 @@ private:
 	int output_multiplier = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
 	int variation_count = 1;
+	const population_class *default_population_class = nullptr;
+	std::vector<const population_class *> population_classes;
 	improvement *required_improvement = nullptr;
 	technology *required_technology = nullptr;
 	int wealth_cost = 0;

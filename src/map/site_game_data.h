@@ -207,6 +207,7 @@ public:
 	void decrement_scripted_modifiers();
 
 	Q_INVOKABLE bool can_have_population() const;
+	bool can_have_population_type(const population_type *type) const;
 
 	const std::vector<qunique_ptr<population_unit>> &get_population_units() const
 	{
@@ -229,6 +230,8 @@ public:
 	}
 
 	void on_population_type_count_changed(const population_type *type, const int change);
+
+	const population_class *get_default_population_class() const;
 
 	const centesimal_int &get_housing() const
 	{

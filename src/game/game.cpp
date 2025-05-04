@@ -1166,7 +1166,7 @@ void game::apply_population_history()
 			if (remaining_population > 0 && !group_key.is_empty()) {
 				population_group_key group_key_copy = group_key;
 
-				if (group_key.type != nullptr && !capital->get_game_data()->get_settlement_type()->can_have_population_type(group_key.type)) {
+				if (group_key.type != nullptr && !capital->get_game_data()->can_have_population_type(group_key.type)) {
 					group_key_copy.type = nullptr;
 				} else if (group_key.phenotype != nullptr) {
 					group_key_copy.phenotype = nullptr;
@@ -1205,7 +1205,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 		return population;
 	}
 
-	if (group_key.type != nullptr && site->is_settlement() && !site_game_data->get_settlement_type()->can_have_population_type(group_key.type)) {
+	if (group_key.type != nullptr && !site_game_data->can_have_population_type(group_key.type)) {
 		return population;
 	}
 
@@ -1246,7 +1246,7 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 
 	const population_type *population_type = group_key.type;
 
-	if (population_type != nullptr && site->is_settlement() && !site_game_data->get_settlement_type()->can_have_population_type(population_type)) {
+	if (population_type != nullptr && !site_game_data->can_have_population_type(population_type)) {
 		return;
 	}
 
@@ -1322,7 +1322,7 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 			}
 		}
 
-		const population_class *population_class = country->get_game_data()->get_default_population_class();
+		const population_class *population_class = site->get_game_data()->get_default_population_class();
 		population_type = culture->get_population_class_type(population_class);
 	}
 	assert_throw(population_type != nullptr);

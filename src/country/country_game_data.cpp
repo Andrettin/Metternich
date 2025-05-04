@@ -2227,7 +2227,6 @@ void country_game_data::grow_population()
 	const metternich::culture *culture = population_unit->get_culture();
 	const metternich::religion *religion = population_unit->get_religion();
 	const phenotype *phenotype = population_unit->get_phenotype();
-	const population_type *population_type = culture->get_population_class_type(this->get_default_population_class());
 
 	const site *site = population_unit->get_site();
 	if (site->get_game_data()->get_available_housing() <= 0) {
@@ -2251,6 +2250,8 @@ void country_game_data::grow_population()
 
 		site = vector::get_random(potential_sites);
 	}
+
+	const population_type *population_type = culture->get_population_class_type(site->get_game_data()->get_default_population_class());
 
 	site->get_game_data()->create_population_unit(population_type, culture, religion, phenotype);
 

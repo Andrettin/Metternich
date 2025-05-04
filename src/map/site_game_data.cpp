@@ -1088,6 +1088,18 @@ bool site_game_data::can_have_population() const
 	return this->site->is_settlement() || this->site->get_map_data()->get_type() == site_type::resource;
 }
 
+bool site_game_data::can_have_population_type(const population_type *type) const
+{
+	assert_throw(this->can_have_population());
+	assert_throw(this->is_built());
+
+	if (this->site->is_settlement()) {
+		return this->get_settlement_type()->can_have_population_type(type);
+	} else {
+		return this->get_main_improvement()->can_have_population_type(type);
+	}
+}
+
 void site_game_data::decrement_scripted_modifiers()
 {
 	if (this->scripted_modifiers.empty()) {
@@ -1188,6 +1200,22 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 			this->change_local_luxury_consumption(commodity, value * change);
 		}
 	}
+}
+
+const population_class *site_game_data::get_default_population_class() const
+{
+	assert_throw(this->can_have_population());
+	assert_throw(this->is_built());
+
+	if (!this->site->is_settlement() && this->get_main_improvement()->get_default_population_class() != nullptr) {
+		return this->get_main_improvement()->get_default_population_class();
+	}
+
+	if (this->get_owner() != nullptr) {
+		return this->get_owner()->get_game_data()->get_default_population_class();
+	}
+
+	return defines::get()->get_default_population_class();
 }
 
 void site_game_data::change_housing(const centesimal_int &change)
