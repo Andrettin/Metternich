@@ -278,9 +278,9 @@ bool population_unit::is_food_producer() const
 	}
 
 	if (this->get_type()->get_resource_output_value() > 0 && this->get_site() != nullptr && this->get_site()->get_map_data()->get_type() == site_type::resource) {
-		assert_throw(this->get_site()->get_resource() != nullptr);
-		assert_throw(this->get_site()->get_resource()->get_commodity() != nullptr);
-		return this->get_site()->get_resource()->get_commodity()->is_food();
+		assert_throw(this->get_site()->get_map_data()->get_resource() != nullptr);
+		assert_throw(this->get_site()->get_map_data()->get_resource()->get_commodity() != nullptr);
+		return this->get_site()->get_map_data()->get_resource()->get_commodity()->is_food();
 	}
 
 	return false;
