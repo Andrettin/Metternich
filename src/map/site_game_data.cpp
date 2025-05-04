@@ -1239,6 +1239,51 @@ const population_class *site_game_data::get_default_literate_population_class() 
 	return nullptr;
 }
 
+population_unit *site_game_data::choose_population_unit_for_reallocation() const
+{
+	if (this->site->is_settlement() && this->get_population_unit_count() == 1) {
+		//do not remove a settlement's last population unit
+		return nullptr;
+	}
+
+	std::vector<population_unit *> population_units;
+
+	int lowest_output_value = std::numeric_limits<int>::max();
+	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
+		if (population_unit->get_type()->get_output_commodity() != nullptr) {
+			if (!population_unit->get_type()->get_output_commodity()->is_labor()) {
+				continue;
+			}
+
+			if (this->get_owner() != nullptr && this->get_owner()->get_game_data()->get_net_commodity_output(population_unit->get_type()->get_output_commodity()) < population_unit->get_type()->get_output_value()) {
+				continue;
+			}
+		}
+
+		if (population_unit->get_type()->get_country_modifier() != nullptr) {
+			continue;
+		}
+
+		const int output_value = this->site->is_settlement() ? population_unit->get_type()->get_output_value() : population_unit->get_type()->get_resource_output_value();
+		assert_throw(output_value > 0);
+
+		if (output_value > lowest_output_value) {
+			continue;
+		} else if (output_value < lowest_output_value) {
+			lowest_output_value = output_value;
+			population_units.clear();
+		}
+
+		population_units.push_back(population_unit.get());
+	}
+
+	if (population_units.empty()) {
+		return nullptr;
+	}
+
+	return vector::get_random(population_units);
+}
+
 void site_game_data::change_housing(const centesimal_int &change)
 {
 	if (change == 0) {

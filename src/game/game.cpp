@@ -1221,9 +1221,6 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	if (group_key.type != nullptr && group_key.type->get_profession() != nullptr) {
 		population_unit_count = std::min(population_unit_count, site_game_data->get_available_profession_capacity(group_key.type->get_profession()));
 	}
-	if (site->get_map_data()->get_type() == site_type::resource) {
-		population_unit_count = std::min(population_unit_count, site_game_data->get_available_housing().to_int());
-	}
 
 	this->apply_historical_population_units_to_site(group_key, population_unit_count, site);
 
@@ -1350,8 +1347,10 @@ QCoro::Task<void> game::on_setup_finished()
 			map::get()->calculate_tile_country_border_directions(border_tile_pos);
 		}
 
-		//build free on start buildings
 		for (const province *province : country->get_game_data()->get_provinces()) {
+			province->get_game_data()->allocate_population();
+
+			//build free on start buildings
 			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
 				if (!settlement->get_game_data()->is_built()) {
 					continue;
@@ -1465,6 +1464,10 @@ void game::adjust_food_production_for_country_populations()
 			if (net_food >= 0) {
 				break;
 			}
+		}
+
+		for (const province *province : country->get_game_data()->get_provinces()) {
+			province->get_game_data()->allocate_population();
 		}
 	}
 }

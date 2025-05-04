@@ -234,6 +234,8 @@ public:
 	const population_class *get_default_population_class() const;
 	const population_class *get_default_literate_population_class() const;
 
+	population_unit *choose_population_unit_for_reallocation() const;
+
 	const centesimal_int &get_housing() const
 	{
 		return this->housing;

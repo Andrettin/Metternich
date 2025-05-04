@@ -67,6 +67,8 @@ province_game_data::~province_game_data()
 
 void province_game_data::do_turn()
 {
+	this->allocate_population();
+
 	for (const site *site : this->get_sites()) {
 		site->get_game_data()->do_turn();
 	}
@@ -544,6 +546,57 @@ void province_game_data::on_population_type_count_changed(const population_type 
 	for (const auto &[commodity, value] : type->get_luxury_consumption()) {
 		if (commodity->is_local() && commodity->is_provincial()) {
 			this->change_local_luxury_consumption(commodity, value * change);
+		}
+	}
+}
+
+void province_game_data::allocate_population()
+{
+	//move resource site population above housing capacity to the provincial capital
+	const metternich::site *provincial_capital = this->province->get_provincial_capital();
+
+	std::vector<const site *> available_resource_sites;
+
+	for (const site *site : this->get_sites()) {
+		if (!site->get_game_data()->can_have_population()) {
+			continue;
+		}
+
+		if (site->get_map_data()->get_type() != site_type::resource) {
+			continue;
+		}
+
+		if (site->get_game_data()->get_available_housing() >= 1) {
+			available_resource_sites.push_back(site);
+			continue;
+		}
+
+		while (site->get_game_data()->get_available_housing() < 0) {
+			assert_throw(site->get_game_data()->is_built());
+			population_unit *population_unit = site->get_game_data()->choose_population_unit_for_reallocation();
+			assert_throw(population_unit != nullptr);
+			population_unit->migrate_to(provincial_capital);
+		}
+	}
+
+	//move urban workers (if they are free) to resource sites with available capacity
+	site_game_data *provincial_capital_game_data = provincial_capital->get_game_data();
+
+	if (!available_resource_sites.empty()) {
+		population_unit *population_unit = provincial_capital_game_data->choose_population_unit_for_reallocation();
+
+		while (population_unit != nullptr) {
+			const site *chosen_resource_site = vector::get_random(available_resource_sites);
+			population_unit->migrate_to(chosen_resource_site);
+			if (chosen_resource_site->get_game_data()->get_available_housing() < 1) {
+				std::erase(available_resource_sites, chosen_resource_site);
+
+				if (available_resource_sites.empty()) {
+					break;
+				}
+			}
+
+			population_unit = provincial_capital_game_data->choose_population_unit_for_reallocation();
 		}
 	}
 }

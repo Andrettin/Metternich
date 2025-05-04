@@ -69,6 +69,8 @@ void population_unit::set_type(const population_type *type)
 		return;
 	}
 
+	assert_throw(type != nullptr);
+
 	this->get_site()->get_game_data()->get_population()->change_type_count(this->get_type(), -1);
 
 	this->type = type;
@@ -301,6 +303,12 @@ void population_unit::migrate_to(const metternich::site *site)
 	province->get_game_data()->add_population_unit(this);
 
 	this->set_site(site);
+
+	if (!site->get_game_data()->can_have_population_type(this->get_type())) {
+		const population_type *default_population_type = this->get_culture()->get_population_class_type(site->get_game_data()->get_default_population_class());
+		assert_throw(default_population_type != nullptr);
+		this->set_type(default_population_type);
+	}
 }
 
 }
