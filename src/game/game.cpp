@@ -1221,6 +1221,9 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	if (group_key.type != nullptr && group_key.type->get_profession() != nullptr) {
 		population_unit_count = std::min(population_unit_count, site_game_data->get_available_profession_capacity(group_key.type->get_profession()));
 	}
+	if (site->get_map_data()->get_type() == site_type::resource) {
+		population_unit_count = std::min(population_unit_count, site_game_data->get_available_housing().to_int());
+	}
 
 	this->apply_historical_population_units_to_site(group_key, population_unit_count, site);
 
