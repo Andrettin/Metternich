@@ -98,14 +98,6 @@ void improvement::check() const
 		throw std::runtime_error(std::format("Improvement \"{}\" is ruins, but is not a main improvement.", this->get_identifier()));
 	}
 
-	if (this->get_output_commodity() != nullptr && this->get_output_multiplier() == 0) {
-		throw std::runtime_error(std::format("Improvement \"{}\" has an output commodity, but no output multiplier.", this->get_identifier()));
-	}
-
-	if (this->get_output_multiplier() > 0 && this->get_output_commodity() == nullptr) {
-		throw std::runtime_error(std::format("Improvement \"{}\" has an output multiplier, but no output commodity.", this->get_identifier()));
-	}
-
 	if ((this->get_slot() == improvement_slot::main || this->get_slot() == improvement_slot::resource) && this->get_image_filepath().empty()) {
 		throw std::runtime_error(std::format("Main or resource improvement \"{}\" has no image filepath.", this->get_identifier()));
 	}
@@ -143,15 +135,6 @@ void improvement::set_image_filepath(const std::filesystem::path &filepath)
 	}
 
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
-}
-
-const commodity *improvement::get_output_commodity() const
-{
-	if (this->get_resource() != nullptr) {
-		return this->get_resource()->get_commodity();
-	}
-
-	return nullptr;
 }
 
 bool improvement::can_have_population_type(const population_type *population_type) const
@@ -200,15 +183,11 @@ bool improvement::is_buildable_on_site(const site *site) const
 			return false;
 		}
 
-		if (this->get_output_multiplier() < current_improvement->get_output_multiplier()) {
-			return false;
-		}
-
 		if (this->get_level() < current_improvement->get_level()) {
 			return false;
 		}
 
-		if (this->get_output_multiplier() == current_improvement->get_output_multiplier() && this->get_level() == current_improvement->get_level()) {
+		if (this->get_level() == current_improvement->get_level()) {
 			//the improvement must be better in some way
 			return false;
 		}

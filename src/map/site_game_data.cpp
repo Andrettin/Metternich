@@ -859,7 +859,7 @@ void site_game_data::check_free_buildings()
 	const int free_resource_improvement_level = this->get_settlement_type()->get_free_resource_improvement_level();
 	if (resource != nullptr && free_resource_improvement_level > 0) {
 		for (const improvement *improvement : resource->get_improvements()) {
-			if (improvement->get_output_multiplier() > free_resource_improvement_level) {
+			if (improvement->get_level() > free_resource_improvement_level) {
 				continue;
 			}
 
@@ -1018,10 +1018,6 @@ void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier
 
 void site_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
 {
-	if (improvement->get_output_commodity() != nullptr) {
-		this->change_base_commodity_output(improvement->get_output_commodity(), centesimal_int(improvement->get_output_multiplier()) * multiplier);
-	}
-
 	if (this->get_province() != nullptr && this->get_resource() != nullptr && improvement->get_slot() == improvement_slot::resource) {
 		for (const auto &[commodity, value] : this->get_province()->get_game_data()->get_improved_resource_commodity_bonuses(this->get_resource())) {
 			this->change_base_commodity_output(commodity, centesimal_int(value) * multiplier);

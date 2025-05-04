@@ -1439,7 +1439,7 @@ void game::adjust_food_production_for_country_populations()
 					}
 
 					for (const improvement *improvement : resource->get_improvements()) {
-						if (improvement->get_output_multiplier() > i) {
+						if (improvement->get_level() > i) {
 							continue;
 						}
 
