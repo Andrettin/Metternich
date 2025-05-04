@@ -2209,7 +2209,7 @@ void country_game_data::grow_population()
 	std::vector<population_unit *> potential_base_population_units = this->population_units;
 
 	std::erase_if(potential_base_population_units, [this](const population_unit *population_unit) {
-		if (population_unit->get_settlement()->get_game_data()->get_available_housing() <= 0) {
+		if (population_unit->get_site()->get_game_data()->get_available_housing() <= 0) {
 			return true;
 		}
 
@@ -2229,25 +2229,30 @@ void country_game_data::grow_population()
 	const phenotype *phenotype = population_unit->get_phenotype();
 	const population_type *population_type = culture->get_population_class_type(this->get_default_population_class());
 
-	const site *settlement = population_unit->get_settlement();
-	if (settlement->get_game_data()->get_available_housing() <= 0) {
-		//if the population unit's settlement has no available housing, but there are empty settlements, grow the population in one of them
-		std::vector<const province *> potential_settlement_provinces = this->get_provinces();
+	const site *site = population_unit->get_site();
+	if (site->get_game_data()->get_available_housing() <= 0) {
+		//if the population unit's site has no available housing, but there are empty populatable sites, grow the population in one of them
+		std::vector<const metternich::site *> potential_sites;
+		for (const province *province : this->get_provinces()) {
+			for (const metternich::site *province_site : province->get_game_data()->get_sites()) {
+				if (!province_site->get_game_data()->can_have_population() || !province_site->get_game_data()->is_built()) {
+					continue;
+				}
 
-		std::erase_if(potential_settlement_provinces, [this](const province *province) {
-			if (province->get_provincial_capital()->get_game_data()->get_available_housing() <= 0) {
-				return true;
+				if (province_site->get_game_data()->get_available_housing() <= 0) {
+					continue;
+				}
+
+				potential_sites.push_back(province_site);
 			}
+		}
 
-			return false;
-		});
+		assert_throw(!potential_sites.empty());
 
-		assert_throw(!potential_settlement_provinces.empty());
-
-		settlement = vector::get_random(potential_settlement_provinces)->get_provincial_capital();
+		site = vector::get_random(potential_sites);
 	}
 
-	settlement->get_game_data()->create_population_unit(population_type, culture, religion, phenotype);
+	site->get_game_data()->create_population_unit(population_type, culture, religion, phenotype);
 
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
@@ -2260,7 +2265,7 @@ void country_game_data::decrease_population()
 		if (population_unit != nullptr) {
 			this->change_population_growth(1);
 			population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
-			population_unit->get_settlement()->get_game_data()->pop_population_unit(population_unit);
+			population_unit->get_site()->get_game_data()->pop_population_unit(population_unit);
 			return;
 		}
 	}
@@ -2277,7 +2282,7 @@ population_unit *country_game_data::choose_starvation_population_unit()
 	bool found_labor_producer = false;
 	int lowest_output_value = std::numeric_limits<int>::max();
 	for (population_unit *population_unit : this->get_population_units()) {
-		if (population_unit->get_settlement()->get_game_data()->get_population_unit_count() == 1) {
+		if (population_unit->get_site()->is_settlement() && population_unit->get_site()->get_game_data()->get_population_unit_count() == 1) {
 			//do not remove a settlement's last population unit
 			continue;
 		}

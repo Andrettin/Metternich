@@ -248,7 +248,7 @@ void province_game_data::set_owner(const country *country)
 	} else {
 		//remove population if this province becomes unowned
 		for (population_unit *population_unit : this->population_units) {
-			population_unit->get_settlement()->get_game_data()->pop_population_unit(population_unit);
+			population_unit->get_site()->get_game_data()->pop_population_unit(population_unit);
 		}
 	}
 

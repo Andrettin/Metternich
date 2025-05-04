@@ -7,17 +7,17 @@ namespace metternich {
 
 class site;
 
-class settlement_condition final : public scope_condition<population_unit, site, read_only_context, condition<site>>
+class site_scope_condition final : public scope_condition<population_unit, site, read_only_context, condition<site>>
 {
 public:
-	explicit settlement_condition(const gsml_operator condition_operator)
+	explicit site_scope_condition(const gsml_operator condition_operator)
 		: scope_condition<population_unit, site, read_only_context, condition<site>>(condition_operator)
 	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "settlement";
+		static const std::string class_identifier = "site_scope";
 		return class_identifier;
 	}
 
@@ -25,12 +25,12 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return upper_scope->get_settlement();
+		return upper_scope->get_site();
 	}
 
 	virtual std::string get_scope_name() const override
 	{
-		return "Settlement";
+		return "Site";
 	}
 };
 

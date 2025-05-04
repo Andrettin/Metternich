@@ -49,7 +49,7 @@ public:
 					continue;
 				}
 
-				assert_throw(population_unit->get_settlement() != nullptr);
+				assert_throw(population_unit->get_site() != nullptr);
 
 				potential_population_units.push_back(population_unit);
 			}

@@ -95,9 +95,9 @@
 #include "script/condition/saved_scope_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
-#include "script/condition/settlement_condition.h"
 #include "script/condition/settlement_type_condition.h"
 #include "script/condition/site_condition.h"
+#include "script/condition/site_scope_condition.h"
 #include "script/condition/source_character_condition.h"
 #include "script/condition/source_site_condition.h"
 #include "script/condition/source_site_scope_condition.h"
@@ -362,8 +362,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			condition = std::make_unique<any_neighbor_country_condition>(condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
-		if (tag == "settlement") {
-			condition = std::make_unique<settlement_condition>(condition_operator);
+		if (tag == "site") {
+			condition = std::make_unique<site_scope_condition>(condition_operator);
 		}
 	}
 

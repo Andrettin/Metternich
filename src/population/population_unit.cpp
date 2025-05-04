@@ -9,7 +9,6 @@
 #include "country/religion.h"
 #include "economy/commodity.h"
 #include "game/game.h"
-#include "infrastructure/settlement_building_slot.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -25,15 +24,15 @@
 
 namespace metternich {
 
-population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *settlement)
-	: type(type), culture(culture), religion(religion), phenotype(phenotype), settlement(settlement)
+population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::site *site)
+	: type(type), culture(culture), religion(religion), phenotype(phenotype), site(site)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
 
-	this->set_country(settlement->get_game_data()->get_owner());
+	this->set_country(site->get_game_data()->get_owner());
 	assert_throw(this->get_country() != nullptr);
 
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
@@ -67,11 +66,11 @@ void population_unit::set_type(const population_type *type)
 		return;
 	}
 
-	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), -1);
+	this->get_site()->get_game_data()->get_population()->change_type_count(this->get_type(), -1);
 
 	this->type = type;
 
-	this->get_settlement()->get_game_data()->get_population()->change_type_count(this->get_type(), 1);
+	this->get_site()->get_game_data()->get_population()->change_type_count(this->get_type(), 1);
 
 	emit type_changed();
 }
@@ -82,11 +81,11 @@ void population_unit::set_culture(const metternich::culture *culture)
 		return;
 	}
 
-	this->get_settlement()->get_game_data()->get_population()->change_culture_count(this->get_culture(), -1);
+	this->get_site()->get_game_data()->get_population()->change_culture_count(this->get_culture(), -1);
 
 	this->culture = culture;
 
-	this->get_settlement()->get_game_data()->get_population()->change_culture_count(this->get_culture(), 1);
+	this->get_site()->get_game_data()->get_population()->change_culture_count(this->get_culture(), 1);
 
 	const population_type *culture_population_type = culture->get_population_class_type(this->get_type()->get_population_class());
 	if (culture_population_type != this->get_type()) {
@@ -102,11 +101,11 @@ void population_unit::set_religion(const metternich::religion *religion)
 		return;
 	}
 
-	this->get_settlement()->get_game_data()->get_population()->change_religion_count(this->get_religion(), -1);
+	this->get_site()->get_game_data()->get_population()->change_religion_count(this->get_religion(), -1);
 
 	this->religion = religion;
 
-	this->get_settlement()->get_game_data()->get_population()->change_religion_count(this->get_religion(), 1);
+	this->get_site()->get_game_data()->get_population()->change_religion_count(this->get_religion(), 1);
 
 	emit religion_changed();
 }
@@ -117,11 +116,11 @@ void population_unit::set_phenotype(const metternich::phenotype *phenotype)
 		return;
 	}
 
-	this->get_settlement()->get_game_data()->get_population()->change_phenotype_count(this->get_phenotype(), -1);
+	this->get_site()->get_game_data()->get_population()->change_phenotype_count(this->get_phenotype(), -1);
 
 	this->phenotype = phenotype;
 
-	this->get_settlement()->get_game_data()->get_population()->change_phenotype_count(this->get_phenotype(), 1);
+	this->get_site()->get_game_data()->get_population()->change_phenotype_count(this->get_phenotype(), 1);
 
 	emit phenotype_changed();
 }
@@ -152,24 +151,24 @@ void population_unit::set_country(const metternich::country *country)
 
 const province *population_unit::get_province() const
 {
-	if (this->get_settlement() == nullptr) {
+	if (this->get_site() == nullptr) {
 		return nullptr;
 	}
 
-	return this->get_settlement()->get_game_data()->get_province();
+	return this->get_site()->get_game_data()->get_province();
 }
 
-void population_unit::set_settlement(const site *settlement)
+void population_unit::set_site(const metternich::site *site)
 {
-	if (settlement == this->get_settlement()) {
+	if (site == this->get_site()) {
 		return;
 	}
 
 	const province *old_province = this->get_province();
 
-	this->settlement = settlement;
+	this->site = site;
 
-	emit settlement_changed();
+	emit site_changed();
 
 	const province *province = this->get_province();
 
@@ -177,7 +176,7 @@ void population_unit::set_settlement(const site *settlement)
 		emit province_changed();
 	}
 
-	const metternich::country *country = settlement ? settlement->get_game_data()->get_owner() : nullptr;
+	const metternich::country *country = site ? site->get_game_data()->get_owner() : nullptr;
 	this->set_country(country);
 }
 
@@ -188,13 +187,13 @@ void population_unit::set_ideology(const metternich::ideology *ideology)
 	}
 
 	if (this->get_ideology() != nullptr) {
-		this->get_settlement()->get_game_data()->get_population()->change_ideology_count(this->get_ideology(), -1);
+		this->get_site()->get_game_data()->get_population()->change_ideology_count(this->get_ideology(), -1);
 	}
 
 	this->ideology = ideology;
 
 	if (this->get_ideology() != nullptr) {
-		this->get_settlement()->get_game_data()->get_population()->change_ideology_count(this->get_ideology(), 1);
+		this->get_site()->get_game_data()->get_population()->change_ideology_count(this->get_ideology(), 1);
 	}
 }
 
@@ -236,7 +235,7 @@ void population_unit::set_consciousness(const centesimal_int &consciousness)
 	this->consciousness = consciousness;
 
 	const centesimal_int change = consciousness - old_consciousness;
-	this->get_settlement()->get_game_data()->get_population()->change_total_consciousness(change);
+	this->get_site()->get_game_data()->get_population()->change_total_consciousness(change);
 
 	if (game::get()->is_running() && consciousness.to_int() != old_consciousness.to_int()) {
 		this->choose_ideology();
@@ -260,7 +259,7 @@ void population_unit::set_militancy(const centesimal_int &militancy)
 	this->militancy = militancy;
 
 	const centesimal_int change = militancy - old_militancy;
-	this->get_settlement()->get_game_data()->get_population()->change_total_militancy(change);
+	this->get_site()->get_game_data()->get_population()->change_total_militancy(change);
 
 	if (game::get()->is_running() && militancy.to_int() != old_militancy.to_int()) {
 		this->choose_ideology();
@@ -276,22 +275,23 @@ bool population_unit::is_food_producer() const
 	return false;
 }
 
-void population_unit::migrate_to(const site *settlement)
+void population_unit::migrate_to(const metternich::site *site)
 {
-	assert_throw(settlement != nullptr);
+	assert_throw(site != nullptr);
+	assert_throw(site->get_game_data()->can_have_population());
 
 	this->get_province()->get_game_data()->remove_population_unit(this);
 
-	qunique_ptr<population_unit> unique_ptr = this->get_settlement()->get_game_data()->pop_population_unit(this);
+	qunique_ptr<population_unit> unique_ptr = this->get_site()->get_game_data()->pop_population_unit(this);
 
 	assert_throw(unique_ptr != nullptr);
 
-	settlement->get_game_data()->add_population_unit(std::move(unique_ptr));
+	site->get_game_data()->add_population_unit(std::move(unique_ptr));
 
-	const province *province = settlement->get_game_data()->get_province();
+	const province *province = site->get_game_data()->get_province();
 	province->get_game_data()->add_population_unit(this);
 
-	this->set_settlement(settlement);
+	this->set_site(site);
 }
 
 }

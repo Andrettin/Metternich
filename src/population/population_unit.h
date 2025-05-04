@@ -21,7 +21,6 @@ class phenotype;
 class population_type;
 class province;
 class religion;
-class settlement_building_slot;
 class site;
 
 class population_unit final : public QObject
@@ -35,13 +34,13 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::country* country READ get_country NOTIFY country_changed)
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
-	Q_PROPERTY(const metternich::site* settlement READ get_settlement NOTIFY settlement_changed)
+	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
 
 public:
 	static constexpr int max_consciousness = 10;
 	static constexpr int max_militancy = 10;
 
-	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *settlement);
+	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *site);
 
 	void do_turn();
 
@@ -87,12 +86,12 @@ public:
 
 	const province *get_province() const;
 
-	const site *get_settlement() const
+	const site *get_site() const
 	{
-		return this->settlement;
+		return this->site;
 	}
 
-	void set_settlement(const site *settlement);
+	void set_site(const site *site);
 
 	const metternich::ideology *get_ideology() const
 	{
@@ -156,7 +155,7 @@ public:
 		this->luxury_consumption_fulfilled = value;
 	}
 
-	void migrate_to(const site *settlement);
+	void migrate_to(const site *site);
 
 signals:
 	void type_changed();
@@ -166,7 +165,7 @@ signals:
 	void icon_changed();
 	void country_changed();
 	void province_changed();
-	void settlement_changed();
+	void site_changed();
 
 private:
 	const population_type *type = nullptr;
@@ -174,7 +173,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::country *country = nullptr;
-	const site *settlement = nullptr;
+	const site *site = nullptr;
 	const metternich::ideology *ideology = nullptr;
 	centesimal_int consciousness;
 	centesimal_int militancy;
