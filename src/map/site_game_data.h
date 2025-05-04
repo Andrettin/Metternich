@@ -232,6 +232,7 @@ public:
 	void on_population_type_count_changed(const population_type *type, const int change);
 
 	const population_class *get_default_population_class() const;
+	const population_class *get_default_literate_population_class() const;
 
 	const centesimal_int &get_housing() const
 	{

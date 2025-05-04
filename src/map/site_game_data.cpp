@@ -1174,6 +1174,7 @@ void site_game_data::clear_population_units()
 
 void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype)
 {
+	assert_throw(type != nullptr);
 	assert_throw(this->can_have_population());
 	assert_throw(this->is_built());
 
@@ -1226,6 +1227,20 @@ const population_class *site_game_data::get_default_population_class() const
 	}
 
 	return defines::get()->get_default_population_class();
+}
+
+const population_class *site_game_data::get_default_literate_population_class() const
+{
+	assert_throw(this->can_have_population());
+	assert_throw(this->is_built());
+
+	if (this->site->is_settlement()) {
+		if (this->get_owner() != nullptr && !this->get_owner()->get_game_data()->is_tribal()) {
+			return defines::get()->get_default_literate_population_class();
+		}
+	}
+
+	return nullptr;
 }
 
 void site_game_data::change_housing(const centesimal_int &change)

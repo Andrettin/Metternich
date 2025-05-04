@@ -1303,7 +1303,8 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 	assert_throw(phenotype != nullptr);
 
 	if (population_type == nullptr) {
-		if (!country->get_game_data()->is_tribal()) {
+		const population_class *literate_population_class = site->get_game_data()->get_default_literate_population_class();
+		if (literate_population_class != nullptr) {
 			centesimal_int literacy_rate = site_history->get_literacy_rate();
 			if (literacy_rate == 0) {
 				literacy_rate = province_history->get_literacy_rate();
@@ -1316,7 +1317,6 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 				const int literate_population_unit_count = (population_unit_count * literacy_rate / 100).to_int();
 				population_unit_count -= literate_population_unit_count;
 
-				const population_class *literate_population_class = defines::get()->get_default_literate_population_class();
 				const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
 
 				for (int i = 0; i < literate_population_unit_count; ++i) {
