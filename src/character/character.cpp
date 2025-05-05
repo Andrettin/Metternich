@@ -257,6 +257,15 @@ void character::reset_game_data()
 	emit game_data_changed();
 }
 
+bool character::is_surname_first() const
+{
+	if (this->get_culture() != nullptr) {
+		return this->get_culture()->is_surname_first();
+	}
+
+	return false;
+}
+
 const military_unit_category character::get_military_unit_category() const
 {
 	if (this->get_character_type() != nullptr) {

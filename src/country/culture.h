@@ -16,6 +16,7 @@ class culture final : public culture_base, public data_type<culture>
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
+	Q_PROPERTY(bool surname_first MEMBER surname_first READ is_surname_first NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "culture";
@@ -37,6 +38,11 @@ public:
 		return this->color;
 	}
 
+	bool is_surname_first() const
+	{
+		return this->surname_first;
+	}
+
 	const std::vector<const culture *> &get_derived_cultures() const
 	{
 		return this->derived_cultures;
@@ -52,6 +58,7 @@ signals:
 
 private:
 	QColor color;
+	bool surname_first = false;
 	std::vector<const culture *> derived_cultures;
 	std::unique_ptr<const and_condition<population_unit>> derivation_conditions;
 };

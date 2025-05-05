@@ -108,6 +108,8 @@ public:
 		return this->dynasty;
 	}
 
+	virtual bool is_surname_first() const override;
+
 	character_role get_role() const
 	{
 		return this->role;
