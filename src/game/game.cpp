@@ -472,6 +472,8 @@ void game::apply_history(const metternich::scenario *scenario)
 					country_game_data->set_subject_type(nullptr);
 				}
 			}
+
+			country_game_data->check_government_type();
 		}
 
 		this->apply_sites();
