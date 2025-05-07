@@ -166,7 +166,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 						object_image_sources.push_back(std::move(image_source));
 					}
 
-					if (tile->get_resource() != nullptr && tile->is_resource_discovered() && (tile->get_site()->get_game_data()->get_main_improvement() == nullptr || tile->get_resource()->is_natural_wonder())) {
+					if (tile->get_resource() != nullptr && tile->is_resource_discovered() && ((tile->get_settlement_type() == nullptr && tile->get_site()->get_game_data()->get_main_improvement() == nullptr) || tile->get_resource()->is_natural_wonder())) {
 						object_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
 					}
 				}
