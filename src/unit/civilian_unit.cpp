@@ -236,10 +236,6 @@ bool civilian_unit::can_build_improvement(const improvement *improvement) const
 		return false;
 	}
 
-	if (improvement->get_resource() != nullptr && !this->get_type()->can_improve_resource(improvement->get_resource())) {
-		return false;
-	}
-
 	if (improvement->get_wealth_cost() > 0 && improvement->get_wealth_cost() > country_game_data->get_wealth_with_credit()) {
 		return false;
 	}
@@ -263,6 +259,10 @@ bool civilian_unit::can_build_improvement_on_tile(const improvement *improvement
 	const site *site = tile->get_site();
 
 	if (site == nullptr) {
+		return false;
+	}
+
+	if (tile->get_resource() != nullptr && !this->get_type()->can_improve_resource(tile->get_resource())) {
 		return false;
 	}
 
@@ -314,7 +314,7 @@ const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(co
 	}
 
 	for (const improvement *improvement : tile->get_resource()->get_improvements()) {
-		assert_throw(improvement->get_resource() != nullptr);
+		assert_throw(!improvement->get_resources().empty());
 
 		if (!this->can_build_improvement_on_tile(improvement, tile_pos)) {
 			continue;

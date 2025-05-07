@@ -4,7 +4,6 @@
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 
-Q_MOC_INCLUDE("economy/resource.h")
 Q_MOC_INCLUDE("population/population_class.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -29,7 +28,6 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::improvement_slot slot MEMBER slot READ get_slot NOTIFY changed)
-	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(bool ruins MEMBER ruins READ is_ruins NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
@@ -63,9 +61,9 @@ public:
 
 	void calculate_level();
 
-	const metternich::resource *get_resource() const
+	const std::vector<const resource *> &get_resources() const
 	{
-		return this->resource;
+		return this->resources;
 	}
 
 	bool is_ruins() const
@@ -155,7 +153,7 @@ signals:
 private:
 	improvement_slot slot{};
 	int level = 0;
-	metternich::resource *resource = nullptr; //the resource for which this improvement can be built
+	std::vector<const resource *> resources; //the resources for which this improvement can be built
 	bool ruins = false; //if true, this improvement can be explored by troops, yielding some bonus (or malus)
 	const metternich::icon *icon = nullptr;
 	std::filesystem::path image_filepath;

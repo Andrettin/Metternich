@@ -27,7 +27,7 @@ class resource final : public named_data_entry, public data_type<resource>
 
 	Q_PROPERTY(QString plural_name READ get_plural_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* commodity MEMBER commodity NOTIFY changed)
-	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* tiny_icon MEMBER tiny_icon READ get_tiny_icon NOTIFY changed)
 	Q_PROPERTY(bool natural_wonder MEMBER natural_wonder READ is_natural_wonder NOTIFY changed)
 	Q_PROPERTY(bool coastal MEMBER coastal READ is_coastal NOTIFY changed)

@@ -32,7 +32,13 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "terrain_types") {
+	if (tag == "resources") {
+		for (const std::string &value : values) {
+			resource *resource = resource::get(value);
+			resource->add_improvement(this);
+			this->resources.push_back(resource);
+		}
+	} else if (tag == "terrain_types") {
 		for (const std::string &value : values) {
 			this->terrain_types.push_back(terrain_type::get(value));
 		}
@@ -67,10 +73,6 @@ void improvement::initialize()
 		this->required_technology->add_enabled_improvement(this);
 	}
 
-	if (this->get_resource() != nullptr) {
-		this->resource->add_improvement(this);
-	}
-
 	if (!this->get_image_filepath().empty()) {
 		tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/0");
 	}
@@ -90,7 +92,7 @@ void improvement::check() const
 		throw std::runtime_error(std::format("Improvement \"{}\" has no slot.", this->get_identifier()));
 	}
 
-	if (this->get_resource() != nullptr && this->get_slot() != improvement_slot::resource) {
+	if (!this->get_resources().empty() && this->get_slot() != improvement_slot::resource) {
 		throw std::runtime_error(std::format("Improvement \"{}\" has a resource, but is not a resource improvement.", this->get_identifier()));
 	}
 
@@ -103,7 +105,24 @@ void improvement::check() const
 	}
 
 	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
-		assert_throw(vector::contains(this->get_terrain_types(), terrain) || vector::contains(this->get_resource()->get_terrain_types(), terrain));
+		bool found = false;
+
+		if (vector::contains(this->get_terrain_types(), terrain)) {
+			found = true;
+		}
+
+		if (!found) {
+			for (const resource *resource : this->get_resources()) {
+				if (vector::contains(resource->get_terrain_types(), terrain)) {
+					found = true;
+					break;
+				}
+			}
+		}
+
+		if (!found) {
+			throw std::runtime_error(std::format("Improvement \"{}\" has a tile image variation for terrain \"{}\", but does not have that terrain in its terrain list, nor do any of its resources have it.", this->get_identifier(), terrain->get_identifier()));
+		}
 	}
 
 	if ((this->get_slot() == improvement_slot::resource || this->get_slot() == improvement_slot::depot || this->get_slot() == improvement_slot::port) && this->icon == nullptr) {
@@ -168,7 +187,7 @@ bool improvement::is_buildable_on_site(const site *site) const
 			break;
 	}
 
-	if (this->get_resource() != nullptr && this->get_resource() != site_game_data->get_resource()) {
+	if (!this->get_resources().empty() && !vector::contains(this->get_resources(), site_game_data->get_resource())) {
 		return false;
 	}
 

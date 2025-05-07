@@ -869,15 +869,15 @@ void game::apply_sites()
 
 			for (const auto &[improvement_slot, improvement] : site_improvements) {
 				if (improvement != nullptr) {
-					if (improvement->get_resource() != nullptr) {
+					if (!improvement->get_resources().empty()) {
 						assert_throw(site->get_map_data()->get_type() == site_type::resource || site->is_settlement());
 
 						if (tile->get_resource() == nullptr) {
-							throw std::runtime_error("Failed to set resource improvement for tile for site \"" + site->get_identifier() + "\", as it has no resource.");
+							throw std::runtime_error(std::format("Failed to set resource improvement for tile for site \"{}\", as it has no resource.", site->get_identifier()));
 						}
 
-						if (tile->get_resource() != improvement->get_resource()) {
-							throw std::runtime_error("Failed to set resource improvement for tile for site \"" + site->get_identifier() + "\", as its resource is different than that of the improvement.");
+						if (!vector::contains(improvement->get_resources(), tile->get_resource())) {
+							throw std::runtime_error(std::format("Failed to set resource improvement for tile for site \"{}\", as its resource is different than that of the improvement.", site->get_identifier()));
 						}
 
 						map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
