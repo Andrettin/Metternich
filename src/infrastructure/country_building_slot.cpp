@@ -418,22 +418,12 @@ QString country_building_slot::get_country_modifier_string() const
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
 
 	if (this->get_building()->get_country_modifier() != nullptr) {
-		centesimal_int multiplier(1);
+		int multiplier = 1;
 		if (this->get_building()->is_provincial()) {
-			multiplier = centesimal_int(country_game_data->get_settlement_building_count(this->get_building())) / country_game_data->get_settlement_count();
+			multiplier = country_game_data->get_settlement_building_count(this->get_building());
 		}
 
 		str = this->get_building()->get_country_modifier()->get_string(this->get_country(), multiplier);
-	}
-
-	if (this->get_building()->get_stackable_country_modifier() != nullptr) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		assert_throw(this->get_building()->is_provincial());
-		const int multiplier = country_game_data->get_settlement_building_count(this->get_building());
-		str += this->get_building()->get_stackable_country_modifier()->get_string(this->get_country(), multiplier);
 	}
 
 	return QString::fromStdString(str);

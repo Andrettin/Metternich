@@ -283,11 +283,6 @@ public:
 		return this->country_modifier.get();
 	}
 
-	const modifier<const country> *get_stackable_country_modifier() const
-	{
-		return this->stackable_country_modifier.get();
-	}
-
 	Q_INVOKABLE QString get_effects_string(metternich::site *site) const;
 
 	const effect_list<const site> *get_effects() const
@@ -334,7 +329,6 @@ private:
 	std::unique_ptr<modifier<const site>> settlement_modifier;
 	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const country>> country_modifier;
-	std::unique_ptr<modifier<const country>> stackable_country_modifier;
 	std::unique_ptr<effect_list<const site>> effects;
 };
 

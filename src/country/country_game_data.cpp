@@ -1272,24 +1272,7 @@ void country_game_data::change_settlement_count(const int change)
 		return;
 	}
 
-	const int old_settlement_count = this->get_settlement_count();
-
 	this->settlement_count += change;
-
-	for (const auto &[building, count] : this->settlement_building_counts) {
-		if (building->get_country_modifier() != nullptr) {
-			building->get_country_modifier()->apply(this->country, centesimal_int(-count) / old_settlement_count);
-		}
-	}
-
-	if (this->get_settlement_count() != 0) {
-		for (const auto &[building, count] : this->settlement_building_counts) {
-			if (building->get_country_modifier() != nullptr) {
-				//reapply the settlement building's country modifier with the updated province count
-				building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_settlement_count());
-			}
-		}
-	}
 }
 
 void country_game_data::calculate_territory_rect()
@@ -2565,14 +2548,8 @@ void country_game_data::change_settlement_building_count(const building_type *bu
 		}
 	}
 
-	if (building->get_country_modifier() != nullptr && this->get_settlement_count() != 0) {
-		//reapply the settlement building's country modifier with the updated count
-		building->get_country_modifier()->apply(this->country, centesimal_int(-old_count) / this->get_settlement_count());
-		building->get_country_modifier()->apply(this->country, centesimal_int(count) / this->get_settlement_count());
-	}
-
-	if (building->get_stackable_country_modifier() != nullptr) {
-		building->get_stackable_country_modifier()->apply(this->country, change);
+	if (building->get_country_modifier() != nullptr) {
+		building->get_country_modifier()->apply(this->country, change);
 	}
 
 	if (game::get()->is_running()) {
