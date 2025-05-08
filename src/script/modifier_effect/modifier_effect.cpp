@@ -22,6 +22,7 @@
 #include "script/modifier_effect/commodity_bonus_per_improvement_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_population_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_settlement_modifier_effect.h"
+#include "script/modifier_effect/commodity_demand_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/commodity_throughput_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
@@ -281,6 +282,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<commodity_bonus_per_improvement_modifier_effect<scope_type>>();
 		} else if (tag == "commodity_bonus_per_settlement") {
 			modifier_effect = std::make_unique<commodity_bonus_per_settlement_modifier_effect<scope_type>>();
+		} else if (tag == "commodity_demand") {
+			modifier_effect = std::make_unique<commodity_demand_modifier_effect>();
 		} else if (tag == "military_unit_domain_stat_modifier") {
 			modifier_effect = std::make_unique<military_unit_domain_stat_modifier_effect>();
 		}
