@@ -157,6 +157,11 @@ void defines::initialize()
 	tile_image_provider::get()->load_image("rivermouth/0");
 }
 
+void defines::check() const
+{
+	assert_throw(this->get_great_power_commodity_demand_divisor() > 0);
+}
+
 QSize defines::get_scaled_tile_size() const
 {
 	return this->get_tile_size() * preferences::get()->get_scale_factor();

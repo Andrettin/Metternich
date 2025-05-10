@@ -1579,7 +1579,7 @@ void game::do_trade()
 	});
 
 	country_map<commodity_map<int>> country_luxury_demands;
-	static constexpr int great_power_luxury_demand_divisor = 10;
+	const int great_power_commodity_demand_divisor = defines::get()->get_great_power_commodity_demand_divisor();
 
 	for (const country *country : trade_countries) {
 		country_game_data *country_game_data = country->get_game_data();
@@ -1592,7 +1592,7 @@ void game::do_trade()
 			//increase demand if prices are lower than the base price, or the inverse if they are higher
 			decimillesimal_int effective_demand = demand * commodity->get_base_price() / game::get()->get_price(commodity);
 			if (country->is_great_power()) {
-				effective_demand /= great_power_luxury_demand_divisor;
+				effective_demand /= great_power_commodity_demand_divisor;
 			}
 
 			int effective_demand_int = effective_demand.to_int();
