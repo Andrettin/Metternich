@@ -26,7 +26,6 @@ class scenario final : public named_data_entry, public data_type<scenario>
 	Q_PROPERTY(archimedes::calendar* start_date_calendar MEMBER start_date_calendar)
 	Q_PROPERTY(archimedes::timeline* timeline MEMBER timeline NOTIFY changed)
 	Q_PROPERTY(metternich::map_template* map_template MEMBER map_template NOTIFY changed)
-	Q_PROPERTY(bool major MEMBER major READ is_major NOTIFY changed)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(QVariantList default_countries READ get_default_countries_qvariant_list NOTIFY changed)
@@ -85,11 +84,6 @@ public:
 		return this->map_template;
 	}
 
-	bool is_major() const
-	{
-		return this->major;
-	}
-
 	bool is_hidden() const
 	{
 		return this->hidden;
@@ -123,7 +117,6 @@ private:
 	archimedes::timeline *timeline = nullptr; //the timeline in which the scenario is set
 	metternich::map_template *map_template = nullptr;
 	metternich::country *default_country = nullptr;
-	bool major = false;
 	bool hidden = false;
 	std::string description;
 	std::vector<const country *> default_countries;

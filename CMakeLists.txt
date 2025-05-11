@@ -105,6 +105,7 @@ set(game_SRCS
 	src/game/game.cpp
 	src/game/game_rules.cpp
 	src/game/scenario.cpp
+	src/game/scenario_model.cpp
 	src/game/scoped_event_base.cpp
 )
 source_group(game FILES ${game_SRCS})
@@ -403,6 +404,7 @@ set(game_HDRS
 	src/game/game_rules.h
 	src/game/province_event.h
 	src/game/scenario.h
+	src/game/scenario_model.h
 	src/game/scoped_event_base.h
 	src/game/site_event.h
 )

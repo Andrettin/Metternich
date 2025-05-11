@@ -32,6 +32,7 @@
 #include "game/game.h"
 #include "game/game_rules.h"
 #include "game/scenario.h"
+#include "game/scenario_model.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/country_building_slot.h"
 #include "infrastructure/improvement.h"
@@ -197,6 +198,7 @@ int main(int argc, char **argv)
 		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
 		qmlRegisterType<map_province_model>("map_province_model", 1, 0, "MapProvinceModel");
 		qmlRegisterType<map_site_model>("map_site_model", 1, 0, "MapSiteModel");
+		qmlRegisterType<scenario_model>("scenario_model", 1, 0, "ScenarioModel");
 		qmlRegisterType<MaskedMouseArea>("MaskedMouseArea", 1, 0, "MaskedMouseArea");
 
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());

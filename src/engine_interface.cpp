@@ -96,23 +96,9 @@ QVariantList engine_interface::get_scenarios() const
 	return container::to_qvariant_list(available_scenarios);
 }
 
-QVariantList engine_interface::get_major_scenarios() const
+QVariantList engine_interface::get_top_level_scenarios() const
 {
-	std::vector<const scenario *> available_scenarios;
-
-	for (const scenario *scenario : scenario::get_all()) {
-		if (scenario->is_hidden()) {
-			continue;
-		}
-
-		if (!scenario->is_major()) {
-			continue;
-		}
-
-		available_scenarios.push_back(scenario);
-	}
-
-	return container::to_qvariant_list(available_scenarios);
+	return container::to_qvariant_list(scenario::get_top_level_scenarios());
 }
 
 QVariantList engine_interface::get_eras() const

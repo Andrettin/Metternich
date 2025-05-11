@@ -71,7 +71,7 @@ public:
 	Q_INVOKABLE const map_template *get_map_template(const QString &identifier) const;
 	Q_INVOKABLE const world *get_world(const QString &identifier) const;
 	Q_INVOKABLE QVariantList get_scenarios() const;
-	Q_INVOKABLE QVariantList get_major_scenarios() const;
+	Q_INVOKABLE QVariantList get_top_level_scenarios() const;
 	Q_INVOKABLE QVariantList get_eras() const;
 	Q_INVOKABLE QVariantList get_law_groups() const;
 	Q_INVOKABLE QVariantList get_technologies() const;
