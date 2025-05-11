@@ -1231,7 +1231,7 @@ const population_class *site_game_data::get_default_literate_population_class() 
 	assert_throw(this->is_built());
 
 	if (this->site->is_settlement()) {
-		if (this->get_owner() != nullptr && !this->get_owner()->get_game_data()->is_tribal()) {
+		if (this->get_owner() != nullptr && !this->get_owner()->get_game_data()->is_tribal() && !this->get_owner()->get_game_data()->is_clade()) {
 			return defines::get()->get_default_literate_population_class();
 		}
 	}

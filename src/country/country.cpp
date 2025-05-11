@@ -69,7 +69,7 @@ void country::initialize()
 		this->max_tier = this->get_default_tier();
 	}
 
-	if (this->is_tribe()) {
+	if (this->is_tribe() || this->is_clade()) {
 		this->short_name = true;
 	}
 
@@ -142,7 +142,7 @@ void country::reset_turn_data()
 
 bool country::is_great_power() const
 {
-	return this->get_type() == country_type::great_power;
+	return this->get_type() == country_type::great_power || this->get_type() == country_type::clade;
 }
 
 bool country::is_tribe() const
@@ -150,9 +150,14 @@ bool country::is_tribe() const
 	return this->get_type() == country_type::tribe;
 }
 
+bool country::is_clade() const
+{
+	return this->get_type() == country_type::clade;
+}
+
 const QColor &country::get_color() const
 {
-	if (this->get_type() != country_type::great_power) {
+	if (!this->is_great_power()) {
 		return defines::get()->get_minor_nation_color();
 	}
 

@@ -16,6 +16,7 @@ class government_group final : public named_data_entry, public data_type<governm
 	Q_OBJECT
 
 	Q_PROPERTY(bool tribal MEMBER tribal READ is_tribal NOTIFY changed)
+	Q_PROPERTY(bool clade MEMBER clade READ is_clade NOTIFY changed)
 	Q_PROPERTY(bool religious MEMBER religious READ is_religious NOTIFY changed)
 
 public:
@@ -37,6 +38,11 @@ public:
 		return this->tribal;
 	}
 
+	bool is_clade() const
+	{
+		return this->clade;
+	}
+
 	bool is_religious() const
 	{
 		return this->religious;
@@ -50,6 +56,7 @@ signals:
 
 private:
 	bool tribal = false; //tribal countries do not need to be declared war upon to be attacked, nor is war necessary for them to attack others
+	bool clade = false; //clade countries cannot attack non-clade countries, and do not need war declaration to be attacked
 	bool religious = false; //religious government types use the title names from their religion, rather than culture
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;

@@ -926,6 +926,7 @@ std::string country_game_data::get_type_name() const
 {
 	switch (this->country->get_type()) {
 		case country_type::great_power:
+		case country_type::clade:
 			if (this->get_overlord() != nullptr) {
 				return "Subject Power";
 			}
@@ -1633,6 +1634,12 @@ bool country_game_data::can_attack(const metternich::country *other_country) con
 		return false;
 	}
 
+	if (other_country->get_game_data()->is_clade()) {
+		return true;
+	} else if (this->is_clade()) {
+		return false;
+	}
+
 	switch (this->get_diplomacy_state(other_country)) {
 		case diplomacy_state::non_aggression_pact:
 		case diplomacy_state::alliance:
@@ -2101,7 +2108,7 @@ void country_game_data::change_military_score(const int change)
 
 const population_class *country_game_data::get_default_population_class() const
 {
-	if (this->is_tribal()) {
+	if (this->is_tribal() || this->is_clade()) {
 		return defines::get()->get_default_tribal_population_class();
 	} else {
 		return defines::get()->get_default_population_class();
@@ -3584,6 +3591,10 @@ void country_game_data::set_government_type(const metternich::government_type *g
 		if (this->country->is_tribe() && !government_type->get_group()->is_tribal()) {
 			throw std::runtime_error(std::format("Tried to set a non-tribal government type (\"{}\") for a tribal country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
 		}
+
+		if (this->country->is_clade() && !government_type->get_group()->is_clade()) {
+			throw std::runtime_error(std::format("Tried to set a non-clade government type (\"{}\") for a clade country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
+		}
 	}
 
 	this->government_type = government_type;
@@ -3624,6 +3635,11 @@ void country_game_data::check_government_type()
 bool country_game_data::is_tribal() const
 {
 	return this->get_government_type()->get_group()->is_tribal();
+}
+
+bool country_game_data::is_clade() const
+{
+	return this->get_government_type()->get_group()->is_clade();
 }
 
 QVariantList country_game_data::get_laws_qvariant_list() const
@@ -4450,7 +4466,7 @@ void country_game_data::choose_next_advisor()
 bool country_game_data::can_have_advisors() const
 {
 	//only great powers can have advisors
-	return this->country->get_type() == country_type::great_power;
+	return this->country->is_great_power();
 }
 
 bool country_game_data::can_recruit_advisor(const character *advisor) const

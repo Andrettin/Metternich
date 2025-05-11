@@ -1249,6 +1249,7 @@ public:
 	void check_government_type();
 
 	bool is_tribal() const;
+	bool is_clade() const;
 
 	const law_group_map<const law *> &get_laws() const
 	{
