@@ -46,7 +46,6 @@ set(country_SRCS
 	src/country/country_tier.cpp
 	src/country/country_tier_data.cpp
 	src/country/country_turn_data.cpp
-	src/country/country_type.cpp
 	src/country/cultural_group.cpp
 	src/country/cultural_group_rank.cpp
 	src/country/culture.cpp

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class country_type {
@@ -22,11 +20,9 @@ inline std::string get_country_type_name(const country_type type)
 			break;
 	}
 
-	throw std::runtime_error("Invalid country type: \"" + std::to_string(static_cast<int>(type)) + "\".");
+	throw std::runtime_error(std::format("Invalid country type: \"{}\".", static_cast<int>(type)));
 }
 
 }
-
-extern template class archimedes::enum_converter<metternich::country_type>;
 
 Q_DECLARE_METATYPE(metternich::country_type)
