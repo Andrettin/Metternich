@@ -523,6 +523,7 @@ set(script_condition_HDRS
 	src/script/condition/any_neighbor_country_condition.h
 	src/script/condition/any_population_unit_condition.h
 	src/script/condition/any_settlement_condition.h
+	src/script/condition/any_subject_country_condition.h
 	src/script/condition/artillery_condition.h
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/available_food_condition.h

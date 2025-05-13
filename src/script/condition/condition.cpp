@@ -22,6 +22,7 @@
 #include "script/condition/any_neighbor_country_condition.h"
 #include "script/condition/any_population_unit_condition.h"
 #include "script/condition/any_settlement_condition.h"
+#include "script/condition/any_subject_country_condition.h"
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/available_food_condition.h"
@@ -360,6 +361,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			condition = std::make_unique<any_known_country_condition>(condition_operator);
 		} else if (tag == "any_neighbor_country") {
 			condition = std::make_unique<any_neighbor_country_condition>(condition_operator);
+		} else if (tag == "any_subject_country") {
+			condition = std::make_unique<any_subject_country_condition>(condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		if (tag == "site") {
