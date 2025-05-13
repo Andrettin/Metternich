@@ -134,6 +134,11 @@ public:
 
 	site_map<std::vector<const improvement *>> get_built_site_improvements_with_requirements() const;
 
+	const site_map<int> &get_built_resource_site_levels() const
+	{
+		return this->built_resource_site_levels;
+	}
+
 	const std::vector<const technology *> &get_researched_technologies() const
 	{
 		return this->researched_technologies;
@@ -169,6 +174,7 @@ private:
 	std::vector<const building_type *> built_buildings;
 	site_map<std::vector<const building_type *>> built_settlement_buildings;
 	site_map<std::vector<const improvement *>> built_site_improvements;
+	site_map<int> built_resource_site_levels;
 	std::vector<const technology *> researched_technologies;
 	std::vector<const tradition *> adopted_traditions;
 	std::vector<const character *> recruited_characters;

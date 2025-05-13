@@ -109,6 +109,12 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 				this->built_site_improvements[site].push_back(improvement::get(value));
 			}
 		});
+	} else if (tag == "built_resource_site_levels") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const site *site = site::get(property.get_key());
+			const int level = std::stoi(property.get_value());
+			this->built_resource_site_levels[site] = level;
+		});
 	} else if (tag == "researched_technologies") {
 		for (const std::string &value : values) {
 			this->researched_technologies.push_back(technology::get(value));
@@ -165,6 +171,12 @@ void journal_entry::check() const
 	for (const auto &[site, improvements] : this->get_built_site_improvements()) {
 		if (site->get_type() == site_type::none) {
 			throw std::runtime_error(std::format("Journal entry \"{}\" requires constructing an improvement in \"{}\", but that site has no type.", this->get_identifier(), site->get_identifier()));
+		}
+	}
+
+	for (const auto &[site, level] : this->get_built_resource_site_levels()) {
+		if (site->get_type() != site_type::resource) {
+			throw std::runtime_error(std::format("Journal entry \"{}\" requires developing resource site \"{}\" to a certain level, but that site is not a resource site.", this->get_identifier(), site->get_identifier()));
 		}
 	}
 
@@ -231,6 +243,7 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 		&& this->get_built_buildings().empty()
 		&& this->get_built_settlement_buildings().empty()
 		&& this->get_built_site_improvements().empty()
+		&& this->get_built_resource_site_levels().empty()
 		&& this->get_researched_technologies().empty()
 		&& this->get_adopted_traditions().empty()
 		&& this->get_recruited_characters().empty()
@@ -289,6 +302,12 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 			if (!site->get_game_data()->has_improvement_or_better(improvement)) {
 				return false;
 			}
+		}
+	}
+
+	for (const auto &[site, level] : this->get_built_resource_site_levels()) {
+		if (site->get_game_data()->get_resource_improvement() == nullptr || site->get_game_data()->get_resource_improvement()->get_level() < level) {
+			return false;
 		}
 	}
 
@@ -388,6 +407,14 @@ QString journal_entry::get_completion_conditions_string() const
 
 			str += std::format("Build {} {} in {}", string::get_indefinite_article(improvement->get_name()), improvement->get_name(), site->get_game_data()->get_current_cultural_name());
 		}
+	}
+
+	for (const auto &[site, level] : this->get_built_resource_site_levels()) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("Improve Resource in {} to Level {}", site->get_game_data()->get_current_cultural_name(), level);
 	}
 
 	for (const technology *technology : this->get_researched_technologies()) {
