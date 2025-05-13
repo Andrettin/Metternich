@@ -10,10 +10,12 @@
 #include "country/tradition.h"
 #include "country/tradition_category.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/improvement.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_type.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
@@ -95,6 +97,18 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 				this->built_settlement_buildings[settlement].push_back(building_type::get(value));
 			}
 		});
+	} else if (tag == "built_site_improvements") {
+		scope.for_each_element([&](const gsml_property &property) {
+			const site *site = site::get(property.get_key());
+			const improvement *improvement = improvement::get(property.get_value());
+			this->built_site_improvements[site].push_back(improvement);
+		}, [&](const gsml_data &child_scope) {
+			const site *site = site::get(child_scope.get_tag());
+
+			for (const std::string &value : child_scope.get_values()) {
+				this->built_site_improvements[site].push_back(improvement::get(value));
+			}
+		});
 	} else if (tag == "researched_technologies") {
 		for (const std::string &value : values) {
 			this->researched_technologies.push_back(technology::get(value));
@@ -145,6 +159,12 @@ void journal_entry::check() const
 	for (const auto &[settlement, buildings] : this->get_built_settlement_buildings()) {
 		if (!settlement->is_settlement()) {
 			throw std::runtime_error(std::format("Journal entry \"{}\" requires constructing a building in \"{}\", but that site is not a settlement.", this->get_identifier(), settlement->get_identifier()));
+		}
+	}
+
+	for (const auto &[site, improvements] : this->get_built_site_improvements()) {
+		if (site->get_type() == site_type::none) {
+			throw std::runtime_error(std::format("Journal entry \"{}\" requires constructing an improvement in \"{}\", but that site has no type.", this->get_identifier(), site->get_identifier()));
 		}
 	}
 
@@ -205,7 +225,17 @@ bool journal_entry::check_conditions(const country *country) const
 
 bool journal_entry::check_completion_conditions(const country *country, const bool ignore_random_chance) const
 {
-	if (this->completion_conditions == nullptr && this->owned_provinces.empty() && this->owned_sites.empty() && this->get_built_buildings().empty() && this->get_built_settlement_buildings().empty() && this->get_researched_technologies().empty() && this->get_adopted_traditions().empty() && this->get_recruited_characters().empty() && this->get_completion_random_chance() == 0) {
+	if (this->completion_conditions == nullptr
+		&& this->owned_provinces.empty()
+		&& this->owned_sites.empty()
+		&& this->get_built_buildings().empty()
+		&& this->get_built_settlement_buildings().empty()
+		&& this->get_built_site_improvements().empty()
+		&& this->get_researched_technologies().empty()
+		&& this->get_adopted_traditions().empty()
+		&& this->get_recruited_characters().empty()
+		&& this->get_completion_random_chance() == 0
+	) {
 		//no completion conditions at all, so the entry can't be completed normally
 		return false;
 	}
@@ -249,6 +279,14 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 
 		for (const building_type *building : buildings) {
 			if (!settlement->get_game_data()->has_building_or_better(building)) {
+				return false;
+			}
+		}
+	}
+
+	for (const auto &[site, improvements] : this->get_built_site_improvements()) {
+		for (const improvement *improvement : improvements) {
+			if (!site->get_game_data()->has_improvement_or_better(improvement)) {
 				return false;
 			}
 		}
@@ -339,6 +377,16 @@ QString journal_entry::get_completion_conditions_string() const
 			}
 
 			str += std::format("Build {} {} in {}", string::get_indefinite_article(building->get_name()), building->get_name(), settlement->get_game_data()->get_current_cultural_name());
+		}
+	}
+
+	for (const auto &[site, improvements] : this->get_built_site_improvements()) {
+		for (const improvement *improvement : improvements) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Build {} {} in {}", string::get_indefinite_article(improvement->get_name()), improvement->get_name(), site->get_game_data()->get_current_cultural_name());
 		}
 	}
 
@@ -464,6 +512,23 @@ site_map<std::vector<const building_type *>> journal_entry::get_built_settlement
 	}
 
 	return settlement_buildings;
+}
+
+site_map<std::vector<const improvement *>> journal_entry::get_built_site_improvements_with_requirements() const
+{
+	site_map<std::vector<const improvement *>> site_improvements = this->get_built_site_improvements();
+
+	for (auto &[site, improvements] : site_improvements) {
+		for (size_t i = 0; i < improvements.size(); ++i) {
+			const improvement *improvement = improvements[i];
+
+			if (improvement->get_required_improvement() != nullptr) {
+				improvements.push_back(improvement->get_required_improvement());
+			}
+		}
+	}
+
+	return site_improvements;
 }
 
 }

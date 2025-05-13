@@ -583,6 +583,21 @@ bool site_game_data::has_improvement(const improvement *improvement) const
 	return this->get_improvement(improvement->get_slot()) == improvement;
 }
 
+bool site_game_data::has_improvement_or_better(const improvement *improvement) const
+{
+	if (this->has_improvement(improvement)) {
+		return true;
+	}
+
+	for (const metternich::improvement *requiring_improvement : improvement->get_requiring_improvements()) {
+		if (this->has_improvement_or_better(requiring_improvement)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void site_game_data::set_improvement(const improvement_slot slot, const improvement *improvement)
 {
 	const metternich::improvement *old_improvement = this->get_improvement(slot);

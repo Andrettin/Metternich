@@ -12,6 +12,7 @@ namespace metternich {
 class building_type;
 class character;
 class country;
+class improvement;
 class portrait;
 class province;
 class site;
@@ -126,6 +127,13 @@ public:
 
 	site_map<std::vector<const building_type *>> get_built_settlement_buildings_with_requirements() const;
 
+	const site_map<std::vector<const improvement *>> &get_built_site_improvements() const
+	{
+		return this->built_site_improvements;
+	}
+
+	site_map<std::vector<const improvement *>> get_built_site_improvements_with_requirements() const;
+
 	const std::vector<const technology *> &get_researched_technologies() const
 	{
 		return this->researched_technologies;
@@ -160,6 +168,7 @@ private:
 	std::vector<const site *> owned_sites;
 	std::vector<const building_type *> built_buildings;
 	site_map<std::vector<const building_type *>> built_settlement_buildings;
+	site_map<std::vector<const improvement *>> built_site_improvements;
 	std::vector<const technology *> researched_technologies;
 	std::vector<const tradition *> adopted_traditions;
 	std::vector<const character *> recruited_characters;

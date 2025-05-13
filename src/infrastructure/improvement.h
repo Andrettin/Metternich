@@ -125,6 +125,11 @@ public:
 		return this->required_improvement;
 	}
 
+	const std::vector<const improvement *> &get_requiring_improvements() const
+	{
+		return this->requiring_improvements;
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -163,6 +168,7 @@ private:
 	const population_class *default_population_class = nullptr;
 	std::vector<const population_class *> population_classes;
 	improvement *required_improvement = nullptr;
+	std::vector<const improvement *> requiring_improvements; //improvements which require this one
 	technology *required_technology = nullptr;
 	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;

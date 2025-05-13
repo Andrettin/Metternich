@@ -69,6 +69,10 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 
 void improvement::initialize()
 {
+	if (this->required_improvement != nullptr) {
+		this->required_improvement->requiring_improvements.push_back(this);
+	}
+
 	if (this->required_technology != nullptr) {
 		this->required_technology->add_enabled_improvement(this);
 	}
