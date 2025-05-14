@@ -4,6 +4,8 @@
 #include "character/character_role.h"
 #include "script/condition/condition.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 class character_role_condition final : public condition<character>
@@ -12,7 +14,7 @@ public:
 	explicit character_role_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<character>(condition_operator)
 	{
-		this->role = enum_converter<character_role>::to_enum(value);
+		this->role = magic_enum::enum_cast<character_role>(value).value();
 	}
 
 	virtual const std::string &get_class_identifier() const override

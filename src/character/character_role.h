@@ -1,7 +1,5 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class character_role {
@@ -31,7 +29,5 @@ inline std::string_view get_character_role_name(const character_role role)
 }
 
 }
-
-extern template class archimedes::enum_converter<metternich::character_role>;
 
 Q_DECLARE_METATYPE(metternich::character_role)
