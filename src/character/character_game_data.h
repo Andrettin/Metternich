@@ -130,10 +130,22 @@ public:
 
 	void apply_ruler_modifier(const metternich::country *country, const int multiplier) const;
 	void apply_trait_ruler_modifier(const trait *trait, const metternich::country *country, const int multiplier) const;
+
 	bool is_advisor() const;
 	Q_INVOKABLE QString get_advisor_effects_string(const metternich::country *country) const;
 	void apply_advisor_modifier(const metternich::country *country, const int multiplier) const;
 	void apply_trait_advisor_modifier(const trait *trait, const metternich::country *country, const int multiplier) const;
+
+	bool is_governor() const;
+	std::string get_governor_modifier_string(const metternich::province *province) const;
+
+	Q_INVOKABLE QString get_governor_modifier_qstring(const metternich::province *province) const
+	{
+		return QString::fromStdString(this->get_governor_modifier_string(province));
+	}
+
+	void apply_governor_modifier(const metternich::province *province, const int multiplier) const;
+	void apply_trait_governor_modifier(const trait *trait, const metternich::province *province, const int multiplier) const;
 
 	metternich::military_unit *get_military_unit() const
 	{

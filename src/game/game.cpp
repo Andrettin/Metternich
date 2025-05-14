@@ -1350,6 +1350,7 @@ QCoro::Task<void> game::on_setup_finished()
 		}
 
 		for (const province *province : country->get_game_data()->get_provinces()) {
+			province->get_game_data()->check_governor();
 			province->get_game_data()->allocate_population();
 
 			//build free on start buildings

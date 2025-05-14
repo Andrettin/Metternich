@@ -15,6 +15,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "map/province.h"
+#include "map/province_game_data.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
@@ -197,6 +198,9 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	if (this->is_advisor()) {
 		this->apply_advisor_modifier(this->get_country(), -1);
 	}
+	if (this->is_governor()) {
+		this->apply_governor_modifier(this->character->get_governable_province(), -1);
+	}
 	if (this->character->get_role() == character_role::leader) {
 		for (const trait *trait : this->get_traits()) {
 			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
@@ -216,6 +220,9 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	}
 	if (this->is_advisor()) {
 		this->apply_advisor_modifier(this->get_country(), 1);
+	}
+	if (this->is_governor()) {
+		this->apply_governor_modifier(this->character->get_governable_province(), 1);
 	}
 	if (this->character->get_role() == character_role::leader) {
 		for (const trait *trait : this->get_traits()) {
@@ -335,6 +342,13 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 
 		if (trait->get_advisor_modifier() != nullptr || trait->get_scaled_advisor_modifier() != nullptr) {
 			this->apply_trait_advisor_modifier(trait, this->get_country(), multiplier);
+		}
+	}
+	if (this->is_governor()) {
+		assert_throw(this->get_country() != nullptr);
+
+		if (trait->get_governor_modifier() != nullptr || trait->get_scaled_governor_modifier() != nullptr) {
+			this->apply_trait_governor_modifier(trait, this->character->get_governable_province(), multiplier);
 		}
 	}
 
@@ -483,11 +497,6 @@ bool character_game_data::is_ruler() const
 	return this->get_country() != nullptr && this->get_country()->get_game_data()->get_ruler() == this->character;
 }
 
-bool character_game_data::is_advisor() const
-{
-	return this->get_country() != nullptr && vector::contains(this->get_country()->get_game_data()->get_advisors(), this->character);
-}
-
 std::string character_game_data::get_ruler_modifier_string(const metternich::country *country) const
 {
 	assert_throw(this->character->get_role() == character_role::ruler);
@@ -548,6 +557,11 @@ void character_game_data::apply_trait_ruler_modifier(const trait *trait, const m
 	if (trait->get_scaled_ruler_modifier() != nullptr) {
 		trait->get_scaled_ruler_modifier()->apply(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
 	}
+}
+
+bool character_game_data::is_advisor() const
+{
+	return this->get_country() != nullptr && vector::contains(this->get_country()->get_game_data()->get_advisors(), this->character);
 }
 
 QString character_game_data::get_advisor_effects_string(const metternich::country *country) const
@@ -644,7 +658,6 @@ void character_game_data::apply_advisor_modifier(const metternich::country *coun
 	}
 }
 
-
 void character_game_data::apply_trait_advisor_modifier(const trait *trait, const metternich::country *country, const int multiplier) const
 {
 	if (trait->get_advisor_modifier() != nullptr) {
@@ -653,6 +666,59 @@ void character_game_data::apply_trait_advisor_modifier(const trait *trait, const
 
 	if (trait->get_scaled_advisor_modifier() != nullptr) {
 		trait->get_scaled_advisor_modifier()->apply(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
+	}
+}
+
+bool character_game_data::is_governor() const
+{
+	return this->character->get_governable_province() != nullptr && this->character->get_governable_province()->get_game_data()->get_governor() == this->character;
+}
+
+std::string character_game_data::get_governor_modifier_string(const metternich::province *province) const
+{
+	assert_throw(this->character->get_role() == character_role::governor);
+
+	std::string str;
+
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_governor_modifier() == nullptr && trait->get_scaled_governor_modifier() == nullptr) {
+			continue;
+		}
+
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += string::highlight(trait->get_name());
+		if (trait->get_governor_modifier() != nullptr) {
+			str += "\n" + trait->get_governor_modifier()->get_string(province, 1, 1);
+		}
+		if (trait->get_scaled_governor_modifier() != nullptr) {
+			str += "\n" + trait->get_scaled_governor_modifier()->get_string(province, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), 1);
+		}
+	}
+
+	return str;
+}
+
+void character_game_data::apply_governor_modifier(const metternich::province *province, const int multiplier) const
+{
+	assert_throw(this->character->get_role() == character_role::governor);
+	assert_throw(province != nullptr);
+
+	for (const trait *trait : this->get_traits()) {
+		this->apply_trait_governor_modifier(trait, province, multiplier);
+	}
+}
+
+void character_game_data::apply_trait_governor_modifier(const trait *trait, const metternich::province *province, const int multiplier) const
+{
+	if (trait->get_governor_modifier() != nullptr) {
+		trait->get_governor_modifier()->apply(province, multiplier);
+	}
+
+	if (trait->get_scaled_governor_modifier() != nullptr) {
+		trait->get_scaled_governor_modifier()->apply(province, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
 	}
 }
 

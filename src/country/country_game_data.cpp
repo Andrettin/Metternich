@@ -4164,6 +4164,11 @@ void country_game_data::check_characters()
 {
 	this->check_ruler();
 	this->check_advisors();
+
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->check_governor();
+	}
+
 	this->check_leaders();
 	this->check_civilian_characters();
 }
@@ -4230,7 +4235,7 @@ void country_game_data::check_ruler()
 		this->get_ruler()->get_game_data()->set_dead(true);
 	}
 
-	//if the country has no ruler, see if there is any character which can become its ruler
+	//if the country has no ruler, see if there is any character who can become its ruler
 	if (this->get_ruler() == nullptr) {
 		std::vector<const character *> potential_rulers;
 

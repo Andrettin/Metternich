@@ -2,6 +2,9 @@
 
 #include "map/province_game_data.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
+#include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_turn_data.h"
@@ -12,6 +15,7 @@
 #include "economy/commodity_container.h"
 #include "economy/production_type.h"
 #include "economy/resource.h"
+#include "engine_interface.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/province_event.h"
@@ -31,11 +35,13 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/modifier.h"
 #include "script/scripted_province_modifier.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
+#include "ui/portrait.h"
 #include "unit/army.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
@@ -59,6 +65,10 @@ province_game_data::province_game_data(const metternich::province *province)
 	connect(this->get_population(), &population::type_count_changed, this, &province_game_data::on_population_type_count_changed);
 	connect(this->get_population(), &population::main_culture_changed, this, &province_game_data::on_population_main_culture_changed);
 	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::on_population_main_religion_changed);
+
+	connect(this, &province_game_data::culture_changed, this, &province_game_data::governor_title_name_changed);
+	connect(this, &province_game_data::religion_changed, this, &province_game_data::governor_title_name_changed);
+	connect(this, &province_game_data::governor_changed, this, &province_game_data::governor_title_name_changed);
 }
 
 province_game_data::~province_game_data()
@@ -215,6 +225,13 @@ void province_game_data::do_ai_turn()
 bool province_game_data::is_on_map() const
 {
 	return this->province->get_map_data()->is_on_map();
+}
+
+const std::string &province_game_data::get_governor_title_name() const
+{
+	static const std::string governor_title_name = "Governor";
+	//FIXME: add cultural variation and etc. for governor title names
+	return governor_title_name;
 }
 
 void province_game_data::set_owner(const country *country)
@@ -597,6 +614,95 @@ void province_game_data::allocate_population()
 			}
 
 			population_unit = provincial_capital_game_data->choose_population_unit_for_reallocation();
+		}
+	}
+}
+
+void province_game_data::set_governor(const character *governor)
+{
+	if (governor == this->get_governor()) {
+		return;
+	}
+
+	const character *old_governor = this->get_governor();
+
+	if (old_governor != nullptr) {
+		old_governor->get_game_data()->apply_governor_modifier(this->province, -1);
+		old_governor->get_game_data()->set_country(nullptr);
+	}
+
+	this->governor = governor;
+
+	if (this->get_governor() != nullptr) {
+		this->get_governor()->get_game_data()->apply_governor_modifier(this->province, 1);
+		this->get_governor()->get_game_data()->set_country(this->get_owner());
+	}
+
+	if (game::get()->is_running()) {
+		emit governor_changed();
+	}
+}
+
+void province_game_data::check_governor()
+{
+	if (this->get_owner() == nullptr || this->get_owner()->get_game_data()->is_under_anarchy()) {
+		this->set_governor(nullptr);
+		return;
+	}
+
+	//remove the governor if they have become obsolete
+	if (this->get_governor() != nullptr && this->get_governor()->get_obsolescence_technology() != nullptr && this->get_owner()->get_game_data()->has_technology(this->get_governor()->get_obsolescence_technology())) {
+		if (game::get()->is_running()) {
+			if (this->get_owner() == game::get()->get_player_country()) {
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification(std::format("Governor of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, governor {} of {} has decided to retire.", this->get_governor()->get_full_name(), this->get_current_cultural_name()));
+			}
+		}
+
+		this->set_governor(nullptr);
+		this->get_governor()->get_game_data()->set_dead(true);
+	}
+
+	//if the province has no governor, see if there is any character who can become its governor
+	if (this->get_governor() == nullptr) {
+		std::vector<const character *> potential_governors;
+
+		for (const character *character : this->province->get_governors()) {
+			assert_throw(character->get_role() == character_role::governor);
+
+			const character_game_data *character_game_data = character->get_game_data();
+			if (character_game_data->get_country() != nullptr) {
+				continue;
+			}
+
+			if (character_game_data->is_dead()) {
+				continue;
+			}
+
+			if (character->get_required_technology() != nullptr && !this->get_owner()->get_game_data()->has_technology(character->get_required_technology())) {
+				continue;
+			}
+
+			if (character->get_obsolescence_technology() != nullptr && this->get_owner()->get_game_data()->has_technology(character->get_obsolescence_technology())) {
+				continue;
+			}
+
+			if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->get_owner(), read_only_context(this->get_owner()))) {
+				continue;
+			}
+
+			potential_governors.push_back(character);
+		}
+
+		if (!potential_governors.empty()) {
+			this->set_governor(vector::get_random(potential_governors));
+
+			if (this->get_owner() == game::get()->get_player_country() && game::get()->is_running()) {
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification(std::format("New Governor of {}", this->get_current_cultural_name()), interior_minister_portrait, std::format("{} has become the new governor of {}!\n\n{}", this->get_governor()->get_full_name(), this->get_current_cultural_name(), this->get_governor()->get_game_data()->get_governor_modifier_string(this->province)));
+			}
 		}
 	}
 }
