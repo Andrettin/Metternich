@@ -151,14 +151,18 @@ void character::initialize()
 		}
 	}
 
+	if (this->get_governable_province() != nullptr) {
+		this->governable_province->add_governor(this);
+	}
+
 	character_base::initialize();
 }
 
 void character::check() const
 {
-	if (this->get_role() == character_role::ruler || this->get_role() == character_role::advisor) {
+	if (this->get_role() == character_role::ruler || this->get_role() == character_role::advisor || this->get_role() == character_role::governor) {
 		if (this->get_character_type() == nullptr) {
-			throw std::runtime_error(std::format("Character \"{}\" is a ruler or advisor, but has no character type.", this->get_identifier()));
+			throw std::runtime_error(std::format("Character \"{}\" is a ruler, advisor or governor, but has no character type.", this->get_identifier()));
 		}
 	}
 
@@ -188,10 +192,30 @@ void character::check() const
 			break;
 		}
 		case character_role::advisor:
-			if (this->get_character_type()->get_advisor_modifier() == nullptr && this->get_character_type()->get_scaled_advisor_modifier() == nullptr && this->get_character_type()->get_advisor_effects() == nullptr) {
+			if (this->get_character_type()->get_advisor_modifier() == nullptr
+				&& this->get_character_type()->get_scaled_advisor_modifier() == nullptr
+				&& this->get_character_type()->get_advisor_effects() == nullptr
+			) {
 				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but its character type (\"{}\") has no advisor modifier or effects.", this->get_identifier(), this->get_character_type()->get_identifier()));
 			}
 			break;
+		case character_role::governor:
+		{
+			if (this->get_governable_province() == nullptr) {
+				throw std::runtime_error(std::format("Character \"{}\" is a governor, but has no governable province.", this->get_identifier()));
+			}
+
+			std::vector<const trait *> governor_traits = this->get_traits();
+			std::erase_if(governor_traits, [](const trait *trait) {
+				return trait->get_governor_modifier() == nullptr;
+			});
+			const int governor_trait_count = static_cast<int>(governor_traits.size());
+
+			if (governor_trait_count == 0) {
+				log::log_error(std::format("Governor character \"{}\" has no governor traits.", this->get_identifier()));
+			}
+			break;
+		}
 		case character_role::leader:
 			if (this->get_military_unit_category() == military_unit_category::none) {
 				throw std::runtime_error(std::format("Character \"{}\" is a leader, but has no military unit category.", this->get_identifier()));
@@ -222,6 +246,10 @@ void character::check() const
 		if (this->advisor_effects != nullptr) {
 			throw std::runtime_error(std::format("Character \"{}\" has advisor effects, but is not an advisor.", this->get_identifier()));
 		}
+	}
+
+	if (this->get_role() != character_role::governor && this->get_governable_province() == nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has a governable province, but is not a governor.", this->get_identifier()));
 	}
 
 	assert_throw(this->get_culture() != nullptr);

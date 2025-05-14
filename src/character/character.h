@@ -10,6 +10,7 @@ Q_MOC_INCLUDE("character/character_type.h")
 Q_MOC_INCLUDE("character/dynasty.h")
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/phenotype.h")
 Q_MOC_INCLUDE("technology/technology.h")
@@ -32,6 +33,7 @@ class culture;
 class dynasty;
 class phenotype;
 class portrait;
+class province;
 class religion;
 class site;
 class technology;
@@ -66,6 +68,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::character* mother READ get_mother WRITE set_mother NOTIFY changed)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
+	Q_PROPERTY(metternich::province* governable_province MEMBER governable_province NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
@@ -211,6 +214,11 @@ public:
 		return this->advisor_effects.get();
 	}
 
+	const province *get_governable_province() const
+	{
+		return this->governable_province;
+	}
+
 	bool is_admiral() const;
 	bool is_explorer() const;
 	std::string_view get_leader_type_name() const;
@@ -236,6 +244,7 @@ private:
 	const site *home_site = nullptr;
 	int skill = 0;
 	std::vector<const country *> rulable_countries;
+	province *governable_province = nullptr;
 	std::vector<const trait *> traits;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;

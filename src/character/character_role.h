@@ -6,6 +6,7 @@ enum class character_role {
 	none,
 	ruler,
 	advisor,
+	governor,
 	leader,
 	civilian
 };
@@ -17,6 +18,8 @@ inline std::string_view get_character_role_name(const character_role role)
 			return "Ruler";
 		case character_role::advisor:
 			return "Advisor";
+		case character_role::governor:
+			return "Governor";
 		case character_role::leader:
 			return "Leader";
 		case character_role::civilian:

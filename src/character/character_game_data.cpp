@@ -15,7 +15,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "map/province.h"
-#include "script/condition/condition.h"
+#include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "script/scripted_character_modifier.h"
@@ -107,8 +107,8 @@ bool character_game_data::is_current_portrait_valid() const
 
 void character_game_data::check_portrait()
 {
-	if (this->character->get_role() != character_role::ruler && this->character->get_role() != character_role::advisor) {
-		//only rulers and advisors need portraits
+	if (this->character->get_role() != character_role::ruler && this->character->get_role() != character_role::advisor && this->character->get_role() != character_role::governor) {
+		//only rulers, advisors and governors need portraits
 		return;
 	}
 
