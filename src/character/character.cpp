@@ -248,7 +248,7 @@ void character::check() const
 		}
 	}
 
-	if (this->get_role() != character_role::governor && this->get_governable_province() == nullptr) {
+	if (this->get_role() != character_role::governor && this->get_governable_province() != nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has a governable province, but is not a governor.", this->get_identifier()));
 	}
 
