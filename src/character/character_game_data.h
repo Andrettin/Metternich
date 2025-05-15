@@ -39,6 +39,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
+	Q_PROPERTY(bool governor READ is_governor NOTIFY governor_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
 
@@ -271,6 +272,7 @@ signals:
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void ruler_changed();
+	void governor_changed();
 	void spells_changed();
 
 private:

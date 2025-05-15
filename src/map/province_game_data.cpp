@@ -640,6 +640,14 @@ void province_game_data::set_governor(const character *governor)
 
 	if (game::get()->is_running()) {
 		emit governor_changed();
+
+		if (old_governor != nullptr) {
+			emit old_governor->get_game_data()->governor_changed();
+		}
+
+		if (governor != nullptr) {
+			emit governor->get_game_data()->governor_changed();
+		}
 	}
 }
 
