@@ -30,6 +30,9 @@ enum class diplomacy_state;
 enum class event_trigger;
 enum class trait_type;
 
+template <typename scope_type>
+class modifier;
+
 class defines final : public defines_base, public singleton<defines>
 {
 	Q_OBJECT
@@ -77,6 +80,7 @@ public:
 	using singleton<defines>::get;
 
 	defines();
+	~defines();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
@@ -274,11 +278,16 @@ public:
 		return std::numeric_limits<int>::max();
 	}
 
+	const modifier<const site> *get_scaled_landholder_modifier() const
+	{
+		return this->scaled_landholder_modifier.get();
+	}
+
 	int get_max_character_skill() const
 	{
 		return this->max_character_skill;
 	}
-
+	
 	const portrait *get_interior_minister_portrait() const
 	{
 		return this->interior_minister_portrait;
@@ -404,6 +413,7 @@ private:
 	const icon *military_upkeep_icon = nullptr;
 	std::map<trait_type, int> min_traits_per_type;
 	std::map<trait_type, int> max_traits_per_type;
+	std::unique_ptr<modifier<const site>> scaled_landholder_modifier;
 	int max_character_skill = 0;
 	portrait *interior_minister_portrait = nullptr;
 	portrait *war_minister_portrait = nullptr;

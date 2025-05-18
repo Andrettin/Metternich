@@ -738,10 +738,13 @@ bool character_game_data::is_landholder() const
 std::string character_game_data::get_landholder_modifier_string(const metternich::site *site) const
 {
 	assert_throw(this->character->get_role() == character_role::landholder);
+	assert_throw(site != nullptr);
 
 	std::string str;
 
-	//FIXME: add skill-based production modifier
+	if (defines::get()->get_scaled_landholder_modifier() != nullptr) {
+		str = defines::get()->get_scaled_landholder_modifier()->get_string(site, this->get_attribute_value(character_attribute::stewardship));
+	}
 
 	return str;
 }
@@ -751,7 +754,9 @@ void character_game_data::apply_landholder_modifier(const metternich::site *site
 	assert_throw(this->character->get_role() == character_role::landholder);
 	assert_throw(site != nullptr);
 
-	//FIXME: add skill-based production modifier
+	if (defines::get()->get_scaled_landholder_modifier() != nullptr) {
+		defines::get()->get_scaled_landholder_modifier()->apply(site, this->get_attribute_value(character_attribute::stewardship) * multiplier);
+	}
 }
 
 bool character_game_data::is_deployable() const
