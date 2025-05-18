@@ -382,6 +382,27 @@ public:
 		this->set_output_modifier(this->get_output_modifier() + change);
 	}
 
+	int get_resource_output_modifier() const
+	{
+		return this->resource_output_modifier;
+	}
+
+	void set_resource_output_modifier(const int value)
+	{
+		if (value == this->get_resource_output_modifier()) {
+			return;
+		}
+
+		this->resource_output_modifier = value;
+
+		this->calculate_commodity_outputs();
+	}
+
+	void change_resource_output_modifier(const int value)
+	{
+		this->set_resource_output_modifier(this->get_resource_output_modifier() + value);
+	}
+
 	const commodity_map<centesimal_int> &get_commodity_output_modifiers() const
 	{
 		return this->commodity_output_modifiers;
@@ -527,6 +548,7 @@ private:
 	commodity_map<centesimal_int> local_everyday_consumption;
 	commodity_map<centesimal_int> local_luxury_consumption;
 	centesimal_int output_modifier;
+	int resource_output_modifier = 0;
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	int depot_level = 0;
 	int port_level = 0;

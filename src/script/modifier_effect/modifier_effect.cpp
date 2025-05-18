@@ -123,8 +123,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<law_cost_modifier_effect>(value);
 		} else if (key == "leader_cost_modifier") {
 			return std::make_unique<leader_cost_modifier_effect>(value);
-		} else if (key == "resource_output_modifier") {
-			return std::make_unique<resource_output_modifier_effect<scope_type>>(value);
 		} else if (key == "storage_capacity") {
 			return std::make_unique<storage_capacity_modifier_effect>(value);
 		} else if (key == "throughput_modifier") {
@@ -259,6 +257,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 		if (key == "output_modifier") {
 			return std::make_unique<output_modifier_effect<scope_type>>(value);
+		} else if (key == "resource_output_modifier") {
+			return std::make_unique<resource_output_modifier_effect<scope_type>>(value);
 		} else if (key.ends_with(output_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - output_modifier_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - output_modifier_suffix.size()));
 			return std::make_unique<commodity_output_modifier_effect<scope_type>>(commodity, value);
