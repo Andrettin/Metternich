@@ -40,6 +40,7 @@ class site_game_data final : public QObject
 
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos CONSTANT)
 	Q_PROPERTY(const metternich::province* province READ get_province CONSTANT)
+	Q_PROPERTY(QString landholder_title_name READ get_landholder_title_name_qstring NOTIFY landholder_title_name_changed)
 	Q_PROPERTY(const metternich::country* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::settlement_type* settlement_type READ get_settlement_type NOTIFY settlement_type_changed)
@@ -52,6 +53,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(int housing READ get_housing_int NOTIFY housing_changed)
+	Q_PROPERTY(const metternich::character* landholder READ get_landholder NOTIFY landholder_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(int transport_level READ get_best_transport_level NOTIFY transport_level_changed)
 	Q_PROPERTY(QVariantList visiting_armies READ get_visiting_armies_qvariant_list NOTIFY visiting_armies_changed)
@@ -83,6 +85,13 @@ public:
 	bool is_provincial_capital() const;
 	bool is_capital() const;
 	bool can_be_capital() const;
+
+	const std::string &get_landholder_title_name() const;
+
+	QString get_landholder_title_name_qstring() const
+	{
+		return QString::fromStdString(this->get_landholder_title_name());
+	}
 
 	const country *get_owner() const
 	{
@@ -282,6 +291,14 @@ public:
 	void change_profession_capacity(const profession *profession, const int change);
 	int get_available_profession_capacity(const profession *profession) const;
 
+	const character *get_landholder() const
+	{
+		return this->landholder;
+	}
+
+	void set_landholder(const character *landholder);
+	void check_landholder();
+
 	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
 	{
 		return this->base_commodity_outputs;
@@ -474,6 +491,7 @@ public:
 	}
 
 signals:
+	void landholder_title_name_changed();
 	void owner_changed();
 	void culture_changed();
 	void religion_changed();
@@ -482,6 +500,7 @@ signals:
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void housing_changed();
+	void landholder_changed();
 	void commodity_outputs_changed();
 	void transport_level_changed();
 	void visiting_armies_changed();
@@ -502,6 +521,7 @@ private:
 	centesimal_int housing;
 	int free_food_consumption = 0;
 	std::map<const profession *, int> profession_capacities;
+	const character *landholder = nullptr;
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<centesimal_int> local_everyday_consumption;

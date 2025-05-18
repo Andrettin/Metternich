@@ -155,14 +155,18 @@ void character::initialize()
 		this->governable_province->add_governor(this);
 	}
 
+	if (this->get_holdable_site() != nullptr) {
+		this->holdable_site->add_landholder(this);
+	}
+
 	character_base::initialize();
 }
 
 void character::check() const
 {
-	if (this->get_role() == character_role::ruler || this->get_role() == character_role::advisor || this->get_role() == character_role::governor) {
+	if (this->get_role() == character_role::ruler || this->get_role() == character_role::advisor || this->get_role() == character_role::governor || this->get_role() == character_role::landholder) {
 		if (this->get_character_type() == nullptr) {
-			throw std::runtime_error(std::format("Character \"{}\" is a ruler, advisor or governor, but has no character type.", this->get_identifier()));
+			throw std::runtime_error(std::format("Character \"{}\" is a ruler, advisor, governor or landholder, but has no character type.", this->get_identifier()));
 		}
 	}
 
@@ -216,6 +220,17 @@ void character::check() const
 			}
 			break;
 		}
+		case character_role::landholder:
+		{
+			if (this->get_holdable_site() == nullptr) {
+				throw std::runtime_error(std::format("Character \"{}\" is a landholder, but has no holdable site.", this->get_identifier()));
+			}
+
+			if (this->get_holdable_site()->get_type() == site_type::settlement) {
+				throw std::runtime_error(std::format("The holdable site for character \"{}\" is a settlement.", this->get_identifier()));
+			}
+			break;
+		}
 		case character_role::leader:
 			if (this->get_military_unit_category() == military_unit_category::none) {
 				throw std::runtime_error(std::format("Character \"{}\" is a leader, but has no military unit category.", this->get_identifier()));
@@ -250,6 +265,10 @@ void character::check() const
 
 	if (this->get_role() != character_role::governor && this->get_governable_province() != nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has a governable province, but is not a governor.", this->get_identifier()));
+	}
+
+	if (this->get_role() != character_role::landholder && this->get_holdable_site() != nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has a holdable site, but is not a landholder.", this->get_identifier()));
 	}
 
 	assert_throw(this->get_culture() != nullptr);

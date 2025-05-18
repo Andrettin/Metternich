@@ -69,6 +69,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::province* governable_province MEMBER governable_province NOTIFY changed)
+	Q_PROPERTY(metternich::site* holdable_site MEMBER holdable_site NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
@@ -219,6 +220,11 @@ public:
 		return this->governable_province;
 	}
 
+	const site *get_holdable_site() const
+	{
+		return this->holdable_site;
+	}
+
 	bool is_admiral() const;
 	bool is_explorer() const;
 	std::string_view get_leader_type_name() const;
@@ -245,6 +251,7 @@ private:
 	int skill = 0;
 	std::vector<const country *> rulable_countries;
 	province *governable_province = nullptr;
+	site *holdable_site = nullptr;
 	std::vector<const trait *> traits;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;

@@ -16,6 +16,8 @@
 #include "game/game.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
@@ -108,8 +110,8 @@ bool character_game_data::is_current_portrait_valid() const
 
 void character_game_data::check_portrait()
 {
-	if (this->character->get_role() != character_role::ruler && this->character->get_role() != character_role::advisor && this->character->get_role() != character_role::governor) {
-		//only rulers, advisors and governors need portraits
+	if (this->character->get_role() != character_role::ruler && this->character->get_role() != character_role::advisor && this->character->get_role() != character_role::governor && this->character->get_role() != character_role::landholder) {
+		//only rulers, advisors, governors and landholders need portraits
 		return;
 	}
 
@@ -201,6 +203,9 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	if (this->is_governor()) {
 		this->apply_governor_modifier(this->character->get_governable_province(), -1);
 	}
+	if (this->is_landholder()) {
+		this->apply_landholder_modifier(this->character->get_holdable_site(), -1);
+	}
 	if (this->character->get_role() == character_role::leader) {
 		for (const trait *trait : this->get_traits()) {
 			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
@@ -223,6 +228,9 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	}
 	if (this->is_governor()) {
 		this->apply_governor_modifier(this->character->get_governable_province(), 1);
+	}
+	if (this->is_landholder()) {
+		this->apply_landholder_modifier(this->character->get_holdable_site(), 1);
 	}
 	if (this->character->get_role() == character_role::leader) {
 		for (const trait *trait : this->get_traits()) {
@@ -720,6 +728,30 @@ void character_game_data::apply_trait_governor_modifier(const trait *trait, cons
 	if (trait->get_scaled_governor_modifier() != nullptr) {
 		trait->get_scaled_governor_modifier()->apply(province, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
 	}
+}
+
+bool character_game_data::is_landholder() const
+{
+	return this->character->get_holdable_site() != nullptr && this->character->get_holdable_site()->get_game_data()->get_landholder() == this->character;
+}
+
+std::string character_game_data::get_landholder_modifier_string(const metternich::site *site) const
+{
+	assert_throw(this->character->get_role() == character_role::landholder);
+
+	std::string str;
+
+	//FIXME: add skill-based production modifier
+
+	return str;
+}
+
+void character_game_data::apply_landholder_modifier(const metternich::site *site, const int multiplier) const
+{
+	assert_throw(this->character->get_role() == character_role::landholder);
+	assert_throw(site != nullptr);
+
+	//FIXME: add skill-based production modifier
 }
 
 bool character_game_data::is_deployable() const

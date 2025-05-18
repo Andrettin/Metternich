@@ -40,6 +40,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(bool governor READ is_governor NOTIFY governor_changed)
+	Q_PROPERTY(bool landholder READ is_landholder NOTIFY landholder_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
 
@@ -147,6 +148,16 @@ public:
 
 	void apply_governor_modifier(const metternich::province *province, const int multiplier) const;
 	void apply_trait_governor_modifier(const trait *trait, const metternich::province *province, const int multiplier) const;
+
+	bool is_landholder() const;
+	std::string get_landholder_modifier_string(const metternich::site *site) const;
+
+	Q_INVOKABLE QString get_landholder_modifier_qstring(const metternich::site *site) const
+	{
+		return QString::fromStdString(this->get_landholder_modifier_string(site));
+	}
+
+	void apply_landholder_modifier(const metternich::site *site, const int multiplier) const;
 
 	metternich::military_unit *get_military_unit() const
 	{
@@ -273,6 +284,7 @@ signals:
 	void scripted_modifiers_changed();
 	void ruler_changed();
 	void governor_changed();
+	void landholder_changed();
 	void spells_changed();
 
 private:

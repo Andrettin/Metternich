@@ -121,6 +121,16 @@ public:
 	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture *culture) const;
 
+	const std::vector<const character *> &get_landholders() const
+	{
+		return this->landholders;
+	}
+
+	void add_landholder(const character *character)
+	{
+		this->landholders.push_back(character);
+	}
+
 signals:
 	void changed();
 
@@ -134,6 +144,7 @@ private:
 	metternich::province *province = nullptr;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
+	std::vector<const character *> landholders;
 	qunique_ptr<site_history> history;
 	qunique_ptr<site_map_data> map_data;
 	qunique_ptr<site_game_data> game_data;

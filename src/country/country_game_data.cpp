@@ -56,6 +56,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
+#include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/phenotype.h"
@@ -4167,6 +4168,12 @@ void country_game_data::check_characters()
 
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->check_governor();
+
+		for (const site *site : province->get_map_data()->get_sites()) {
+			if (site->get_map_data()->get_type() == site_type::resource) {
+				site->get_game_data()->check_landholder();
+			}
+		}
 	}
 
 	this->check_leaders();
