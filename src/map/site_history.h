@@ -16,6 +16,7 @@ class settlement_type;
 class site;
 class wonder;
 enum class improvement_slot;
+enum class site_tier;
 
 class site_history final : public data_entry_history
 {
@@ -24,6 +25,7 @@ class site_history final : public data_entry_history
 	Q_PROPERTY(bool resource_discovered MEMBER resource_discovered READ is_resource_discovered)
 	Q_PROPERTY(bool developed MEMBER developed)
 	Q_PROPERTY(int development_level MEMBER development_level)
+	Q_PROPERTY(site_tier tier READ get_tier WRITE set_tier)
 	Q_PROPERTY(metternich::settlement_type* settlement_type MEMBER settlement_type)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
@@ -55,6 +57,16 @@ public:
 		}
 
 		return this->development_level;
+	}
+
+	site_tier get_tier() const
+	{
+		return static_cast<site_tier>(this->development_level);
+	}
+
+	void set_tier(const site_tier tier)
+	{
+		this->development_level = static_cast<int>(tier);
 	}
 
 	const metternich::settlement_type *get_settlement_type() const
