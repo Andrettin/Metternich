@@ -14,6 +14,7 @@ namespace metternich {
 
 class government_group;
 enum class country_tier;
+enum class site_tier;
 
 template <typename scope_type>
 class and_condition;
@@ -32,7 +33,7 @@ public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
 	using title_name_map = std::map<country_tier, std::string>;
 	using ruler_title_name_map = std::map<country_tier, std::map<gender, std::string>>;
-	using landholder_title_name_map = std::map<int, std::map<gender, std::string>>;
+	using landholder_title_name_map = std::map<site_tier, std::map<gender, std::string>>;
 
 	static constexpr const char class_identifier[] = "government_type";
 	static constexpr const char property_class_identifier[] = "metternich::government_type*";
@@ -55,7 +56,7 @@ public:
 
 	const std::string &get_title_name(const country_tier tier) const;
 	const std::string &get_ruler_title_name(const country_tier tier, const gender gender) const;
-	const std::string &get_landholder_title_name(const int resource_development_level, const gender gender) const;
+	const std::string &get_landholder_title_name(const site_tier tier, const gender gender) const;
 
 	const government_group *get_group() const
 	{

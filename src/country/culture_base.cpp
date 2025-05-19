@@ -11,6 +11,7 @@
 #include "language/fallback_name_generator.h"
 #include "language/gendered_name_generator.h"
 #include "language/name_generator.h"
+#include "map/site_tier.h"
 #include "population/population_class.h"
 #include "population/population_type.h"
 #include "unit/civilian_unit_class.h"
@@ -303,7 +304,7 @@ const std::string &culture_base::get_ruler_title_name(const government_type *gov
 	return string::empty_str;
 }
 
-const std::string &culture_base::get_landholder_title_name(const government_type *government_type, const int resource_development_level, const gender gender) const
+const std::string &culture_base::get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender) const
 {
 	auto find_iterator = this->landholder_title_names.find(government_type);
 	if (find_iterator == this->landholder_title_names.end()) {
@@ -311,9 +312,9 @@ const std::string &culture_base::get_landholder_title_name(const government_type
 	}
 
 	if (find_iterator != this->landholder_title_names.end()) {
-		auto sub_find_iterator = find_iterator->second.find(resource_development_level);
+		auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(0);
+			sub_find_iterator = find_iterator->second.find(site_tier::none);
 		}
 
 		if (sub_find_iterator != find_iterator->second.end()) {
@@ -329,7 +330,7 @@ const std::string &culture_base::get_landholder_title_name(const government_type
 	}
 
 	if (this->get_group() != nullptr) {
-		return this->get_group()->get_landholder_title_name(government_type, resource_development_level, gender);
+		return this->get_group()->get_landholder_title_name(government_type, tier, gender);
 	}
 
 	return string::empty_str;

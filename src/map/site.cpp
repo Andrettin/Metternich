@@ -11,6 +11,7 @@
 #include "map/site_game_data.h"
 #include "map/site_history.h"
 #include "map/site_map_data.h"
+#include "map/site_tier.h"
 #include "map/site_type.h"
 #include "map/tile.h"
 #include "map/world.h"
@@ -22,7 +23,7 @@
 
 namespace metternich {
 
-site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::none)
+site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::none), max_tier(site_tier::barony)
 {
 	this->reset_map_data();
 	this->reset_game_data();
@@ -149,7 +150,7 @@ const std::string &site::get_cultural_name(const culture *culture) const
 	return this->get_name();
 }
 
-const std::string &site::get_landholder_title_name(const government_type *government_type, const int resource_development_level, const gender gender, const culture *culture) const
+const std::string &site::get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender, const culture *culture) const
 {
 	auto find_iterator = this->landholder_title_names.find(government_type);
 	if (find_iterator == this->landholder_title_names.end()) {
@@ -157,9 +158,9 @@ const std::string &site::get_landholder_title_name(const government_type *govern
 	}
 
 	if (find_iterator != this->landholder_title_names.end()) {
-		auto sub_find_iterator = find_iterator->second.find(resource_development_level);
+		auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(0);
+			sub_find_iterator = find_iterator->second.find(site_tier::none);
 		}
 
 		if (sub_find_iterator != find_iterator->second.end()) {
@@ -175,7 +176,7 @@ const std::string &site::get_landholder_title_name(const government_type *govern
 	}
 
 	if (culture != nullptr) {
-		const std::string &culture_landholder_title_name = culture->get_landholder_title_name(government_type, resource_development_level, gender);
+		const std::string &culture_landholder_title_name = culture->get_landholder_title_name(government_type, tier, gender);
 		if (!culture_landholder_title_name.empty()) {
 			return culture_landholder_title_name;
 		}
@@ -183,7 +184,7 @@ const std::string &site::get_landholder_title_name(const government_type *govern
 
 	assert_throw(government_type != nullptr);
 
-	return government_type->get_landholder_title_name(resource_development_level, gender);
+	return government_type->get_landholder_title_name(tier, gender);
 }
 
 }

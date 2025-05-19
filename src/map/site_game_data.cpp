@@ -30,6 +30,7 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_map_data.h"
+#include "map/site_tier.h"
 #include "map/site_type.h"
 #include "map/tile.h"
 #include "population/population.h"
@@ -263,8 +264,13 @@ bool site_game_data::can_be_capital() const
 
 const std::string &site_game_data::get_landholder_title_name() const
 {
+	site_tier tier = this->get_resource_improvement() ? static_cast<site_tier>(this->get_resource_improvement()->get_level()) : site_tier::none;
+	if (tier > this->site->get_max_tier()) {
+		tier = this->site->get_max_tier();
+	}
+
 	const gender gender = this->get_landholder() != nullptr ? this->get_landholder()->get_gender() : gender::male;
-	return this->site->get_landholder_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, this->get_resource_improvement() ? this->get_resource_improvement()->get_level() : 0, gender, this->get_culture());
+	return this->site->get_landholder_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, tier, gender, this->get_culture());
 }
 
 void site_game_data::set_owner(const country *owner)

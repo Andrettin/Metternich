@@ -98,9 +98,9 @@ const std::string &government_group::get_ruler_title_name(const country_tier tie
 	return string::empty_str;
 }
 
-const std::string &government_group::get_landholder_title_name(const int resource_development_level, const gender gender) const
+const std::string &government_group::get_landholder_title_name(const site_tier tier, const gender gender) const
 {
-	const auto find_iterator = this->landholder_title_names.find(resource_development_level);
+	const auto find_iterator = this->landholder_title_names.find(tier);
 	if (find_iterator != this->landholder_title_names.end()) {
 		auto sub_find_iterator = find_iterator->second.find(gender);
 		if (sub_find_iterator != find_iterator->second.end()) {

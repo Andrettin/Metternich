@@ -5,6 +5,7 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("country/country_game_data.h")
+Q_MOC_INCLUDE("country/country_tier.h")
 Q_MOC_INCLUDE("country/country_turn_data.h")
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("country/government_type.h")

@@ -25,6 +25,7 @@ class site_history;
 class site_map_data;
 class terrain_type;
 class world;
+enum class site_tier;
 enum class site_type;
 
 class site final : public named_data_entry, public data_type<site>
@@ -39,12 +40,13 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(metternich::province* province MEMBER province NOTIFY changed)
+	Q_PROPERTY(metternich::site_tier max_tier MEMBER max_tier READ get_max_tier)
 	Q_PROPERTY(metternich::site_map_data* map_data READ get_map_data NOTIFY changed)
 	Q_PROPERTY(metternich::site_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
-	using landholder_title_name_map = std::map<government_variant, std::map<int, std::map<gender, std::string>>>;
+	using landholder_title_name_map = std::map<government_variant, std::map<site_tier, std::map<gender, std::string>>>;
 
 	static constexpr const char class_identifier[] = "site";
 	static constexpr const char property_class_identifier[] = "metternich::site*";
@@ -123,10 +125,15 @@ public:
 		this->province = province;
 	}
 
+	site_tier get_max_tier() const
+	{
+		return this->max_tier;
+	}
+
 	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture *culture) const;
 
-	const std::string &get_landholder_title_name(const government_type *government_type, const int resource_development_level, const gender gender, const culture *culture) const;
+	const std::string &get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender, const culture *culture) const;
 
 	const std::vector<const character *> &get_landholders() const
 	{
@@ -149,6 +156,7 @@ private:
 	metternich::terrain_type *terrain_type = nullptr;
 	metternich::resource *resource = nullptr;
 	metternich::province *province = nullptr;
+	site_tier max_tier{};
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	landholder_title_name_map landholder_title_names;

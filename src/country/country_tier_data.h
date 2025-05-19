@@ -1,12 +1,12 @@
 #pragma once
 
+#include "country/country_tier.h"
 #include "database/enum_data_type.h"
 #include "database/named_data_entry.h"
 
 namespace metternich {
 
 class country;
-enum class country_tier;
 
 template <typename scope_type>
 class modifier;

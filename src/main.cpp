@@ -52,6 +52,7 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_tier.h"
 #include "map/site_type.h"
 #include "map/temperature_type.h"
 #include "map/tile_image_provider.h"
@@ -135,7 +136,6 @@ int main(int argc, char **argv)
 
 		enum_converter<advisor_category>();
 		enum_converter<character_attribute>();
-		enum_converter<country_tier>();
 		enum_converter<cultural_group_rank>();
 		enum_converter<diplomacy_state>();
 		enum_converter<elevation_type>();
@@ -149,9 +149,11 @@ int main(int argc, char **argv)
 		enum_converter<trait_type>();
 
 		database::get()->register_enum<character_role>();
+		database::get()->register_enum<country_tier>();
 		database::get()->register_enum<country_type>();
 		database::get()->register_enum<event_trigger>();
 		database::get()->register_enum<improvement_slot>();
+		database::get()->register_enum<site_tier>();
 		database::get()->register_enum<site_type>();
 
 		QCoro::Qml::registerTypes();

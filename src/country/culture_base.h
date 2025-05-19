@@ -31,6 +31,7 @@ class phenotype;
 class population_type;
 class transporter_type;
 enum class country_tier;
+enum class site_tier;
 
 class culture_base : public named_data_entry
 {
@@ -44,7 +45,7 @@ public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
 	using title_name_map = std::map<government_variant, std::map<country_tier, std::string>>;
 	using ruler_title_name_map = std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>;
-	using landholder_title_name_map = std::map<government_variant, std::map<int, std::map<gender, std::string>>>;
+	using landholder_title_name_map = std::map<government_variant, std::map<site_tier, std::map<gender, std::string>>>;
 
 	explicit culture_base(const std::string &identifier);
 	~culture_base();
@@ -74,7 +75,7 @@ public:
 
 	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
 	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const;
-	const std::string &get_landholder_title_name(const government_type *government_type, const int resource_development_level, const gender gender) const;
+	const std::string &get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender) const;
 
 	const building_type *get_building_class_type(const building_class *building_class) const;
 

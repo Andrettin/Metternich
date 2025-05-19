@@ -26,6 +26,7 @@
 
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("country/country_tier.h")
 Q_MOC_INCLUDE("country/government_type.h")
 Q_MOC_INCLUDE("country/journal_entry.h")
 Q_MOC_INCLUDE("country/law.h")

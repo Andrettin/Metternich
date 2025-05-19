@@ -42,7 +42,6 @@ set(country_SRCS
 	src/country/country_game_data.cpp
 	src/country/country_history.cpp
 	src/country/country_rank.cpp
-	src/country/country_tier.cpp
 	src/country/country_tier_data.cpp
 	src/country/country_turn_data.cpp
 	src/country/cultural_group.cpp
@@ -462,6 +461,7 @@ set(map_HDRS
 	src/map/site_game_data.h
 	src/map/site_history.h
 	src/map/site_map_data.h
+	src/map/site_tier.h
 	src/map/site_type.h
 	src/map/temperature_type.h
 	src/map/terrain_adjacency.h

@@ -4,10 +4,13 @@
 
 #include "country/country_tier.h"
 #include "country/government_group.h"
+#include "map/site_tier.h"
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/string_util.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -46,7 +49,7 @@ void government_type::process_title_name_scope(title_name_map &title_names, cons
 	scope.for_each_property([&](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
-		const country_tier tier = enum_converter<country_tier>::to_enum(key);
+		const country_tier tier = magic_enum::enum_cast<country_tier>(key).value();
 		title_names[tier] = value;
 	});
 }
@@ -71,8 +74,8 @@ void government_type::process_ruler_title_name_scope(ruler_title_name_map &ruler
 	scope.for_each_property([&](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
-		if (enum_converter<country_tier>::has_value(key)) {
-			const country_tier tier = enum_converter<country_tier>::to_enum(key);
+		if (magic_enum::enum_contains<country_tier>(key)) {
+			const country_tier tier = magic_enum::enum_cast<country_tier>(key).value();
 			ruler_title_names[tier][gender::none] = value;
 		} else {
 			const gender gender = enum_converter<metternich::gender>::to_enum(key);
@@ -81,7 +84,7 @@ void government_type::process_ruler_title_name_scope(ruler_title_name_map &ruler
 	});
 
 	scope.for_each_child([&](const gsml_data &child_scope) {
-		const country_tier tier = enum_converter<country_tier>::to_enum(child_scope.get_tag());
+		const country_tier tier = magic_enum::enum_cast<country_tier>(child_scope.get_tag()).value();
 
 		government_type::process_ruler_title_name_scope(ruler_title_names[tier], child_scope);
 	});
@@ -117,19 +120,19 @@ void government_type::process_landholder_title_name_scope(landholder_title_name_
 	scope.for_each_property([&](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
-		if (string::is_number(key)) {
-			const int resource_development_level = std::stoi(key);
-			landholder_title_names[resource_development_level][gender::none] = value;
+		if (magic_enum::enum_contains<site_tier>(key)) {
+			const site_tier tier = magic_enum::enum_cast<site_tier>(key).value();
+			landholder_title_names[tier][gender::none] = value;
 		} else {
 			const gender gender = enum_converter<metternich::gender>::to_enum(key);
-			landholder_title_names[0][gender] = value;
+			landholder_title_names[site_tier::none][gender] = value;
 		}
 	});
 
 	scope.for_each_child([&](const gsml_data &child_scope) {
-		const int resource_development_level = std::stoi(child_scope.get_tag());
+		const site_tier tier = magic_enum::enum_cast<site_tier>(child_scope.get_tag()).value();
 
-		government_type::process_landholder_title_name_scope(landholder_title_names[resource_development_level], child_scope);
+		government_type::process_landholder_title_name_scope(landholder_title_names[tier], child_scope);
 	});
 }
 
@@ -213,9 +216,9 @@ const std::string &government_type::get_ruler_title_name(const country_tier tier
 	return this->get_group()->get_ruler_title_name(tier, gender);
 }
 
-const std::string &government_type::get_landholder_title_name(const int resource_development_level, const gender gender) const
+const std::string &government_type::get_landholder_title_name(const site_tier tier, const gender gender) const
 {
-	const auto find_iterator = this->landholder_title_names.find(resource_development_level);
+	const auto find_iterator = this->landholder_title_names.find(tier);
 	if (find_iterator != this->landholder_title_names.end()) {
 		auto sub_find_iterator = find_iterator->second.find(gender);
 		if (sub_find_iterator != find_iterator->second.end()) {
@@ -228,7 +231,7 @@ const std::string &government_type::get_landholder_title_name(const int resource
 		}
 	}
 
-	return this->get_group()->get_landholder_title_name(resource_development_level, gender);
+	return this->get_group()->get_landholder_title_name(tier, gender);
 }
 
 }
