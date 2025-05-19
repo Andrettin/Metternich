@@ -23,6 +23,7 @@ class site_history final : public data_entry_history
 
 	Q_PROPERTY(bool resource_discovered MEMBER resource_discovered READ is_resource_discovered)
 	Q_PROPERTY(bool developed MEMBER developed)
+	Q_PROPERTY(int development_level MEMBER development_level)
 	Q_PROPERTY(metternich::settlement_type* settlement_type MEMBER settlement_type)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
@@ -44,7 +45,16 @@ public:
 
 	bool is_developed() const
 	{
-		return this->developed || this->get_settlement_type() != nullptr || !this->get_improvements().empty() || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
+		return this->developed || this->development_level > 0 || this->get_settlement_type() != nullptr || !this->get_improvements().empty() || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
+	}
+
+	int get_development_level() const
+	{
+		if (this->is_developed()) {
+			return std::max(1, this->development_level);
+		}
+
+		return this->development_level;
 	}
 
 	const metternich::settlement_type *get_settlement_type() const
@@ -178,6 +188,7 @@ private:
 	const metternich::site *site = nullptr;
 	bool resource_discovered = false;
 	bool developed = false;
+	int development_level = 0;
 	metternich::settlement_type *settlement_type = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;

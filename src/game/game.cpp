@@ -855,10 +855,10 @@ void game::apply_sites()
 
 			std::map<improvement_slot, const improvement *> site_improvements = site_history->get_improvements();
 
-			if (!site_improvements.contains(improvement_slot::resource) && site_history->is_developed() && site->get_map_data()->get_resource() != nullptr) {
-				//if the site is marked as developed, but has no specific improvement set for it, pick the most basic improvement for its resource
+			if (site->get_map_data()->get_resource() != nullptr && site_history->is_developed() && (!site_improvements.contains(improvement_slot::resource) || site_improvements.find(improvement_slot::resource)->second->get_level() < site_history->get_development_level())) {
+				//if the site is marked as developed, but has no specific improvement set for it, or has an improvement with a level below its development level, pick an appropriate improvement for its resource
 				for (const improvement *improvement : site->get_map_data()->get_resource()->get_improvements()) {
-					if (improvement->get_required_improvement() != nullptr) {
+					if (improvement->get_level() != site_history->get_development_level()) {
 						continue;
 					}
 
