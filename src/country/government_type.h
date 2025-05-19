@@ -32,6 +32,7 @@ public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
 	using title_name_map = std::map<country_tier, std::string>;
 	using ruler_title_name_map = std::map<country_tier, std::map<gender, std::string>>;
+	using landholder_title_name_map = std::map<int, std::map<gender, std::string>>;
 
 	static constexpr const char class_identifier[] = "government_type";
 	static constexpr const char property_class_identifier[] = "metternich::government_type*";
@@ -42,6 +43,9 @@ public:
 	static void process_ruler_title_name_scope(std::map<government_variant, ruler_title_name_map> &ruler_title_names, const gsml_data &scope);
 	static void process_ruler_title_name_scope(ruler_title_name_map &ruler_title_names, const gsml_data &scope);
 	static void process_ruler_title_name_scope(std::map<gender, std::string> &ruler_title_names, const gsml_data &scope);
+	static void process_landholder_title_name_scope(std::map<government_variant, landholder_title_name_map> &landholder_title_names, const gsml_data &scope);
+	static void process_landholder_title_name_scope(landholder_title_name_map &landholder_title_names, const gsml_data &scope);
+	static void process_landholder_title_name_scope(std::map<gender, std::string> &landholder_title_names, const gsml_data &scope);
 
 	explicit government_type(const std::string &identifier);
 	~government_type();
@@ -51,6 +55,7 @@ public:
 
 	const std::string &get_title_name(const country_tier tier) const;
 	const std::string &get_ruler_title_name(const country_tier tier, const gender gender) const;
+	const std::string &get_landholder_title_name(const int resource_development_level, const gender gender) const;
 
 	const government_group *get_group() const
 	{
@@ -76,6 +81,7 @@ private:
 	std::unique_ptr<const and_condition<country>> conditions;
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;
+	landholder_title_name_map landholder_title_names;
 };
 
 }

@@ -42,6 +42,8 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "ruler_title_names") {
 		government_type::process_ruler_title_name_scope(this->ruler_title_names, scope);
+	} else if (tag == "landholder_title_names") {
+		government_type::process_landholder_title_name_scope(this->landholder_title_names, scope);
 	} else if (tag == "building_class_types") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -296,6 +298,38 @@ const std::string &culture_base::get_ruler_title_name(const government_type *gov
 
 	if (this->get_group() != nullptr) {
 		return this->get_group()->get_ruler_title_name(government_type, tier, gender);
+	}
+
+	return string::empty_str;
+}
+
+const std::string &culture_base::get_landholder_title_name(const government_type *government_type, const int resource_development_level, const gender gender) const
+{
+	auto find_iterator = this->landholder_title_names.find(government_type);
+	if (find_iterator == this->landholder_title_names.end()) {
+		find_iterator = this->landholder_title_names.find(government_type->get_group());
+	}
+
+	if (find_iterator != this->landholder_title_names.end()) {
+		auto sub_find_iterator = find_iterator->second.find(resource_development_level);
+		if (sub_find_iterator == find_iterator->second.end()) {
+			sub_find_iterator = find_iterator->second.find(0);
+		}
+
+		if (sub_find_iterator != find_iterator->second.end()) {
+			auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
+			if (sub_sub_find_iterator == sub_find_iterator->second.end()) {
+				sub_sub_find_iterator = sub_find_iterator->second.find(gender::none);
+			}
+
+			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
+				return sub_sub_find_iterator->second;
+			}
+		}
+	}
+
+	if (this->get_group() != nullptr) {
+		return this->get_group()->get_landholder_title_name(government_type, resource_development_level, gender);
 	}
 
 	return string::empty_str;

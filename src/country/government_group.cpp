@@ -18,6 +18,8 @@ void government_group::process_gsml_scope(const gsml_data &scope)
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "ruler_title_names") {
 		government_type::process_ruler_title_name_scope(this->ruler_title_names, scope);
+	} else if (tag == "landholder_title_names") {
+		government_type::process_landholder_title_name_scope(this->landholder_title_names, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -94,6 +96,25 @@ const std::string &government_group::get_ruler_title_name(const country_tier tie
 	}
 
 	return string::empty_str;
+}
+
+const std::string &government_group::get_landholder_title_name(const int resource_development_level, const gender gender) const
+{
+	const auto find_iterator = this->landholder_title_names.find(resource_development_level);
+	if (find_iterator != this->landholder_title_names.end()) {
+		auto sub_find_iterator = find_iterator->second.find(gender);
+		if (sub_find_iterator != find_iterator->second.end()) {
+			return sub_find_iterator->second;
+		}
+
+		sub_find_iterator = find_iterator->second.find(gender::none);
+		if (sub_find_iterator != find_iterator->second.end()) {
+			return sub_find_iterator->second;
+		}
+	}
+
+	static const std::string str = "Landholder";
+	return str;
 }
 
 }

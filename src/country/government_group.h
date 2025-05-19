@@ -22,6 +22,7 @@ class government_group final : public named_data_entry, public data_type<governm
 public:
 	using title_name_map = std::map<country_tier, std::string>;
 	using ruler_title_name_map = std::map<country_tier, std::map<gender, std::string>>;
+	using landholder_title_name_map = std::map<int, std::map<gender, std::string>>;
 
 	static constexpr const char class_identifier[] = "government_group";
 	static constexpr const char property_class_identifier[] = "metternich::government_group*";
@@ -50,6 +51,7 @@ public:
 
 	const std::string &get_title_name(const country_tier tier) const;
 	const std::string &get_ruler_title_name(const country_tier tier, const gender gender) const;
+	const std::string &get_landholder_title_name(const int resource_development_level, const gender gender) const;
 
 signals:
 	void changed();
@@ -60,6 +62,7 @@ private:
 	bool religious = false; //religious government types use the title names from their religion, rather than culture
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;
+	landholder_title_name_map landholder_title_names;
 };
 
 }

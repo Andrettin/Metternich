@@ -7,6 +7,7 @@
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -96,6 +97,52 @@ void government_type::process_ruler_title_name_scope(std::map<gender, std::strin
 	});
 }
 
+void government_type::process_landholder_title_name_scope(std::map<government_variant, landholder_title_name_map> &landholder_title_names, const gsml_data &scope)
+{
+	scope.for_each_child([&](const gsml_data &child_scope) {
+		government_variant government_variant{};
+		const government_group *government_group = government_group::try_get(child_scope.get_tag());
+		if (government_group != nullptr) {
+			government_variant = government_group;
+		} else {
+			government_variant = government_type::get(child_scope.get_tag());
+		}
+
+		government_type::process_landholder_title_name_scope(landholder_title_names[government_variant], child_scope);
+	});
+}
+
+void government_type::process_landholder_title_name_scope(landholder_title_name_map &landholder_title_names, const gsml_data &scope)
+{
+	scope.for_each_property([&](const gsml_property &property) {
+		const std::string &key = property.get_key();
+		const std::string &value = property.get_value();
+		if (string::is_number(key)) {
+			const int resource_development_level = std::stoi(key);
+			landholder_title_names[resource_development_level][gender::none] = value;
+		} else {
+			const gender gender = enum_converter<metternich::gender>::to_enum(key);
+			landholder_title_names[0][gender] = value;
+		}
+	});
+
+	scope.for_each_child([&](const gsml_data &child_scope) {
+		const int resource_development_level = std::stoi(child_scope.get_tag());
+
+		government_type::process_landholder_title_name_scope(landholder_title_names[resource_development_level], child_scope);
+	});
+}
+
+void government_type::process_landholder_title_name_scope(std::map<gender, std::string> &landholder_title_names, const gsml_data &scope)
+{
+	scope.for_each_property([&](const gsml_property &property) {
+		const std::string &key = property.get_key();
+		const std::string &value = property.get_value();
+		const gender gender = enum_converter<archimedes::gender>::to_enum(key);
+		landholder_title_names[gender] = value;
+	});
+}
+
 government_type::government_type(const std::string &identifier) : named_data_entry(identifier)
 {
 }
@@ -116,6 +163,8 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "ruler_title_names") {
 		government_type::process_ruler_title_name_scope(this->ruler_title_names, scope);
+	} else if (tag == "landholder_title_names") {
+		government_type::process_landholder_title_name_scope(this->landholder_title_names, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -162,6 +211,24 @@ const std::string &government_type::get_ruler_title_name(const country_tier tier
 	}
 
 	return this->get_group()->get_ruler_title_name(tier, gender);
+}
+
+const std::string &government_type::get_landholder_title_name(const int resource_development_level, const gender gender) const
+{
+	const auto find_iterator = this->landholder_title_names.find(resource_development_level);
+	if (find_iterator != this->landholder_title_names.end()) {
+		auto sub_find_iterator = find_iterator->second.find(gender);
+		if (sub_find_iterator != find_iterator->second.end()) {
+			return sub_find_iterator->second;
+		}
+
+		sub_find_iterator = find_iterator->second.find(gender::none);
+		if (sub_find_iterator != find_iterator->second.end()) {
+			return sub_find_iterator->second;
+		}
+	}
+
+	return this->get_group()->get_landholder_title_name(resource_development_level, gender);
 }
 
 }

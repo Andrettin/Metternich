@@ -43,6 +43,7 @@
 #include "ui/portrait.h"
 #include "unit/army.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/vector_random_util.h"
@@ -262,9 +263,8 @@ bool site_game_data::can_be_capital() const
 
 const std::string &site_game_data::get_landholder_title_name() const
 {
-	static const std::string landholder_title_name = "Landholder";
-	//FIXME: add cultural variation and etc. for landholder title names
-	return landholder_title_name;
+	const gender gender = this->get_landholder() != nullptr ? this->get_landholder()->get_gender() : gender::male;
+	return this->site->get_landholder_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, this->get_resource_improvement() ? this->get_resource_improvement()->get_level() : 0, gender, this->get_culture());
 }
 
 void site_game_data::set_owner(const country *owner)

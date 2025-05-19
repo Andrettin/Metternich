@@ -4,6 +4,7 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "country/government_type.h"
 #include "economy/resource.h"
 #include "map/province.h"
 #include "map/province_history.h"
@@ -14,6 +15,7 @@
 #include "map/tile.h"
 #include "map/world.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 #include "util/log_util.h"
 
 #include <magic_enum/magic_enum.hpp>
@@ -44,6 +46,8 @@ void site::process_gsml_scope(const gsml_data &scope)
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
 		});
+	} else if (tag == "landholder_title_names") {
+		government_type::process_landholder_title_name_scope(this->landholder_title_names, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -143,6 +147,43 @@ const std::string &site::get_cultural_name(const culture *culture) const
 	}
 
 	return this->get_name();
+}
+
+const std::string &site::get_landholder_title_name(const government_type *government_type, const int resource_development_level, const gender gender, const culture *culture) const
+{
+	auto find_iterator = this->landholder_title_names.find(government_type);
+	if (find_iterator == this->landholder_title_names.end()) {
+		find_iterator = this->landholder_title_names.find(government_type->get_group());
+	}
+
+	if (find_iterator != this->landholder_title_names.end()) {
+		auto sub_find_iterator = find_iterator->second.find(resource_development_level);
+		if (sub_find_iterator == find_iterator->second.end()) {
+			sub_find_iterator = find_iterator->second.find(0);
+		}
+
+		if (sub_find_iterator != find_iterator->second.end()) {
+			auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
+			if (sub_sub_find_iterator == sub_find_iterator->second.end()) {
+				sub_sub_find_iterator = sub_find_iterator->second.find(gender::none);
+			}
+
+			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
+				return sub_sub_find_iterator->second;
+			}
+		}
+	}
+
+	if (culture != nullptr) {
+		const std::string &culture_landholder_title_name = culture->get_landholder_title_name(government_type, resource_development_level, gender);
+		if (!culture_landholder_title_name.empty()) {
+			return culture_landholder_title_name;
+		}
+	}
+
+	assert_throw(government_type != nullptr);
+
+	return government_type->get_landholder_title_name(resource_development_level, gender);
 }
 
 }

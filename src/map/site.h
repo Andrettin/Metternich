@@ -16,6 +16,8 @@ namespace metternich {
 
 class cultural_group;
 class culture;
+class government_group;
+class government_type;
 class province;
 class resource;
 class site_game_data;
@@ -41,6 +43,9 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(metternich::site_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
+	using government_variant = std::variant<const government_type *, const government_group *>;
+	using landholder_title_name_map = std::map<government_variant, std::map<int, std::map<gender, std::string>>>;
+
 	static constexpr const char class_identifier[] = "site";
 	static constexpr const char property_class_identifier[] = "metternich::site*";
 	static constexpr const char database_folder[] = "sites";
@@ -121,6 +126,8 @@ public:
 	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture *culture) const;
 
+	const std::string &get_landholder_title_name(const government_type *government_type, const int resource_development_level, const gender gender, const culture *culture) const;
+
 	const std::vector<const character *> &get_landholders() const
 	{
 		return this->landholders;
@@ -144,6 +151,7 @@ private:
 	metternich::province *province = nullptr;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
+	landholder_title_name_map landholder_title_names;
 	std::vector<const character *> landholders;
 	qunique_ptr<site_history> history;
 	qunique_ptr<site_map_data> map_data;
