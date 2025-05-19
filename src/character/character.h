@@ -83,6 +83,8 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
+	static void initialize_all();
+
 	static bool skill_compare(const character *lhs, const character *rhs);
 
 	explicit character(const std::string &identifier);
@@ -106,6 +108,9 @@ public:
 	{
 		return this->game_data.get();
 	}
+
+	bool initialize_dates_from_children();
+	bool initialize_dates_from_parents();
 
 	const dynasty *get_dynasty() const
 	{

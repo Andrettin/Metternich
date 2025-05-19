@@ -26,7 +26,9 @@
 #include "unit/civilian_unit_class.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
+#include "util/date_util.h"
 #include "util/log_util.h"
+#include "util/random.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -35,6 +37,52 @@ const std::set<std::string> character::database_dependencies = {
 	//characters must be initialized after provinces, as their initialization results in settlements being assigned to their provinces, which is necessary for getting the provinces for home sites
 	province::class_identifier
 };
+
+void character::initialize_all()
+{
+	data_type::initialize_all();
+
+	std::vector<character *> dateless_characters = character::get_all();
+	std::erase_if(dateless_characters, [](const character *character) {
+		return character->has_vital_dates();
+	});
+
+	bool changed = true;
+	while (changed) {
+		while (changed) {
+			changed = false;
+
+			for (character *character : dateless_characters) {
+				if (character->has_vital_dates()) {
+					continue;
+				}
+
+				const bool success = character->initialize_dates_from_children();
+				if (success) {
+					character->initialize_dates();
+					changed = true;
+				}
+			}
+
+			std::erase_if(dateless_characters, [](const character *character) {
+				return character->has_vital_dates();
+			});
+		}
+
+		changed = false;
+		for (character *character : dateless_characters) {
+			const bool success = character->initialize_dates_from_parents();
+			if (success) {
+				character->initialize_dates();
+				changed = true;
+			}
+		}
+
+		std::erase_if(dateless_characters, [](const character *character) {
+			return character->has_vital_dates();
+		});
+	}
+}
 
 bool character::skill_compare(const character *lhs, const character *rhs)
 {
@@ -302,6 +350,110 @@ void character::reset_game_data()
 {
 	this->game_data = make_qunique<character_game_data>(this);
 	emit game_data_changed();
+}
+
+bool character::initialize_dates_from_children()
+{
+	assert_throw(!this->has_vital_dates());
+
+	if (this->get_children().empty()) {
+		return false;
+	}
+
+	const int adulthood_age = 15; //FIXME: make it variable according to character species
+	if (adulthood_age == 0) {
+		return false;
+	}
+
+	const int middle_age = 35; //FIXME: make it variable according to character species
+	if (middle_age == 0) {
+		return false;
+	}
+
+	QDate earliest_child_birth_date;
+
+	for (character_base *child_base : this->get_children()) {
+		character *child = static_cast<character *>(child_base);
+		if (!child->has_vital_dates()) {
+			if (child->initialize_dates_from_children()) {
+				child->initialize_dates();
+			}
+		}
+
+		if (!child->get_birth_date().isValid()) {
+			continue;
+		}
+
+		if (!earliest_child_birth_date.isValid() || child->get_birth_date() < earliest_child_birth_date) {
+			earliest_child_birth_date = child->get_birth_date();
+		}
+	}
+
+	if (!earliest_child_birth_date.isValid()) {
+		return false;
+	}
+
+	QDate birth_date = earliest_child_birth_date;
+	birth_date = birth_date.addYears(-random::get()->generate_in_range(adulthood_age, middle_age));
+	this->set_birth_date(birth_date);
+	log_trace(std::format("Set birth date for character \"{}\": {}.", this->get_identifier(), date::to_string(birth_date)));
+
+	return true;
+}
+
+bool character::initialize_dates_from_parents()
+{
+	assert_throw(!this->has_vital_dates());
+
+	std::vector<const character *> parents;
+	if (this->get_father() != nullptr) {
+		parents.push_back(this->get_father());
+	}
+	if (this->get_mother() != nullptr) {
+		parents.push_back(this->get_mother());
+	}
+
+	if (parents.empty()) {
+		return false;
+	}
+
+	int adulthood_age = 0;
+	int middle_age = 0;
+
+	QDate latest_parent_birth_date;
+
+	for (const character *parent : parents) {
+		if (!parent->get_birth_date().isValid()) {
+			continue;
+		}
+
+		const int parent_adulthood_age = 15; //FIXME: make it variable according to character species
+		if (parent_adulthood_age == 0) {
+			continue;
+		}
+
+		const int parent_middle_age = 35; //FIXME: make it variable according to character species
+		if (parent_middle_age == 0) {
+			continue;
+		}
+
+		if (!latest_parent_birth_date.isValid() || parent->get_birth_date() > latest_parent_birth_date) {
+			latest_parent_birth_date = parent->get_birth_date();
+			adulthood_age = parent_adulthood_age;
+			middle_age = parent_middle_age;
+		}
+	}
+
+	if (!latest_parent_birth_date.isValid()) {
+		return false;
+	}
+
+	QDate birth_date = latest_parent_birth_date;
+	birth_date = birth_date.addYears(random::get()->generate_in_range(adulthood_age, middle_age));
+	this->set_birth_date(birth_date);
+	log_trace(std::format("Set birth date for character \"{}\": {}.", this->get_identifier(), date::to_string(birth_date)));
+
+	return true;
 }
 
 bool character::is_surname_first() const
