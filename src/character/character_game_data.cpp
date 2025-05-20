@@ -283,6 +283,23 @@ bool character_game_data::can_have_trait(const trait *trait) const
 		return false;
 	}
 
+	return true;
+}
+
+bool character_game_data::can_gain_trait(const trait *trait) const
+{
+	if (this->has_trait(trait)) {
+		return false;
+	}
+
+	if (!this->can_have_trait(trait)) {
+		return false;
+	}
+
+	if (this->get_trait_count_for_type(trait->get_type()) >= defines::get()->get_max_traits_for_type(trait->get_type())) {
+		return false;
+	}
+
 	// characters cannot gain a trait which would reduce their primary attribute below 1
 	const character_attribute primary_attribute = this->character->get_primary_attribute();
 	if (primary_attribute != character_attribute::none) {
@@ -302,15 +319,13 @@ bool character_game_data::has_trait(const trait *trait) const
 
 void character_game_data::add_trait(const trait *trait)
 {
-	if (vector::contains(this->get_traits(), trait)) {
-		log::log_error("Tried to add trait \"" + trait->get_identifier() + "\" to character \"" + this->character->get_identifier() + "\", but they already have the trait.");
+	if (this->has_trait(trait)) {
+		log::log_error(std::format("Tried to add trait \"{}\" to character \"{}\", but they already have the trait.", trait->get_identifier(), this->character->get_identifier()));
 		return;
 	}
 
-	const read_only_context ctx(this->character);
-
-	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, ctx)) {
-		log::log_error("Tried to add trait \"" + trait->get_identifier() + "\" to character \"" + this->character->get_identifier() + "\", for which the trait's conditions are not fulfilled.");
+	if (!this->can_gain_trait(trait)) {
+		log::log_error(std::format("Tried to add trait \"{}\" to character \"{}\", who cannot gain it.", trait->get_identifier(), this->character->get_identifier()));
 		return;
 	}
 
@@ -396,11 +411,7 @@ bool character_game_data::generate_trait(const trait_type trait_type, const char
 			continue;
 		}
 
-		if (this->has_trait(trait)) {
-			continue;
-		}
-
-		if (!this->can_have_trait(trait)) {
+		if (!this->can_gain_trait(trait)) {
 			continue;
 		}
 

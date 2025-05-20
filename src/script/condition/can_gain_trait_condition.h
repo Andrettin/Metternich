@@ -7,10 +7,10 @@
 
 namespace metternich {
 
-class can_have_trait_condition final : public condition<character>
+class can_gain_trait_condition final : public condition<character>
 {
 public:
-	explicit can_have_trait_condition(const std::string &value, const gsml_operator condition_operator)
+	explicit can_gain_trait_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<character>(condition_operator)
 	{
 		this->trait = trait::get(value);
@@ -18,7 +18,7 @@ public:
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "can_have_trait";
+		static const std::string class_identifier = "can_gain_trait";
 		return class_identifier;
 	}
 
@@ -26,14 +26,14 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->can_have_trait(this->trait);
+		return scope->get_game_data()->can_gain_trait(this->trait);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
 
-		return "Can have the " + this->trait->get_name() + " trait";
+		return std::format("Can gain the {} trait", this->trait->get_name());
 	}
 
 private:

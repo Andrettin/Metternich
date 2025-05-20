@@ -528,7 +528,7 @@ set(script_condition_HDRS
 	src/script/condition/available_food_condition.h
 	src/script/condition/available_housing_condition.h
 	src/script/condition/can_gain_building_class_condition.h
-	src/script/condition/can_have_trait_condition.h
+	src/script/condition/can_gain_trait_condition.h
 	src/script/condition/capital_condition.h
 	src/script/condition/cavalry_condition.h
 	src/script/condition/character_attribute_condition.h
