@@ -51,7 +51,10 @@ void character_game_data::on_setup_finished()
 		this->add_trait(trait);
 	}
 
-	static constexpr std::array generated_trait_types{ trait_type::background, trait_type::personality, trait_type::expertise };
+	std::vector<trait_type> generated_trait_types{ trait_type::background, trait_type::personality, trait_type::expertise };
+	if (this->character->get_role() == character_role::ruler) {
+		generated_trait_types.insert(generated_trait_types.begin(), trait_type::ruler);
+	}
 
 	bool success = true;
 	for (const trait_type trait_type : generated_trait_types) {
