@@ -29,7 +29,6 @@ set(character_SRCS
 	src/character/character_type_container.cpp
 	src/character/dynasty.cpp
 	src/character/trait.cpp
-	src/character/trait_type.cpp
 )
 source_group(character FILES ${character_SRCS})
 set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")

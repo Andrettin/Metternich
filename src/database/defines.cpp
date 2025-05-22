@@ -63,14 +63,14 @@ void defines::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "min_traits_per_type") {
 		scope.for_each_property([&](const gsml_property &property) {
-			const trait_type type = enum_converter<trait_type>::to_enum(property.get_key());
+			const trait_type type = magic_enum::enum_cast<trait_type>(property.get_key()).value();
 			const int value = std::stoi(property.get_value());
 
 			this->min_traits_per_type[type] = value;
 		});
 	} else if (tag == "max_traits_per_type") {
 		scope.for_each_property([&](const gsml_property &property) {
-			const trait_type type = enum_converter<trait_type>::to_enum(property.get_key());
+			const trait_type type = magic_enum::enum_cast<trait_type>(property.get_key()).value();
 			const int value = std::stoi(property.get_value());
 
 			this->max_traits_per_type[type] = value;

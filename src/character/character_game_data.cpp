@@ -35,6 +35,8 @@
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 character_game_data::character_game_data(const metternich::character *character)
@@ -273,7 +275,7 @@ std::vector<const trait *> character_game_data::get_traits_of_type(const trait_t
 
 QVariantList character_game_data::get_traits_of_type(const QString &trait_type_str) const
 {
-	const trait_type type = enum_converter<trait_type>::to_enum(trait_type_str.toStdString());
+	const trait_type type = magic_enum::enum_cast<trait_type>(trait_type_str.toStdString()).value();
 	return container::to_qvariant_list(this->get_traits_of_type(type));
 }
 
