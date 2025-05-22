@@ -224,10 +224,6 @@ void character::check() const
 				throw std::runtime_error(std::format("Character \"{}\" is a ruler, but has no rulable countries.", this->get_identifier()));
 			}
 
-			if (this->get_character_type()->get_ruler_modifier() == nullptr && this->get_character_type()->get_scaled_ruler_modifier() == nullptr) {
-				throw std::runtime_error(std::format("Character \"{}\" is a ruler, but its character type (\"{}\") has no ruler modifier.", this->get_identifier(), this->get_character_type()->get_identifier()));
-			}
-
 			std::vector<const trait *> ruler_traits = this->get_traits();
 			std::erase_if(ruler_traits, [](const trait *trait) {
 				return !trait->get_types().contains(trait_type::ruler);
@@ -244,13 +240,30 @@ void character::check() const
 			break;
 		}
 		case character_role::advisor:
+		{
+			std::vector<const trait *> advisor_traits = this->get_traits();
+			std::erase_if(advisor_traits, [](const trait *trait) {
+				return !trait->get_types().contains(trait_type::advisor);
+			});
+			const int advisor_trait_count = static_cast<int>(advisor_traits.size());
+			const int min_advisor_traits = defines::get()->get_min_traits_for_type(trait_type::advisor);
+			const int max_advisor_traits = defines::get()->get_max_traits_for_type(trait_type::advisor);
+
+			if (advisor_trait_count < min_advisor_traits) {
+				log::log_error(std::format("Advisor character \"{}\" only has {} advisor {}, less than the expected minimum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", min_advisor_traits));
+			} else if (advisor_trait_count > max_advisor_traits) {
+				log::log_error(std::format("Advisor character \"{}\" has {} advisor {}, more than the expected maximum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", max_advisor_traits));
+			}
+
 			if (this->get_character_type()->get_advisor_modifier() == nullptr
 				&& this->get_character_type()->get_scaled_advisor_modifier() == nullptr
 				&& this->get_character_type()->get_advisor_effects() == nullptr
+				&& advisor_trait_count == 0
 			) {
-				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but its character type (\"{}\") has no advisor modifier or effects.", this->get_identifier(), this->get_character_type()->get_identifier()));
+				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but its character type (\"{}\") has no advisor modifier or effects, nor does the character have an advisor trait.", this->get_identifier(), this->get_character_type()->get_identifier()));
 			}
 			break;
+		}
 		case character_role::governor:
 		{
 			if (this->get_governable_province() == nullptr) {

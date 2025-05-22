@@ -56,6 +56,8 @@ void character_game_data::on_setup_finished()
 	std::vector<trait_type> generated_trait_types{ trait_type::background, trait_type::personality, trait_type::expertise };
 	if (this->character->get_role() == character_role::ruler) {
 		generated_trait_types.insert(generated_trait_types.begin(), trait_type::ruler);
+	} else if (this->character->get_role() == character_role::advisor) {
+		generated_trait_types.insert(generated_trait_types.begin(), trait_type::advisor);
 	}
 
 	bool success = true;
@@ -300,6 +302,10 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 
 	for (const trait_type trait_type : trait->get_types()) {
 		if (trait_type == trait_type::ruler && this->character->get_role() != character_role::ruler) {
+			continue;
+		}
+
+		if (trait_type == trait_type::advisor && this->character->get_role() != character_role::advisor) {
 			continue;
 		}
 

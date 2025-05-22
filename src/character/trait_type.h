@@ -3,10 +3,11 @@
 namespace metternich {
 
 enum class trait_type {
-	ruler,
 	background,
 	personality,
-	expertise
+	expertise,
+	ruler,
+	advisor
 };
 
 }
