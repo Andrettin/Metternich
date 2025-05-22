@@ -8,10 +8,12 @@
 #include "script/modifier.h"
 #include "util/assert_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 trait::trait(const std::string &identifier)
-	: named_data_entry(identifier), type(trait_type::none), attribute(character_attribute::none)
+	: named_data_entry(identifier), attribute(character_attribute::none)
 {
 }
 
@@ -22,8 +24,19 @@ trait::~trait()
 void trait::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "attribute_bonuses") {
+	if (tag == "types") {
+		for (const std::string &value : values) {
+			this->types.insert(magic_enum::enum_cast<trait_type>(value).value());
+		}
+		scope.for_each_property([&](const gsml_property &property) {
+			const character_attribute attribute = enum_converter<character_attribute>::to_enum(property.get_key());
+			const int value = std::stoi(property.get_value());
+
+			this->attribute_bonuses[attribute] = value;
+		});
+	} else if (tag == "attribute_bonuses") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const character_attribute attribute = enum_converter<character_attribute>::to_enum(property.get_key());
 			const int value = std::stoi(property.get_value());
@@ -85,7 +98,7 @@ void trait::process_gsml_scope(const gsml_data &scope)
 
 void trait::check() const
 {
-	if (this->get_type() == trait_type::none) {
+	if (this->get_types().empty()) {
 		throw std::runtime_error(std::format("Trait \"{}\" has no type.", this->get_identifier()));
 	}
 

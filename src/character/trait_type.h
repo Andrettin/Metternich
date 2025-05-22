@@ -3,7 +3,6 @@
 namespace metternich {
 
 enum class trait_type {
-	none,
 	ruler,
 	background,
 	personality,

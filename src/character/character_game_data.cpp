@@ -263,7 +263,7 @@ std::vector<const trait *> character_game_data::get_traits_of_type(const trait_t
 	std::vector<const trait *> traits;
 
 	for (const trait *trait : this->get_traits()) {
-		if (trait->get_type() != trait_type) {
+		if (!trait->get_types().contains(trait_type)) {
 			continue;
 		}
 
@@ -298,8 +298,14 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 		return false;
 	}
 
-	if (this->get_trait_count_for_type(trait->get_type()) >= defines::get()->get_max_traits_for_type(trait->get_type())) {
-		return false;
+	for (const trait_type trait_type : trait->get_types()) {
+		if (trait_type == trait_type::ruler && this->character->get_role() != character_role::ruler) {
+			continue;
+		}
+
+		if (this->get_trait_count_for_type(trait_type) >= defines::get()->get_max_traits_for_type(trait_type)) {
+			return false;
+		}
 	}
 
 	// characters cannot gain a trait which would reduce their primary attribute below 1
@@ -409,7 +415,7 @@ bool character_game_data::generate_trait(const trait_type trait_type, const char
 	int best_attribute_bonus = 0;
 
 	for (const trait *trait : trait::get_all()) {
-		if (trait->get_type() != trait_type) {
+		if (!trait->get_types().contains(trait_type)) {
 			continue;
 		}
 
@@ -454,8 +460,8 @@ bool character_game_data::generate_initial_trait(const trait_type trait_type)
 void character_game_data::sort_traits()
 {
 	std::sort(this->traits.begin(), this->traits.end(), [](const trait *lhs, const trait *rhs) {
-		if (lhs->get_type() != rhs->get_type()) {
-			return lhs->get_type() < rhs->get_type();
+		if (*lhs->get_types().begin() != *rhs->get_types().begin()) {
+			return *lhs->get_types().begin() < *rhs->get_types().begin();
 		}
 
 		return lhs->get_identifier() < rhs->get_identifier();

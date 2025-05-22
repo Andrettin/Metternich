@@ -230,7 +230,7 @@ void character::check() const
 
 			std::vector<const trait *> ruler_traits = this->get_traits();
 			std::erase_if(ruler_traits, [](const trait *trait) {
-				return trait->get_type() != trait_type::ruler;
+				return !trait->get_types().contains(trait_type::ruler);
 			});
 			const int ruler_trait_count = static_cast<int>(ruler_traits.size());
 			const int min_ruler_traits = defines::get()->get_min_traits_for_type(trait_type::ruler);

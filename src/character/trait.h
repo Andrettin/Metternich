@@ -25,7 +25,6 @@ class trait final : public named_data_entry, public data_type<trait>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::trait_type type MEMBER type NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(metternich::character_attribute attribute MEMBER attribute READ get_attribute NOTIFY changed)
@@ -44,9 +43,9 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
-	trait_type get_type() const
+	const std::set<trait_type> &get_types() const
 	{
-		return this->type;
+		return this->types;
 	}
 
 	const metternich::icon *get_icon() const
@@ -152,7 +151,7 @@ signals:
 	void changed();
 
 private:
-	trait_type type;
+	std::set<trait_type> types;
 	metternich::icon *icon = nullptr;
 	int level = 1;
 	character_attribute attribute{};
