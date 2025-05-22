@@ -258,9 +258,11 @@ void character::check() const
 			if (this->get_character_type()->get_advisor_modifier() == nullptr
 				&& this->get_character_type()->get_scaled_advisor_modifier() == nullptr
 				&& this->get_character_type()->get_advisor_effects() == nullptr
+				&& this->get_advisor_modifier() == nullptr
+				&& this->get_advisor_effects() == nullptr
 				&& advisor_trait_count == 0
 			) {
-				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but its character type (\"{}\") has no advisor modifier or effects, nor does the character have an advisor trait.", this->get_identifier(), this->get_character_type()->get_identifier()));
+				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but its character type (\"{}\") has no advisor modifier or effects, nor does the character have modifier or effects of their own, or an advisor trait.", this->get_identifier(), this->get_character_type()->get_identifier()));
 			}
 			break;
 		}
