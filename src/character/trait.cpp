@@ -5,6 +5,7 @@
 #include "character/character_attribute.h"
 #include "character/trait_type.h"
 #include "script/condition/and_condition.h"
+#include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 
@@ -71,6 +72,10 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
 		this->scaled_advisor_modifier = std::move(modifier);
+	} else if (tag == "advisor_effects") {
+		auto effect_list = std::make_unique<metternich::effect_list<const country>>();
+		database::process_gsml_data(effect_list, scope);
+		this->advisor_effects = std::move(effect_list);
 	} else if (tag == "governor_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const province>>();
 		database::process_gsml_data(modifier, scope);
@@ -112,6 +117,10 @@ void trait::check() const
 
 	if (this->get_scaled_advisor_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
 		throw std::runtime_error(std::format("Trait \"{}\" with scaled advisor modifier has no attribute.", this->get_identifier()));
+	}
+
+	if (this->get_advisor_effects() != nullptr) {
+		this->get_advisor_effects()->check();
 	}
 
 	if (this->get_scaled_governor_modifier() != nullptr && this->get_attribute() == character_attribute::none) {

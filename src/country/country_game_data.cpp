@@ -4340,10 +4340,17 @@ void country_game_data::check_advisors()
 
 				if (this->get_next_advisor()->get_advisor_effects() != nullptr) {
 					context ctx(this->country);
-					this->get_next_advisor()->get_advisor_effects()->do_effects(country, ctx);
+					this->get_next_advisor()->get_advisor_effects()->do_effects(this->country, ctx);
 				} else if (this->get_next_advisor()->get_character_type()->get_advisor_effects() != nullptr) {
 					context ctx(this->country);
-					this->get_next_advisor()->get_character_type()->get_advisor_effects()->do_effects(country, ctx);
+					this->get_next_advisor()->get_character_type()->get_advisor_effects()->do_effects(this->country, ctx);
+				}
+
+				for (const trait *trait : this->get_next_advisor()->get_game_data()->get_traits()) {
+					if (trait->get_advisor_effects() != nullptr) {
+						context ctx(this->country);
+						trait->get_advisor_effects()->do_effects(this->country, ctx);
+					}
 				}
 
 				emit advisor_recruited(this->get_next_advisor());

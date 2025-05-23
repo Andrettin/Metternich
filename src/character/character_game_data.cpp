@@ -383,6 +383,11 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 		if (trait->get_advisor_modifier() != nullptr || trait->get_scaled_advisor_modifier() != nullptr) {
 			this->apply_trait_advisor_modifier(trait, this->get_country(), multiplier);
 		}
+
+		if (trait->get_advisor_effects() != nullptr) {
+			context ctx(this->get_country());
+			trait->get_advisor_effects()->do_effects(this->get_country(), ctx);
+		}
 	}
 	if (this->is_governor()) {
 		assert_throw(this->get_country() != nullptr);
@@ -660,6 +665,14 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 			}
 
 			str += trait->get_scaled_advisor_modifier()->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
+		}
+
+		if (trait->get_advisor_effects() != nullptr) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += trait->get_advisor_effects()->get_effects_string(country, read_only_context(country));
 		}
 	}
 

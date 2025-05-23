@@ -19,6 +19,9 @@ template <typename scope_type>
 class and_condition;
 
 template <typename scope_type>
+class effect_list;
+
+template <typename scope_type>
 class modifier;
 
 class trait final : public named_data_entry, public data_type<trait>
@@ -120,6 +123,11 @@ public:
 		return this->scaled_advisor_modifier.get();
 	}
 
+	const effect_list<const country> *get_advisor_effects() const
+	{
+		return this->advisor_effects.get();
+	}
+
 	const metternich::modifier<const province> *get_governor_modifier() const
 	{
 		return this->governor_modifier.get();
@@ -164,6 +172,7 @@ private:
 	std::unique_ptr<const metternich::modifier<const country>> scaled_ruler_modifier;
 	std::unique_ptr<const metternich::modifier<const country>> advisor_modifier;
 	std::unique_ptr<const metternich::modifier<const country>> scaled_advisor_modifier;
+	std::unique_ptr<const effect_list<const country>> advisor_effects;
 	std::unique_ptr<const metternich::modifier<const province>> governor_modifier;
 	std::unique_ptr<const metternich::modifier<const province>> scaled_governor_modifier;
 	std::unique_ptr<const metternich::modifier<const character>> leader_modifier;
