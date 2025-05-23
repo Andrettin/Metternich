@@ -8,6 +8,7 @@
 #include "character/character_role.h"
 #include "character/character_type.h"
 #include "character/trait.h"
+#include "character/trait_type.h"
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/country_rank.h"
@@ -4524,6 +4525,8 @@ bool country_game_data::has_incompatible_advisor_to(const character *advisor) co
 		return false;
 	}
 
+	const std::vector<const trait *> advisor_traits = advisor->get_game_data()->get_traits_of_type(trait_type::advisor);
+
 	//only one advisor with the same advisor type can be obtained (though advisors can be replaced with higher-skilled ones)
 	for (const character *other_advisor : this->get_advisors()) {
 		if (other_advisor->get_advisor_modifier() != nullptr || other_advisor->get_advisor_effects() != nullptr) {
@@ -4534,7 +4537,22 @@ bool country_game_data::has_incompatible_advisor_to(const character *advisor) co
 			continue;
 		}
 
+		if (other_advisor->get_game_data()->get_traits_of_type(trait_type::advisor) != advisor_traits) {
+			continue;
+		}
+
 		if (advisor->get_character_type()->get_scaled_advisor_modifier() != nullptr && advisor->get_game_data()->get_primary_attribute_value() > other_advisor->get_game_data()->get_primary_attribute_value()) {
+			continue;
+		}
+
+		bool has_better_attribute = false;
+		for (const trait *advisor_trait : advisor_traits) {
+			if (advisor_trait->get_scaled_advisor_modifier() != nullptr && advisor->get_game_data()->get_attribute_value(advisor_trait->get_attribute()) > other_advisor->get_game_data()->get_attribute_value(advisor_trait->get_attribute())) {
+				has_better_attribute = true;
+				break;
+			}
+		}
+		if (has_better_attribute) {
 			continue;
 		}
 
@@ -4550,13 +4568,19 @@ const character *country_game_data::get_replaced_advisor_for(const character *ad
 		return nullptr;
 	}
 
-	//only one advisor with the same advisor type can be obtained (though advisors can be replaced with higher-skilled ones)
+	const std::vector<const trait *> advisor_traits = advisor->get_game_data()->get_traits_of_type(trait_type::advisor);
+
+	//only one advisor with the same advisor trait can be obtained (though advisors can be replaced with higher-skilled ones)
 	for (const character *other_advisor : this->get_advisors()) {
 		if (other_advisor->get_advisor_modifier() != nullptr || other_advisor->get_advisor_effects() != nullptr) {
 			continue;
 		}
 
 		if (other_advisor->get_character_type() != advisor->get_character_type()) {
+			continue;
+		}
+
+		if (other_advisor->get_game_data()->get_traits_of_type(trait_type::advisor) != advisor_traits) {
 			continue;
 		}
 
