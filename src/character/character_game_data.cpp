@@ -537,13 +537,18 @@ std::string character_game_data::get_ruler_modifier_string(const metternich::cou
 {
 	assert_throw(this->character->get_role() == character_role::ruler);
 
-	std::string str = string::highlight(this->character->get_character_type()->get_name());
+	std::string str;
 
-	if (this->character->get_character_type()->get_ruler_modifier() != nullptr) {
-		str += "\n" + this->character->get_character_type()->get_ruler_modifier()->get_string(country, 1, 1);
-	}
-	if (this->character->get_character_type()->get_scaled_ruler_modifier() != nullptr) {
-		str += "\n" + this->character->get_character_type()->get_scaled_ruler_modifier()->get_string(country, this->get_primary_attribute_value(), 1);
+	if (this->character->get_character_type()->get_ruler_modifier() != nullptr || this->character->get_character_type()->get_scaled_ruler_modifier() != nullptr) {
+		str = string::highlight(this->character->get_character_type()->get_name());
+
+		if (this->character->get_character_type()->get_ruler_modifier() != nullptr) {
+			str += "\n" + this->character->get_character_type()->get_ruler_modifier()->get_string(country, 1, 1);
+		}
+
+		if (this->character->get_character_type()->get_scaled_ruler_modifier() != nullptr) {
+			str += "\n" + this->character->get_character_type()->get_scaled_ruler_modifier()->get_string(country, this->get_primary_attribute_value(), 1);
+		}
 	}
 
 	for (const trait *trait : this->get_traits()) {
