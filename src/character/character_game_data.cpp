@@ -384,7 +384,7 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 			this->apply_trait_advisor_modifier(trait, this->get_country(), multiplier);
 		}
 
-		if (trait->get_advisor_effects() != nullptr) {
+		if (trait->get_advisor_effects() != nullptr && multiplier > 0) {
 			context ctx(this->get_country());
 			trait->get_advisor_effects()->do_effects(this->get_country(), ctx);
 		}
