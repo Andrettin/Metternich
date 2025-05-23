@@ -26,8 +26,6 @@ public:
 
 	virtual bool check_assignment(const scope_type *scope, const read_only_context &ctx) const override
 	{
-		Q_UNUSED(ctx);
-
 		const country *country = condition<scope_type>::get_scope_country(scope);
 
 		return country == this->get_country(ctx);
