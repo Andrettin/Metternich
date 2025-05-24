@@ -651,12 +651,22 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 			continue;
 		}
 
+		if (!trait->has_hidden_name()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += string::highlight(trait->get_name());
+		}
+
+		const size_t indent = trait->has_hidden_name() ? 0 : 1;
+
 		if (trait->get_advisor_modifier() != nullptr) {
 			if (!str.empty()) {
 				str += "\n";
 			}
 
-			str += trait->get_advisor_modifier()->get_string(country);
+			str += trait->get_advisor_modifier()->get_string(country, 1, indent);
 		}
 
 		if (trait->get_scaled_advisor_modifier() != nullptr) {
@@ -664,7 +674,7 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 				str += "\n";
 			}
 
-			str += trait->get_scaled_advisor_modifier()->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
+			str += trait->get_scaled_advisor_modifier()->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), indent);
 		}
 
 		if (trait->get_advisor_effects() != nullptr) {
@@ -672,7 +682,7 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 				str += "\n";
 			}
 
-			str += trait->get_advisor_effects()->get_effects_string(country, read_only_context(country));
+			str += trait->get_advisor_effects()->get_effects_string(country, read_only_context(country), indent);
 		}
 	}
 
