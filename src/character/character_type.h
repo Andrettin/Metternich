@@ -40,7 +40,6 @@ public:
 	explicit character_type(const std::string &identifier);
 	~character_type();
 
-	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	metternich::advisor_category get_advisor_category() const
@@ -73,31 +72,6 @@ public:
 		return this->obsolescence_technology;
 	}
 
-	const modifier<const country> *get_ruler_modifier() const
-	{
-		return this->ruler_modifier.get();
-	}
-
-	const modifier<const country> *get_scaled_ruler_modifier() const
-	{
-		return this->scaled_ruler_modifier.get();
-	}
-
-	const modifier<const country> *get_advisor_modifier() const
-	{
-		return this->advisor_modifier.get();
-	}
-
-	const modifier<const country> *get_scaled_advisor_modifier() const
-	{
-		return this->scaled_advisor_modifier.get();
-	}
-
-	const effect_list<const country> *get_advisor_effects() const
-	{
-		return this->advisor_effects.get();
-	}
-
 signals:
 	void changed();
 
@@ -108,11 +82,6 @@ private:
 	const metternich::civilian_unit_class *civilian_unit_class = nullptr;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
-	std::unique_ptr<modifier<const country>> ruler_modifier;
-	std::unique_ptr<modifier<const country>> scaled_ruler_modifier;
-	std::unique_ptr<modifier<const country>> advisor_modifier;
-	std::unique_ptr<modifier<const country>> scaled_advisor_modifier;
-	std::unique_ptr<const effect_list<const country>> advisor_effects;
 };
 
 }

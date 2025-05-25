@@ -255,14 +255,11 @@ void character::check() const
 				log::log_error(std::format("Advisor character \"{}\" has {} advisor {}, more than the expected maximum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", max_advisor_traits));
 			}
 
-			if (this->get_character_type()->get_advisor_modifier() == nullptr
-				&& this->get_character_type()->get_scaled_advisor_modifier() == nullptr
-				&& this->get_character_type()->get_advisor_effects() == nullptr
-				&& this->get_advisor_modifier() == nullptr
+			if (this->get_advisor_modifier() == nullptr
 				&& this->get_advisor_effects() == nullptr
 				&& advisor_trait_count == 0
 			) {
-				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but its character type (\"{}\") has no advisor modifier or effects, nor does the character have modifier or effects of their own, or an advisor trait.", this->get_identifier(), this->get_character_type()->get_identifier()));
+				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but they do not the have a modifier or effects of their own, nor an advisor trait.", this->get_identifier()));
 			}
 			break;
 		}
