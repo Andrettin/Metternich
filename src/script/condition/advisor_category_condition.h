@@ -14,7 +14,7 @@ public:
 	explicit advisor_category_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<character>(condition_operator)
 	{
-		this->advisor_category = enum_converter<metternich::advisor_category>::to_enum(value);
+		this->advisor_category = magic_enum::enum_cast<metternich::advisor_category>(value).value();
 	}
 
 	virtual const std::string &get_class_identifier() const override

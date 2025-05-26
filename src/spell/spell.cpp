@@ -26,7 +26,7 @@ void spell::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "military_unit_categories") {
 		for (const std::string &value : values) {
-			this->military_unit_categories.push_back(enum_converter<military_unit_category>::to_enum(value));
+			this->military_unit_categories.push_back(magic_enum::enum_cast<military_unit_category>(value).value());
 		}
 	} else if (tag == "effects") {
 		scope.for_each_element([&](const gsml_property &property) {

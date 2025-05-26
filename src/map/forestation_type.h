@@ -1,7 +1,5 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class forestation_type {
@@ -10,7 +8,5 @@ enum class forestation_type {
 };
 
 }
-
-extern template class archimedes::enum_converter<metternich::forestation_type>;
 
 Q_DECLARE_METATYPE(metternich::forestation_type)

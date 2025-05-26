@@ -32,14 +32,14 @@ void trait::process_gsml_scope(const gsml_data &scope)
 			this->types.insert(magic_enum::enum_cast<trait_type>(value).value());
 		}
 		scope.for_each_property([&](const gsml_property &property) {
-			const character_attribute attribute = enum_converter<character_attribute>::to_enum(property.get_key());
+			const character_attribute attribute = magic_enum::enum_cast<character_attribute>(property.get_key()).value();
 			const int value = std::stoi(property.get_value());
 
 			this->attribute_bonuses[attribute] = value;
 		});
 	} else if (tag == "attribute_bonuses") {
 		scope.for_each_property([&](const gsml_property &property) {
-			const character_attribute attribute = enum_converter<character_attribute>::to_enum(property.get_key());
+			const character_attribute attribute = magic_enum::enum_cast<character_attribute>(property.get_key()).value();
 			const int value = std::stoi(property.get_value());
 
 			this->attribute_bonuses[attribute] = value;

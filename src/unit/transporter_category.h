@@ -1,7 +1,5 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class transporter_category {
@@ -12,7 +10,5 @@ enum class transporter_category {
 };
 
 }
-
-extern template class archimedes::enum_converter<metternich::transporter_category>;
 
 Q_DECLARE_METATYPE(metternich::transporter_category)

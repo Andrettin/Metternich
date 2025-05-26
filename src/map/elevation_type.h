@@ -1,7 +1,5 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class elevation_type {
@@ -13,7 +11,5 @@ enum class elevation_type {
 };
 
 }
-
-extern template class archimedes::enum_converter<metternich::elevation_type>;
 
 Q_DECLARE_METATYPE(metternich::elevation_type)

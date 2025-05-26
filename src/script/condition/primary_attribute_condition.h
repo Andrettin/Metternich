@@ -12,7 +12,7 @@ public:
 	explicit primary_attribute_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<character>(condition_operator)
 	{
-		this->attribute = enum_converter<character_attribute>::to_enum(value);
+		this->attribute = magic_enum::enum_cast<character_attribute>(value).value();
 	}
 
 	virtual const std::string &get_class_identifier() const override

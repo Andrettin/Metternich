@@ -28,9 +28,9 @@ public:
 		const std::string &value = property.get_value();
 
 		if (key == "category") {
-			this->category = enum_converter<military_unit_category>::to_enum(value);
+			this->category = magic_enum::enum_cast<military_unit_category>(value).value();
 		} else if (key == "stat") {
-			this->stat = enum_converter<military_unit_stat>::to_enum(value);
+			this->stat = magic_enum::enum_cast<military_unit_stat>(value).value();
 		} else if (key == "value") {
 			this->value = centesimal_int(value);
 		} else {

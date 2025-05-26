@@ -1,7 +1,5 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class technology_category {
@@ -40,7 +38,5 @@ inline std::string get_technology_category_name(const technology_category catego
 }
 
 }
-
-extern template class archimedes::enum_converter<metternich::technology_category>;
 
 Q_DECLARE_METATYPE(metternich::technology_category)

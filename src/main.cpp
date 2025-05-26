@@ -20,6 +20,7 @@
 #include "country/journal_entry.h"
 #include "country/law.h"
 #include "country/law_group.h"
+#include "country/tradition_category.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -59,14 +60,18 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "script/scripted_character_modifier.h"
+#include "spell/spell_target.h"
 #include "technology/technology.h"
+#include "technology/technology_category.h"
 #include "time/era.h"
 #include "ui/icon.h"
 #include "ui/icon_image_provider.h"
 #include "ui/interface_image_provider.h"
 #include "ui/portrait.h"
 #include "ui/portrait_image_provider.h"
+#include "unit/military_unit_category.h"
 #include "unit/military_unit_domain.h"
+#include "unit/transporter_category.h"
 #include "util/empty_image_provider.h"
 #include "util/exception_util.h"
 #include "util/gender.h"
@@ -134,27 +139,32 @@ int main(int argc, char **argv)
 
 		QQmlApplicationEngine engine;
 
-		enum_converter<advisor_category>();
-		enum_converter<character_attribute>();
-		enum_converter<diplomacy_state>();
-		enum_converter<elevation_type>();
-		enum_converter<food_type>();
-		enum_converter<forestation_type>();
 		enum_converter<gender>();
 		enum_converter<log_level>();
-		enum_converter<military_unit_domain>();
-		enum_converter<moisture_type>();
-		enum_converter<temperature_type>();
 
+		database::get()->register_enum<advisor_category>();
+		database::get()->register_enum<character_attribute>();
 		database::get()->register_enum<character_role>();
 		database::get()->register_enum<country_tier>();
 		database::get()->register_enum<country_type>();
 		database::get()->register_enum<cultural_group_rank>();
+		database::get()->register_enum<diplomacy_state>();
+		database::get()->register_enum<elevation_type>();
 		database::get()->register_enum<event_trigger>();
+		database::get()->register_enum<food_type>();
+		database::get()->register_enum<forestation_type>();
 		database::get()->register_enum<improvement_slot>();
+		database::get()->register_enum<military_unit_category>();
+		database::get()->register_enum<military_unit_domain>();
+		database::get()->register_enum<moisture_type>();
 		database::get()->register_enum<site_tier>();
 		database::get()->register_enum<site_type>();
+		database::get()->register_enum<spell_target>();
+		database::get()->register_enum<technology_category>();
+		database::get()->register_enum<temperature_type>();
+		database::get()->register_enum<tradition_category>();
 		database::get()->register_enum<trait_type>();
+		database::get()->register_enum<transporter_category>();
 
 		QCoro::Qml::registerTypes();
 

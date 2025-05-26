@@ -14,8 +14,8 @@ public:
 	explicit religion_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<scope_type>(condition_operator)
 	{
-		if (enum_converter<special_target_type>::has_value(value)) {
-			this->religion_target = enum_converter<special_target_type>::to_enum(value);
+		if (magic_enum::enum_contains<special_target_type>(value)) {
+			this->religion_target = magic_enum::enum_cast<special_target_type>(value).value();
 		} else {
 			this->religion_target = religion::get(value);
 		}
@@ -50,7 +50,7 @@ public:
 			return std::get<const religion *>(this->religion_target)->get_name() + " religion";
 		} else if (std::holds_alternative<special_target_type>(this->religion_target)) {
 			const special_target_type target_type = std::get<special_target_type>(this->religion_target);
-			return string::capitalized(enum_converter<special_target_type>::to_string(target_type)) + " scope religion";
+			return string::capitalized(std::string(magic_enum::enum_name(target_type))) + " scope religion";
 		} else {
 			assert_throw(false);
 			return std::string();

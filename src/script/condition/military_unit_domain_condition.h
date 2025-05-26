@@ -13,7 +13,7 @@ public:
 	explicit military_unit_domain_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<military_unit>(condition_operator)
 	{
-		this->military_unit_domain = enum_converter<metternich::military_unit_domain>::to_enum(value);
+		this->military_unit_domain = magic_enum::enum_cast<metternich::military_unit_domain>(value).value();
 	}
 
 	virtual const std::string &get_class_identifier() const override

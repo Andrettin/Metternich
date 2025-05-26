@@ -1,7 +1,5 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class military_unit_category {
@@ -141,7 +139,5 @@ inline bool is_leader_military_unit_category(const military_unit_category catego
 }
 
 }
-
-extern template class archimedes::enum_converter<metternich::military_unit_category>;
 
 Q_DECLARE_METATYPE(metternich::military_unit_category)

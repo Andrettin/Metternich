@@ -22,7 +22,7 @@ terrain_type *terrain_type::get_by_biome(const metternich::elevation_type elevat
 	terrain_type *terrain_type = terrain_type::try_get_by_biome(elevation_type, temperature_type, moisture_type, forestation_type);
 
 	if (terrain_type == nullptr) {
-		throw std::runtime_error("No terrain type found for " + enum_converter<metternich::elevation_type>::to_string(elevation_type) + ", " + enum_converter<metternich::temperature_type>::to_string(temperature_type) + ", " + enum_converter<metternich::moisture_type>::to_string(moisture_type) + ", " + enum_converter<metternich::forestation_type>::to_string(forestation_type) + " biome.");
+		throw std::runtime_error(std::format("No terrain type found for {}, {}, {}, {} biome", magic_enum::enum_name(elevation_type), magic_enum::enum_name(temperature_type), magic_enum::enum_name(moisture_type), magic_enum::enum_name(forestation_type)));
 	}
 
 	return terrain_type;

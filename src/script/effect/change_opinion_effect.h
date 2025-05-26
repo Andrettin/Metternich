@@ -30,8 +30,8 @@ public:
 		const std::string &value = property.get_value();
 
 		if (key == "target") {
-			if (enum_converter<special_target_type>::has_value(value)) {
-				this->target = enum_converter<special_target_type>::to_enum(value);
+			if (magic_enum::enum_contains<special_target_type>(value)) {
+				this->target = magic_enum::enum_cast<special_target_type>(value).value();
 			} else {
 				this->target = std::remove_const_t<scope_type>::get(value);
 			}

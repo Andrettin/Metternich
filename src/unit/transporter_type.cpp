@@ -22,7 +22,7 @@ void transporter_type::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "stats") {
 		scope.for_each_property([&](const gsml_property &property) {
-			const transporter_stat stat = enum_converter<transporter_stat>::to_enum(property.get_key());
+			const transporter_stat stat = magic_enum::enum_cast<transporter_stat>(property.get_key()).value();
 			const centesimal_int stat_value(property.get_value());
 			this->stats[stat] = stat_value;
 		});

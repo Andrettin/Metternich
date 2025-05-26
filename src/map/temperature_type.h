@@ -1,7 +1,5 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class temperature_type {
@@ -13,7 +11,5 @@ enum class temperature_type {
 };
 
 }
-
-extern template class archimedes::enum_converter<metternich::temperature_type>;
 
 Q_DECLARE_METATYPE(metternich::temperature_type)

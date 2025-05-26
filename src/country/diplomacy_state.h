@@ -1,7 +1,5 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class diplomacy_state {
@@ -72,7 +70,5 @@ inline bool is_vassalage_diplomacy_state(const diplomacy_state state)
 }
 
 }
-
-extern template class archimedes::enum_converter<metternich::diplomacy_state>;
 
 Q_DECLARE_METATYPE(metternich::diplomacy_state)

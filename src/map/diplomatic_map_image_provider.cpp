@@ -41,7 +41,7 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 			std::optional<diplomacy_state> diplomacy_state;
 			const std::string &diplomacy_state_identifier = id_list.at(2);
 			if (diplomacy_state_identifier != "empire") {
-				diplomacy_state = enum_converter<metternich::diplomacy_state>::to_enum(diplomacy_state_identifier);
+				diplomacy_state = magic_enum::enum_cast<metternich::diplomacy_state>(diplomacy_state_identifier).value();
 			}
 			
 			if (diplomacy_state.has_value()) {

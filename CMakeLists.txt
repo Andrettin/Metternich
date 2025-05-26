@@ -20,9 +20,7 @@ include_directories(
 )
 
 set(character_SRCS
-	src/character/advisor_category.cpp
 	src/character/character.cpp
-	src/character/character_attribute.cpp
 	src/character/character_container.cpp
 	src/character/character_game_data.cpp
 	src/character/character_type.cpp
@@ -48,7 +46,6 @@ set(country_SRCS
 	src/country/culture_base.cpp
 	src/country/culture_container.cpp
 	src/country/culture_history.cpp
-	src/country/diplomacy_state.cpp
 	src/country/government_group.cpp
 	src/country/government_type.cpp
 	src/country/government_type_container.cpp
@@ -63,7 +60,6 @@ set(country_SRCS
 	src/country/religion_container.cpp
 	src/country/subject_type.cpp
 	src/country/tradition.cpp
-	src/country/tradition_category.cpp
 	src/country/tradition_container.cpp
 	src/country/tradition_group.cpp
 	src/country/tradition_group_container.cpp
@@ -82,7 +78,6 @@ set(economy_SRCS
 	src/economy/commodity.cpp
 	src/economy/commodity_container.cpp
 	src/economy/expense_transaction.cpp
-	src/economy/food_type.cpp
 	src/economy/income_transaction.cpp
 	src/economy/production_type.cpp
 	src/economy/resource.cpp
@@ -133,8 +128,6 @@ set_source_files_properties(${language_SRCS} PROPERTIES UNITY_GROUP "language")
 
 set(map_SRCS
 	src/map/diplomatic_map_image_provider.cpp
-	src/map/elevation_type.cpp
-	src/map/forestation_type.cpp
 	src/map/map.cpp
 	src/map/map_country_model.cpp
 	src/map/map_generator.cpp
@@ -142,7 +135,6 @@ set(map_SRCS
 	src/map/map_province_model.cpp
 	src/map/map_site_model.cpp
 	src/map/map_template.cpp
-	src/map/moisture_type.cpp
 	src/map/province.cpp
 	src/map/province_container.cpp
 	src/map/province_game_data.cpp
@@ -157,7 +149,6 @@ set(map_SRCS
 	src/map/site_game_data.cpp
 	src/map/site_history.cpp
 	src/map/site_map_data.cpp
-	src/map/temperature_type.cpp
 	src/map/terrain_adjacency.cpp
 	src/map/terrain_feature.cpp
 	src/map/terrain_geodata_map.cpp
@@ -224,7 +215,6 @@ set(spell_SRCS
 	src/spell/spell.cpp
 	src/spell/spell_container.cpp
 	src/spell/spell_effect.cpp
-	src/spell/spell_target.cpp
 )
 source_group(spell FILES ${spell_SRCS})
 set_source_files_properties(${spell_SRCS} PROPERTIES UNITY_GROUP "spell")
@@ -232,7 +222,6 @@ set_source_files_properties(${spell_SRCS} PROPERTIES UNITY_GROUP "spell")
 set(technology_SRCS
 	src/technology/technological_period.cpp
 	src/technology/technology.cpp
-	src/technology/technology_category.cpp
 	src/technology/technology_container.cpp
 )
 source_group(technology FILES ${technology_SRCS})
@@ -263,18 +252,13 @@ set(unit_SRCS
 	src/unit/military_unit.cpp
 	src/unit/military_unit_class.cpp
 	src/unit/military_unit_class_container.cpp
-	src/unit/military_unit_domain.cpp
-	src/unit/military_unit_category.cpp
-	src/unit/military_unit_stat.cpp
 	src/unit/military_unit_type.cpp
 	src/unit/military_unit_type_container.cpp
 	src/unit/promotion.cpp
 	src/unit/promotion_container.cpp
 	src/unit/transporter.cpp
-	src/unit/transporter_category.cpp
 	src/unit/transporter_class.cpp
 	src/unit/transporter_class_container.cpp
-	src/unit/transporter_stat.cpp
 	src/unit/transporter_type.cpp
 	src/unit/transporter_type_container.cpp
 )
@@ -772,8 +756,8 @@ set(unit_HDRS
 	src/unit/military_unit.h
 	src/unit/military_unit_class.h
 	src/unit/military_unit_class_container.h
-	src/unit/military_unit_domain.h
 	src/unit/military_unit_category.h
+	src/unit/military_unit_domain.h
 	src/unit/military_unit_stat.h
 	src/unit/military_unit_type.h
 	src/unit/military_unit_type_container.h

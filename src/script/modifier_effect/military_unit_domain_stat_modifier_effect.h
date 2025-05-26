@@ -25,9 +25,9 @@ public:
 		const std::string &value = property.get_value();
 
 		if (key == "domain") {
-			this->domain = enum_converter<military_unit_domain>::to_enum(value);
+			this->domain = magic_enum::enum_cast<military_unit_domain>(value).value();
 		} else if (key == "stat") {
-			this->stat = enum_converter<military_unit_stat>::to_enum(value);
+			this->stat = magic_enum::enum_cast<military_unit_stat>(value).value();
 		} else if (key == "value") {
 			this->value = centesimal_int(value);
 		} else {

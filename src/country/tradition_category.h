@@ -1,7 +1,5 @@
 #pragma once
 
-#include "util/enum_converter.h"
-
 namespace metternich {
 
 enum class tradition_category {
@@ -25,7 +23,5 @@ inline std::string_view get_tradition_category_name(const tradition_category cat
 }
 
 }
-
-extern template class archimedes::enum_converter<metternich::tradition_category>;
 
 Q_DECLARE_METATYPE(metternich::tradition_category)

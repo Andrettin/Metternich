@@ -4,7 +4,6 @@
 #include "script/condition/condition.h"
 #include "script/target_variant.h"
 #include "util/assert_util.h"
-#include "util/enum_converter.h"
 
 namespace metternich {
 
@@ -45,7 +44,7 @@ public:
 			}
 		} else if (std::holds_alternative<special_target_type>(this->country_target)) {
 			const special_target_type target_type = std::get<special_target_type>(this->country_target);
-			return string::capitalized(enum_converter<special_target_type>::to_string(target_type)) + " scope country";
+			return string::capitalized(std::string(magic_enum::enum_name(target_type))) + " scope country";
 		} else {
 			assert_throw(false);
 			return std::string();

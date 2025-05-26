@@ -46,7 +46,7 @@ public:
 		} else if (key == "unit_class") {
 			this->unit_class = military_unit_class::get(value);
 		} else if (key == "category") {
-			this->category = enum_converter<military_unit_category>::to_enum(value);
+			this->category = magic_enum::enum_cast<military_unit_category>(value).value();
 		} else if (key == "count") {
 			this->count = std::stoi(value);
 		} else {

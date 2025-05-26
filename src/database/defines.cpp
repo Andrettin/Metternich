@@ -82,7 +82,7 @@ void defines::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const diplomacy_state diplomacy_state = enum_converter<metternich::diplomacy_state>::to_enum(child_tag);
+			const diplomacy_state diplomacy_state = magic_enum::enum_cast<metternich::diplomacy_state>(child_tag).value();
 			this->diplomacy_state_colors[diplomacy_state] = child_scope.to_color();
 		});
 	} else if (tag == "event_trigger_none_random_weights") {

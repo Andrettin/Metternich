@@ -44,7 +44,7 @@ public:
 		} else if (key == "unit_class") {
 			this->transporter_class = transporter_class::get(value);
 		} else if (key == "category") {
-			this->category = enum_converter<transporter_category>::to_enum(value);
+			this->category = magic_enum::enum_cast<transporter_category>(value).value();
 		} else if (key == "count") {
 			this->count = std::stoi(value);
 		} else {

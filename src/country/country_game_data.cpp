@@ -98,6 +98,8 @@
 
 #include "xbrz.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 country_game_data::country_game_data(metternich::country *country)
@@ -1614,7 +1616,7 @@ QString country_game_data::get_diplomacy_state_diplomatic_map_suffix(metternich:
 		return "empire";
 	}
 
-	return QString::fromStdString(enum_converter<diplomacy_state>::to_string(this->get_diplomacy_state(other_country)));
+	return QString::fromStdString(std::string(magic_enum::enum_name(this->get_diplomacy_state(other_country))));
 }
 
 bool country_game_data::at_war() const

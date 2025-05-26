@@ -23,7 +23,7 @@ void military_unit_type::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "stats") {
 		scope.for_each_property([&](const gsml_property &property) {
-			const military_unit_stat stat = enum_converter<military_unit_stat>::to_enum(property.get_key());
+			const military_unit_stat stat = magic_enum::enum_cast<military_unit_stat>(property.get_key()).value();
 			const centesimal_int stat_value(property.get_value());
 			this->stats[stat] = stat_value;
 		});

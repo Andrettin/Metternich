@@ -15,7 +15,7 @@ class ship_stat_modifier_effect final : public modifier_effect<const country>
 {
 public:
 	explicit ship_stat_modifier_effect(const std::string &stat_name, const std::string &value)
-		: modifier_effect(value), military_unit_stat(enum_converter<metternich::military_unit_stat>::to_enum(stat_name)), transporter_stat(enum_converter<metternich::transporter_stat>::to_enum(stat_name))
+		: modifier_effect(value), military_unit_stat(magic_enum::enum_cast<metternich::military_unit_stat>(stat_name).value()), transporter_stat(magic_enum::enum_cast<metternich::transporter_stat>(stat_name).value())
 	{
 	}
 

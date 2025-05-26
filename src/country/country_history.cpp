@@ -38,7 +38,7 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 			if (key == "country") {
 				other_country = country::get(value);
 			} else if (key == "state") {
-				state = enum_converter<diplomacy_state>::to_enum(value);
+				state = magic_enum::enum_cast<diplomacy_state>(value).value();
 			} else if (key == "subject_type") {
 				subject_type = subject_type::get(value);
 				state = diplomacy_state::vassal;

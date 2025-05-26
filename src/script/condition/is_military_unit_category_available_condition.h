@@ -11,7 +11,7 @@ public:
 	explicit is_military_unit_category_available_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<country>(condition_operator)
 	{
-		this->category = enum_converter<military_unit_category>::to_enum(value);
+		this->category = magic_enum::enum_cast<military_unit_category>(value).value();
 	}
 
 	virtual const std::string &get_class_identifier() const override

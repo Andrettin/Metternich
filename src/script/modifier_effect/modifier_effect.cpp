@@ -151,8 +151,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (key.ends_with(throughput_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - throughput_modifier_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - throughput_modifier_suffix.size()));
 			return std::make_unique<commodity_throughput_modifier_effect<scope_type>>(commodity, value);
-		} else if (key.ends_with(research_modifier_suffix) && enum_converter<technology_category>::has_value(key.substr(0, key.size() - research_modifier_suffix.size()))) {
-			const technology_category category = enum_converter<technology_category>::to_enum(key.substr(0, key.size() - research_modifier_suffix.size()));
+		} else if (key.ends_with(research_modifier_suffix) && magic_enum::enum_contains<technology_category>(key.substr(0, key.size() - research_modifier_suffix.size()))) {
+			const technology_category category = magic_enum::enum_cast<technology_category>(key.substr(0, key.size() - research_modifier_suffix.size())).value();
 			return std::make_unique<category_research_modifier_effect<scope_type>>(category, value);
 		} else if (key.ends_with(bonus_suffix) && population_type::try_get(key.substr(0, key.size() - bonus_suffix.size())) != nullptr) {
 			const population_type *population_type = population_type::get(key.substr(0, key.size() - bonus_suffix.size()));
@@ -183,16 +183,16 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			} else if (key.starts_with(merchant_ship_stat_modifier_prefix)) {
 				const std::string stat_name = key.substr(merchant_ship_stat_modifier_prefix.size(), key.size() - merchant_ship_stat_modifier_prefix.size() - military_unit_type_stat_modifier_suffix.size());
 
-				return std::make_unique<merchant_ship_stat_modifier_effect>(enum_converter<transporter_stat>::to_enum(stat_name), value);
+				return std::make_unique<merchant_ship_stat_modifier_effect>(magic_enum::enum_cast<transporter_stat>(stat_name).value(), value);
 			}
 
 			infix_pos = key.rfind(military_unit_type_stat_modifier_infix, suffix_pos - 1);
 			if (infix_pos != std::string::npos) {
 				if (
-					enum_converter<military_unit_stat>::has_value(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1))
+					magic_enum::enum_contains<military_unit_stat>(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1))
 					&& military_unit_type::try_get(key.substr(0, infix_pos)) != nullptr
 				) {
-					const military_unit_stat stat = enum_converter<military_unit_stat>::to_enum(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1));
+					const military_unit_stat stat = magic_enum::enum_cast<military_unit_stat>(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1)).value();
 
 					const military_unit_type *military_unit_type = military_unit_type::get(key.substr(0, infix_pos));
 
@@ -202,10 +202,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 				infix_pos = key.rfind(military_unit_type_stat_modifier_infix, infix_pos - 1);
 				if (
 					infix_pos != std::string::npos
-					&& enum_converter<military_unit_stat>::has_value(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1))
+					&& magic_enum::enum_contains<military_unit_stat>(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1))
 					&& military_unit_type::try_get(key.substr(0, infix_pos)) != nullptr
 				) {
-					const military_unit_stat stat = enum_converter<military_unit_stat>::to_enum(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1));
+					const military_unit_stat stat = magic_enum::enum_cast<military_unit_stat>(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1)).value();
 
 					const military_unit_type *military_unit_type = military_unit_type::get(key.substr(0, infix_pos));
 
@@ -227,8 +227,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	}
 
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, military_unit>) {
-		if (enum_converter<military_unit_stat>::has_value(key)) {
-			return std::make_unique<military_unit_stat_modifier_effect<scope_type>>(enum_converter<military_unit_stat>::to_enum(key), value);
+		if (magic_enum::enum_contains<military_unit_stat>(key)) {
+			return std::make_unique<military_unit_stat_modifier_effect<scope_type>>(magic_enum::enum_cast<military_unit_stat>(key).value(), value);
 		}
 	}
 
