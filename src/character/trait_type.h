@@ -7,7 +7,8 @@ enum class trait_type {
 	personality,
 	expertise,
 	ruler,
-	advisor
+	advisor,
+	governor
 };
 
 }

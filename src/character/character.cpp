@@ -246,10 +246,6 @@ void character::check() const
 			} else if (advisor_trait_count > max_advisor_traits) {
 				throw std::runtime_error(std::format("Advisor character \"{}\" has {} advisor {}, more than the expected maximum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", max_advisor_traits));
 			}
-
-			if (advisor_trait_count == 0) {
-				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but they have no advisor trait.", this->get_identifier()));
-			}
 			break;
 		}
 		case character_role::governor:
@@ -260,12 +256,16 @@ void character::check() const
 
 			std::vector<const trait *> governor_traits = this->get_traits();
 			std::erase_if(governor_traits, [](const trait *trait) {
-				return trait->get_governor_modifier() == nullptr;
+				return !trait->get_types().contains(trait_type::governor);
 			});
 			const int governor_trait_count = static_cast<int>(governor_traits.size());
+			const int min_governor_traits = defines::get()->get_min_traits_for_type(trait_type::governor);
+			const int max_governor_traits = defines::get()->get_max_traits_for_type(trait_type::governor);
 
-			if (governor_trait_count == 0) {
-				log::log_error(std::format("Governor character \"{}\" has no governor traits.", this->get_identifier()));
+			if (governor_trait_count < min_governor_traits) {
+				throw std::runtime_error(std::format("Governor character \"{}\" only has {} governor {}, less than the expected minimum of {}.", this->get_identifier(), governor_trait_count, governor_trait_count == 1 ? "trait" : "traits", min_governor_traits));
+			} else if (governor_trait_count > max_governor_traits) {
+				throw std::runtime_error(std::format("Governor character \"{}\" has {} governor {}, more than the expected maximum of {}.", this->get_identifier(), governor_trait_count, governor_trait_count == 1 ? "trait" : "traits", max_governor_traits));
 			}
 			break;
 		}

@@ -58,6 +58,8 @@ void character_game_data::on_setup_finished()
 		generated_trait_types.insert(generated_trait_types.begin(), trait_type::ruler);
 	} else if (this->character->get_role() == character_role::advisor) {
 		generated_trait_types.insert(generated_trait_types.begin(), trait_type::advisor);
+	} else if (this->character->get_role() == character_role::governor) {
+		generated_trait_types.insert(generated_trait_types.begin(), trait_type::governor);
 	}
 
 	bool success = true;
@@ -96,6 +98,12 @@ void character_game_data::on_setup_finished()
 		for (const trait *trait : this->get_traits_of_type(trait_type::advisor)) {
 			if (trait->get_advisor_modifier() == nullptr && trait->get_advisor_effects() == nullptr && trait->get_scaled_advisor_modifier() != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
 				throw std::runtime_error(std::format("Character \"{}\" is an advisor with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
+			}
+		}
+	} else if (this->character->get_role() == character_role::governor) {
+		for (const trait *trait : this->get_traits_of_type(trait_type::governor)) {
+			if (trait->get_governor_modifier() == nullptr && trait->get_scaled_governor_modifier() != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
+				throw std::runtime_error(std::format("Character \"{}\" is a governor with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
 			}
 		}
 	}
@@ -314,6 +322,10 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 		}
 
 		if (trait_type == trait_type::advisor && this->character->get_role() != character_role::advisor) {
+			continue;
+		}
+
+		if (trait_type == trait_type::governor && this->character->get_role() != character_role::governor) {
 			continue;
 		}
 
