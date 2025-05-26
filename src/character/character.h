@@ -210,16 +210,6 @@ public:
 
 	void add_rulable_country(country *country);
 
-	const modifier<const country> *get_advisor_modifier() const
-	{
-		return this->advisor_modifier.get();
-	}
-
-	const effect_list<const country> *get_advisor_effects() const
-	{
-		return this->advisor_effects.get();
-	}
-
 	const province *get_governable_province() const
 	{
 		return this->governable_province;
@@ -261,8 +251,6 @@ private:
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
 	std::unique_ptr<const and_condition<country>> conditions;
-	std::unique_ptr<const modifier<const country>> advisor_modifier;
-	std::unique_ptr<const effect_list<const country>> advisor_effects;
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;
 };

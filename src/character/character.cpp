@@ -120,14 +120,6 @@ void character::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<country>>();
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
-	} else if (tag == "advisor_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
-		database::process_gsml_data(modifier, scope);
-		this->advisor_modifier = std::move(modifier);
-	} else if (tag == "advisor_effects") {
-		auto effect_list = std::make_unique<metternich::effect_list<const country>>();
-		database::process_gsml_data(effect_list, scope);
-		this->advisor_effects = std::move(effect_list);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -250,16 +242,13 @@ void character::check() const
 			const int max_advisor_traits = defines::get()->get_max_traits_for_type(trait_type::advisor);
 
 			if (advisor_trait_count < min_advisor_traits) {
-				log::log_error(std::format("Advisor character \"{}\" only has {} advisor {}, less than the expected minimum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", min_advisor_traits));
+				throw std::runtime_error(std::format("Advisor character \"{}\" only has {} advisor {}, less than the expected minimum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", min_advisor_traits));
 			} else if (advisor_trait_count > max_advisor_traits) {
-				log::log_error(std::format("Advisor character \"{}\" has {} advisor {}, more than the expected maximum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", max_advisor_traits));
+				throw std::runtime_error(std::format("Advisor character \"{}\" has {} advisor {}, more than the expected maximum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", max_advisor_traits));
 			}
 
-			if (this->get_advisor_modifier() == nullptr
-				&& this->get_advisor_effects() == nullptr
-				&& advisor_trait_count == 0
-			) {
-				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but they do not the have a modifier or effects of their own, nor an advisor trait.", this->get_identifier()));
+			if (advisor_trait_count == 0) {
+				throw std::runtime_error(std::format("Character \"{}\" is an advisor, but they have no advisor trait.", this->get_identifier()));
 			}
 			break;
 		}
@@ -311,16 +300,6 @@ void character::check() const
 
 	if (this->get_role() != character_role::ruler && !this->get_rulable_countries().empty()) {
 		throw std::runtime_error(std::format("Character \"{}\" has rulable countries, but is not a ruler.", this->get_identifier()));
-	}
-
-	if (this->get_role() != character_role::advisor) {
-		if (this->advisor_modifier != nullptr) {
-			throw std::runtime_error(std::format("Character \"{}\" has an advisor modifier, but is not an advisor.", this->get_identifier()));
-		}
-
-		if (this->advisor_effects != nullptr) {
-			throw std::runtime_error(std::format("Character \"{}\" has advisor effects, but is not an advisor.", this->get_identifier()));
-		}
 	}
 
 	if (this->get_role() != character_role::governor && this->get_governable_province() != nullptr) {

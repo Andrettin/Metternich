@@ -4339,11 +4339,6 @@ void country_game_data::check_advisors()
 
 				this->add_advisor(this->get_next_advisor());
 
-				if (this->get_next_advisor()->get_advisor_effects() != nullptr) {
-					context ctx(this->country);
-					this->get_next_advisor()->get_advisor_effects()->do_effects(this->country, ctx);
-				}
-
 				for (const trait *trait : this->get_next_advisor()->get_game_data()->get_traits()) {
 					if (trait->get_advisor_effects() != nullptr) {
 						context ctx(this->country);
@@ -4446,11 +4441,8 @@ void country_game_data::choose_next_advisor()
 		for (const auto &[category, advisor] : potential_advisor_map) {
 			//consider advisors with special modifiers or effects to have maximum skill, for the purposes of preferring to select them
 			int advisor_skill = advisor->get_game_data()->get_primary_attribute_value();
-			if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr) {
-				advisor_skill = defines::get()->get_max_character_skill();
-			}
 			for (const trait *trait : advisor->get_game_data()->get_traits_of_type(trait_type::advisor)) {
-				if (trait->get_advisor_modifier() != nullptr && trait->get_scaled_advisor_modifier() == nullptr) {
+				if ((trait->get_advisor_modifier() != nullptr || trait->get_advisor_effects() != nullptr) && trait->get_scaled_advisor_modifier() == nullptr) {
 					advisor_skill = defines::get()->get_max_character_skill();
 					break;
 				}
@@ -4524,18 +4516,10 @@ bool country_game_data::can_recruit_advisor(const character *advisor) const
 
 bool country_game_data::has_incompatible_advisor_to(const character *advisor) const
 {
-	if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr) {
-		return false;
-	}
-
 	const std::vector<const trait *> advisor_traits = advisor->get_game_data()->get_traits_of_type(trait_type::advisor);
 
 	//only one advisor with the same advisor type can be obtained (though advisors can be replaced with higher-skilled ones)
 	for (const character *other_advisor : this->get_advisors()) {
-		if (other_advisor->get_advisor_modifier() != nullptr || other_advisor->get_advisor_effects() != nullptr) {
-			continue;
-		}
-
 		if (other_advisor->get_character_type() != advisor->get_character_type()) {
 			continue;
 		}
@@ -4563,18 +4547,10 @@ bool country_game_data::has_incompatible_advisor_to(const character *advisor) co
 
 const character *country_game_data::get_replaced_advisor_for(const character *advisor) const
 {
-	if (advisor->get_advisor_modifier() != nullptr || advisor->get_advisor_effects() != nullptr) {
-		return nullptr;
-	}
-
 	const std::vector<const trait *> advisor_traits = advisor->get_game_data()->get_traits_of_type(trait_type::advisor);
 
 	//only one advisor with the same advisor trait can be obtained (though advisors can be replaced with higher-skilled ones)
 	for (const character *other_advisor : this->get_advisors()) {
-		if (other_advisor->get_advisor_modifier() != nullptr || other_advisor->get_advisor_effects() != nullptr) {
-			continue;
-		}
-
 		if (other_advisor->get_character_type() != advisor->get_character_type()) {
 			continue;
 		}

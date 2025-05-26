@@ -605,22 +605,6 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 
 	std::string str;
 
-	if (this->character->get_advisor_modifier() != nullptr) {
-		str += this->character->get_advisor_modifier()->get_string(country);
-	}
-
-	if (this->character->get_advisor_effects() != nullptr) {
-		if (!str.empty()) {
-			str += '\n';
-		}
-
-		str += this->character->get_advisor_effects()->get_effects_string(country, read_only_context(country));
-	}
-
-	if (!str.empty()) {
-		return QString::fromStdString(str);
-	}
-
 	for (const trait *trait : this->get_traits()) {
 		if (trait->get_advisor_modifier() == nullptr && trait->get_scaled_advisor_modifier() == nullptr) {
 			continue;
@@ -679,14 +663,6 @@ void character_game_data::apply_advisor_modifier(const metternich::country *coun
 {
 	assert_throw(this->character->get_role() == character_role::advisor);
 	assert_throw(country != nullptr);
-
-	if (this->character->get_advisor_effects() != nullptr) {
-		return;
-	}
-
-	if (this->character->get_advisor_modifier() != nullptr) {
-		this->character->get_advisor_modifier()->apply(country, multiplier);
-	}
 
 	for (const trait *trait : this->get_traits()) {
 		this->apply_trait_advisor_modifier(trait, country, multiplier);
