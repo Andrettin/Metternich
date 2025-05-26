@@ -277,6 +277,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const country>) {
 		if (tag == "ai_building_desire") {
 			modifier_effect = std::make_unique<ai_building_desire_modifier_effect>();
+		} else if (tag == "building_cost_efficiency") {
+			modifier_effect = std::make_unique<building_cost_efficiency_modifier_effect>();
 		} else if (tag == "commodity_bonus_per_improvement") {
 			modifier_effect = std::make_unique<commodity_bonus_per_improvement_modifier_effect<scope_type>>();
 		} else if (tag == "commodity_bonus_per_settlement") {

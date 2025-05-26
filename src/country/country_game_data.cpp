@@ -5630,6 +5630,19 @@ void country_game_data::set_population_type_militancy_modifier(const population_
 	}
 }
 
+void country_game_data::set_building_class_cost_efficiency_modifier(const building_class *building_class, const int value)
+{
+	if (value == this->get_building_class_cost_efficiency_modifier(building_class)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->building_class_cost_efficiency_modifiers.erase(building_class);
+	} else {
+		this->building_class_cost_efficiency_modifiers[building_class] = value;
+	}
+}
+
 bool country_game_data::is_tile_explored(const QPoint &tile_pos) const
 {
 	const tile *tile = map::get()->get_tile(tile_pos);

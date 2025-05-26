@@ -252,7 +252,7 @@ commodity_map<int> building_type::get_commodity_costs_for_country(const country 
 		if (cost > 0) {
 			if (country->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
 				cost *= 100;
-				cost /= 100 + country->get_game_data()->get_building_cost_efficiency_modifier();
+				cost /= 100 + country->get_game_data()->get_building_cost_efficiency_modifier() + country->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
 			}
 
 			if (this->get_cost_factor() != nullptr) {

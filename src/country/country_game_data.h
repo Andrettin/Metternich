@@ -2122,6 +2122,24 @@ public:
 		this->building_cost_efficiency_modifier += change;
 	}
 
+	int get_building_class_cost_efficiency_modifier(const building_class *building_class) const
+	{
+		const auto find_iterator = this->building_class_cost_efficiency_modifiers.find(building_class);
+
+		if (find_iterator != this->building_class_cost_efficiency_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_building_class_cost_efficiency_modifier(const building_class *building_class, const int value);
+
+	void change_building_class_cost_efficiency_modifier(const building_class *building_class, const int value)
+	{
+		this->set_building_class_cost_efficiency_modifier(building_class, this->get_building_class_cost_efficiency_modifier(building_class) + value);
+	}
+
 	int get_wonder_cost_efficiency_modifier() const
 	{
 		return this->wonder_cost_efficiency_modifier;
@@ -2605,6 +2623,7 @@ private:
 	int advisor_cost_modifier = 0;
 	int leader_cost_modifier = 0;
 	int building_cost_efficiency_modifier = 0;
+	building_class_map<int> building_class_cost_efficiency_modifiers;
 	int wonder_cost_efficiency_modifier = 0;
 	int diplomatic_penalty_for_expansion_modifier = 0;
 	province_set explored_provinces;
