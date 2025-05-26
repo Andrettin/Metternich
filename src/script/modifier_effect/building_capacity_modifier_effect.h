@@ -28,8 +28,10 @@ public:
 		building_slot->change_capacity((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("{} Capacity", this->building_slot_type->get_name());
 	}
 

@@ -40,16 +40,11 @@ public:
 		scope->get_game_data()->change_improvement_commodity_bonus(this->improvement, this->commodity, (this->value * multiplier));
 	}
 
-	virtual std::string get_base_string() const override
-	{
-		return std::format("{} per {}", this->commodity->get_name(), this->improvement->get_name());
-	}
-
-	virtual std::string get_string(const scope_type *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_base_string(const scope_type *scope) const override
 	{
 		Q_UNUSED(scope);
 
-		return modifier_effect<scope_type>::get_string(multiplier, ignore_decimals);
+		return std::format("{} per {}", this->commodity->get_name(), this->improvement->get_name());
 	}
 
 	virtual bool are_decimals_relevant() const override

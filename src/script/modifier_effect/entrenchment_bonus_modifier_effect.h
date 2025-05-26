@@ -25,8 +25,10 @@ public:
 		scope->get_game_data()->change_entrenchment_bonus_modifier(change);
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return "Entrenchment Bonus";
 	}
 

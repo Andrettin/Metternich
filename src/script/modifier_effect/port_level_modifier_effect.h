@@ -24,8 +24,10 @@ public:
 		scope->get_game_data()->change_port_level((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const site *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return "Port Level";
 	}
 };

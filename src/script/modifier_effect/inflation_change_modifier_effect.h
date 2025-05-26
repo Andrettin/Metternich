@@ -24,8 +24,10 @@ public:
 		scope->get_game_data()->change_inflation_change(this->value * multiplier);
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return "Inflation Change";
 	}
 

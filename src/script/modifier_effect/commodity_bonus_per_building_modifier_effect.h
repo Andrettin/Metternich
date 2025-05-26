@@ -29,8 +29,10 @@ public:
 		scope->get_game_data()->change_building_commodity_bonus(this->building, this->commodity, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const scope_type *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("{} per {}", this->commodity->get_name(), this->building->get_name());
 	}
 
@@ -40,7 +42,7 @@ public:
 			return std::string();
 		}
 
-		return modifier_effect<scope_type>::get_string(multiplier, ignore_decimals);
+		return modifier_effect<scope_type>::get_string(scope, multiplier, ignore_decimals);
 	}
 
 private:

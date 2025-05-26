@@ -23,8 +23,10 @@ public:
 		scope->get_game_data()->change_output_modifier(this->value * multiplier);
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const scope_type *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return "Output";
 	}
 

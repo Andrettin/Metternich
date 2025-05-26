@@ -35,8 +35,10 @@ public:
 		scope->get_game_data()->change_ai_building_desire_modifier(this->building, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("AI {} Building Desire", this->building->get_name());
 	}
 

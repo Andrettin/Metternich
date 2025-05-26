@@ -24,8 +24,10 @@ public:
 		scope->get_game_data()->change_deployment_limit((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return "Deployment Limit";
 	}
 };

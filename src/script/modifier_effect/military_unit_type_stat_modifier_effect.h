@@ -28,8 +28,10 @@ public:
 		scope->get_game_data()->change_military_unit_type_stat_modifier(this->military_unit_type, this->stat, this->value * multiplier);
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("{} {}", this->military_unit_type->get_name(), get_military_unit_stat_name(this->stat));
 	}
 

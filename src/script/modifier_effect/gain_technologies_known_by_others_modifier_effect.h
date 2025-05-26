@@ -26,17 +26,19 @@ public:
 		scope->get_game_data()->change_gain_technologies_known_by_others_count((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return "Gain technologies acquired by 2 known countries";
 	}
 
-	virtual std::string get_string(const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const country *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(multiplier);
 		Q_UNUSED(ignore_decimals);
 
-		return this->get_base_string();
+		return this->get_base_string(scope);
 	}
 };
 

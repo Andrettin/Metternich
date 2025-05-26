@@ -23,8 +23,10 @@ public:
 		scope->get_game_data()->change_resource_output_modifier((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const scope_type *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return "Resource Output";
 	}
 

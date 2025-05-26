@@ -31,8 +31,10 @@ public:
 		scope->get_game_data()->change_commodity_bonus_for_tile_threshold(this->commodity, (this->value * multiplier).to_int(), this->threshold);
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const scope_type *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		if (this->threshold > 1) {
 			return std::format("{} per Tile Producing at Least {} {}", this->commodity->get_name(), this->threshold, this->commodity->get_name());
 		} else {

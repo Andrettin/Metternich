@@ -24,7 +24,7 @@ public:
 		scope->get_game_data()->change_building_cost_efficiency_modifier((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
 		return "Building Cost Efficiency";
 	}

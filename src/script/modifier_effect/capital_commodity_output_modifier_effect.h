@@ -26,8 +26,10 @@ public:
 		scope->get_game_data()->change_capital_commodity_output_modifier(this->commodity, this->value * multiplier);
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("Capital {} Output", this->commodity->get_name());
 	}
 

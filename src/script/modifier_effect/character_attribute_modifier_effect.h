@@ -26,8 +26,10 @@ public:
 		scope->get_game_data()->change_attribute_value(this->attribute, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const character *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::string(get_character_attribute_name(this->attribute));
 	}
 

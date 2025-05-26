@@ -35,8 +35,10 @@ public:
 		scope->get_game_data()->change_profession_capacity(this->profession, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const site *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("{} Capacity", profession->get_name());
 	}
 

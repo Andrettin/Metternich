@@ -27,8 +27,10 @@ public:
 		scope->get_game_data()->change_population_type_modifier_multiplier(this->population_type, this->value * multiplier / 100);
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("{} Bonus", string::get_singular_form(this->population_type->get_name()));
 	}
 

@@ -27,8 +27,10 @@ public:
 		scope->get_game_data()->change_category_research_modifier(this->category, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("{} Research", get_technology_category_name(this->category));
 	}
 

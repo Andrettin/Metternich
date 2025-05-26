@@ -27,17 +27,19 @@ public:
 		scope->get_game_data()->change_free_consulate_count(this->consulate, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
-		return std::format("Free {}", this->consulate->get_name());
+		Q_UNUSED(scope);
+
+		return std::format("Free {} with every known country", this->consulate->get_name());
 	}
 
-	virtual std::string get_string(const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const country *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(multiplier);
 		Q_UNUSED(ignore_decimals);
 
-		return std::format("Free {} with every known country", this->consulate->get_name());
+		return this->get_base_string(scope);
 	}
 
 private:

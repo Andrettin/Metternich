@@ -34,8 +34,10 @@ public:
 		}
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("Merchant Ship {}", get_transporter_stat_name(this->stat));
 	}
 

@@ -36,16 +36,11 @@ public:
 		scope->get_game_data()->change_commodity_demand(this->commodity, decimillesimal_int(this->value * multiplier));
 	}
 
-	virtual std::string get_base_string() const override
-	{
-		return std::format("{} Demand", this->commodity->get_name());
-	}
-
-	virtual std::string get_string(const country *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
 		Q_UNUSED(scope);
 
-		return modifier_effect::get_string(multiplier, ignore_decimals);
+		return std::format("{} Demand", this->commodity->get_name());
 	}
 
 	virtual bool are_decimals_relevant() const override

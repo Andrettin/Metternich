@@ -29,8 +29,10 @@ public:
 		scope->get_game_data()->change_commodity_output_modifier(this->commodity, this->value * multiplier);
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const scope_type *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("{} Output", this->commodity->get_name());
 	}
 

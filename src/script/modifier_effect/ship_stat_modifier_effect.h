@@ -40,8 +40,10 @@ public:
 		}
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("Ship {}", get_military_unit_stat_name(this->military_unit_stat));
 	}
 

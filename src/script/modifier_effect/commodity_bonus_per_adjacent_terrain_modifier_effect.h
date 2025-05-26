@@ -44,8 +44,10 @@ public:
 		scope->get_game_data()->change_base_commodity_output(this->commodity, this->value * adjacent_terrain_count * multiplier);
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(const site *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		if (this->commodity->is_storable()) {
 			return std::format("{} Output per Adjacent {}", this->commodity->get_name(), this->terrain->get_name());
 		} else {

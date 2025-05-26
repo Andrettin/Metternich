@@ -268,7 +268,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	throw std::runtime_error(std::format("Invalid property modifier effect: \"{}\".", key));
 }
 
-
 template <typename scope_type>
 std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_gsml_scope(const gsml_data &scope)
 {

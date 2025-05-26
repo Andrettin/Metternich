@@ -51,8 +51,10 @@ public:
 		}
 	}
 
-	virtual std::string get_base_string() const override
+	virtual std::string get_base_string(scope_type *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return std::format("{} {}", get_military_unit_category_name(this->category), get_military_unit_stat_name(this->stat));
 	}
 
