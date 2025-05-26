@@ -136,7 +136,6 @@ int main(int argc, char **argv)
 
 		enum_converter<advisor_category>();
 		enum_converter<character_attribute>();
-		enum_converter<cultural_group_rank>();
 		enum_converter<diplomacy_state>();
 		enum_converter<elevation_type>();
 		enum_converter<food_type>();
@@ -150,6 +149,7 @@ int main(int argc, char **argv)
 		database::get()->register_enum<character_role>();
 		database::get()->register_enum<country_tier>();
 		database::get()->register_enum<country_type>();
+		database::get()->register_enum<cultural_group_rank>();
 		database::get()->register_enum<event_trigger>();
 		database::get()->register_enum<improvement_slot>();
 		database::get()->register_enum<site_tier>();
