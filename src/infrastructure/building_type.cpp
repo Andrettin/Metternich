@@ -236,8 +236,22 @@ int building_type::get_wealth_cost_for_country(const country *country) const
 {
 	int cost = this->get_wealth_cost();
 
-	if (cost > 0 && this->get_cost_factor() != nullptr) {
-		cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+	if (cost > 0) {
+		if (country->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
+			const int cost_efficiency_modifier = country->get_game_data()->get_building_cost_efficiency_modifier() + country->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
+			if (cost_efficiency_modifier >= 0) {
+				cost *= 100;
+				cost /= 100 + cost_efficiency_modifier;
+			} else {
+				cost *= 100 + std::abs(cost_efficiency_modifier);
+				cost /= 100;
+			}
+		}
+
+		if (this->get_cost_factor() != nullptr) {
+			cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+		}
+
 		cost = std::max(1, cost);
 	}
 
