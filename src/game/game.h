@@ -112,7 +112,6 @@ public:
 	void apply_historical_population_units_to_site(const population_group_key &group_key, const int population_unit_count, const site *site);
 
 	QCoro::Task<void> on_setup_finished();
-	void adjust_food_production_for_country_populations();
 
 	Q_INVOKABLE QCoro::QmlTask do_turn()
 	{

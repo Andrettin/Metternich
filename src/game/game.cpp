@@ -248,8 +248,6 @@ QCoro::Task<void> game::start_coro()
 		map::get()->create_minimap_image();
 		co_await this->create_exploration_diplomatic_map_image();
 
-		this->adjust_food_production_for_country_populations();
-
 		for (const site *site : site::get_all()) {
 			if (!site->get_game_data()->is_on_map()) {
 				continue;
@@ -1407,79 +1405,6 @@ QCoro::Task<void> game::on_setup_finished()
 	}
 
 	emit setup_finished();
-}
-
-void game::adjust_food_production_for_country_populations()
-{
-	//increase food resource improvement and building levels to prevent starvation on game start to the extent possible
-	for (const country *country : this->get_countries()) {
-		int food_output = 0;
-
-		for (const auto &[commodity, output] : country->get_game_data()->get_commodity_outputs()) {
-			if (commodity->is_food()) {
-				food_output += output.to_int();
-			}
-		}
-
-		int net_food = food_output - country->get_game_data()->get_net_food_consumption();
-
-		if (net_food >= 0) {
-			continue;
-		}
-
-		static constexpr int max_resource_level = 4;
-
-		for (int i = 1; i <= max_resource_level; ++i) {
-			for (const province *province : country->get_game_data()->get_provinces()) {
-				//construct food resource improvements
-				for (const QPoint &resource_tile_pos : province->get_game_data()->get_resource_tiles()) {
-					tile *resource_tile = map::get()->get_tile(resource_tile_pos);
-					const site *resource_site = resource_tile->get_site();
-
-					if (resource_site->get_map_data()->get_type() != site_type::resource && resource_site->get_map_data()->get_type() != site_type::settlement) {
-						continue;
-					}
-
-					const resource *resource = resource_tile->get_resource();
-					assert_throw(resource != nullptr);
-
-					if (resource->get_commodity() != nullptr && !resource->get_commodity()->is_food()) {
-						continue;
-					}
-
-					for (const improvement *improvement : resource->get_improvements()) {
-						if (improvement->get_level() > i) {
-							continue;
-						}
-
-						if (!improvement->is_buildable_on_site(resource_site)) {
-							continue;
-						}
-
-						resource_site->get_game_data()->set_improvement(improvement->get_slot(), improvement);
-						++net_food;
-						break;
-					}
-
-					if (net_food >= 0) {
-						break;
-					}
-				}
-
-				if (net_food >= 0) {
-					break;
-				}
-			}
-
-			if (net_food >= 0) {
-				break;
-			}
-		}
-
-		for (const province *province : country->get_game_data()->get_provinces()) {
-			province->get_game_data()->allocate_population();
-		}
-	}
 }
 
 QCoro::Task<void> game::do_turn_coro()
