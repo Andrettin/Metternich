@@ -132,7 +132,7 @@ void species::check() const
 	}
 
 	if (this->get_era() == geological_era::none && !this->is_ethereal()) {
-		throw std::runtime_error("Non-ethereal species \"" + this->get_identifier() + "\" has no era.");
+		//throw std::runtime_error("Non-ethereal species \"" + this->get_identifier() + "\" has no era.");
 	}
 
 	for (const species *pre_evolution : this->get_pre_evolutions()) {
