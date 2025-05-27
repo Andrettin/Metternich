@@ -211,6 +211,14 @@ set(script_modifier_effect_SRCS
 source_group(script\\modifier_effect FILES ${script_modifier_effect_SRCS})
 set_source_files_properties(${script_modifier_effect_SRCS} PROPERTIES UNITY_GROUP "script_modifier_effect")
 
+set(species_SRCS
+	src/species/species.cpp
+	src/species/taxon.cpp
+	src/species/taxon_base.cpp
+)
+source_group(species FILES ${species_SRCS})
+set_source_files_properties(${species_SRCS} PROPERTIES UNITY_GROUP "species")
+
 set(spell_SRCS
 	src/spell/spell.cpp
 	src/spell/spell_container.cpp
@@ -285,6 +293,7 @@ set(metternich_SRCS
 	${script_condition_SRCS}
 	${script_effect_SRCS}
 	${script_modifier_effect_SRCS}
+	${species_SRCS}
 	${spell_SRCS}
 	${technology_SRCS}
 	${ui_SRCS}
@@ -711,6 +720,15 @@ set(script_modifier_effect_HDRS
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})
 
+set(species_HDRS
+	src/species/geological_era.h
+	src/species/species.h
+	src/species/taxon.h
+	src/species/taxon_base.h
+	src/species/taxonomic_rank.h
+)
+source_group(species FILES ${species_HDRS})
+
 set(spell_HDRS
 	src/spell/damage_spell_effect.h
 	src/spell/healing_spell_effect.h
@@ -794,6 +812,7 @@ set(metternich_HDRS
 	${script_condition_HDRS}
 	${script_effect_HDRS}
 	${script_modifier_effect_HDRS}
+	${species_HDRS}
 	${spell_HDRS}
 	${technology_HDRS}
 	${ui_HDRS}

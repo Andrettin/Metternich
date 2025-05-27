@@ -5,6 +5,7 @@
 #include "map/province_container.h"
 #include "map/route_container.h"
 #include "map/terrain_geodata_map.h"
+#include "util/geocoordinate.h"
 
 namespace metternich {
 

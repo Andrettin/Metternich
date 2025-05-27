@@ -60,6 +60,8 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "script/scripted_character_modifier.h"
+#include "species/geological_era.h"
+#include "species/taxonomic_rank.h"
 #include "spell/spell_target.h"
 #include "technology/technology.h"
 #include "technology/technology_category.h"
@@ -153,6 +155,7 @@ int main(int argc, char **argv)
 		database::get()->register_enum<event_trigger>();
 		database::get()->register_enum<food_type>();
 		database::get()->register_enum<forestation_type>();
+		database::get()->register_enum<geological_era>();
 		database::get()->register_enum<improvement_slot>();
 		database::get()->register_enum<military_unit_category>();
 		database::get()->register_enum<military_unit_domain>();
@@ -160,6 +163,7 @@ int main(int argc, char **argv)
 		database::get()->register_enum<site_tier>();
 		database::get()->register_enum<site_type>();
 		database::get()->register_enum<spell_target>();
+		database::get()->register_enum<taxonomic_rank>();
 		database::get()->register_enum<technology_category>();
 		database::get()->register_enum<temperature_type>();
 		database::get()->register_enum<tradition_category>();
