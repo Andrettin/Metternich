@@ -18,9 +18,11 @@
 #include "map/province.h"
 #include "map/site.h"
 #include "map/site_type.h"
+#include "population/phenotype.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
+#include "species/species.h"
 #include "technology/technology.h"
 #include "time/calendar.h"
 #include "unit/civilian_unit_class.h"
@@ -129,6 +131,10 @@ void character::initialize()
 {
 	if (this->get_phenotype() == nullptr && this->get_culture() != nullptr) {
 		this->phenotype = this->get_culture()->get_default_phenotype();
+	}
+
+	if (this->get_species() == nullptr && this->get_phenotype() != nullptr) {
+		this->species = this->get_phenotype()->get_species();
 	}
 
 	if (this->get_surname().empty() && this->get_dynasty() != nullptr) {
@@ -310,13 +316,21 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has a holdable site, but is not a landholder.", this->get_identifier()));
 	}
 
-	assert_throw(this->get_culture() != nullptr);
+	if (this->get_species() == nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has no species.", this->get_identifier()));
+	}
+
+	if (this->get_culture() == nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has no culture.", this->get_identifier()));
+	}
 
 	if (this->get_religion() == nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has no religion.", this->get_identifier()));
 	}
 
-	assert_throw(this->get_phenotype() != nullptr);
+	if (this->get_phenotype() == nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has no phenotype.", this->get_identifier()));
+	}
 
 	if (this->get_home_settlement() == nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has no home settlement.", this->get_identifier()));

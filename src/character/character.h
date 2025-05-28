@@ -13,6 +13,7 @@ Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/phenotype.h")
+Q_MOC_INCLUDE("species/species.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
@@ -36,6 +37,7 @@ class portrait;
 class province;
 class religion;
 class site;
+class species;
 class technology;
 class trait;
 enum class character_attribute;
@@ -58,6 +60,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::dynasty* dynasty MEMBER dynasty NOTIFY changed)
 	Q_PROPERTY(metternich::character_role role MEMBER role READ get_role NOTIFY changed)
 	Q_PROPERTY(const metternich::character_type* character_type MEMBER character_type READ get_character_type NOTIFY changed)
+	Q_PROPERTY(metternich::species* species MEMBER species NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
@@ -132,6 +135,11 @@ public:
 	const military_unit_category get_military_unit_category() const;
 	const civilian_unit_class *get_civilian_unit_class() const;
 	const civilian_unit_type *get_civilian_unit_type() const;
+
+	const metternich::species *get_species() const
+	{
+		return this->species;
+	}
 
 	const metternich::culture *get_culture() const
 	{
@@ -237,6 +245,7 @@ private:
 	metternich::dynasty *dynasty = nullptr;
 	metternich::character_role role;
 	const metternich::character_type *character_type = nullptr;
+	metternich::species *species = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	metternich::phenotype *phenotype = nullptr;
