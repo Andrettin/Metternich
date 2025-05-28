@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "character/character_role.h"
 #include "character/dynasty.h"
+#include "character/starting_age_category.h"
 #include "character/trait_type.h"
 #include "country/consulate.h"
 #include "country/country.h"
@@ -163,6 +164,7 @@ int main(int argc, char **argv)
 		database::get()->register_enum<site_tier>();
 		database::get()->register_enum<site_type>();
 		database::get()->register_enum<spell_target>();
+		database::get()->register_enum<starting_age_category>();
 		database::get()->register_enum<taxonomic_rank>();
 		database::get()->register_enum<technology_category>();
 		database::get()->register_enum<temperature_type>();

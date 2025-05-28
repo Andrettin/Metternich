@@ -313,6 +313,7 @@ set(character_HDRS
 	src/character/character_type.h
 	src/character/character_type_container.h
 	src/character/dynasty.h
+	src/character/starting_age_category.h
 	src/character/trait.h
 	src/character/trait_type.h
 )
