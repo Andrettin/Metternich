@@ -156,6 +156,11 @@ public:
 		return this->phenotype;
 	}
 
+	virtual int get_adulthood_age() const override;
+	virtual int get_venerable_age() const override;
+	virtual const dice &get_maximum_age_modifier() const override;
+	virtual const dice &get_starting_age_modifier() const override;
+
 	virtual bool is_immortal() const override
 	{
 		return false;

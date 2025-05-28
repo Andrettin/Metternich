@@ -8,6 +8,7 @@
 #include "character/character_role.h"
 #include "character/character_type.h"
 #include "character/dynasty.h"
+#include "character/starting_age_category.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "country/country.h"
@@ -365,15 +366,13 @@ bool character::initialize_dates_from_children()
 		return false;
 	}
 
-	const int adulthood_age = 15; //FIXME: make it variable according to character species
-	if (adulthood_age == 0) {
-		return false;
-	}
+	assert_throw(this->get_species() != nullptr);
 
-	const int middle_age = 35; //FIXME: make it variable according to character species
-	if (middle_age == 0) {
-		return false;
-	}
+	const int adulthood_age = this->get_species()->get_adulthood_age();
+	assert_throw(adulthood_age != 0);
+
+	const int middle_age = this->get_species()->get_middle_age();
+	assert_throw(middle_age != 0);
 
 	QDate earliest_child_birth_date;
 
@@ -432,15 +431,13 @@ bool character::initialize_dates_from_parents()
 			continue;
 		}
 
-		const int parent_adulthood_age = 15; //FIXME: make it variable according to character species
-		if (parent_adulthood_age == 0) {
-			continue;
-		}
+		assert_throw(this->get_species() != nullptr);
 
-		const int parent_middle_age = 35; //FIXME: make it variable according to character species
-		if (parent_middle_age == 0) {
-			continue;
-		}
+		const int parent_adulthood_age = parent->get_species()->get_adulthood_age();
+		assert_throw(parent_adulthood_age != 0);
+
+		const int parent_middle_age = parent->get_species()->get_middle_age();
+		assert_throw(parent_middle_age != 0);
 
 		if (!latest_parent_birth_date.isValid() || parent->get_birth_date() > latest_parent_birth_date) {
 			latest_parent_birth_date = parent->get_birth_date();
@@ -496,6 +493,30 @@ const civilian_unit_type *character::get_civilian_unit_type() const
 	}
 
 	return nullptr;
+}
+
+int character::get_adulthood_age() const
+{
+	assert_throw(this->get_species() != nullptr);
+	return this->get_species()->get_adulthood_age();
+}
+
+int character::get_venerable_age() const
+{
+	assert_throw(this->get_species() != nullptr);
+	return this->get_species()->get_venerable_age();
+}
+
+const dice &character::get_maximum_age_modifier() const
+{
+	assert_throw(this->get_species() != nullptr);
+	return this->get_species()->get_maximum_age_modifier();
+}
+
+const dice &character::get_starting_age_modifier() const
+{
+	assert_throw(this->get_species() != nullptr);
+	return this->get_species()->get_starting_age_modifier(this->get_character_type() ? this->get_character_type()->get_starting_age_category() : starting_age_category::intuitive);
 }
 
 character_attribute character::get_primary_attribute() const

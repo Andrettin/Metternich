@@ -2,6 +2,7 @@
 
 #include "species/taxon_base.h"
 
+#include "character/starting_age_category.h"
 #include "database/gsml_data.h"
 #include "language/fallback_name_generator.h"
 #include "language/gendered_name_generator.h"
@@ -25,7 +26,14 @@ void taxon_base::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "given_names") {
+	if (tag == "starting_age_modifiers") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->starting_age_modifiers[magic_enum::enum_cast<starting_age_category>(key).value()] = dice(value);
+		});
+	} else if (tag == "given_names") {
 		if (this->given_name_generator == nullptr) {
 			this->given_name_generator = std::make_unique<gendered_name_generator>();
 		}
@@ -109,6 +117,87 @@ bool taxon_base::is_ethereal() const
 	}
 
 	return false;
+}
+
+int taxon_base::get_adulthood_age() const
+{
+	if (this->adulthood_age != 0) {
+		return this->adulthood_age;
+	}
+
+	if (this->get_supertaxon() != nullptr) {
+		return this->get_supertaxon()->get_adulthood_age();
+	}
+
+	return this->adulthood_age;
+}
+
+int taxon_base::get_middle_age() const
+{
+	if (this->middle_age != 0) {
+		return this->middle_age;
+	}
+
+	if (this->get_supertaxon() != nullptr) {
+		return this->get_supertaxon()->get_middle_age();
+	}
+
+	return this->middle_age;
+}
+
+int taxon_base::get_old_age() const
+{
+	if (this->old_age != 0) {
+		return this->old_age;
+	}
+
+	if (this->get_supertaxon() != nullptr) {
+		return this->get_supertaxon()->get_old_age();
+	}
+
+	return this->old_age;
+}
+
+int taxon_base::get_venerable_age() const
+{
+	if (this->venerable_age != 0) {
+		return this->venerable_age;
+	}
+
+	if (this->get_supertaxon() != nullptr) {
+		return this->get_supertaxon()->get_venerable_age();
+	}
+
+	return this->venerable_age;
+}
+
+const dice &taxon_base::get_maximum_age_modifier() const
+{
+	if (!this->maximum_age_modifier.is_null()) {
+		return this->maximum_age_modifier;
+	}
+
+	if (this->get_supertaxon() != nullptr) {
+		return this->get_supertaxon()->get_maximum_age_modifier();
+	}
+
+	return this->maximum_age_modifier;
+}
+
+const dice &taxon_base::get_starting_age_modifier(const starting_age_category category) const
+{
+	const auto find_iterator = this->starting_age_modifiers.find(category);
+
+	if (find_iterator != this->starting_age_modifiers.end()) {
+		return find_iterator->second;
+	}
+
+	if (this->get_supertaxon() != nullptr) {
+		return this->get_supertaxon()->get_starting_age_modifier(category);
+	}
+
+	static constexpr dice dice;
+	return dice;
 }
 
 const name_generator *taxon_base::get_given_name_generator(const gender gender) const
