@@ -5,6 +5,7 @@
 
 namespace metternich {
 
+class phenotype;
 class taxon;
 enum class geological_era;
 enum class taxonomic_rank;
@@ -93,6 +94,16 @@ public:
 		return this->evolutions;
 	}
 
+	const std::vector<const phenotype *> &get_phenotypes() const
+	{
+		return this->phenotypes;
+	}
+
+	void add_phenotype(const phenotype *phenotype)
+	{
+		this->phenotypes.push_back(phenotype);
+	}
+
 private:
 	std::string specific_name;
 	geological_era era;
@@ -102,6 +113,7 @@ private:
 	bool domestic = false;
 	std::vector<const species *> pre_evolutions; //species from which this one can evolve
 	std::vector<const species *> evolutions; //species to which this one can evolve
+	std::vector<const phenotype *> phenotypes;
 };
 
 }

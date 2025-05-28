@@ -5,11 +5,14 @@
 
 namespace metternich {
 
+class species;
+
 class phenotype final : public named_data_entry, public data_type<phenotype>
 {
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
+	Q_PROPERTY(metternich::species* species MEMBER species NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "phenotype";
@@ -28,11 +31,17 @@ public:
 		return this->color;
 	}
 
+	metternich::species *get_species() const
+	{
+		return this->species;
+	}
+
 signals:
 	void changed();
 
 private:
 	QColor color;
+	metternich::species *species = nullptr;
 };
 
 }

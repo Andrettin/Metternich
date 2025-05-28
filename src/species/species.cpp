@@ -128,7 +128,7 @@ void species::process_gsml_scope(const gsml_data &scope)
 void species::check() const
 {
 	if (this->get_supertaxon() == nullptr) {
-		throw std::runtime_error("Species \"" + this->get_identifier() + "\" has no supertaxon.");
+		throw std::runtime_error(std::format("Species \"{}\" has no supertaxon.", this->get_identifier()));
 	}
 
 	if (this->get_era() == geological_era::none && !this->is_ethereal()) {
@@ -139,6 +139,10 @@ void species::check() const
 		if (this->get_era() != geological_era::none && pre_evolution->get_era() != geological_era::none && this->get_era() <= pre_evolution->get_era()) {
 			throw std::runtime_error("Species \"" + this->get_identifier() + "\" is set to evolve from \"" + pre_evolution->get_identifier() + "\", but is from the same or an earlier era than the latter.");
 		}
+	}
+
+	if (this->is_sapient() && this->get_phenotypes().empty()) {
+		throw std::runtime_error(std::format("Sapient species \"{}\" has no phenotypes.", this->get_identifier()));
 	}
 }
 
