@@ -4,8 +4,8 @@
 
 #include "country/culture.h"
 #include "country/religion.h"
-#include "population/phenotype.h"
 #include "population/population_type.h"
+#include "species/phenotype.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
 

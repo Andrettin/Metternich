@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "population/phenotype.h"
+#include "species/phenotype.h"
 
 #include "species/species.h"
 #include "util/assert_util.h"

@@ -1,8 +1,8 @@
 #include "metternich.h"
 
-#include "population/phenotype_container.h"
+#include "species/phenotype_container.h"
 
-#include "population/phenotype.h"
+#include "species/phenotype.h"
 
 namespace metternich {
 

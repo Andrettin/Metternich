@@ -10,7 +10,7 @@
 #include "unit/transporter_class_container.h"
 #include "util/qunique_ptr.h"
 
-Q_MOC_INCLUDE("population/phenotype.h")
+Q_MOC_INCLUDE("species/phenotype.h")
 
 namespace archimedes {
 	class gendered_name_generator;

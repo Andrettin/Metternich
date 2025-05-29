@@ -162,8 +162,6 @@ source_group(map FILES ${map_SRCS})
 set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
 set(population_SRCS
-	src/population/phenotype.cpp
-	src/population/phenotype_container.cpp
 	src/population/population.cpp
 	src/population/population_class.cpp
 	src/population/population_class_container.cpp
@@ -212,6 +210,8 @@ source_group(script\\modifier_effect FILES ${script_modifier_effect_SRCS})
 set_source_files_properties(${script_modifier_effect_SRCS} PROPERTIES UNITY_GROUP "script_modifier_effect")
 
 set(species_SRCS
+	src/species/phenotype.cpp
+	src/species/phenotype_container.cpp
 	src/species/species.cpp
 	src/species/taxon.cpp
 	src/species/taxon_base.cpp
@@ -469,8 +469,6 @@ set(map_HDRS
 source_group(map FILES ${map_HDRS})
 
 set(population_HDRS
-	src/population/phenotype.h
-	src/population/phenotype_container.h
 	src/population/population.h
 	src/population/population_class.h
 	src/population/population_class_container.h
@@ -723,6 +721,8 @@ source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})
 
 set(species_HDRS
 	src/species/geological_era.h
+	src/species/phenotype.h
+	src/species/phenotype_container.h
 	src/species/species.h
 	src/species/taxon.h
 	src/species/taxon_base.h

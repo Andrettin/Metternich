@@ -3,8 +3,8 @@
 #include "country/culture_container.h"
 #include "country/ideology_container.h"
 #include "country/religion_container.h"
-#include "population/phenotype_container.h"
 #include "population/population_type_container.h"
+#include "species/phenotype_container.h"
 #include "util/fractional_int.h"
 
 namespace metternich {
