@@ -5,11 +5,15 @@
 
 namespace metternich {
 
+class character;
 class culture;
 class phenotype;
 class taxon;
 enum class geological_era;
 enum class taxonomic_rank;
+
+template <typename scope_type>
+class modifier;
 
 class species final : public taxon_base, public data_type<species>
 {
@@ -111,6 +115,11 @@ public:
 		this->cultures.push_back(culture);
 	}
 
+	const metternich::modifier<const character> *get_modifier() const
+	{
+		return this->modifier.get();
+	}
+
 private:
 	std::string specific_name;
 	geological_era era;
@@ -121,6 +130,7 @@ private:
 	std::vector<const species *> evolutions; //species to which this one can evolve
 	std::vector<const phenotype *> phenotypes;
 	std::vector<const culture *> cultures;
+	std::unique_ptr<const metternich::modifier<const character>> modifier;
 };
 
 }

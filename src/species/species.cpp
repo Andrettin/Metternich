@@ -3,6 +3,7 @@
 #include "species/species.h"
 
 #include "character/starting_age_category.h"
+#include "script/modifier.h"
 #include "species/geological_era.h"
 #include "species/taxon.h"
 #include "species/taxonomic_rank.h"
@@ -112,6 +113,10 @@ species::species(const std::string &identifier)
 {
 }
 
+species::~species()
+{
+}
+
 void species::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
@@ -123,6 +128,10 @@ void species::process_gsml_scope(const gsml_data &scope)
 			this->pre_evolutions.push_back(other_species);
 			other_species->evolutions.push_back(this);
 		}
+	} else if (tag == "modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const character>>();
+		database::process_gsml_data(modifier, scope);
+		this->modifier = std::move(modifier);
 	} else {
 		taxon_base::process_gsml_scope(scope);
 	}

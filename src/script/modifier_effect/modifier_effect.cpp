@@ -71,7 +71,11 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 	static const std::string bonus_suffix = "_bonus";
 
-	if constexpr (std::is_same_v<scope_type, const country>) {
+	if constexpr (std::is_same_v<scope_type, const character>) {
+		if (magic_enum::enum_contains<character_attribute>(key)) {
+			return std::make_unique<character_attribute_modifier_effect>(magic_enum::enum_cast<character_attribute>(key).value(), value);
+		}
+	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		static const std::string building_capacity_modifier_suffix = "_capacity";
 		static const std::string capital_commodity_bonus_prefix = "capital_";
 		static const std::string commodity_bonus_per_population_suffix = "_bonus_per_population";

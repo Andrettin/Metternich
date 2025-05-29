@@ -22,6 +22,7 @@
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "script/scripted_character_modifier.h"
+#include "species/species.h"
 #include "spell/spell.h"
 #include "ui/portrait.h"
 #include "unit/military_unit.h"
@@ -49,6 +50,10 @@ character_game_data::character_game_data(const metternich::character *character)
 
 void character_game_data::on_setup_finished()
 {
+	if (this->character->get_species()->get_modifier() != nullptr) {
+		this->character->get_species()->get_modifier()->apply(this->character, 1);
+	}
+
 	for (const trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);
 	}
