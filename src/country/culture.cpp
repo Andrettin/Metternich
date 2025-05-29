@@ -6,6 +6,7 @@
 #include "infrastructure/building_class.h"
 #include "population/population_class.h"
 #include "script/condition/and_condition.h"
+#include "species/species.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/random.h"
@@ -25,7 +26,13 @@ void culture::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "derived_cultures") {
+	if (tag == "species") {
+		for (const std::string &value : values) {
+			metternich::species *species = species::get(value);
+			species->add_culture(this);
+			this->species.push_back(species);
+		}
+	} else if (tag == "derived_cultures") {
 		for (const std::string &value : values) {
 			this->derived_cultures.push_back(culture::get(value));
 		}
@@ -51,6 +58,10 @@ void culture::initialize()
 void culture::check() const
 {
 	assert_throw(this->get_color().isValid());
+
+	if (this->get_species().empty()) {
+		throw std::runtime_error(std::format("Culture \"{}\" has no species set for it.", this->get_identifier()));
+	}
 
 	if (this->get_default_phenotype() == nullptr) {
 		throw std::runtime_error("Culture \"" + this->get_identifier() + "\" has no default phenotype.");

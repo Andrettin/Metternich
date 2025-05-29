@@ -2,9 +2,12 @@
 
 #include "species/species.h"
 
+#include "character/starting_age_category.h"
 #include "species/geological_era.h"
 #include "species/taxon.h"
 #include "species/taxonomic_rank.h"
+
+#include <magic_enum/magic_enum_utility.hpp>
 
 namespace metternich {
 
@@ -143,6 +146,22 @@ void species::check() const
 
 	if (this->is_sapient() && this->get_phenotypes().empty()) {
 		throw std::runtime_error(std::format("Sapient species \"{}\" has no phenotypes.", this->get_identifier()));
+	}
+
+	if (this->is_sapient()) {
+		magic_enum::enum_for_each<starting_age_category>([&](const starting_age_category category) {
+			if (category == starting_age_category::none) {
+				return;
+			}
+
+			if (this->get_starting_age_modifier(category).is_null()) {
+				throw std::runtime_error(std::format("Sapient species \"{}\" has no starting age modifier for starting age category \"{}\".", this->get_identifier(), magic_enum::enum_name(category)));
+			}
+		});
+
+		if (this->get_cultures().empty()) {
+			throw std::runtime_error(std::format("Sapient species \"{}\" has no cultures set for it.", this->get_identifier()));
+		}
 	}
 }
 

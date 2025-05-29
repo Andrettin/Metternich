@@ -7,6 +7,7 @@ namespace metternich {
 
 class cultural_group;
 class population_unit;
+class species;
 
 template <typename scope_type>
 class and_condition;
@@ -43,6 +44,11 @@ public:
 		return this->surname_first;
 	}
 
+	const std::vector<const metternich::species *> &get_species() const
+	{
+		return this->species;
+	}
+
 	const std::vector<const culture *> &get_derived_cultures() const
 	{
 		return this->derived_cultures;
@@ -59,6 +65,7 @@ signals:
 private:
 	QColor color;
 	bool surname_first = false;
+	std::vector<const metternich::species *> species; //species which can have this culture
 	std::vector<const culture *> derived_cultures;
 	std::unique_ptr<const and_condition<population_unit>> derivation_conditions;
 };

@@ -5,6 +5,7 @@
 
 namespace metternich {
 
+class culture;
 class phenotype;
 class taxon;
 enum class geological_era;
@@ -29,6 +30,7 @@ public:
 	static std::vector<std::string> get_name_list(const std::vector<const species *> &species_list);
 
 	explicit species(const std::string &identifier);
+	~species();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
@@ -60,11 +62,6 @@ public:
 	geological_era get_era() const
 	{
 		return this->era;
-	}
-
-	world *get_homeworld() const
-	{
-		return this->homeworld;
 	}
 
 	bool is_sapient() const
@@ -104,16 +101,26 @@ public:
 		this->phenotypes.push_back(phenotype);
 	}
 
+	const std::vector<const culture *> &get_cultures() const
+	{
+		return this->cultures;
+	}
+
+	void add_culture(const culture *culture)
+	{
+		this->cultures.push_back(culture);
+	}
+
 private:
 	std::string specific_name;
 	geological_era era;
-	world *homeworld = nullptr;
 	bool sapient = false;
 	bool asexual = false;
 	bool domestic = false;
 	std::vector<const species *> pre_evolutions; //species from which this one can evolve
 	std::vector<const species *> evolutions; //species to which this one can evolve
 	std::vector<const phenotype *> phenotypes;
+	std::vector<const culture *> cultures;
 };
 
 }

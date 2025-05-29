@@ -225,7 +225,11 @@ phenotype *culture_base::get_default_phenotype() const
 		return this->default_phenotype;
 	}
 
-	return this->get_group()->get_default_phenotype();
+	if (this->get_group() != nullptr) {
+		return this->get_group()->get_default_phenotype();
+	}
+
+	return nullptr;
 }
 
 
