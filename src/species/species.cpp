@@ -29,7 +29,6 @@ void species::process_database(const bool definition)
 				phenotype->set_name(species->get_name());
 				phenotype->set_species(species);
 				phenotype->set_color(species->get_color());
-				species->add_phenotype(phenotype);
 			}
 		}
 	}

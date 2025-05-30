@@ -17,10 +17,6 @@ void phenotype::initialize()
 		this->color = random::get()->generate_color();
 	}
 
-	if (this->get_species() != nullptr && !vector::contains(this->get_species()->get_phenotypes(), this)) {
-		this->species->add_phenotype(this);
-	}
-
 	named_data_entry::initialize();
 }
 
@@ -33,6 +29,18 @@ void phenotype::check() const
 	if (this->get_species() == nullptr) {
 		throw std::runtime_error(std::format("Phenotype \"{}\" has no species.", this->get_identifier()));
 	}
+}
+
+void phenotype::set_species(metternich::species *species)
+{
+	if (species == this->get_species()) {
+		return;
+	}
+	
+	assert_throw(species != nullptr);
+	this->species = species;
+	
+	this->species->add_phenotype(this);
 }
 
 }

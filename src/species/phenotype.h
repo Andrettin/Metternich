@@ -12,7 +12,7 @@ class phenotype final : public named_data_entry, public data_type<phenotype>
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
-	Q_PROPERTY(metternich::species* species MEMBER species NOTIFY changed)
+	Q_PROPERTY(metternich::species* species READ get_species WRITE set_species NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "phenotype";
@@ -41,10 +41,7 @@ public:
 		return this->species;
 	}
 
-	void set_species(metternich::species *species)
-	{
-		this->species = species;
-	}
+	void set_species(metternich::species *species);
 
 signals:
 	void changed();
