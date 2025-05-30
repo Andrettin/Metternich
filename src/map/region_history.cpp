@@ -9,6 +9,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
+#include "species/phenotype.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -17,7 +18,19 @@ void region_history::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "population_groups") {
+	if (tag == "phenotype_weights") {
+		this->phenotype_weights.clear();
+
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const phenotype *phenotype = phenotype::get(key);
+
+			const std::string &value = property.get_value();
+			const int64_t weight = decimal_int(value).get_value();
+
+			this->phenotype_weights[phenotype] = weight;
+		});
+	} else if (tag == "population_groups") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key_str = property.get_key();
 			const population_group_key key(key_str);
@@ -38,13 +51,17 @@ void region_history::process_gsml_scope(const gsml_data &scope)
 
 void region_history::distribute_population()
 {
-	if (this->get_literacy_rate() != 0) {
+	if (this->get_literacy_rate() != 0 || !this->get_phenotype_weights().empty()) {
 		for (const province *province : this->region->get_provinces()) {
 			if (province->is_water_zone()) {
 				continue;
 			}
 
 			province_history *province_history = province->get_history();
+
+			if (province_history->get_phenotype_weights().empty() && !this->get_phenotype_weights().empty()) {
+				province_history->set_phenotype_weights(this->get_phenotype_weights());
+			}
 
 			if (province_history->get_literacy_rate() == 0) {
 				province_history->set_literacy_rate(this->get_literacy_rate());

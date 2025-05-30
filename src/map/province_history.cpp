@@ -2,12 +2,17 @@
 
 #include "map/province_history.h"
 
+#include "country/culture.h"
 #include "database/gsml_data.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
+#include "species/phenotype.h"
+#include "util/assert_util.h"
+#include "util/map_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -15,7 +20,19 @@ void province_history::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "population_groups") {
+	if (tag == "phenotype_weights") {
+		this->phenotype_weights.clear();
+
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const phenotype *phenotype = phenotype::get(key);
+
+			const std::string &value = property.get_value();
+			const int64_t weight = decimal_int(value).get_value();
+
+			this->phenotype_weights[phenotype] = weight;
+		});
+	} else if (tag == "population_groups") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key_str = property.get_key();
 			const population_group_key key(key_str);
@@ -32,6 +49,20 @@ void province_history::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry_history::process_gsml_scope(scope);
 	}
+}
+
+std::vector<const phenotype *> province_history::get_weighted_phenotypes_for_culture(const metternich::culture *culture) const
+{
+	assert_throw(culture != nullptr);
+
+	phenotype_map<int64_t> phenotype_weights = this->get_phenotype_weights();
+
+	std::erase_if(phenotype_weights, [culture](const auto & element) {
+		const auto &[key, value] = element;
+		return !vector::contains(culture->get_species(), key->get_species());
+	});
+
+	return archimedes::map::to_weighted_vector(phenotype_weights);
 }
 
 void province_history::initialize_population()

@@ -2,6 +2,7 @@
 
 #include "database/data_entry_history.h"
 #include "population/population_group_map.h"
+#include "species/phenotype_container.h"
 
 namespace metternich {
 
@@ -20,6 +21,11 @@ public:
 	}
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+
+	const phenotype_map<int64_t> &get_phenotype_weights() const
+	{
+		return this->phenotype_weights;
+	}
 
 	int get_population() const
 	{
@@ -53,6 +59,7 @@ public:
 
 private:
 	const metternich::region *region = nullptr;
+	phenotype_map<int64_t> phenotype_weights;
 	population_group_map<int> population_groups;
 	centesimal_int literacy_rate;
 };

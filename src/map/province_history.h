@@ -2,6 +2,7 @@
 
 #include "database/data_entry_history.h"
 #include "population/population_group_map.h"
+#include "species/phenotype_container.h"
 #include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/country.h")
@@ -45,6 +46,18 @@ public:
 	{
 		return this->religion;
 	}
+
+	const phenotype_map<int64_t> &get_phenotype_weights() const
+	{
+		return this->phenotype_weights;
+	}
+
+	void set_phenotype_weights(const phenotype_map<int64_t> &weights)
+	{
+		this->phenotype_weights = weights;
+	}
+
+	std::vector<const phenotype *> get_weighted_phenotypes_for_culture(const metternich::culture *culture) const;
 
 	int get_population() const
 	{
@@ -117,6 +130,7 @@ private:
 	country *owner = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
+	phenotype_map<int64_t> phenotype_weights;
 	population_group_map<int> population_groups;
 	population_group_map<int> lower_bound_population_groups;
 	centesimal_int literacy_rate;

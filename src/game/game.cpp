@@ -1294,10 +1294,17 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 	assert_throw(religion != nullptr);
 
 	const phenotype *phenotype = group_key.phenotype;
+	std::vector<const metternich::phenotype *> weighted_phenotypes;
 	if (phenotype == nullptr) {
-		phenotype = vector::get_random(culture->get_weighted_phenotypes());
+		if (culture->get_default_phenotype() != nullptr && province_history->get_phenotype_weights().empty()) {
+			phenotype = culture->get_default_phenotype();
+		} else if (!province_history->get_phenotype_weights().empty()) {
+			weighted_phenotypes = province_history->get_weighted_phenotypes_for_culture(culture);
+		} else {
+			log::log_error(std::format("Province \"{}\" has no phenotype weights.", province->get_identifier()));
+			return;
+		}
 	}
-	assert_throw(phenotype != nullptr);
 
 	if (population_type == nullptr) {
 		const population_class *literate_population_class = site->get_game_data()->get_default_literate_population_class();
@@ -1317,7 +1324,12 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 				const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
 
 				for (int i = 0; i < literate_population_unit_count; ++i) {
-					site_game_data->create_population_unit(literate_population_type, culture, religion, phenotype);
+					const metternich::phenotype *population_unit_phenotype = phenotype;
+					if (population_unit_phenotype == nullptr && !weighted_phenotypes.empty()) {
+						population_unit_phenotype = vector::get_random(weighted_phenotypes);
+					}
+
+					site_game_data->create_population_unit(literate_population_type, culture, religion, population_unit_phenotype);
 				}
 			}
 		}
@@ -1328,7 +1340,12 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 	assert_throw(population_type != nullptr);
 
 	for (int i = 0; i < population_unit_count; ++i) {
-		site_game_data->create_population_unit(population_type, culture, religion, phenotype);
+		const metternich::phenotype *population_unit_phenotype = phenotype;
+		if (population_unit_phenotype == nullptr && !weighted_phenotypes.empty()) {
+			population_unit_phenotype = vector::get_random(weighted_phenotypes);
+		}
+
+		site_game_data->create_population_unit(population_type, culture, religion, population_unit_phenotype);
 	}
 }
 
