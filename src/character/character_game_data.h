@@ -87,6 +87,8 @@ public:
 	void change_attribute_value(const character_attribute attribute, const int change);
 	int get_primary_attribute_value() const;
 
+	std::set<character_attribute> get_main_attributes() const;
+
 	const std::vector<const trait *> &get_traits() const
 	{
 		return this->traits;

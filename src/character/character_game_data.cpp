@@ -276,6 +276,23 @@ int character_game_data::get_primary_attribute_value() const
 	return this->get_attribute_value(this->character->get_primary_attribute());
 }
 
+std::set<character_attribute> character_game_data::get_main_attributes() const
+{
+	std::set<character_attribute> attributes;
+
+	if (this->character->get_primary_attribute() != character_attribute::none) {
+		attributes.insert(this->character->get_primary_attribute());
+	}
+
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_attribute() != character_attribute::none) {
+			attributes.insert(trait->get_attribute());
+		}
+	}
+
+	return attributes;
+}
+
 QVariantList character_game_data::get_traits_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_traits());
@@ -339,11 +356,10 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 		}
 	}
 
-	// characters cannot gain a trait which would reduce their primary attribute below 1
-	const character_attribute primary_attribute = this->character->get_primary_attribute();
-	if (primary_attribute != character_attribute::none) {
-		const int trait_primary_attribute_bonus = trait->get_attribute_bonus(primary_attribute);
-		if (trait_primary_attribute_bonus < 0 && (this->get_primary_attribute_value() + trait_primary_attribute_bonus) <= 0) {
+	// characters cannot gain a trait which would reduce their main attributes below 1
+	for (const character_attribute attribute : this->get_main_attributes()) {
+		const int trait_primary_attribute_bonus = trait->get_attribute_bonus(attribute);
+		if (trait_primary_attribute_bonus < 0 && (this->get_attribute_value(attribute) + trait_primary_attribute_bonus) <= 0) {
 			return false;
 		}
 	}
