@@ -20,6 +20,7 @@ class species final : public taxon_base, public data_type<species>
 	Q_OBJECT
 
 	Q_PROPERTY(QString specific_name READ get_specific_name_qstring)
+	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 	Q_PROPERTY(metternich::geological_era era MEMBER era READ get_era)
 	Q_PROPERTY(bool sapient MEMBER sapient READ is_sapient)
 	Q_PROPERTY(bool asexual MEMBER asexual READ is_asexual)
@@ -29,6 +30,10 @@ public:
 	static constexpr const char class_identifier[] = "species";
 	static constexpr const char property_class_identifier[] = "metternich::species*";
 	static constexpr const char database_folder[] = "species";
+
+	static const std::set<std::string> database_dependencies;
+
+	static void process_database(const bool definition);
 
 	static std::map<const taxon *, int> get_supertaxon_counts(const std::vector<const species *> &source_species_list, const std::vector<const taxon *> &taxons);
 	static std::vector<std::string> get_name_list(const std::vector<const species *> &species_list);
@@ -61,6 +66,11 @@ public:
 	virtual const std::string &get_common_name() const override
 	{
 		return this->get_name();
+	}
+
+	const QColor &get_color() const
+	{
+		return this->color;
 	}
 
 	geological_era get_era() const
@@ -122,6 +132,7 @@ public:
 
 private:
 	std::string specific_name;
+	QColor color;
 	geological_era era;
 	bool sapient = false;
 	bool asexual = false;

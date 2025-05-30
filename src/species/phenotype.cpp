@@ -6,6 +6,7 @@
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/random.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -16,7 +17,7 @@ void phenotype::initialize()
 		this->color = random::get()->generate_color();
 	}
 
-	if (this->get_species() != nullptr) {
+	if (this->get_species() != nullptr && !vector::contains(this->get_species()->get_phenotypes(), this)) {
 		this->species->add_phenotype(this);
 	}
 

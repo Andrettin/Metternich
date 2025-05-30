@@ -5,12 +5,35 @@
 #include "character/starting_age_category.h"
 #include "script/modifier.h"
 #include "species/geological_era.h"
+#include "species/phenotype.h"
 #include "species/taxon.h"
 #include "species/taxonomic_rank.h"
 
 #include <magic_enum/magic_enum_utility.hpp>
 
 namespace metternich {
+
+const std::set<std::string> species::database_dependencies = {
+	//species need to be defined after phenotypes, so that post-definition they can automatically create a phenotype for themselves if they don't have any
+	phenotype::class_identifier
+};
+
+void species::process_database(const bool definition)
+{
+	data_type::process_database(definition);
+
+	if (!definition) {
+		for (species *species : species::get_all()) {
+			if (species->get_phenotypes().empty()) {
+				metternich::phenotype *phenotype = phenotype::add(species->get_identifier(), species->get_module());
+				phenotype->set_name(species->get_name());
+				phenotype->set_species(species);
+				phenotype->set_color(species->get_color());
+				species->add_phenotype(phenotype);
+			}
+		}
+	}
+}
 
 std::map<const taxon *, int> species::get_supertaxon_counts(const std::vector<const species *> &species_list, const std::vector<const taxon *> &taxons)
 {
@@ -153,8 +176,8 @@ void species::check() const
 		}
 	}
 
-	if (this->is_sapient() && this->get_phenotypes().empty()) {
-		throw std::runtime_error(std::format("Sapient species \"{}\" has no phenotypes.", this->get_identifier()));
+	if (this->get_phenotypes().empty()) {
+		throw std::runtime_error(std::format("Species \"{}\" has no phenotypes.", this->get_identifier()));
 	}
 
 	if (this->is_sapient()) {

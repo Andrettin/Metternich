@@ -83,7 +83,7 @@ void map_generator::generate()
 			const population_type *population_type = culture->get_population_class_type(population_class);
 
 			for (int i = 0; i < population_unit_count; ++i) {
-				settlement->get_game_data()->create_population_unit(population_type, culture, religion, culture->get_default_phenotype());
+				settlement->get_game_data()->create_population_unit(population_type, culture, religion, vector::get_random(culture->get_weighted_phenotypes()));
 			}
 		}
 	}

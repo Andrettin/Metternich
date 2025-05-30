@@ -63,7 +63,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::species* species MEMBER species NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
-	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype NOTIFY changed)
+	Q_PROPERTY(const metternich::phenotype* phenotype MEMBER phenotype READ get_phenotype NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_settlement MEMBER home_settlement NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_site MEMBER home_site NOTIFY changed)
@@ -253,7 +253,7 @@ private:
 	metternich::species *species = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
-	metternich::phenotype *phenotype = nullptr;
+	const metternich::phenotype *phenotype = nullptr;
 	metternich::portrait *portrait = nullptr;
 	const site *home_settlement = nullptr;
 	const site *home_site = nullptr;

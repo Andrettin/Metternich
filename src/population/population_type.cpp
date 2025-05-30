@@ -12,6 +12,7 @@
 #include "population/population_class.h"
 #include "script/modifier.h"
 #include "species/phenotype.h"
+#include "species/species.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
@@ -19,6 +20,11 @@
 #include "util/string_util.h"
 
 namespace metternich {
+
+const std::set<std::string> population_type::database_dependencies = {
+	//population types need to be defined after species, so they can refer to automatically-created species phenotypes
+	species::class_identifier
+};
 
 population_type::population_type(const std::string &identifier) : named_data_entry(identifier)
 {

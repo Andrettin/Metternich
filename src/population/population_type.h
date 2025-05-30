@@ -48,6 +48,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::population_type*";
 	static constexpr const char database_folder[] = "population_types";
 
+	static const std::set<std::string> database_dependencies;
+
 public:
 	explicit population_type(const std::string &identifier);
 	~population_type();

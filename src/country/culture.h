@@ -49,6 +49,8 @@ public:
 		return this->species;
 	}
 
+	std::vector<const phenotype *> get_weighted_phenotypes() const;
+
 	const std::vector<const culture *> &get_derived_cultures() const
 	{
 		return this->derived_cultures;

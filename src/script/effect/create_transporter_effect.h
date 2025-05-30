@@ -11,6 +11,7 @@
 #include "unit/transporter_type.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
+#include "util/vector_random_util.h"
 
 namespace metternich {
 
@@ -66,7 +67,7 @@ public:
 			return;
 		}
 
-		auto transporter = make_qunique<metternich::transporter>(type, scope, scope->get_culture()->get_default_phenotype());
+		auto transporter = make_qunique<metternich::transporter>(type, scope, vector::get_random(scope->get_culture()->get_weighted_phenotypes()));
 
 		scope->get_game_data()->add_transporter(std::move(transporter));
 	}

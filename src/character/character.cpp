@@ -134,8 +134,14 @@ void character::initialize()
 		this->phenotype = this->get_culture()->get_default_phenotype();
 	}
 
+	if (this->get_species() == nullptr && this->get_phenotype() == nullptr && this->get_culture() != nullptr && this->get_culture()->get_species().size() == 1) {
+		this->species = const_cast<metternich::species *>(this->get_culture()->get_species().at(0));
+	}
+
 	if (this->get_species() == nullptr && this->get_phenotype() != nullptr) {
 		this->species = this->get_phenotype()->get_species();
+	} else if (this->get_species() != nullptr && this->get_phenotype() == nullptr && this->get_species()->get_phenotypes().size() == 1) {
+		this->phenotype = this->get_species()->get_phenotypes().at(0);
 	}
 
 	if (this->get_surname().empty() && this->get_dynasty() != nullptr) {

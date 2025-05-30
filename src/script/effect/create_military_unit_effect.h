@@ -13,6 +13,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
+#include "util/vector_random_util.h"
 
 namespace metternich {
 
@@ -73,7 +74,7 @@ public:
 		assert_throw(province != nullptr);
 		assert_throw(province->get_game_data()->is_on_map());
 
-		auto military_unit = make_qunique<metternich::military_unit>(type, scope, scope->get_culture()->get_default_phenotype());
+		auto military_unit = make_qunique<metternich::military_unit>(type, scope, vector::get_random(scope->get_culture()->get_weighted_phenotypes()));
 		military_unit->set_province(province);
 
 		scope->get_game_data()->add_military_unit(std::move(military_unit));

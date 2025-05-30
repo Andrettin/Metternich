@@ -649,7 +649,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const phenotype *phenotype = historical_civilian_unit->get_phenotype();
 			if (phenotype == nullptr) {
-				phenotype = owner->get_culture()->get_default_phenotype();
+				phenotype = vector::get_random(owner->get_culture()->get_weighted_phenotypes());
 			}
 			assert_throw(phenotype != nullptr);
 
@@ -702,7 +702,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const phenotype *phenotype = historical_military_unit->get_phenotype();
 			if (phenotype == nullptr) {
-				phenotype = country->get_culture()->get_default_phenotype();
+				phenotype = vector::get_random(country->get_culture()->get_weighted_phenotypes());
 			}
 			assert_throw(phenotype != nullptr);
 
@@ -743,7 +743,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const phenotype *phenotype = historical_transporter->get_phenotype();
 			if (phenotype == nullptr) {
-				phenotype = country->get_culture()->get_default_phenotype();
+				phenotype = vector::get_random(country->get_culture()->get_weighted_phenotypes());
 			}
 			assert_throw(phenotype != nullptr);
 
@@ -1295,7 +1295,7 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 
 	const phenotype *phenotype = group_key.phenotype;
 	if (phenotype == nullptr) {
-		phenotype = culture->get_default_phenotype();
+		phenotype = vector::get_random(culture->get_weighted_phenotypes());
 	}
 	assert_throw(phenotype != nullptr);
 

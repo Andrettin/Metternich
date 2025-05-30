@@ -31,9 +31,19 @@ public:
 		return this->color;
 	}
 
+	void set_color(const QColor &color)
+	{
+		this->color = color;
+	}
+
 	metternich::species *get_species() const
 	{
 		return this->species;
+	}
+
+	void set_species(metternich::species *species)
+	{
+		this->species = species;
 	}
 
 signals:

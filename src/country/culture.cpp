@@ -10,6 +10,7 @@
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/random.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -63,11 +64,26 @@ void culture::check() const
 		throw std::runtime_error(std::format("Culture \"{}\" has no species set for it.", this->get_identifier()));
 	}
 
-	if (this->get_default_phenotype() == nullptr) {
-		throw std::runtime_error("Culture \"" + this->get_identifier() + "\" has no default phenotype.");
+	if (this->get_weighted_phenotypes().empty()) {
+		throw std::runtime_error(std::format("Culture \"{}\" has no weighted phenotypes.", this->get_identifier()));
 	}
 
 	culture_base::check();
+}
+
+std::vector<const phenotype *> culture::get_weighted_phenotypes() const
+{
+	if (this->get_default_phenotype() != nullptr) {
+		return { this->get_default_phenotype() };
+	}
+
+	std::vector<const phenotype *> weighted_phenotypes;
+
+	for (const metternich::species * species : this->get_species()) {
+		vector::merge(weighted_phenotypes, species->get_phenotypes());
+	}
+
+	return weighted_phenotypes;
 }
 
 }
