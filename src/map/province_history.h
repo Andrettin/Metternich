@@ -30,6 +30,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
 	const country *get_owner() const

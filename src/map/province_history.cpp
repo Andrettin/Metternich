@@ -16,6 +16,20 @@
 
 namespace metternich {
 
+void province_history::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "phenotype") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		this->phenotype_weights.clear();
+		this->phenotype_weights[phenotype::get(value)] = 1;
+	} else {
+		data_entry_history::process_gsml_property(property);
+	}
+}
+
 void province_history::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
