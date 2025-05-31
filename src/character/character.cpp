@@ -33,6 +33,7 @@
 #include "util/log_util.h"
 #include "util/random.h"
 #include "util/string_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -337,6 +338,14 @@ void character::check() const
 
 	if (this->get_phenotype() == nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has no phenotype.", this->get_identifier()));
+	}
+
+	if (this->get_phenotype()->get_species() != this->get_species()) {
+		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is different than its phenotype's species (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_phenotype()->get_species()->get_identifier()));
+	}
+
+	if (!vector::contains(this->get_culture()->get_species(), this->get_species())) {
+		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its culture (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_culture()->get_identifier()));
 	}
 
 	if (this->get_home_settlement() == nullptr) {
