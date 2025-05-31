@@ -32,7 +32,7 @@ public:
 
 	int get_quantity(const country *scope) const
 	{
-		return (this->base_quantity * scope->get_game_data()->get_total_unit_count()).to_int();
+		return (this->base_quantity * scope->get_game_data()->get_population_unit_count()).to_int();
 	}
 
 	virtual void do_assignment_effect(const country *scope) const override

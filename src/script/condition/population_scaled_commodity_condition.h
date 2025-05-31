@@ -29,7 +29,7 @@ public:
 
 	virtual int get_value(const country *scope) const override
 	{
-		return (this->get_base_value() * scope->get_game_data()->get_total_unit_count()).to_int();
+		return (this->get_base_value() * scope->get_game_data()->get_population_unit_count()).to_int();
 	}
 
 	virtual std::string get_value_name() const override

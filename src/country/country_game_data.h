@@ -676,11 +676,6 @@ public:
 
 	Q_INVOKABLE const icon *get_population_type_small_icon(const metternich::population_type *type) const;
 
-	int get_total_unit_count() const
-	{
-		return this->get_population_unit_count() + static_cast<int>(this->civilian_units.size()) + static_cast<int>(this->military_units.size()) + static_cast<int>(this->transporters.size());
-	}
-
 	const centesimal_int &get_housing() const
 	{
 		return this->housing;
