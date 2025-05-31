@@ -5,6 +5,7 @@
 #include "infrastructure/building_class_container.h"
 #include "language/name_variant.h"
 #include "population/population_class_container.h"
+#include "species/phenotype_container.h"
 #include "unit/civilian_unit_class_container.h"
 #include "unit/military_unit_class_container.h"
 #include "unit/transporter_class_container.h"
@@ -156,6 +157,9 @@ public:
 
 	void add_names_from(const culture_base *other);
 
+	const phenotype_map<int> &get_phenotype_weights() const;
+	void change_phenotype_weight(const phenotype *phenotype, const int change);
+
 signals:
 	void changed();
 
@@ -175,6 +179,7 @@ private:
 	military_unit_class_map<std::unique_ptr<name_generator>> military_unit_class_name_generators;
 	transporter_class_map<std::unique_ptr<name_generator>> transporter_class_name_generators;
 	std::unique_ptr<name_generator> ship_name_generator;
+	phenotype_map<int> phenotype_weights;
 	qunique_ptr<culture_history> history;
 };
 

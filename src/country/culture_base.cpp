@@ -668,4 +668,30 @@ void culture_base::add_names_from(const culture_base *other)
 	}
 }
 
+const phenotype_map<int> &culture_base::get_phenotype_weights() const
+{
+	if (!this->phenotype_weights.empty()) {
+		return this->phenotype_weights;
+	}
+
+	if (this->get_group() != nullptr) {
+		return this->get_group()->get_phenotype_weights();
+	}
+
+	return this->phenotype_weights;
+}
+
+void culture_base::change_phenotype_weight(const phenotype *phenotype, const int change)
+{
+	const int weight = (this->phenotype_weights[phenotype] += change);
+
+	if (weight == 0) {
+		this->phenotype_weights.erase(phenotype);
+	}
+
+	if (this->group != nullptr) {
+		this->group->change_phenotype_weight(phenotype, change);
+	}
+}
+
 }

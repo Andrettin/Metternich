@@ -167,6 +167,10 @@ void character::initialize()
 		if (!this->get_surname().empty()) {
 			this->culture->add_surname(this->get_gender(), this->get_surname());
 		}
+
+		if (this->get_phenotype() != nullptr) {
+			this->culture->change_phenotype_weight(this->get_phenotype(), 1);
+		}
 	}
 
 	if (this->home_site != nullptr) {

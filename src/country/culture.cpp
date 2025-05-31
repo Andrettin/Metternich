@@ -9,6 +9,7 @@
 #include "species/species.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/random.h"
 #include "util/vector_util.h"
 
@@ -73,13 +74,24 @@ void culture::check() const
 
 std::vector<const phenotype *> culture::get_weighted_phenotypes() const
 {
+	phenotype_map<int> phenotype_weights = this->get_phenotype_weights();
+
+	std::erase_if(phenotype_weights, [this](const auto &element) {
+		const auto &[key, value] = element;
+		return !vector::contains(this->get_species(), key->get_species());
+	});
+
+	if (!phenotype_weights.empty()) {
+		return archimedes::map::to_weighted_vector(phenotype_weights);
+	}
+
 	if (this->get_default_phenotype() != nullptr) {
 		return { this->get_default_phenotype() };
 	}
 
 	std::vector<const phenotype *> weighted_phenotypes;
 
-	for (const metternich::species * species : this->get_species()) {
+	for (const metternich::species *species : this->get_species()) {
 		vector::merge(weighted_phenotypes, species->get_phenotypes());
 	}
 
