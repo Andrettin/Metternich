@@ -21,8 +21,10 @@
 #include "script/condition/and_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
+#include "species/phenotype.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
+#include "util/vector_util.h"
 #include "util/vector_random_util.h"
 
 namespace metternich {
@@ -34,6 +36,7 @@ population_unit::population_unit(const population_type *type, const metternich::
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
+	assert_throw(vector::contains(this->get_culture()->get_species(), this->get_phenotype()->get_species()));
 
 	this->set_country(site->get_game_data()->get_owner());
 	assert_throw(this->get_country() != nullptr);
@@ -86,6 +89,9 @@ void population_unit::set_culture(const metternich::culture *culture)
 		return;
 	}
 
+	assert_throw(culture != nullptr);
+	assert_throw(vector::contains(culture->get_species(), this->get_phenotype()->get_species()));
+
 	this->get_site()->get_game_data()->get_population()->change_culture_count(this->get_culture(), -1);
 
 	this->culture = culture;
@@ -120,6 +126,9 @@ void population_unit::set_phenotype(const metternich::phenotype *phenotype)
 	if (phenotype == this->get_phenotype()) {
 		return;
 	}
+
+	assert_throw(phenotype != nullptr);
+	assert_throw(vector::contains(this->get_culture()->get_species(), phenotype->get_species()));
 
 	this->get_site()->get_game_data()->get_population()->change_phenotype_count(this->get_phenotype(), -1);
 
