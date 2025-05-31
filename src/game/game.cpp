@@ -1302,20 +1302,15 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 	const phenotype *phenotype = group_key.phenotype;
 	std::vector<const metternich::phenotype *> weighted_phenotypes;
 	if (phenotype == nullptr) {
-		if (culture->get_default_phenotype() != nullptr && province_history->get_phenotype_weights().empty()) {
-			phenotype = culture->get_default_phenotype();
+		if (!province_history->get_phenotype_weights().empty()) {
+			weighted_phenotypes = province_history->get_weighted_phenotypes_for_culture(culture);
 		}
 		
-		if (phenotype == nullptr) {
-			if (!province_history->get_phenotype_weights().empty()) {
-				weighted_phenotypes = province_history->get_weighted_phenotypes_for_culture(culture);
-			}
-
-			if (weighted_phenotypes.empty()) {
-				log::log_error(std::format("Province \"{}\" has no phenotype weights valid for culture \"{}\".", province->get_identifier(), culture->get_identifier()));
-				return;
-			}
+		if (weighted_phenotypes.empty()) {
+			weighted_phenotypes = culture->get_weighted_phenotypes();
 		}
+
+		assert_throw(!weighted_phenotypes.empty());
 	}
 
 	if (population_type == nullptr) {
