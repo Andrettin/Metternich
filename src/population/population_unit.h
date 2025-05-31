@@ -22,6 +22,7 @@ class population_type;
 class province;
 class religion;
 class site;
+class species;
 
 class population_unit final : public QObject
 {
@@ -73,6 +74,8 @@ public:
 	}
 
 	void set_phenotype(const metternich::phenotype *phenotype);
+
+	const species *get_species() const;
 
 	const icon *get_icon() const;
 	const icon *get_small_icon() const;

@@ -22,6 +22,7 @@
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "species/phenotype.h"
+#include "species/species.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
@@ -36,7 +37,10 @@ population_unit::population_unit(const population_type *type, const metternich::
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
-	assert_throw(vector::contains(this->get_culture()->get_species(), this->get_phenotype()->get_species()));
+
+	if (!vector::contains(this->get_culture()->get_species(), this->get_species())) {
+		throw std::runtime_error(std::format("Tried to create a population unit with a species (\"{}\") which is not allowed for its culture (\"{}\").", this->get_species()->get_identifier(), this->get_culture()->get_identifier()));
+	}
 
 	this->set_country(site->get_game_data()->get_owner());
 	assert_throw(this->get_country() != nullptr);
@@ -90,7 +94,7 @@ void population_unit::set_culture(const metternich::culture *culture)
 	}
 
 	assert_throw(culture != nullptr);
-	assert_throw(vector::contains(culture->get_species(), this->get_phenotype()->get_species()));
+	assert_throw(vector::contains(culture->get_species(), this->get_species()));
 
 	this->get_site()->get_game_data()->get_population()->change_culture_count(this->get_culture(), -1);
 
@@ -137,6 +141,11 @@ void population_unit::set_phenotype(const metternich::phenotype *phenotype)
 	this->get_site()->get_game_data()->get_population()->change_phenotype_count(this->get_phenotype(), 1);
 
 	emit phenotype_changed();
+}
+
+const species *population_unit::get_species() const
+{
+	return this->get_phenotype()->get_species();
 }
 
 const icon *population_unit::get_small_icon() const
