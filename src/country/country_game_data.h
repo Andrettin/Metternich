@@ -656,6 +656,8 @@ public:
 
 	void on_population_type_count_changed(const population_type *type, const int change);
 
+	std::vector<const phenotype *> get_weighted_phenotypes() const;
+
 	int get_population_growth() const
 	{
 		return this->population_growth;

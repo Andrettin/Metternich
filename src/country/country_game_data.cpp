@@ -2177,6 +2177,17 @@ void country_game_data::on_population_type_count_changed(const population_type *
 	}
 }
 
+std::vector<const phenotype *> country_game_data::get_weighted_phenotypes() const
+{
+	std::vector<const phenotype *> weighted_phenotypes = this->get_population()->get_weighted_phenotypes_for_culture(this->country->get_culture());
+
+	if (weighted_phenotypes.empty()) {
+		weighted_phenotypes = this->country->get_culture()->get_weighted_phenotypes();
+	}
+
+	return weighted_phenotypes;
+}
+
 void country_game_data::set_population_growth(const int growth)
 {
 	if (growth == this->get_population_growth()) {

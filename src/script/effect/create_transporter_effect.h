@@ -67,7 +67,12 @@ public:
 			return;
 		}
 
-		auto transporter = make_qunique<metternich::transporter>(type, scope, vector::get_random(scope->get_culture()->get_weighted_phenotypes()));
+		const std::vector<const metternich::phenotype *> weighted_phenotypes = scope->get_game_data()->get_weighted_phenotypes();
+		assert_throw(!weighted_phenotypes.empty());
+		const phenotype *phenotype = vector::get_random(weighted_phenotypes);
+		assert_throw(phenotype != nullptr);
+
+		auto transporter = make_qunique<metternich::transporter>(type, scope, phenotype);
 
 		scope->get_game_data()->add_transporter(std::move(transporter));
 	}

@@ -9,6 +9,7 @@
 #include "population/population_unit.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -197,6 +198,20 @@ void population::change_phenotype_count(const phenotype *phenotype, const int ch
 	if (game::get()->is_running()) {
 		emit phenotype_counts_changed();
 	}
+}
+
+std::vector<const phenotype *> population::get_weighted_phenotypes_for_culture(const culture *culture) const
+{
+	assert_throw(culture != nullptr);
+
+	phenotype_map<int> phenotype_counts = this->get_phenotype_counts();
+
+	std::erase_if(phenotype_counts, [culture](const auto &element) {
+		const auto &[key, value] = element;
+		return !vector::contains(culture->get_species(), key->get_species());
+	});
+
+	return archimedes::map::to_weighted_vector(phenotype_counts);
 }
 
 QVariantList population::get_ideology_counts_qvariant_list() const

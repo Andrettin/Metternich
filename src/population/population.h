@@ -164,6 +164,8 @@ public:
 	QVariantList get_phenotype_counts_qvariant_list() const;
 	void change_phenotype_count(const phenotype *phenotype, const int change);
 
+	std::vector<const phenotype *> get_weighted_phenotypes_for_culture(const culture *culture) const;
+
 	const ideology_map<int> &get_ideology_counts() const
 	{
 		return this->ideology_counts;
