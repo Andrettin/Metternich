@@ -81,6 +81,7 @@
 #include "util/exception_util.h"
 #include "util/image_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/path_util.h"
 #include "util/size_util.h"
 #include "util/vector_random_util.h"
@@ -357,7 +358,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					continue;
 				}
 
-				province_game_data->set_culture(province_history->get_culture());
+				province_game_data->set_culture(province_history->get_main_culture());
 				province_game_data->set_religion(province_history->get_religion());
 
 				const country *owner = province_history->get_owner();
@@ -1268,20 +1269,26 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 	}
 
 	const culture *site_culture = site_history->get_culture();
-	const culture *province_culture = province_history->get_culture();
 
 	const culture *culture = group_key.culture;
+	culture_map<int64_t> culture_weights;
+	std::vector<const metternich::culture *> weighted_cultures;
 	if (culture == nullptr) {
 		if (site_culture != nullptr) {
 			culture = site_culture;
-		} else if (province_culture != nullptr) {
-			culture = province_culture;
+		} else if (!province_history->get_culture_weights().empty()) {
+			culture_weights = province_history->get_culture_weights();
+			if (culture_weights.size() == 1) {
+				culture = culture_weights.begin()->first;
+			} else {
+				weighted_cultures = archimedes::map::to_weighted_vector(culture_weights);
+			}
 		} else {
-			log::log_error(std::format("Province \"{}\" has no culture.", province->get_identifier()));
+			log::log_error(std::format("Province \"{}\" has no culture weights.", province->get_identifier()));
 			return;
 		}
 	}
-	assert_throw(culture != nullptr);
+	assert_throw(culture != nullptr || !weighted_cultures.empty());
 
 	const religion *site_religion = site_history->get_religion();
 	const religion *province_religion = province_history->get_religion();
@@ -1300,17 +1307,39 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 	assert_throw(religion != nullptr);
 
 	const phenotype *phenotype = group_key.phenotype;
-	std::vector<const metternich::phenotype *> weighted_phenotypes;
+	culture_map<std::vector<const metternich::phenotype *>> culture_weighted_phenotypes;
 	if (phenotype == nullptr) {
-		if (!province_history->get_phenotype_weights().empty()) {
-			weighted_phenotypes = province_history->get_weighted_phenotypes_for_culture(culture);
-		}
-		
-		if (weighted_phenotypes.empty()) {
-			weighted_phenotypes = culture->get_weighted_phenotypes();
+		if (culture != nullptr) {
+			std::vector<const metternich::phenotype *> weighted_phenotypes;
+
+			if (!province_history->get_phenotype_weights().empty()) {
+				weighted_phenotypes = province_history->get_weighted_phenotypes_for_culture(culture);
+			}
+
+			if (weighted_phenotypes.empty()) {
+				weighted_phenotypes = culture->get_weighted_phenotypes();
+			}
+
+			assert_throw(!weighted_phenotypes.empty());
+			culture_weighted_phenotypes[culture] = std::move(weighted_phenotypes);
+		} else {
+			for (const auto &[potential_culture, weight] : culture_weights) {
+				std::vector<const metternich::phenotype *> weighted_phenotypes;
+
+				if (!province_history->get_phenotype_weights().empty()) {
+					weighted_phenotypes = province_history->get_weighted_phenotypes_for_culture(potential_culture);
+				}
+
+				if (weighted_phenotypes.empty()) {
+					weighted_phenotypes = potential_culture->get_weighted_phenotypes();
+				}
+
+				assert_throw(!weighted_phenotypes.empty());
+				culture_weighted_phenotypes[potential_culture] = std::move(weighted_phenotypes);
+			}
 		}
 
-		assert_throw(!weighted_phenotypes.empty());
+		assert_throw(!culture_weighted_phenotypes.empty());
 	}
 
 	if (population_type == nullptr) {
@@ -1328,31 +1357,45 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 				const int literate_population_unit_count = (population_unit_count * literacy_rate / 100).to_int();
 				population_unit_count -= literate_population_unit_count;
 
-				const metternich::population_type *literate_population_type = culture->get_population_class_type(literate_population_class);
-
 				for (int i = 0; i < literate_population_unit_count; ++i) {
-					const metternich::phenotype *population_unit_phenotype = phenotype;
-					if (population_unit_phenotype == nullptr && !weighted_phenotypes.empty()) {
-						population_unit_phenotype = vector::get_random(weighted_phenotypes);
+					const metternich::culture *population_unit_culture = culture;
+					if (population_unit_culture == nullptr && !weighted_cultures.empty()) {
+						population_unit_culture = vector::get_random(weighted_cultures);
 					}
 
-					site_game_data->create_population_unit(literate_population_type, culture, religion, population_unit_phenotype);
+					const metternich::population_type *unit_population_type = population_unit_culture->get_population_class_type(literate_population_class);
+
+					const metternich::phenotype *population_unit_phenotype = phenotype;
+					if (population_unit_phenotype == nullptr && !culture_weighted_phenotypes[population_unit_culture].empty()) {
+						population_unit_phenotype = vector::get_random(culture_weighted_phenotypes[population_unit_culture]);
+					}
+
+					site_game_data->create_population_unit(unit_population_type, population_unit_culture, religion, population_unit_phenotype);
 				}
 			}
 		}
-
-		const population_class *population_class = site->get_game_data()->get_default_population_class();
-		population_type = culture->get_population_class_type(population_class);
 	}
-	assert_throw(population_type != nullptr);
+
+	const population_class *population_class = site->get_game_data()->get_default_population_class();
 
 	for (int i = 0; i < population_unit_count; ++i) {
-		const metternich::phenotype *population_unit_phenotype = phenotype;
-		if (population_unit_phenotype == nullptr && !weighted_phenotypes.empty()) {
-			population_unit_phenotype = vector::get_random(weighted_phenotypes);
+		const metternich::culture *population_unit_culture = culture;
+		if (population_unit_culture == nullptr && !weighted_cultures.empty()) {
+			population_unit_culture = vector::get_random(weighted_cultures);
 		}
 
-		site_game_data->create_population_unit(population_type, culture, religion, population_unit_phenotype);
+		const metternich::population_type *unit_population_type = population_type;
+		if (population_type == nullptr) {
+			unit_population_type = population_unit_culture->get_population_class_type(population_class);
+		}
+		assert_throw(unit_population_type != nullptr);
+
+		const metternich::phenotype *population_unit_phenotype = phenotype;
+		if (population_unit_phenotype == nullptr && !culture_weighted_phenotypes[population_unit_culture].empty()) {
+			population_unit_phenotype = vector::get_random(culture_weighted_phenotypes[population_unit_culture]);
+		}
+
+		site_game_data->create_population_unit(unit_population_type, population_unit_culture, religion, population_unit_phenotype);
 	}
 }
 

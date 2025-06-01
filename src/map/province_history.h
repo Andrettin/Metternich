@@ -1,5 +1,6 @@
 #pragma once
 
+#include "country/culture_container.h"
 #include "database/data_entry_history.h"
 #include "population/population_group_map.h"
 #include "species/phenotype_container.h"
@@ -20,7 +21,6 @@ class province_history final : public data_entry_history
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country* owner MEMBER owner)
-	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
@@ -38,10 +38,17 @@ public:
 		return this->owner;
 	}
 
-	const metternich::culture *get_culture() const
+	const culture_map<int64_t> &get_culture_weights() const
 	{
-		return this->culture;
+		return this->culture_weights;
 	}
+
+	void set_culture_weights(const culture_map<int64_t> &weights)
+	{
+		this->culture_weights = weights;
+	}
+
+	const culture *get_main_culture() const;
 
 	const metternich::religion *get_religion() const
 	{
@@ -129,7 +136,7 @@ public:
 private:
 	const metternich::province *province = nullptr;
 	country *owner = nullptr;
-	metternich::culture *culture = nullptr;
+	culture_map<int64_t> culture_weights;
 	metternich::religion *religion = nullptr;
 	phenotype_map<int64_t> phenotype_weights;
 	population_group_map<int> population_groups;

@@ -21,7 +21,11 @@ void province_history::process_gsml_property(const gsml_property &property)
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if (key == "phenotype") {
+	if (key == "culture") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		this->culture_weights.clear();
+		this->culture_weights[culture::get(value)] = 1;
+	} else if (key == "phenotype") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		this->phenotype_weights.clear();
 		this->phenotype_weights[phenotype::get(value)] = 1;
@@ -34,7 +38,19 @@ void province_history::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "phenotype_weights") {
+	if (tag == "culture_weights") {
+		this->culture_weights.clear();
+
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const metternich::culture *culture = culture::get(key);
+
+			const std::string &value = property.get_value();
+			const int64_t weight = decimal_int(value).get_value();
+
+			this->culture_weights[culture] = weight;
+		});
+	} else if (tag == "phenotype_weights") {
 		this->phenotype_weights.clear();
 
 		scope.for_each_property([&](const gsml_property &property) {
@@ -63,6 +79,21 @@ void province_history::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry_history::process_gsml_scope(scope);
 	}
+}
+
+const culture *province_history::get_main_culture() const
+{
+	const culture *best_culture = nullptr;
+	int64_t best_weight = 0;
+
+	for (const auto &[culture, weight] : this->get_culture_weights()) {
+		if (best_culture == nullptr || weight > best_weight) {
+			best_culture = culture;
+			best_weight = weight;
+		}
+	}
+
+	return best_culture;
 }
 
 std::vector<const phenotype *> province_history::get_weighted_phenotypes_for_culture(const metternich::culture *culture) const

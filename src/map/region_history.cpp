@@ -2,6 +2,7 @@
 
 #include "map/region_history.h"
 
+#include "country/culture.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
@@ -18,7 +19,19 @@ void region_history::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "phenotype_weights") {
+	if (tag == "culture_weights") {
+		this->culture_weights.clear();
+
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const culture *culture = culture::get(key);
+
+			const std::string &value = property.get_value();
+			const int64_t weight = decimal_int(value).get_value();
+
+			this->culture_weights[culture] = weight;
+		});
+	} else if (tag == "phenotype_weights") {
 		this->phenotype_weights.clear();
 
 		scope.for_each_property([&](const gsml_property &property) {
@@ -51,13 +64,17 @@ void region_history::process_gsml_scope(const gsml_data &scope)
 
 void region_history::distribute_population()
 {
-	if (this->get_literacy_rate() != 0 || !this->get_phenotype_weights().empty()) {
+	if (this->get_literacy_rate() != 0 || !this->get_culture_weights().empty() || !this->get_phenotype_weights().empty()) {
 		for (const province *province : this->region->get_provinces()) {
 			if (province->is_water_zone()) {
 				continue;
 			}
 
 			province_history *province_history = province->get_history();
+
+			if (province_history->get_culture_weights().empty() && !this->get_culture_weights().empty()) {
+				province_history->set_culture_weights(this->get_culture_weights());
+			}
 
 			if (province_history->get_phenotype_weights().empty() && !this->get_phenotype_weights().empty()) {
 				province_history->set_phenotype_weights(this->get_phenotype_weights());
