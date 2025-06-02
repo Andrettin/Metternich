@@ -24,11 +24,17 @@ void province_history::process_gsml_property(const gsml_property &property)
 	if (key == "culture") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		this->culture_weights.clear();
-		this->culture_weights[culture::get(value)] = 1;
+		const metternich::culture *culture = culture::get(value);
+		if (culture != nullptr) {
+			this->culture_weights[culture] = 1;
+		}
 	} else if (key == "phenotype") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		this->phenotype_weights.clear();
-		this->phenotype_weights[phenotype::get(value)] = 1;
+		const metternich::phenotype *phenotype = phenotype::get(value);
+		if (phenotype != nullptr) {
+			this->phenotype_weights[phenotype] = 1;
+		}
 	} else {
 		data_entry_history::process_gsml_property(property);
 	}
