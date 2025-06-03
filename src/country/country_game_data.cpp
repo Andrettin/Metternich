@@ -3429,7 +3429,7 @@ void country_game_data::set_current_research(const technology *technology)
 
 void country_game_data::choose_current_research()
 {
-	const std::map<technology_category, const technology *> research_choice_map = this->get_research_choice_map();
+	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map();
 
 	if (research_choice_map.empty()) {
 		return;
@@ -3479,7 +3479,7 @@ void country_game_data::on_technology_researched(const technology *technology)
 	emit technology_researched(technology);
 }
 
-std::map<technology_category, const technology *> country_game_data::get_research_choice_map() const
+data_entry_map<technology_category, const technology *> country_game_data::get_research_choice_map() const
 {
 	const std::vector<const technology *> available_technologies = this->get_available_technologies();
 
@@ -3487,7 +3487,7 @@ std::map<technology_category, const technology *> country_game_data::get_researc
 		return {};
 	}
 
-	std::map<technology_category, std::vector<const technology *>> potential_technologies_per_category;
+	data_entry_map<technology_category, std::vector<const technology *>> potential_technologies_per_category;
 
 	for (const technology *technology : available_technologies) {
 		std::vector<const metternich::technology *> &category_technologies = potential_technologies_per_category[technology->get_category()];
@@ -3500,17 +3500,17 @@ std::map<technology_category, const technology *> country_game_data::get_researc
 
 	assert_throw(!potential_technologies_per_category.empty());
 
-	std::map<technology_category, const technology *> research_choice_map;
-	const std::vector<technology_category> potential_categories = archimedes::map::get_keys(potential_technologies_per_category);
+	data_entry_map<technology_category, const technology *> research_choice_map;
+	const std::vector<const technology_category *> potential_categories = archimedes::map::get_keys(potential_technologies_per_category);
 
-	for (const technology_category category : potential_categories) {
+	for (const technology_category *category : potential_categories) {
 		research_choice_map[category] = vector::get_random(potential_technologies_per_category[category]);
 	}
 
 	return research_choice_map;
 }
 
-const technology *country_game_data::get_ai_research_choice(const std::map<technology_category, const technology *> &research_choice_map) const
+const technology *country_game_data::get_ai_research_choice(const data_entry_map<technology_category, const technology *> &research_choice_map) const
 {
 	assert_throw(this->is_ai());
 
@@ -3546,7 +3546,7 @@ const technology *country_game_data::get_ai_research_choice(const std::map<techn
 
 void country_game_data::gain_free_technology()
 {
-	const std::map<technology_category, const technology *> research_choice_map = this->get_research_choice_map();
+	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map();
 
 	if (research_choice_map.empty()) {
 		return;
@@ -5700,7 +5700,7 @@ void country_game_data::change_capital_commodity_bonus_per_population(const comm
 	}
 }
 
-void country_game_data::set_category_research_modifier(const technology_category category, const int value)
+void country_game_data::set_category_research_modifier(const technology_category *category, const int value)
 {
 	if (value == this->get_category_research_modifier(category)) {
 		return;

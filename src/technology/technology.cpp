@@ -55,7 +55,7 @@ void technology::initialize_all()
 }
 
 technology::technology(const std::string &identifier)
-	: named_data_entry(identifier), category(technology_category::none)
+	: named_data_entry(identifier)
 {
 }
 
@@ -95,6 +95,10 @@ void technology::process_gsml_scope(const gsml_data &scope)
 
 void technology::initialize()
 {
+	if (this->category != nullptr) {
+		this->category->add_technology(this);
+	}
+
 	this->calculate_total_prerequisite_depth();
 
 	for (technology *prerequisite : this->get_prerequisites()) {
@@ -109,7 +113,7 @@ void technology::initialize()
 
 void technology::check() const
 {
-	if (this->get_category() == technology_category::none) {
+	if (this->get_category() == nullptr) {
 		throw std::runtime_error(std::format("Technology \"{}\" has no category.", this->get_identifier()));
 	}
 

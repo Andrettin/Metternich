@@ -155,8 +155,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (key.ends_with(throughput_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - throughput_modifier_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - throughput_modifier_suffix.size()));
 			return std::make_unique<commodity_throughput_modifier_effect<scope_type>>(commodity, value);
-		} else if (key.ends_with(research_modifier_suffix) && magic_enum::enum_contains<technology_category>(key.substr(0, key.size() - research_modifier_suffix.size()))) {
-			const technology_category category = magic_enum::enum_cast<technology_category>(key.substr(0, key.size() - research_modifier_suffix.size())).value();
+		} else if (key.ends_with(research_modifier_suffix) && technology_category::try_get(key.substr(0, key.size() - research_modifier_suffix.size())) != nullptr) {
+			const technology_category *category = technology_category::get(key.substr(0, key.size() - research_modifier_suffix.size()));
 			return std::make_unique<category_research_modifier_effect<scope_type>>(category, value);
 		} else if (key.ends_with(bonus_suffix) && population_type::try_get(key.substr(0, key.size() - bonus_suffix.size())) != nullptr) {
 			const population_type *population_type = population_type::get(key.substr(0, key.size() - bonus_suffix.size()));

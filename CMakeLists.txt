@@ -232,6 +232,7 @@ set_source_files_properties(${spell_SRCS} PROPERTIES UNITY_GROUP "spell")
 set(technology_SRCS
 	src/technology/technological_period.cpp
 	src/technology/technology.cpp
+	src/technology/technology_category.cpp
 	src/technology/technology_container.cpp
 )
 source_group(technology FILES ${technology_SRCS})

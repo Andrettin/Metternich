@@ -11,7 +11,7 @@ template <typename scope_type>
 class category_research_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
-	explicit category_research_modifier_effect(const technology_category category, const std::string &value)
+	explicit category_research_modifier_effect(const technology_category *category, const std::string &value)
 		: modifier_effect<scope_type>(value), category(category)
 	{
 	}
@@ -31,7 +31,7 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return std::format("{} Research", get_technology_category_name(this->category));
+		return std::format("{} Research", this->category->get_name());
 	}
 
 	virtual bool is_percent() const override
@@ -40,7 +40,7 @@ public:
 	}
 
 private:
-	const technology_category category = technology_category::none;
+	const technology_category *category = nullptr;
 };
 
 }

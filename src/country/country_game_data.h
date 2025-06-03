@@ -73,6 +73,7 @@ class religion;
 class scripted_country_modifier;
 class site;
 class subject_type;
+class technology_category;
 class tradition;
 class transporter;
 class transporter_type;
@@ -84,7 +85,6 @@ enum class event_trigger;
 enum class income_transaction_type;
 enum class military_unit_category;
 enum class military_unit_stat;
-enum class technology_category;
 enum class transporter_category;
 enum class transporter_stat;
 struct read_only_context;
@@ -1210,8 +1210,8 @@ public:
 		return 100 + (this->get_population_unit_count() - 1);
 	}
 
-	std::map<technology_category, const technology *> get_research_choice_map() const;
-	const technology *get_ai_research_choice(const std::map<technology_category, const technology *> &research_choice_map) const;
+	data_entry_map<technology_category, const technology *> get_research_choice_map() const;
+	const technology *get_ai_research_choice(const data_entry_map<technology_category, const technology *> &research_choice_map) const;
 
 	void gain_free_technology();
 
@@ -2028,7 +2028,7 @@ public:
 
 	void change_capital_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change);
 
-	Q_INVOKABLE int get_category_research_modifier(metternich::technology_category category) const
+	Q_INVOKABLE int get_category_research_modifier(const metternich::technology_category *category) const
 	{
 		const auto find_iterator = this->category_research_modifiers.find(category);
 
@@ -2039,9 +2039,9 @@ public:
 		return 0;
 	}
 
-	void set_category_research_modifier(const technology_category category, const int value);
+	void set_category_research_modifier(const technology_category *category, const int value);
 
-	void change_category_research_modifier(const technology_category category, const int value)
+	void change_category_research_modifier(const technology_category *category, const int value)
 	{
 		this->set_category_research_modifier(category, this->get_category_research_modifier(category) + value);
 	}
@@ -2628,7 +2628,7 @@ private:
 	commodity_map<centesimal_int> settlement_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses_per_population;
-	std::map<technology_category, int> category_research_modifiers;
+	data_entry_map<technology_category, int> category_research_modifiers;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	population_type_map<centesimal_int> population_type_militancy_modifiers;
 	int law_cost_modifier = 0;

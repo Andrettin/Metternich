@@ -166,7 +166,6 @@ int main(int argc, char **argv)
 		database::get()->register_enum<spell_target>();
 		database::get()->register_enum<starting_age_category>();
 		database::get()->register_enum<taxonomic_rank>();
-		database::get()->register_enum<technology_category>();
 		database::get()->register_enum<temperature_type>();
 		database::get()->register_enum<tradition_category>();
 		database::get()->register_enum<trait_type>();
@@ -210,6 +209,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<site>("", 1);
 		qmlRegisterAnonymousType<site_game_data>("", 1);
 		qmlRegisterAnonymousType<technology>("", 1);
+		qmlRegisterAnonymousType<technology_category>("", 1);
 		qmlRegisterAnonymousType<wonder>("", 1);
 
 		qmlRegisterType<map_country_model>("map_country_model", 1, 0, "MapCountryModel");

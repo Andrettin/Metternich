@@ -5,6 +5,7 @@
 #include "database/named_data_entry.h"
 #include "infrastructure/pathway_container.h"
 
+Q_MOC_INCLUDE("technology/technology_category.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
@@ -27,12 +28,12 @@ class portrait;
 class production_type;
 class resource;
 class technological_period;
+class technology_category;
 class terrain_type;
 class tradition;
 class transporter_type;
 class wonder;
 enum class character_role;
-enum class technology_category;
 
 template <typename scope_type>
 class factor;
@@ -45,8 +46,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_OBJECT
 
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
-	Q_PROPERTY(metternich::technology_category category MEMBER category NOTIFY changed)
-	Q_PROPERTY(int category_index READ get_category_index NOTIFY changed)
+	Q_PROPERTY(metternich::technology_category* category MEMBER category NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(int cost MEMBER cost READ get_cost NOTIFY changed)
@@ -95,14 +95,9 @@ public:
 		return QString::fromStdString(this->get_description());
 	}
 
-	technology_category get_category() const
+	const technology_category *get_category() const
 	{
 		return this->category;
-	}
-
-	int get_category_index() const
-	{
-		return static_cast<int>(this->get_category());
 	}
 
 	const metternich::portrait *get_portrait() const
@@ -299,7 +294,7 @@ public:
 
 	QVariantList get_enabled_civilian_units_qvariant_list() const;
 	std::vector<const civilian_unit_type *> get_enabled_civilian_units_for_culture(const culture *culture) const;
-	void add_enabled_civilian_unit(const civilian_unit_type *military_unit);
+	void add_enabled_civilian_unit(const civilian_unit_type *civilian_unit);
 
 	const std::vector<const military_unit_type *> &get_enabled_military_units() const
 	{
@@ -420,7 +415,7 @@ signals:
 
 private:
 	std::string description;
-	technology_category category;
+	technology_category *category = nullptr;
 	metternich::portrait *portrait = nullptr;
 	metternich::icon *icon = nullptr;
 	culture_set cultures;

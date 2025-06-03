@@ -22,6 +22,7 @@
 #include "map/tile.h"
 #include "map/world.h"
 #include "technology/technology.h"
+#include "technology/technology_category.h"
 #include "time/era.h"
 #include "unit/army.h"
 #include "unit/military_unit.h"
@@ -114,6 +115,11 @@ QVariantList engine_interface::get_law_groups() const
 QVariantList engine_interface::get_technologies() const
 {
 	return container::to_qvariant_list(technology::get_all());
+}
+
+QVariantList engine_interface::get_technology_categories() const
+{
+	return container::to_qvariant_list(technology_category::get_all());
 }
 
 const country_tier_data *engine_interface::get_country_tier_data(const metternich::country_tier tier) const
