@@ -4,6 +4,7 @@
 #include "country/country_container.h"
 #include "country/law_group_container.h"
 #include "country/tradition_container.h"
+#include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_class_container.h"
@@ -58,6 +59,7 @@ class journal_entry;
 class law;
 class military_unit;
 class military_unit_type;
+class office;
 class opinion_modifier;
 class phenotype;
 class population;
@@ -156,6 +158,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(const metternich::tradition* next_belief READ get_next_belief WRITE set_next_belief NOTIFY next_belief_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
+	Q_PROPERTY(QVariantList office_holders READ get_office_holders_qvariant_list NOTIFY office_holders_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
 	Q_PROPERTY(const metternich::character* next_advisor READ get_next_advisor WRITE set_next_advisor NOTIFY next_advisor_changed)
@@ -233,6 +236,8 @@ public:
 	{
 		return QString::fromStdString(this->get_ruler_title_name());
 	}
+
+	const std::string &get_office_title_name(const office *office) const;
 
 	const metternich::religion *get_religion() const
 	{
@@ -1373,6 +1378,30 @@ public:
 	void set_ruler(const character *ruler);
 	void check_ruler();
 
+	const data_entry_map<office, const character *> &get_office_holders() const
+	{
+		return this->office_holders;
+	}
+
+	QVariantList get_office_holders_qvariant_list() const;
+
+	const character *get_office_holder(const office *office) const
+	{
+		const auto find_iterator = this->office_holders.find(office);
+
+		if (find_iterator != this->office_holders.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	void set_office_holder(const office *office, const character *character);
+	void check_office_holder(const office *office, const character *previous_holder);
+	void choose_office_holder(const office *office, const character *previous_holder);
+	bool can_appoint_office_holder(const office *office, const character *character) const;
+	void on_office_holder_died(const office *office, const character *office_holder);
+
 	const std::vector<const character *> &get_advisors() const
 	{
 		return this->advisors;
@@ -2439,6 +2468,7 @@ signals:
 	void tier_changed();
 	void title_name_changed();
 	void ruler_title_name_changed();
+	void office_title_names_changed();
 	void religion_changed();
 	void overlord_changed();
 	void type_name_changed();
@@ -2485,6 +2515,7 @@ signals:
 	void belief_adopted(const tradition *belief);
 	void scripted_modifiers_changed();
 	void ruler_changed();
+	void office_holders_changed();
 	void advisors_changed();
 	void next_advisor_changed();
 	void advisor_recruited(const character *advisor);
@@ -2576,6 +2607,7 @@ private:
 	const tradition *next_belief = nullptr;
 	scripted_country_modifier_map<int> scripted_modifiers;
 	const character *ruler = nullptr;
+	data_entry_map<office, const character *> office_holders;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;
 	std::vector<const character *> leaders;

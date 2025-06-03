@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
@@ -26,6 +27,7 @@ class country_turn_data;
 class culture;
 class government_group;
 class government_type;
+class office;
 class population_class;
 class province;
 class religion;
@@ -59,6 +61,7 @@ public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
 	using title_name_map = std::map<government_variant, std::map<country_tier, std::string>>;
 	using ruler_title_name_map = std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>;
+	using office_title_name_map = data_entry_map<office, std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>>;
 
 	static constexpr const char class_identifier[] = "country";
 	static constexpr const char property_class_identifier[] = "metternich::country*";
@@ -129,6 +132,7 @@ public:
 	std::string get_titled_name(const government_type *government_type, const country_tier tier, const religion *religion) const;
 	const std::string &get_title_name(const government_type *government_type, const country_tier tier, const religion *religion) const;
 	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender, const religion *religion) const;
+	const std::string &get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender, const religion *religion) const;
 
 	const metternich::culture *get_culture() const
 	{
@@ -201,6 +205,7 @@ private:
 	title_name_map short_names;
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;
+	office_title_name_map office_title_names;
 	std::vector<province *> core_provinces;
 	std::vector<const character *> rulers;
 	qunique_ptr<country_history> history;

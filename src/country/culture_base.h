@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "infrastructure/building_class_container.h"
@@ -28,6 +29,7 @@ class culture_history;
 class government_group;
 class government_type;
 class military_unit_type;
+class office;
 class phenotype;
 class population_type;
 class transporter_type;
@@ -46,6 +48,7 @@ public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
 	using title_name_map = std::map<government_variant, std::map<country_tier, std::string>>;
 	using ruler_title_name_map = std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>;
+	using office_title_name_map = data_entry_map<office, std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>>;
 	using landholder_title_name_map = std::map<government_variant, std::map<site_tier, std::map<gender, std::string>>>;
 
 	explicit culture_base(const std::string &identifier);
@@ -76,6 +79,7 @@ public:
 
 	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
 	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const;
+	const std::string &get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender) const;
 	const std::string &get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender) const;
 
 	const building_type *get_building_class_type(const building_class *building_class) const;
@@ -168,6 +172,7 @@ private:
 	phenotype *default_phenotype = nullptr;
 	title_name_map title_names;
 	ruler_title_name_map ruler_title_names;
+	office_title_name_map office_title_names;
 	landholder_title_name_map landholder_title_names;
 	building_class_map<const building_type *> building_class_types;
 	population_class_map<const population_type *> population_class_types;

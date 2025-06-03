@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
@@ -11,6 +12,7 @@ class character;
 class country;
 class icon;
 class military_unit;
+class office;
 class province;
 enum class character_attribute;
 enum class trait_type;
@@ -119,6 +121,26 @@ public:
 		return this->scaled_ruler_modifier.get();
 	}
 
+	const metternich::modifier<const country> *get_office_modifier(const office *office) const
+	{
+		const auto find_iterator = this->office_modifiers.find(office);
+		if (find_iterator != this->office_modifiers.end()) {
+			return find_iterator->second.get();
+		}
+
+		return nullptr;
+	}
+
+	const metternich::modifier<const country> *get_scaled_office_modifier(const office *office) const
+	{
+		const auto find_iterator = this->scaled_office_modifiers.find(office);
+		if (find_iterator != this->scaled_office_modifiers.end()) {
+			return find_iterator->second.get();
+		}
+
+		return nullptr;
+	}
+
 	const metternich::modifier<const country> *get_advisor_modifier() const
 	{
 		return this->advisor_modifier.get();
@@ -177,6 +199,8 @@ private:
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	std::unique_ptr<const metternich::modifier<const country>> ruler_modifier;
 	std::unique_ptr<const metternich::modifier<const country>> scaled_ruler_modifier;
+	data_entry_map<office, std::unique_ptr<const metternich::modifier<const country>>> office_modifiers;
+	data_entry_map<office, std::unique_ptr<const metternich::modifier<const country>>> scaled_office_modifiers;
 	std::unique_ptr<const metternich::modifier<const country>> advisor_modifier;
 	std::unique_ptr<const metternich::modifier<const country>> scaled_advisor_modifier;
 	std::unique_ptr<const effect_list<const country>> advisor_effects;

@@ -4,6 +4,7 @@
 
 #include "country/country_tier.h"
 #include "country/government_group.h"
+#include "country/office.h"
 #include "map/site_tier.h"
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
@@ -100,6 +101,70 @@ void government_type::process_ruler_title_name_scope(std::map<gender, std::strin
 	});
 }
 
+void government_type::process_office_title_name_scope(data_entry_map<office, std::map<government_variant, office_title_inner_name_map>> &office_title_names, const gsml_data &scope)
+{
+	scope.for_each_child([&](const gsml_data &child_scope) {
+		const office *office = office::get(child_scope.get_tag());
+
+		government_type::process_office_title_name_scope(office_title_names[office], child_scope);
+	});
+}
+
+void government_type::process_office_title_name_scope(office_title_name_map &office_title_names, const gsml_data &scope)
+{
+	scope.for_each_child([&](const gsml_data &child_scope) {
+		const office *office = office::get(child_scope.get_tag());
+
+		government_type::process_office_title_name_scope(office_title_names[office], child_scope);
+	});
+}
+
+void government_type::process_office_title_name_scope(std::map<government_variant, office_title_inner_name_map> &office_title_names, const gsml_data &scope)
+{
+	scope.for_each_child([&](const gsml_data &child_scope) {
+		government_variant government_variant{};
+		const government_group *government_group = government_group::try_get(child_scope.get_tag());
+		if (government_group != nullptr) {
+			government_variant = government_group;
+		} else {
+			government_variant = government_type::get(child_scope.get_tag());
+		}
+
+		government_type::process_office_title_name_scope(office_title_names[government_variant], child_scope);
+	});
+}
+
+void government_type::process_office_title_name_scope(office_title_inner_name_map &office_title_names, const gsml_data &scope)
+{
+	scope.for_each_property([&](const gsml_property &property) {
+		const std::string &key = property.get_key();
+		const std::string &value = property.get_value();
+		if (magic_enum::enum_contains<country_tier>(key)) {
+			const country_tier tier = magic_enum::enum_cast<country_tier>(key).value();
+			office_title_names[tier][gender::none] = value;
+		} else {
+			const gender gender = enum_converter<archimedes::gender>::to_enum(key);
+			office_title_names[country_tier::none][gender] = value;
+		}
+	});
+
+	scope.for_each_child([&](const gsml_data &child_scope) {
+		const country_tier tier = magic_enum::enum_cast<country_tier>(child_scope.get_tag()).value();
+
+		government_type::process_office_title_name_scope(office_title_names[tier], child_scope);
+	});
+}
+
+void government_type::process_office_title_name_scope(std::map<gender, std::string> &office_title_names, const gsml_data &scope)
+{
+	scope.for_each_property([&](const gsml_property &property) {
+		const std::string &key = property.get_key();
+		const std::string &value = property.get_value();
+		const gender gender = enum_converter<archimedes::gender>::to_enum(key);
+		office_title_names[gender] = value;
+	});
+}
+
 void government_type::process_landholder_title_name_scope(std::map<government_variant, landholder_title_name_map> &landholder_title_names, const gsml_data &scope)
 {
 	scope.for_each_child([&](const gsml_data &child_scope) {
@@ -166,6 +231,8 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "ruler_title_names") {
 		government_type::process_ruler_title_name_scope(this->ruler_title_names, scope);
+	} else if (tag == "office_title_names") {
+		government_type::process_office_title_name_scope(this->office_title_names, scope);
 	} else if (tag == "landholder_title_names") {
 		government_type::process_landholder_title_name_scope(this->landholder_title_names, scope);
 	} else {
@@ -214,6 +281,27 @@ const std::string &government_type::get_ruler_title_name(const country_tier tier
 	}
 
 	return this->get_group()->get_ruler_title_name(tier, gender);
+}
+
+const std::string &government_type::get_office_title_name(const office *office, const country_tier tier, const gender gender) const
+{
+	const auto office_find_iterator = this->office_title_names.find(office);
+	if (office_find_iterator != this->office_title_names.end()) {
+		const auto find_iterator = office_find_iterator->second.find(tier);
+		if (find_iterator != office_find_iterator->second.end()) {
+			auto sub_find_iterator = find_iterator->second.find(gender);
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+
+			sub_find_iterator = find_iterator->second.find(gender::none);
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+	}
+
+	return this->get_group()->get_office_title_name(office, tier, gender);
 }
 
 const std::string &government_type::get_landholder_title_name(const site_tier tier, const gender gender) const

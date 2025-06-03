@@ -7,6 +7,7 @@
 #include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("country/office.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
@@ -16,6 +17,7 @@ class civilian_unit;
 class country;
 class military_unit;
 class military_unit_type;
+class office;
 class portrait;
 class province;
 class scripted_character_modifier;
@@ -32,6 +34,7 @@ class character_game_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY titled_name_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
 	Q_PROPERTY(const metternich::country* country READ get_country NOTIFY country_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
@@ -39,6 +42,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
+	Q_PROPERTY(const metternich::office* office READ get_office NOTIFY office_changed)
 	Q_PROPERTY(bool governor READ is_governor NOTIFY governor_changed)
 	Q_PROPERTY(bool landholder READ is_landholder NOTIFY landholder_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
@@ -47,7 +51,15 @@ class character_game_data final : public QObject
 public:
 	explicit character_game_data(const metternich::character *character);
 
+	void apply_history(const QDate &start_date);
 	void on_setup_finished();
+
+	std::string get_titled_name() const;
+
+	QString get_titled_name_qstring() const
+	{
+		return QString::fromStdString(this->get_titled_name());
+	}
 
 	const metternich::portrait *get_portrait() const
 	{
@@ -135,6 +147,15 @@ public:
 
 	void apply_ruler_modifier(const metternich::country *country, const int multiplier) const;
 	void apply_trait_ruler_modifier(const trait *trait, const metternich::country *country, const int multiplier) const;
+
+	const metternich::office *get_office() const
+	{
+		return this->office;
+	}
+
+	void set_office(const metternich::office *office);
+	void apply_office_modifier(const metternich::country *country, const metternich::office *office, const int multiplier) const;
+	void apply_trait_office_modifier(const trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const;
 
 	bool is_advisor() const;
 	Q_INVOKABLE QString get_advisor_effects_string(const metternich::country *country) const;
@@ -279,6 +300,7 @@ public:
 	}
 
 signals:
+	void titled_name_changed();
 	void portrait_changed();
 	void country_changed();
 	void age_changed();
@@ -286,6 +308,7 @@ signals:
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void ruler_changed();
+	void office_changed();
 	void governor_changed();
 	void landholder_changed();
 	void spells_changed();
@@ -298,6 +321,7 @@ private:
 	std::map<character_attribute, int> attribute_values;
 	std::vector<const trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
+	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;
 	metternich::civilian_unit *civilian_unit = nullptr;
 	spell_set spells;

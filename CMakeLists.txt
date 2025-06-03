@@ -55,6 +55,7 @@ set(country_SRCS
 	src/country/law.cpp
 	src/country/law_group.cpp
 	src/country/law_group_container.cpp
+	src/country/office.cpp
 	src/country/religion.cpp
 	src/country/religion_base.cpp
 	src/country/religion_container.cpp
@@ -68,6 +69,7 @@ source_group(country FILES ${country_SRCS})
 set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
 
 set(database_SRCS
+	src/database/data_entry_container.cpp
 	src/database/defines.cpp
 	src/database/preferences.cpp
 )
@@ -347,6 +349,7 @@ set(country_HDRS
 	src/country/law.h
 	src/country/law_group.h
 	src/country/law_group_container.h
+	src/country/office.h
 	src/country/religion.h
 	src/country/religion_base.h
 	src/country/religion_container.h
@@ -361,6 +364,7 @@ set(country_HDRS
 source_group(country FILES ${country_HDRS})
 
 set(database_HDRS
+	src/database/data_entry_container.h
 	src/database/defines.h
 	src/database/preferences.h
 )
@@ -635,6 +639,7 @@ set(script_effect_HDRS
 	src/script/effect/location_effect.h
 	src/script/effect/migrate_to_effect.h
 	src/script/effect/militancy_effect.h
+	src/script/effect/office_holder_effect.h
 	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/population_scaled_commodity_effect.h
 	src/script/effect/random_effect.h

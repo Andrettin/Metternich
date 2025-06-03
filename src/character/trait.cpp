@@ -4,6 +4,7 @@
 
 #include "character/character_attribute.h"
 #include "character/trait_type.h"
+#include "country/office.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
@@ -64,6 +65,20 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
 		this->scaled_ruler_modifier = std::move(modifier);
+	} else if (tag == "office_modifiers") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const office *office = office::get(child_scope.get_tag());
+			auto modifier = std::make_unique<metternich::modifier<const country>>();
+			database::process_gsml_data(modifier, scope);
+			this->office_modifiers[office] = std::move(modifier);
+		});
+	} else if (tag == "scaled_office_modifiers") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const office *office = office::get(child_scope.get_tag());
+			auto modifier = std::make_unique<metternich::modifier<const country>>();
+			database::process_gsml_data(modifier, scope);
+			this->scaled_office_modifiers[office] = std::move(modifier);
+		});
 	} else if (tag == "advisor_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
@@ -113,6 +128,10 @@ void trait::check() const
 
 	if (this->get_scaled_ruler_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
 		throw std::runtime_error(std::format("Trait \"{}\" with scaled ruler modifier has no attribute.", this->get_identifier()));
+	}
+
+	if (!this->scaled_office_modifiers.empty() && this->get_attribute() == character_attribute::none) {
+		throw std::runtime_error(std::format("Trait \"{}\" with scaled office modifier has no attribute.", this->get_identifier()));
 	}
 
 	if (this->get_scaled_advisor_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
