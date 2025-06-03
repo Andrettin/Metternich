@@ -41,7 +41,6 @@ public:
 	}
 
 	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
-	const std::string &get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const;
 	const std::string &get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender) const;
 
 signals:

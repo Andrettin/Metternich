@@ -111,16 +111,6 @@ public:
 
 	QString get_modifier_string() const;
 
-	const metternich::modifier<const country> *get_ruler_modifier() const
-	{
-		return this->ruler_modifier.get();
-	}
-
-	const metternich::modifier<const country> *get_scaled_ruler_modifier() const
-	{
-		return this->scaled_ruler_modifier.get();
-	}
-
 	const metternich::modifier<const country> *get_office_modifier(const office *office) const
 	{
 		const auto find_iterator = this->office_modifiers.find(office);
@@ -197,8 +187,6 @@ private:
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const and_condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
-	std::unique_ptr<const metternich::modifier<const country>> ruler_modifier;
-	std::unique_ptr<const metternich::modifier<const country>> scaled_ruler_modifier;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const country>>> office_modifiers;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const country>>> scaled_office_modifiers;
 	std::unique_ptr<const metternich::modifier<const country>> advisor_modifier;

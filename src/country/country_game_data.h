@@ -100,7 +100,6 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
-	Q_PROPERTY(QString ruler_title_name READ get_ruler_title_name_qstring NOTIFY ruler_title_name_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(const metternich::country* overlord READ get_overlord NOTIFY overlord_changed)
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
@@ -228,13 +227,6 @@ public:
 	QString get_title_name_qstring() const
 	{
 		return QString::fromStdString(this->get_title_name());
-	}
-
-	const std::string &get_ruler_title_name() const;
-
-	QString get_ruler_title_name_qstring() const
-	{
-		return QString::fromStdString(this->get_ruler_title_name());
 	}
 
 	const std::string &get_office_title_name(const office *office) const;
@@ -1370,13 +1362,7 @@ public:
 
 	void check_characters();
 
-	const character *get_ruler() const
-	{
-		return this->ruler;
-	}
-
-	void set_ruler(const character *ruler);
-	void check_ruler();
+	const character *get_ruler() const;
 
 	const data_entry_map<office, const character *> &get_office_holders() const
 	{
@@ -2467,7 +2453,6 @@ public:
 signals:
 	void tier_changed();
 	void title_name_changed();
-	void ruler_title_name_changed();
 	void office_title_names_changed();
 	void religion_changed();
 	void overlord_changed();
@@ -2606,7 +2591,6 @@ private:
 	const tradition *next_tradition = nullptr;
 	const tradition *next_belief = nullptr;
 	scripted_country_modifier_map<int> scripted_modifiers;
-	const character *ruler = nullptr;
 	data_entry_map<office, const character *> office_holders;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;

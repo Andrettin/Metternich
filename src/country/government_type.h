@@ -34,7 +34,6 @@ class government_type final : public named_data_entry, public data_type<governme
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
 	using title_name_map = std::map<country_tier, std::string>;
-	using ruler_title_name_map = std::map<country_tier, std::map<gender, std::string>>;
 	using office_title_inner_name_map = std::map<country_tier, std::map<gender, std::string>>;
 	using office_title_name_map = data_entry_map<office, office_title_inner_name_map>;
 	using landholder_title_name_map = std::map<site_tier, std::map<gender, std::string>>;
@@ -45,9 +44,6 @@ public:
 
 	static void process_title_name_scope(std::map<government_variant, title_name_map> &title_names, const gsml_data &scope);
 	static void process_title_name_scope(title_name_map &title_names, const gsml_data &scope);
-	static void process_ruler_title_name_scope(std::map<government_variant, ruler_title_name_map> &ruler_title_names, const gsml_data &scope);
-	static void process_ruler_title_name_scope(ruler_title_name_map &ruler_title_names, const gsml_data &scope);
-	static void process_ruler_title_name_scope(std::map<gender, std::string> &ruler_title_names, const gsml_data &scope);
 	static void process_office_title_name_scope(data_entry_map<office, std::map<government_variant, office_title_inner_name_map>> &office_title_names, const gsml_data &scope);
 	static void process_office_title_name_scope(office_title_name_map &office_title_names, const gsml_data &scope);
 	static void process_office_title_name_scope(std::map<government_variant, office_title_inner_name_map> &office_title_names, const gsml_data &scope);
@@ -64,7 +60,6 @@ public:
 	virtual void check() const override;
 
 	const std::string &get_title_name(const country_tier tier) const;
-	const std::string &get_ruler_title_name(const country_tier tier, const gender gender) const;
 	const std::string &get_office_title_name(const office *office, const country_tier tier, const gender gender) const;
 	const std::string &get_landholder_title_name(const site_tier tier, const gender gender) const;
 
@@ -91,7 +86,6 @@ private:
 	const icon *icon = nullptr;
 	std::unique_ptr<const and_condition<country>> conditions;
 	title_name_map title_names;
-	ruler_title_name_map ruler_title_names;
 	office_title_name_map office_title_names;
 	landholder_title_name_map landholder_title_names;
 };

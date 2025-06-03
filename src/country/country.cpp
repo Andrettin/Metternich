@@ -48,8 +48,6 @@ void country::process_gsml_scope(const gsml_data &scope)
 		government_type::process_title_name_scope(this->short_names, scope);
 	} else if (tag == "title_names") {
 		government_type::process_title_name_scope(this->title_names, scope);
-	} else if (tag == "ruler_title_names") {
-		government_type::process_ruler_title_name_scope(this->ruler_title_names, scope);
 	} else if (tag == "office_title_names") {
 		government_type::process_office_title_name_scope(this->office_title_names, scope);
 	} else if (tag == "core_provinces") {
@@ -261,48 +259,6 @@ const std::string &country::get_title_name(const government_type *government_typ
 	return government_type->get_title_name(tier);
 }
 
-const std::string &country::get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender, const religion *religion) const
-{
-	auto find_iterator = this->ruler_title_names.find(government_type);
-	if (find_iterator == this->ruler_title_names.end()) {
-		find_iterator = this->ruler_title_names.find(government_type->get_group());
-	}
-
-	if (find_iterator != this->ruler_title_names.end()) {
-		auto sub_find_iterator = find_iterator->second.find(tier);
-		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(country_tier::none);
-		}
-
-		if (sub_find_iterator != find_iterator->second.end()) {
-			auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
-			if (sub_sub_find_iterator == sub_find_iterator->second.end()) {
-				sub_sub_find_iterator = sub_find_iterator->second.find(gender::none);
-			}
-			
-			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
-				return sub_sub_find_iterator->second;
-			}
-		}
-	}
-
-	if (government_type->get_group()->is_religious()) {
-		const std::string &religion_ruler_title_name = religion->get_ruler_title_name(government_type, tier, gender);
-		if (!religion_ruler_title_name.empty()) {
-			return religion_ruler_title_name;
-		}
-	}
-
-	const std::string &culture_ruler_title_name = this->get_culture()->get_ruler_title_name(government_type, tier, gender);
-	if (!culture_ruler_title_name.empty()) {
-		return culture_ruler_title_name;
-	}
-
-	assert_throw(government_type != nullptr);
-
-	return government_type->get_ruler_title_name(tier, gender);
-}
-
 const std::string &country::get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender, const religion *religion) const
 {
 	const auto office_find_iterator = this->office_title_names.find(office);
@@ -328,6 +284,13 @@ const std::string &country::get_office_title_name(const office *office, const go
 					return sub_sub_find_iterator->second;
 				}
 			}
+		}
+	}
+
+	if (government_type->get_group()->is_religious() && office == defines::get()->get_ruler_office()) {
+		const std::string &religion_office_title_name = religion->get_office_title_name(office, government_type, tier, gender);
+		if (!religion_office_title_name.empty()) {
+			return religion_office_title_name;
 		}
 	}
 

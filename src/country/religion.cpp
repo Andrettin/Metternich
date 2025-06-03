@@ -43,20 +43,6 @@ const std::string &religion::get_title_name(const government_type *government_ty
 	return string::empty_str;
 }
 
-const std::string &religion::get_ruler_title_name(const government_type *government_type, const country_tier tier, const gender gender) const
-{
-	const std::string &ruler_title_name = religion_base::get_ruler_title_name(government_type, tier, gender);
-	if (!ruler_title_name.empty()) {
-		return ruler_title_name;
-	}
-
-	if (this->get_group() != nullptr) {
-		return this->get_group()->get_ruler_title_name(government_type, tier, gender);
-	}
-
-	return string::empty_str;
-}
-
 const std::string &religion::get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender) const
 {
 	const std::string &office_title_name = religion_base::get_office_title_name(office, government_type, tier, gender);

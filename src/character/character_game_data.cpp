@@ -181,7 +181,7 @@ void character_game_data::on_setup_finished()
 
 	if (this->character->get_role() == character_role::ruler) {
 		for (const trait *trait : this->get_traits_of_type(trait_type::ruler)) {
-			if (trait->get_ruler_modifier() == nullptr && trait->get_scaled_ruler_modifier() != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
+			if (trait->get_office_modifier(defines::get()->get_ruler_office()) == nullptr && trait->get_scaled_office_modifier(defines::get()->get_ruler_office()) != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
 				throw std::runtime_error(std::format("Character \"{}\" is a ruler with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
 			}
 		}
@@ -204,10 +204,6 @@ void character_game_data::on_setup_finished()
 
 std::string character_game_data::get_titled_name() const
 {
-	if (this->is_ruler()) {
-		return std::format("{} {}", this->get_country()->get_game_data()->get_ruler_title_name(), this->character->get_full_name());
-	}
-
 	if (this->get_office() != nullptr) {
 		return std::format("{} {}", this->get_country()->get_game_data()->get_office_title_name(this->get_office()), this->character->get_full_name());
 	}
@@ -332,9 +328,6 @@ void character_game_data::change_attribute_value(const character_attribute attri
 		return;
 	}
 
-	if (this->is_ruler()) {
-		this->apply_ruler_modifier(this->get_country(), -1);
-	}
 	if (this->get_office() != nullptr) {
 		this->apply_office_modifier(this->country, this->get_office(), -1);
 	}
@@ -361,9 +354,6 @@ void character_game_data::change_attribute_value(const character_attribute attri
 		this->attribute_values.erase(attribute);
 	}
 
-	if (this->is_ruler()) {
-		this->apply_ruler_modifier(this->get_country(), 1);
-	}
 	if (this->get_office() != nullptr) {
 		this->apply_office_modifier(this->country, this->get_office(), 1);
 	}
@@ -527,11 +517,11 @@ void character_game_data::remove_trait(const trait *trait)
 
 void character_game_data::on_trait_gained(const trait *trait, const int multiplier)
 {
-	if (this->is_ruler()) {
+	if (this->get_office() != nullptr) {
 		assert_throw(this->get_country() != nullptr);
 
-		if (trait->get_ruler_modifier() != nullptr || trait->get_scaled_ruler_modifier() != nullptr) {
-			this->apply_trait_ruler_modifier(trait, this->get_country(), multiplier);
+		if (trait->get_office_modifier(this->get_office()) != nullptr || trait->get_scaled_office_modifier(this->get_office()) != nullptr) {
+			this->apply_trait_office_modifier(trait, this->get_country(), this->get_office(), multiplier);
 		}
 	}
 	if (this->is_advisor()) {
@@ -695,54 +685,6 @@ bool character_game_data::is_ruler() const
 	return this->get_country() != nullptr && this->get_country()->get_game_data()->get_ruler() == this->character;
 }
 
-std::string character_game_data::get_ruler_modifier_string(const metternich::country *country) const
-{
-	assert_throw(this->character->get_role() == character_role::ruler);
-
-	std::string str;
-
-	for (const trait *trait : this->get_traits()) {
-		if (trait->get_ruler_modifier() == nullptr && trait->get_scaled_ruler_modifier() == nullptr) {
-			continue;
-		}
-
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		str += string::highlight(trait->get_name());
-		if (trait->get_ruler_modifier() != nullptr) {
-			str += "\n" + trait->get_ruler_modifier()->get_string(country, 1, 1);
-		}
-		if (trait->get_scaled_ruler_modifier() != nullptr) {
-			str += "\n" + trait->get_scaled_ruler_modifier()->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), 1);
-		}
-	}
-
-	return str;
-}
-
-void character_game_data::apply_ruler_modifier(const metternich::country *country, const int multiplier) const
-{
-	assert_throw(this->character->get_role() == character_role::ruler);
-	assert_throw(country != nullptr);
-
-	for (const trait *trait : this->get_traits()) {
-		this->apply_trait_ruler_modifier(trait, country, multiplier);
-	}
-}
-
-void character_game_data::apply_trait_ruler_modifier(const trait *trait, const metternich::country *country, const int multiplier) const
-{
-	if (trait->get_ruler_modifier() != nullptr) {
-		trait->get_ruler_modifier()->apply(country, multiplier);
-	}
-
-	if (trait->get_scaled_ruler_modifier() != nullptr) {
-		trait->get_scaled_ruler_modifier()->apply(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
-	}
-}
-
 void character_game_data::set_office(const metternich::office *office)
 {
 	if (office == this->get_office()) {
@@ -756,10 +698,49 @@ void character_game_data::set_office(const metternich::office *office)
 	}
 }
 
+std::string character_game_data::get_office_modifier_string(const metternich::country *country, const metternich::office *office) const
+{
+	if (office == defines::get()->get_ruler_office()) {
+		assert_throw(this->character->get_role() == character_role::ruler);
+	} else {
+		assert_throw(this->character->get_role() == character_role::advisor);
+	}
+
+	assert_throw(office != nullptr);
+
+	std::string str;
+
+	for (const trait *trait : this->get_traits()) {
+		if (trait->get_office_modifier(office) == nullptr && trait->get_scaled_office_modifier(office) == nullptr) {
+			continue;
+		}
+
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += string::highlight(trait->get_name());
+		if (trait->get_office_modifier(office) != nullptr) {
+			str += "\n" + trait->get_office_modifier(office)->get_string(country, 1, 1);
+		}
+		if (trait->get_scaled_office_modifier(office) != nullptr) {
+			str += "\n" + trait->get_scaled_office_modifier(office)->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), 1);
+		}
+	}
+
+	return str;
+}
+
 void character_game_data::apply_office_modifier(const metternich::country *country, const metternich::office *office, const int multiplier) const
 {
-	assert_throw(this->character->get_role() == character_role::advisor);
+	if (office == defines::get()->get_ruler_office()) {
+		assert_throw(this->character->get_role() == character_role::ruler);
+	} else {
+		assert_throw(this->character->get_role() == character_role::advisor);
+	}
+
 	assert_throw(country != nullptr);
+	assert_throw(office != nullptr);
 
 	for (const trait *trait : this->get_traits()) {
 		this->apply_trait_office_modifier(trait, country, office, multiplier);

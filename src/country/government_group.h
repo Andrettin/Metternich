@@ -22,7 +22,6 @@ class government_group final : public named_data_entry, public data_type<governm
 
 public:
 	using title_name_map = std::map<country_tier, std::string>;
-	using ruler_title_name_map = std::map<country_tier, std::map<gender, std::string>>;
 	using office_title_name_map = data_entry_map<office, std::map<country_tier, std::map<gender, std::string>>>;
 	using landholder_title_name_map = std::map<site_tier, std::map<gender, std::string>>;
 
@@ -52,7 +51,6 @@ public:
 	}
 
 	const std::string &get_title_name(const country_tier tier) const;
-	const std::string &get_ruler_title_name(const country_tier tier, const gender gender) const;
 	const std::string &get_office_title_name(const office *office, const country_tier tier, const gender gender) const;
 	const std::string &get_landholder_title_name(const site_tier tier, const gender gender) const;
 
@@ -64,7 +62,6 @@ private:
 	bool clade = false; //clade countries cannot attack non-clade countries, and do not need war declaration to be attacked
 	bool religious = false; //religious government types use the title names from their religion, rather than culture
 	title_name_map title_names;
-	ruler_title_name_map ruler_title_names;
 	office_title_name_map office_title_names;
 	landholder_title_name_map landholder_title_names;
 };

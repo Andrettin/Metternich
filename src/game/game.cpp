@@ -16,6 +16,7 @@
 #include "country/culture_history.h"
 #include "country/diplomacy_state.h"
 #include "country/government_type.h"
+#include "country/office.h"
 #include "country/religion.h"
 #include "country/tradition.h"
 #include "database/defines.h"
@@ -264,7 +265,9 @@ QCoro::Task<void> game::start_coro()
 				population_unit->choose_ideology();
 			}
 
-			country_game_data->check_ruler();
+			for (const office *office : office::get_all()) {
+				country_game_data->check_office_holder(office, nullptr);
+			}
 
 			//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
 			country_game_data->check_journal_entries(true, true);
@@ -420,7 +423,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					throw std::runtime_error(std::format("Cannot set \"{}\" as the ruler of \"{}\", as it is already assigned to another country.", ruler->get_identifier(), country->get_identifier()));
 				}
 
-				country_game_data->set_ruler(ruler);
+				country_game_data->set_office_holder(defines::get()->get_ruler_office(), ruler);
 
 				if (ruler->get_required_technology() != nullptr) {
 					country_game_data->add_technology_with_prerequisites(ruler->get_required_technology());
@@ -1338,7 +1341,10 @@ QCoro::Task<void> game::on_setup_finished()
 	for (const country *country : this->get_countries()) {
 		country->get_game_data()->check_government_type();
 		country->get_game_data()->check_laws();
-		country->get_game_data()->check_ruler();
+
+		for (const office *office : office::get_all()) {
+			country->get_game_data()->check_office_holder(office, nullptr);
+		}
 
 		for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
 			map::get()->calculate_tile_country_border_directions(border_tile_pos);

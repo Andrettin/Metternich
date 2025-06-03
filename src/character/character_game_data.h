@@ -138,15 +138,6 @@ public:
 	void decrement_scripted_modifiers();
 
 	bool is_ruler() const;
-	std::string get_ruler_modifier_string(const metternich::country *country) const;
-
-	Q_INVOKABLE QString get_ruler_modifier_qstring(const metternich::country *country) const
-	{
-		return QString::fromStdString(this->get_ruler_modifier_string(country));
-	}
-
-	void apply_ruler_modifier(const metternich::country *country, const int multiplier) const;
-	void apply_trait_ruler_modifier(const trait *trait, const metternich::country *country, const int multiplier) const;
 
 	const metternich::office *get_office() const
 	{
@@ -154,6 +145,13 @@ public:
 	}
 
 	void set_office(const metternich::office *office);
+	std::string get_office_modifier_string(const metternich::country *country, const metternich::office *office) const;
+
+	Q_INVOKABLE QString get_office_modifier_qstring(const metternich::country *country, const metternich::office *office) const
+	{
+		return QString::fromStdString(this->get_office_modifier_string(country, office));
+	}
+
 	void apply_office_modifier(const metternich::country *country, const metternich::office *office, const int multiplier) const;
 	void apply_trait_office_modifier(const trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const;
 
