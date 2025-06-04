@@ -29,6 +29,7 @@
 #include "script/modifier.h"
 #include "technology/technological_period.h"
 #include "technology/technology_category.h"
+#include "technology/technology_subcategory.h"
 #include "unit/civilian_unit_type.h"
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
@@ -46,8 +47,12 @@ void technology::initialize_all()
 	data_type::initialize_all();
 
 	technology::sort_instances([](const technology *lhs, const technology *rhs) {
-		if (lhs->get_category() != rhs->get_category()) {
-			return lhs->get_category() < rhs->get_category();
+		if (lhs->get_category() != rhs->get_category() && lhs->get_category() != nullptr && rhs->get_category() != nullptr) {
+			return lhs->get_category()->get_identifier() < rhs->get_category()->get_identifier();
+		}
+
+		if (lhs->get_subcategory() != rhs->get_subcategory() && lhs->get_subcategory() != nullptr && rhs->get_subcategory() != nullptr) {
+			return lhs->get_subcategory()->get_identifier() < rhs->get_subcategory()->get_identifier();
 		}
 
 		return lhs->get_identifier() < rhs->get_identifier();
@@ -95,8 +100,8 @@ void technology::process_gsml_scope(const gsml_data &scope)
 
 void technology::initialize()
 {
-	if (this->category != nullptr) {
-		this->category->add_technology(this);
+	if (this->subcategory != nullptr) {
+		this->subcategory->add_technology(this);
 	}
 
 	this->calculate_total_prerequisite_depth();
@@ -113,6 +118,10 @@ void technology::initialize()
 
 void technology::check() const
 {
+	if (this->get_subcategory() == nullptr) {
+		throw std::runtime_error(std::format("Technology \"{}\" has no subcategory.", this->get_identifier()));
+	}
+
 	if (this->get_category() == nullptr) {
 		throw std::runtime_error(std::format("Technology \"{}\" has no category.", this->get_identifier()));
 	}
@@ -173,6 +182,15 @@ void technology::check() const
 	) {
 		log::log_error(std::format("Technology \"{}\" has no effects.", this->get_identifier()));
 	}
+}
+
+const technology_category *technology::get_category() const
+{
+	if (this->get_subcategory() != nullptr) {
+		return this->get_subcategory()->get_category();
+	}
+
+	return nullptr;
 }
 
 bool technology::is_available_for_country(const country *country) const

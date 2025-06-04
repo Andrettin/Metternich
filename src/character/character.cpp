@@ -222,9 +222,9 @@ void character::initialize()
 
 void character::check() const
 {
-	if (this->get_role() == character_role::ruler || this->get_role() == character_role::advisor || this->get_role() == character_role::governor || this->get_role() == character_role::landholder) {
+	if (this->get_role() != character_role::none) {
 		if (this->get_character_type() == nullptr) {
-			throw std::runtime_error(std::format("Character \"{}\" is a ruler, advisor, governor or landholder, but has no character type.", this->get_identifier()));
+			throw std::runtime_error(std::format("Character \"{}\" has a role, but has no character type.", this->get_identifier()));
 		}
 	}
 

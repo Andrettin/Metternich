@@ -6,6 +6,7 @@
 #include "infrastructure/pathway_container.h"
 
 Q_MOC_INCLUDE("technology/technology_category.h")
+Q_MOC_INCLUDE("technology/technology_subcategory.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
@@ -29,6 +30,7 @@ class production_type;
 class resource;
 class technological_period;
 class technology_category;
+class technology_subcategory;
 class terrain_type;
 class tradition;
 class transporter_type;
@@ -46,7 +48,8 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_OBJECT
 
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
-	Q_PROPERTY(metternich::technology_category* category MEMBER category NOTIFY changed)
+	Q_PROPERTY(const metternich::technology_category* category READ get_category NOTIFY changed)
+	Q_PROPERTY(metternich::technology_subcategory* subcategory MEMBER subcategory NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(int cost MEMBER cost READ get_cost NOTIFY changed)
@@ -95,9 +98,11 @@ public:
 		return QString::fromStdString(this->get_description());
 	}
 
-	const technology_category *get_category() const
+	const technology_category *get_category() const;
+
+	const technology_subcategory *get_subcategory() const
 	{
-		return this->category;
+		return this->subcategory;
 	}
 
 	const metternich::portrait *get_portrait() const
@@ -415,7 +420,7 @@ signals:
 
 private:
 	std::string description;
-	technology_category *category = nullptr;
+	technology_subcategory *subcategory = nullptr;
 	metternich::portrait *portrait = nullptr;
 	metternich::icon *icon = nullptr;
 	culture_set cultures;
