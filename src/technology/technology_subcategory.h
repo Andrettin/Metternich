@@ -28,6 +28,7 @@ public:
 	{
 	}
 
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const technology_category *get_category() const

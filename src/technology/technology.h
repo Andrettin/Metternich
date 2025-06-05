@@ -115,7 +115,7 @@ public:
 		return this->icon;
 	}
 
-	bool is_available_for_country(const country *country) const;
+	Q_INVOKABLE bool is_available_for_country(const metternich::country *country) const;
 
 	int get_cost() const
 	{

@@ -8,6 +8,15 @@
 
 namespace metternich {
 	
+void technology_subcategory::initialize()
+{
+	if (this->category != nullptr) {
+		this->category->add_subcategory(this);
+	}
+
+	named_data_entry::initialize();
+}
+	
 void technology_subcategory::check() const
 {
 	if (this->get_category() == nullptr) {

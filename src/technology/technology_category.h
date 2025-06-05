@@ -9,12 +9,14 @@ namespace metternich {
 
 class icon;
 class technology;
+class technology_subcategory;
 
 class technology_category final : public named_data_entry, public data_type<technology_category>
 {
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(QVariantList subcategories READ get_subcategories_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY changed)
 
 public:
@@ -31,6 +33,18 @@ public:
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	const std::vector<const technology_subcategory *> &get_subcategories() const
+	{
+		return this->subcategories;
+	}
+
+	QVariantList get_subcategories_qvariant_list() const;
+
+	void add_subcategory(const technology_subcategory *subcategory)
+	{
+		this->subcategories.push_back(subcategory);
 	}
 
 	const std::vector<const technology *> &get_technologies() const
@@ -50,6 +64,7 @@ signals:
 
 private:
 	const metternich::icon *icon = nullptr;
+	std::vector<const technology_subcategory *> subcategories;
 	std::vector<const technology *> technologies;
 };
 
