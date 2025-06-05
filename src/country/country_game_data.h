@@ -144,7 +144,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int land_transport_capacity READ get_land_transport_capacity NOTIFY land_transport_capacity_changed)
 	Q_PROPERTY(int sea_transport_capacity READ get_sea_transport_capacity NOTIFY sea_transport_capacity_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
-	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY technologies_changed)
+	Q_PROPERTY(QVariantList researchable_technologies READ get_researchable_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(const metternich::technology* current_research READ get_current_research WRITE set_current_research NOTIFY current_research_changed)
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
@@ -1185,15 +1185,9 @@ public:
 
 	bool can_gain_technology(const technology *technology) const;
 
-	std::vector<const technology *> get_available_technologies() const;
-	QVariantList get_available_technologies_qvariant_list() const;
-	bool is_technology_available(const technology *technology) const;
-
-	Q_INVOKABLE bool is_technology_available(metternich::technology *technology) const
-	{
-		const metternich::technology *const_technology = technology;
-		return this->is_technology_available(const_technology);
-	}
+	std::vector<const technology *> get_researchable_technologies() const;
+	QVariantList get_researchable_technologies_qvariant_list() const;
+	Q_INVOKABLE bool is_technology_researchable(const metternich::technology *technology) const;
 
 	QVariantList get_future_technologies_qvariant_list() const;
 

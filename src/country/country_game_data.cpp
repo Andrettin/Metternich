@@ -3359,29 +3359,29 @@ bool country_game_data::can_gain_technology(const technology *technology) const
 	return true;
 }
 
-std::vector<const technology *> country_game_data::get_available_technologies() const
+std::vector<const technology *> country_game_data::get_researchable_technologies() const
 {
-	std::vector<const technology *> available_technologies;
+	std::vector<const technology *> researchable_technologies;
 
 	for (const technology *technology : this->country->get_available_technologies()) {
-		if (!this->is_technology_available(technology)) {
+		if (!this->is_technology_researchable(technology)) {
 			continue;
 		}
 
-		available_technologies.push_back(technology);
+		researchable_technologies.push_back(technology);
 	}
 
-	std::sort(available_technologies.begin(), available_technologies.end(), technology_compare());
+	std::sort(researchable_technologies.begin(), researchable_technologies.end(), technology_compare());
 
-	return available_technologies;
+	return researchable_technologies;
 }
 
-QVariantList country_game_data::get_available_technologies_qvariant_list() const
+QVariantList country_game_data::get_researchable_technologies_qvariant_list() const
 {
-	return container::to_qvariant_list(this->get_available_technologies());
+	return container::to_qvariant_list(this->get_researchable_technologies());
 }
 
-bool country_game_data::is_technology_available(const technology *technology) const
+bool country_game_data::is_technology_researchable(const technology *technology) const
 {
 	if (technology->is_discovery()) {
 		return false;
@@ -3481,15 +3481,15 @@ void country_game_data::on_technology_researched(const technology *technology)
 
 data_entry_map<technology_category, const technology *> country_game_data::get_research_choice_map() const
 {
-	const std::vector<const technology *> available_technologies = this->get_available_technologies();
+	const std::vector<const technology *> researchable_technologies = this->get_researchable_technologies();
 
-	if (available_technologies.empty()) {
+	if (researchable_technologies.empty()) {
 		return {};
 	}
 
 	data_entry_map<technology_category, std::vector<const technology *>> potential_technologies_per_category;
 
-	for (const technology *technology : available_technologies) {
+	for (const technology *technology : researchable_technologies) {
 		std::vector<const metternich::technology *> &category_technologies = potential_technologies_per_category[technology->get_category()];
 
 		const int weight = 1;
