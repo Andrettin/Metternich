@@ -75,9 +75,9 @@ void character_game_data::apply_history(const QDate &start_date)
 			if (this->character->get_role() == character_role::advisor) {
 				const metternich::office *office = character_history->get_office();
 				if (office != nullptr && country == character_history->get_country()) {
-					assert_throw(this->get_country()->get_game_data()->get_office_holder(office) == nullptr);
+					assert_throw(country_game_data->get_office_holder(office) == nullptr);
 
-					this->get_country()->get_game_data()->set_office_holder(office, this->character);
+					country_game_data->set_office_holder(office, this->character);
 				} else if (country_game_data->can_have_advisors() && !country_game_data->has_incompatible_advisor_to(this->character)) {
 					country_game_data->add_advisor(this->character);
 				}
