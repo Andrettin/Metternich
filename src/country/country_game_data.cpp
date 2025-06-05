@@ -4413,6 +4413,22 @@ void country_game_data::on_office_holder_died(const office *office, const charac
 	this->check_office_holder(office, office_holder);
 }
 
+std::vector<const office *> country_game_data::get_available_offices() const
+{
+	std::vector<const office *> available_offices;
+
+	for (const office *office : office::get_all()) {
+		available_offices.push_back(office);
+	}
+
+	return available_offices;
+}
+
+QVariantList country_game_data::get_available_offices_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_available_offices());
+}
+
 QVariantList country_game_data::get_advisors_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_advisors());

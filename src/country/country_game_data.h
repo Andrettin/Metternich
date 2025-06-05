@@ -158,6 +158,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList office_holders READ get_office_holders_qvariant_list NOTIFY office_holders_changed)
+	Q_PROPERTY(QVariantList available_offices READ get_available_offices_qvariant_list NOTIFY available_offices_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
 	Q_PROPERTY(const metternich::character* next_advisor READ get_next_advisor WRITE set_next_advisor NOTIFY next_advisor_changed)
@@ -1371,7 +1372,7 @@ public:
 
 	QVariantList get_office_holders_qvariant_list() const;
 
-	const character *get_office_holder(const office *office) const
+	Q_INVOKABLE const metternich::character *get_office_holder(const metternich::office *office) const
 	{
 		const auto find_iterator = this->office_holders.find(office);
 
@@ -1387,6 +1388,9 @@ public:
 	void choose_office_holder(const office *office, const character *previous_holder);
 	bool can_appoint_office_holder(const office *office, const character *character) const;
 	void on_office_holder_died(const office *office, const character *office_holder);
+
+	std::vector<const office *> get_available_offices() const;
+	QVariantList get_available_offices_qvariant_list() const;
 
 	const std::vector<const character *> &get_advisors() const
 	{
@@ -2501,6 +2505,7 @@ signals:
 	void scripted_modifiers_changed();
 	void ruler_changed();
 	void office_holders_changed();
+	void available_offices_changed();
 	void advisors_changed();
 	void next_advisor_changed();
 	void advisor_recruited(const character *advisor);
