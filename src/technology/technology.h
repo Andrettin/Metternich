@@ -181,6 +181,20 @@ public:
 	commodity_map<int> get_commodity_costs_for_country(const country *country) const;
 	Q_INVOKABLE QVariantList get_commodity_costs_for_country_qvariant_list(const metternich::country *country) const;
 
+	int get_total_commodity_cost() const
+	{
+		int cost = 0;
+
+		for (const auto &[commodity, commodity_cost] : this->get_commodity_costs()) {
+			cost += commodity_cost;
+		}
+
+		return cost;
+	}
+
+	bool initialize_costs_from_prerequisites();
+	bool initialize_costs_from_dependents();
+
 	const factor<country> *get_cost_factor() const
 	{
 		return this->cost_factor.get();
