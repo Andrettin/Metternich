@@ -3,6 +3,7 @@
 #include "country/culture_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/commodity_container.h"
 #include "infrastructure/pathway_container.h"
 
 Q_MOC_INCLUDE("technology/technology_category.h")
@@ -52,13 +53,13 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(metternich::technology_subcategory* subcategory MEMBER subcategory NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
-	Q_PROPERTY(int cost MEMBER cost READ get_cost NOTIFY changed)
 	Q_PROPERTY(bool discovery MEMBER discovery READ is_discovery NOTIFY changed)
 	Q_PROPERTY(int year MEMBER year READ get_year NOTIFY changed)
 	Q_PROPERTY(const metternich::technological_period* period MEMBER period READ get_period NOTIFY changed)
 	Q_PROPERTY(bool free_technology MEMBER free_technology READ grants_free_technology NOTIFY changed)
 	Q_PROPERTY(int shared_prestige MEMBER shared_prestige READ get_shared_prestige NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
+	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_pathways READ get_enabled_pathways_qvariant_list NOTIFY changed)
@@ -117,22 +118,6 @@ public:
 
 	Q_INVOKABLE bool is_available_for_country(const metternich::country *country) const;
 
-	int get_cost() const
-	{
-		if (this->cost > 0) {
-			return this->cost;
-		}
-
-		return (this->get_total_prerequisite_depth() + 1) * technology::base_cost;
-	}
-
-	Q_INVOKABLE int get_cost_for_country(const metternich::country *country) const;
-
-	const factor<country> *get_cost_factor() const
-	{
-		return this->cost_factor.get();
-	}
-
 	bool is_discovery() const
 	{
 		return this->discovery;
@@ -179,6 +164,26 @@ public:
 	const std::vector<const technology *> &get_leads_to() const
 	{
 		return this->leads_to;
+	}
+
+	int get_wealth_cost() const
+	{
+		return this->wealth_cost;
+	}
+
+	Q_INVOKABLE int get_wealth_cost_for_country(const metternich::country *country) const;
+
+	const commodity_map<int> &get_commodity_costs() const
+	{
+		return this->commodity_costs;
+	}
+
+	commodity_map<int> get_commodity_costs_for_country(const country *country) const;
+	Q_INVOKABLE QVariantList get_commodity_costs_for_country_qvariant_list(const metternich::country *country) const;
+
+	const factor<country> *get_cost_factor() const
+	{
+		return this->cost_factor.get();
 	}
 
 	const std::vector<const commodity *> &get_enabled_commodities() const
@@ -425,8 +430,6 @@ private:
 	metternich::icon *icon = nullptr;
 	culture_set cultures;
 	std::vector<const cultural_group *> cultural_groups;
-	int cost = 0;
-	std::unique_ptr<const factor<country>> cost_factor;
 	bool discovery = false;
 	int year = 0; //the historical year that this technology was discovered
 	const technological_period *period = nullptr;
@@ -435,6 +438,9 @@ private:
 	std::vector<technology *> prerequisites;
 	int total_prerequisite_depth = 0;
 	std::vector<const technology *> leads_to;
+	int wealth_cost = 0;
+	commodity_map<int> commodity_costs;
+	std::unique_ptr<const factor<country>> cost_factor;
 	std::vector<const commodity *> enabled_commodities;
 	std::vector<const resource *> enabled_resources;
 	std::vector<const building_type *> enabled_buildings;

@@ -37,6 +37,7 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
@@ -85,6 +86,11 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->prerequisites.push_back(technology::get(value));
 		}
+	} else if (tag == "commodity_costs") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->commodity_costs[commodity] = std::stoi(property.get_value());
+		});
 	} else if (tag == "cost_factor") {
 		auto factor = std::make_unique<metternich::factor<country>>(100);
 		database::process_gsml_data(factor, scope);
@@ -134,7 +140,7 @@ void technology::check() const
 		throw std::runtime_error(std::format("Technology \"{}\" has no icon.", this->get_identifier()));
 	}
 
-	if (this->get_cost() == 0 && !this->is_discovery()) {
+	if (this->get_wealth_cost() == 0 && this->get_commodity_costs().empty() && !this->is_discovery()) {
 		throw std::runtime_error(std::format("Technology \"{}\" has no cost, and is not a discovery.", this->get_identifier()));
 	}
 
@@ -212,23 +218,6 @@ bool technology::is_available_for_country(const country *country) const
 	return true;
 }
 
-int technology::get_cost_for_country(const country *country) const
-{
-	centesimal_int cost(this->get_cost());
-
-	if (cost > 0) {
-		if (this->get_cost_factor() != nullptr) {
-			cost = this->get_cost_factor()->calculate(country, cost);
-		}
-
-		cost *= country->get_game_data()->get_research_cost_modifier();
-		cost /= 100;
-		cost = centesimal_int::max(centesimal_int(1), cost);
-	}
-
-	return cost.to_int();
-}
-
 int technology::get_shared_prestige_for_country(const country *country) const
 {
 	int prestige = this->get_shared_prestige();
@@ -288,6 +277,57 @@ void technology::calculate_total_prerequisite_depth()
 	}
 
 	this->total_prerequisite_depth = depth;
+}
+
+int technology::get_wealth_cost_for_country(const country *country) const
+{
+	int cost = this->get_wealth_cost();
+
+	if (cost == 0) {
+		cost = (this->get_total_prerequisite_depth() + 1) * technology::base_cost * 100;
+	}
+
+	if (cost > 0) {
+		if (this->get_cost_factor() != nullptr) {
+			cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+		}
+
+		cost *= country->get_game_data()->get_research_cost_modifier();
+		cost /= 100;
+
+		cost = std::max(1, cost);
+	}
+
+	return cost;
+}
+
+commodity_map<int> technology::get_commodity_costs_for_country(const country *country) const
+{
+	commodity_map<int> costs = this->get_commodity_costs();
+
+	if (costs.empty()) {
+		costs[defines::get()->get_research_commodity()] = (this->get_total_prerequisite_depth() + 1) * technology::base_cost;
+	}
+
+	for (auto &[commodity, cost] : costs) {
+		if (cost > 0) {
+			if (this->get_cost_factor() != nullptr) {
+				cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+			}
+
+			cost *= country->get_game_data()->get_research_cost_modifier();
+			cost /= 100;
+
+			cost = std::max(1, cost);
+		}
+	}
+
+	return costs;
+}
+
+QVariantList technology::get_commodity_costs_for_country_qvariant_list(const country *country) const
+{
+	return archimedes::map::to_qvariant_list(this->get_commodity_costs_for_country(country));
 }
 
 QVariantList technology::get_enabled_buildings_qvariant_list() const

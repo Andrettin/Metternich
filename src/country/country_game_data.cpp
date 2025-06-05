@@ -268,7 +268,7 @@ void country_game_data::do_research()
 			return;
 		}
 
-		const int technology_cost = researched_technology->get_cost_for_country(this->country);
+		const int technology_cost = researched_technology->get_commodity_costs_for_country(this->country)[defines::get()->get_research_commodity()];
 		if (this->get_stored_commodity(defines::get()->get_research_commodity()) >= technology_cost || this->free_technology_count > 0) {
 			if (this->free_technology_count > 0) {
 				--this->free_technology_count;
