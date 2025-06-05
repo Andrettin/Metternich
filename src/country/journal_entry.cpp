@@ -200,6 +200,12 @@ bool journal_entry::check_preconditions(const country *country) const
 		return false;
 	}
 
+	for (const technology *technology : this->get_researched_technologies()) {
+		if (!technology->is_available_for_country(country)) {
+			return false;
+		}
+	}
+
 	for (const character *character : this->get_recruited_characters()) {
 		const metternich::country *character_country = character->get_game_data()->get_country();
 		if (character_country != nullptr && character_country != country) {
