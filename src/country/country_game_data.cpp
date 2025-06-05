@@ -4396,7 +4396,11 @@ void country_game_data::on_office_holder_died(const office *office, const charac
 		if (this->country == game::get()->get_player_country()) {
 			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
-			engine_interface::get()->add_notification(std::format("{} Died", office->get_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
+			if (office->is_ruler()) {
+				engine_interface::get()->add_notification(std::format("{} Died", office->get_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
+			} else {
+				engine_interface::get()->add_notification(std::format("{} Retired", office->get_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, {} {} has decided to retire.", string::lowered(office->get_name()), office_holder->get_full_name()));
+			}
 		}
 
 		if (office->is_ruler()) {
