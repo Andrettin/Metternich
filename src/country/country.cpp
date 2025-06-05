@@ -11,6 +11,7 @@
 #include "country/culture.h"
 #include "country/government_group.h"
 #include "country/government_type.h"
+#include "country/office.h"
 #include "country/religion.h"
 #include "database/defines.h"
 #include "map/province.h"
@@ -287,7 +288,7 @@ const std::string &country::get_office_title_name(const office *office, const go
 		}
 	}
 
-	if (government_type->get_group()->is_religious() && office == defines::get()->get_ruler_office()) {
+	if (government_type->get_group()->is_religious() && office->is_ruler()) {
 		const std::string &religion_office_title_name = religion->get_office_title_name(office, government_type, tier, gender);
 		if (!religion_office_title_name.empty()) {
 			return religion_office_title_name;

@@ -56,7 +56,7 @@ const std::string &government_group::get_office_title_name(const office *office,
 		}
 	}
 
-	if (office == defines::get()->get_ruler_office()) {
+	if (office->is_ruler()) {
 		switch (tier) {
 			case country_tier::barony:
 				if (gender == gender::female) {

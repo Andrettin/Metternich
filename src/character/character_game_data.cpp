@@ -700,7 +700,7 @@ void character_game_data::set_office(const metternich::office *office)
 
 std::string character_game_data::get_office_modifier_string(const metternich::country *country, const metternich::office *office) const
 {
-	if (office == defines::get()->get_ruler_office()) {
+	if (office->is_ruler()) {
 		assert_throw(this->character->get_role() == character_role::ruler);
 	} else {
 		assert_throw(this->character->get_role() == character_role::advisor);
@@ -733,7 +733,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 
 void character_game_data::apply_office_modifier(const metternich::country *country, const metternich::office *office, const int multiplier) const
 {
-	if (office == defines::get()->get_ruler_office()) {
+	if (office->is_ruler()) {
 		assert_throw(this->character->get_role() == character_role::ruler);
 	} else {
 		assert_throw(this->character->get_role() == character_role::advisor);

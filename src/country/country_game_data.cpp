@@ -4244,7 +4244,7 @@ void country_game_data::set_office_holder(const office *office, const character 
 		this->check_office_holder(old_office, character);
 	}
 
-	if (office == defines::get()->get_ruler_office()) {
+	if (office->is_ruler()) {
 		if (this->country == game::get()->get_player_country()) {
 			game::get()->set_player_character(character);
 		}
@@ -4253,7 +4253,7 @@ void country_game_data::set_office_holder(const office *office, const character 
 	if (game::get()->is_running()) {
 		emit office_holders_changed();
 
-		if (office == defines::get()->get_ruler_office()) {
+		if (office->is_ruler()) {
 			emit ruler_changed();
 
 			if (old_office_holder != nullptr) {
@@ -4295,7 +4295,7 @@ void country_game_data::choose_office_holder(const office *office, const charact
 	bool found_same_dynasty = false;
 
 	for (const character *character : character::get_all()) {
-		if (office == defines::get()->get_ruler_office()) {
+		if (office->is_ruler()) {
 			if (character->get_role() != character_role::ruler) {
 				continue;
 			}
@@ -4311,7 +4311,7 @@ void country_game_data::choose_office_holder(const office *office, const charact
 
 		const character_game_data *character_game_data = character->get_game_data();
 
-		if (office == defines::get()->get_ruler_office()) {
+		if (office->is_ruler()) {
 			if (previous_holder != nullptr && previous_holder->get_dynasty() != nullptr) {
 				const bool same_dynasty = character->get_dynasty() == previous_holder->get_dynasty();
 				if (same_dynasty && !found_same_dynasty) {
@@ -4373,7 +4373,7 @@ bool country_game_data::can_appoint_office_holder(const office *office, const ch
 		return false;
 	}
 
-	if (office == defines::get()->get_ruler_office()) {
+	if (office->is_ruler()) {
 		if (!vector::contains(this->country->get_rulers(), character)) {
 			return false;
 		}
@@ -4399,7 +4399,7 @@ void country_game_data::on_office_holder_died(const office *office, const charac
 			engine_interface::get()->add_notification(std::format("{} Died", office->get_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
 		}
 
-		if (office == defines::get()->get_ruler_office()) {
+		if (office->is_ruler()) {
 			context ctx(this->country);
 			ctx.source_scope = office_holder;
 			country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);

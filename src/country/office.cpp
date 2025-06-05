@@ -3,6 +3,7 @@
 #include "country/office.h"
 
 #include "character/character_attribute.h"
+#include "database/defines.h"
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 
@@ -32,6 +33,15 @@ void office::process_gsml_scope(const gsml_data &scope)
 void office::check() const
 {
 	assert_throw(this->get_attribute() != character_attribute::none);
+
+	if (this->is_ruler()) {
+		assert_throw(!this->is_minister());
+	}
+}
+
+bool office::is_ruler() const
+{
+	return defines::get()->get_ruler_office() == this;
 }
 
 }
