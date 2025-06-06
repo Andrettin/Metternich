@@ -453,6 +453,7 @@ bool technology::initialize_costs_from_prerequisites()
 
 		if (!commodity_cost_modifiers.empty()) {
 			for (const auto &[commodity, modifier] : commodity_cost_modifiers) {
+				assert_throw(modifier >= 100);
 				this->commodity_costs[commodity] = std::max(1, highest_prerequisite_commodity_costs[commodity] * modifier / 100);
 			}
 
@@ -555,6 +556,7 @@ bool technology::initialize_costs_from_dependents()
 
 		if (!commodity_cost_modifiers.empty()) {
 			for (const auto &[commodity, modifier] : commodity_cost_modifiers) {
+				assert_throw(modifier <= 100);
 				this->commodity_costs[commodity] = std::max(1, highest_dependent_commodity_costs[commodity] * modifier / 100);
 			}
 
