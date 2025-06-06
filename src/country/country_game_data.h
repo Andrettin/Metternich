@@ -146,7 +146,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList researchable_technologies READ get_researchable_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
-	Q_PROPERTY(const metternich::technology* current_research READ get_current_research WRITE set_current_research NOTIFY current_research_changed)
+	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
@@ -1191,12 +1191,25 @@ public:
 
 	QVariantList get_future_technologies_qvariant_list() const;
 
-	const technology *get_current_research() const
+	const technology_set &get_current_researches() const
 	{
-		return this->current_research;
+		return this->current_researches;
 	}
 
-	void set_current_research(const technology *technology);
+	QVariantList get_current_researches_qvariant_list() const;
+
+	Q_INVOKABLE void add_current_research(const metternich::technology *technology)
+	{
+		this->current_researches.insert(technology);
+		emit current_researches_changed();
+	}
+
+	Q_INVOKABLE void remove_current_research(const metternich::technology *technology)
+	{
+		this->current_researches.erase(technology);
+		emit current_researches_changed();
+	}
+
 	void choose_current_research();
 	void on_technology_researched(const technology *technology);
 
@@ -2487,7 +2500,7 @@ signals:
 	void land_transport_capacity_changed();
 	void sea_transport_capacity_changed();
 	void technologies_changed();
-	void current_research_changed();
+	void current_researches_changed();
 	void technology_researched(const technology *technology);
 	void government_type_changed();
 	void laws_changed();
@@ -2582,7 +2595,7 @@ private:
 	int land_transport_capacity = 0;
 	int sea_transport_capacity = 0;
 	technology_set technologies;
-	const technology *current_research = nullptr;
+	technology_set current_researches;
 	int free_technology_count = 0;
 	const metternich::government_type *government_type = nullptr;
 	law_group_map<const law *> laws;

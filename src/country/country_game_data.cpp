@@ -194,14 +194,7 @@ void country_game_data::do_production()
 				continue;
 			}
 
-			centesimal_int final_output = output;
-
-			if (commodity == defines::get()->get_research_commodity() && this->get_current_research() != nullptr) {
-				final_output *= 100 + this->get_category_research_modifier(this->get_current_research()->get_category());
-				final_output /= 100;
-			}
-
-			this->change_stored_commodity(commodity, final_output.to_int());
+			this->change_stored_commodity(commodity, output.to_int());
 		}
 
 		//decrease consumption of commodities for which we no longer have enough in storage
@@ -255,29 +248,20 @@ void country_game_data::do_research()
 
 		assert_throw(this->free_technology_count >= 0);
 
-		const technology *researched_technology = this->get_current_research();
-
-		if (researched_technology == nullptr) {
-			if (this->free_technology_count > 0) {
-				this->gain_free_technology();
-			} else {
-				if (this->get_commodity_output(defines::get()->get_research_commodity()).to_int() > 0 || this->get_stored_commodity(defines::get()->get_research_commodity()) > 0) {
-					this->choose_current_research();
-				}
-			}
-			return;
+		if (this->free_technology_count > 0) {
+			this->gain_free_technology();
 		}
 
-		const int technology_cost = researched_technology->get_commodity_costs_for_country(this->country)[defines::get()->get_research_commodity()];
-		if (this->get_stored_commodity(defines::get()->get_research_commodity()) >= technology_cost || this->free_technology_count > 0) {
-			if (this->free_technology_count > 0) {
-				--this->free_technology_count;
-			} else {
-				this->change_stored_commodity(defines::get()->get_research_commodity(), -technology_cost);
-			}
-
-			this->on_technology_researched(researched_technology);
+		if (this->is_ai()) {
+			this->choose_current_research();
 		}
+
+		for (const technology *current_research : this->get_current_researches()) {
+			this->on_technology_researched(current_research);
+		}
+
+		this->current_researches.clear();
+		emit current_researches_changed();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error doing research for country \"" + this->country->get_identifier() + "\"."));
 	}
@@ -3416,38 +3400,32 @@ QVariantList country_game_data::get_future_technologies_qvariant_list() const
 	return container::to_qvariant_list(future_technologies);
 }
 
-void country_game_data::set_current_research(const technology *technology)
+QVariantList country_game_data::get_current_researches_qvariant_list() const
 {
-	if (technology == this->get_current_research()) {
-		return;
-	}
-
-	this->current_research = technology;
-
-	emit current_research_changed();
+	return container::to_qvariant_list(this->get_current_researches());
 }
 
 void country_game_data::choose_current_research()
 {
+	assert_throw(this->is_ai());
+
 	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map();
 
 	if (research_choice_map.empty()) {
 		return;
 	}
 
-	if (this->is_ai()) {
-		const technology *chosen_technology = this->get_ai_research_choice(research_choice_map);
-		this->set_current_research(chosen_technology);
-	} else {
-		const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
-		emit engine_interface::get()->current_research_choosable(container::to_qvariant_list(potential_technologies));
+	const technology *chosen_technology = this->get_ai_research_choice(research_choice_map);
+
+	if (chosen_technology != nullptr) {
+		this->add_current_research(chosen_technology);
 	}
 }
 
 void country_game_data::on_technology_researched(const technology *technology)
 {
-	if (technology == this->get_current_research()) {
-		this->set_current_research(nullptr);
+	if (this->get_current_researches().contains(technology)) {
+		this->remove_current_research(technology);
 	}
 
 	this->add_technology(technology);
@@ -3556,12 +3534,8 @@ void country_game_data::gain_free_technology()
 		const technology *chosen_technology = this->get_ai_research_choice(research_choice_map);
 		this->gain_free_technology(chosen_technology);
 	} else {
-		if (this->get_current_research() != nullptr) {
-			this->gain_free_technology(this->get_current_research());
-		} else {
-			const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
-			emit engine_interface::get()->free_technology_choosable(container::to_qvariant_list(potential_technologies));
-		}
+		const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
+		emit engine_interface::get()->free_technology_choosable(container::to_qvariant_list(potential_technologies));
 	}
 }
 
