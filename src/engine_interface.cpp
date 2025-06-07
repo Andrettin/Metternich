@@ -10,6 +10,7 @@
 #include "country/law_group.h"
 #include "database/defines.h"
 #include "database/preferences.h"
+#include "economy/commodity.h"
 #include "game/event_instance.h"
 #include "game/game.h"
 #include "game/scenario.h"
@@ -120,6 +121,11 @@ QVariantList engine_interface::get_technologies() const
 QVariantList engine_interface::get_technology_categories() const
 {
 	return container::to_qvariant_list(technology_category::get_all());
+}
+
+QVariantList engine_interface::get_research_commodities() const
+{
+	return container::to_qvariant_list(technology::get_research_commodities());
 }
 
 const country_tier_data *engine_interface::get_country_tier_data(const metternich::country_tier tier) const

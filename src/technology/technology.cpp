@@ -96,6 +96,25 @@ void technology::initialize_all()
 
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
+
+	commodity_map<int> research_commodity_counts;
+	for (const technology *technology : technology::get_all()) {
+		for (const auto &[commodity, cost] : technology->get_commodity_costs()) {
+			research_commodity_counts[commodity] += cost;
+		}
+	}
+
+	technology::research_commodities = archimedes::map::get_keys(research_commodity_counts);
+
+	std::sort(technology::research_commodities.begin(), technology::research_commodities.end(), [&research_commodity_counts](const commodity *lhs, const commodity *rhs) {
+		const int lhs_count = research_commodity_counts.find(lhs)->second;
+		const int rhs_count = research_commodity_counts.find(rhs)->second;
+		if (lhs_count != rhs_count) {
+			return lhs_count > rhs_count;
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
 }
 
 technology::technology(const std::string &identifier)

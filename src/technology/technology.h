@@ -75,8 +75,18 @@ public:
 
 	static constexpr int base_cost = 10;
 
+public:
 	static void initialize_all();
 
+	static const std::vector<const commodity *> &get_research_commodities()
+	{
+		return technology::research_commodities;
+	}
+
+private:
+	static inline std::vector<const commodity *> research_commodities;
+
+public:
 	explicit technology(const std::string &identifier);
 	~technology();
 

@@ -76,6 +76,7 @@ public:
 	Q_INVOKABLE QVariantList get_law_groups() const;
 	Q_INVOKABLE QVariantList get_technologies() const;
 	Q_INVOKABLE QVariantList get_technology_categories() const;
+	Q_INVOKABLE QVariantList get_research_commodities() const;
 	Q_INVOKABLE const metternich::country_tier_data *get_country_tier_data(const metternich::country_tier tier) const;
 	Q_INVOKABLE const consulate *get_consulate(const QString &identifier) const;
 
