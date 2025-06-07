@@ -5,6 +5,7 @@
 #include "country/cultural_group.h"
 #include "country/office.h"
 #include "technology/technology_category.h"
+#include "technology/technology_subcategory.h"
 
 namespace metternich {
 
@@ -18,5 +19,6 @@ template struct data_entry_compare<cultural_group>;
 template struct data_entry_compare<named_data_entry>;
 template struct data_entry_compare<office>;
 template struct data_entry_compare<technology_category>;
+template struct data_entry_compare<technology_subcategory>;
 
 }

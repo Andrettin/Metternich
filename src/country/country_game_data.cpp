@@ -5744,16 +5744,29 @@ void country_game_data::change_capital_commodity_bonus_per_population(const comm
 	}
 }
 
-void country_game_data::set_category_research_modifier(const technology_category *category, const int value)
+void country_game_data::set_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value)
 {
-	if (value == this->get_category_research_modifier(category)) {
+	if (value == this->get_technology_category_cost_modifier(category)) {
 		return;
 	}
 
 	if (value == 0) {
-		this->category_research_modifiers.erase(category);
+		this->technology_category_cost_modifiers.erase(category);
 	} else {
-		this->category_research_modifiers[category] = value;
+		this->technology_category_cost_modifiers[category] = value;
+	}
+}
+
+void country_game_data::set_technology_subcategory_cost_modifier(const technology_subcategory *subcategory, const centesimal_int &value)
+{
+	if (value == this->get_technology_subcategory_cost_modifier(subcategory)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->technology_subcategory_cost_modifiers.erase(subcategory);
+	} else {
+		this->technology_subcategory_cost_modifiers[subcategory] = value;
 	}
 }
 

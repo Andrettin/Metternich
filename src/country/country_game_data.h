@@ -74,6 +74,7 @@ class scripted_country_modifier;
 class site;
 class subject_type;
 class technology_category;
+class technology_subcategory;
 class tradition;
 class transporter;
 class transporter_type;
@@ -2029,22 +2030,52 @@ public:
 
 	void change_capital_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change);
 
-	Q_INVOKABLE int get_category_research_modifier(const metternich::technology_category *category) const
+	const centesimal_int &get_technology_cost_modifier() const
 	{
-		const auto find_iterator = this->category_research_modifiers.find(category);
+		return this->technology_cost_modifier;
+	}
 
-		if (find_iterator != this->category_research_modifiers.end()) {
+	void change_technology_cost_modifier(const centesimal_int &change)
+	{
+		this->technology_cost_modifier += change;
+	}
+
+	const centesimal_int &get_technology_category_cost_modifier(const technology_category *category) const
+	{
+		const auto find_iterator = this->technology_category_cost_modifiers.find(category);
+
+		if (find_iterator != this->technology_category_cost_modifiers.end()) {
 			return find_iterator->second;
 		}
 
-		return 0;
+		static const centesimal_int zero;
+		return zero;
 	}
 
-	void set_category_research_modifier(const technology_category *category, const int value);
+	void set_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value);
 
-	void change_category_research_modifier(const technology_category *category, const int value)
+	void change_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value)
 	{
-		this->set_category_research_modifier(category, this->get_category_research_modifier(category) + value);
+		this->set_technology_category_cost_modifier(category, this->get_technology_category_cost_modifier(category) + value);
+	}
+
+	const centesimal_int &get_technology_subcategory_cost_modifier(const technology_subcategory *subcategory) const
+	{
+		const auto find_iterator = this->technology_subcategory_cost_modifiers.find(subcategory);
+
+		if (find_iterator != this->technology_subcategory_cost_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
+	void set_technology_subcategory_cost_modifier(const technology_subcategory *subcategory, const centesimal_int &value);
+
+	void change_technology_subcategory_cost_modifier(const technology_subcategory *subcategory, const centesimal_int &value)
+	{
+		this->set_technology_subcategory_cost_modifier(subcategory, this->get_technology_subcategory_cost_modifier(subcategory) + value);
 	}
 
 	Q_INVOKABLE const centesimal_int &get_population_type_modifier_multiplier(const population_type *type) const
@@ -2630,7 +2661,9 @@ private:
 	commodity_map<centesimal_int> settlement_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses;
 	commodity_map<centesimal_int> capital_commodity_bonuses_per_population;
-	data_entry_map<technology_category, int> category_research_modifiers;
+	centesimal_int technology_cost_modifier;
+	data_entry_map<technology_category, centesimal_int> technology_category_cost_modifiers;
+	data_entry_map<technology_subcategory, centesimal_int> technology_subcategory_cost_modifiers;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	population_type_map<centesimal_int> population_type_militancy_modifiers;
 	int law_cost_modifier = 0;

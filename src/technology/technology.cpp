@@ -338,36 +338,44 @@ void technology::calculate_total_prerequisite_depth()
 
 int technology::get_wealth_cost_for_country(const country *country) const
 {
-	int cost = this->get_wealth_cost();
+	centesimal_int cost(this->get_wealth_cost());
 
 	if (cost > 0) {
-		if (this->get_cost_factor() != nullptr) {
-			cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
-		}
-
 		cost *= country->get_game_data()->get_research_cost_modifier();
 		cost /= 100;
 
-		cost = std::max(1, cost);
+		cost *= centesimal_int(100) + country->get_game_data()->get_technology_cost_modifier() + country->get_game_data()->get_technology_category_cost_modifier(this->get_category()) + country->get_game_data()->get_technology_subcategory_cost_modifier(this->get_subcategory());
+		cost /= 100;
+
+		if (this->get_cost_factor() != nullptr) {
+			cost = this->get_cost_factor()->calculate(country, cost);
+		}
+
+		cost = centesimal_int::max(centesimal_int(1), cost);
 	}
 
-	return cost;
+	return cost.to_int();
 }
 
 commodity_map<int> technology::get_commodity_costs_for_country(const country *country) const
 {
 	commodity_map<int> costs = this->get_commodity_costs();
 
-	for (auto &[commodity, cost] : costs) {
-		if (cost > 0) {
-			if (this->get_cost_factor() != nullptr) {
-				cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
-			}
+	for (auto &[commodity, cost_int] : costs) {
+		if (cost_int > 0) {
+			centesimal_int cost(cost_int);
 
 			cost *= country->get_game_data()->get_research_cost_modifier();
 			cost /= 100;
 
-			cost = std::max(1, cost);
+			cost *= centesimal_int(100) + country->get_game_data()->get_technology_cost_modifier() + country->get_game_data()->get_technology_category_cost_modifier(this->get_category()) + country->get_game_data()->get_technology_subcategory_cost_modifier(this->get_subcategory());
+			cost /= 100;
+
+			if (this->get_cost_factor() != nullptr) {
+				cost = this->get_cost_factor()->calculate(country, cost);
+			}
+
+			cost_int = std::max(1, cost.to_int());
 		}
 	}
 

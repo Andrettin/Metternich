@@ -11,7 +11,6 @@
 #include "script/modifier_effect/capital_commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_output_modifier_effect.h"
-#include "script/modifier_effect/category_research_modifier_effect.h"
 #include "script/modifier_effect/cavalry_cost_modifier_effect.h"
 #include "script/modifier_effect/character_attribute_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
@@ -54,6 +53,7 @@
 #include "script/modifier_effect/resource_output_modifier_effect.h"
 #include "script/modifier_effect/ship_stat_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
+#include "script/modifier_effect/technology_cost_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
 #include "script/modifier_effect/unit_upgrade_cost_modifier_effect.h"
 #include "script/modifier_effect/warship_cost_modifier_effect.h"
@@ -129,6 +129,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<leader_cost_modifier_effect>(value);
 		} else if (key == "storage_capacity") {
 			return std::make_unique<storage_capacity_modifier_effect>(value);
+		} else if (key == "technology_cost_modifier") {
+			return std::make_unique<technology_cost_modifier_effect>(value);
 		} else if (key == "throughput_modifier") {
 			return std::make_unique<throughput_modifier_effect<scope_type>>(value);
 		} else if (key == "unit_upgrade_cost_modifier") {
@@ -155,9 +157,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (key.ends_with(throughput_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - throughput_modifier_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - throughput_modifier_suffix.size()));
 			return std::make_unique<commodity_throughput_modifier_effect<scope_type>>(commodity, value);
-		} else if (key.ends_with(research_modifier_suffix) && technology_category::try_get(key.substr(0, key.size() - research_modifier_suffix.size())) != nullptr) {
-			const technology_category *category = technology_category::get(key.substr(0, key.size() - research_modifier_suffix.size()));
-			return std::make_unique<category_research_modifier_effect<scope_type>>(category, value);
 		} else if (key.ends_with(bonus_suffix) && population_type::try_get(key.substr(0, key.size() - bonus_suffix.size())) != nullptr) {
 			const population_type *population_type = population_type::get(key.substr(0, key.size() - bonus_suffix.size()));
 
@@ -291,6 +290,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<commodity_demand_modifier_effect>();
 		} else if (tag == "military_unit_domain_stat_modifier") {
 			modifier_effect = std::make_unique<military_unit_domain_stat_modifier_effect>();
+		} else if (tag == "technology_cost_modifier") {
+			modifier_effect = std::make_unique<technology_cost_modifier_effect>();
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (tag == "commodity_bonus_per_adjacent_terrain") {

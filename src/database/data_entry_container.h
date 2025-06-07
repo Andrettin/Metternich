@@ -21,10 +21,12 @@ using data_entry_map = std::map<const T *, U, data_entry_compare<T>>;
 class cultural_group;
 class office;
 class technology_category;
+class technology_subcategory;
 
 extern template struct data_entry_compare<cultural_group>;
 extern template struct data_entry_compare<named_data_entry>;
 extern template struct data_entry_compare<office>;
 extern template struct data_entry_compare<technology_category>;
+extern template struct data_entry_compare<technology_subcategory>;
 
 }

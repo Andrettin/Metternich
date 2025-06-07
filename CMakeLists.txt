@@ -675,7 +675,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/capital_commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_output_modifier_effect.h
-	src/script/modifier_effect/category_research_modifier_effect.h
 	src/script/modifier_effect/cavalry_cost_modifier_effect.h
 	src/script/modifier_effect/character_attribute_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h
@@ -719,6 +718,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/resource_output_modifier_effect.h
 	src/script/modifier_effect/ship_stat_modifier_effect.h
 	src/script/modifier_effect/storage_capacity_modifier_effect.h
+	src/script/modifier_effect/technology_cost_modifier_effect.h
 	src/script/modifier_effect/throughput_modifier_effect.h
 	src/script/modifier_effect/unit_upgrade_cost_modifier_effect.h
 	src/script/modifier_effect/warship_cost_modifier_effect.h
