@@ -1184,6 +1184,7 @@ public:
 	void add_technology_with_prerequisites(const technology *technology);
 
 	bool can_gain_technology(const technology *technology) const;
+	Q_INVOKABLE bool can_research_technology(const metternich::technology *technology) const;
 
 	std::vector<const technology *> get_researchable_technologies() const;
 	QVariantList get_researchable_technologies_qvariant_list() const;
@@ -1197,19 +1198,8 @@ public:
 	}
 
 	QVariantList get_current_researches_qvariant_list() const;
-
-	Q_INVOKABLE void add_current_research(const metternich::technology *technology)
-	{
-		this->current_researches.insert(technology);
-		emit current_researches_changed();
-	}
-
-	Q_INVOKABLE void remove_current_research(const metternich::technology *technology)
-	{
-		this->current_researches.erase(technology);
-		emit current_researches_changed();
-	}
-
+	Q_INVOKABLE void add_current_research(const metternich::technology *technology);
+	Q_INVOKABLE void remove_current_research(const metternich::technology *technology);
 	void choose_current_research();
 	void on_technology_researched(const technology *technology);
 
@@ -1218,7 +1208,7 @@ public:
 		return 100 + (this->get_population_unit_count() - 1);
 	}
 
-	data_entry_map<technology_category, const technology *> get_research_choice_map() const;
+	data_entry_map<technology_category, const technology *> get_research_choice_map(const bool is_free) const;
 	const technology *get_ai_research_choice(const data_entry_map<technology_category, const technology *> &research_choice_map) const;
 
 	void gain_free_technology();

@@ -3343,6 +3343,26 @@ bool country_game_data::can_gain_technology(const technology *technology) const
 	return true;
 }
 
+bool country_game_data::can_research_technology(const technology *technology) const
+{
+	if (!this->can_gain_technology(technology)) {
+		return false;
+	}
+
+	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
+	if (wealth_cost > 0 && this->get_inflated_value(wealth_cost) > this->get_wealth_with_credit()) {
+		return false;
+	}
+
+	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
+		if (cost > this->get_stored_commodity(commodity)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 std::vector<const technology *> country_game_data::get_researchable_technologies() const
 {
 	std::vector<const technology *> researchable_technologies;
@@ -3405,11 +3425,37 @@ QVariantList country_game_data::get_current_researches_qvariant_list() const
 	return container::to_qvariant_list(this->get_current_researches());
 }
 
+void country_game_data::add_current_research(const technology *technology)
+{
+	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
+	this->change_wealth_inflated(-wealth_cost);
+
+	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
+		this->change_stored_commodity(commodity, -cost);
+	}
+
+	this->current_researches.insert(technology);
+	emit current_researches_changed();
+}
+
+void country_game_data::remove_current_research(const technology *technology)
+{
+	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
+	this->change_wealth_inflated(wealth_cost);
+
+	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
+		this->change_stored_commodity(commodity, cost);
+	}
+
+	this->current_researches.erase(technology);
+	emit current_researches_changed();
+}
+
 void country_game_data::choose_current_research()
 {
 	assert_throw(this->is_ai());
 
-	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map();
+	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map(false);
 
 	if (research_choice_map.empty()) {
 		return;
@@ -3457,7 +3503,7 @@ void country_game_data::on_technology_researched(const technology *technology)
 	emit technology_researched(technology);
 }
 
-data_entry_map<technology_category, const technology *> country_game_data::get_research_choice_map() const
+data_entry_map<technology_category, const technology *> country_game_data::get_research_choice_map(const bool is_free) const
 {
 	const std::vector<const technology *> researchable_technologies = this->get_researchable_technologies();
 
@@ -3468,6 +3514,10 @@ data_entry_map<technology_category, const technology *> country_game_data::get_r
 	data_entry_map<technology_category, std::vector<const technology *>> potential_technologies_per_category;
 
 	for (const technology *technology : researchable_technologies) {
+		if (!is_free && !this->can_research_technology(technology)) {
+			continue;
+		}
+
 		std::vector<const metternich::technology *> &category_technologies = potential_technologies_per_category[technology->get_category()];
 
 		const int weight = 1;
@@ -3524,7 +3574,7 @@ const technology *country_game_data::get_ai_research_choice(const data_entry_map
 
 void country_game_data::gain_free_technology()
 {
-	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map();
+	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map(true);
 
 	if (research_choice_map.empty()) {
 		return;
