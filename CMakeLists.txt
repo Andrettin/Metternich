@@ -23,10 +23,10 @@ set(character_SRCS
 	src/character/character.cpp
 	src/character/character_container.cpp
 	src/character/character_game_data.cpp
+	src/character/character_trait.cpp
 	src/character/character_type.cpp
 	src/character/character_type_container.cpp
 	src/character/dynasty.cpp
-	src/character/trait.cpp
 )
 source_group(character FILES ${character_SRCS})
 set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")
@@ -314,12 +314,12 @@ set(character_HDRS
 	src/character/character_game_data.h
 	src/character/character_history.h
 	src/character/character_role.h
+	src/character/character_trait.h
+	src/character/character_trait_type.h
 	src/character/character_type.h
 	src/character/character_type_container.h
 	src/character/dynasty.h
 	src/character/starting_age_category.h
-	src/character/trait.h
-	src/character/trait_type.h
 )
 source_group(character FILES ${character_HDRS})
 

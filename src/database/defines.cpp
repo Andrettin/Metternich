@@ -2,7 +2,7 @@
 
 #include "database/defines.h"
 
-#include "character/trait_type.h"
+#include "character/character_trait_type.h"
 #include "country/diplomacy_state.h"
 #include "database/database.h"
 #include "database/preferences.h"
@@ -61,19 +61,19 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->river_settlement_commodity_bonuses[commodity] = bonus;
 		});
-	} else if (tag == "min_traits_per_type") {
+	} else if (tag == "min_character_traits_per_type") {
 		scope.for_each_property([&](const gsml_property &property) {
-			const trait_type type = magic_enum::enum_cast<trait_type>(property.get_key()).value();
+			const character_trait_type type = magic_enum::enum_cast<character_trait_type>(property.get_key()).value();
 			const int value = std::stoi(property.get_value());
 
-			this->min_traits_per_type[type] = value;
+			this->min_character_traits_per_type[type] = value;
 		});
-	} else if (tag == "max_traits_per_type") {
+	} else if (tag == "max_character_traits_per_type") {
 		scope.for_each_property([&](const gsml_property &property) {
-			const trait_type type = magic_enum::enum_cast<trait_type>(property.get_key()).value();
+			const character_trait_type type = magic_enum::enum_cast<character_trait_type>(property.get_key()).value();
 			const int value = std::stoi(property.get_value());
 
-			this->max_traits_per_type[type] = value;
+			this->max_character_traits_per_type[type] = value;
 		});
 	} else if (tag == "scaled_landholder_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const site>>();

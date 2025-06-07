@@ -15,7 +15,7 @@ class military_unit;
 class office;
 class province;
 enum class character_attribute;
-enum class trait_type;
+enum class character_trait_type;
 
 template <typename scope_type>
 class and_condition;
@@ -26,7 +26,7 @@ class effect_list;
 template <typename scope_type>
 class modifier;
 
-class trait final : public named_data_entry, public data_type<trait>
+class character_trait final : public named_data_entry, public data_type<character_trait>
 {
 	Q_OBJECT
 
@@ -39,17 +39,17 @@ class trait final : public named_data_entry, public data_type<trait>
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
 
 public:
-	static constexpr const char class_identifier[] = "trait";
-	static constexpr const char property_class_identifier[] = "metternich::trait*";
-	static constexpr const char database_folder[] = "traits";
+	static constexpr const char class_identifier[] = "character_trait";
+	static constexpr const char property_class_identifier[] = "metternich::character_trait*";
+	static constexpr const char database_folder[] = "traits/character";
 
-	explicit trait(const std::string &identifier);
-	~trait();
+	explicit character_trait(const std::string &identifier);
+	~character_trait();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
-	const std::set<trait_type> &get_types() const
+	const std::set<character_trait_type> &get_types() const
 	{
 		return this->types;
 	}
@@ -177,7 +177,7 @@ signals:
 	void changed();
 
 private:
-	std::set<trait_type> types;
+	std::set<character_trait_type> types;
 	metternich::icon *icon = nullptr;
 	int level = 1;
 	bool hidden_name = false;

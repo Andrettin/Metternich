@@ -26,6 +26,7 @@ namespace metternich {
 
 class character_game_data;
 class character_history;
+class character_trait;
 class character_type;
 class civilian_unit_class;
 class civilian_unit_type;
@@ -39,7 +40,6 @@ class religion;
 class site;
 class species;
 class technology;
-class trait;
 enum class character_attribute;
 enum class character_role;
 enum class military_unit_category;
@@ -196,7 +196,7 @@ public:
 	centesimal_int get_skill_multiplier() const;
 	void set_skill_multiplier(const centesimal_int &skill_multiplier);
 
-	const std::vector<const trait *> &get_traits() const
+	const std::vector<const character_trait *> &get_traits() const
 	{
 		return this->traits;
 	}
@@ -261,7 +261,7 @@ private:
 	std::vector<const country *> rulable_countries;
 	province *governable_province = nullptr;
 	site *holdable_site = nullptr;
-	std::vector<const trait *> traits;
+	std::vector<const character_trait *> traits;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
 	std::unique_ptr<const and_condition<country>> conditions;

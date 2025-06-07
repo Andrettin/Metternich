@@ -13,6 +13,7 @@ Q_MOC_INCLUDE("ui/portrait.h")
 namespace metternich {
 
 class character;
+class character_trait;
 class civilian_unit;
 class country;
 class military_unit;
@@ -22,10 +23,9 @@ class portrait;
 class province;
 class scripted_character_modifier;
 class spell;
-class trait;
 enum class character_attribute;
+enum class character_trait_type;
 enum class military_unit_stat;
-enum class trait_type;
 
 template <typename scope_type>
 class modifier;
@@ -101,29 +101,29 @@ public:
 
 	std::set<character_attribute> get_main_attributes() const;
 
-	const std::vector<const trait *> &get_traits() const
+	const std::vector<const character_trait *> &get_traits() const
 	{
 		return this->traits;
 	}
 
 	QVariantList get_traits_qvariant_list() const;
 
-	std::vector<const trait *> get_traits_of_type(const trait_type trait_type) const;
+	std::vector<const character_trait *> get_traits_of_type(const character_trait_type trait_type) const;
 	Q_INVOKABLE QVariantList get_traits_of_type(const QString &trait_type_str) const;
 
-	int get_trait_count_for_type(const trait_type trait_type) const
+	int get_trait_count_for_type(const character_trait_type trait_type) const
 	{
 		return static_cast<int>(this->get_traits_of_type(trait_type).size());
 	}
 
-	bool can_have_trait(const trait *trait) const;
-	bool can_gain_trait(const trait *trait) const;
-	bool has_trait(const trait *trait) const;
-	void add_trait(const trait *trait);
-	void remove_trait(const trait *trait);
-	void on_trait_gained(const trait *trait, const int multiplier);
-	[[nodiscard]] bool generate_trait(const trait_type trait_type, const character_attribute target_attribute, const int target_attribute_bonus);
-	[[nodiscard]] bool generate_initial_trait(const trait_type trait_type);
+	bool can_have_trait(const character_trait *trait) const;
+	bool can_gain_trait(const character_trait *trait) const;
+	bool has_trait(const character_trait *trait) const;
+	void add_trait(const character_trait *trait);
+	void remove_trait(const character_trait *trait);
+	void on_trait_gained(const character_trait *trait, const int multiplier);
+	[[nodiscard]] bool generate_trait(const character_trait_type trait_type, const character_attribute target_attribute, const int target_attribute_bonus);
+	[[nodiscard]] bool generate_initial_trait(const character_trait_type trait_type);
 	void sort_traits();
 
 	const scripted_character_modifier_map<int> &get_scripted_modifiers() const
@@ -153,12 +153,12 @@ public:
 	}
 
 	void apply_office_modifier(const metternich::country *country, const metternich::office *office, const int multiplier) const;
-	void apply_trait_office_modifier(const trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const;
+	void apply_trait_office_modifier(const character_trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const;
 
 	bool is_advisor() const;
 	Q_INVOKABLE QString get_advisor_effects_string(const metternich::country *country) const;
 	void apply_advisor_modifier(const metternich::country *country, const int multiplier) const;
-	void apply_trait_advisor_modifier(const trait *trait, const metternich::country *country, const int multiplier) const;
+	void apply_trait_advisor_modifier(const character_trait *trait, const metternich::country *country, const int multiplier) const;
 
 	bool is_governor() const;
 	std::string get_governor_modifier_string(const metternich::province *province) const;
@@ -169,7 +169,7 @@ public:
 	}
 
 	void apply_governor_modifier(const metternich::province *province, const int multiplier) const;
-	void apply_trait_governor_modifier(const trait *trait, const metternich::province *province, const int multiplier) const;
+	void apply_trait_governor_modifier(const character_trait *trait, const metternich::province *province, const int multiplier) const;
 
 	bool is_landholder() const;
 	std::string get_landholder_modifier_string(const metternich::site *site) const;
@@ -317,7 +317,7 @@ private:
 	const metternich::country *country = nullptr;
 	bool dead = false;
 	std::map<character_attribute, int> attribute_values;
-	std::vector<const trait *> traits;
+	std::vector<const character_trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;

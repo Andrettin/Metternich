@@ -2,7 +2,7 @@
 
 namespace metternich {
 
-enum class trait_type {
+enum class character_trait_type {
 	background,
 	personality,
 	expertise,
@@ -13,4 +13,4 @@ enum class trait_type {
 
 }
 
-Q_DECLARE_METATYPE(metternich::trait_type)
+Q_DECLARE_METATYPE(metternich::character_trait_type)

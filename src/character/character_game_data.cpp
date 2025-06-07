@@ -6,9 +6,9 @@
 #include "character/character_attribute.h"
 #include "character/character_history.h"
 #include "character/character_role.h"
+#include "character/character_trait.h"
+#include "character/character_trait_type.h"
 #include "character/character_type.h"
-#include "character/trait.h"
-#include "character/trait_type.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/office.h"
@@ -140,23 +140,23 @@ void character_game_data::on_setup_finished()
 		this->character->get_species()->get_modifier()->apply(this->character, 1);
 	}
 
-	for (const trait *trait : this->character->get_traits()) {
+	for (const character_trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);
 	}
 
-	std::vector<trait_type> generated_trait_types{ trait_type::background, trait_type::personality, trait_type::expertise };
+	std::vector<character_trait_type> generated_trait_types{ character_trait_type::background, character_trait_type::personality, character_trait_type::expertise };
 	if (this->character->get_role() == character_role::ruler) {
-		generated_trait_types.insert(generated_trait_types.begin(), trait_type::ruler);
+		generated_trait_types.insert(generated_trait_types.begin(), character_trait_type::ruler);
 	} else if (this->character->get_role() == character_role::advisor) {
-		generated_trait_types.insert(generated_trait_types.begin(), trait_type::advisor);
+		generated_trait_types.insert(generated_trait_types.begin(), character_trait_type::advisor);
 	} else if (this->character->get_role() == character_role::governor) {
-		generated_trait_types.insert(generated_trait_types.begin(), trait_type::governor);
+		generated_trait_types.insert(generated_trait_types.begin(), character_trait_type::governor);
 	}
 
 	bool success = true;
-	for (const trait_type trait_type : generated_trait_types) {
+	for (const character_trait_type trait_type : generated_trait_types) {
 		success = true;
-		while (this->get_trait_count_for_type(trait_type) < defines::get()->get_min_traits_for_type(trait_type) && success) {
+		while (this->get_trait_count_for_type(trait_type) < defines::get()->get_min_character_traits_for_type(trait_type) && success) {
 			success = this->generate_initial_trait(trait_type);
 		}
 	}
@@ -165,7 +165,7 @@ void character_game_data::on_setup_finished()
 	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : character_attribute::none;
 	const int target_attribute_value = this->character->get_skill();
 	while (target_attribute != character_attribute::none && success) {
-		for (const trait_type trait_type : generated_trait_types) {
+		for (const character_trait_type trait_type : generated_trait_types) {
 			success = false;
 
 			const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
@@ -173,26 +173,26 @@ void character_game_data::on_setup_finished()
 				break;
 			}
 
-			if (this->get_trait_count_for_type(trait_type) < defines::get()->get_max_traits_for_type(trait_type)) {
+			if (this->get_trait_count_for_type(trait_type) < defines::get()->get_max_character_traits_for_type(trait_type)) {
 				success = this->generate_initial_trait(trait_type);
 			}
 		}
 	}
 
 	if (this->character->get_role() == character_role::ruler) {
-		for (const trait *trait : this->get_traits_of_type(trait_type::ruler)) {
+		for (const character_trait *trait : this->get_traits_of_type(character_trait_type::ruler)) {
 			if (trait->get_office_modifier(defines::get()->get_ruler_office()) == nullptr && trait->get_scaled_office_modifier(defines::get()->get_ruler_office()) != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
 				throw std::runtime_error(std::format("Character \"{}\" is a ruler with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
 			}
 		}
 	} else if (this->character->get_role() == character_role::advisor) {
-		for (const trait *trait : this->get_traits_of_type(trait_type::advisor)) {
+		for (const character_trait *trait : this->get_traits_of_type(character_trait_type::advisor)) {
 			if (trait->get_advisor_modifier() == nullptr && trait->get_advisor_effects() == nullptr && trait->get_scaled_advisor_modifier() != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
 				throw std::runtime_error(std::format("Character \"{}\" is an advisor with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
 			}
 		}
 	} else if (this->character->get_role() == character_role::governor) {
-		for (const trait *trait : this->get_traits_of_type(trait_type::governor)) {
+		for (const character_trait *trait : this->get_traits_of_type(character_trait_type::governor)) {
 			if (trait->get_governor_modifier() == nullptr && trait->get_scaled_governor_modifier() != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
 				throw std::runtime_error(std::format("Character \"{}\" is a governor with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
 			}
@@ -341,7 +341,7 @@ void character_game_data::change_attribute_value(const character_attribute attri
 		this->apply_landholder_modifier(this->character->get_holdable_site(), -1);
 	}
 	if (this->character->get_role() == character_role::leader) {
-		for (const trait *trait : this->get_traits()) {
+		for (const character_trait *trait : this->get_traits()) {
 			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
 				this->apply_modifier(trait->get_scaled_leader_modifier(), -std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
 			}
@@ -367,7 +367,7 @@ void character_game_data::change_attribute_value(const character_attribute attri
 		this->apply_landholder_modifier(this->character->get_holdable_site(), 1);
 	}
 	if (this->character->get_role() == character_role::leader) {
-		for (const trait *trait : this->get_traits()) {
+		for (const character_trait *trait : this->get_traits()) {
 			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
 				this->apply_modifier(trait->get_scaled_leader_modifier(), std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
 			}
@@ -390,7 +390,7 @@ std::set<character_attribute> character_game_data::get_main_attributes() const
 		attributes.insert(this->character->get_primary_attribute());
 	}
 
-	for (const trait *trait : this->get_traits()) {
+	for (const character_trait *trait : this->get_traits()) {
 		if (trait->get_attribute() != character_attribute::none) {
 			attributes.insert(trait->get_attribute());
 		}
@@ -404,11 +404,11 @@ QVariantList character_game_data::get_traits_qvariant_list() const
 	return container::to_qvariant_list(this->get_traits());
 }
 
-std::vector<const trait *> character_game_data::get_traits_of_type(const trait_type trait_type) const
+std::vector<const character_trait *> character_game_data::get_traits_of_type(const character_trait_type trait_type) const
 {
-	std::vector<const trait *> traits;
+	std::vector<const character_trait *> traits;
 
-	for (const trait *trait : this->get_traits()) {
+	for (const character_trait *trait : this->get_traits()) {
 		if (!trait->get_types().contains(trait_type)) {
 			continue;
 		}
@@ -421,11 +421,11 @@ std::vector<const trait *> character_game_data::get_traits_of_type(const trait_t
 
 QVariantList character_game_data::get_traits_of_type(const QString &trait_type_str) const
 {
-	const trait_type type = magic_enum::enum_cast<trait_type>(trait_type_str.toStdString()).value();
+	const character_trait_type type = magic_enum::enum_cast<character_trait_type>(trait_type_str.toStdString()).value();
 	return container::to_qvariant_list(this->get_traits_of_type(type));
 }
 
-bool character_game_data::can_have_trait(const trait *trait) const
+bool character_game_data::can_have_trait(const character_trait *trait) const
 {
 	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, read_only_context(this->character))) {
 		return false;
@@ -434,7 +434,7 @@ bool character_game_data::can_have_trait(const trait *trait) const
 	return true;
 }
 
-bool character_game_data::can_gain_trait(const trait *trait) const
+bool character_game_data::can_gain_trait(const character_trait *trait) const
 {
 	if (this->has_trait(trait)) {
 		return false;
@@ -444,20 +444,20 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 		return false;
 	}
 
-	for (const trait_type trait_type : trait->get_types()) {
-		if (trait_type == trait_type::ruler && this->character->get_role() != character_role::ruler) {
+	for (const character_trait_type trait_type : trait->get_types()) {
+		if (trait_type == character_trait_type::ruler && this->character->get_role() != character_role::ruler) {
 			continue;
 		}
 
-		if (trait_type == trait_type::advisor && this->character->get_role() != character_role::advisor) {
+		if (trait_type == character_trait_type::advisor && this->character->get_role() != character_role::advisor) {
 			continue;
 		}
 
-		if (trait_type == trait_type::governor && this->character->get_role() != character_role::governor) {
+		if (trait_type == character_trait_type::governor && this->character->get_role() != character_role::governor) {
 			continue;
 		}
 
-		if (this->get_trait_count_for_type(trait_type) >= defines::get()->get_max_traits_for_type(trait_type)) {
+		if (this->get_trait_count_for_type(trait_type) >= defines::get()->get_max_character_traits_for_type(trait_type)) {
 			return false;
 		}
 	}
@@ -473,12 +473,12 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 	return true;
 }
 
-bool character_game_data::has_trait(const trait *trait) const
+bool character_game_data::has_trait(const character_trait *trait) const
 {
 	return vector::contains(this->get_traits(), trait);
 }
 
-void character_game_data::add_trait(const trait *trait)
+void character_game_data::add_trait(const character_trait *trait)
 {
 	if (this->has_trait(trait)) {
 		log::log_error(std::format("Tried to add trait \"{}\" to character \"{}\", but they already have the trait.", trait->get_identifier(), this->character->get_identifier()));
@@ -501,7 +501,7 @@ void character_game_data::add_trait(const trait *trait)
 	}
 }
 
-void character_game_data::remove_trait(const trait *trait)
+void character_game_data::remove_trait(const character_trait *trait)
 {
 	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the trait change can affect them
 	std::erase(this->traits, trait);
@@ -515,7 +515,7 @@ void character_game_data::remove_trait(const trait *trait)
 	}
 }
 
-void character_game_data::on_trait_gained(const trait *trait, const int multiplier)
+void character_game_data::on_trait_gained(const character_trait *trait, const int multiplier)
 {
 	if (this->get_office() != nullptr) {
 		assert_throw(this->get_country() != nullptr);
@@ -567,12 +567,12 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 	}
 }
 
-bool character_game_data::generate_trait(const trait_type trait_type, const character_attribute target_attribute, const int target_attribute_bonus)
+bool character_game_data::generate_trait(const character_trait_type trait_type, const character_attribute target_attribute, const int target_attribute_bonus)
 {
-	std::vector<const trait *> potential_traits;
+	std::vector<const character_trait *> potential_traits;
 	int best_attribute_bonus = 0;
 
-	for (const trait *trait : trait::get_all()) {
+	for (const character_trait *trait : character_trait::get_all()) {
 		if (!trait->get_types().contains(trait_type)) {
 			continue;
 		}
@@ -606,7 +606,7 @@ bool character_game_data::generate_trait(const trait_type trait_type, const char
 	return true;
 }
 
-bool character_game_data::generate_initial_trait(const trait_type trait_type)
+bool character_game_data::generate_initial_trait(const character_trait_type trait_type)
 {
 	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : character_attribute::none;
 	const int target_attribute_value = this->character->get_skill();
@@ -617,7 +617,7 @@ bool character_game_data::generate_initial_trait(const trait_type trait_type)
 
 void character_game_data::sort_traits()
 {
-	std::sort(this->traits.begin(), this->traits.end(), [](const trait *lhs, const trait *rhs) {
+	std::sort(this->traits.begin(), this->traits.end(), [](const character_trait *lhs, const character_trait *rhs) {
 		if (*lhs->get_types().begin() != *rhs->get_types().begin()) {
 			return *lhs->get_types().begin() < *rhs->get_types().begin();
 		}
@@ -710,7 +710,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 
 	std::string str;
 
-	for (const trait *trait : this->get_traits()) {
+	for (const character_trait *trait : this->get_traits()) {
 		if (trait->get_office_modifier(office) == nullptr && trait->get_scaled_office_modifier(office) == nullptr) {
 			continue;
 		}
@@ -742,12 +742,12 @@ void character_game_data::apply_office_modifier(const metternich::country *count
 	assert_throw(country != nullptr);
 	assert_throw(office != nullptr);
 
-	for (const trait *trait : this->get_traits()) {
+	for (const character_trait *trait : this->get_traits()) {
 		this->apply_trait_office_modifier(trait, country, office, multiplier);
 	}
 }
 
-void character_game_data::apply_trait_office_modifier(const trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const
+void character_game_data::apply_trait_office_modifier(const character_trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const
 {
 	if (trait->get_office_modifier(office) != nullptr) {
 		trait->get_office_modifier(office)->apply(country, multiplier);
@@ -769,7 +769,7 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 
 	std::string str;
 
-	for (const trait *trait : this->get_traits()) {
+	for (const character_trait *trait : this->get_traits()) {
 		if (trait->get_advisor_modifier() == nullptr && trait->get_scaled_advisor_modifier() == nullptr) {
 			continue;
 		}
@@ -828,12 +828,12 @@ void character_game_data::apply_advisor_modifier(const metternich::country *coun
 	assert_throw(this->character->get_role() == character_role::advisor);
 	assert_throw(country != nullptr);
 
-	for (const trait *trait : this->get_traits()) {
+	for (const character_trait *trait : this->get_traits()) {
 		this->apply_trait_advisor_modifier(trait, country, multiplier);
 	}
 }
 
-void character_game_data::apply_trait_advisor_modifier(const trait *trait, const metternich::country *country, const int multiplier) const
+void character_game_data::apply_trait_advisor_modifier(const character_trait *trait, const metternich::country *country, const int multiplier) const
 {
 	if (trait->get_advisor_modifier() != nullptr) {
 		trait->get_advisor_modifier()->apply(country, multiplier);
@@ -855,7 +855,7 @@ std::string character_game_data::get_governor_modifier_string(const metternich::
 
 	std::string str;
 
-	for (const trait *trait : this->get_traits()) {
+	for (const character_trait *trait : this->get_traits()) {
 		if (trait->get_governor_modifier() == nullptr && trait->get_scaled_governor_modifier() == nullptr) {
 			continue;
 		}
@@ -881,12 +881,12 @@ void character_game_data::apply_governor_modifier(const metternich::province *pr
 	assert_throw(this->character->get_role() == character_role::governor);
 	assert_throw(province != nullptr);
 
-	for (const trait *trait : this->get_traits()) {
+	for (const character_trait *trait : this->get_traits()) {
 		this->apply_trait_governor_modifier(trait, province, multiplier);
 	}
 }
 
-void character_game_data::apply_trait_governor_modifier(const trait *trait, const metternich::province *province, const int multiplier) const
+void character_game_data::apply_trait_governor_modifier(const character_trait *trait, const metternich::province *province, const int multiplier) const
 {
 	if (trait->get_governor_modifier() != nullptr) {
 		trait->get_governor_modifier()->apply(province, multiplier);
@@ -970,7 +970,7 @@ void character_game_data::apply_modifier(const modifier<const metternich::charac
 
 void character_game_data::apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier)
 {
-	for (const trait *trait : this->get_traits()) {
+	for (const character_trait *trait : this->get_traits()) {
 		if (trait->get_military_unit_modifier() != nullptr) {
 			trait->get_military_unit_modifier()->apply(military_unit, multiplier);
 		}

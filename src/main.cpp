@@ -5,9 +5,9 @@
 #include "character/character_attribute.h"
 #include "character/character_game_data.h"
 #include "character/character_role.h"
+#include "character/character_trait_type.h"
 #include "character/dynasty.h"
 #include "character/starting_age_category.h"
-#include "character/trait_type.h"
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
@@ -148,6 +148,7 @@ int main(int argc, char **argv)
 		database::get()->register_enum<advisor_category>();
 		database::get()->register_enum<character_attribute>();
 		database::get()->register_enum<character_role>();
+		database::get()->register_enum<character_trait_type>();
 		database::get()->register_enum<country_tier>();
 		database::get()->register_enum<country_type>();
 		database::get()->register_enum<cultural_group_rank>();
@@ -168,7 +169,6 @@ int main(int argc, char **argv)
 		database::get()->register_enum<taxonomic_rank>();
 		database::get()->register_enum<temperature_type>();
 		database::get()->register_enum<tradition_category>();
-		database::get()->register_enum<trait_type>();
 		database::get()->register_enum<transporter_category>();
 
 		QCoro::Qml::registerTypes();

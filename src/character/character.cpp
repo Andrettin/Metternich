@@ -9,8 +9,8 @@
 #include "character/character_type.h"
 #include "character/dynasty.h"
 #include "character/starting_age_category.h"
-#include "character/trait.h"
-#include "character/trait_type.h"
+#include "character/character_trait.h"
+#include "character/character_trait_type.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
@@ -118,7 +118,7 @@ void character::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "traits") {
 		for (const std::string &value : values) {
-			this->traits.push_back(trait::get(value));
+			this->traits.push_back(character_trait::get(value));
 		}
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
@@ -234,13 +234,13 @@ void character::check() const
 				throw std::runtime_error(std::format("Character \"{}\" is a ruler, but has no rulable countries.", this->get_identifier()));
 			}
 
-			std::vector<const trait *> ruler_traits = this->get_traits();
-			std::erase_if(ruler_traits, [](const trait *trait) {
-				return !trait->get_types().contains(trait_type::ruler);
+			std::vector<const character_trait *> ruler_traits = this->get_traits();
+			std::erase_if(ruler_traits, [](const character_trait *trait) {
+				return !trait->get_types().contains(character_trait_type::ruler);
 			});
 			const int ruler_trait_count = static_cast<int>(ruler_traits.size());
-			const int min_ruler_traits = defines::get()->get_min_traits_for_type(trait_type::ruler);
-			const int max_ruler_traits = defines::get()->get_max_traits_for_type(trait_type::ruler);
+			const int min_ruler_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::ruler);
+			const int max_ruler_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::ruler);
 
 			if (ruler_trait_count < min_ruler_traits) {
 				log::log_error(std::format("Ruler character \"{}\" only has {} ruler {}, less than the expected minimum of {}.", this->get_identifier(), ruler_trait_count, ruler_trait_count == 1 ? "trait" : "traits", min_ruler_traits));
@@ -251,13 +251,13 @@ void character::check() const
 		}
 		case character_role::advisor:
 		{
-			std::vector<const trait *> advisor_traits = this->get_traits();
-			std::erase_if(advisor_traits, [](const trait *trait) {
-				return !trait->get_types().contains(trait_type::advisor);
+			std::vector<const character_trait *> advisor_traits = this->get_traits();
+			std::erase_if(advisor_traits, [](const character_trait *trait) {
+				return !trait->get_types().contains(character_trait_type::advisor);
 			});
 			const int advisor_trait_count = static_cast<int>(advisor_traits.size());
-			const int min_advisor_traits = defines::get()->get_min_traits_for_type(trait_type::advisor);
-			const int max_advisor_traits = defines::get()->get_max_traits_for_type(trait_type::advisor);
+			const int min_advisor_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::advisor);
+			const int max_advisor_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::advisor);
 
 			if (advisor_trait_count < min_advisor_traits) {
 				throw std::runtime_error(std::format("Advisor character \"{}\" only has {} advisor {}, less than the expected minimum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", min_advisor_traits));
@@ -272,13 +272,13 @@ void character::check() const
 				throw std::runtime_error(std::format("Character \"{}\" is a governor, but has no governable province.", this->get_identifier()));
 			}
 
-			std::vector<const trait *> governor_traits = this->get_traits();
-			std::erase_if(governor_traits, [](const trait *trait) {
-				return !trait->get_types().contains(trait_type::governor);
+			std::vector<const character_trait *> governor_traits = this->get_traits();
+			std::erase_if(governor_traits, [](const character_trait *trait) {
+				return !trait->get_types().contains(character_trait_type::governor);
 			});
 			const int governor_trait_count = static_cast<int>(governor_traits.size());
-			const int min_governor_traits = defines::get()->get_min_traits_for_type(trait_type::governor);
-			const int max_governor_traits = defines::get()->get_max_traits_for_type(trait_type::governor);
+			const int min_governor_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::governor);
+			const int max_governor_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::governor);
 
 			if (governor_trait_count < min_governor_traits) {
 				throw std::runtime_error(std::format("Governor character \"{}\" only has {} governor {}, less than the expected minimum of {}.", this->get_identifier(), governor_trait_count, governor_trait_count == 1 ? "trait" : "traits", min_governor_traits));

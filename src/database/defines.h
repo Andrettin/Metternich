@@ -26,9 +26,9 @@ class pathway;
 class population_class;
 class portrait;
 class terrain_type;
+enum class character_trait_type;
 enum class diplomacy_state;
 enum class event_trigger;
-enum class trait_type;
 
 template <typename scope_type>
 class modifier;
@@ -253,20 +253,20 @@ public:
 		return this->military_upkeep_icon;
 	}
 
-	int get_min_traits_for_type(const trait_type type) const
+	int get_min_character_traits_for_type(const character_trait_type type) const
 	{
-		const auto find_iterator = this->min_traits_per_type.find(type);
-		if (find_iterator != this->min_traits_per_type.end()) {
+		const auto find_iterator = this->min_character_traits_per_type.find(type);
+		if (find_iterator != this->min_character_traits_per_type.end()) {
 			return find_iterator->second;
 		}
 
 		return 0;
 	}
 
-	int get_max_traits_for_type(const trait_type type) const
+	int get_max_character_traits_for_type(const character_trait_type type) const
 	{
-		const auto find_iterator = this->max_traits_per_type.find(type);
-		if (find_iterator != this->max_traits_per_type.end()) {
+		const auto find_iterator = this->max_character_traits_per_type.find(type);
+		if (find_iterator != this->max_character_traits_per_type.end()) {
 			return find_iterator->second;
 		}
 
@@ -410,8 +410,8 @@ private:
 	const icon *tariff_icon = nullptr;
 	const icon *treasure_fleet_icon = nullptr;
 	const icon *military_upkeep_icon = nullptr;
-	std::map<trait_type, int> min_traits_per_type;
-	std::map<trait_type, int> max_traits_per_type;
+	std::map<character_trait_type, int> min_character_traits_per_type;
+	std::map<character_trait_type, int> max_character_traits_per_type;
 	std::unique_ptr<modifier<const site>> scaled_landholder_modifier;
 	int max_character_skill = 0;
 	const office *ruler_office = nullptr;

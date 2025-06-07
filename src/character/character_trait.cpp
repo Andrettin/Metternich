@@ -1,9 +1,9 @@
 #include "metternich.h"
 
-#include "character/trait.h"
+#include "character/character_trait.h"
 
 #include "character/character_attribute.h"
-#include "character/trait_type.h"
+#include "character/character_trait_type.h"
 #include "country/office.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
@@ -14,23 +14,23 @@
 
 namespace metternich {
 
-trait::trait(const std::string &identifier)
+character_trait::character_trait(const std::string &identifier)
 	: named_data_entry(identifier), attribute(character_attribute::none)
 {
 }
 
-trait::~trait()
+character_trait::~character_trait()
 {
 }
 
-void trait::process_gsml_scope(const gsml_data &scope)
+void character_trait::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "types") {
 		for (const std::string &value : values) {
-			this->types.insert(magic_enum::enum_cast<trait_type>(value).value());
+			this->types.insert(magic_enum::enum_cast<character_trait_type>(value).value());
 		}
 		scope.for_each_property([&](const gsml_property &property) {
 			const character_attribute attribute = magic_enum::enum_cast<character_attribute>(property.get_key()).value();
@@ -108,22 +108,22 @@ void trait::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-void trait::check() const
+void character_trait::check() const
 {
 	if (this->get_types().empty()) {
-		throw std::runtime_error(std::format("Trait \"{}\" has no type.", this->get_identifier()));
+		throw std::runtime_error(std::format("Character trait \"{}\" has no type.", this->get_identifier()));
 	}
 
 	if (this->get_icon() == nullptr) {
-		throw std::runtime_error(std::format("Trait \"{}\" has no icon.", this->get_identifier()));
+		throw std::runtime_error(std::format("Character rait \"{}\" has no icon.", this->get_identifier()));
 	}
 
 	if (!this->scaled_office_modifiers.empty() && this->get_attribute() == character_attribute::none) {
-		throw std::runtime_error(std::format("Trait \"{}\" with scaled office modifier has no attribute.", this->get_identifier()));
+		throw std::runtime_error(std::format("Character trait \"{}\" with scaled office modifier has no attribute.", this->get_identifier()));
 	}
 
 	if (this->get_scaled_advisor_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
-		throw std::runtime_error(std::format("Trait \"{}\" with scaled advisor modifier has no attribute.", this->get_identifier()));
+		throw std::runtime_error(std::format("Character trait \"{}\" with scaled advisor modifier has no attribute.", this->get_identifier()));
 	}
 
 	if (this->get_advisor_effects() != nullptr) {
@@ -131,15 +131,15 @@ void trait::check() const
 	}
 
 	if (this->get_scaled_governor_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
-		throw std::runtime_error(std::format("Trait \"{}\" with scaled governor modifier has no attribute.", this->get_identifier()));
+		throw std::runtime_error(std::format("Character trait \"{}\" with scaled governor modifier has no attribute.", this->get_identifier()));
 	}
 
 	if (this->get_scaled_leader_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
-		throw std::runtime_error(std::format("Trait \"{}\" with scaled leader modifier has no attribute.", this->get_identifier()));
+		throw std::runtime_error(std::format("Character trait \"{}\" with scaled leader modifier has no attribute.", this->get_identifier()));
 	}
 }
 
-QString trait::get_modifier_string() const
+QString character_trait::get_modifier_string() const
 {
 	if (this->get_modifier() == nullptr) {
 		return QString();
@@ -148,7 +148,7 @@ QString trait::get_modifier_string() const
 	return QString::fromStdString(this->get_modifier()->get_string(nullptr));
 }
 
-QString trait::get_military_unit_modifier_string() const
+QString character_trait::get_military_unit_modifier_string() const
 {
 	if (this->get_military_unit_modifier() == nullptr) {
 		return QString();

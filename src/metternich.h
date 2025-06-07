@@ -10,6 +10,7 @@ namespace metternich {
 	class building_type;
 	class character;
 	class character_game_data;
+	class character_trait;
 	class civilian_unit_class;
 	class civilian_unit_type;
 	class commodity;
@@ -48,7 +49,6 @@ namespace metternich {
 	class site_game_data;
 	class technology;
 	class terrain_type;
-	class trait;
 	class transporter_class;
 	class wonder;
 	class world;
