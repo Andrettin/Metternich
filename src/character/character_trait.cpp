@@ -15,7 +15,7 @@
 namespace metternich {
 
 character_trait::character_trait(const std::string &identifier)
-	: named_data_entry(identifier), attribute(character_attribute::none)
+	: trait_base(identifier), attribute(character_attribute::none)
 {
 }
 
@@ -32,12 +32,6 @@ void character_trait::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->types.insert(magic_enum::enum_cast<character_trait_type>(value).value());
 		}
-		scope.for_each_property([&](const gsml_property &property) {
-			const character_attribute attribute = magic_enum::enum_cast<character_attribute>(property.get_key()).value();
-			const int value = std::stoi(property.get_value());
-
-			this->attribute_bonuses[attribute] = value;
-		});
 	} else if (tag == "attribute_bonuses") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const character_attribute attribute = magic_enum::enum_cast<character_attribute>(property.get_key()).value();
@@ -104,7 +98,7 @@ void character_trait::process_gsml_scope(const gsml_data &scope)
 		database::process_gsml_data(modifier, scope);
 		this->military_unit_modifier = std::move(modifier);
 	} else {
-		data_entry::process_gsml_scope(scope);
+		trait_base::process_gsml_scope(scope);
 	}
 }
 
@@ -112,10 +106,6 @@ void character_trait::check() const
 {
 	if (this->get_types().empty()) {
 		throw std::runtime_error(std::format("Character trait \"{}\" has no type.", this->get_identifier()));
-	}
-
-	if (this->get_icon() == nullptr) {
-		throw std::runtime_error(std::format("Character rait \"{}\" has no icon.", this->get_identifier()));
 	}
 
 	if (!this->scaled_office_modifiers.empty() && this->get_attribute() == character_attribute::none) {
@@ -137,6 +127,8 @@ void character_trait::check() const
 	if (this->get_scaled_leader_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
 		throw std::runtime_error(std::format("Character trait \"{}\" with scaled leader modifier has no attribute.", this->get_identifier()));
 	}
+
+	trait_base::check();
 }
 
 QString character_trait::get_modifier_string() const
