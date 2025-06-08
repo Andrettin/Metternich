@@ -233,6 +233,11 @@ public:
 
 	const std::string &get_office_title_name(const office *office) const;
 
+	Q_INVOKABLE QString get_office_title_name_qstring(const metternich::office *office) const
+	{
+		return QString::fromStdString(this->get_office_title_name(office));
+	}
+
 	const metternich::religion *get_religion() const
 	{
 		return this->religion;

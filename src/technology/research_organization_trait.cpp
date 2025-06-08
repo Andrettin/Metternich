@@ -22,7 +22,6 @@ research_organization_trait::~research_organization_trait()
 void research_organization_trait::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
-	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
