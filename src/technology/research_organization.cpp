@@ -5,7 +5,21 @@
 #include "technology/research_organization_trait.h"
 
 namespace metternich {
-	
+
+void research_organization::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "traits") {
+		for (const std::string &value : values) {
+			this->traits.push_back(research_organization_trait::get(value));
+		}
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
+}
+
 void research_organization::check() const
 {
 	if (this->get_portrait() == nullptr) {
