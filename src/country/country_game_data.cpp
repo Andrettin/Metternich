@@ -71,6 +71,7 @@
 #include "script/opinion_modifier.h"
 #include "script/scripted_country_modifier.h"
 #include "species/phenotype.h"
+#include "technology/research_organization.h"
 #include "technology/research_organization_slot_type.h"
 #include "technology/technology.h"
 #include "ui/icon.h"
@@ -3625,6 +3626,11 @@ void country_game_data::gain_technologies_known_by_others()
 
 		this->on_technology_researched(technology);
 	}
+}
+
+QVariantList country_game_data::get_research_organizations_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_research_organizations());
 }
 
 std::vector<const research_organization_slot_type *> country_game_data::get_available_research_organization_slots() const

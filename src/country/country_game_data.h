@@ -37,6 +37,7 @@ Q_MOC_INCLUDE("country/subject_type.h")
 Q_MOC_INCLUDE("country/tradition.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
+Q_MOC_INCLUDE("technology/research_organization_slot_type.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/military_unit_type.h")
@@ -70,6 +71,7 @@ class profession;
 class province;
 class region;
 class religion;
+class research_organization;
 class research_organization_slot_type;
 class scripted_country_modifier;
 class site;
@@ -150,6 +152,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
+	Q_PROPERTY(QVariantList research_organizations READ get_research_organizations_qvariant_list NOTIFY research_organizations_changed)
 	Q_PROPERTY(QVariantList available_research_organization_slots READ get_available_research_organization_slots_qvariant_list NOTIFY available_research_organization_slots_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
@@ -1239,6 +1242,24 @@ public:
 
 	void gain_free_technologies(const int count);
 	void gain_technologies_known_by_others();
+
+	const data_entry_map<research_organization_slot_type, const research_organization *> &get_research_organizations() const
+	{
+		return this->research_organizations;
+	}
+
+	QVariantList get_research_organizations_qvariant_list() const;
+
+	Q_INVOKABLE const metternich::research_organization *get_research_organization(const metternich::research_organization_slot_type *slot) const
+	{
+		const auto find_iterator = this->research_organizations.find(slot);
+
+		if (find_iterator != this->research_organizations.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
 
 	std::vector<const research_organization_slot_type *> get_available_research_organization_slots() const;
 	QVariantList get_available_research_organization_slots_qvariant_list() const;
@@ -2533,6 +2554,7 @@ signals:
 	void technologies_changed();
 	void current_researches_changed();
 	void technology_researched(const technology *technology);
+	void research_organizations_changed();
 	void available_research_organization_slots_changed();
 	void government_type_changed();
 	void laws_changed();
@@ -2629,6 +2651,7 @@ private:
 	technology_set technologies;
 	technology_set current_researches;
 	int free_technology_count = 0;
+	data_entry_map<research_organization_slot_type, const research_organization *> research_organizations;
 	const metternich::government_type *government_type = nullptr;
 	law_group_map<const law *> laws;
 	tradition_set traditions;
