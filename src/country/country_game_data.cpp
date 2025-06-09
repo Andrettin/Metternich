@@ -71,6 +71,7 @@
 #include "script/opinion_modifier.h"
 #include "script/scripted_country_modifier.h"
 #include "species/phenotype.h"
+#include "technology/research_organization_slot_type.h"
 #include "technology/technology.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
@@ -3624,6 +3625,26 @@ void country_game_data::gain_technologies_known_by_others()
 
 		this->on_technology_researched(technology);
 	}
+}
+
+std::vector<const research_organization_slot_type *> country_game_data::get_available_research_organization_slots() const
+{
+	std::vector<const research_organization_slot_type *> available_research_organization_slots;
+
+	for (const research_organization_slot_type *slot_type : research_organization_slot_type::get_all()) {
+		if (slot_type->get_conditions() != nullptr && !slot_type->get_conditions()->check(this->country, read_only_context(this->country))) {
+			continue;
+		}
+
+		available_research_organization_slots.push_back(slot_type);
+	}
+
+	return available_research_organization_slots;
+}
+
+QVariantList country_game_data::get_available_research_organization_slots_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_available_research_organization_slots());
 }
 
 void country_game_data::set_government_type(const metternich::government_type *government_type)

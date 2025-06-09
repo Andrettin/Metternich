@@ -70,6 +70,7 @@ class profession;
 class province;
 class region;
 class religion;
+class research_organization_slot_type;
 class scripted_country_modifier;
 class site;
 class subject_type;
@@ -149,6 +150,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
+	Q_PROPERTY(QVariantList available_research_organization_slots READ get_available_research_organization_slots_qvariant_list NOTIFY available_research_organization_slots_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
 	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY laws_changed)
@@ -1237,6 +1239,9 @@ public:
 
 	void gain_free_technologies(const int count);
 	void gain_technologies_known_by_others();
+
+	std::vector<const research_organization_slot_type *> get_available_research_organization_slots() const;
+	QVariantList get_available_research_organization_slots_qvariant_list() const;
 
 	const metternich::government_type *get_government_type() const
 	{
@@ -2528,6 +2533,7 @@ signals:
 	void technologies_changed();
 	void current_researches_changed();
 	void technology_researched(const technology *technology);
+	void available_research_organization_slots_changed();
 	void government_type_changed();
 	void laws_changed();
 	void traditions_changed();

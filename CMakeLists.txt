@@ -231,6 +231,7 @@ set_source_files_properties(${spell_SRCS} PROPERTIES UNITY_GROUP "spell")
 
 set(technology_SRCS
 	src/technology/research_organization.cpp
+	src/technology/research_organization_slot_type.cpp
 	src/technology/research_organization_trait.cpp
 	src/technology/technological_period.cpp
 	src/technology/technology.cpp
@@ -752,6 +753,7 @@ source_group(spell FILES ${spell_HDRS})
 
 set(technology_HDRS
 	src/technology/research_organization.h
+	src/technology/research_organization_slot_type.h
 	src/technology/research_organization_trait.h
 	src/technology/technological_period.h
 	src/technology/technology.h
