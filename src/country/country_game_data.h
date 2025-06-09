@@ -1206,7 +1206,7 @@ public:
 	QVariantList get_current_researches_qvariant_list() const;
 	Q_INVOKABLE void add_current_research(const metternich::technology *technology);
 	Q_INVOKABLE void remove_current_research(const metternich::technology *technology);
-	void choose_current_research();
+	void ai_choose_current_research();
 	void on_technology_researched(const technology *technology);
 
 	int get_research_cost_modifier() const

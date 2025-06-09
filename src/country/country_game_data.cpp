@@ -252,10 +252,6 @@ void country_game_data::do_research()
 			this->gain_free_technology();
 		}
 
-		if (this->is_ai()) {
-			this->choose_current_research();
-		}
-
 		for (const technology *current_research : this->get_current_researches()) {
 			this->on_technology_researched(current_research);
 		}
@@ -700,6 +696,10 @@ void country_game_data::do_events()
 
 void country_game_data::do_ai_turn()
 {
+	assert_throw(this->is_ai());
+
+	this->ai_choose_current_research();
+
 	//build buildings
 	building_type_map<int> ai_building_desires;
 	std::vector<const building_type *> ai_desired_buildings;
@@ -3427,6 +3427,8 @@ QVariantList country_game_data::get_current_researches_qvariant_list() const
 
 void country_game_data::add_current_research(const technology *technology)
 {
+	assert_throw(this->can_research_technology(technology));
+
 	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
 	this->change_wealth_inflated(-wealth_cost);
 
@@ -3440,6 +3442,8 @@ void country_game_data::add_current_research(const technology *technology)
 
 void country_game_data::remove_current_research(const technology *technology)
 {
+	assert_throw(this->get_current_researches().contains(technology));
+
 	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
 	this->change_wealth_inflated(wealth_cost);
 
@@ -3451,7 +3455,7 @@ void country_game_data::remove_current_research(const technology *technology)
 	emit current_researches_changed();
 }
 
-void country_game_data::choose_current_research()
+void country_game_data::ai_choose_current_research()
 {
 	assert_throw(this->is_ai());
 
