@@ -28,6 +28,7 @@ class military_unit_type;
 class pathway;
 class portrait;
 class production_type;
+class research_organization;
 class resource;
 class technological_period;
 class technology_category;
@@ -363,6 +364,30 @@ public:
 	std::vector<const tradition *> get_enabled_traditions_for_country(const country *country) const;
 	void add_enabled_tradition(const tradition *tradition);
 
+	const std::vector<const research_organization *> &get_enabled_research_organizations() const
+	{
+		return this->enabled_research_organizations;
+	}
+
+	std::vector<const research_organization *> get_enabled_research_organizations_for_country(const country *country) const;
+
+	void add_enabled_research_organization(const research_organization *organization)
+	{
+		this->enabled_research_organizations.push_back(organization);
+	}
+
+	const std::vector<const research_organization *> &get_disabled_research_organizations() const
+	{
+		return this->disabled_research_organizations;
+	}
+
+	std::vector<const research_organization *> get_disabled_research_organizations_for_country(const country *country) const;
+
+	void add_disabled_research_organization(const research_organization *organization)
+	{
+		this->disabled_research_organizations.push_back(organization);
+	}
+
 	const std::vector<const character *> &get_enabled_characters(const character_role role) const
 	{
 		static const std::vector<const character *> empty_vector;
@@ -480,6 +505,8 @@ private:
 	std::vector<const transporter_type *> enabled_transporters;
 	std::vector<const law *> enabled_laws;
 	std::vector<const tradition *> enabled_traditions;
+	std::vector<const research_organization *> enabled_research_organizations;
+	std::vector<const research_organization *> disabled_research_organizations;
 	std::map<character_role, std::vector<const character *>> enabled_characters;
 	std::map<character_role, std::vector<const character *>> retired_characters;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;

@@ -27,6 +27,7 @@
 #include "script/condition/and_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
+#include "technology/research_organization.h"
 #include "technology/technological_period.h"
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
@@ -238,6 +239,7 @@ void technology::check() const
 		&& this->get_enabled_pathway_terrains().empty()
 		&& this->get_enabled_pathways().empty()
 		&& this->get_enabled_production_types().empty()
+		&& this->get_enabled_research_organizations().empty()
 		&& this->get_enabled_resources().empty()
 		&& this->get_enabled_river_crossing_pathways().empty()
 		&& this->get_enabled_transporters().empty()
@@ -788,6 +790,36 @@ void technology::add_enabled_tradition(const tradition *tradition)
 	});
 }
 
+std::vector<const research_organization *> technology::get_enabled_research_organizations_for_country(const country *country) const
+{
+	std::vector<const research_organization *> organizations;
+
+	for (const research_organization *organization : this->get_enabled_research_organizations()) {
+		if (organization->get_conditions() != nullptr && !organization->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		organizations.push_back(organization);
+	}
+
+	return organizations;
+}
+
+std::vector<const research_organization *> technology::get_disabled_research_organizations_for_country(const country *country) const
+{
+	std::vector<const research_organization *> organizations;
+
+	for (const research_organization *organization : this->get_disabled_research_organizations()) {
+		if (organization->get_conditions() != nullptr && !organization->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		organizations.push_back(organization);
+	}
+
+	return organizations;
+}
+
 std::vector<const character *> technology::get_enabled_characters_for_country(const character_role role, const country *country) const
 {
 	std::vector<const character *> characters;
@@ -1046,6 +1078,28 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} {}", tradition->get_name(), string::lowered(get_tradition_category_name(tradition->get_category())));
+		}
+	}
+
+	const std::vector<const research_organization *> enabled_research_organizations = this->get_enabled_research_organizations_for_country(country);
+	if (!enabled_research_organizations.empty()) {
+		for (const research_organization *research_organization : enabled_research_organizations) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} research organization", research_organization->get_name());
+		}
+	}
+
+	const std::vector<const research_organization *> disabled_research_organizations = this->get_disabled_research_organizations_for_country(country);
+	if (!disabled_research_organizations.empty()) {
+		for (const research_organization *research_organization : disabled_research_organizations) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Obsoletes {} research organization", research_organization->get_name());
 		}
 	}
 
