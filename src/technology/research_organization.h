@@ -8,6 +8,7 @@ Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
 
+class country;
 class portrait;
 class technology;
 class research_organization_trait;
@@ -65,6 +66,16 @@ public:
 	{
 		return this->traits;
 	}
+
+	std::string get_modifier_string(const country *country) const;
+
+	Q_INVOKABLE QString get_modifier_qstring(const country *country) const
+	{
+		return QString::fromStdString(this->get_modifier_string(country));
+	}
+
+	void apply_modifier(const country *country, const int multiplier) const;
+	void apply_trait_modifier(const research_organization_trait *trait, const country *country, const int multiplier) const;
 
 signals:
 	void changed();

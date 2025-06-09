@@ -37,6 +37,7 @@ Q_MOC_INCLUDE("country/subject_type.h")
 Q_MOC_INCLUDE("country/tradition.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
+Q_MOC_INCLUDE("technology/research_organization.h")
 Q_MOC_INCLUDE("technology/research_organization_slot_type.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -1260,6 +1261,12 @@ public:
 
 		return nullptr;
 	}
+
+	void set_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization);
+	void check_research_organization(const research_organization_slot_type *slot);
+	void check_research_organizations();
+	void choose_research_organization(const research_organization_slot_type *slot);
+	bool can_appoint_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const;
 
 	std::vector<const research_organization_slot_type *> get_available_research_organization_slots() const;
 	QVariantList get_available_research_organization_slots_qvariant_list() const;

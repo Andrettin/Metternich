@@ -3,8 +3,11 @@
 #include "technology/research_organization.h"
 
 #include "script/condition/and_condition.h"
+#include "script/modifier.h"
 #include "technology/research_organization_trait.h"
 #include "technology/technology.h"
+#include "util/assert_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -65,6 +68,61 @@ void research_organization::check() const
 
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
+	}
+}
+
+std::string research_organization::get_modifier_string(const country *country) const
+{
+	std::string str;
+
+	for (const research_organization_trait *trait : this->get_traits()) {
+		if (trait->get_modifier() == nullptr && trait->get_scaled_modifier() == nullptr) {
+			continue;
+		}
+
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		if (!trait->has_hidden_name()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += string::highlight(trait->get_name());
+		}
+
+		const size_t indent = trait->has_hidden_name() ? 0 : 1;
+
+		if (trait->get_modifier() != nullptr) {
+			str += "\n" + trait->get_modifier()->get_string(country, 1, indent);
+		}
+
+		if (trait->get_scaled_modifier() != nullptr) {
+			str += "\n" + trait->get_scaled_modifier()->get_string(country, std::min(this->get_skill(), trait->get_max_scaling()), indent);
+		}
+	}
+
+	return str;
+}
+
+void research_organization::apply_modifier(const country *country, const int multiplier) const
+{
+	assert_throw(country != nullptr);
+
+	for (const research_organization_trait *trait : this->get_traits()) {
+		this->apply_trait_modifier(trait, country, multiplier);
+	}
+}
+
+void research_organization::apply_trait_modifier(const research_organization_trait *trait, const country *country, const int multiplier) const
+{
+	if (trait->get_modifier() != nullptr) {
+		trait->get_modifier()->apply(country, multiplier);
+	}
+
+	if (trait->get_scaled_modifier() != nullptr) {
+		trait->get_scaled_modifier()->apply(country, std::min(this->get_skill(), trait->get_max_scaling()) * multiplier);
 	}
 }
 

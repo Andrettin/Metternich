@@ -719,12 +719,22 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 			str += "\n";
 		}
 
-		str += string::highlight(trait->get_name());
-		if (trait->get_office_modifier(office) != nullptr) {
-			str += "\n" + trait->get_office_modifier(office)->get_string(country, 1, 1);
+		if (!trait->has_hidden_name()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += string::highlight(trait->get_name());
 		}
+
+		const size_t indent = trait->has_hidden_name() ? 0 : 1;
+
+		if (trait->get_office_modifier(office) != nullptr) {
+			str += "\n" + trait->get_office_modifier(office)->get_string(country, 1, indent);
+		}
+
 		if (trait->get_scaled_office_modifier(office) != nullptr) {
-			str += "\n" + trait->get_scaled_office_modifier(office)->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), 1);
+			str += "\n" + trait->get_scaled_office_modifier(office)->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), indent);
 		}
 	}
 
