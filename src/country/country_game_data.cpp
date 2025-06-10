@@ -3192,6 +3192,8 @@ void country_game_data::add_technology(const technology *technology)
 		return;
 	}
 
+	assert_throw(technology->is_available_for_country(this->country));
+
 	this->technologies.insert(technology);
 
 	if (technology->get_modifier() != nullptr) {
