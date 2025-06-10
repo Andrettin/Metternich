@@ -2,10 +2,12 @@
 
 #include "country/country_history.h"
 
+#include "character/character.h"
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/country_tier.h"
 #include "country/diplomacy_state.h"
+#include "country/office.h"
 #include "country/subject_type.h"
 #include "economy/commodity.h"
 #include "util/map_util.h"
@@ -21,7 +23,17 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "commodities") {
+	if (tag == "offices") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const office *office = office::get(property.get_key());
+			const character *office_holder = character::get(property.get_value());
+			if (office_holder != nullptr) {
+				this->office_holders[office] = office_holder;
+			} else {
+				this->office_holders.erase(office);
+			}
+		});
+	} else if (tag == "commodities") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodities[commodity] = std::stoi(property.get_value());

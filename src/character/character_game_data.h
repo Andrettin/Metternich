@@ -51,7 +51,7 @@ class character_game_data final : public QObject
 public:
 	explicit character_game_data(const metternich::character *character);
 
-	void apply_history(const QDate &start_date);
+	void apply_history();
 	void on_setup_finished();
 
 	std::string get_titled_name() const;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "country/country_container.h"
+#include "database/data_entry_container.h"
 #include "database/data_entry_history.h"
 #include "economy/commodity_container.h"
 #include "util/fractional_int.h"
@@ -14,6 +15,7 @@ namespace metternich {
 class character;
 class consulate;
 class country;
+class office;
 class religion;
 class subject_type;
 class technology;
@@ -27,7 +29,6 @@ class country_history final : public data_entry_history
 
 	Q_PROPERTY(metternich::country_tier tier MEMBER tier)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
-	Q_PROPERTY(metternich::character* ruler MEMBER ruler)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
 	Q_PROPERTY(std::vector<const metternich::tradition *> traditions READ get_traditions)
@@ -48,9 +49,9 @@ public:
 		return this->religion;
 	}
 
-	const character *get_ruler() const
+	const data_entry_map<office, const character *> &get_office_holders() const
 	{
-		return this->ruler;
+		return this->office_holders;
 	}
 
 	const metternich::subject_type *get_subject_type() const
@@ -119,7 +120,7 @@ private:
 	const metternich::country *country = nullptr;
 	country_tier tier{};
 	metternich::religion *religion = nullptr;
-	character *ruler = nullptr;
+	data_entry_map<office, const character *> office_holders;
 	const metternich::subject_type *subject_type = nullptr;
 	centesimal_int literacy_rate;
 	std::vector<const technology *> technologies;

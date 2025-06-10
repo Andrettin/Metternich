@@ -418,18 +418,17 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->set_subject_type(subject_type);
 			}
 
-			const character *ruler = country_history->get_ruler();
-			if (ruler != nullptr) {
-				character_game_data *ruler_game_data = ruler->get_game_data();
+			for (const auto &[office, office_holder] : country_history->get_office_holders()) {
+				character_game_data *office_holder_game_data = office_holder->get_game_data();
 
-				if (ruler_game_data->get_country() != nullptr && ruler_game_data->get_country() != country) {
-					throw std::runtime_error(std::format("Cannot set \"{}\" as the ruler of \"{}\", as it is already assigned to another country.", ruler->get_identifier(), country->get_identifier()));
+				if (office_holder_game_data->get_country() != nullptr && office_holder_game_data->get_country() != country) {
+					throw std::runtime_error(std::format("Cannot set \"{}\" as an office holder for \"{}\", as they are already assigned to another country.", office_holder->get_identifier(), country->get_identifier()));
 				}
 
-				country_game_data->set_office_holder(defines::get()->get_ruler_office(), ruler);
+				country_game_data->set_office_holder(office, office_holder);
 
-				if (ruler->get_required_technology() != nullptr) {
-					country_game_data->add_technology_with_prerequisites(ruler->get_required_technology());
+				if (office_holder->get_required_technology() != nullptr) {
+					country_game_data->add_technology_with_prerequisites(office_holder->get_required_technology());
 				}
 			}
 
@@ -547,7 +546,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 		for (const character *character : character::get_all()) {
 			character_game_data *character_game_data = character->get_game_data();
-			character_game_data->apply_history(scenario->get_start_date());
+			character_game_data->apply_history();
 		}
 
 		for (const historical_civilian_unit *historical_civilian_unit : historical_civilian_unit::get_all()) {
