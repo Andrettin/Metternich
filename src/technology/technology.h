@@ -60,7 +60,8 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(bool free_technology MEMBER free_technology READ grants_free_technology NOTIFY changed)
 	Q_PROPERTY(int shared_prestige MEMBER shared_prestige READ get_shared_prestige NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
-	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
+	Q_PROPERTY(int cost MEMBER cost NOTIFY changed)
+	Q_PROPERTY(int wealth_cost_weight MEMBER wealth_cost_weight NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_pathways READ get_enabled_pathways_qvariant_list NOTIFY changed)
@@ -91,6 +92,7 @@ public:
 	explicit technology(const std::string &identifier);
 	~technology();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -177,34 +179,14 @@ public:
 		return this->leads_to;
 	}
 
-	int get_wealth_cost() const
-	{
-		return this->wealth_cost;
-	}
-
+	int get_total_cost_weights() const;
+	centesimal_int get_cost_for_country(const country *country) const;
 	Q_INVOKABLE int get_wealth_cost_for_country(const metternich::country *country) const;
-
-	const commodity_map<int> &get_commodity_costs() const
-	{
-		return this->commodity_costs;
-	}
-
 	commodity_map<int> get_commodity_costs_for_country(const country *country) const;
 	Q_INVOKABLE QVariantList get_commodity_costs_for_country_qvariant_list(const metternich::country *country) const;
 
-	int get_total_commodity_cost() const
-	{
-		int cost = 0;
-
-		for (const auto &[commodity, commodity_cost] : this->get_commodity_costs()) {
-			cost += commodity_cost;
-		}
-
-		return cost;
-	}
-
-	bool initialize_costs_from_prerequisites();
-	bool initialize_costs_from_dependents();
+	bool initialize_cost_from_prerequisites();
+	bool initialize_cost_from_dependents();
 
 	const factor<country> *get_cost_factor() const
 	{
@@ -487,8 +469,9 @@ private:
 	std::vector<technology *> prerequisites;
 	int total_prerequisite_depth = 0;
 	std::vector<const technology *> leads_to;
-	int wealth_cost = 0;
-	commodity_map<int> commodity_costs;
+	int cost = 0;
+	int wealth_cost_weight = 1;
+	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const factor<country>> cost_factor;
 	std::vector<const commodity *> enabled_commodities;
 	std::vector<const resource *> enabled_resources;

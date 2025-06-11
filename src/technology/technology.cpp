@@ -49,7 +49,7 @@ void technology::initialize_all()
 	data_type::initialize_all();
 	std::vector<technology *> costless_technologies = technology::get_all();
 	std::erase_if(costless_technologies, [](const technology *technology) {
-		return technology->is_discovery() || (technology->get_wealth_cost() != 0 && !technology->get_commodity_costs().empty());
+		return technology->is_discovery() || technology->cost != 0;
 	});
 
 	bool changed = true;
@@ -58,31 +58,31 @@ void technology::initialize_all()
 			changed = false;
 
 			for (technology *technology : costless_technologies) {
-				if (technology->get_wealth_cost() != 0 && !technology->get_commodity_costs().empty()) {
+				if (technology->cost != 0) {
 					continue;
 				}
 
-				const bool success = technology->initialize_costs_from_prerequisites();
+				const bool success = technology->initialize_cost_from_prerequisites();
 				if (success) {
 					changed = true;
 				}
 			}
 
 			std::erase_if(costless_technologies, [](const technology *technology) {
-				return technology->get_wealth_cost() != 0 && !technology->get_commodity_costs().empty();
+				return technology->cost != 0;
 			});
 		}
 
 		changed = false;
 		for (technology *technology : costless_technologies) {
-			const bool success = technology->initialize_costs_from_dependents();
+			const bool success = technology->initialize_cost_from_dependents();
 			if (success) {
 				changed = true;
 			}
 		}
 
 		std::erase_if(costless_technologies, [](const technology *technology) {
-			return technology->get_wealth_cost() != 0 && !technology->get_commodity_costs().empty();
+			return technology->cost != 0;
 		});
 	}
 
@@ -100,8 +100,8 @@ void technology::initialize_all()
 
 	commodity_map<int> research_commodity_counts;
 	for (const technology *technology : technology::get_all()) {
-		for (const auto &[commodity, cost] : technology->get_commodity_costs()) {
-			research_commodity_counts[commodity] += cost;
+		for (const auto &[commodity, cost_weight] : technology->commodity_cost_weights) {
+			++research_commodity_counts[commodity];
 		}
 	}
 
@@ -127,6 +127,19 @@ technology::~technology()
 {
 }
 
+void technology::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "cost_commodity") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		this->commodity_cost_weights[commodity::get(key)] = std::stoi(value);
+	} else {
+		named_data_entry::process_gsml_property(property);
+	}
+}
+
 void technology::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
@@ -144,11 +157,6 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->prerequisites.push_back(technology::get(value));
 		}
-	} else if (tag == "commodity_costs") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const commodity *commodity = commodity::get(property.get_key());
-			this->commodity_costs[commodity] = std::stoi(property.get_value());
-		});
 	} else if (tag == "cost_factor") {
 		auto factor = std::make_unique<metternich::factor<country>>(100);
 		database::process_gsml_data(factor, scope);
@@ -198,8 +206,12 @@ void technology::check() const
 		throw std::runtime_error(std::format("Technology \"{}\" has no icon.", this->get_identifier()));
 	}
 
-	if (this->get_wealth_cost() == 0 && this->get_commodity_costs().empty() && !this->is_discovery()) {
+	if (this->cost == 0 && !this->is_discovery()) {
 		//throw std::runtime_error(std::format("Technology \"{}\" has no cost, and is not a discovery.", this->get_identifier()));
+	}
+
+	if (this->commodity_cost_weights.empty() && !this->is_discovery()) {
+		throw std::runtime_error(std::format("Technology \"{}\" has no cost commodity, and is not a discovery.", this->get_identifier()));
 	}
 
 	if (this->get_period() != nullptr) {
@@ -338,9 +350,20 @@ void technology::calculate_total_prerequisite_depth()
 	this->total_prerequisite_depth = depth;
 }
 
-int technology::get_wealth_cost_for_country(const country *country) const
+int technology::get_total_cost_weights() const
 {
-	centesimal_int cost(this->get_wealth_cost());
+	int cost_weights = this->wealth_cost_weight;
+
+	for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+		cost_weights += cost_weight;
+	}
+
+	return cost_weights;
+}
+
+centesimal_int technology::get_cost_for_country(const country *country) const
+{
+	centesimal_int cost(this->cost);
 
 	if (cost > 0) {
 		cost *= country->get_game_data()->get_research_cost_modifier();
@@ -356,29 +379,37 @@ int technology::get_wealth_cost_for_country(const country *country) const
 		cost = centesimal_int::max(centesimal_int(1), cost);
 	}
 
-	return cost.to_int();
+	return cost;
+}
+
+int technology::get_wealth_cost_for_country(const country *country) const
+{
+	if (this->wealth_cost_weight == 0) {
+		return 0;
+	}
+
+	centesimal_int cost = this->get_cost_for_country(country) * 100;
+	cost *= this->wealth_cost_weight;
+	cost /= this->get_total_cost_weights();
+	return std::max(1, cost.to_int());
 }
 
 commodity_map<int> technology::get_commodity_costs_for_country(const country *country) const
 {
-	commodity_map<int> costs = this->get_commodity_costs();
+	const centesimal_int cost = this->get_cost_for_country(country);
+	const int total_cost_weights = this->get_total_cost_weights();
 
-	for (auto &[commodity, cost_int] : costs) {
-		if (cost_int > 0) {
-			centesimal_int cost(cost_int);
+	commodity_map<int> costs;
 
-			cost *= country->get_game_data()->get_research_cost_modifier();
-			cost /= 100;
-
-			cost *= centesimal_int(100) + country->get_game_data()->get_technology_cost_modifier() + country->get_game_data()->get_technology_category_cost_modifier(this->get_category()) + country->get_game_data()->get_technology_subcategory_cost_modifier(this->get_subcategory());
-			cost /= 100;
-
-			if (this->get_cost_factor() != nullptr) {
-				cost = this->get_cost_factor()->calculate(country, cost);
-			}
-
-			cost_int = std::max(1, cost.to_int());
+	for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+		if (cost_weight <= 0) {
+			continue;
 		}
+
+		centesimal_int commodity_cost = cost;
+		commodity_cost *= cost_weight;
+		commodity_cost /= total_cost_weights;
+		costs[commodity] = std::max(1, commodity_cost.to_int());
 	}
 
 	return costs;
@@ -389,103 +420,47 @@ QVariantList technology::get_commodity_costs_for_country_qvariant_list(const cou
 	return archimedes::map::to_qvariant_list(this->get_commodity_costs_for_country(country));
 }
 
-bool technology::initialize_costs_from_prerequisites()
+bool technology::initialize_cost_from_prerequisites()
 {
 	bool changed = false;
 
-	if (this->get_wealth_cost() == 0) {
-		int highest_prerequisite_wealth_cost = 0;
-		int wealth_cost_modifier = 0;
+	if (this->cost == 0) {
+		int highest_prerequisite_cost = 0;
+		int cost_modifier = 0;
 
 		for (const technology *prerequisite : this->get_prerequisites()) {
 			if (prerequisite->get_total_prerequisite_depth() != (this->get_total_prerequisite_depth() - 1)) {
 				continue;
 			}
 
-			if (prerequisite->get_wealth_cost() == 0) {
+			if (prerequisite->cost == 0) {
 				continue;
 			}
 
-			highest_prerequisite_wealth_cost = std::max(prerequisite->get_wealth_cost(), highest_prerequisite_wealth_cost);
+			highest_prerequisite_cost = std::max(prerequisite->cost, highest_prerequisite_cost);
 
-			int prerequisite_wealth_cost_modifier = 0;
+			int prerequisite_cost_modifier = 0;
 			for (const technology *subprerequisite : prerequisite->get_prerequisites()) {
 				if (subprerequisite->get_total_prerequisite_depth() != (prerequisite->get_total_prerequisite_depth() - 1)) {
 					continue;
 				}
 
-				if (subprerequisite->get_wealth_cost() == 0) {
+				if (subprerequisite->cost == 0) {
 					continue;
 				}
 
-				if (subprerequisite->get_wealth_cost() > prerequisite->get_wealth_cost()) {
+				if (subprerequisite->cost > prerequisite->cost) {
 					continue;
 				}
 
-				prerequisite_wealth_cost_modifier = std::max(prerequisite->get_wealth_cost() * 100 / subprerequisite->get_wealth_cost(), prerequisite_wealth_cost_modifier);
+				prerequisite_cost_modifier = std::max(prerequisite->cost * 100 / subprerequisite->cost, prerequisite_cost_modifier);
 			}
 
-			wealth_cost_modifier = std::max(prerequisite_wealth_cost_modifier, wealth_cost_modifier);
+			cost_modifier = std::max(prerequisite_cost_modifier, cost_modifier);
 		}
 
-		if (wealth_cost_modifier != 0) {
-			this->wealth_cost = std::max(1, highest_prerequisite_wealth_cost * wealth_cost_modifier / 100);
-			changed = true;
-		}
-	}
-
-	if (this->get_commodity_costs().empty()) {
-		commodity_map<int> highest_prerequisite_commodity_costs;
-		commodity_map<int> commodity_cost_modifiers;
-
-		for (const technology *prerequisite : this->get_prerequisites()) {
-			if (prerequisite->get_total_prerequisite_depth() != (this->get_total_prerequisite_depth() - 1)) {
-				continue;
-			}
-
-			if (prerequisite->get_commodity_costs().empty()) {
-				continue;
-			}
-
-			for (const auto &[commodity, cost] : prerequisite->get_commodity_costs()) {
-				highest_prerequisite_commodity_costs[commodity] = std::max(cost, highest_prerequisite_commodity_costs[commodity]);
-			}
-
-			commodity_map<int> prerequisite_commodity_cost_modifiers;
-			for (const technology *subprerequisite : prerequisite->get_prerequisites()) {
-				if (subprerequisite->get_total_prerequisite_depth() != (prerequisite->get_total_prerequisite_depth() - 1)) {
-					continue;
-				}
-
-				if (subprerequisite->get_commodity_costs().empty()) {
-					continue;
-				}
-
-				if (subprerequisite->get_total_commodity_cost() > prerequisite->get_total_commodity_cost()) {
-					continue;
-				}
-
-				if (archimedes::map::get_keys(prerequisite->get_commodity_costs()) != archimedes::map::get_keys(subprerequisite->get_commodity_costs())) {
-					continue;
-				}
-
-				for (const auto &[commodity, cost] : prerequisite->get_commodity_costs()) {
-					const int subprerequisite_cost = subprerequisite->get_commodity_costs().find(commodity)->second;
-					prerequisite_commodity_cost_modifiers[commodity] = std::max(cost * 100 / subprerequisite_cost, prerequisite_commodity_cost_modifiers[commodity]);
-				}
-			}
-
-			for (const auto &[commodity, modifier] : prerequisite_commodity_cost_modifiers) {
-				commodity_cost_modifiers[commodity] = std::max(modifier, commodity_cost_modifiers[commodity]);
-			}
-		}
-
-		if (!commodity_cost_modifiers.empty()) {
-			for (const auto &[commodity, modifier] : commodity_cost_modifiers) {
-				assert_throw(modifier >= 100);
-				this->commodity_costs[commodity] = std::max(1, highest_prerequisite_commodity_costs[commodity] * modifier / 100);
-			}
-
+		if (cost_modifier != 0) {
+			this->cost = std::max(1, highest_prerequisite_cost * cost_modifier / 100);
 			changed = true;
 		}
 	}
@@ -493,102 +468,47 @@ bool technology::initialize_costs_from_prerequisites()
 	return changed;
 }
 
-bool technology::initialize_costs_from_dependents()
+bool technology::initialize_cost_from_dependents()
 {
 	bool changed = false;
 
-	if (this->get_wealth_cost() == 0) {
-		int highest_dependent_wealth_cost = 0;
-		int wealth_cost_modifier = 0;
+	if (this->cost == 0) {
+		int highest_dependent_cost = 0;
+		int cost_modifier = 0;
 
 		for (const technology *dependent : this->get_leads_to()) {
 			if (dependent->get_total_prerequisite_depth() != (this->get_total_prerequisite_depth() + 1)) {
 				continue;
 			}
 
-			if (dependent->get_wealth_cost() == 0) {
+			if (dependent->cost == 0) {
 				continue;
 			}
 
-			highest_dependent_wealth_cost = std::max(dependent->get_wealth_cost(), highest_dependent_wealth_cost);
+			highest_dependent_cost = std::max(dependent->cost, highest_dependent_cost);
 
-			int dependent_wealth_cost_modifier = 0;
+			int dependent_cost_modifier = 0;
 			for (const technology *subdependent : dependent->get_leads_to()) {
 				if (subdependent->get_total_prerequisite_depth() != (dependent->get_total_prerequisite_depth() + 1)) {
 					continue;
 				}
 
-				if (subdependent->get_wealth_cost() == 0) {
+				if (subdependent->cost == 0) {
 					continue;
 				}
 
-				if (subdependent->get_wealth_cost() < dependent->get_wealth_cost()) {
+				if (subdependent->cost < dependent->cost) {
 					continue;
 				}
 
-				dependent_wealth_cost_modifier = std::max(dependent->get_wealth_cost() * 100 / subdependent->get_wealth_cost(), dependent_wealth_cost_modifier);
+				dependent_cost_modifier = std::max(dependent->cost * 100 / subdependent->cost, dependent_cost_modifier);
 			}
 
-			wealth_cost_modifier = std::max(dependent_wealth_cost_modifier, wealth_cost_modifier);
+			cost_modifier = std::max(dependent_cost_modifier, cost_modifier);
 		}
 
-		if (wealth_cost_modifier != 0) {
-			this->wealth_cost = std::max(1, highest_dependent_wealth_cost * wealth_cost_modifier / 100);
-			changed = true;
-		}
-	}
-
-	if (this->get_commodity_costs().empty()) {
-		commodity_map<int> highest_dependent_commodity_costs;
-		commodity_map<int> commodity_cost_modifiers;
-
-		for (const technology *dependent : this->get_leads_to()) {
-			if (dependent->get_total_prerequisite_depth() != (this->get_total_prerequisite_depth() + 1)) {
-				continue;
-			}
-
-			if (dependent->get_commodity_costs().empty()) {
-				continue;
-			}
-
-			for (const auto &[commodity, cost] : dependent->get_commodity_costs()) {
-				highest_dependent_commodity_costs[commodity] = std::max(cost, highest_dependent_commodity_costs[commodity]);
-			}
-
-			commodity_map<int> dependent_commodity_cost_modifiers;
-			for (const technology *subdependent : dependent->get_leads_to()) {
-				if (subdependent->get_total_prerequisite_depth() != (dependent->get_total_prerequisite_depth() + 1)) {
-					continue;
-				}
-
-				if (subdependent->get_commodity_costs().empty()) {
-					continue;
-				}
-
-				if (subdependent->get_total_commodity_cost() < dependent->get_total_commodity_cost()) {
-					continue;
-				}
-
-				if (archimedes::map::get_keys(dependent->get_commodity_costs()) != archimedes::map::get_keys(subdependent->get_commodity_costs())) {
-					continue;
-				}
-
-				for (const auto &[commodity, cost] : dependent->get_commodity_costs()) {
-					dependent_commodity_cost_modifiers[commodity] = std::max(cost * 100 / subdependent->get_commodity_costs().find(commodity)->second, dependent_commodity_cost_modifiers[commodity]);
-				}
-			}
-
-			for (const auto &[commodity, modifier] : dependent_commodity_cost_modifiers) {
-				commodity_cost_modifiers[commodity] = std::max(modifier, commodity_cost_modifiers[commodity]);
-			}
-		}
-
-		if (!commodity_cost_modifiers.empty()) {
-			for (const auto &[commodity, modifier] : commodity_cost_modifiers) {
-				assert_throw(modifier <= 100);
-				this->commodity_costs[commodity] = std::max(1, highest_dependent_commodity_costs[commodity] * modifier / 100);
-			}
-
+		if (cost_modifier != 0) {
+			this->cost = std::max(1, highest_dependent_cost * cost_modifier / 100);
 			changed = true;
 		}
 	}
