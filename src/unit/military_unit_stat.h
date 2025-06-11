@@ -56,7 +56,7 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 		case military_unit_stat::movement:
 			return "Movement";
 		case military_unit_stat::damage_bonus:
-			return "Damage Bonus";
+			return "Damage";
 		case military_unit_stat::bonus_vs_infantry:
 			return "Bonus vs. Infantry";
 		case military_unit_stat::bonus_vs_cavalry:
@@ -70,33 +70,33 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 		case military_unit_stat::ranged_defense_modifier:
 			return "Ranged Defense";
 		case military_unit_stat::entrenchment_bonus_modifier:
-			return "Entrenchment Bonus Modifier";
+			return "Entrenchment Bonus";
 		case military_unit_stat::movement_modifier:
-			return "Movement Modifier";
+			return "Movement";
 		case military_unit_stat::recovery_modifier:
-			return "Recovery Modifier";
+			return "Recovery";
 		case military_unit_stat::morale_recovery_modifier:
-			return "Morale Recovery Modifier";
+			return "Morale Recovery";
 		case military_unit_stat::desert_attack_modifier:
-			return "Desert Attack Modifier";
+			return "Desert Attack";
 		case military_unit_stat::desert_defense_modifier:
-			return "Desert Defense Modifier";
+			return "Desert Defense";
 		case military_unit_stat::forest_attack_modifier:
-			return "Forest Attack Modifier";
+			return "Forest Attack";
 		case military_unit_stat::forest_defense_modifier:
-			return "Forest Defense Modifier";
+			return "Forest Defense";
 		case military_unit_stat::hills_attack_modifier:
-			return "Hills Attack Modifier";
+			return "Hills Attack";
 		case military_unit_stat::hills_defense_modifier:
-			return "Hills Defense Modifier";
+			return "Hills Defense";
 		case military_unit_stat::mountains_attack_modifier:
-			return "Mountains Attack Modifier";
+			return "Mountains Attack";
 		case military_unit_stat::mountains_defense_modifier:
-			return "Mountains Defense Modifier";
+			return "Mountains Defense";
 		case military_unit_stat::wetland_attack_modifier:
-			return "Wetland Attack Modifier";
+			return "Wetland Attack";
 		case military_unit_stat::wetland_defense_modifier:
-			return "Wetland Defense Modifier";
+			return "Wetland Defense";
 		default:
 			break;
 	}

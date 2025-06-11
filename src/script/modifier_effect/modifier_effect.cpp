@@ -41,10 +41,7 @@
 #include "script/modifier_effect/law_cost_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
 #include "script/modifier_effect/merchant_ship_stat_modifier_effect.h"
-#include "script/modifier_effect/military_unit_category_stat_modifier_effect.h"
-#include "script/modifier_effect/military_unit_domain_stat_modifier_effect.h"
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
-#include "script/modifier_effect/military_unit_type_stat_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
 #include "script/modifier_effect/population_type_militancy_modifier_effect.h"
@@ -82,7 +79,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		static const std::string commodity_per_building_infix = "_per_";
 		static const std::string merchant_ship_stat_modifier_prefix = "merchant_ship_";
 		static const std::string militancy_modifier_suffix = "_militancy_modifier";
-		static const std::string military_unit_type_stat_modifier_infix = "_";
 		static const std::string military_unit_type_stat_modifier_suffix = "_modifier";
 		static const std::string output_modifier_suffix = "_output_modifier";
 		static const std::string research_modifier_suffix = "_research_modifier";
@@ -188,33 +184,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 				return std::make_unique<merchant_ship_stat_modifier_effect>(magic_enum::enum_cast<transporter_stat>(stat_name).value(), value);
 			}
-
-			infix_pos = key.rfind(military_unit_type_stat_modifier_infix, suffix_pos - 1);
-			if (infix_pos != std::string::npos) {
-				if (
-					magic_enum::enum_contains<military_unit_stat>(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1))
-					&& military_unit_type::try_get(key.substr(0, infix_pos)) != nullptr
-				) {
-					const military_unit_stat stat = magic_enum::enum_cast<military_unit_stat>(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1)).value();
-
-					const military_unit_type *military_unit_type = military_unit_type::get(key.substr(0, infix_pos));
-
-					return std::make_unique<military_unit_type_stat_modifier_effect>(military_unit_type, stat, value);
-				}
-
-				infix_pos = key.rfind(military_unit_type_stat_modifier_infix, infix_pos - 1);
-				if (
-					infix_pos != std::string::npos
-					&& magic_enum::enum_contains<military_unit_stat>(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1))
-					&& military_unit_type::try_get(key.substr(0, infix_pos)) != nullptr
-				) {
-					const military_unit_stat stat = magic_enum::enum_cast<military_unit_stat>(key.substr(infix_pos + military_unit_type_stat_modifier_infix.size(), suffix_pos - infix_pos - 1)).value();
-
-					const military_unit_type *military_unit_type = military_unit_type::get(key.substr(0, infix_pos));
-
-					return std::make_unique<military_unit_type_stat_modifier_effect>(military_unit_type, stat, value);
-				}
-			}
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (key == "depot_level") {
@@ -288,8 +257,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<commodity_bonus_per_settlement_modifier_effect<scope_type>>();
 		} else if (tag == "commodity_demand") {
 			modifier_effect = std::make_unique<commodity_demand_modifier_effect>();
-		} else if (tag == "military_unit_domain_stat_modifier") {
-			modifier_effect = std::make_unique<military_unit_domain_stat_modifier_effect>();
 		} else if (tag == "technology_cost_modifier") {
 			modifier_effect = std::make_unique<technology_cost_modifier_effect>();
 		}
@@ -302,8 +269,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	}
 	
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
-		if (tag == "military_unit_category_stat_modifier") {
-			modifier_effect = std::make_unique<military_unit_category_stat_modifier_effect<scope_type>>();
+		if (tag == "military_unit_stat") {
+			modifier_effect = std::make_unique<military_unit_stat_modifier_effect<scope_type>>();
 		}
 	}
 
