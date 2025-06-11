@@ -3925,15 +3925,25 @@ void country_game_data::enact_law(const law *law)
 void country_game_data::check_laws()
 {
 	for (const law_group *law_group : law_group::get_all()) {
-		const law *law = this->get_law(law_group);
-		if (law != nullptr && !this->can_have_law(law)) {
+		if (this->get_law(law_group) != nullptr && !this->can_have_law(this->get_law(law_group))) {
 			this->set_law(law_group, nullptr);
-			law = nullptr;
 		}
 
-		if (law == nullptr) {
+		if (this->get_law(law_group) == nullptr) {
 			if (this->can_have_law(law_group->get_default_law())) {
 				this->set_law(law_group, law_group->get_default_law());
+			}
+		}
+
+		if (this->get_law(law_group) == nullptr) {
+			std::vector<const law *> potential_laws;
+			for (const metternich::law *group_law : law_group->get_laws()) {
+				if (this->can_have_law(group_law)) {
+					potential_laws.push_back(group_law);
+				}
+			}
+			if (!potential_laws.empty()) {
+				this->set_law(law_group, vector::get_random(potential_laws));
 			}
 		}
 	}
