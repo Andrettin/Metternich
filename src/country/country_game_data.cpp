@@ -3485,7 +3485,7 @@ void country_game_data::on_technology_researched(const technology *technology)
 
 	this->add_technology(technology);
 
-	if (technology->grants_free_technology()) {
+	if (technology->get_free_technologies() > 0) {
 		bool first_to_research = true;
 
 		//technology grants a free technology for the first one to research it
@@ -3501,7 +3501,7 @@ void country_game_data::on_technology_researched(const technology *technology)
 		}
 
 		if (first_to_research) {
-			this->gain_free_technologies(1);
+			this->gain_free_technologies(technology->get_free_technologies());
 		}
 	}
 

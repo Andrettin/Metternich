@@ -234,7 +234,7 @@ void technology::check() const
 
 	if (
 		this->get_modifier() == nullptr
-		&& !this->grants_free_technology()
+		&& this->get_free_technologies() == 0
 		&& this->get_shared_prestige() == 0
 		&& this->get_enabled_buildings().empty()
 		&& this->get_enabled_characters(character_role::ruler).empty()
@@ -825,12 +825,12 @@ QString technology::get_effects_string(metternich::country *country) const
 {
 	std::string str = this->get_modifier_string(country);
 
-	if (this->grants_free_technology()) {
+	if (this->get_free_technologies() > 0) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
-		str += "Free technology for the first to research";
+		str += std::format("{} free {} for the first to research", this->get_free_technologies(), this->get_free_technologies() > 1 ? "technologies" : "technology");
 	}
 
 	if (this->get_shared_prestige() > 0) {
