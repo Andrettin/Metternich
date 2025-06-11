@@ -584,6 +584,9 @@ void military_unit::attack(military_unit *target, const bool ranged, const bool 
 	}
 	int attack_modifier = 0;
 	attack_modifier += this->get_effective_stat(military_unit_stat::damage_bonus).to_int();
+	if (ranged) {
+		attack_modifier += this->get_effective_stat(military_unit_stat::firepower_modifier).to_int();
+	}
 	if (target->get_type()->is_infantry()) {
 		attack_modifier += this->get_effective_stat(military_unit_stat::bonus_vs_infantry).to_int();
 	} else if (target->get_type()->is_cavalry()) {
