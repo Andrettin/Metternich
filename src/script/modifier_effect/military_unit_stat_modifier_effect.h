@@ -37,13 +37,20 @@ public:
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 
-		if ((std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) && key == "domain") {
-			this->domain = magic_enum::enum_cast<military_unit_domain>(value).value();
-		} else if ((std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) && key == "category") {
-			this->category = magic_enum::enum_cast<military_unit_category>(value).value();
-		} else if ((std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) && key == "type") {
-			this->type = military_unit_type::get(value);
-		} else if (key == "stat") {
+		if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
+			if (key == "domain") {
+				this->domain = magic_enum::enum_cast<military_unit_domain>(value).value();
+				return;
+			} else if (key == "category") {
+				this->category = magic_enum::enum_cast<military_unit_category>(value).value();
+				return;
+			} else if (key == "type") {
+				this->type = military_unit_type::get(value);
+				return;
+			}
+		}
+
+		if (key == "stat") {
 			this->stat = magic_enum::enum_cast<military_unit_stat>(value).value();
 		} else if (key == "value") {
 			this->value = centesimal_int(value);
