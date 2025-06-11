@@ -3855,6 +3855,8 @@ QVariantList country_game_data::get_laws_qvariant_list() const
 
 void country_game_data::set_law(const law_group *law_group, const law *law)
 {
+	assert_throw(law_group != nullptr);
+
 	if (law == this->get_law(law_group)) {
 		return;
 	}
@@ -3868,9 +3870,10 @@ void country_game_data::set_law(const law_group *law_group, const law *law)
 
 	if (law != nullptr) {
 		assert_throw(law->get_group() == law_group);
-
 		law->get_modifier()->apply(this->country);
 	}
+
+	this->check_government_type();
 
 	if (game::get()->is_running()) {
 		emit laws_changed();

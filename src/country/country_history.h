@@ -1,6 +1,7 @@
 #pragma once
 
 #include "country/country_container.h"
+#include "country/law_group_container.h"
 #include "database/data_entry_container.h"
 #include "database/data_entry_history.h"
 #include "economy/commodity_container.h"
@@ -15,6 +16,7 @@ namespace metternich {
 class character;
 class consulate;
 class country;
+class law;
 class office;
 class religion;
 class subject_type;
@@ -94,6 +96,11 @@ public:
 		std::erase(this->traditions, tradition);
 	}
 
+	const law_group_map<const law *> &get_laws() const
+	{
+		return this->laws;
+	}
+
 	int get_wealth() const
 	{
 		return this->wealth;
@@ -125,6 +132,7 @@ private:
 	centesimal_int literacy_rate;
 	std::vector<const technology *> technologies;
 	std::vector<const tradition *> traditions;
+	law_group_map<const law *> laws;
 	int wealth = 0;
 	commodity_map<int> commodities;
 	country_map<diplomacy_state> diplomacy_states;

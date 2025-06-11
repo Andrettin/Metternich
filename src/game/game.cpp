@@ -440,6 +440,10 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->gain_tradition_with_prerequisites(tradition);
 			}
 
+			for (const auto &[law_group, law] : country_history->get_laws()) {
+				country_game_data->set_law(law_group, law);
+			}
+
 			country_game_data->set_wealth(country_history->get_wealth());
 
 			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {

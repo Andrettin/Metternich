@@ -7,6 +7,8 @@
 #include "country/country.h"
 #include "country/country_tier.h"
 #include "country/diplomacy_state.h"
+#include "country/law.h"
+#include "country/law_group.h"
 #include "country/office.h"
 #include "country/subject_type.h"
 #include "economy/commodity.h"
@@ -31,6 +33,16 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 				this->office_holders[office] = office_holder;
 			} else {
 				this->office_holders.erase(office);
+			}
+		});
+	} else if (tag == "laws") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const law_group *law_group = law_group::get(property.get_key());
+			const law *law = law::get(property.get_value());
+			if (law != nullptr) {
+				this->laws[law_group] = law;
+			} else {
+				this->laws.erase(law_group);
 			}
 		});
 	} else if (tag == "commodities") {
