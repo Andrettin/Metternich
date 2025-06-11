@@ -603,7 +603,9 @@ set(script_condition_HDRS
 	src/script/condition/source_character_condition.h
 	src/script/condition/source_site_condition.h
 	src/script/condition/source_site_scope_condition.h
+	src/script/condition/species_condition.h
 	src/script/condition/subject_type_condition.h
+	src/script/condition/taxon_condition.h
 	src/script/condition/technology_condition.h
 	src/script/condition/terrain_condition.h
 	src/script/condition/tradition_condition.h

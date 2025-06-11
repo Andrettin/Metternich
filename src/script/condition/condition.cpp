@@ -103,7 +103,9 @@
 #include "script/condition/source_character_condition.h"
 #include "script/condition/source_site_condition.h"
 #include "script/condition/source_site_scope_condition.h"
+#include "script/condition/species_condition.h"
 #include "script/condition/subject_type_condition.h"
+#include "script/condition/taxon_condition.h"
 #include "script/condition/technology_condition.h"
 #include "script/condition/terrain_condition.h"
 #include "script/condition/tradition_condition.h"
@@ -250,6 +252,14 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, military_unit>) {
 		if (key == "military_unit_category") {
 			return std::make_unique<military_unit_category_condition<scope_type>>(value, condition_operator);
+		}
+	}
+	
+	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, population_unit>) {
+		if (key == "species") {
+			return std::make_unique<species_condition<scope_type>>(value, condition_operator);
+		} else if (key == "taxon") {
+			return std::make_unique<taxon_condition<scope_type>>(value, condition_operator);
 		}
 	}
 	
