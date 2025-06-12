@@ -3701,8 +3701,9 @@ void country_game_data::check_research_organization(const research_organization_
 	}
 
 	//process appointment, if any
-	if (this->get_appointed_research_organization(slot) != nullptr) {
-		this->set_research_organization(slot, this->get_appointed_research_organization(slot));
+	const research_organization *appointed_organization = this->get_appointed_research_organization(slot);
+	if (appointed_organization != nullptr && this->can_appoint_research_organization(slot, appointed_organization)) {
+		this->set_research_organization(slot, appointed_organization);
 		this->set_appointed_research_organization(slot, nullptr);
 	}
 
@@ -4572,9 +4573,10 @@ void country_game_data::check_office_holder(const office *office, const characte
 	}
 
 	//process appointment, if any
-	if (this->get_appointed_office_holder(office) != nullptr) {
+	const character *appointed_holder = this->get_appointed_office_holder(office);
+	if (appointed_holder != nullptr && this->can_appoint_office_holder(office, appointed_holder)) {
 		assert_throw(office->is_appointable());
-		this->set_office_holder(office, this->get_appointed_office_holder(office));
+		this->set_office_holder(office, appointed_holder);
 		this->set_appointed_office_holder(office, nullptr);
 	}
 
