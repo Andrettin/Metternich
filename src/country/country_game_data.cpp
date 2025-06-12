@@ -3738,16 +3738,32 @@ void country_game_data::check_research_organizations()
 	this->appointed_research_organizations.clear();
 }
 
-const research_organization *country_game_data::get_best_research_organization(const research_organization_slot_type *slot)
+std::vector<const research_organization *> country_game_data::get_appointable_research_organizations(const research_organization_slot_type *slot) const
 {
 	std::vector<const research_organization *> potential_organizations;
-	int best_skill = 0;
 
 	for (const research_organization *organization : research_organization::get_all()) {
 		if (!this->can_appoint_research_organization(slot, organization)) {
 			continue;
 		}
 
+		potential_organizations.push_back(organization);
+	}
+
+	return potential_organizations;
+}
+
+QVariantList country_game_data::get_appointable_research_organizations_qvariant_list(const research_organization_slot_type *slot) const
+{
+	return container::to_qvariant_list(this->get_appointable_research_organizations(slot));
+}
+
+const research_organization *country_game_data::get_best_research_organization(const research_organization_slot_type *slot)
+{
+	std::vector<const research_organization *> potential_organizations;
+	int best_skill = 0;
+
+	for (const research_organization *organization : this->get_appointable_research_organizations(slot)) {
 		const int skill = organization->get_skill();
 
 		if (skill < best_skill) {
@@ -4577,13 +4593,12 @@ void country_game_data::check_office_holder(const office *office, const characte
 	}
 }
 
-const character *country_game_data::get_best_office_holder(const office *office, const character *previous_holder) const
+
+std::vector<const character *> country_game_data::get_appointable_office_holders(const office *office) const
 {
 	assert_throw(this->get_government_type() != nullptr);
 
 	std::vector<const character *> potential_holders;
-	int best_attribute_value = 0;
-	bool found_same_dynasty = false;
 
 	for (const character *character : character::get_all()) {
 		if (office->is_ruler()) {
@@ -4600,6 +4615,26 @@ const character *country_game_data::get_best_office_holder(const office *office,
 			continue;
 		}
 
+		potential_holders.push_back(character);
+	}
+
+	return potential_holders;
+}
+
+QVariantList country_game_data::get_appointable_office_holders_qvariant_list(const office *office) const
+{
+	return container::to_qvariant_list(this->get_appointable_office_holders(office));
+}
+
+const character *country_game_data::get_best_office_holder(const office *office, const character *previous_holder) const
+{
+	assert_throw(this->get_government_type() != nullptr);
+
+	std::vector<const character *> potential_holders;
+	int best_attribute_value = 0;
+	bool found_same_dynasty = false;
+
+	for (const character *character : this->get_appointable_office_holders(office)) {
 		const character_game_data *character_game_data = character->get_game_data();
 
 		if (office->is_ruler()) {
