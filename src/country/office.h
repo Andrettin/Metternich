@@ -37,6 +37,11 @@ public:
 		return this->minister;
 	}
 
+	bool is_appointable() const
+	{
+		return !this->is_ruler();
+	}
+
 	character_attribute get_attribute() const
 	{
 		return this->attribute;

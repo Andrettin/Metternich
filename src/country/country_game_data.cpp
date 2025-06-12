@@ -702,6 +702,7 @@ void country_game_data::do_ai_turn()
 	assert_throw(this->is_ai());
 
 	this->ai_choose_current_research();
+	this->ai_appoint_office_holders();
 
 	//build buildings
 	building_type_map<int> ai_building_desires;
@@ -4466,6 +4467,37 @@ void country_game_data::set_office_holder(const office *office, const character 
 				emit character->get_game_data()->ruler_changed();
 			}
 		}
+
+		if (this->country == game::get()->get_player_country()) {
+			assert_throw(character != nullptr);
+			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+			engine_interface::get()->add_notification(std::format("New {}", office->get_name()), interior_minister_portrait, std::format("{} has become our new {}!\n\n{}", character->get_full_name(), string::lowered(office->get_name()), character->get_game_data()->get_office_modifier_string(this->country, office)));
+		}
+	}
+}
+
+QVariantList country_game_data::get_appointing_office_holders_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_appointing_office_holders());
+}
+
+void country_game_data::set_appointing_office_holder(const office *office, const character *character)
+{
+	assert_throw(office->is_appointable());
+
+	if (character == this->get_appointing_office_holder(office)) {
+		return;
+	}
+
+	if (character != nullptr) {
+		this->appointing_office_holders[office] = character;
+	} else {
+		this->appointing_office_holders.erase(office);
+	}
+
+	if (game::get()->is_running()) {
+		emit appointing_office_holders_changed();
 	}
 }
 
@@ -4476,19 +4508,28 @@ void country_game_data::check_office_holder(const office *office, const characte
 		return;
 	}
 
+	//process appointment, if any
+	if (this->get_appointing_office_holder(office) != nullptr) {
+		assert_throw(office->is_appointable());
+		this->set_office_holder(office, this->get_appointing_office_holder(office));
+	}
+
 	//remove office holders if they have become obsolete
 	if (this->get_office_holder(office) != nullptr && this->get_office_holder(office)->get_obsolescence_technology() != nullptr && this->has_technology(this->get_office_holder(office)->get_obsolescence_technology())) {
 		this->get_office_holder(office)->get_game_data()->die();
 		return; //the office holder death will already trigger a re-check of the office holder position
 	}
 
-	//if the country has no holder for the office, see if there is any character who can become the holder
-	if (this->get_office_holder(office) == nullptr) {
-		this->choose_office_holder(office, previous_holder);
+	//if the country has no holder for a non-appointable office, see if there is any character who can become the holder
+	if (this->get_office_holder(office) == nullptr && !office->is_appointable()) {
+		const character *character = this->get_best_office_holder(office, previous_holder);
+		if (character != nullptr) {
+			this->set_office_holder(office, character);
+		}
 	}
 }
 
-void country_game_data::choose_office_holder(const office *office, const character *previous_holder)
+const character *country_game_data::get_best_office_holder(const office *office, const character *previous_holder) const
 {
 	assert_throw(this->get_government_type() != nullptr);
 
@@ -4542,15 +4583,10 @@ void country_game_data::choose_office_holder(const office *office, const charact
 
 	if (!potential_holders.empty()) {
 		const character *office_holder = vector::get_random(potential_holders);
-		this->set_office_holder(office, office_holder);
-
-		if (this->country == game::get()->get_player_country() && game::get()->is_running()) {
-			assert_throw(office_holder != nullptr);
-			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
-
-			engine_interface::get()->add_notification(std::format("New {}", office->get_name()), interior_minister_portrait, std::format("{} has become our new {}!\n\n{}", office_holder->get_full_name(), string::lowered(office->get_name()), office_holder->get_game_data()->get_office_modifier_string(this->country, office)));
-		}
+		return office_holder;
 	}
+
+	return nullptr;
 }
 
 bool country_game_data::can_appoint_office_holder(const office *office, const character *character) const
@@ -4614,6 +4650,28 @@ void country_game_data::on_office_holder_died(const office *office, const charac
 	}
 
 	this->check_office_holder(office, office_holder);
+}
+
+void country_game_data::ai_appoint_office_holders()
+{
+	for (const office *office : this->get_available_offices()) {
+		if (!office->is_appointable()) {
+			continue;
+		}
+
+		if (this->get_office_holder(office) != nullptr) {
+			continue;
+		}
+
+		if (this->get_appointing_office_holder(office) != nullptr) {
+			continue;
+		}
+
+		const character *character = this->get_best_office_holder(office, nullptr);
+		if (character != nullptr) {
+			this->set_appointing_office_holder(office, character);
+		}
+	}
 }
 
 std::vector<const office *> country_game_data::get_available_offices() const

@@ -165,6 +165,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList office_holders READ get_office_holders_qvariant_list NOTIFY office_holders_changed)
+	Q_PROPERTY(QVariantList appointing_office_holders READ get_appointing_office_holders_qvariant_list NOTIFY appointing_office_holders_changed)
 	Q_PROPERTY(QVariantList available_offices READ get_available_offices_qvariant_list NOTIFY available_offices_changed)
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
@@ -1420,10 +1421,32 @@ public:
 	}
 
 	void set_office_holder(const office *office, const character *character);
+
+	const data_entry_map<office, const character *> &get_appointing_office_holders() const
+	{
+		return this->appointing_office_holders;
+	}
+
+	QVariantList get_appointing_office_holders_qvariant_list() const;
+
+	Q_INVOKABLE const metternich::character *get_appointing_office_holder(const metternich::office *office) const
+	{
+		const auto find_iterator = this->appointing_office_holders.find(office);
+
+		if (find_iterator != this->appointing_office_holders.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	Q_INVOKABLE void set_appointing_office_holder(const metternich::office *office, const metternich::character *character);
+
 	void check_office_holder(const office *office, const character *previous_holder);
-	void choose_office_holder(const office *office, const character *previous_holder);
+	const character *get_best_office_holder(const office *office, const character *previous_holder) const;
 	bool can_appoint_office_holder(const office *office, const character *character) const;
 	void on_office_holder_died(const office *office, const character *office_holder);
+	void ai_appoint_office_holders();
 
 	std::vector<const office *> get_available_offices() const;
 	QVariantList get_available_offices_qvariant_list() const;
@@ -2573,6 +2596,7 @@ signals:
 	void scripted_modifiers_changed();
 	void ruler_changed();
 	void office_holders_changed();
+	void appointing_office_holders_changed();
 	void available_offices_changed();
 	void advisors_changed();
 	void next_advisor_changed();
@@ -2666,6 +2690,7 @@ private:
 	const tradition *next_belief = nullptr;
 	scripted_country_modifier_map<int> scripted_modifiers;
 	data_entry_map<office, const character *> office_holders;
+	data_entry_map<office, const character *> appointing_office_holders;
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;
 	std::vector<const character *> leaders;
