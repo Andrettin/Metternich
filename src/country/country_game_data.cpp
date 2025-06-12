@@ -4477,27 +4477,27 @@ void country_game_data::set_office_holder(const office *office, const character 
 	}
 }
 
-QVariantList country_game_data::get_appointing_office_holders_qvariant_list() const
+QVariantList country_game_data::get_appointed_office_holders_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_appointing_office_holders());
+	return archimedes::map::to_qvariant_list(this->get_appointed_office_holders());
 }
 
-void country_game_data::set_appointing_office_holder(const office *office, const character *character)
+void country_game_data::set_appointed_office_holder(const office *office, const character *character)
 {
 	assert_throw(office->is_appointable());
 
-	if (character == this->get_appointing_office_holder(office)) {
+	if (character == this->get_appointed_office_holder(office)) {
 		return;
 	}
 
 	if (character != nullptr) {
-		this->appointing_office_holders[office] = character;
+		this->appointed_office_holders[office] = character;
 	} else {
-		this->appointing_office_holders.erase(office);
+		this->appointed_office_holders.erase(office);
 	}
 
 	if (game::get()->is_running()) {
-		emit appointing_office_holders_changed();
+		emit appointed_office_holders_changed();
 	}
 }
 
@@ -4509,9 +4509,9 @@ void country_game_data::check_office_holder(const office *office, const characte
 	}
 
 	//process appointment, if any
-	if (this->get_appointing_office_holder(office) != nullptr) {
+	if (this->get_appointed_office_holder(office) != nullptr) {
 		assert_throw(office->is_appointable());
-		this->set_office_holder(office, this->get_appointing_office_holder(office));
+		this->set_office_holder(office, this->get_appointed_office_holder(office));
 	}
 
 	//remove office holders if they have become obsolete
@@ -4663,13 +4663,13 @@ void country_game_data::ai_appoint_office_holders()
 			continue;
 		}
 
-		if (this->get_appointing_office_holder(office) != nullptr) {
+		if (this->get_appointed_office_holder(office) != nullptr) {
 			continue;
 		}
 
 		const character *character = this->get_best_office_holder(office, nullptr);
 		if (character != nullptr) {
-			this->set_appointing_office_holder(office, character);
+			this->set_appointed_office_holder(office, character);
 		}
 	}
 }
