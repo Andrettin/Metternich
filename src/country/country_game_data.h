@@ -1291,6 +1291,7 @@ public:
 	std::vector<const research_organization *> get_appointable_research_organizations(const research_organization_slot_type *slot) const;
 	Q_INVOKABLE QVariantList get_appointable_research_organizations_qvariant_list(const metternich::research_organization_slot_type *slot) const;
 	const research_organization *get_best_research_organization(const research_organization_slot_type *slot);
+	bool can_have_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const;
 	bool can_appoint_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const;
 	void ai_appoint_research_organizations();
 
@@ -1471,6 +1472,7 @@ public:
 	std::vector<const character *> get_appointable_office_holders(const office *office) const;
 	Q_INVOKABLE QVariantList get_appointable_office_holders_qvariant_list(const metternich::office *office) const;
 	const character *get_best_office_holder(const office *office, const character *previous_holder) const;
+	bool can_have_office_holder(const office *office, const character *character) const;
 	bool can_appoint_office_holder(const office *office, const character *character) const;
 	void on_office_holder_died(const office *office, const character *office_holder);
 	void ai_appoint_office_holders();

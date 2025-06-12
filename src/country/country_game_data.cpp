@@ -3537,7 +3537,13 @@ data_entry_map<technology_category, const technology *> country_game_data::get_r
 		}
 	}
 
-	assert_throw(!potential_technologies_per_category.empty());
+	if (is_free) {
+		assert_throw(!potential_technologies_per_category.empty());
+	}
+
+	if (potential_technologies_per_category.empty()) {
+		return {};
+	}
 
 	data_entry_map<technology_category, const technology *> research_choice_map;
 	const std::vector<const technology_category *> potential_categories = archimedes::map::get_keys(potential_technologies_per_category);
@@ -3702,7 +3708,7 @@ void country_game_data::check_research_organization(const research_organization_
 
 	//process appointment, if any
 	const research_organization *appointed_organization = this->get_appointed_research_organization(slot);
-	if (appointed_organization != nullptr && this->can_appoint_research_organization(slot, appointed_organization)) {
+	if (appointed_organization != nullptr && this->can_have_research_organization(slot, appointed_organization)) {
 		this->set_research_organization(slot, appointed_organization);
 		this->set_appointed_research_organization(slot, nullptr);
 	}
@@ -3787,7 +3793,7 @@ const research_organization *country_game_data::get_best_research_organization(c
 	return nullptr;
 }
 
-bool country_game_data::can_appoint_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const
+bool country_game_data::can_have_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const
 {
 	Q_UNUSED(slot);
 
@@ -3804,6 +3810,21 @@ bool country_game_data::can_appoint_research_organization(const research_organiz
 	}
 
 	for (const auto &[loop_slot, slot_organization] : this->get_research_organizations()) {
+		if (slot_organization == research_organization) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool country_game_data::can_appoint_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const
+{
+	if (!this->can_have_research_organization(slot, research_organization)) {
+		return false;
+	}
+
+	for (const auto &[loop_slot, slot_organization] : this->get_appointed_research_organizations()) {
 		if (slot_organization == research_organization) {
 			return false;
 		}
@@ -4574,7 +4595,7 @@ void country_game_data::check_office_holder(const office *office, const characte
 
 	//process appointment, if any
 	const character *appointed_holder = this->get_appointed_office_holder(office);
-	if (appointed_holder != nullptr && this->can_appoint_office_holder(office, appointed_holder)) {
+	if (appointed_holder != nullptr && this->can_have_office_holder(office, appointed_holder)) {
 		assert_throw(office->is_appointable());
 		this->set_office_holder(office, appointed_holder);
 		this->set_appointed_office_holder(office, nullptr);
@@ -4674,7 +4695,7 @@ const character *country_game_data::get_best_office_holder(const office *office,
 	return nullptr;
 }
 
-bool country_game_data::can_appoint_office_holder(const office *office, const character *character) const
+bool country_game_data::can_have_office_holder(const office *office, const character *character) const
 {
 	const character_game_data *character_game_data = character->get_game_data();
 	if (character_game_data->get_country() != nullptr && character_game_data->get_country() != this->country) {
@@ -4709,6 +4730,21 @@ bool country_game_data::can_appoint_office_holder(const office *office, const ch
 
 	if (office->get_holder_conditions() != nullptr && !office->get_holder_conditions()->check(character, read_only_context(character))) {
 		return false;
+	}
+
+	return true;
+}
+
+bool country_game_data::can_appoint_office_holder(const office *office, const character *character) const
+{
+	if (!this->can_have_office_holder(office, character)) {
+		return false;
+	}
+
+	for (const auto &[loop_office, office_appointee] : this->get_appointed_office_holders()) {
+		if (office_appointee == character) {
+			return false;
+		}
 	}
 
 	return true;
