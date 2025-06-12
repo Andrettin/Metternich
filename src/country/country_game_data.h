@@ -154,6 +154,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList research_organizations READ get_research_organizations_qvariant_list NOTIFY research_organizations_changed)
+	Q_PROPERTY(QVariantList appointed_research_organizations READ get_appointed_research_organizations_qvariant_list NOTIFY appointed_research_organizations_changed)
 	Q_PROPERTY(QVariantList available_research_organization_slots READ get_available_research_organization_slots_qvariant_list NOTIFY available_research_organization_slots_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
@@ -1264,10 +1265,32 @@ public:
 	}
 
 	void set_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization);
+
+	const data_entry_map<research_organization_slot_type, const research_organization *> &get_appointed_research_organizations() const
+	{
+		return this->appointed_research_organizations;
+	}
+
+	QVariantList get_appointed_research_organizations_qvariant_list() const;
+
+	Q_INVOKABLE const metternich::research_organization *get_appointed_research_organization(const metternich::research_organization_slot_type *slot) const
+	{
+		const auto find_iterator = this->appointed_research_organizations.find(slot);
+
+		if (find_iterator != this->appointed_research_organizations.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	Q_INVOKABLE void set_appointed_research_organization(const metternich::research_organization_slot_type *slot, const metternich::research_organization *research_organization);
+
 	void check_research_organization(const research_organization_slot_type *slot);
 	void check_research_organizations();
-	void choose_research_organization(const research_organization_slot_type *slot);
+	const research_organization *get_best_research_organization(const research_organization_slot_type *slot);
 	bool can_appoint_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const;
+	void ai_appoint_research_organizations();
 
 	std::vector<const research_organization_slot_type *> get_available_research_organization_slots() const;
 	QVariantList get_available_research_organization_slots_qvariant_list() const;
@@ -2585,6 +2608,7 @@ signals:
 	void current_researches_changed();
 	void technology_researched(const technology *technology);
 	void research_organizations_changed();
+	void appointed_research_organizations_changed();
 	void available_research_organization_slots_changed();
 	void government_type_changed();
 	void laws_changed();
@@ -2683,6 +2707,7 @@ private:
 	technology_set current_researches;
 	int free_technology_count = 0;
 	data_entry_map<research_organization_slot_type, const research_organization *> research_organizations;
+	data_entry_map<research_organization_slot_type, const research_organization *> appointed_research_organizations;
 	const metternich::government_type *government_type = nullptr;
 	law_group_map<const law *> laws;
 	tradition_set traditions;

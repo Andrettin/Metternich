@@ -703,6 +703,7 @@ void country_game_data::do_ai_turn()
 
 	this->ai_choose_current_research();
 	this->ai_appoint_office_holders();
+	this->ai_appoint_research_organizations();
 
 	//build buildings
 	building_type_map<int> ai_building_desires;
@@ -3661,6 +3662,34 @@ void country_game_data::set_research_organization(const research_organization_sl
 
 	if (game::get()->is_running()) {
 		emit research_organizations_changed();
+
+		if (this->country == game::get()->get_player_country() && research_organization != nullptr) {
+			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+			engine_interface::get()->add_notification(std::format("{} Gains Contract", research_organization->get_name()), interior_minister_portrait, std::format("The {} has gained an important contract with our govenment to conduct research!\n\n{}", research_organization->get_name(), research_organization->get_modifier_string(this->country)));
+		}
+	}
+}
+
+QVariantList country_game_data::get_appointed_research_organizations_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_appointed_research_organizations());
+}
+
+void country_game_data::set_appointed_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization)
+{
+	if (research_organization == this->get_appointed_research_organization(slot)) {
+		return;
+	}
+
+	if (research_organization != nullptr) {
+		this->appointed_research_organizations[slot] = research_organization;
+	} else {
+		this->appointed_research_organizations.erase(slot);
+	}
+
+	if (game::get()->is_running()) {
+		emit appointed_research_organizations_changed();
 	}
 }
 
@@ -3669,6 +3698,12 @@ void country_game_data::check_research_organization(const research_organization_
 	if (this->is_under_anarchy()) {
 		this->set_research_organization(slot, nullptr);
 		return;
+	}
+
+	//process appointment, if any
+	if (this->get_appointed_research_organization(slot) != nullptr) {
+		this->set_research_organization(slot, this->get_appointed_research_organization(slot));
+		this->set_appointed_research_organization(slot, nullptr);
 	}
 
 	//remove research organizations if they have become obsolete
@@ -3683,11 +3718,6 @@ void country_game_data::check_research_organization(const research_organization_
 				engine_interface::get()->add_notification(std::format("{} Abolished", old_research_organization->get_name()), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history in conducting research for our nation, the {} has lost its ability to function, and has been abolished.", old_research_organization->get_name()));
 			}
 		}
-	}
-
-	//if the country has no holder for the office, see if there is any character who can become the holder
-	if (this->get_research_organization(slot) == nullptr) {
-		this->choose_research_organization(slot);
 	}
 }
 
@@ -3704,9 +3734,11 @@ void country_game_data::check_research_organizations()
 			this->set_research_organization(slot, nullptr);
 		}
 	}
+
+	this->appointed_research_organizations.clear();
 }
 
-void country_game_data::choose_research_organization(const research_organization_slot_type *slot)
+const research_organization *country_game_data::get_best_research_organization(const research_organization_slot_type *slot)
 {
 	std::vector<const research_organization *> potential_organizations;
 	int best_skill = 0;
@@ -3732,15 +3764,10 @@ void country_game_data::choose_research_organization(const research_organization
 
 	if (!potential_organizations.empty()) {
 		const research_organization *research_organization = vector::get_random(potential_organizations);
-		this->set_research_organization(slot, research_organization);
-
-		if (this->country == game::get()->get_player_country() && game::get()->is_running()) {
-			assert_throw(research_organization != nullptr);
-			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
-
-			engine_interface::get()->add_notification(std::format("{} Gains Contract", research_organization->get_name()), interior_minister_portrait, std::format("The {} has gained an important contract with our govenment to conduct research!\n\n{}", research_organization->get_name(), research_organization->get_modifier_string(this->country)));
-		}
+		return research_organization;
 	}
+
+	return nullptr;
 }
 
 bool country_game_data::can_appoint_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const
@@ -3767,6 +3794,25 @@ bool country_game_data::can_appoint_research_organization(const research_organiz
 
 	return true;
 }
+
+void country_game_data::ai_appoint_research_organizations()
+{
+	for (const research_organization_slot_type *slot : this->get_available_research_organization_slots()) {
+		if (this->get_research_organization(slot) != nullptr) {
+			continue;
+		}
+
+		if (this->get_research_organization(slot) != nullptr) {
+			continue;
+		}
+
+		const research_organization *research_organization = this->get_best_research_organization(slot);
+		if (research_organization != nullptr) {
+			this->set_appointed_research_organization(slot, research_organization);
+		}
+	}
+}
+
 
 std::vector<const research_organization_slot_type *> country_game_data::get_available_research_organization_slots() const
 {
@@ -4386,6 +4432,8 @@ void country_game_data::check_characters()
 		this->check_office_holder(office, nullptr);
 	}
 
+	this->appointed_office_holders.clear();
+
 	this->check_advisors();
 
 	for (const province *province : this->get_provinces()) {
@@ -4468,8 +4516,7 @@ void country_game_data::set_office_holder(const office *office, const character 
 			}
 		}
 
-		if (this->country == game::get()->get_player_country()) {
-			assert_throw(character != nullptr);
+		if (this->country == game::get()->get_player_country() && character != nullptr) {
 			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
 			engine_interface::get()->add_notification(std::format("New {}", office->get_name()), interior_minister_portrait, std::format("{} has become our new {}!\n\n{}", character->get_full_name(), string::lowered(office->get_name()), character->get_game_data()->get_office_modifier_string(this->country, office)));
@@ -4512,6 +4559,7 @@ void country_game_data::check_office_holder(const office *office, const characte
 	if (this->get_appointed_office_holder(office) != nullptr) {
 		assert_throw(office->is_appointable());
 		this->set_office_holder(office, this->get_appointed_office_holder(office));
+		this->set_appointed_office_holder(office, nullptr);
 	}
 
 	//remove office holders if they have become obsolete
