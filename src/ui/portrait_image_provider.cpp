@@ -48,6 +48,14 @@ QCoro::Task<void> portrait_image_provider::load_image(const std::string id)
 	QImage image(path::to_qstring(filepath));
 	assert_throw(!image.isNull());
 
+	if (id_list.size() >= 2) {
+		const std::string &state = id_list.back();
+		if (state == "grayscale") {
+			image::apply_grayscale(image);
+		} else {
+			assert_throw(false);
+		}
+	}
 	if (image_scale_factor != scale_factor) {
 		co_await QtConcurrent::run([this, &image, &scale_factor, &image_scale_factor]() {
 			image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
