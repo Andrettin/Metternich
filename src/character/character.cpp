@@ -18,6 +18,7 @@
 #include "map/province.h"
 #include "map/site.h"
 #include "map/site_type.h"
+#include "religion/deity.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
@@ -131,6 +132,16 @@ void character::process_gsml_scope(const gsml_data &scope)
 
 void character::initialize()
 {
+	if (this->get_deity() != nullptr) {
+		if (this->get_name().empty()) {
+			this->set_name(this->get_deity()->get_name());
+		}
+
+		if (this->get_name_word() == nullptr) {
+			this->set_name_word(this->get_deity()->get_name_word());
+		}
+	}
+
 	if (this->get_phenotype() == nullptr && this->get_culture() != nullptr) {
 		this->phenotype = this->get_culture()->get_default_phenotype();
 	}
@@ -352,9 +363,9 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its culture (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_culture()->get_identifier()));
 	}
 
-	if (this->get_home_settlement() == nullptr) {
-		throw std::runtime_error(std::format("Character \"{}\" has no home settlement.", this->get_identifier()));
-	} else if (!this->get_home_settlement()->is_settlement()) {
+	if (this->get_home_settlement() == nullptr && !this->is_deity()) {
+		throw std::runtime_error(std::format("Non-deity character \"{}\" has no home settlement.", this->get_identifier()));
+	} else if (this->get_home_settlement() != nullptr && !this->get_home_settlement()->is_settlement()) {
 		throw std::runtime_error(std::format("Character \"{}\" has \"{}\" set as their home settlement, but it is not a settlement site.", this->get_identifier(), this->get_home_settlement()->get_identifier()));
 	}
 

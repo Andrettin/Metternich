@@ -11,6 +11,7 @@ Q_MOC_INCLUDE("character/dynasty.h")
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
+Q_MOC_INCLUDE("religion/deity.h")
 Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("species/phenotype.h")
 Q_MOC_INCLUDE("species/species.h")
@@ -32,6 +33,7 @@ class civilian_unit_class;
 class civilian_unit_type;
 class country;
 class culture;
+class deity;
 class dynasty;
 class phenotype;
 class portrait;
@@ -64,6 +66,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(const metternich::phenotype* phenotype MEMBER phenotype READ get_phenotype NOTIFY changed)
+	Q_PROPERTY(const metternich::deity* deity READ get_deity CONSTANT)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_settlement MEMBER home_settlement NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_site MEMBER home_site NOTIFY changed)
@@ -156,6 +159,21 @@ public:
 		return this->phenotype;
 	}
 
+	const metternich::deity *get_deity() const
+	{
+		return this->deity;
+	}
+
+	void set_deity(const metternich::deity *deity)
+	{
+		this->deity = deity;
+	}
+
+	bool is_deity() const
+	{
+		return this->get_deity() != nullptr;
+	}
+
 	virtual int get_adulthood_age() const override;
 	virtual int get_venerable_age() const override;
 	virtual const dice &get_maximum_age_modifier() const override;
@@ -163,7 +181,7 @@ public:
 
 	virtual bool is_immortal() const override
 	{
-		return false;
+		return this->is_deity();
 	}
 
 	const metternich::portrait *get_portrait() const
@@ -254,6 +272,7 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
+	const metternich::deity *deity = nullptr; //the deity which the character is (if it is a deity)
 	metternich::portrait *portrait = nullptr;
 	const site *home_settlement = nullptr;
 	const site *home_site = nullptr;

@@ -8,6 +8,7 @@ Q_MOC_INCLUDE("religion/religious_group.h")
 
 namespace metternich {
 
+class deity;
 class office;
 class religious_group;
 
@@ -40,6 +41,16 @@ public:
 		return this->color;
 	}
 
+	const std::vector<const deity *> &get_deities() const
+	{
+		return this->deities;
+	}
+
+	void add_deity(const deity *deity)
+	{
+		this->deities.push_back(deity);
+	}
+
 	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
 	const std::string &get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender) const;
 
@@ -49,6 +60,7 @@ signals:
 private:
 	religious_group *group = nullptr;
 	QColor color;
+	std::vector<const deity *> deities;
 };
 
 }
