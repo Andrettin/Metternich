@@ -174,6 +174,7 @@ set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "populatio
 
 set(religion_SRCS
 	src/religion/deity.cpp
+	src/religion/deity_trait.cpp
 	src/religion/religion.cpp
 	src/religion/religion_base.cpp
 	src/religion/religion_container.cpp
@@ -495,6 +496,7 @@ source_group(population FILES ${population_HDRS})
 
 set(religion_HDRS
 	src/religion/deity.h
+	src/religion/deity_trait.h
 	src/religion/pantheon.h
 	src/religion/religion.h
 	src/religion/religion_base.h
