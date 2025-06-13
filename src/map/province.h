@@ -150,6 +150,7 @@ public:
 
 	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture *culture) const;
+	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
 
 	const resource_map<int> &get_resource_counts() const
 	{

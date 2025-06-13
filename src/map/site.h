@@ -132,6 +132,7 @@ public:
 
 	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture *culture) const;
+	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
 
 	const std::string &get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender, const culture *culture) const;
 

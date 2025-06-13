@@ -129,9 +129,24 @@ const std::string &province::get_cultural_name(const culture *culture) const
 			return find_iterator->second;
 		}
 
-		const auto group_find_iterator = this->cultural_group_names.find(culture->get_group());
+		if (culture->get_group() != nullptr) {
+			return this->get_cultural_name(culture->get_group());
+		}
+	}
+
+	return this->get_name();
+}
+
+const std::string &province::get_cultural_name(const cultural_group *cultural_group) const
+{
+	if (cultural_group != nullptr) {
+		const auto group_find_iterator = this->cultural_group_names.find(cultural_group);
 		if (group_find_iterator != this->cultural_group_names.end()) {
 			return group_find_iterator->second;
+		}
+
+		if (cultural_group->get_upper_group() != nullptr) {
+			return this->get_cultural_name(cultural_group->get_upper_group());
 		}
 	}
 
