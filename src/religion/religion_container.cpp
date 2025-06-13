@@ -1,8 +1,8 @@
 #include "metternich.h"
 
-#include "country/religion_container.h"
+#include "religion/religion_container.h"
 
-#include "country/religion.h"
+#include "religion/religion.h"
 
 namespace metternich {
 

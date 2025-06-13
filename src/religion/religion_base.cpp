@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "country/religion_base.h"
+#include "religion/religion_base.h"
 
 #include "country/country_tier.h"
 #include "country/government_type.h"

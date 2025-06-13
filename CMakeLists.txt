@@ -56,9 +56,6 @@ set(country_SRCS
 	src/country/law_group.cpp
 	src/country/law_group_container.cpp
 	src/country/office.cpp
-	src/country/religion.cpp
-	src/country/religion_base.cpp
-	src/country/religion_container.cpp
 	src/country/subject_type.cpp
 	src/country/tradition.cpp
 	src/country/tradition_container.cpp
@@ -174,6 +171,14 @@ set(population_SRCS
 )
 source_group(population FILES ${population_SRCS})
 set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "population")
+
+set(religion_SRCS
+	src/religion/religion.cpp
+	src/religion/religion_base.cpp
+	src/religion/religion_container.cpp
+)
+source_group(religion FILES ${religion_SRCS})
+set_source_files_properties(${religion_SRCS} PROPERTIES UNITY_GROUP "religion")
 
 set(script_SRCS
 	src/script/context.cpp
@@ -296,6 +301,7 @@ set(metternich_SRCS
 	${language_SRCS}
 	${map_SRCS}
 	${population_SRCS}
+	${religion_SRCS}
 	${script_SRCS}
 	${script_condition_SRCS}
 	${script_effect_SRCS}
@@ -356,10 +362,6 @@ set(country_HDRS
 	src/country/law_group.h
 	src/country/law_group_container.h
 	src/country/office.h
-	src/country/religion.h
-	src/country/religion_base.h
-	src/country/religion_container.h
-	src/country/religious_group.h
 	src/country/subject_type.h
 	src/country/tradition.h
 	src/country/tradition_category.h
@@ -489,6 +491,14 @@ set(population_HDRS
 	src/population/profession.h
 )
 source_group(population FILES ${population_HDRS})
+
+set(religion_HDRS
+	src/religion/religion.h
+	src/religion/religion_base.h
+	src/religion/religion_container.h
+	src/religion/religious_group.h
+)
+source_group(religion FILES ${religion_HDRS})
 
 set(script_HDRS
 	src/script/context.h
@@ -823,6 +833,7 @@ set(metternich_HDRS
 	${language_HDRS}
 	${map_HDRS}
 	${population_HDRS}
+	${religion_HDRS}
 	${script_HDRS}
 	${script_condition_HDRS}
 	${script_effect_HDRS}

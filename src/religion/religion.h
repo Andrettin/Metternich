@@ -2,9 +2,9 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
-#include "country/religion_base.h"
+#include "religion/religion_base.h"
 
-Q_MOC_INCLUDE("country/religious_group.h")
+Q_MOC_INCLUDE("religion/religious_group.h")
 
 namespace metternich {
 

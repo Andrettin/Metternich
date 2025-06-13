@@ -7,7 +7,7 @@
 #include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/country.h")
-Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("religion/religion.h")
 
 namespace metternich {
 

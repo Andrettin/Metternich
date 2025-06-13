@@ -9,7 +9,7 @@
 
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("country/government_type.h")
-Q_MOC_INCLUDE("country/religion.h")
+Q_MOC_INCLUDE("religion/religion.h")
 
 namespace metternich {
 

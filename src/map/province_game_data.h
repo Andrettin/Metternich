@@ -1,11 +1,11 @@
 #pragma once
 
 #include "country/culture_container.h"
-#include "country/religion_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_type_container.h"
 #include "map/terrain_type_container.h"
+#include "religion/religion_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
@@ -13,8 +13,8 @@
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("country/culture.h")
-Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("population/population.h")
+Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {

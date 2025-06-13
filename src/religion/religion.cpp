@@ -1,8 +1,8 @@
 #include "metternich.h"
 
-#include "country/religion.h"
+#include "religion/religion.h"
 
-#include "country/religious_group.h"
+#include "religion/religious_group.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/random.h"

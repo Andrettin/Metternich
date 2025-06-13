@@ -5,8 +5,8 @@
 #include "population/population_group_map.h"
 
 Q_MOC_INCLUDE("country/culture.h")
-Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("infrastructure/settlement_type.h")
+Q_MOC_INCLUDE("religion/religion.h")
 
 namespace metternich {
 

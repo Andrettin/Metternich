@@ -4,10 +4,10 @@
 
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("country/culture.h")
-Q_MOC_INCLUDE("country/religion.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population_type.h")
+Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("species/phenotype.h")
 Q_MOC_INCLUDE("ui/icon.h")
 

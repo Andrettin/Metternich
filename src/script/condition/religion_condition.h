@@ -1,6 +1,6 @@
 #pragma once
 
-#include "country/religion.h"
+#include "religion/religion.h"
 #include "script/condition/condition.h"
 #include "script/target_variant.h"
 #include "util/assert_util.h"

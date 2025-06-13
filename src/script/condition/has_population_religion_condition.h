@@ -1,7 +1,7 @@
 #pragma once
 
-#include "country/religion.h"
 #include "population/population.h"
+#include "religion/religion.h"
 #include "script/condition/condition.h"
 
 namespace metternich {
