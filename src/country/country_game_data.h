@@ -38,7 +38,7 @@ Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("technology/research_organization.h")
-Q_MOC_INCLUDE("technology/research_organization_slot_type.h")
+Q_MOC_INCLUDE("technology/research_organization_slot.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/military_unit_type.h")
@@ -73,7 +73,7 @@ class province;
 class region;
 class religion;
 class research_organization;
-class research_organization_slot_type;
+class research_organization_slot;
 class scripted_country_modifier;
 class site;
 class subject_type;
@@ -1246,14 +1246,14 @@ public:
 	void gain_free_technologies(const int count);
 	void gain_technologies_known_by_others();
 
-	const data_entry_map<research_organization_slot_type, const research_organization *> &get_research_organizations() const
+	const data_entry_map<research_organization_slot, const research_organization *> &get_research_organizations() const
 	{
 		return this->research_organizations;
 	}
 
 	QVariantList get_research_organizations_qvariant_list() const;
 
-	Q_INVOKABLE const metternich::research_organization *get_research_organization(const metternich::research_organization_slot_type *slot) const
+	Q_INVOKABLE const metternich::research_organization *get_research_organization(const metternich::research_organization_slot *slot) const
 	{
 		const auto find_iterator = this->research_organizations.find(slot);
 
@@ -1264,16 +1264,16 @@ public:
 		return nullptr;
 	}
 
-	void set_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization);
+	void set_research_organization(const research_organization_slot *slot, const research_organization *research_organization);
 
-	const data_entry_map<research_organization_slot_type, const research_organization *> &get_appointed_research_organizations() const
+	const data_entry_map<research_organization_slot, const research_organization *> &get_appointed_research_organizations() const
 	{
 		return this->appointed_research_organizations;
 	}
 
 	QVariantList get_appointed_research_organizations_qvariant_list() const;
 
-	Q_INVOKABLE const metternich::research_organization *get_appointed_research_organization(const metternich::research_organization_slot_type *slot) const
+	Q_INVOKABLE const metternich::research_organization *get_appointed_research_organization(const metternich::research_organization_slot *slot) const
 	{
 		const auto find_iterator = this->appointed_research_organizations.find(slot);
 
@@ -1284,18 +1284,18 @@ public:
 		return nullptr;
 	}
 
-	Q_INVOKABLE void set_appointed_research_organization(const metternich::research_organization_slot_type *slot, const metternich::research_organization *research_organization);
+	Q_INVOKABLE void set_appointed_research_organization(const metternich::research_organization_slot *slot, const metternich::research_organization *research_organization);
 
-	void check_research_organization(const research_organization_slot_type *slot);
+	void check_research_organization(const research_organization_slot *slot);
 	void check_research_organizations();
-	std::vector<const research_organization *> get_appointable_research_organizations(const research_organization_slot_type *slot) const;
-	Q_INVOKABLE QVariantList get_appointable_research_organizations_qvariant_list(const metternich::research_organization_slot_type *slot) const;
-	const research_organization *get_best_research_organization(const research_organization_slot_type *slot);
-	bool can_have_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const;
-	bool can_appoint_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const;
+	std::vector<const research_organization *> get_appointable_research_organizations(const research_organization_slot *slot) const;
+	Q_INVOKABLE QVariantList get_appointable_research_organizations_qvariant_list(const metternich::research_organization_slot *slot) const;
+	const research_organization *get_best_research_organization(const research_organization_slot *slot);
+	bool can_have_research_organization(const research_organization_slot *slot, const research_organization *research_organization) const;
+	bool can_appoint_research_organization(const research_organization_slot *slot, const research_organization *research_organization) const;
 	void ai_appoint_research_organizations();
 
-	std::vector<const research_organization_slot_type *> get_available_research_organization_slots() const;
+	std::vector<const research_organization_slot *> get_available_research_organization_slots() const;
 	QVariantList get_available_research_organization_slots_qvariant_list() const;
 
 	const metternich::government_type *get_government_type() const
@@ -2712,8 +2712,8 @@ private:
 	technology_set technologies;
 	technology_set current_researches;
 	int free_technology_count = 0;
-	data_entry_map<research_organization_slot_type, const research_organization *> research_organizations;
-	data_entry_map<research_organization_slot_type, const research_organization *> appointed_research_organizations;
+	data_entry_map<research_organization_slot, const research_organization *> research_organizations;
+	data_entry_map<research_organization_slot, const research_organization *> appointed_research_organizations;
 	const metternich::government_type *government_type = nullptr;
 	law_group_map<const law *> laws;
 	tradition_set traditions;

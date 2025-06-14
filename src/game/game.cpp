@@ -59,7 +59,7 @@
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
-#include "technology/research_organization_slot_type.h"
+#include "technology/research_organization_slot.h"
 #include "time/era.h"
 #include "unit/army.h"
 #include "unit/civilian_unit.h"

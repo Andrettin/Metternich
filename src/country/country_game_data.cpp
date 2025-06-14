@@ -72,7 +72,7 @@
 #include "script/scripted_country_modifier.h"
 #include "species/phenotype.h"
 #include "technology/research_organization.h"
-#include "technology/research_organization_slot_type.h"
+#include "technology/research_organization_slot.h"
 #include "technology/technology.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
@@ -3644,7 +3644,7 @@ QVariantList country_game_data::get_research_organizations_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_research_organizations());
 }
 
-void country_game_data::set_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization)
+void country_game_data::set_research_organization(const research_organization_slot *slot, const research_organization *research_organization)
 {
 	const metternich::research_organization *old_research_organization = this->get_research_organization(slot);
 
@@ -3682,7 +3682,7 @@ QVariantList country_game_data::get_appointed_research_organizations_qvariant_li
 	return archimedes::map::to_qvariant_list(this->get_appointed_research_organizations());
 }
 
-void country_game_data::set_appointed_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization)
+void country_game_data::set_appointed_research_organization(const research_organization_slot *slot, const research_organization *research_organization)
 {
 	if (research_organization == this->get_appointed_research_organization(slot)) {
 		return;
@@ -3699,7 +3699,7 @@ void country_game_data::set_appointed_research_organization(const research_organ
 	}
 }
 
-void country_game_data::check_research_organization(const research_organization_slot_type *slot)
+void country_game_data::check_research_organization(const research_organization_slot *slot)
 {
 	if (this->is_under_anarchy()) {
 		this->set_research_organization(slot, nullptr);
@@ -3730,12 +3730,12 @@ void country_game_data::check_research_organization(const research_organization_
 
 void country_game_data::check_research_organizations()
 {
-	const std::vector<const research_organization_slot_type *> research_organization_slots = this->get_available_research_organization_slots();
-	for (const research_organization_slot_type *research_organization_slot : research_organization_slots) {
+	const std::vector<const research_organization_slot *> research_organization_slots = this->get_available_research_organization_slots();
+	for (const research_organization_slot *research_organization_slot : research_organization_slots) {
 		this->check_research_organization(research_organization_slot);
 	}
 
-	const data_entry_map<research_organization_slot_type, const research_organization *> research_organizations = this->get_research_organizations();
+	const data_entry_map<research_organization_slot, const research_organization *> research_organizations = this->get_research_organizations();
 	for (const auto &[slot, slot_organization] : research_organizations) {
 		if (!vector::contains(research_organization_slots, slot)) {
 			this->set_research_organization(slot, nullptr);
@@ -3745,7 +3745,7 @@ void country_game_data::check_research_organizations()
 	this->appointed_research_organizations.clear();
 }
 
-std::vector<const research_organization *> country_game_data::get_appointable_research_organizations(const research_organization_slot_type *slot) const
+std::vector<const research_organization *> country_game_data::get_appointable_research_organizations(const research_organization_slot *slot) const
 {
 	std::vector<const research_organization *> potential_organizations;
 
@@ -3760,12 +3760,12 @@ std::vector<const research_organization *> country_game_data::get_appointable_re
 	return potential_organizations;
 }
 
-QVariantList country_game_data::get_appointable_research_organizations_qvariant_list(const research_organization_slot_type *slot) const
+QVariantList country_game_data::get_appointable_research_organizations_qvariant_list(const research_organization_slot *slot) const
 {
 	return container::to_qvariant_list(this->get_appointable_research_organizations(slot));
 }
 
-const research_organization *country_game_data::get_best_research_organization(const research_organization_slot_type *slot)
+const research_organization *country_game_data::get_best_research_organization(const research_organization_slot *slot)
 {
 	std::vector<const research_organization *> potential_organizations;
 	int best_skill = 0;
@@ -3793,7 +3793,7 @@ const research_organization *country_game_data::get_best_research_organization(c
 	return nullptr;
 }
 
-bool country_game_data::can_have_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const
+bool country_game_data::can_have_research_organization(const research_organization_slot *slot, const research_organization *research_organization) const
 {
 	Q_UNUSED(slot);
 
@@ -3818,7 +3818,7 @@ bool country_game_data::can_have_research_organization(const research_organizati
 	return true;
 }
 
-bool country_game_data::can_appoint_research_organization(const research_organization_slot_type *slot, const research_organization *research_organization) const
+bool country_game_data::can_appoint_research_organization(const research_organization_slot *slot, const research_organization *research_organization) const
 {
 	if (!this->can_have_research_organization(slot, research_organization)) {
 		return false;
@@ -3835,7 +3835,7 @@ bool country_game_data::can_appoint_research_organization(const research_organiz
 
 void country_game_data::ai_appoint_research_organizations()
 {
-	for (const research_organization_slot_type *slot : this->get_available_research_organization_slots()) {
+	for (const research_organization_slot *slot : this->get_available_research_organization_slots()) {
 		if (this->get_research_organization(slot) != nullptr) {
 			continue;
 		}
@@ -3852,11 +3852,11 @@ void country_game_data::ai_appoint_research_organizations()
 }
 
 
-std::vector<const research_organization_slot_type *> country_game_data::get_available_research_organization_slots() const
+std::vector<const research_organization_slot *> country_game_data::get_available_research_organization_slots() const
 {
-	std::vector<const research_organization_slot_type *> available_research_organization_slots;
+	std::vector<const research_organization_slot *> available_research_organization_slots;
 
-	for (const research_organization_slot_type *slot_type : research_organization_slot_type::get_all()) {
+	for (const research_organization_slot *slot_type : research_organization_slot::get_all()) {
 		if (slot_type->get_conditions() != nullptr && !slot_type->get_conditions()->check(this->country, read_only_context(this->country))) {
 			continue;
 		}

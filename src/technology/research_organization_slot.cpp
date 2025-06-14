@@ -1,19 +1,19 @@
 #include "metternich.h"
 
-#include "technology/research_organization_slot_type.h"
+#include "technology/research_organization_slot.h"
 
 #include "script/condition/and_condition.h"
 
 namespace metternich {
 
-research_organization_slot_type::research_organization_slot_type(const std::string &identifier)
+research_organization_slot::research_organization_slot(const std::string &identifier)
 	: named_data_entry(identifier)
 {
 }
 
-research_organization_slot_type::~research_organization_slot_type() = default;
+research_organization_slot::~research_organization_slot() = default;
 
-void research_organization_slot_type::process_gsml_scope(const gsml_data &scope)
+void research_organization_slot::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 

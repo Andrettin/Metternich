@@ -10,8 +10,8 @@ namespace metternich {
 
 class country;
 class portrait;
-class technology;
 class research_organization_trait;
+class technology;
 
 template <typename scope_type>
 class and_condition;
