@@ -2,6 +2,7 @@
 
 #include "religion/deity_trait.h"
 
+#include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 
@@ -22,7 +23,11 @@ void deity_trait::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "modifier") {
+	if (tag == "conditions") {
+		auto conditions = std::make_unique<and_condition<country>>();
+		database::process_gsml_data(conditions, scope);
+		this->conditions = std::move(conditions);
+	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		database::process_gsml_data(modifier, scope);
 		this->modifier = std::move(modifier);
@@ -35,6 +40,10 @@ void deity_trait::check() const
 {
 	if (this->get_modifier() == nullptr) {
 		throw std::runtime_error(std::format("Deity trait \"{}\" has no modifier.", this->get_identifier()));
+	}
+
+	if (this->get_conditions() != nullptr) {
+		this->get_conditions()->check_validity();
 	}
 
 	trait_base::check();

@@ -36,6 +36,8 @@ Q_MOC_INCLUDE("country/subject_type.h")
 Q_MOC_INCLUDE("country/tradition.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
+Q_MOC_INCLUDE("religion/deity.h")
+Q_MOC_INCLUDE("religion/deity_slot.h")
 Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("technology/research_organization.h")
 Q_MOC_INCLUDE("technology/research_organization_slot.h")
@@ -54,6 +56,8 @@ class country;
 class country_building_slot;
 class country_rank;
 class culture;
+class deity;
+class deity_slot;
 class event;
 class flag;
 class government_type;
@@ -163,6 +167,9 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int tradition_cost READ get_tradition_cost NOTIFY traditions_changed)
 	Q_PROPERTY(const metternich::tradition* next_tradition READ get_next_tradition WRITE set_next_tradition NOTIFY next_tradition_changed)
 	Q_PROPERTY(const metternich::tradition* next_belief READ get_next_belief WRITE set_next_belief NOTIFY next_belief_changed)
+	Q_PROPERTY(QVariantList deities READ get_deities_qvariant_list NOTIFY deities_changed)
+	Q_PROPERTY(QVariantList appointed_deities READ get_appointed_deities_qvariant_list NOTIFY appointed_deities_changed)
+	Q_PROPERTY(QVariantList available_deity_slots READ get_available_deity_slots_qvariant_list NOTIFY available_deity_slots_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList office_holders READ get_office_holders_qvariant_list NOTIFY office_holders_changed)
@@ -1406,6 +1413,58 @@ public:
 
 	void choose_next_belief();
 
+	const data_entry_map<deity_slot, const deity *> &get_deities() const
+	{
+		return this->deities;
+	}
+
+	QVariantList get_deities_qvariant_list() const;
+
+	Q_INVOKABLE const metternich::deity *get_deity(const metternich::deity_slot *slot) const
+	{
+		const auto find_iterator = this->deities.find(slot);
+
+		if (find_iterator != this->deities.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	void set_deity(const deity_slot *slot, const deity *deity);
+
+	const data_entry_map<deity_slot, const deity *> &get_appointed_deities() const
+	{
+		return this->appointed_deities;
+	}
+
+	QVariantList get_appointed_deities_qvariant_list() const;
+
+	Q_INVOKABLE const metternich::deity *get_appointed_deity(const metternich::deity_slot *slot) const
+	{
+		const auto find_iterator = this->appointed_deities.find(slot);
+
+		if (find_iterator != this->appointed_deities.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+	Q_INVOKABLE void set_appointed_deity(const metternich::deity_slot *slot, const metternich::deity *deity);
+
+	void check_deity(const deity_slot *slot);
+	void check_deities();
+	std::vector<const deity *> get_appointable_deities(const deity_slot *slot) const;
+	Q_INVOKABLE QVariantList get_appointable_deities_qvariant_list(const metternich::deity_slot *slot) const;
+	const deity *get_best_deity(const deity_slot *slot);
+	bool can_have_deity(const deity_slot *slot, const deity *deity) const;
+	bool can_appoint_deity(const deity_slot *slot, const deity *deity) const;
+	void ai_appoint_deities();
+
+	std::vector<const deity_slot *> get_available_deity_slots() const;
+	QVariantList get_available_deity_slots_qvariant_list() const;
+
 	const scripted_country_modifier_map<int> &get_scripted_modifiers() const
 	{
 		return this->scripted_modifiers;
@@ -2623,6 +2682,9 @@ signals:
 	void tradition_adopted(const tradition *tradition);
 	void next_belief_changed();
 	void belief_adopted(const tradition *belief);
+	void deities_changed();
+	void appointed_deities_changed();
+	void available_deity_slots_changed();
 	void scripted_modifiers_changed();
 	void ruler_changed();
 	void office_holders_changed();
@@ -2719,6 +2781,8 @@ private:
 	tradition_set traditions;
 	const tradition *next_tradition = nullptr;
 	const tradition *next_belief = nullptr;
+	data_entry_map<deity_slot, const deity *> deities;
+	data_entry_map<deity_slot, const deity *> appointed_deities;
 	scripted_country_modifier_map<int> scripted_modifiers;
 	data_entry_map<office, const character *> office_holders;
 	data_entry_map<office, const character *> appointed_office_holders;

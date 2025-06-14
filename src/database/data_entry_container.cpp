@@ -4,6 +4,7 @@
 
 #include "country/cultural_group.h"
 #include "country/office.h"
+#include "religion/deity_slot.h"
 #include "technology/research_organization_slot.h"
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
@@ -17,6 +18,7 @@ bool data_entry_compare<T>::operator()(const T *lhs, const T *rhs) const
 }
 
 template struct data_entry_compare<cultural_group>;
+template struct data_entry_compare<deity_slot>;
 template struct data_entry_compare<named_data_entry>;
 template struct data_entry_compare<office>;
 template struct data_entry_compare<research_organization_slot>;

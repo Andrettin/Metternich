@@ -63,6 +63,9 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "religion/deity.h"
+#include "religion/deity_slot.h"
+#include "religion/deity_trait.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
@@ -177,6 +180,7 @@ void country_game_data::do_turn()
 		this->check_traditions();
 		this->check_government_type();
 		this->check_characters();
+		this->check_deities();
 		this->check_research_organizations();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->country->get_identifier())));
@@ -703,6 +707,7 @@ void country_game_data::do_ai_turn()
 
 	this->ai_choose_current_research();
 	this->ai_appoint_office_holders();
+	this->ai_appoint_deities();
 	this->ai_appoint_research_organizations();
 
 	//build buildings
@@ -3840,7 +3845,7 @@ void country_game_data::ai_appoint_research_organizations()
 			continue;
 		}
 
-		if (this->get_research_organization(slot) != nullptr) {
+		if (this->get_appointed_research_organization(slot) != nullptr) {
 			continue;
 		}
 
@@ -4377,6 +4382,243 @@ void country_game_data::choose_next_belief()
 		const std::vector<const tradition *> potential_beliefs = archimedes::map::get_values(potential_belief_map);
 		emit engine_interface::get()->next_belief_choosable(container::to_qvariant_list(potential_beliefs));
 	}
+}
+
+QVariantList country_game_data::get_deities_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_deities());
+}
+
+void country_game_data::set_deity(const deity_slot *slot, const deity *deity)
+{
+	const metternich::deity *old_deity = this->get_deity(slot);
+
+	if (deity == old_deity) {
+		return;
+	}
+
+	if (old_deity != nullptr) {
+		old_deity->apply_modifier(this->country, -1);
+	}
+
+	if (deity != nullptr) {
+		this->deities[slot] = deity;
+	} else {
+		this->deities.erase(slot);
+	}
+
+	if (deity != nullptr) {
+		deity->apply_modifier(this->country, 1);
+	}
+
+	if (game::get()->is_running()) {
+		emit deities_changed();
+
+		if (this->country == game::get()->get_player_country() && deity != nullptr) {
+			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+			engine_interface::get()->add_notification(std::format("{} Becomes Patron Deity", deity->get_name()), interior_minister_portrait, std::format("{} has become a patron deity of our nation!\n\n{}", deity->get_name(), deity->get_modifier_string(this->country)));
+		}
+	}
+}
+
+QVariantList country_game_data::get_appointed_deities_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_appointed_deities());
+}
+
+void country_game_data::set_appointed_deity(const deity_slot *slot, const deity *deity)
+{
+	if (deity == this->get_appointed_deity(slot)) {
+		return;
+	}
+
+	if (deity != nullptr) {
+		this->appointed_deities[slot] = deity;
+	} else {
+		this->appointed_deities.erase(slot);
+	}
+
+	if (game::get()->is_running()) {
+		emit appointed_deities_changed();
+	}
+}
+
+void country_game_data::check_deity(const deity_slot *slot)
+{
+	if (this->is_under_anarchy()) {
+		this->set_deity(slot, nullptr);
+		return;
+	}
+
+	//process appointment, if any
+	const deity *appointed_deity = this->get_appointed_deity(slot);
+	if (appointed_deity != nullptr && this->can_have_deity(slot, appointed_deity)) {
+		this->set_deity(slot, appointed_deity);
+		this->set_appointed_deity(slot, nullptr);
+	}
+
+	//remove deities if they have become obsolete
+	const deity *old_deity = this->get_deity(slot);
+	if (old_deity != nullptr && old_deity->get_obsolescence_technology() != nullptr && this->has_technology(old_deity->get_obsolescence_technology())) {
+		this->set_deity(slot, nullptr);
+
+		if (game::get()->is_running()) {
+			if (this->country == game::get()->get_player_country()) {
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				engine_interface::get()->add_notification(std::format("{} No Longer Patron Deity", old_deity->get_name()), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history of being worshiped in our nation, the cult of {} has lost favor amongst our people, and declined to nothingness.", old_deity->get_name()));
+			}
+		}
+	}
+}
+
+void country_game_data::check_deities()
+{
+	const std::vector<const deity_slot *> deity_slots = this->get_available_deity_slots();
+	for (const deity_slot *deity_slot : deity_slots) {
+		this->check_deity(deity_slot);
+	}
+
+	const data_entry_map<deity_slot, const deity *> deities = this->get_deities();
+	for (const auto &[slot, slot_deity] : deities) {
+		if (!vector::contains(deity_slots, slot)) {
+			this->set_deity(slot, nullptr);
+		}
+	}
+
+	this->appointed_deities.clear();
+}
+
+std::vector<const deity *> country_game_data::get_appointable_deities(const deity_slot *slot) const
+{
+	std::vector<const deity *> potential_deities;
+
+	for (const deity *deity : deity::get_all()) {
+		if (!this->can_appoint_deity(slot, deity)) {
+			continue;
+		}
+
+		potential_deities.push_back(deity);
+	}
+
+	return potential_deities;
+}
+
+QVariantList country_game_data::get_appointable_deities_qvariant_list(const deity_slot *slot) const
+{
+	return container::to_qvariant_list(this->get_appointable_deities(slot));
+}
+
+const deity *country_game_data::get_best_deity(const deity_slot *slot)
+{
+	std::vector<const deity *> potential_deities;
+
+	for (const deity *deity : this->get_appointable_deities(slot)) {
+		potential_deities.push_back(deity);
+	}
+
+	if (!potential_deities.empty()) {
+		const deity *deity = vector::get_random(potential_deities);
+		return deity;
+	}
+
+	return nullptr;
+}
+
+bool country_game_data::can_have_deity(const deity_slot *slot, const deity *deity) const
+{
+	if (!deity->can_be_worshiped()) {
+		return false;
+	}
+
+	if (deity->is_major() != slot->is_major()) {
+		return false;
+	}
+
+	if (!vector::contains(deity->get_religions(), this->get_religion())) {
+		return false;
+	}
+
+	if (deity->get_required_technology() != nullptr && !this->has_technology(deity->get_required_technology())) {
+		return false;
+	}
+
+	if (deity->get_obsolescence_technology() != nullptr && this->has_technology(deity->get_obsolescence_technology())) {
+		return false;
+	}
+
+	if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(this->country, read_only_context(this->country))) {
+		return false;
+	}
+
+	for (const deity_trait *trait : deity->get_traits()) {
+		if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->country, read_only_context(this->country))) {
+			return false;
+		}
+	}
+
+	for (const auto &[loop_slot, slot_deity] : this->get_deities()) {
+		if (slot_deity == deity) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool country_game_data::can_appoint_deity(const deity_slot *slot, const deity *deity) const
+{
+	if (!this->can_have_deity(slot, deity)) {
+		return false;
+	}
+
+	for (const auto &[loop_slot, slot_deity] : this->get_appointed_deities()) {
+		if (slot_deity == deity) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void country_game_data::ai_appoint_deities()
+{
+	for (const deity_slot *slot : this->get_available_deity_slots()) {
+		if (this->get_deity(slot) != nullptr) {
+			continue;
+		}
+
+		if (this->get_appointed_deity(slot) != nullptr) {
+			continue;
+		}
+
+		const deity *deity = this->get_best_deity(slot);
+		if (deity != nullptr) {
+			this->set_appointed_deity(slot, deity);
+		}
+	}
+}
+
+
+std::vector<const deity_slot *> country_game_data::get_available_deity_slots() const
+{
+	std::vector<const deity_slot *> available_deity_slots;
+
+	for (const deity_slot *slot_type : deity_slot::get_all()) {
+		if (slot_type->get_conditions() != nullptr && !slot_type->get_conditions()->check(this->country, read_only_context(this->country))) {
+			continue;
+		}
+
+		available_deity_slots.push_back(slot_type);
+	}
+
+	return available_deity_slots;
+}
+
+QVariantList country_game_data::get_available_deity_slots_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_available_deity_slots());
 }
 
 QVariantList country_game_data::get_scripted_modifiers_qvariant_list() const

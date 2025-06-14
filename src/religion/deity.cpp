@@ -7,7 +7,12 @@
 #include "country/culture.h"
 #include "database/defines.h"
 #include "map/province.h"
+#include "religion/deity_trait.h"
 #include "religion/religion.h"
+#include "script/condition/and_condition.h"
+#include "script/modifier.h"
+#include "technology/technology.h"
+#include "util/assert_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -23,6 +28,12 @@ deity *deity::add(const std::string &identifier, const metternich::data_module *
 
 	return deity;
 }
+
+deity::deity(const std::string &identifier) : named_data_entry(identifier)
+{
+}
+
+deity::~deity() = default;
 
 void deity::process_gsml_scope(const gsml_data &scope)
 {
@@ -45,11 +56,32 @@ void deity::process_gsml_scope(const gsml_data &scope)
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
 		});
+	} else if (tag == "conditions") {
+		auto conditions = std::make_unique<and_condition<country>>();
+		database::process_gsml_data(conditions, scope);
+		this->conditions = std::move(conditions);
+	} else if (tag == "traits") {
+		for (const std::string &value : values) {
+			this->traits.push_back(deity_trait::get(value));
+		}
 	} else if (tag == "character") {
 		database::process_gsml_data(this->character, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void deity::initialize()
+{
+	if (this->required_technology != nullptr) {
+		this->required_technology->add_enabled_deity(this);
+	}
+
+	if (this->obsolescence_technology != nullptr) {
+		this->obsolescence_technology->add_disabled_deity(this);
+	}
+
+	named_data_entry::initialize();
 }
 
 void deity::check() const
@@ -58,8 +90,16 @@ void deity::check() const
 		throw std::runtime_error(std::format("Deity \"{}\" has no pantheon.", this->get_identifier()));
 	}
 
+	if (this->can_be_worshiped() && this->get_portrait() == nullptr) {
+		throw std::runtime_error(std::format("Deity \"{}\" can be worshiped, but has no portrait.", this->get_identifier()));
+	}
+
 	if (this->get_religions().empty()) {
 		throw std::runtime_error(std::format("Deity \"{}\" is not worshipped by any religions.", this->get_identifier()));
+	}
+
+	if (this->get_conditions() != nullptr) {
+		this->get_conditions()->check_validity();
 	}
 }
 
@@ -93,6 +133,53 @@ const std::string &deity::get_cultural_name(const cultural_group *cultural_group
 	}
 
 	return this->get_name();
+}
+
+std::string deity::get_modifier_string(const country *country) const
+{
+	std::string str;
+
+	for (const deity_trait *trait : this->get_traits()) {
+		if (trait->get_modifier() == nullptr) {
+			continue;
+		}
+
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		if (!trait->has_hidden_name()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += string::highlight(trait->get_name());
+		}
+
+		const size_t indent = trait->has_hidden_name() ? 0 : 1;
+
+		if (trait->get_modifier() != nullptr) {
+			str += "\n" + trait->get_modifier()->get_string(country, 1, indent);
+		}
+	}
+
+	return str;
+}
+
+void deity::apply_modifier(const country *country, const int multiplier) const
+{
+	assert_throw(country != nullptr);
+
+	for (const deity_trait *trait : this->get_traits()) {
+		this->apply_trait_modifier(trait, country, multiplier);
+	}
+}
+
+void deity::apply_trait_modifier(const deity_trait *trait, const country *country, const int multiplier) const
+{
+	if (trait->get_modifier() != nullptr) {
+		trait->get_modifier()->apply(country, multiplier);
+	}
 }
 
 }

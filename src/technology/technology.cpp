@@ -24,6 +24,8 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
+#include "religion/deity.h"
+#include "religion/deity_trait.h"
 #include "script/condition/and_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
@@ -244,6 +246,7 @@ void technology::check() const
 		&& this->get_enabled_characters(character_role::leader).empty()
 		&& this->get_enabled_civilian_units().empty()
 		&& this->get_enabled_commodities().empty()
+		&& this->get_enabled_deities().empty()
 		&& this->get_enabled_improvements().empty()
 		&& this->get_enabled_laws().empty()
 		&& this->get_enabled_traditions().empty()
@@ -740,6 +743,58 @@ std::vector<const research_organization *> technology::get_disabled_research_org
 	return organizations;
 }
 
+std::vector<const deity *> technology::get_enabled_deities_for_country(const country *country) const
+{
+	std::vector<const deity *> deities;
+
+	for (const deity *deity : this->get_enabled_deities()) {
+		if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		bool traits_allowed = true;
+		for (const deity_trait *trait : deity->get_traits()) {
+			if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(country, read_only_context(country))) {
+				traits_allowed = false;
+				break;
+			}
+		}
+		if (!traits_allowed) {
+			continue;
+		}
+
+		deities.push_back(deity);
+	}
+
+	return deities;
+}
+
+std::vector<const deity *> technology::get_disabled_deities_for_country(const country *country) const
+{
+	std::vector<const deity *> deities;
+
+	for (const deity *deity : this->get_disabled_deities()) {
+		if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(country, read_only_context(country))) {
+			continue;
+		}
+
+		bool traits_allowed = true;
+		for (const deity_trait *trait : deity->get_traits()) {
+			if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(country, read_only_context(country))) {
+				traits_allowed = false;
+				break;
+			}
+		}
+		if (!traits_allowed) {
+			continue;
+		}
+
+		deities.push_back(deity);
+	}
+
+	return deities;
+}
+
 std::vector<const character *> technology::get_enabled_characters_for_country(const character_role role, const country *country) const
 {
 	std::vector<const character *> characters;
@@ -1020,6 +1075,28 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Obsoletes {} research organization", research_organization->get_name());
+		}
+	}
+
+	const std::vector<const deity *> enabled_deities = this->get_enabled_deities_for_country(country);
+	if (!enabled_deities.empty()) {
+		for (const deity *deity : enabled_deities) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} deity", deity->get_name());
+		}
+	}
+
+	const std::vector<const deity *> disabled_deities = this->get_disabled_deities_for_country(country);
+	if (!disabled_deities.empty()) {
+		for (const deity *deity : disabled_deities) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Obsoletes {} deity", deity->get_name());
 		}
 	}
 

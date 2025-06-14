@@ -9,6 +9,9 @@ namespace metternich {
 class country;
 
 template <typename scope_type>
+class and_condition;
+
+template <typename scope_type>
 class modifier;
 
 class deity_trait final : public trait_base, public data_type<deity_trait>
@@ -26,6 +29,11 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
+	const and_condition<country> *get_conditions() const
+	{
+		return this->conditions.get();
+	}
+
 	const metternich::modifier<const country> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -35,6 +43,7 @@ signals:
 	void changed();
 
 private:
+	std::unique_ptr<const and_condition<country>> conditions; //conditions for the country to have the deity with this trait
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
 };
 

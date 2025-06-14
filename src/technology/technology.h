@@ -20,6 +20,7 @@ class commodity;
 class country;
 class cultural_group;
 class culture;
+class deity;
 class government_type;
 class icon;
 class improvement;
@@ -370,6 +371,30 @@ public:
 		this->disabled_research_organizations.push_back(organization);
 	}
 
+	const std::vector<const deity *> &get_enabled_deities() const
+	{
+		return this->enabled_deities;
+	}
+
+	std::vector<const deity *> get_enabled_deities_for_country(const country *country) const;
+
+	void add_enabled_deity(const deity *deity)
+	{
+		this->enabled_deities.push_back(deity);
+	}
+
+	const std::vector<const deity *> &get_disabled_deities() const
+	{
+		return this->disabled_deities;
+	}
+
+	std::vector<const deity *> get_disabled_deities_for_country(const country *country) const;
+
+	void add_disabled_deity(const deity *deity)
+	{
+		this->disabled_deities.push_back(deity);
+	}
+
 	const std::vector<const character *> &get_enabled_characters(const character_role role) const
 	{
 		static const std::vector<const character *> empty_vector;
@@ -490,6 +515,8 @@ private:
 	std::vector<const tradition *> enabled_traditions;
 	std::vector<const research_organization *> enabled_research_organizations;
 	std::vector<const research_organization *> disabled_research_organizations;
+	std::vector<const deity *> enabled_deities;
+	std::vector<const deity *> disabled_deities;
 	std::map<character_role, std::vector<const character *>> enabled_characters;
 	std::map<character_role, std::vector<const character *>> retired_characters;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
