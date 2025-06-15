@@ -106,7 +106,6 @@ QCoro::Task<void> tile_image_provider::load_image(const std::string id)
 	}
 
 	QImage image = QImage(path::to_qstring(filepath));
-
 	assert_throw(!image.isNull());
 
 	const QSize frame_size = is_subtile_image ? defines::get()->get_tile_size() / 2 : defines::get()->get_tile_size();
