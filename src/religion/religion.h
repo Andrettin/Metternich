@@ -5,10 +5,12 @@
 #include "religion/religion_base.h"
 
 Q_MOC_INCLUDE("religion/religious_group.h")
+Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
 class deity;
+class icon;
 class office;
 class religious_group;
 
@@ -18,6 +20,7 @@ class religion final : public religion_base, public data_type<religion>
 
 	Q_PROPERTY(metternich::religious_group* group MEMBER group NOTIFY changed)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "religion";
@@ -41,6 +44,11 @@ public:
 		return this->color;
 	}
 
+	const icon *get_icon() const
+	{
+		return this->icon;
+	}
+
 	const std::vector<const deity *> &get_deities() const
 	{
 		return this->deities;
@@ -60,6 +68,7 @@ signals:
 private:
 	religious_group *group = nullptr;
 	QColor color;
+	const metternich::icon *icon = nullptr;
 	std::vector<const deity *> deities;
 };
 

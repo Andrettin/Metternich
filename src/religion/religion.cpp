@@ -23,7 +23,11 @@ void religion::initialize()
 void religion::check() const
 {
 	if (this->get_group() == nullptr) {
-		throw std::runtime_error("Religion \"" + this->get_identifier() + "\" has no religious group.");
+		throw std::runtime_error(std::format("Religion \"{}\" has no religious group.", this->get_identifier()));
+	}
+
+	if (this->get_icon() == nullptr) {
+		throw std::runtime_error(std::format("Religion \"{}\" has no icon.", this->get_identifier()));
 	}
 
 	assert_throw(this->get_color().isValid());

@@ -83,7 +83,7 @@ signals:
 
 private:
 	const government_group *group = nullptr;
-	const icon *icon = nullptr;
+	const metternich::icon *icon = nullptr;
 	std::unique_ptr<const and_condition<country>> conditions;
 	title_name_map title_names;
 	office_title_name_map office_title_names;
