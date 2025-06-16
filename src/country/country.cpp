@@ -103,6 +103,10 @@ void country::check() const
 		throw std::runtime_error(std::format("Country \"{}\" has no default religion.", this->get_identifier()));
 	}
 
+	if (this->get_default_government_type() == nullptr) {
+		throw std::runtime_error(std::format("Country \"{}\" has no default government type.", this->get_identifier()));
+	}
+
 	if (this->get_default_capital() == nullptr) {
 		throw std::runtime_error(std::format("Country \"{}\" has no default capital.", this->get_identifier()));
 	}

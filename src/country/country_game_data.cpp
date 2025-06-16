@@ -3902,6 +3902,16 @@ void country_game_data::set_government_type(const metternich::government_type *g
 
 bool country_game_data::can_have_government_type(const metternich::government_type *government_type) const
 {
+	if (government_type->get_required_technology() != nullptr && !this->has_technology(government_type->get_required_technology())) {
+		return false;
+	}
+
+	for (const law *forbidden_law : government_type->get_forbidden_laws()) {
+		if (this->has_law(forbidden_law)) {
+			return false;
+		}
+	}
+
 	if (government_type->get_conditions() != nullptr && !government_type->get_conditions()->check(this->country, read_only_context(this->country))) {
 		return false;
 	}
@@ -3994,6 +4004,10 @@ bool country_game_data::can_enact_law(const metternich::law *law) const
 		return false;
 	}
 
+	if (vector::contains(this->get_government_type()->get_forbidden_laws(), law)) {
+		return false;
+	}
+
 	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
 		if (this->get_stored_commodity(commodity) < (cost * this->get_total_law_cost_modifier() / 100)) {
 			return false;
@@ -4017,6 +4031,13 @@ void country_game_data::check_laws()
 	for (const law_group *law_group : law_group::get_all()) {
 		if (this->get_law(law_group) != nullptr && !this->can_have_law(this->get_law(law_group))) {
 			this->set_law(law_group, nullptr);
+		}
+
+		if (this->get_law(law_group) == nullptr) {
+			const law *government_type_default_law = this->get_government_type()->get_default_law(law_group);
+			if (government_type_default_law != nullptr && this->can_have_law(government_type_default_law)) {
+				this->set_law(law_group, government_type_default_law);
+			}
 		}
 
 		if (this->get_law(law_group) == nullptr) {

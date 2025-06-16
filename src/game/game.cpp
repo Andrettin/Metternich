@@ -16,6 +16,7 @@
 #include "country/culture_history.h"
 #include "country/diplomacy_state.h"
 #include "country/government_type.h"
+#include "country/law.h"
 #include "country/office.h"
 #include "country/tradition.h"
 #include "database/defines.h"
@@ -418,6 +419,20 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_game_data->set_subject_type(subject_type);
 			}
 
+			if (country_history->get_government_type() != nullptr) {
+				country_game_data->set_government_type(country_history->get_government_type());
+
+				if (country_history->get_government_type()->get_required_technology() != nullptr) {
+					country_game_data->add_technology_with_prerequisites(country_history->get_government_type()->get_required_technology());
+				}
+			} else if (country->get_default_government_type() != nullptr) {
+				country_game_data->set_government_type(country->get_default_government_type());
+
+				if (country->get_default_government_type()->get_required_technology() != nullptr) {
+					country_game_data->add_technology_with_prerequisites(country->get_default_government_type()->get_required_technology());
+				}
+			}
+
 			for (const auto &[office, office_holder] : country_history->get_office_holders()) {
 				character_game_data *office_holder_game_data = office_holder->get_game_data();
 
@@ -442,6 +457,10 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			for (const auto &[law_group, law] : country_history->get_laws()) {
 				country_game_data->set_law(law_group, law);
+
+				if (law->get_required_technology() != nullptr) {
+					country_game_data->add_technology_with_prerequisites(law->get_required_technology());
+				}
 			}
 
 			country_game_data->set_wealth(country_history->get_wealth());

@@ -247,6 +247,7 @@ void technology::check() const
 		&& this->get_enabled_civilian_units().empty()
 		&& this->get_enabled_commodities().empty()
 		&& this->get_enabled_deities().empty()
+		&& this->get_enabled_government_types().empty()
 		&& this->get_enabled_improvements().empty()
 		&& this->get_enabled_laws().empty()
 		&& this->get_enabled_traditions().empty()
@@ -680,6 +681,15 @@ void technology::add_enabled_transporter(const transporter_type *transporter)
 	});
 }
 
+void technology::add_enabled_government_type(const government_type *government_type)
+{
+	this->enabled_government_types.push_back(government_type);
+
+	std::sort(this->enabled_government_types.begin(), this->enabled_government_types.end(), [](const metternich::government_type *lhs, const metternich::government_type *rhs) {
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+}
+
 void technology::add_enabled_law(const law *law)
 {
 	this->enabled_laws.push_back(law);
@@ -1032,6 +1042,16 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} {}", transporter->get_name(), transporter->is_ship() ? "merchant ship" : "transporter");
+		}
+	}
+
+	if (!this->get_enabled_government_types().empty()) {
+		for (const government_type *government_type : this->get_enabled_government_types()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} government type", government_type->get_name());
 		}
 	}
 

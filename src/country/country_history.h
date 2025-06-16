@@ -16,6 +16,7 @@ namespace metternich {
 class character;
 class consulate;
 class country;
+class government_type;
 class law;
 class office;
 class religion;
@@ -30,7 +31,8 @@ class country_history final : public data_entry_history
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country_tier tier MEMBER tier)
-	Q_PROPERTY(metternich::religion* religion MEMBER religion)
+	Q_PROPERTY(const metternich::religion* religion MEMBER religion READ get_religion)
+	Q_PROPERTY(const metternich::government_type* government_type MEMBER government_type READ get_government_type)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
 	Q_PROPERTY(std::vector<const metternich::tradition *> traditions READ get_traditions)
@@ -49,6 +51,11 @@ public:
 	const metternich::religion *get_religion() const
 	{
 		return this->religion;
+	}
+
+	const metternich::government_type *get_government_type() const
+	{
+		return this->government_type;
 	}
 
 	const data_entry_map<office, const character *> &get_office_holders() const
@@ -126,7 +133,8 @@ public:
 private:
 	const metternich::country *country = nullptr;
 	country_tier tier{};
-	metternich::religion *religion = nullptr;
+	const metternich::religion *religion = nullptr;
+	const metternich::government_type *government_type = nullptr;
 	data_entry_map<office, const character *> office_holders;
 	const metternich::subject_type *subject_type = nullptr;
 	centesimal_int literacy_rate;

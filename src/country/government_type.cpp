@@ -4,9 +4,12 @@
 
 #include "country/country_tier.h"
 #include "country/government_group.h"
+#include "country/law.h"
+#include "country/law_group.h"
 #include "country/office.h"
 #include "map/site_tier.h"
 #include "script/condition/and_condition.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/string_util.h"
@@ -176,8 +179,26 @@ government_type::~government_type()
 void government_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "conditions") {
+	if (tag == "forbidden_laws") {
+		for (const std::string &value : values) {
+			this->forbidden_laws.push_back(law::get(value));
+		}
+		auto conditions = std::make_unique<and_condition<country>>();
+		database::process_gsml_data(conditions, scope);
+		this->conditions = std::move(conditions);
+	} else if (tag == "default_laws") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const law_group *law_group = law_group::get(property.get_key());
+			const law *law = law::get(property.get_value());
+			if (law != nullptr) {
+				this->default_laws[law_group] = law;
+			} else {
+				this->default_laws.erase(law_group);
+			}
+		});
+	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
@@ -190,6 +211,15 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void government_type::initialize()
+{
+	if (this->required_technology != nullptr) {
+		this->required_technology->add_enabled_government_type(this);
+	}
+
+	named_data_entry::initialize();
 }
 
 void government_type::check() const

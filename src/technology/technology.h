@@ -332,6 +332,13 @@ public:
 	std::vector<const transporter_type *> get_enabled_transporters_for_culture(const culture *culture) const;
 	void add_enabled_transporter(const transporter_type *transporter);
 
+	const std::vector<const government_type *> &get_enabled_government_types() const
+	{
+		return this->enabled_government_types;
+	}
+
+	void add_enabled_government_type(const government_type *government_type);
+
 	const std::vector<const law *> &get_enabled_laws() const
 	{
 		return this->enabled_laws;
@@ -511,6 +518,7 @@ private:
 	std::vector<const civilian_unit_type *> enabled_civilian_units;
 	std::vector<const military_unit_type *> enabled_military_units;
 	std::vector<const transporter_type *> enabled_transporters;
+	std::vector<const government_type *> enabled_government_types;
 	std::vector<const law *> enabled_laws;
 	std::vector<const tradition *> enabled_traditions;
 	std::vector<const research_organization *> enabled_research_organizations;
