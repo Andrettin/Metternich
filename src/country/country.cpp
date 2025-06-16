@@ -133,12 +133,12 @@ void country::reset_game_data()
 {
 	this->game_data = make_qunique<country_game_data>(this);
 
+	this->reset_turn_data();
+	this->reset_ai();
+
 	this->get_game_data()->set_tier(this->get_default_tier());
 	this->get_game_data()->set_government_type(this->get_default_government_type());
 	this->get_game_data()->initialize_building_slots();
-
-	this->reset_turn_data();
-	this->reset_ai();
 }
 
 void country::reset_turn_data()

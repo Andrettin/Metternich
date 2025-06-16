@@ -9,9 +9,11 @@
 #include "country/office.h"
 #include "map/site_tier.h"
 #include "script/condition/and_condition.h"
+#include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
+#include "util/log_util.h"
 #include "util/string_util.h"
 
 #include <magic_enum/magic_enum.hpp>
@@ -202,6 +204,10 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<country>>();
 		database::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
+	} else if (tag == "modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		database::process_gsml_data(modifier, scope);
+		this->modifier = std::move(modifier);
 	} else if (tag == "title_names") {
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "office_title_names") {
@@ -230,6 +236,10 @@ void government_type::check() const
 
 	if (this->get_icon() == nullptr) {
 		throw std::runtime_error(std::format("Government type \"{}\" has no icon.", this->get_identifier()));
+	}
+
+	if (this->get_modifier() == nullptr) {
+		log::log_error(std::format("Government type \"{}\" has no modifier.", this->get_identifier()));
 	}
 
 	if (this->get_conditions() != nullptr) {
@@ -284,6 +294,11 @@ const std::string &government_type::get_landholder_title_name(const site_tier ti
 	}
 
 	return this->get_group()->get_landholder_title_name(tier, gender);
+}
+
+QString government_type::get_modifier_string(const metternich::country *country) const
+{
+	return QString::fromStdString(this->get_modifier()->get_string(country));
 }
 
 }

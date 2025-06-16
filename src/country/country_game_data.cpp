@@ -3748,7 +3748,15 @@ void country_game_data::set_government_type(const metternich::government_type *g
 		}
 	}
 
+	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
+		this->get_government_type()->get_modifier()->apply(this->country, -1);
+	}
+
 	this->government_type = government_type;
+
+	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
+		this->get_government_type()->get_modifier()->apply(this->country, 1);
+	}
 
 	if (game::get()->is_running()) {
 		emit government_type_changed();

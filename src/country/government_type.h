@@ -111,6 +111,13 @@ public:
 		return this->conditions.get();
 	}
 
+	const modifier<const country> *get_modifier() const
+	{
+		return this->modifier.get();
+	}
+
+	Q_INVOKABLE QString get_modifier_string(const metternich::country *country) const;
+
 signals:
 	void changed();
 
@@ -121,6 +128,7 @@ private:
 	law_group_map<const law *> default_laws;
 	technology *required_technology = nullptr;
 	std::unique_ptr<const and_condition<country>> conditions;
+	std::unique_ptr<const modifier<const country>> modifier;
 	title_name_map title_names;
 	office_title_name_map office_title_names;
 	landholder_title_name_map landholder_title_names;
