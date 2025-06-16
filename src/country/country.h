@@ -5,6 +5,7 @@
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("country/country_ai.h")
 Q_MOC_INCLUDE("country/country_game_data.h")
 Q_MOC_INCLUDE("country/country_tier.h")
 Q_MOC_INCLUDE("country/country_turn_data.h")
@@ -21,6 +22,7 @@ namespace archimedes {
 namespace metternich {
 
 class character;
+class country_ai;
 class country_game_data;
 class country_history;
 class country_turn_data;
@@ -56,6 +58,7 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY changed)
 	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
+	Q_PROPERTY(metternich::country_ai* ai READ get_ai NOTIFY ai_changed)
 
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
@@ -97,6 +100,13 @@ public:
 	country_turn_data *get_turn_data() const
 	{
 		return this->turn_data.get();
+	}
+
+	void reset_ai();
+
+	country_ai *get_ai() const
+	{
+		return this->ai.get();
 	}
 
 	country_type get_type() const
@@ -186,6 +196,7 @@ signals:
 	void changed();
 	void game_data_changed() const;
 	void turn_data_changed() const;
+	void ai_changed() const;
 
 private:
 	country_type type{};
@@ -208,6 +219,7 @@ private:
 	qunique_ptr<country_history> history;
 	qunique_ptr<country_game_data> game_data;
 	qunique_ptr<country_turn_data> turn_data;
+	qunique_ptr<country_ai> ai;
 };
 
 }

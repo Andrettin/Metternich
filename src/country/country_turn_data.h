@@ -28,7 +28,7 @@ public:
 
 	static inline const centesimal_int base_inflation_change = centesimal_int("0.5");
 
-	explicit country_turn_data(metternich::country *country);
+	explicit country_turn_data(const metternich::country *country);
 	~country_turn_data();
 
 	int get_total_income() const
@@ -100,7 +100,7 @@ public:
 	}
 
 private:
-	metternich::country *country = nullptr;
+	const metternich::country *country = nullptr;
 	int total_income = 0;
 	int total_expense = 0;
 	centesimal_int total_inflation_change;

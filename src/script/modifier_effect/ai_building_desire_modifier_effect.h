@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_ai.h"
 #include "infrastructure/building_type.h"
 #include "script/modifier_effect/modifier_effect.h"
 
@@ -32,7 +32,7 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_ai_building_desire_modifier(this->building, (this->value * multiplier).to_int());
+		scope->get_ai()->change_building_desire_modifier(this->building, (this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string(const country *scope) const override

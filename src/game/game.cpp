@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "character/character_role.h"
 #include "country/country.h"
+#include "country/country_ai.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
 #include "country/country_rank.h"
@@ -1451,7 +1452,7 @@ QCoro::Task<void> game::do_turn_coro()
 			country->get_game_data()->calculate_commodity_needs();
 
 			if (country->get_game_data()->is_ai()) {
-				country->get_game_data()->do_ai_turn();
+				country->get_ai()->do_turn();
 			}
 
 			old_bids[country] = country->get_game_data()->get_bids();

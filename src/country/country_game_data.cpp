@@ -11,6 +11,7 @@
 #include "character/character_type.h"
 #include "country/consulate.h"
 #include "country/country.h"
+#include "country/country_ai.h"
 #include "country/country_rank.h"
 #include "country/country_tier.h"
 #include "country/country_tier_data.h"
@@ -701,90 +702,14 @@ void country_game_data::do_events()
 	}
 }
 
-void country_game_data::do_ai_turn()
-{
-	assert_throw(this->is_ai());
-
-	this->ai_choose_current_research();
-	this->ai_appoint_office_holders();
-	this->ai_appoint_deities();
-	this->ai_appoint_research_organizations();
-
-	//build buildings
-	building_type_map<int> ai_building_desires;
-	std::vector<const building_type *> ai_desired_buildings;
-	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
-		if (!building_slot->is_available()) {
-			continue;
-		}
-
-		const building_type *buildable_building = building_slot->get_buildable_building();
-
-		if (buildable_building == nullptr) {
-			continue;
-		}
-
-		if (building_slot->is_expanding() || building_slot->get_under_construction_building() != nullptr) {
-			continue;
-		}
-
-		int ai_building_desire = 0;
-		ai_building_desire += this->get_ai_building_desire_modifier(buildable_building);
-
-		if (ai_building_desire <= 0) {
-			continue;
-		}
-
-		ai_building_desires[buildable_building] = ai_building_desire;
-		ai_desired_buildings.push_back(buildable_building);
-	}
-
-	std::sort(ai_desired_buildings.begin(), ai_desired_buildings.end(), [&](const building_type *lhs, const building_type *rhs) {
-		const int lhs_priority = ai_building_desires[lhs];
-		const int rhs_priority = ai_building_desires[rhs];
-		if (lhs_priority != rhs_priority) {
-			return lhs_priority > rhs_priority;
-		}
-
-		return lhs->get_identifier() < rhs->get_identifier();
-	});
-
-	for (const building_type *ai_desired_building : ai_desired_buildings) {
-		country_building_slot *building_slot = this->get_building_slot(ai_desired_building->get_slot_type());
-		assert_throw(building_slot != nullptr);
-
-		building_slot->build_building(ai_desired_building);
-	}
-
-	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->do_ai_turn();
-	}
-
-	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
-		civilian_unit->do_ai_turn();
-	}
-
-	for (const qunique_ptr<military_unit> &military_unit : this->military_units) {
-		military_unit->do_ai_turn();
-	}
-
-	for (size_t i = 0; i < this->civilian_units.size();) {
-		civilian_unit *civilian_unit = this->civilian_units.at(i).get();
-		if (civilian_unit->is_busy()) {
-			++i;
-		} else {
-			//if the civilian unit is idle, this means that nothing was found for it to do above; in that case, disband it
-			civilian_unit->disband(false);
-		}
-	}
-
-	this->assign_transport_orders();
-	this->assign_trade_orders();
-}
-
 bool country_game_data::is_ai() const
 {
 	return this->country != game::get()->get_player_country();
+}
+
+country_ai *country_game_data::get_ai() const
+{
+	return this->country->get_ai();
 }
 
 void country_game_data::set_tier(const country_tier tier)
@@ -3467,23 +3392,6 @@ void country_game_data::remove_current_research(const technology *technology)
 	emit current_researches_changed();
 }
 
-void country_game_data::ai_choose_current_research()
-{
-	assert_throw(this->is_ai());
-
-	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map(false);
-
-	if (research_choice_map.empty()) {
-		return;
-	}
-
-	const technology *chosen_technology = this->get_ai_research_choice(research_choice_map);
-
-	if (chosen_technology != nullptr) {
-		this->add_current_research(chosen_technology);
-	}
-}
-
 void country_game_data::on_technology_researched(const technology *technology)
 {
 	if (this->get_current_researches().contains(technology)) {
@@ -3560,40 +3468,6 @@ data_entry_map<technology_category, const technology *> country_game_data::get_r
 	return research_choice_map;
 }
 
-const technology *country_game_data::get_ai_research_choice(const data_entry_map<technology_category, const technology *> &research_choice_map) const
-{
-	assert_throw(this->is_ai());
-
-	std::vector<const technology *> preferred_technologies;
-
-	int best_desire = 0;
-	for (const auto &[category, technology] : research_choice_map) {
-		int desire = 100 / (technology->get_total_prerequisite_depth() + 1);
-
-		for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
-			if (vector::contains(journal_entry->get_researched_technologies(), technology)) {
-				desire += journal_entry::ai_technology_desire_modifier;
-			}
-		}
-
-		assert_throw(desire > 0);
-
-		if (desire > best_desire) {
-			preferred_technologies.clear();
-			best_desire = desire;
-		}
-
-		if (desire >= best_desire) {
-			preferred_technologies.push_back(technology);
-		}
-	}
-
-	assert_throw(!preferred_technologies.empty());
-
-	const technology *chosen_technology = vector::get_random(preferred_technologies);
-	return chosen_technology;
-}
-
 void country_game_data::gain_free_technology()
 {
 	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map(true);
@@ -3603,7 +3477,7 @@ void country_game_data::gain_free_technology()
 	}
 
 	if (this->is_ai()) {
-		const technology *chosen_technology = this->get_ai_research_choice(research_choice_map);
+		const technology *chosen_technology = this->get_ai()->get_research_choice(research_choice_map);
 		this->gain_free_technology(chosen_technology);
 	} else {
 		const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
@@ -3837,25 +3711,6 @@ bool country_game_data::can_appoint_research_organization(const research_organiz
 
 	return true;
 }
-
-void country_game_data::ai_appoint_research_organizations()
-{
-	for (const research_organization_slot *slot : this->get_available_research_organization_slots()) {
-		if (this->get_research_organization(slot) != nullptr) {
-			continue;
-		}
-
-		if (this->get_appointed_research_organization(slot) != nullptr) {
-			continue;
-		}
-
-		const research_organization *research_organization = this->get_best_research_organization(slot);
-		if (research_organization != nullptr) {
-			this->set_appointed_research_organization(slot, research_organization);
-		}
-	}
-}
-
 
 std::vector<const research_organization_slot *> country_game_data::get_available_research_organization_slots() const
 {
@@ -4603,25 +4458,6 @@ bool country_game_data::can_appoint_deity(const deity_slot *slot, const deity *d
 	return true;
 }
 
-void country_game_data::ai_appoint_deities()
-{
-	for (const deity_slot *slot : this->get_available_deity_slots()) {
-		if (this->get_deity(slot) != nullptr) {
-			continue;
-		}
-
-		if (this->get_appointed_deity(slot) != nullptr) {
-			continue;
-		}
-
-		const deity *deity = this->get_best_deity(slot);
-		if (deity != nullptr) {
-			this->set_appointed_deity(slot, deity);
-		}
-	}
-}
-
-
 std::vector<const deity_slot *> country_game_data::get_available_deity_slots() const
 {
 	std::vector<const deity_slot *> available_deity_slots;
@@ -5034,28 +4870,6 @@ void country_game_data::on_office_holder_died(const office *office, const charac
 	}
 
 	this->check_office_holder(office, office_holder);
-}
-
-void country_game_data::ai_appoint_office_holders()
-{
-	for (const office *office : this->get_available_offices()) {
-		if (!office->is_appointable()) {
-			continue;
-		}
-
-		if (this->get_office_holder(office) != nullptr) {
-			continue;
-		}
-
-		if (this->get_appointed_office_holder(office) != nullptr) {
-			continue;
-		}
-
-		const character *character = this->get_best_office_holder(office, nullptr);
-		if (character != nullptr) {
-			this->set_appointed_office_holder(office, character);
-		}
-	}
 }
 
 std::vector<const office *> country_game_data::get_available_offices() const
@@ -5687,30 +5501,6 @@ void country_game_data::do_sale(const metternich::country *other_country, const 
 void country_game_data::calculate_commodity_needs()
 {
 	this->commodity_needs.clear();
-}
-
-void country_game_data::assign_trade_orders()
-{
-	assert_throw(this->is_ai());
-
-	this->bids.clear();
-	this->offers.clear();
-
-	if (this->is_under_anarchy()) {
-		return;
-	}
-
-	for (const auto &[commodity, value] : this->get_stored_commodities()) {
-		if (!this->can_trade_commodity(commodity)) {
-			continue;
-		}
-
-		const int need = this->get_commodity_need(commodity);
-
-		if (value > need) {
-			this->set_offer(commodity, value);
-		}
-	}
 }
 
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
@@ -6645,12 +6435,12 @@ void country_game_data::add_active_journal_entry(const journal_entry *journal_en
 	}
 
 	for (const building_type *building : journal_entry->get_built_buildings_with_requirements()) {
-		this->change_ai_building_desire_modifier(building, journal_entry::ai_building_desire_modifier);
+		this->get_ai()->change_building_desire_modifier(building, journal_entry::ai_building_desire_modifier);
 	}
 
 	for (const auto &[settlement, buildings] : journal_entry->get_built_settlement_buildings_with_requirements()) {
 		for (const building_type *building : buildings) {
-			this->change_ai_settlement_building_desire_modifier(settlement, building, journal_entry::ai_building_desire_modifier);
+			this->get_ai()->change_settlement_building_desire_modifier(settlement, building, journal_entry::ai_building_desire_modifier);
 		}
 	}
 }
@@ -6664,12 +6454,12 @@ void country_game_data::remove_active_journal_entry(const journal_entry *journal
 	}
 
 	for (const building_type *building : journal_entry->get_built_buildings_with_requirements()) {
-		this->change_ai_building_desire_modifier(building, -journal_entry::ai_building_desire_modifier);
+		this->get_ai()->change_building_desire_modifier(building, -journal_entry::ai_building_desire_modifier);
 	}
 
 	for (const auto &[settlement, buildings] : journal_entry->get_built_settlement_buildings_with_requirements()) {
 		for (const building_type *building : buildings) {
-			this->change_ai_settlement_building_desire_modifier(settlement, building, -journal_entry::ai_building_desire_modifier);
+			this->get_ai()->change_settlement_building_desire_modifier(settlement, building, -journal_entry::ai_building_desire_modifier);
 		}
 	}
 }

@@ -9,7 +9,7 @@
 
 namespace metternich {
 
-country_turn_data::country_turn_data(metternich::country *country) : country(country)
+country_turn_data::country_turn_data(const metternich::country *country) : country(country)
 {
 }
 

@@ -53,6 +53,7 @@ class character;
 class civilian_unit;
 class consulate;
 class country;
+class country_ai;
 class country_building_slot;
 class country_rank;
 class culture;
@@ -214,9 +215,9 @@ public:
 	void do_trade(country_map<commodity_map<int>> &country_luxury_demands);
 	void do_inflation();
 	void do_events();
-	void do_ai_turn();
 
 	bool is_ai() const;
+	country_ai *get_ai() const;
 
 	country_tier get_tier() const
 	{
@@ -754,6 +755,11 @@ public:
 	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
 
+	const std::vector<qunique_ptr<country_building_slot>> &get_building_slots() const
+	{
+		return this->building_slots;
+	}
+
 	country_building_slot *get_building_slot(const building_slot_type *slot_type) const
 	{
 		const auto find_iterator = this->building_slot_map.find(slot_type);
@@ -1221,7 +1227,6 @@ public:
 	QVariantList get_current_researches_qvariant_list() const;
 	Q_INVOKABLE void add_current_research(const metternich::technology *technology);
 	Q_INVOKABLE void remove_current_research(const metternich::technology *technology);
-	void ai_choose_current_research();
 	void on_technology_researched(const technology *technology);
 
 	int get_research_cost_modifier() const
@@ -1230,7 +1235,6 @@ public:
 	}
 
 	data_entry_map<technology_category, const technology *> get_research_choice_map(const bool is_free) const;
-	const technology *get_ai_research_choice(const data_entry_map<technology_category, const technology *> &research_choice_map) const;
 
 	void gain_free_technology();
 
@@ -1300,7 +1304,6 @@ public:
 	const research_organization *get_best_research_organization(const research_organization_slot *slot);
 	bool can_have_research_organization(const research_organization_slot *slot, const research_organization *research_organization) const;
 	bool can_appoint_research_organization(const research_organization_slot *slot, const research_organization *research_organization) const;
-	void ai_appoint_research_organizations();
 
 	std::vector<const research_organization_slot *> get_available_research_organization_slots() const;
 	QVariantList get_available_research_organization_slots_qvariant_list() const;
@@ -1460,7 +1463,6 @@ public:
 	const deity *get_best_deity(const deity_slot *slot);
 	bool can_have_deity(const deity_slot *slot, const deity *deity) const;
 	bool can_appoint_deity(const deity_slot *slot, const deity *deity) const;
-	void ai_appoint_deities();
 
 	std::vector<const deity_slot *> get_available_deity_slots() const;
 	QVariantList get_available_deity_slots_qvariant_list() const;
@@ -1534,7 +1536,6 @@ public:
 	bool can_have_office_holder(const office *office, const character *character) const;
 	bool can_appoint_office_holder(const office *office, const character *character) const;
 	void on_office_holder_died(const office *office, const character *office_holder);
-	void ai_appoint_office_holders();
 
 	std::vector<const office *> get_available_offices() const;
 	QVariantList get_available_offices_qvariant_list() const;
@@ -1661,6 +1662,12 @@ public:
 		this->set_bid(commodity, this->get_bid(commodity) + change);
 	}
 
+	void clear_bids()
+	{
+		this->bids.clear();
+		emit bids_changed();
+	}
+
 	const commodity_map<int> &get_offers() const
 	{
 		return this->offers;
@@ -1684,6 +1691,12 @@ public:
 	Q_INVOKABLE void change_offer(const metternich::commodity *commodity, const int change)
 	{
 		this->set_offer(commodity, this->get_offer(commodity) + change);
+	}
+
+	void clear_offers()
+	{
+		this->offers.clear();
+		emit offers_changed();
 	}
 
 	void do_sale(const metternich::country *other_country, const commodity *commodity, const int sold_quantity, const bool state_purchase);
@@ -1719,10 +1732,18 @@ public:
 
 	void calculate_commodity_needs();
 
-	void assign_trade_orders();
+	const std::vector<qunique_ptr<civilian_unit>> &get_civilian_units() const
+	{
+		return this->civilian_units;
+	}
 
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
+
+	const std::vector<qunique_ptr<military_unit>> &get_military_units() const
+	{
+		return this->military_units;
+	}
 
 	void add_military_unit(qunique_ptr<military_unit> &&military_unit);
 	void remove_military_unit(military_unit *military_unit);
@@ -2565,72 +2586,6 @@ public:
 		this->flags.erase(flag);
 	}
 
-	int get_ai_building_desire_modifier(const building_type *building) const
-	{
-		const auto find_iterator = this->ai_building_desire_modifiers.find(building);
-
-		if (find_iterator != this->ai_building_desire_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void set_ai_building_desire_modifier(const building_type *building, const int value)
-	{
-		if (value == this->get_ai_building_desire_modifier(building)) {
-			return;
-		}
-
-		if (value == 0) {
-			this->ai_building_desire_modifiers.erase(building);
-		} else {
-			this->ai_building_desire_modifiers[building] = value;
-		}
-	}
-
-	void change_ai_building_desire_modifier(const building_type *building, const int value)
-	{
-		this->set_ai_building_desire_modifier(building, this->get_ai_building_desire_modifier(building) + value);
-	}
-
-	int get_ai_settlement_building_desire_modifier(const site *settlement, const building_type *building) const
-	{
-		const auto find_iterator = this->ai_settlement_building_desire_modifiers.find(settlement);
-
-		if (find_iterator != this->ai_settlement_building_desire_modifiers.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(building);
-
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
-
-		return 0;
-	}
-
-	void set_ai_settlement_building_desire_modifier(const site *settlement, const building_type *building, const int value)
-	{
-		if (value == this->get_ai_settlement_building_desire_modifier(settlement, building)) {
-			return;
-		}
-
-		if (value == 0) {
-			this->ai_settlement_building_desire_modifiers[settlement].erase(building);
-
-			if (this->ai_settlement_building_desire_modifiers[settlement].empty()) {
-				this->ai_settlement_building_desire_modifiers.erase(settlement);
-			}
-		} else {
-			this->ai_settlement_building_desire_modifiers[settlement][building] = value;
-		}
-	}
-
-	void change_ai_settlement_building_desire_modifier(const site *settlement, const building_type *building, const int value)
-	{
-		this->set_ai_settlement_building_desire_modifier(settlement, building, this->get_ai_settlement_building_desire_modifier(settlement, building) + value);
-	}
-
 signals:
 	void tier_changed();
 	void title_name_changed();
@@ -2849,8 +2804,6 @@ private:
 	promotion_map<int> free_warship_promotion_counts;
 	consulate_map<int> free_consulate_counts;
 	std::set<const flag *> flags;
-	building_type_map<int> ai_building_desire_modifiers;
-	site_map<building_type_map<int>> ai_settlement_building_desire_modifiers;
 };
 
 }

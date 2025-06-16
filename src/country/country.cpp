@@ -2,6 +2,7 @@
 
 #include "country/country.h"
 
+#include "country/country_ai.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
 #include "country/country_tier.h"
@@ -137,12 +138,19 @@ void country::reset_game_data()
 	this->get_game_data()->initialize_building_slots();
 
 	this->reset_turn_data();
+	this->reset_ai();
 }
 
 void country::reset_turn_data()
 {
 	this->turn_data = make_qunique<country_turn_data>(this);
 	emit turn_data_changed();
+}
+
+void country::reset_ai()
+{
+	this->ai = make_qunique<country_ai>(this);
+	emit ai_changed();
 }
 
 bool country::is_great_power() const
