@@ -4436,7 +4436,7 @@ bool country_game_data::can_have_deity(const deity_slot *slot, const deity *deit
 		return false;
 	}
 
-	for (const deity_trait *trait : deity->get_traits()) {
+	for (const idea_trait *trait : deity->get_traits()) {
 		if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->country, read_only_context(this->country))) {
 			return false;
 		}

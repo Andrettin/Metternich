@@ -1,14 +1,11 @@
 #pragma once
 
+#include "country/idea_slot.h"
 #include "database/data_type.h"
-#include "database/named_data_entry.h"
 
 namespace metternich {
 
-template <typename scope_type>
-class and_condition;
-
-class deity_slot final : public named_data_entry, public data_type<deity_slot>
+class deity_slot final : public idea_slot, public data_type<deity_slot>
 {
 	Q_OBJECT
 
@@ -23,16 +20,11 @@ public:
 	explicit deity_slot(const std::string &identifier);
 	~deity_slot();
 
-	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual idea_type get_idea_type() const override;
 
 	bool is_major() const
 	{
 		return this->major;
-	}
-
-	const and_condition<country> *get_conditions() const
-	{
-		return this->conditions.get();
 	}
 
 signals:
@@ -40,7 +32,6 @@ signals:
 
 private:
 	bool major = false;
-	std::unique_ptr<const and_condition<country>> conditions;
 };
 
 }

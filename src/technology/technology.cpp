@@ -763,7 +763,7 @@ std::vector<const deity *> technology::get_enabled_deities_for_country(const cou
 		}
 
 		bool traits_allowed = true;
-		for (const deity_trait *trait : deity->get_traits()) {
+		for (const idea_trait *trait : deity->get_traits()) {
 			if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(country, read_only_context(country))) {
 				traits_allowed = false;
 				break;
@@ -789,7 +789,7 @@ std::vector<const deity *> technology::get_disabled_deities_for_country(const co
 		}
 
 		bool traits_allowed = true;
-		for (const deity_trait *trait : deity->get_traits()) {
+		for (const idea_trait *trait : deity->get_traits()) {
 			if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(country, read_only_context(country))) {
 				traits_allowed = false;
 				break;

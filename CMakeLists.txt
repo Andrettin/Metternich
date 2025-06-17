@@ -50,6 +50,9 @@ set(country_SRCS
 	src/country/government_group.cpp
 	src/country/government_type.cpp
 	src/country/government_type_container.cpp
+	src/country/idea.cpp
+	src/country/idea_slot.cpp
+	src/country/idea_trait.cpp
 	src/country/ideology.cpp
 	src/country/ideology_container.cpp
 	src/country/journal_entry.cpp
@@ -360,6 +363,10 @@ set(country_HDRS
 	src/country/government_group.h
 	src/country/government_type.h
 	src/country/government_type_container.h
+	src/country/idea.h
+	src/country/idea_slot.h
+	src/country/idea_trait.h
+	src/country/idea_type.h
 	src/country/ideology.h
 	src/country/ideology_container.h
 	src/country/journal_entry.h
