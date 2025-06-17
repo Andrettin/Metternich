@@ -1,10 +1,12 @@
 #pragma once
 
 #include "country/culture_container.h"
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 #include "infrastructure/pathway_container.h"
+#include "religion/religion_container.h"
 
 Q_MOC_INCLUDE("technology/technology_category.h")
 Q_MOC_INCLUDE("technology/technology_subcategory.h")
@@ -29,6 +31,8 @@ class military_unit_type;
 class pathway;
 class portrait;
 class production_type;
+class religion;
+class religious_group;
 class research_organization;
 class resource;
 class technological_period;
@@ -493,6 +497,8 @@ private:
 	metternich::icon *icon = nullptr;
 	culture_set cultures;
 	std::vector<const cultural_group *> cultural_groups;
+	religion_set religions;
+	std::vector<const religious_group *> religious_groups;
 	bool discovery = false;
 	int year = 0; //the historical year that this technology was discovered
 	const technological_period *period = nullptr;

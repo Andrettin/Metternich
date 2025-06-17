@@ -921,6 +921,12 @@ public:
 		emit available_commodities_changed();
 	}
 
+	void remove_available_commodity(const commodity *commodity)
+	{
+		this->available_commodities.erase(commodity);
+		emit available_commodities_changed();
+	}
+
 	const commodity_set &get_tradeable_commodities() const
 	{
 		return this->tradeable_commodities;
@@ -931,6 +937,12 @@ public:
 	void add_tradeable_commodity(const commodity *commodity)
 	{
 		this->tradeable_commodities.insert(commodity);
+		emit tradeable_commodities_changed();
+	}
+
+	void remove_tradeable_commodity(const commodity *commodity)
+	{
+		this->tradeable_commodities.erase(commodity);
 		emit tradeable_commodities_changed();
 	}
 
@@ -1205,6 +1217,8 @@ public:
 
 	void add_technology(const technology *technology);
 	void add_technology_with_prerequisites(const technology *technology);
+	void remove_technology(const technology *technology);
+	void check_technologies();
 
 	bool can_gain_technology(const technology *technology) const;
 	Q_INVOKABLE bool can_research_technology(const metternich::technology *technology) const;
@@ -2579,6 +2593,7 @@ signals:
 	void technologies_changed();
 	void current_researches_changed();
 	void technology_researched(const technology *technology);
+	void technology_lost(const technology *technology);
 	void government_type_changed();
 	void laws_changed();
 	void ideas_changed();

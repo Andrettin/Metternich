@@ -775,6 +775,8 @@ void country_game_data::set_religion(const metternich::religion *religion)
 		}
 	}
 
+	this->check_technologies();
+
 	if (game::get()->is_running()) {
 		emit religion_changed();
 	}
@@ -3259,6 +3261,56 @@ void country_game_data::add_technology_with_prerequisites(const technology *tech
 
 	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
 		this->add_technology_with_prerequisites(prerequisite);
+	}
+}
+
+void country_game_data::remove_technology(const technology *technology)
+{
+	assert_throw(technology != nullptr);
+
+	if (!this->has_technology(technology)) {
+		return;
+	}
+
+	this->technologies.erase(technology);
+
+	if (technology->get_modifier() != nullptr) {
+		technology->get_modifier()->apply(this->country, -1);
+	}
+
+	for (const commodity *enabled_commodity : technology->get_enabled_commodities()) {
+		this->remove_available_commodity(enabled_commodity);
+
+		if (enabled_commodity->is_tradeable()) {
+			this->remove_tradeable_commodity(enabled_commodity);
+		}
+	}
+
+	if (!technology->get_enabled_laws().empty()) {
+		this->check_laws();
+	}
+
+	//remove any technologies requiring this one as well
+	for (const metternich::technology *requiring_technology : technology->get_leads_to()) {
+		this->remove_technology(requiring_technology);
+	}
+
+	if (game::get()->is_running()) {
+		emit technology_lost(technology);
+
+		emit technologies_changed();
+	}
+}
+
+void country_game_data::check_technologies()
+{
+	//technologies may no longer be available for the country due to e.g. religion change, and may therefore need to be removed
+
+	const technology_set technologies = this->get_technologies();
+	for (const technology *technology : technologies) {
+		if (!technology->is_available_for_country(this->country)) {
+			this->remove_technology(technology);
+		}
 	}
 }
 

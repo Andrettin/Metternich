@@ -26,6 +26,8 @@
 #include "map/terrain_type.h"
 #include "religion/deity.h"
 #include "religion/deity_trait.h"
+#include "religion/religion.h"
+#include "religion/religious_group.h"
 #include "script/condition/and_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
@@ -154,6 +156,14 @@ void technology::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "cultural_groups") {
 		for (const std::string &value : values) {
 			this->cultural_groups.push_back(cultural_group::get(value));
+		}
+	} else if (tag == "religions") {
+		for (const std::string &value : values) {
+			this->religions.insert(religion::get(value));
+		}
+	} else if (tag == "religious_groups") {
+		for (const std::string &value : values) {
+			this->religious_groups.push_back(religious_group::get(value));
 		}
 	} else if (tag == "prerequisites") {
 		for (const std::string &value : values) {
@@ -285,6 +295,18 @@ bool technology::is_available_for_country(const country *country) const
 			if (country->get_culture()->is_part_of_group(cultural_group)) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	if (!this->religions.empty() || !this->religious_groups.empty()) {
+		if (this->religions.contains(country->get_game_data()->get_religion())) {
+			return true;
+		}
+
+		if (vector::contains(this->religious_groups, country->get_game_data()->get_religion()->get_group())) {
+			return true;
 		}
 
 		return false;

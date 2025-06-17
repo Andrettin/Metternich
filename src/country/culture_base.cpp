@@ -232,7 +232,6 @@ phenotype *culture_base::get_default_phenotype() const
 	return nullptr;
 }
 
-
 bool culture_base::is_part_of_group(const cultural_group *group) const
 {
 	if (this->get_group() == nullptr) {
