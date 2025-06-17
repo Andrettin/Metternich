@@ -3571,7 +3571,7 @@ void country_game_data::set_idea(const idea_slot *slot, const idea *idea)
 
 			switch (slot->get_idea_type()) {
 				case idea_type::deity:
-					engine_interface::get()->add_notification(std::format("{} Becomes Patron Deity", idea->get_cultural_name(this->country->get_culture())), interior_minister_portrait, std::format("{} has become a patron deity of our nation!\n\n{}", idea->get_cultural_name(this->country->get_culture()), idea->get_modifier_string(this->country)));
+					engine_interface::get()->add_notification(std::format("{} Worshiped", idea->get_cultural_name(this->country->get_culture())), interior_minister_portrait, std::format("The cult of {} has become widespread in our nation!\n\n{}", idea->get_cultural_name(this->country->get_culture()), idea->get_modifier_string(this->country)));
 					break;
 				case idea_type::research_organization:
 					engine_interface::get()->add_notification(std::format("{} Gains Contract", idea->get_name()), interior_minister_portrait, std::format("The {} has gained an important contract with our govenment to conduct research!\n\n{}", idea->get_name(), idea->get_modifier_string(this->country)));
@@ -3645,7 +3645,7 @@ void country_game_data::check_idea(const idea_slot *slot)
 
 				switch (slot->get_idea_type()) {
 					case idea_type::deity:
-						engine_interface::get()->add_notification(std::format("{} No Longer Patron Deity", old_idea->get_cultural_name(this->country->get_culture())), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history of being worshiped in our nation, the cult of {} has lost favor amongst our people, and declined to nothingness.", old_idea->get_cultural_name(this->country->get_culture())));
+						engine_interface::get()->add_notification(std::format("{} No Longer Worshiped", old_idea->get_cultural_name(this->country->get_culture())), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history of being worshiped in our nation, the cult of {} has lost favor amongst our people, and declined to nothingness.", old_idea->get_cultural_name(this->country->get_culture())));
 						break;
 					case idea_type::research_organization:
 						engine_interface::get()->add_notification(std::format("{} Abolished", old_idea->get_name()), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history in conducting research for our nation, the {} has lost its ability to function, and has been abolished.", old_idea->get_name()));
