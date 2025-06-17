@@ -19,17 +19,15 @@ template <typename T, typename U>
 using data_entry_map = std::map<const T *, U, data_entry_compare<T>>;
 
 class cultural_group;
-class deity_slot;
+class idea_slot;
 class office;
-class research_organization_slot;
 class technology_category;
 class technology_subcategory;
 
 extern template struct data_entry_compare<cultural_group>;
-extern template struct data_entry_compare<deity_slot>;
+extern template struct data_entry_compare<idea_slot>;
 extern template struct data_entry_compare<named_data_entry>;
 extern template struct data_entry_compare<office>;
-extern template struct data_entry_compare<research_organization_slot>;
 extern template struct data_entry_compare<technology_category>;
 extern template struct data_entry_compare<technology_subcategory>;
 

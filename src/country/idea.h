@@ -9,6 +9,7 @@ namespace metternich {
 
 class country;
 class portrait;
+class idea_slot;
 class idea_trait;
 class technology;
 enum class idea_type;
@@ -20,6 +21,7 @@ class idea : public named_data_entry
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::idea_type idea_type READ get_idea_type CONSTANT)
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
@@ -32,6 +34,25 @@ public:
 	virtual void check() const override;
 
 	virtual idea_type get_idea_type() const = 0;
+
+	virtual const std::string &get_cultural_name(const culture *culture) const
+	{
+		Q_UNUSED(culture);
+
+		return this->get_name();
+	}
+
+	virtual const std::string &get_cultural_name(const cultural_group *cultural_group) const
+	{
+		Q_UNUSED(cultural_group);
+
+		return this->get_name();
+	}
+
+	Q_INVOKABLE QString get_cultural_name_qstring(const metternich::culture *culture) const
+	{
+		return QString::fromStdString(this->get_cultural_name(culture));
+	}
 
 	const metternich::portrait *get_portrait() const
 	{
@@ -52,6 +73,13 @@ public:
 	{
 		return this->obsolescence_technology;
 	}
+
+	bool is_available() const
+	{
+		return !this->get_traits().empty();
+	}
+
+	virtual bool is_available_for_country_slot(const country *country, const idea_slot *slot) const;
 
 	const and_condition<country> *get_conditions() const
 	{

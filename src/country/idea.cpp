@@ -2,7 +2,10 @@
 
 #include "country/idea.h"
 
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/idea_trait.h"
+#include "country/idea_slot.h"
 #include "country/idea_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
@@ -33,12 +36,12 @@ void idea::process_gsml_scope(const gsml_data &scope)
 
 void idea::check() const
 {
-	if (this->get_portrait() == nullptr) {
-		throw std::runtime_error(std::format("Idea \"{}\" of type \"{}\" has no portrait.", this->get_identifier(), magic_enum::enum_name(this->get_idea_type())));
+	if (this->is_available() && this->get_portrait() == nullptr) {
+		throw std::runtime_error(std::format("Idea \"{}\" of type \"{}\" is available, but has no portrait.", this->get_identifier(), magic_enum::enum_name(this->get_idea_type())));
 	}
 
 	if (this->get_traits().empty()) {
-		throw std::runtime_error(std::format("Idea \"{}\" of type \"{}\" has no traits.", this->get_identifier(), magic_enum::enum_name(this->get_idea_type())));
+		//throw std::runtime_error(std::format("Idea \"{}\" of type \"{}\" has no traits.", this->get_identifier(), magic_enum::enum_name(this->get_idea_type())));
 	}
 
 	if (this->get_skill() == 0) {
@@ -52,6 +55,39 @@ void idea::check() const
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
 	}
+}
+
+bool idea::is_available_for_country_slot(const country *country, const idea_slot *slot) const
+{
+	Q_UNUSED(slot);
+
+	assert_throw(this->get_idea_type() == slot->get_idea_type());
+
+	if (!this->is_available()) {
+		return false;
+	}
+
+	const country_game_data *country_game_data = country->get_game_data();
+
+	if (this->get_required_technology() != nullptr && !country_game_data->has_technology(this->get_required_technology())) {
+		return false;
+	}
+
+	if (this->get_obsolescence_technology() != nullptr && country_game_data->has_technology(this->get_obsolescence_technology())) {
+		return false;
+	}
+
+	if (this->get_conditions() != nullptr && !this->get_conditions()->check(country, read_only_context(country))) {
+		return false;
+	}
+
+	for (const idea_trait *trait : this->get_traits()) {
+		if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(country, read_only_context(country))) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 std::string idea::get_modifier_string(const country *country) const

@@ -39,13 +39,8 @@ public:
 
 	virtual idea_type get_idea_type() const override;
 
-	const std::string &get_cultural_name(const culture *culture) const;
-	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
-
-	Q_INVOKABLE QString get_cultural_name_qstring(const metternich::culture *culture) const
-	{
-		return QString::fromStdString(this->get_cultural_name(culture));
-	}
+	virtual const std::string &get_cultural_name(const culture *culture) const override;
+	virtual const std::string &get_cultural_name(const cultural_group *cultural_group) const override;
 
 	const metternich::pantheon *get_pantheon() const
 	{
@@ -62,15 +57,12 @@ public:
 		return this->religions;
 	}
 
-	bool can_be_worshiped() const
-	{
-		return !this->get_traits().empty();
-	}
-
 	const metternich::character *get_character() const
 	{
 		return this->character;
 	}
+
+	virtual bool is_available_for_country_slot(const country *country, const idea_slot *slot) const override;
 
 signals:
 	void changed();

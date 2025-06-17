@@ -36,11 +36,7 @@ Q_MOC_INCLUDE("country/subject_type.h")
 Q_MOC_INCLUDE("country/tradition.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
-Q_MOC_INCLUDE("religion/deity.h")
-Q_MOC_INCLUDE("religion/deity_slot.h")
 Q_MOC_INCLUDE("religion/religion.h")
-Q_MOC_INCLUDE("technology/research_organization.h")
-Q_MOC_INCLUDE("technology/research_organization_slot.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/military_unit_type.h")
@@ -57,11 +53,11 @@ class country_ai;
 class country_building_slot;
 class country_rank;
 class culture;
-class deity;
-class deity_slot;
 class event;
 class flag;
 class government_type;
+class idea;
+class idea_slot;
 class journal_entry;
 class law;
 class military_unit;
@@ -77,8 +73,6 @@ class profession;
 class province;
 class region;
 class religion;
-class research_organization;
-class research_organization_slot;
 class scripted_country_modifier;
 class site;
 class subject_type;
@@ -92,6 +86,7 @@ enum class country_tier;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
 enum class event_trigger;
+enum class idea_type;
 enum class income_transaction_type;
 enum class military_unit_category;
 enum class military_unit_stat;
@@ -158,19 +153,17 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
 	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
-	Q_PROPERTY(QVariantList research_organizations READ get_research_organizations_qvariant_list NOTIFY research_organizations_changed)
-	Q_PROPERTY(QVariantList appointed_research_organizations READ get_appointed_research_organizations_qvariant_list NOTIFY appointed_research_organizations_changed)
-	Q_PROPERTY(QVariantList available_research_organization_slots READ get_available_research_organization_slots_qvariant_list NOTIFY available_research_organization_slots_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
 	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY laws_changed)
+	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
+	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
+	Q_PROPERTY(QVariantList available_research_organization_slots READ get_available_research_organization_slots_qvariant_list NOTIFY available_idea_slots_changed)
+	Q_PROPERTY(QVariantList available_deity_slots READ get_available_deity_slots_qvariant_list NOTIFY available_idea_slots_changed)
 	Q_PROPERTY(QVariantList available_traditions READ get_available_traditions_qvariant_list NOTIFY traditions_changed)
 	Q_PROPERTY(int tradition_cost READ get_tradition_cost NOTIFY traditions_changed)
 	Q_PROPERTY(const metternich::tradition* next_tradition READ get_next_tradition WRITE set_next_tradition NOTIFY next_tradition_changed)
 	Q_PROPERTY(const metternich::tradition* next_belief READ get_next_belief WRITE set_next_belief NOTIFY next_belief_changed)
-	Q_PROPERTY(QVariantList deities READ get_deities_qvariant_list NOTIFY deities_changed)
-	Q_PROPERTY(QVariantList appointed_deities READ get_appointed_deities_qvariant_list NOTIFY appointed_deities_changed)
-	Q_PROPERTY(QVariantList available_deity_slots READ get_available_deity_slots_qvariant_list NOTIFY available_deity_slots_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList office_holders READ get_office_holders_qvariant_list NOTIFY office_holders_changed)
@@ -1257,57 +1250,6 @@ public:
 	void gain_free_technologies(const int count);
 	void gain_technologies_known_by_others();
 
-	const data_entry_map<research_organization_slot, const research_organization *> &get_research_organizations() const
-	{
-		return this->research_organizations;
-	}
-
-	QVariantList get_research_organizations_qvariant_list() const;
-
-	Q_INVOKABLE const metternich::research_organization *get_research_organization(const metternich::research_organization_slot *slot) const
-	{
-		const auto find_iterator = this->research_organizations.find(slot);
-
-		if (find_iterator != this->research_organizations.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	void set_research_organization(const research_organization_slot *slot, const research_organization *research_organization);
-
-	const data_entry_map<research_organization_slot, const research_organization *> &get_appointed_research_organizations() const
-	{
-		return this->appointed_research_organizations;
-	}
-
-	QVariantList get_appointed_research_organizations_qvariant_list() const;
-
-	Q_INVOKABLE const metternich::research_organization *get_appointed_research_organization(const metternich::research_organization_slot *slot) const
-	{
-		const auto find_iterator = this->appointed_research_organizations.find(slot);
-
-		if (find_iterator != this->appointed_research_organizations.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	Q_INVOKABLE void set_appointed_research_organization(const metternich::research_organization_slot *slot, const metternich::research_organization *research_organization);
-
-	void check_research_organization(const research_organization_slot *slot);
-	void check_research_organizations();
-	std::vector<const research_organization *> get_appointable_research_organizations(const research_organization_slot *slot) const;
-	Q_INVOKABLE QVariantList get_appointable_research_organizations_qvariant_list(const metternich::research_organization_slot *slot) const;
-	const research_organization *get_best_research_organization(const research_organization_slot *slot);
-	bool can_have_research_organization(const research_organization_slot *slot, const research_organization *research_organization) const;
-	bool can_appoint_research_organization(const research_organization_slot *slot, const research_organization *research_organization) const;
-
-	std::vector<const research_organization_slot *> get_available_research_organization_slots() const;
-	QVariantList get_available_research_organization_slots_qvariant_list() const;
-
 	const metternich::government_type *get_government_type() const
 	{
 		return this->government_type;
@@ -1350,6 +1292,60 @@ public:
 	}
 
 	void check_laws();
+
+	const std::map<idea_type, data_entry_map<idea_slot, const idea *>> &get_ideas() const
+	{
+		return this->ideas;
+	}
+
+	const data_entry_map<idea_slot, const idea *> &get_ideas(const idea_type idea_type) const
+	{
+		const auto find_iterator = this->ideas.find(idea_type);
+
+		if (find_iterator != this->ideas.end()) {
+			return find_iterator->second;
+		}
+
+		static const data_entry_map<idea_slot, const idea *> empty_ideas;
+		return empty_ideas;
+	}
+
+	QVariantList get_ideas_qvariant_list() const;
+	Q_INVOKABLE const metternich::idea *get_idea(const metternich::idea_slot *slot) const;
+	void set_idea(const idea_slot *slot, const idea *idea);
+
+	const std::map<idea_type, data_entry_map<idea_slot, const idea *>> &get_appointed_ideas() const
+	{
+		return this->appointed_ideas;
+	}
+
+	const data_entry_map<idea_slot, const idea *> &get_appointed_ideas(const idea_type idea_type) const
+	{
+		const auto find_iterator = this->appointed_ideas.find(idea_type);
+
+		if (find_iterator != this->appointed_ideas.end()) {
+			return find_iterator->second;
+		}
+
+		static const data_entry_map<idea_slot, const idea *> empty_ideas;
+		return empty_ideas;
+	}
+
+	QVariantList get_appointed_ideas_qvariant_list() const;
+	Q_INVOKABLE const metternich::idea *get_appointed_idea(const metternich::idea_slot *slot) const;
+	Q_INVOKABLE void set_appointed_idea(const metternich::idea_slot *slot, const metternich::idea *idea);
+
+	void check_idea(const idea_slot *slot);
+	void check_ideas();
+	std::vector<const idea *> get_appointable_ideas(const idea_slot *slot) const;
+	Q_INVOKABLE QVariantList get_appointable_ideas_qvariant_list(const metternich::idea_slot *slot) const;
+	const idea *get_best_idea(const idea_slot *slot);
+	bool can_have_idea(const idea_slot *slot, const idea *idea) const;
+	bool can_appoint_idea(const idea_slot *slot, const idea *idea) const;
+
+	std::vector<const idea_slot *> get_available_idea_slots(const idea_type idea_type) const;
+	QVariantList get_available_research_organization_slots_qvariant_list() const;
+	QVariantList get_available_deity_slots_qvariant_list() const;
 
 	const tradition_set &get_traditions() const
 	{
@@ -1415,57 +1411,6 @@ public:
 	}
 
 	void choose_next_belief();
-
-	const data_entry_map<deity_slot, const deity *> &get_deities() const
-	{
-		return this->deities;
-	}
-
-	QVariantList get_deities_qvariant_list() const;
-
-	Q_INVOKABLE const metternich::deity *get_deity(const metternich::deity_slot *slot) const
-	{
-		const auto find_iterator = this->deities.find(slot);
-
-		if (find_iterator != this->deities.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	void set_deity(const deity_slot *slot, const deity *deity);
-
-	const data_entry_map<deity_slot, const deity *> &get_appointed_deities() const
-	{
-		return this->appointed_deities;
-	}
-
-	QVariantList get_appointed_deities_qvariant_list() const;
-
-	Q_INVOKABLE const metternich::deity *get_appointed_deity(const metternich::deity_slot *slot) const
-	{
-		const auto find_iterator = this->appointed_deities.find(slot);
-
-		if (find_iterator != this->appointed_deities.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	Q_INVOKABLE void set_appointed_deity(const metternich::deity_slot *slot, const metternich::deity *deity);
-
-	void check_deity(const deity_slot *slot);
-	void check_deities();
-	std::vector<const deity *> get_appointable_deities(const deity_slot *slot) const;
-	Q_INVOKABLE QVariantList get_appointable_deities_qvariant_list(const metternich::deity_slot *slot) const;
-	const deity *get_best_deity(const deity_slot *slot);
-	bool can_have_deity(const deity_slot *slot, const deity *deity) const;
-	bool can_appoint_deity(const deity_slot *slot, const deity *deity) const;
-
-	std::vector<const deity_slot *> get_available_deity_slots() const;
-	QVariantList get_available_deity_slots_qvariant_list() const;
 
 	const scripted_country_modifier_map<int> &get_scripted_modifiers() const
 	{
@@ -2627,19 +2572,16 @@ signals:
 	void technologies_changed();
 	void current_researches_changed();
 	void technology_researched(const technology *technology);
-	void research_organizations_changed();
-	void appointed_research_organizations_changed();
-	void available_research_organization_slots_changed();
 	void government_type_changed();
 	void laws_changed();
+	void ideas_changed();
+	void appointed_ideas_changed();
+	void available_idea_slots_changed();
 	void traditions_changed();
 	void next_tradition_changed();
 	void tradition_adopted(const tradition *tradition);
 	void next_belief_changed();
 	void belief_adopted(const tradition *belief);
-	void deities_changed();
-	void appointed_deities_changed();
-	void available_deity_slots_changed();
 	void scripted_modifiers_changed();
 	void ruler_changed();
 	void office_holders_changed();
@@ -2729,15 +2671,13 @@ private:
 	technology_set technologies;
 	technology_set current_researches;
 	int free_technology_count = 0;
-	data_entry_map<research_organization_slot, const research_organization *> research_organizations;
-	data_entry_map<research_organization_slot, const research_organization *> appointed_research_organizations;
+	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
+	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
 	const metternich::government_type *government_type = nullptr;
 	law_group_map<const law *> laws;
 	tradition_set traditions;
 	const tradition *next_tradition = nullptr;
 	const tradition *next_belief = nullptr;
-	data_entry_map<deity_slot, const deity *> deities;
-	data_entry_map<deity_slot, const deity *> appointed_deities;
 	scripted_country_modifier_map<int> scripted_modifiers;
 	data_entry_map<office, const character *> office_holders;
 	data_entry_map<office, const character *> appointed_office_holders;

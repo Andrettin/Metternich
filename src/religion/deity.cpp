@@ -3,12 +3,16 @@
 #include "religion/deity.h"
 
 #include "character/character.h"
+#include "country/country.h"
+#include "country/country_game_data.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "country/idea_type.h"
+#include "religion/deity_slot.h"
 #include "religion/deity_trait.h"
 #include "religion/religion.h"
 #include "technology/technology.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -81,10 +85,6 @@ void deity::check() const
 		throw std::runtime_error(std::format("Deity \"{}\" has no pantheon.", this->get_identifier()));
 	}
 
-	if (this->can_be_worshiped() && this->get_portrait() == nullptr) {
-		throw std::runtime_error(std::format("Deity \"{}\" can be worshiped, but has no portrait.", this->get_identifier()));
-	}
-
 	if (this->get_religions().empty()) {
 		throw std::runtime_error(std::format("Deity \"{}\" is not worshipped by any religions.", this->get_identifier()));
 	}
@@ -127,6 +127,27 @@ const std::string &deity::get_cultural_name(const cultural_group *cultural_group
 	}
 
 	return this->get_name();
+}
+
+bool deity::is_available_for_country_slot(const country *country, const idea_slot *slot) const
+{
+	if (!idea::is_available_for_country_slot(country, slot)) {
+		return false;
+	}
+
+	const deity_slot *deity_slot = static_cast<const metternich::deity_slot *>(slot);
+
+	if (this->is_major() != deity_slot->is_major()) {
+		return false;
+	}
+
+	const country_game_data *country_game_data = country->get_game_data();
+
+	if (!vector::contains(this->get_religions(), country_game_data->get_religion())) {
+		return false;
+	}
+
+	return true;
 }
 
 }

@@ -61,7 +61,6 @@
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
-#include "technology/research_organization_slot.h"
 #include "time/era.h"
 #include "unit/army.h"
 #include "unit/civilian_unit.h"
@@ -272,7 +271,7 @@ QCoro::Task<void> game::start_coro()
 				country_game_data->check_office_holder(office, nullptr);
 			}
 
-			country_game_data->check_research_organizations();
+			country_game_data->check_ideas();
 
 			//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
 			country_game_data->check_journal_entries(true, true);
@@ -1372,7 +1371,7 @@ QCoro::Task<void> game::on_setup_finished()
 			country->get_game_data()->check_office_holder(office, nullptr);
 		}
 
-		country->get_game_data()->check_research_organizations();
+		country->get_game_data()->check_ideas();
 
 		for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
 			map::get()->calculate_tile_country_border_directions(border_tile_pos);

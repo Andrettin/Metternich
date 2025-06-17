@@ -18,6 +18,9 @@
 #include "country/cultural_group_rank.h"
 #include "country/diplomacy_state.h"
 #include "country/government_type.h"
+#include "country/idea.h"
+#include "country/idea_slot.h"
+#include "country/idea_type.h"
 #include "country/journal_entry.h"
 #include "country/law.h"
 #include "country/law_group.h"
@@ -159,6 +162,7 @@ int main(int argc, char **argv)
 		database::get()->register_enum<food_type>();
 		database::get()->register_enum<forestation_type>();
 		database::get()->register_enum<geological_era>();
+		database::get()->register_enum<idea_type>();
 		database::get()->register_enum<improvement_slot>();
 		database::get()->register_enum<military_unit_category>();
 		database::get()->register_enum<military_unit_domain>();
@@ -192,6 +196,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<game_rules>("", 1);
 		qmlRegisterAnonymousType<government_type>("", 1);
 		qmlRegisterAnonymousType<icon>("", 1);
+		qmlRegisterAnonymousType<idea>("", 1);
+		qmlRegisterAnonymousType<idea_slot>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);
 		qmlRegisterAnonymousType<journal_entry>("", 1);
 		qmlRegisterAnonymousType<law>("", 1);

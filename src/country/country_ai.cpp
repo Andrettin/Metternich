@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/idea_type.h"
 #include "country/journal_entry.h"
 #include "country/office.h"
 #include "infrastructure/building_type.h"
@@ -17,6 +18,8 @@
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 #include "util/vector_random_util.h"
+
+#include <magic_enum/magic_enum_utility.hpp>
 
 namespace metternich {
 
@@ -39,8 +42,7 @@ void country_ai::do_turn()
 
 	this->choose_current_research();
 	this->appoint_office_holders();
-	this->appoint_deities();
-	this->appoint_research_organizations();
+	this->appoint_ideas();
 
 	//build buildings
 	building_type_map<int> ai_building_desires;
@@ -165,40 +167,24 @@ const technology *country_ai::get_research_choice(const data_entry_map<technolog
 	return chosen_technology;
 }
 
-void country_ai::appoint_research_organizations()
+void country_ai::appoint_ideas()
 {
-	for (const research_organization_slot *slot : this->get_game_data()->get_available_research_organization_slots()) {
-		if (this->get_game_data()->get_research_organization(slot) != nullptr) {
-			continue;
-		}
+	magic_enum::enum_for_each<idea_type>([this](const idea_type idea_type) {
+		for (const idea_slot *slot : this->get_game_data()->get_available_idea_slots(idea_type)) {
+			if (this->get_game_data()->get_idea(slot) != nullptr) {
+				continue;
+			}
 
-		if (this->get_game_data()->get_appointed_research_organization(slot) != nullptr) {
-			continue;
-		}
+			if (this->get_game_data()->get_appointed_idea(slot) != nullptr) {
+				continue;
+			}
 
-		const research_organization *research_organization = this->get_game_data()->get_best_research_organization(slot);
-		if (research_organization != nullptr) {
-			this->get_game_data()->set_appointed_research_organization(slot, research_organization);
+			const idea *idea = this->get_game_data()->get_best_idea(slot);
+			if (idea != nullptr) {
+				this->get_game_data()->set_appointed_idea(slot, idea);
+			}
 		}
-	}
-}
-
-void country_ai::appoint_deities()
-{
-	for (const deity_slot *slot : this->get_game_data()->get_available_deity_slots()) {
-		if (this->get_game_data()->get_deity(slot) != nullptr) {
-			continue;
-		}
-
-		if (this->get_game_data()->get_appointed_deity(slot) != nullptr) {
-			continue;
-		}
-
-		const deity *deity = this->get_game_data()->get_best_deity(slot);
-		if (deity != nullptr) {
-			this->get_game_data()->set_appointed_deity(slot, deity);
-		}
-	}
+	});
 }
 
 void country_ai::appoint_office_holders()

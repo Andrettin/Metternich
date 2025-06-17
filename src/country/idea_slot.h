@@ -14,6 +14,8 @@ class idea_slot : public named_data_entry
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::idea_type idea_type READ get_idea_type CONSTANT)
+
 public:
 	explicit idea_slot(const std::string &identifier);
 	~idea_slot();

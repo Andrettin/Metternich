@@ -21,6 +21,10 @@
 #include "country/diplomacy_state.h"
 #include "country/government_group.h"
 #include "country/government_type.h"
+#include "country/idea.h"
+#include "country/idea_slot.h"
+#include "country/idea_trait.h"
+#include "country/idea_type.h"
 #include "country/journal_entry.h"
 #include "country/law.h"
 #include "country/law_group.h"
@@ -66,7 +70,6 @@
 #include "population/population_unit.h"
 #include "religion/deity.h"
 #include "religion/deity_slot.h"
-#include "religion/deity_trait.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
@@ -106,6 +109,7 @@
 #include "xbrz.h"
 
 #include <magic_enum/magic_enum.hpp>
+#include <magic_enum/magic_enum_utility.hpp>
 
 namespace metternich {
 
@@ -181,8 +185,7 @@ void country_game_data::do_turn()
 		this->check_traditions();
 		this->check_government_type();
 		this->check_characters();
-		this->check_deities();
-		this->check_research_organizations();
+		this->check_ideas();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->country->get_identifier())));
 	}
@@ -3518,139 +3521,204 @@ void country_game_data::gain_technologies_known_by_others()
 	}
 }
 
-QVariantList country_game_data::get_research_organizations_qvariant_list() const
+QVariantList country_game_data::get_ideas_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_research_organizations());
+	return archimedes::map::to_qvariant_list(this->get_ideas());
 }
 
-void country_game_data::set_research_organization(const research_organization_slot *slot, const research_organization *research_organization)
+const idea *country_game_data::get_idea(const idea_slot *slot) const
 {
-	const metternich::research_organization *old_research_organization = this->get_research_organization(slot);
+	const data_entry_map<idea_slot, const idea *> &ideas = this->get_ideas(slot->get_idea_type());
+	const auto find_iterator = ideas.find(slot);
 
-	if (research_organization == old_research_organization) {
+	if (find_iterator != ideas.end()) {
+		return find_iterator->second;
+	}
+
+	return nullptr;
+}
+
+void country_game_data::set_idea(const idea_slot *slot, const idea *idea)
+{
+	const metternich::idea *old_idea = this->get_idea(slot);
+
+	if (idea == old_idea) {
 		return;
 	}
 
-	if (old_research_organization != nullptr) {
-		old_research_organization->apply_modifier(this->country, -1);
+	if (old_idea != nullptr) {
+		old_idea->apply_modifier(this->country, -1);
 	}
 
-	if (research_organization != nullptr) {
-		this->research_organizations[slot] = research_organization;
+	if (idea != nullptr) {
+		this->ideas[slot->get_idea_type()][slot] = idea;
 	} else {
-		this->research_organizations.erase(slot);
-	}
-
-	if (research_organization != nullptr) {
-		research_organization->apply_modifier(this->country, 1);
-	}
-
-	if (game::get()->is_running()) {
-		emit research_organizations_changed();
-
-		if (this->country == game::get()->get_player_country() && research_organization != nullptr) {
-			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
-
-			engine_interface::get()->add_notification(std::format("{} Gains Contract", research_organization->get_name()), interior_minister_portrait, std::format("The {} has gained an important contract with our govenment to conduct research!\n\n{}", research_organization->get_name(), research_organization->get_modifier_string(this->country)));
+		this->ideas[slot->get_idea_type()].erase(slot);
+		if (this->ideas[slot->get_idea_type()].empty()) {
+			this->ideas.erase(slot->get_idea_type());
 		}
 	}
-}
 
-QVariantList country_game_data::get_appointed_research_organizations_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_appointed_research_organizations());
-}
-
-void country_game_data::set_appointed_research_organization(const research_organization_slot *slot, const research_organization *research_organization)
-{
-	if (research_organization == this->get_appointed_research_organization(slot)) {
-		return;
-	}
-
-	if (research_organization != nullptr) {
-		this->appointed_research_organizations[slot] = research_organization;
-	} else {
-		this->appointed_research_organizations.erase(slot);
+	if (idea != nullptr) {
+		idea->apply_modifier(this->country, 1);
 	}
 
 	if (game::get()->is_running()) {
-		emit appointed_research_organizations_changed();
-	}
-}
+		emit ideas_changed();
 
-void country_game_data::check_research_organization(const research_organization_slot *slot)
-{
-	if (this->is_under_anarchy()) {
-		this->set_research_organization(slot, nullptr);
-		return;
-	}
+		if (this->country == game::get()->get_player_country() && idea != nullptr) {
+			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
 
-	//process appointment, if any
-	const research_organization *appointed_organization = this->get_appointed_research_organization(slot);
-	if (appointed_organization != nullptr && this->can_have_research_organization(slot, appointed_organization)) {
-		this->set_research_organization(slot, appointed_organization);
-		this->set_appointed_research_organization(slot, nullptr);
-	}
-
-	//remove research organizations if they have become obsolete
-	const research_organization *old_research_organization = this->get_research_organization(slot);
-	if (old_research_organization != nullptr && old_research_organization->get_obsolescence_technology() != nullptr && this->has_technology(old_research_organization->get_obsolescence_technology())) {
-		this->set_research_organization(slot, nullptr);
-
-		if (game::get()->is_running()) {
-			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
-
-				engine_interface::get()->add_notification(std::format("{} Abolished", old_research_organization->get_name()), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history in conducting research for our nation, the {} has lost its ability to function, and has been abolished.", old_research_organization->get_name()));
+			switch (slot->get_idea_type()) {
+				case idea_type::deity:
+					engine_interface::get()->add_notification(std::format("{} Becomes Patron Deity", idea->get_cultural_name(this->country->get_culture())), interior_minister_portrait, std::format("{} has become a patron deity of our nation!\n\n{}", idea->get_cultural_name(this->country->get_culture()), idea->get_modifier_string(this->country)));
+					break;
+				case idea_type::research_organization:
+					engine_interface::get()->add_notification(std::format("{} Gains Contract", idea->get_name()), interior_minister_portrait, std::format("The {} has gained an important contract with our govenment to conduct research!\n\n{}", idea->get_name(), idea->get_modifier_string(this->country)));
+					break;
+				default:
+					assert_throw(false);
 			}
 		}
 	}
 }
 
-void country_game_data::check_research_organizations()
+QVariantList country_game_data::get_appointed_ideas_qvariant_list() const
 {
-	const std::vector<const research_organization_slot *> research_organization_slots = this->get_available_research_organization_slots();
-	for (const research_organization_slot *research_organization_slot : research_organization_slots) {
-		this->check_research_organization(research_organization_slot);
+	return archimedes::map::to_qvariant_list(this->get_appointed_ideas());
+}
+
+const idea *country_game_data::get_appointed_idea(const idea_slot *slot) const
+{
+	const data_entry_map<idea_slot, const idea *> &appointed_ideas = this->get_appointed_ideas(slot->get_idea_type());
+	const auto find_iterator = appointed_ideas.find(slot);
+
+	if (find_iterator != appointed_ideas.end()) {
+		return find_iterator->second;
 	}
 
-	const data_entry_map<research_organization_slot, const research_organization *> research_organizations = this->get_research_organizations();
-	for (const auto &[slot, slot_organization] : research_organizations) {
-		if (!vector::contains(research_organization_slots, slot)) {
-			this->set_research_organization(slot, nullptr);
+	return nullptr;
+}
+
+void country_game_data::set_appointed_idea(const idea_slot *slot, const idea *idea)
+{
+	if (idea == this->get_appointed_idea(slot)) {
+		return;
+	}
+
+	if (idea != nullptr) {
+		this->appointed_ideas[slot->get_idea_type()][slot] = idea;
+	} else {
+		this->appointed_ideas[slot->get_idea_type()].erase(slot);
+		if (this->appointed_ideas[slot->get_idea_type()].empty()) {
+			this->appointed_ideas.erase(slot->get_idea_type());
 		}
 	}
 
-	this->appointed_research_organizations.clear();
+	if (game::get()->is_running()) {
+		emit appointed_ideas_changed();
+	}
 }
 
-std::vector<const research_organization *> country_game_data::get_appointable_research_organizations(const research_organization_slot *slot) const
+void country_game_data::check_idea(const idea_slot *slot)
 {
-	std::vector<const research_organization *> potential_organizations;
-
-	for (const research_organization *organization : research_organization::get_all()) {
-		if (!this->can_appoint_research_organization(slot, organization)) {
-			continue;
-		}
-
-		potential_organizations.push_back(organization);
+	if (this->is_under_anarchy()) {
+		this->set_idea(slot, nullptr);
+		return;
 	}
 
-	return potential_organizations;
+	//process appointment, if any
+	const idea *appointed_idea = this->get_appointed_idea(slot);
+	if (appointed_idea != nullptr && this->can_have_idea(slot, appointed_idea)) {
+		this->set_idea(slot, appointed_idea);
+		this->set_appointed_idea(slot, nullptr);
+	}
+
+	//remove research organizations if they have become obsolete
+	const idea *old_idea = this->get_idea(slot);
+	if (old_idea != nullptr && old_idea->get_obsolescence_technology() != nullptr && this->has_technology(old_idea->get_obsolescence_technology())) {
+		this->set_idea(slot, nullptr);
+
+		if (game::get()->is_running()) {
+			if (this->country == game::get()->get_player_country()) {
+				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+
+				switch (slot->get_idea_type()) {
+					case idea_type::deity:
+						engine_interface::get()->add_notification(std::format("{} No Longer Patron Deity", old_idea->get_cultural_name(this->country->get_culture())), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history of being worshiped in our nation, the cult of {} has lost favor amongst our people, and declined to nothingness.", old_idea->get_cultural_name(this->country->get_culture())));
+						break;
+					case idea_type::research_organization:
+						engine_interface::get()->add_notification(std::format("{} Abolished", old_idea->get_name()), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history in conducting research for our nation, the {} has lost its ability to function, and has been abolished.", old_idea->get_name()));
+						break;
+					default:
+						assert_throw(false);
+				}
+			}
+		}
+	}
 }
 
-QVariantList country_game_data::get_appointable_research_organizations_qvariant_list(const research_organization_slot *slot) const
+void country_game_data::check_ideas()
 {
-	return container::to_qvariant_list(this->get_appointable_research_organizations(slot));
+	magic_enum::enum_for_each<idea_type>([this](const idea_type idea_type) {
+		const std::vector<const idea_slot *> idea_slots = this->get_available_idea_slots(idea_type);
+		for (const idea_slot *idea_slot : idea_slots) {
+			this->check_idea(idea_slot);
+		}
+
+		const data_entry_map<idea_slot, const idea *> ideas = this->get_ideas(idea_type);
+		for (const auto &[slot, slot_idea] : ideas) {
+			if (!vector::contains(idea_slots, slot)) {
+				this->set_idea(slot, nullptr);
+			}
+		}
+	});
+
+	this->appointed_ideas.clear();
 }
 
-const research_organization *country_game_data::get_best_research_organization(const research_organization_slot *slot)
+std::vector<const idea *> country_game_data::get_appointable_ideas(const idea_slot *slot) const
 {
-	std::vector<const research_organization *> potential_organizations;
+	std::vector<const idea *> potential_ideas;
+
+	switch (slot->get_idea_type()) {
+		case idea_type::deity:
+			for (const deity *deity : deity::get_all()) {
+				potential_ideas.push_back(deity);
+			}
+			break;
+		case idea_type::research_organization:
+			for (const research_organization *research_organization : research_organization::get_all()) {
+				potential_ideas.push_back(research_organization);
+			}
+			break;
+		default:
+			assert_throw(false);
+	}
+
+	std::erase_if(potential_ideas, [this, slot](const idea *idea) {
+		if (!this->can_appoint_idea(slot, idea)) {
+			return true;
+		}
+
+		return false;
+	});
+
+	return potential_ideas;
+}
+
+QVariantList country_game_data::get_appointable_ideas_qvariant_list(const idea_slot *slot) const
+{
+	return container::to_qvariant_list(this->get_appointable_ideas(slot));
+}
+
+const idea *country_game_data::get_best_idea(const idea_slot *slot)
+{
+	std::vector<const idea *> potential_ideas;
 	int best_skill = 0;
 
-	for (const research_organization *organization : this->get_appointable_research_organizations(slot)) {
-		const int skill = organization->get_skill();
+	for (const idea *idea : this->get_appointable_ideas(slot)) {
+		const int skill = idea->get_skill();
 
 		if (skill < best_skill) {
 			continue;
@@ -3658,38 +3726,28 @@ const research_organization *country_game_data::get_best_research_organization(c
 
 		if (skill > best_skill) {
 			best_skill = skill;
-			potential_organizations.clear();
+			potential_ideas.clear();
 		}
 
-		potential_organizations.push_back(organization);
+		potential_ideas.push_back(idea);
 	}
 
-	if (!potential_organizations.empty()) {
-		const research_organization *research_organization = vector::get_random(potential_organizations);
-		return research_organization;
+	if (!potential_ideas.empty()) {
+		const idea *idea = vector::get_random(potential_ideas);
+		return idea;
 	}
 
 	return nullptr;
 }
 
-bool country_game_data::can_have_research_organization(const research_organization_slot *slot, const research_organization *research_organization) const
+bool country_game_data::can_have_idea(const idea_slot *slot, const idea *idea) const
 {
-	Q_UNUSED(slot);
-
-	if (research_organization->get_required_technology() != nullptr && !this->has_technology(research_organization->get_required_technology())) {
+	if (!idea->is_available_for_country_slot(this->country, slot)) {
 		return false;
 	}
 
-	if (research_organization->get_obsolescence_technology() != nullptr && this->has_technology(research_organization->get_obsolescence_technology())) {
-		return false;
-	}
-
-	if (research_organization->get_conditions() != nullptr && !research_organization->get_conditions()->check(this->country, read_only_context(this->country))) {
-		return false;
-	}
-
-	for (const auto &[loop_slot, slot_organization] : this->get_research_organizations()) {
-		if (slot_organization == research_organization) {
+	for (const auto &[loop_slot, slot_idea] : this->get_ideas(slot->get_idea_type())) {
+		if (slot_idea == idea) {
 			return false;
 		}
 	}
@@ -3697,14 +3755,14 @@ bool country_game_data::can_have_research_organization(const research_organizati
 	return true;
 }
 
-bool country_game_data::can_appoint_research_organization(const research_organization_slot *slot, const research_organization *research_organization) const
+bool country_game_data::can_appoint_idea(const idea_slot *slot, const idea *idea) const
 {
-	if (!this->can_have_research_organization(slot, research_organization)) {
+	if (!this->can_have_idea(slot, idea)) {
 		return false;
 	}
 
-	for (const auto &[loop_slot, slot_organization] : this->get_appointed_research_organizations()) {
-		if (slot_organization == research_organization) {
+	for (const auto &[loop_slot, slot_idea] : this->get_appointed_ideas(slot->get_idea_type())) {
+		if (slot_idea == idea) {
 			return false;
 		}
 	}
@@ -3712,24 +3770,44 @@ bool country_game_data::can_appoint_research_organization(const research_organiz
 	return true;
 }
 
-std::vector<const research_organization_slot *> country_game_data::get_available_research_organization_slots() const
+std::vector<const idea_slot *> country_game_data::get_available_idea_slots(const idea_type idea_type) const
 {
-	std::vector<const research_organization_slot *> available_research_organization_slots;
+	std::vector<const idea_slot *> available_idea_slots;
 
-	for (const research_organization_slot *slot_type : research_organization_slot::get_all()) {
-		if (slot_type->get_conditions() != nullptr && !slot_type->get_conditions()->check(this->country, read_only_context(this->country))) {
-			continue;
-		}
-
-		available_research_organization_slots.push_back(slot_type);
+	switch (idea_type) {
+		case idea_type::deity:
+			for (const deity_slot *slot : deity_slot::get_all()) {
+				available_idea_slots.push_back(slot);
+			}
+			break;
+		case idea_type::research_organization:
+			for (const research_organization_slot *slot : research_organization_slot::get_all()) {
+				available_idea_slots.push_back(slot);
+			}
+			break;
+		default:
+			assert_throw(false);
 	}
 
-	return available_research_organization_slots;
+	std::erase_if(available_idea_slots, [this](const idea_slot *slot) {
+		if (slot->get_conditions() != nullptr && !slot->get_conditions()->check(this->country, read_only_context(this->country))) {
+			return true;
+		}
+
+		return false;
+	});
+
+	return available_idea_slots;
 }
 
 QVariantList country_game_data::get_available_research_organization_slots_qvariant_list() const
 {
-	return container::to_qvariant_list(this->get_available_research_organization_slots());
+	return container::to_qvariant_list(this->get_available_idea_slots(idea_type::research_organization));
+}
+
+QVariantList country_game_data::get_available_deity_slots_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_available_idea_slots(idea_type::deity));
 }
 
 void country_game_data::set_government_type(const metternich::government_type *government_type)
@@ -4266,224 +4344,6 @@ void country_game_data::choose_next_belief()
 		const std::vector<const tradition *> potential_beliefs = archimedes::map::get_values(potential_belief_map);
 		emit engine_interface::get()->next_belief_choosable(container::to_qvariant_list(potential_beliefs));
 	}
-}
-
-QVariantList country_game_data::get_deities_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_deities());
-}
-
-void country_game_data::set_deity(const deity_slot *slot, const deity *deity)
-{
-	const metternich::deity *old_deity = this->get_deity(slot);
-
-	if (deity == old_deity) {
-		return;
-	}
-
-	if (old_deity != nullptr) {
-		old_deity->apply_modifier(this->country, -1);
-	}
-
-	if (deity != nullptr) {
-		this->deities[slot] = deity;
-	} else {
-		this->deities.erase(slot);
-	}
-
-	if (deity != nullptr) {
-		deity->apply_modifier(this->country, 1);
-	}
-
-	if (game::get()->is_running()) {
-		emit deities_changed();
-
-		if (this->country == game::get()->get_player_country() && deity != nullptr) {
-			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
-
-			engine_interface::get()->add_notification(std::format("{} Becomes Patron Deity", deity->get_name()), interior_minister_portrait, std::format("{} has become a patron deity of our nation!\n\n{}", deity->get_name(), deity->get_modifier_string(this->country)));
-		}
-	}
-}
-
-QVariantList country_game_data::get_appointed_deities_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_appointed_deities());
-}
-
-void country_game_data::set_appointed_deity(const deity_slot *slot, const deity *deity)
-{
-	if (deity == this->get_appointed_deity(slot)) {
-		return;
-	}
-
-	if (deity != nullptr) {
-		this->appointed_deities[slot] = deity;
-	} else {
-		this->appointed_deities.erase(slot);
-	}
-
-	if (game::get()->is_running()) {
-		emit appointed_deities_changed();
-	}
-}
-
-void country_game_data::check_deity(const deity_slot *slot)
-{
-	if (this->is_under_anarchy()) {
-		this->set_deity(slot, nullptr);
-		return;
-	}
-
-	//process appointment, if any
-	const deity *appointed_deity = this->get_appointed_deity(slot);
-	if (appointed_deity != nullptr && this->can_have_deity(slot, appointed_deity)) {
-		this->set_deity(slot, appointed_deity);
-		this->set_appointed_deity(slot, nullptr);
-	}
-
-	//remove deities if they have become obsolete
-	const deity *old_deity = this->get_deity(slot);
-	if (old_deity != nullptr && old_deity->get_obsolescence_technology() != nullptr && this->has_technology(old_deity->get_obsolescence_technology())) {
-		this->set_deity(slot, nullptr);
-
-		if (game::get()->is_running()) {
-			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
-
-				engine_interface::get()->add_notification(std::format("{} No Longer Patron Deity", old_deity->get_name()), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history of being worshiped in our nation, the cult of {} has lost favor amongst our people, and declined to nothingness.", old_deity->get_name()));
-			}
-		}
-	}
-}
-
-void country_game_data::check_deities()
-{
-	const std::vector<const deity_slot *> deity_slots = this->get_available_deity_slots();
-	for (const deity_slot *deity_slot : deity_slots) {
-		this->check_deity(deity_slot);
-	}
-
-	const data_entry_map<deity_slot, const deity *> deities = this->get_deities();
-	for (const auto &[slot, slot_deity] : deities) {
-		if (!vector::contains(deity_slots, slot)) {
-			this->set_deity(slot, nullptr);
-		}
-	}
-
-	this->appointed_deities.clear();
-}
-
-std::vector<const deity *> country_game_data::get_appointable_deities(const deity_slot *slot) const
-{
-	std::vector<const deity *> potential_deities;
-
-	for (const deity *deity : deity::get_all()) {
-		if (!this->can_appoint_deity(slot, deity)) {
-			continue;
-		}
-
-		potential_deities.push_back(deity);
-	}
-
-	return potential_deities;
-}
-
-QVariantList country_game_data::get_appointable_deities_qvariant_list(const deity_slot *slot) const
-{
-	return container::to_qvariant_list(this->get_appointable_deities(slot));
-}
-
-const deity *country_game_data::get_best_deity(const deity_slot *slot)
-{
-	std::vector<const deity *> potential_deities;
-
-	for (const deity *deity : this->get_appointable_deities(slot)) {
-		potential_deities.push_back(deity);
-	}
-
-	if (!potential_deities.empty()) {
-		const deity *deity = vector::get_random(potential_deities);
-		return deity;
-	}
-
-	return nullptr;
-}
-
-bool country_game_data::can_have_deity(const deity_slot *slot, const deity *deity) const
-{
-	if (!deity->can_be_worshiped()) {
-		return false;
-	}
-
-	if (deity->is_major() != slot->is_major()) {
-		return false;
-	}
-
-	if (!vector::contains(deity->get_religions(), this->get_religion())) {
-		return false;
-	}
-
-	if (deity->get_required_technology() != nullptr && !this->has_technology(deity->get_required_technology())) {
-		return false;
-	}
-
-	if (deity->get_obsolescence_technology() != nullptr && this->has_technology(deity->get_obsolescence_technology())) {
-		return false;
-	}
-
-	if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(this->country, read_only_context(this->country))) {
-		return false;
-	}
-
-	for (const idea_trait *trait : deity->get_traits()) {
-		if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->country, read_only_context(this->country))) {
-			return false;
-		}
-	}
-
-	for (const auto &[loop_slot, slot_deity] : this->get_deities()) {
-		if (slot_deity == deity) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-bool country_game_data::can_appoint_deity(const deity_slot *slot, const deity *deity) const
-{
-	if (!this->can_have_deity(slot, deity)) {
-		return false;
-	}
-
-	for (const auto &[loop_slot, slot_deity] : this->get_appointed_deities()) {
-		if (slot_deity == deity) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-std::vector<const deity_slot *> country_game_data::get_available_deity_slots() const
-{
-	std::vector<const deity_slot *> available_deity_slots;
-
-	for (const deity_slot *slot_type : deity_slot::get_all()) {
-		if (slot_type->get_conditions() != nullptr && !slot_type->get_conditions()->check(this->country, read_only_context(this->country))) {
-			continue;
-		}
-
-		available_deity_slots.push_back(slot_type);
-	}
-
-	return available_deity_slots;
-}
-
-QVariantList country_game_data::get_available_deity_slots_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_available_deity_slots());
 }
 
 QVariantList country_game_data::get_scripted_modifiers_qvariant_list() const
