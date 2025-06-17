@@ -61,10 +61,6 @@ set(country_SRCS
 	src/country/law_group_container.cpp
 	src/country/office.cpp
 	src/country/subject_type.cpp
-	src/country/tradition.cpp
-	src/country/tradition_container.cpp
-	src/country/tradition_group.cpp
-	src/country/tradition_group_container.cpp
 )
 source_group(country FILES ${country_SRCS})
 set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
@@ -375,11 +371,6 @@ set(country_HDRS
 	src/country/law_group_container.h
 	src/country/office.h
 	src/country/subject_type.h
-	src/country/tradition.h
-	src/country/tradition_category.h
-	src/country/tradition_container.h
-	src/country/tradition_group.h
-	src/country/tradition_group_container.h
 )
 source_group(country FILES ${country_HDRS})
 
@@ -634,7 +625,6 @@ set(script_condition_HDRS
 	src/script/condition/taxon_condition.h
 	src/script/condition/technology_condition.h
 	src/script/condition/terrain_condition.h
-	src/script/condition/tradition_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
 	src/script/condition/wealth_condition.h

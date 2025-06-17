@@ -54,7 +54,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* prestige_commodity MEMBER prestige_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* piety_commodity MEMBER piety_commodity NOTIFY changed)
-	Q_PROPERTY(const metternich::commodity* tradition_commodity MEMBER tradition_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* advisor_commodity MEMBER advisor_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* leader_commodity MEMBER leader_commodity NOTIFY changed)
 	Q_PROPERTY(int great_power_commodity_demand_divisor MEMBER great_power_commodity_demand_divisor READ get_great_power_commodity_demand_divisor NOTIFY changed)
@@ -216,11 +215,6 @@ public:
 	const commodity *get_piety_commodity() const
 	{
 		return this->piety_commodity;
-	}
-
-	const commodity *get_tradition_commodity() const
-	{
-		return this->tradition_commodity;
 	}
 
 	const commodity *get_advisor_commodity() const
@@ -403,7 +397,6 @@ private:
 	commodity_map<int> river_settlement_commodity_bonuses;
 	const commodity *prestige_commodity = nullptr;
 	const commodity *piety_commodity = nullptr;
-	const commodity *tradition_commodity = nullptr;
 	const commodity *advisor_commodity = nullptr;
 	const commodity *leader_commodity = nullptr;
 	int great_power_commodity_demand_divisor = 1;

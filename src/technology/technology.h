@@ -39,7 +39,6 @@ class technological_period;
 class technology_category;
 class technology_subcategory;
 class terrain_type;
-class tradition;
 class transporter_type;
 class wonder;
 enum class character_role;
@@ -350,14 +349,6 @@ public:
 
 	void add_enabled_law(const law *law);
 
-	const std::vector<const tradition *> &get_enabled_traditions() const
-	{
-		return this->enabled_traditions;
-	}
-
-	std::vector<const tradition *> get_enabled_traditions_for_country(const country *country) const;
-	void add_enabled_tradition(const tradition *tradition);
-
 	const std::vector<const research_organization *> &get_enabled_research_organizations() const
 	{
 		return this->enabled_research_organizations;
@@ -526,7 +517,6 @@ private:
 	std::vector<const transporter_type *> enabled_transporters;
 	std::vector<const government_type *> enabled_government_types;
 	std::vector<const law *> enabled_laws;
-	std::vector<const tradition *> enabled_traditions;
 	std::vector<const research_organization *> enabled_research_organizations;
 	std::vector<const research_organization *> disabled_research_organizations;
 	std::vector<const deity *> enabled_deities;

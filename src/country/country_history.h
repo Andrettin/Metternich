@@ -22,7 +22,6 @@ class office;
 class religion;
 class subject_type;
 class technology;
-class tradition;
 enum class country_tier;
 enum class diplomacy_state;
 
@@ -35,7 +34,6 @@ class country_history final : public data_entry_history
 	Q_PROPERTY(const metternich::government_type* government_type MEMBER government_type READ get_government_type)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
-	Q_PROPERTY(std::vector<const metternich::tradition *> traditions READ get_traditions)
 	Q_PROPERTY(int wealth MEMBER wealth READ get_wealth)
 
 public:
@@ -88,21 +86,6 @@ public:
 		std::erase(this->technologies, technology);
 	}
 
-	const std::vector<const tradition *> &get_traditions() const
-	{
-		return this->traditions;
-	}
-
-	Q_INVOKABLE void add_tradition(const tradition *tradition)
-	{
-		this->traditions.push_back(tradition);
-	}
-
-	Q_INVOKABLE void remove_tradition(const tradition *tradition)
-	{
-		std::erase(this->traditions, tradition);
-	}
-
 	const law_group_map<const law *> &get_laws() const
 	{
 		return this->laws;
@@ -139,7 +122,6 @@ private:
 	const metternich::subject_type *subject_type = nullptr;
 	centesimal_int literacy_rate;
 	std::vector<const technology *> technologies;
-	std::vector<const tradition *> traditions;
 	law_group_map<const law *> laws;
 	int wealth = 0;
 	commodity_map<int> commodities;

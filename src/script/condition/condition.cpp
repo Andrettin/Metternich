@@ -108,7 +108,6 @@
 #include "script/condition/taxon_condition.h"
 #include "script/condition/technology_condition.h"
 #include "script/condition/terrain_condition.h"
-#include "script/condition/tradition_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
 #include "script/condition/wealth_condition.h"
@@ -353,8 +352,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return std::make_unique<source_site_condition<scope_type>>(value, condition_operator);
 	} else if (key == "technology") {
 		return std::make_unique<technology_condition<scope_type>>(value, condition_operator);
-	} else if (key == "tradition") {
-		return std::make_unique<tradition_condition<scope_type>>(value, condition_operator);
 	} else if (key == "year") {
 		return std::make_unique<year_condition<scope_type>>(value, condition_operator);
 	}

@@ -24,7 +24,6 @@
 #include "country/journal_entry.h"
 #include "country/law.h"
 #include "country/law_group.h"
-#include "country/tradition_category.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -173,7 +172,6 @@ int main(int argc, char **argv)
 		database::get()->register_enum<starting_age_category>();
 		database::get()->register_enum<taxonomic_rank>();
 		database::get()->register_enum<temperature_type>();
-		database::get()->register_enum<tradition_category>();
 		database::get()->register_enum<transporter_category>();
 
 		QCoro::Qml::registerTypes();

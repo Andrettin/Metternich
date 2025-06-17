@@ -19,7 +19,6 @@
 #include "country/government_type.h"
 #include "country/law.h"
 #include "country/office.h"
-#include "country/tradition.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
@@ -449,10 +448,6 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			for (const technology *technology : country_history->get_technologies()) {
 				country_game_data->add_technology_with_prerequisites(technology);
-			}
-
-			for (const tradition *tradition : country_history->get_traditions()) {
-				country_game_data->gain_tradition_with_prerequisites(tradition);
 			}
 
 			for (const auto &[law_group, law] : country_history->get_laws()) {

@@ -132,8 +132,6 @@ signals:
 	void event_fired(const event_instance *event_instance);
 	void event_closed(const event_instance *event_instance);
 	void free_technology_choosable(const QVariantList &potential_technologies);
-	void next_tradition_choosable(const QVariantList &potential_traditions);
-	void next_belief_choosable(const QVariantList &potential_beliefs);
 	void next_advisor_choosable(const QVariantList &potential_advisors);
 	void next_leader_choosable(const QVariantList &potential_leaders);
 	void selected_military_units_changed();

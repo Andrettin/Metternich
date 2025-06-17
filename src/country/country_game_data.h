@@ -3,7 +3,6 @@
 #include "country/consulate_container.h"
 #include "country/country_container.h"
 #include "country/law_group_container.h"
-#include "country/tradition_container.h"
 #include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
@@ -33,7 +32,6 @@ Q_MOC_INCLUDE("country/journal_entry.h")
 Q_MOC_INCLUDE("country/law.h")
 Q_MOC_INCLUDE("country/law_group.h")
 Q_MOC_INCLUDE("country/subject_type.h")
-Q_MOC_INCLUDE("country/tradition.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
@@ -78,7 +76,6 @@ class site;
 class subject_type;
 class technology_category;
 class technology_subcategory;
-class tradition;
 class transporter;
 class transporter_type;
 class wonder;
@@ -160,10 +157,6 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
 	Q_PROPERTY(QVariantList available_research_organization_slots READ get_available_research_organization_slots_qvariant_list NOTIFY available_idea_slots_changed)
 	Q_PROPERTY(QVariantList available_deity_slots READ get_available_deity_slots_qvariant_list NOTIFY available_idea_slots_changed)
-	Q_PROPERTY(QVariantList available_traditions READ get_available_traditions_qvariant_list NOTIFY traditions_changed)
-	Q_PROPERTY(int tradition_cost READ get_tradition_cost NOTIFY traditions_changed)
-	Q_PROPERTY(const metternich::tradition* next_tradition READ get_next_tradition WRITE set_next_tradition NOTIFY next_tradition_changed)
-	Q_PROPERTY(const metternich::tradition* next_belief READ get_next_belief WRITE set_next_belief NOTIFY next_belief_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList office_holders READ get_office_holders_qvariant_list NOTIFY office_holders_changed)
@@ -1368,71 +1361,6 @@ public:
 	int get_deity_cost() const;
 	commodity_map<int> get_idea_commodity_costs(const idea *idea) const;
 
-	const tradition_set &get_traditions() const
-	{
-		return this->traditions;
-	}
-
-	Q_INVOKABLE bool has_tradition(const metternich::tradition *tradition) const
-	{
-		return this->get_traditions().contains(tradition);
-	}
-
-	std::vector<const tradition *> get_available_traditions() const;
-	QVariantList get_available_traditions_qvariant_list() const;
-
-	Q_INVOKABLE bool can_have_tradition(const metternich::tradition *tradition) const;
-	void gain_tradition(const tradition *tradition, const int multiplier);
-	void gain_tradition_with_prerequisites(const tradition *tradition);
-	void check_traditions();
-	void check_beliefs();
-
-	int get_tradition_cost() const
-	{
-		int cost = 3 * static_cast<int>(this->get_traditions().size()) + 25;
-		cost *= 100 + (10 * (this->get_province_count() - 1));
-		cost /= 100;
-
-		cost *= 100 + this->get_tradition_cost_modifier();
-		cost /= 100;
-
-		return std::max(0, cost);
-	}
-
-	const tradition *get_next_tradition() const
-	{
-		return this->next_tradition;
-	}
-
-	void set_next_tradition(const tradition *tradition)
-	{
-		if (tradition == this->get_next_tradition()) {
-			return;
-		}
-
-		this->next_tradition = tradition;
-		emit next_tradition_changed();
-	}
-
-	void choose_next_tradition();
-
-	const tradition *get_next_belief() const
-	{
-		return this->next_belief;
-	}
-
-	void set_next_belief(const tradition *belief)
-	{
-		if (belief == this->get_next_belief()) {
-			return;
-		}
-
-		this->next_belief = belief;
-		emit next_belief_changed();
-	}
-
-	void choose_next_belief();
-
 	const scripted_country_modifier_map<int> &get_scripted_modifiers() const
 	{
 		return this->scripted_modifiers;
@@ -2262,16 +2190,6 @@ public:
 		this->law_cost_modifier += change;
 	}
 
-	int get_tradition_cost_modifier() const
-	{
-		return this->tradition_cost_modifier;
-	}
-
-	void change_tradition_cost_modifier(const int change)
-	{
-		this->tradition_cost_modifier += change;
-	}
-
 	int get_advisor_cost_modifier() const
 	{
 		return this->advisor_cost_modifier;
@@ -2599,11 +2517,6 @@ signals:
 	void ideas_changed();
 	void appointed_ideas_changed();
 	void available_idea_slots_changed();
-	void traditions_changed();
-	void next_tradition_changed();
-	void tradition_adopted(const tradition *tradition);
-	void next_belief_changed();
-	void belief_adopted(const tradition *belief);
 	void scripted_modifiers_changed();
 	void ruler_changed();
 	void office_holders_changed();
@@ -2697,9 +2610,6 @@ private:
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
 	const metternich::government_type *government_type = nullptr;
 	law_group_map<const law *> laws;
-	tradition_set traditions;
-	const tradition *next_tradition = nullptr;
-	const tradition *next_belief = nullptr;
 	scripted_country_modifier_map<int> scripted_modifiers;
 	data_entry_map<office, const character *> office_holders;
 	data_entry_map<office, const character *> appointed_office_holders;
@@ -2745,7 +2655,6 @@ private:
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	population_type_map<centesimal_int> population_type_militancy_modifiers;
 	int law_cost_modifier = 0;
-	int tradition_cost_modifier = 0;
 	int advisor_cost_modifier = 0;
 	int leader_cost_modifier = 0;
 	int building_cost_efficiency_modifier = 0;

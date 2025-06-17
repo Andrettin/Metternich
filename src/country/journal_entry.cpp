@@ -7,8 +7,6 @@
 #include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
-#include "country/tradition.h"
-#include "country/tradition_category.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/province.h"
@@ -119,10 +117,6 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->researched_technologies.push_back(technology::get(value));
 		}
-	} else if (tag == "adopted_traditions") {
-		for (const std::string &value : values) {
-			this->adopted_traditions.push_back(tradition::get(value));
-		}
 	} else if (tag == "recruited_characters") {
 		for (const std::string &value : values) {
 			this->recruited_characters.push_back(character::get(value));
@@ -232,12 +226,6 @@ bool journal_entry::check_conditions(const country *country) const
 		}
 	}
 
-	for (const tradition *tradition : this->get_adopted_traditions()) {
-		if (!country_game_data->can_have_tradition(tradition)) {
-			return false;
-		}
-	}
-
 	return true;
 }
 
@@ -251,7 +239,6 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 		&& this->get_built_site_improvements().empty()
 		&& this->get_built_resource_site_levels().empty()
 		&& this->get_researched_technologies().empty()
-		&& this->get_adopted_traditions().empty()
 		&& this->get_recruited_characters().empty()
 		&& this->get_completion_random_chance() == 0
 	) {
@@ -319,12 +306,6 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 
 	for (const technology *technology : this->get_researched_technologies()) {
 		if (!country_game_data->has_technology(technology)) {
-			return false;
-		}
-	}
-
-	for (const tradition *tradition : this->get_adopted_traditions()) {
-		if (!country_game_data->has_tradition(tradition)) {
 			return false;
 		}
 	}
@@ -429,14 +410,6 @@ QString journal_entry::get_completion_conditions_string() const
 		}
 
 		str += std::format("Research {}", technology->get_name());
-	}
-
-	for (const tradition *tradition : this->get_adopted_traditions()) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		str += std::format("Adopt {} ({})", tradition->get_name(), get_tradition_category_name(tradition->get_category()));
 	}
 
 	for (const character *character : this->get_recruited_characters()) {

@@ -10,8 +10,6 @@
 #include "country/culture.h"
 #include "country/government_type.h"
 #include "country/law.h"
-#include "country/tradition.h"
-#include "country/tradition_category.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
@@ -260,7 +258,6 @@ void technology::check() const
 		&& this->get_enabled_government_types().empty()
 		&& this->get_enabled_improvements().empty()
 		&& this->get_enabled_laws().empty()
-		&& this->get_enabled_traditions().empty()
 		&& this->get_enabled_military_units().empty()
 		&& this->get_enabled_pathway_terrains().empty()
 		&& this->get_enabled_pathways().empty()
@@ -721,30 +718,6 @@ void technology::add_enabled_law(const law *law)
 	});
 }
 
-std::vector<const tradition *> technology::get_enabled_traditions_for_country(const country *country) const
-{
-	std::vector<const tradition *> traditions;
-
-	for (const tradition *tradition : this->get_enabled_traditions()) {
-		if (!tradition->is_available_for_country(country)) {
-			continue;
-		}
-
-		traditions.push_back(tradition);
-	}
-
-	return traditions;
-}
-
-void technology::add_enabled_tradition(const tradition *tradition)
-{
-	this->enabled_traditions.push_back(tradition);
-
-	std::sort(this->enabled_traditions.begin(), this->enabled_traditions.end(), [](const metternich::tradition *lhs, const metternich::tradition *rhs) {
-		return lhs->get_identifier() < rhs->get_identifier();
-	});
-}
-
 std::vector<const research_organization *> technology::get_enabled_research_organizations_for_country(const country *country) const
 {
 	std::vector<const research_organization *> organizations;
@@ -1084,17 +1057,6 @@ QString technology::get_effects_string(metternich::country *country) const
 			}
 
 			str += std::format("Enables {} law", law->get_name());
-		}
-	}
-
-	const std::vector<const tradition *> enabled_traditions = this->get_enabled_traditions_for_country(country);
-	if (!enabled_traditions.empty()) {
-		for (const tradition *tradition : enabled_traditions) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Enables {} {}", tradition->get_name(), string::lowered(get_tradition_category_name(tradition->get_category())));
 		}
 	}
 
