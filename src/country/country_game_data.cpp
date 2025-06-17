@@ -3521,6 +3521,198 @@ void country_game_data::gain_technologies_known_by_others()
 	}
 }
 
+void country_game_data::set_government_type(const metternich::government_type *government_type)
+{
+	if (government_type == this->get_government_type()) {
+		return;
+	}
+
+	if (government_type != nullptr) {
+		if (this->country->is_tribe() && !government_type->get_group()->is_tribal()) {
+			throw std::runtime_error(std::format("Tried to set a non-tribal government type (\"{}\") for a tribal country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
+		}
+
+		if (this->country->is_clade() && !government_type->get_group()->is_clade()) {
+			throw std::runtime_error(std::format("Tried to set a non-clade government type (\"{}\") for a clade country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
+		}
+	}
+
+	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
+		this->get_government_type()->get_modifier()->apply(this->country, -1);
+	}
+
+	this->government_type = government_type;
+
+	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
+		this->get_government_type()->get_modifier()->apply(this->country, 1);
+	}
+
+	if (game::get()->is_running()) {
+		emit government_type_changed();
+	}
+}
+
+bool country_game_data::can_have_government_type(const metternich::government_type *government_type) const
+{
+	if (government_type->get_required_technology() != nullptr && !this->has_technology(government_type->get_required_technology())) {
+		return false;
+	}
+
+	for (const law *forbidden_law : government_type->get_forbidden_laws()) {
+		if (this->has_law(forbidden_law)) {
+			return false;
+		}
+	}
+
+	if (government_type->get_conditions() != nullptr && !government_type->get_conditions()->check(this->country, read_only_context(this->country))) {
+		return false;
+	}
+
+	return true;
+}
+
+void country_game_data::check_government_type()
+{
+	if (this->get_government_type() != nullptr && this->can_have_government_type(this->get_government_type())) {
+		return;
+	}
+
+	std::vector<const metternich::government_type *> potential_government_types;
+
+	for (const metternich::government_type *government_type : government_type::get_all()) {
+		if (this->can_have_government_type(government_type)) {
+			potential_government_types.push_back(government_type);
+		}
+	}
+
+	assert_throw(!potential_government_types.empty());
+
+	this->set_government_type(vector::get_random(potential_government_types));
+}
+
+bool country_game_data::is_tribal() const
+{
+	return this->get_government_type()->get_group()->is_tribal();
+}
+
+bool country_game_data::is_clade() const
+{
+	return this->get_government_type()->get_group()->is_clade();
+}
+
+QVariantList country_game_data::get_laws_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_laws());
+}
+
+void country_game_data::set_law(const law_group *law_group, const law *law)
+{
+	assert_throw(law_group != nullptr);
+
+	if (law == this->get_law(law_group)) {
+		return;
+	}
+
+	const metternich::law *old_law = this->get_law(law_group);
+	if (old_law != nullptr) {
+		old_law->get_modifier()->remove(this->country);
+	}
+
+	this->laws[law_group] = law;
+
+	if (law != nullptr) {
+		assert_throw(law->get_group() == law_group);
+		law->get_modifier()->apply(this->country);
+	}
+
+	this->check_government_type();
+
+	if (game::get()->is_running()) {
+		emit laws_changed();
+	}
+}
+
+bool country_game_data::has_law(const law *law) const
+{
+	return this->get_law(law->get_group()) == law;
+}
+
+bool country_game_data::can_have_law(const metternich::law *law) const
+{
+	if (law->get_required_technology() != nullptr && !this->has_technology(law->get_required_technology())) {
+		return false;
+	}
+
+	if (law->get_conditions() != nullptr && !law->get_conditions()->check(this->country, read_only_context(this->country))) {
+		return false;
+	}
+
+	return true;
+}
+
+bool country_game_data::can_enact_law(const metternich::law *law) const
+{
+	if (!this->can_have_law(law)) {
+		return false;
+	}
+
+	if (vector::contains(this->get_government_type()->get_forbidden_laws(), law)) {
+		return false;
+	}
+
+	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
+		if (this->get_stored_commodity(commodity) < (cost * this->get_total_law_cost_modifier() / 100)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void country_game_data::enact_law(const law *law)
+{
+	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
+		this->change_stored_commodity(commodity, -cost * this->get_total_law_cost_modifier() / 100);
+	}
+
+	this->set_law(law->get_group(), law);
+}
+
+void country_game_data::check_laws()
+{
+	for (const law_group *law_group : law_group::get_all()) {
+		if (this->get_law(law_group) != nullptr && !this->can_have_law(this->get_law(law_group))) {
+			this->set_law(law_group, nullptr);
+		}
+
+		if (this->get_law(law_group) == nullptr) {
+			const law *government_type_default_law = this->get_government_type()->get_default_law(law_group);
+			if (government_type_default_law != nullptr && this->can_have_law(government_type_default_law)) {
+				this->set_law(law_group, government_type_default_law);
+			}
+		}
+
+		if (this->get_law(law_group) == nullptr) {
+			if (this->can_have_law(law_group->get_default_law())) {
+				this->set_law(law_group, law_group->get_default_law());
+			}
+		}
+
+		if (this->get_law(law_group) == nullptr) {
+			std::vector<const law *> potential_laws;
+			for (const metternich::law *group_law : law_group->get_laws()) {
+				if (this->can_have_law(group_law)) {
+					potential_laws.push_back(group_law);
+				}
+			}
+			if (!potential_laws.empty()) {
+				this->set_law(law_group, vector::get_random(potential_laws));
+			}
+		}
+	}
+}
+
+
 QVariantList country_game_data::get_ideas_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_ideas());
@@ -3808,197 +4000,6 @@ QVariantList country_game_data::get_available_research_organization_slots_qvaria
 QVariantList country_game_data::get_available_deity_slots_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_available_idea_slots(idea_type::deity));
-}
-
-void country_game_data::set_government_type(const metternich::government_type *government_type)
-{
-	if (government_type == this->get_government_type()) {
-		return;
-	}
-
-	if (government_type != nullptr) {
-		if (this->country->is_tribe() && !government_type->get_group()->is_tribal()) {
-			throw std::runtime_error(std::format("Tried to set a non-tribal government type (\"{}\") for a tribal country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
-		}
-
-		if (this->country->is_clade() && !government_type->get_group()->is_clade()) {
-			throw std::runtime_error(std::format("Tried to set a non-clade government type (\"{}\") for a clade country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
-		}
-	}
-
-	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
-		this->get_government_type()->get_modifier()->apply(this->country, -1);
-	}
-
-	this->government_type = government_type;
-
-	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
-		this->get_government_type()->get_modifier()->apply(this->country, 1);
-	}
-
-	if (game::get()->is_running()) {
-		emit government_type_changed();
-	}
-}
-
-bool country_game_data::can_have_government_type(const metternich::government_type *government_type) const
-{
-	if (government_type->get_required_technology() != nullptr && !this->has_technology(government_type->get_required_technology())) {
-		return false;
-	}
-
-	for (const law *forbidden_law : government_type->get_forbidden_laws()) {
-		if (this->has_law(forbidden_law)) {
-			return false;
-		}
-	}
-
-	if (government_type->get_conditions() != nullptr && !government_type->get_conditions()->check(this->country, read_only_context(this->country))) {
-		return false;
-	}
-
-	return true;
-}
-
-void country_game_data::check_government_type()
-{
-	if (this->get_government_type() != nullptr && this->can_have_government_type(this->get_government_type())) {
-		return;
-	}
-
-	std::vector<const metternich::government_type *> potential_government_types;
-
-	for (const metternich::government_type *government_type : government_type::get_all()) {
-		if (this->can_have_government_type(government_type)) {
-			potential_government_types.push_back(government_type);
-		}
-	}
-
-	assert_throw(!potential_government_types.empty());
-
-	this->set_government_type(vector::get_random(potential_government_types));
-}
-
-bool country_game_data::is_tribal() const
-{
-	return this->get_government_type()->get_group()->is_tribal();
-}
-
-bool country_game_data::is_clade() const
-{
-	return this->get_government_type()->get_group()->is_clade();
-}
-
-QVariantList country_game_data::get_laws_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_laws());
-}
-
-void country_game_data::set_law(const law_group *law_group, const law *law)
-{
-	assert_throw(law_group != nullptr);
-
-	if (law == this->get_law(law_group)) {
-		return;
-	}
-
-	const metternich::law *old_law = this->get_law(law_group);
-	if (old_law != nullptr) {
-		old_law->get_modifier()->remove(this->country);
-	}
-
-	this->laws[law_group] = law;
-
-	if (law != nullptr) {
-		assert_throw(law->get_group() == law_group);
-		law->get_modifier()->apply(this->country);
-	}
-
-	this->check_government_type();
-
-	if (game::get()->is_running()) {
-		emit laws_changed();
-	}
-}
-
-bool country_game_data::has_law(const law *law) const
-{
-	return this->get_law(law->get_group()) == law;
-}
-
-bool country_game_data::can_have_law(const metternich::law *law) const
-{
-	if (law->get_required_technology() != nullptr && !this->has_technology(law->get_required_technology())) {
-		return false;
-	}
-
-	if (law->get_conditions() != nullptr && !law->get_conditions()->check(this->country, read_only_context(this->country))) {
-		return false;
-	}
-
-	return true;
-}
-
-bool country_game_data::can_enact_law(const metternich::law *law) const
-{
-	if (!this->can_have_law(law)) {
-		return false;
-	}
-
-	if (vector::contains(this->get_government_type()->get_forbidden_laws(), law)) {
-		return false;
-	}
-
-	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		if (this->get_stored_commodity(commodity) < (cost * this->get_total_law_cost_modifier() / 100)) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-void country_game_data::enact_law(const law *law)
-{
-	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		this->change_stored_commodity(commodity, -cost * this->get_total_law_cost_modifier() / 100);
-	}
-
-	this->set_law(law->get_group(), law);
-}
-
-void country_game_data::check_laws()
-{
-	for (const law_group *law_group : law_group::get_all()) {
-		if (this->get_law(law_group) != nullptr && !this->can_have_law(this->get_law(law_group))) {
-			this->set_law(law_group, nullptr);
-		}
-
-		if (this->get_law(law_group) == nullptr) {
-			const law *government_type_default_law = this->get_government_type()->get_default_law(law_group);
-			if (government_type_default_law != nullptr && this->can_have_law(government_type_default_law)) {
-				this->set_law(law_group, government_type_default_law);
-			}
-		}
-
-		if (this->get_law(law_group) == nullptr) {
-			if (this->can_have_law(law_group->get_default_law())) {
-				this->set_law(law_group, law_group->get_default_law());
-			}
-		}
-
-		if (this->get_law(law_group) == nullptr) {
-			std::vector<const law *> potential_laws;
-			for (const metternich::law *group_law : law_group->get_laws()) {
-				if (this->can_have_law(group_law)) {
-					potential_laws.push_back(group_law);
-				}
-			}
-			if (!potential_laws.empty()) {
-				this->set_law(law_group, vector::get_random(potential_laws));
-			}
-		}
-	}
 }
 
 std::vector<const tradition *> country_game_data::get_available_traditions() const
