@@ -3837,7 +3837,6 @@ void country_game_data::check_idea(const idea_slot *slot)
 	const idea *appointed_idea = this->get_appointed_idea(slot);
 	if (appointed_idea != nullptr && this->can_have_idea(slot, appointed_idea)) {
 		this->set_idea(slot, appointed_idea);
-		this->set_appointed_idea(slot, nullptr);
 	}
 
 	//remove research organizations if they have become obsolete
@@ -3924,6 +3923,10 @@ const idea *country_game_data::get_best_idea(const idea_slot *slot)
 	int best_skill = 0;
 
 	for (const idea *idea : this->get_appointable_ideas(slot)) {
+		if (!this->can_appoint_idea(slot, idea)) {
+			continue;
+		}
+
 		const int skill = idea->get_skill();
 
 		if (skill < best_skill) {
