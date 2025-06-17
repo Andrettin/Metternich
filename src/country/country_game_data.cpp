@@ -3794,16 +3794,30 @@ const idea *country_game_data::get_appointed_idea(const idea_slot *slot) const
 
 void country_game_data::set_appointed_idea(const idea_slot *slot, const idea *idea)
 {
-	if (idea == this->get_appointed_idea(slot)) {
+	const metternich::idea *old_idea = this->get_appointed_idea(slot);
+
+	if (idea == old_idea) {
 		return;
 	}
 
 	if (idea != nullptr) {
+		const commodity_map<int> commodity_costs = this->get_idea_commodity_costs(idea);
+		for (const auto &[commodity, cost] : commodity_costs) {
+			this->change_stored_commodity(commodity, -cost);
+		}
+
 		this->appointed_ideas[slot->get_idea_type()][slot] = idea;
 	} else {
 		this->appointed_ideas[slot->get_idea_type()].erase(slot);
 		if (this->appointed_ideas[slot->get_idea_type()].empty()) {
 			this->appointed_ideas.erase(slot->get_idea_type());
+		}
+	}
+
+	if (old_idea != nullptr) {
+		const commodity_map<int> commodity_costs = this->get_idea_commodity_costs(old_idea);
+		for (const auto &[commodity, cost] : commodity_costs) {
+			this->change_stored_commodity(commodity, cost);
 		}
 	}
 
@@ -3889,7 +3903,7 @@ std::vector<const idea *> country_game_data::get_appointable_ideas(const idea_sl
 	}
 
 	std::erase_if(potential_ideas, [this, slot](const idea *idea) {
-		if (!this->can_appoint_idea(slot, idea)) {
+		if (!this->can_gain_idea(slot, idea)) {
 			return true;
 		}
 
@@ -3947,7 +3961,7 @@ bool country_game_data::can_have_idea(const idea_slot *slot, const idea *idea) c
 	return true;
 }
 
-bool country_game_data::can_appoint_idea(const idea_slot *slot, const idea *idea) const
+bool country_game_data::can_gain_idea(const idea_slot *slot, const idea *idea) const
 {
 	if (!this->can_have_idea(slot, idea)) {
 		return false;
@@ -3955,6 +3969,22 @@ bool country_game_data::can_appoint_idea(const idea_slot *slot, const idea *idea
 
 	for (const auto &[loop_slot, slot_idea] : this->get_appointed_ideas(slot->get_idea_type())) {
 		if (slot_idea == idea) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool country_game_data::can_appoint_idea(const idea_slot *slot, const idea *idea) const
+{
+	if (!this->can_gain_idea(slot, idea)) {
+		return false;
+	}
+
+	const commodity_map<int> commodity_costs = this->get_idea_commodity_costs(idea);
+	for (const auto &[commodity, cost] : commodity_costs) {
+		if (this->get_stored_commodity(commodity) < cost) {
 			return false;
 		}
 	}
@@ -4000,6 +4030,31 @@ QVariantList country_game_data::get_available_research_organization_slots_qvaria
 QVariantList country_game_data::get_available_deity_slots_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_available_idea_slots(idea_type::deity));
+}
+
+int country_game_data::get_deity_cost() const
+{
+	const data_entry_map<idea_slot, const idea *> &deities = this->get_ideas(idea_type::deity);
+	const data_entry_map<idea_slot, const idea *> &appointed_deities = this->get_appointed_ideas(idea_type::deity);
+	const int deity_count = static_cast<int>(deities.size() + appointed_deities.size());
+
+	if (deity_count == 0) {
+		return country_game_data::first_deity_cost;
+	}
+
+	return country_game_data::base_deity_cost + country_game_data::deity_cost_increment * (deity_count - 1) * deity_count / 2;
+}
+
+commodity_map<int> country_game_data::get_idea_commodity_costs(const idea *idea) const
+{
+	commodity_map<int> commodity_costs;
+
+	if (idea->get_idea_type() == idea_type::deity) {
+		const int cost = this->get_deity_cost();
+		commodity_costs[defines::get()->get_piety_commodity()] = cost;
+	}
+
+	return commodity_costs;
 }
 
 std::vector<const tradition *> country_game_data::get_available_traditions() const

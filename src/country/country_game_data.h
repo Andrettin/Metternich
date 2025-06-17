@@ -187,6 +187,9 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList finished_journal_entries READ get_finished_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 
 public:
+	static constexpr int first_deity_cost = 10;
+	static constexpr int base_deity_cost = 200;
+	static constexpr int deity_cost_increment = 100;
 	static constexpr int base_advisor_cost = 80;
 	static constexpr int base_leader_cost = 80;
 	static constexpr int base_deployment_limit = 10;
@@ -1341,11 +1344,15 @@ public:
 	Q_INVOKABLE QVariantList get_appointable_ideas_qvariant_list(const metternich::idea_slot *slot) const;
 	const idea *get_best_idea(const idea_slot *slot);
 	bool can_have_idea(const idea_slot *slot, const idea *idea) const;
-	bool can_appoint_idea(const idea_slot *slot, const idea *idea) const;
+	bool can_gain_idea(const idea_slot *slot, const idea *idea) const;
+	Q_INVOKABLE bool can_appoint_idea(const metternich::idea_slot *slot, const metternich::idea *idea) const;
 
 	std::vector<const idea_slot *> get_available_idea_slots(const idea_type idea_type) const;
 	QVariantList get_available_research_organization_slots_qvariant_list() const;
 	QVariantList get_available_deity_slots_qvariant_list() const;
+
+	int get_deity_cost() const;
+	commodity_map<int> get_idea_commodity_costs(const idea *idea) const;
 
 	const tradition_set &get_traditions() const
 	{
