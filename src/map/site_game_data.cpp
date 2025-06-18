@@ -1404,7 +1404,7 @@ void site_game_data::check_landholder()
 	if (this->get_landholder() != nullptr && this->get_landholder()->get_obsolescence_technology() != nullptr && this->get_owner()->get_game_data()->has_technology(this->get_landholder()->get_obsolescence_technology())) {
 		if (game::get()->is_running()) {
 			if (this->get_owner() == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_owner()->get_game_data()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification(std::format("Landholder of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, landholder {} of {} has decided to retire.", this->get_landholder()->get_full_name(), this->get_current_cultural_name()));
 			}
@@ -1449,7 +1449,7 @@ void site_game_data::check_landholder()
 			this->set_landholder(vector::get_random(potential_landholders));
 
 			if (this->get_owner() == game::get()->get_player_country() && game::get()->is_running()) {
-				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_owner()->get_game_data()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification(std::format("New Landholder of {}", this->get_current_cultural_name()), interior_minister_portrait, std::format("{} has become the new landholder of {}!\n\n{}", this->get_landholder()->get_full_name(), this->get_current_cultural_name(), this->get_landholder()->get_game_data()->get_landholder_modifier_string(this->site)));
 			}

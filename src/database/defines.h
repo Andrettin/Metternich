@@ -62,8 +62,10 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::icon* military_upkeep_icon MEMBER military_upkeep_icon NOTIFY changed)
 	Q_PROPERTY(int max_character_skill MEMBER max_character_skill READ get_max_character_skill NOTIFY changed)
 	Q_PROPERTY(const metternich::office* ruler_office MEMBER ruler_office READ get_ruler_office NOTIFY changed)
-	Q_PROPERTY(metternich::portrait* interior_minister_portrait MEMBER interior_minister_portrait NOTIFY changed)
-	Q_PROPERTY(metternich::portrait* war_minister_portrait MEMBER war_minister_portrait NOTIFY changed)
+	Q_PROPERTY(const metternich::office* interior_minister_office MEMBER interior_minister_office READ get_interior_minister_office NOTIFY changed)
+	Q_PROPERTY(const metternich::office* war_minister_office MEMBER war_minister_office READ get_war_minister_office NOTIFY changed)
+	Q_PROPERTY(const metternich::portrait* interior_minister_portrait MEMBER interior_minister_portrait READ get_interior_minister_portrait NOTIFY changed)
+	Q_PROPERTY(const metternich::portrait* war_minister_portrait MEMBER war_minister_portrait READ get_war_minister_portrait NOTIFY changed)
 	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color NOTIFY changed)
 	Q_PROPERTY(QColor country_border_color MEMBER country_border_color READ get_country_border_color NOTIFY changed)
 	Q_PROPERTY(QColor selected_country_color MEMBER selected_country_color READ get_selected_country_color NOTIFY changed)
@@ -282,6 +284,16 @@ public:
 		return this->ruler_office;
 	}
 
+	const office *get_interior_minister_office() const
+	{
+		return this->interior_minister_office;
+	}
+
+	const office *get_war_minister_office() const
+	{
+		return this->war_minister_office;
+	}
+
 	const portrait *get_interior_minister_portrait() const
 	{
 		return this->interior_minister_portrait;
@@ -408,8 +420,10 @@ private:
 	std::unique_ptr<modifier<const site>> scaled_landholder_modifier;
 	int max_character_skill = 0;
 	const office *ruler_office = nullptr;
-	portrait *interior_minister_portrait = nullptr;
-	portrait *war_minister_portrait = nullptr;
+	const office *interior_minister_office = nullptr;
+	const office *war_minister_office = nullptr;
+	const portrait *interior_minister_portrait = nullptr;
+	const portrait *war_minister_portrait = nullptr;
 	QColor minor_nation_color;
 	QColor country_border_color;
 	QColor selected_country_color;

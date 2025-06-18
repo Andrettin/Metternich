@@ -37,6 +37,7 @@ Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
+Q_MOC_INCLUDE("ui/portrait.h")
 Q_MOC_INCLUDE("unit/military_unit_type.h")
 
 namespace metternich {
@@ -67,6 +68,7 @@ class population;
 class population_class;
 class population_type;
 class population_unit;
+class portrait;
 class profession;
 class province;
 class region;
@@ -165,6 +167,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
 	Q_PROPERTY(const metternich::character* next_advisor READ get_next_advisor WRITE set_next_advisor NOTIFY next_advisor_changed)
+	Q_PROPERTY(const metternich::portrait* interior_minister_portrait READ get_interior_minister_portrait NOTIFY office_holders_changed)
+	Q_PROPERTY(const metternich::portrait* war_minister_portrait READ get_war_minister_portrait NOTIFY office_holders_changed)
 	Q_PROPERTY(QVariantList leaders READ get_leaders_qvariant_list NOTIFY leaders_changed)
 	Q_PROPERTY(int leader_cost READ get_leader_cost NOTIFY leaders_changed)
 	Q_PROPERTY(const metternich::character* next_leader READ get_next_leader WRITE set_next_leader NOTIFY next_leader_changed)
@@ -1486,6 +1490,9 @@ public:
 	bool can_recruit_advisor(const character *advisor) const;
 	bool has_incompatible_advisor_to(const character *advisor) const;
 	const character *get_replaced_advisor_for(const character *advisor) const;
+
+	const metternich::portrait *get_interior_minister_portrait() const;
+	const metternich::portrait *get_war_minister_portrait() const;
 
 	const std::vector<const character *> &get_leaders() const
 	{

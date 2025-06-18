@@ -343,7 +343,7 @@ void country_game_data::do_starvation()
 	if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
 		const bool plural = starvation_count > 1;
 
-		const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+		const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 		engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
 	}
@@ -3807,7 +3807,7 @@ void country_game_data::set_idea(const idea_slot *slot, const idea *idea)
 		emit ideas_changed();
 
 		if (this->country == game::get()->get_player_country() && idea != nullptr) {
-			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 			switch (slot->get_idea_type()) {
 				case idea_type::deity:
@@ -3894,7 +3894,7 @@ void country_game_data::check_idea(const idea_slot *slot)
 
 		if (game::get()->is_running()) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 				switch (slot->get_idea_type()) {
 					case idea_type::deity:
@@ -4284,7 +4284,7 @@ void country_game_data::set_office_holder(const office *office, const character 
 		}
 
 		if (this->country == game::get()->get_player_country() && character != nullptr) {
-			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 			engine_interface::get()->add_notification(std::format("New {}", office->get_name()), interior_minister_portrait, std::format("{} has become our new {}!\n\n{}", character->get_full_name(), string::lowered(office->get_name()), character->get_game_data()->get_office_modifier_string(this->country, office)));
 		}
@@ -4516,7 +4516,7 @@ void country_game_data::on_office_holder_died(const office *office, const charac
 {
 	if (game::get()->is_running()) {
 		if (this->country == game::get()->get_player_country()) {
-			const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 			if (office->is_ruler()) {
 				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
@@ -4563,7 +4563,7 @@ void country_game_data::check_advisors()
 	for (const character *advisor : advisors) {
 		if (advisor->get_obsolescence_technology() != nullptr && this->has_technology(advisor->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification("Advisor Retired", interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the advisor {} has decided to retire.", advisor->get_full_name()));
 			}
@@ -4584,7 +4584,7 @@ void country_game_data::check_advisors()
 	if (this->get_next_advisor() != nullptr) {
 		if (this->get_next_advisor()->get_game_data()->get_country() != nullptr) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor {} has unfortunately decided to join {}, and is no longer available for recruitment.", this->get_next_advisor()->get_full_name(), this->get_next_advisor()->get_game_data()->get_country()->get_game_data()->get_name()));
 			}
@@ -4592,7 +4592,7 @@ void country_game_data::check_advisors()
 			this->set_next_advisor(nullptr);
 		} else if (this->get_next_advisor()->get_obsolescence_technology() != nullptr && this->has_technology(this->get_next_advisor()->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor {} is no longer available for recruitment.", this->get_next_advisor()->get_full_name()));
 			}
@@ -4842,6 +4842,26 @@ const character *country_game_data::get_replaced_advisor_for(const character *ad
 	return nullptr;
 }
 
+const metternich::portrait *country_game_data::get_interior_minister_portrait() const
+{
+	const character *office_holder = this->get_office_holder(defines::get()->get_interior_minister_office());
+	if (office_holder != nullptr) {
+		return office_holder->get_game_data()->get_portrait();
+	}
+
+	return defines::get()->get_interior_minister_portrait();
+}
+
+const metternich::portrait *country_game_data::get_war_minister_portrait() const
+{
+	const character *office_holder = this->get_office_holder(defines::get()->get_war_minister_office());
+	if (office_holder != nullptr) {
+		return office_holder->get_game_data()->get_portrait();
+	}
+
+	return defines::get()->get_war_minister_portrait();
+}
+
 QVariantList country_game_data::get_leaders_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_leaders());
@@ -4854,7 +4874,7 @@ void country_game_data::check_leaders()
 	for (const character *leader : leaders) {
 		if (leader->get_obsolescence_technology() != nullptr && this->has_technology(leader->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *war_minister_portrait = defines::get()->get_war_minister_portrait();
+				const portrait *war_minister_portrait = this->get_war_minister_portrait();
 
 				const std::string_view leader_type_name = leader->get_leader_type_name();
 
@@ -4876,7 +4896,7 @@ void country_game_data::check_leaders()
 	if (this->get_next_leader() != nullptr) {
 		if (this->get_next_leader()->get_game_data()->get_country() != nullptr) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *war_minister_portrait = defines::get()->get_war_minister_portrait();
+				const portrait *war_minister_portrait = this->get_war_minister_portrait();
 
 				const std::string_view leader_type_name = this->get_next_leader()->get_leader_type_name();
 
@@ -4889,7 +4909,7 @@ void country_game_data::check_leaders()
 			|| this->get_best_military_unit_category_type(this->get_next_leader()->get_military_unit_category(), this->get_next_leader()->get_culture()) == nullptr
 		) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *war_minister_portrait = defines::get()->get_war_minister_portrait();
+				const portrait *war_minister_portrait = this->get_war_minister_portrait();
 
 				const std::string_view leader_type_name = this->get_next_leader()->get_leader_type_name();
 
@@ -5080,7 +5100,7 @@ void country_game_data::check_civilian_characters()
 	for (const character *character : civilian_characters) {
 		if (character->get_obsolescence_technology() != nullptr && this->has_technology(character->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = defines::get()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 				const std::string &civilian_unit_type_name = character->get_civilian_unit_type()->get_name();
 
