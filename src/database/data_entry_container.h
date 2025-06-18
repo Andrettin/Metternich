@@ -1,6 +1,7 @@
 #pragma once
 
 namespace archimedes {
+	class game_rule;
 	class named_data_entry;
 }
 
@@ -25,6 +26,7 @@ class technology_category;
 class technology_subcategory;
 
 extern template struct data_entry_compare<cultural_group>;
+extern template struct data_entry_compare<game_rule>;
 extern template struct data_entry_compare<idea_slot>;
 extern template struct data_entry_compare<named_data_entry>;
 extern template struct data_entry_compare<office>;
