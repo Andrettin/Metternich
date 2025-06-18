@@ -1756,7 +1756,10 @@ void game::set_player_country(const country *country)
 	}
 
 	this->player_country = country;
-	emit player_country_changed();
+
+	if (this->is_running()) {
+		emit player_country_changed();
+	}
 
 	this->set_player_character(country ? country->get_game_data()->get_ruler() : nullptr);
 }
