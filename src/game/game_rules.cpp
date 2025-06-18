@@ -7,6 +7,7 @@
 #include "game/game_rule.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/exception_util.h"
 #include "util/map_util.h"
 #include "util/string_conversion_util.h"
 
@@ -21,12 +22,20 @@ game_rules::game_rules()
 
 void game_rules::process_gsml_property(const gsml_property &property)
 {
-	const game_rule *rule = game_rule::try_get(property.get_key());
-	if (rule != nullptr) {
-		assert_throw(property.get_operator() == gsml_operator::assignment);
-		this->values[rule] = string::to_bool(property.get_value());
-	} else {
-		database::get()->process_gsml_property_for_object(this, property);
+	try {
+		const game_rule *rule = game_rule::try_get(property.get_key());
+		if (rule != nullptr) {
+			assert_throw(property.get_operator() == gsml_operator::assignment);
+			//for hidden rules, don't change their value from the default one
+			if (!rule->is_hidden()) { 
+				this->values[rule] = string::to_bool(property.get_value());
+			}
+		} else {
+			//this can throw an exception if an old rule was removed
+			database::get()->process_gsml_property_for_object(this, property);
+		}
+	} catch (...) {
+		exception::report(std::current_exception());
 	}
 }
 

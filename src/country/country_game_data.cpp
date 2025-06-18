@@ -40,7 +40,6 @@
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
-#include "game/game_rules.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
