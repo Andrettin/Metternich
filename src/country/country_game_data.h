@@ -1455,7 +1455,7 @@ public:
 	{
 		int cost = 0;
 
-		const int advisor_count = static_cast<int>(this->get_advisors().size() + this->get_office_holders().size()) - 1;
+		const int advisor_count = static_cast<int>(this->get_advisors().size() + this->get_office_holders().size() + this->get_appointed_office_holders().size()) - 1;
 
 		if (advisor_count <= 0) {
 			cost = country_game_data::base_advisor_cost / 2;
