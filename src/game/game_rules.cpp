@@ -40,6 +40,10 @@ gsml_data game_rules::to_gsml_data() const
 	gsml_data data;
 
 	for (const auto &[rule, value] : this->get_values()) {
+		if (rule->is_hidden()) {
+			continue;
+		}
+
 		data.add_property(rule->get_identifier(), string::from_bool(value));
 	}
 
