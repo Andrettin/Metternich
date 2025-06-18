@@ -1364,6 +1364,7 @@ public:
 
 	int get_deity_cost() const;
 	commodity_map<int> get_idea_commodity_costs(const idea *idea) const;
+	Q_INVOKABLE QVariantList get_idea_commodity_costs_qvariant_list(const metternich::idea *idea) const;
 
 	const scripted_country_modifier_map<int> &get_scripted_modifiers() const
 	{
@@ -1469,6 +1470,7 @@ public:
 	}
 
 	commodity_map<int> get_advisor_commodity_costs(const office *office) const;
+	Q_INVOKABLE QVariantList get_advisor_commodity_costs_qvariant_list(const metternich::office *office) const;
 
 	const character *get_next_advisor() const
 	{

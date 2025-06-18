@@ -4108,6 +4108,11 @@ commodity_map<int> country_game_data::get_idea_commodity_costs(const idea *idea)
 	return commodity_costs;
 }
 
+QVariantList country_game_data::get_idea_commodity_costs_qvariant_list(const idea *idea) const
+{
+	return archimedes::map::to_qvariant_list(this->get_idea_commodity_costs(idea));
+}
+
 QVariantList country_game_data::get_scripted_modifiers_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
@@ -4672,6 +4677,11 @@ commodity_map<int> country_game_data::get_advisor_commodity_costs(const office *
 	}
 
 	return commodity_costs;
+}
+
+QVariantList country_game_data::get_advisor_commodity_costs_qvariant_list(const office *office) const
+{
+	return archimedes::map::to_qvariant_list(this->get_advisor_commodity_costs(office));
 }
 
 void country_game_data::choose_next_advisor()
