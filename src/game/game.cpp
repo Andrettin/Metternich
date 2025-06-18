@@ -289,16 +289,20 @@ QCoro::Task<void> game::start_coro()
 
 void game::stop()
 {
-	if (!this->is_running()) {
-		//already stopped
-		return;
-	}
+	try {
+		if (!this->is_running()) {
+			//already stopped
+			return;
+		}
 
-	this->set_running(false);
-	this->clear();
-	map::get()->clear();
-	this->set_player_character(nullptr);
-	this->set_player_country(nullptr);
+		this->set_running(false);
+		this->clear();
+		map::get()->clear();
+		this->set_player_character(nullptr);
+		this->set_player_country(nullptr);
+	} catch (...) {
+		exception::report(std::current_exception());
+	}
 }
 
 void game::clear()
@@ -313,6 +317,7 @@ void game::clear()
 		this->scenario = nullptr;
 		this->countries.clear();
 		this->great_powers.clear();
+		this->wonder_countries.clear();
 		this->prices.clear();
 
 		this->date = game::normalize_date(defines::get()->get_default_start_date());
