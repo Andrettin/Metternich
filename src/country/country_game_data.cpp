@@ -4300,14 +4300,28 @@ void country_game_data::set_appointed_office_holder(const office *office, const 
 {
 	assert_throw(office->is_appointable());
 
-	if (character == this->get_appointed_office_holder(office)) {
+	const metternich::character *old_appointee = this->get_appointed_office_holder(office);
+
+	if (character == old_appointee) {
 		return;
 	}
 
 	if (character != nullptr) {
+		const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
+		for (const auto &[commodity, cost] : commodity_costs) {
+			this->change_stored_commodity(commodity, -cost);
+		}
+
 		this->appointed_office_holders[office] = character;
 	} else {
 		this->appointed_office_holders.erase(office);
+	}
+
+	if (old_appointee != nullptr) {
+		const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
+		for (const auto &[commodity, cost] : commodity_costs) {
+			this->change_stored_commodity(commodity, cost);
+		}
 	}
 
 	if (game::get()->is_running()) {
@@ -4345,7 +4359,6 @@ void country_game_data::check_office_holder(const office *office, const characte
 	}
 }
 
-
 std::vector<const character *> country_game_data::get_appointable_office_holders(const office *office) const
 {
 	assert_throw(this->get_government_type() != nullptr);
@@ -4363,7 +4376,7 @@ std::vector<const character *> country_game_data::get_appointable_office_holders
 			}
 		}
 
-		if (!this->can_appoint_office_holder(office, character)) {
+		if (!this->can_gain_office_holder(office, character)) {
 			continue;
 		}
 
@@ -4387,6 +4400,10 @@ const character *country_game_data::get_best_office_holder(const office *office,
 	bool found_same_dynasty = false;
 
 	for (const character *character : this->get_appointable_office_holders(office)) {
+		if (!this->can_appoint_office_holder(office, character)) {
+			continue;
+		}
+
 		const character_game_data *character_game_data = character->get_game_data();
 
 		if (office->is_ruler()) {
@@ -4464,7 +4481,7 @@ bool country_game_data::can_have_office_holder(const office *office, const chara
 	return true;
 }
 
-bool country_game_data::can_appoint_office_holder(const office *office, const character *character) const
+bool country_game_data::can_gain_office_holder(const office *office, const character *character) const
 {
 	if (!this->can_have_office_holder(office, character)) {
 		return false;
@@ -4472,6 +4489,22 @@ bool country_game_data::can_appoint_office_holder(const office *office, const ch
 
 	for (const auto &[loop_office, office_appointee] : this->get_appointed_office_holders()) {
 		if (office_appointee == character) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool country_game_data::can_appoint_office_holder(const office *office, const character *character) const
+{
+	if (!this->can_gain_office_holder(office, character)) {
+		return false;
+	}
+
+	const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
+	for (const auto &[commodity, cost] : commodity_costs) {
+		if (this->get_stored_commodity(commodity) < cost) {
 			return false;
 		}
 	}
@@ -4627,6 +4660,18 @@ void country_game_data::clear_advisors()
 	assert_throw(this->get_advisors().empty());
 
 	emit advisors_changed();
+}
+
+commodity_map<int> country_game_data::get_advisor_commodity_costs(const office *office) const
+{
+	commodity_map<int> commodity_costs;
+
+	if (office != nullptr && office->is_appointable()) {
+		const int cost = this->get_advisor_cost();
+		commodity_costs[defines::get()->get_advisor_commodity()] = cost;
+	}
+
+	return commodity_costs;
 }
 
 void country_game_data::choose_next_advisor()

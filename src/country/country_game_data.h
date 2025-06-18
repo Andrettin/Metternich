@@ -1428,7 +1428,8 @@ public:
 	Q_INVOKABLE QVariantList get_appointable_office_holders_qvariant_list(const metternich::office *office) const;
 	const character *get_best_office_holder(const office *office, const character *previous_holder) const;
 	bool can_have_office_holder(const office *office, const character *character) const;
-	bool can_appoint_office_holder(const office *office, const character *character) const;
+	bool can_gain_office_holder(const office *office, const character *character) const;
+	Q_INVOKABLE bool can_appoint_office_holder(const metternich::office *office, const metternich::character *character) const;
 	void on_office_holder_died(const office *office, const character *office_holder);
 
 	std::vector<const office *> get_available_offices() const;
@@ -1449,10 +1450,12 @@ public:
 	{
 		int cost = 0;
 
-		if (this->get_advisors().empty()) {
+		const int advisor_count = static_cast<int>(this->get_advisors().size() + this->get_office_holders().size()) - 1;
+
+		if (advisor_count <= 0) {
 			cost = country_game_data::base_advisor_cost / 2;
 		} else {
-			cost = country_game_data::base_advisor_cost * static_cast<int>(this->get_advisors().size() + 1);
+			cost = country_game_data::base_advisor_cost * (advisor_count + 1);
 		}
 
 		cost *= 100 + this->get_advisor_cost_modifier();
@@ -1460,6 +1463,8 @@ public:
 
 		return std::max(0, cost);
 	}
+
+	commodity_map<int> get_advisor_commodity_costs(const office *office) const;
 
 	const character *get_next_advisor() const
 	{
