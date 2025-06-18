@@ -48,6 +48,8 @@ public:
 		return this->values.find(rule)->second;
 	}
 
+	Q_INVOKABLE bool get_value(const std::string &rule_identifier) const;
+
 	Q_INVOKABLE void set_value(const archimedes::game_rule *rule, const bool value)
 	{
 		if (value == this->get_value(rule)) {

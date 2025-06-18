@@ -70,4 +70,14 @@ QVariantList game_rules::get_values_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_values());
 }
 
+bool game_rules::get_value(const std::string &rule_identifier) const
+{
+	try {
+		return this->get_value(game_rule::get(rule_identifier));
+	} catch (...) {
+		exception::report(std::current_exception());
+		return false;
+	}
+}
+
 }
