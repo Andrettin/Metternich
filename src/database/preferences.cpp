@@ -21,7 +21,6 @@ std::filesystem::path preferences::get_path()
 
 preferences::preferences()
 {
-	this->game_rules = make_qunique<metternich::game_rules>();
 }
 
 preferences::~preferences()
@@ -30,6 +29,8 @@ preferences::~preferences()
 
 void preferences::load()
 {
+	this->game_rules = make_qunique<metternich::game_rules>();
+
 	this->load_file();
 }
 
