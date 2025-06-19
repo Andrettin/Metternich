@@ -63,8 +63,8 @@ bool commodity::is_food() const
 
 bool commodity::is_enabled() const
 {
-	if (this->game_rule != nullptr && game::get()->get_rules() != nullptr) {
-		return game::get()->get_rules()->get_value(this->game_rule);
+	if (this->required_game_rule != nullptr && game::get()->get_rules() != nullptr) {
+		return game::get()->get_rules()->get_value(this->required_game_rule);
 	}
 
 	return true;

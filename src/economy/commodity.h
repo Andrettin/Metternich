@@ -32,7 +32,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(int wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
 	Q_PROPERTY(int base_price MEMBER base_price READ get_base_price NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
-	Q_PROPERTY(const archimedes::game_rule* game_rule MEMBER game_rule NOTIFY changed)
+	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
 	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
 
 public:
@@ -137,7 +137,7 @@ private:
 	int wealth_value = 0;
 	int base_price = 0;
 	technology *required_technology = nullptr;
-	const archimedes::game_rule *game_rule = nullptr;
+	const game_rule *required_game_rule = nullptr;
 };
 
 }
