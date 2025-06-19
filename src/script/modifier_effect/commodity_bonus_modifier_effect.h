@@ -23,6 +23,10 @@ public:
 
 	virtual void apply(const site *scope, const centesimal_int &multiplier) const override
 	{
+		if (!this->commodity->is_enabled()) {
+			return;
+		}
+
 		scope->get_game_data()->change_base_commodity_output(this->commodity, this->value * multiplier);
 	}
 
@@ -40,6 +44,11 @@ public:
 	virtual bool are_decimals_relevant() const override
 	{
 		return true;
+	}
+
+	virtual bool is_hidden() const override
+	{
+		return !this->commodity->is_enabled();
 	}
 
 private:

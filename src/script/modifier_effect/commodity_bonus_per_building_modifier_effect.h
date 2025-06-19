@@ -26,6 +26,10 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
+		if (!this->commodity->is_enabled()) {
+			return;
+		}
+
 		scope->get_game_data()->change_building_commodity_bonus(this->building, this->commodity, (this->value * multiplier).to_int());
 	}
 
@@ -43,6 +47,11 @@ public:
 		}
 
 		return modifier_effect<scope_type>::get_string(scope, multiplier, ignore_decimals);
+	}
+
+	virtual bool is_hidden() const override
+	{
+		return !this->commodity->is_enabled();
 	}
 
 private:

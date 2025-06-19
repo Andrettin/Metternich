@@ -26,6 +26,10 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
+		if (!this->commodity->is_enabled()) {
+			return;
+		}
+
 		scope->get_game_data()->change_commodity_output_modifier(this->commodity, this->value * multiplier);
 	}
 
@@ -44,6 +48,11 @@ public:
 	virtual bool is_percent() const override
 	{
 		return true;
+	}
+
+	virtual bool is_hidden() const override
+	{
+		return !this->commodity->is_enabled();
 	}
 
 private:

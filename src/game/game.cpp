@@ -199,7 +199,6 @@ QCoro::Task<void> game::create_random_map_coro(const QSize map_size, metternich:
 {
 	try {
 		this->clear();
-		this->rules = preferences::get()->get_game_rules()->duplicate();
 
 		map_generator map_generator(map_size, era);
 		map_generator.generate();
@@ -219,7 +218,6 @@ QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
 		const metternich::scenario *old_scenario = this->scenario;
 
 		this->clear();
-		this->rules = preferences::get()->get_game_rules()->duplicate();
 		this->scenario = scenario;
 
 		if (old_scenario == nullptr || old_scenario->get_map_template() != scenario->get_map_template()) {
@@ -308,6 +306,8 @@ void game::stop()
 void game::clear()
 {
 	try {
+		this->rules = preferences::get()->get_game_rules()->duplicate();
+
 		this->clear_delayed_effects();
 
 		this->reset_game_data();
@@ -323,7 +323,6 @@ void game::clear()
 		this->date = game::normalize_date(defines::get()->get_default_start_date());
 		this->turn = 1;
 
-		this->rules.reset();
 		this->exploration_diplomatic_map_image = QImage();
 		this->exploration_changed = false;
 	} catch (...) {
@@ -1530,12 +1529,14 @@ void game::do_trade()
 	});
 
 	std::sort(trade_countries.begin(), trade_countries.end(), [&](const metternich::country *lhs, const metternich::country *rhs) {
-		//give trade priority by opinion-weighted prestige
-		const int lhs_prestige = lhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
-		const int rhs_prestige = rhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
+		if (defines::get()->get_prestige_commodity()->is_enabled()) {
+			//give trade priority by prestige
+			const int lhs_prestige = lhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
+			const int rhs_prestige = rhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
 
-		if (lhs_prestige != rhs_prestige) {
-			return lhs_prestige > rhs_prestige;
+			if (lhs_prestige != rhs_prestige) {
+				return lhs_prestige > rhs_prestige;
+			}
 		}
 
 		return lhs->get_identifier() < rhs->get_identifier();

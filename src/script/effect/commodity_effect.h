@@ -30,11 +30,19 @@ public:
 
 	virtual void do_assignment_effect(const country *scope) const override
 	{
+		if (!this->commodity->is_enabled()) {
+			return;
+		}
+
 		scope->get_game_data()->set_stored_commodity(this->commodity, this->quantity);
 	}
 
 	virtual void do_addition_effect(const country *scope) const override
 	{
+		if (!this->commodity->is_enabled()) {
+			return;
+		}
+
 		int change = this->quantity;
 
 		const int storage = scope->get_game_data()->get_stored_commodity(this->commodity);
@@ -47,6 +55,10 @@ public:
 
 	virtual void do_subtraction_effect(const country *scope) const override
 	{
+		if (!this->commodity->is_enabled()) {
+			return;
+		}
+
 		int change = -this->quantity;
 
 		const int storage = scope->get_game_data()->get_stored_commodity(this->commodity);
@@ -70,6 +82,11 @@ public:
 	virtual std::string get_subtraction_string() const override
 	{
 		return std::format("Lose {} {}", std::to_string(this->quantity), string::highlight(this->commodity->get_name()));
+	}
+
+	virtual bool is_hidden() const override
+	{
+		return !this->commodity->is_enabled();
 	}
 
 private:

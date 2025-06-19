@@ -122,6 +122,10 @@ country_game_data::country_game_data(metternich::country *country)
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 
 	for (const commodity *commodity : commodity::get_all()) {
+		if (!commodity->is_enabled()) {
+			continue;
+		}
+
 		if (commodity->get_required_technology() != nullptr) {
 			continue;
 		}
@@ -607,12 +611,22 @@ void country_game_data::do_trade(country_map<commodity_map<int>> &country_luxury
 				return this->is_any_vassal_of(lhs);
 			}
 
-			//give trade priority by opinion-weighted prestige
-			const int lhs_opinion_weighted_prestige = this->get_opinion_weighted_prestige_for(lhs);
-			const int rhs_opinion_weighted_prestige = this->get_opinion_weighted_prestige_for(rhs);
+			if (defines::get()->get_prestige_commodity()->is_enabled()) {
+				//give trade priority by opinion-weighted prestige
+				const int lhs_opinion_weighted_prestige = this->get_opinion_weighted_prestige_for(lhs);
+				const int rhs_opinion_weighted_prestige = this->get_opinion_weighted_prestige_for(rhs);
 
-			if (lhs_opinion_weighted_prestige != rhs_opinion_weighted_prestige) {
-				return lhs_opinion_weighted_prestige > rhs_opinion_weighted_prestige;
+				if (lhs_opinion_weighted_prestige != rhs_opinion_weighted_prestige) {
+					return lhs_opinion_weighted_prestige > rhs_opinion_weighted_prestige;
+				}
+			} else {
+				//give trade priority by opinion
+				const int lhs_opinion = this->get_opinion_of(lhs);
+				const int rhs_opinion = this->get_opinion_of(rhs);
+
+				if (lhs_opinion != rhs_opinion) {
+					return lhs_opinion > rhs_opinion;
+				}
 			}
 
 			return lhs->get_identifier() < rhs->get_identifier();
@@ -2622,6 +2636,10 @@ QVariantList country_game_data::get_stored_commodities_qvariant_list() const
 
 void country_game_data::set_stored_commodity(const commodity *commodity, const int value)
 {
+	if (!commodity->is_enabled()) {
+		return;
+	}
+
 	if (value == this->get_stored_commodity(commodity)) {
 		return;
 	}
@@ -3133,6 +3151,10 @@ void country_game_data::add_technology(const technology *technology)
 	}
 
 	for (const commodity *enabled_commodity : technology->get_enabled_commodities()) {
+		if (!enabled_commodity->is_enabled()) {
+			continue;
+		}
+
 		this->add_available_commodity(enabled_commodity);
 
 		if (enabled_commodity->is_tradeable()) {
@@ -3274,6 +3296,10 @@ void country_game_data::remove_technology(const technology *technology)
 	}
 
 	for (const commodity *enabled_commodity : technology->get_enabled_commodities()) {
+		if (!enabled_commodity->is_enabled()) {
+			continue;
+		}
+
 		this->remove_available_commodity(enabled_commodity);
 
 		if (enabled_commodity->is_tradeable()) {
@@ -3470,7 +3496,7 @@ void country_game_data::on_technology_researched(const technology *technology)
 		}
 	}
 
-	if (technology->get_shared_prestige() > 0) {
+	if (technology->get_shared_prestige() > 0 && defines::get()->get_prestige_commodity()->is_enabled()) {
 		this->change_stored_commodity(defines::get()->get_prestige_commodity(), technology->get_shared_prestige_for_country(this->country));
 	}
 

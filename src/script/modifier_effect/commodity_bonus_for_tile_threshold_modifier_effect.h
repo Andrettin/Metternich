@@ -28,6 +28,10 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
+		if (!this->commodity->is_enabled()) {
+			return;
+		}
+
 		scope->get_game_data()->change_commodity_bonus_for_tile_threshold(this->commodity, (this->value * multiplier).to_int(), this->threshold);
 	}
 
@@ -40,6 +44,11 @@ public:
 		} else {
 			return std::format("{} per {}-Producing Tile", this->commodity->get_name(), this->commodity->get_name());
 		}
+	}
+
+	virtual bool is_hidden() const override
+	{
+		return !this->commodity->is_enabled();
 	}
 
 private:

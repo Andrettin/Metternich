@@ -28,6 +28,10 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
+		if (!this->commodity->is_enabled()) {
+			return;
+		}
+
 		scope->get_game_data()->change_improved_resource_commodity_bonus(this->resource, this->commodity, (this->value * multiplier).to_int());
 	}
 
@@ -36,6 +40,11 @@ public:
 		Q_UNUSED(scope);
 
 		return std::format("{} per Improved {}", this->commodity->get_name(), this->resource->get_name());
+	}
+
+	virtual bool is_hidden() const override
+	{
+		return !this->commodity->is_enabled();
 	}
 
 private:

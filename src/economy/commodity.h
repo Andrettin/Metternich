@@ -3,7 +3,12 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("technology/technology.h")
+
+namespace archimedes {
+	class game_rule;
+}
 
 namespace metternich {
 
@@ -27,6 +32,8 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(int wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
 	Q_PROPERTY(int base_price MEMBER base_price READ get_base_price NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(const archimedes::game_rule* game_rule MEMBER game_rule NOTIFY changed)
+	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "commodity";
@@ -112,6 +119,8 @@ public:
 		return this->required_technology;
 	}
 
+	bool is_enabled() const;
+
 signals:
 	void changed();
 
@@ -128,6 +137,7 @@ private:
 	int wealth_value = 0;
 	int base_price = 0;
 	technology *required_technology = nullptr;
+	const archimedes::game_rule *game_rule = nullptr;
 };
 
 }

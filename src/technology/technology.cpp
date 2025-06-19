@@ -893,7 +893,7 @@ QString technology::get_effects_string(metternich::country *country) const
 		str += std::format("{} free {} for the first to research", this->get_free_technologies(), this->get_free_technologies() > 1 ? "technologies" : "technology");
 	}
 
-	if (this->get_shared_prestige() > 0) {
+	if (this->get_shared_prestige() > 0 && defines::get()->get_prestige_commodity()->is_enabled()) {
 		if (!str.empty()) {
 			str += "\n";
 		}
@@ -904,6 +904,10 @@ QString technology::get_effects_string(metternich::country *country) const
 
 	if (!this->get_enabled_commodities().empty()) {
 		for (const commodity *commodity : this->get_enabled_commodities()) {
+			if (!commodity->is_enabled()) {
+				continue;
+			}
+
 			if (!str.empty()) {
 				str += "\n";
 			}

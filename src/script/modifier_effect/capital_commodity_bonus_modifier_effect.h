@@ -23,6 +23,10 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
+		if (!this->commodity->is_enabled()) {
+			return;
+		}
+
 		scope->get_game_data()->change_capital_commodity_bonus(this->commodity, this->value * multiplier);
 	}
 
@@ -35,6 +39,11 @@ public:
 		} else {
 			return std::format("Capital {}", this->commodity->get_name());
 		}
+	}
+
+	virtual bool is_hidden() const override
+	{
+		return !this->commodity->is_enabled();
 	}
 
 private:
