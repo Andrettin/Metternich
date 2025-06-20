@@ -443,7 +443,11 @@ void game::apply_history(const metternich::scenario *scenario)
 					throw std::runtime_error(std::format("Cannot set \"{}\" as an office holder for \"{}\", as they are already assigned to another country.", office_holder->get_identifier(), country->get_identifier()));
 				}
 
-				country_game_data->set_office_holder(office, office_holder);
+				if (office_holder->get_role() == character_role::advisor && defines::get()->get_advisors_game_rule() != nullptr && game::get()->get_rules()->get_value(defines::get()->get_advisors_game_rule()) && country_game_data->can_have_advisors()) {
+					country_game_data->add_advisor(office_holder);
+				} else {
+					country_game_data->set_office_holder(office, office_holder);
+				}
 
 				if (office_holder->get_required_technology() != nullptr) {
 					country_game_data->add_technology_with_prerequisites(office_holder->get_required_technology());

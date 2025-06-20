@@ -4668,18 +4668,23 @@ void country_game_data::check_advisors()
 
 void country_game_data::add_advisor(const character *advisor)
 {
-	assert_throw(this->can_have_advisors());
+	try {
+		assert_throw(this->can_have_advisors());
+		assert_throw(advisor->get_role() == character_role::advisor);
 
-	const character *replaced_advisor = this->get_replaced_advisor_for(advisor);
-	if (replaced_advisor != nullptr) {
-		this->remove_advisor(replaced_advisor);
+		const character *replaced_advisor = this->get_replaced_advisor_for(advisor);
+		if (replaced_advisor != nullptr) {
+			this->remove_advisor(replaced_advisor);
+		}
+
+		this->advisors.push_back(advisor);
+		advisor->get_game_data()->set_country(this->country);
+		advisor->get_game_data()->apply_advisor_modifier(this->country, 1);
+
+		emit advisors_changed();
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Failed to add advisor \"{}\" for country \"{}\".", advisor->get_identifier(), this->country->get_identifier())));
 	}
-
-	this->advisors.push_back(advisor);
-	advisor->get_game_data()->set_country(this->country);
-	advisor->get_game_data()->apply_advisor_modifier(this->country, 1);
-
-	emit advisors_changed();
 }
 
 void country_game_data::remove_advisor(const character *advisor)
