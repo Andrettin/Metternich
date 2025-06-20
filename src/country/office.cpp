@@ -21,7 +21,11 @@ void office::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "holder_conditions") {
+	if (tag == "conditions") {
+		auto conditions = std::make_unique<and_condition<country>>();
+		database::process_gsml_data(conditions, scope);
+		this->conditions = std::move(conditions);
+	} else if (tag == "holder_conditions") {
 		auto conditions = std::make_unique<and_condition<character>>();
 		database::process_gsml_data(conditions, scope);
 		this->holder_conditions = std::move(conditions);
@@ -36,6 +40,14 @@ void office::check() const
 
 	if (this->is_ruler()) {
 		assert_throw(!this->is_minister());
+	}
+
+	if (this->get_conditions() != nullptr) {
+		this->get_conditions()->check_validity();
+	}
+
+	if (this->get_holder_conditions() != nullptr) {
+		this->get_holder_conditions()->check_validity();
 	}
 }
 

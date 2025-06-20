@@ -4225,8 +4225,16 @@ void country_game_data::apply_modifier(const modifier<const metternich::country>
 
 void country_game_data::check_characters()
 {
-	for (const office *office : office::get_all()) {
+	const std::vector<const office *> available_offices = this->get_available_offices();
+	for (const office *office : available_offices) {
 		this->check_office_holder(office, nullptr);
+	}
+
+	const data_entry_map<office, const character *> office_holders = this->get_office_holders();
+	for (const auto &[office, office_holders] : office_holders) {
+		if (!vector::contains(available_offices, office)) {
+			this->set_office_holder(office, nullptr);
+		}
 	}
 
 	this->appointed_office_holders.clear();
@@ -4570,6 +4578,10 @@ std::vector<const office *> country_game_data::get_available_offices() const
 	std::vector<const office *> available_offices;
 
 	for (const office *office : office::get_all()) {
+		if (office->get_conditions() != nullptr && !office->get_conditions()->check(this->country, read_only_context(this->country))) {
+			continue;
+		}
+
 		available_offices.push_back(office);
 	}
 

@@ -48,6 +48,11 @@ public:
 		return this->attribute;
 	}
 
+	const and_condition<country> *get_conditions() const
+	{
+		return this->conditions.get();
+	}
+
 	const and_condition<character> *get_holder_conditions() const
 	{
 		return this->holder_conditions.get();
@@ -59,6 +64,7 @@ signals:
 private:
 	bool minister = false;
 	character_attribute attribute{};
+	std::unique_ptr<const and_condition<country>> conditions;
 	std::unique_ptr<const and_condition<character>> holder_conditions;
 };
 
