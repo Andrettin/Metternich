@@ -34,6 +34,8 @@
 #include "game/event_instance.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "game/game_rule.h"
+#include "game/game_rule_group.h"
 #include "game/game_rules.h"
 #include "game/scenario.h"
 #include "game/scenario_model.h"
@@ -191,6 +193,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<event>("", 1);
 		qmlRegisterAnonymousType<event_instance>("", 1);
 		qmlRegisterAnonymousType<game>("", 1);
+		qmlRegisterAnonymousType<game_rule>("", 1);
+		qmlRegisterAnonymousType<game_rule_group>("", 1);
 		qmlRegisterAnonymousType<game_rules>("", 1);
 		qmlRegisterAnonymousType<government_type>("", 1);
 		qmlRegisterAnonymousType<icon>("", 1);

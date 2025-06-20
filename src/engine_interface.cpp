@@ -13,6 +13,7 @@
 #include "economy/commodity.h"
 #include "game/event_instance.h"
 #include "game/game.h"
+#include "game/game_rule_group.h"
 #include "game/scenario.h"
 #include "map/map.h"
 #include "map/map_template.h"
@@ -71,6 +72,11 @@ map *engine_interface::get_map() const
 preferences *engine_interface::get_preferences() const
 {
 	return preferences::get();
+}
+
+QVariantList engine_interface::get_game_rule_groups() const
+{
+	return container::to_qvariant_list(game_rule_group::get_all());
 }
 
 const map_template *engine_interface::get_map_template(const QString &identifier) const

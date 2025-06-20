@@ -68,6 +68,7 @@ public:
 	map *get_map() const;
 	preferences *get_preferences() const;
 
+	Q_INVOKABLE QVariantList get_game_rule_groups() const;
 	Q_INVOKABLE const map_template *get_map_template(const QString &identifier) const;
 	Q_INVOKABLE const world *get_world(const QString &identifier) const;
 	Q_INVOKABLE QVariantList get_scenarios() const;

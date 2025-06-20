@@ -16,7 +16,7 @@ namespace metternich {
 game_rules::game_rules()
 {
 	for (const game_rule *rule : game_rule::get_all()) {
-		this->values[rule] = rule->get_default_value();
+		this->set_value(rule, rule->get_default_value());
 	}
 }
 
@@ -78,6 +78,27 @@ bool game_rules::get_value(const std::string &rule_identifier) const
 		exception::report(std::current_exception());
 		return false;
 	}
+}
+
+void game_rules::set_value(const game_rule *rule, const bool value)
+{
+	assert_throw(rule != nullptr);
+
+	if (value == this->get_value(rule)) {
+		return;
+	}
+
+	this->values[rule] = value;
+
+	if (value && rule->get_group() != nullptr) {
+		for (const game_rule *group_rule : game_rule::get_all()) {
+			if (group_rule != rule && this->get_value(group_rule)) {
+				this->set_value(group_rule, false);
+			}
+		}
+	}
+
+	emit values_changed();
 }
 
 }
