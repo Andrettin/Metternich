@@ -40,6 +40,7 @@
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "game/game_rules.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
@@ -4805,7 +4806,7 @@ void country_game_data::choose_next_advisor()
 bool country_game_data::can_have_advisors() const
 {
 	//only great powers can have advisors
-	return this->country->is_great_power();
+	return this->country->is_great_power() && defines::get()->get_advisors_game_rule() != nullptr && game::get()->get_rules()->get_value(defines::get()->get_advisors_game_rule());
 }
 
 bool country_game_data::can_recruit_advisor(const character *advisor) const

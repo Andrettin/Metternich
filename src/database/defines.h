@@ -6,7 +6,9 @@
 #include "util/fractional_int.h"
 #include "util/singleton.h"
 
+Q_MOC_INCLUDE("country/office.h")
 Q_MOC_INCLUDE("economy/commodity.h")
+Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("infrastructure/pathway.h")
 Q_MOC_INCLUDE("map/terrain_type.h")
 Q_MOC_INCLUDE("population/population_class.h")
@@ -14,6 +16,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace archimedes {
+	class game_rule;
 	enum class log_level;
 }
 
@@ -22,6 +25,7 @@ namespace metternich {
 class building_class;
 class commodity;
 class icon;
+class office;
 class pathway;
 class population_class;
 class portrait;
@@ -47,6 +51,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
 	Q_PROPERTY(metternich::pathway* route_pathway MEMBER route_pathway NOTIFY changed)
+	Q_PROPERTY(const archimedes::game_rule* advisors_game_rule MEMBER advisors_game_rule READ get_advisors_game_rule NOTIFY changed)
 	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
 	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
 	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
@@ -172,6 +177,11 @@ public:
 	const pathway *get_route_pathway() const
 	{
 		return this->route_pathway;
+	}
+
+	const game_rule *get_advisors_game_rule() const
+	{
+		return this->advisors_game_rule;
 	}
 
 	const population_class *get_default_population_class() const
@@ -400,6 +410,7 @@ private:
 	terrain_type *default_province_terrain = nullptr;
 	terrain_type *default_water_zone_terrain = nullptr;
 	pathway *route_pathway = nullptr;
+	const game_rule *advisors_game_rule = nullptr;
 	population_class *default_population_class = nullptr;
 	population_class *default_tribal_population_class = nullptr;
 	population_class *default_literate_population_class = nullptr;
