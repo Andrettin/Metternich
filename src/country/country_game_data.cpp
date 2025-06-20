@@ -4231,7 +4231,7 @@ void country_game_data::check_characters()
 	}
 
 	const data_entry_map<office, const character *> office_holders = this->get_office_holders();
-	for (const auto &[office, office_holders] : office_holders) {
+	for (const auto &[office, office_holder] : office_holders) {
 		if (!vector::contains(available_offices, office)) {
 			this->set_office_holder(office, nullptr);
 		}
@@ -4615,7 +4615,7 @@ void country_game_data::check_advisors()
 		}
 	}
 
-	if (this->is_under_anarchy()) {
+	if (this->is_under_anarchy() || !this->can_have_advisors()) {
 		if (this->get_next_advisor() != nullptr) {
 			this->set_next_advisor(nullptr);
 		}
