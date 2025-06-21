@@ -7,6 +7,10 @@
 #include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/office.h"
+#include "database/defines.h"
+#include "game/game.h"
+#include "game/game_rules.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "map/province.h"
@@ -200,9 +204,20 @@ bool journal_entry::check_preconditions(const country *country) const
 		}
 	}
 
+	std::vector<const office *> available_offices = country->get_game_data()->get_available_offices();
+	std::erase_if(available_offices, [](const office *office) {
+		return office->is_ruler();
+	});
+
+	const bool can_recruit_advisors = (defines::get()->get_advisors_game_rule() != nullptr && game::get()->get_rules()->get_value(defines::get()->get_advisors_game_rule())) || !available_offices.empty();
+
 	for (const character *character : this->get_recruited_characters()) {
 		const metternich::country *character_country = character->get_game_data()->get_country();
 		if (character_country != nullptr && character_country != country) {
+			return false;
+		}
+
+		if (character->get_role() == character_role::advisor && !can_recruit_advisors) {
 			return false;
 		}
 	}
