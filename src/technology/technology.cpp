@@ -10,11 +10,13 @@
 #include "country/culture.h"
 #include "country/government_type.h"
 #include "country/law.h"
+#include "country/office.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
 #include "economy/resource.h"
 #include "game/game.h"
+#include "game/game_rules.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
@@ -1056,6 +1058,10 @@ QString technology::get_effects_string(metternich::country *country) const
 
 	if (!this->get_enabled_laws().empty()) {
 		for (const law *law : this->get_enabled_laws()) {
+			if (law->get_conditions() != nullptr && !law->get_conditions()->check(country, read_only_context(country))) {
+				continue;
+			}
+
 			if (!str.empty()) {
 				str += "\n";
 			}
@@ -1120,6 +1126,18 @@ QString technology::get_effects_string(metternich::country *country) const
 
 void technology::write_character_effects_string(const character_role role, const std::string_view &role_name, const country *country, std::string &str) const
 {
+	if (role == character_role::advisor) {
+		std::vector<const office *> available_offices = country->get_game_data()->get_available_offices();
+		std::erase_if(available_offices, [](const office *office) {
+			return office->is_ruler();
+		});
+
+		const bool can_recruit_advisors = (defines::get()->get_advisors_game_rule() != nullptr && game::get()->get_rules()->get_value(defines::get()->get_advisors_game_rule())) || !available_offices.empty();
+		if (!can_recruit_advisors) {
+			return;
+		}
+	}
+
 	const std::vector<const character *> enabled_characters = get_enabled_characters_for_country(role, country);
 
 	if (!enabled_characters.empty()) {
