@@ -5,6 +5,8 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "economy/commodity.h"
+#include "game/game.h"
+#include "game/game_rules.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
@@ -125,6 +127,15 @@ commodity_map<int> wonder::get_commodity_costs_for_country(const country *countr
 	}
 
 	return costs;
+}
+
+bool wonder::is_enabled() const
+{
+	if (this->required_game_rule != nullptr && game::get()->get_rules() != nullptr) {
+		return game::get()->get_rules()->get_value(this->required_game_rule);
+	}
+
+	return true;
 }
 
 }

@@ -2,10 +2,16 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/commodity_container.h"
 
+Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("infrastructure/building_type.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/portrait.h")
+
+namespace archimedes {
+	class game_rule;
+}
 
 namespace metternich {
 
@@ -33,6 +39,8 @@ class wonder final : public named_data_entry, public data_type<wonder>
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
 	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
+	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
+	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "wonder";
@@ -105,6 +113,8 @@ public:
 		return this->country_modifier.get();
 	}
 
+	bool is_enabled() const;
+
 signals:
 	void changed();
 
@@ -120,6 +130,7 @@ private:
 	std::unique_ptr<const and_condition<province>> province_conditions;
 	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const country>> country_modifier;
+	const game_rule *required_game_rule = nullptr;
 };
 
 }

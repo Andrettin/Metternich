@@ -958,6 +958,10 @@ void game::apply_site_buildings(const site *site)
 	}
 
 	for (auto [building_slot_type, wonder] : site_history->get_wonders()) {
+		if (!wonder->is_enabled()) {
+			continue;
+		}
+
 		if (settlement_type == nullptr) {
 			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but has no settlement type.", settlement->get_identifier(), wonder->get_identifier()));
 		}

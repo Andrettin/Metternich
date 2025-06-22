@@ -131,6 +131,10 @@ bool building_slot::can_build_building(const building_type *building) const
 
 bool building_slot::can_have_wonder(const wonder *wonder) const
 {
+	if (!wonder->is_enabled()) {
+		return false;
+	}
+
 	if (wonder->get_conditions() != nullptr) {
 		if (this->get_country() == nullptr) {
 			return false;
