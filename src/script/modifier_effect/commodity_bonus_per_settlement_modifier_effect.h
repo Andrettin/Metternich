@@ -53,8 +53,10 @@ public:
 		return true;
 	}
 
-	virtual bool is_hidden() const override
+	virtual bool is_hidden(const scope_type *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return !this->commodity->is_enabled();
 	}
 

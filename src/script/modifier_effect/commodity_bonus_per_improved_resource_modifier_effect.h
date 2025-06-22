@@ -42,7 +42,7 @@ public:
 		return std::format("{} per Improved {}", this->commodity->get_name(), this->resource->get_name());
 	}
 
-	virtual bool is_hidden() const override
+	virtual bool is_hidden(const scope_type *scope) const override
 	{
 		return !this->commodity->is_enabled();
 	}

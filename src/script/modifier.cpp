@@ -56,7 +56,7 @@ std::string modifier<scope_type>::get_string(const scope_type *scope, const cent
 {
 	std::string str;
 	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {
-		if (modifier_effect->is_hidden()) {
+		if (modifier_effect->is_hidden(scope)) {
 			continue;
 		}
 

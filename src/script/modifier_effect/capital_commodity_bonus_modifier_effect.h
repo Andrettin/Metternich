@@ -41,8 +41,10 @@ public:
 		}
 	}
 
-	virtual bool is_hidden() const override
+	virtual bool is_hidden(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return !this->commodity->is_enabled();
 	}
 

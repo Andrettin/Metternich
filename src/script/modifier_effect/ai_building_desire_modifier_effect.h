@@ -42,8 +42,10 @@ public:
 		return std::format("AI {} Building Desire", this->building->get_name());
 	}
 
-	virtual bool is_hidden() const override
+	virtual bool is_hidden(const country *scope) const override
 	{
+		Q_UNUSED(scope);
+
 		return true;
 	}
 
