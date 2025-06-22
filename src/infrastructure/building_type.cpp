@@ -8,7 +8,6 @@
 #include "country/culture.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
-#include "economy/resource.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/settlement_type.h"

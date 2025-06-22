@@ -28,7 +28,7 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
-		if (!this->commodity->is_enabled()) {
+		if (!this->commodity->is_enabled() || !this->resource->is_enabled()) {
 			return;
 		}
 
@@ -44,7 +44,9 @@ public:
 
 	virtual bool is_hidden(const scope_type *scope) const override
 	{
-		return !this->commodity->is_enabled();
+		Q_UNUSED(scope);
+
+		return !this->commodity->is_enabled() || !this->resource->is_enabled();
 	}
 
 private:

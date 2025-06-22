@@ -971,6 +971,10 @@ bool map_template::generate_resource_sites(const resource_map<int> &resource_cou
 			continue;
 		}
 
+		if (!resource->is_enabled()) {
+			continue;
+		}
+
 		for (int i = 0; i < count; ++i) {
 			std::vector<const site *> potential_sites;
 			bool found_site_with_suitable_terrain = false;

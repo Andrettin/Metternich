@@ -3,6 +3,8 @@
 #include "economy/resource.h"
 
 #include "economy/commodity.h"
+#include "game/game.h"
+#include "game/game_rules.h"
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "script/modifier.h"
@@ -96,6 +98,15 @@ const terrain_type *resource::get_fallback_terrain(const terrain_type *terrain) 
 	}
 
 	return nullptr;
+}
+
+bool resource::is_enabled() const
+{
+	if (this->required_game_rule != nullptr && game::get()->get_rules() != nullptr) {
+		return game::get()->get_rules()->get_value(this->required_game_rule);
+	}
+
+	return true;
 }
 
 }

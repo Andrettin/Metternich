@@ -45,10 +45,7 @@ public:
 		return this->resource;
 	}
 
-	void set_resource(const metternich::resource *resource)
-	{
-		this->resource = resource;
-	}
+	void set_resource(const metternich::resource *resource);
 
 	const province *get_province() const;
 

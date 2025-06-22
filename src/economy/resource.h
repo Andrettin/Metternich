@@ -4,8 +4,13 @@
 #include "database/named_data_entry.h"
 
 Q_MOC_INCLUDE("economy/commodity.h")
+Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
+
+namespace archimedes {
+	class game_rule;
+}
 
 namespace metternich {
 
@@ -35,6 +40,8 @@ class resource final : public named_data_entry, public data_type<resource>
 	Q_PROPERTY(bool prospectable MEMBER prospectable READ is_prospectable NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* discovery_technology MEMBER discovery_technology NOTIFY changed)
+	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
+	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "resource";
@@ -137,6 +144,8 @@ public:
 		return this->improved_modifier.get();
 	}
 
+	bool is_enabled() const;
+
 signals:
 	void changed();
 
@@ -156,6 +165,7 @@ private:
 	std::vector<const improvement *> improvements;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
 	std::unique_ptr<metternich::modifier<const site>> improved_modifier;
+	const game_rule *required_game_rule = nullptr;
 };
 
 }

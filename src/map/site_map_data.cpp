@@ -2,6 +2,7 @@
 
 #include "map/site_map_data.h"
 
+#include "economy/resource.h"
 #include "map/map.h"
 #include "map/site.h"
 #include "map/site_type.h"
@@ -13,8 +14,15 @@
 namespace metternich {
 
 site_map_data::site_map_data(const metternich::site *site)
-	: site(site), type(site->get_type()), resource(site->get_resource())
+	: site(site)
 {
+	if (site->get_resource() != nullptr && site->get_resource()->is_enabled()) {
+		this->set_resource(site->get_resource());
+	}
+
+	if (site->get_type() != site_type::resource || this->get_resource() != nullptr) {
+		this->type = site->get_type();
+	}
 }
 
 void site_map_data::set_tile_pos(const QPoint &tile_pos)
@@ -46,6 +54,13 @@ void site_map_data::set_type(const site_type type)
 
 	assert_throw(type != site_type::settlement);
 	this->type = type;
+}
+
+void site_map_data::set_resource(const metternich::resource *resource)
+{
+	assert_throw(resource->is_enabled());
+
+	this->resource = resource;
 }
 
 const province *site_map_data::get_province() const
