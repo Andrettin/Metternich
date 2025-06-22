@@ -1133,6 +1133,24 @@ void country_game_data::on_site_gained(const site *site, const int multiplier)
 			this->change_profession_capacity(profession, capacity * multiplier);
 		}
 	}
+
+	const resource *site_resource = site->get_game_data()->get_resource();
+	if (site_resource != nullptr) {
+		if (site_resource->get_country_modifier() != nullptr) {
+			site_resource->get_country_modifier()->apply(this->country, multiplier);
+		}
+
+		if (site_resource->get_improved_country_modifier() != nullptr && site->get_game_data()->get_resource_improvement() != nullptr) {
+			site_resource->get_improved_country_modifier()->apply(this->country, multiplier);
+		}
+	}
+
+	magic_enum::enum_for_each<improvement_slot>([this, site, multiplier](const improvement_slot slot) {
+		const improvement *improvement = site->get_game_data()->get_improvement(slot);
+		if (improvement != nullptr && improvement->get_country_modifier() != nullptr) {
+			improvement->get_country_modifier()->apply(this->country, multiplier);
+		}
+	});
 }
 
 void country_game_data::set_capital(const site *capital)

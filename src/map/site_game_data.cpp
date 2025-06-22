@@ -1069,12 +1069,22 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 		}
 	}
 
-	if (this->get_resource() != nullptr && this->get_resource()->get_improved_modifier() != nullptr && improvement->get_slot() == improvement_slot::resource) {
-		this->get_resource()->get_improved_modifier()->apply(this->site, multiplier);
+	if (this->get_resource() != nullptr && improvement->get_slot() == improvement_slot::resource) {
+		if (this->get_resource()->get_improved_modifier() != nullptr) {
+			this->get_resource()->get_improved_modifier()->apply(this->site, multiplier);
+		}
+
+		if (this->get_resource()->get_improved_country_modifier() != nullptr && this->get_owner() != nullptr) {
+			this->get_resource()->get_improved_country_modifier()->apply(this->get_owner(), multiplier);
+		}
 	}
 
 	if (improvement->get_modifier() != nullptr) {
 		improvement->get_modifier()->apply(this->site, multiplier);
+	}
+
+	if (improvement->get_country_modifier() != nullptr && this->get_owner() != nullptr) {
+		improvement->get_country_modifier()->apply(this->get_owner(), multiplier);
 	}
 }
 

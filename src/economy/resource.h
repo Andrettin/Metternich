@@ -15,6 +15,7 @@ namespace archimedes {
 namespace metternich {
 
 class commodity;
+class country;
 class icon;
 class improvement;
 class technology;
@@ -139,9 +140,19 @@ public:
 		return this->modifier.get();
 	}
 
+	const modifier<const country> *get_country_modifier() const
+	{
+		return this->country_modifier.get();
+	}
+
 	const modifier<const site> *get_improved_modifier() const
 	{
 		return this->improved_modifier.get();
+	}
+
+	const modifier<const country> *get_improved_country_modifier() const
+	{
+		return this->improved_country_modifier.get();
 	}
 
 	bool is_enabled() const;
@@ -164,7 +175,9 @@ private:
 	std::set<site_type> site_types;
 	std::vector<const improvement *> improvements;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
+	std::unique_ptr<metternich::modifier<const country>> country_modifier;
 	std::unique_ptr<metternich::modifier<const site>> improved_modifier;
+	std::unique_ptr<metternich::modifier<const country>> improved_country_modifier;
 	const game_rule *required_game_rule = nullptr;
 };
 
