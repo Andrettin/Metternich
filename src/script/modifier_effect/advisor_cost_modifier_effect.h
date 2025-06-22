@@ -21,6 +21,10 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
+		if (!scope->get_game_data()->can_have_advisors_or_appointable_offices()) {
+			return;
+		}
+
 		scope->get_game_data()->change_advisor_cost_modifier((this->value * multiplier).to_int());
 	}
 
@@ -39,6 +43,11 @@ public:
 	virtual bool is_negative(const centesimal_int &multiplier) const override
 	{
 		return (this->value * multiplier) > 0;
+	}
+
+	virtual bool is_hidden(const country *scope) const override
+	{
+		return !scope->get_game_data()->can_have_advisors_or_appointable_offices();
 	}
 };
 
