@@ -4589,6 +4589,15 @@ std::vector<const office *> country_game_data::get_available_offices() const
 	return available_offices;
 }
 
+std::vector<const office *> country_game_data::get_appointable_available_offices() const
+{
+	std::vector<const office *> available_offices = this->get_available_offices();
+	std::erase_if(available_offices, [](const office *office) {
+		return !office->is_appointable();
+	});
+	return available_offices;
+}
+
 QVariantList country_game_data::get_available_offices_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_available_offices());
@@ -4893,6 +4902,11 @@ const character *country_game_data::get_replaced_advisor_for(const character *ad
 	}
 
 	return nullptr;
+}
+
+bool country_game_data::can_have_advisors_or_appointable_offices() const
+{
+	return this->can_have_advisors() || !this->get_appointable_available_offices().empty();
 }
 
 const metternich::portrait *country_game_data::get_interior_minister_portrait() const

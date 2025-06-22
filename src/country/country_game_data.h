@@ -1438,6 +1438,7 @@ public:
 	void on_office_holder_died(const office *office, const character *office_holder);
 
 	std::vector<const office *> get_available_offices() const;
+	std::vector<const office *> get_appointable_available_offices() const;
 	QVariantList get_available_offices_qvariant_list() const;
 
 	const std::vector<const character *> &get_advisors() const
@@ -1492,6 +1493,7 @@ public:
 	bool can_recruit_advisor(const character *advisor) const;
 	bool has_incompatible_advisor_to(const character *advisor) const;
 	const character *get_replaced_advisor_for(const character *advisor) const;
+	bool can_have_advisors_or_appointable_offices() const;
 
 	const metternich::portrait *get_interior_minister_portrait() const;
 	const metternich::portrait *get_war_minister_portrait() const;

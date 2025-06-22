@@ -204,12 +204,7 @@ bool journal_entry::check_preconditions(const country *country) const
 		}
 	}
 
-	std::vector<const office *> available_offices = country->get_game_data()->get_available_offices();
-	std::erase_if(available_offices, [](const office *office) {
-		return office->is_ruler();
-	});
-
-	const bool can_recruit_advisors = (defines::get()->get_advisors_game_rule() != nullptr && game::get()->get_rules()->get_value(defines::get()->get_advisors_game_rule())) || !available_offices.empty();
+	const bool can_recruit_advisors = country->get_game_data()->can_have_advisors_or_appointable_offices();
 
 	for (const character *character : this->get_recruited_characters()) {
 		const metternich::country *character_country = character->get_game_data()->get_country();
