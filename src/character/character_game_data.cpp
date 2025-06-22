@@ -710,6 +710,22 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 			continue;
 		}
 
+		const size_t indent = trait->has_hidden_name() ? 0 : 1;
+
+		std::string trait_modifier_str;
+
+		if (trait->get_office_modifier(office) != nullptr) {
+			trait_modifier_str = trait->get_office_modifier(office)->get_string(country, 1, indent);
+		}
+
+		if (trait->get_scaled_office_modifier(office) != nullptr) {
+			trait_modifier_str = trait->get_scaled_office_modifier(office)->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), indent);
+		}
+
+		if (trait_modifier_str.empty()) {
+			continue;
+		}
+
 		if (!str.empty()) {
 			str += "\n";
 		}
@@ -722,15 +738,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 			str += string::highlight(trait->get_name());
 		}
 
-		const size_t indent = trait->has_hidden_name() ? 0 : 1;
-
-		if (trait->get_office_modifier(office) != nullptr) {
-			str += "\n" + trait->get_office_modifier(office)->get_string(country, 1, indent);
-		}
-
-		if (trait->get_scaled_office_modifier(office) != nullptr) {
-			str += "\n" + trait->get_scaled_office_modifier(office)->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), indent);
-		}
+		str += "\n" + trait_modifier_str;
 	}
 
 	return str;
