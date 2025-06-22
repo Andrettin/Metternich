@@ -5,6 +5,7 @@
 #include "database/database.h"
 #include "database/gsml_data.h"
 #include "game/game_rule.h"
+#include "game/game_rule_group.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
@@ -70,6 +71,15 @@ QVariantList game_rules::get_values_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_values());
 }
 
+bool game_rules::get_value(const archimedes::game_rule *rule) const
+{
+	const auto find_iterator = this->values.find(rule);
+	if (find_iterator != this->values.end()) {
+		return find_iterator->second;
+	}
+	return false;
+}
+
 bool game_rules::get_value(const std::string &rule_identifier) const
 {
 	try {
@@ -91,7 +101,7 @@ void game_rules::set_value(const game_rule *rule, const bool value)
 	this->values[rule] = value;
 
 	if (value && rule->get_group() != nullptr) {
-		for (const game_rule *group_rule : game_rule::get_all()) {
+		for (const game_rule *group_rule : rule->get_group()->get_rules()) {
 			if (group_rule != rule && this->get_value(group_rule)) {
 				this->set_value(group_rule, false);
 			}

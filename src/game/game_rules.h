@@ -42,12 +42,7 @@ public:
 	}
 
 	QVariantList get_values_qvariant_list() const;
-
-	Q_INVOKABLE virtual bool get_value(const archimedes::game_rule *rule) const override
-	{
-		return this->values.find(rule)->second;
-	}
-
+	Q_INVOKABLE virtual bool get_value(const archimedes::game_rule *rule) const override;
 	Q_INVOKABLE bool get_value(const std::string &rule_identifier) const;
 	Q_INVOKABLE void set_value(const archimedes::game_rule *rule, const bool value);
 
