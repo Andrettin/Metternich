@@ -73,6 +73,12 @@ QVariantList game_rules::get_values_qvariant_list() const
 
 bool game_rules::get_value(const archimedes::game_rule *rule) const
 {
+	for (const game_rule *required_rule : rule->get_required_rules()) {
+		if (!this->get_value(required_rule)) {
+			return false;
+		}
+	}
+
 	const auto find_iterator = this->values.find(rule);
 	if (find_iterator != this->values.end()) {
 		return find_iterator->second;
@@ -100,10 +106,12 @@ void game_rules::set_value(const game_rule *rule, const bool value)
 
 	this->values[rule] = value;
 
-	if (value && rule->get_group() != nullptr) {
-		for (const game_rule *group_rule : rule->get_group()->get_rules()) {
-			if (group_rule != rule && this->get_value(group_rule)) {
-				this->set_value(group_rule, false);
+	if (value) {
+		if (rule->get_group() != nullptr) {
+			for (const game_rule *group_rule : rule->get_group()->get_rules()) {
+				if (group_rule != rule && this->get_value(group_rule)) {
+					this->set_value(group_rule, false);
+				}
 			}
 		}
 	}
