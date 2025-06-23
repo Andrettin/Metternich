@@ -151,7 +151,6 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList researchable_technologies READ get_researchable_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
-	Q_PROPERTY(int research_cost_modifier READ get_research_cost_modifier NOTIFY provinces_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
 	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY laws_changed)
@@ -1235,11 +1234,6 @@ public:
 	Q_INVOKABLE void add_current_research(const metternich::technology *technology);
 	Q_INVOKABLE void remove_current_research(const metternich::technology *technology);
 	void on_technology_researched(const technology *technology);
-
-	int get_research_cost_modifier() const
-	{
-		return 100 + (this->get_population_unit_count() - 1);
-	}
 
 	data_entry_map<technology_category, const technology *> get_research_choice_map(const bool is_free) const;
 

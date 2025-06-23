@@ -414,9 +414,6 @@ centesimal_int technology::get_cost_for_country(const country *country) const
 	centesimal_int cost(this->cost);
 
 	if (cost > 0) {
-		cost *= country->get_game_data()->get_research_cost_modifier();
-		cost /= 100;
-
 		cost *= centesimal_int(100) + country->get_game_data()->get_technology_cost_modifier() + country->get_game_data()->get_technology_category_cost_modifier(this->get_category()) + country->get_game_data()->get_technology_subcategory_cost_modifier(this->get_subcategory());
 		cost /= 100;
 
