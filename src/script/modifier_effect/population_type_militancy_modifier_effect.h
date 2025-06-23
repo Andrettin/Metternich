@@ -23,6 +23,10 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
+		if (!this->population_type->is_enabled()) {
+			return;
+		}
+
 		scope->get_game_data()->change_population_type_militancy_modifier(this->population_type, this->value * multiplier);
 	}
 
@@ -41,6 +45,13 @@ public:
 	virtual bool are_decimals_relevant() const override
 	{
 		return true;
+	}
+
+	virtual bool is_hidden(const country *scope) const override
+	{
+		Q_UNUSED(scope);
+
+		return !this->population_type->is_enabled();
 	}
 
 private:

@@ -8,8 +8,11 @@
 #include "country/culture.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
+#include "game/game.h"
+#include "game/game_rules.h"
 #include "population/population.h"
 #include "population/population_class.h"
+#include "population/profession.h"
 #include "script/modifier.h"
 #include "species/phenotype.h"
 #include "species/species.h"
@@ -113,6 +116,10 @@ void population_type::initialize()
 		this->population_class->set_default_population_type(this);
 	}
 
+	if (this->profession != nullptr) {
+		this->profession->add_population_type(this);
+	}
+
 	named_data_entry::initialize();
 }
 
@@ -162,6 +169,21 @@ QString population_type::get_country_modifier_string(const metternich::country *
 	}
 
 	return QString::fromStdString(str);
+}
+
+bool population_type::is_enabled() const
+{
+	if (this->required_game_rule != nullptr && game::get()->get_rules() != nullptr) {
+		if (!game::get()->get_rules()->get_value(this->required_game_rule)) {
+			return false;
+		}
+	}
+
+	if (this->get_output_commodity() != nullptr && !this->get_output_commodity()->is_enabled()) {
+		return false;
+	}
+
+	return true;
 }
 
 }

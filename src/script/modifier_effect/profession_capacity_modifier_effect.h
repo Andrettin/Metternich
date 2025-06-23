@@ -42,6 +42,19 @@ public:
 		return std::format("{} Capacity", profession->get_name());
 	}
 
+	virtual bool is_hidden(const site *scope) const override
+	{
+		Q_UNUSED(scope);
+
+		for (const population_type *population_type : this->profession->get_population_types()) {
+			if (population_type->is_enabled()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 private:
 	const metternich::profession *profession = nullptr;
 };

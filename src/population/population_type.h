@@ -9,9 +9,14 @@
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("economy/commodity.h")
+Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("population/population_class.h")
 Q_MOC_INCLUDE("population/profession.h")
 Q_MOC_INCLUDE("ui/icon.h")
+
+namespace archimedes {
+	class game_rule;
+}
 
 namespace metternich {
 
@@ -32,7 +37,7 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(metternich::population_class* population_class MEMBER population_class NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
-	Q_PROPERTY(const metternich::profession* profession MEMBER profession READ get_profession NOTIFY changed)
+	Q_PROPERTY(metternich::profession* profession MEMBER profession NOTIFY changed)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 	Q_PROPERTY(bool literate MEMBER literate READ is_literate NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
@@ -42,6 +47,8 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(int resource_output_value MEMBER resource_output_value READ get_resource_output_value NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int max_modifier_multiplier MEMBER max_modifier_multiplier READ get_max_modifier_multiplier NOTIFY changed)
+	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
+	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "population_type";
@@ -198,6 +205,8 @@ public:
 
 	Q_INVOKABLE QString get_country_modifier_string(const metternich::country *country) const;
 
+	bool is_enabled() const;
+
 signals:
 	void changed();
 
@@ -205,7 +214,7 @@ private:
 	population_class *population_class = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
-	const metternich::profession *profession = nullptr;
+	metternich::profession *profession = nullptr;
 	QColor color;
 	bool literate = false;
 	metternich::icon *icon = nullptr;
@@ -221,6 +230,7 @@ private:
 	int resource_output_value = 0;
 	centesimal_int max_modifier_multiplier = centesimal_int(0);
 	std::unique_ptr<modifier<const country>> country_modifier;
+	const game_rule *required_game_rule = nullptr;
 };
 
 }

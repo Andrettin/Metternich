@@ -5,6 +5,8 @@
 
 namespace metternich {
 
+class population_type;
+
 class profession final : public named_data_entry, public data_type<profession>
 {
 	Q_OBJECT
@@ -18,6 +20,19 @@ public:
 	explicit profession(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}
+
+	const std::vector<const population_type *> &get_population_types() const
+	{
+		return this->population_types;
+	}
+
+	void add_population_type(const population_type *population_type)
+	{
+		this->population_types.push_back(population_type);
+	}
+
+private:
+	std::vector<const population_type *> population_types;
 };
 
 }

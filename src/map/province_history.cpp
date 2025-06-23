@@ -9,6 +9,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
+#include "population/population_type.h"
 #include "species/phenotype.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
@@ -72,6 +73,10 @@ void province_history::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key_str = property.get_key();
 			const population_group_key key(key_str);
+
+			if (key.type != nullptr && !key.type->is_enabled()) {
+				return;
+			}
 
 			const std::string &value = property.get_value();
 			const int population = std::stoi(value);

@@ -24,6 +24,10 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
+		if (!this->population_type->is_enabled()) {
+			return;
+		}
+
 		scope->get_game_data()->change_population_type_modifier_multiplier(this->population_type, this->value * multiplier / 100);
 	}
 
@@ -37,6 +41,13 @@ public:
 	virtual bool is_percent() const override
 	{
 		return true;
+	}
+
+	virtual bool is_hidden(const country *scope) const override
+	{
+		Q_UNUSED(scope);
+
+		return !this->population_type->is_enabled();
 	}
 
 private:

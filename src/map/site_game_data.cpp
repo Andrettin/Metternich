@@ -1218,6 +1218,7 @@ void site_game_data::clear_population_units()
 void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype)
 {
 	assert_throw(type != nullptr);
+	assert_throw(type->is_enabled());
 	assert_throw(this->can_have_population());
 	assert_throw(this->is_built());
 
