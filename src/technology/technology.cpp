@@ -375,9 +375,29 @@ void technology::calculate_total_prerequisite_depth()
 	this->total_prerequisite_depth = depth;
 }
 
+int technology::get_wealth_cost_weight() const
+{
+	int weight = this->wealth_cost_weight;
+
+	if (weight == 0) {
+		bool has_commodity_cost_weight = false;
+		for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+			if (commodity->is_enabled()) {
+				has_commodity_cost_weight = true;
+				break;
+			}
+		}
+		if (!has_commodity_cost_weight) {
+			weight = 1;
+		}
+	}
+
+	return weight;
+}
+
 int technology::get_total_cost_weights() const
 {
-	int cost_weights = this->wealth_cost_weight;
+	int cost_weights = this->get_wealth_cost_weight();
 
 	for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
 		if (!commodity->is_enabled()) {
@@ -412,12 +432,14 @@ centesimal_int technology::get_cost_for_country(const country *country) const
 
 int technology::get_wealth_cost_for_country(const country *country) const
 {
-	if (this->wealth_cost_weight == 0) {
+	const int wealth_cost_weight = this->get_wealth_cost_weight();
+
+	if (wealth_cost_weight == 0) {
 		return 0;
 	}
 
 	centesimal_int cost = this->get_cost_for_country(country) * 100;
-	cost *= this->wealth_cost_weight;
+	cost *= wealth_cost_weight;
 	cost /= this->get_total_cost_weights();
 	return std::max(1, cost.to_int());
 }

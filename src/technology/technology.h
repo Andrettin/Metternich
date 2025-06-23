@@ -183,6 +183,7 @@ public:
 		return this->leads_to;
 	}
 
+	int get_wealth_cost_weight() const;
 	int get_total_cost_weights() const;
 	centesimal_int get_cost_for_country(const country *country) const;
 	Q_INVOKABLE int get_wealth_cost_for_country(const metternich::country *country) const;
@@ -499,7 +500,7 @@ private:
 	int total_prerequisite_depth = 0;
 	std::vector<const technology *> leads_to;
 	int cost = 0;
-	int wealth_cost_weight = 1;
+	int wealth_cost_weight = 0;
 	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const factor<country>> cost_factor;
 	std::vector<const commodity *> enabled_commodities;
