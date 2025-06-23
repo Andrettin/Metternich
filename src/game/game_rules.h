@@ -1,6 +1,6 @@
 #pragma once
 
-#include "database/data_entry_container.h"
+#include "game/game_rule_container.h"
 #include "game/game_rules_base.h"
 #include "util/qunique_ptr.h"
 
@@ -36,7 +36,7 @@ public:
 
 	QVariantList get_rules_qvariant_list() const;
 
-	const data_entry_map<game_rule, bool> &get_values() const
+	const game_rule_map<bool> &get_values() const
 	{
 		return this->values;
 	}
@@ -46,11 +46,13 @@ public:
 	Q_INVOKABLE bool get_value(const std::string &rule_identifier) const;
 	Q_INVOKABLE void set_value(const archimedes::game_rule *rule, const bool value);
 
+	Q_INVOKABLE bool is_rule_available(const archimedes::game_rule *rule) const;
+
 signals:
 	void values_changed();
 
 private:
-	data_entry_map<game_rule, bool> values;
+	game_rule_map<bool> values;
 };
 
 }

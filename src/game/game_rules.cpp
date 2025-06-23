@@ -17,6 +17,7 @@ namespace metternich {
 game_rules::game_rules()
 {
 	for (const game_rule *rule : game_rule::get_all()) {
+		this->values[rule] = false;
 		this->set_value(rule, rule->get_default_value());
 	}
 }
@@ -73,12 +74,6 @@ QVariantList game_rules::get_values_qvariant_list() const
 
 bool game_rules::get_value(const archimedes::game_rule *rule) const
 {
-	for (const game_rule *required_rule : rule->get_required_rules()) {
-		if (!this->get_value(required_rule)) {
-			return false;
-		}
-	}
-
 	const auto find_iterator = this->values.find(rule);
 	if (find_iterator != this->values.end()) {
 		return find_iterator->second;
@@ -99,6 +94,7 @@ bool game_rules::get_value(const std::string &rule_identifier) const
 void game_rules::set_value(const game_rule *rule, const bool value)
 {
 	assert_throw(rule != nullptr);
+	assert_throw(!value || this->is_rule_available(rule));
 
 	if (value == this->get_value(rule)) {
 		return;
@@ -114,9 +110,24 @@ void game_rules::set_value(const game_rule *rule, const bool value)
 				}
 			}
 		}
+	} else {
+		for (const game_rule *requiring_rule : rule->get_requiring_rules()) {
+			this->set_value(requiring_rule, false);
+		}
 	}
 
 	emit values_changed();
+}
+
+bool game_rules::is_rule_available(const game_rule *rule) const
+{
+	for (const game_rule *required_rule : rule->get_required_rules()) {
+		if (!this->get_value(required_rule)) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 }
