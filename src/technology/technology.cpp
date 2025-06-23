@@ -380,6 +380,9 @@ int technology::get_total_cost_weights() const
 	int cost_weights = this->wealth_cost_weight;
 
 	for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+		if (!commodity->is_enabled()) {
+			continue;
+		}
 		cost_weights += cost_weight;
 	}
 
@@ -427,6 +430,10 @@ commodity_map<int> technology::get_commodity_costs_for_country(const country *co
 	commodity_map<int> costs;
 
 	for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+		if (!commodity->is_enabled()) {
+			continue;
+		}
+
 		if (cost_weight <= 0) {
 			continue;
 		}
