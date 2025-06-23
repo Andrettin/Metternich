@@ -67,6 +67,8 @@ public:
 	{
 		return this->industrial;
 	}
+	
+	bool is_enabled() const;
 
 signals:
 	void changed();

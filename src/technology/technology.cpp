@@ -989,6 +989,10 @@ QString technology::get_effects_string(metternich::country *country) const
 
 	if (!this->get_enabled_production_types().empty()) {
 		for (const production_type *production_type : this->get_enabled_production_types()) {
+			if (!production_type->is_enabled()) {
+				continue;
+			}
+
 			if (!str.empty()) {
 				str += "\n";
 			}

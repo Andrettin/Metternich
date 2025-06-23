@@ -57,4 +57,19 @@ QVariantList production_type::get_input_commodities_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_input_commodities());
 }
 
+bool production_type::is_enabled() const
+{
+	for (const auto &[commodity, input] : this->get_input_commodities()) {
+		if (!commodity->is_enabled()) {
+			return false;
+		}
+	}
+
+	if (this->get_output_commodity() != nullptr && !this->get_output_commodity()->is_enabled()) {
+		return false;
+	}
+
+	return true;
+}
+
 }
