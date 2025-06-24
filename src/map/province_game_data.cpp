@@ -107,6 +107,10 @@ void province_game_data::do_everyday_consumption()
 		assert_throw(commodity->is_local() && commodity->is_provincial());
 		assert_throw(!commodity->is_storable());
 
+		if (!commodity->is_enabled()) {
+			continue;
+		}
+
 		const int effective_consumption = std::min(consumption.to_int(), this->get_local_commodity_output(commodity).to_int());
 
 		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
@@ -151,6 +155,10 @@ void province_game_data::do_luxury_consumption()
 	for (const auto &[commodity, consumption] : this->local_luxury_consumption) {
 		assert_throw(commodity->is_local() && commodity->is_provincial());
 		assert_throw(!commodity->is_storable());
+
+		if (!commodity->is_enabled()) {
+			continue;
+		}
 
 		const int effective_consumption = std::min(consumption.to_int(), this->get_local_commodity_output(commodity).to_int());
 
@@ -555,12 +563,20 @@ void province_game_data::clear_population_units()
 void province_game_data::on_population_type_count_changed(const population_type *type, const int change)
 {
 	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
+		if (!commodity->is_enabled()) {
+			continue;
+		}
+
 		if (commodity->is_local() && commodity->is_provincial()) {
 			this->change_local_everyday_consumption(commodity, value * change);
 		}
 	}
 
 	for (const auto &[commodity, value] : type->get_luxury_consumption()) {
+		if (!commodity->is_enabled()) {
+			continue;
+		}
+
 		if (commodity->is_local() && commodity->is_provincial()) {
 			this->change_local_luxury_consumption(commodity, value * change);
 		}

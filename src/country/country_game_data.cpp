@@ -405,6 +405,10 @@ void country_game_data::do_everyday_consumption()
 	}
 
 	for (const auto &[commodity, consumption] : this->get_everyday_consumption()) {
+		if (!commodity->is_enabled()) {
+			continue;
+		}
+
 		//local consumption is handled separately
 		assert_throw(!commodity->is_local());
 
@@ -477,6 +481,10 @@ void country_game_data::do_luxury_consumption()
 	}
 
 	for (const auto &[commodity, consumption] : this->get_luxury_consumption()) {
+		if (!commodity->is_enabled()) {
+			continue;
+		}
+
 		//local consumption is handled separately
 		assert_throw(!commodity->is_local());
 
@@ -2096,6 +2104,10 @@ void country_game_data::on_population_type_count_changed(const population_type *
 	this->change_everyday_wealth_consumption(type->get_everyday_wealth_consumption() * change);
 
 	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
+		if (!commodity->is_enabled()) {
+			continue;
+		}
+
 		if (commodity->is_local()) {
 			//handled at the site or province level
 			continue;
@@ -2105,6 +2117,10 @@ void country_game_data::on_population_type_count_changed(const population_type *
 	}
 
 	for (const auto &[commodity, value] : type->get_luxury_consumption()) {
+		if (!commodity->is_enabled()) {
+			continue;
+		}
+
 		if (commodity->is_local()) {
 			//handled at the site or province level
 			continue;
