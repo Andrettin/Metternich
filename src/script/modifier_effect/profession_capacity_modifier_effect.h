@@ -48,11 +48,11 @@ public:
 
 		for (const population_type *population_type : this->profession->get_population_types()) {
 			if (population_type->is_enabled()) {
-				return true;
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 private:
