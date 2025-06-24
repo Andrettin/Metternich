@@ -16,6 +16,7 @@
 #include "game/character_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "game/game_rules.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -519,6 +520,7 @@ void character_game_data::on_trait_gained(const character_trait *trait, const in
 			this->apply_trait_office_modifier(trait, this->get_country(), this->get_office(), multiplier);
 		}
 	}
+
 	if (this->is_advisor()) {
 		assert_throw(this->get_country() != nullptr);
 
@@ -697,6 +699,10 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 {
 	if (office->is_ruler()) {
 		assert_throw(this->character->get_role() == character_role::ruler);
+
+		if (defines::get()->get_ruler_traits_game_rule() != nullptr && !game::get()->get_rules()->get_value(defines::get()->get_ruler_traits_game_rule())) {
+			return {};
+		}
 	} else {
 		assert_throw(this->character->get_role() == character_role::advisor);
 	}
@@ -762,6 +768,10 @@ void character_game_data::apply_office_modifier(const metternich::country *count
 
 void character_game_data::apply_trait_office_modifier(const character_trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const
 {
+	if (office->is_ruler() && defines::get()->get_ruler_traits_game_rule() != nullptr && !game::get()->get_rules()->get_value(defines::get()->get_ruler_traits_game_rule())) {
+		return;
+	}
+
 	if (trait->get_office_modifier(office) != nullptr) {
 		trait->get_office_modifier(office)->apply(country, multiplier);
 	}
