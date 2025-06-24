@@ -285,6 +285,10 @@ const technology_category *technology::get_category() const
 
 bool technology::is_available_for_country(const country *country) const
 {
+	if (!this->is_enabled()) {
+		return false;
+	}
+
 	if (!this->cultures.empty() || !this->cultural_groups.empty()) {
 		if (this->cultures.contains(country->get_culture())) {
 			return true;
@@ -1202,6 +1206,17 @@ void technology::write_character_effects_string(const character_role role, const
 bool technology::is_hidden_in_tree() const
 {
 	return !this->is_available_for_country(game::get()->get_player_country());
+}
+
+bool technology::is_enabled() const
+{
+	if (this->required_game_rule != nullptr && game::get()->get_rules() != nullptr) {
+		if (!game::get()->get_rules()->get_value(this->required_game_rule)) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 }

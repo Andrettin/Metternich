@@ -8,10 +8,15 @@
 #include "infrastructure/pathway_container.h"
 #include "religion/religion_container.h"
 
+Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("technology/technology_category.h")
 Q_MOC_INCLUDE("technology/technology_subcategory.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
+
+namespace archimedes {
+	class game_rule;
+}
 
 namespace metternich {
 
@@ -73,6 +78,8 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(const QObject* tree_parent READ get_tree_parent CONSTANT)
 	Q_PROPERTY(QVariantList secondary_tree_parents READ get_secondary_tree_parents CONSTANT)
+	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
+	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "technology";
@@ -479,6 +486,8 @@ public:
 
 	virtual bool is_hidden_in_tree() const override;
 
+	bool is_enabled() const;
+
 signals:
 	void changed();
 
@@ -525,6 +534,7 @@ private:
 	std::map<character_role, std::vector<const character *>> enabled_characters;
 	std::map<character_role, std::vector<const character *>> retired_characters;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
+	const game_rule *required_game_rule = nullptr;
 };
 
 }
