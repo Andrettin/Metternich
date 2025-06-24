@@ -52,6 +52,7 @@ class country_ai;
 class country_building_slot;
 class country_rank;
 class culture;
+class education_type;
 class event;
 class flag;
 class government_type;
@@ -130,6 +131,8 @@ class country_game_data final : public QObject
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 	Q_PROPERTY(int housing READ get_housing_int NOTIFY housing_changed)
+	Q_PROPERTY(QVariantList population_type_inputs READ get_population_type_inputs_qvariant_list NOTIFY population_type_inputs_changed)
+	Q_PROPERTY(QVariantList population_type_outputs READ get_population_type_outputs_qvariant_list NOTIFY population_type_outputs_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int wealth_income READ get_wealth_income NOTIFY wealth_income_changed)
@@ -196,6 +199,7 @@ public:
 
 	void do_turn();
 	void do_production();
+	void do_education();
 	void do_research();
 	void do_population_growth();
 	void do_food_consumption(const int food_consumption);
@@ -743,6 +747,48 @@ public:
 
 	void change_profession_capacity(const profession *profession, const int change);
 	int get_available_profession_capacity(const profession *profession) const;
+
+	const population_type_map<int> &get_population_type_inputs() const
+	{
+		return this->population_type_inputs;
+	}
+
+	QVariantList get_population_type_inputs_qvariant_list() const;
+
+	int get_population_type_input(const population_type *population_type) const
+	{
+		const auto find_iterator = this->population_type_inputs.find(population_type);
+
+		if (find_iterator != this->population_type_inputs.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_population_type_input(const population_type *population_type, const int change);
+
+	const population_type_map<int> &get_population_type_outputs() const
+	{
+		return this->population_type_outputs;
+	}
+
+	QVariantList get_population_type_outputs_qvariant_list() const;
+
+	int get_population_type_output(const population_type *population_type) const
+	{
+		const auto find_iterator = this->population_type_outputs.find(population_type);
+
+		if (find_iterator != this->population_type_outputs.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_population_type_output(const population_type *population_type, const int change);
+
+	population_unit *choose_education_population_unit(const education_type *education_type);
 
 	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
@@ -2500,6 +2546,8 @@ signals:
 	void population_units_changed();
 	void population_growth_changed();
 	void housing_changed();
+	void population_type_inputs_changed();
+	void population_type_outputs_changed();
 	void settlement_building_counts_changed();
 	void wealth_changed();
 	void wealth_income_changed();
@@ -2591,6 +2639,8 @@ private:
 	centesimal_int housing;
 	int food_consumption = 0;
 	std::map<const profession *, int> profession_capacities;
+	population_type_map<int> population_type_inputs;
+	population_type_map<int> population_type_outputs;
 	std::vector<qunique_ptr<country_building_slot>> building_slots;
 	building_slot_type_map<country_building_slot *> building_slot_map;
 	building_type_map<int> settlement_building_counts;

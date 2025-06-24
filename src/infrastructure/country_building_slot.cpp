@@ -11,6 +11,9 @@
 #include "game/game.h"
 #include "game/game_rules.h"
 #include "infrastructure/building_type.h"
+#include "population/education_type.h"
+#include "population/population.h"
+#include "population/population_type.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -25,6 +28,7 @@ country_building_slot::country_building_slot(const building_slot_type *type, con
 	assert_throw(this->get_country() != nullptr);
 
 	connect(this, &building_slot::building_changed, this, &country_building_slot::available_production_types_changed);
+	connect(this, &building_slot::building_changed, this, &country_building_slot::available_education_types_changed);
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
 
@@ -94,6 +98,21 @@ void country_building_slot::set_building(const building_type *building)
 
 				while (this->get_production_type_employed_capacity(production_type) > 0) {
 					this->decrease_production(production_type, true);
+				}
+			}
+		}
+	}
+
+	//clear education for education types which are no longer valid
+	if (old_building != nullptr && !old_building->get_education_types().empty()) {
+		if (building == nullptr || building->get_education_types() != old_building->get_education_types()) {
+			for (const education_type *education_type : old_building->get_education_types()) {
+				if (building != nullptr && vector::contains(building->get_education_types(), education_type)) {
+					continue;
+				}
+
+				while (this->get_education_type_employed_capacity(education_type) > 0) {
+					this->decrease_education(education_type, true);
 				}
 			}
 		}
@@ -174,6 +193,15 @@ void country_building_slot::change_capacity(const int change)
 			for (const production_type *production_type : this->get_building()->get_production_types()) {
 				while (this->get_employed_capacity() > this->get_capacity() && this->get_production_type_employed_capacity(production_type) > 0) {
 					this->decrease_production(production_type, true);
+				}
+			}
+		}
+
+		//clear education that is over capacity
+		if (this->get_building() != nullptr && this->get_employed_capacity() > this->get_capacity()) {
+			for (const education_type *education_type : this->get_building()->get_education_types()) {
+				while (this->get_employed_capacity() > this->get_capacity() && this->get_education_type_employed_capacity(education_type) > 0) {
+					this->decrease_education(education_type, true);
 				}
 			}
 		}
@@ -366,7 +394,7 @@ bool country_building_slot::can_increase_production(const production_type *produ
 		}
 	}
 
-	if (production_type->get_input_wealth() != 0 && country_game_data->get_wealth_with_credit() < production_type->get_input_wealth()) {
+	if (production_type->get_input_wealth() != 0 && country_game_data->get_wealth_with_credit() < country_game_data->get_inflated_value(production_type->get_input_wealth())) {
 		return false;
 	}
 
@@ -408,6 +436,197 @@ void country_building_slot::decrease_production(const production_type *productio
 		this->change_production(production_type, -1, restore_inputs);
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error decreasing production of \"" + production_type->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\"."));
+	}
+}
+
+std::vector<const education_type *> country_building_slot::get_available_education_types() const
+{
+	if (this->get_building() == nullptr) {
+		return {};
+	}
+
+	std::vector<const education_type *> education_types;
+
+	for (const education_type *education_type : this->get_building()->get_education_types()) {
+		if (!education_type->is_enabled()) {
+			continue;
+		}
+
+		education_types.push_back(education_type);
+	}
+
+	return education_types;
+}
+
+QVariantList country_building_slot::get_available_education_types_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_available_education_types());
+}
+
+commodity_map<int> country_building_slot::get_education_type_inputs(const education_type *education_type) const
+{
+	commodity_map<int> inputs;
+
+	for (const auto &[input_commodity, input_value] : education_type->get_input_commodities()) {
+		//ensure each input commodity for the education type is in the map
+		inputs[input_commodity] = 0;
+	}
+
+	const int employed_capacity = this->get_education_type_employed_capacity(education_type);
+
+	if (employed_capacity == 0) {
+		return inputs;
+	}
+
+	for (const auto &[input_commodity, input_value] : education_type->get_input_commodities()) {
+		const int total_input = input_value * employed_capacity;
+		inputs[input_commodity] = total_input;
+	}
+
+	return inputs;
+}
+
+QVariantList country_building_slot::get_education_type_inputs(metternich::education_type *education_type) const
+{
+	const metternich::education_type *const_education_type = education_type;
+	return archimedes::map::to_qvariant_list(this->get_education_type_inputs(const_education_type));
+}
+
+int country_building_slot::get_education_type_input_wealth(const education_type *education_type) const
+{
+	if (education_type->get_input_wealth() == 0) {
+		return 0;
+	}
+
+	const int employed_capacity = this->get_education_type_employed_capacity(education_type);
+
+	if (employed_capacity == 0) {
+		return 0;
+	}
+
+	return this->get_country()->get_game_data()->get_inflated_value(education_type->get_input_wealth() * employed_capacity);
+}
+
+int country_building_slot::get_education_type_output(const education_type *education_type) const
+{
+	return this->get_education_type_employed_capacity(education_type);
+}
+
+void country_building_slot::change_education(const education_type *education_type, const int multiplier, const bool change_input_storage)
+{
+	const int old_output = this->get_education_type_output(education_type);
+	const commodity_map<int> old_inputs = this->get_education_type_inputs(education_type);
+	const int old_input_wealth = this->get_education_type_input_wealth(education_type);
+
+	const int change = multiplier;
+	this->employed_capacity += change;
+
+	const int changed_education_type_employed_capacity = (this->education_type_employed_capacities[education_type] += change);
+	assert_throw(changed_education_type_employed_capacity >= 0);
+	if (changed_education_type_employed_capacity == 0) {
+		this->education_type_employed_capacities.erase(education_type);
+	}
+
+	country_game_data *country_game_data = this->get_country()->get_game_data();
+
+	const commodity_map<int> new_inputs = this->get_education_type_inputs(education_type);
+	for (const auto &[input_commodity, input_value] : education_type->get_input_commodities()) {
+		const int old_input = old_inputs.find(input_commodity)->second;
+		const int new_input = new_inputs.find(input_commodity)->second;
+		const int input_change = new_input - old_input;
+
+		if (input_commodity->is_storable() && change_input_storage) {
+			country_game_data->change_stored_commodity(input_commodity, -input_change);
+		}
+		country_game_data->change_commodity_input(input_commodity, input_change);
+	}
+
+	const int new_input_wealth = this->get_education_type_input_wealth(education_type);
+	const int input_wealth_change = new_input_wealth - old_input_wealth;
+	if (change_input_storage) {
+		country_game_data->change_wealth(-input_wealth_change);
+	}
+	country_game_data->change_wealth_income(-input_wealth_change);
+
+	const int new_output = this->get_education_type_output(education_type);
+	country_game_data->change_population_type_input(education_type->get_input_population_type(), new_output - old_output);
+	country_game_data->change_population_type_output(education_type->get_output_population_type(), new_output - old_output);
+}
+
+bool country_building_slot::can_increase_education(const education_type *education_type) const
+{
+	assert_throw(this->get_building() != nullptr);
+	assert_throw(vector::contains(this->get_building()->get_education_types(), education_type));
+
+	if ((this->get_employed_capacity() + 1) > this->get_capacity()) {
+		return false;
+	}
+
+	const country_game_data *country_game_data = this->get_country()->get_game_data();
+
+	if (country_game_data->get_population()->get_type_count(education_type->get_input_population_type()) - country_game_data->get_population_type_input(education_type->get_input_population_type()) < 1) {
+		return false;
+	}
+
+	if (education_type->get_output_population_type()->get_profession() != nullptr && country_game_data->get_available_profession_capacity(education_type->get_output_population_type()->get_profession()) < 1) {
+		return false;
+	}
+
+	for (const auto &[input_commodity, input_value] : education_type->get_input_commodities()) {
+		if (input_commodity->is_storable()) {
+			if (country_game_data->get_stored_commodity(input_commodity) < input_value) {
+				return false;
+			}
+		} else {
+			//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
+			if (country_game_data->get_net_commodity_output(input_commodity) < input_value) {
+				return false;
+			}
+		}
+	}
+
+	if (education_type->get_input_wealth() != 0 && country_game_data->get_wealth_with_credit() < country_game_data->get_inflated_value(education_type->get_input_wealth())) {
+		return false;
+	}
+
+	return true;
+}
+
+void country_building_slot::increase_education(const education_type *education_type)
+{
+	try {
+		assert_throw(this->can_increase_education(education_type));
+
+		this->change_education(education_type, 1);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Error increasing education of \"" + education_type->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\"."));
+	}
+}
+
+bool country_building_slot::can_decrease_education(const education_type *education_type) const
+{
+	assert_throw(this->get_building() != nullptr);
+	assert_throw(vector::contains(this->get_building()->get_education_types(), education_type));
+
+	if (this->get_employed_capacity() == 0) {
+		return false;
+	}
+
+	if (this->get_education_type_employed_capacity(education_type) == 0) {
+		return false;
+	}
+
+	return true;
+}
+
+void country_building_slot::decrease_education(const education_type *education_type, const bool restore_inputs)
+{
+	try {
+		assert_throw(this->can_decrease_education(education_type));
+
+		this->change_education(education_type, -1, restore_inputs);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("Error decreasing education of \"" + education_type->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\"."));
 	}
 }
 

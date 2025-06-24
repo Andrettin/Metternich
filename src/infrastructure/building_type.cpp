@@ -11,6 +11,7 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/settlement_type.h"
+#include "population/education_type.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
@@ -49,6 +50,10 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "production_types") {
 		for (const std::string &value : values) {
 			this->production_types.push_back(production_type::get(value));
+		}
+	} else if (tag == "education_types") {
+		for (const std::string &value : values) {
+			this->education_types.push_back(education_type::get(value));
 		}
 	} else if (tag == "commodity_costs") {
 		scope.for_each_property([&](const gsml_property &property) {
@@ -187,7 +192,7 @@ void building_type::check() const
 		throw std::runtime_error(std::format("Building type \"{}\" is not provincial, but does have settlement types listed for it.", this->get_identifier()));
 	}
 
-	if (!this->get_production_types().empty() && !this->is_provincial()) {
+	if ((!this->get_production_types().empty() || !this->get_education_types().empty()) && !this->is_provincial()) {
 		assert_throw(this->get_base_capacity() > 0);
 	}
 
@@ -229,6 +234,11 @@ void building_type::calculate_level()
 QVariantList building_type::get_production_types_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_production_types());
+}
+
+QVariantList building_type::get_education_types_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_education_types());
 }
 
 int building_type::get_wealth_cost_for_country(const country *country) const

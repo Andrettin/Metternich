@@ -19,6 +19,7 @@ class building_slot_type;
 class country;
 class cultural_group;
 class culture;
+class education_type;
 class icon;
 class population_unit;
 class portrait;
@@ -51,6 +52,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList education_types READ get_education_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
 	Q_PROPERTY(int capacity_increment MEMBER capacity_increment READ get_capacity_increment NOTIFY changed)
 	Q_PROPERTY(bool capitol MEMBER capitol READ is_capitol NOTIFY changed)
@@ -131,6 +133,13 @@ public:
 	}
 
 	QVariantList get_production_types_qvariant_list() const;
+
+	const std::vector<const education_type *> &get_education_types() const
+	{
+		return this->education_types;
+	}
+
+	QVariantList get_education_types_qvariant_list() const;
 
 	int get_base_capacity() const
 	{
@@ -303,6 +312,7 @@ private:
 	int level = 0;
 	std::vector<const settlement_type *> settlement_types;
 	std::vector<const production_type *> production_types;
+	std::vector<const education_type *> education_types;
 	int base_capacity = 0;
 	int capacity_increment = 0;
 	bool capitol = false;

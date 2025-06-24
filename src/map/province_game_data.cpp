@@ -12,7 +12,6 @@
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/commodity_container.h"
-#include "economy/production_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
 #include "game/event_trigger.h"

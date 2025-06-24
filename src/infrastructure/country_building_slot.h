@@ -5,6 +5,7 @@
 
 namespace metternich {
 
+class education_type;
 class production_type;
 
 class country_building_slot final : public building_slot
@@ -15,6 +16,7 @@ class country_building_slot final : public building_slot
 	Q_PROPERTY(int capacity READ get_capacity NOTIFY capacity_changed)
 	Q_PROPERTY(int employed_capacity READ get_employed_capacity NOTIFY employed_capacity_changed)
 	Q_PROPERTY(QVariantList available_production_types READ get_available_production_types_qvariant_list NOTIFY available_production_types_changed)
+	Q_PROPERTY(QVariantList available_education_types READ get_available_education_types_qvariant_list NOTIFY available_education_types_changed)
 	Q_PROPERTY(QString country_modifier_string READ get_country_modifier_string NOTIFY country_modifier_changed)
 
 public:
@@ -85,7 +87,7 @@ public:
 	std::vector<const production_type *> get_available_production_types() const;
 	QVariantList get_available_production_types_qvariant_list() const;
 
-	int get_production_type_employed_capacity(const production_type *production_type) const
+	Q_INVOKABLE int get_production_type_employed_capacity(const metternich::production_type *production_type) const
 	{
 		const auto find_iterator = this->production_type_employed_capacities.find(production_type);
 		if (find_iterator != this->production_type_employed_capacities.end()) {
@@ -95,21 +97,9 @@ public:
 		return 0;
 	}
 
-	Q_INVOKABLE int get_production_type_employed_capacity(metternich::production_type *production_type) const
-	{
-		const metternich::production_type *const_production_type = production_type;
-		return this->get_production_type_employed_capacity(const_production_type);
-	}
-
 	commodity_map<int> get_production_type_inputs(const production_type *production_type) const;
 	Q_INVOKABLE QVariantList get_production_type_inputs(metternich::production_type *production_type) const;
-	int get_production_type_input_wealth(const production_type *production_type) const;
-
-	Q_INVOKABLE int get_production_type_input_wealth(metternich::production_type *production_type) const
-	{
-		const metternich::production_type *const_production_type = production_type;
-		return this->get_production_type_input_wealth(const_production_type);
-	}
+	Q_INVOKABLE int get_production_type_input_wealth(const metternich::production_type *production_type) const;
 
 	centesimal_int get_production_type_output(const production_type *production_type) const;
 
@@ -120,38 +110,34 @@ public:
 	}
 
 	void change_production(const production_type *production_type, const int change, const bool change_input_storage = true);
+	Q_INVOKABLE bool can_increase_production(const metternich::production_type *production_type) const;
+	Q_INVOKABLE void increase_production(const metternich::production_type *production_type);
+	Q_INVOKABLE bool can_decrease_production(const metternich::production_type *production_type) const;
+	Q_INVOKABLE void decrease_production(const metternich::production_type *production_type, const bool restore_inputs);
 
-	bool can_increase_production(const production_type *production_type) const;
+	std::vector<const education_type *> get_available_education_types() const;
+	QVariantList get_available_education_types_qvariant_list() const;
 
-	Q_INVOKABLE bool can_increase_production(metternich::production_type *production_type) const
+	Q_INVOKABLE int get_education_type_employed_capacity(const metternich::education_type *education_type) const
 	{
-		const metternich::production_type *const_production_type = production_type;
-		return this->can_increase_production(const_production_type);
+		const auto find_iterator = this->education_type_employed_capacities.find(education_type);
+		if (find_iterator != this->education_type_employed_capacities.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
 	}
 
-	void increase_production(const production_type *production_type);
+	commodity_map<int> get_education_type_inputs(const education_type *education_type) const;
+	Q_INVOKABLE QVariantList get_education_type_inputs(metternich::education_type *education_type) const;
+	Q_INVOKABLE int get_education_type_input_wealth(const metternich::education_type *education_type) const;
+	Q_INVOKABLE int get_education_type_output(const metternich::education_type *education_type) const;
 
-	Q_INVOKABLE void increase_production(metternich::production_type *production_type)
-	{
-		const metternich::production_type *const_production_type = production_type;
-		this->increase_production(const_production_type);
-	}
-
-	bool can_decrease_production(const production_type *production_type) const;
-
-	Q_INVOKABLE bool can_decrease_production(metternich::production_type *production_type) const
-	{
-		const metternich::production_type *const_production_type = production_type;
-		return this->can_decrease_production(const_production_type);
-	}
-
-	void decrease_production(const production_type *production_type, const bool restore_inputs);
-
-	Q_INVOKABLE void decrease_production(metternich::production_type *production_type)
-	{
-		const metternich::production_type *const_production_type = production_type;
-		this->decrease_production(const_production_type, true);
-	}
+	void change_education(const education_type *education_type, const int change, const bool change_input_storage = true);
+	Q_INVOKABLE bool can_increase_education(const metternich::education_type *education_type) const;
+	Q_INVOKABLE void increase_education(const metternich::education_type *education_type);
+	Q_INVOKABLE bool can_decrease_education(const metternich::education_type *education_type) const;
+	Q_INVOKABLE void decrease_education(const metternich::education_type *education_type, const bool restore_inputs);
 
 	QString get_country_modifier_string() const;
 
@@ -160,6 +146,7 @@ signals:
 	void capacity_changed();
 	void employed_capacity_changed();
 	void available_production_types_changed();
+	void available_education_types_changed();
 	void country_modifier_changed();
 
 private:
@@ -168,6 +155,7 @@ private:
 	int capacity = 0;
 	int employed_capacity = 0;
 	std::map<const production_type *, int> production_type_employed_capacities;
+	std::map<const education_type *, int> education_type_employed_capacities;
 	bool expanding = false;
 };
 
