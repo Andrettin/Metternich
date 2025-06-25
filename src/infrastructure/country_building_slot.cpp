@@ -196,15 +196,6 @@ void country_building_slot::change_capacity(const int change)
 				}
 			}
 		}
-
-		//clear education that is over capacity
-		if (this->get_building() != nullptr && this->get_employed_capacity() > this->get_capacity()) {
-			for (const education_type *education_type : this->get_building()->get_education_types()) {
-				while (this->get_employed_capacity() > this->get_capacity() && this->get_education_type_employed_capacity(education_type) > 0) {
-					this->decrease_education(education_type, true);
-				}
-			}
-		}
 	}
 
 	if (game::get()->is_running()) {
@@ -519,7 +510,6 @@ void country_building_slot::change_education(const education_type *education_typ
 	const int old_input_wealth = this->get_education_type_input_wealth(education_type);
 
 	const int change = multiplier;
-	this->employed_capacity += change;
 
 	const int changed_education_type_employed_capacity = (this->education_type_employed_capacities[education_type] += change);
 	assert_throw(changed_education_type_employed_capacity >= 0);
@@ -557,10 +547,6 @@ bool country_building_slot::can_increase_education(const education_type *educati
 {
 	assert_throw(this->get_building() != nullptr);
 	assert_throw(vector::contains(this->get_building()->get_education_types(), education_type));
-
-	if ((this->get_employed_capacity() + 1) > this->get_capacity()) {
-		return false;
-	}
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
 
@@ -607,10 +593,6 @@ bool country_building_slot::can_decrease_education(const education_type *educati
 {
 	assert_throw(this->get_building() != nullptr);
 	assert_throw(vector::contains(this->get_building()->get_education_types(), education_type));
-
-	if (this->get_employed_capacity() == 0) {
-		return false;
-	}
 
 	if (this->get_education_type_employed_capacity(education_type) == 0) {
 		return false;
