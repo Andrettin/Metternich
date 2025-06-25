@@ -298,7 +298,8 @@ void country_game_data::do_research()
 			this->gain_free_technology();
 		}
 
-		for (const technology *current_research : this->get_current_researches()) {
+		const technology_set current_researches = this->get_current_researches();
+		for (const technology *current_research : current_researches) {
 			this->on_technology_researched(current_research);
 		}
 
