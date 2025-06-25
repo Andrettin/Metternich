@@ -30,6 +30,7 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/country_building_slot.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
@@ -908,7 +909,18 @@ void game::apply_site_buildings(const site *site)
 	country_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
 
 	for (auto [building_slot_type, building] : site_history->get_buildings()) {
-		const settlement_building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
+		building_slot *building_slot = nullptr;
+		if (building->is_provincial()) {
+			building_slot = settlement_game_data->get_building_slot(building_slot_type);
+		} else {
+			if (owner_game_data == nullptr) {
+				continue;
+			}
+
+			building_slot = owner_game_data->get_building_slot(building_slot_type);
+		}
+
+		assert_throw(building_slot != nullptr);
 
 		while (building != nullptr) {
 			if (building->is_provincial() && settlement == site) {
@@ -942,6 +954,13 @@ void game::apply_site_buildings(const site *site)
 			}
 
 			slot_building = owner_game_data->get_slot_building(building_slot_type);
+
+			if (slot_building == building) {
+				country_building_slot *country_building_slot = static_cast<metternich::country_building_slot *>(building_slot);
+				if (country_building_slot->can_expand()) {
+					country_building_slot->change_expansion_count(1);
+				}
+			}
 		}
 
 		if (slot_building == nullptr || slot_building->get_level() < building->get_level()) {
