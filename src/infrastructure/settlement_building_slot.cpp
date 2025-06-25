@@ -325,6 +325,16 @@ QString settlement_building_slot::get_modifier_string() const
 		str += this->get_building()->get_country_modifier()->get_string(this->get_country());
 	}
 
+	if (this->get_building()->get_weighted_country_modifier() != nullptr) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		const country_game_data *country_game_data = this->get_country()->get_game_data();
+		const centesimal_int multiplier = centesimal_int(1) / country_game_data->get_settlement_count();
+		str += this->get_building()->get_weighted_country_modifier()->get_string(this->get_country(), multiplier, 0, false);
+	}
+
 	std::string settlement_modifier_str;
 	if (this->get_building()->get_settlement_modifier() != nullptr) {
 		settlement_modifier_str += this->get_building()->get_settlement_modifier()->get_string(this->get_settlement());

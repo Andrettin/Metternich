@@ -89,6 +89,9 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
 		database::process_gsml_data(this->country_modifier, scope);
+	} else if (tag == "weighted_country_modifier") {
+		this->weighted_country_modifier = std::make_unique<modifier<const country>>();
+		database::process_gsml_data(this->weighted_country_modifier, scope);
 	} else if (tag == "effects") {
 		auto effect_list = std::make_unique<metternich::effect_list<const site>>();
 		database::process_gsml_data(effect_list, scope);
@@ -206,6 +209,10 @@ void building_type::check() const
 
 	if (this->get_province_modifier() != nullptr && !this->is_provincial()) {
 		throw std::runtime_error(std::format("Building type \"{}\" has a province modifier, but is not a provincial building.", this->get_identifier()));
+	}
+
+	if (this->get_weighted_country_modifier() != nullptr && !this->is_provincial()) {
+		throw std::runtime_error(std::format("Building type \"{}\" has a weighted country modifier, but is not a provincial building.", this->get_identifier()));
 	}
 
 	if (this->get_province_conditions() != nullptr && !this->is_provincial()) {

@@ -631,6 +631,20 @@ QString country_building_slot::get_country_modifier_string() const
 		str = this->get_building()->get_country_modifier()->get_string(this->get_country(), multiplier);
 	}
 
+	if (this->get_building()->get_weighted_country_modifier() != nullptr) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		assert_throw(this->get_building()->is_provincial());
+		centesimal_int multiplier(1);
+		if (this->get_building()->is_provincial()) {
+			multiplier = centesimal_int(country_game_data->get_settlement_building_count(this->get_building())) / country_game_data->get_settlement_count();
+		}
+
+		str = this->get_building()->get_weighted_country_modifier()->get_string(this->get_country(), multiplier);
+	}
+
 	return QString::fromStdString(str);
 }
 
