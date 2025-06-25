@@ -3645,15 +3645,17 @@ void country_game_data::add_current_research(const technology *technology)
 	emit current_researches_changed();
 }
 
-void country_game_data::remove_current_research(const technology *technology)
+void country_game_data::remove_current_research(const technology *technology, const bool restore_costs)
 {
 	assert_throw(this->get_current_researches().contains(technology));
 
-	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-	this->change_wealth_inflated(wealth_cost);
+	if (restore_costs) {
+		const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
+		this->change_wealth_inflated(wealth_cost);
 
-	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
-		this->change_stored_commodity(commodity, cost);
+		for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
+			this->change_stored_commodity(commodity, cost);
+		}
 	}
 
 	this->current_researches.erase(technology);
@@ -3663,7 +3665,7 @@ void country_game_data::remove_current_research(const technology *technology)
 void country_game_data::on_technology_researched(const technology *technology)
 {
 	if (this->get_current_researches().contains(technology)) {
-		this->remove_current_research(technology);
+		this->remove_current_research(technology, false);
 	}
 
 	this->add_technology(technology);

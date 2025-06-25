@@ -1278,7 +1278,7 @@ public:
 
 	QVariantList get_current_researches_qvariant_list() const;
 	Q_INVOKABLE void add_current_research(const metternich::technology *technology);
-	Q_INVOKABLE void remove_current_research(const metternich::technology *technology);
+	Q_INVOKABLE void remove_current_research(const metternich::technology *technology, const bool restore_costs);
 	void on_technology_researched(const technology *technology);
 
 	data_entry_map<technology_category, const technology *> get_research_choice_map(const bool is_free) const;
