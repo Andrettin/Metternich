@@ -11,26 +11,20 @@ school = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = research
-			}
-			capital = true
-		}
-	}
 	education_types = {
 		trained_workers
 		expert_workers
 	}
+	production_types = {
+		researching
+	}
 	country_modifier = {
+		school_capacity = 1
+		
 		commodity_demand = {
 			commodity = paper
 			value = 1
 		}
-	}
-	province_modifier = {
-		research_output_modifier = 25
 	}
 }
 
@@ -46,26 +40,20 @@ college = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = research
-			}
-			capital = true
-		}
-	}
 	education_types = {
 		trained_workers
 		expert_workers
 	}
+	production_types = {
+		researching
+	}
 	country_modifier = {
+		school_capacity = 2
+		
 		commodity_demand = {
 			commodity = paper
 			value = 1
 		}
-	}
-	province_modifier = {
-		research_output_modifier = 50
 	}
 	settlement_modifier = {
 		profession_capacity = {
@@ -88,14 +76,6 @@ university = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = research
-			}
-			capital = true
-		}
-	}
 	cost_factor = {
 		modifier = {
 			factor = 0.5
@@ -113,14 +93,16 @@ university = {
 		clergymen
 		officers
 	}
+	production_types = {
+		researching
+	}
 	country_modifier = {
+		school_capacity = 3
+		
 		commodity_demand = {
 			commodity = paper
 			value = 1
 		}
-	}
-	province_modifier = {
-		research_output_modifier = 100
 	}
 	settlement_modifier = {
 		profession_capacity = {
@@ -141,26 +123,20 @@ monastic_school = {
 	settlement_types = {
 		monastery
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = research
-			}
-			capital = true
-		}
-	}
 	education_types = {
 		trained_workers
 		expert_workers
 	}
+	production_types = {
+		researching
+	}
 	country_modifier = {
+		school_capacity = 1
+		
 		commodity_demand = {
 			commodity = paper
 			value = 1
 		}
-	}
-	province_modifier = {
-		research_output_modifier = 25
 	}
 }
 
@@ -175,25 +151,19 @@ cathedral_school = {
 	settlement_types = {
 		monastery
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = research
-			}
-			capital = true
-		}
-	}
 	education_types = {
 		trained_workers
 		expert_workers
 	}
+	production_types = {
+		researching
+	}
 	country_modifier = {
+		school_capacity = 2
+		
 		commodity_demand = {
 			commodity = paper
 			value = 1
 		}
-	}
-	province_modifier = {
-		research_output_modifier = 50
 	}
 }
