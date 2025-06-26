@@ -7,7 +7,7 @@ import "./menus"
 ApplicationWindow {
 	id: window
 	visible: true
-	title: qsTr("Iron Barons")
+	title: qsTr("Metternich")
 	width: Screen.width
 	height: Screen.height + 1 //it needs to be +1 otherwise it becomes (non-borderless) fullscreen automatically
 	flags: Qt.FramelessWindowHint | Qt.Window

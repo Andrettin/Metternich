@@ -139,9 +139,9 @@ int main(int argc, char **argv)
 #endif
 
 		QApplication app(argc, argv);
-		app.setApplicationName("Iron Barons");
+		app.setApplicationName("Metternich");
 		app.setApplicationVersion("1.0.0");
-		app.setOrganizationName("Iron Barons");
+		app.setOrganizationName("Metternich");
 		app.setOrganizationDomain("andrettin.github.io");
 
 		database::get()->set_defines(defines::get());
