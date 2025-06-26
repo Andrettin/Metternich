@@ -793,7 +793,7 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 	std::string str;
 
 	for (const character_trait *trait : this->get_traits()) {
-		if (trait->get_advisor_modifier() == nullptr && trait->get_scaled_advisor_modifier() == nullptr) {
+		if (trait->get_advisor_modifier() == nullptr && trait->get_scaled_advisor_modifier() == nullptr && trait->get_advisor_effects() == nullptr) {
 			continue;
 		}
 
