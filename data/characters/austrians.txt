@@ -274,6 +274,7 @@ johann_von_eggenberg = {
 	skill_multiplier = 0.33
 	required_technology = merchant_companies
 	conditions = {
+		game_rule = trade_commodity
 		country = austria
 	}
 	traits = {
