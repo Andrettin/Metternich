@@ -26,7 +26,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_improvement(this->improvement->get_slot()) == this->improvement;
+		return scope->get_game_data()->has_improvement_or_better(this->improvement);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
