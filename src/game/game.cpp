@@ -273,9 +273,6 @@ QCoro::Task<void> game::start_coro()
 
 			//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
 			country_game_data->check_journal_entries(true, true);
-
-			//assign transport orders for countries on start
-			country_game_data->assign_transport_orders();
 		}
 
 		this->set_running(true);
@@ -1395,20 +1392,22 @@ QCoro::Task<void> game::on_setup_finished()
 	emit countries_changed();
 
 	for (const country *country : this->get_countries()) {
-		country->get_game_data()->check_government_type();
-		country->get_game_data()->check_laws();
+		country_game_data *country_game_data = country->get_game_data();
+
+		country_game_data->check_government_type();
+		country_game_data->check_laws();
 
 		for (const office *office : office::get_all()) {
-			country->get_game_data()->check_office_holder(office, nullptr);
+			country_game_data->check_office_holder(office, nullptr);
 		}
 
-		country->get_game_data()->check_ideas();
+		country_game_data->check_ideas();
 
-		for (const QPoint &border_tile_pos : country->get_game_data()->get_border_tiles()) {
+		for (const QPoint &border_tile_pos : country_game_data->get_border_tiles()) {
 			map::get()->calculate_tile_country_border_directions(border_tile_pos);
 		}
 
-		for (const province *province : country->get_game_data()->get_provinces()) {
+		for (const province *province : country_game_data->get_provinces()) {
 			province->get_game_data()->check_governor();
 
 			for (const site *site : province->get_game_data()->get_sites()) {
@@ -1448,11 +1447,19 @@ QCoro::Task<void> game::on_setup_finished()
 				continue;
 			}
 
-			country->get_game_data()->check_free_building(building);
+			country_game_data->check_free_building(building);
 		}
 
 		//calculate it here rather than on start so that score is displayed properly
-		country->get_game_data()->calculate_tile_transport_levels();
+		country_game_data->calculate_tile_transport_levels();
+
+		//assign transport orders for countries, here rather than on start so that food output can be calculated correctly, for decreasing the population
+		country_game_data->assign_transport_orders();
+
+		//decrease population if there's too much for the starting food output
+		while ((country_game_data->get_food_output() - country_game_data->get_net_food_consumption()) < 0) {
+			country_game_data->decrease_population(false);
+		}
 
 		emit country->game_data_changed();
 	}

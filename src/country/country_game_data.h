@@ -687,7 +687,7 @@ public:
 	}
 
 	void grow_population();
-	void decrease_population();
+	void decrease_population(const bool change_population_growth);
 	population_unit *choose_starvation_population_unit();
 
 	Q_INVOKABLE const icon *get_population_type_small_icon(const metternich::population_type *type) const;
@@ -1124,6 +1124,8 @@ public:
 
 	void calculate_site_commodity_outputs();
 	void calculate_site_commodity_output(const commodity *commodity);
+
+	int get_food_output() const;
 
 	int get_everyday_wealth_consumption() const
 	{

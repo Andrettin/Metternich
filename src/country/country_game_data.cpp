@@ -371,7 +371,7 @@ void country_game_data::do_starvation()
 
 	while (this->get_population_growth() < 0) {
 		//starvation
-		this->decrease_population();
+		this->decrease_population(true);
 		++starvation_count;
 
 		if (this->get_food_consumption() == 0) {
@@ -2286,13 +2286,15 @@ void country_game_data::grow_population()
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
 
-void country_game_data::decrease_population()
+void country_game_data::decrease_population(const bool change_population_growth)
 {
 	//disband population unit, if possible
 	if (!this->population_units.empty()) {
 		population_unit *population_unit = this->choose_starvation_population_unit();
 		if (population_unit != nullptr) {
-			this->change_population_growth(1);
+			if (change_population_growth) {
+				this->change_population_growth(1);
+			}
 			population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
 			population_unit->get_site()->get_game_data()->pop_population_unit(population_unit);
 			return;
@@ -3058,6 +3060,19 @@ void country_game_data::calculate_site_commodity_output(const commodity *commodi
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->calculate_site_commodity_output(commodity);
 	}
+}
+
+int country_game_data::get_food_output() const
+{
+	int food_output = 0;
+
+	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+		if (commodity->is_food()) {
+			food_output += output.to_int();
+		}
+	}
+
+	return food_output;
 }
 
 void country_game_data::change_everyday_wealth_consumption(const int change)
