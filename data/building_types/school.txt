@@ -76,15 +76,6 @@ university = {
 		city
 		metropolis
 	}
-	cost_factor = {
-		modifier = {
-			factor = 0.5
-			game_rule = ruler_traits
-			ruler = {
-				trait = philosophical
-			}
-		}
-	}
 	education_types = {
 		trained_workers
 		expert_workers
@@ -95,6 +86,15 @@ university = {
 	}
 	production_types = {
 		researching
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			game_rule = ruler_traits
+			ruler = {
+				trait = philosophical
+			}
+		}
 	}
 	country_modifier = {
 		school_capacity = 3

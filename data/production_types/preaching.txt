@@ -1,0 +1,8 @@
+preaching = {
+	name = "Preaching"
+	input_commodities = {
+		labor = 2
+	}
+	output_commodity = piety
+	output_value = 1
+}

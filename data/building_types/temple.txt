@@ -14,16 +14,11 @@ shrine = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = piety
-			}
-			capital = true
-		}
+	production_types = {
+		preaching
 	}
-	province_modifier = {
-		piety_output_modifier = 25
+	country_modifier = {
+		temple_capacity = 1
 	}
 }
 
@@ -40,13 +35,8 @@ temple = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = piety
-			}
-			capital = true
-		}
+	production_types = {
+		preaching
 	}
 	cost_factor = {
 		modifier = {
@@ -57,8 +47,8 @@ temple = {
 			}
 		}
 	}
-	province_modifier = {
-		piety_output_modifier = 50
+	country_modifier = {
+		temple_capacity = 2
 	}
 	settlement_modifier = {
 		amenities_bonus = 1
@@ -82,16 +72,11 @@ cathedral = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = piety
-			}
-			capital = true
-		}
+	production_types = {
+		preaching
 	}
-	province_modifier = {
-		piety_output_modifier = 100
+	country_modifier = {
+		temple_capacity = 3
 	}
 	settlement_modifier = {
 		amenities_bonus = 4
