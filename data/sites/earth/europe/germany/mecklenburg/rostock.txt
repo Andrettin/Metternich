@@ -1,0 +1,12 @@
+rostock = {
+	name = "Rostock"
+	world = earth
+	geocoordinate = { 12.14999710960 54.07038047190 } #from Natural Earth
+	province = mecklenburg
+	
+	history = {
+		1419 = {
+			buildings += university #University founded in Rostock in 1419; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

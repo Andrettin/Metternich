@@ -1,0 +1,13 @@
+chevremont = {
+	name = "Chevremont" #"Chèvremont"
+	world = earth
+	#geocoordinate = { 5.64082 50.5979 }
+	province = liege
+	
+	history = {
+		919 = {
+			#settlement_type = castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

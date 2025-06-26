@@ -1,0 +1,14 @@
+stockholm = {
+	name = "Stockholm"
+	world = earth
+	geocoordinate = { 18.09733473280 59.35075995430 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+	province = uppland
+	
+	history = {
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,4 @@
+aqueduct = {
+	name = "Aqueduct"
+	slot_type = aqueduct
+}

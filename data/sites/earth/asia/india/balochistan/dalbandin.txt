@@ -1,0 +1,8 @@
+dalbandin = {
+	name = "Dalbandin"
+	world = earth
+	geocoordinate = { 64.416666666667 28.883333333333 }
+	type = resource
+	resource = sheep
+	province = balochistan
+}

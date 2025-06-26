@@ -1,0 +1,44 @@
+cumberland = {
+	name = "Cumberland"
+	color = { 176 45 29 }
+	provincial_capital = carlisle
+	resources = {
+		grain = 1
+	}
+	regions = {
+		england
+	}
+	
+	history = {
+		owner = elginerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = elginerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = britons
+			culture = briton
+		}
+		
+		526 = {
+			owner = britons #territory of the Britons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = briton
+		}
+		
+		802 = {
+			owner = strathclyde #part of Strathclyde c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+			culture = cumbrian
+		}
+		
+		1360 = {
+			owner = england #part of England in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = english
+			religion = catholic
+		}
+	}
+}

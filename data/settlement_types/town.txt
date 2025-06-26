@@ -1,0 +1,131 @@
+hamlet = {
+	name = "Hamlet"
+	image_filepath = "tiles/settlements/hamlet.png"
+	free_resource_improvement_level = 1
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+	}
+	build_conditions = {
+		country = {
+			not = {
+				scripted_condition = is_tribe
+			}
+		}
+	}
+}
+
+village = {
+	name = "Village"
+	image_filepath = "tiles/settlements/village.png"
+	free_resource_improvement_level = 2
+	base_settlement_types = {
+		camp
+		hamlet
+	}
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+	}
+	build_conditions = {
+		population_unit_count = 3
+		has_building_class = warehouse
+	}
+}
+
+town = {
+	name = "Town"
+	image_filepath = "tiles/settlements/town.png"
+	free_resource_improvement_level = 3
+	base_settlement_types = {
+		village
+	}
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+		bureaucrats
+		elder_statesmen
+		capitalists
+	}
+	build_conditions = {
+		population_unit_count = 6
+		or = {
+			has_building_class = village_hall
+			has_building_class = market
+		}
+	}
+	conditions = {
+		not = {
+			resource = holy_site
+		}
+	}
+}
+
+city = {
+	name = "City"
+	image_filepath = "tiles/settlements/city.png"
+	free_resource_improvement_level = 4
+	base_settlement_types = {
+		campus
+		castle
+		monastery
+		town
+	}
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+		soldiers
+		academics
+		bureaucrats
+		clergymen
+		elder_statesmen
+		firebrand_preachers
+		officers
+		aristocrats
+		capitalists
+	}
+	build_conditions = {
+		population_unit_count = 12
+		has_building_class = town_hall
+	}
+}
+
+metropolis = {
+	name = "Metropolis"
+	image_filepath = "tiles/settlements/metropolis.png"
+	free_resource_improvement_level = 5
+	base_settlement_types = {
+		city
+	}
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+		soldiers
+		academics
+		bureaucrats
+		clergymen
+		elder_statesmen
+		firebrand_preachers
+		officers
+		aristocrats
+		capitalists
+	}
+	build_conditions = {
+		population_unit_count = 80
+		or = {
+			has_building_class = city_hall
+			has_building_class = state_house
+			has_building_class = capitol
+		}
+	}
+}

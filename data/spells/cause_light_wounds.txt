@@ -1,0 +1,12 @@
+cause_light_wounds = {
+	name = "Cause Light Wounds"
+	target = enemy
+	icon = wooden_cross
+	mana_cost = 5
+	range = 1
+	military_unit_categories = {
+	}
+	effects = {
+		damage = 10
+	}
+}

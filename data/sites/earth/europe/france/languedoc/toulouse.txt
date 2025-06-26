@@ -1,0 +1,36 @@
+toulouse = {
+	name = "Toulouse"
+	world = earth
+	geocoordinate = { 1.44992671571 43.61995892240 } #from Natural Earth
+	type = settlement
+	#resource = grain
+	province = upper_languedoc
+	cultural_names = {
+		frankish = "Tolosa"
+		gaulish = "Tolosa"
+		roman = "Tolosa" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Toulouse was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		1230 = {
+			buildings += university #University founded in Toulouse in 1230; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 3200
+				clergymen.french.catholic = 6800
+				officers.french.catholic = 1400
+			}
+		}
+	}
+}

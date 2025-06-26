@@ -1,0 +1,5 @@
+siouan = {
+	name = "Siouan"
+	rank = group
+	upper_group = american
+}

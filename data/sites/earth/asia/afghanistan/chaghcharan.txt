@@ -1,0 +1,8 @@
+chaghcharan = {
+	name = "Chaghcharan"
+	world = earth
+	geocoordinate = { 65.25000062520 34.51670110350 } #from Natural Earth
+	type = resource
+	resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	province = afghanistan
+}

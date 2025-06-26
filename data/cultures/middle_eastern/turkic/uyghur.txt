@@ -1,0 +1,8 @@
+uyghur = {
+	name = "Uyghur"
+	group = turkic
+	color = { 92 96 168 }
+	species = {
+		human
+	}
+}

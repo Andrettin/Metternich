@@ -1,0 +1,18 @@
+castillian = {
+	name = "Castillian"
+	group = iberian
+	color = { 255 173 41 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = castille
+		}
+	}
+	
+	ship_names = {
+		"Victoria" #Spanish vessel which circumnavigated the world in 1519-1522; Source: Henry Kamen, "Early Modern European Society", 2021, p. 3.
+	}
+}

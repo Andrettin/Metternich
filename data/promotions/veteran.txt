@@ -1,0 +1,29 @@
+veteran_1 = {
+	name = "Veteran I"
+	icon = saber
+	modifier = {
+		damage_bonus = 10
+	}
+}
+
+veteran_2 = {
+	name = "Veteran II"
+	icon = saber
+	conditions = {
+		promotion = veteran_1
+	}
+	modifier = {
+		damage_bonus = 10
+	}
+}
+
+veteran_3 = {
+	name = "Veteran III"
+	icon = saber
+	conditions = {
+		promotion = veteran_2
+	}
+	modifier = {
+		damage_bonus = 10
+	}
+}

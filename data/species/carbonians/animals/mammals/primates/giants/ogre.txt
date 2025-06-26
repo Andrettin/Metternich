@@ -1,0 +1,7 @@
+ogre = {
+	name = "Ogre"
+	supertaxon = giant
+	era = holocene
+	sapient = true
+	#ogres, ettins and cyclopses should have a common ancestor
+}

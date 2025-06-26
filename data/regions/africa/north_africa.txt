@@ -1,0 +1,41 @@
+north_africa = {
+	superregions = {
+		africa
+	}
+}
+
+algeria = {
+	superregions = {
+		north_africa
+	}
+	
+	history = {
+		2003 = {
+			literacy_rate = 70 #Source: Philip's International School Atlas, p. 141.
+		}
+	}
+}
+
+egypt = {
+	superregions = {
+		north_africa
+	}
+}
+
+libya = {
+	superregions = {
+		north_africa
+	}
+}
+
+morocco = {
+	superregions = {
+		north_africa
+	}
+}
+
+tunisia = {
+	superregions = {
+		north_africa
+	}
+}

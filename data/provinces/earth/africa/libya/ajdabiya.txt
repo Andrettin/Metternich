@@ -1,0 +1,20 @@
+ajdabiya = {
+	name = "Ajdabiya"
+	color = { 213 152 88 }
+	provincial_capital = ajdabiya
+	regions = {
+		libya
+	}
+	
+	history = {
+		owner = egypt
+		culture = egyptian
+		religion = pagan
+		
+		1360 = {
+			owner = egypt_arabic #part of the Mameluke Sultanates in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = arabic
+			religion = sunni
+		}
+	}
+}

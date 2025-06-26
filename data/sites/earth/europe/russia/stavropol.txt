@@ -1,0 +1,7 @@
+stavropol = {
+	name = "Stavropol"
+	world = earth
+	geocoordinate = { 41.98001094440 45.05000083320 } #from Natural Earth
+	type = settlement
+	province = stavropol
+}

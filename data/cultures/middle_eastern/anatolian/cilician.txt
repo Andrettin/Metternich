@@ -1,0 +1,8 @@
+cilician = {
+	name = "Cilician"
+	group = anatolian
+	color = { 51 49 47 }
+	species = {
+		human
+	}
+}

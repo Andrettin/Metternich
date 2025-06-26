@@ -1,0 +1,6 @@
+crateus = {
+	name = "Crateus" #"Crateús"
+	world = earth
+	geocoordinate = { -40.66600386710 -5.16559039421 } #from Natural Earth
+	province = ceara
+}

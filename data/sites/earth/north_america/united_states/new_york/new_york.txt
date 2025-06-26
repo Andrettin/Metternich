@@ -1,0 +1,16 @@
+new_york = {
+	name = "New York"
+	world = earth
+	geocoordinate = { -73.98001692880 40.74997906400 } #from Natural Earth
+	type = settlement
+	province = new_york
+	cultural_names = {
+		dutch = "New Amsterdam"
+	}
+	
+	history = {
+		1609 = {
+			settlement_type = hamlet #New Amsterdam founded by the Dutch in 1609; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+		}
+	}
+}

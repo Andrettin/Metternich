@@ -1,0 +1,23 @@
+incense_camp = {
+	name = "Incense Camp"
+	slot = resource
+	resources = {
+		incense
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/coffee_plantation.png"
+	default_population_class = farmers
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		farmers
+		expert_farmers
+	}
+	commodity_costs = {
+		lumber = 1
+		cast_iron = 1
+	}
+	modifier = {
+		housing_bonus = 1
+	}
+}

@@ -1,0 +1,33 @@
+basil_iii_of_russia = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
+	name = "Basil"
+	epithet = "III"
+	culture = russian
+	religion = orthodox
+	home_settlement = moscow
+	gender = male
+	birth_date = 1479
+	death_date = 1533
+	#son of Ivan III of Russia
+	#became Czar of Russia in 1505
+}
+
+peter_the_great_of_russia = {
+	name = "Peter"
+	epithet = "the Great"
+	role = ruler
+	character_type = general
+	culture = russian
+	religion = orthodox
+	home_settlement = moscow
+	gender = male
+	birth_date = 1672
+	death_date = 1725
+	rulable_countries = {
+		russia
+		muscovy
+	}
+	traits = {
+		expansive
+		philosophical
+	}
+}

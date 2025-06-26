@@ -1,0 +1,7 @@
+szeged = {
+	name = "Szeged"
+	world = earth
+	geocoordinate = { 20.15002559270 46.25039267890 } #from Natural Earth
+	type = resource
+	resource = fruit
+}

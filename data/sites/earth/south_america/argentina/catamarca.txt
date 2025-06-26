@@ -1,0 +1,6 @@
+catamarca = {
+	name = "Catamarca"
+	world = earth
+	geocoordinate = { -65.78000065270 -28.47000771200 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,21 @@
+pilsen = {
+	name = "Pilsen"
+	world = earth
+	geocoordinate = { 13.36000077180 49.74043804840 } #from Natural Earth
+	type = settlement
+	#resource = coal
+	province = pilsen
+	cultural_names = {
+		czech = "Plzen"
+	}
+	
+	history = {
+		919 = {
+			settlement_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

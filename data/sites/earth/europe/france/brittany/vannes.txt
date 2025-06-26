@@ -1,0 +1,16 @@
+vannes = {
+	name = "Vannes"
+	world = earth
+	geocoordinate = { -2.7616666666667 47.655 }
+	type = resource
+	resource = fish
+	province = brittany
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 4400
+			}
+		}
+	}
+}

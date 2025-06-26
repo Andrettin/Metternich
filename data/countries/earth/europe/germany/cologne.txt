@@ -1,0 +1,16 @@
+cologne = {
+	name = "Cologne"
+	type = minor_nation
+	culture = german
+	default_religion = catholic
+	default_tier = duchy #archbishopric
+	default_government_type = theocracy
+	default_capital = cologne
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		rhineland
+	}
+}

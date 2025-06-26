@@ -1,0 +1,12 @@
+iceland = {
+	name = "Iceland"
+	type = minor_nation
+	culture = icelandic
+	default_religion = protestant
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = reykjavik
+	core_provinces = {
+		iceland
+	}
+}

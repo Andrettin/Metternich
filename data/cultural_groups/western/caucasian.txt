@@ -1,0 +1,5 @@
+caucasian = {
+	name = "Caucasian"
+	rank = group
+	upper_group = western
+}

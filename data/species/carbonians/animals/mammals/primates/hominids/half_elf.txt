@@ -1,0 +1,16 @@
+half_elf = {
+	name = "Half-Elf"
+	supertaxon = hominidae
+	era = holocene
+	sapient = true
+	adulthood_age = 20
+	middle_age = 62
+	old_age = 93
+	venerable_age = 125
+	maximum_age_modifier = 3d20
+	starting_age_modifiers = {
+		intuitive = 1d6
+		self_taught = 2d6
+		trained = 3d6
+	}
+}

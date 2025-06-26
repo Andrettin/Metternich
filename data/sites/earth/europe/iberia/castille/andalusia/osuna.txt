@@ -1,0 +1,16 @@
+osuna = {
+	name = "Osuna"
+	world = earth
+	geocoordinate = { -5.1030555555556 37.237222222222 }
+	province = andalusia
+	
+	history = {
+		1548 = {
+			buildings += university #Minor university founded in Osuna in 1548; Source: "The Cambridge Modern History Atlas", 1912, p. 9; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+		
+		1807 = {
+			buildings -= university #Minor university abolished in Osuna in 1807; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

@@ -1,0 +1,6 @@
+cayenne = {
+	name = "Cayenne"
+	world = earth
+	geocoordinate = { -52.33002059080 4.93299216605 } #from Natural Earth
+	type = settlement
+}

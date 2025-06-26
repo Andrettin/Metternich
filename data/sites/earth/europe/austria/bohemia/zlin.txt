@@ -1,0 +1,5 @@
+zlin = {
+	name = "Zlin" #"Zlín"
+	world = earth
+	geocoordinate = { 17.65002315130 49.23041749990 } #from Natural Earth
+}

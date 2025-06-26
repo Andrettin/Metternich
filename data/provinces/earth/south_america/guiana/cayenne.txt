@@ -1,0 +1,19 @@
+cayenne = {
+	name = "Cayenne"
+	color = { 131 74 133 }
+	provincial_capital = cayenne
+	regions = {
+		south_america
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = tupi
+			culture = tupi
+		}
+	}
+}

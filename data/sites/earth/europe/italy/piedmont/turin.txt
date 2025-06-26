@@ -1,0 +1,18 @@
+turin = {
+	name = "Turin"
+	world = earth
+	geocoordinate = { 7.66996048853 45.07038718570 } #from Natural Earth
+	type = settlement
+	province = piedmont
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1405 = {
+			buildings += university #University founded in Turin in 1405; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			settlement_type = campus
+		}
+	}
+}

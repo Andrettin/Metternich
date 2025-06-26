@@ -1,0 +1,14 @@
+adrar = {
+	name = "Adrar"
+	color = { 215 249 33 }
+	provincial_capital = adrar
+	regions = {
+		algeria
+	}
+	
+	history = {
+		owner = carthage
+		culture = carthaginian
+		religion = pagan
+	}
+}

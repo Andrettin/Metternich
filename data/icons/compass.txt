@@ -1,0 +1,3 @@
+compass = {
+	filepath = "icons/compass.png"
+}

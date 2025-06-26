@@ -1,0 +1,29 @@
+mendoza = {
+	name = "Mendoza"
+	color = { 140 219 56 }
+	provincial_capital = mendoza
+	regions = {
+		argentina
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = inca_empire
+			culture = inca
+		}
+		
+		1790 = {
+			owner = la_plata #part of the Viceroyalty of La Plata c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = castillian
+			religion = catholic
+		}
+		
+		1810 = {
+			owner = argentina #Argentina became independent in 1810/1816; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+	}
+}

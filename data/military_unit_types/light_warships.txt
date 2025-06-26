@@ -1,0 +1,134 @@
+trireme = {
+	name = "Trireme"
+	unit_class = trireme
+	icon = frigate
+	stats = {
+		firepower = 2
+		melee = 3
+		range = 3
+		resistance = 5
+		movement = 4
+	}
+	hit_points = 25
+	required_technology = cartography
+	upgrades = {
+		sloop
+	}
+}
+
+sloop = {
+	name = "Sloop"
+	unit_class = sloop
+	icon = frigate
+	stats = {
+		firepower = 4
+		melee = 4
+		range = 4
+		resistance = 5
+		movement = 4
+	}
+	hit_points = 25
+	required_technology = navigation
+	commodity_costs = {
+		lumber = 3
+		bronze_cannons = 1
+		fabric = 1
+	}
+	upgrades = {
+		frigate
+	}
+}
+
+frigate = {
+	name = "Frigate"
+	unit_class = frigate
+	icon = frigate
+	stats = {
+		firepower = 3
+		melee = 3
+		range = 5
+		resistance = 10
+		movement = 4
+	}
+	hit_points = 35
+	required_technology = advanced_hull_design
+	upkeep = 50
+	commodity_costs = {
+		fabric = 2
+		lumber = 5
+		iron_cannons = 2
+	}
+	upgrades = {
+		raider
+	}
+}
+
+raider = {
+	name = "Raider"
+	unit_class = raider
+	icon = paddlewheeler
+	stats = {
+		firepower = 3
+		melee = 3
+		range = 7
+		resistance = 20
+		movement = 7
+	}
+	hit_points = 30
+	required_technology = paddlewheels
+	upkeep = 75
+	commodity_costs = {
+		lumber = 6
+		steel_cannons = 3
+		coal = 10
+	}
+	upgrades = {
+		armored_cruiser
+	}
+}
+
+armored_cruiser = {
+	name = "Armored Cruiser"
+	unit_class = armored_cruiser
+	icon = dreadnought
+	stats = {
+		firepower = 6
+		melee = 6
+		range = 9
+		resistance = 50
+		movement = 8
+	}
+	hit_points = 40
+	required_technology = marine_engineering
+	upkeep = 200
+	commodity_costs = {
+		lumber = 2
+		steel_cannons = 8
+		steel = 6
+		coal = 20
+	}
+	upgrades = {
+		battlecruiser
+	}
+}
+
+battlecruiser = {
+	name = "Battlecruiser"
+	unit_class = battlecruiser
+	icon = dreadnought
+	stats = {
+		firepower = 18
+		melee = 18
+		range = 13
+		resistance = 55
+		movement = 9
+	}
+	hit_points = 90
+	required_technology = improved_range_finding
+	upkeep = 450
+	commodity_costs = {
+		steel_cannons = 18
+		steel = 22
+		fuel = 20
+	}
+}

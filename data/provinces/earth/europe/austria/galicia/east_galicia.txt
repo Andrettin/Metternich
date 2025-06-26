@@ -1,0 +1,33 @@
+east_galicia = {
+	name = "East Galicia"
+	color = { 17 160 33 }
+	provincial_capital = lemberg
+	resources = {
+		grain = 3
+		fruit = 1
+		oil = 1
+	}
+	regions = {
+		galicia
+		poland_lithuania
+	}
+	
+	history = {
+		culture = ukrainian
+		religion = pagan
+		
+		1360 = {
+			owner = poland #part of Poland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = ukrainian
+			religion = orthodox
+		}
+		
+		1740 = {
+			owner = poland #part of the Kingdom of Poland c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

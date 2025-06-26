@@ -1,0 +1,5 @@
+karnstein = { #Source: Sheridan Le Fanu, "Carmilla".
+	name = "Karnstein"
+	prefix = "von"
+	culture = austrian
+}

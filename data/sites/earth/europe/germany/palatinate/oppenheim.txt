@@ -1,0 +1,12 @@
+oppenheim = {
+	name = "Oppenheim"
+	world = earth
+	#geocoordinate = { 8.3602777777778 49.855555555556 }
+	province = palatinate
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

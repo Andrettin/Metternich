@@ -1,0 +1,4 @@
+industrial_era = {
+	name = "Industrial Era"
+	start_date = 1815.11.20
+}

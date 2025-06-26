@@ -1,0 +1,8 @@
+mount_thera = {
+	name = "Mount Thera"
+	world = earth
+	geocoordinate = { 25.396389 36.403611 } #Santorini caldera
+	type = resource
+	resource = mount_thera
+	province = attica
+}

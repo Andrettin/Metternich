@@ -1,0 +1,57 @@
+austrian = {
+	name = "Austrian"
+	group = german
+	color = { 244 121 126 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = austria
+		}
+	}
+	
+	personal_names = {
+		female = {
+			"Bertha" #Source: Sheridan Le Fanu, "Carmilla".
+			"Carmilla" #Mircalla's alias; Source: Sheridan Le Fanu, "Carmilla".
+			"Millarca" #Mircalla's alias; Source: Sheridan Le Fanu, "Carmilla".
+			"Mircalla" #Countess Mircalla von Karnstein; Source: Sheridan Le Fanu, "Carmilla".
+		}
+	}
+	
+	surnames = {
+		"Spielsberg" #Doctor Spielsberg; Source: Sheridan Le Fanu, "Carmilla".
+		"von Carlsfeld" #Count Carlsfeld; Source: Sheridan Le Fanu, "Carmilla".
+		"von Spielsdorf" #General Baron Spielsdorf; Source: Sheridan Le Fanu, "Carmilla".
+		"von Vordenburg" #Baron Vordenburg; Source: Sheridan Le Fanu, "Carmilla".
+	}
+	
+	military_unit_class_names = {
+		raider = {
+			"Bodrog" #river monitor; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 34.
+			"Enns" #river monitor; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 35.
+			"Erzherzog Albrecht" #steam warship; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 30.
+			"Koros" #"Körös"; river monitor; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", pp. 33-34.
+			"Leitha" #river monitor; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", pp. 32-33.
+			"Maros" #river monitor; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", pp. 32-33.
+			"Schlick" #steam warship; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 30.
+			"Szamos" #river monitor; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", pp. 33-34.
+			"Temes" #river monitor; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 34.
+		}
+	}
+	
+	transporter_class_names = {
+		paddlewheeler = {
+			"Achilles" #steamship; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 38.
+			"Adler" #imperial yacht; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 30.
+			"Banhans" #steamship; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 38.
+			"Erzherzog Franz Ferdinand" #hospital ship; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 38.
+			"Franz I" #"Franz I."; steamship; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", pp. 28-29.
+			"Kulpa" #hospital ship; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 38.
+			"Traisen" #hospital ship; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 38.
+			"Traun" #steamship; Source: Peter Schubert, "Krieg auf der Donau: Die Geschichte der k.u.k. Donauflotille", p. 38.
+		}
+	}
+}

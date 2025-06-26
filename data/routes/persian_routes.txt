@@ -1,0 +1,10 @@
+persian_royal_highway = {
+	name = "Persian Royal Highway"
+	color = { 168 168 24 }
+	
+	history = {
+		-500 = {
+			pathway = road #the Persian Royal Highway existed c. 500 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 8.
+		}
+	}
+}

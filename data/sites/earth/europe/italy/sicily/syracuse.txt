@@ -1,0 +1,15 @@
+syracuse = {
+	name = "Syracuse"
+	world = earth
+	geocoordinate = { 15.28996048860 37.07035870260 } #from Natural Earth
+	province = sicily
+	cultural_names = {
+		#greek = "Syracusae" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

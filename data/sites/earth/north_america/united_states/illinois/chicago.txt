@@ -1,0 +1,8 @@
+chicago = {
+	name = "Chicago"
+	world = earth
+	geocoordinate = { -87.75005497410 41.82999066070 } #from Natural Earth
+	type = settlement
+	#resource = coal
+	province = illinois
+}

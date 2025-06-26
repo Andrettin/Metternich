@@ -1,0 +1,7 @@
+hobgoblin = {
+	name = "Hobgoblin"
+	group = goblinoid
+	species = {
+		hobgoblin
+	}
+}

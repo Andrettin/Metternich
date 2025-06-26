@@ -1,0 +1,8 @@
+kashan = {
+	name = "Kashan"
+	world = earth
+	geocoordinate = { 51.57999344770 33.98041811020 }
+	type = resource
+	resource = sheep
+	province = isfahan
+}

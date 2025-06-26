@@ -1,0 +1,33 @@
+decentralization = {
+	name = "Decentralization"
+	group = centralization
+	icon = crown_baronial
+	commodity_costs = {
+		statesmanship = 50
+	}
+	conditions = {
+		game_rule = laws
+	}
+	modifier = {
+		resource_output_modifier = -15
+		trade_output_modifier = -20
+	}
+}
+
+centralization = {
+	name = "Centralization"
+	group = centralization
+	icon = crown_royal
+	required_technology = monarchy
+	commodity_costs = {
+		statesmanship = 50
+	}
+	conditions = {
+		game_rule = laws
+	}
+	modifier = {
+		resource_output_modifier = 15
+		trade_output_modifier = 20
+		inflation_change = -0.05
+	}
+}

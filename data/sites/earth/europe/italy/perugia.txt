@@ -1,0 +1,14 @@
+perugia = {
+	name = "Perugia"
+	world = earth
+	geocoordinate = { 12.38998246120 43.11037762360 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = romagna
+	
+	history = {
+		1308 = {
+			buildings += university #University founded in Perugia in 1308; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

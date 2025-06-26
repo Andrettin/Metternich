@@ -1,0 +1,10 @@
+sphenacodon = {
+	name = "Sphenacodon"
+	supertaxon = reptilia
+	pre_evolutions = {
+		diadectes
+		peltobatrachus
+		platyhystrix
+		seymouria
+	}
+}

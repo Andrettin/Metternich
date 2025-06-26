@@ -1,0 +1,102 @@
+sugar_plantation = {
+	name = "Sugar Plantation"
+	slot = resource
+	resources = {
+		sugar_cane
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/sugar_plantation.png"
+	default_population_class = farmers
+	required_technology = sugar_planting
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		farmers
+		master_sugar_planters
+	}
+	commodity_costs = {
+		lumber = 1
+		cast_iron = 1
+	}
+	modifier = {
+		housing_bonus = 1
+	}
+}
+
+large_sugar_plantation = {
+	name = "Large Sugar Plantation"
+	slot = resource
+	resources = {
+		sugar_cane
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/sugar_plantation.png"
+	default_population_class = farmers
+	required_improvement = sugar_plantation
+	required_technology = large_sugar_plantations
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		farmers
+		master_sugar_planters
+	}
+	commodity_costs = {
+		lumber = 4
+		cast_iron = 4
+	}
+	modifier = {
+		housing_bonus = 2
+	}
+}
+
+mechanized_sugar_plantation = {
+	name = "Mechanized Sugar Plantation"
+	slot = resource
+	resources = {
+		sugar_cane
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/sugar_plantation.png"
+	default_population_class = farmers
+	required_improvement = large_sugar_plantation
+	required_technology = sugar_industry
+	wealth_cost = 1000
+	population_classes = {
+		slaves
+		farmers
+		master_sugar_planters
+	}
+	commodity_costs = {
+		lumber = 8
+		cast_iron = 8
+	}
+	modifier = {
+		housing_bonus = 3
+	}
+}
+
+industrial_sugar_plantation = {
+	name = "Industrial Sugar Plantation"
+	slot = resource
+	resources = {
+		sugar_cane
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/sugar_plantation.png"
+	default_population_class = farmers
+	required_improvement = mechanized_sugar_plantation
+	required_technology = sugar_industry
+	wealth_cost = 5000
+	population_classes = {
+		slaves
+		farmers
+		master_sugar_planters
+	}
+	commodity_costs = {
+		lumber = 16
+		cast_iron = 16
+	}
+	modifier = {
+		housing_bonus = 4
+	}
+}

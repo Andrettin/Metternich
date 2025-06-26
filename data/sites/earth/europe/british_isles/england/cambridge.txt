@@ -1,0 +1,19 @@
+cambridge = {
+	name = "Cambridge"
+	world = earth
+	geocoordinate = { 0.11662308615 52.20039125480 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = east_anglia
+	cultural_names = {
+		anglo_saxon = "Grantanbrycg" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
+		briton = "Camboricum"
+		roman = "Camboricum" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 51.
+	}
+	
+	history = {
+		1250 = {
+			buildings += university #University existent in Cambridge in 1250; Source: "Atlas de História Mundial", p. 144.
+		}
+	}
+}

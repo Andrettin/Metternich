@@ -1,0 +1,8 @@
+kut = {
+	name = "Kut"
+	world = earth
+	geocoordinate = { 45.83037023800 32.49071575830 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = sumer
+}

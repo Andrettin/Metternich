@@ -1,0 +1,12 @@
+philip_ii_of_spain = {
+	filepath = "portraits/characters/philip_ii_of_spain.png"
+	character_conditions = {
+		gender = male
+		or = {
+			culture = castillian
+			culture = austrian
+			culture = persian
+		}
+		is_ruler = true
+	}
+}

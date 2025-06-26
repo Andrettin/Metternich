@@ -1,0 +1,8 @@
+ciudad_real = {
+	name = "Ciudad Real"
+	world = earth
+	geocoordinate = { -3.9166666666667 38.983333333333 }
+	type = resource
+	resource = grain
+	province = castille
+}

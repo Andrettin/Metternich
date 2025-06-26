@@ -1,0 +1,18 @@
+buenos_aires = {
+	name = "Buenos Aires"
+	world = earth
+	geocoordinate = { -58.39753137370 -34.60250160850 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1535 = {
+			settlement_type = village #Buenos Aires founded by the Spanish in 1535/1580; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			culture = castillian
+		}
+		
+		1784 = {
+			buildings += college #College or seminary founded in Buenos Aires in 1784; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+	}
+}

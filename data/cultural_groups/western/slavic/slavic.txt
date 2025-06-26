@@ -1,0 +1,5 @@
+slavic = {
+	name = "Slavic"
+	rank = group
+	upper_group = western
+}

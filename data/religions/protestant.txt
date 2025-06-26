@@ -1,0 +1,6 @@
+protestant = {
+	name = "Protestant"
+	group = christian
+	color = { 0 49 83 }
+	icon = wooden_cross
+}

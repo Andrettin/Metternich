@@ -1,0 +1,10 @@
+hundred_years_war = {
+	name = "Hundred Years' War"
+	start_date = 1337
+	map_template = earth
+	hidden = true
+	default_countries = {
+		england
+		france
+	}
+}

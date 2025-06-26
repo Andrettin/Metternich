@@ -1,0 +1,21 @@
+sewer_system = {
+	name = "Sewer System"
+	building_class = sewer_system
+	portrait = hospital
+	icon = architecture
+	provincial = true
+	required_technology = sanitation
+	settlement_types = {
+		city
+		metropolis
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = lead_pipes
+			value = 1
+		}
+	}
+	settlement_modifier = {
+		housing_bonus = 2
+	}
+}

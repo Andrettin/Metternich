@@ -1,0 +1,6 @@
+sugar_cane = {
+	name = "Sugar Cane"
+	icon = sugar_cane
+	required_technology = sugar_cane
+	base_price = 100
+}

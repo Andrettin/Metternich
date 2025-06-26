@@ -1,0 +1,6 @@
+leopoldina = {
+	name = "Leopoldina"
+	world = earth
+	geocoordinate = { -42.64004358070 -21.53001788450 } #from Natural Earth
+	province = minas_gerais
+}

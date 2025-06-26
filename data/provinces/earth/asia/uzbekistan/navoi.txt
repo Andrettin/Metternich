@@ -1,0 +1,14 @@
+navoi = {
+	name = "Navoi"
+	color = { 226 0 67 }
+	provincial_capital = navoi
+	regions = {
+		uzbekistan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

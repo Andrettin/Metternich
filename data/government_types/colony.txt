@@ -1,0 +1,24 @@
+colony = {
+	name = "Colony"
+	group = republic
+	icon = settlement
+	conditions = {
+		subject_type = colony
+		not = {
+			country_type = clade
+			country_type = tribe
+		}
+	}
+	title_names = {
+		duchy = "Colony"
+		kingdom = "Governorate General"
+		empire = "Grand Governorate General"
+	}
+	office_title_names = {
+		ruler = {
+			duchy = "Colonial Governor"
+			kingdom = "Governor General"
+			empire = "Grand Governor General"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+waidhofen_an_der_ybbs = {
+	name = "Waidhofen an der Ybbs"
+	world = earth
+	geocoordinate = { 14.77453 47.95964 }
+	province = lower_austria
+	
+	history = {
+		1900 = {
+			population = 4447 #Waidhofen on the Ybbs had a population of 4447 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

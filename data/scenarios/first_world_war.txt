@@ -1,0 +1,13 @@
+first_world_war = {
+	name = "First World War"
+	parent_scenario = restoration_of_europe
+	start_date = 1914.7.28
+	map_template = earth
+	default_countries = {
+		austria
+		france
+		germany
+		great_britain
+		russia
+	}
+}

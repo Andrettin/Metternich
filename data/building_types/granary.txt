@@ -1,0 +1,36 @@
+granary = {
+	name = "Granary"
+	building_class = granary
+	portrait = trading_post
+	icon = grain
+	provincial = true
+	required_technology = pottery
+	settlement_types = {
+		camp
+		hamlet
+		village
+		campus
+		castle
+		monastery
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			has_resource = grain
+		}
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = expansive
+			}
+		}
+	}
+	province_modifier = {
+		grain_per_improved_grain = 1
+		housing_per_improved_grain = 1
+	}
+}

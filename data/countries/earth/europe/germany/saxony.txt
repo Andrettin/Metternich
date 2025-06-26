@@ -1,0 +1,21 @@
+saxony = {
+	name = "Saxony"
+	type = minor_nation
+	culture = german
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = hanover #Brunswick
+	max_tier = kingdom
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		hanover
+		bremen
+		holstein
+		magdeburg
+		oldenburg
+		westphalia
+	}
+}

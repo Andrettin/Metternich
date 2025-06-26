@@ -1,0 +1,6 @@
+atyrau = {
+	name = "Atyrau"
+	world = earth
+	geocoordinate = { 51.92002437220 47.11269146640 } #from Natural Earth
+	type = settlement
+}

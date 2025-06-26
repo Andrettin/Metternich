@@ -1,0 +1,15 @@
+erzincan = {
+	name = "Erzincan"
+	type = minor_nation
+	culture = turkish
+	default_religion = sunni
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = erzincan
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		erzincan
+	}
+}

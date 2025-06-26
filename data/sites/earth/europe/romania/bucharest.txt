@@ -1,0 +1,13 @@
+bucharest = {
+	name = "Bucharest"
+	world = earth
+	geocoordinate = { 26.09994665400 44.43337180490 } #from Natural Earth
+	type = settlement
+	province = wallachia
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

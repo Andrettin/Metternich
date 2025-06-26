@@ -1,0 +1,7 @@
+naryn = {
+	name = "Naryn"
+	world = earth
+	geocoordinate = { 75.99106156300 41.42634604800 } #from Natural Earth
+	type = settlement
+	province = naryn
+}

@@ -1,0 +1,7 @@
+ventastega = {
+	name = "Ventastega"
+	supertaxon = amphibia
+	pre_evolutions = {
+		rhipidistian_fish
+	}
+}

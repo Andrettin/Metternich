@@ -1,0 +1,7 @@
+architecture = {
+	filepath = "icons/technologies/architecture.png"
+}
+
+philosophy = {
+	filepath = "icons/technologies/philosophy.png"
+}

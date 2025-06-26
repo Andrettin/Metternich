@@ -1,0 +1,15 @@
+english_carracks = {
+	type = carrack
+	country = england
+	quantity = 3
+	
+	history = {
+		1492 = {
+			active = true
+		}
+		
+		1820 = {
+			active = false
+		}
+	}
+}

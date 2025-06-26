@@ -1,0 +1,57 @@
+dock = {
+	name = "Dock"
+	building_class = dock
+	portrait = dock
+	icon = anchor
+	free_in_capital = true
+	provincial = true
+	required_technology = seafaring
+	settlement_types = {
+		camp
+		hamlet
+		village
+		town
+		city
+		metropolis
+		campus
+		castle
+		monastery
+	}
+	wealth_cost = 3000
+	commodity_costs = {
+		lumber = 5
+		cast_iron = 5
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = expansive
+			}
+		}
+	}
+	settlement_conditions = {
+		near_water = true
+	}
+	effects = {
+		add_improvement = port
+	}
+}
+
+shipyard = {
+	name = "Shipyard"
+	building_class = shipyard
+	portrait = dock
+	icon = anchor
+	provincial = true
+	capital_only = true
+	required_building = dock
+	required_technology = seafaring
+	settlement_types = {
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		near_water = true
+	}
+}

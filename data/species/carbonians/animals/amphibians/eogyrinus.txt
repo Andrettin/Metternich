@@ -1,0 +1,9 @@
+eogyrinus = {
+	name = "Eogyrinus"
+	supertaxon = amphibia
+	pre_evolutions = {
+		elginerpeton
+		hylerpeton
+		ventastega
+	}
+}

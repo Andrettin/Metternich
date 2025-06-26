@@ -1,0 +1,57 @@
+imperial_austria_1806 = { #the territory of the Empire of Austria, 1806-1809
+	superregions = {
+		europe
+	}
+	
+	history = {
+		1807 = {
+			population_groups = {
+				soldiers = 600000 #the Empire of Austria had 600,000 individuals under military jurisdiction outside of the military frontiers in 1807 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 11.
+			}
+		}
+		
+		1809 = {
+			population_groups = {
+				aristocrats = 540000 #the Empire of Austria had over 540,000 nobles in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 11.
+				
+				clergymen = 39700 #the Empire of Austria had 39,700 clergymen ("Geistliche") in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 11.
+				
+				bureaucrats = 112000 #the Empire of Austria had 112,000 bureaucrats ("Beamte und Honorazioren"), including their families, in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 11.
+			}
+		}
+	}
+}
+
+austria = { #the territory of the modern Republic of Austria
+	superregions = {
+		europe
+		west_and_central_europe
+		cisleithania
+	}
+	
+	history = {
+		1 = {
+			population = 500000 #Austria had a population of 500,000 in 1 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1000 = {
+			population = 700000 #Austria had a population of 700,000 in 1000 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1500 = {
+			population = 2000000 #Austria had a population of 2,000,000 in 1500 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1600 = {
+			population = 2500000 #Austria had a population of 2,500,000 in 1600 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1700 = {
+			population = 2500000 #Austria had a population of 2,500,000 in 1700 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		2003 = {
+			literacy_rate = 98 #Source: Philip's International School Atlas, p. 141.
+		}
+	}
+}

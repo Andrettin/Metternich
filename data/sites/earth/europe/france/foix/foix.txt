@@ -1,0 +1,16 @@
+foix = {
+	name = "Foix"
+	world = earth
+	geocoordinate = { 1.6069444444444 42.965277777778 }
+	type = resource
+	resource = grain
+	province = upper_languedoc
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 3400
+			}
+		}
+	}
+}

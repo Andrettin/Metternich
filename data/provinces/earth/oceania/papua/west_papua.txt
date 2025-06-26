@@ -1,0 +1,14 @@
+west_papua = {
+	name = "West Papua"
+	color = { 148 54 75 }
+	provincial_capital = jayapura
+	regions = {
+		indonesia
+		oceania
+	}
+	
+	history = {
+		culture = moluccan
+		religion = pagan
+	}
+}

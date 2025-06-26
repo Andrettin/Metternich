@@ -1,0 +1,3 @@
+settlement = {
+	filepath = "icons/settlement.png"
+}

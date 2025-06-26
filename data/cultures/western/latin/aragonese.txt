@@ -1,0 +1,18 @@
+aragonese = {
+	name = "Aragonese"
+	group = iberian
+	color = { 204 170 61 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = aragon
+			not = {
+				core = catalonia
+				core = valencia
+			}
+		}
+	}
+}

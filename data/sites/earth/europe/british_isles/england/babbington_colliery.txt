@@ -1,0 +1,7 @@
+#babbington_colliery = { #commented out because it would occupy the same tile as Nottingham
+#	name = "Babbington"
+#	world = earth
+#	geocoordinate = { -1.206683 52.988841 }
+#	type = resource
+#	resource = coal #Babbington Colliery
+#}

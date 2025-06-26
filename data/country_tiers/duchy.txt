@@ -1,0 +1,7 @@
+duchy = {
+	name = "Duchy"
+	icon = crown_ducal
+	modifier = {
+		capital_prestige_bonus = 3
+	}
+}

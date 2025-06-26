@@ -1,0 +1,12 @@
+boppard = {
+	name = "Boppard"
+	world = earth
+	#geocoordinate = { 7.5908333333333 50.231388888889 }
+	province = rhineland
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,10 @@
+ship_designer = {
+	name = "Ship Designer"
+	icon = anchor
+	scaled_modifier = {
+		technology_cost_modifier = {
+			category = navy
+			value = -2.5
+		}
+	}
+}

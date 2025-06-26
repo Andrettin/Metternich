@@ -1,0 +1,12 @@
+timber = {
+	name = "Timber"
+	commodity = timber
+	tiny_icon = garrison
+	terrain_types = {
+		conifer_forest
+		scrub_forest
+	}
+	site_types = {
+		resource
+	}
+}

@@ -1,0 +1,43 @@
+city_raider_1 = {
+	name = "City Raider I"
+	icon = saber
+	conditions = {
+		or = {
+			infantry = true
+			artillery = true
+		}
+	}
+	modifier = {
+		bonus_vs_fortifications = 20
+	}
+}
+
+city_raider_2 = {
+	name = "City Raider II"
+	icon = saber
+	conditions = {
+		or = {
+			infantry = true
+			artillery = true
+		}
+		promotion = city_raider_1
+	}
+	modifier = {
+		bonus_vs_fortifications = 25
+	}
+}
+
+city_raider_3 = {
+	name = "City Raider III"
+	icon = saber
+	conditions = {
+		or = {
+			infantry = true
+			artillery = true
+		}
+		promotion = city_raider_2
+	}
+	modifier = {
+		bonus_vs_fortifications = 30
+	}
+}

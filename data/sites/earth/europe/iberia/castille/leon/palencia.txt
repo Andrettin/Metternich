@@ -1,0 +1,14 @@
+palencia = {
+	name = "Palencia"
+	world = earth
+	geocoordinate = { -4.5333333333333 42.016666666667 }
+	type = settlement
+	province = palencia
+	
+	history = {
+		1212 = {
+			buildings += university #University founded in Palencia in 1212; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			settlement_type = campus
+		}
+	}
+}

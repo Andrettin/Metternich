@@ -1,0 +1,8 @@
+yasuj = {
+	name = "Yasuj"
+	world = earth
+	geocoordinate = { 51.59400360810 30.65900412480 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = isfahan
+}

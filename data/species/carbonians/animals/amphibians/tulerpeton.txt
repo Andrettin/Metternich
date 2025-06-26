@@ -1,0 +1,7 @@
+tulerpeton = {
+	name = "Tulerpeton"
+	supertaxon = amphibia
+	pre_evolutions = {
+		rhipidistian_fish
+	}
+}

@@ -1,0 +1,31 @@
+spikes = {
+	name = "Spikes"
+	subcategory = back_protection
+	portrait = building_slot
+	icon = lion
+	period = permian
+	year = -97000000 #Acanthopholis
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		spines
+		bony_plates
+	}
+}
+
+hip_spikes = {
+	name = "Hip Spikes"
+	subcategory = back_protection
+	portrait = building_slot
+	icon = lion
+	period = triassic
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		spikes
+	}
+}

@@ -1,0 +1,26 @@
+madrid = {
+	name = "Madrid"
+	world = earth
+	geocoordinate = { -3.68335168600 40.40002626450 } #from Natural Earth
+	type = settlement
+	#resource = cattle
+	province = castille
+	cultural_names = {
+		roman = "Complutum"
+	}
+	
+	history = {
+		910 = {
+			settlement_type = town #existed in 910; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 82-83.
+		}
+		
+		1661 = {
+			buildings += newspaper #the newspaper "Gaceta de Madrid" was founded in 1661; Source: Henry Kamen, "Early Modern European Society", 2021, p. 309.
+			settlement_type = city
+		}
+		
+		1700 = {
+			population = 100000 #Madrid had a population of 100,000+ in 1700; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+	}
+}

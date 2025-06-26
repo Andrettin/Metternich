@@ -1,0 +1,14 @@
+megazostrodontids = {
+	name = "Megazostrodontids"
+	type = clade
+	color = { 113 91 160 }
+	culture = mammalian
+	default_religion = pagan
+	default_tier = barony
+	max_tier = empire
+	default_government_type = clade
+	default_capital = cape_town
+	core_provinces = {
+		western_cape
+	}
+}

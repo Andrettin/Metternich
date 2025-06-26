@@ -1,0 +1,7 @@
+batken = {
+	name = "Batken"
+	world = earth
+	geocoordinate = { 70.819444444444 40.0625 }
+	type = settlement
+	province = batken
+}

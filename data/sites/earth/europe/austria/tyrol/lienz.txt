@@ -1,0 +1,14 @@
+lienz = {
+	name = "Lienz"
+	world = earth
+	geocoordinate = { 12.769722222222 46.829722222222 }
+	type = resource
+	resource = timber
+	province = carinthia
+	
+	history = {
+		610 = {
+			#improvements += ruins #Aguntum
+		}
+	}
+}

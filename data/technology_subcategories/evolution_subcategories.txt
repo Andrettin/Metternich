@@ -1,0 +1,83 @@
+aerial_animals = {
+	name = "Aerial Animals"
+	category = army
+	icon = lion
+}
+
+amphibious_animals = {
+	name = "Amphibious Animals"
+	category = culture
+	icon = lion
+}
+
+aquatic_animals = {
+	name = "Aquatic Animals"
+	category = navy
+	icon = lion
+}
+
+collective_behavior = {
+	name = "Collective Behavior"
+	category = culture
+	icon = lion
+}
+
+back_protection = {
+	name = "Back Protection"
+	category = army
+	icon = lion
+}
+
+body_proportions = {
+	name = "Body Proportions"
+	category = army
+	icon = lion
+}
+
+claws = {
+	name = "Claws"
+	category = army
+	icon = lion
+}
+
+feeding = {
+	name = "Feeding"
+	category = culture
+	icon = lion
+}
+
+head_protection = {
+	name = "Head Protection"
+	category = army
+	icon = lion
+}
+
+mouth = {
+	name = "Mouth"
+	category = army
+	icon = lion
+}
+
+organs = {
+	name = "Organs"
+	category = culture
+	icon = lion
+}
+
+procreation = {
+	name = "Procreation"
+	category = culture
+	icon = lion
+}
+
+tail_weapons = {
+	name = "Tail Weapons"
+	category = army
+	icon = lion
+}
+
+teeth = {
+	name = "Teeth"
+	category = army
+	icon = lion
+}

@@ -1,0 +1,101 @@
+adventurer = {
+	name = "Adventurer"
+	types = {
+		background
+	}
+	icon = saber
+	conditions = {
+		character_type = none
+		character_type = privateer
+	}
+	attribute_bonuses = {
+		diplomacy = -1
+		martial = 1
+	}
+}
+
+monk = {
+	name = "Monk"
+	types = {
+		background
+	}
+	icon = wooden_cross
+	conditions = {
+		character_type = none
+		or = {
+			character_type = inquisitor
+			character_type = theologian
+		}
+		gender = male
+	}
+	attribute_bonuses = {
+		learning = 1
+	}
+}
+
+nun = {
+	name = "Nun"
+	types = {
+		background
+	}
+	icon = wooden_cross
+	conditions = {
+		character_type = none
+		or = {
+			character_type = inquisitor
+			character_type = theologian
+		}
+		gender = female
+	}
+	attribute_bonuses = {
+		learning = 1
+	}
+}
+
+peasant_leader = {
+	name = "Peasant Leader"
+	types = {
+		background
+	}
+	icon = grain
+	conditions = {
+		character_type = none
+		character_type = statesman
+	}
+}
+
+pirate = {
+	name = "Pirate"
+	types = {
+		background
+	}
+	icon = skull
+	conditions = {
+		character_type = none
+		or = {
+			character_type = navigator
+			character_type = privateer
+		}
+	}
+	attribute_bonuses = {
+		martial = 1
+	}
+}
+
+professor = {
+	name = "Professor"
+	types = {
+		background
+	}
+	icon = university
+	conditions = {
+		character_type = none
+		or = {
+			character_type = high_judge
+			character_type = military_engineer
+			character_type = natural_scientist
+			character_type = philosopher
+			character_type = theologian
+		}
+	}
+}

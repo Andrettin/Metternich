@@ -1,0 +1,12 @@
+mariana = {
+	name = "Mariana"
+	world = earth
+	#geocoordinate = { -43.416472222222 -20.378347222222 }
+	province = minas_gerais
+	
+	history = {
+		1750 = {
+			buildings += college #Seminary founded in Mariana in 1750; Source: Keila Grinberg; Ricardo Salles, "O Brasil Imperial", vol. I, 2009, p. 296.
+		}
+	}
+}

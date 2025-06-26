@@ -1,0 +1,14 @@
+panama = {
+	name = "Panama"
+	color = { 133 100 159 }
+	provincial_capital = panama_city
+	regions = {
+		central_america
+	}
+	
+	history = {
+		owner = arawaks
+		culture = arawak
+		religion = pagan
+	}
+}

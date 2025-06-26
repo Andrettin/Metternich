@@ -1,0 +1,15 @@
+cinnabar = {
+	name = "Cinnabar"
+	commodity = cinnabar
+	tiny_icon = trade_consulate
+	prospectable = true
+	terrain_types = {
+		barren_hills #correct?
+	}
+	site_types = {
+		resource
+	}
+	improved_modifier = {
+		research_bonus = 1
+	}
+}

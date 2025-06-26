@@ -1,0 +1,8 @@
+peniche = {
+	name = "Peniche"
+	world = earth
+	geocoordinate = { -9.388722222222222 39.362833333333334 }
+	type = resource
+	resource = fish #Source: Map No. 500530 of the Perry-Castañeda Library Map Collection, 1972.
+	province = estremadura
+}

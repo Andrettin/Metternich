@@ -1,0 +1,34 @@
+north_america = {
+	name = "North America"
+	superregions = {
+		america
+	}
+}
+
+caribbean = {
+	name = "Caribbean"
+	superregions = {
+		north_america
+	}
+}
+
+central_america = {
+	name = "Central America"
+	superregions = {
+		north_america
+	}
+}
+
+greenland = {
+	name = "Greenland"
+	superregions = {
+		north_america
+	}
+}
+
+mississippi_basin = {
+	name = "Mississippi Basin"
+	superregions = {
+		north_america
+	}
+}

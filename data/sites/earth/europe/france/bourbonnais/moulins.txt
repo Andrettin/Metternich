@@ -1,0 +1,16 @@
+moulins = {
+	name = "Moulins"
+	world = earth
+	geocoordinate = { 3.3325 46.564722222222 }
+	type = resource
+	resource = coal
+	province = berry
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 5900
+			}
+		}
+	}	
+}

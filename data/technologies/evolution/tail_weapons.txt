@@ -1,0 +1,76 @@
+tail_weapons = {
+	name = "Tail Weapons"
+	subcategory = tail_weapons
+	portrait = building_slot
+	icon = lion
+	period = devonian
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+}
+
+tail_spikes = {
+	name = "Tail Spikes"
+	subcategory = tail_weapons
+	portrait = building_slot
+	icon = lion
+	period = triassic
+	year = -155000000 #Stegosaurus
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		spikes
+		tail_weapons
+	}
+}
+
+tail_crest = {
+	name = "Tail Crest"
+	subcategory = tail_weapons
+	portrait = building_slot
+	icon = lion
+	period = cretaceous
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		crested_back
+	}
+}
+
+tail_club = {
+	name = "Tail Club"
+	subcategory = tail_weapons
+	portrait = building_slot
+	icon = lion
+	period = triassic
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		bony_knobs
+		tail_weapons
+	}
+}
+
+whipping_tail = {
+	name = "Whipping Tail"
+	subcategory = tail_weapons
+	portrait = building_slot
+	icon = lion
+	period = cretaceous
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		tail_weapons
+		long_necks
+	}
+}

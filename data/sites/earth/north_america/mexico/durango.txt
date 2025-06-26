@@ -1,0 +1,6 @@
+durango = {
+	name = "Durango"
+	world = earth
+	geocoordinate = { -104.67002995000 24.03110292460 } #from Natural Earth
+	type = settlement
+}

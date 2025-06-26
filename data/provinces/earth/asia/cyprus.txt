@@ -1,0 +1,31 @@
+cyprus = {
+	name = "Cyprus"
+	color = { 142 146 118 }
+	provincial_capital = nicosia
+	regions = {
+		asia
+		middle_east
+	}
+	
+	history = {
+		-1450 = {
+			owner = phoenicia #part of Phoenician territory c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = phoenician
+			religion = pagan
+		}
+		
+		1204 = {
+			owner = cyprus #part of the Kingdom of Cyprus in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+			culture = greek
+			religion = orthodox
+		}
+		
+		1360 = {
+			owner = cyprus #part of the Kingdom of Cyprus in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1489 = {
+			owner = venice #became a Venetian possession in 1489; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+		}
+	}
+}

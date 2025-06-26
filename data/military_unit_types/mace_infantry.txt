@@ -1,0 +1,40 @@
+clubmen = {
+	name = "Clubmen"
+	unit_class = clubmen
+	icon = spearmen
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	entrench = true
+	required_technology = warrior_code
+	commodity_costs = {
+		manpower = 1
+	}
+	upgrades = {
+		macemen
+	}
+}
+
+macemen = {
+	name = "Macemen"
+	unit_class = macemen
+	icon = pikemen
+	stats = {
+		melee = 3
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	entrench = true
+	required_technology = mace
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+	}
+	upgrades = {
+		calivermen
+	}
+}

@@ -1,0 +1,17 @@
+political_thought = {
+	name = "Political Thought"
+	category = government
+	icon = bell
+}
+
+diplomacy = {
+	name = "Diplomacy"
+	category = government
+	icon = treaty
+}
+
+social_thought = {
+	name = "Social Thought"
+	category = government
+	icon = philosophy
+}

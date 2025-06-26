@@ -1,0 +1,3 @@
+war_college = {
+	name = "War College"
+}

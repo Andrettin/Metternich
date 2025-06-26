@@ -1,0 +1,78 @@
+carniola = {
+	name = "Carniola"
+	color = { 176 224 64 }
+	provincial_capital = laibach
+	resources = {
+		cotton = 1
+	}
+	regions = {
+		cisleithania
+		imperial_austria_1806
+		slovenia
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		919 = {
+			owner = bavaria #part of Bavaria in the 919-976 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		976 = {
+			owner = carinthia #became part of Carinthia in 976; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1040 = {
+			owner = carniola #became part of the March of Carniola in 1040; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1477 = {
+			owner = austria #Austrian possession c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = slovene
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1801 = {
+			population = 531242 #Carniola and Görz had a population of 531,242 in 1801 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1803 = {
+			population = 534090 #Carniola and Görz had a population of 534,?9? (the digits marked with "?" are illegible in the source) in 1803 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1805 = {
+			population = 557949 #Carniola and Görz had a population of 557,949 in 1805 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1806 = {
+			population = 498975 #Carniola and Görz had a population of 498,975 in 1806 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1807 = {
+			population = 419908 #Carniola and Görz had a population of 419,908 in 1807 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1809 = {
+			population = 422000 #Carniola and Görz had an estimated population of 422,000 in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = slovene #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

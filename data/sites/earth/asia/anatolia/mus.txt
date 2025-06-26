@@ -1,0 +1,8 @@
+mus = {
+	name = "Mus" #"Muş"
+	world = earth
+	geocoordinate = { 41.49693965530 38.74901592920 } #from Natural Earth
+	type = resource
+	resource = cattle #Grazing area with scattered cultivation; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
+	province = erzurum
+}

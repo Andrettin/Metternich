@@ -1,0 +1,8 @@
+kaposvar = {
+	name = "Kaposvar"
+	world = earth
+	geocoordinate = { 17.79998815780 46.36702638660 } #from Natural Earth
+	type = resource
+	resource = cattle
+	province = buda
+}

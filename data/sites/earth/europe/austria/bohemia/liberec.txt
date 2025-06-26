@@ -1,0 +1,5 @@
+liberec = {
+	name = "Liberec"
+	world = earth
+	geocoordinate = { 15.07999914420 50.79995993970 } #from Natural Earth
+}

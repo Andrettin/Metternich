@@ -1,0 +1,6 @@
+tataouine = {
+	name = "Tataouine"
+	world = earth
+	geocoordinate = { 10.46670358940 33.00000315430 } #from Natural Earth
+	type = settlement
+}

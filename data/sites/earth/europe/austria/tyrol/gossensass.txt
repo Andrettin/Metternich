@@ -1,0 +1,18 @@
+gossensass = {
+	name = "Gossensass"
+	world = earth
+	geocoordinate = { 11.444825 46.938301 }
+	type = resource
+	resource = silver
+	province = south_tyrol
+	
+	history = {
+		1427 = {
+			improvements += silver_mine #the silver-lead mine Gossensass was in existence in 1427; Source: M. J. T. Lewis, "Railways in the Greek and Roman World", 2001, p. 16.
+		}
+		
+		1480 = {
+			#the silver-lead mine Gossensass had railways within it in c. 1480; Source: M. J. T. Lewis, "Railways in the Greek and Roman World", 2001, p. 16.
+		}
+	}
+}

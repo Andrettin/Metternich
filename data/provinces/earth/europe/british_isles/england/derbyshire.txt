@@ -1,0 +1,49 @@
+derbyshire = {
+	name = "Derbyshire"
+	color = { 135 77 166 }
+	provincial_capital = derby
+	regions = {
+		england
+	}
+	
+	history = {
+		owner = elginerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = elginerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = britons
+			culture = briton
+		}
+		
+		526 = {
+			owner = anglo_saxons #territory of the Anglo-Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = anglo_saxon
+		}
+		
+		802 = {
+			owner = mercia #part of Mercia c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+			religion = catholic
+		}
+		
+		886 = {
+			owner = danelaw #part of the Danelaw in 886; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+		}
+		
+		1360 = {
+			owner = england #part of England in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = english
+		}
+		
+		1740 = {
+			owner = england #part of England c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = protestant
+		}
+	}
+}

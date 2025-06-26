@@ -1,0 +1,32 @@
+dictatorship = {
+	name = "Dictatorship"
+	group = republic
+	icon = saber
+	required_technology = republic
+	default_laws = {
+		ruling_class = plutocracy
+		centralization = centralization
+		serfdom = free_subjects
+		press_rights = censored_press
+	}
+	forbidden_laws = {
+		decentralization
+		free_press
+	}
+	conditions = {
+		not = {
+			country_type = clade
+			country_type = tribe
+			subject_type = colony
+		}
+	}
+	office_title_names = {
+		ruler = {
+			barony = "Dictator"
+			county = "Dictator"
+			duchy = "Dictator"
+			kingdom = "Dictator"
+			empire = "Dictator"
+		}
+	}
+}

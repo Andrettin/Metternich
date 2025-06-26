@@ -1,0 +1,43 @@
+linz_budweis = {
+	name = "Linz-Budweis"
+	color = { 0 71 102 }
+	
+	history = {
+		1832 = {
+			pathway = railroad #Linz-Budweiser Pferdeeisenbahn commissioned in 1832; Source: Hans Peter Hye, "Die Wende zur Industrie- und Wissensgesselschaft", 2010, p. 23.
+		}
+	}
+}
+
+pest_zagreb_fiume = {
+	name = "Pest-Zagreb-Fiume"
+	color = { 226 180 121 }
+	
+	history = {
+		1873 = {
+			pathway = railroad #railroad built in 1873; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
+		}
+	}
+}
+
+vienna_brunn = {
+	name = "Vienna-Brunn"
+	color = { 139 105 112 }
+	
+	history = {
+		1839.7.7 = {
+			pathway = railroad #the first trains from Vienna arrived in Brno on 1839.7.7; Source: Chad Bryant, "Into an Uncertain Future: Railroads and Vormärz Liberalism in Brno, Vienna, and Prague", 2009, p. 183.
+		}
+	}
+}
+
+vienna_trieste = {
+	name = "Vienna-Trieste"
+	color = { 191 242 151 }
+	
+	history = {
+		1857 = {
+			pathway = railroad #railroad built in 1857; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
+		}
+	}
+}

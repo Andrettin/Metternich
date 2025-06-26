@@ -1,0 +1,36 @@
+alchemists_shop = {
+	name = "Alchemist's Shop"
+	building_class = alchemists_shop
+	portrait = university
+	icon = research
+	provincial = true
+	required_technology = alchemy
+	settlement_types = {
+		village
+		town
+		city
+		metropolis
+		campus
+	}
+	commodity_costs = {
+		lumber = 4
+		cast_iron = 4
+	}
+	conditions = {
+		game_rule = research_commodity
+	}
+	settlement_conditions = {
+		province = {
+			produces_commodity = cinnabar
+		}
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = mercury
+			value = 1
+		}
+	}
+	province_modifier = {
+		research_per_improved_cinnabar = 1
+	}
+}

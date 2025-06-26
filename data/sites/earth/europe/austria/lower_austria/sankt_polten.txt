@@ -1,0 +1,23 @@
+sankt_polten = {
+	name = "Sankt Polten" #"Sankt Pölten"
+	world = earth
+	geocoordinate = { 15.616666666667 48.2 }
+	type = resource
+	#resource = grain #Crop cultivation with livestock; Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
+	resource = coal
+	province = lower_austria
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1807 = {
+			population = 4353 #Sankt Pölten had a population of 4,353 in 1807 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 12.
+		}
+		
+		1900 = {
+			population = 14510 #St Pölten had a population of 14,510 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

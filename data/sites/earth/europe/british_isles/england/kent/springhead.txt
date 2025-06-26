@@ -1,0 +1,11 @@
+springhead = {
+	name = "Springhead"
+	world = earth
+	geocoordinate = { 0.328333 51.4306 }
+	type = resource
+	resource = amber
+	province = kent
+	cultural_names = {
+		roman = "Vagniacis"
+	}
+}

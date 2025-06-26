@@ -1,0 +1,5 @@
+berber = {
+	name = "Berber"
+	rank = group
+	upper_group = middle_eastern
+}

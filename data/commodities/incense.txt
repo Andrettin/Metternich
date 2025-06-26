@@ -1,0 +1,5 @@
+incense = {
+	name = "Incense"
+	icon = spices
+	wealth_value = 25
+}

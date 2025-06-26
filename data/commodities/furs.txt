@@ -1,0 +1,6 @@
+furs = {
+	name = "Furs"
+	icon = furs
+	base_price = 100
+	required_technology = furs
+}

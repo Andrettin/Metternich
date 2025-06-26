@@ -1,0 +1,102 @@
+oil_rig = {
+	name = "Oil Rig"
+	slot = resource
+	resources = {
+		oil
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	default_population_class = laborers
+	required_technology = oil_drilling
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		laborers
+		expert_drillers
+	}
+	commodity_costs = {
+		lumber = 1
+		cast_iron = 1
+	}
+	modifier = {
+		housing_bonus = 1
+	}
+}
+
+improved_oil_rig = {
+	name = "Improved Oil Rig"
+	slot = resource
+	resources = {
+		oil
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	default_population_class = laborers
+	required_improvement = oil_rig
+	required_technology = oil_drilling
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		laborers
+		expert_drillers
+	}
+	commodity_costs = {
+		lumber = 4
+		cast_iron = 4
+	}
+	modifier = {
+		housing_bonus = 2
+	}
+}
+
+advanced_oil_rig = {
+	name = "Advanced Oil Rig"
+	slot = resource
+	resources = {
+		oil
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	default_population_class = laborers
+	required_improvement = improved_oil_rig
+	required_technology = chemistry
+	wealth_cost = 1000
+	population_classes = {
+		slaves
+		laborers
+		expert_drillers
+	}
+	commodity_costs = {
+		lumber = 8
+		cast_iron = 8
+	}
+	modifier = {
+		housing_bonus = 3
+	}
+}
+
+industrial_oil_rig = {
+	name = "Industrial Oil Rig"
+	slot = resource
+	resources = {
+		oil
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	default_population_class = laborers
+	required_improvement = advanced_oil_rig
+	required_technology = internal_combustion
+	wealth_cost = 5000
+	population_classes = {
+		slaves
+		laborers
+		expert_drillers
+	}
+	commodity_costs = {
+		lumber = 16
+		cast_iron = 16
+	}
+	modifier = {
+		housing_bonus = 4
+	}
+}

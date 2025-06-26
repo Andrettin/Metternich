@@ -1,0 +1,18 @@
+switzerland = {
+	name = "Switzerland"
+	type = minor_nation
+	culture = german
+	default_religion = protestant
+	default_tier = duchy
+	default_government_type = republic
+	default_capital = bern
+	eras = {
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		bern
+		zurich
+		geneva
+	}
+}

@@ -1,0 +1,42 @@
+physics = {
+	name = "Physics"
+	subcategory = philosophy
+	portrait = engineering
+	icon = research
+	period = 1600_1650
+	cost = 485
+	cost_commodity = research
+	prerequisites = {
+		astronomy
+		literature
+		navigation
+	}
+}
+
+theory_of_gravity = {
+	name = "Theory of Gravity"
+	subcategory = philosophy
+	portrait = engineering
+	icon = research
+	period = 1650_1700
+	cost = 680
+	cost_commodity = research
+	prerequisites = {
+		physics
+		
+		scientific_method
+	}
+}
+
+atomic_theory = {
+	name = "Atomic Theory"
+	subcategory = philosophy
+	portrait = engineering
+	icon = research
+	period = 1700_1750
+	cost = 5100
+	cost_commodity = research
+	prerequisites = {
+		theory_of_gravity
+	}
+}

@@ -1,0 +1,13 @@
+sinope = {
+	name = "Sinope"
+	world = earth
+	geocoordinate = { 35.15300149970 42.02299801770 } #from Natural Earth
+	type = settlement
+	#resource = grain #Arable land; Source: "CIA Atlas of the Middle East", 1993.
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,32 @@
+gotland = {
+	name = "Gotland"
+	color = { 33 192 224 }
+	provincial_capital = visby
+	regions = {
+		sweden
+	}
+	
+	history = {
+		culture = norse
+		religion = pagan
+		
+		1360 = {
+			owner = sweden #part of Sweden in 1360 (apparently, it's difficult to see in the map); Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = swedish
+			religion = catholic
+		}
+		
+		1560 = {
+			owner = denmark #part of Denmark c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+			religion = protestant #Lutheran c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, p. 116.
+		}
+		
+		1645 = {
+			owner = sweden #became part of Sweden in 1645; Source: William R. Shepherd, "Historical Atlas", 1911, p. 120.
+		}
+		
+		1740 = {
+			owner = sweden #part of the Kingdom of Sweden c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

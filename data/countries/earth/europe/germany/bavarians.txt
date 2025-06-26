@@ -1,0 +1,25 @@
+bavarians = {
+	name = "Bavarians"
+	type = tribe
+	culture = suebi
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = munich #Regensburg
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		bavaria
+		bohemia
+		brunn
+		buda
+		budweis
+		lower_austria
+		lower_silesia
+		moravia
+		pilsen
+		salzburg
+		upper_austria
+	}
+}

@@ -1,0 +1,20 @@
+qaasuitsup = {
+	name = "Qaasuitsup"
+	color = { 144 97 236 }
+	provincial_capital = ilulissat
+	regions = {
+		greenland
+	}
+	
+	history = {
+		owner = acanthostegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = { #Acanthostega lived in Greenland in the Devonian; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=36963
+			owner = acanthostegids
+			culture = amphibian
+			religion = pagan
+		}
+	}
+}

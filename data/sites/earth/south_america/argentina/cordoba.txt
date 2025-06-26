@@ -1,0 +1,18 @@
+cordoba_argentina = {
+	name = "Cordoba" #"Córdoba"
+	world = earth
+	geocoordinate = { -64.18229455730 -31.39995807010 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1700 = {
+			buildings += college #College or seminary founded in Cordoba in 1700(?); Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+		
+		1795 = {
+			buildings -= college #College or seminary abolished in Cordoba in 1795(?); Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = none
+		}
+	}
+}

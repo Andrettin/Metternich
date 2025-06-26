@@ -1,0 +1,6 @@
+al_hasakah = {
+	name = "Al-Hasakah"
+	world = earth
+	geocoordinate = { 40.75000850300 36.48328859360 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,8 @@
+catanzaro = {
+	name = "Catanzaro"
+	world = earth
+	geocoordinate = { 16.60000972360 38.90037619940 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = cosenza
+}

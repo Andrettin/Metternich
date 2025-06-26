@@ -1,0 +1,6 @@
+malatya = {
+	name = "Malatya"
+	world = earth
+	geocoordinate = { 38.30002884800 38.37043438620 } #from Natural Earth
+	type = settlement
+}

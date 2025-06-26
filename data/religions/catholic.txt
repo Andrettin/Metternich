@@ -1,0 +1,18 @@
+catholic = {
+	name = "Catholic"
+	group = christian
+	color = { 173 197 189 }
+	icon = wooden_cross
+	title_names = {
+		theocracy = {
+			kingdom = "Papacy"
+		}
+	}
+	office_title_names = {
+		ruler = {
+			theocracy = {
+				kingdom = "Pope"
+			}
+		}
+	}
+}

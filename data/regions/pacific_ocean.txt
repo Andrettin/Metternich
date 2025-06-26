@@ -1,0 +1,4 @@
+pacific_ocean = {
+	name = "Pacific Ocean"
+	ocean = true
+}

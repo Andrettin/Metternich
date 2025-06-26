@@ -1,0 +1,3 @@
+musketeers = {
+	filepath = "icons/units/troops/musketeers.png"
+}

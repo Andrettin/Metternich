@@ -1,0 +1,6 @@
+sapporo = {
+	name = "Sapporo"
+	world = earth
+	geocoordinate = { 141.34004431100 43.07497926740 } #from Natural Earth
+	type = settlement
+}

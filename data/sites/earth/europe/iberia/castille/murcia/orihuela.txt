@@ -1,0 +1,16 @@
+orihuela = {
+	name = "Orihuela"
+	world = earth
+	geocoordinate = { -0.94694444444444 38.085555555556 }
+	province = valencia
+	
+	history = {
+		1552 = {
+			buildings += university #Minor university founded in Orihuela in 1552; Source: "The Cambridge Modern History Atlas", 1912, p. 9; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+		
+		1807 = {
+			buildings -= university #Minor university abolished in Orihuela in 1807; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

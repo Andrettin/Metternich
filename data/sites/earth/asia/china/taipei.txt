@@ -1,0 +1,6 @@
+taipei = {
+	name = "Taipei"
+	world = earth
+	geocoordinate = { 121.56833333333 25.03583333333 } #from Natural Earth
+	type = settlement
+}

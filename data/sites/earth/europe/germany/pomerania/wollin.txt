@@ -1,0 +1,15 @@
+wollin = {
+	name = "Wollin"
+	world = earth
+	geocoordinate = { 14.611388888889 53.841388888889 }
+	cultural_names = {
+		norse = "Jomsburg" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		polish = "Wolin"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

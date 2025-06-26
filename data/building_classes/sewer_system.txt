@@ -1,0 +1,4 @@
+sewer_system = {
+	name = "Sewer System"
+	slot_type = sewer_system
+}

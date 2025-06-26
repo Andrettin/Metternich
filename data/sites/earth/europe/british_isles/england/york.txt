@@ -1,0 +1,22 @@
+york = {
+	name = "York"
+	world = earth
+	geocoordinate = { -1.08002221822 53.97038657540 } #from Natural Earth
+	type = settlement
+	cultural_names = {
+		anglo_saxon = "Eoforwic" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
+		briton = "Eboracum"
+		roman = "Eboracum" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 51.
+	}
+	
+	history = {
+		735 = {
+			buildings += cathedral #archbishopric of York permanently instituted in 735 AD; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 109, 133.
+			settlement_type = city
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

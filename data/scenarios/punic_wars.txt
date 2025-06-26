@@ -1,0 +1,23 @@
+first_punic_war = {
+	name = "First Punic War"
+	parent_scenario = rise_of_rome
+	start_date = -264
+	map_template = earth
+	hidden = true
+	default_countries = {
+		rome
+		carthage
+	}
+}
+
+second_punic_war = {
+	name = "Second Punic War"
+	parent_scenario = rise_of_rome
+	start_date = -218
+	map_template = earth
+	hidden = true
+	default_countries = {
+		rome
+		carthage
+	}
+}

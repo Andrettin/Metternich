@@ -1,0 +1,6 @@
+brunei = {
+	name = "Brunei"
+	world = earth
+	geocoordinate = { 114.93328405700 4.88333111462 } #from Natural Earth (Bandar Seri Begawan)
+	type = settlement
+}

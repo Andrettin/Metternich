@@ -1,0 +1,6 @@
+lae = {
+	name = "Lae"
+	world = earth
+	geocoordinate = { 146.99003535900 -6.73298826205 } #from Natural Earth
+	type = settlement
+}

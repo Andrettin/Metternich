@@ -1,0 +1,11 @@
+spanish_carracks = {
+	type = carrack
+	country = spain
+	quantity = 3
+	
+	history = {
+		1492 = {
+			active = true
+		}
+	}
+}

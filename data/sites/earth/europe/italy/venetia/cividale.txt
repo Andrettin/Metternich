@@ -1,0 +1,12 @@
+cividale = {
+	name = "Cividale"
+	world = earth
+	geocoordinate = { 13.42861 46.09019 }
+	province = venetia
+	
+	history = {
+		1353 = {
+			buildings += university #University founded in Cividale in 1353; Source: "Atlas de História Mundial", 2001, p. 144.
+		}
+	}
+}

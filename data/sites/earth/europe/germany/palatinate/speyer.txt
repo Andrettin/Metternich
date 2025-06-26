@@ -1,0 +1,12 @@
+speyer = {
+	name = "Speyer" #also known as Spires
+	world = earth
+	geocoordinate = { 8.4311111111111 49.319444444444 }
+	province = palatinate
+	
+	history = {
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,34 @@
+dijon = {
+	name = "Dijon"
+	world = earth
+	geocoordinate = { 5.03001826846 47.33040427560 } #from Natural Earth
+	type = settlement
+	#resource = fruit
+	province = burgundy
+	cultural_names = {
+		frankish = "Divio"
+	}
+	
+	history = {
+		919 = {
+			settlement_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1789 = {
+			buildings += courthouse #Parlement or conseil souverain, chambre des comptes, prévôt des maréchaux and chief court of the salt tax existent in Dijon in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+			settlement_type = city
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 4400
+				clergymen.french.catholic = 3800
+				officers.french.catholic = 2000
+			}
+		}
+	}
+}

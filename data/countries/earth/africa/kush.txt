@@ -1,0 +1,15 @@
+kush = {
+	name = "Kush"
+	type = minor_nation
+	culture = meroitic
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = khartoum #Napata
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		nubia
+	}
+}

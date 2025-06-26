@@ -1,0 +1,35 @@
+poitiers = {
+	name = "Poitiers"
+	world = earth
+	geocoordinate = { 0.33327652854 46.58329225570 } #from Natural Earth
+	type = settlement
+	province = poitou
+	cultural_names = {
+		frankish = "Pictavis"
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Poitiers was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1431 = {
+			buildings += university #University founded in Poitiers in 1431; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1789 = {
+			buildings += courthouse #Prévôt des maréchaux existent in Poitiers in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 2900
+			}
+		}
+	}
+}

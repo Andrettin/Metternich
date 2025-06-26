@@ -1,0 +1,3 @@
+treaty = {
+	filepath = "icons/treaty.png"
+}

@@ -1,0 +1,130 @@
+catapult = {
+	name = "Catapult"
+	unit_class = catapult
+	icon = artillery
+	stats = {
+		firepower = 6
+		melee = 1
+		range = 5
+		defense = 2
+		movement = 2
+	}
+	required_technology = mathematics
+	commodity_costs = {
+		manpower = 1
+	}
+	upgrades = {
+		culverin
+	}
+}
+
+culverin = {
+	name = "Culverin"
+	unit_class = culverin
+	icon = artillery
+	stats = {
+		firepower = 8
+		melee = 1
+		range = 5
+		defense = 2
+		movement = 2
+	}
+	required_technology = gunpowder
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		bronze_cannons = 2
+	}
+	upgrades = {
+		royal_artillery
+	}
+}
+
+royal_artillery = {
+	name = "Royal Artillery"
+	unit_class = royal_artillery
+	icon = artillery
+	stats = {
+		firepower = 9
+		melee = 2
+		range = 8
+		defense = 2
+		movement = 2
+	}
+	required_technology = siege_engineering
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		bronze_cannons = 3
+	}
+	upgrades = {
+		artillery
+	}
+}
+
+artillery = {
+	name = "Artillery"
+	unit_class = artillery
+	icon = artillery
+	stats = {
+		firepower = 16
+		melee = 4
+		range = 11
+		defense = 2
+		movement = 3
+	}
+	required_technology = heavy_artillery
+	wealth_cost = 1000
+	upkeep = 50
+	commodity_costs = {
+		manpower = 1
+		iron_cannons = 2
+	}
+	upgrades = {
+		siege_artillery
+	}
+}
+
+siege_artillery = {
+	name = "Siege Artillery"
+	unit_class = siege_artillery
+	icon = artillery
+	stats = {
+		firepower = 30
+		melee = 8
+		range = 14
+		defense = 3
+		movement = 3
+	}
+	required_technology = rifled_artillery
+	wealth_cost = 5000
+	upkeep = 100
+	commodity_costs = {
+		manpower = 1
+		steel_cannons = 4
+	}
+	upgrades = {
+		railroad_guns
+	}
+}
+
+railroad_guns = {
+	name = "Railroad Guns"
+	unit_class = railroad_guns
+	icon = artillery
+	stats = {
+		firepower = 50
+		melee = 12
+		range = 17
+		defense = 20
+		movement = 3
+	}
+	entrenchment_bonus = 5
+	required_technology = large_artillery
+	wealth_cost = 9000
+	upkeep = 200
+	commodity_costs = {
+		manpower = 1
+		steel_cannons = 8
+	}
+}

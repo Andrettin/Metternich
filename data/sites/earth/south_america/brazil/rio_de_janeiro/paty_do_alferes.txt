@@ -1,0 +1,15 @@
+paty_do_alferes = {
+	name = "Paty do Alferes"
+	world = earth
+	geocoordinate = { -43.418888888889 -22.428888888889 }
+	type = resource
+	resource = coffee
+	province = rio_de_janeiro
+	max_tier = barony #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 343-344.
+	
+	history = {
+		1825.10.12 = {
+			tier = barony #created as a barony on 1825.10.12; Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 228-229.
+		}
+	}
+}

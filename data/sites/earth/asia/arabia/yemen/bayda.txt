@@ -1,0 +1,8 @@
+bayda = {
+	name = "Bayda"
+	world = earth
+	geocoordinate = { 45.57400264700 13.97899810450 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = yemen
+}

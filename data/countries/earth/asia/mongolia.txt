@@ -1,0 +1,19 @@
+mongolia = {
+	name = "Mongolia"
+	type = great_power
+	color = { 100 100 250 }
+	culture = mongol
+	default_religion = pagan
+	default_tier = empire
+	default_government_type = tribal_despotism
+	default_capital = hohhot #should be Karakorum
+	short_names = {
+		tribe = "Mongols"
+	}
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		inner_mongolia
+	}
+}

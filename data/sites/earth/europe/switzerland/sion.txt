@@ -1,0 +1,12 @@
+sion = {
+	name = "Sion"
+	world = earth
+	geocoordinate = { 7.35399948193 46.23900302860 } #from Natural Earth
+	province = geneva
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

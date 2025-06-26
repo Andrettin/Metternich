@@ -1,0 +1,6 @@
+huancayo = {
+	name = "Huancayo"
+	world = earth
+	geocoordinate = { -75.20001998060 -12.08000038770 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,9 @@
+neanderthal = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=83087
+	name = "Neanderthal"
+	supertaxon = homo
+	specific_name = "neanderthalensis"
+	era = pleistocene #Quarternary
+	pre_evolutions = {
+		australopithecus
+	}
+}

@@ -1,0 +1,6 @@
+itamaraju = {
+	name = "Itamaraju"
+	world = earth
+	geocoordinate = { -39.52994917960 -17.03959430050 } #from Natural Earth
+	province = bahia
+}

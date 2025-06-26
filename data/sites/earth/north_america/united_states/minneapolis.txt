@@ -1,0 +1,6 @@
+minneapolis = {
+	name = "Minneapolis"
+	world = earth
+	geocoordinate = { -93.25178633810 44.97997926740 } #from Natural Earth
+	type = settlement
+}

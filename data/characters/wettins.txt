@@ -1,0 +1,94 @@
+friedrich_ii_of_saxony = {
+	name = "Friedrich"
+	epithet = "II"
+	dynasty = wettin
+	role = ruler
+	character_type = statesman
+	culture = german #Thuringian
+	religion = catholic
+	home_settlement = dresden
+	gender = male
+	birth_date = 1412.8.22
+	death_date = 1464.9.7
+	obsolescence_technology = nationalism
+	rulable_countries = {
+		saxe_wittenberg
+	}
+	traits = {
+		industrious
+	}
+}
+
+august_iii_of_poland = {
+	name = "August"
+	epithet = "III"
+	dynasty = wettin
+	role = ruler
+	character_type = statesman
+	culture = german #Thuringian
+	religion = catholic
+	home_settlement = dresden
+	gender = male
+	birth_date = 1696.10.17
+	death_date = 1763.10.5
+	required_technology = nationalism
+	rulable_countries = {
+		poland
+		saxe_wittenberg
+	}
+	traits = {
+		industrious
+	}
+}
+
+friedrich_christian_von_wettin = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.
+	name = "Friedrich Christian"
+	dynasty = wettin
+	culture = german #Thuringian
+	religion = catholic
+	home_settlement = dresden
+	gender = male
+	death_date = 1763.12.17 #succeeded by his son on 1763.12.17
+	
+	#prince-elector of Saxony
+}
+
+albert_von_wettin = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
+	name = "Albert"
+	dynasty = wettin
+	culture = german #Thuringian
+	religion = catholic
+	home_settlement = dresden
+	gender = male
+	birth_date = 1738.7.11
+	
+	history = {
+		#widowed on 1793.7.24 of Marie Christine, daughter of emperor Franz I (presumably of the Holy Roman Empire)
+		
+		1815 = {
+			#imperial Austrian field-marshal as of 1815
+			country = austria
+			deployment_province = lower_austria
+		}
+	}
+}
+
+friedrich_august_von_wettin = { #Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 6-7.
+	name = "Friedrich August"
+	dynasty = wettin
+	culture = german #Thuringian
+	religion = catholic
+	home_settlement = dresden
+	gender = male
+	father = friedrich_christian_von_wettin #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.
+	birth_date = 1750.12.23
+	death_date = 1827.5.5
+	
+	#king of Saxony
+	
+	history = {
+		1769.1.17 = { #married by procuration on 1769.1.17 and in person on 1769.1.29 to Maria Amalie Auguste
+			#spouse = 10000337 #Marie Amalie Auguste von Wittelsbach
+		}
+	}
+}

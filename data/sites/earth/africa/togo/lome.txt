@@ -1,0 +1,6 @@
+lome = {
+	name = "Lome" #"Lomé"
+	world = earth
+	geocoordinate = { 1.22275711936 6.13193707166 } #from Natural Earth
+	type = settlement
+}

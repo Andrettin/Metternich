@@ -1,0 +1,15 @@
+anarcho_liberal = {
+	name = "Anarcho-Liberal"
+	color = { 150 150 10 }
+	conditions = {
+		technology = rights_of_man
+	}
+	weight_factor = {
+		base_value = 100
+		
+		modifier = {
+			factor = 0.1
+			militancy < 6
+		}
+	}
+}

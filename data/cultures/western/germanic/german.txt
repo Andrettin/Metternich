@@ -1,0 +1,114 @@
+german = {
+	name = "German"
+	group = german
+	color = { 245 167 97 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			not = {
+				core = austria
+				core = belgium
+				core = great_britain
+				core = netherlands
+				core = strasbourg
+			}
+		}
+	}
+	office_title_names = {
+		ruler = {
+			democratic_republic = "Chancellor"
+		}
+	}
+	
+	personal_names = {
+		male = {
+			"Adalbert"
+			"Albert"
+			"Albrecht"
+			"Alexander"
+			"Alphart"
+			"Anton"
+			"Arnulf"
+			"Bernard"
+			"Carl"
+			"Christian"
+			"David"
+			"Eduard"
+			"Ernst"
+			"Eugen"
+			"Fabian"
+			"Ferdinand"
+			"Franz"
+			"Friedrich"
+			"Georg"
+			"Gerhard"
+			"Gottfried"
+			"Gunther"
+			"Gustav"
+			"Hagen"
+			"Hans"
+			"Heinrich"
+			"Heinz"
+			"Helmut"
+			"Hermann"
+			"Hildebrand"
+			"Jakob"
+			"Johann"
+			"Josef"
+			"Joseph"
+			"Karl"
+			"Karlmann"
+			"Klaus"
+			"Kurt"
+			"Leopold"
+			"Lothar"
+			"Ludwig"
+			"Luitpold"
+			"Lukas"
+			"Manfred"
+			"Mark"
+			"Matthias"
+			"Maximilian"
+			"Michael"
+			"Otto"
+			"Paul"
+			"Peter"
+			"Philipp"
+			"Pippin"
+			"Richard"
+			"Rudolf"
+			"Siegfried"
+			"Theodor"
+			"Thomas"
+			"Tobias"
+			"Victor"
+			"Walter"
+			"Werner"
+			"Wilhelm"
+			"Wolfgang"
+			"Wolfhart"
+		}
+		
+		female = {
+			"Hilde"
+			"Wilhelmina"
+		}
+	}
+	
+	surnames = {
+		"Bauer"
+		"Braun"
+		"Fischer"
+		"Muhlhausen" #"Mühlhausen"; Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 104.
+		"Muller" #"Müller"
+		"Pichler"
+		"Schmidt"
+		"Schwarz"
+		"Wagner"
+		"Winkler"
+		"Zimmermann"
+	}
+}

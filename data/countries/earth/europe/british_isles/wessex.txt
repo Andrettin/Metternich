@@ -1,0 +1,18 @@
+wessex = {
+	name = "Wessex"
+	type = great_power
+	color = { 206 8 8 }
+	culture = anglo_saxon
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = wells #Winchester
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		somerset
+		devon
+		cornwall
+	}
+}

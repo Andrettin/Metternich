@@ -1,0 +1,6 @@
+larissa = {
+	name = "Larissa"
+	world = earth
+	geocoordinate = { 22.42001623400 39.63040915840 } #from Natural Earth
+	type = settlement
+}

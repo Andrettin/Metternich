@@ -1,0 +1,7 @@
+ruwayshid = {
+	name = "Ruwayshid"
+	world = earth
+	geocoordinate = { 38.385 32.506111111111 }
+	type = resource
+	resource = grain
+}

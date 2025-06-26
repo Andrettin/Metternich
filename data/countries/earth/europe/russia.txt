@@ -1,0 +1,38 @@
+russia = {
+	name = "Russia"
+	type = great_power
+	color = { 111 177 210 }
+	culture = russian
+	default_religion = orthodox
+	default_tier = empire
+	default_government_type = monarchy
+	default_capital = moscow
+	short_names = {
+		monarchy = {
+			empire = "Russian Empire"
+		}
+	}
+	eras = {
+		industrial_era
+	}
+	
+	history = {
+		1820 = {
+			wealth = 1500
+			
+			commodities = {
+				horses = 5
+				canned_food = 20
+				fabric = 4
+				lumber = 10
+				paper = 2
+				steel = 5
+				clothing = 1
+				furniture = 1
+				tools = 1
+				muskets = 3
+				iron_cannons = 2
+			}
+		}
+	}
+}

@@ -1,0 +1,16 @@
+tulle = {
+	name = "Tulle"
+	world = earth
+	geocoordinate = { 1.7722222222222 45.265833333333 }
+	type = resource
+	resource = fruit
+	province = limousin
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 8000
+			}
+		}
+	}
+}

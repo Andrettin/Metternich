@@ -1,0 +1,19 @@
+crown_baronial = {
+	filepath = "icons/items/crown_baronial.png"
+}
+
+crown_comital = {
+	filepath = "icons/items/crown_comital.png"
+}
+
+crown_ducal = {
+	filepath = "icons/items/crown_ducal.png"
+}
+
+crown_royal = {
+	filepath = "icons/items/crown_royal.png"
+}
+
+crown_imperial = {
+	filepath = "icons/items/crown_imperial.png"
+}

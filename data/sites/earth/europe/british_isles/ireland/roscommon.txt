@@ -1,0 +1,10 @@
+roscommon = {
+	name = "Roscommon"
+	world = earth
+	geocoordinate = { -8.18333330000 53.63333330000 } #from Natural Earth
+	type = settlement
+	province = connaught
+	cultural_names = {
+		#irish = "Ros Comain"
+	}
+}

@@ -1,0 +1,20 @@
+van = {
+	name = "Van"
+	color = { 181 25 183 }
+	provincial_capital = van
+	regions = {
+		anatolia
+	}
+	
+	history = {
+		owner = persia
+		culture = persian
+		religion = pagan
+		
+		1360 = {
+			owner = qara_qoyunlu #territory of the Qara Qoyunlu in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = turkish
+			religion = sunni
+		}
+	}
+}

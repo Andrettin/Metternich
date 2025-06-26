@@ -1,0 +1,25 @@
+baltic_countries = {
+	superregions = {
+		europe
+		west_and_central_europe
+		soviet_union
+	}
+}
+
+estonia = {
+	superregions = {
+		baltic_countries
+	}
+}
+
+latvia = {
+	superregions = {
+		baltic_countries
+	}
+}
+
+lithuania = {
+	superregions = {
+		baltic_countries
+	}
+}

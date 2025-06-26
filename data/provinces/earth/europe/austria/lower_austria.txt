@@ -1,0 +1,92 @@
+lower_austria = {
+	name = "Lower Austria"
+	color = { 49 97 65 }
+	provincial_capital = vienna
+	resources = {
+		grain = 3
+		fruit = 5
+		horses = 1
+	}
+	regions = {
+		austria
+		imperial_austria_1806
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = bavarians #territory of the Bavarians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = suebi
+		}
+		
+		907 = {
+			owner = hungary #became part of Hungary in 907; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			religion = catholic
+		}
+		
+		955 = {
+			owner = bavaria #became the Bavarian East March in 955; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+		}
+		
+		1156 = {
+			owner = austria #became part of the Duchy of Austria in 1156; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = austrian
+		}
+		
+		1477 = {
+			owner = austria #part of the Archduchy of Austria c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = austria #part of Austria c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1798 = {
+			population = 1013139 #Lower Austria had a population of 1,013,139 in 1798 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1800 = {
+			population = 1016512 #Lower Austria had a population of 1,016,512 in 1800 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1803 = {
+			population = 1042345 #Lower Austria had a population of 1,042,345 in 1803 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1806 = {
+			population = 1053653 #Lower Austria had a population of 1,053,653 in 1806 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1807 = {
+			population = 1049904 #Lower Austria had a population of 1,049,904 in 1807 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1808 = {
+			population = 1060499 #Lower Austria had a population of 1,060,499 in 1808 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1809 = {
+			population = 1070000 #Lower Austria had an estimated population of 1,070,000 in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = austrian #German; Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		1900 = {
+			#Lower Austria had a population of 3,100,493 in 1900 (95% German and 4.66% Czech); Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+			population = 3100493
+			
+			population_groups = {
+				austrian = 2945468 #95% German
+				czech = 144482 #4.66% Czech
+			}
+		}
+	}
+}

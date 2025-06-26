@@ -1,0 +1,15 @@
+grone = {
+	name = "Grone"
+	world = earth
+	#geocoordinate = { 9.90067 51.5346 }
+	province = hanover
+	
+	history = {
+		919 = {
+			#settlement_type = castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+			
+			#castle or estate belonging to the Ludolfing monarchs in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

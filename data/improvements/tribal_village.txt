@@ -1,0 +1,11 @@
+tribal_village = {
+	name = "Tribal Village"
+	slot = main
+	ruins = true
+	image_filepath = "tiles/settlements/town.png"
+	terrain_types = {
+		plains
+		savannah
+		tundra
+	}
+}

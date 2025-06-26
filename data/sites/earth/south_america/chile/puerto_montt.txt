@@ -1,0 +1,6 @@
+puerto_montt = {
+	name = "Puerto Montt"
+	world = earth
+	geocoordinate = { -72.92997766280 -41.46998940150 } #from Natural Earth
+	type = settlement
+}

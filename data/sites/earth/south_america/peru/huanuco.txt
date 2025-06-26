@@ -1,0 +1,6 @@
+huanuco = {
+	name = "Huanuco" #"Huánuco"
+	world = earth
+	geocoordinate = { -76.24000818040 -9.92002887079 } #from Natural Earth
+	type = settlement
+}

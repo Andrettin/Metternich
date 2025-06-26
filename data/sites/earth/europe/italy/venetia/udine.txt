@@ -1,0 +1,14 @@
+udine = {
+	name = "Udine"
+	world = earth
+	geocoordinate = { 13.24000809600 46.07001609200 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = venetia
+	
+	history = {
+		1815 = {
+			developed = true #important settlement in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

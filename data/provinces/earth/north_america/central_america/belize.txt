@@ -1,0 +1,14 @@
+belize = {
+	name = "Belize"
+	color = { 253 125 139 }
+	provincial_capital = belmopan
+	regions = {
+		central_america
+	}
+	
+	history = {
+		owner = mayas
+		culture = maya
+		religion = pagan
+	}
+}

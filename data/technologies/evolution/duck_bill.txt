@@ -1,0 +1,14 @@
+duck_bill = {
+	name = "Duck Bill"
+	subcategory = mouth
+	portrait = building_slot
+	icon = lion
+	period = carboniferous
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		phytophagia
+	}
+}

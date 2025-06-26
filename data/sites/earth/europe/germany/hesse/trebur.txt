@@ -1,0 +1,12 @@
+trebur = {
+	name = "Trebur" #also known as Tribur
+	world = earth
+	#geocoordinate = { 8.4091666666667 49.924166666667 }
+	province = hesse
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

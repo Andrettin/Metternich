@@ -1,0 +1,7 @@
+barbacena = {
+	name = "Barbacena"
+	world = earth
+	geocoordinate = { -43.77000044920 -21.22001096720 } #from Natural Earth
+	province = minas_gerais
+	max_tier = marquisate
+}

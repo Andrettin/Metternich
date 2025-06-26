@@ -1,0 +1,13 @@
+persian = {
+	name = "Persian"
+	group = iranian
+	color = { 144 88 81 }
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			monarchy = "Shah"
+		}
+	}
+}

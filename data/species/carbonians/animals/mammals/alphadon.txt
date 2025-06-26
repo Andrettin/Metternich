@@ -1,0 +1,9 @@
+alphadon = { #Source: http://fossilworks.org/bridge.pl?action=taxonInfo&taxon_no=39947
+	name = "Alphadon"
+	supertaxon = alphadon
+	era = cretaceous
+	pre_evolutions = {
+		adelobasileus #possibly, since Adelobasileus is a very early mammal (or is related to the earliest mammals)
+	}
+	#scansorial omnivore
+}

@@ -1,0 +1,16 @@
+egyptian = {
+	name = "Egyptian"
+	group = middle_eastern
+	color = { 178 160 0 }
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			monarchy = {
+				kingdom = "Pharaoh"
+				empire = "Great Pharaoh"
+			}
+		}
+	}
+}

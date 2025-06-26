@@ -1,0 +1,6 @@
+diamantina = {
+	name = "Diamantina"
+	world = earth
+	geocoordinate = { -43.60998437660 -18.23998614620 } #from Natural Earth
+	province = minas_gerais
+}

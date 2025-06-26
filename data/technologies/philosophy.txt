@@ -1,0 +1,8 @@
+#logics = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 111.
+#	name = "Logics"
+#	category = industry
+#	portrait = engineering
+#	prerequisites = {
+#		philosophy
+#	}
+#}

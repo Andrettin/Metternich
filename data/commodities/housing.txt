@@ -1,0 +1,8 @@
+housing = {
+	name = "Housing"
+	icon = settlement
+	abstract = true
+	storable = false
+	local = true
+	housing = true
+}

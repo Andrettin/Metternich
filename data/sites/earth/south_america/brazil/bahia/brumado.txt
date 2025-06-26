@@ -1,0 +1,6 @@
+brumado = {
+	name = "Brumado"
+	world = earth
+	geocoordinate = { -41.67002527010 -14.20999957390 } #from Natural Earth
+	province = bahia
+}

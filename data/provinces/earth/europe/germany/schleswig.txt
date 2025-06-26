@@ -1,0 +1,60 @@
+schleswig = {
+	name = "Schleswig"
+	color = { 0 192 96 }
+	provincial_capital = flensburg
+	resources = {
+		grain = 1
+		fruit = 1
+		cattle = 2
+		sheep = 1
+	}
+	regions = {
+		germany
+	}
+	
+	history = {
+		owner = anglia
+		culture = anglian
+		religion = pagan
+		
+		-264 = {
+			owner = anglia #territory of the Angles in the 264 BC - 180 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+			culture = anglian
+			religion = pagan
+		}
+		
+		919 = {
+			owner = denmark #part of the Kingdom of Denmark in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		1360 = {
+			owner = denmark #part of Denmark in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1460 = {
+			owner = denmark #became a Danish royal possession in 1460; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1560 = {
+			religion = protestant #Lutheran c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, p. 116.
+		}
+		
+		1740 = {
+			owner = denmark #part of the Kingdom of Denmark c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = denmark #part of the Kingdom of Denmark in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1866 = {
+			owner = prussia #part of Prussia in 1866; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

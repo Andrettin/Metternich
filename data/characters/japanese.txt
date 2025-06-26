@@ -1,0 +1,20 @@
+tokugawa_ieyasu = {
+	name = "Ieyasu"
+	surname = "Tokugawa"
+	role = ruler
+	character_type = general
+	culture = japanese
+	religion = pagan
+	portrait = tokugawa_ieyasu
+	home_settlement = tokyo
+	gender = male
+	birth_date = 1543.1.31
+	death_date = 1616.6.1
+	rulable_countries = {
+		japan
+	}
+	traits = {
+		aggressive
+		protective
+	}
+}

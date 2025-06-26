@@ -1,0 +1,11 @@
+cleric = {
+	name = "Cleric"
+	unit_class = cleric
+	icon = artillerist
+	stats = {
+		range = 5
+		defense = 3
+		movement = 4
+	}
+	entrench = true
+}

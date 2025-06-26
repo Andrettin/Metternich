@@ -1,0 +1,20 @@
+hawaii = {
+	name = "Hawaii"
+	color = { 120 216 115 }
+	provincial_capital = honolulu
+	regions = {
+		united_states
+	}
+	
+	history = {
+		owner = hawaii
+		culture = polynesian
+		religion = pagan
+		
+		1898 = {
+			owner = united_states #became part of the United States in 1898; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 198-199.
+			culture = american
+			religion = protestant
+		}
+	}
+}

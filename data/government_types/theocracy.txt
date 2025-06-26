@@ -1,0 +1,18 @@
+theocracy = {
+	name = "Theocracy"
+	group = theocracy
+	icon = wooden_cross
+	required_technology = fundamentalism
+	conditions = {
+		not = {
+			country_type = clade
+			country_type = tribe
+			subject_type = colony
+		}
+	}
+	modifier = {
+		trade_per_shrine = 1
+		trade_per_temple = 2
+		trade_per_cathedral = 3
+	}
+}

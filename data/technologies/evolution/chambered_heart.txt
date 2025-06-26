@@ -1,0 +1,16 @@
+chambered_heart = {
+	name = "Chambered Heart"
+	subcategory = organs
+	portrait = building_slot
+	icon = heart
+	period = permian
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		ectothermics
+		upright_stature
+	}
+}

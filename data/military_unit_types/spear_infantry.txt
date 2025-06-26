@@ -1,0 +1,66 @@
+spearmen = {
+	name = "Spearmen"
+	unit_class = spearmen
+	icon = spearmen
+	stats = {
+		melee = 4
+		range = 1
+		defense = 5
+		movement = 4
+		bonus_vs_cavalry = 100
+	}
+	entrench = true
+	required_technology = warrior_code
+	commodity_costs = {
+		manpower = 1
+	}
+	upgrades = {
+		pikemen
+	}
+}
+
+pikemen = {
+	name = "Pikemen"
+	unit_class = pikemen
+	icon = pikemen
+	stats = {
+		melee = 5
+		range = 1
+		defense = 5
+		movement = 3
+		bonus_vs_cavalry = 100
+	}
+	entrench = true
+	required_technology = pike
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		cast_iron = 1
+	}
+	upgrades = {
+		halberdiers
+	}
+}
+
+halberdiers = {
+	name = "Halberdiers"
+	unit_class = halberdiers
+	icon = halberdiers
+	stats = {
+		melee = 7
+		range = 1
+		defense = 6
+		movement = 4
+		bonus_vs_cavalry = 100
+	}
+	entrench = true
+	required_technology = halberd
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		cast_iron = 2
+	}
+	upgrades = {
+		regulars
+	}
+}

@@ -1,0 +1,13 @@
+erzurum = {
+	name = "Erzurum"
+	world = earth
+	geocoordinate = { 41.29002722040 39.92039145820 } #from Natural Earth
+	type = settlement
+	#resource = cattle #Pasture grasses; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

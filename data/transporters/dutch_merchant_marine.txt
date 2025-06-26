@@ -1,0 +1,11 @@
+dutch_carracks = {
+	type = carrack
+	country = netherlands
+	quantity = 3
+	
+	history = {
+		1492 = {
+			active = true
+		}
+	}
+}

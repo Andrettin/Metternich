@@ -1,0 +1,23 @@
+chihuahua = {
+	name = "Chihuahua"
+	color = { 106 57 55 }
+	provincial_capital = chihuahua
+	regions = {
+		mexico
+	}
+	border_rivers = {
+		#texas = rio_grande
+	}
+	
+	history = {
+		owner = aztec_empire
+		culture = aztec
+		religion = pagan
+		
+		1600 = {
+			owner = new_spain #part of New Spain in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = castillian
+			religion = catholic
+		}
+	}
+}

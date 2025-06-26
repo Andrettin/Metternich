@@ -1,0 +1,20 @@
+montauban = {
+	name = "Montauban"
+	world = earth
+	geocoordinate = { 1.355 44.017222222222 }
+	type = resource
+	resource = tobacco
+	province = guyenne
+	
+	history = {
+		1789 = {
+			buildings += courthouse #Chambre des comptes and prévôt des maréchaux existent in Montauban in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 5800
+			}
+		}
+	}
+}

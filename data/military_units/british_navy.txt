@@ -1,0 +1,83 @@
+british_north_sea_ships_of_the_line = {
+	type = ship_of_the_line
+	country = great_britain
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = north_sea
+		}
+	}
+}
+
+british_north_sea_frigates = {
+	type = frigate
+	country = great_britain
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = north_sea
+		}
+	}
+}
+
+british_east_mediterranean_ships_of_the_line = {
+	type = ship_of_the_line
+	country = great_britain
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = eastern_mediterranean_sea
+		}
+	}
+}
+
+british_east_mediterranean_frigates = {
+	type = frigate
+	country = great_britain
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = eastern_mediterranean_sea
+		}
+	}
+}
+
+british_english_channel_ships_of_the_line = {
+	type = ship_of_the_line
+	country = great_britain
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = english_channel
+		}
+	}
+}
+
+british_english_channel_frigates = {
+	type = frigate
+	country = great_britain
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = english_channel
+		}
+	}
+}
+
+british_straits_of_gibraltar_ships_of_the_line = {
+	type = ship_of_the_line
+	country = great_britain
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = alboran_sea
+		}
+	}
+}

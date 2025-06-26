@@ -1,0 +1,9 @@
+french_builders = {
+	type = builder
+	
+	history = {
+		1492 = {
+			site = paris
+		}
+	}
+}

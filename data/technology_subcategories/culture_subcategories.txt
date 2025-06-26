@@ -1,0 +1,40 @@
+aesthetics = {
+	name = "Aesthetics"
+	category = culture
+	icon = painting
+}
+
+architecture = {
+	name = "Architecture"
+	category = culture
+	icon = architecture
+}
+
+education = {
+	name = "Education"
+	category = culture
+	icon = university
+}
+
+philosophy = {
+	name = "Philosophy"
+	category = culture
+	icon = philosophy
+}
+
+noble_customs = {
+	name = "Noble Customs"
+	category = culture
+	icon = crown_baronial
+}
+
+popular_customs = {
+	name = "Popular Customs"
+	category = culture
+	icon = music
+}
+religion = {
+	name = "Religion"
+	category = culture
+	icon = wooden_cross
+}

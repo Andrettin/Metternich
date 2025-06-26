@@ -1,0 +1,12 @@
+neustadt_an_der_weinstrasse = {
+	name = "Neustadt an der Weinstrasse"
+	world = earth
+	geocoordinate = { 8.13607 49.353621 }
+	province = palatinate
+	
+	history = {
+		1578 = {
+			buildings += university #University founded in Neustadt in 1578; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

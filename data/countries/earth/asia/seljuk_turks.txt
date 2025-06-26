@@ -1,0 +1,29 @@
+seljuk_turks = {
+	name = "Seljuk Turks"
+	type = tribe
+	culture = turkish
+	default_religion = sunni
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = karaman #Konya
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		karaman
+		afyonkarahisar
+		antalya
+		aydin
+		burdur
+		corum
+		denizli
+		kastamonu
+		mersin
+		mugla
+		samsun
+		saruhan
+		sinope
+		sivas
+		smyrna
+	}
+}

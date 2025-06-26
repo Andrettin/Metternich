@@ -1,0 +1,5 @@
+brass = {
+	name = "Brass"
+	icon = bronze
+	base_price = 300
+}

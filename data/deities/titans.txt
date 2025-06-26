@@ -1,0 +1,163 @@
+atlas = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 91-92.
+	name = "Atlas" #the name means "very enduring"
+	pantheon = titan
+	religions = {
+		hellenic
+	}
+	character = {
+		species = titan
+		culture = abyssal #Titan
+		religion = hellenic
+		gender = male
+		father = iapetus
+	}
+	
+	#associated with the sky and the stars
+	#condemned by Zeus to hold up the sky
+}
+
+cronus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 139-140, 435, 479.
+	name = "Cronus"
+	pantheon = titan
+	major = true
+	religions = {
+		hellenic
+	}
+	character = {
+		species = titan
+		culture = abyssal #Titan
+		religion = hellenic
+		gender = male
+		father = uranus
+		mother = gaia
+	}
+	
+	#Saturn taught people agriculture and civilization
+	#Cronus devoured his own children
+	#depicted as a personification of time occasionally, due to a confusion with the Greek word "chronos" ("time")
+}
+
+helios = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 228-230.
+	name = "Helios" #the name means "sun"
+	pantheon = titan #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 479.
+	portrait = henry_the_navigator
+	religions = {
+		hellenic
+	}
+	traits = {
+		sun_god
+	}
+	character = {
+		species = titan
+		culture = abyssal #Titan
+		religion = hellenic
+		gender = male
+		father = hyperion
+	}
+}
+
+hyperion = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 256.
+	name = "Hyperion" #the name means "he who travels above", apparently meaning the sun
+	pantheon = titan
+	religions = {
+		hellenic
+	}
+	character = {
+		species = titan
+		culture = abyssal #Titan
+		religion = hellenic
+		gender = male
+		father = uranus
+		mother = gaia
+	}
+	
+	#married to Theia
+}
+
+iapetus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 259.
+	name = "Iapetus"
+	pantheon = titan
+	religions = {
+		hellenic
+	}
+	character = {
+		species = titan
+		culture = abyssal #Titan
+		religion = hellenic
+		gender = male
+		father = uranus
+		mother = gaia
+	}
+}
+
+oceanus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 338.
+	name = "Oceanus"
+	pantheon = titan
+	religions = {
+		hellenic
+	}
+	character = {
+		species = titan
+		culture = abyssal #Titan
+		religion = hellenic
+		gender = male
+		father = uranus
+		mother = gaia
+	}
+	
+	#god of the ocean (river which completely surrounded the earth)
+}
+
+prometheus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 419-421.
+	name = "Prometheus"
+	pantheon = titan
+	religions = {
+		hellenic
+	}
+	character = {
+		species = titan
+		culture = abyssal #Titan
+		religion = hellenic
+		gender = male
+		father = iapetus
+	}
+	
+	#gave fire to mankind
+}
+
+rhea = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 429.
+	name = "Rhea"
+	pantheon = titan
+	religions = {
+		hellenic
+	}
+	cultural_group_names = {
+		latin = "Ops"
+	}
+	character = {
+		species = titan
+		culture = abyssal #Titan
+		religion = hellenic
+		gender = female
+		father = uranus
+		mother = gaia
+	}
+	
+	#identified with Ops, the Roman goddess of plenty
+}
+
+tethys = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 464.
+	name = "Tethys"
+	pantheon = titan
+	religions = {
+		hellenic
+	}
+	character = {
+		species = titan
+		culture = abyssal #Titan
+		religion = hellenic
+		gender = female
+		father = uranus
+		mother = gaia
+	}
+}

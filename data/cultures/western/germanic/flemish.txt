@@ -1,0 +1,14 @@
+flemish = {
+	name = "Flemish"
+	group = west_germanic
+	color = { 43 141 172 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = belgium
+		}
+	}
+}

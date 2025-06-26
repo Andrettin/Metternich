@@ -1,0 +1,14 @@
+surkhandarya = {
+	name = "Surkhandarya"
+	color = { 163 99 28 }
+	provincial_capital = termiz
+	regions = {
+		uzbekistan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

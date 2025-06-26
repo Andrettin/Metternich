@@ -1,0 +1,29 @@
+geneva = {
+	name = "Geneva"
+	world = earth
+	geocoordinate = { 6.14002803409 46.21000754710 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		395 = {
+			buildings += cathedral #Geneva was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		919 = {
+			settlement_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1365 = {
+			buildings += university #University founded in Geneva in 1365; Source: "Atlas de História Mundial", p. 144.
+		}
+	
+		1559 = {
+			#Calvin's Academy (the University of Geneva) was founded in 1559; Source: Henry Kamen, "Early Modern European Society", 2021, p. 296.
+		}
+	}
+}

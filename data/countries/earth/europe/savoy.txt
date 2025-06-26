@@ -1,0 +1,13 @@
+savoy = {
+	name = "Savoy"
+	type = great_power
+	color = { 142 167 80 }
+	culture = italian
+	default_religion = catholic
+	default_tier = county
+	default_government_type = monarchy
+	default_capital = chambery
+	eras = {
+		renaissance_era
+	}
+}

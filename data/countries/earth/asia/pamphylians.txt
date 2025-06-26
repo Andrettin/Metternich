@@ -1,0 +1,15 @@
+pamphylians = {
+	name = "Pamphylians"
+	type = tribe
+	culture = pamphylian
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = antalya
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		antalya
+	}
+}

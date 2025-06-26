@@ -1,0 +1,16 @@
+sioux = {
+	name = "Sioux"
+	type = tribe
+	culture = sioux
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = bismarck
+	eras = {
+		renaissance_era
+	}
+	core_provinces = {
+		north_dakota
+		south_dakota
+	}
+}

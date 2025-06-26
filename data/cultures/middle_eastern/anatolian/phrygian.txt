@@ -1,0 +1,8 @@
+phrygian = {
+	name = "Phrygian"
+	group = anatolian
+	color = { 246 223 15 }
+	species = {
+		human
+	}
+}

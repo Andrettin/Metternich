@@ -1,0 +1,17 @@
+general_napoleonic = {
+	name = "General"
+	domain = land
+	category = general
+}
+
+general_victorian = {
+	name = "General"
+	domain = land
+	category = general
+}
+
+general_modern = {
+	name = "General"
+	domain = land
+	category = general
+}

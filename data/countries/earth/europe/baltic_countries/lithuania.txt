@@ -1,0 +1,15 @@
+lithuania = {
+	name = "Lithuania"
+	type = minor_nation
+	culture = lithuanian
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = vilnius
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		lithuania
+	}
+}

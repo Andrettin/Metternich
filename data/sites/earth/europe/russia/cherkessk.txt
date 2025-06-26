@@ -1,0 +1,6 @@
+cherkessk = {
+	name = "Cherkessk"
+	world = earth
+	geocoordinate = { 42.06000606160 44.29040895490 } #from Natural Earth
+	type = settlement
+}

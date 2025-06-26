@@ -1,0 +1,13 @@
+lima = {
+	name = "Lima"
+	world = earth
+	geocoordinate = { -77.05006209480 -12.04801267610 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1551 = {
+			buildings += university #University founded in Lima in 1551; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+	}
+}

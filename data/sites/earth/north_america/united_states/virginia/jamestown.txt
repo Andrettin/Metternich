@@ -1,0 +1,13 @@
+jamestown = {
+	name = "Jamestown"
+	world = earth
+	geocoordinate = { -76.7775 37.209166666667 }
+	type = resource
+	resource = tobacco
+	
+	history = {
+		1607 = {
+			developed = true #Jamestown founded in 1607; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+		}
+	}
+}

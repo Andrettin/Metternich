@@ -1,0 +1,19 @@
+ecuador = {
+	name = "Ecuador"
+	color = { 69 239 113 }
+	provincial_capital = quito
+	regions = {
+		south_america
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = inca_empire
+			culture = inca
+		}
+	}
+}

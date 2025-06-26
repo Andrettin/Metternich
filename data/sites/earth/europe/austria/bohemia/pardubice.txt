@@ -1,0 +1,5 @@
+pardubice = {
+	name = "Pardubice"
+	world = earth
+	geocoordinate = { 15.76000931670 50.04041973780 } #from Natural Earth
+}

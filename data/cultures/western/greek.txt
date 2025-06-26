@@ -1,0 +1,25 @@
+greek = {
+	name = "Greek"
+	group = hellenic
+	color = { 122 180 210 }
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			democratic_republic = "Prime Minister"
+		}
+	}
+	
+	history = {
+		-1700 = {
+			#Linear B tablets found in Mycenae belonging to the period between 1700 and 1200 BC; Source: "Atlas de História Mundial", 2001, p. 67.
+			technologies += writing
+		}
+		
+		-1400 = {
+			#Construction of palaces in continental Greece around 1400 BC; Source: "Atlas de História Mundial", 2001, p. 66.
+			technologies += masonry
+		}
+	}
+}

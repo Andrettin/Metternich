@@ -1,0 +1,9 @@
+ghazni = {
+	name = "Ghazni"
+	world = earth
+	geocoordinate = { 68.41782873420 33.56331178690 } #from Natural Earth
+	type = resource
+	#resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	resource = sheep
+	province = afghanistan
+}

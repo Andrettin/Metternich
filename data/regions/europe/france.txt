@@ -1,0 +1,62 @@
+france = {
+	superregions = {
+		europe
+		west_and_central_europe
+	}
+	
+	history = {
+		-27 = {
+			population = 5000000 #5 million people lived in France at the "Time of Augustus"; Source: Josiah Cox Russell, "Medieval Population", 1937, p. 504.
+		}
+		
+		1 = {
+			population = 5000000 #France had a population of 5,000,000 in 1 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1000 = {
+			population = 6500000 #France had a population of 6,500,000 in 1000 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1328 = {
+			population = 21000000 #21 million people lived in France in 1328; Source: Josiah Cox Russell, "Medieval Population", 1937, p. 504.
+		}
+		
+		1345 = {
+			population = 13600000 #France had a population of 13.6 millions in 1345; Source: Josiah Cox Russell, "Late Mediaeval Population Patterns", 1945, p. 166.
+		}
+		
+		1500 = {
+			population = 15000000 #France had a population of 15,000,000 in 1500 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1600 = {
+			#population = 17000000 #17 million people lived in France around 1600; Source: Josiah Cox Russell, "Medieval Population", 1937, p. 504.
+			
+			population = 18500000 #France had a population of 18,500,000 in 1600 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1700 = {
+			population = 21471000 #France had a population of 21,471,000 in 1700 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1850 = {
+			literacy_rate = 60 #50-70% of adults; Source: Eric J. Hobsbawm, "A Era do Capital 1848-1875", 1977, p. 522.
+		}
+		
+		2003 = {
+			literacy_rate = 99 #Source: Philip's International School Atlas, p. 141.
+		}
+	}
+}
+
+lorraine = {
+	superregions = {
+		france
+	}
+	resources = {
+		grain = 2
+		sheep = 2
+		timber = 2
+		iron_ore = 1
+	}
+}

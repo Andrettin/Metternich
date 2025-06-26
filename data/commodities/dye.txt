@@ -1,0 +1,5 @@
+dye = {
+	name = "Dye"
+	icon = cotton
+	base_price = 100
+}

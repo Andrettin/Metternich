@@ -1,0 +1,56 @@
+kent = {
+	name = "Kent"
+	color = { 98 89 147 }
+	provincial_capital = canterbury
+	regions = {
+		england
+	}
+	
+	history = {
+		owner = elginerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = elginerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = britons
+			culture = briton
+		}
+		
+		526 = {
+			owner = anglo_saxons #territory of the Anglo-Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = anglo_saxon
+		}
+		
+		802 = {
+			owner = kent #part of Kent c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+			religion = catholic
+		}
+		
+		886 = {
+			owner = wessex #part of Wessex and its dependencies in 886; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+		}
+		
+		1328 = {
+			owner = england #part of England in 1328; Source: William R. Shepherd, "Historical Atlas", 1911, p. 76.
+			culture = english
+		}
+		
+		1360 = {
+			owner = england #part of England in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1560 = {
+			religion = protestant #Anglican c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, p. 116.
+		}
+		
+		1740 = {
+			owner = england #part of England c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

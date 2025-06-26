@@ -1,0 +1,6 @@
+ciudad_victoria = {
+	name = "Ciudad Victoria"
+	world = earth
+	geocoordinate = { -99.12998051130 23.71995912580 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,5 @@
+lead_pipes = {
+	name = "Lead Pipes"
+	icon = tools
+	base_price = 900
+}

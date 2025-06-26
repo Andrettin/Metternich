@@ -1,0 +1,6 @@
+belmopan = {
+	name = "Belmopan"
+	world = earth
+	geocoordinate = { -88.76707299980 17.25203350720 } #from Natural Earth
+	type = settlement
+}

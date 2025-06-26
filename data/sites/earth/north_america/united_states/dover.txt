@@ -1,0 +1,6 @@
+dover_delaware = {
+	name = "Dover"
+	world = earth
+	geocoordinate = { -75.52470300460 39.15808656720 } #from Natural Earth
+	type = settlement
+}

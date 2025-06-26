@@ -1,0 +1,17 @@
+gorno_badakhshan = {
+	name = "Gorno-Badakhshan"
+	color = { 103 29 100 }
+	provincial_capital = khorugh
+	resources = {
+		cattle = 1
+	}
+	regions = {
+		tajikistan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

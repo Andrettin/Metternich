@@ -1,0 +1,16 @@
+flippers = {
+	name = "Flippers"
+	subcategory = aquatic_animals
+	portrait = building_slot
+	icon = fish
+	period = triassic
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		fingers
+		amphibians
+	}
+}

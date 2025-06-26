@@ -1,0 +1,6 @@
+teresina = {
+	name = "Teresina"
+	world = earth
+	geocoordinate = { -42.78000919750 -5.09500038770 } #from Natural Earth
+	type = settlement
+}

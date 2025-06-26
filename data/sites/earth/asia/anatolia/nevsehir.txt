@@ -1,0 +1,8 @@
+nevsehir = {
+	name = "Nevsehir" #"Nevşehir"
+	world = earth
+	geocoordinate = { 34.72399851730 38.62400403560 } #from Natural Earth
+	type = resource
+	resource = grain #Cultivated areas with livestock grazing; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
+	province = karaman
+}

@@ -1,0 +1,16 @@
+goldemarland = {
+	name = "Goldemarland"
+	type = minor_nation
+	culture = dwarven
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = munster
+	eras = {
+		ancient_era
+		medieval_era
+	}
+	core_provinces = {
+		westphalia
+	}
+}

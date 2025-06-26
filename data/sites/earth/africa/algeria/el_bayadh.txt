@@ -1,0 +1,6 @@
+el_bayadh = {
+	name = "El Bayadh"
+	world = earth
+	geocoordinate = { 1.00995357118 33.69035829570 } #from Natural Earth
+	type = settlement
+}

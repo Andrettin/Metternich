@@ -1,0 +1,8 @@
+gilgit = {
+	name = "Gilgit"
+	world = earth
+	geocoordinate = { 74.30000199270 35.91709576320 } #from Natural Earth
+	type = settlement
+	#resource = tea
+	province = gilgit_baltistan
+}

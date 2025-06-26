@@ -1,0 +1,93 @@
+circumnavigation_of_the_earth = {
+	name = "Circumnavigation of the Earth"
+	portrait = unload
+	completion_conditions = {
+		tooltip = {
+			text = "Discovered the Atlantic, Indian and Pacific Oceans"
+			
+			discovered_region = atlantic_ocean
+			discovered_region = pacific_ocean
+			discovered_region = indian_ocean
+		}
+	}
+	completion_effects = {
+		research += 5
+	}
+}
+
+discovery_of_the_amazon_river = {
+	name = "Discovery of the Amazon River"
+	portrait = unload
+	completion_conditions = {
+		discovered_region = amazon_basin
+	}
+	completion_effects = {
+		research += 5
+	}
+}
+
+discovery_of_america = {
+	name = "Discovery of America"
+	portrait = unload
+	completion_conditions = {
+		discovered_region = america
+	}
+	completion_effects = {
+		research += 5
+	}
+}
+
+discovery_of_florida = {
+	name = "Discovery of Florida"
+	portrait = unload
+	completion_conditions = {
+		discovered_province = florida
+	}
+	completion_effects = {
+		research += 5
+	}
+}
+
+discovery_of_mexico = {
+	name = "Discovery of Mexico"
+	portrait = unload
+	completion_conditions = {
+		discovered_region = mexico
+	}
+	completion_effects = {
+		research += 5
+	}
+}
+
+discovery_of_the_mississippi_river = {
+	name = "Discovery of the Mississippi River"
+	portrait = unload
+	completion_conditions = {
+		discovered_region = mississippi_basin
+	}
+	completion_effects = {
+		research += 5
+	}
+}
+
+discovery_of_the_pacific_ocean = {
+	name = "Discovery of the Pacific Ocean"
+	portrait = unload
+	completion_conditions = {
+		discovered_region = pacific_ocean
+	}
+	completion_effects = {
+		research += 5
+	}
+}
+
+discovery_of_peru = {
+	name = "Discovery of Peru"
+	portrait = unload
+	completion_conditions = {
+		discovered_region = peru
+	}
+	completion_effects = {
+		research += 5
+	}
+}

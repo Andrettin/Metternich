@@ -1,0 +1,12 @@
+alcala_de_henares = {
+	name = "Alcala de Henares" #"Alcalá de Henares"
+	world = earth
+	geocoordinate = { -3.364305 40.481815 }
+	province = castille
+	
+	history = {
+		1499 = {
+			buildings += university #University founded in Alcalá de Henares in 1499; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

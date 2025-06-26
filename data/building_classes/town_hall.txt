@@ -1,0 +1,24 @@
+village_hall = {
+	name = "Village Hall"
+	slot_type = town_hall
+}
+
+town_hall = {
+	name = "Town Hall"
+	slot_type = town_hall
+}
+
+city_hall = {
+	name = "City Hall"
+	slot_type = town_hall
+}
+
+state_house = {
+	name = "State House"
+	slot_type = town_hall
+}
+
+capitol = {
+	name = "Capitol"
+	slot_type = town_hall
+}

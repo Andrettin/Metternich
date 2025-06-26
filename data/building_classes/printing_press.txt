@@ -1,0 +1,9 @@
+printing_press = {
+	name = "Printing Press"
+	slot_type = printing_press
+}
+
+newspaper = {
+	name = "Newspaper"
+	slot_type = printing_press
+}

@@ -1,0 +1,8 @@
+khvoy = {
+	name = "Khvoy"
+	world = earth
+	geocoordinate = { 44.97000931680 38.53039878240 } #from Natural Earth
+	type = resource
+	resource = cotton
+	province = west_azarbaijan
+}

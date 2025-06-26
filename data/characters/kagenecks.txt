@@ -1,0 +1,23 @@
+friederich_von_kageneck = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 84.
+	name = "Friederich"
+	dynasty = kageneck
+	culture = german #Rhenish
+	religion = catholic
+	home_site = freiburg #correct?
+	gender = male
+	start_date = 1755.12.8 #daughter's birth
+	
+	#count of Kageneck
+}
+
+marie_beatrix_von_kageneck = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 84.
+	name = "Marie Beatrix"
+	dynasty = kageneck
+	culture = german #Rhenish
+	religion = catholic
+	home_site = freiburg #correct?
+	gender = female
+	father = friederich_von_kageneck
+	birth_date = 1755.12.8
+	start_date = 1771.1.9 #married
+}

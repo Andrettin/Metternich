@@ -1,0 +1,11 @@
+crimean_war = {
+	name = "Crimean War"
+	parent_scenario = restoration_of_europe
+	start_date = 1853
+	map_template = earth
+	default_countries = {
+		france
+		great_britain
+		russia
+	}
+}

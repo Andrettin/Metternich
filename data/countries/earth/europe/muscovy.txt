@@ -1,0 +1,13 @@
+muscovy = {
+	name = "Muscovy"
+	type = great_power
+	color = { 111 177 210 }
+	culture = russian
+	default_religion = orthodox
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = moscow
+	eras = {
+		renaissance_era
+	}
+}

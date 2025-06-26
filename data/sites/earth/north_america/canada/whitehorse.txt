@@ -1,0 +1,6 @@
+whitehorse = {
+	name = "Whitehorse"
+	world = earth
+	geocoordinate = { -135.04998437700 60.71671897290 } #from Natural Earth
+	type = settlement
+}

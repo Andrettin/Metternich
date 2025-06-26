@@ -1,0 +1,8 @@
+lystrosaurus = {
+	name = "Lystrosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		edaphosaurus
+		sphenacodon
+	}
+}

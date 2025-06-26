@@ -1,0 +1,6 @@
+keren = {
+	name = "Keren"
+	world = earth
+	geocoordinate = { 38.44999385450 15.68039817200 } #from Natural Earth
+	type = settlement
+}

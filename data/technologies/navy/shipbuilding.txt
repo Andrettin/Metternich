@@ -1,0 +1,164 @@
+superior_hull_design = {
+	name = "Superior Hull Design"
+	subcategory = merchant_ships
+	portrait = unload
+	icon = anchor
+	period = 1500_1550
+	cost_commodity = research
+	prerequisites = {
+		cartography
+		invention
+		
+		foreign_accreditation
+	}
+}
+
+improved_sail_design = {
+	name = "Improved Sail Design"
+	subcategory = merchant_ships
+	portrait = unload
+	icon = anchor
+	period = 1600_1650
+	cost_commodity = research
+	prerequisites = {
+		superior_hull_design
+		wind_saw_mill
+	}
+}
+
+large_hulls = {
+	name = "Large Hulls"
+	subcategory = merchant_ships
+	portrait = unload
+	icon = anchor
+	period = 1600_1650
+	cost = 33
+	cost_commodity = research
+	prerequisites = {
+		navigation
+		convoying
+		wind_saw_mill
+	}
+}
+
+advanced_hull_design = {
+	name = "Advanced Hull Design"
+	subcategory = warships
+	portrait = unload
+	icon = anchor
+	period = 1650_1700
+	cost_commodity = research
+	prerequisites = {
+		improved_sail_design
+		privateering_companies
+		scientific_method
+	}
+}
+
+ship_of_the_line = {
+	name = "Ship-of-the-Line"
+	subcategory = warships
+	portrait = unload
+	icon = anchor
+	period = 1650_1700
+	cost_commodity = research
+	prerequisites = {
+		large_hulls
+		large_copper_and_tin_mines
+	}
+}
+
+streamlined_hulls = {
+	name = "Streamlined Hulls"
+	subcategory = merchant_ships
+	portrait = unload
+	icon = anchor
+	period = 1700_1750
+	cost = 15
+	cost_commodity = research
+	prerequisites = {
+		advanced_hull_design
+		circular_saw
+	}
+}
+
+paddlewheels = {
+	name = "Paddlewheels"
+	subcategory = warships
+	portrait = unload
+	icon = anchor
+	period = 1700_1750
+	cost = 30
+	cost_commodity = research
+	prerequisites = {
+		advanced_hull_design
+		high_pressure_steam_engine
+	}
+}
+
+merchant_steamships = {
+	name = "Merchant Steamships"
+	subcategory = merchant_ships
+	portrait = unload
+	icon = anchor
+	period = 1750_1800
+	cost_commodity = research
+	prerequisites = {
+		paddlewheels
+		riverboats
+	}
+}
+
+advanced_iron_working = {
+	name = "Advanced Iron Working"
+	subcategory = warships
+	portrait = unload
+	icon = anchor
+	period = 1750_1800
+	cost = 120
+	cost_commodity = research
+	prerequisites = {
+		ship_of_the_line
+		paddlewheels
+		industrial_funding_of_research
+	}
+}
+
+steel_armor_plate = {
+	name = "Steel Armor Plate"
+	subcategory = warships
+	portrait = unload
+	icon = anchor
+	period = 1850_1875
+	cost = 400
+	cost_commodity = research
+	prerequisites = {
+		advanced_iron_working
+	}
+}
+
+marine_engineering = {
+	name = "Marine Engineering"
+	subcategory = warships
+	portrait = unload
+	icon = anchor
+	period = 1875_1900
+	cost = 400
+	cost_commodity = research
+	prerequisites = {
+		steel_armor_plate
+	}
+}
+
+improved_range_finding = {
+	name = "Improved Range-Finding"
+	subcategory = warships
+	portrait = unload
+	icon = anchor
+	period = 1900_1925
+	cost = 1500
+	cost_commodity = research
+	prerequisites = {
+		marine_engineering
+	}
+}

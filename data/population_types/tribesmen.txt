@@ -1,0 +1,37 @@
+tribesmen = {
+	name = "Tribesmen"
+	population_class = tribesmen
+	color = { 142 92 42 }
+	icon = slaves_light
+	small_icon = slaves_light_small
+	output_commodity = labor
+	output_value = 1
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 0.0625
+		furniture = 0.0625
+		tools = 0.0625
+		brass_lamps = 0.0313
+		coffee = 0.0625
+		opium = 0.0313
+		salt = 0.0625
+		tea = 0.0625
+	}
+	phenotype_icons = {
+		afro_european = slaves_medium
+		amerindian = slaves_medium
+		south_asian = slaves_medium
+		african = slaves_dark
+	}
+	phenotype_small_icons = {
+		afro_european = slaves_medium_small
+		amerindian = slaves_medium_small
+		south_asian = slaves_medium_small
+		african = slaves_dark_small
+	}
+}

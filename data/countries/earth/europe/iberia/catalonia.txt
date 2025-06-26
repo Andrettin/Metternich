@@ -1,0 +1,17 @@
+catalonia = {
+	name = "Catalonia"
+	type = minor_nation
+	culture = catalan
+	default_religion = catholic
+	default_tier = county
+	default_government_type = monarchy
+	default_capital = barcelona
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		catalonia
+	}
+}

@@ -1,0 +1,11 @@
+gerstungen = {
+	name = "Gerstungen"
+	world = earth
+	#geocoordinate = { 10.059722222222 50.9625 }
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,6 @@
+el_fasher = {
+	name = "El Fasher"
+	world = earth
+	geocoordinate = { 25.35001826850 13.62998069150 } #from Natural Earth
+	type = settlement
+}

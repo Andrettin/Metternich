@@ -1,0 +1,5 @@
+mercury = {
+	name = "Mercury"
+	icon = iron
+	base_price = 300
+}

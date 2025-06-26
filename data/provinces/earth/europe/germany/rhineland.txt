@@ -1,0 +1,46 @@
+rhineland = {
+	name = "Rhineland"
+	color = { 81 128 33 }
+	provincial_capital = cologne
+	regions = {
+		germany
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = frankish
+			religion = catholic
+		}
+		
+		911 = {
+			owner = france #became part of France in 911; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		925 = {
+			owner = lotharingia #became part of the Duchy of Lotharingia in 925; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		959 = {
+			owner = lower_lotharingia #became part of the Duchy of Lower Lotharingia in 959; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1477 = {
+			owner = cologne #part of the Archbishopric of Cologne c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = german
+			religion = catholic
+		}
+		
+		1815 = {
+			owner = prussia #part of the Kingdom of Prussia in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

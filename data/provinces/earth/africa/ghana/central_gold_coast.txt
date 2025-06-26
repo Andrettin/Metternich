@@ -1,0 +1,28 @@
+central_gold_coast = {
+	name = "Central Gold Coast"
+	color = { 222 167 181 }
+	provincial_capital = cape_coast
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = carthage
+		culture = akan
+		religion = pagan
+		
+		1482 = {
+			owner = portugal #São Jorge da Mina founded by the Portuguese in 1482; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			religion = catholic
+		}
+		
+		1637 = {
+			owner = netherlands #São Jorge da Mina (Elmina) became a Dutch possession in 1637; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			religion = protestant
+		}
+		
+		1884.11 = {
+			owner = gold_coast #part of the British Gold Coast by 1884.11; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 174-175.
+		}
+	}
+}

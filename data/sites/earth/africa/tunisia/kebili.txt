@@ -1,0 +1,6 @@
+kebili = {
+	name = "Kebili"
+	world = earth
+	geocoordinate = { 8.97100253790 33.68999703490 } #from Natural Earth
+	type = settlement
+}

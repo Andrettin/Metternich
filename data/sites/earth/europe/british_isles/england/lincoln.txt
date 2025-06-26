@@ -1,0 +1,18 @@
+lincoln_england = {
+	name = "Lincoln"
+	world = earth
+	geocoordinate = { -0.55 53.25 }
+	type = resource
+	resource = iron_ore
+	province = derbyshire
+	
+	history = {
+		395 = {
+			buildings += cathedral #Lincoln was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+		}
+		
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

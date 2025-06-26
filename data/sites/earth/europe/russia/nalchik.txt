@@ -1,0 +1,6 @@
+nalchik = {
+	name = "Nalchik"
+	world = earth
+	geocoordinate = { 43.61794714230 43.49810589500 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,32 @@
+slavs = {
+	name = "Slavs"
+	type = tribe
+	culture = slavic
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = warsaw
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		warsaw
+		brandenburg
+		brest
+		czenstochowa
+		east_prussia
+		farther_pomerania
+		gomel
+		grodno
+		hither_pomerania
+		lodz
+		lublin
+		mecklenburg
+		minsk
+		mogilev
+		posen
+		rovno
+		upper_silesia
+		west_prussia
+	}
+}

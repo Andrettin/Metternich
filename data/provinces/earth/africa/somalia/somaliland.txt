@@ -1,0 +1,14 @@
+somaliland = {
+	name = "Somaliland"
+	color = { 154 4 51 }
+	provincial_capital = hargeysa
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = egypt
+		culture = somali
+		religion = pagan
+	}
+}

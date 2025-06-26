@@ -1,0 +1,12 @@
+merida_venezuela = {
+	name = "Merida" #"Mérida"
+	world = earth
+	geocoordinate = { -71.13001001150 8.39998984673 } #from Natural Earth
+	province = venezuela
+	
+	history = {
+		1807 = {
+			buildings += college #College or seminary founded in Mérida in 1807; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+		}
+	}
+}

@@ -1,0 +1,14 @@
+henan = {
+	name = "Henan"
+	color = { 218 15 113 }
+	provincial_capital = zhengzhou
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

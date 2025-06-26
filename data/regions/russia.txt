@@ -1,0 +1,12 @@
+russia = {
+	superregions = {
+		commonwealth_of_independent_states
+		soviet_union
+	}
+	
+	history = {
+		2003 = {
+			literacy_rate = 99 #Source: Philip's International School Atlas, p. 145.
+		}
+	}
+}

@@ -1,0 +1,113 @@
+iron_mine = {
+	name = "Iron Mine"
+	slot = resource
+	resources = {
+		iron_ore
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	terrain_image_filepaths = {
+		mountains = "tiles/improvements/quarry_mountains.png"
+	}
+	default_population_class = laborers
+	required_technology = iron_mining
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		laborers
+		expert_miners
+	}
+	commodity_costs = {
+		lumber = 1
+		cast_iron = 1
+	}
+	modifier = {
+		housing_bonus = 1
+	}
+}
+
+improved_iron_mine = {
+	name = "Improved Iron Mine"
+	slot = resource
+	resources = {
+		iron_ore
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	terrain_image_filepaths = {
+		mountains = "tiles/improvements/quarry_mountains.png"
+	}
+	default_population_class = laborers
+	required_technology = iron_mining
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		laborers
+		expert_miners
+	}
+	commodity_costs = {
+		lumber = 4
+		cast_iron = 4
+	}
+	modifier = {
+		housing_bonus = 2
+	}
+}
+
+steam_pumped_iron_mine = {
+	name = "Steam-Pumped Iron Mine"
+	slot = resource
+	resources = {
+		iron_ore
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	terrain_image_filepaths = {
+		mountains = "tiles/improvements/quarry_mountains.png"
+	}
+	default_population_class = laborers
+	required_improvement = improved_iron_mine
+	required_technology = steam_in_mining
+	wealth_cost = 1000
+	population_classes = {
+		slaves
+		laborers
+		expert_miners
+	}
+	commodity_costs = {
+		lumber = 8
+		cast_iron = 8
+	}
+	modifier = {
+		housing_bonus = 3
+	}
+}
+
+industrial_iron_mine = {
+	name = "Industrial Iron Mine"
+	slot = resource
+	resources = {
+		iron_ore
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	terrain_image_filepaths = {
+		mountains = "tiles/improvements/quarry_mountains.png"
+	}
+	default_population_class = laborers
+	required_improvement = steam_pumped_iron_mine
+	required_technology = industrial_iron_mining
+	wealth_cost = 5000
+	population_classes = {
+		slaves
+		laborers
+		expert_miners
+	}
+	commodity_costs = {
+		lumber = 16
+		cast_iron = 16
+	}
+	modifier = {
+		housing_bonus = 4
+	}
+}

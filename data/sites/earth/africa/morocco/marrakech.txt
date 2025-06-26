@@ -1,0 +1,13 @@
+marrakech = {
+	name = "Marrakech" #also known as Morocco
+	world = earth
+	geocoordinate = { -7.99998742820 31.62999310200 } #from Natural Earth
+	type = settlement
+	province = marrakech
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

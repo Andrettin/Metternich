@@ -1,0 +1,14 @@
+belgard = {
+	name = "Belgard"
+	world = earth
+	geocoordinate = { 15.98751 54.00696 }
+	cultural_names = {
+		polish = "Bialogard" #"Białogard"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

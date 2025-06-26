@@ -1,0 +1,34 @@
+selim_i_of_the_ottoman_empire = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 204.
+	name = "Selim"
+	epithet = "I"
+	culture = turkish
+	religion = sunni
+	home_site = amasia
+	gender = male
+	birth_date = 1467
+	death_date = 1520
+	#became Sultan of the Ottoman Empire in 1512
+}
+
+suleiman_i_of_the_ottoman_empire = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
+	name = "Suleiman" #"Süleyman"
+	epithet = "I"
+	role = ruler
+	character_type = statesman
+	culture = turkish
+	religion = sunni
+	home_settlement = trebizond
+	gender = male
+	birth_date = 1494
+	death_date = 1566
+	rulable_countries = {
+		ottoman_empire
+	}
+	traits = {
+		philosophical
+		imperialistic
+	}
+	
+	#known as the Magnificent
+	#became Sultan of the Ottoman Empire in 1520
+}

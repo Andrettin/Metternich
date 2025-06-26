@@ -1,0 +1,5 @@
+cinnabar = {
+	name = "Cinnabar"
+	icon = copper
+	base_price = 100
+}

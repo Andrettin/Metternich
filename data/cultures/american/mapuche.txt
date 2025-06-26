@@ -1,0 +1,8 @@
+mapuche = {
+	name = "Mapuche"
+	group = araucanian
+	color = { 225 71 35 }
+	species = {
+		human
+	}
+}

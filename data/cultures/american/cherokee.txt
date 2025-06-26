@@ -1,0 +1,8 @@
+cherokee = {
+	name = "Cherokee"
+	group = iroquoian
+	color = { 136 114 173 }
+	species = {
+		human
+	}
+}

@@ -1,0 +1,19 @@
+leicester = {
+	name = "Leicester"
+	world = earth
+	geocoordinate = { -1.13324894348 52.62997743640 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = derbyshire
+	cultural_names = {
+		anglo_saxon = "Ligoraceaster" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
+		briton = "Ratae"
+		roman = "Ratae" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 51.
+	}
+	
+	history = {
+		737 = {
+			buildings += cathedral #diocese of Leicester permanently founded in 737 AD; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 109, 134, 146.
+		}
+	}
+}

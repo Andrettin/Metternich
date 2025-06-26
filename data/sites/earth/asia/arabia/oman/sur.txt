@@ -1,0 +1,8 @@
+sur = {
+	name = "Sur"
+	world = earth
+	geocoordinate = { 59.53480505250 22.57581707660 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = oman
+}

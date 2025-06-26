@@ -1,0 +1,16 @@
+beaks = {
+	name = "Beaks"
+	subcategory = mouth
+	portrait = building_slot
+	icon = lion
+	period = carboniferous
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		phytophagia
+		egg_laying
+	}
+}

@@ -1,0 +1,42 @@
+diplomatic_expertise = {
+	name = "Diplomatic Expertise"
+	subcategory = diplomacy
+	portrait = grand_ducal_crown
+	icon = treaty
+	period = 1500_1550
+	cost_commodity = statesmanship
+	prerequisites = {
+		code_of_laws
+		cartography
+		trade
+		
+		noblesse_oblige
+	}
+}
+
+propaganda = {
+	name = "Propaganda"
+	subcategory = diplomacy
+	portrait = grand_ducal_crown
+	icon = newspaper
+	period = 1650_1700
+	cost_commodity = statesmanship
+	prerequisites = {
+		national_bureaucracy
+		scientific_method
+	}
+}
+
+empire_building = {
+	name = "Empire Building"
+	subcategory = diplomacy
+	portrait = grand_ducal_crown
+	icon = crown_imperial
+	period = 1750_1800
+	cost = 102
+	cost_commodity = statesmanship
+	prerequisites = {
+		nationalism
+		banking
+	}
+}

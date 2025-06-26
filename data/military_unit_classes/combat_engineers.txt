@@ -1,0 +1,17 @@
+sappers = {
+	name = "Sappers"
+	domain = land
+	category = combat_engineers
+}
+
+combat_engineers = {
+	name = "Combat Engineers"
+	domain = land
+	category = combat_engineers
+}
+
+saboteurs = {
+	name = "Saboteurs"
+	domain = land
+	category = combat_engineers
+}

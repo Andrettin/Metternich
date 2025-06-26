@@ -1,0 +1,92 @@
+calivermen = {
+	name = "Calivermen"
+	unit_class = calivermen
+	icon = musketeers
+	stats = {
+		firepower = 3
+		melee = 2
+		range = 5
+		defense = 5
+		movement = 4
+	}
+	entrench = true
+	required_technology = improved_infantry_tactics
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		arquebuses = 1
+	}
+	upgrades = {
+		skirmishers
+	}
+}
+
+skirmishers = {
+	name = "Skirmishers"
+	unit_class = skirmishers
+	icon = whitecoats
+	stats = {
+		firepower = 5
+		melee = 5
+		range = 5
+		defense = 7
+		movement = 6
+	}
+	entrench = true
+	required_technology = flintlock_rifle
+	wealth_cost = 200
+	upkeep = 25
+	commodity_costs = {
+		manpower = 1
+		rifles = 1
+	}
+	upgrades = {
+		sharpshooters
+	}
+}
+
+sharpshooters = {
+	name = "Sharpshooters"
+	unit_class = sharpshooters
+	icon = rifle_infantry_light
+	stats = {
+		firepower = 10
+		melee = 10
+		range = 8
+		defense = 7
+		movement = 6
+	}
+	entrench = true
+	required_technology = long_range_rifle
+	wealth_cost = 3000
+	upkeep = 50
+	commodity_costs = {
+		manpower = 1
+		rifles = 2
+	}
+	upgrades = {
+		rangers
+	}
+}
+
+rangers = {
+	name = "Rangers"
+	unit_class = rangers
+	icon = rifle_infantry_light
+	stats = {
+		firepower = 15
+		melee = 15
+		range = 10
+		defense = 20
+		movement = 7
+	}
+	entrench = true
+	entrenchment_bonus = 5
+	required_technology = machine_gun
+	wealth_cost = 5000
+	upkeep = 100
+	commodity_costs = {
+		manpower = 1
+		rifles = 4
+	}
+}

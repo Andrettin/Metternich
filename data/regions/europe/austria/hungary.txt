@@ -1,0 +1,47 @@
+royal_hungary = {
+	superregions = {
+		europe
+		imperial_austria_1806
+	}
+	
+	history = {
+		1809 = {
+			population_groups = {
+				aristocrats = 336000 #Hungary had over 336,000 nobles in 1809; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 11.
+			}
+		}
+	}
+}
+
+hungary = { #the territory of modern Hungary
+	superregions = {
+		europe
+		hungary_croatia_slavonia
+		royal_hungary
+		west_and_central_europe
+	}
+}
+
+hungary_croatia_slavonia = { #Royal Hungary without the military frontier, the Banat or Transylvania
+	superregions = {
+		europe
+	}
+	
+	history = {
+		1785 = {
+			population = 7008574 #Hungary-Croatia-Slavonia had a population (not counting the nobility and clergy) of 7,008,574 in 1785; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1787 = {
+			population = 7116789 #Hungary-Croatia-Slavonia had a population (not counting the nobility and clergy) of 7,116,789 in 1787; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1808 = {
+			population = 7555920 #Hungary-Croatia-Slavonia had a population (not counting the nobility and clergy) of 7,555,920 in 180(8?); Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1809 = {
+			population = 7990000 #Hungary-Croatia-Slavonia had an estimated population (not counting the nobility and clergy) of 7,990,000 in 1809; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+	}
+}

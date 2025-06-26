@@ -1,0 +1,32 @@
+moldavia = {
+	name = "Moldavia"
+	color = { 176 160 224 }
+	provincial_capital = iasi
+	resources = {
+		fruit = 1
+	}
+	regions = {
+		romania
+	}
+	
+	history = {
+		culture = romanian
+		religion = pagan
+		
+		1360 = {
+			owner = moldavia #part of Moldavia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = romanian
+			religion = orthodox
+		}
+		
+		1740 = {
+			owner = moldavia #part of Moldavia c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

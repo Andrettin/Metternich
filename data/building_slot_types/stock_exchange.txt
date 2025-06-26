@@ -1,0 +1,3 @@
+stock_exchange = {
+	name = "Stock Exchange"
+}

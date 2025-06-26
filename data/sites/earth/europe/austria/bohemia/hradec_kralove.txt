@@ -1,0 +1,7 @@
+hradec_kralove = {
+	name = "Hradec Kralove" #"Hradec Králové"
+	world = earth
+	geocoordinate = { 15.81200152540 50.20599617220 } #from Natural Earth
+	type = resource
+	resource = coal
+}

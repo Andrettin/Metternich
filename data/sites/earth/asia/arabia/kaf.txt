@@ -1,0 +1,8 @@
+kaf = {
+	name = "Kaf"
+	world = earth
+	geocoordinate = { 37.553055555556 31.401944444444 }
+	type = settlement
+	#resource = sheep
+	province = jawf
+}

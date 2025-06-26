@@ -1,0 +1,12 @@
+rohrheim = {
+	name = "Rohrheim" #Groß-Rohrheim; also known as Rara
+	world = earth
+	geocoordinate = { 8.473402777777778 49.717083333333335 }
+	province = hesse
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

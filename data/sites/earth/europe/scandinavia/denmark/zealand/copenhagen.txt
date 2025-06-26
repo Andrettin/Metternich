@@ -1,0 +1,16 @@
+copenhagen = {
+	name = "Copenhagen"
+	world = earth
+	geocoordinate = { 12.56348574730 55.67856419040 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1478 = {
+			buildings += university #University founded in Copenhagen in 1478; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

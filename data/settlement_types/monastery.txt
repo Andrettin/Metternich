@@ -1,0 +1,26 @@
+monastery = {
+	name = "Monastery"
+	image_filepath = "tiles/settlements/town.png"
+	free_resource_improvement_level = 3
+	base_settlement_types = {
+		village
+	}
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+		clergymen
+		firebrand_preachers
+	}
+	build_conditions = {
+		population_unit_count = 6
+	}
+	conditions = {
+		game_rule = additional_settlement_types
+		not = {
+			resource = center_of_trade
+		}
+		has_building_class = temple
+	}
+}

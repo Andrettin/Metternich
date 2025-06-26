@@ -1,0 +1,6 @@
+honolulu = {
+	name = "Honolulu"
+	world = earth
+	geocoordinate = { -157.85799788600 21.30687644350 } #from Natural Earth
+	type = settlement
+}

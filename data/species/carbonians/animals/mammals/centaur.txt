@@ -1,0 +1,16 @@
+centaur = {
+	name = "Centaur"
+	supertaxon = mammalia
+	era = holocene
+	sapient = true
+	adulthood_age = 40 #as dwarf
+	middle_age = 125
+	old_age = 188
+	venerable_age = 250
+	maximum_age_modifier = 2d100
+	starting_age_modifiers = {
+		intuitive = 3d6
+		self_taught = 5d6
+		trained = 7d6
+	}
+}

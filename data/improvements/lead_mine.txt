@@ -1,0 +1,56 @@
+lead_mine = {
+	name = "Lead Mine"
+	slot = resource
+	resources = {
+		lead
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	terrain_image_filepaths = {
+		#mountains = "tiles/improvements/quarry_mountains.png"
+	}
+	default_population_class = laborers
+	required_technology = iron_mining
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		laborers
+		expert_miners
+	}
+	commodity_costs = {
+		lumber = 1
+		cast_iron = 1
+	}
+	modifier = {
+		housing_bonus = 1
+	}
+}
+
+steam_pumped_lead_mine = {
+	name = "Steam-Pumped Lead Mine"
+	slot = resource
+	resources = {
+		lead
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	terrain_image_filepaths = {
+		#mountains = "tiles/improvements/quarry_mountains.png"
+	}
+	default_population_class = laborers
+	required_improvement = lead_mine
+	required_technology = steam_in_mining
+	wealth_cost = 1000
+	population_classes = {
+		slaves
+		laborers
+		expert_miners
+	}
+	commodity_costs = {
+		lumber = 8
+		cast_iron = 8
+	}
+	modifier = {
+		housing_bonus = 3
+	}
+}

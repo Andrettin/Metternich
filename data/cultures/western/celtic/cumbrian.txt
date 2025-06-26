@@ -1,0 +1,8 @@
+cumbrian = {
+	name = "Cumbrian"
+	group = brythonic
+	color = { 73 91 183 }
+	species = {
+		human
+	}
+}

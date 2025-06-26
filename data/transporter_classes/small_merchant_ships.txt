@@ -1,0 +1,14 @@
+carrack = {
+	name = "Carrack"
+	category = small_merchant_ship
+}
+
+trader = {
+	name = "Trader"
+	category = small_merchant_ship
+}
+
+clipper = {
+	name = "Clipper"
+	category = small_merchant_ship
+}

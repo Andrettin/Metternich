@@ -1,0 +1,15 @@
+chur = {
+	name = "Chur"
+	world = earth
+	geocoordinate = { 9.50002966171 46.85002016100 } #from Natural Earth
+	province = zurich
+	cultural_names = {
+		french = "Coire"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

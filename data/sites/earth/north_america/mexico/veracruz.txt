@@ -1,0 +1,6 @@
+veracruz = {
+	name = "Veracruz"
+	world = earth
+	geocoordinate = { -96.15998091810 19.17734234510 } #from Natural Earth
+	type = settlement
+}

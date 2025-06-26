@@ -1,0 +1,8 @@
+lake_superior = {
+	name = "Lake Superior"
+	color = { 82 170 236 }
+	lake = true
+	regions = {
+		north_america
+	}
+}

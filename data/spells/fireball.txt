@@ -1,0 +1,14 @@
+fireball = {
+	name = "Fireball"
+	target = enemy
+	icon = research
+	mana_cost = 15
+	range = 5
+	military_unit_categories = {
+	}
+	effects = {
+		damage = {
+			value = 15
+		}
+	}
+}

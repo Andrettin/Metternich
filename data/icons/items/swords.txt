@@ -1,0 +1,7 @@
+saber = {
+	filepath = "icons/items/saber.png"
+}
+
+crossed_sabers = {
+	filepath = "icons/items/crossed_sabers.png"
+}

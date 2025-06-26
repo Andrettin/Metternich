@@ -1,0 +1,8 @@
+jask = {
+	name = "Jask"
+	world = earth
+	geocoordinate = { 57.774444444444 25.643888888889 }
+	type = resource
+	resource = fruit
+	province = hormozgan
+}

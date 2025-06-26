@@ -1,0 +1,6 @@
+santa_rosa = {
+	name = "Santa Rosa"
+	world = earth
+	geocoordinate = { -64.29998763190 -36.62000120160 } #from Natural Earth
+	type = settlement
+}

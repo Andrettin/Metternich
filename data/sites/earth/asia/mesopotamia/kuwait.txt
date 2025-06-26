@@ -1,0 +1,8 @@
+kuwait = {
+	name = "Kuwait"
+	world = earth
+	geocoordinate = { 47.97830114620 29.36971763000 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = chaldea
+}

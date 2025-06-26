@@ -1,0 +1,6 @@
+fundao = {
+	name = "Fundao" #"Fundão"
+	world = earth
+	#geocoordinate = { -7.5 40.133333333333 }
+	province = beira
+}

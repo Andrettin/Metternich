@@ -1,0 +1,12 @@
+severin = {
+	name = "Severin"
+	world = earth
+	geocoordinate = { 22.66589269890 44.64589113270 } #from Natural Earth
+	province = oltenia
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

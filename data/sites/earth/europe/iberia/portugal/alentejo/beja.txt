@@ -1,0 +1,6 @@
+beja = {
+	name = "Beja"
+	world = earth
+	geocoordinate = { -7.86300241019 38.01400214270 } #from Natural Earth
+	province = alentejo
+}

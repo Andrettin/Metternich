@@ -1,0 +1,14 @@
+znaym = {
+	name = "Znaym"
+	world = earth
+	geocoordinate = { 16.048796054219 48.855540667876 }
+	cultural_names = {
+		czech = "Znojmo"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

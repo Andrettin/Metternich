@@ -1,0 +1,24 @@
+zaragoza = {
+	name = "Zaragoza"
+	world = earth
+	geocoordinate = { -0.88998213846 41.65000164700 } #from Natural Earth
+	type = settlement
+	cultural_names = {
+		roman = "Caesaraugusta"
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Saragossa was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1474 = {
+			buildings += university #University founded in Zaragoza in 1474; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

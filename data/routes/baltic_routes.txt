@@ -1,0 +1,4 @@
+baltic_route_network = { #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	name = "Baltic Route Network"
+	color = { 129 163 211 }
+}

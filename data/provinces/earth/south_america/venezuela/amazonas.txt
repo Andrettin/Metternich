@@ -1,0 +1,19 @@
+amazonas_venezuela = {
+	name = "Amazonas"
+	color = { 177 17 21 }
+	provincial_capital = puerto_ayacucho
+	regions = {
+		venezuela
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = arawaks
+			culture = arawak
+		}
+	}
+}

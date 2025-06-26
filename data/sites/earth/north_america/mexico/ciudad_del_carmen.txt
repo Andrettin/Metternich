@@ -1,0 +1,8 @@
+ciudad_del_carmen = {
+	name = "Ciudad del Carmen"
+	world = earth
+	geocoordinate = { -91.82448019070 18.65365928380 } #from Natural Earth
+	type = resource
+	resource = fish #Shrimp fishing; Source: Map No. 503497 of the Perry-Castañeda Library Map Collection, 1978.
+	province = yucatan
+}

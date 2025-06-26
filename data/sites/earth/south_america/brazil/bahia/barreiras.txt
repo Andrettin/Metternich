@@ -1,0 +1,6 @@
+barreiras = {
+	name = "Barreiras"
+	world = earth
+	geocoordinate = { -45.00000289060 -12.13999672560 } #from Natural Earth
+	province = bahia
+}

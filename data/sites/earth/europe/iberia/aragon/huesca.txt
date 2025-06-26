@@ -1,0 +1,14 @@
+huesca = {
+	name = "Huesca"
+	world = earth
+	geocoordinate = { -0.40889722222222 42.1401 }
+	type = resource
+	resource = sheep
+	province = aragon
+	
+	history = {
+		1354 = {
+			buildings += university #Major university founded in Huesca in 1354; Source: "The Cambridge Modern History Atlas", 1912, p. 9, Atlas de História Mundial, 2001, p. 144; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

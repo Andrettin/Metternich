@@ -1,0 +1,23 @@
+mauretanians = {
+	name = "Mauretanians"
+	type = tribe
+	culture = maurian
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = biskra
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		biskra
+		djelfa
+		el_bayadh
+		fez
+		laghouat
+		msila
+		naama
+		oran
+		tiaret
+	}
+}

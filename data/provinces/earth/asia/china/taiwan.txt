@@ -1,0 +1,17 @@
+taiwan = {
+	name = "Taiwan"
+	color = { 225 193 35 }
+	provincial_capital = taipei
+	cultural_names = {
+		portuguese = "Formosa"
+	}
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

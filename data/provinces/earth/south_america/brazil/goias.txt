@@ -1,0 +1,28 @@
+goias = {
+	name = "Goias" #"Goiás"
+	color = { 174 212 82 }
+	provincial_capital = goiania
+	resources = {
+		cattle = 2 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+	}
+	regions = {
+		brazil
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = tupi
+			culture = tupi
+		}
+		
+		1790 = {
+			owner = brazil #part of Brazil c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = brazilian
+			religion = catholic
+		}
+	}
+}

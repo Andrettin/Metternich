@@ -1,0 +1,6 @@
+mataro = {
+	name = "Mataro" #"Mataró"
+	world = earth
+	#geocoordinate = { 2.45002070986 41.53995668440 } #from Natural Earth
+	province = catalonia
+}

@@ -1,0 +1,43 @@
+beautiful_statuette = {
+	name = "Beautiful Statuette"
+	#description = "One of our master bronzesmiths at [unit.name] has made a beautiful statuette! The striking masterpiece has caught the eyes of many, and will fetch a good price."
+	description = "One of our master bronzesmiths has made a beautiful statuette! The striking masterpiece has caught the eyes of many, and will fetch a good price."
+	trigger = quarterly_pulse
+	random = true
+	conditions = {
+		technology = bronzeworking
+		#unit_class = smithy
+	}
+	option = {
+		name = "Marvelous!"
+		effects = {
+			wealth += 100
+			prestige += 1
+		}
+	}
+}
+
+#bountiful_harvest = {
+#	name = "Bountiful Harvest"
+	#description = "The harvest this year at [site.name] has been exceptionally plentiful, rejoice! Our farmers are bringing their abundant surplus to market and selling it for a profit."
+#	description = "The harvest this year has been exceptionally plentiful, rejoice! Our farmers are bringing their abundant surplus to market and selling it for a profit."
+#	trigger = yearly_pulse
+#	random = true
+	#conditions = {
+	#	unit_class = farm
+	#}
+	#option = {
+	#	name = "Excellent!"
+	#	#hotkey = e
+	#	#tooltip = "+100 ~<Copper~> per Farm"
+	#	#effects = {
+	#	#	random_site = {
+	#	#		unit_class = farm
+	#	#		
+	#	#		current_player = {
+	#	#			copper += 100
+	#	#		}
+	#	#	}
+	#	#}
+	#}
+#}

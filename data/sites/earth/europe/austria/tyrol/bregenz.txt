@@ -1,0 +1,18 @@
+bregenz = {
+	name = "Bregenz"
+	world = earth
+	geocoordinate = { 9.76670158807 47.51669706580 } #from Natural Earth
+	type = resource
+	resource = timber
+	province = tyrol
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

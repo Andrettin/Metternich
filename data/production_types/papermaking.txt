@@ -1,0 +1,10 @@
+papermaking = {
+	name = "Papermaking"
+	input_commodities = {
+		labor = 2
+		timber = 2
+	}
+	output_commodity = paper
+	output_value = 1
+	required_technology = papermaking
+}

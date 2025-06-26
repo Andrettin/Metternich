@@ -1,0 +1,146 @@
+aphrodite = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 60-62.
+	name = "Aphrodite"
+	pantheon = olympian
+	religions = {
+		hellenic
+	}
+	character = {
+		species = archon #Olympian
+		culture = celestial
+		religion = hellenic
+		gender = female
+		father = zeus #according to Homer; according to Hesiod she was born out of Uranus instead
+	}
+}
+
+apollo = {
+	name = "Apollo"
+	pantheon = olympian
+	religions = {
+		hellenic
+	}
+	character = {
+		species = archon
+		culture = celestial
+		religion = hellenic
+		gender = male
+		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 287-288.
+	}
+}
+
+artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 287-288.
+	name = "Artemis"
+	pantheon = olympian
+	portrait = athena
+	religions = {
+		hellenic
+	}
+	traits = {
+		goddess_of_the_hunt
+	}
+	character = {
+		species = archon
+		culture = celestial
+		religion = hellenic
+		gender = female
+		father = zeus
+	}
+}
+
+athena = {
+	name = "Athena"
+	pantheon = olympian
+	religions = {
+		hellenic
+	}
+	character = {
+		species = archon
+		culture = celestial
+		religion = hellenic
+		gender = female
+		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+	}
+}
+
+hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 232-234, 426.
+	name = "Hera"
+	pantheon = olympian #one of the twelve main Olympian deities
+	religions = {
+		hellenic
+	}
+	cultural_group_names = {
+		latin = "Juno"
+	}
+	character = {
+		species = archon
+		culture = celestial
+		religion = hellenic
+		gender = female
+		father = cronus
+		mother = rhea
+	}
+	
+	#goddess of marriage and childbirth
+	#wife of Zeus
+}
+
+hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 243-246.
+	name = "Hermes"
+	pantheon = olympian
+	religions = {
+		hellenic
+	}
+	cultural_group_names = {
+		latin = "Mercury"
+	}
+	character = {
+		species = archon
+		culture = celestial
+		religion = hellenic
+		gender = male
+		father = zeus
+		mother = maia #Pleiad
+	}
+	
+	#herald and messenger of the gods
+	#god of merchants and traders
+}
+
+poseidon = {
+	name = "Poseidon"
+	pantheon = olympian
+	portrait = henry_the_navigator
+	major = true
+	religions = {
+		hellenic
+	}
+	cultural_group_names = {
+		latin = "Neptune"
+	}
+	traits = {
+		god_of_the_sea
+	}
+	character = {
+		species = triton
+		culture = aquan
+		religion = hellenic
+		gender = male
+		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+	}
+}
+
+zeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 287-288.
+	name = "Zeus"
+	pantheon = olympian
+	major = true
+	religions = {
+		hellenic
+	}
+	character = {
+		species = archon #Olympian
+		culture = celestial
+		religion = hellenic
+		gender = male
+		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+	}
+}

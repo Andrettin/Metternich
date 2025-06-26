@@ -1,0 +1,14 @@
+tyrannosaurus = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=54833 ; Source: http://www.marine.csiro.au/mirrorsearch/ir_search.list_species?gen_id=1206683
+	name = "Tyrannosaurus"
+	supertaxon = tyrannosaurus
+	specific_name = "rex"
+	era = cretaceous
+	pre_evolutions = {
+		#should be ancestors to all Tyrannosauruses
+		allosaurus
+		dilophosaurus
+	}
+	#description = "The mighty tyrannosaurus rex was a fierce predator. The goddess Gaia brought a few of them to Jotunheim, where they originated the first draconic creatures."
+	#weighted 3.97 tons
+	#ground dwelling carnivore
+}

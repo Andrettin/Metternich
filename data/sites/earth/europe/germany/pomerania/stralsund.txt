@@ -1,0 +1,12 @@
+stralsund = {
+	name = "Stralsund"
+	world = earth
+	geocoordinate = { 13.10001664090 54.30041811030 } #from Natural Earth
+	province = hither_pomerania
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

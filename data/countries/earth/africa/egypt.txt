@@ -1,0 +1,42 @@
+egypt = {
+	name = "Egypt"
+	type = great_power
+	color = { 143 141 128 }
+	culture = egyptian
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = cairo
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		cairo
+		alexandria
+		suez
+		upper_egypt
+		sinai
+	}
+}
+
+egypt_arabic = {
+	name = "Egypt"
+	type = minor_nation
+	culture = arabic
+	default_religion = sunni
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = cairo
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		cairo
+		alexandria
+		suez
+		upper_egypt
+		sinai
+	}
+}

@@ -1,0 +1,17 @@
+south_kazakhstan = {
+	name = "South Kazakhstan"
+	color = { 158 170 169 }
+	provincial_capital = turkistan
+	resources = {
+		sheep = 1
+	}
+	regions = {
+		kazakhstan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

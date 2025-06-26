@@ -1,0 +1,6 @@
+troll = {
+	name = "Troll"
+	species = {
+		troll
+	}
+}

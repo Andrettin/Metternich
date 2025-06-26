@@ -1,0 +1,26 @@
+nice = {
+	name = "Nice"
+	world = earth
+	geocoordinate = { 7.26502396509 43.71501771960 } #from Natural Earth
+	type = resource
+	#resource = fruit #Market gardening (fruits, vegetables, flowers); Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
+	resource = grain
+	province = provence
+	cultural_names = {
+		frankish = "Nicea"
+		gaulish = "Nicaea"
+		roman = "Nicaea"
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Nicaea was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.italian.catholic = 1700
+			}
+		}
+	}
+}

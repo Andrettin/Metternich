@@ -1,0 +1,7 @@
+clothing = {
+	filepath = "icons/commodities/clothing.png"
+}
+
+fur_hats = {
+	filepath = "icons/commodities/fur_hats.png"
+}

@@ -1,0 +1,6 @@
+seattle = {
+	name = "Seattle"
+	world = earth
+	geocoordinate = { -122.33998498700 47.57000205390 } #from Natural Earth
+	type = settlement
+}

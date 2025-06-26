@@ -1,0 +1,8 @@
+fredrikstad = {
+	name = "Fredrikstad"
+	world = earth
+	geocoordinate = { 10.95 59.216667 }
+	pos_offset = { 0 -1 }
+	type = resource
+	resource = grain
+}

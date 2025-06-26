@@ -1,0 +1,61 @@
+savoy = {
+	name = "Savoy"
+	color = { 208 0 224 }
+	provincial_capital = chambery
+	resources = {
+		grain = 4
+		cattle = 1
+		sheep = 2
+		coal = 2
+	}
+	regions = {
+		france
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = burgundians #territory of the Burgundians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		919 = {
+			owner = lower_burgundy #part of Lower Burgundy in 919; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = french
+			religion = catholic
+		}
+		
+		933 = {
+			owner = arles #became part of the Kingdom of Burgundy in 933; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1280 = {
+			owner = savoy #part of the County of the Savoy c. 1280; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1418 = {
+			owner = savoy #part of the Domain of the Duchy of Savoy in 1418; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1477 = {
+			owner = savoy #part of the Duchy of Savoy c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1720 = {
+			owner = sardinia #became part of the Kingdom of Sardinia in 1720; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = sardinia #part of the Kingdom of Sardinia in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = french #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		1860 = {
+			owner = france #became part of France in 1860; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

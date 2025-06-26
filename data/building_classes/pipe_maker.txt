@@ -1,0 +1,4 @@
+pipe_maker = {
+	name = "Pipe Maker"
+	slot_type = pipe_maker
+}

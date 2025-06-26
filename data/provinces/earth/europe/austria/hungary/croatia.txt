@@ -1,0 +1,51 @@
+croatia = {
+	name = "Croatia"
+	color = { 244 17 246 }
+	provincial_capital = zagreb
+	resources = {
+		timber = 1
+	}
+	regions = {
+		croatia
+		hungary_croatia_slavonia
+		royal_hungary
+	}
+	
+	history = {
+		culture = gothic
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		919 = {
+			owner = croatia #part of Croatia in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = croatian
+			religion = catholic
+		}
+		
+		1204 = {
+			owner = hungary #part of Hungary in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+		}
+		
+		1360 = {
+			owner = hungary #part of Hungary in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1477 = {
+			owner = hungary #part of the Kingdom of Hungary c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = croatian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

@@ -1,0 +1,8 @@
+sharm_al_shaykh = {
+	name = "Sharm al Shaykh"
+	world = earth
+	geocoordinate = { 34.393611111111 27.978611111111 }
+	type = resource
+	resource = fruit
+	province = sinai
+}

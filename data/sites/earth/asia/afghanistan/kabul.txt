@@ -1,0 +1,14 @@
+kabul = {
+	name = "Kabul"
+	world = earth
+	geocoordinate = { 69.18326004930 34.51669028630 } #from Natural Earth
+	type = settlement
+	#resource = timber
+	province = afghanistan
+	
+	history = {
+		1801 = {
+			settlement_type = city #important settlement in the 1801-1911 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 170-171.
+		}
+	}
+}

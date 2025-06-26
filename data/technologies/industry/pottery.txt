@@ -1,0 +1,9 @@
+pottery = {
+	name = "Pottery"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = cog
+	period = copper_age
+	cost = 35
+	cost_commodity = research
+}

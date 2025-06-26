@@ -1,0 +1,8 @@
+soria = {
+	name = "Soria"
+	world = earth
+	geocoordinate = { -2.4666666666667 41.766666666667 }
+	type = resource
+	resource = grain
+	province = castille
+}

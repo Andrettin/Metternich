@@ -1,0 +1,8 @@
+olhao = {
+	name = "Olhao" #"Olhão"
+	world = earth
+	geocoordinate = { -7.8388888888889 37.027777777778 }
+	type = resource
+	resource = fish #Source: Map No. 500530 of the Perry-Castañeda Library Map Collection, 1972.
+	province = algarve
+}

@@ -1,0 +1,13 @@
+stanislavov = {
+	name = "Stanislavov" #also known as Ivano-Frankivsk
+	world = earth
+	geocoordinate = { 24.70938553740 48.93475079250 } #from Natural Earth
+	type = resource
+	resource = grain
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

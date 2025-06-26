@@ -1,0 +1,14 @@
+tulerpetontids = {
+	name = "Tulerpetontids"
+	type = clade
+	color = { 111 177 210 }
+	culture = amphibian
+	default_religion = pagan
+	default_tier = barony
+	max_tier = empire
+	default_government_type = clade
+	default_capital = tula #Andreyevka, Tula
+	core_provinces = {
+		tula
+	}
+}

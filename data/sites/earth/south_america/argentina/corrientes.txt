@@ -1,0 +1,6 @@
+corrientes = {
+	name = "Corrientes"
+	world = earth
+	geocoordinate = { -58.80998681810 -27.48996417360 } #from Natural Earth
+	type = settlement
+}

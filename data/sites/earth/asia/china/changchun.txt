@@ -1,0 +1,6 @@
+changchun = {
+	name = "Changchun"
+	world = earth
+	geocoordinate = { 125.33998734400 43.86500856430 } #from Natural Earth
+	type = settlement
+}

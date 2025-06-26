@@ -1,0 +1,4 @@
+vasa = {
+	name = "Vasa"
+	culture = swedish
+}

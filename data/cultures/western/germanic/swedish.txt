@@ -1,0 +1,17 @@
+swedish = {
+	name = "Swedish"
+	group = scandinavian
+	color = { 0 173 198 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			or = {
+				core = sweden
+				core = finland
+			}
+		}
+	}
+}

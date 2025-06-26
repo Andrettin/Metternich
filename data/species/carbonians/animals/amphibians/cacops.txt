@@ -1,0 +1,9 @@
+cacops = {
+	name = "Cacops"
+	supertaxon = amphibia
+	pre_evolutions = {
+		acanthostega
+		ichthyostega
+		ventastega
+	}
+}

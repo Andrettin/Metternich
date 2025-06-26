@@ -1,0 +1,15 @@
+valenca = {
+	name = "Valenca" #"Valença"
+	world = earth
+	#geocoordinate = { -43.7 -22.245833333333 }
+	type = resource
+	resource = coffee
+	province = rio_de_janeiro
+	max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 524-525.
+	
+	history = {
+		1825.10.12 = {
+			tier = barony #created as a barony on 1825.10.12; Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 525.
+		}
+	}
+}

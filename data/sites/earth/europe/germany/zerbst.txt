@@ -1,0 +1,12 @@
+zerbst = {
+	name = "Zerbst"
+	world = earth
+	geocoordinate = { 12.084444444444 51.968055555556 }
+	
+	history = {
+		919 = {
+			#settlement_type = castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

@@ -1,0 +1,7 @@
+#snowdown_colliery = { #commented out because it would occupy the same tile as Canterbury
+#	name = "Snowdown"
+#	world = earth
+#	geocoordinate = { 1.21789 51.21385 }
+#	type = resource
+#	resource = coal #Snowdown Colliery
+#}

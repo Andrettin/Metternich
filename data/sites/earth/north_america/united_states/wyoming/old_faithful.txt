@@ -1,0 +1,8 @@
+old_faithful = {
+	name = "Old Faithful"
+	world = earth
+	geocoordinate = { -110.8281764 44.4604545 }
+	type = resource
+	resource = old_faithful
+	province = wyoming
+}

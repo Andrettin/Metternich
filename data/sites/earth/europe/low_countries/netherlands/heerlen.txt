@@ -1,0 +1,8 @@
+heerlen = {
+	name = "Heerlen"
+	world = earth
+	geocoordinate = { 5.98154 50.88365 }
+	type = resource
+	resource = grain #Agriculture (horticulture and cereals); Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
+	province = zeeland
+}

@@ -1,0 +1,12 @@
+nis = {
+	name = "Nis" #"Niš"
+	world = earth
+	geocoordinate = { 21.89999629590 43.33041587230 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

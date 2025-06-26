@@ -1,0 +1,6 @@
+belem = {
+	name = "Belem" #"Belém"
+	world = earth
+	geocoordinate = { -48.48002303220 -1.45000323599 }
+	type = settlement
+}

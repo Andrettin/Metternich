@@ -1,0 +1,11 @@
+livorno = {
+	name = "Livorno"
+	world = earth
+	geocoordinate = { 10.30227470380 43.55113365730 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = tuscany
+	cultural_names = {
+		english = "Leghorn"
+	}
+}

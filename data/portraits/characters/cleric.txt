@@ -1,0 +1,18 @@
+frankish_cleric = {
+	filepath = "portraits/characters/frankish_cleric.png"
+	character_conditions = {
+		gender = male
+		not = {
+			cultural_group = african
+			cultural_group = asian
+		}
+		or = {
+			character_type = inquisitor
+			character_type = theologian
+		}
+	}
+}
+
+frankish_cleric_with_background = {
+	filepath = "portraits/characters/frankish_cleric_with_background.png"
+}

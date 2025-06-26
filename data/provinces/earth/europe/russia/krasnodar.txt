@@ -1,0 +1,50 @@
+krasnodar = {
+	name = "Krasnodar"
+	color = { 154 59 122 }
+	provincial_capital = krasnodar
+	regions = {
+		european_russia
+	}
+	
+	history = {
+		owner = tulerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = tulerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = mongolia
+			culture = mongol
+		}
+		
+		1360 = {
+			owner = golden_horde #part of the Khanate of the Golden Horde in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = mongol
+		}
+		
+		1699 = {
+			owner = russia #became part of the Russian Empire in 1699; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			culture = russian
+			religion = orthodox
+		}
+		
+		1711 = {
+			owner = ottoman_empire #became part of the Ottoman Empire in 1711; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1739 = {
+			owner = russia #became part of the Russian Empire in 1739; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

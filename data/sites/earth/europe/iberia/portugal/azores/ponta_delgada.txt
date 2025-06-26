@@ -1,0 +1,7 @@
+ponta_delgada = {
+	name = "Ponta Delgada"
+	world = earth
+	geocoordinate = { -25.66658349760 37.74830181790 } #from Natural Earth
+	type = settlement
+	province = azores
+}

@@ -1,0 +1,13 @@
+baden = {
+	name = "Baden" #also known as Baden-Baden
+	world = earth
+	geocoordinate = { 8.2408333333333 48.761944444444 }
+	province = baden
+	
+	history = {
+		919 = {
+			#settlement_type = castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

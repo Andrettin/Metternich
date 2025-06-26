@@ -1,0 +1,101 @@
+scamander = {
+	name = "Scamander"
+	species = human
+	culture = lydian #Trojan
+	religion = hellenic
+	home_site = troy
+	gender = male
+}
+
+idaea = {
+	name = "Idaea"
+	species = human
+	culture = lydian #Trojan
+	religion = hellenic
+	home_site = troy
+	gender = female
+}
+
+teucer = {
+	name = "Teucer"
+	species = human
+	culture = lydian #Trojan
+	religion = hellenic
+	home_site = troy
+	gender = male
+	father = scamander #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+	mother = idaea #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+}
+
+dardanus = {
+	name = "Dardanus"
+	species = human
+	culture = lydian #Trojan
+	religion = hellenic
+	home_site = troy
+	gender = male
+	father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+	mother = electra #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+}
+
+bateia = {
+	name = "Bateia"
+	species = human
+	culture = lydian #Trojan
+	religion = hellenic
+	home_site = troy
+	gender = female
+	father = teucer #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+}
+
+erichthonius = {
+	name = "Erichthonius"
+	species = human
+	culture = lydian #Trojan
+	religion = hellenic
+	home_site = troy
+	gender = male
+	father = dardanus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+	mother = bateia #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+}
+
+tros = {
+	name = "Tros"
+	species = human
+	culture = lydian #Trojan
+	religion = hellenic
+	home_site = troy
+	gender = male
+	father = erichthonius #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+}
+
+ilus = {
+	name = "Ilus"
+	species = human
+	culture = lydian #Trojan
+	religion = hellenic
+	home_site = troy
+	gender = male
+	father = tros #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+}
+
+laomedon = {
+	name = "Laomedon"
+	species = human
+	culture = lydian #Trojan
+	religion = hellenic
+	home_site = troy
+	gender = male
+	father = ilus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+}
+
+priam = {
+	name = "Priam"
+	species = human
+	culture = lydian #Trojan
+	religion = hellenic
+	home_site = troy
+	gender = male
+	father = laomedon #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
+	death_date = -1184 #Troy was destroyed by Mycenae in 1184 BC; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 90.
+}

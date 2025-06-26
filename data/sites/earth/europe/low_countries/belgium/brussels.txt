@@ -1,0 +1,23 @@
+brussels = {
+	name = "Brussels"
+	world = earth
+	geocoordinate = { 4.33331660830 50.83331707670 } #from Natural Earth
+	type = settlement
+	province = brabant
+	
+	history = {
+		1836 = {
+			population_groups = {
+				aristocrats.flemish.catholic = 6000
+				aristocrats.walloon.catholic = 1200
+				bureaucrats.flemish.catholic = 3200
+				bureaucrats.walloon.catholic = 6400
+				capitalists.flemish.catholic = 200
+				capitalists.walloon.catholic = 600
+				clergymen.ashkenazi.jewish = 100
+				clergymen.flemish.catholic = 6500
+				clergymen.walloon.catholic = 1000
+			}
+		}
+	}
+}

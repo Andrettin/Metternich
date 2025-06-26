@@ -1,0 +1,6 @@
+ulyanovsk = {
+	name = "Ulyanovsk"
+	world = earth
+	geocoordinate = { 48.41000606160 54.32997702950 } #from Natural Earth
+	type = settlement
+}

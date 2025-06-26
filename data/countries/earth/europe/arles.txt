@@ -1,0 +1,19 @@
+arles = { #Kingdom of Arles
+	name = "Arles"
+	type = minor_nation
+	culture = french
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = marseilles #Arles
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		provence
+		bern
+		franche_comte
+		geneva
+		savoy
+	}
+}

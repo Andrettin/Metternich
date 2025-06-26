@@ -1,0 +1,6 @@
+undead = {
+	name = "Undead"
+	species = {
+		vampire
+	}
+}

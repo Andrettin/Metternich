@@ -1,0 +1,10 @@
+petsamo = {
+	name = "Petsamo"
+	world = earth
+	geocoordinate = { 31.226666666667 69.553888888889 }
+	type = resource
+	resource = iron_ore
+	cultural_names = {
+		russian = "Pechenga"
+	}
+}

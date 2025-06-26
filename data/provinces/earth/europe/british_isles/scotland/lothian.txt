@@ -1,0 +1,44 @@
+lothian = {
+	name = "Lothian"
+	color = { 141 37 63 }
+	provincial_capital = edinburgh
+	regions = {
+		scotland
+	}
+	
+	history = {
+		owner = elginerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = elginerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = pictland
+			culture = pictish
+		}
+		
+		526 = {
+			owner = pictland #territory of the Picts in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = pictish
+		}
+		
+		802 = {
+			owner = northumbria #part of Northumbria c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+			culture = anglo_saxon
+			religion = catholic
+		}
+		
+		886 = {
+			owner = bernicia
+		}
+		
+		1360 = {
+			owner = alba #part of Scotland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,15 @@
+valladolid = {
+	name = "Valladolid"
+	world = earth
+	geocoordinate = { -4.75003076315 41.65000164700 } #from Natural Earth
+	type = settlement
+	#resource = cattle
+	province = valladolid
+	
+	history = {
+		1346 = {
+			buildings += university #University founded in Valladolid in 1346; Source: "Atlas de História Mundial", 2001, p. 144.
+			settlement_type = campus
+		}
+	}
+}

@@ -1,0 +1,18 @@
+haryana = {
+	name = "Haryana"
+	color = { 143 126 67 }
+	provincial_capital = delhi
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = india
+		culture = indian
+		religion = pagan
+		
+		1803 = {
+			owner = great_britain #became a British possession in 1803; Source: William R. Shepherd, "Historical Atlas", 1911, p. 152.
+		}
+	}
+}

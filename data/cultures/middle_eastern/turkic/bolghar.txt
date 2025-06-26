@@ -1,0 +1,8 @@
+bolghar = {
+	name = "Bolghar"
+	group = turkic
+	color = { 178 165 38 }
+	species = {
+		human
+	}
+}

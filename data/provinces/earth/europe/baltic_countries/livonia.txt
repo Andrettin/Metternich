@@ -1,0 +1,50 @@
+livonia = {
+	name = "Livonia"
+	color = { 0 160 160 }
+	provincial_capital = riga
+	regions = {
+		latvia
+		poland_lithuania
+	}
+	
+	history = {
+		owner = ventastegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = { #Ventastega lived in Latvia in the Devonian; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:226306
+			owner = ventastegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			culture = latvian
+		}
+		
+		1360 = {
+			owner = teutonic_order #territory of the Teutonic Order in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			religion = catholic
+		}
+		
+		1629 = {
+			owner = sweden #became part of Sweden in 1629; Source: William R. Shepherd, "Historical Atlas", 1911, p. 120.
+			religion = protestant
+		}
+		
+		1721 = {
+			owner = russia #became part of the Russian Empire in 1721; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			culture = latvian #Lettish; Source: "The British Dominions Year Book 1918", 1918, Map 3.
+			religion = protestant
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

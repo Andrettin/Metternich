@@ -1,0 +1,34 @@
+rogaland = {
+	name = "Rogaland"
+	color = { 3 80 255 }
+	provincial_capital = stavanger
+	regions = {
+		norway
+	}
+	
+	history = {
+		owner = northmen
+		culture = norse
+		religion = pagan
+		
+		526 = {
+			owner = northmen #territory of the Northmen in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = norse
+		}
+		
+		1360 = {
+			owner = norway #part of Norway in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = norwegian
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = denmark #Danish possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = protestant
+		}
+		
+		1814 = {
+			owner = norway #part of Norway in 1814/1815; Source: William R. Shepherd, "Historical Atlas", 1911, p. 157.
+		}
+	}
+}

@@ -1,0 +1,14 @@
+bavarian_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = bavaria
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}

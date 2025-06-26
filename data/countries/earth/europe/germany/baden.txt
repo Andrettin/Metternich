@@ -1,0 +1,16 @@
+baden = {
+	name = "Baden"
+	type = minor_nation
+	culture = german
+	default_religion = protestant
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = karlsruhe
+	eras = {
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		baden
+	}
+}

@@ -1,0 +1,6 @@
+lincoln_usa = {
+	name = "Lincoln"
+	world = earth
+	geocoordinate = { -96.68000085630 40.81997479150 } #from Natural Earth
+	type = settlement
+}

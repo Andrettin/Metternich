@@ -1,0 +1,12 @@
+breisach = {
+	name = "Breisach"
+	world = earth
+	#geocoordinate = { 7.58 48.028888888889 } #commented out because it conflicts with Freiburg
+	province = baden
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,32 @@
+bohemia = {
+	name = "Bohemia"
+	type = minor_nation
+	culture = czech
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = prague
+	min_tier = duchy
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		bohemia
+		budweis
+		pilsen
+		moravia
+		brunn
+	}
+	
+	history = {
+		919 = {
+			tier = duchy #Bohemia was a duchy in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			government_type = monarchy
+		}
+		
+		1477 = {
+			tier = kingdom #Bohemia was a kingdom c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+	}
+}

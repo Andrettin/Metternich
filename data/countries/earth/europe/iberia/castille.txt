@@ -1,0 +1,25 @@
+castille = {
+	name = "Castille"
+	type = great_power
+	color = { 255 173 41 }
+	culture = castillian
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = madrid
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		castille
+		leon
+		asturias
+		extremadura
+		galicia
+		andalusia
+		murcia
+		granada
+		navarre
+	}
+}

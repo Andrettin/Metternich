@@ -1,0 +1,33 @@
+golden_horde = {
+	name = "Golden Horde"
+	type = tribe
+	culture = mongol
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = sarai
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		astrakhan
+		atyrau
+		bashkortostan
+		crimea
+		donetsk
+		kalmykia
+		karachay_cherkess
+		kharkov
+		kherson
+		krasnodar
+		krivoy_rog
+		luhansk
+		mordovia
+		orenburg
+		rostov
+		stavropol
+		volgograd
+		voronezh
+		west_kazakhstan
+	}
+}

@@ -1,0 +1,15 @@
+eger = {
+	name = "Eger"
+	world = earth
+	geocoordinate = { 20.38300257840 47.89500313620 } #from Natural Earth
+	province = pest
+	cultural_group_names = {
+		german = "Erlau"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

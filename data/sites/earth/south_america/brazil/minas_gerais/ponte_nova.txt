@@ -1,0 +1,6 @@
+ponte_nova = {
+	name = "Ponte Nova"
+	world = earth
+	geocoordinate = { -42.89995019690 -20.40962115600 } #from Natural Earth
+	province = minas_gerais
+}

@@ -1,0 +1,16 @@
+magdeburg = {
+	name = "Magdeburg"
+	type = minor_nation
+	culture = german
+	default_religion = protestant
+	default_tier = duchy #archbishopric
+	default_government_type = theocracy
+	default_capital = magdeburg
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		magdeburg
+	}
+}

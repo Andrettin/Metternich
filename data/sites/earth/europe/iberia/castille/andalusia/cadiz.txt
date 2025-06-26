@@ -1,0 +1,26 @@
+cadiz = {
+	name = "Cadiz" #"Cádiz"
+	world = earth
+	geocoordinate = { -6.22500533184 36.53499086410 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = andalusia
+	cultural_names = {
+		carthaginian = "Gades"
+		phoenician = "Gades"
+		roman = "Gades"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1616 = {
+			population_groups = {
+				slaves.african = 500 #500 black slaves lived in Cadiz in 1616; Source: Henry Kamen, "Early Modern European Society", 2021, p. 273.
+				slaves.sunni = 300 #300 Muslim slaves lived in Cadiz in 1616; Source: Henry Kamen, "Early Modern European Society", 2021, p. 273.
+			}
+		}
+	}
+}

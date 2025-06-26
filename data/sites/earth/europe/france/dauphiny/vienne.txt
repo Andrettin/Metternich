@@ -1,0 +1,12 @@
+vienne = {
+	name = "Vienne"
+	world = earth
+	geocoordinate = { 4.8747222222222 45.525555555556 }
+	province = dauphiny
+	
+	history = {
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

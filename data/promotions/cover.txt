@@ -1,0 +1,28 @@
+cover_1 = {
+	name = "Cover I"
+	icon = heater_shield
+	conditions = {
+		or = {
+			infantry = true
+			artillery = true
+		}
+	}
+	modifier = {
+		ranged_defense_modifier = 25
+	}
+}
+
+cover_2 = {
+	name = "Cover II"
+	icon = heater_shield
+	conditions = {
+		or = {
+			infantry = true
+			artillery = true
+		}
+		promotion = cover_1
+	}
+	modifier = {
+		ranged_defense_modifier = 25
+	}
+}

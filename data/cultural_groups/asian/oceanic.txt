@@ -1,0 +1,6 @@
+oceanic = {
+	name = "Oceanic"
+	rank = group
+	upper_group = asian
+	default_phenotype = south_asian
+}

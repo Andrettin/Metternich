@@ -1,0 +1,15 @@
+east_anglia = {
+	name = "East Anglia"
+	type = minor_nation
+	culture = anglo_saxon
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = norwich
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		east_anglia
+	}
+}

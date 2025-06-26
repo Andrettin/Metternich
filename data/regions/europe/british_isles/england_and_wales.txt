@@ -1,0 +1,19 @@
+england_and_wales = {
+	superregions = {
+		great_britain
+	}
+	
+	history = {
+		1561 = {
+			population = 3000000 #England and Wales had a population just below 3 million in 1561; Source: Henry Kamen, "Early Modern European Society", 2021, p. 36.
+		}
+		
+		1601 = {
+			population = 4100000 #England and Wales had a population of 4.1 millions in 1601; Source: Henry Kamen, "Early Modern European Society", 2021, p. 36.
+		}
+		
+		1651 = {
+			population = 5200000 #England and Wales had a population of 5.2+ millions in 1651; Source: Henry Kamen, "Early Modern European Society", 2021, p. 36.
+		}
+	}
+}

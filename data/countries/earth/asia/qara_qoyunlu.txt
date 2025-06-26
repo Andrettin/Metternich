@@ -1,0 +1,22 @@
+qara_qoyunlu = {
+	name = "Qara Qoyunlu"
+	type = tribe
+	culture = azerbaijani
+	default_religion = shiite
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = van
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		van
+		al_hasakah
+		amida
+		armenia
+		assyria
+		kars
+		nakhchivan
+		sanliurfa
+	}
+}

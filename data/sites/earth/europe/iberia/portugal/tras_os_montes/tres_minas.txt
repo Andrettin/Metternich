@@ -1,0 +1,20 @@
+tres_minas = {
+	name = "Tres Minas" #"Três Minas"
+	world = earth
+	geocoordinate = { -7.5180833333333 41.481138888889 }
+	type = resource
+	resource = gold #gold present in Três Minas; Source: M. J. T. Lewis, "Railways in the Greek and Roman World", 2001, p. 15.
+	province = tras_os_montes
+	
+	history = {
+		1 = {
+			#Três Minas was the location of a Roman gold mine in the 1st century AD; Source: M. J. T. Lewis, "Railways in the Greek and Roman World", 2001, p. 15.
+			improvements += gold_mine
+		}
+		
+		100 = {
+			improvements -= gold_mine
+			#improvements += ruins
+		}
+	}
+}

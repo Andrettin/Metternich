@@ -1,0 +1,40 @@
+highlands = {
+	name = "Highlands"
+	color = { 245 141 27 }
+	provincial_capital = inverness
+	regions = {
+		scotland
+	}
+	
+	history = {
+		owner = elginerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = { #Elginerpeton lived in Elgin in the Devonian; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:242708
+			owner = elginerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = pictland
+			culture = pictish
+		}
+		
+		526 = {
+			owner = pictland #territory of the Picts in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = pictish
+		}
+		
+		802 = {
+			owner = pictland #part of Pictland c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+		}
+		
+		843 = {
+			owner = alba #became part of Scotland in 843; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+			culture = highlander
+			religion = catholic
+		}
+	}
+}

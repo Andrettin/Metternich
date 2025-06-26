@@ -1,0 +1,22 @@
+miner = {
+	name = "Miner"
+	unit_class = miner
+	icon = miners
+	improvable_resources = {
+		amber
+		cinnabar
+		coal
+		copper
+		diamonds
+		gems
+		gold
+		iron_ore
+		lead
+		salt
+		silver
+		stone
+		tin
+		zinc
+		cerro_de_potosi
+	}
+}

@@ -1,0 +1,7 @@
+biskra = {
+	name = "Biskra"
+	world = earth
+	geocoordinate = { 5.73002722029 34.85997682600 } #from Natural Earth
+	type = settlement
+	province = biskra
+}

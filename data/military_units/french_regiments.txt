@@ -1,0 +1,68 @@
+paris_spearmen = {
+	type = spearmen
+	quantity = 1
+	
+	history = {
+		1492 = {
+			province = ile_de_france
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+paris_arquebusiers = {
+	type = arquebusiers
+	quantity = 1
+	
+	history = {
+		1492 = {
+			province = ile_de_france
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+paris_knights = {
+	type = knights
+	quantity = 1
+	
+	history = {
+		1492 = {
+			province = ile_de_france
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+paris_regulars = {
+	type = regulars
+	country = france
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = ile_de_france
+		}
+	}
+}
+
+paris_artillery = {
+	type = artillery
+	country = france
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = ile_de_france
+		}
+	}
+}

@@ -1,0 +1,13 @@
+ebersberg = {
+	name = "Ebersberg"
+	world = earth
+	geocoordinate = { 11.966666666666667 48.083333333333336 }
+	province = bavaria
+	
+	history = {
+		919 = {
+			#settlement_type = castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

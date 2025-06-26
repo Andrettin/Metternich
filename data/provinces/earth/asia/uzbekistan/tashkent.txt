@@ -1,0 +1,17 @@
+tashkent = {
+	name = "Tashkent"
+	color = { 188 24 213 }
+	provincial_capital = tashkent
+	resources = {
+		grain = 1
+	}
+	regions = {
+		uzbekistan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

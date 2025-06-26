@@ -1,0 +1,30 @@
+is_lower_strata = {
+	tooltip = {
+		text = "~<Lower Strata~>"
+		or = {
+			population_type = slaves
+			population_type = tribesmen
+			population_type = untrained_workers
+			population_type = trained_workers
+			#population_type = expert_workers
+		}
+	}
+}
+
+is_middle_strata = {
+	tooltip = {
+		text = "~<Middle Strata~>"
+		or = {
+			population_type = expert_workers
+		}
+	}
+}
+
+is_upper_strata = {
+	tooltip = {
+		text = "~<Upper Strata~>"
+		or = {
+			population_type = aristocrats
+		}
+	}
+}

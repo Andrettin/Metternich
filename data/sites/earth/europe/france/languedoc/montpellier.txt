@@ -1,0 +1,23 @@
+montpellier = {
+	name = "Montpellier"
+	world = earth
+	geocoordinate = { 3.86998571637 43.61039878240 } #from Natural Earth
+	type = settlement
+	#resource = cattle
+	province = lower_languedoc
+	
+	history = {
+		1250 = {
+			buildings += university #University existent in Montpellier in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
+			settlement_type = campus
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 4400
+				clergymen.french.catholic = 7200
+				officers.french.catholic = 1800
+			}
+		}
+	}
+}

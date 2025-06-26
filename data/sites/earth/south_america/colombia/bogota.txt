@@ -1,0 +1,18 @@
+bogota = {
+	name = "Bogota"
+	world = earth
+	geocoordinate = { -74.08334395520 4.59642356253 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1626 = {
+			buildings += university #University Sto. Tomás founded in Bogota in 1626; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+		
+		1704 = {
+			buildings -= university #University Sto. Tomás abolished in Bogota in 1704; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = none
+		}
+	}
+}

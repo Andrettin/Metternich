@@ -1,0 +1,25 @@
+northwest_territories = {
+	name = "Northwest Territories"
+	color = { 161 101 115 }
+	provincial_capital = yellowknife
+	regions = {
+		canada
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = sioux
+			culture = sioux
+		}
+	}
+}

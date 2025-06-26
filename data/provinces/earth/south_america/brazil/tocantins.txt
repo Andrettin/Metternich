@@ -1,0 +1,25 @@
+tocantins = {
+	name = "Tocantins"
+	color = { 188 31 76 }
+	provincial_capital = palmas
+	regions = {
+		brazil
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = tupi
+			culture = tupi
+		}
+		
+		1790 = {
+			owner = brazil #part of Brazil c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = brazilian
+			religion = catholic
+		}
+	}
+}

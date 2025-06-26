@@ -1,0 +1,5 @@
+embassy = {
+	name = "Embassy"
+	level = 2
+	icon = embassy
+}

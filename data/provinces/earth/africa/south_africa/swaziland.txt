@@ -1,0 +1,14 @@
+swaziland = {
+	name = "Swaziland"
+	color = { 242 116 143 }
+	provincial_capital = mbabane
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = zululand
+		culture = zulu
+		religion = pagan
+	}
+}

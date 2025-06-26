@@ -1,0 +1,45 @@
+jan_stephan_van_calcar = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
+	name = "Jan Stephan"
+	surname = "van Calcar"
+	#character_type = artist
+	culture = flemish
+	religion = catholic
+	home_site = dordrecht
+	gender = male
+	birth_date = 1499
+	death_date = 1545
+	skill_multiplier = 0.83
+	
+	history = {
+		#made illustrations for Vesalius' book "De Corporis Humani Fabrica", published in 1543
+	}
+}
+
+andreas_vesalius = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
+	name = "Andreas"
+	surname = "Vesalius"
+	role = advisor
+	character_type = natural_scientist
+	culture = flemish #correct?
+	religion = catholic
+	home_settlement = brussels #correct?
+	gender = male
+	birth_date = 1514
+	death_date = 1564
+	required_technology = medicine #revolutionized the understanding of anatomy
+	skill_multiplier = 0.83
+	conditions = {
+		or = {
+			culture = dutch
+			culture = flemish
+			culture = walloon
+		}
+	}
+	traits = {
+		natural_scientist
+	}
+	
+	history = {
+		#published the book "De Corporis Humani Fabrica" in 1543
+	}
+}

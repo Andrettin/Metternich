@@ -1,0 +1,13 @@
+lead = {
+	name = "Lead"
+	commodity = lead
+	tiny_icon = trade_consulate
+	prospectable = true
+	terrain_types = {
+		barren_hills #correct?
+		mountains #correct?
+	}
+	site_types = {
+		resource
+	}
+}

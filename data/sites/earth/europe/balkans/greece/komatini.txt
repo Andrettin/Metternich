@@ -1,0 +1,6 @@
+komatini = {
+	name = "Komatini"
+	world = earth
+	geocoordinate = { 25.41670256190 41.13330309080 } #from Natural Earth
+	type = settlement
+}

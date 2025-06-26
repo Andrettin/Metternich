@@ -1,0 +1,26 @@
+jamaica = {
+	name = "Jamaica"
+	type = minor_nation
+	culture = english
+	default_religion = protestant
+	default_tier = duchy
+	default_government_type = republic
+	default_capital = kingston
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		jamaica
+	}
+	
+	
+	history = {
+		1635 = {
+			#became an English possession in 1635; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			diplomacy_state = {
+				country = england
+				subject_type = colony
+			}
+		}
+	}
+}

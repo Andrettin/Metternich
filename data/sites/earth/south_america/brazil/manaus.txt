@@ -1,0 +1,6 @@
+manaus = {
+	name = "Manaus"
+	world = earth
+	geocoordinate = { -60.00001753910 -3.10003171907 }
+	type = settlement
+}

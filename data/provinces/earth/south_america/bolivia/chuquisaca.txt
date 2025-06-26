@@ -1,0 +1,29 @@
+chuquisaca = {
+	name = "Chuquisaca"
+	color = { 212 37 241 }
+	provincial_capital = sucre
+	regions = {
+		bolivia
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = tupi
+			culture = tupi
+		}
+		
+		1790 = {
+			owner = la_plata #part of the Viceroyalty of La Plata c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = castillian
+			religion = catholic
+		}
+		
+		1825 = {
+			owner = bolivia #Bolivia became independent in 1825; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+	}
+}

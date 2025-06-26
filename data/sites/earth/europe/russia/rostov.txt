@@ -1,0 +1,7 @@
+rostov = {
+	name = "Rostov"
+	world = earth
+	geocoordinate = { 39.71265580120 47.23464784660 } #from Natural Earth
+	type = settlement
+	province = rostov
+}

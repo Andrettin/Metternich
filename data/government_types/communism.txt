@@ -1,0 +1,22 @@
+communism = {
+	name = "Communism"
+	group = republic
+	icon = labor
+	required_technology = communism
+	conditions = {
+		not = {
+			country_type = clade
+			country_type = tribe
+			subject_type = colony
+		}
+	}
+	office_title_names = {
+		ruler = {
+			barony = "Comrade"
+			county = "Comrade"
+			duchy = "Comrade"
+			kingdom = "Comrade"
+			empire = "Comrade"
+		}
+	}
+}

@@ -1,0 +1,14 @@
+kebili = {
+	name = "Kebili"
+	color = { 60 184 70 }
+	provincial_capital = kebili
+	regions = {
+		tunisia
+	}
+	
+	history = {
+		owner = carthage
+		culture = carthaginian
+		religion = pagan
+	}
+}

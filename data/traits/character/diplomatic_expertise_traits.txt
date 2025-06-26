@@ -1,0 +1,96 @@
+falconer = {
+	name = "Falconer"
+	types = {
+		expertise
+	}
+	icon = bow
+	conditions = {
+		primary_attribute = diplomacy
+	}
+	attribute_bonuses = {
+		diplomacy = 1
+	}
+}
+
+game_master = {
+	name = "Game Master"
+	types = {
+		expertise
+	}
+	icon = globe
+	conditions = {
+		or = {
+			primary_attribute = diplomacy
+			primary_attribute = martial
+		}
+	}
+	attribute_bonuses = {
+		diplomacy = 2
+		martial = 1
+	}
+}
+
+negotiator = {
+	name = "Negotiator"
+	types = {
+		expertise
+	}
+	icon = treaty
+	conditions = {
+		character_type = none
+		or = {
+			character_type = banker
+			character_type = diplomat
+			character_type = merchant
+			character_type = statesman
+			character_type = treasurer
+		}
+		not = {
+			trait = charismatic_negotiator
+		}
+	}
+}
+
+persuasive = {
+	name = "Persuasive"
+	types = {
+		expertise
+	}
+	icon = treaty
+	conditions = {
+		character_type = none
+		or = {
+			character_type = diplomat
+			character_type = spymaster
+			character_type = statesman
+		}
+	}
+}
+
+poet = {
+	name = "Poet"
+	types = {
+		expertise
+	}
+	icon = music
+	conditions = {
+		primary_attribute = diplomacy
+	}
+	attribute_bonuses = {
+		diplomacy = 1
+	}
+}
+
+socializer = {
+	name = "Socializer"
+	types = {
+		expertise
+	}
+	icon = music
+	conditions = {
+		primary_attribute = diplomacy
+	}
+	attribute_bonuses = {
+		diplomacy = 3
+	}
+}

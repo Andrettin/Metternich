@@ -1,0 +1,31 @@
+jalayirids = {
+	name = "Jalayirids"
+	type = tribe
+	culture = mongol
+	default_religion = shiite
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = baghdad
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		diyala
+		al_anbar
+		babylon
+		chaldea
+		east_azarbaijan
+		elam
+		hamadan
+		karbala
+		kermanshah
+		kordestan
+		khuzestan
+		lorestan
+		najaf
+		saladin
+		sumer
+		teheran
+		west_azarbaijan
+	}
+}

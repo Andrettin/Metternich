@@ -1,0 +1,31 @@
+nunavut = {
+	name = "Nunavut"
+	color = { 207 17 66 }
+	provincial_capital = iqaluit
+	regions = {
+		canada
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = sioux
+			culture = sioux
+		}
+		
+		1670 = {
+			owner = ruperts_land #became part of Rupert's Land in 1670; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = english
+			religion = protestant
+		}
+	}
+}

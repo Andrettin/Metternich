@@ -1,0 +1,20 @@
+japonica = {
+	name = "Japonica"
+	type = minor_nation
+	culture = japanese
+	default_religion = shinto
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = sacramento
+	
+	history = {
+		my_country_tis_of_thee = {
+			1920 = {
+				#diplomacy_state = { #Source: "Life Magazine", 1916.
+				#	country = japan
+				#	state = colony
+				#}
+			}
+		}
+	}
+}

@@ -1,0 +1,14 @@
+wagon = {
+	name = "Wagon"
+	transporter_class = wagon
+	icon = carrack
+	hit_points = 10
+	stats = {
+		movement = 2
+	}
+	cargo = 2
+	commodity_costs = {
+		lumber = 2
+		fabric = 2
+	}
+}

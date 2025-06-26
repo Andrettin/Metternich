@@ -1,0 +1,35 @@
+rio_grande_do_norte = {
+	name = "Rio Grande do Norte"
+	color = { 96 65 144 }
+	provincial_capital = natal
+	regions = {
+		brazil
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = tupi
+			culture = tupi
+		}
+		
+		1300 = {
+			owner = tupi #territory of the Tropical Forest cultural group (to which the Tupi belonged) in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
+			culture = tupi
+			religion = pagan
+		}
+		
+		1549 = {
+			owner = brazil #Portuguese possession in the 1340-1600 period; Salvador founded by the Portuguese in 1549; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			culture = brazilian
+			religion = catholic
+		}
+		
+		1790 = {
+			owner = brazil #part of Brazil c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+	}
+}

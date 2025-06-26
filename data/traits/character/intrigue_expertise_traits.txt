@@ -1,0 +1,44 @@
+investigator = {
+	name = "Investigator"
+	types = {
+		expertise
+	}
+	icon = treaty
+	conditions = {
+		character_type = none
+		or = {
+			character_type = inquisitor
+			character_type = spymaster
+		}
+	}
+}
+
+stealthy = {
+	name = "Stealthy"
+	types = {
+		expertise
+	}
+	icon = dagger
+	conditions = {
+		character_type = none
+		character_type = spymaster
+	}
+}
+
+thug = {
+	name = "Thug"
+	types = {
+		expertise
+	}
+	icon = dagger
+	conditions = {
+		character_type = none
+		or = {
+			character_type = privateer
+			character_type = spymaster
+		}
+	}
+	military_unit_modifier = {
+		melee = 1
+	}
+}

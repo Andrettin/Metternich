@@ -1,0 +1,6 @@
+tarija = {
+	name = "Tarija"
+	world = earth
+	geocoordinate = { -64.74998600430 -21.51668536500 } #from Natural Earth
+	type = settlement
+}

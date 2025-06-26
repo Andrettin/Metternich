@@ -1,0 +1,12 @@
+como = {
+	name = "Como"
+	world = earth
+	geocoordinate = { 9.08000362004 45.81000612290 } #from Natural Earth
+	province = lombardy
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

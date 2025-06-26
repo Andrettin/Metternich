@@ -1,0 +1,6 @@
+coventry = {
+	name = "Coventry"
+	world = earth
+	geocoordinate = { -1.49999658345 52.42040366530 } #from Natural Earth
+	type = settlement
+}

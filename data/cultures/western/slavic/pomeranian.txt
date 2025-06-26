@@ -1,0 +1,8 @@
+pomeranian = {
+	name = "Pomeranian"
+	group = west_slavic
+	color = { 102 153 102 }
+	species = {
+		human
+	}
+}

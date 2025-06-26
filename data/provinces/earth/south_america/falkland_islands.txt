@@ -1,0 +1,36 @@
+falkland_islands = {
+	name = "Falkland Islands"
+	color = { 137 35 47 }
+	provincial_capital = stanley
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = mapuche
+			culture = mapuche
+		}
+		
+		1763 = {
+			owner = france #became a French possession in 1763; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+		
+		1765 = {
+			owner = great_britain #became a British possession in 1763; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+		
+		1770 = {
+			owner = la_plata #became a Spanish possession in 1770; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+		
+		1820 = {
+			owner = argentina #became part of Argentina in 1820; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+		
+		1833 = {
+			owner = great_britain #became a British possession in 1833; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+	}
+}

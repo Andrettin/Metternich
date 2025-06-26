@@ -1,0 +1,6 @@
+portalegre = {
+	name = "Portalegre"
+	world = earth
+	geocoordinate = { -7.42300154937 39.29000410950 } #from Natural Earth
+	province = alentejo
+}

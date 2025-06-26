@@ -1,0 +1,6 @@
+bencoolen = {
+	name = "Bencoolen"
+	world = earth
+	geocoordinate = { 102.26997432400 -3.80004067090 } #from Natural Earth (Bengkulu)
+	type = settlement
+}

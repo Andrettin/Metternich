@@ -1,0 +1,6 @@
+antofagasta = {
+	name = "Antofagasta"
+	world = earth
+	geocoordinate = { -70.40000289070 -23.64999184290 } #from Natural Earth
+	type = settlement
+}

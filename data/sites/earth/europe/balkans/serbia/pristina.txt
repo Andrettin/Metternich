@@ -1,0 +1,6 @@
+pristina = {
+	name = "Pristina"
+	world = earth
+	geocoordinate = { 21.16598425160 42.66670961410 } #from Natural Earth
+	type = settlement
+}

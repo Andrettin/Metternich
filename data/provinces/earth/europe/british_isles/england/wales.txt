@@ -1,0 +1,48 @@
+wales = {
+	name = "Wales"
+	color = { 143 77 6 }
+	provincial_capital = cardiff
+	resources = {
+		coal = 1
+	}
+	regions = {
+		wales
+	}
+	
+	history = {
+		owner = elginerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = elginerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = britons
+			culture = briton
+		}
+		
+		526 = {
+			owner = britons #territory of the Britons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = briton
+		}
+		
+		802 = {
+			owner = wales #part of (North) Wales c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+			culture = welsh
+			religion = catholic
+		}
+		
+		1360 = {
+			owner = england #part of England in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1740 = {
+			owner = england #part of England c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = protestant
+		}
+	}
+}

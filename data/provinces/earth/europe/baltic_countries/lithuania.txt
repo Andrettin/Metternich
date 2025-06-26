@@ -1,0 +1,58 @@
+lithuania = {
+	name = "Lithuania"
+	color = { 65 224 97 }
+	provincial_capital = vilnius
+	resources = {
+		grain = 1
+	}
+	regions = {
+		lithuania
+		poland_lithuania
+	}
+	
+	history = {
+		owner = ventastegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = ventastegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = estonians
+			culture = estonian
+		}
+		
+		526 = {
+			owner = estonians #territory of the Esthonians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = estonian
+		}
+		
+		1360 = {
+			owner = lithuania #part of Lithuania in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = lithuanian
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = poland #part of the Kingdom of Poland c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1795 = {
+			owner = russia #became part of Russia in 1795; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 138-139.
+		}
+		
+		1815 = {
+			culture = lithuanian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

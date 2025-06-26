@@ -1,0 +1,7 @@
+saratov = {
+	name = "Saratov"
+	world = earth
+	geocoordinate = { 46.02999629600 51.57998984690 } #from Natural Earth
+	type = settlement
+	province = saratov
+}

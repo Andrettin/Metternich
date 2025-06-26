@@ -1,0 +1,18 @@
+togo = {
+	name = "Togo"
+	color = { 224 187 246 }
+	provincial_capital = lome
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = carthage
+		culture = ewe
+		religion = pagan
+		
+		1897 = {
+			owner = togoland #became part of German Togoland in 1897; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 174-175.
+		}
+	}
+}

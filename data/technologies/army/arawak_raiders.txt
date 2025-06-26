@@ -1,0 +1,33 @@
+arawak_raiders = {
+	name = "Arawak Raiders"
+	subcategory = infantry
+	portrait = helmet
+	icon = bow
+	cost_commodity = leadership
+	required_game_rule = additional_technologies
+	cultures = {
+		arawak
+	}
+	prerequisites = {
+		warrior_code
+	}
+	modifier = {
+		military_unit_stat = {
+			category = mace_infantry
+			stat = damage_bonus
+			value = 10
+		}
+		
+		military_unit_stat = {
+			category = spear_infantry
+			stat = damage_bonus
+			value = 10
+		}
+		
+		military_unit_stat = {
+			category = bowmen
+			stat = damage_bonus
+			value = 10
+		}
+	}
+}

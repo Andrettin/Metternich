@@ -1,0 +1,9 @@
+acanthostega = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=36963
+	name = "Acanthostega"
+	supertaxon = acanthostega
+	specific_name = "gunnari" #type species
+	era = devonian
+	pre_evolutions = {
+		rhipidistian_fish
+	}
+}

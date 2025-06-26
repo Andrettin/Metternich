@@ -1,0 +1,34 @@
+bukovina = {
+	name = "Bukovina"
+	color = { 49 160 160 }
+	provincial_capital = czernowitz
+	resources = {
+		timber = 2
+		
+		fruit = 1
+	}
+	regions = {
+		galicia
+	}
+	
+	history = {
+		culture = romanian
+		religion = pagan
+		
+		1360 = {
+			owner = moldavia #part of Moldavia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = romanian
+			religion = orthodox
+		}
+		
+		1740 = {
+			owner = moldavia #part of Moldavia c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = romanian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

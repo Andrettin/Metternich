@@ -1,0 +1,23 @@
+baronial_crown = {
+	filepath = "portraits/baronial_crown.png"
+}
+
+vicecomital_crown = {
+	filepath = "portraits/vicecomital_crown.png"
+}
+
+comital_crown = {
+	filepath = "portraits/comital_crown.png"
+}
+
+marquisal_crown = {
+	filepath = "portraits/marquisal_crown.png"
+}
+
+ducal_crown = {
+	filepath = "portraits/ducal_crown.png"
+}
+
+grand_ducal_crown = {
+	filepath = "portraits/grand_ducal_crown.png"
+}

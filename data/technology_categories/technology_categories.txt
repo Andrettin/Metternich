@@ -1,0 +1,34 @@
+gathering = {
+	name = "Gathering"
+	icon = grain
+}
+
+industry = {
+	name = "Industry"
+	icon = tools
+}
+
+army = {
+	name = "Army"
+	icon = crossed_sabers
+}
+
+navy = {
+	name = "Navy"
+	icon = anchor
+}
+
+finance = {
+	name = "Finance"
+	icon = wealth
+}
+
+government = {
+	name = "Government"
+	icon = bell
+}
+
+culture = {
+	name = "Culture"
+	icon = music
+}

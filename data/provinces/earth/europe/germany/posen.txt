@@ -1,0 +1,67 @@
+posen = {
+	name = "Posen"
+	color = { 33 65 160 }
+	provincial_capital = posen
+	cultural_names = {
+		polish = "Poznan" #"Poznań"
+	}
+	resources = {
+		grain = 2
+		cattle = 3
+		timber = 2
+	}
+	regions = {
+		poland
+		poland_lithuania
+	}
+	
+	history = {
+		owner = ventastegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = ventastegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = slavs
+			culture = slavic
+		}
+		
+		526 = {
+			owner = slavs #territory of Slavic peoples in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = slavic
+		}
+		
+		919 = {
+			owner = poland #part of Poland in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = polish
+		}
+		
+		1360 = {
+			owner = poland #part of Poland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			religion = catholic
+		}
+		
+		1477 = {
+			owner = poland #part of the Kingdom of Poland c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = poland #part of the Kingdom of Poland c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = prussia #part of the Kingdom of Prussia in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = polish #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

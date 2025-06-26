@@ -1,0 +1,12 @@
+neunkirchen = {
+	name = "Neunkirchen"
+	world = earth
+	#geocoordinate = { 16.081666666667 47.726944444444 }
+	province = lower_austria
+	
+	history = {
+		1900 = {
+			population = 10831 #Neunkirchen had a population of 10,831 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

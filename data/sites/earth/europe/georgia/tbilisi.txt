@@ -1,0 +1,14 @@
+tbilisi = {
+	name = "Tbilisi" #also known as Tiflis
+	world = earth
+	geocoordinate = { 44.79079544960 41.72500998850 } #from Natural Earth
+	type = settlement
+	#resource = sheep
+	province = georgia_caucasus
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

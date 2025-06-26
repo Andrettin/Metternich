@@ -1,0 +1,38 @@
+montenegro = {
+	name = "Montenegro"
+	color = { 64 223 9 }
+	provincial_capital = podgorica
+	regions = {
+		yugoslavia
+	}
+	
+	history = {
+		culture = greek
+		religion = pagan
+		
+		526 = {
+			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			religion = orthodox
+		}
+		
+		1360 = {
+			owner = serbia #part of the Serbian Principalities in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = serbian
+		}
+		
+		1740 = {
+			owner = montenegro #part of Montenegro c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = orthodox
+		}
+		
+		1815 = {
+			culture = albanian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = austria #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

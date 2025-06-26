@@ -1,0 +1,6 @@
+nymph = {
+	name = "Nymph"
+	supertaxon = fey
+	era = holocene
+	sapient = true
+}

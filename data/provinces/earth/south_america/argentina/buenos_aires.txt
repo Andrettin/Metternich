@@ -1,0 +1,37 @@
+buenos_aires = {
+	name = "Buenos Aires"
+	color = { 176 192 144 }
+	provincial_capital = buenos_aires
+	regions = {
+		argentina
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = charrua
+			culture = charruan
+		}
+		
+		1535 = {
+			owner = spain #Buenos Aires founded by the Spanish in 1535/1580; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			culture = castillian
+			religion = catholic
+		}
+		
+		1600 = {
+			owner = la_plata #part of La Plata in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+		}
+		
+		1790 = {
+			owner = la_plata #part of the Viceroyalty of La Plata c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+		
+		1810 = {
+			owner = argentina #Argentina became independent in 1810/1816; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+	}
+}

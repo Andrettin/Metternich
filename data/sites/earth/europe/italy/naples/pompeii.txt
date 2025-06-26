@@ -1,0 +1,12 @@
+pompeii = {
+	name = "Pompeii"
+	world = earth
+	geocoordinate = { 14.489722 40.750556 }
+	pos_offset = { 0 -1 }
+	
+	history = {
+		79 = {
+			#improvements += ruins
+		}
+	}
+}

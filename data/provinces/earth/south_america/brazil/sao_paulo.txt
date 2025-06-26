@@ -1,0 +1,42 @@
+sao_paulo = {
+	name = "Sao Paulo" #"São Paulo"
+	color = { 83 205 137 }
+	provincial_capital = sao_paulo
+	resources = {
+		grain = 2 #corn; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+		cattle = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+		iron_ore = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+		diamonds = 1 #diamonds and other precious stones; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+		coffee = 1
+	}
+	regions = {
+		brazil
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = tupi
+			culture = tupi
+		}
+		
+		1300 = {
+			owner = tupi #Tupinambá territory in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
+			culture = tupi
+			religion = pagan
+		}
+		
+		1567 = {
+			owner = brazil #Portuguese possession in the 1340-1600 period; Rio de Janeiro founded by the Portuguese in 1567; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			culture = brazilian
+			religion = catholic
+		}
+		
+		1790 = {
+			owner = brazil #part of Brazil c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+	}
+}

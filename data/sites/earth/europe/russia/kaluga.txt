@@ -1,0 +1,13 @@
+kaluga = {
+	name = "Kaluga"
+	world = earth
+	geocoordinate = { 36.27002355830 54.52037884430 } #from Natural Earth
+	type = settlement
+	province = kaluga
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

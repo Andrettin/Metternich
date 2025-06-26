@@ -1,0 +1,28 @@
+jamtland = {
+	name = "Jamtland"
+	color = { 65 192 192 }
+	provincial_capital = ostersund
+	regions = {
+		sweden
+	}
+	
+	history = {
+		culture = norse
+		religion = pagan
+		
+		1560 = {
+			owner = norway #part of Norway c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+			culture = norwegian
+			religion = protestant
+		}
+		
+		1645 = {
+			owner = sweden #became part of Sweden in 1645; Source: William R. Shepherd, "Historical Atlas", 1911, p. 120.
+			culture = swedish
+		}
+		
+		1740 = {
+			owner = sweden #part of the Kingdom of Sweden c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

@@ -1,0 +1,27 @@
+angers = {
+	name = "Angers"
+	world = earth
+	geocoordinate = { -0.53002994933 47.48000754710 } #from Natural Earth
+	type = settlement
+	province = anjou
+	
+	history = {
+		1250 = {
+			buildings += university #University existent in Angers in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
+			settlement_type = campus
+		}
+	
+		1789 = {
+			buildings += courthouse #Prévôt des maréchaux and chief court of the salt tax existent in Angers in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+			settlement_type = city
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 4800
+				clergymen.french.catholic = 7600
+				officers.french.catholic = 2000
+			}
+		}
+	}
+}

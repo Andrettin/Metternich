@@ -1,0 +1,19 @@
+upper_egypt = {
+	name = "Upper Egypt"
+	color = { 146 51 56 }
+	provincial_capital = luxor
+	resources = {
+		grain = 1
+	}
+	regions = {
+		egypt
+	}
+	
+	history = {
+		-1450 = {
+			owner = egypt #part of Egypt c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = egyptian
+			religion = pagan
+		}
+	}
+}

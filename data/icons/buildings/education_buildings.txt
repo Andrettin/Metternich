@@ -1,0 +1,3 @@
+university = {
+	filepath = "icons/buildings/university.png"
+}

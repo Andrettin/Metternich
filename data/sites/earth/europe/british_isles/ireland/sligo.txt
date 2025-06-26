@@ -1,0 +1,8 @@
+sligo = {
+	name = "Sligo"
+	world = earth
+	geocoordinate = { -8.48331709943 54.26706097320 } #from Natural Earth
+	type = resource
+	resource = cattle
+	province = connaught
+}

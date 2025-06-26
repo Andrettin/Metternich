@@ -1,0 +1,6 @@
+curitiba = {
+	name = "Curitiba"
+	world = earth
+	geocoordinate = { -49.31999760090 -25.42001300170 } #from Natural Earth
+	type = settlement
+}

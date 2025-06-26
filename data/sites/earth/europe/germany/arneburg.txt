@@ -1,0 +1,12 @@
+arneburg = {
+	name = "Arneburg"
+	world = earth
+	geocoordinate = { 12 52.6667 }
+	province = magdeburg
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

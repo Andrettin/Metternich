@@ -1,0 +1,3 @@
+newspaper = {
+	filepath = "icons/newspaper.png"
+}

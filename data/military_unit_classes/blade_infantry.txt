@@ -1,0 +1,17 @@
+axemen = {
+	name = "Axemen"
+	domain = land
+	category = blade_infantry
+}
+
+swordsmen = {
+	name = "Swordsmen"
+	domain = land
+	category = blade_infantry
+}
+
+two_handed_swordsmen = {
+	name = "Two-Handed Swordsmen"
+	domain = land
+	category = blade_infantry
+}

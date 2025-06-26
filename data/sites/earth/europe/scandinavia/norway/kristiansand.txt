@@ -1,0 +1,7 @@
+kristiansand = {
+	name = "Kristiansand"
+	world = earth
+	geocoordinate = { 8.00001786157 58.16664206860 } #from Natural Earth
+	type = resource
+	resource = fish
+}

@@ -1,0 +1,6 @@
+castelo_branco = {
+	name = "Castelo Branco"
+	world = earth
+	geocoordinate = { -7.48799955910 39.81099614830 } #from Natural Earth
+	province = beira
+}

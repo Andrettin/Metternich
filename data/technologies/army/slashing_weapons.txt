@@ -1,0 +1,101 @@
+shortsword = {
+	name = "Shortsword"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = bronze_age
+	cost_commodity = research
+	prerequisites = {
+		warrior_code
+		bronzeworking
+	}
+	modifier = {
+		military_unit_stat = {
+			type = squires
+			stat = melee
+			value = 0.33
+		}
+	}
+}
+
+broadsword = {
+	name = "Broadsword"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = iron_age
+	cost_commodity = research
+	prerequisites = {
+		shortsword
+	}
+	modifier = {
+		military_unit_stat = {
+			type = swordsmen
+			stat = melee
+			value = 0.5
+		}
+		military_unit_stat = {
+			type = squires
+			stat = melee
+			value = 0.33
+		}
+	}
+}
+
+longsword = {
+	name = "Longsword"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = 1_500
+	cost_commodity = research
+	prerequisites = {
+		broadsword
+		ironworking
+	}
+	modifier = {
+		military_unit_stat = {
+			type = swordsmen
+			stat = melee
+			value = 0.5
+		}
+		military_unit_stat = {
+			type = squires
+			stat = melee
+			value = 0.34
+		}
+	}
+}
+
+bastard_sword = {
+	name = "Bastard Sword"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = 1300_1400
+	cost_commodity = research
+	prerequisites = {
+		longsword
+		
+		reserves
+	}
+}
+
+greatsword = {
+	name = "Greatsword"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = 1400_1500
+	cost_commodity = research
+	prerequisites = {
+		bastard_sword
+	}
+	modifier = {
+		military_unit_stat = {
+			type = two_handed_swordsmen
+			stat = melee
+			value = 0.5
+		}
+	}
+}

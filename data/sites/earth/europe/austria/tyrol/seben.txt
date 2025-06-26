@@ -1,0 +1,12 @@
+seben = {
+	name = "Seben" #also known as Säben
+	world = earth
+	geocoordinate = { 11.56779 46.64461 }
+	province = south_tyrol
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

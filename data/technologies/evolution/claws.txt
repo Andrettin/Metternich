@@ -1,0 +1,83 @@
+claws = {
+	name = "Claws"
+	subcategory = claws
+	portrait = building_slot
+	icon = lion
+	period = triassic
+	year = -130000000 #Baryonyx
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		fingers
+	}
+}
+
+grasping_claws = {
+	name = "Grasping Claws"
+	subcategory = claws
+	portrait = building_slot
+	icon = lion
+	period = jurassic
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		claws
+	}
+}
+
+curved_claws = {
+	name = "Curved Claws"
+	subcategory = claws
+	portrait = building_slot
+	icon = lion
+	period = paleogene
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		claws
+		swiftness
+	}
+}
+
+slashing_claw = {
+	name = "Slashing Claw"
+	subcategory = claws
+	portrait = building_slot
+	icon = lion
+	period = neogene
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		curved_claws
+	}
+}
+
+tearing_claw = {
+	name = "Tearing Claw"
+	subcategory = claws
+	portrait = building_slot
+	icon = lion
+	period = pleistocene
+	year = -75000000 #Velociraptor
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		slashing_claw
+		pack_hunting
+	}
+}

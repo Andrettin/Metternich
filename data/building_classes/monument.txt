@@ -1,0 +1,4 @@
+monument = {
+	name = "Monument"
+	slot_type = monument
+}

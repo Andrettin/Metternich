@@ -1,0 +1,17 @@
+yunnan = {
+	name = "Yunnan"
+	color = { 249 192 40 }
+	provincial_capital = kunming
+	resources = {
+		silk = 1
+	}
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

@@ -1,0 +1,22 @@
+laibach = {
+	name = "Laibach"
+	world = earth
+	geocoordinate = { 14.51496903350 46.05528830880 } #from Natural Earth
+	type = settlement
+	#resource = cotton
+	cultural_names = {
+		roman = "Emona" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+		slovene = "Ljubljana"
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Laibach was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		1815 = {
+			population = 20000 #Laibach had a population of 20,000 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 86.
+		}
+	}
+}

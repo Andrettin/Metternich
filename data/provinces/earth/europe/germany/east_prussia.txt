@@ -1,0 +1,60 @@
+east_prussia = {
+	name = "East Prussia"
+	color = { 65 33 160 }
+	provincial_capital = konigsberg
+	resources = {
+		grain = 4
+		fruit = 1
+		cattle = 1
+		timber = 2
+	}
+	regions = {
+		european_russia
+	}
+	
+	history = {
+		owner = ventastegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = ventastegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = pruthenia
+			culture = prussian
+		}
+		
+		919 = {
+			owner = pruthenia #territory of the Prussians in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = prussian
+			religion = pagan
+		}
+		
+		1360 = {
+			owner = teutonic_order #territory of the Teutonic Order in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = german
+			religion = catholic
+		}
+		
+		1477 = {
+			owner = teutonic_order #part of the Domain of the Teutonic Order c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = prussia #part of the Kingdom of Prussia c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = protestant
+		}
+		
+		1815 = {
+			owner = prussia #part of the Kingdom of Prussia in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

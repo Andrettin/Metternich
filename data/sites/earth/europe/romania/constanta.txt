@@ -1,0 +1,11 @@
+constanta = {
+	name = "Constanta"
+	world = earth
+	geocoordinate = { 28.60997432320 44.20266237290 } #from Natural Earth
+	type = settlement
+	#resource = grain
+	province = dobruja
+	cultural_names = {
+		roman = "Tomi" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+	}
+}

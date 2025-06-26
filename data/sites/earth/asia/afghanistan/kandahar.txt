@@ -1,0 +1,9 @@
+kandahar = {
+	name = "Kandahar"
+	world = earth
+	geocoordinate = { 65.69494584030 31.61002016100 } #from Natural Earth
+	type = resource
+	#resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	resource = sheep
+	province = afghanistan
+}

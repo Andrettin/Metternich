@@ -1,0 +1,6 @@
+el_obeid = {
+	name = "El Obeid"
+	world = earth
+	geocoordinate = { 30.21669795610 13.18328961070 } #from Natural Earth
+	type = settlement
+}

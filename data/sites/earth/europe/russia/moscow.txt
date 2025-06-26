@@ -1,0 +1,17 @@
+moscow = {
+	name = "Moscow"
+	world = earth
+	geocoordinate = { 37.61552282590 55.75216412260 } #from Natural Earth
+	type = settlement
+	province = moscow
+	
+	history = {
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1700 = {
+			population = 100000 #Moscow had a population of 100,000+ in 1700; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+	}
+}

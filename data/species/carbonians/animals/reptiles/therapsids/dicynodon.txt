@@ -1,0 +1,11 @@
+dicynodon = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=39019
+	name = "Dicynodon"
+	supertaxon = dicynodon
+	era = permian
+	pre_evolutions = {
+		edaphosaurus
+		petrolacosaurus
+		sphenacodon
+		thadeosaurus
+	}
+}

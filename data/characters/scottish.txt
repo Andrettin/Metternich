@@ -1,0 +1,103 @@
+robert_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
+	name = "Robert"
+	surname = "Stevenson"
+	role = civilian
+	character_type = engineer #lighthouse engineer
+	culture = scottish
+	religion = protestant
+	home_settlement = edinburgh #born in Glasgow, died in Edinburgh
+	gender = male
+	#son of Alan Stevenson
+	birth_date = 1772.6.8
+	death_date = 1850.7.12
+	required_technology = navigation
+	conditions = {
+		country = great_britain
+	}
+	
+	#text based on that of the Encyclopædia Britannica, in the public domain
+	description = "Scottish engineer, he designed and executed a large number of lighthouses, the most important being that on the Bell Rock. For its illumination he introduced an improved apparatus, and he was also the author of various valuable inventions in connexion with lighting, including the intermittent and flashing lights, and the mast lantern for lightships. As a civil engineer he improved the approaches to Edinburgh, constructed harbours, docks and breakwaters, improved river and canal navigation, and constructed several important bridges. He was the inventor of the movable jib and balance cranes."
+	
+	history = {
+		1797 = {
+			country = great_britain #was engineer to the Commissioners of Northern Lighthouses from 1797 to 1843
+			deployment_site = edinburgh
+		}
+		
+		#married the daughter of Thomas Smith in 1799
+		#began the construction of the Bell Rock lighthouse in 1807
+		#published "Account of the Bell Rock Lighthouse" in 1824
+	}
+}
+
+alan_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
+	name = "Alan"
+	surname = "Stevenson"
+	culture = scottish
+	religion = protestant
+	home_settlement = edinburgh
+	gender = male
+	father = robert_stevenson
+	birth_date = 1807
+	death_date = 1865
+	
+	history = {
+		#became engineer to the Commissioners of Northern Lighthouses in 1843
+		#built the Skerryvore lighthouse from 1840 to 1843
+		#published "Account of the Skerryvore Lighthouse" in 1848
+		#published "Rudimentary Treatise on the History, Construction and Illumination of Lighthouses" in 1850
+	}
+}
+
+david_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
+	name = "David"
+	surname = "Stevenson"
+	culture = scottish
+	religion = protestant
+	home_settlement = edinburgh
+	gender = male
+	father = robert_stevenson
+	birth_date = 1815
+	death_date = 1886
+	
+	history = {
+		#toured North America in 1837
+		#published "Sketch of the Civil Engineering of North America" in 1838
+		#published "Marine Surveying" in 1842
+		#became joint engineer to the Commissioners of Northern Lighthouses in 1853
+		#published "Canal and River Engineering" in 1858
+		#published "Reclamation and Protection of Agricultural Land" in 1874
+		#published "Life of Robert Stevenson" in 1878
+	}
+}
+
+thomas_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
+	name = "Thomas"
+	surname = "Stevenson"
+	culture = scottish
+	religion = protestant
+	home_settlement = edinburgh
+	gender = male
+	father = robert_stevenson
+	birth_date = 1818
+	death_date = 1887
+	
+	history = {
+		#joined his father's business in 1846
+		#was joint engineer to the Commissioners of Northern Lighthouses from 1853 to 1885
+		#designed the Stevenson screen in 1864 (meteorology)
+	}
+}
+
+robert_lewis_balfour_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, pp. 907-908.
+	name = "Robert Lewis Balfour"
+	surname = "Stevenson"
+	culture = scottish
+	religion = protestant
+	home_settlement = edinburgh
+	gender = male
+	father = thomas_stevenson
+	#his mother was Margaret Isabella Balfour
+	birth_date = 1850
+	death_date = 1894
+}

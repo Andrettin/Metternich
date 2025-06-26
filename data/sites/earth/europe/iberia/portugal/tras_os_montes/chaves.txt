@@ -1,0 +1,11 @@
+chaves = {
+	name = "Chaves"
+	world = earth
+	geocoordinate = { -7.4706805555556 41.739869444444 }
+	type = resource
+	resource = timber
+	province = tras_os_montes
+	cultural_names = {
+		roman = "Aquae Flaviae"
+	}
+}

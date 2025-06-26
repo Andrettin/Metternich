@@ -1,0 +1,9 @@
+santos = {
+	name = "Santos"
+	world = earth
+	geocoordinate = { -46.33294265650 -23.95372393350 } #from Natural Earth
+	type = resource
+	resource = sugar_cane
+	province = sao_paulo
+	max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 433-434.
+}

@@ -1,0 +1,19 @@
+holy_site = {
+	name = "Holy Site"
+	plural_name = "Holy Sites"
+	icon = wooden_cross
+	tiny_icon = peace
+	terrain_types = {
+		plains
+		savannah
+		desert
+		barren_hills
+		mountains
+	}
+	site_types = {
+		settlement
+	}
+	modifier = {
+		piety_bonus = 1
+	}
+}

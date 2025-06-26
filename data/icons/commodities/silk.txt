@@ -1,0 +1,3 @@
+silk = {
+	filepath = "icons/commodities/silk.png"
+}

@@ -1,0 +1,7 @@
+jerash = {
+	name = "Jerash"
+	world = earth
+	geocoordinate = { 35.891397222222 32.272280555556 }
+	type = resource
+	resource = grain
+}

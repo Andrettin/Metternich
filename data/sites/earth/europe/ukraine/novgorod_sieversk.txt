@@ -1,0 +1,12 @@
+novgorod_sieversk = {
+	name = "Novgorod Sieversk"
+	world = earth
+	geocoordinate = { 33.266666666666666 51.99722222222222 }
+	province = chernigov
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

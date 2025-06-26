@@ -1,0 +1,43 @@
+galicia = {
+	superregions = {
+		cisleithania
+		galicia_and_west_galicia
+	}
+}
+
+galicia_and_west_galicia = {
+	superregions = {
+		europe
+		imperial_austria_1806
+	}
+	
+	history = {
+		1801 = {
+			population = 4931477 #Galicia (including West Galicia) had a population of 4,931,477 in 1801 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1803 = {
+			population = 5515747 #Galicia (including West Galicia) had a population of 5,515,(7?)47 in 1803 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1805 = {
+			population = 5193778 #Galicia (including West Galicia) had a population of 5,193,778 in 1805 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1806 = {
+			population = 5095843 #Galicia (including West Galicia) had a population of 5,095,843 in 1806 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1807 = {
+			population = 5091170 #Galicia (including West Galicia) had a population of 5,091,170 in 1807 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1809 = {
+			population = 5095000 #Galicia (including West Galicia) had an estimated population of 5,095,000 in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+			
+			population_groups = {
+				aristocrats = 132000 #Galicia (including West Galicia) had over 132,000 nobles in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 11.
+			}
+		}
+	}
+}

@@ -1,0 +1,3 @@
+glass = {
+	filepath = "icons/commodities/glass.png"
+}

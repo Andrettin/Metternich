@@ -1,0 +1,15 @@
+sioux = {
+	name = "Sioux"
+	group = siouan
+	color = { 66 78 134 }
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			tribe = {
+				empire = "Great Chief"
+			}
+		}
+	}
+}

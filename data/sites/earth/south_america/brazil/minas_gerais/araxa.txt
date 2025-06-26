@@ -1,0 +1,6 @@
+araxa = {
+	name = "Araxa" #"Araxá"
+	world = earth
+	geocoordinate = { -46.95001306310 -19.57959430050 } #from Natural Earth
+	province = minas_gerais
+}

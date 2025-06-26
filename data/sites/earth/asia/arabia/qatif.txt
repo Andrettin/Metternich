@@ -1,0 +1,8 @@
+qatif = {
+	name = "Qatif"
+	world = earth
+	geocoordinate = { 50.01151037480 26.51963319800 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = riyadh
+}

@@ -1,0 +1,14 @@
+tobacconists_house = {
+	name = "Tobacconist's House"
+	slot_type = cigar_factory
+}
+
+tobacconists_shop = {
+	name = "Tobacconist's Shop"
+	slot_type = cigar_factory
+}
+
+cigar_factory = {
+	name = "Cigar Factory"
+	slot_type = cigar_factory
+}

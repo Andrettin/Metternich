@@ -1,0 +1,4 @@
+medieval_era = {
+	name = "Medieval Era"
+	start_date = 476
+}

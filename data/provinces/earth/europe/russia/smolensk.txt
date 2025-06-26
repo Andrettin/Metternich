@@ -1,0 +1,47 @@
+smolensk = {
+	name = "Smolensk"
+	color = { 54 9 109 }
+	provincial_capital = smolensk
+	resources = {
+		cattle = 1
+	}
+	regions = {
+		european_russia
+	}
+	
+	history = {
+		owner = tulerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = tulerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			culture = slavic
+		}
+		
+		1360 = {
+			owner = russia #part of the Russian States in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = russian
+			religion = orthodox
+		}
+		
+		1560 = {
+			owner = muscovy #part of the Muscovite Dominions c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+		}
+		
+		1740 = {
+			owner = russia #part of the Russian Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

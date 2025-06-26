@@ -1,0 +1,19 @@
+svithjod = {
+	name = "Svithjod" #"Sviþjod"
+	type = great_power
+	color = { 0 173 198 }
+	culture = norse
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = stockholm
+	short_names = {
+		tribe = "Sviar"
+	}
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		uppland
+	}
+}

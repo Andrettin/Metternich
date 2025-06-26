@@ -1,0 +1,14 @@
+shanxi = {
+	name = "Shanxi"
+	color = { 229 183 153 }
+	provincial_capital = taiyuan
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

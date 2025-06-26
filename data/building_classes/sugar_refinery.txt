@@ -1,0 +1,4 @@
+sugar_refinery = {
+	name = "Sugar Refinery"
+	slot_type = sugar_refinery
+}

@@ -1,0 +1,54 @@
+navarre = {
+	name = "Navarre"
+	color = { 16 224 192 }
+	provincial_capital = pamplona
+	resources = {
+		grain = 2
+		sheep = 1
+		zinc = 1 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
+		
+		fruit = 1
+	}
+	regions = {
+		spain
+	}
+	
+	history = {
+		owner = crusafontids
+		culture = mammalian
+		religion = pagan
+		
+		-143100000 = { #Crusafontia lived in Spain in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:39892
+			owner = crusafontids
+			culture = mammalian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = basques
+			culture = basque
+		}
+		
+		526 = {
+			owner = basques #territory of the Basques in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = basque
+		}
+		
+		1360 = {
+			owner = navarre #part of Navarre in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			religion = catholic
+		}
+		
+		1512 = {
+			owner = spain #became part of Aragon in 1512; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+		}
+		
+		1560 = {
+			owner = spain #part of the Kingdom of Spain c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+		}
+		
+		1740 = {
+			owner = spain #part of the Kingdom of Spain c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

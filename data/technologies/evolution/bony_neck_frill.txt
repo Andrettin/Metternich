@@ -1,0 +1,15 @@
+bony_neck_frill = {
+	name = "Bony Neck Frill"
+	subcategory = back_protection
+	portrait = building_slot
+	icon = lion
+	period = triassic
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		bony_knobs
+		beaks
+	}
+}

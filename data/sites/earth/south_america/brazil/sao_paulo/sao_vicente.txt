@@ -1,0 +1,9 @@
+sao_vicente = {
+	name = "Sao Vicente" #"São Vicente"
+	world = earth
+	#geocoordinate = { -46.392222222222 -23.963333333333 }
+	type = resource
+	resource = sugar_cane
+	province = sao_paulo
+	max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 468-469.
+}

@@ -1,0 +1,8 @@
+dubai = {
+	name = "Dubai"
+	world = earth
+	geocoordinate = { 55.27997432340 25.22999615380 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = abu_dhabi
+}

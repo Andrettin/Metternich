@@ -1,0 +1,36 @@
+peru = {
+	name = "Peru"
+	superregions = {
+		south_america
+	}
+	
+	history = {
+		1000 = {
+			population = 3000000 #Peru had a population of 3,000,000 in 1000 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1500 = {
+			population = 4000000 #Peru had a population of 4,000,000 in 1500 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1600 = {
+			population = 1300000 #Peru had a population of 1,300,000 in 1600 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1700 = {
+			population = 1300000 #Peru had a population of 1,300,000 in 1700 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1820 = {
+			population = 1317000 #Peru had a population of 1,317,000 in 1820 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1910 = {
+			population = 4137000 #Peru had a population of 4,137,000 in 1910 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		2003 = {
+			literacy_rate = 91 #Source: Philip's International School Atlas, p. 143.
+		}
+	}
+}

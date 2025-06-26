@@ -1,0 +1,5 @@
+springfield = {
+	name = "Springfield"
+	world = earth
+	geocoordinate = { -89.65001652200 39.82000998850 } #from Natural Earth
+}

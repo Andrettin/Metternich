@@ -1,0 +1,6 @@
+florencia = {
+	name = "Florencia"
+	world = earth
+	geocoordinate = { -75.61999434580 1.61040427541 } #from Natural Earth
+	type = settlement
+}

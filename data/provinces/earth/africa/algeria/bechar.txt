@@ -1,0 +1,17 @@
+bechar = {
+	name = "Bechar"
+	color = { 128 90 169 }
+	provincial_capital = bechar
+	resources = {
+		sheep = 1
+	}
+	regions = {
+		algeria
+	}
+	
+	history = {
+		owner = carthage
+		culture = carthaginian
+		religion = pagan
+	}
+}

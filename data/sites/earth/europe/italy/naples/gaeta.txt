@@ -1,0 +1,8 @@
+gaeta = {
+	name = "Gaeta"
+	world = earth
+	geocoordinate = { 13.566666666667 41.216666666667 }
+	type = resource
+	resource = fish
+	province = naples
+}

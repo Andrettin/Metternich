@@ -1,0 +1,102 @@
+tobacco_plantation = {
+	name = "Tobacco Plantation"
+	slot = resource
+	resources = {
+		tobacco
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/sugar_plantation.png"
+	default_population_class = farmers
+	required_technology = tobacco_planting
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		farmers
+		master_tobacco_planters
+	}
+	commodity_costs = {
+		lumber = 1
+		cast_iron = 1
+	}
+	modifier = {
+		housing_bonus = 1
+	}
+}
+
+large_tobacco_plantation = {
+	name = "Large Tobacco Plantation"
+	slot = resource
+	resources = {
+		tobacco
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/sugar_plantation.png"
+	default_population_class = farmers
+	required_improvement = tobacco_plantation
+	required_technology = large_tobacco_plantations
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		farmers
+		master_tobacco_planters
+	}
+	commodity_costs = {
+		lumber = 4
+		cast_iron = 4
+	}
+	modifier = {
+		housing_bonus = 2
+	}
+}
+
+mechanized_tobacco_plantation = {
+	name = "Mechanized Tobacco Plantation"
+	slot = resource
+	resources = {
+		tobacco
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/sugar_plantation.png"
+	default_population_class = farmers
+	required_improvement = large_tobacco_plantation
+	required_technology = tobacco_industry
+	wealth_cost = 1000
+	population_classes = {
+		slaves
+		farmers
+		master_tobacco_planters
+	}
+	commodity_costs = {
+		lumber = 8
+		cast_iron = 8
+	}
+	modifier = {
+		housing_bonus = 3
+	}
+}
+
+industrial_tobacco_plantation = {
+	name = "Industrial Tobacco Plantation"
+	slot = resource
+	resources = {
+		tobacco
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/sugar_plantation.png"
+	default_population_class = farmers
+	required_improvement = mechanized_tobacco_plantation
+	required_technology = tobacco_industry
+	wealth_cost = 5000
+	population_classes = {
+		slaves
+		farmers
+		master_tobacco_planters
+	}
+	commodity_costs = {
+		lumber = 16
+		cast_iron = 16
+	}
+	modifier = {
+		housing_bonus = 4
+	}
+}

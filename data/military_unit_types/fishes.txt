@@ -1,0 +1,25 @@
+climatius = {
+	name = "Climatius"
+	unit_class = sea_beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	required_technology = spiny_fins
+}
+
+gyroptychius = {
+	name = "Gyroptychius"
+	unit_class = sea_beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	required_technology = egg_laying
+}

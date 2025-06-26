@@ -1,0 +1,7 @@
+burdur = {
+	name = "Burdur"
+	world = earth
+	geocoordinate = { 30.28333553850 37.71666011090 } #from Natural Earth
+	type = settlement
+	#resource = grain #Cultivated areas with livestock grazing; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
+}

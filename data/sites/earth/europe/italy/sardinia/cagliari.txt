@@ -1,0 +1,20 @@
+cagliari = {
+	name = "Cagliari"
+	world = earth
+	geocoordinate = { 9.10398148462 39.22239788720 } #from Natural Earth
+	type = settlement
+	cultural_names = {
+		roman = "Caralis" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Cagliari was the seat of an archbishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

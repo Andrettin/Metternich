@@ -1,0 +1,10 @@
+merida = {
+	name = "Merida" #"Mérida"
+	world = earth
+	geocoordinate = { -6.33799751231 38.91200401840 } #from Natural Earth
+	type = settlement
+	province = extremadura
+	cultural_names = {
+		roman = "Emerita Augusta" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+	}
+}

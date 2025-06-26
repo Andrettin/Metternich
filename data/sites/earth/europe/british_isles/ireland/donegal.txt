@@ -1,0 +1,8 @@
+donegal = {
+	name = "Donegal"
+	world = earth
+	geocoordinate = { -8.11667281232 54.65000917470 } #from Natural Earth
+	type = resource
+	resource = cattle
+	province = ulster
+}

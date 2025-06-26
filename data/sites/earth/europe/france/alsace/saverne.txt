@@ -1,0 +1,16 @@
+saverne = {
+	name = "Saverne"
+	world = earth
+	geocoordinate = { 7.3619444444444 48.741388888889 }
+	province = alsace
+	cultural_group_names = {
+		german = "Zabern"
+	}
+	
+	history = {
+		919 = {
+			#settlement_type = castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

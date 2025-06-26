@@ -1,0 +1,16 @@
+teschen = {
+	name = "Teschen"
+	world = earth
+	geocoordinate = { 18.633333333333 49.75 }
+	type = resource
+	resource = coal
+	cultural_names = {
+		czech = "Tesin"
+	}
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

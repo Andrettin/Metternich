@@ -1,0 +1,12 @@
+chemnitz = {
+	name = "Chemnitz"
+	world = earth
+	geocoordinate = { 12.91997595080 50.82998394680 } #from Natural Earth
+	province = upper_saxony
+	
+	history = {
+		1846 = {
+			buildings += college #Bergakademie Freiberg existent in Chemnitz in 1846; Source: Silvia Fernanda de Mendonça Figueirôa, "Ciência e tecnologia no Brasil Imperial: Guilherme Schüch, Barão de Capanema (1824-1908)", 2005, p. 443.
+		}
+	}
+}

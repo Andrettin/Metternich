@@ -1,0 +1,18 @@
+teutonia = {
+	name = "Teutonia"
+	type = minor_nation
+	culture = teutonian
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = kiel
+	short_names = {
+		tribe = "Teutones"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		holstein
+	}
+}

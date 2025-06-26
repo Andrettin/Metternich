@@ -1,0 +1,12 @@
+molsheim = {
+	name = "Molsheim"
+	world = earth
+	geocoordinate = { 7.4922222222222 48.542777777778 }
+	province = alsace
+	
+	history = {
+		1618 = {
+			buildings += university #University founded in Molsheim in 1618; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

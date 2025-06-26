@@ -1,0 +1,5 @@
+kwakiutl = {
+	name = "Kwakiutl"
+	rank = group
+	upper_group = american
+}

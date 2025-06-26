@@ -1,0 +1,15 @@
+seleucia = {
+	name = "Seleucia"
+	world = earth
+	geocoordinate = { 33.926064 36.378261 }
+	province = mersin
+	cultural_names = {
+		turkish = "Silifke"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

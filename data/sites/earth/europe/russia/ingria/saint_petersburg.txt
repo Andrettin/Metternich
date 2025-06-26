@@ -1,0 +1,7 @@
+saint_petersburg = {
+	name = "Saint Petersburg"
+	world = earth
+	geocoordinate = { 30.31602005890 59.93901450510 } #from Natural Earth
+	type = settlement
+	province = ingria
+}

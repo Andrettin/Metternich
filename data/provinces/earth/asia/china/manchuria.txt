@@ -1,0 +1,14 @@
+manchuria = {
+	name = "Manchuria"
+	color = { 249 166 191 }
+	provincial_capital = changchun
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

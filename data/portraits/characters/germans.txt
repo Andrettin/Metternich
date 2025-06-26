@@ -1,0 +1,61 @@
+frederick_the_great = {
+	filepath = "portraits/characters/frederick_the_great.png"
+	character_conditions = {
+		gender = male
+		or = {
+			culture = german
+			culture = polish
+		}
+		is_ruler = true
+	}
+}
+
+jakob_fugger = {
+	filepath = "portraits/characters/jakob_fugger.png"
+	character_conditions = {
+		gender = male
+		not = {
+			cultural_group = african
+			cultural_group = asian
+		}
+		or = {
+			character_type = banker
+			character_type = farmer
+			character_type = master_of_mint
+			character_type = merchant
+			character_type = pioneer
+			character_type = treasurer
+		}
+		birth_year < 1800
+	}
+}
+
+wilhelmine_von_sagan = {
+	filepath = "portraits/characters/wilhelmine_von_sagan.png"
+	character_conditions = {
+		gender = female
+		not = {
+			cultural_group = african
+		}
+		is_ruler = false
+	}
+}
+
+otto_von_bismarck = {
+	filepath = "portraits/characters/otto_von_bismarck.png"
+	character_conditions = {
+		gender = male
+		not = {
+			cultural_group = african
+			cultural_group = asian
+		}
+		is_ruler = false
+		or = {
+			character_type = conquistador
+			character_type = diplomat
+			character_type = general
+			character_type = military_engineer
+			character_type = statesman
+		}
+	}
+}

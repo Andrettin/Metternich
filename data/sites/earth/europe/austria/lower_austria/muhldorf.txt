@@ -1,0 +1,8 @@
+muhldorf = {
+	name = "Muhldorf" #"Mühldorf"
+	world = earth
+	geocoordinate = { 15.35 48.366666666667 }
+	type = resource
+	resource = coal #Graphite nearby; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 1.
+	province = lower_austria
+}

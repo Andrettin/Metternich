@@ -1,0 +1,4 @@
+afro_european = {
+	name = "Afro-European"
+	species = human
+}

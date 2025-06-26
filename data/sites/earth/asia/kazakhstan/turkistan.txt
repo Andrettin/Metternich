@@ -1,0 +1,8 @@
+turkistan = {
+	name = "Turkistan" #also known as Yasi
+	world = earth
+	geocoordinate = { 68.25489294320 43.30155458480 } #from Natural Earth
+	type = settlement
+	#resource = sheep
+	province = south_kazakhstan
+}

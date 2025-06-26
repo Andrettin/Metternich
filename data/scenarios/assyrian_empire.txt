@@ -1,0 +1,9 @@
+assyrian_empire = {
+	name = "Assyrian Empire"
+	start_date = -720
+	map_template = earth
+	hidden = true
+	default_countries = {
+		assyria
+	}
+}

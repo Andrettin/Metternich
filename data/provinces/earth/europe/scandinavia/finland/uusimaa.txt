@@ -1,0 +1,40 @@
+uusimaa = {
+	name = "Uusimaa"
+	color = { 91 56 83 }
+	provincial_capital = helsinki
+	resources = {
+		grain = 1
+	}
+	regions = {
+		finland
+	}
+	
+	history = {
+		culture = finnish
+		religion = pagan
+		
+		1360 = {
+			owner = sweden #part of Sweden in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			religion = catholic
+		}
+		
+		1524 = {
+			owner = sweden #part of Sweden in 1524; Source: William R. Shepherd, "Historical Atlas", 1911, p. 120.
+			religion = protestant
+		}
+		
+		1740 = {
+			owner = sweden #part of the Kingdom of Sweden c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1808 = {
+			owner = russia #became part of Russia in 1808; Source: William R. Shepherd, "Historical Atlas", 1911, p. 152.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

@@ -1,0 +1,15 @@
+estonians = {
+	name = "Estonians"
+	type = tribe
+	culture = estonian
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = reval
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		lithuania
+	}
+}

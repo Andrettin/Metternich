@@ -1,0 +1,12 @@
+kastamonu = {
+	name = "Kastamonu"
+	world = earth
+	geocoordinate = { 33.78300349050 41.38900215260 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

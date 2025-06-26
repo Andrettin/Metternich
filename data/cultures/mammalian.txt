@@ -1,0 +1,9 @@
+mammalian = {
+	name = "Mammalian"
+	default_phenotype = mammal
+	species = {
+		alphadon
+		leptictidium
+		zalambdalestes
+	}
+}

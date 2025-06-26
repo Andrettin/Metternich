@@ -1,0 +1,194 @@
+leopold_iii_of_austria = { #Leopold III of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
+	name = "Leopold"
+	epithet = "III"
+	dynasty = habsburg
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	#father = albrecht_ii_the_wise_of_austria #Albrecht II 'the Wise' of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
+	#mother = johanna_von_pfirt #Johanna von Pfirt; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
+	birth_date = 1351 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	death_date = 1386 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	
+	history = {
+		1377 = { #married Viridis Visconti, and had his son Ernst with her in 1377; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+			#spouse = viridis_visconti #Viridis Visconti
+		}
+	}
+}
+
+ernst_the_iron_of_austria = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	name = "Ernst"
+	epithet = "the Iron"
+	dynasty = habsburg
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	father = leopold_iii_of_austria #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	mother = viridis_visconti #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	birth_date = 1377 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	death_date = 1424 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	
+	history = {
+		#married Margarete von Pommern; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+		
+		1415 = { #married a second time to Cymburgis of Masovia, and had his son Friedrich with her in 1415; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+			#spouse = cymburgis_of_masovia #Cymburgis of Masovia
+		}
+	}
+}
+
+friedrich_iii_of_the_holy_roman_empire = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 245-246.
+	name = "Friedrich"
+	epithet = "III"
+	dynasty = habsburg
+	role = ruler
+	character_type = statesman
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	father = ernst_the_iron_of_austria #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	mother = cymburgis_of_masovia #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	birth_date = 1415.9.21 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 47, 245.
+	death_date = 1493 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	rulable_countries = {
+		austria
+	}
+	traits = {
+		careful
+	}
+	
+	history = {
+		1459 = { #married Leonor of Portugal, and had his son Maximilian with her in 1459; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 245-246.
+			#spouse = 10000407 #Leonor of Portugal
+		}
+	}
+}
+
+sigismund_von_habsburg = {
+	name = "Sigismund"
+	dynasty = habsburg
+	role = advisor
+	character_type = statesman
+	culture = austrian
+	religion = catholic
+	home_settlement = innsbruck
+	gender = male
+	birth_date = 1427.10.26
+	death_date = 1496.3.4
+	skill_multiplier = 0.67
+	traits = {
+		statesman
+	}
+}
+
+karl_vi_of_the_holy_roman_empire = { #Emperor Karl VI of the Holy Roman Empire; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+	name = "Karl"
+	epithet = "VI"
+	dynasty = habsburg
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1685 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+	start_date = 1711
+	death_date = 1740 #Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+	skill_multiplier = 0.67
+	
+	#became emperor of the HRE in 1711; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+}
+
+maria_theresia_of_austria = { #Empress Maria Theresia of the Holy Roman Empire; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+	name = "Maria Theresia"
+	dynasty = habsburg
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = female
+	father = karl_vi_of_the_holy_roman_empire #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+	birth_date = 1717 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+	start_date = 1740
+	death_date = 1780 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+	
+	#became queen of Bohemia and Hungary on 1740; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+	#became empress of the HRE in 1745; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+}
+
+leopold_ii_of_the_holy_roman_empire = { #Emperor Leopold II of the Holy Roman Empire; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
+	name = "Leopold"
+	epithet = "II"
+	dynasty = habsburg
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	mother = maria_theresia_of_austria #Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 249-250.
+	birth_date = 1747.5.5
+	death_date = 1792.3.1
+	
+	history = {
+		1768.2.12 = { #marriage date unknown, but this is the date their first child was born
+			#spouse = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
+		}
+	}
+}
+
+franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman Empire and later Emperor Franz I of Austria; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
+	name = "Franz"
+	epithet = "I"
+	dynasty = habsburg
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	father = leopold_ii_of_the_holy_roman_empire
+	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
+	birth_date = 1768.2.12
+	death_date = 1835.3.2
+	skill_multiplier = 0.67
+	
+	history = {
+		1791.12.12 = { #marriage date unknown, but their daughter Marie Louise was born on 1791.12.12
+			#spouse = maria_theresa_de_bourbon
+		}
+		
+		1816.10.29 = { #married by procuration on 1816.10.29 and in person on 1816.11.10
+			#spouse = caroline_von_wittelsbach
+		}
+	}
+}
+
+karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
+	name = "Karl"
+	dynasty = habsburg
+	role = leader
+	character_type = general
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	father = leopold_ii_of_the_holy_roman_empire
+	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
+	birth_date = 1771.9.5
+	required_technology = nationalism
+	conditions = {
+		country = austria
+	}
+	
+	history = {
+		#resigned as Grand Master of the Teutonic Order on 1804.6.30
+		#1815.9.17 = {
+		#	spouse = 10000028 #Henriette, daughter of Friedrich Wilhelm, Prince of Nassau-Weilburg
+		#}
+		
+		1847 = {
+			#field marshal-general and proprietary of the 3rd infantry regiment and of the 3rd ulans regiment as of 1847
+			#traits += cavalry_leader
+			country = austria
+			deployment_province = lower_austria
+		}
+	}
+}

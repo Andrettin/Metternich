@@ -1,0 +1,6 @@
+asatru = {
+	name = "Asatru"
+	group = pagan
+	color = { 102 102 102 }
+	icon = pine_tree
+}

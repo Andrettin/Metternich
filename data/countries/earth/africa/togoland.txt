@@ -1,0 +1,25 @@
+togoland = {
+	name = "Togoland"
+	type = minor_nation
+	culture = ewe
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = lome
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		togo
+	}
+	
+	history = {
+		1897 = {
+			#became a German possession in 1897; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 174-175.
+			diplomacy_state = {
+				country = germany
+				subject_type = colony
+			}
+		}
+	}
+}

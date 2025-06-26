@@ -1,0 +1,6 @@
+ushuaia = {
+	name = "Ushuaia"
+	world = earth
+	geocoordinate = { -68.31000126310 -54.79000323620 } #from Natural Earth
+	type = settlement
+}

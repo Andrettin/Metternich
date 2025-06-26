@@ -1,0 +1,12 @@
+grapes = {
+	name = "Grapes"
+	commodity = fruit
+	tiny_icon = trade_consulate
+	terrain_types = {
+		plains
+		savannah
+	}
+	site_types = {
+		resource
+	}
+}

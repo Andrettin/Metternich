@@ -1,0 +1,40 @@
+sawyers_house = {
+	name = "Sawyer's House"
+	building_class = sawyers_house
+	portrait = factory
+	icon = lumber
+	production_types = {
+		lumber_making
+		papermaking
+	}
+	base_capacity = 2
+}
+
+sawyers_shop = {
+	name = "Sawyer's Shop"
+	building_class = sawyers_shop
+	portrait = factory
+	icon = lumber
+	production_types = {
+		lumber_making
+		papermaking
+	}
+	base_capacity = 4
+	required_building = sawyers_house
+}
+
+lumber_mill = {
+	name = "Lumber Mill"
+	building_class = lumber_mill
+	portrait = factory
+	icon = lumber
+	production_types = {
+		lumber_making
+		papermaking
+	}
+	base_capacity = 8
+	capacity_increment = 8
+	expandable = true
+	required_building = sawyers_shop
+	required_technology = saw_mill
+}

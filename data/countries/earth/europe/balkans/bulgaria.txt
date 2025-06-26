@@ -1,0 +1,17 @@
+bulgaria = {
+	name = "Bulgaria"
+	type = minor_nation
+	culture = bulgarian
+	default_religion = orthodox
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = sofia
+	eras = {
+		medieval_era
+		industrial_era
+	}
+	core_provinces = {
+		bulgaria
+		eastern_rumelia
+	}
+}

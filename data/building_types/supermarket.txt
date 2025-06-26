@@ -1,0 +1,29 @@
+supermarket = {
+	name = "Supermarket"
+	building_class = supermarket
+	portrait = trading_post
+	icon = canned_food
+	provincial = true
+	required_technology = refrigeration
+	settlement_types = {
+		city
+		metropolis
+	}
+	conditions = {
+		game_rule = trade_commodity
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				produces_commodity = fish
+				produces_commodity = fruit
+				produces_commodity = grain
+				produces_commodity = meat
+				produces_commodity = potatoes
+			}
+		}
+	}
+	settlement_modifier = {
+		trade_bonus = 1
+	}
+}

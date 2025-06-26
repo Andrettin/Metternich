@@ -1,0 +1,13 @@
+saxon = {
+	name = "Saxon"
+	group = west_germanic
+	color = { 127 25 25 }
+	species = {
+		human
+		half_elf
+	}
+	derived_cultures = {
+		anglo_saxon
+		german
+	}
+}

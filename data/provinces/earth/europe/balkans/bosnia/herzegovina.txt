@@ -1,0 +1,37 @@
+herzegovina = {
+	name = "Herzegovina"
+	color = { 54 215 74 }
+	provincial_capital = mostar
+	resources = {
+		fruit = 1
+		timber = 5
+		tobacco = 2 #Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
+	}
+	regions = {
+		bosnia
+	}
+	
+	history = {
+		culture = gothic
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		1360 = {
+			owner = bosnia #part of Bosnia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = bosnian
+		}
+		
+		1740 = {
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = sunni
+		}
+		
+		1908 = {
+			owner = austria #annexed by Austria in 1908; Source: William R. Shepherd, "Historical Atlas", 1911, p. 164.
+		}
+	}
+}

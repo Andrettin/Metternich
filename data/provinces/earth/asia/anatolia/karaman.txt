@@ -1,0 +1,26 @@
+karaman = {
+	name = "Karaman"
+	color = { 70 0 137 }
+	provincial_capital = karaman
+	regions = {
+		anatolia
+	}
+	
+	history = {
+		-1450 = {
+			owner = cilicia #part of Cilicia c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = cilician
+			religion = pagan
+		}
+		
+		1360 = {
+			owner = seljuk_turks #territory of the Seljuk Turks in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = turkish
+			religion = sunni
+		}
+		
+		1815 = {
+			culture = turkish #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

@@ -1,0 +1,54 @@
+transylvania = {
+	name = "Transylvania"
+	color = { 108 208 7 }
+	provincial_capital = klausenburg
+	resources = {
+		grain = 3
+		sheep = 1
+		timber = 2
+	}
+	regions = {
+		romania
+		royal_hungary
+	}
+	
+	history = {
+		owner = gepids
+		culture = gothic
+		religion = pagan
+		
+		526 = {
+			owner = gepids #territory of the Gepids in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		1204 = {
+			owner = hungary #part of Hungary in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+			culture = romanian
+			religion = orthodox
+		}
+		
+		1360 = {
+			owner = hungary #part of Hungary in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1786 = {
+			population = 1412985 #Transylvania (without its military frontier) had a population of 1,412,985 in 1786 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1809 = {
+			population = 1660600 #Transylvania (without its military frontier) had an estimated population of 1,660,600 in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = romanian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+			religion = orthodox
+		}
+	}
+}

@@ -1,0 +1,133 @@
+hamburg_spearmen = {
+	type = spearmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = holstein
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+hamburg_arquebusiers = {
+	type = arquebusiers
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = holstein
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+hamburg_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = holstein
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+rhineland_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = rhineland
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+brunswick_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = hanover
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+saxony_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = upper_saxony
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+hamburg_regulars = {
+	type = regulars
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = holstein
+		}
+	}
+}
+
+hamburg_artillery = {
+	type = artillery
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = holstein
+		}
+	}
+}
+
+bremen_regulars = {
+	type = regulars
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = bremen
+		}
+	}
+}
+
+bremen_artillery = {
+	type = artillery
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = bremen
+		}
+	}
+}

@@ -1,0 +1,6 @@
+st_johns = {
+	name = "St. John's"
+	world = earth
+	geocoordinate = { -52.68100691890 47.58498821930 } #from Natural Earth
+	type = settlement
+}

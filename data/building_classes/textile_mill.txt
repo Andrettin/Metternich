@@ -1,0 +1,14 @@
+weavers_house = {
+	name = "Weaver's House"
+	slot_type = textile_mill
+}
+
+weavers_shop = {
+	name = "Weaver's Shop"
+	slot_type = textile_mill
+}
+
+textile_mill = {
+	name = "Textile Mill"
+	slot_type = textile_mill
+}

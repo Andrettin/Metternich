@@ -1,0 +1,6 @@
+wells = {
+	name = "Wells"
+	world = earth
+	geocoordinate = { -2.645 51.20944444444444 }
+	type = settlement
+}

@@ -1,0 +1,12 @@
+philadelphia = {
+	name = "Philadelphia"
+	world = earth
+	geocoordinate = { -75.16999597340 39.99997316390 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1815 = {
+			population = 80000 #Philadelphia had a population of 80,000 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 88.
+		}
+	}
+}

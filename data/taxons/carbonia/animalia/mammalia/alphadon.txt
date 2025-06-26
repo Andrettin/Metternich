@@ -1,0 +1,5 @@
+alphadon = { #Source: http://fossilworks.org/bridge.pl?action=taxonInfo&taxon_no=39947
+	name = "Alphadon"
+	rank = genus
+	supertaxon = alphadontidae
+}

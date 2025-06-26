@@ -1,0 +1,37 @@
+perseus = {
+	name = "Perseus"
+	role = advisor
+	character_type = navigator
+	culture = greek
+	religion = pagan
+	home_site = mycenae
+	gender = male
+	start_date = -1550 #possible year of the foundation of Mycenae
+	required_technology = seafaring
+	conditions = {
+		culture = greek
+	}
+	traits = {
+		ferdinand_magellan
+	}
+}
+
+archimedes = {
+	name = "Archimedes"
+	role = advisor
+	character_type = engineer
+	culture = greek
+	religion = pagan
+	home_site = syracuse
+	gender = male
+	birth_date = -287
+	death_date = -212
+	required_technology = invention
+	obsolescence_technology = internal_combustion #automobile
+	conditions = {
+		culture = greek
+	}
+	traits = {
+		leonardo_da_vinci
+	}
+}

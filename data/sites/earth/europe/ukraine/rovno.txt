@@ -1,0 +1,6 @@
+rovno = {
+	name = "Rovno"
+	world = earth
+	geocoordinate = { 26.25280554070 50.61658611970 } #from Natural Earth
+	type = settlement
+}

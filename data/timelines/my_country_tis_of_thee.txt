@@ -1,0 +1,6 @@
+my_country_tis_of_thee = { #Source: "Life Magazine", 1916.
+	name = "My Country, 'Tis of Thee"
+	point_of_divergence = 1916
+	
+	#timeline based on the 1916 cover of Life Magazine, which contained a map with a hypothetical North America under Imperial German domination
+}

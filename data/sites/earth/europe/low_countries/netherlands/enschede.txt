@@ -1,0 +1,8 @@
+enschede = {
+	name = "Enschede"
+	world = earth
+	geocoordinate = { 6.8925 52.2225 }
+	type = resource
+	resource = cattle #Cattle raising or mixed use with pasture dominant; Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
+	province = overijssel
+}

@@ -1,0 +1,167 @@
+philip_the_fair = {
+	name = "Philip"
+	epithet = "the Fair"
+	role = ruler
+	character_type = statesman
+	culture = french
+	religion = catholic
+	home_settlement = paris
+	gender = male
+	birth_date = 1268.6.8
+	death_date = 1314.11.29
+	obsolescence_technology = national_bureaucracy
+	rulable_countries = {
+		france
+	}
+	traits = {
+		dutiful_cleric
+		temperate
+	}
+}
+
+jacques_cartier = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 207.
+	name = "Jacques"
+	surname = "Cartier"
+	#character_type = navigator
+	culture = french
+	religion = catholic
+	home_settlement = paris
+	gender = male
+	birth_date = 1491
+	death_date = 1557
+	
+	#discovered the Strait of Belle Isle in 1534
+	#discovered the Gulf of Saint Lawrence on 1534.8.10
+}
+
+jean_calvin = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 208.
+	name = "Jean"
+	surname = "Calvin"
+	role = advisor
+	character_type = theologian
+	culture = french
+	religion = protestant
+	home_settlement = geneva
+	gender = male
+	birth_date = 1509
+	death_date = 1564
+	skill_multiplier = 1
+	traits = {
+		theologian
+	}
+}
+
+ambroise_pare = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 212-213.
+	name = "Ambroise"
+	surname = "Pare" #"Paré"
+	role = advisor
+	character_type = natural_scientist #barber-surgeon
+	culture = french
+	religion = catholic
+	home_settlement = paris
+	gender = male
+	birth_date = 1510
+	death_date = 1590
+	required_technology = medicine
+	skill_multiplier = 0.67
+	conditions = {
+		country = france
+	}
+	traits = {
+		natural_scientist
+	}
+	
+	#considered the father of rational surgery
+	#wrote a report about his findings regarding surgery in 1545
+}
+
+henri_ii_of_france = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 212.
+	name = "Henri"
+	epithet = "II"
+	culture = french
+	religion = catholic
+	home_settlement = paris
+	gender = male
+	birth_date = 1519
+	death_date = 1559
+}
+
+jean_de_brebeuf = {
+	name = "Jean"
+	surname = "de Brebeuf"
+	#character_type = theologian
+	culture = french
+	religion = catholic
+	home_settlement = quebec
+	gender = male
+	birth_date = 1593
+	death_date = 1649
+}
+
+jacques_marquette = {
+	name = "Jacques"
+	surname = "Marquette"
+	role = advisor
+	character_type = conquistador
+	culture = french
+	religion = catholic
+	home_site = laon
+	gender = male
+	birth_date = 1637
+	death_date = 1675
+	required_technology = colonization
+	traits = {
+		jacques_marquette
+	}
+	
+	history = {
+		1673 = {
+			country = new_france
+		}
+	}
+}
+
+sieur_de_la_salle = {
+	name = "Sieur"
+	surname = "de La Salle"
+	role = advisor
+	character_type = conquistador
+	culture = french
+	religion = catholic
+	home_site = montreal
+	gender = male
+	birth_date = 1643
+	death_date = 1687
+	required_technology = colonization
+	traits = {
+		sieur_de_la_salle
+	}
+	
+	history = {
+		1682 = {
+			country = new_france #acquired new territories for New France in 1682; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+		}
+	}
+}
+
+louis_xiv_of_france = {
+	name = "Louis"
+	epithet = "XIV"
+	role = ruler
+	character_type = statesman
+	culture = french
+	religion = catholic
+	portrait = louis_xiv
+	home_settlement = paris
+	gender = male
+	birth_date = 1638
+	death_date = 1715
+	required_technology = national_bureaucracy
+	rulable_countries = {
+		france
+	}
+	traits = {
+		creative
+		industrious
+	}
+}

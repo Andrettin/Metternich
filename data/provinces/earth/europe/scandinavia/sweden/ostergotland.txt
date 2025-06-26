@@ -1,0 +1,30 @@
+ostergotland = {
+	name = "Ostergotland" #"Östergötland"
+	color = { 220 168 183 }
+	provincial_capital = linkoping
+	regions = {
+		sweden
+	}
+	
+	history = {
+		owner = danes
+		culture = norse
+		religion = pagan
+		
+		526 = {
+			owner = danes #territory of the Danes in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = norse
+		}
+		
+		1360 = {
+			owner = sweden #part of Sweden in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = swedish
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = sweden #part of the Kingdom of Sweden c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = protestant
+		}
+	}
+}

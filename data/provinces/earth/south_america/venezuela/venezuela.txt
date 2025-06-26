@@ -1,0 +1,19 @@
+venezuela = {
+	name = "Venezuela"
+	color = { 187 163 101 }
+	provincial_capital = caracas
+	regions = {
+		venezuela
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = arawaks
+			culture = arawak
+		}
+	}
+}

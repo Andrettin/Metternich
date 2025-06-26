@@ -1,0 +1,77 @@
+intelligent = {
+	name = "Intelligent"
+	types = {
+		personality
+		ruler
+	}
+	icon = research
+	attribute_bonuses = {
+		diplomacy = 3
+		martial = 3
+		stewardship = 3
+		intrigue = 3
+		learning = 3
+	}
+	office_modifiers = {
+		ruler = {
+			research_output_modifier = 5
+		}
+	}
+	leader_modifier = {
+		discipline = 10
+	}
+}
+
+genius = {
+	name = "Genius"
+	types = {
+		personality
+		ruler
+	}
+	icon = research
+	attribute_bonuses = {
+		diplomacy = 5
+		martial = 5
+		stewardship = 5
+		intrigue = 5
+		learning = 5
+	}
+	office_modifiers = {
+		ruler = {
+			research_output_modifier = 5
+		}
+	}
+	leader_modifier = {
+		discipline = 10
+	}
+}
+
+stupid = {
+	name = "Stupid"
+	types = {
+		personality
+	}
+	icon = research
+	attribute_bonuses = {
+		diplomacy = -3
+		martial = -3
+		stewardship = -3
+		intrigue = -3
+		learning = -3
+	}
+}
+
+imbecile = {
+	name = "Imbecile"
+	types = {
+		personality
+	}
+	icon = research
+	attribute_bonuses = {
+		diplomacy = -5
+		martial = -5
+		stewardship = -5
+		intrigue = -5
+		learning = -5
+	}
+}

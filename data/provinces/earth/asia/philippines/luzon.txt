@@ -1,0 +1,19 @@
+luzon = {
+	name = "Luzon"
+	color = { 186 58 71 }
+	provincial_capital = manila
+	regions = {
+		asia
+	}
+	
+	history = {
+		culture = filipino
+		religion = pagan
+		
+		1898 = {
+			owner = philippines #part of the Philippines in 1898; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 198-199.
+			culture = filipino
+			religion = catholic
+		}
+	}
+}

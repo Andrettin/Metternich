@@ -1,0 +1,24 @@
+pamplona = {
+	name = "Pamplona"
+	world = earth
+	geocoordinate = { -1.64998742818 42.82000775050 } #from Natural Earth
+	type = settlement
+	#resource = fruit
+	province = navarre
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1628 = {
+			buildings += university #Major university founded in Pamplona in 1628; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+			settlement_type = campus
+		}
+		
+		1725 = {
+			buildings -= university #Major university abolished in Pamplona in 1725; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+			settlement_type = town
+		}
+	}
+}

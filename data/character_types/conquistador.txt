@@ -1,0 +1,7 @@
+conquistador = {
+	name = "Conquistador"
+	advisor_category = exploration
+	attribute = martial
+	military_unit_category = general
+	starting_age_category = self_taught
+}

@@ -1,0 +1,14 @@
+sassari = {
+	name = "Sassari"
+	world = earth
+	geocoordinate = { 8.57000890975 40.73000612290 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = sardinia
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

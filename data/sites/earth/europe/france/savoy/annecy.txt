@@ -1,0 +1,19 @@
+annecy = {
+	name = "Annecy"
+	world = earth
+	geocoordinate = { 6.11667028670 45.89997479150 } #from Natural Earth
+	pos_offset = { 0 -1 } #to not conflict with Chambéry's position
+	type = resource
+	resource = coal
+	province = savoy
+	
+	history = {
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 800
+				clergymen.french.catholic = 2600
+				officers.french.catholic = 400
+			}
+		}
+	}
+}

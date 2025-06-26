@@ -1,0 +1,9 @@
+iron_smelting = {
+	name = "Iron Smelting"
+	input_commodities = {
+		labor = 2
+		iron_ore = 2
+	}
+	output_commodity = cast_iron
+	output_value = 1
+}

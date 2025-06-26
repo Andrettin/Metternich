@@ -1,0 +1,8 @@
+senj = {
+	name = "Senj"
+	world = earth
+	geocoordinate = { 14.901388888889 44.990277777778 }
+	type = resource
+	resource = iron_ore
+	province = croatia
+}

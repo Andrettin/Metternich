@@ -1,0 +1,33 @@
+georgia_caucasus = {
+	name = "Georgia"
+	color = { 161 34 243 }
+	provincial_capital = tbilisi
+	resources = {
+		sheep = 1
+	}
+	regions = {
+		georgia
+	}
+	
+	history = {
+		owner = persia
+		culture = georgian
+		religion = pagan
+		
+		1204 = {
+			owner = georgia #part of the Kingdom of Georgia in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+			culture = georgian
+			religion = orthodox
+		}
+		
+		1360 = {
+			owner = georgia #part of Georgia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

@@ -1,0 +1,30 @@
+penza = {
+	name = "Penza"
+	color = { 210 107 181 }
+	provincial_capital = penza
+	regions = {
+		european_russia
+	}
+	
+	history = {
+		owner = tulerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = tulerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = mongolia
+			culture = bolghar
+		}
+		
+		1360 = {
+			owner = great_bulgaria #part of Great Bulgaria in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = bolghar
+		}
+	}
+}

@@ -1,0 +1,45 @@
+rio_de_janeiro = {
+	name = "Rio de Janeiro"
+	world = earth
+	geocoordinate = { -43.22502079420 -22.92502317420 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+	province = rio_de_janeiro
+	cultural_names = {
+		french = "Henriville"
+	}
+	
+	history = {
+		1555 = {
+			settlement_type = hamlet #Villegaignon Island became a French possession in 1555; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			culture = french
+			religion = catholic
+		}
+		
+		1567 = {
+			settlement_type = village #Rio de Janeiro founded by the Portuguese in 1567; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			culture = brazilian
+		}
+		
+		1862 = {
+			buildings += college #Instituto Politécnico Brasileiro founded in Rio de Janeiro in 1862; Source: Silvia Fernanda de Mendonça Figueirôa, "Ciência e tecnologia no Brasil Imperial: Guilherme Schüch, Barão de Capanema (1824-1908)", 2005, p. 446.
+			settlement_type = campus
+		}
+		
+		1872 = {
+			population = 274972 #in 1872, the population of the city of Rio de Janeiro was 274,972; Source: Elisabeth von der Weid, "O bonde como elemento de expansão urbana no Rio de Janeiro", p. 4.
+		}
+		
+		1890 = {
+			population = 522651 #in 1890, the population of the city of Rio de Janeiro was 522,651; Source: Elisabeth von der Weid, "O bonde como elemento de expansão urbana no Rio de Janeiro", p. 4.
+		}
+		
+		1900 = {
+			population = 691565 #in 1900, the population of the city of Rio de Janeiro was 691,565; Source: Elisabeth von der Weid, "O bonde como elemento de expansão urbana no Rio de Janeiro", p. 4.
+		}
+		
+		1906 = {
+			population = 811444 #in 1906, the population of the city of Rio de Janeiro was 811,444; Source: Elisabeth von der Weid, "O bonde como elemento de expansão urbana no Rio de Janeiro", p. 4.
+		}
+	}
+}

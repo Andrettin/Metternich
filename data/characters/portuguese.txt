@@ -1,0 +1,175 @@
+joao_ii_of_portugal = {
+	name = "Joao" #"João"
+	epithet = "II"
+	role = ruler
+	character_type = statesman
+	culture = portuguese
+	religion = catholic
+	home_settlement = lisbon
+	gender = male
+	birth_date = 1455.3.3
+	death_date = 1495.10.25
+	rulable_countries = {
+		portugal
+	}
+	traits = {
+		expansive
+		imperialistic
+	}
+}
+
+pedro_alvares_cabral = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 200.
+	name = "Pedro Alvares" #"Pedro Álvares"
+	surname = "Cabral"
+	#character_type = navigator
+	culture = portuguese
+	religion = catholic
+	home_site = covilha
+	gender = male
+	birth_date = 1467
+	death_date = 1520
+}
+
+ferdinand_magellan = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 203.
+	name = "Ferdinand"
+	surname = "Magellan"
+	role = advisor
+	character_type = navigator
+	culture = portuguese
+	religion = catholic
+	home_settlement = oporto #correct?
+	gender = male
+	birth_date = 1480
+	death_date = 1521
+	required_technology = navigation
+	conditions = {
+		not = {
+			culture = greek
+		}
+	}
+	traits = {
+		ferdinand_magellan
+	}
+	
+	history = {
+		1519.9.20 = {
+			country = spain #went on an expedition financed by Spain in 1519.9.20; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 203.
+		}
+	}
+}
+
+bartolomeu_dias = {
+	name = "Bartolomeu"
+	surname = "Dias"
+	role = leader
+	character_type = navigator
+	culture = portuguese
+	religion = catholic
+	home_settlement = lisbon #correct?
+	gender = male
+	start_date = 1487
+	required_technology = navigation
+	
+	history = {
+		1487 = {
+			#sailed around Africa's southern tip in 1487; Source: Henry Kamen, "Early Modern European Society", 2021, p. 3.
+			deployment_province = indian_ocean
+			country = portugal
+		}
+	}
+}
+
+vasco_da_gama = {
+	name = "Vasco"
+	surname = "da Gama"
+	role = leader
+	character_type = navigator
+	culture = portuguese
+	religion = catholic
+	home_settlement = lisbon #correct?
+	gender = male
+	start_date = 1498.5
+	required_technology = navigation
+	
+	history = {
+		1498.5 = {
+			#was in Malabar in 1498.5; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
+			deployment_province = laccadive_sea
+			country = portugal
+		}
+	}
+}
+
+francisco_leite = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Francisco"
+	surname = "Leite"
+	culture = portuguese #his son was Portuguese
+	religion = catholic
+	home_site = sao_joao_del_rei #his granddaughter's husband was born there
+	gender = male
+	
+	history = {
+		#spouse = isabel_ferreira
+	}
+}
+
+isabel_ferreira = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Isabel"
+	surname = "Ferreira"
+	culture = portuguese #her son was Portuguese
+	religion = catholic
+	home_site = sao_joao_del_rei #her granddaughter's husband was born there
+	gender = female
+}
+
+lourenco_correia = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Lourenco" #"Lourenço"
+	surname = "Correia Sardinha"
+	culture = portuguese #his daughter's husband was Portuguese
+	religion = catholic
+	home_site = sao_joao_del_rei #his granddaughter's husband was born there
+	gender = male
+	
+	history = {
+		#spouse = maria_de_assumpcao_moraes
+	}
+}
+
+maria_de_assumpcao_moraes = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Maria"
+	surname = "de Assumpcao Moraes" #"de Assumpção Moraes"
+	culture = portuguese #her daughter's husband was Portuguese
+	religion = catholic
+	home_site = sao_joao_del_rei #her granddaughter's husband was born there
+	gender = female
+}
+
+jose_leite_ribeiro = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Jose" #"José"
+	surname = "Leite Ribeiro"
+	culture = portuguese
+	religion = catholic
+	home_site = sao_joao_del_rei #his daughter's husband was born there
+	gender = male
+	father = francisco_leite
+	mother = isabel_ferreira
+	
+	#sergeant major ("sargento-mór")
+	
+	history = {
+		1781.6.4 = { #date that their daughter was born
+			#spouse = escholastica_maria_de_jesus
+		}
+	}
+}
+
+escholastica_maria_de_jesus = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Escholastica Maria"
+	surname = "de Jesus"
+	culture = portuguese #her husband was Portuguese
+	religion = catholic
+	home_site = sao_joao_del_rei #her daughter's husband was born there
+	gender = female
+	father = lourenco_correia
+	mother = maria_de_assumpcao_moraes
+}

@@ -1,0 +1,6 @@
+lhasa = {
+	name = "Lhasa"
+	world = earth
+	geocoordinate = { 91.10001013080 29.64502382310 } #from Natural Earth
+	type = settlement
+}

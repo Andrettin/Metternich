@@ -1,0 +1,29 @@
+buda = {
+	name = "Buda"
+	world = earth
+	geocoordinate = { 19.05 47.466666666667 }
+	type = settlement
+	province = buda
+	cultural_group_names = {
+		german = "Ofen" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+	}
+	
+	history = {
+		919 = {
+			settlement_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1389 = {
+			buildings += university #University founded in Buda in 1389; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1896 = {
+			#Eötvos College founded in Budapest in 1896; Source: John Lukacs, "Budapest 1900: a historical portrait of a city and its culture", pp. 175-176.
+			#it is located in Budapest west of the Danube
+		}
+	}
+}

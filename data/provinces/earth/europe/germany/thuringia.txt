@@ -1,0 +1,44 @@
+thuringia = {
+	name = "Thuringia"
+	color = { 97 128 97 }
+	provincial_capital = erfurt
+	resources = {
+		grain = 4
+		fruit = 2
+		cattle = 2
+		timber = 2
+	}
+	regions = {
+		germany
+	}
+	
+	history = {
+		owner = thuringians
+		culture = suebi
+		religion = pagan
+		
+		526 = {
+			owner = thuringians #territory of the Thuringians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = suebi
+		}
+		
+		919 = {
+			owner = thuringia #part of Thuringia in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		1477 = {
+			owner = saxe_wittenberg #part of the Wettin Lands c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1815 = {
+			owner = thuringia #part of the Thuringian States in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			religion = protestant
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

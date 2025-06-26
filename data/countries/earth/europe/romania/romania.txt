@@ -1,0 +1,18 @@
+romania = {
+	name = "Romania"
+	type = minor_nation
+	culture = romanian
+	default_religion = orthodox
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = bucharest
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		wallachia
+		oltenia
+		moldavia
+		dobruja
+	}
+}

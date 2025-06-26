@@ -1,0 +1,3 @@
+atheist = {
+	name = "Atheist"
+}

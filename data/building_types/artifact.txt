@@ -1,0 +1,18 @@
+artifact = {
+	name = "Artifact"
+	building_class = artifact
+	portrait = oil_lamp
+	icon = bell
+	provincial = true
+	wonder_only = true
+	settlement_types = {
+		camp
+		hamlet
+		campus
+		castle
+		monastery
+		town
+		city
+		metropolis
+	}
+}

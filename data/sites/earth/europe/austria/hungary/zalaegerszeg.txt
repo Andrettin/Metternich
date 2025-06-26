@@ -1,0 +1,8 @@
+zalaegerszeg = {
+	name = "Zalaegerszeg"
+	world = earth
+	geocoordinate = { 16.83999958610 46.84400102660 } #from Natural Earth
+	type = resource
+	resource = cattle
+	province = buda
+}

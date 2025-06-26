@@ -1,0 +1,27 @@
+ferdinand_august_von_wurtemberg = { #Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 80, 83.
+	name = "Ferdinand August" #"Ferdinand August Friedrich"
+	dynasty = wurtemberg
+	role = leader
+	character_type = general
+	culture = german #Swabian
+	religion = protestant
+	home_settlement = stuttgart
+	gender = male
+	birth_date = 1763.10.22
+	death_date = 1834.1.20
+	required_technology = nationalism
+	conditions = {
+		or = {
+			country = austria
+			country = wurtemberg
+		}
+	}
+	
+	history = {
+		1817.2.23 = {
+			#spouse = pauline_von_metternich #married on 1817.2.23 to Pauline, daughter of prince Franz Georg Karl von Metternich
+		}
+	}
+	
+	#fieldmarshal in the Austrian army
+}

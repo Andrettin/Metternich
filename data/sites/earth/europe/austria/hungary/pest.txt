@@ -1,0 +1,18 @@
+pest = {
+	name = "Pest"
+	world = earth
+	geocoordinate = { 19.1 47.5 }
+	type = settlement
+	resource = center_of_trade
+	province = pest
+	
+	history = {
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1873 = {
+			improvements += rail_depot #Pest-Zagreb-Fiume railroad built in 1873; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
+		}
+	}
+}

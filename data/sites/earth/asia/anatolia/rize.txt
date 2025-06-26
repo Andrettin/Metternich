@@ -1,0 +1,8 @@
+rize = {
+	name = "Rize"
+	world = earth
+	geocoordinate = { 40.52185705440 41.02084108380 } #from Natural Earth
+	type = resource
+	resource = grain #Cultivated areas with livestock grazing; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
+	province = trebizond
+}

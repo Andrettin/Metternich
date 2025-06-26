@@ -1,0 +1,15 @@
+midian = {
+	name = "Midian"
+	type = minor_nation
+	culture = arabic
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = tabuk
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		tabuk
+	}
+}

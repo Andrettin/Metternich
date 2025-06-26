@@ -1,0 +1,38 @@
+research_organization_1 = {
+	name = "Research Organization"
+	conditions = {
+		game_rule = research_organizations
+	}
+}
+
+research_organization_2 = {
+	name = "Research Organization"
+	conditions = {
+		game_rule = research_organizations
+		province_count >= 8 #should be based on industrial capacity instead
+	}
+}
+
+research_organization_3 = {
+	name = "Research Organization"
+	conditions = {
+		game_rule = research_organizations
+		province_count >= 16 #should be based on industrial capacity instead
+	}
+}
+
+research_organization_4 = {
+	name = "Research Organization"
+	conditions = {
+		game_rule = research_organizations
+		province_count >= 24 #should be based on industrial capacity instead
+	}
+}
+
+research_organization_5 = {
+	name = "Research Organization"
+	conditions = {
+		game_rule = research_organizations
+		province_count >= 32 #should be based on industrial capacity instead
+	}
+}

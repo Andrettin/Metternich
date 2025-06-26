@@ -1,0 +1,16 @@
+suebi = {
+	name = "Suebi"
+	type = tribe
+	culture = suebi
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = berlin
+	eras = {
+		ancient_era
+		medieval_era
+	}
+	core_provinces = {
+		brandenburg
+	}
+}

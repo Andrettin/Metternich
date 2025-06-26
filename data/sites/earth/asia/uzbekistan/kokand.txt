@@ -1,0 +1,8 @@
+kokand = {
+	name = "Kokand"
+	world = earth
+	geocoordinate = { 70.94000036510 40.54040529280 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = fergana
+}

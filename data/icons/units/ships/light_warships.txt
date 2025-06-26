@@ -1,0 +1,3 @@
+frigate = {
+	filepath = "icons/units/ships/frigate.png"
+}

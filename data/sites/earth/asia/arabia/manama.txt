@@ -1,0 +1,8 @@
+manama = {
+	name = "Manama"
+	world = earth
+	geocoordinate = { 50.58305171590 26.23613629050 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = qatar
+}

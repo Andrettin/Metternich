@@ -1,0 +1,14 @@
+java = {
+	name = "Java"
+	color = { 178 155 146 }
+	provincial_capital = jakarta
+	regions = {
+		asia
+		indonesia
+	}
+	
+	history = {
+		culture = javanese
+		religion = pagan
+	}
+}

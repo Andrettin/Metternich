@@ -1,0 +1,43 @@
+ottoman_empire = {
+	name = "Ottoman Empire"
+	type = great_power
+	color = { 170 148 214 }
+	culture = turkish
+	default_religion = sunni
+	default_tier = empire
+	default_government_type = monarchy
+	default_capital = constantinople
+	short_name = true
+	eras = {
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		thrace
+	}
+	
+	history = {
+		1520 = {
+			offices = {
+				ruler = suleiman_i_of_the_ottoman_empire #Suleiman I became Sultan of the Ottoman Empire in 1520; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
+			}
+			
+			government_type = monarchy
+		}
+	
+		1820 = {
+			wealth = 1500
+			
+			commodities = {
+				horses = 4
+				canned_food = 20
+				fabric = 3
+				lumber = 15
+				paper = 4
+				steel = 4
+				muskets = 2
+				iron_cannons = 2
+			}
+		}
+	}
+}

@@ -1,0 +1,7 @@
+banska_bystrica = {
+	name = "Banska Bystrica" #"Banská Bystrica"
+	world = earth
+	geocoordinate = { 19.14998327500 48.73329022120 } #from Natural Earth
+	type = resource
+	resource = grain
+}

@@ -1,0 +1,18 @@
+denmark = {
+	name = "Denmark"
+	type = minor_nation
+	culture = danish
+	default_religion = protestant
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = copenhagen
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		zealand
+		jutland
+	}
+}

@@ -1,0 +1,8 @@
+prussian = {
+	name = "Prussian"
+	group = baltic
+	color = { 142 140 102 }
+	species = {
+		human
+	}
+}

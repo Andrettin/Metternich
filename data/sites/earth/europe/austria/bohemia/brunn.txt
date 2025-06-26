@@ -1,0 +1,29 @@
+brunn = {
+	name = "Brunn" #"Brünn"
+	world = earth
+	geocoordinate = { 16.60998327500 49.20039349270 } #from Natural Earth
+	type = settlement
+	#resource = coal
+	province = brunn
+	cultural_names = {
+		czech = "Brno"
+	}
+	
+	history = {
+		919 = {
+			settlement_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1815 = {
+			buildings += fort #Spielberg had a "castle" in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1839.7.7 = { #the first trains from Vienna arrived in Brno on 1839.7.7; Source: Chad Bryant, "Into an Uncertain Future: Railroads and Vormärz Liberalism in Brno, Vienna, and Prague", 2009, p. 183.
+			improvements += rail_depot
+		}
+	}
+}

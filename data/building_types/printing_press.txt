@@ -1,0 +1,62 @@
+printing_press = {
+	name = "Printing Press"
+	building_class = printing_press
+	portrait = trading_post
+	icon = newspaper
+	provincial = true
+	required_technology = printing_press
+	settlement_types = {
+		campus
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				produces_commodity = research
+				produces_commodity = statesmanship
+			}
+		}
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = paper
+			value = 1
+		}
+	}
+	settlement_modifier = {
+		statesmanship_output_modifier = 50
+		research_output_modifier = 22
+	}
+}
+
+newspaper = {
+	name = "Newspaper"
+	building_class = newspaper
+	portrait = trading_post
+	icon = newspaper
+	provincial = true
+	required_building = printing_press
+	required_technology = printing_press
+	settlement_types = {
+		campus
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			produces_commodity = statesmanship
+		}
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = paper
+			value = 1
+		}
+	}
+	settlement_modifier = {
+		statesmanship_output_modifier = 100
+		research_output_modifier = 22
+	}
+}

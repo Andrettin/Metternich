@@ -1,0 +1,13 @@
+guatemala = {
+	name = "Guatemala"
+	world = earth
+	geocoordinate = { -90.52696557790 14.62113466280 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1676 = {
+			buildings += university #University founded in Guatemala in 1676; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+	}
+}

@@ -1,0 +1,14 @@
+jerusalem = {
+	name = "Jerusalem"
+	world = earth
+	geocoordinate = { 35.20662593460 31.77840781560 } #from Natural Earth
+	type = settlement
+	resource = holy_site
+	province = palestine
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

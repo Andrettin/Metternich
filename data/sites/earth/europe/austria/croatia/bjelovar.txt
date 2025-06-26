@@ -1,0 +1,7 @@
+bjelovar = {
+	name = "Bjelovar"
+	world = earth
+	geocoordinate = { 16.842222222222 45.898888888889 }
+	type = resource
+	resource = grain
+}

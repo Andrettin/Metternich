@@ -1,0 +1,8 @@
+karlstad = {
+	name = "Karlstad"
+	world = earth
+	geocoordinate = { 13.49994055040 59.36713726720 } #from Natural Earth
+	type = resource
+	resource = timber
+	province = uppland
+}

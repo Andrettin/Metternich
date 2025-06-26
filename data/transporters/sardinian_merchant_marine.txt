@@ -1,0 +1,11 @@
+sardinian_traders = {
+	type = trader
+	country = sardinia
+	quantity = 3
+	
+	history = {
+		1820 = {
+			active = true
+		}
+	}
+}

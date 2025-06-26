@@ -1,0 +1,14 @@
+sichuan = {
+	name = "Sichuan"
+	color = { 230 33 8 }
+	provincial_capital = chengdu
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

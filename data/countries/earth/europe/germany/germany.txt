@@ -1,0 +1,43 @@
+germany = {
+	name = "Germany"
+	type = great_power
+	color = { 245 167 97 }
+	culture = german
+	default_religion = protestant
+	default_tier = empire
+	default_government_type = monarchy
+	default_capital = berlin
+	min_tier = kingdom
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		brandenburg
+		augsburg
+		baden
+		bavaria
+		bremen
+		east_friesland
+		east_prussia
+		farther_pomerania
+		franconia
+		hanover
+		hesse
+		hither_pomerania
+		holstein
+		lower_silesia
+		magdeburg
+		mecklenburg
+		nassau
+		oldenburg
+		palatinate
+		rhineland
+		schleswig
+		thuringia
+		upper_saxony
+		upper_silesia
+		west_prussia
+		westphalia
+		wurtemberg
+	}
+}

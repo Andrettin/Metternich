@@ -1,0 +1,14 @@
+gaceta_de_madrid = { #Source: Henry Kamen, "Early Modern European Society", 2021, p. 309.
+	name = "Gaceta de Madrid"
+	portrait = trading_post
+	description = "The ~<Gaceta de Madrid~> was a weekly gazette founded in 1661."
+	preconditions = {
+		owns_site = madrid
+	}
+	built_settlement_buildings = {
+		madrid = newspaper
+	}
+	completion_effects = {
+		statesmanship += 5
+	}
+}

@@ -1,0 +1,16 @@
+phoenicia = {
+	name = "Phoenicia"
+	type = great_power
+	color = { 204 161 197 }
+	culture = phoenician
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = republic
+	default_capital = tyre
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		lebanon
+	}
+}

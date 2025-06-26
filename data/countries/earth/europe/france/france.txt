@@ -1,0 +1,51 @@
+france = {
+	name = "France"
+	type = great_power
+	color = { 87 139 166 }
+	culture = french
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = paris
+	max_tier = empire
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		ile_de_france
+		orleanais
+		anjou
+		champagne
+		picardy
+		poitou
+		burgundy
+		limousin
+		auvergne
+		dauphiny
+		guyenne
+		gascony
+		upper_languedoc
+		lower_languedoc
+		provence
+	}
+	
+	history = {
+		1820 = {
+			wealth = 5000
+			
+			commodities = {
+				horses = 4
+				canned_food = 20
+				fabric = 5
+				lumber = 20
+				paper = 10
+				steel = 15
+				clothing = 4
+				furniture = 4
+				tools = 4
+			}
+		}
+	}
+}

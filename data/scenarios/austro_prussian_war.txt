@@ -1,0 +1,10 @@
+austro_prussian_war = {
+	name = "Austro-Prussian War"
+	parent_scenario = restoration_of_europe
+	start_date = 1866
+	map_template = earth
+	default_countries = {
+		austria
+		prussia
+	}
+}

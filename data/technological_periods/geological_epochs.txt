@@ -1,0 +1,52 @@
+devonian = {
+	start_year = -419200000
+	end_year = -358900000
+}
+
+carboniferous = {
+	parent_period = devonian
+	start_year = -358900000
+	end_year = -298900000
+}
+
+permian = {
+	parent_period = carboniferous
+	start_year = -298900000
+	end_year = -251902000
+}
+
+triassic = {
+	parent_period = permian
+	start_year = -251902000
+	end_year = -201400000
+}
+
+jurassic = {
+	parent_period = triassic
+	start_year = -201400000
+	end_year = -145000000
+}
+
+cretaceous = {
+	parent_period = jurassic
+	start_year = -145000000
+	end_year = -66000000
+}
+
+paleogene = {
+	parent_period = cretaceous
+	start_year = -66000000
+	end_year = -23030000
+}
+
+neogene = {
+	parent_period = paleogene
+	start_year = -23030000
+	end_year = -2588000
+}
+
+pleistocene = {
+	parent_period = neogene
+	start_year = -2588000
+	end_year = -4000
+}

@@ -1,0 +1,23 @@
+santiago = {
+	name = "Santiago"
+	type = minor_nation
+	culture = castillian
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = kingston
+	core_provinces = {
+		jamaica
+	}
+	
+	
+	history = {
+		1600 = {
+			#Spanish possession in 1600; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			diplomacy_state = {
+				country = spain
+				subject_type = colony
+			}
+		}
+	}
+}

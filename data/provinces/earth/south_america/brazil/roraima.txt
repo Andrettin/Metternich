@@ -1,0 +1,22 @@
+roraima = {
+	name = "Roraima"
+	color = { 110 75 109 }
+	provincial_capital = boa_vista
+	resources = {
+		diamonds = 1 #diamonds and other precious stones; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+	}
+	regions = {
+		brazil
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = arawaks
+			culture = arawak
+		}
+	}
+}

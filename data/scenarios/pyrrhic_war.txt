@@ -1,0 +1,10 @@
+pyrrhic_war = {
+	name = "Pyrrhic War"
+	parent_scenario = rise_of_rome
+	start_date = -280
+	map_template = earth
+	hidden = true
+	default_countries = {
+		rome
+	}
+}

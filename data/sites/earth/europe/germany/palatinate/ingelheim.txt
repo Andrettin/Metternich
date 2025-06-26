@@ -1,0 +1,12 @@
+ingelheim = {
+	name = "Ingelheim"
+	world = earth
+	#geocoordinate = { 8.0563888888889 49.974722222222 }
+	province = palatinate
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

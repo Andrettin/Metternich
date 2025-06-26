@@ -1,0 +1,27 @@
+lille = {
+	name = "Lille"
+	world = earth
+	geocoordinate = { 3.08000809593 50.64996909490 } #from Natural Earth
+	type = resource
+	#resource = grain #Cropland (primarily wheat, sugar beets, corn); Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
+	resource = iron_ore
+	province = picardy
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1789 = {
+			buildings += courthouse #Prévôt des maréchaux existent in Lille in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 7000
+				clergymen.french.catholic = 8000
+				officers.french.catholic = 3000
+			}
+		}
+	}
+}

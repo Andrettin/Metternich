@@ -1,0 +1,6 @@
+prijedor = {
+	name = "Prijedor"
+	world = earth
+	geocoordinate = { 16.70000362010 44.98039267890 } #from Natural Earth
+	province = bosnia
+}

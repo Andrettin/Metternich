@@ -1,0 +1,8 @@
+cardiff = {
+	name = "Cardiff"
+	world = earth
+	geocoordinate = { -3.22500756979 51.49999472970 } #from Natural Earth
+	type = settlement
+	#resource = coal
+	province = wales
+}

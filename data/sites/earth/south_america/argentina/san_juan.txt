@@ -1,0 +1,6 @@
+san_juan_argentina = {
+	name = "San Juan"
+	world = earth
+	geocoordinate = { -68.51998844570 -31.55002642950 } #from Natural Earth
+	type = settlement
+}

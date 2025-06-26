@@ -1,0 +1,12 @@
+ceuta = {
+	name = "Ceuta"
+	world = earth
+	#geocoordinate = { -5.30699935039 35.88898378400 } #from Natural Earth
+	province = tangier
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

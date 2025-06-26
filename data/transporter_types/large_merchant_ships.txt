@@ -1,0 +1,78 @@
+fluyte = {
+	name = "Fluyte"
+	transporter_class = fluyte
+	icon = fluyte
+	hit_points = 35
+	stats = {
+		resistance = 5
+		movement = 2
+	}
+	cargo = 4
+	required_technology = superior_hull_design
+	commodity_costs = {
+		lumber = 6
+		cast_iron = 2
+		fabric = 2
+	}
+	upgrades = {
+		indiaman
+	}
+}
+
+indiaman = {
+	name = "Indiaman"
+	transporter_class = indiaman
+	icon = indiaman
+	hit_points = 55
+	stats = {
+		resistance = 10
+		movement = 3
+	}
+	cargo = 8
+	required_technology = large_hulls
+	commodity_costs = {
+		fabric = 3
+		lumber = 7
+	}
+	upgrades = {
+		paddlewheeler
+	}
+}
+
+paddlewheeler = {
+	name = "Paddlewheeler"
+	transporter_class = paddlewheeler
+	icon = paddlewheeler
+	hit_points = 60
+	stats = {
+		resistance = 10
+		movement = 6
+	}
+	cargo = 10
+	required_technology = merchant_steamships
+	commodity_costs = {
+		lumber = 6
+		steel = 2
+		coal = 10
+	}
+	upgrades = {
+		freighter
+	}
+}
+
+freighter = {
+	name = "Freighter"
+	transporter_class = freighter
+	icon = freighter
+	hit_points = 45
+	stats = {
+		resistance = 25
+		movement = 7
+	}
+	cargo = 16
+	required_technology = marine_engineering
+	commodity_costs = {
+		steel = 8
+		coal = 20
+	}
+}

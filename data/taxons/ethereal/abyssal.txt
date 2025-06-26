@@ -1,0 +1,6 @@
+abyssal = {
+	name = "Abyssal"
+	common_name = "Abyssal"
+	rank = kingdom
+	supertaxon = ethereal
+}

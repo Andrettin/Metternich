@@ -1,0 +1,11 @@
+ottoman_traders = {
+	type = trader
+	country = ottoman_empire
+	quantity = 2
+	
+	history = {
+		1820 = {
+			active = true
+		}
+	}
+}

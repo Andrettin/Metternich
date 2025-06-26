@@ -1,0 +1,14 @@
+charge = {
+	name = "Charge"
+	icon = saber
+	conditions = {
+		or = {
+			infantry = true
+			cavalry = true
+		}
+		promotion = veteran_1
+	}
+	modifier = {
+		bonus_vs_artillery = 25
+	}
+}

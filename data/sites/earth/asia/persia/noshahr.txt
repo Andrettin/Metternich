@@ -1,0 +1,8 @@
+noshahr = {
+	name = "Noshahr" #also known as Nowshar and Noshehr
+	world = earth
+	geocoordinate = { 51.49611111111111 36.64861111111111 }
+	type = resource
+	resource = timber
+	province = mazandaran
+}

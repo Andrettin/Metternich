@@ -1,0 +1,7 @@
+pori = {
+	name = "Pori"
+	world = earth
+	geocoordinate = { 21.77493932970 61.47889467280 } #from Natural Earth
+	type = settlement
+	province = satakunta
+}

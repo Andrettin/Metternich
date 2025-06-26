@@ -1,0 +1,7 @@
+norrkoping = {
+	name = "Norrkoping" #"Norrköping"
+	world = earth
+	geocoordinate = { 16.17869177110 58.59542726560 } #from Natural Earth
+	type = resource
+	resource = grain
+}

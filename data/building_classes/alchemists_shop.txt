@@ -1,0 +1,4 @@
+alchemists_shop = {
+	name = "Alchemist's Shop"
+	slot_type = laboratory
+}

@@ -1,0 +1,27 @@
+valence = {
+	name = "Valence" #located in the Drôme department
+	world = earth
+	geocoordinate = { 4.8908333333333 44.9325 }
+	type = resource
+	resource = fruit
+	province = dauphiny
+	cultural_names = {
+		frankish = "Valentia"
+	}
+	
+	history = {
+		1459 = {
+			buildings += university #University founded in Valence in 1459; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1789 = {
+			buildings += courthouse #Chief court of the salt tax existent in Valence in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 6600
+			}
+		}
+	}
+}

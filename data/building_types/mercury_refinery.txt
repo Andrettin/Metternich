@@ -1,0 +1,13 @@
+mercury_refinery = {
+	name = "Mercury Refinery"
+	building_class = mercury_refinery
+	portrait = factory
+	icon = iron
+	production_types = {
+		mercury_refining
+	}
+	base_capacity = 8
+	capacity_increment = 8
+	expandable = true
+	required_technology = alchemy
+}

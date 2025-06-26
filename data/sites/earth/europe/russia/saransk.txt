@@ -1,0 +1,6 @@
+saransk = {
+	name = "Saransk"
+	world = earth
+	geocoordinate = { 45.18002233760 54.17037436840 } #from Natural Earth
+	type = settlement
+}

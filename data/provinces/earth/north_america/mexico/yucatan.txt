@@ -1,0 +1,20 @@
+yucatan = {
+	name = "Yucatan"
+	color = { 217 197 109 }
+	provincial_capital = merida_yucatan
+	regions = {
+		mexico
+	}
+	
+	history = {
+		owner = mayas
+		culture = maya
+		religion = pagan
+		
+		1600 = {
+			owner = new_spain #part of New Spain in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = castillian
+			religion = catholic
+		}
+	}
+}

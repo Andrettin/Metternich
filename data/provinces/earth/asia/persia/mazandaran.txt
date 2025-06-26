@@ -1,0 +1,23 @@
+mazandaran = {
+	name = "Mazandaran"
+	color = { 17 193 68 }
+	provincial_capital = sari
+	resources = {
+		sheep = 1
+	}
+	regions = {
+		persia
+	}
+	
+	history = {
+		owner = persia
+		culture = persian
+		religion = pagan
+		
+		1801 = {
+			owner = persia #part of Persia in 1801; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 170-171.
+			culture = persian
+			religion = shiite
+		}
+	}
+}

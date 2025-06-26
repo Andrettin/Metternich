@@ -1,0 +1,17 @@
+regulars = {
+	name = "Regulars"
+	domain = land
+	category = regular_infantry
+}
+
+rifle_infantry = {
+	name = "Rifle Infantry"
+	domain = land
+	category = regular_infantry
+}
+
+infantry = {
+	name = "Infantry"
+	domain = land
+	category = regular_infantry
+}

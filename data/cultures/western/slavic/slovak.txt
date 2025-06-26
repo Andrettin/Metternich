@@ -1,0 +1,8 @@
+slovak = {
+	name = "Slovak"
+	group = west_slavic
+	color = { 120 255 255 }
+	species = {
+		human
+	}
+}

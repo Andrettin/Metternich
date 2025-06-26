@@ -1,0 +1,6 @@
+sefra = {
+	name = "Sefra"
+	world = earth
+	geocoordinate = { -0.57994938293 32.76041505840 } #from Natural Earth
+	type = settlement
+}

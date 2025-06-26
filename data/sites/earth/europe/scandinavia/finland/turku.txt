@@ -1,0 +1,17 @@
+turku = {
+	name = "Turku"
+	world = earth
+	geocoordinate = { 22.25496170930 60.45386680010 } #from Natural Earth
+	type = settlement
+	#resource = fish
+	province = finland
+	cultural_names = {
+		swedish = "Abo"
+	}
+	
+	history = {
+		1815 = {
+			population = 12215 #Abo had a population of 12,215 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 81.
+		}
+	}
+}

@@ -1,0 +1,6 @@
+volgograd = {
+	name = "Volgograd"
+	world = earth
+	geocoordinate = { 44.49996048870 48.71000998850 } #from Natural Earth
+	type = settlement
+}

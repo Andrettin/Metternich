@@ -1,0 +1,11 @@
+brasso = {
+	name = "Brasso"
+	world = earth
+	geocoordinate = { 25.60716019560 45.64753541980 } #from Natural Earth
+	type = resource
+	resource = sheep
+	province = transylvania
+	cultural_names = {
+		romanian = "Brasov" #"Brașov"
+	}
+}

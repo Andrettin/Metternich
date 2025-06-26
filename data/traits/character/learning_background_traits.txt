@@ -1,0 +1,208 @@
+detached_priest = {
+	name = "Detached Priest"
+	types = {
+		background
+	}
+	icon = wooden_cross
+	conditions = {
+		character_type = theologian
+		not = {
+			trait = dutiful_cleric
+			trait = martial_cleric
+			trait = scholarly_theologian
+			trait = mastermind_theologian
+		}
+	}
+	attribute_bonuses = {
+		learning = 2
+	}
+}
+
+dutiful_cleric = {
+	name = "Dutiful Cleric"
+	types = {
+		background
+	}
+	icon = bronze_cross
+	conditions = {
+		character_type = theologian
+		not = {
+			trait = detached_priest
+			trait = martial_cleric
+			trait = scholarly_theologian
+			trait = mastermind_theologian
+		}
+	}
+	attribute_bonuses = {
+		learning = 4
+	}
+}
+
+martial_cleric = {
+	name = "Martial Cleric"
+	types = {
+		background
+	}
+	icon = bronze_cross
+	conditions = {
+		character_type = theologian
+		not = {
+			trait = detached_priest
+			trait = dutiful_cleric
+			trait = scholarly_theologian
+			trait = mastermind_theologian
+		}
+	}
+	attribute_bonuses = {
+		learning = 4
+		martial = 1
+	}
+}
+
+scholarly_theologian = {
+	name = "Scholarly Theologian"
+	types = {
+		background
+	}
+	icon = silver_cross
+	conditions = {
+		character_type = theologian
+		not = {
+			trait = detached_priest
+			trait = dutiful_cleric
+			trait = martial_cleric
+			trait = mastermind_theologian
+		}
+	}
+	attribute_bonuses = {
+		learning = 6
+		diplomacy = 1
+		stewardship = 1
+	}
+}
+
+mastermind_theologian = {
+	name = "Mastermind Theologian"
+	types = {
+		background
+	}
+	icon = golden_cross
+	conditions = {
+		character_type = theologian
+		not = {
+			trait = detached_priest
+			trait = dutiful_cleric
+			trait = martial_cleric
+			trait = scholarly_theologian
+		}
+	}
+	attribute_bonuses = {
+		learning = 8
+		diplomacy = 2
+		stewardship = 2
+	}
+}
+
+conscientious_scribe = {
+	name = "Conscientious Scribe"
+	types = {
+		background
+	}
+	icon = research
+	conditions = {
+		or = {
+			character_type = artist
+			character_type = engineer
+			character_type = natural_scientist
+			character_type = navigator
+			character_type = philosopher
+		}
+		not = {
+			trait = insightful_thinker
+			trait = astute_intellectual
+			trait = mastermind_philosopher
+		}
+	}
+	attribute_bonuses = {
+		learning = 2
+	}
+}
+
+insightful_thinker = {
+	name = "Insightful Thinker"
+	types = {
+		background
+	}
+	icon = philosophy
+	conditions = {
+		or = {
+			character_type = artist
+			character_type = engineer
+			character_type = natural_scientist
+			character_type = navigator
+			character_type = philosopher
+		}
+		not = {
+			trait = conscientious_scribe
+			trait = astute_intellectual
+			trait = mastermind_philosopher
+		}
+	}
+	attribute_bonuses = {
+		learning = 4
+	}
+}
+
+astute_intellectual = {
+	name = "Astute Intellectual"
+	types = {
+		background
+	}
+	icon = philosophy
+	conditions = {
+		or = {
+			character_type = artist
+			character_type = engineer
+			character_type = natural_scientist
+			character_type = navigator
+			character_type = philosopher
+		}
+		not = {
+			trait = conscientious_scribe
+			trait = insightful_thinker
+			trait = mastermind_philosopher
+		}
+	}
+	attribute_bonuses = {
+		learning = 6
+		diplomacy = 1
+		stewardship = 1
+	}
+}
+
+mastermind_philosopher = {
+	name = "Mastermind Philosopher"
+	types = {
+		background
+	}
+	icon = philosophy
+	conditions = {
+		or = {
+			character_type = artist
+			character_type = engineer
+			character_type = natural_scientist
+			character_type = navigator
+			character_type = philosopher
+		}
+		not = {
+			trait = conscientious_scribe
+			trait = insightful_thinker
+			trait = astute_intellectual
+		}
+	}
+	attribute_bonuses = {
+		learning = 8
+		diplomacy = 2
+		stewardship = 2
+	}
+}

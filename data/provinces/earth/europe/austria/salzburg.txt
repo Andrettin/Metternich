@@ -1,0 +1,68 @@
+salzburg = {
+	name = "Salzburg"
+	color = { 240 97 192 }
+	provincial_capital = salzburg
+	cultural_names = {
+		roman = "Iuvavum"
+	}
+	resources = {
+		grain = 2
+		fruit = 1
+	}
+	regions = {
+		austria
+		imperial_austria_1806
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		myths_enabled = {
+			-3000 = {
+				owner = untersberg
+				culture = gnomish
+				religion = pagan
+			}
+			
+			450 = {
+				owner = untersberg
+				culture = gnomish
+				religion = pagan
+			}
+		}
+		
+		!myths_enabled = {
+			526 = {
+				owner = bavarians #territory of the Bavarians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+				culture = suebi
+			}
+		}
+		
+		919 = {
+			owner = bavaria #part of the Duchy of Bavaria in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		1477 = {
+			owner = salzburg #part of the Archbishopric of Salzburg c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = austrian
+		}
+		
+		1808 = {
+			population = 193825 #Salzburg (province) with Berchtoldsg. had a population of 193,825 in 1808 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1809 = {
+			population = 195000 #Salzburg (province) with Berchtoldsg. had an estimated population of 195,000 in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = austrian #German; Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

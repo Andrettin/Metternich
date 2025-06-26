@@ -1,0 +1,19 @@
+vasterbotten = {
+	name = "Vasterbotten"
+	color = { 97 1 128 }
+	provincial_capital = umea
+	regions = {
+		sweden
+	}
+	
+	history = {
+		culture = norse
+		religion = pagan
+		
+		1524 = {
+			owner = sweden #part of Sweden in 1524; Source: William R. Shepherd, "Historical Atlas", 1911, p. 120.
+			culture = swedish
+			religion = protestant
+		}
+	}
+}

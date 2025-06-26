@@ -1,0 +1,7 @@
+zwolle = {
+	name = "Zwolle"
+	world = earth
+	geocoordinate = { 6.09699652852 52.52400008890 } #from Natural Earth
+	type = settlement
+	province = overijssel
+}

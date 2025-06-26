@@ -1,0 +1,4 @@
+european = {
+	name = "European"
+	species = human
+}

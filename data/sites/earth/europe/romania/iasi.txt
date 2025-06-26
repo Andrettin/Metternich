@@ -1,0 +1,14 @@
+iasi = {
+	name = "Iasi" #"Iași"
+	world = earth
+	geocoordinate = { 27.57494706090 47.16834698390 } #from Natural Earth
+	type = settlement
+	#resource = fruit
+	province = moldavia
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

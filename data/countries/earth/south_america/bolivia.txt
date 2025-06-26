@@ -1,0 +1,23 @@
+bolivia = {
+	name = "Bolivia"
+	type = minor_nation
+	culture = castillian
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = republic
+	default_capital = sucre
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		chuquisaca
+		beni
+		cochabamba
+		la_paz
+		oruro
+		pando
+		potosi
+		santa_cruz_bolivia
+		tarija
+	}
+}

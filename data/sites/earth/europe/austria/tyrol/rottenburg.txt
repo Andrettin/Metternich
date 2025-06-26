@@ -1,0 +1,12 @@
+rottenburg = {
+	name = "Rottenburg"
+	world = earth
+	geocoordinate = { 11.7981 47.3844 }
+	province = tyrol
+	
+	history = {
+		1411 = {
+			#improvements += ruins
+		}
+	}
+}

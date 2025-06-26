@@ -1,0 +1,14 @@
+tentyris = {
+	name = "Tentyris"
+	world = earth
+	geocoordinate = { 32.669722 26.142194 }
+	type = resource
+	resource = cotton #linen
+	province = upper_egypt
+	
+	history = {
+		-1450 = {
+			developed = true #Tentyris existed c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+	}
+}

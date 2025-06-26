@@ -1,0 +1,9 @@
+cigar_production = {
+	name = "Cigar Production"
+	input_commodities = {
+		labor = 2
+		tobacco = 2
+	}
+	output_commodity = cigars
+	output_value = 1
+}

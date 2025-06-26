@@ -1,0 +1,7 @@
+gomel = {
+	name = "Gomel"
+	world = earth
+	geocoordinate = { 31.00000931670 52.43001548170 } #from Natural Earth
+	type = settlement
+	province = gomel
+}

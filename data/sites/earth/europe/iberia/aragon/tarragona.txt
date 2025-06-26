@@ -1,0 +1,21 @@
+tarragona = {
+	name = "Tarragona"
+	world = earth
+	geocoordinate = { 1.24999059918 41.12036989240 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = catalonia
+	cultural_names = {
+		roman = "Tarraco" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Tarragona was the seat of an archbishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+		}
+		
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

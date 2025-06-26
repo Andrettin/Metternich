@@ -1,0 +1,15 @@
+konigswart = { #estate
+	name = "Konigswart" #"Königswart"
+	world = earth
+	geocoordinate = { 12.60558333 50.00430556 }
+	pos_offset = { 1 0 }
+	type = resource
+	resource = sheep #the estate possessed sheep farms, as well as a plethora of other economic activities; Source: Wolfram Siemann, "Metternich: Strategist and Visionary", 2019, p. 29.
+	
+	history = {
+		1630.4.10 = {
+			#Königswart was acquired by Johann Reinhard von Metternich together with four of his brothers on 1630.4.11; Source: Wolfram Siemann, "Metternich: Strategist and Visionary", 2019, pp. 26-27.
+			improvements += sheep_ranch
+		}
+	}
+}

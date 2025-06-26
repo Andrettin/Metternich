@@ -1,0 +1,6 @@
+monterrey = {
+	name = "Monterrey"
+	world = earth
+	geocoordinate = { -100.32998478400 25.66999513650 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,8 @@
+karlskrona = {
+	name = "Karlskrona"
+	world = earth
+	geocoordinate = { 15.29600461090 56.20300218590 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = scania
+}

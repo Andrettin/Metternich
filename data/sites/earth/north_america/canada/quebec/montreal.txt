@@ -1,0 +1,8 @@
+montreal = {
+	name = "Montreal"
+	world = earth
+	geocoordinate = { -73.58329695810 45.49999920560 } #from Natural Earth
+	type = resource
+	resource = cattle
+	province = quebec
+}

@@ -1,0 +1,24 @@
+masonry = {
+	name = "Masonry"
+	subcategory = infrastructure
+	portrait = engineering
+	icon = wall
+	period = copper_age
+	cost = 55
+	cost_commodity = research
+}
+
+architecture = {
+	name = "Architecture"
+	subcategory = infrastructure
+	portrait = engineering
+	icon = architecture
+	period = iron_age
+	cost = 105
+	cost_commodity = research
+	prerequisites = {
+		masonry
+		ironworking
+		mathematics
+	}
+}

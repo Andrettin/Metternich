@@ -1,0 +1,6 @@
+san_luis_potosi = {
+	name = "San Luis Potosi" #"San Luis Potosí"
+	world = earth
+	geocoordinate = { -100.99999556700 22.16997621560 } #from Natural Earth
+	type = settlement
+}

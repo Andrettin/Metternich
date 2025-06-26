@@ -1,0 +1,39 @@
+diplomat = {
+	name = "Diplomat"
+	types = {
+		advisor
+	}
+	icon = treaty
+	attribute = diplomacy
+	conditions = {
+		character_type = diplomat
+	}
+	scaled_advisor_modifier = {
+		diplomatic_penalty_for_expansion_modifier = -1
+	}
+	scaled_office_modifiers = {
+		chancellor = {
+			diplomatic_penalty_for_expansion_modifier = -1
+		}
+	}
+}
+
+statesman = {
+	name = "Statesman"
+	types = {
+		advisor
+	}
+	icon = bell
+	attribute = diplomacy
+	conditions = {
+		character_type = statesman
+	}
+	scaled_advisor_modifier = {
+		statesmanship_output_modifier = 5
+	}
+	scaled_office_modifiers = {
+		chancellor = {
+			statesmanship_output_modifier = 5
+		}
+	}
+}

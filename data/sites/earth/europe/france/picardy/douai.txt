@@ -1,0 +1,13 @@
+douai = {
+	name = "Douai"
+	world = earth
+	geocoordinate = { 3.0791666666667 50.370833333333 }
+	province = picardy
+	
+	history = {
+		1562 = {
+			buildings += university #University founded in Douai in 1562; Source: Henry Kamen, "Early Modern European Society", 2021, p. 292.
+			#The Cambridge Modern History Atlas gives the year as 1582 instead; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

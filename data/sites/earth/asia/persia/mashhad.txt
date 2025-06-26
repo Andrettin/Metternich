@@ -1,0 +1,8 @@
+mashhad = {
+	name = "Mashhad"
+	world = earth
+	geocoordinate = { 59.56999670290 36.27001995750 } #from Natural Earth
+	type = settlement
+	#resource = coal
+	province = razavi_khorasan
+}

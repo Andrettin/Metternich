@@ -1,0 +1,11 @@
+babur = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
+	name = "Babur"
+	#descendant of Tamerlane (i.e. Timurid)
+	culture = uzbek
+	religion = sunni
+	home_settlement = fergana
+	gender = male
+	birth_date = 1483
+	death_date = 1530
+	#established the Mughal Empire in 1526 after taking Delhi and Agra
+}

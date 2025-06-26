@@ -1,0 +1,13 @@
+liverpool = {
+	name = "Liverpool"
+	world = earth
+	geocoordinate = { -2.91799788554 53.41600180980 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1903 = {
+			buildings += university #University founded in Liverpool in 1903; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
+			settlement_type = campus
+		}
+	}
+}

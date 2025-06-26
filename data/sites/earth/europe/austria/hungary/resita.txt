@@ -1,0 +1,7 @@
+resita = {
+	name = "Resita"
+	world = earth
+	geocoordinate = { 21.88650874700 45.29696250310 } #from Natural Earth
+	type = resource
+	resource = grain
+}

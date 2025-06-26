@@ -1,0 +1,19 @@
+shaka = {
+	name = "Shaka"
+	role = ruler
+	character_type = general
+	culture = zulu
+	religion = pagan
+	portrait = shaka
+	home_settlement = ulundi
+	gender = male
+	birth_date = 1787.7.1
+	death_date = 1828.9.24
+	rulable_countries = {
+		zululand
+	}
+	traits = {
+		aggressive
+		expansive
+	}
+}

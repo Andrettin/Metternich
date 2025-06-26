@@ -1,0 +1,7 @@
+maseru = {
+	name = "Maseru"
+	world = earth
+	geocoordinate = { 27.48327307000 -29.31667437870 } #from Natural Earth
+	type = settlement
+	province = lesotho
+}

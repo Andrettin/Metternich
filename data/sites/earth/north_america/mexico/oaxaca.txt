@@ -1,0 +1,6 @@
+oaxaca = {
+	name = "Oaxaca"
+	world = earth
+	geocoordinate = { -96.66994979020 17.08268983860 } #from Natural Earth
+	type = settlement
+}

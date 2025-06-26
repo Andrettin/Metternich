@@ -1,0 +1,10 @@
+gnomish_herbalist = {
+	filepath = "portraits/characters/gnomish_herbalist.png"
+	character_conditions = {
+		gender = male
+		or = {
+			species = gnome
+			species = dwarf
+		}
+	}
+}

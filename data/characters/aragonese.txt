@@ -1,0 +1,10 @@
+catherine_of_aragon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 207.
+	name = "Catherine"
+	surname = "of Aragon"
+	culture = aragonese
+	religion = catholic
+	home_settlement = zaragoza
+	gender = female
+	birth_date = 1485
+	death_date = 1536
+}

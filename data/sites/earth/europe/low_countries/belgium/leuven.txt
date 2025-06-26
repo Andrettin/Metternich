@@ -1,0 +1,20 @@
+leuven = {
+	name = "Leuven"
+	world = earth
+	geocoordinate = { 4.704444 50.8775 }
+	province = brabant
+	cultural_names = {
+		french = "Louvain"
+		walloon = "Louvain"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1425 = {
+			buildings += university #University founded in Louvain in 1425; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

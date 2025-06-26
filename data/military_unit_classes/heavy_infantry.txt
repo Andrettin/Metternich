@@ -1,0 +1,29 @@
+arquebusiers = {
+	name = "Arquebusiers"
+	domain = land
+	category = heavy_infantry
+}
+
+musketeers = {
+	name = "Musketeers"
+	domain = land
+	category = heavy_infantry
+}
+
+grenadiers = {
+	name = "Grenadiers"
+	domain = land
+	category = heavy_infantry
+}
+
+guards = {
+	name = "Guards"
+	domain = land
+	category = heavy_infantry
+}
+
+machine_gunners = {
+	name = "Machine Gunners"
+	domain = land
+	category = heavy_infantry
+}

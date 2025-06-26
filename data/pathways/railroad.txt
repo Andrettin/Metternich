@@ -1,0 +1,13 @@
+railroad = {
+	name = "Railroad"
+	image_filepath = "tiles/pathways/road.png"
+	transport_level = 4
+	required_pathway = road
+	required_technology = high_pressure_steam_engine
+	river_crossing_required_technology = iron_railroad_bridge
+	terrain_required_technologies = {
+		barren_hills = compound_steam_engine
+		mountains = dynamite
+		swamp = iron_railroad_bridge
+	}
+}

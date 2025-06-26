@@ -1,0 +1,8 @@
+suwayda = {
+	name = "Suwayda"
+	world = earth
+	geocoordinate = { 36.56659460320 32.70041872050 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = syria
+}

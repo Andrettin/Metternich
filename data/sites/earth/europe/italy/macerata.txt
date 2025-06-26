@@ -1,0 +1,12 @@
+macerata = {
+	name = "Macerata"
+	world = earth
+	geocoordinate = { 13.453333333333333 43.30027777777778 }
+	province = romagna
+	
+	history = {
+		1540 = {
+			buildings += university #University founded in Macerata in 1540; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

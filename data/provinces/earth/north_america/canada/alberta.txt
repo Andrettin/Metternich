@@ -1,0 +1,36 @@
+alberta = {
+	name = "Alberta"
+	color = { 204 179 161 }
+	provincial_capital = edmonton
+	regions = {
+		canada
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-143100000 = { #Alphadon lived in Alberta in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=487156
+			owner = alphadontids
+			culture = mammalian
+		}
+		
+		-4000 = {
+			owner = sioux
+			culture = sioux
+		}
+		
+		1670 = {
+			owner = ruperts_land #became part of Rupert's Land in 1670; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = english
+			religion = protestant
+		}
+	}
+}

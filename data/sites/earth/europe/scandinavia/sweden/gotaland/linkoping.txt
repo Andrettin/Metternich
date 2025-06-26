@@ -1,0 +1,6 @@
+linkoping = {
+	name = "Linkoping" #"Linköping"
+	world = earth
+	geocoordinate = { 15.62993973660 58.41001222650 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,18 @@
+novum_organum = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 252.
+	name = "Novum Organum"
+	portrait = scholar
+	description = "Our advisor Francis Bacon has published a book called \"Novum Organum\", in which he describes a novel approach to the pursuit of science. According to Bacon, scientific laws had to be proven empirically, deduction not being enough."
+	trigger = quarterly_pulse
+	only_once = true
+	random_weight = 1000
+	conditions = {
+		advisor = francis_bacon
+		technology = scientific_method
+		game_rule = research_commodity
+	}
+	option = {
+		effects = {
+			research += 5
+		}
+	}
+}

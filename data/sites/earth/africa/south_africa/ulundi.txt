@@ -1,0 +1,8 @@
+ulundi = {
+	name = "Ulundi"
+	world = earth
+	geocoordinate = { 31.41001013050 -28.32960284550 } #from Natural Earth
+	type = settlement
+	#resource = sheep
+	province = zululand
+}

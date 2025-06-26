@@ -1,0 +1,27 @@
+briton = {
+	name = "Briton"
+	group = brythonic
+	color = { 102 98 30 }
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			theocracy = "Druid"
+		}
+	}
+	
+	personal_names = {
+		male = {
+			"Caratacos"
+			#"Cassivellaunus" #ancient Celt; Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 137.
+			"Cassiwellaunos"
+			"Cunobelinos"
+		}
+		
+		female = {
+			"Boudica"
+			"Cartismandua"
+		}
+	}
+}

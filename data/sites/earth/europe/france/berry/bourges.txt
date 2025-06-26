@@ -1,0 +1,32 @@
+bourges = {
+	name = "Bourges"
+	world = earth
+	geocoordinate = { 2.39999792340 47.08372682610 } #from Natural Earth
+	type = settlement
+	#resource = timber
+	province = berry
+	cultural_names = {
+		frankish = "Bituricae"
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Bourges was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1464 = {
+			buildings += university #University founded in Bourges in 1464; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 3000
+			}
+		}
+	}
+}

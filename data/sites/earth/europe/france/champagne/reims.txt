@@ -1,0 +1,27 @@
+reims = {
+	name = "Reims"
+	world = earth
+	geocoordinate = { 4.02997595075 49.25039044100 } #from Natural Earth
+	type = resource
+	resource = grain #Other crops (primarily cereals); Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
+	province = champagne
+	cultural_names = {
+		frankish = "Remi"
+		gaulish = "Durocortorum"
+		roman = "Durocortorum" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Reims was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+		}
+		
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1547 = {
+			buildings += university #University founded in Reims in 1547; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

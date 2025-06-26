@@ -1,0 +1,12 @@
+fribourg = {
+	name = "Fribourg"
+	world = earth
+	geocoordinate = { 7.14999652234 46.80000008000 } #from Natural Earth
+	province = geneva
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

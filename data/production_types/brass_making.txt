@@ -1,0 +1,10 @@
+brass_making = {
+	name = "Brass Making"
+	input_commodities = {
+		labor = 2
+		copper = 1
+		zinc = 1
+	}
+	output_commodity = brass
+	output_value = 1
+}

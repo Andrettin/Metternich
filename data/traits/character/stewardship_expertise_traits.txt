@@ -1,0 +1,87 @@
+administrator = {
+	name = "Administrator"
+	types = {
+		expertise
+	}
+	icon = chest
+	attribute = stewardship
+	max_scaling = 3
+	conditions = {
+		or = {
+			primary_attribute = stewardship
+			military_unit_category = general
+			military_unit_category = light_warship
+			military_unit_category = heavy_warship
+		}
+		not = {
+			trait = gifted_administrator
+		}
+	}
+	attribute_bonuses = {
+		stewardship = 3
+	}
+	scaled_leader_modifier = {
+		discipline = 2.5
+	}
+}
+
+gifted_administrator = {
+	name = "Gifted Administrator"
+	types = {
+		expertise
+	}
+	icon = chest
+	attribute = stewardship
+	max_scaling = 6
+	conditions = {
+		or = {
+			primary_attribute = stewardship
+			military_unit_category = general
+			military_unit_category = light_warship
+			military_unit_category = heavy_warship
+		}
+		not = {
+			trait = administrator
+		}
+	}
+	attribute_bonuses = {
+		stewardship = 4
+	}
+	scaled_leader_modifier = {
+		discipline = 2.5
+	}
+}
+
+gardener = {
+	name = "Gardener"
+	types = {
+		expertise
+	}
+	icon = architecture
+	conditions = {
+		or = {
+			primary_attribute = stewardship
+			primary_attribute = learning
+		}
+	}
+	attribute_bonuses = {
+		stewardship = 2
+		learning = 1
+	}
+}
+
+silver_palm = {
+	name = "Silver Palm"
+	types = {
+		expertise
+	}
+	icon = chest
+	conditions = {
+		character_type = none
+		or = {
+			character_type = banker
+			character_type = merchant
+			character_type = treasurer
+		}
+	}
+}

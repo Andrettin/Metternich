@@ -1,0 +1,8 @@
+haarlem = {
+	name = "Haarlem"
+	world = earth
+	#geocoordinate = { 4.62999100609 52.38043194490 } #from Natural Earth
+	type = resource
+	resource = cattle #Cattle raising or mixed use with pasture dominant; Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
+	province = holland
+}

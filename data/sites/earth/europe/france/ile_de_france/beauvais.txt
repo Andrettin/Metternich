@@ -1,0 +1,16 @@
+beauvais = {
+	name = "Beauvais"
+	world = earth
+	geocoordinate = { 2.0875 49.434166666667 }
+	type = resource
+	resource = grain
+	province = ile_de_france
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 4400
+			}
+		}
+	}
+}

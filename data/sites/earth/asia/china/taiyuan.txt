@@ -1,0 +1,7 @@
+taiyuan = {
+	name = "Taiyuan"
+	world = earth
+	geocoordinate = { 112.54505773800 37.87501242990 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+}

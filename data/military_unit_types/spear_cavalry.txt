@@ -1,0 +1,62 @@
+chariots = {
+	name = "Chariots"
+	unit_class = chariots
+	icon = knights
+	stats = {
+		melee = 5
+		range = 1
+		defense = 5
+		movement = 4
+	}
+	required_technology = wheel
+	commodity_costs = {
+		manpower = 1
+	}
+	upgrades = {
+		knights
+	}
+}
+
+knights = {
+	name = "Knights"
+	unit_class = knights
+	icon = knights
+	stats = {
+		melee = 6
+		range = 1
+		defense = 6
+		movement = 4
+	}
+	required_technology = chivalry
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		bronze = 2
+		horses = 2
+	}
+	upgrades = {
+		lancers
+	}
+}
+
+lancers = {
+	name = "Lancers"
+	unit_class = lancers
+	icon = knights
+	stats = {
+		melee = 8
+		range = 1
+		defense = 5
+		movement = 6
+	}
+	required_technology = organized_regiments
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		bronze = 2
+		horses = 3
+	}
+	upgrades = {
+		cuirassiers
+	}
+}

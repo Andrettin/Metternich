@@ -1,0 +1,53 @@
+city_garrison_1 = {
+	name = "City Garrison I"
+	icon = wall
+	conditions = {
+		or = {
+			military_unit_category = militia
+			military_unit_category = bowmen
+			military_unit_category = light_infantry
+			military_unit_category = regular_infantry
+			military_unit_category = heavy_infantry
+		}
+	}
+	modifier = {
+		entrenchment_bonus_modifier = 20
+	}
+}
+
+city_garrison_2 = {
+	name = "City Garrison II"
+	icon = wall
+	conditions = {
+		or = {
+			military_unit_category = militia
+			military_unit_category = bowmen
+			military_unit_category = light_infantry
+			military_unit_category = regular_infantry
+			military_unit_category = heavy_infantry
+		}
+		promotion = city_garrison_1
+	}
+	modifier = {
+		entrenchment_bonus_modifier = 25
+	}
+}
+
+city_garrison_3 = {
+	name = "City Garrison III"
+	icon = wall
+	conditions = {
+		or = {
+			military_unit_category = militia
+			military_unit_category = bowmen
+			military_unit_category = light_infantry
+			military_unit_category = regular_infantry
+			military_unit_category = heavy_infantry
+		}
+		promotion = city_garrison_2
+	}
+	modifier = {
+		entrenchment_bonus_modifier = 30
+		bonus_vs_infantry = 10
+	}
+}

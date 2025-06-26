@@ -1,0 +1,11 @@
+great_library = {
+	name = "Great Library"
+	portrait = university
+	building = library
+	required_technology = literature
+	obsolescence_technology = electricity
+	required_game_rule = research_commodity
+	country_modifier = {
+		gain_technologies_known_by_others = true
+	}
+}

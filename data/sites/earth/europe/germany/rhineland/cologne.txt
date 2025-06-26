@@ -1,0 +1,33 @@
+cologne = {
+	name = "Cologne"
+	world = earth
+	geocoordinate = { 6.95000443383 50.93000368150 } #from Natural Earth
+	type = settlement
+	resource = holy_site
+	cultural_names = {
+		roman = "Colonia Agrippina" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39; Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Cologne was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		768 = {
+			#archbishopric existent in Cologne during 768-814 AD; Source: "Medieval Warfare V.2", 2013, pp. 8-9.
+		}
+		
+		919 = {
+			settlement_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1388 = {
+			buildings += university #University founded in Cologne in 1388; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

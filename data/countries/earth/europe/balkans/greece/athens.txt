@@ -1,0 +1,48 @@
+athens = {
+	name = "Athens"
+	type = great_power
+	color = { 19 139 244 }
+	culture = greek
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = republic
+	default_capital = athens
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		attica
+	}
+}
+
+athenes = { #the French Duchy of Athens
+	name = "Athenes"
+	type = minor_nation
+	culture = french
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = athens
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		attica
+	}
+}
+
+atenes = { #the Catalan Duchy of Athens
+	name = "Atenes"
+	type = minor_nation
+	culture = catalan
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = athens
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		attica
+	}
+}

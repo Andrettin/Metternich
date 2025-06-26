@@ -1,0 +1,20 @@
+guerrero = {
+	name = "Guerrero"
+	color = { 158 123 41 }
+	provincial_capital = chilpancingo
+	regions = {
+		mexico
+	}
+	
+	history = {
+		owner = aztec_empire
+		culture = aztec
+		religion = pagan
+		
+		1600 = {
+			owner = new_spain #part of New Spain in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = castillian
+			religion = catholic
+		}
+	}
+}

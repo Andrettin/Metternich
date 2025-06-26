@@ -1,0 +1,3 @@
+heater_shield = {
+	filepath = "icons/items/heater_shield.png"
+}

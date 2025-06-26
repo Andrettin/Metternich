@@ -1,0 +1,16 @@
+danes = {
+	name = "Danes"
+	type = tribe
+	culture = norse
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = copenhagen
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		zealand
+		scania
+	}
+}

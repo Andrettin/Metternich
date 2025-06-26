@@ -1,0 +1,14 @@
+darfur = {
+	name = "Darfur"
+	color = { 107 48 96 }
+	provincial_capital = el_fasher
+	regions = {
+		sudan
+	}
+	
+	history = {
+		owner = egypt
+		culture = fur
+		religion = pagan
+	}
+}

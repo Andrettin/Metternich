@@ -1,0 +1,16 @@
+lesser_armenia = {
+	name = "Lesser Armenia"
+	type = minor_nation
+	culture = armenian
+	default_religion = orthodox
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = marash
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		ramadan
+		marash
+	}
+}

@@ -1,0 +1,5 @@
+fuel = {
+	name = "Fuel"
+	icon = fuel
+	base_price = 300
+}

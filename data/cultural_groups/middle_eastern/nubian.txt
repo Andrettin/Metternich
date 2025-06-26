@@ -1,0 +1,6 @@
+nubian = {
+	name = "Nubian"
+	rank = group
+	upper_group = middle_eastern
+	default_phenotype = african
+}

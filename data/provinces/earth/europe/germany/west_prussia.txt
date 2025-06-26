@@ -1,0 +1,67 @@
+west_prussia = {
+	name = "West Prussia"
+	color = { 128 160 160 }
+	provincial_capital = danzig
+	resources = {
+		grain = 3
+		cattle = 1
+		timber = 4
+	}
+	regions = {
+		poland
+		poland_lithuania
+	}
+	
+	history = {
+		owner = ventastegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = ventastegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = slavs
+			culture = slavic
+		}
+		
+		526 = {
+			owner = slavs #territory of Slavic peoples in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = slavic
+		}
+		
+		919 = {
+			owner = pomerania_slavic #part of Pomerania in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = pomeranian
+		}
+		
+		1360 = {
+			owner = teutonic_order #territory of the Teutonic Order in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = polish
+			religion = catholic
+		}
+		
+		1466 = {
+			owner = poland #became part of the Kingdom of Poland in 1466; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = polish
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = poland #part of the Kingdom of Poland c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = prussia #part of the Kingdom of Prussia in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = polish #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

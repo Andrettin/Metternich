@@ -1,0 +1,24 @@
+expert_fishermen = {
+	name = "Expert Fishermen"
+	population_class = expert_fishermen
+	literate = true
+	icon = fishermen
+	small_icon = fishermen_small
+	resource_output_value = 2
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 0.125
+		furniture = 0.125
+		tools = 0.125
+		brass_lamps = 0.0625
+		coffee = 0.125
+		opium = 0.0625
+		salt = 0.125
+		tea = 0.125
+	}
+}

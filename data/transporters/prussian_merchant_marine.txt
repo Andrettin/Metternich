@@ -1,0 +1,11 @@
+prussian_traders = {
+	type = trader
+	country = prussia
+	quantity = 3
+	
+	history = {
+		1820 = {
+			active = true
+		}
+	}
+}

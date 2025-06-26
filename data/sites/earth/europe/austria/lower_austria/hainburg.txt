@@ -1,0 +1,12 @@
+hainburg = {
+	name = "Hainburg"
+	world = earth
+	geocoordinate = { 16.941944444444 48.147777777778 }
+	province = lower_austria
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,5 @@
+lake_ladoga = {
+	name = "Lake Ladoga"
+	color = { 62 123 178 }
+	lake = true
+}

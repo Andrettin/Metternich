@@ -1,0 +1,14 @@
+baghdad = {
+	name = "Baghdad"
+	world = earth
+	geocoordinate = { 44.39386877320 33.33864849750 } #from Natural Earth
+	type = settlement
+	resource = holy_site
+	province = diyala
+	
+	history = {
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

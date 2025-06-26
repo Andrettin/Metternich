@@ -1,0 +1,15 @@
+gepids = {
+	name = "Gepids"
+	type = tribe
+	culture = gothic
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = klausenburg
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		transylvania
+	}
+}

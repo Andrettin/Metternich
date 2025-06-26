@@ -1,0 +1,8 @@
+huelva = {
+	name = "Huelva"
+	world = earth
+	geocoordinate = { -6.92994938295 37.25037355450 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = andalusia
+}

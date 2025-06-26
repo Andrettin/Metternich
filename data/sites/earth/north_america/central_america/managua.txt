@@ -1,0 +1,6 @@
+managua = {
+	name = "Managua"
+	world = earth
+	geocoordinate = { -86.26849166030 12.15301658010 } #from Natural Earth
+	type = settlement
+}

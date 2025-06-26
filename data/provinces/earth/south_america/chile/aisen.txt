@@ -1,0 +1,19 @@
+aisen = {
+	name = "Aisen" #"Aisén"
+	color = { 92 253 87 }
+	provincial_capital = puerto_aisen
+	regions = {
+		chile
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = mapuche
+			culture = mapuche
+		}
+	}
+}

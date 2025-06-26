@@ -1,0 +1,6 @@
+rawson = {
+	name = "Rawson"
+	world = earth
+	geocoordinate = { -65.09999048020 -43.30000689830 } #from Natural Earth
+	type = settlement
+}

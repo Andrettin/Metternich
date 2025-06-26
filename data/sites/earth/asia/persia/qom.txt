@@ -1,0 +1,8 @@
+qom = {
+	name = "Qom"
+	world = earth
+	geocoordinate = { 50.95000606160 34.65001548160 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = teheran
+}

@@ -1,0 +1,6 @@
+fey = {
+	name = "Fey"
+	species = {
+		nymph
+	}
+}

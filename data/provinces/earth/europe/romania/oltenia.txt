@@ -1,0 +1,50 @@
+oltenia = {
+	name = "Oltenia"
+	color = { 50 146 44 }
+	provincial_capital = craiova
+	resources = {
+		grain = 2
+		fruit = 2
+		timber = 1
+		
+		coal = 1
+	}
+	regions = {
+		romania
+	}
+	
+	history = {
+		owner = gepids
+		culture = gothic
+		religion = pagan
+		
+		526 = {
+			owner = gepids #territory of the Gepids in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		1204 = {
+			owner = hungary #part of Hungary in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+		}
+		
+		1360 = {
+			owner = wallachia #part of Wallachia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = romanian
+			religion = orthodox
+		}
+		
+		1718 = {
+			owner = austria #became an Austrian possession in 1718; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1739 = {
+			owner = wallachia #became part of Wallachia in 1739; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = austria #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

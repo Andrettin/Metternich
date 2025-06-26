@@ -1,0 +1,11 @@
+trujillo = {
+	name = "Trujillo"
+	world = earth
+	geocoordinate = { -5.8788888888889 39.465277777778 }
+	type = resource
+	resource = gold
+	province = extremadura
+	cultural_names = {
+		roman = "Turgalium"
+	}
+}

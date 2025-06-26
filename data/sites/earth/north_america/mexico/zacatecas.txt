@@ -1,0 +1,6 @@
+zacatecas = {
+	name = "Zacatecas"
+	world = earth
+	geocoordinate = { -102.58000248400 22.77043052060 } #from Natural Earth
+	type = settlement
+}

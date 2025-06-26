@@ -1,0 +1,6 @@
+sacramento = {
+	name = "Sacramento"
+	world = earth
+	geocoordinate = { -121.47003808800 38.57502138170 } #from Natural Earth
+	type = settlement
+}

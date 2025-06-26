@@ -1,0 +1,9 @@
+fisherman = {
+	name = "Fisherman"
+	unit_class = fisherman
+	icon = fishermen
+	improvable_resources = {
+		fish
+		whales
+	}
+}

@@ -1,0 +1,6 @@
+wuhan = {
+	name = "Wuhan"
+	world = earth
+	geocoordinate = { 114.27001704800 30.58003135070 } #from Natural Earth
+	type = settlement
+}

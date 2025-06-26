@@ -1,0 +1,11 @@
+shiite = {
+	name = "Shiite"
+	group = muslim
+	color = { 148 116 108 }
+	icon = mountains
+	office_title_names = {
+		ruler = {
+			theocracy = "Ayatollah"
+		}
+	}
+}

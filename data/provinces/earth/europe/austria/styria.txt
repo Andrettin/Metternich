@@ -1,0 +1,90 @@
+styria = {
+	name = "Styria"
+	color = { 176 97 65 }
+	provincial_capital = graz
+	resources = {
+		grain = 3
+		fruit = 2
+		cattle = 2
+		sheep = 1
+		iron_ore = 2 #Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
+		salt = 1 #Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
+	}
+	regions = {
+		austria #only Lower Styria belongs to modern Austria; Upper Styria is part of Slovenia
+		imperial_austria_1806
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		919 = {
+			owner = bavaria #part of Bavaria in the 919-976 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		970 = {
+			#became part of the March of Carinthia (under Carinthia, which itself was under Bavaria) in 970; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		976 = {
+			owner = carinthia #Carinthia was detached from Bavaria in 976; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1035 = {
+			owner = styria #the March of Carinthia was detached from Carinthia in 1035; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1055 = {
+			owner = styria #became part of the March of Styria in 1055; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1477 = {
+			owner = austria #Austrian possession c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = austrian
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1801 = {
+			population = 811114 #Styria had a population of 811,114 in 1801 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1803 = {
+			population = 816326 #Styria had a population of 816,326 in 1803 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1805 = {
+			population = 836257 #Styria had a population of 836,257 in 1805 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1806 = {
+			population = 813113 #Styria had a population of 813,113 in 1806 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1807 = {
+			population = 806974 #Styria had a population of 806,974 in 1807 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1809 = {
+			population = 812000 #Styria had an estimated population of 812,000 in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = austrian #German; Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

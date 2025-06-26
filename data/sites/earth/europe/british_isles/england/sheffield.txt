@@ -1,0 +1,14 @@
+sheffield = {
+	name = "Sheffield"
+	world = earth
+	geocoordinate = { -1.49999658345 53.36667665520 } #from Natural Earth
+	type = resource
+	resource = coal
+	province = yorkshire
+	
+	history = {
+		1905 = {
+			buildings += university #University founded in Sheffield in 1905; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
+		}
+	}
+}

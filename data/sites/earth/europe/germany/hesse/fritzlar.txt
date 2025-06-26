@@ -1,0 +1,12 @@
+fritzlar = {
+	name = "Fritzlar"
+	world = earth
+	geocoordinate = { 9.266666666666667 51.13333333333333 }
+	province = hesse
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

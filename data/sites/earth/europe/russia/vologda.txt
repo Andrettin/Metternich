@@ -1,0 +1,7 @@
+vologda = {
+	name = "Vologda"
+	world = earth
+	geocoordinate = { 39.91998164750 59.20998923660 } #from Natural Earth
+	type = settlement
+	province = vologda
+}

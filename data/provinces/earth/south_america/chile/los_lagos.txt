@@ -1,0 +1,19 @@
+los_lagos = {
+	name = "Los Lagos"
+	color = { 223 217 97 }
+	provincial_capital = puerto_montt
+	regions = {
+		chile
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = mapuche
+			culture = mapuche
+		}
+	}
+}

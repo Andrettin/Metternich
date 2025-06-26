@@ -1,0 +1,6 @@
+trenton = {
+	name = "Trenton"
+	world = earth
+	geocoordinate = { -74.74335534840 40.21696250310 } #from Natural Earth
+	type = settlement
+}

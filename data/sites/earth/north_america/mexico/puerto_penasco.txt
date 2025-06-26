@@ -1,0 +1,8 @@
+puerto_penasco = {
+	name = "Puerto Penasco" #"Puerto Peñasco"
+	world = earth
+	geocoordinate = { -113.54 31.306666666666665 }
+	type = resource
+	resource = fish #Shrimp fishing; Source: Map No. 503497 of the Perry-Castañeda Library Map Collection, 1978.
+	province = sonora
+}

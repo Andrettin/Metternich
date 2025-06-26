@@ -1,0 +1,14 @@
+shocking_grasp = {
+	name = "Shocking Grasp"
+	target = enemy
+	icon = research
+	mana_cost = 5
+	range = 1
+	military_unit_categories = {
+	}
+	effects = {
+		damage = {
+			value = 10
+		}
+	}
+}

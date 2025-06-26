@@ -1,0 +1,7 @@
+arrow_up = {
+	filepath = "icons/arrow_up.png"
+}
+
+arrow_down = {
+	filepath = "icons/arrow_down.png"
+}

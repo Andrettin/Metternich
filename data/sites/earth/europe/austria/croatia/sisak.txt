@@ -1,0 +1,7 @@
+sisak = {
+	name = "Sisak"
+	world = earth
+	geocoordinate = { 16.37611111111111 45.48722222222222 }
+	type = resource
+	resource = cattle
+}

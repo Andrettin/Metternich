@@ -1,0 +1,6 @@
+georgetown = {
+	name = "Georgetown"
+	world = earth
+	geocoordinate = { -58.16702864750 6.80197369275 } #from Natural Earth
+	type = settlement
+}

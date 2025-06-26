@@ -1,0 +1,37 @@
+estremadura = {
+	name = "Estremadura"
+	color = { 208 160 128 }
+	provincial_capital = lisbon
+	resources = {
+		grain = 5
+		fruit = 2
+		cattle = 1
+		horses = 1
+		timber = 2
+		tin = 1
+	}
+	regions = {
+		portugal
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = visigothia #part of the Kingdom of the West Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		1148 = {
+			owner = portugal #became part of the Kingdom of Portugal in 1148; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 82-83.
+			culture = portuguese
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = portugal #part of the Kingdom of Portugal c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

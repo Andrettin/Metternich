@@ -1,0 +1,14 @@
+alessandria = {
+	name = "Alessandria"
+	world = earth
+	geocoordinate = { 8.62 44.913330555556 }
+	type = resource
+	resource = fruit
+	province = piedmont
+	
+	history = {
+		1815 = {
+			population = 30000 #Italian Alessandria had a population of 30,000 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 81.
+		}
+	}
+}

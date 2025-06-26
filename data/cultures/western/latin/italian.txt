@@ -1,0 +1,54 @@
+italian = {
+	name = "Italian"
+	group = italian
+	color = { 142 167 80 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = italy
+		}
+	}
+	
+	personal_names = {
+		male = {
+			"Alessandro"
+			"Carlo"
+			"Francesco"
+			"Giovanni"
+			"Mario"
+			"Michele"
+			"Paolo"
+		}
+		
+		female = {
+			"Carla"
+			"Emilia"
+			"Francesca"
+			"Gianna"
+			"Laura"
+			"Luisa"
+			"Maria"
+			"Marisa"
+			"Marta"
+			"Mirella"
+			"Renata"
+			"Sandra"
+			"Silvia"
+			"Simona"
+		}
+	}
+	
+	surnames = {
+		"Lombardi"
+		"Palamidese"
+	}
+
+	history = {
+		1535 = {
+			#method to solve cubic equations invented by the Italian Niccolò Tartaglia in 1535; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 206.
+		}
+	}
+}

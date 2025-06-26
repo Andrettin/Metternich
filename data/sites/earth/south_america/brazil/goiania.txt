@@ -1,0 +1,6 @@
+goiania = {
+	name = "Goiania" #"Goiânia"
+	world = earth
+	geocoordinate = { -49.30002465980 -16.72002724320 }
+	type = settlement
+}

@@ -1,0 +1,3 @@
+paper = {
+	filepath = "icons/commodities/paper.png"
+}

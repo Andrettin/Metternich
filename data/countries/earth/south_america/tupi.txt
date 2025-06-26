@@ -1,0 +1,30 @@
+tupi = {
+	name = "Tupi"
+	type = tribe
+	culture = tupi
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = salvador
+	eras = {
+		renaissance_era
+	}
+	core_provinces = {
+		bahia
+		alagoas
+		ceara
+		espirito_santo
+		maranhao
+		minas_gerais
+		paraiba
+		parana
+		pernambuco
+		piaui
+		rio_de_janeiro
+		rio_grande_do_norte
+		rio_grande_do_sul
+		santa_catarina
+		sao_paulo
+		sergipe
+	}
+}

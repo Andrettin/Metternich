@@ -1,0 +1,14 @@
+borneo = {
+	name = "Borneo"
+	color = { 190 162 153 }
+	provincial_capital = brunei
+	regions = {
+		asia
+		indonesia
+	}
+	
+	history = {
+		culture = malay
+		religion = pagan
+	}
+}

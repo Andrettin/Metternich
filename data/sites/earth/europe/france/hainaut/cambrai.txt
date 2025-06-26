@@ -1,0 +1,20 @@
+cambrai = {
+	name = "Cambrai"
+	world = earth
+	geocoordinate = { 3.2347222222222 50.175833333333 }
+	type = resource
+	resource = coal
+	province = picardy
+	
+	history = {
+		919 = {
+			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 2800
+			}
+		}
+	}
+}

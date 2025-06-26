@@ -1,0 +1,12 @@
+seres = {
+	name = "Seres"
+	world = earth
+	geocoordinate = { 23.54971472040 41.08597922670 } #from Natural Earth
+	province = central_macedonia
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

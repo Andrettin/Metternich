@@ -1,0 +1,6 @@
+frankfort = {
+	name = "Frankfort"
+	world = earth
+	geocoordinate = { -84.87335717950 38.20080649720 } #from Natural Earth
+	type = settlement
+}

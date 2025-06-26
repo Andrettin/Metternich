@@ -1,0 +1,6 @@
+denver = {
+	name = "Denver"
+	world = earth
+	geocoordinate = { -104.98401595200 39.73918804840 } #from Natural Earth
+	type = settlement
+}

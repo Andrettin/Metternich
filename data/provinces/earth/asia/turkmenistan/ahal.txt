@@ -1,0 +1,17 @@
+ahal = {
+	name = "Ahal"
+	color = { 245 72 177 }
+	provincial_capital = ashgabat
+	resources = {
+		opium = 1
+	}
+	regions = {
+		turkmenistan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

@@ -1,0 +1,58 @@
+parma = {
+	name = "Parma"
+	color = { 112 1 32 }
+	provincial_capital = parma
+	resources = {
+		grain = 2
+		fruit = 2
+		
+		iron_ore = 1
+	}
+	regions = {
+		italy
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		568 = {
+			owner = langobardia #became part of the Kingdom of the Lombards in 568; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = lombard
+		}
+		
+		1360 = {
+			owner = milan #part of the Lands of the Visconti in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = italian
+			religion = catholic
+		}
+		
+		1477 = {
+			owner = milan #part of the Duchy of Milan c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = parma #part of the Duchy of Parma in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = italian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		1860 = {
+			owner = sardinia #became part of the Kingdom of Sardinia in 1860; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1861 = {
+			owner = italy #became part of the Kingdom of Italy in 1861; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

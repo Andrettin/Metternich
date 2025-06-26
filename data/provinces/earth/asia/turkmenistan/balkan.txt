@@ -1,0 +1,17 @@
+balkan = {
+	name = "Balkan"
+	color = { 239 208 215 }
+	provincial_capital = gyzlarbat
+	resources = {
+		grain = 1
+	}
+	regions = {
+		turkmenistan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

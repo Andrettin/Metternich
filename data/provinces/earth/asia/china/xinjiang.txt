@@ -1,0 +1,17 @@
+xinjiang = {
+	name = "Xinjiang"
+	color = { 223 147 134 }
+	provincial_capital = urumqi
+	resources = {
+		cotton = 1
+	}
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

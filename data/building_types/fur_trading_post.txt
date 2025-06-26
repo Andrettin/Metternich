@@ -1,0 +1,29 @@
+fur_trading_post = {
+	name = "Fur Trading Post"
+	building_class = fur_trading_post
+	portrait = trading_post
+	icon = furs
+	provincial = true
+	required_technology = furs
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	conditions = {
+		game_rule = trade_commodity
+	}
+	settlement_conditions = {
+		province = {
+			produces_commodity = furs
+		}
+		or = {
+			near_water = true
+			has_route = true
+		}
+	}
+	province_modifier = {
+		trade_per_improved_beavers = 1
+		trade_per_improved_deer = 1
+	}
+}

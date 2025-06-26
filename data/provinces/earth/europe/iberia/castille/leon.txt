@@ -1,0 +1,60 @@
+leon = {
+	name = "Leon"
+	color = { 208 96 192 }
+	provincial_capital = leon
+	cultural_names = {
+		roman = "Castra Legionis" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	resources = {
+		grain = 1
+		fruit = 2
+		cattle = 3
+		sheep = 1
+		
+		coal = 1
+	}
+	regions = {
+		spain
+	}
+	
+	history = {
+		owner = crusafontids
+		culture = mammalian
+		religion = pagan
+		
+		-143100000 = { #Crusafontia lived in Spain in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:39892
+			owner = crusafontids
+			culture = mammalian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = asturia
+			culture = asturian
+		}
+		
+		-264 = {
+			owner = asturia #territory of the Astures in the 264-17 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+			culture = asturian
+			religion = pagan
+		}
+		
+		526 = {
+			owner = suebi #territory of the Suebi in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+		}
+		
+		1360 = {
+			owner = castille #part of Castille in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = castillian
+			religion = catholic
+		}
+		
+		1560 = {
+			owner = spain #part of the Kingdom of Spain c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+		}
+		
+		1740 = {
+			owner = spain #part of the Kingdom of Spain c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

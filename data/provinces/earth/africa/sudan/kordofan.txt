@@ -1,0 +1,14 @@
+kordofan = {
+	name = "Kordofan"
+	color = { 193 144 46 }
+	provincial_capital = el_obeid
+	regions = {
+		sudan
+	}
+	
+	history = {
+		owner = egypt
+		culture = nuba
+		religion = pagan
+	}
+}

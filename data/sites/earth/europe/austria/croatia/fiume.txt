@@ -1,0 +1,26 @@
+fiume = {
+	name = "Fiume"
+	world = earth
+	geocoordinate = { 14.45001175810 45.32998374340 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = croatia
+	cultural_names = {
+		croatian = "Rijeka"
+	}
+	
+	history = {
+		1719 = {
+			improvements += port #Karl VI of the Holy Roman Empire made Fiume/Rijeka a free port ("Freihafen") in 1719; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464.
+		}
+		
+		1780 = {
+			#400 people in Fiume/Rijeka were employed in sugar refining in 1780; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 466.
+			buildings += sugar_refinery
+		}
+		
+		1873 = {
+			improvements += rail_depot #Pest-Zagreb-Fiume railroad built in 1873; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
+		}
+	}
+}

@@ -1,0 +1,6 @@
+hefei = {
+	name = "Hefei"
+	world = earth
+	geocoordinate = { 117.28001420000 31.85003135070 } #from Natural Earth
+	type = settlement
+}

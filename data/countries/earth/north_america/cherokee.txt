@@ -1,0 +1,12 @@
+cherokee = {
+	name = "Cherokee"
+	type = tribe
+	culture = cherokee
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = charleston
+	eras = {
+		renaissance_era
+	}
+}

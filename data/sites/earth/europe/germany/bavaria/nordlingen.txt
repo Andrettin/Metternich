@@ -1,0 +1,12 @@
+nordlingen = {
+	name = "Nordlingen" #"Nördlingen"
+	world = earth
+	geocoordinate = { 10.5 48.85 }
+	province = augsburg
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

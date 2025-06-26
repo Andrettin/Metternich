@@ -1,0 +1,8 @@
+alesund = {
+	name = "Alesund" #"Ålesund"
+	world = earth
+	geocoordinate = { 6.38802323266 62.54541872060 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = hordaland
+}

@@ -1,0 +1,18 @@
+madeira = {
+	name = "Madeira"
+	color = { 56 87 25 }
+	provincial_capital = funchal
+	regions = {
+		portugal
+	}
+	
+	history = {
+		culture = portuguese
+		religion = pagan
+		
+		1419 = {
+			owner = portugal #became a Portuguese possession in 1419; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			religion = catholic
+		}
+	}
+}

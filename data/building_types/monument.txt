@@ -1,0 +1,18 @@
+monument = {
+	name = "Monument"
+	building_class = monument
+	portrait = aristocratic_palace
+	icon = architecture
+	provincial = true
+	required_technology = mysticism
+	settlement_types = {
+		town
+		city
+		metropolis
+		castle
+		monastery
+	}
+	settlement_modifier = {
+		culture_bonus = 2
+	}
+}

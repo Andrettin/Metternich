@@ -1,0 +1,5 @@
+american = {
+	name = "American"
+	rank = supergroup
+	default_phenotype = amerindian
+}

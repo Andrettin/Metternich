@@ -1,0 +1,30 @@
+byzantium = {
+	name = "Byzantium"
+	type = great_power
+	color = { 170 148 214 }
+	culture = greek
+	default_religion = orthodox
+	default_tier = empire
+	default_government_type = monarchy
+	default_capital = constantinople
+	short_names = {
+		monarchy = {
+			empire = "Byzantine Empire"
+		}
+	}
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		thrace
+		attica
+		central_macedonia
+		crete
+		east_macedonia
+		eastern_rumelia
+		epirus
+		peloponnese
+		thessaly
+		west_macedonia
+	}
+}

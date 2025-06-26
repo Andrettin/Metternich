@@ -1,0 +1,14 @@
+salerno = {
+	name = "Salerno"
+	world = earth
+	geocoordinate = { 14.76994055040 40.68039674790 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = naples
+	
+	history = {
+		1250 = {
+			buildings += university #University existent in Salerno in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
+		}
+	}
+}

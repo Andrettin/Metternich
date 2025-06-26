@@ -1,0 +1,104 @@
+dublin_spearmen = {
+	type = spearmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = leinster
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+dublin_arquebusiers = {
+	type = arquebusiers
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = leinster
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+dublin_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = leinster
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+the_pale_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = leinster
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+connaught_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = connaught
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+munster_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = munster
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+ulster_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = ulster
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}

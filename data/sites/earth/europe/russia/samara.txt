@@ -1,0 +1,7 @@
+samara = {
+	name = "Samara"
+	world = earth
+	geocoordinate = { 50.15129512410 53.19500754710 } #from Natural Earth
+	type = settlement
+	province = samara
+}

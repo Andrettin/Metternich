@@ -1,0 +1,8 @@
+dezful = {
+	name = "Dezful"
+	world = earth
+	geocoordinate = { 48.47000239950 32.38038657530 }
+	type = resource
+	resource = cotton
+	province = khuzestan
+}

@@ -1,0 +1,23 @@
+iberian = {
+	name = "Iberian"
+	group = western
+	color = { 255 106 0 }
+	species = {
+		human
+	}
+	
+	personal_names = {
+		male = {
+			"Budar"
+			"Busadines"
+			"Indibil"
+			"Korbis"
+			"Korribilo"
+			"Mandonio"
+		}
+		
+		female = {
+			"Himilce"
+		}
+	}
+}

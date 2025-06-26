@@ -1,0 +1,18 @@
+naples = {
+	name = "Naples"
+	type = minor_nation
+	culture = italian
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = naples
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		naples
+		cosenza
+		taranto
+	}
+}

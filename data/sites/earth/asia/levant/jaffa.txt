@@ -1,0 +1,14 @@
+jaffa = {
+	name = "Jaffa"
+	world = earth
+	geocoordinate = { 34.77001175820 32.07999147440 } #from Natural Earth (Tel Aviv-Yafo)
+	type = resource
+	resource = fruit
+	province = palestine
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

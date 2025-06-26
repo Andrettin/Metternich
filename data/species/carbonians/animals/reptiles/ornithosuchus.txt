@@ -1,0 +1,9 @@
+ornithosuchus = {
+	name = "Ornithosuchus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		hylonomus
+		petrolacosaurus
+		thadeosaurus
+	}
+}

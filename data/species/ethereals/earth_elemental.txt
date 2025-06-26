@@ -1,0 +1,6 @@
+earth_elemental = {
+	name = "Earth Elemental"
+	supertaxon = terran
+	era = holocene
+	sapient = true
+}

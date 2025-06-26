@@ -1,0 +1,13 @@
+asuncion = {
+	name = "Asuncion" #"Asunción"
+	world = earth
+	geocoordinate = { -57.64150516930 -25.29640297570 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1776 = {
+			buildings += college #College or seminary founded in Asuncion in 1776. Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+	}
+}

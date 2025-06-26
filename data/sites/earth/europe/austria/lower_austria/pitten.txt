@@ -1,0 +1,11 @@
+pitten = {
+	name = "Pitten"
+	world = earth
+	#geocoordinate = { 16.186388888889 47.716111111111 }
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

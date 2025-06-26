@@ -1,0 +1,19 @@
+gaul = {
+	name = "Gaul"
+	type = great_power
+	color = { 94 130 93 }
+	culture = gaulish
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = paris
+	short_names = {
+		tribe = "Gauls"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		ile_de_france
+	}
+}

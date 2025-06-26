@@ -1,0 +1,18 @@
+leipzig = {
+	name = "Leipzig" #also known as Leipsic
+	world = earth
+	geocoordinate = { 12.40998124050 51.33540529290 } #from Natural Earth
+	type = resource
+	resource = coal
+	province = upper_saxony
+	
+	history = {
+		919 = {
+			buildings += fort #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1409 = {
+			buildings += university #University founded in Leipzig in 1409; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

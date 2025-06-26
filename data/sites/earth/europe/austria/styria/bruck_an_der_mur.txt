@@ -1,0 +1,12 @@
+bruck_an_der_mur = {
+	name = "Bruck an der Mur"
+	world = earth
+	geocoordinate = { 15.268611111111 47.410555555556 }
+	province = styria
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

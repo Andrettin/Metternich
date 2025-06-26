@@ -1,0 +1,8 @@
+bischofshofen = {
+	name = "Bischofshofen"
+	world = earth
+	geocoordinate = { 13.219444444444 47.417222222222 }
+	type = resource
+	resource = timber #Forest; Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
+	province = salzburg
+}

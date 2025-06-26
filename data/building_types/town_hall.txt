@@ -1,0 +1,177 @@
+village_hall = {
+	name = "Village Hall"
+	building_class = village_hall
+	portrait = town
+	icon = flag
+	provincial = true
+	settlement_types = {
+		village
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = statesmanship
+			}
+			capital = true
+		}
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = furniture
+			value = 1
+		}
+	}
+	province_modifier = {
+		statesmanship_output_modifier = 25
+	}
+}
+
+town_hall = {
+	name = "Town Hall"
+	building_class = town_hall
+	portrait = town
+	icon = flag
+	provincial = true
+	required_building = village_hall
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = statesmanship
+			}
+			capital = true
+		}
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = furniture
+			value = 1
+		}
+	}
+	province_modifier = {
+		statesmanship_output_modifier = 50
+	}
+	settlement_modifier = {
+		profession_capacity = {
+			profession = bureaucrats
+			value = 2
+		}
+	}
+}
+
+city_hall = {
+	name = "City Hall"
+	building_class = city_hall
+	portrait = city
+	icon = flag
+	provincial = true
+	required_building = town_hall
+	settlement_types = {
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = statesmanship
+			}
+			capital = true
+		}
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = furniture
+			value = 1
+		}
+	}
+	province_modifier = {
+		statesmanship_output_modifier = 100
+	}
+	settlement_modifier = {
+		profession_capacity = {
+			profession = bureaucrats
+			value = 3
+		}
+	}
+}
+
+state_house = {
+	name = "State House"
+	building_class = state_house
+	portrait = city
+	icon = flag
+	provincial = true
+	provincial_capitol = true
+	required_building = city_hall
+	settlement_types = {
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = statesmanship
+			}
+			capital = true
+		}
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = furniture
+			value = 1
+		}
+	}
+	province_modifier = {
+		statesmanship_output_modifier = 150
+	}
+	settlement_modifier = {
+		profession_capacity = {
+			profession = bureaucrats
+			value = 3
+		}
+	}
+}
+
+capitol = {
+	name = "Capitol"
+	building_class = capitol
+	portrait = city
+	icon = flag
+	provincial = true
+	capitol = true
+	required_building = state_house
+	settlement_types = {
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = statesmanship
+			}
+			capital = true
+		}
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = furniture
+			value = 1
+		}
+	}
+	province_modifier = {
+		statesmanship_output_modifier = 200
+	}
+	settlement_modifier = {
+		profession_capacity = {
+			profession = bureaucrats
+			value = 3
+		}
+	}
+}

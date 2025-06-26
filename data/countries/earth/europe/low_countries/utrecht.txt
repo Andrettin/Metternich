@@ -1,0 +1,15 @@
+utrecht = {
+	name = "Utrecht"
+	type = minor_nation
+	culture = dutch
+	default_religion = protestant
+	default_tier = county #bishopric
+	default_government_type = theocracy
+	default_capital = utrecht
+	eras = {
+		renaissance_era
+	}
+	core_provinces = {
+		utrecht
+	}
+}

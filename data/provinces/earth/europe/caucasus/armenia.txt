@@ -1,0 +1,25 @@
+armenia = {
+	name = "Armenia"
+	color = { 191 61 194 }
+	provincial_capital = yerevan
+	regions = {
+		armenia
+	}
+	
+	history = {
+		owner = persia
+		culture = armenian
+		religion = pagan
+		
+		1360 = {
+			owner = qara_qoyunlu #territory of the Qara Qoyunlu in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			religion = orthodox
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

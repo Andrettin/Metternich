@@ -1,0 +1,54 @@
+istanbul_regulars = {
+	type = regulars
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = thrace
+		}
+	}
+}
+
+istanbul_artillery = {
+	type = artillery
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = thrace
+		}
+	}
+}
+
+bucharest_regulars = {
+	type = regulars
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = wallachia
+		}
+	}
+}
+
+dobruja_regulars = {
+	type = regulars
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = dobruja
+		}
+	}
+}
+
+moldavian_regulars = {
+	type = regulars
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = moldavia
+		}
+	}
+}

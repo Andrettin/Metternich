@@ -1,0 +1,12 @@
+niemitsch = {
+	name = "Niemitsch"
+	world = earth
+	geocoordinate = { 14.688055555556 51.888888888889 } #Polanowice, Lubusz Voivodeship
+	
+	history = {
+		919 = {
+			#settlement_type = castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

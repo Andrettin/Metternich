@@ -1,0 +1,16 @@
+almagro = {
+	name = "Almagro"
+	world = earth
+	geocoordinate = { -3.7118218 38.888238 }
+	province = castille
+	
+	history = {
+		1553 = {
+			buildings += university #Minor university founded in Almagro in 1553; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+		
+		1787 = {
+			buildings -= university #Minor university abolished in Almagro in 1787; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

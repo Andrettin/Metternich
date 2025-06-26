@@ -1,0 +1,14 @@
+leitmeritz = {
+	name = "Leitmeritz"
+	world = earth
+	#geocoordinate = { 14.131899491403 50.53355947692 }
+	cultural_names = {
+		czech = "Litomerice" #"Litoměřice"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

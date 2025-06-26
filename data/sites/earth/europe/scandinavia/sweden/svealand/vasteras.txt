@@ -1,0 +1,7 @@
+vasteras = {
+	name = "Vasteras" #"Västerås"
+	world = earth
+	geocoordinate = { 16.54001338570 59.63001527820 } #from Natural Earth
+	type = resource
+	resource = iron_ore
+}

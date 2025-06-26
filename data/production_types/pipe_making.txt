@@ -1,0 +1,9 @@
+lead_pipe_making = {
+	name = "Lead Pipe Making"
+	input_commodities = {
+		labor = 2
+		lead_ingots = 2
+	}
+	output_commodity = lead_pipes
+	output_value = 1
+}

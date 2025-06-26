@@ -1,0 +1,4 @@
+mesozoic_era = {
+	name = "Mesozoic Era"
+	start_date = -251902000
+}

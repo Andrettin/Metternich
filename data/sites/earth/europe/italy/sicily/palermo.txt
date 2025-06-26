@@ -1,0 +1,26 @@
+palermo = {
+	name = "Palermo"
+	world = earth
+	geocoordinate = { 13.35002722030 38.12502300930 } #from Natural Earth
+	type = settlement
+	#resource = fish
+	province = sicily
+	cultural_names = {
+		greek = "Panormus"
+		roman = "Panormus" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 12.
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1394 = {
+			buildings += university #University founded in Palermo in 1394; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+		
+		1600 = {
+			population = 100000 #Palermo had a population of 100,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+	}
+}

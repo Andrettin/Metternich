@@ -1,0 +1,22 @@
+aberdeen = {
+	name = "Aberdeen"
+	world = earth
+	geocoordinate = { -2.07998702128 57.17039796870 } #from Natural Earth
+	type = resource
+	resource = sheep
+	province = highlands
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1494 = {
+			buildings += university #University founded in Aberdeen in 1494; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1593 = {
+			#Protestant College founded in Aberdeen in 1593; Source: Henry Kamen, "Early Modern European Society", 2021, p. 291.
+		}
+	}
+}

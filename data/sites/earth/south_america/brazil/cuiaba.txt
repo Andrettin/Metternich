@@ -1,0 +1,6 @@
+cuiaba = {
+	name = "Cuiaba" #"Cuiabá"
+	world = earth
+	geocoordinate = { -56.08498519040 -15.56960650750 }
+	type = settlement
+}

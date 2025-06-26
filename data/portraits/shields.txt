@@ -1,0 +1,3 @@
+bronze_shield = {
+	filepath = "portraits/bronze_shield.png"
+}

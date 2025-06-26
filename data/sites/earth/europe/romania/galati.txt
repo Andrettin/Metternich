@@ -1,0 +1,17 @@
+galati = {
+	name = "Galati" #"Galați"
+	world = earth
+	geocoordinate = { 28.04587438830 45.45589337060 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = moldavia
+	cultural_group_names = {
+		german = "Galatz"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

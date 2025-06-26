@@ -1,0 +1,19 @@
+darius_i_of_persia = {
+	name = "Darius"
+	epithet = "I"
+	role = ruler
+	character_type = treasurer
+	culture = persian
+	religion = pagan
+	home_settlement = shiraz #Persepolis; correct?
+	gender = male
+	birth_date = -550
+	death_date = -486
+	rulable_countries = {
+		persia
+	}
+	traits = {
+		financial
+		organized
+	}
+}

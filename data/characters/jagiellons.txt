@@ -1,0 +1,20 @@
+zygmunt_ii_of_poland = {
+	name = "Zygmunt"
+	epithet = "II"
+	dynasty = jagiellon
+	role = ruler
+	character_type = statesman
+	culture = polish
+	religion = catholic
+	home_settlement = warsaw
+	gender = male
+	birth_date = 1520.8.1
+	death_date = 1572.7.7
+	obsolescence_technology = nationalism
+	rulable_countries = {
+		poland
+	}
+	traits = {
+		industrious
+	}
+}

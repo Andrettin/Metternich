@@ -1,0 +1,6 @@
+silver = {
+	name = "Silver"
+	icon = silver
+	wealth_value = 100
+	required_technology = precious_metals
+}

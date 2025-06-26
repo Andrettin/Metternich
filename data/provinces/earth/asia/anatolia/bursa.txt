@@ -1,0 +1,33 @@
+bursa = {
+	name = "Bursa"
+	color = { 59 166 11 }
+	provincial_capital = bursa
+	regions = {
+		anatolia
+	}
+	
+	history = {
+		culture = greek
+		religion = sunni
+		
+		526 = {
+			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = greek
+			religion = orthodox
+		}
+		
+		1360 = {
+			owner = ottoman_turks #territory of the Ottoman Turks in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = turkish
+			religion = sunni
+		}
+		
+		1740 = {
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			culture = turkish #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

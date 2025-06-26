@@ -1,0 +1,8 @@
+nottingham = {
+	name = "Nottingham"
+	world = earth
+	geocoordinate = { -1.17001672505 52.97034425770 } #from Natural Earth
+	type = resource
+	resource = coal
+	province = derbyshire
+}

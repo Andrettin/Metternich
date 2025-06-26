@@ -1,0 +1,8 @@
+mount_sinai = {
+	name = "Mount Sinai"
+	world = earth
+	geocoordinate = { 33.9752 28.5384 }
+	type = resource
+	resource = mount_sinai
+	province = sinai
+}

@@ -1,0 +1,52 @@
+paleozoic = {
+	name = "Paleozoic"
+	start_date = -419200000 #Devonian
+	map_template = earth
+	hidden = true
+}
+
+carboniferous = {
+	name = "Carboniferous"
+	parent_scenario = paleozoic
+	start_date = -358900000
+	map_template = earth
+	hidden = true
+}
+
+permian = {
+	name = "Permian"
+	parent_scenario = paleozoic
+	start_date = -298900000
+	map_template = earth
+	hidden = true
+}
+
+mesozoic = {
+	name = "Mesozoic"
+	start_date = -251902000 #Triassic
+	map_template = earth
+	hidden = true
+}
+
+jurassic = {
+	name = "Jurassic"
+	parent_scenario = mesozoic
+	start_date = -201400000
+	map_template = earth
+	hidden = true
+}
+
+cretaceous = {
+	name = "Cretaceous"
+	parent_scenario = mesozoic
+	start_date = -143100000
+	map_template = earth
+	hidden = true
+}
+
+cenozoic = {
+	name = "Cenozoic"
+	start_date = -66000000
+	map_template = earth
+	hidden = true
+}

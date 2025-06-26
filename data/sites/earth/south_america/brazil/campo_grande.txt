@@ -1,0 +1,6 @@
+campo_grande = {
+	name = "Campo Grande"
+	world = earth
+	geocoordinate = { -54.61662520510 -20.45003212600 }
+	type = settlement
+}

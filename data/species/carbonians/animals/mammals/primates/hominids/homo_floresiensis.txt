@@ -1,0 +1,9 @@
+homo_floresiensis = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=91487
+	name = "Homo Floresiensis"
+	supertaxon = homo
+	specific_name = "floresiensis"
+	era = pleistocene #Quarternary
+	pre_evolutions = {
+		australopithecus
+	}
+}

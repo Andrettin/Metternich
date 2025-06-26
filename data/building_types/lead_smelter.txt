@@ -1,0 +1,13 @@
+lead_smelter = {
+	name = "Lead Smelter"
+	building_class = lead_smelter
+	portrait = factory
+	icon = iron
+	production_types = {
+		lead_smelting
+	}
+	base_capacity = 8
+	capacity_increment = 8
+	expandable = true
+	required_technology = ironworking
+}

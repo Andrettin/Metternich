@@ -1,0 +1,6 @@
+spy = {
+	name = "Spy"
+	unit_class = spy
+	icon = rifle_infantry_light
+	spy = true
+}

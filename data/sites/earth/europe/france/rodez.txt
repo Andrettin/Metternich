@@ -1,0 +1,20 @@
+rodez = {
+	name = "Rodez"
+	world = earth
+	geocoordinate = { 2.5741666666667 44.35 }
+	type = resource
+	resource = cattle
+	province = guyenne
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 5000
+			}
+		}
+	}
+}

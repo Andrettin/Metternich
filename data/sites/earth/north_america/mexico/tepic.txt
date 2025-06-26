@@ -1,0 +1,6 @@
+tepic = {
+	name = "Tepic"
+	world = earth
+	geocoordinate = { -104.87999129400 21.50539145810 } #from Natural Earth
+	type = settlement
+}

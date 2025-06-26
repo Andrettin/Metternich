@@ -1,0 +1,23 @@
+kerman = {
+	name = "Kerman"
+	color = { 125 41 53 }
+	provincial_capital = kerman
+	resources = {
+		cotton = 1
+	}
+	regions = {
+		persia
+	}
+	
+	history = {
+		owner = persia
+		culture = persian
+		religion = pagan
+		
+		1801 = {
+			owner = persia #part of Persia in 1801; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 170-171.
+			culture = persian
+			religion = shiite
+		}
+	}
+}

@@ -1,0 +1,6 @@
+puerto_ayacucho = {
+	name = "Puerto Ayacucho"
+	world = earth
+	geocoordinate = { -67.62360905120 5.66390362439 } #from Natural Earth
+	type = settlement
+}

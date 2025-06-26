@@ -1,0 +1,12 @@
+goslar = {
+	name = "Goslar"
+	world = earth
+	geocoordinate = { 10.429163 51.906003 }
+	province = hanover
+	
+	history = {
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

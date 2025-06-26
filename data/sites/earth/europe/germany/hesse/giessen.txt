@@ -1,0 +1,12 @@
+giessen = {
+	name = "Giessen"
+	world = earth
+	geocoordinate = { 8.65000402694 50.58371990870 } #from Natural Earth
+	province = hesse
+	
+	history = {
+		1607 = {
+			buildings += university #University founded in Giessen in 1607; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

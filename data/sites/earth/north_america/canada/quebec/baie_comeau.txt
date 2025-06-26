@@ -1,0 +1,6 @@
+baie_comeau = {
+	name = "Baie-Comeau"
+	world = earth
+	geocoordinate = { -68.15799503750 49.22266603500 } #from Natural Earth
+	province = quebec
+}

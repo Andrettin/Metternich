@@ -1,0 +1,12 @@
+franeker = {
+	name = "Franeker"
+	world = earth
+	#geocoordinate = { 5.54 53.1875 }
+	province = friesland
+	
+	history = {
+		1585 = {
+			buildings += university #University founded in Franeker in 1585; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

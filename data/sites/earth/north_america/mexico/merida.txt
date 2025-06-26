@@ -1,0 +1,13 @@
+merida_yucatan = {
+	name = "Merida" #"Mérida"
+	world = earth
+	geocoordinate = { -89.61663354670 20.96663881330 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1778 = {
+			buildings += college #College or seminary founded in Merida in 1778; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+	}
+}

@@ -1,0 +1,8 @@
+nasiriyah = {
+	name = "Nasiriyah" #also known as Nasiriyya
+	world = earth
+	#geocoordinate = { 46.26755285520 31.04294883120 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = sumer
+}

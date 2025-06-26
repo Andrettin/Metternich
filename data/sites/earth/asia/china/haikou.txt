@@ -1,0 +1,6 @@
+haikou = {
+	name = "Haikou"
+	world = earth
+	geocoordinate = { 110.32002559300 20.05000225730 } #from Natural Earth
+	type = settlement
+}

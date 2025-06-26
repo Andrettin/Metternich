@@ -1,0 +1,6 @@
+sisimiut = {
+	name = "Sisimiut"
+	world = earth
+	geocoordinate = { -53.66660567380 66.95000775060 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,125 @@
+offensive_terrain = {
+	name = "Offensive Terrain"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = mountains
+	period = 1000_1100
+	cost_commodity = leadership
+	prerequisites = {
+		feudalism
+	}
+	modifier = {
+		military_unit_stat = {
+			category = spear_cavalry
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			type = squires
+			stat = discipline
+			value = 10
+		}
+	}
+}
+
+frontal_charge = {
+	name = "Frontal Charge"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = saber
+	period = 1100_1200
+	cost_commodity = leadership
+	prerequisites = {
+		offensive_terrain
+	}
+	modifier = {
+		military_unit_stat = {
+			category = spear_cavalry
+			stat = discipline
+			value = 20
+		}
+		military_unit_stat = {
+			type = squires
+			stat = discipline
+			value = 20
+		}
+	}
+}
+
+reserves = {
+	name = "Reserves"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = saber
+	period = 1200_1300
+	cost_commodity = leadership
+	prerequisites = {
+		frontal_charge
+	}
+	modifier = {
+		military_unit_stat = {
+			category = blade_infantry
+			stat = discipline
+			value = 20
+		}
+		military_unit_stat = {
+			category = spear_cavalry
+			stat = discipline
+			value = 10
+		}
+	}
+}
+
+dismounted_knights = {
+	name = "Dismounted Knights"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = heater_shield
+	period = 1300_1400
+	cost_commodity = leadership
+	prerequisites = {
+		reserves
+		chivalry
+	}
+	modifier = {
+		military_unit_stat = {
+			category = blade_infantry
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			category = spear_cavalry
+			stat = discipline
+			value = 20
+		}
+	}
+}
+
+hierarchical_command = {
+	name = "Hierarchical Command"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = saber
+	period = 1400_1500
+	cost_commodity = leadership
+	prerequisites = {
+		dismounted_knights
+	}
+	modifier = {
+		military_unit_stat = {
+			category = blade_infantry
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			category = spear_cavalry
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			type = squires
+			stat = discipline
+			value = 10
+		}
+	}
+}

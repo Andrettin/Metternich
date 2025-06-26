@@ -1,0 +1,6 @@
+ilulissat = {
+	name = "Ilulissat"
+	world = earth
+	geocoordinate = { -51.09996647300 69.21666526200 } #from Natural Earth
+	type = settlement
+}

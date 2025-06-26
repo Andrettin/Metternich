@@ -1,0 +1,7 @@
+mbombela = {
+	name = "Mbombela"
+	world = earth
+	geocoordinate = { 30.98001053740 -25.46962237670 } #from Natural Earth
+	type = settlement
+	province = mpumalanga
+}

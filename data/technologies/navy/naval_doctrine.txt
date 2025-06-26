@@ -1,0 +1,91 @@
+naval_tradition = {
+	name = "Naval Tradition"
+	subcategory = naval_doctrine
+	portrait = unload
+	icon = anchor
+	cost_commodity = leadership
+	required_game_rule = additional_technologies
+	prerequisites = {
+		navigation
+	}
+	modifier = {
+		amenities_per_dock = 1
+		amenities_per_shipyard = 1
+		amenities_per_lighthouse = 1
+	}
+}
+
+naval_drill = {
+	name = "Naval Drill"
+	subcategory = naval_doctrine
+	portrait = unload
+	icon = anchor
+	cost_commodity = leadership
+	required_game_rule = additional_technologies
+	prerequisites = {
+		naval_tradition
+	}
+	modifier = {
+		military_unit_stat = {
+			domain = water
+			stat = discipline
+			value = 10
+		}
+	}
+}
+
+merchant_navy = {
+	name = "Merchant Navy"
+	subcategory = naval_doctrine
+	portrait = unload
+	icon = anchor
+	cost_commodity = leadership
+	required_game_rule = additional_technologies
+	prerequisites = {
+		naval_tradition
+		convoying
+	}
+	modifier = {
+		trade_per_dock = 1
+		trade_per_shipyard = 1
+		trade_per_lighthouse = 1
+	}
+}
+
+navigation_acts = {
+	name = "Navigation Acts"
+	subcategory = naval_doctrine
+	portrait = unload
+	icon = anchor
+	cost_commodity = statesmanship
+	required_game_rule = additional_technologies
+	cultures = {
+		english
+	}
+	prerequisites = {
+		merchant_navy
+		convoying
+	}
+	modifier = {
+		trade_output_modifier = 10
+	}
+}
+
+sun_never_sets = {
+	name = "Sun Never Sets"
+	subcategory = naval_doctrine
+	portrait = unload
+	icon = anchor
+	cost_commodity = statesmanship
+	required_game_rule = additional_technologies
+	cultures = {
+		english
+	}
+	prerequisites = {
+		merchant_navy
+		empire_building
+	}
+	modifier = {
+		ship_movement_modifier = 2
+	}
+}

@@ -1,0 +1,16 @@
+mont_de_marsan = {
+	name = "Mont-de-Marsan"
+	world = earth
+	geocoordinate = { -0.50055555555556 43.890277777778 }
+	type = resource
+	resource = grain
+	province = gascony
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 5500
+			}
+		}
+	}
+}

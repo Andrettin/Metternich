@@ -1,0 +1,6 @@
+maceio = {
+	name = "Maceio" #"Maceió"
+	world = earth
+	geocoordinate = { -35.72997440750 -9.61999550490 } #from Natural Earth
+	type = settlement
+}

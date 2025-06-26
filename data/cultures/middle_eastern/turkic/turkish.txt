@@ -1,0 +1,8 @@
+turkish = {
+	name = "Turkish"
+	group = turkic
+	color = { 170 148 214 }
+	species = {
+		human
+	}
+}

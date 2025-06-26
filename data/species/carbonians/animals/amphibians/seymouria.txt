@@ -1,0 +1,9 @@
+seymouria = {
+	name = "Seymouria"
+	supertaxon = amphibia
+	pre_evolutions = {
+		acanthostega
+		hylerpeton
+		ventastega
+	}
+}

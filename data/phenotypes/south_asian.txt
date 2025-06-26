@@ -1,0 +1,4 @@
+south_asian = {
+	name = "South Asian"
+	species = human
+}

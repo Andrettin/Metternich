@@ -1,0 +1,43 @@
+mountaineer_1 = {
+	name = "Mountaineer I"
+	icon = mountains
+	conditions = {
+		infantry = true
+	}
+	modifier = {
+		hills_attack_modifier = 15
+		hills_defense_modifier = 15
+		mountains_attack_modifier = 15
+		mountains_defense_modifier = 15
+	}
+}
+
+mountaineer_2 = {
+	name = "Mountaineer II"
+	icon = mountains
+	conditions = {
+		infantry = true
+		promotion = mountaineer_1
+	}
+	modifier = {
+		hills_attack_modifier = 25
+		hills_defense_modifier = 25
+		mountains_attack_modifier = 25
+		mountains_defense_modifier = 25
+	}
+}
+
+mountaineer_3 = {
+	name = "Mountaineer III"
+	icon = mountains
+	conditions = {
+		infantry = true
+		promotion = mountaineer_2
+	}
+	modifier = {
+		hills_attack_modifier = 35
+		hills_defense_modifier = 35
+		mountains_attack_modifier = 35
+		mountains_defense_modifier = 35
+	}
+}

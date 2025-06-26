@@ -1,0 +1,8 @@
+lake_michigan = {
+	name = "Lake Michigan"
+	color = { 169 214 254 }
+	lake = true
+	regions = {
+		united_states
+	}
+}

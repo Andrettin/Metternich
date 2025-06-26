@@ -1,0 +1,13 @@
+erzincan = {
+	name = "Erzincan"
+	world = earth
+	geocoordinate = { 39.49277258180 39.75264975900 } #from Natural Earth
+	type = settlement
+	#resource = grain #Irrigated farming; Source: "CIA Atlas of the Middle East", 1993.
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,13 @@
+faro = {
+	name = "Faro"
+	world = earth
+	geocoordinate = { -7.93327315412 37.01708030090 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		395 = {
+			buildings += cathedral #Faro was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+	}
+}

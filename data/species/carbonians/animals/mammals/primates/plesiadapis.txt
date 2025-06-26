@@ -1,0 +1,10 @@
+plesiadapis = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=40738
+	name = "Plesiadapis"
+	supertaxon = plesiadapis
+	era = paleocene
+	pre_evolutions = {
+		alphadon
+		#leptictidium #too late to be an ancestor of Plesiadapis
+		zalambdalestes
+	}
+}

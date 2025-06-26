@@ -1,0 +1,7 @@
+labor = {
+	filepath = "icons/commodities/labor.png"
+}
+
+labor_hammer = {
+	filepath = "icons/commodities/labor_hammer.png"
+}

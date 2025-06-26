@@ -1,0 +1,13 @@
+gems = {
+	name = "Gems"
+	commodity = gems
+	tiny_icon = trade_consulate
+	prospectable = true
+	discovery_technology = precious_stones
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+}

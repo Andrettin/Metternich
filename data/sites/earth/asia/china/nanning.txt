@@ -1,0 +1,8 @@
+nanning = {
+	name = "Nanning"
+	world = earth
+	geocoordinate = { 108.32004431100 22.81998821920 } #from Natural Earth
+	type = settlement
+	#resource = cotton
+	province = guangxi
+}

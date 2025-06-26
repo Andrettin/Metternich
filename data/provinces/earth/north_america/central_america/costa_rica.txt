@@ -1,0 +1,14 @@
+costa_rica = {
+	name = "Costa Rica"
+	color = { 126 28 7 }
+	provincial_capital = san_jose
+	regions = {
+		central_america
+	}
+	
+	history = {
+		owner = arawaks
+		culture = arawak
+		religion = pagan
+	}
+}

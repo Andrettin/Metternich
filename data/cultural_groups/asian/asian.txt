@@ -1,0 +1,4 @@
+asian = {
+	name = "Asian"
+	rank = supergroup
+}

@@ -1,0 +1,7 @@
+iron = {
+	filepath = "icons/commodities/iron.png"
+}
+
+iron_ore = {
+	filepath = "icons/commodities/iron_ore.png"
+}

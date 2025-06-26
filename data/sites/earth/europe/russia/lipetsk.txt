@@ -1,0 +1,6 @@
+lipetsk = {
+	name = "Lipetsk"
+	world = earth
+	geocoordinate = { 39.63999873740 52.62000388500 } #from Natural Earth
+	type = settlement
+}

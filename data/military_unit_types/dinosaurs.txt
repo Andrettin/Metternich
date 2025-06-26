@@ -1,0 +1,121 @@
+triceratops = {
+	name = "Triceratops"
+	unit_class = spearmen
+	culture = reptilian
+	icon = lion
+	stats = {
+		melee = 4
+		range = 1
+		defense = 5
+		movement = 4
+		bonus_vs_cavalry = 100
+	}
+	required_technology = horns
+	commodity_costs = {
+		manpower = 1
+	}
+}
+
+coelophysis = {
+	name = "Coelophysis"
+	unit_class = beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	required_technology = scaly_skin
+}
+
+acanthopholis = {
+	name = "Acanthopholis"
+	unit_class = beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	required_technology = spikes
+}
+
+baryonyxes = {
+	name = "Baryonyxes"
+	unit_class = beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	required_technology = claws
+}
+
+stegosaurus = {
+	name = "Stegosaurus"
+	unit_class = beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	required_technology = tail_spikes
+}
+
+velociraptors = {
+	name = "Velociraptors"
+	unit_class = beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	required_technology = tearing_claw
+}
+
+tyrannosaurus = {
+	name = "Tyrannosaurus"
+	unit_class = colossal_beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	required_technology = archosaurs
+}
+
+pterodactyls = {
+	name = "Pterodactyls"
+	unit_class = flying_beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	required_technology = pterosaurs
+}
+
+quetzalcoatlus = {
+	name = "Quetzalcoatlus"
+	unit_class = flying_beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+	required_technology = advanced_pterosaurs
+}

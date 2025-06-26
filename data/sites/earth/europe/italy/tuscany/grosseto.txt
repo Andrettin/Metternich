@@ -1,0 +1,8 @@
+grosseto = {
+	name = "Grosseto"
+	world = earth
+	geocoordinate = { 11.108888888889 42.772222222222 }
+	type = resource
+	resource = cattle
+	province = tuscany
+}

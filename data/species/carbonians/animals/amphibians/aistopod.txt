@@ -1,0 +1,9 @@
+aistopod = {
+	name = "Aistopod"
+	supertaxon = amphibia
+	pre_evolutions = {
+		elginerpeton
+		hylerpeton
+		tulerpeton
+	}
+}

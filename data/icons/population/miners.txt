@@ -1,0 +1,7 @@
+miners = {
+	filepath = "icons/population/miners.png"
+}
+
+miners_small = {
+	filepath = "icons/population/miners_small.png"
+}

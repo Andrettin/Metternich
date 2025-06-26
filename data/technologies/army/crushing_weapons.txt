@@ -1,0 +1,51 @@
+mace = {
+	name = "Mace"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = 1200_1300
+	cost_commodity = research
+	prerequisites = {
+		battleaxe
+		
+		positional_combat
+	}
+}
+
+warhammer = {
+	name = "Warhammer"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = 1300_1400
+	cost_commodity = research
+	prerequisites = {
+		mace
+	}
+	modifier = {
+		military_unit_stat = {
+			type = macemen
+			stat = melee
+			value = 0.5
+		}
+	}
+}
+
+morningstar = {
+	name = "Morningstar"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = 1400_1500
+	cost_commodity = research
+	prerequisites = {
+		warhammer
+	}
+	modifier = {
+		military_unit_stat = {
+			type = macemen
+			stat = melee
+			value = 0.5
+		}
+	}
+}

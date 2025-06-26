@@ -1,0 +1,19 @@
+fluyte = {
+	name = "Fluyte"
+	category = large_merchant_ship
+}
+
+indiaman = {
+	name = "Indiaman"
+	category = large_merchant_ship
+}
+
+paddlewheeler = {
+	name = "Paddlewheeler"
+	category = large_merchant_ship
+}
+
+freighter = {
+	name = "Freighter"
+	category = large_merchant_ship
+}

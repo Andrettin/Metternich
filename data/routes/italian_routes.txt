@@ -1,0 +1,48 @@
+aemilian_way = {
+	name = "Aemilian Way"
+	color = { 2 80 57 }
+	
+	history = {
+		-100 = {
+			pathway = road #the Aemilian Way roman road existed c. 100 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
+		}
+	}
+}
+
+appian_way = {
+	name = "Appian Way"
+	color = { 159 93 229 }
+	
+	history = {
+		-100 = {
+			pathway = road #the Appian Way Roman road existed c. 100 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
+		}
+	}
+}
+
+cassian_way = {
+	name = "Cassian Way"
+	color = { 206 39 73 }
+	
+	history = {
+		-100 = {
+			pathway = road #the Cassian Way roman road existed c. 100 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
+		}
+	}
+}
+
+flaminian_way = {
+	name = "Flaminian Way"
+	color = { 71 132 104 }
+	
+	history = {
+		-100 = {
+			pathway = road #the Flaminian Way roman road existed c. 100 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
+		}
+	}
+}
+
+postumian_way = {
+	name = "Postumian Way"
+	color = { 87 243 152 }
+}

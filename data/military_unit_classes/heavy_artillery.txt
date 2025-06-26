@@ -1,0 +1,35 @@
+catapult = {
+	name = "Catapult"
+	domain = land
+	category = heavy_artillery
+}
+
+culverin = {
+	name = "Culverin"
+	domain = land
+	category = heavy_artillery
+}
+
+royal_artillery = {
+	name = "Royal Artillery"
+	domain = land
+	category = heavy_artillery
+}
+
+artillery = {
+	name = "Artillery"
+	domain = land
+	category = heavy_artillery
+}
+
+siege_artillery = {
+	name = "Siege Artillery"
+	domain = land
+	category = heavy_artillery
+}
+
+railroad_guns = {
+	name = "Railroad Guns"
+	domain = land
+	category = heavy_artillery
+}

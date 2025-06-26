@@ -1,0 +1,97 @@
+minas_gerais = {
+	name = "Minas Gerais"
+	color = { 132 153 248 }
+	provincial_capital = ouro_preto
+	resources = {
+		grain = 1 #corn; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+		tobacco = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+		cattle = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+		iron_ore = 3 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+		diamonds = 1 #diamonds and other precious stones; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
+		coffee = 1
+	}
+	regions = {
+		brazil
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = tupi
+			culture = tupi
+		}
+		
+		1300 = {
+			owner = tupi
+			culture = tupi
+			religion = pagan
+		}
+		
+		1716 = {
+			population_groups = {
+				slaves.african = 27909 #27,909 slaves lived in Minas Gerais in 1716; Source: "Linguagem, Domínio Senhorial e Identidade Étnica nas Minas Gerais de Meados do Século XVIII", p. 13.
+			}
+		}
+		
+		1718 = {
+			population_groups = {
+				slaves.african = 35094 #35,094 slaves lived in Minas Gerais in 1718; Source: "Linguagem, Domínio Senhorial e Identidade Étnica nas Minas Gerais de Meados do Século XVIII", p. 13.
+			}
+		}
+		
+		1786 = {
+			population = 362847 #362,847 people lived in Minas Gerais in 1786; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 282.
+			
+			population_groups = {
+				slaves.african = 174135 #174,135 slaves lived in Minas Gerais in 1786; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 282.
+			}
+		}
+		
+		1790 = {
+			owner = brazil #part of Brazil c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = brazilian
+			religion = catholic
+		}
+		
+		1805 = {
+			population = 406984 #406,984 people lived in Minas Gerais in 1805; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 282.
+			
+			population_groups = {
+				slaves.african = 188761 #188,761 slaves lived in Minas Gerais in 1805; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 282.
+			}
+		}
+		
+		1808 = {
+			population = 433049 #433,049 people lived in Minas Gerais in 1808; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 282.
+			
+			population_groups = {
+				slaves.african = 148772 #148,772 slaves lived in Minas Gerais in 1808; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 282.
+			}
+		}
+		
+		1821 = {
+			population = 514537 #514,537 people lived in Minas Gerais in 1821; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 282.
+			
+			population_groups = {
+				slaves.african = 171204 #171,204 slaves lived in Minas Gerais in 1821; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 282.
+			}
+		}
+		
+		1823 = {
+			population = 518985 #518,985 people lived in Minas Gerais in 1823; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 282.
+			
+			population_groups = {
+				slaves.african = 140365 #140,365 slaves lived in Minas Gerais in 1823; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 282.
+			}
+		}
+		
+		1855 = {
+			population_groups = {
+				tribesmen.tupi.pagan = 1000 #1,000 Indians lived in Minas Gerais in 1855; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 194.
+			}
+		}
+	}
+}

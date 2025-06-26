@@ -1,0 +1,15 @@
+crested_back = {
+	name = "Crested Back"
+	subcategory = back_protection
+	portrait = building_slot
+	icon = lion
+	period = jurassic
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		back_protection
+		head_crest
+	}
+}

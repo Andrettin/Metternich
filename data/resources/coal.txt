@@ -1,0 +1,13 @@
+coal = {
+	name = "Coal"
+	commodity = coal
+	tiny_icon = trade_consulate
+	prospectable = true
+	terrain_types = {
+		barren_hills
+		mountains
+	}
+	site_types = {
+		resource
+	}
+}

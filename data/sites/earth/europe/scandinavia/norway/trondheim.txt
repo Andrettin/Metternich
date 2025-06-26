@@ -1,0 +1,7 @@
+trondheim = {
+	name = "Trondheim"
+	world = earth
+	geocoordinate = { 10.41666621770 63.41665753090 } #from Natural Earth
+	type = settlement
+	province = trondelag
+}

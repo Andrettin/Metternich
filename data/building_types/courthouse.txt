@@ -1,0 +1,34 @@
+courthouse = {
+	name = "Courthouse"
+	building_class = courthouse
+	portrait = trading_post
+	icon = courthouse
+	provincial = true
+	required_technology = code_of_laws
+	settlement_types = {
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			produces_commodity = statesmanship
+		}
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = organized
+			}
+		}
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = furniture
+			value = 1
+		}
+	}
+	province_modifier = {
+		statesmanship_output_modifier = 25
+	}
+}

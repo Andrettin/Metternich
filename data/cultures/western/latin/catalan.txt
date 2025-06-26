@@ -1,0 +1,17 @@
+catalan = {
+	name = "Catalan"
+	group = iberian
+	color = { 220 110 30 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			or = {
+				core = catalonia
+				core = valencia
+			}
+		}
+	}
+}

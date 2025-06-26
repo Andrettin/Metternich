@@ -1,0 +1,12 @@
+kerch = {
+	name = "Kerch" #also known as Bosphorus
+	world = earth
+	geocoordinate = { 36.48809810260 45.36850852360 } #from Natural Earth
+	province = crimea
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

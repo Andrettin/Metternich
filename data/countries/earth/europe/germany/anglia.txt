@@ -1,0 +1,18 @@
+anglia = {
+	name = "Anglia"
+	type = minor_nation
+	culture = anglian
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = flensburg
+	short_names = {
+		tribe = "Angles"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		schleswig
+	}
+}

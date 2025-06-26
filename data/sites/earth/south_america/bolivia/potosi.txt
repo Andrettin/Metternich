@@ -1,0 +1,6 @@
+potosi = {
+	name = "Potosi" #"Potosí"
+	world = earth
+	geocoordinate = { -65.75002832200 -19.56956907270 } #from Natural Earth
+	type = settlement
+}

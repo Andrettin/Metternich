@@ -1,0 +1,6 @@
+ipu = {
+	name = "Ipu" #"Ipú"
+	world = earth
+	geocoordinate = { -40.72005741530 -4.31959552116 } #from Natural Earth
+	province = ceara
+}

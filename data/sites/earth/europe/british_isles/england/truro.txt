@@ -1,0 +1,6 @@
+truro = {
+	name = "Truro"
+	world = earth
+	geocoordinate = { -5.051 50.26 }
+	type = settlement
+}

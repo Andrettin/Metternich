@@ -1,0 +1,29 @@
+tiaret = {
+	name = "Tiaret"
+	color = { 40 163 89 }
+	provincial_capital = tiaret
+	regions = {
+		algeria
+	}
+	
+	history = {
+		owner = mauretanians
+		culture = maurian
+		religion = pagan
+		
+		526 = {
+			owner = mauretanians #territory of the Mauretanians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = maurian
+		}
+		
+		1360 = {
+			owner = algeria #part of Algeria in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = arabic
+			religion = sunni
+		}
+		
+		1740 = {
+			owner = algeria #part of Algeria c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

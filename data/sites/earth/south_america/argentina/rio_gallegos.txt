@@ -1,0 +1,6 @@
+rio_gallegos = {
+	name = "Rio Gallegos" #"Río Gallegos"
+	world = earth
+	geocoordinate = { -69.21658675300 -51.63329669320 } #from Natural Earth
+	type = settlement
+}

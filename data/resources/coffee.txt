@@ -1,0 +1,14 @@
+coffee = {
+	name = "Coffee"
+	commodity = coffee
+	tiny_icon = trade_consulate
+	terrain_types = {
+		savannah
+	}
+	site_types = {
+		resource
+	}
+	improved_modifier = {
+		culture_bonus = 1
+	}
+}

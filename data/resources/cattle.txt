@@ -1,0 +1,12 @@
+cattle = {
+	name = "Cattle"
+	commodity = meat
+	tiny_icon = garrison
+	terrain_types = {
+		plains
+		savannah
+	}
+	site_types = {
+		resource
+	}
+}

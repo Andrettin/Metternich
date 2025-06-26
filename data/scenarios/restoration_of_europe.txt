@@ -1,0 +1,13 @@
+restoration_of_europe = {
+	name = "Restoration of Europe"
+	#start_date = 1815.11.20
+	start_date = 1820
+	map_template = earth
+	default_countries = {
+		austria
+		france
+		great_britain
+		prussia
+		russia
+	}
+}

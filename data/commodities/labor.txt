@@ -1,0 +1,7 @@
+labor = {
+	name = "Labor"
+	icon = labor
+	abstract = true
+	storable = false
+	labor = true
+}

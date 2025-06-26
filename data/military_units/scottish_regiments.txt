@@ -1,0 +1,74 @@
+edinburgh_spearmen = {
+	type = spearmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = lothian
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+edinburgh_arquebusiers = {
+	type = arquebusiers
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = lothian
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+edinburgh_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = lothian
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+ayr_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = ayrshire
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+highlands_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = highlands
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}

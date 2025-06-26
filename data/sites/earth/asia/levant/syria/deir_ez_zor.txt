@@ -1,0 +1,6 @@
+deir_ez_zor = {
+	name = "Deir ez-Zor"
+	world = earth
+	geocoordinate = { 40.12999466830 35.33038738920 } #from Natural Earth
+	type = settlement
+}

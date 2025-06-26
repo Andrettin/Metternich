@@ -1,0 +1,6 @@
+pierre = {
+	name = "Pierre"
+	world = earth
+	geocoordinate = { -100.35055200400 44.36833701480 } #from Natural Earth
+	type = settlement
+}

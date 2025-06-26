@@ -1,0 +1,6 @@
+oruro = {
+	name = "Oruro"
+	world = earth
+	geocoordinate = { -67.12999576990 -17.97995033890 } #from Natural Earth
+	type = settlement
+}

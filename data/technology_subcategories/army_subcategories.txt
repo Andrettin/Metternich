@@ -1,0 +1,41 @@
+infantry = {
+	name = "Infantry"
+	category = army
+	icon = saber
+}
+
+cavalry = {
+	name = "Cavalry"
+	category = army
+	icon = horses
+}
+
+siege_weapons = {
+	name = "Siege Weapons"
+	category = army
+	icon = cannon
+}
+
+fortifications = {
+	name = "Fortifications"
+	category = army
+	icon = wall
+}
+
+army_doctrine = {
+	name = "Army Doctrine"
+	category = army
+	icon = saber
+}
+
+#military_science = {
+#	name = "Military Science"
+#	category = army
+#	icon = saber
+#}
+
+#army_leadership = {
+#	name = "Army Leadership"
+#	category = army
+#	icon = saber
+#}

@@ -1,0 +1,13 @@
+cork = {
+	name = "Cork"
+	world = earth
+	geocoordinate = { -8.49577111961 51.89860089020 } #from Natural Earth
+	type = settlement
+	province = munster
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

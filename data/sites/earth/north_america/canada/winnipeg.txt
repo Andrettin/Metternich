@@ -1,0 +1,6 @@
+winnipeg = {
+	name = "Winnipeg"
+	world = earth
+	geocoordinate = { -97.16599186380 49.88298748690 } #from Natural Earth
+	type = settlement
+}

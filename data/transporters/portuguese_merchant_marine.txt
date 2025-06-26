@@ -1,0 +1,11 @@
+portuguese_carracks = {
+	type = carrack
+	country = portugal
+	quantity = 3
+	
+	history = {
+		1492 = {
+			active = true
+		}
+	}
+}

@@ -1,0 +1,16 @@
+baeza = {
+	name = "Baeza"
+	world = earth
+	geocoordinate = { -3.47103 37.99384 }
+	province = andalusia
+	
+	history = {
+		1542 = {
+			buildings += university #Minor university founded in Baeza in 1542; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+		
+		1807 = {
+			buildings -= university #Minor university abolished in Baeza in 1807; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

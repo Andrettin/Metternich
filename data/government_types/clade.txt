@@ -1,0 +1,8 @@
+clade = {
+	name = "Clade"
+	group = clade
+	icon = bow
+	conditions = {
+		country_type = clade
+	}
+}

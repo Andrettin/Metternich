@@ -1,0 +1,36 @@
+improved_infantry_tactics = {
+	name = "Improved Infantry Tactics"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = 1600_1650
+	cost_commodity = leadership
+	prerequisites = {
+		organized_regiments
+		printing_press
+	}
+}
+
+improved_cavalry_tactics = {
+	name = "Improved Cavalry Tactics"
+	subcategory = cavalry
+	portrait = helmet
+	icon = saber
+	period = 1600_1650
+	cost_commodity = leadership
+	prerequisites = {
+		animal_husbandry
+		printing_press
+	}
+}
+
+mobile_warfare = {
+	name = "Mobile Warfare"
+	subcategory = cavalry
+	portrait = helmet
+	icon = saber
+	cost_commodity = leadership
+	prerequisites = {
+		internal_combustion
+	}
+}

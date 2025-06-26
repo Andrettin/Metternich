@@ -1,0 +1,52 @@
+tuscany = {
+	name = "Tuscany"
+	color = { 112 128 160 }
+	provincial_capital = florence
+	resources = {
+		grain = 4
+		cattle = 2
+		iron_ore = 1
+		
+		fruit = 1
+	}
+	regions = {
+		italy
+	}
+	
+	history = {
+		owner = etruscans
+		culture = etruscan
+		religion = pagan
+		
+		-750 = {
+			owner = etruscans #Etruscan territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+			culture = etruscan
+		}
+		
+		-500 = {
+			owner = etruria #part of Etruria in the 500-100 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
+		}
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+		}
+		
+		568 = {
+			owner = langobardia #became part of the Kingdom of the Lombards in 568; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+		}
+		
+		1477 = {
+			owner = florence #part of the Republic of Florence c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = italian
+			religion = catholic
+		}
+		
+		1737 = {
+			owner = tuscany #part of the Grand Duchy of Tuscany in 1737; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			culture = italian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

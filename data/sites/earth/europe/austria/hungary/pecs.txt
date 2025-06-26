@@ -1,0 +1,21 @@
+pecs = {
+	name = "Pecs" #"Pécs"
+	world = earth
+	geocoordinate = { 18.22001419950 46.08042889310 } #from Natural Earth
+	type = resource
+	resource = cattle
+	province = buda
+	cultural_group_names = {
+		german = "Funfkirchen" #"Fünfkirchen"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1367 = {
+			buildings += university #University founded in Pécs/Fünfkirchen in 1367; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

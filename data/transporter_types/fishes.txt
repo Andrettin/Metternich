@@ -1,0 +1,30 @@
+griphognathus = {
+	name = "Griphognathus"
+	transporter_class = carrack
+	culture = reptilian
+	icon = fish
+	hit_points = 25
+	stats = {
+		resistance = 5
+		movement = 3
+	}
+	cargo = 3
+	required_technology = egg_laying
+	upgrades = {
+		hemicyclaspis
+	}
+}
+
+hemicyclaspis = {
+	name = "Hemicyclaspis"
+	transporter_class = trader
+	culture = reptilian
+	icon = fish
+	hit_points = 30
+	stats = {
+		resistance = 10
+		movement = 4
+	}
+	cargo = 4
+	required_technology = armored_fish
+}

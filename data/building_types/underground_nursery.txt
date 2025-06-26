@@ -1,0 +1,20 @@
+underground_nursery = {
+	name = "Underground Nursery"
+	building_class = underground_nursery
+	culture = reptilian
+	portrait = building_slot
+	icon = heart
+	provincial = true
+	required_technology = burrowing
+	settlement_types = {
+		village
+		town
+		city
+		metropolis
+		castle
+		monastery
+	}
+	settlement_modifier = {
+		amenities_bonus = 3
+	}
+}

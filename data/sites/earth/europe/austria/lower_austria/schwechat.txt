@@ -1,0 +1,16 @@
+schwechat = {
+	name = "Schwechat"
+	world = earth
+	#geocoordinate = { 16.478611111111 48.141111111111 } #commented out because it is in the same spot as Vienna
+	province = lower_austria
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1900 = {
+			population = 8241 #Schwechat had a population of 8241 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

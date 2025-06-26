@@ -1,0 +1,14 @@
+meissen = {
+	name = "Meissen"
+	world = earth
+	geocoordinate = { 13.4775 51.163611111111 }
+	
+	history = {
+		919 = {
+			#settlement_type = castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+			
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

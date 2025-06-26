@@ -1,0 +1,22 @@
+nordland = {
+	name = "Nordland"
+	color = { 192 192 192 }
+	provincial_capital = bodo
+	resources = {
+		fish = 1
+	}
+	regions = {
+		norway
+	}
+	
+	history = {
+		culture = norse
+		religion = pagan
+		
+		1524 = {
+			owner = norway #part of Norway in the 1524-1658 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 120.
+			culture = norwegian
+			religion = protestant
+		}
+	}
+}

@@ -1,0 +1,8 @@
+kangan = {
+	name = "Kangan"
+	world = earth
+	geocoordinate = { 52.062777777778 27.833888888889 }
+	type = resource
+	resource = fish
+	province = fars
+}

@@ -1,0 +1,7 @@
+fergana = {
+	name = "Fergana" #also known as Fargona
+	world = earth
+	geocoordinate = { 71.78000077200 40.38997519840 } #from Natural Earth
+	type = settlement
+	province = fergana
+}

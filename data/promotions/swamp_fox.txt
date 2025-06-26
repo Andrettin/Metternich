@@ -1,0 +1,37 @@
+swamp_fox_1 = {
+	name = "Swamp Fox I"
+	icon = mountains
+	conditions = {
+		infantry = true
+	}
+	modifier = {
+		wetland_attack_modifier = 20
+		wetland_defense_modifier = 20
+	}
+}
+
+swamp_fox_2 = {
+	name = "Swamp Fox II"
+	icon = mountains
+	conditions = {
+		infantry = true
+		promotion = swamp_fox_1
+	}
+	modifier = {
+		wetland_attack_modifier = 25
+		wetland_defense_modifier = 25
+	}
+}
+
+swamp_fox_3 = {
+	name = "Swamp Fox III"
+	icon = mountains
+	conditions = {
+		infantry = true
+		promotion = swamp_fox_2
+	}
+	modifier = {
+		wetland_attack_modifier = 30
+		wetland_defense_modifier = 30
+	}
+}

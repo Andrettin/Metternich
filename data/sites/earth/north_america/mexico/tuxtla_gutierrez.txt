@@ -1,0 +1,6 @@
+tuxtla_gutierrez = {
+	name = "Tuxtla Gutierrez" #"Tuxtla Gutiérrez"
+	world = earth
+	geocoordinate = { -93.15000960470 16.74999696750 } #from Natural Earth
+	type = settlement
+}

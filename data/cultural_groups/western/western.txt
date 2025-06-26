@@ -1,0 +1,211 @@
+western = {
+	name = "Western"
+	rank = supergroup
+	default_phenotype = european
+	
+	history = {
+		explored_regions += europe
+		explored_regions += middle_east
+		explored_regions += north_africa
+		explored_regions += baltic_sea
+		explored_regions += mediterranean_sea
+		explored_regions += north_sea
+		explored_provinces += lake_ladoga
+		explored_provinces += lake_onega
+		explored_provinces += lake_vanern
+		explored_provinces += bay_of_biscay
+		explored_provinces += bristol_channel
+		explored_provinces += english_channel
+		explored_provinces += inner_seas
+		explored_provinces += irish_sea
+		explored_provinces += north_atlantic_ocean
+		
+		1180 = {
+			#the English scholar Alexander Neckam (1157-1217) wrote about the uses of magnetism for ascertaining the north/south direction in 1180; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 164-165.
+			#technologies += compass
+		}
+		
+		1249 = {
+			#the Englishman Roger Bacon wrote about gunpowder in 1249; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 169-170.
+			technologies += gunpowder
+		}
+		
+		1480 = {
+			#by 1480 there were printing presses in 100+ European towns; Source: Henry Kamen, "Early Modern European Society", 2021, p. 286.
+			technologies += printing_press
+		}
+		
+		1492 = {
+			#Puerto Rico was discovered in 1492 by Columbus; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 201.
+			explored_provinces += puerto_rico
+		}
+		
+		1497 = {
+			#Amerigo Vespucci went on an expedition to explore the coast of South America in 1497; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 199.
+			explored_provinces += south_atlantic_ocean
+			explored_provinces += alagoas
+			explored_provinces += bahia
+			explored_provinces += ceara
+			explored_provinces += espirito_santo
+			explored_provinces += maranhao
+			explored_provinces += paraiba
+			explored_provinces += parana
+			explored_provinces += pernambuco
+			explored_provinces += piaui
+			explored_provinces += rio_de_janeiro
+			explored_provinces += rio_grande_do_norte
+			explored_provinces += rio_grande_do_sul
+			explored_provinces += santa_catarina
+			explored_provinces += sergipe
+			explored_provinces += sao_paulo
+			explored_provinces += buenos_aires
+			explored_provinces += chubut
+			explored_provinces += falkland_islands
+			explored_provinces += rio_negro
+			explored_provinces += santa_cruz_argentina
+			explored_provinces += tierra_del_fuego
+		}
+		
+		1498 = {
+			#Christopher Columbus went on an expedition to the mouth of the Orinoco River in 1498; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 200.
+			explored_provinces += venezuela
+		}
+		
+		1500.3 = {
+			#the Portuguese explorer Pedro Álvares Cabral reached the Brazilian coast in 1500.3; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 200.
+		}
+		
+		1502 = {
+			#Christopher Columbus reached the Central American coasts in 1502; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 200.
+			explored_provinces += belize
+			explored_provinces += guatemala
+			explored_provinces += honduras
+			explored_provinces += nicaragua
+			explored_provinces += costa_rica
+			explored_provinces += panama
+		}
+		
+		1503 = {
+			#the Portuguese reached Indonesia in 1503; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
+			explored_regions += indonesia
+		}
+		
+		1504 = {
+			#watch invented by the German sawmiller Peter Henlein in 1504; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 200.
+		}
+		
+		1512 = {
+			#the Portuguese reached Canton, in China, in 1512; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
+			explored_provinces += canton
+		}
+		
+		1513.3.3 = {
+			#Juan Ponce de León discovered Florida on 1513.3.3; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 201.
+			explored_provinces += florida
+		}
+		
+		1513.9.25 = {
+			#Vasco Nuñez de Balboa discovered the Pacific Ocean, at the Panamanian coast, in 1513.9.25; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 201.
+			explored_provinces += north_pacific_ocean
+		}
+		
+		1517 = {
+			#Francisco Fernández de Córdoba discovered the Yucatan peninsula in 1517; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
+			explored_provinces += yucatan
+		}
+		
+		1519 = {
+			#Hernán Cortés reached Mexico in 1519; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
+			explored_regions += mexico
+		}
+		
+		1519.10.21 = {
+			#Ferdinand Magellan reached the southern tip of South America on 1519.10.21; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
+			explored_provinces += santa_cruz_argentina
+			explored_provinces += tierra_del_fuego
+			explored_provinces += magallanes
+		}
+		
+		1519.11.28 = {
+			#Ferdinand Magellan crossed the Strait of Magellan into open ocean on 1519.11.28; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
+			explored_provinces += south_pacific_ocean
+		}
+		
+		1524 = {
+			#Giovanni da Verrazano discovered New York Bay in 1524; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
+			explored_provinces += new_york
+		}
+		
+		1530 = {
+			#Potatoes discovered by Spanish explorer Gonzalo Jiménez de Quesada in 1530; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 205-206.
+			technologies += potatoes
+		}
+		
+		1531 = {
+			#Francisco Pizarro reached Peru in 1531; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
+			explored_regions += peru
+		}
+		
+		1534 = {
+			#Jacques Cartier discovered the Strait of Belle Isle in 1534; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 207.
+		}
+		
+		1534.8.10 = {
+			#Jacques Cartier discovered the Gulf of Saint Lawrence on 1534.8.10; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 207.
+			explored_provinces += gulf_of_saint_lawrence
+		}
+		
+		1535 = {
+			#method to solve cubic equations invented by the Italian Niccolò Tartaglia in 1535; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 206.
+		}
+		
+		1536 = {
+			#Hernán Cortés discovered Baja California in 1536; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 208.
+			explored_provinces += baja_california
+		}
+		
+		1541 = {
+			#Hernando de Soto discovered the Mississippi River in 1541; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 208.
+			explored_regions += mississippi_basin
+		}
+		
+		1542.8 = {
+			#Francisco de Orellana fully explored the Amazon River from 1541.4 to 1542.8; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 209.
+			explored_regions += amazon_basin
+		}
+		
+		1543 = {
+			#the Polish astronomer Nicolaus Copernicus published his "De Revolutionibus Orbium Coelestium" in 1543, in which he described the heliocentric model; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 209-211.
+			technologies += astronomy
+			
+			#Andreas Vesalius published his "De Corporis Humani Fabrica" in 1543, which revolutionized the understanding of anatomy; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
+			technologies += medicine
+			
+			#Europeans reached Japan for the first time in 1543; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
+			explored_regions += japan
+		}
+		
+		1545 = {
+			#the concept of negative numbers was developed by Cardano in 1545; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 212.
+			
+			#Ambroise Paré wrote a report about his findings regarding surgery in 1545; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 212-213.
+		}
+		
+		1620 = {
+			#the Englishman Francis Bacon published his "Novum Organum" in 1620, in which he described the scientific method; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 252.
+			technologies += scientific_method
+		}
+		
+		1800 = {
+			explored_regions += america
+			explored_regions += asia
+			explored_regions += atlantic_ocean
+			explored_regions += indian_ocean
+			explored_regions += pacific_ocean
+		}
+		
+		1900 = {
+			explored_regions += africa
+		}
+	}
+}

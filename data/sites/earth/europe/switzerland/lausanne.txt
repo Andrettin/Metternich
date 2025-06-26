@@ -1,0 +1,12 @@
+lausanne = {
+	name = "Lausanne"
+	world = earth
+	geocoordinate = { 6.65002274438 46.53042726550 } #from Natural Earth
+	province = geneva
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

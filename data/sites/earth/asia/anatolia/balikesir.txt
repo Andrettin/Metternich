@@ -1,0 +1,6 @@
+balikesir = {
+	name = "Balikesir"
+	world = earth
+	geocoordinate = { 27.89001826860 39.65038209950 } #from Natural Earth
+	type = settlement
+}

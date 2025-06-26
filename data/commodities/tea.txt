@@ -1,0 +1,5 @@
+tea = {
+	name = "Tea"
+	icon = tobacco
+	base_price = 100
+}

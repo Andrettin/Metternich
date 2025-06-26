@@ -1,0 +1,6 @@
+krivoy_rog = {
+	name = "Krivoy Rog"
+	world = earth
+	geocoordinate = { 33.34498246130 47.92832643540 } #from Natural Earth
+	type = settlement
+}

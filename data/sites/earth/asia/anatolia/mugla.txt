@@ -1,0 +1,6 @@
+mugla = {
+	name = "Mugla"
+	world = earth
+	geocoordinate = { 28.36389115270 37.21637046210 } #from Natural Earth
+	type = settlement
+}

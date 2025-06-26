@@ -1,0 +1,13 @@
+sanitation = {
+	name = "Sanitation"
+	subcategory = infrastructure
+	portrait = engineering
+	icon = architecture
+	period = 1550_1600
+	cost = 900
+	cost_commodity = research
+	prerequisites = {
+		medicine
+		engineering
+	}
+}

@@ -1,0 +1,25 @@
+market = {
+	name = "Market"
+	building_class = market
+	portrait = trading_post
+	icon = wealth
+	provincial = true
+	required_technology = coinage
+	settlement_types = {
+		village
+		town
+		city
+		metropolis
+	}
+	conditions = {
+		game_rule = trade_commodity
+	}
+	settlement_conditions = {
+		province = {
+			produces_commodity = trade
+		}
+	}
+	settlement_modifier = {
+		trade_output_modifier = 50
+	}
+}

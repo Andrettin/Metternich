@@ -1,0 +1,11 @@
+ratzeburg = {
+	name = "Ratzeburg"
+	world = earth
+	geocoordinate = { 10.756666666667 53.701666666667 }
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

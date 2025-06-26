@@ -1,0 +1,18 @@
+arvernia = {
+	name = "Arvernia"
+	type = minor_nation
+	culture = arverni
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = clermont
+	short_names = {
+		tribe = "Arverni"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		auvergne
+	}
+}

@@ -1,0 +1,35 @@
+minuteman_1 = {
+	name = "Minuteman I"
+	icon = musket
+	conditions = {
+		infantry = true
+	}
+	modifier = {
+		entrenchment_bonus_modifier = 20
+	}
+}
+
+minuteman_2 = {
+	name = "Minuteman II"
+	icon = musket
+	conditions = {
+		infantry = true
+		promotion = minuteman_1
+	}
+	modifier = {
+		entrenchment_bonus_modifier = 25
+	}
+}
+
+minuteman_3 = {
+	name = "Minuteman III"
+	icon = musket
+	conditions = {
+		infantry = true
+		promotion = minuteman_2
+	}
+	modifier = {
+		entrenchment_bonus_modifier = 30
+		bonus_vs_infantry = 10
+	}
+}

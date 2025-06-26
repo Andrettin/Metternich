@@ -1,0 +1,22 @@
+japanese = {
+	name = "Japanese"
+	group = asian
+	default_phenotype = east_asian
+	color = { 230 230 230 }
+	surname_first = true
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			democratic_republic = "Prime Minister"
+		}
+	}
+	
+	history = {
+		1543 = {
+			#Europeans reached Japan for the first time in 1543, passing knowledge of muskets onto the Japanese; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
+			technologies += weapon_craftsmanship
+		}
+	}
+}

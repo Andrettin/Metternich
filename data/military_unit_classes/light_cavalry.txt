@@ -1,0 +1,29 @@
+squires = {
+	name = "Squires"
+	domain = land
+	category = light_cavalry
+}
+
+cossacks = {
+	name = "Cossacks"
+	domain = land
+	category = light_cavalry
+}
+
+hussars = {
+	name = "Hussars"
+	domain = land
+	category = light_cavalry
+}
+
+scouts = {
+	name = "Scouts"
+	domain = land
+	category = light_cavalry
+}
+
+mechanized_infantry = {
+	name = "Mechanized Infantry"
+	domain = land
+	category = light_cavalry
+}

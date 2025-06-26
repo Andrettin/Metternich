@@ -1,0 +1,59 @@
+food_processing_center = {
+	name = "Food Processing Center"
+}
+
+bronze_foundry = {
+	name = "Bronze Foundry"
+}
+
+iron_smelter = {
+	name = "Iron Smelter"
+}
+
+lead_smelter = {
+	name = "Lead Smelter"
+}
+
+lumber_mill = {
+	name = "Lumber Mill"
+}
+
+mercury_refinery = {
+	name = "Mercury Refinery"
+}
+
+steel_mill = {
+	name = "Steel Mill"
+}
+
+textile_mill = {
+	name = "Textile Mill"
+}
+
+clothing_factory = {
+	name = "Clothing Factory"
+}
+
+furniture_factory = {
+	name = "Furniture Factory"
+}
+
+metalworks = {
+	name = "Metalworks"
+}
+
+pipe_maker = {
+	name = "Pipe Maker"
+}
+
+sugar_refinery = {
+	name = "Sugar Refinery"
+}
+
+cigar_factory = {
+	name = "Cigar Factory"
+}
+
+fur_factory = {
+	name = "Fur Factory"
+}

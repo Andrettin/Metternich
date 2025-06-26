@@ -1,0 +1,14 @@
+jizzakh = {
+	name = "Jizzakh"
+	color = { 3 39 46 }
+	provincial_capital = jizzakh
+	regions = {
+		uzbekistan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

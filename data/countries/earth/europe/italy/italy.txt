@@ -1,0 +1,29 @@
+italy = {
+	name = "Italy"
+	type = great_power
+	color = { 142 167 80 }
+	culture = italian
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = rome
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		latium
+		cosenza
+		genoa
+		lombardy
+		modena
+		naples
+		parma
+		piedmont
+		romagna
+		sardinia
+		sicily
+		taranto
+		tuscany
+		venetia
+	}
+}

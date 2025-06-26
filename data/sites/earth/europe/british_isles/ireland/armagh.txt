@@ -1,0 +1,14 @@
+armagh = {
+	name = "Armagh"
+	world = earth
+	geocoordinate = { -6.654444 54.349444 }
+	type = resource
+	resource = cattle
+	province = ulster
+	
+	history = {
+		802 = {
+			developed = true #existed c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+		}
+	}
+}

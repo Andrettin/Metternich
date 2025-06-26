@@ -1,0 +1,29 @@
+kordestan = {
+	name = "Kordestan"
+	color = { 191 201 73 }
+	provincial_capital = sanandaj
+	resources = {
+		sheep = 1
+	}
+	regions = {
+		persia
+	}
+	
+	history = {
+		owner = persia
+		culture = persian
+		religion = pagan
+		
+		1360 = {
+			owner = jalayirids #part of the Dominions of the Jalayrs in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = persian
+			religion = shiite
+		}
+		
+		1801 = {
+			owner = persia #part of Persia in 1801; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 170-171.
+			culture = persian
+			religion = shiite
+		}
+	}
+}

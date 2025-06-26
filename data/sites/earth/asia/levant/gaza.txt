@@ -1,0 +1,15 @@
+gaza = {
+	name = "Gaza"
+	world = earth
+	geocoordinate = { 34.44501867550 31.52999920550 } #from Natural Earth
+	type = resource
+	#resource = fish #Source: https://maps.lib.utexas.edu/maps/middle_east_and_asia/natural_resources.jpg
+	resource = grain
+	province = hadarom
+	
+	history = {
+		-1450 = {
+			developed = true #Gaza existed c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+	}
+}

@@ -1,0 +1,30 @@
+british_columbia = {
+	name = "British Columbia"
+	color = { 201 169 171 }
+	provincial_capital = victoria
+	regions = {
+		canada
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = kwakiutl
+			culture = kwakiutl
+		}
+		
+		1300 = {
+			owner = kwakiutl #Kwakiutl territory in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
+			culture = kwakiutl
+		}
+	}
+}

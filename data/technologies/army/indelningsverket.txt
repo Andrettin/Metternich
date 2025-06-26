@@ -1,0 +1,20 @@
+indelningsverket = {
+	name = "Indelningsverket"
+	subcategory = army_doctrine
+	portrait = fort
+	icon = saber
+	cost_commodity = leadership
+	cultures = {
+		swedish
+	}
+	prerequisites = {
+		organized_regiments
+	}
+	modifier = {
+		military_unit_stat = {
+			domain = land
+			stat = recovery_modifier
+			value = 20
+		}
+	}
+}

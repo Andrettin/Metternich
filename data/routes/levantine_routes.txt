@@ -1,0 +1,4 @@
+levantine_route_network = {
+	name = "Levantine Route Network"
+	color = { 108 254 113 }
+}

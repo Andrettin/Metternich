@@ -1,0 +1,8 @@
+siena = {
+	name = "Siena"
+	world = earth
+	geocoordinate = { 11.34999426130 43.31703167630 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = tuscany
+}

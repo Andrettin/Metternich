@@ -1,0 +1,6 @@
+topeka = {
+	name = "Topeka"
+	world = earth
+	geocoordinate = { -95.66998498710 39.05000530910 } #from Natural Earth
+	type = settlement
+}

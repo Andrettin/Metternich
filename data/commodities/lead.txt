@@ -1,0 +1,11 @@
+lead = {
+	name = "Lead"
+	icon = iron_ore
+	base_price = 100
+}
+
+lead_ingots = {
+	name = "Lead Ingots"
+	icon = iron
+	base_price = 300
+}

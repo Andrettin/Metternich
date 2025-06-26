@@ -1,0 +1,6 @@
+porto_velho = {
+	name = "Porto Velho"
+	world = earth
+	geocoordinate = { -63.90001204590 -8.75002276727 }
+	type = settlement
+}

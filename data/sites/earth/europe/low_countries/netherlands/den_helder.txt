@@ -1,0 +1,8 @@
+den_helder = {
+	name = "Den Helder"
+	world = earth
+	geocoordinate = { 4.75933 52.95988 }
+	type = resource
+	resource = cattle #Cattle raising or mixed use with pasture dominant; Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
+	province = holland
+}

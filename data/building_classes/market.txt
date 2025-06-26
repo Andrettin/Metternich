@@ -1,0 +1,4 @@
+market = {
+	name = "Market"
+	slot_type = market
+}

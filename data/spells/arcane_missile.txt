@@ -1,0 +1,14 @@
+arcane_missile = {
+	name = "Arcane Missile"
+	target = enemy
+	icon = research
+	mana_cost = 5
+	range = 5
+	military_unit_categories = {
+	}
+	effects = {
+		damage = {
+			value = 5
+		}
+	}
+}

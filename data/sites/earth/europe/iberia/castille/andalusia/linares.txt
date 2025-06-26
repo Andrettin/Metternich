@@ -1,0 +1,6 @@
+linares = {
+	name = "Linares"
+	world = earth
+	geocoordinate = { -3.63335473776 38.08332012840 } #from Natural Earth
+	province = andalusia
+}

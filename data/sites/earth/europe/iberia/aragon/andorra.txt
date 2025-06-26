@@ -1,0 +1,6 @@
+andorra = {
+	name = "Andorra"
+	world = earth
+	geocoordinate = { 1.51648596051 42.50000144350 } #from Natural Earth
+	province = catalonia
+}

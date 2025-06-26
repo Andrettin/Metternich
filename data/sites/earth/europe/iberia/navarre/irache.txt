@@ -1,0 +1,16 @@
+irache = {
+	name = "Irache"
+	world = earth
+	geocoordinate = { -2.05611111 42.64472222 }
+	province = navarre
+	
+	history = {
+		1605 = {
+			buildings += university #Minor university founded in Irache in 1605; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+		
+		1807 = {
+			buildings -= university #Minor university in Irache abolished in 1807; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

@@ -1,0 +1,52 @@
+dauphiny = {
+	name = "Dauphiny"
+	color = { 48 192 96 }
+	provincial_capital = grenoble
+	resources = {
+		tobacco = 1
+	}
+	regions = {
+		france
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = burgundians #territory of the Burgundians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		919 = {
+			owner = lower_burgundy #part of Lower Burgundy in 919; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = french
+			religion = catholic
+		}
+		
+		933 = {
+			owner = arles #became part of the Kingdom of Burgundy in 933; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1349 = {
+			owner = france #became part of France in 1349; Source: William R. Shepherd, "Historical Atlas", 1911, p. 76.
+		}
+		
+		1360 = {
+			owner = france #part of France in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1477 = {
+			owner = france #part of the Kingdom of France c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = france #part of the Kingdom of France c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = france #part of France in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

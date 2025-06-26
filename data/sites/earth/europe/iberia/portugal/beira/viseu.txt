@@ -1,0 +1,6 @@
+viseu = {
+	name = "Viseu"
+	world = earth
+	geocoordinate = { -7.91000043134 40.65699610800 } #from Natural Earth
+	province = beira
+}

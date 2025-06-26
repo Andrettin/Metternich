@@ -1,0 +1,23 @@
+semnan = {
+	name = "Semnan"
+	color = { 200 57 222 }
+	provincial_capital = semnan
+	resources = {
+		coal = 1
+	}
+	regions = {
+		persia
+	}
+	
+	history = {
+		owner = persia
+		culture = persian
+		religion = pagan
+		
+		1801 = {
+			owner = persia #part of Persia in 1801; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 170-171.
+			culture = persian
+			religion = shiite
+		}
+	}
+}

@@ -1,0 +1,15 @@
+food_gathering = {
+	name = "Food Gathering"
+	subcategory = collective_behavior
+	portrait = building_slot
+	icon = lion
+	period = carboniferous
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		phytophagia
+		barter
+	}
+}

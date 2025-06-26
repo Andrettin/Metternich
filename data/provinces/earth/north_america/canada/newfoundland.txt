@@ -1,0 +1,36 @@
+newfoundland = {
+	name = "Newfoundland"
+	color = { 209 215 159 }
+	provincial_capital = st_johns
+	regions = {
+		canada
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = iroquois
+			culture = iroquois
+		}
+		
+		1300 = {
+			owner = iroquois #territory of the Northeastern cultural group (to which the Iroquois belonged) in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
+			culture = iroquois
+		}
+		
+		1623 = {
+			owner = newfoundland #became part of English Newfoundland in 1623; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = english
+			religion = protestant
+		}
+	}
+}

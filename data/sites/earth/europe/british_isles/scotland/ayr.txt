@@ -1,0 +1,6 @@
+ayr = {
+	name = "Ayr"
+	world = earth
+	geocoordinate = { -4.61667972962 55.45039959630 } #from Natural Earth
+	type = settlement
+}

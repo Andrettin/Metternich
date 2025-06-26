@@ -1,0 +1,7 @@
+mogilev = {
+	name = "Mogilev"
+	world = earth
+	geocoordinate = { 30.32465002310 53.89850465810 } #from Natural Earth
+	type = settlement
+	province = mogilev
+}

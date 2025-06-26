@@ -1,0 +1,26 @@
+stock_exchange = {
+	name = "Stock Exchange"
+	building_class = stock_exchange
+	portrait = trading_post
+	icon = wealth
+	provincial = true
+	required_technology = economics
+	settlement_types = {
+		city
+		metropolis
+	}
+	conditions = {
+		game_rule = trade_commodity
+	}
+	build_conditions = {
+		has_building_class = bank
+	}
+	settlement_conditions = {
+		province = {
+			produces_commodity = trade
+		}
+	}
+	settlement_modifier = {
+		trade_output_modifier = 50
+	}
+}

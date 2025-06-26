@@ -1,0 +1,7 @@
+tashkent = {
+	name = "Tashkent"
+	world = earth
+	geocoordinate = { 69.29493281950 41.31170188300 } #from Natural Earth
+	type = settlement
+	province = tashkent
+}

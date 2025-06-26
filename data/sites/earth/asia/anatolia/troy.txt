@@ -1,0 +1,9 @@
+troy = {
+	name = "Troy"
+	world = earth
+	geocoordinate = { 26.40638789750 40.14593324690 } #from Natural Earth (Çanakkale)
+	type = settlement
+	cultural_names = {
+		turkish = "Canakkale" #"Çanakkale"
+	}
+}

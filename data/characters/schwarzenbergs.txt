@@ -1,0 +1,170 @@
+johann_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
+	name = "Johann"
+	dynasty = schwarzenberg
+	culture = german #Franconian
+	religion = catholic
+	home_settlement = nuremberg
+	gender = male
+	birth_date = 1463
+	death_date = 1528
+	#baron of Schwarzenberg and Hohenlandsberg
+	
+	#text based on that of the Encyclopædia Britannica, in the public domain
+	description = "Moralist and reformer who, as judge of the episcopal court at Bamberg, introduced a new code of evidence which amended the procedure then prevalent in Europe by securing for the accused a more impartial hearing."
+}
+
+adolf_von_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
+	name = "Adolf"
+	dynasty = schwarzenberg
+	culture = german #Franconian
+	religion = catholic
+	home_settlement = nuremberg
+	gender = male
+	birth_date = 1547
+	death_date = 1600 #killed in a mutiny of soldiers at Papa in Hungary
+	#count of Schwarzenberg
+	#renowned general of the empire
+}
+
+georg_ludwig_von_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
+	name = "Georg Ludwig"
+	dynasty = schwarzenberg
+	culture = german #Franconian
+	religion = catholic
+	home_settlement = nuremberg
+	gender = male
+	birth_date = 1586
+	death_date = 1646
+	#count of Schwarzenberg
+	#Austrian statesman in the Thirty Years' War
+}
+
+karl_philipp_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, pp. 390-391.
+	name = "Karl Philipp"
+	dynasty = schwarzenberg
+	role = leader
+	character_type = general
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna #born in Vienna
+	gender = male
+	birth_date = 1771.4.15
+	death_date = 1820.10.15 #died of a (second) stroke
+	required_technology = nationalism
+	conditions = {
+		country = austria
+	}
+	
+	#prince of Schwarzenberg
+	#had a sister, Caroline
+	
+	#text based on that of the Encyclopædia Britannica, in the public domain
+	description = "Austrian field marshal, he entered the imperial cavalry in 1788, fought in 1789 against the Turks, distinguished himself by his bravery, and became major in 1792. After taking part in the battles of Amberg and Würzburg in 1796 he was raised to the rank of major-general, and in 1799 he was promoted lieutenant field marshal. In 1813, when Austria, after many hesitations, took the side of the allies against Napoleon, Schwarzenberg, recently promoted to be field marshal, was appointed commander-in-chief of the allied Grand Army of Bohemia. As such he was the senior of the allied generals who conducted the campaign of 1813-1814 to the final victory before Paris and the overthrow of Napoleon."
+	
+	history = {
+		#entered the imperial cavalry in 1788
+		#fought in 1789 under Lacy and Loudon against the Turks
+		#became major in 1792
+		#decorated with the cross of the Maria Theresa order
+		#became major-general in 1796
+		
+		1799 = {
+			#became lieutenant field marshal in 1799
+			deployment_province = lower_austria 
+			country = austria
+		}
+		
+		#became a commander of the order of Maria Theresa in 1805
+		#received the Golden Fleece in 1809
+		#became general of cavalry soon after the Battle of Wagram (1809)
+		#was field marshal by 1813
+		#was president of the Hofkriegsrat
+		#disabled by a stroke of paralysis in 1817
+	}
+}
+
+friedrich_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 391.
+	name = "Friedrich"
+	dynasty = schwarzenberg
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	father = karl_philipp_zu_schwarzenberg
+	birth_date = 1800
+	death_date = 1870
+	#prince of Schwarzenberg
+	
+	history = {
+		#published "Wanderungen eines Lanzknechtes" in 1844-1845
+		#took part as an Austrian officer in the campaigns of Galicia 1846, Italy 1848 and Hungary 1848
+		#became a major-general in the Austrian army in 1849
+	}
+}
+
+karl_philipp_ii_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 391.
+	name = "Karl Philipp"
+	dynasty = schwarzenberg
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	father = karl_philipp_zu_schwarzenberg
+	death_date = 1858
+	#Feldzeugmeister
+}
+
+felix_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
+	name = "Felix"
+	dynasty = schwarzenberg
+	role = advisor
+	character_type = statesman
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1800
+	death_date = 1852
+	required_technology = paternalism
+	skill_multiplier = 0.5
+	traits = {
+		statesman
+	}
+	
+	#nephew of Karl Philipp zu Schwarzenberg
+	
+	#text based on that of the Encyclopædia Britannica, in the public domain
+	description = "The best-known representative of the Schwarzenberg princely family, and an important Austrian statesman. On Nov. 21st of 1848 he was appointed head of a reactionary ministry. On March 7th 1849 a centralized constitution for the whole Austrian monarchy was proclaimed. His refusal to incorporate only the German provinces of the monarchy in the proposed new German Empire had thrown the German parliament into the arms of Prussia. His success in restoring the status quo ante of the German Confederation, with the old predominance of Austria, was largely due to his diplomatic skill, unscrupulousness and iron tenacity of purpose."
+	
+	history = {
+		#served for 6 years in the Austrian army
+		#served as an Austrian diplomat from 1824 to 1848
+		#became the head minister of Austria in 1848.11.21
+	}
+}
+
+edmund_leopold_friedrich_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 391.
+	name = "Edmund Leopold" #"Edmund Leopold Friedrich"
+	dynasty = schwarzenberg
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	father = karl_philipp_zu_schwarzenberg
+	birth_date = 1803
+	death_date = 1873
+	#field marshal in the Austrian army
+}
+
+friedrich_johann_josef_coelestin_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 391.
+	name = "Friedrich Johann" #"Friedrich Johann Josef Coelestin"
+	dynasty = schwarzenberg
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1809
+	death_date = 1885
+	#nephew of Karl Philipp zu Schwarzenberg
+	#cardinal
+}

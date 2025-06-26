@@ -1,0 +1,12 @@
+julich = {
+	name = "Julich" #"Jülich"
+	world = earth
+	#geocoordinate = { 6.3583333333333 50.922222222222 }
+	province = rhineland
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

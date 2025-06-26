@@ -1,0 +1,3 @@
+vassal = {
+	name = "Vassal"
+}

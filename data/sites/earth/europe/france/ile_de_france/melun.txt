@@ -1,0 +1,16 @@
+melun = {
+	name = "Melun"
+	world = earth
+	geocoordinate = { 2.66664831403 48.53330242830 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = ile_de_france
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 3200
+			}
+		}
+	}
+}

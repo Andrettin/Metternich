@@ -1,0 +1,6 @@
+sekondi = {
+	name = "Sekondi"
+	world = earth
+	geocoordinate = { -1.70401513814 4.94327577608 } #from Natural Earth
+	type = settlement
+}

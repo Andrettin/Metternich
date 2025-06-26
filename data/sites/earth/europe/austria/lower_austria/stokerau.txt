@@ -1,0 +1,12 @@
+stokerau = {
+	name = "Stokerau"
+	world = earth
+	#geocoordinate = { 16.210833333333 48.385833333333 }
+	province = lower_austria
+	
+	history = {
+		1900 = {
+			population = 10213 #Stokerau had a population of 10,213 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

@@ -1,0 +1,11 @@
+beszterce = {
+	name = "Beszterce"
+	world = earth
+	geocoordinate = { 24.51300358030 47.13800409460 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = transylvania
+	cultural_names = {
+		romanian = "Bistrita" #"Bistrița"
+	}
+}

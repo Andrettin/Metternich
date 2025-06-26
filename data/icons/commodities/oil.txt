@@ -1,0 +1,3 @@
+oil = {
+	filepath = "icons/commodities/oil.png"
+}

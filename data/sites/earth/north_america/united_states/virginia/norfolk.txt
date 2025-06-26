@@ -1,0 +1,8 @@
+norfolk = {
+	name = "Norfolk"
+	world = earth
+	geocoordinate = { -76.28000573900 36.84995871890 } #from Natural Earth
+	type = resource
+	resource = tobacco
+	province = virginia
+}

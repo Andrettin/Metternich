@@ -1,0 +1,34 @@
+francia = {
+	name = "Francia"
+	type = great_power
+	color = { 87 139 166 }
+	culture = frankish
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = paris
+	max_tier = empire
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		ile_de_france
+		anjou
+		brabant
+		champagne
+		flanders
+		hesse
+		liege
+		lorraine
+		luxembourg
+		moselle
+		nassau
+		normandy
+		orleanais
+		overijssel
+		palatinate
+		picardy
+		rhineland
+		utrecht
+	}
+}

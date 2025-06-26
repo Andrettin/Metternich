@@ -1,0 +1,3 @@
+warehouse = {
+	name = "Warehouse"
+}

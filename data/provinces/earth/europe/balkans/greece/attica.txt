@@ -1,0 +1,40 @@
+attica = {
+	name = "Attica"
+	color = { 241 47 230 }
+	provincial_capital = athens
+	resources = {
+		fruit = 1
+	}
+	regions = {
+		greece
+	}
+	
+	history = {
+		-1450 = {
+			owner = mycenae #part of the Mycenaean civilization c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = greek
+			religion = pagan
+		}
+		
+		-750 = {
+			owner = greece #Greek territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+		}
+		
+		526 = {
+			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			religion = orthodox
+		}
+		
+		-700 = {
+			owner = athens #part of Athens in the 700-600 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 8.
+		}
+		
+		1360 = {
+			owner = atenes #part of the Duchy of Athens in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1740 = {
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

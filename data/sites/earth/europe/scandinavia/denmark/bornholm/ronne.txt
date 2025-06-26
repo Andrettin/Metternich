@@ -1,0 +1,8 @@
+ronne = {
+	name = "Ronne" #"Rønne"
+	world = earth
+	geocoordinate = { 14.7 55.1 }
+	pos_offset = { 1 -1 }
+	type = resource
+	resource = fish
+}

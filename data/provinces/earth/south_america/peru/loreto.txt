@@ -1,0 +1,20 @@
+loreto = {
+	name = "Loreto"
+	color = { 52 246 68 }
+	provincial_capital = iquitos
+	regions = {
+		amazon_basin
+		peru
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = inca_empire
+			culture = inca
+		}
+	}
+}

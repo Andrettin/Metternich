@@ -1,0 +1,23 @@
+ghent = {
+	name = "Ghent"
+	world = earth
+	geocoordinate = { 3.70002193057 51.02999757800 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		919 = {
+			settlement_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.flemish.catholic = 7000
+				clergymen.walloon.catholic = 200
+			}
+		}
+	}
+}

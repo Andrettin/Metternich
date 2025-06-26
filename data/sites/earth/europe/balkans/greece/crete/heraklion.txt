@@ -1,0 +1,15 @@
+heraklion = {
+	name = "Heraklion"
+	world = earth
+	#geocoordinate = { 25.13049678420 35.32501304020 } #from Natural Earth
+	province = crete
+	cultural_names = {
+		italian = "Candia" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

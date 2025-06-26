@@ -1,0 +1,7 @@
+falun = {
+	name = "Falun"
+	world = earth
+	geocoordinate = { 15.64700455370 60.61300203560 } #from Natural Earth
+	type = resource
+	resource = timber #Over 50% forest; Source: Map No. 500866 of the Perry-Castañeda Library Map Collection, 1973.
+}

@@ -1,0 +1,5 @@
+french = {
+	name = "French"
+	rank = subgroup
+	upper_group = latin
+}

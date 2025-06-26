@@ -1,0 +1,25 @@
+tarapaca = {
+	name = "Tarapaca" #"Tarapacá"
+	color = { 10 202 83 }
+	provincial_capital = iquique
+	regions = {
+		chile
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = inca_empire
+			culture = inca
+		}
+		
+		1790 = {
+			owner = peru #part of the Viceroyalty of Peru c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = castillian
+			religion = catholic
+		}
+	}
+}

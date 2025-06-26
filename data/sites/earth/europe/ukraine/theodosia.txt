@@ -1,0 +1,15 @@
+theodosia = {
+	name = "Theodosia"
+	world = earth
+	geocoordinate = { 35.379166666667 45.048888888889 }
+	province = crimea
+	cultural_names = {
+		italian = "Kaffa" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

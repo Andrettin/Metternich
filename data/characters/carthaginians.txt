@@ -1,0 +1,19 @@
+hannibal = {
+	name = "Hannibal"
+	surname = "Barca"
+	role = ruler
+	character_type = statesman
+	culture = carthaginian
+	religion = pagan
+	home_settlement = carthage
+	gender = male
+	birth_date = -247
+	death_date = -181
+	rulable_countries = {
+		carthage
+	}
+	traits = {
+		financial
+		charismatic
+	}
+}

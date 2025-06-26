@@ -1,0 +1,20 @@
+inca_empire = {
+	name = "Inca Empire"
+	type = great_power
+	color = { 125 92 110 }
+	culture = inca
+	default_religion = pagan
+	default_tier = empire
+	default_government_type = tribal_despotism
+	default_capital = cuzco
+	short_name = true
+	short_names = {
+		tribe = "Incas"
+	}
+	eras = {
+		renaissance_era
+	}
+	core_provinces = {
+		cuzco
+	}
+}

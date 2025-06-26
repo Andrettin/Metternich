@@ -1,0 +1,19 @@
+india = {
+	name = "India"
+	type = great_power
+	color = { 150 77 240 }
+	culture = indian
+	default_religion = pagan
+	default_tier = empire
+	default_government_type = tribal_despotism
+	default_capital = delhi
+	short_names = {
+		tribe = "Indians"
+	}
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		haryana
+	}
+}

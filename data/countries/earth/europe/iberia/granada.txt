@@ -1,0 +1,16 @@
+granada = {
+	name = "Granada"
+	type = minor_nation
+	culture = arabic
+	default_religion = sunni
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = granada
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		granada
+	}
+}

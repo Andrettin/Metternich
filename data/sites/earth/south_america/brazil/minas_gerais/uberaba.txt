@@ -1,0 +1,6 @@
+uberaba = {
+	name = "Uberaba"
+	world = earth
+	geocoordinate = { -47.95000370440 -19.77999550490 } #from Natural Earth
+	province = minas_gerais
+}

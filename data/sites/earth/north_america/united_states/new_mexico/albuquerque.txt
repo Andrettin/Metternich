@@ -1,0 +1,8 @@
+albuquerque = {
+	name = "Albuquerque"
+	world = earth
+	geocoordinate = { -106.64133081200 35.10497479150 } #from Natural Earth
+	type = resource
+	resource = cattle
+	province = new_mexico
+}

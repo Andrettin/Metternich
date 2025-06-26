@@ -1,0 +1,3 @@
+pagan = {
+	name = "Pagan"
+}

@@ -1,0 +1,8 @@
+assyrian = {
+	name = "Assyrian"
+	group = mesopotamian
+	color = { 102 76 153 }
+	species = {
+		human
+	}
+}

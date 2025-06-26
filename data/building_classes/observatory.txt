@@ -1,0 +1,4 @@
+observatory = {
+	name = "Observatory"
+	slot_type = observatory
+}

@@ -1,0 +1,13 @@
+pskov = {
+	name = "Pskov"
+	world = earth
+	geocoordinate = { 28.32993973670 57.82999595040 } #from Natural Earth
+	type = settlement
+	province = pskov
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

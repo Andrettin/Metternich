@@ -1,0 +1,16 @@
+electronics = {
+	name = "Electronics"
+	subcategory = infrastructure
+	portrait = engineering
+	icon = research
+	period = 1875_1900
+	cost = 4100
+	cost_commodity = research
+	prerequisites = {
+		electricity
+		corporation
+	}
+	modifier = {
+		amenities_per_arena = 1
+	}
+}

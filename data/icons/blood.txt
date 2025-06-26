@@ -1,0 +1,3 @@
+blood = {
+	filepath = "icons/blood.png"
+}

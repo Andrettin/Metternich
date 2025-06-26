@@ -1,0 +1,15 @@
+brixen = {
+	name = "Brixen"
+	world = earth
+	geocoordinate = { 11.657851 46.716549 }
+	province = south_tyrol
+	cultural_names = {
+		italian = "Bressanone"
+	}
+	
+	history = {
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

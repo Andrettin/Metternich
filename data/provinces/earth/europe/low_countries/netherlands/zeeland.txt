@@ -1,0 +1,53 @@
+zeeland = {
+	name = "Zeeland"
+	color = { 1 192 160 }
+	provincial_capital = middelburg
+	regions = {
+		netherlands
+	}
+	
+	history = {
+		owner = ichthyostegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = ichthyostegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = frisians
+			culture = frisian
+		}
+		
+		526 = {
+			owner = frisians #territory of the Frisians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = frisian
+		}
+		
+		919 = {
+			owner = friesland #part of Friesland in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = dutch
+			religion = catholic
+		}
+		
+		1477 = {
+			owner = burgundy #Burgundian possession c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1609 = {
+			owner = netherlands #part of the United Netherlands in 1609; Source: William R. Shepherd, "Historical Atlas", 1911, p. 117.
+			religion = protestant
+		}
+		
+		1740 = {
+			owner = netherlands #part of the United Netherlands c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = netherlands #part of the Kingdom of the Netherlands in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

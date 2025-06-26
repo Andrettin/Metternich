@@ -1,0 +1,12 @@
+osnabruck = {
+	name = "Osnabruck" #"Osnabrück"
+	world = earth
+	geocoordinate = { 8.04998897160 52.28043804840 } #from Natural Earth
+	province = east_friesland
+	
+	history = {
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

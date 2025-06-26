@@ -1,0 +1,18 @@
+arabic = {
+	name = "Arabic"
+	group = semitic
+	color = { 24 103 22 }
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			monarchy = {
+				kingdom = {
+					male = "Sultan"
+					female = "Sultana"
+				}
+			}
+		}
+	}
+}

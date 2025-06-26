@@ -1,0 +1,3 @@
+personal_union_subject = {
+	name = "Personal Union Subject"
+}

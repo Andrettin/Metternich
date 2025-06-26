@@ -1,0 +1,14 @@
+klattau = {
+	name = "Klattau"
+	world = earth
+	geocoordinate = { 13.29508891337 49.395625338265 }
+	cultural_names = {
+		czech = "Klatovy"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

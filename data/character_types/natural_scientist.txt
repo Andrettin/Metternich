@@ -1,0 +1,6 @@
+natural_scientist = {
+	name = "Natural Scientist"
+	advisor_category = trade
+	attribute = learning
+	starting_age_category = trained
+}

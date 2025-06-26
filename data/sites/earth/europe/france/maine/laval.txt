@@ -1,0 +1,20 @@
+laval = {
+	name = "Laval"
+	world = earth
+	geocoordinate = { -0.77 48.072777777778 }
+	type = resource
+	resource = timber
+	province = anjou
+	
+	history = {
+		1789 = {
+			buildings += courthouse #Chief court of the salt tax existent in Laval in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 3400
+			}
+		}
+	}
+}

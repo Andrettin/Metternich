@@ -1,0 +1,17 @@
+klausenburg = {
+	name = "Klausenburg"
+	world = earth
+	geocoordinate = { 23.59844559600 46.78842185370 } #from Natural Earth
+	type = settlement
+	#resource = grain
+	cultural_names = {
+		romanian = "Cluj"
+	}
+	
+	history = {
+		1580 = {
+			buildings += university #University founded in Klausenburg in 1580; Source: "The Cambridge Modern History Atlas", p. 9.
+			settlement_type = campus
+		}
+	}
+}

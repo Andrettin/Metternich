@@ -1,0 +1,14 @@
+carpenters_house = {
+	name = "Carpenter's House"
+	slot_type = furniture_factory
+}
+
+carpenters_shop = {
+	name = "Carpenter's Shop"
+	slot_type = furniture_factory
+}
+
+furniture_factory = {
+	name = "Furniture Factory"
+	slot_type = furniture_factory
+}

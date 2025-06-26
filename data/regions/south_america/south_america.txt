@@ -1,0 +1,61 @@
+south_america = {
+	name = "South America"
+	superregions = {
+		america
+	}
+}
+
+amazon_basin = {
+	name = "Amazon Basin"
+	superregions = {
+		south_america
+	}
+}
+
+argentina = {
+	name = "Argentina"
+	superregions = {
+		south_america
+	}
+	
+	history = {
+		2003 = {
+			literacy_rate = 97 #Source: Philip's International School Atlas, p. 141.
+		}
+	}
+}
+
+bolivia = {
+	name = "Bolivia"
+	superregions = {
+		south_america
+	}
+}
+
+chile = {
+	name = "Chile"
+	superregions = {
+		south_america
+	}
+}
+
+colombia = {
+	name = "Colombia"
+	superregions = {
+		south_america
+	}
+}
+
+paraguay = {
+	name = "Paraguay"
+	superregions = {
+		south_america
+	}
+}
+
+venezuela = {
+	name = "Venezuela"
+	superregions = {
+		south_america
+	}
+}

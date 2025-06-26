@@ -1,0 +1,407 @@
+min_log_level = trace
+
+green_text_color = { 0 159 3 }
+red_text_color = { 255 50 50 }
+
+tile_size = { 64 64 }
+default_base_terrain = plains
+unexplored_terrain = unexplored
+default_province_terrain = plains
+default_water_zone_terrain = ocean
+route_pathway = route
+
+default_start_date = 1815.11.20
+default_months_per_turn = 3
+months_per_turn_from_year = { #months per turn after a certain year has been reached
+	-419200000 = 12000000
+	-4000 = 480
+	-1000 = 300
+	500 = 240
+	1000 = 120
+	1500 = 12
+	1600 = 6
+	1800 = 3
+}
+
+advisors_game_rule = advisors
+ruler_traits_game_rule = ruler_traits
+
+default_population_class = untrained_workers
+default_tribal_population_class = tribesmen
+default_literate_population_class = trained_workers
+population_per_unit = 100000
+population_growth_threshold = 100
+
+settlement_commodity_bonuses = {
+	housing = 4
+}
+river_settlement_commodity_bonuses = {
+	housing = 2
+}
+
+prestige_commodity = prestige
+piety_commodity = piety
+advisor_commodity = statesmanship
+leader_commodity = leadership
+
+great_power_commodity_demand_divisor = 2
+
+tariff_icon = wealth
+treasure_fleet_icon = chest
+military_upkeep_icon = crossed_sabers
+
+min_character_traits_per_type = {
+	background = 1
+	personality = 1
+	expertise = 0
+	ruler = 2
+	advisor = 1
+	governor = 1
+}
+
+max_character_traits_per_type = {
+	background = 1
+	personality = 1
+	ruler = 2
+	advisor = 1
+	governor = 1
+}
+
+scaled_landholder_modifier = {
+	resource_output_modifier = 5
+}
+
+max_character_skill = 10 #used for calculating character skill based on skill multipliers; this is not a hard cap
+ruler_office = ruler
+interior_minister_office = steward
+war_minister_office = marshal
+interior_minister_portrait = jp_morgan
+war_minister_portrait = otto_von_bismarck
+
+minor_nation_color = { 221 216 181 }
+country_border_color = { 0 0 0 }
+selected_country_color = { 255 255 0 }
+ocean_color = { 49 82 123 }
+minimap_ocean_color = { 49 82 123 }
+diplomacy_state_colors = {
+	peace = { 229 225 219 }
+	war = { 94 92 95 }
+	alliance = { 109 97 200 }
+	non_aggression_pact = { 167 210 205 }
+}
+
+river_image_filepath = "tiles/river.png"
+rivermouth_image_filepath = "tiles/rivermouth.png"
+province_border_image_filepath = "tiles/borders/province_border.png"
+min_diplomatic_map_tile_scale = 2
+
+event_trigger_none_random_weights = {
+	quarterly_pulse = 5000
+	yearly_pulse = 5000
+}
+
+river_adjacency_subtiles = {
+	0 = {
+		north = other
+		south = other
+		west = other
+		east = other
+		northwest = other
+		northeast = other
+		southwest = other
+		southeast = same
+	}
+	1 = {
+		north = other
+		south = other
+		west = other
+		east = other
+		northwest = other
+		northeast = other
+		southwest = same
+		southeast = other
+	}
+	2 = {
+		north = other
+		south = same
+		west = other
+		east = other
+		northwest = other
+		northeast = other
+		southwest = same
+		southeast = same
+		variations = { 3 4 5 6 7 }
+	}
+	8 = {
+		north = same
+		south = same
+		west = other
+		east = other
+		northwest = same
+		northeast = same
+		southwest = same
+		southeast = same
+		variations = { 9 10 11 12 13 }
+	}
+	16 = {
+		north = other
+		south = other
+		west = other
+		east = other
+		northwest = other
+		northeast = same
+		southwest = other
+		southeast = other
+	}
+	17 = {
+		north = other
+		south = other
+		west = other
+		east = other
+		northwest = same
+		northeast = other
+		southwest = other
+		southeast = other
+	}
+	18 = {
+		north = same
+		south = other
+		west = other
+		east = other
+		northwest = same
+		northeast = same
+		southwest = other
+		southeast = other
+		variations = { 19 20 21 22 23 }
+	}
+	32 = {
+		north = other
+		south = other
+		west = other
+		east = same
+		northwest = other
+		northeast = same
+		southwest = other
+		southeast = same
+		variations = { 48 64 80 96 112 }
+	}
+	33 = {
+		north = other
+		south = other
+		west = same
+		east = other
+		northwest = same
+		northeast = other
+		southwest = same
+		southeast = other
+		variations = { 49 65 81 97 113 }
+	}
+	34 = {
+		north = other
+		south = same
+		west = other
+		east = same
+		northwest = other
+		northeast = same
+		southwest = same
+		southeast = same
+		variations = { 36 38 66 68 70 }
+	}
+	35 = {
+		north = other
+		south = same
+		west = same
+		east = other
+		northwest = same
+		northeast = other
+		southwest = same
+		southeast = same
+		variations = { 37 39 67 69 71 }
+	}
+	50 = {
+		north = same
+		south = other
+		west = other
+		east = same
+		northwest = same
+		northeast = same
+		southwest = other
+		southeast = same
+		variations = { 52 54 82 84 86 }
+	}
+	51 = {
+		north = same
+		south = other
+		west = same
+		east = other
+		northwest = same
+		northeast = same
+		southwest = same
+		southeast = other
+		variations = { 53 55 83 85 87 }
+	}
+	128 = {
+		north = other
+		south = other
+		west = same
+		east = same
+		northwest = same
+		northeast = same
+		southwest = same
+		southeast = same
+		variations = { 144 160 176 192 208 }
+	}
+}
+
+route_adjacency_tiles = {
+	1 = {
+		north = other
+		south = same
+		west = other
+		east = other
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	3 = {
+		north = other
+		south = same
+		west = other
+		east = same
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	4 = {
+		north = other
+		south = other
+		west = same
+		east = same
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	5 = {
+		north = other
+		south = same
+		west = same
+		east = other
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	6 = {
+		north = other
+		south = same
+		west = same
+		east = same
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	7 = {
+		north = same
+		south = same
+		west = other
+		east = same
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	16 = {
+		north = other
+		south = other
+		west = other
+		east = same
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	17 = {
+		north = same
+		south = same
+		west = same
+		east = same
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	18 = {
+		north = other
+		south = other
+		west = same
+		east = other
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	19 = {
+		north = same
+		south = same
+		west = other
+		east = other
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	22 = {
+		north = same
+		south = other
+		west = same
+		east = same
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	23 = {
+		north = same
+		south = same
+		west = same
+		east = other
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	33 = {
+		north = same
+		south = other
+		west = other
+		east = other
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	35 = {
+		north = same
+		south = other
+		west = other
+		east = same
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+	37 = {
+		north = same
+		south = other
+		west = same
+		east = other
+		northwest = any
+		northeast = any
+		southwest = any
+		southeast = any
+	}
+}

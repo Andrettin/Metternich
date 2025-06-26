@@ -1,0 +1,14 @@
+saint_etienne = {
+	name = "Saint-Etienne" #"Saint-Étienne"
+	world = earth
+	geocoordinate = { 4.38003210310 45.43039105130 } #from Natural Earth
+	province = auvergne
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 4500
+			}
+		}
+	}
+}

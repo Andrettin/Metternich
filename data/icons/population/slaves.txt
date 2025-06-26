@@ -1,0 +1,23 @@
+slaves_dark = {
+	filepath = "icons/population/slaves_dark.png"
+}
+
+slaves_dark_small = {
+	filepath = "icons/population/slaves_dark_small.png"
+}
+
+slaves_light = {
+	filepath = "icons/population/slaves_light.png"
+}
+
+slaves_light_small = {
+	filepath = "icons/population/slaves_light_small.png"
+}
+
+slaves_medium = {
+	filepath = "icons/population/slaves_medium.png"
+}
+
+slaves_medium_small = {
+	filepath = "icons/population/slaves_medium_small.png"
+}

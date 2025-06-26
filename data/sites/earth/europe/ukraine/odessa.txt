@@ -1,0 +1,6 @@
+odessa = {
+	name = "Odessa"
+	world = earth
+	geocoordinate = { 30.71000117870 46.49001629540 } #from Natural Earth
+	type = settlement
+}

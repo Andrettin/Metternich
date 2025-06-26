@@ -1,0 +1,12 @@
+incense = {
+	name = "Incense"
+	commodity = incense
+	tiny_icon = trade_consulate
+	terrain_types = {
+		desert
+		plains
+	}
+	site_types = {
+		resource
+	}
+}

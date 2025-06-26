@@ -1,0 +1,6 @@
+zenica = {
+	name = "Zenica"
+	world = earth
+	geocoordinate = { 17.91998083360 44.21997397770 } #from Natural Earth
+	province = bosnia
+}

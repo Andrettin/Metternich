@@ -1,0 +1,8 @@
+aden = {
+	name = "Aden"
+	world = earth
+	geocoordinate = { 45.00949011110 12.77972251280 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = yemen
+}

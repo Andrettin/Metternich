@@ -1,0 +1,62 @@
+minor_merchant_houses = {
+	name = "Minor Merchant Houses"
+	subcategory = commerce
+	portrait = trading_post
+	icon = wealth
+	period = 1000_1100
+	cost_commodity = research
+	prerequisites = {
+		trade
+		
+		feudalism #so that it is in the correct period
+	}
+	modifier = {
+		trade_output_modifier = 1
+	}
+}
+
+local_merchant_houses = {
+	name = "Local Merchant Houses"
+	subcategory = commerce
+	portrait = trading_post
+	icon = wealth
+	period = 1100_1200
+	cost_commodity = research
+	prerequisites = {
+		minor_merchant_houses
+	}
+	modifier = {
+		trade_output_modifier = 2
+	}
+}
+
+renowned_merchant_houses = {
+	name = "Renowned Merchant Houses"
+	subcategory = commerce
+	portrait = trading_post
+	icon = wealth
+	period = 1400_1500
+	cost_commodity = research
+	prerequisites = {
+		local_merchant_houses
+		
+		double_entry_bookkeeping
+	}
+	modifier = {
+		trade_output_modifier = 5
+	}
+}
+
+merchant_companies = {
+	name = "Merchant Companies"
+	subcategory = commerce
+	portrait = trading_post
+	icon = wealth
+	period = 1500_1550
+	cost_commodity = research
+	prerequisites = {
+		renowned_merchant_houses
+		foreign_accreditation
+		cartography
+	}
+}

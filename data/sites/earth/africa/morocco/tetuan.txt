@@ -1,0 +1,12 @@
+tetuan = {
+	name = "Tetuan"
+	world = earth
+	geocoordinate = { -5.3666666666667 35.566666666667 }
+	province = tangier
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

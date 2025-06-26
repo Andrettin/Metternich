@@ -1,0 +1,11 @@
+british_indiamen = {
+	type = indiaman
+	country = great_britain
+	quantity = 6
+	
+	history = {
+		1820 = {
+			active = true
+		}
+	}
+}

@@ -1,0 +1,8 @@
+karlovac = {
+	name = "Karlovac"
+	world = earth
+	geocoordinate = { 15.54777420930 45.48720928860 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = croatia
+}

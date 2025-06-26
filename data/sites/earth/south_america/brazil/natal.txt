@@ -1,0 +1,6 @@
+natal = {
+	name = "Natal"
+	world = earth
+	geocoordinate = { -35.24000431470 -5.78002317416 } #from Natural Earth
+	type = settlement
+}

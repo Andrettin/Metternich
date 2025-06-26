@@ -1,0 +1,27 @@
+barcelona = {
+	name = "Barcelona"
+	world = earth
+	geocoordinate = { 2.18337031923 41.38329957990 } #from Natural Earth
+	type = settlement
+	#resource = cattle
+	province = catalonia
+	
+	history = {
+		395 = {
+			buildings += cathedral #Barcelona was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1430 = {
+			buildings += university #University founded in Barcelona in 1430; Source: "The Cambridge Modern History Atlas", 1912, p. 9; Source: "Atlas de História Mundial", 2001, p. 144.
+		}
+		
+		1717 = {
+			buildings -= university #University abolished in Barcelona in 1717; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

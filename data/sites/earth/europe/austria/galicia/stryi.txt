@@ -1,0 +1,7 @@
+stryi = {
+	name = "Stryi"
+	world = earth
+	geocoordinate = { 23.85 49.25 }
+	type = resource
+	resource = coal
+}

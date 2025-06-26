@@ -1,0 +1,70 @@
+south_tyrol = {
+	name = "South Tyrol"
+	color = { 126 94 49 }
+	provincial_capital = trent
+	resources = {
+		grain = 1
+	}
+	regions = {
+		austria
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		myths_enabled = {
+			-3000 = {
+				owner = laurinland
+				culture = dwarven
+				religion = pagan
+			}
+			
+			450 = {
+				owner = laurinland
+				culture = dwarven
+				religion = pagan
+			}
+		}
+		
+		!myths_enabled = {
+			526 = {
+				owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+				culture = gothic
+			}
+		}
+		
+		919 = {
+			owner = italy #part of Italy in the 919-952 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = italian
+			religion = catholic
+		}
+		
+		952 = {
+			owner = bavaria #became part of Bavaria in 952; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		976 = {
+			owner = carinthia #became part of Carinthia in 976; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1027 = {
+			owner = trent #became part of the Holy Roman Empire in 1027; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1477 = {
+			owner = trent #part of the Bishopric of Trent c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = austrian #German; Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

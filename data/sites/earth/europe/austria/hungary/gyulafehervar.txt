@@ -1,0 +1,11 @@
+gyulafehervar = {
+	name = "Gyulafehervar"
+	world = earth
+	geocoordinate = { 23.58000058680 46.07700313130 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = transylvania
+	cultural_names = {
+		romanian = "Alba Iulia"
+	}
+}

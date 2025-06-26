@@ -1,0 +1,7 @@
+zahedan = {
+	name = "Zahedan"
+	world = earth
+	geocoordinate = { 60.83002315150 29.49999391580 } #from Natural Earth
+	type = settlement
+	province = west_baluchistan
+}

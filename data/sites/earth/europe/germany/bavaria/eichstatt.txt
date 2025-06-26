@@ -1,0 +1,12 @@
+eichstatt = {
+	name = "Eichstatt" #"Eichstätt"; also known as Eichstädt
+	world = earth
+	geocoordinate = { 11.18388888888889 48.89194444444445 }
+	province = bavaria
+	
+	history = {
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,12 @@
+bleichfeld = {
+	name = "Bleichfeld"
+	world = earth
+	#geocoordinate = { 10.05 49.866666666667 } #Unterpleichfeld
+	province = franconia
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

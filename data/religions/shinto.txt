@@ -1,0 +1,6 @@
+shinto = {
+	name = "Shinto"
+	group = eastern
+	color = { 204 0 0 }
+	icon = mountains
+}

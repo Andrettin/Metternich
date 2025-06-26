@@ -1,0 +1,8 @@
+sirjan = {
+	name = "Sirjan"
+	world = earth
+	geocoordinate = { 55.73002437220 29.46996990870 } #from Natural Earth
+	type = resource
+	resource = iron_ore
+	province = kerman
+}

@@ -1,0 +1,95 @@
+dwarven = {
+	name = "Dwarven"
+	species = {
+		dwarf
+		#hill_dwarf
+		#mountain_dwarf
+	}
+	
+	personal_names = {
+		male = {
+			"Ai" #dwarf from Norse mythology who was a settler of Joruvellir
+			"Alberich" #dwarf from German sagas
+			"Alf" #dwarf from Norse mythology who was a settler of Joruvellir
+			"Alfrigg" #dwarf from Norse mythology
+			"Alsvid" #dwarf from Norse mythology
+			"Althjof" #"mighty thief", dwarf from Norse mythology
+			"Andvari" #dwarf from Norse mythology who possessed a lot of gold, including a golden ring (Andvaranaut) which was stolen by Loki; was possibly one of the settlers of Joruvellir; son of Oin
+			"Aurvang" #dwarf from Norse mythology
+			"Austri" #dwarf from Norse mythology (name means "the Eastern"); Source: Henry Adams Bellows (transl.), "The Poetic Edda", 1936, p. 101; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 771.
+			"Bari" #dwarf from Norse mythology
+			"Berling" #dwarf from Norse mythology
+			"Bibung" #dwarf from Norse mythology
+			"Delling" #dwarf from Norse mythology
+			"Delling" #dwarf from Norse mythology
+			"Dolgthvari" #dwarf from Norse mythology
+			"Dori" #dwarf from Norse mythology
+			"Duf" #dwarf from Norse mythology
+			"Dulsi" #dwarf from Norse mythology; not entirely clear if this is the name of a particular dwarf, or if it means "dwarf"; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 109.
+			"Eggerich" #dwarf from German sagas
+			"Fal" #dwarf from Norse mythology
+			"Fid" #dwarf from Norse mythology
+			"Fili" #dwarf from Norse mythology
+			"Frag" #dwarf from Norse mythology
+			"Frar" #dwarf from Norse mythology
+			"Fundin" #dwarf from Norse mythology
+			"Ginnar" #dwarf from Norse mythology
+			"Gloin" #dwarf from Norse mythology
+			"Goldemar" #dwarf from German sagas
+			"Grerr" #dwarf from Norse mythology
+			"Hannar" #"Hannarr"; dwarf from Norse mythology; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 239.
+			"Har" #dwarf from Norse mythology
+			"Haur" #dwarf from Norse mythology
+			"Heptifili" #dwarf from Norse mythology
+			"Hledjolf" #dwarf from Norse mythology; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 272.
+			"Hornbori" #dwarf from Norse mythology
+			"Hugstari" #dwarf from Norse mythology
+			"Ingi" #dwarf from Norse mythology
+			"Iri" #dwarf from Norse mythology
+			"Jari" #dwarf from Norse mythology
+			"Kili" #dwarf from Norse mythology
+			"Laurin" #dwarf from German sagas
+			"Lit" #dwarf from Norse mythology
+			"Lofar" #dwarf from Norse mythology who was a descendant of the settlers of Joruvellir
+			"Loni" #dwarf from Norse mythology
+			"Mjodvitnir" #dwarf from Norse mythology
+			"Nabbi" #dwarven mastersmith from Norse mythology; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 100.
+			"Nefi" #dwarf from Norse mythology
+			"Nidi" #dwarf from Norse mythology
+			"Nidjung" #dwarf from Norse mythology; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 454.
+			"Nordri" #dwarf from Norse mythology; Source: Henry Adams Bellows (transl.), "The Poetic Edda", 1936, p. 101.
+			"Nyi" #dwarf from Norse mythology
+			"Nyr" #dwarf from Norse mythology
+			"Nyrad" #dwarf from Norse mythology
+			"Oin" #dwarf from Norse mythology who was the father of Andvari
+			"Ori" #dwarf from Norse mythology
+			"Radsvid" #dwarf from Norse mythology
+			"Rekk" #dwarf from Norse mythology
+			"Skavid" #dwarf from Norse mythology
+			"Skirvir" #dwarf from Norse mythology
+			"Solblindi" #dwarf from Norse mythology
+			"Sudri" #dwarf from Norse mythology; Source: Henry Adams Bellows (transl.), "The Poetic Edda", 1936, p. 101.
+			"Svarin" #dwarf from Norse mythology
+			"Sviar" #dwarf from Norse mythology
+			"Sviur" #dwarf from Norse mythology
+			"Thekk" #dwarf from Norse mythology
+			"Thorin" #dwarf from Norse mythology
+			"Thrain" #dwarf from Norse mythology
+			"Thror" #dwarf from Norse mythology
+			"Tuta" #dwarf from Norse mythology; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 645.
+			"Uni" #dwarf from Norse mythology
+			"Vali" #dwarf from Norse mythology
+			"Var" #dwarf from Norse mythology
+			"Vegdrasil" #dwarf from Norse mythology
+			"Vestri" #dwarf from Norse mythology; Source: Henry Adams Bellows (transl.), "The Poetic Edda", 1936, p. 101.
+			"Vig" #dwarf from Norse mythology
+			"Vigdvalin" #"Víg-dvalinn"; dwarf from Norse mythology; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 715.
+			"Virfir" #dwarf from Norse mythology
+			"Vit" #dwarf from Norse mythology
+		}
+	}
+	
+	ship_names = {
+		"Skidbladnir" #ship built by dwarves in Norse mythology; Source: Henry Adams Bellows (transl.), "The Poetic Edda", 1936, pp. 101.
+	}
+}

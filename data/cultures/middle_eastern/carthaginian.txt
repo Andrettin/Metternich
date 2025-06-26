@@ -1,0 +1,8 @@
+carthaginian = {
+	name = "Carthaginian"
+	group = levantine
+	color = { 74 174 85 }
+	species = {
+		human
+	}
+}

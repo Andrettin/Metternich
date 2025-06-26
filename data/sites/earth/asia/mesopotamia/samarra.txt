@@ -1,0 +1,8 @@
+samarra = {
+	name = "Samarra"
+	world = earth
+	geocoordinate = { 43.87500061760 34.19399704610 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = saladin
+}

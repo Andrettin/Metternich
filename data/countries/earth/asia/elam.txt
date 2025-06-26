@@ -1,0 +1,16 @@
+elam = {
+	name = "Elam"
+	type = minor_nation
+	culture = elamite
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = susa
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		khuzestan
+		elam
+	}
+}

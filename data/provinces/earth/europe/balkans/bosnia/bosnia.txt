@@ -1,0 +1,45 @@
+bosnia = {
+	name = "Bosnia"
+	color = { 141 109 152 }
+	provincial_capital = sarajevo
+	resources = {
+		grain = 1
+		fruit = 1
+		coal = 3 #lignite; Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
+		copper = 1 #Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
+		iron_ore = 3 #Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
+		lead = 1 #Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
+		zinc = 1 #Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
+	}
+	regions = {
+		bosnia
+	}
+	
+	history = {
+		culture = gothic
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		1204 = {
+			owner = hungary #part of Hungary in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+		}
+		
+		1360 = {
+			owner = bosnia #part of Bosnia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = bosnian
+		}
+		
+		1740 = {
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = sunni
+		}
+		
+		1908 = {
+			owner = austria #annexed by Austria in 1908; Source: William R. Shepherd, "Historical Atlas", 1911, p. 164.
+		}
+	}
+}

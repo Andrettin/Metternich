@@ -1,0 +1,12 @@
+biga = {
+	name = "Biga"
+	world = earth
+	geocoordinate = { 27.24222 40.22806 }
+	province = troad
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

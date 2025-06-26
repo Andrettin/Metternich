@@ -1,0 +1,6 @@
+hohhot = {
+	name = "Hohhot"
+	world = earth
+	geocoordinate = { 111.65999548200 40.81997479150 } #from Natural Earth
+	type = settlement
+}

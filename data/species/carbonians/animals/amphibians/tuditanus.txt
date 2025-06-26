@@ -1,0 +1,8 @@
+tuditanus = {
+	name = "Tuditanus"
+	supertaxon = amphibia
+	pre_evolutions = {
+		aistopod
+		diplocaulus
+	}
+}

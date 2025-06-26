@@ -1,0 +1,107 @@
+vilem_rozmberk = {
+	name = "Vilem"
+	surname = "Rozmberk" #"Rožmberk"
+	role = advisor
+	character_type = treasurer
+	culture = czech
+	religion = catholic
+	home_settlement = prague
+	gender = male
+	birth_date = 1545
+	death_date = 1592
+	skill_multiplier = 0.17
+	required_technology = feudalism
+	traits = {
+		treasurer
+	}
+}
+
+karel_starsi = {
+	name = "Karel"
+	epithet = "Starsi" #"starsí"
+	role = advisor
+	character_type = statesman
+	culture = czech
+	religion = catholic
+	home_settlement = brunn
+	gender = male
+	birth_date = 1564.9.15
+	death_date = 1636.11.9
+	skill_multiplier = 0.33
+	required_technology = feudalism
+	traits = {
+		statesman
+	}
+}
+
+zdenko_adalbert = {
+	name = "Zdenko Adalbert"
+	role = advisor
+	character_type = statesman
+	culture = czech
+	religion = catholic
+	home_settlement = prague
+	gender = male
+	birth_date = 1568
+	death_date = 1628.7.16
+	skill_multiplier = 0.17
+	required_technology = national_bureaucracy
+	traits = {
+		statesman
+	}
+}
+
+jaroslav_borsita = {
+	name = "Jaroslav"
+	surname = "Borsita"
+	role = advisor
+	character_type = treasurer
+	culture = czech
+	religion = catholic
+	home_settlement = prague
+	gender = male
+	birth_date = 1582
+	death_date = 1649.11.21
+	skill_multiplier = 0.17
+	required_technology = national_bureaucracy
+	traits = {
+		treasurer
+	}
+}
+
+
+jan_amos_komensky = {
+	name = "Jan Amos"
+	surname = "Komensky"
+	role = advisor
+	character_type = philosopher
+	culture = czech
+	religion = catholic
+	home_settlement = brunn
+	gender = male
+	birth_date = 1592.3.28
+	death_date = 1670.11.15
+	skill_multiplier = 0.17
+	required_technology = philosophy
+	traits = {
+		philosopher
+	}
+}
+
+francis_kinsky = {
+	name = "Francis"
+	surname = "Kinsky"
+	role = advisor
+	character_type = statesman
+	culture = czech
+	religion = catholic
+	home_settlement = prague
+	gender = male
+	birth_date = 1678
+	death_date = 1741
+	skill_multiplier = 0.5
+	required_technology = national_bureaucracy
+	traits = {
+		statesman
+	}
+}

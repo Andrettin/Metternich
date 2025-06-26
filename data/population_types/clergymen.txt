@@ -1,0 +1,39 @@
+clergymen = {
+	name = "Clergymen"
+	population_class = clergymen
+	profession = clergymen
+	color = { 234 227 40 }
+	literate = true
+	icon = rifle_infantry_light
+	small_icon = rifle_infantry_light_small
+	output_commodity = piety
+	output_value = 1
+	required_game_rule = additional_population_types
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 0.25
+		furniture = 0.25
+		brass_lamps = 0.125
+		coffee = 0.25
+		opium = 0.125
+		salt = 0.25
+		tea = 0.25
+	}
+	phenotype_icons = {
+		afro_european = rifle_infantry_medium
+		amerindian = rifle_infantry_medium
+		south_asian = rifle_infantry_medium
+		african = rifle_infantry_dark
+	}
+	phenotype_small_icons = {
+		afro_european = rifle_infantry_medium_small
+		amerindian = rifle_infantry_medium_small
+		south_asian = rifle_infantry_medium_small
+		african = rifle_infantry_dark_small
+	}
+}

@@ -1,0 +1,34 @@
+canister_shot_1 = {
+	name = "Canister Shot I"
+	icon = cannon
+	conditions = {
+		artillery = true
+	}
+	modifier = {
+		bonus_vs_infantry = 20
+	}
+}
+
+canister_shot_2 = {
+	name = "Canister Shot II"
+	icon = cannon
+	conditions = {
+		artillery = true
+		promotion = canister_shot_1
+	}
+	modifier = {
+		bonus_vs_infantry = 25
+	}
+}
+
+canister_shot_3 = {
+	name = "Canister Shot III"
+	icon = cannon
+	conditions = {
+		artillery = true
+		promotion = canister_shot_2
+	}
+	modifier = {
+		bonus_vs_infantry = 30
+	}
+}

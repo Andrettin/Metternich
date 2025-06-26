@@ -1,0 +1,7 @@
+slavic = {
+	name = "Slavic"
+	group = slavic
+	species = {
+		human
+	}
+}

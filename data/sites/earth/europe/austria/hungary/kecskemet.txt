@@ -1,0 +1,8 @@
+kecskemet = {
+	name = "Kecskemet"
+	world = earth
+	geocoordinate = { 19.70002722030 46.90004294750 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = pest
+}

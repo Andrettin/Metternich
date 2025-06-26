@@ -1,0 +1,10 @@
+lycaenops = {
+	name = "Lycaenops"
+	supertaxon = reptilia
+	pre_evolutions = {
+		edaphosaurus
+		pareiasaurus
+		sphenacodon
+		thadeosaurus
+	}
+}

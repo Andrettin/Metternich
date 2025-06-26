@@ -1,0 +1,8 @@
+krakatoa = {
+	name = "Krakatoa"
+	world = earth
+	geocoordinate = { 105.422740105 -6.102105402 } #from Natural Earth
+	type = resource
+	resource = krakatoa
+	province = sumatra
+}

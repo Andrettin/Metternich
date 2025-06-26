@@ -1,0 +1,37 @@
+crete = {
+	name = "Crete"
+	color = { 93 56 165 }
+	provincial_capital = knossos
+	regions = {
+		greece
+	}
+	
+	history = {
+		-1450 = {
+			owner = mycenae #part of the Mycenaean civilization c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = greek
+			religion = pagan
+		}
+		
+		-750 = {
+			owner = greece #Greek territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+		}
+		
+		526 = {
+			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			religion = orthodox
+		}
+		
+		1212 = {
+			owner = venice #became a Venetian possession in 1212; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+		}
+		
+		1360 = {
+			owner = venice #Venetian possession in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1740 = {
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

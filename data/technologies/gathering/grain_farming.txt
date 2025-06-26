@@ -1,0 +1,150 @@
+wood_plow = {
+	name = "Wood Plow"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = copper_age
+	cost_commodity = research
+	modifier = {
+		commodity_bonus_per_improvement = {
+			commodity = grain
+			improvement = grain_farm
+			value = 0.25
+		}
+		commodity_bonus_per_improvement = {
+			commodity = potatoes
+			improvement = potato_farm
+			value = 0.25
+		}
+		commodity_bonus_per_improvement = {
+			commodity = fruit
+			improvement = orchard
+			value = 0.25
+		}
+	}
+}
+
+iron_tipped_wood_plow = {
+	name = "Iron-Tipped Wood Plow"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = iron_age
+	cost_commodity = research
+	prerequisites = {
+		wood_plow
+		ironworking
+	}
+	modifier = {
+		commodity_bonus_per_improvement = {
+			commodity = grain
+			improvement = grain_farm
+			value = 0.25
+		}
+		commodity_bonus_per_improvement = {
+			commodity = potatoes
+			improvement = potato_farm
+			value = 0.25
+		}
+		commodity_bonus_per_improvement = {
+			commodity = fruit
+			improvement = orchard
+			value = 0.25
+		}
+	}
+}
+
+iron_plow = {
+	name = "Iron Plow"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = 1_500
+	cost_commodity = research
+	prerequisites = {
+		iron_tipped_wood_plow
+	}
+	modifier = {
+		commodity_bonus_per_improvement = {
+			commodity = grain
+			improvement = grain_farm
+			value = 0.25
+		}
+		commodity_bonus_per_improvement = {
+			commodity = potatoes
+			improvement = potato_farm
+			value = 0.25
+		}
+		commodity_bonus_per_improvement = {
+			commodity = fruit
+			improvement = orchard
+			value = 0.25
+		}
+	}
+}
+
+land_enclosure = {
+	name = "Land Enclosure"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = 1500_1550
+	cost_commodity = research
+	prerequisites = {
+		rooting_out
+		
+		iron_plow
+	}
+}
+
+seed_drill = {
+	name = "Seed Drill"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = 1550_1600
+	cost_commodity = research
+	prerequisites = {
+		land_enclosure
+	}
+}
+
+moldboard_plow = {
+	name = "Moldboard Plow"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = 1825_1850
+	cost = 30
+	cost_commodity = research
+	prerequisites = {
+		seed_drill
+		
+		high_grade_steel
+	}
+	modifier = {
+		commodity_bonus_per_improvement = {
+			commodity = grain
+			improvement = mechanized_grain_estate
+			value = 0.5
+		}
+		commodity_bonus_per_improvement = {
+			commodity = potatoes
+			improvement = mechanized_potato_estate
+			value = 0.5
+		}
+	}
+}
+
+mechanical_reaper = {
+	name = "Mechanical Reaper"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = 1850_1875
+	cost = 120
+	cost_commodity = research
+	prerequisites = {
+		moldboard_plow
+	}
+}

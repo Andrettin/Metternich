@@ -1,0 +1,23 @@
+saint_domingue = {
+	name = "Saint-Domingue"
+	type = minor_nation
+	culture = french
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = port_au_prince
+	core_provinces = {
+		haiti
+	}
+	
+	
+	history = {
+		1600 = {
+			#French possession in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			diplomacy_state = {
+				country = france
+				subject_type = colony
+			}
+		}
+	}
+}

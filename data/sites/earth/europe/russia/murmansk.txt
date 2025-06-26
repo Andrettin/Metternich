@@ -1,0 +1,6 @@
+murmansk = {
+	name = "Murmansk"
+	world = earth
+	geocoordinate = { 33.10003617220 68.96998781250 } #from Natural Earth
+	type = settlement
+}

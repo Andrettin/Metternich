@@ -1,0 +1,16 @@
+piling_rocks = {
+	name = "Piling Rocks"
+	subcategory = collective_behavior
+	portrait = building_slot
+	icon = lion
+	period = cretaceous
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		grasping_claws
+		collective_behavior
+	}
+}

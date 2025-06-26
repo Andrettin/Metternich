@@ -1,0 +1,6 @@
+chengdu = {
+	name = "Chengdu"
+	world = earth
+	geocoordinate = { 104.07001949000 30.67000001930 } #from Natural Earth
+	type = settlement
+}

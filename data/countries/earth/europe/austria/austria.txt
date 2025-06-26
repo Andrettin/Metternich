@@ -1,0 +1,82 @@
+austria = {
+	name = "Austria"
+	type = great_power
+	color = { 244 121 126 }
+	culture = austrian
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = vienna
+	#min_tier = marquisate
+	max_tier = empire
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		lower_austria
+		upper_austria
+		styria
+		carinthia
+		tyrol
+		salzburg
+		carniola
+		istria
+	}
+	
+	history = {
+		1156 = {
+			tier = duchy #Austria became a duchy in 1156; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			government_type = monarchy
+		}
+		
+		1516 = {
+			consulate = { #the Holy Roman Emperor sent an ambassador (Sigismund von Herbestein) to Muscovy in 1516; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
+				country = muscovy
+				consulate = embassy
+			}
+		}
+		
+		1804.8.11 = {
+			tier = empire #Empire of Austria founded on 1804.8.11; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
+			offices = {
+				#ruler = franz_i_of_austria
+			}
+		}
+		
+		1815 = {
+			offices = {
+				chancellor = clemens_wenceslaus_von_metternich
+			}
+		}
+		
+		1820 = {
+			wealth = 5000
+			
+			commodities = {
+				horses = 4
+				canned_food = 20
+				fabric = 3
+				lumber = 15
+				paper = 8
+				steel = 10
+				clothing = 3
+				furniture = 3
+				tools = 3
+				muskets = 1
+				iron_cannons = 1
+			}
+		}
+		
+		1848.11.21 = {
+			offices = {
+				chancellor = felix_zu_schwarzenberg #Felix zu Schwarzenberg became the head minister of Austria in 1848.11.21; Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
+			}
+		}
+		
+		1850 = {
+			literacy_rate = 60 #50-70% of adults; Source: Eric J. Hobsbawm, "A Era do Capital 1848-1875", 1977, p. 522.
+		}
+	}
+}

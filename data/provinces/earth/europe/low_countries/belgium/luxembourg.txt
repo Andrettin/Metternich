@@ -1,0 +1,66 @@
+luxembourg = {
+	name = "Luxembourg"
+	color = { 81 128 160 }
+	provincial_capital = luxembourg
+	resources = {
+		sheep = 1
+		timber = 3
+	}
+	regions = {
+		low_countries
+	}
+	
+	history = {
+		owner = ichthyostegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = ichthyostegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = gaul
+			culture = gaulish
+		}
+		
+		526 = {
+			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = frankish
+			religion = catholic
+		}
+		
+		911 = {
+			owner = france #became part of France in 911; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		925 = {
+			owner = lotharingia #became part of the Duchy of Lotharingia in 925; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		959 = {
+			owner = upper_lotharingia #became part of the Duchy of Upper Lotharingia in 959; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1477 = {
+			owner = burgundy #Burgundian possession c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = german
+		}
+		
+		1740 = {
+			owner = austria #part of the Austrian Netherlands c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = netherlands #part of the Kingdom of the Netherlands in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

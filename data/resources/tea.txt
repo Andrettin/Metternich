@@ -1,0 +1,14 @@
+tea = {
+	name = "Tea"
+	commodity = tea
+	tiny_icon = trade_consulate
+	terrain_types = {
+		plains
+	}
+	site_types = {
+		resource
+	}
+	improved_modifier = {
+		research_bonus = 1
+	}
+}

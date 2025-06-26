@@ -1,0 +1,12 @@
+braganza = {
+	name = "Braganza"
+	world = earth
+	geocoordinate = { -6.75500342578 41.80799701420 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

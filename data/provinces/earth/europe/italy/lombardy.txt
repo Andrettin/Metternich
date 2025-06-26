@@ -1,0 +1,64 @@
+lombardy = {
+	name = "Lombardy"
+	color = { 208 64 96 }
+	provincial_capital = milan
+	resources = {
+		grain = 3
+		fruit = 2
+		cattle = 1
+		sheep = 3
+		horses = 1
+		copper = 1
+	}
+	regions = {
+		italy
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		568 = {
+			owner = langobardia #became part of the Kingdom of the Lombards in 568; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = lombard
+		}
+		
+		919 = {
+			owner = italy #part of Italy in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = italian
+			religion = catholic
+		}
+		
+		1360 = {
+			owner = milan #part of the Lands of the Visconti in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1477 = {
+			owner = milan #part of the Duchy of Milan c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = italian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		1859 = {
+			owner = sardinia #became part of the Kingdom of Sardinia in 1859; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1861 = {
+			owner = italy #became part of the Kingdom of Italy in 1861; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

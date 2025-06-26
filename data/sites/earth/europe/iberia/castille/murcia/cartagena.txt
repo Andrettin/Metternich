@@ -1,0 +1,19 @@
+cartagena = {
+	name = "Cartagena"
+	world = earth
+	geocoordinate = { -0.98002832173 37.60042970690 } #from Natural Earth
+	type = resource
+	resource = iron_ore
+	province = murcia
+	cultural_names = {
+		carthaginian = "New Carthage"
+		phoenician = "New Carthage"
+		roman = "New Carthage"
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Cartagena was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+		}
+	}
+}

@@ -1,0 +1,6 @@
+posadas = {
+	name = "Posadas"
+	world = earth
+	geocoordinate = { -55.88510734880 -27.35783209790 } #from Natural Earth
+	type = settlement
+}

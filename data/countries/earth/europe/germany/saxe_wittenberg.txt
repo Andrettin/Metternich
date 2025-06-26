@@ -1,0 +1,40 @@
+saxe_wittenberg = {
+	name = "Saxe-Wittenberg"
+	type = minor_nation
+	culture = german
+	default_religion = protestant
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = dresden
+	max_tier = kingdom
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		upper_saxony
+	}
+	
+	history = {
+		1428.1.4 = {
+			offices = {
+				ruler = friedrich_ii_of_saxony
+			}
+			
+			government_type = monarchy
+		}
+		
+		1733.2.1 = {
+			offices = {
+				ruler = august_iii_of_poland
+			}
+		}
+		
+		1733.10.5 = {
+			offices = {
+				ruler = none #August III became king of Poland
+			}
+		}
+	}
+}

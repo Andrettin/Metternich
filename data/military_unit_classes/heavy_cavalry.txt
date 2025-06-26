@@ -1,0 +1,23 @@
+harquebusiers = {
+	name = "Harquebusiers"
+	domain = land
+	category = heavy_cavalry
+}
+
+cuirassiers = {
+	name = "Cuirassiers"
+	domain = land
+	category = heavy_cavalry
+}
+
+carbine_cavalry = {
+	name = "Carbine Cavalry"
+	domain = land
+	category = heavy_cavalry
+}
+
+armor = {
+	name = "Armor"
+	domain = land
+	category = heavy_cavalry
+}

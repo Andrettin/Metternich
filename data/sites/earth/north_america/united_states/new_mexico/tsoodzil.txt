@@ -1,0 +1,8 @@
+tsoodzil = {
+	name = "Tsoodzil"
+	world = earth
+	geocoordinate = { -107.60852777778 35.238694444444 }
+	type = resource
+	resource = tsoodzil
+	province = new_mexico
+}

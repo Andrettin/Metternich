@@ -1,0 +1,12 @@
+sousse = {
+	name = "Sousse" #also known as Susa
+	world = earth
+	geocoordinate = { 10.62502559270 35.82999513660 } #from Natural Earth
+	province = tunisia
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,8 @@
+lashkar_gah = {
+	name = "Lashkar Gah"
+	world = earth
+	geocoordinate = { 64.35999955340 31.58299802240 } #from Natural Earth
+	type = resource
+	resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	province = afghanistan
+}

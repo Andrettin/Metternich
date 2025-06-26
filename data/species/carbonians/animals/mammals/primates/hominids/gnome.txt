@@ -1,0 +1,20 @@
+gnome = {
+	name = "Gnome"
+	supertaxon = homo
+	era = holocene
+	sapient = true
+	adulthood_age = 40
+	middle_age = 100
+	old_age = 150
+	venerable_age = 200
+	maximum_age_modifier = 3d100
+	starting_age_modifiers = {
+		intuitive = 4d6
+		self_taught = 6d6
+		trained = 9d6
+	}
+	pre_evolutions = {
+		neanderthal #dwarves and gnomes should have a common ancestor
+	}
+	#in prehistoric times, the ancestors of dwarves and gnomes were transported to Nidavellir by the magic of the Aesir
+}

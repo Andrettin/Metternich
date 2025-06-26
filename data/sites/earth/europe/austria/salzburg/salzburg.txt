@@ -1,0 +1,34 @@
+salzburg = {
+	name = "Salzburg"
+	world = earth
+	geocoordinate = { 13.04002030300 47.81047833160 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+	province = salzburg
+	cultural_names = {
+		roman = "Iuvavum"
+	}
+	
+	history = {
+		739 = {
+			buildings += cathedral #Salzburg became a bishopric in 739; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 169.
+			settlement_type = city
+		}
+		
+		768 = {
+			#archbishopric existent in Salzburg during 768-814 AD; Source: "Medieval Warfare V.2", 2013, pp. 8-9.
+		}
+		
+		919 = {
+			settlement_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1815 = {
+			population = 15500 #Salzburg had a population of 15,500 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 89.
+		}
+	}
+}

@@ -1,0 +1,33 @@
+pterosaurs = {
+	name = "Pterosaurs"
+	subcategory = aerial_animals
+	portrait = building_slot
+	icon = lion
+	period = cretaceous
+	year = -150800000 #Pterodactyl
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		true_flight
+		sharp_eyesight
+	}
+}
+
+advanced_pterosaurs = {
+	name = "Advanced Pterosaurs"
+	subcategory = aerial_animals
+	portrait = building_slot
+	icon = lion
+	period = neogene
+	year = -68000000 #Quetzalcoatlus
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		pterosaurs
+		serrated_teeth
+	}
+}

@@ -1,0 +1,20 @@
+alamanni = {
+	name = "Alamanni"
+	type = tribe
+	culture = suebi
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = karlsruhe
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		baden
+		wurtemberg
+		augsburg
+		alsace
+		bern
+		zurich
+	}
+}

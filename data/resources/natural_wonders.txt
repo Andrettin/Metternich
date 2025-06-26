@@ -1,0 +1,208 @@
+barringer_crater = {
+	name = "Barringer Crater"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	required_game_rule = research_commodity
+	terrain_types = {
+		desert
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		trade_bonus = 2
+		research_bonus = 3
+	}
+}
+
+cerro_de_potosi = {
+	name = "Cerro de Potosi"
+	commodity = silver
+	icon = mountains
+	tiny_icon = trade_consulate
+	natural_wonder = true
+	discovery_technology = precious_metals
+	prospectable = true
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	improved_modifier = {
+		housing_output_modifier = 400
+	}
+}
+
+krakatoa = {
+	name = "Krakatoa"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	required_game_rule = research_commodity
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		research_bonus = 5
+	}
+}
+
+mount_ararat = {
+	name = "Mount Ararat"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		trade_bonus = 1
+		culture_bonus = 5
+	}
+}
+
+mount_fuji = {
+	name = "Mount Fuji"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		trade_bonus = 2
+		culture_bonus = 3
+		piety_bonus = 3
+	}
+}
+
+mount_kailash = {
+	name = "Mount Kailash"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		piety_bonus = 6
+		amenities_bonus = 2
+	}
+}
+
+mount_sinai = {
+	name = "Mount Sinai"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		piety_bonus = 8
+	}
+}
+
+mount_thera = {
+	name = "Mount Thera"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	required_game_rule = research_commodity
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		research_bonus = 5
+	}
+}
+
+mount_tlaloc = {
+	name = "Mount Tlaloc"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		trade_bonus = 2
+		culture_bonus = 3
+		piety_bonus = 3
+	}
+}
+
+old_faithful = {
+	name = "Old Faithful"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		research_bonus = 2
+		amenities_bonus = 3
+	}
+}
+
+rock_of_gibraltar = {
+	name = "Rock of Gibraltar"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	coastal = true
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		fish_bonus = 2
+		trade_bonus = 5
+	}
+}
+
+tsoodzil = {
+	name = "Tsoodzil"
+	icon = mountains
+	tiny_icon = alliance
+	natural_wonder = true
+	terrain_types = {
+		mountains
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		piety_bonus = 6
+		amenities_bonus = 2
+	}
+}

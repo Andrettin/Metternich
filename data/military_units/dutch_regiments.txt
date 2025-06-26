@@ -1,0 +1,77 @@
+amsterdam_spearmen = {
+	type = spearmen
+	quantity = 1
+	
+	history = {
+		1492 = {
+			province = holland
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+amsterdam_arquebusiers = {
+	type = arquebusiers
+	quantity = 1
+	
+	history = {
+		1492 = {
+			province = holland
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+amsterdam_knights = {
+	type = knights
+	quantity = 1
+	
+	history = {
+		1492 = {
+			province = holland
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+holland_regulars = {
+	type = regulars
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = holland
+		}
+	}
+}
+
+holland_artillery = {
+	type = artillery
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = holland
+		}
+	}
+}
+
+brussels_regulars = {
+	type = regulars
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = brabant
+		}
+	}
+}

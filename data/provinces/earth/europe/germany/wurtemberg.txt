@@ -1,0 +1,44 @@
+wurtemberg = {
+	name = "Wurtemberg"
+	color = { 17 128 96 }
+	provincial_capital = stuttgart
+	resources = {
+		grain = 3
+		fruit = 1
+		sheep = 1
+		timber = 1
+	}
+	regions = {
+		germany
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = alamanni #territory of the Alamanni in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = suebi
+		}
+		
+		919 = {
+			owner = swabia #part of the Duchy of Swabia in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		1477 = {
+			owner = wurtemberg #part of the County of Wurtemberg c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1815 = {
+			owner = wurtemberg #part of the Kingdom of Wurtemberg in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			religion = protestant
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

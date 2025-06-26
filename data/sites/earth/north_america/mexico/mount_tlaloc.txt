@@ -1,0 +1,7 @@
+mount_tlaloc = {
+	name = "Mount Tlaloc"
+	world = earth
+	geocoordinate = { -98.712511 19.41226 }
+	type = resource
+	resource = mount_tlaloc
+}

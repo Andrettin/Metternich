@@ -1,0 +1,6 @@
+lavras = {
+	name = "Lavras"
+	world = earth
+	geocoordinate = { -45.00995060380 -21.24956988650 } #from Natural Earth
+	province = minas_gerais
+}

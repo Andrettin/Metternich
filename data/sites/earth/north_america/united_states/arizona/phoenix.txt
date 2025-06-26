@@ -1,0 +1,7 @@
+phoenix = {
+	name = "Phoenix"
+	world = earth
+	geocoordinate = { -112.06999170100 33.53997987780 } #from Natural Earth
+	type = settlement
+	province = arizona
+}

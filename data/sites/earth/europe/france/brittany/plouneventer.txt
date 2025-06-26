@@ -1,0 +1,11 @@
+plouneventer = {
+	name = "Plouneventer" #"Plounéventer"
+	world = earth
+	geocoordinate = { -4.2125 48.514722222222 }
+	type = resource
+	resource = amber
+	province = brittany
+	cultural_names = {
+		roman = "Vorganium"
+	}
+}

@@ -1,0 +1,6 @@
+salta = {
+	name = "Salta"
+	world = earth
+	geocoordinate = { -65.41663781910 -24.78335935590 } #from Natural Earth
+	type = settlement
+}

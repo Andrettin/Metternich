@@ -1,0 +1,14 @@
+kyushu = {
+	name = "Kyushu"
+	color = { 220 72 96 }
+	provincial_capital = fukuoka
+	regions = {
+		japan
+	}
+	
+	history = {
+		owner = japan
+		culture = japanese
+		religion = pagan
+	}
+}

@@ -1,0 +1,47 @@
+modena = {
+	name = "Modena"
+	color = { 168 134 150 }
+	provincial_capital = modena
+	resources = {
+		iron_ore = 1
+	}
+	regions = {
+		italy
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		568 = {
+			owner = langobardia #became part of the Kingdom of the Lombards in 568; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = lombard
+		}
+		
+		1477 = {
+			owner = modena #part of the Duchy of Modena c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = italian
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = modena #c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = modena #part of the Duchy of Modena in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = italian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		1861 = {
+			owner = italy #became part of the Kingdom of Italy in 1861; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

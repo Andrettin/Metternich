@@ -1,0 +1,17 @@
+scottish = {
+	name = "Scottish"
+	group = anglo_saxon
+	color = { 72 79 127 }
+	species = {
+		human
+	}
+	derived_cultures = {
+		american
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = scotland
+		}
+	}
+}

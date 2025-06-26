@@ -1,0 +1,19 @@
+oviviparity = {
+	name = "Oviviparity"
+	subcategory = procreation
+	portrait = building_slot
+	icon = lion
+	period = permian
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		spawning_grounds
+		egg_laying
+	}
+	modifier = {
+		amenities_per_hatchery = 1
+	}
+}

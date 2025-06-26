@@ -1,0 +1,6 @@
+augusta = {
+	name = "Augusta"
+	world = earth
+	geocoordinate = { -69.77998905610 44.31056276350 } #from Natural Earth
+	type = settlement
+}

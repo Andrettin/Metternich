@@ -1,0 +1,7 @@
+tabuk = {
+	name = "Tabuk"
+	world = earth
+	geocoordinate = { 36.55496740600 28.38383465480 } #from Natural Earth
+	type = settlement
+	province = tabuk
+}

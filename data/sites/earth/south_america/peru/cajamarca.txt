@@ -1,0 +1,6 @@
+cajamarca = {
+	name = "Cajamarca"
+	world = earth
+	geocoordinate = { -78.53002343920 -7.15001707065 } #from Natural Earth
+	type = settlement
+}

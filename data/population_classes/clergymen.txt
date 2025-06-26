@@ -1,0 +1,7 @@
+clergymen = {
+	name = "Clergymen"
+}
+
+firebrand_preachers = {
+	name = "Firebrand Preachers"
+}

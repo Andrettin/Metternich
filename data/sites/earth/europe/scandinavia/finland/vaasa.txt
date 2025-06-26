@@ -1,0 +1,8 @@
+vaasa = {
+	name = "Vaasa"
+	world = earth
+	geocoordinate = { 21.60001460640 63.09998435380 } #from Natural Earth
+	type = settlement
+	#resource = timber
+	province = ostrobothnia
+}

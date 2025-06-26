@@ -1,0 +1,44 @@
+london_spearmen = {
+	type = spearmen
+	quantity = 1
+	
+	history = {
+		1492 = {
+			province = middlesex
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+london_arquebusiers = {
+	type = arquebusiers
+	quantity = 1
+	
+	history = {
+		1492 = {
+			province = middlesex
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+london_knights = {
+	type = knights
+	quantity = 1
+	
+	history = {
+		1492 = {
+			province = middlesex
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}

@@ -1,0 +1,6 @@
+little_rock = {
+	name = "Little Rock"
+	world = earth
+	geocoordinate = { -92.33109318210 34.73608257960 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,18 @@
+wittenberg = {
+	name = "Wittenberg"
+	world = earth
+	geocoordinate = { 12.6484 51.8671 }
+	type = resource
+	resource = sheep
+	province = magdeburg
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1502 = {
+			buildings += university #University founded in Wittenberg in 1502; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

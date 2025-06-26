@@ -1,0 +1,7 @@
+mmabatho = {
+	name = "Mmabatho"
+	world = earth
+	geocoordinate = { 25.61000239940 -25.83001381550 } #from Natural Earth
+	type = settlement
+	province = bophuthatswana
+}

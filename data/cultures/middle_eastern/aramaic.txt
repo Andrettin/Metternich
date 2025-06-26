@@ -1,0 +1,8 @@
+aramaic = {
+	name = "Aramaic"
+	group = levantine
+	color = { 127 38 0 }
+	species = {
+		human
+	}
+}

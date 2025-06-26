@@ -1,0 +1,17 @@
+gilgit_baltistan = {
+	name = "Gilgit-Baltistan"
+	color = { 201 16 69 }
+	provincial_capital = gilgit
+	resources = {
+		tea = 1
+	}
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = india
+		culture = indian
+		religion = pagan
+	}
+}

@@ -1,0 +1,6 @@
+iquique = {
+	name = "Iquique"
+	world = earth
+	geocoordinate = { -70.12996769380 -20.24999265660 } #from Natural Earth
+	type = settlement
+}

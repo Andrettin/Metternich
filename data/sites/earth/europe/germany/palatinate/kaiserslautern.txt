@@ -1,0 +1,8 @@
+kaiserslautern = {
+	name = "Kaiserslautern"
+	world = earth
+	geocoordinate = { 7.7688888888889 49.444722222222 }
+	type = resource
+	resource = fruit
+	province = palatinate
+}

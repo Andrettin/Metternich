@@ -1,0 +1,6 @@
+juiz_de_fora = {
+	name = "Juiz de Fora"
+	world = earth
+	geocoordinate = { -43.37498580070 -21.77000323610 } #from Natural Earth
+	province = minas_gerais
+}

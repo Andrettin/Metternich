@@ -1,0 +1,8 @@
+dumfries = {
+	name = "Dumfries"
+	world = earth
+	geocoordinate = { -3.55000065247 55.06708965970 } #from Natural Earth
+	type = resource
+	resource = coal
+	province = ayrshire
+}

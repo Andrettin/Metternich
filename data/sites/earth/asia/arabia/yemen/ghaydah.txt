@@ -1,0 +1,8 @@
+ghaydah = {
+	name = "Ghaydah" #also known as Ghayda
+	world = earth
+	geocoordinate = { 52.16378210330 16.23940797830 } #from Natural Earth
+	type = resource
+	resource = opium
+	province = yemen
+}

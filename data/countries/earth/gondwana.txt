@@ -1,0 +1,16 @@
+gondwana = {
+	name = "Gondwana"
+	type = clade
+	color = { 32 128 55 }
+	culture = reptilian
+	default_religion = pagan
+	default_tier = empire
+	default_government_type = clade
+	default_capital = recife
+	eras = {
+		mesozoic_era
+	}
+	core_provinces = {
+		pernambuco
+	}
+}

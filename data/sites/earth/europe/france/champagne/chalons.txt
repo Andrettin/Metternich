@@ -1,0 +1,20 @@
+chalons = {
+	name = "Chalons" #"Châlons"
+	world = earth
+	geocoordinate = { 4.3644444444444 48.956666666667 }
+	type = resource
+	resource = fruit
+	province = champagne
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 3400
+			}
+		}
+	}
+}

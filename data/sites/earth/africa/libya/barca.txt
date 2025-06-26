@@ -1,0 +1,15 @@
+barca = {
+	name = "Barca"
+	world = earth
+	geocoordinate = { 20.82998408880 32.50045676580 } #from Natural Earth (Marj)
+	province = benghazi
+	cultural_names = {
+		arabic = "Marj"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,16 @@
+tubingen = {
+	name = "Tubingen"
+	world = earth
+	geocoordinate = { 9.0555555555556 48.52 }
+	province = wurtemberg
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1416 = {
+			buildings += university #University founded in Tubingen in 1416; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

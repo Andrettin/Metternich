@@ -1,0 +1,4 @@
+small_power = {
+	name = "Small Power"
+	priority = 1
+}

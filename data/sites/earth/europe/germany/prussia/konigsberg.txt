@@ -1,0 +1,21 @@
+konigsberg = {
+	name = "Konigsberg" #"Königsberg"
+	world = earth
+	geocoordinate = { 20.49734289420 54.70000612300 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+	cultural_names = {
+		russian = "Kaliningrad"
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1544 = {
+			buildings += university #University founded in Königsberg in 1544; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+			settlement_type = campus
+		}
+	}
+}

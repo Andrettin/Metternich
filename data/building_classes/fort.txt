@@ -1,0 +1,14 @@
+stockade = {
+	name = "Stockade"
+	slot_type = fort
+}
+
+fort = {
+	name = "Fort"
+	slot_type = fort
+}
+
+fortress = {
+	name = "Fortress"
+	slot_type = fort
+}

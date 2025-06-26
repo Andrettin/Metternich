@@ -1,0 +1,14 @@
+crusafontids = {
+	name = "Crusafontids"
+	type = clade
+	color = { 255 173 41 }
+	culture = mammalian
+	default_religion = pagan
+	default_tier = barony
+	max_tier = empire
+	default_government_type = clade
+	default_capital = madrid
+	core_provinces = {
+		castille
+	}
+}

@@ -1,0 +1,11 @@
+gold = {
+	filepath = "icons/commodities/gold.png"
+}
+
+gold_ore = {
+	filepath = "icons/commodities/gold_ore.png"
+}
+
+silver = {
+	filepath = "icons/commodities/silver.png"
+}

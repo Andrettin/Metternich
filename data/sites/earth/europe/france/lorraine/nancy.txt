@@ -1,0 +1,26 @@
+nancy = {
+	name = "Nancy"
+	world = earth
+	geocoordinate = { 6.20002437198 48.68368084620 } #from Natural Earth
+	type = settlement
+	#resource = dye
+	province = lorraine
+	
+	history = {
+		1789 = {
+			buildings += courthouse #Parlement or conseil souverain and prévôt des maréchaux existent in Nancy in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+			settlement_type = city
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 2400
+				bureaucrats.german.catholic = 700
+				clergymen.french.catholic = 4200
+				clergymen.german.catholic = 200
+				clergymen.german.jewish = 100
+				officers.french.catholic = 1600
+			}
+		}
+	}
+}

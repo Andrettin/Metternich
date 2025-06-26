@@ -1,0 +1,530 @@
+arbitrary = {
+	name = "Arbitrary"
+	types = {
+		personality
+	}
+	icon = blood
+	attribute_bonuses = {
+		stewardship = -2
+		intrigue = 1
+		learning = -1
+	}
+}
+
+assertive = {
+	name = "Assertive"
+	types = {
+		personality
+		ruler
+		governor
+	}
+	icon = saber
+	conditions = {
+		not = {
+			trait = submissive
+		}
+	}
+	attribute_bonuses = {
+		diplomacy = 1
+		stewardship = 1
+	}
+	office_modifiers = {
+		ruler = {
+			trade_output_modifier = 5
+		}
+	}
+	governor_modifier = {
+		trade_output_modifier = 5
+	}
+}
+
+careful = {
+	name = "Careful"
+	types = {
+		personality
+		ruler
+	}
+	icon = heater_shield
+	office_modifiers = {
+		ruler = {
+			diplomatic_penalty_for_expansion_modifier = -10
+		}
+	}
+}
+
+cautious = {
+	name = "Cautious"
+	types = {
+		personality
+	}
+	icon = heater_shield
+	attribute_bonuses = {
+		martial = -1
+	}
+}
+
+celibate = {
+	name = "Celibate"
+	types = {
+		personality
+	}
+	icon = wooden_cross
+}
+
+charitable = {
+	name = "Charitable"
+	types = {
+		personality
+	}
+	icon = golden_cross
+	attribute_bonuses = {
+		diplomacy = 3
+	}
+}
+
+chaste = {
+	name = "Chaste"
+	types = {
+		personality
+	}
+	icon = wooden_cross
+	attribute_bonuses = {
+		learning = 1
+	}
+}
+
+compassionate = {
+	name = "Compassionate"
+	types = {
+		personality
+	}
+	icon = love
+	attribute_bonuses = {
+		diplomacy = 2
+		intrigue = -2
+	}
+}
+
+content = {
+	name = "Content"
+	types = {
+		personality
+	}
+	icon = anchor
+	attribute_bonuses = {
+		intrigue = -1
+	}
+}
+
+cynical = {
+	name = "Cynical"
+	types = {
+		personality
+	}
+	icon = blood
+	attribute_bonuses = {
+		intrigue = 2
+	}
+}
+
+devout = {
+	name = "Devout"
+	types = {
+		personality
+		ruler
+	}
+	icon = wooden_cross
+	conditions = {
+		not = {
+			trait = lapsed
+		}
+	}
+	attribute_bonuses = {
+		learning = 1
+	}
+	office_modifiers = {
+		ruler = {
+			piety_output_modifier = 5
+		}
+	}
+}
+
+diligent = {
+	name = "Diligent"
+	types = {
+		personality
+	}
+	icon = hammer
+	attribute_bonuses = {
+		diplomacy = 1
+		martial = 1
+		stewardship = 1
+		intrigue = 1
+		learning = 1
+	}
+}
+
+disciplined = {
+	name = "Disciplined"
+	types = {
+		personality
+		ruler
+	}
+	icon = crossed_sabers
+	attribute = martial
+	max_scaling = 10
+	attribute_bonuses = {
+		martial = 1
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			infantry_cost_modifier = -5
+		}
+	}
+}
+
+erudite = {
+	name = "Erudite"
+	types = {
+		personality
+	}
+	icon = university
+	attribute_bonuses = {
+		learning = 2
+	}
+}
+
+gluttonous = {
+	name = "Gluttonous"
+	types = {
+		personality
+	}
+	icon = cattle
+	attribute_bonuses = {
+		stewardship = -2
+	}
+}
+
+greedy = {
+	name = "Greedy"
+	types = {
+		personality
+	}
+	icon = chest
+	attribute_bonuses = {
+		diplomacy = -1
+	}
+}
+
+gregarious = {
+	name = "Gregarious"
+	types = {
+		personality
+	}
+	icon = music
+	attribute_bonuses = {
+		diplomacy = 2
+	}
+}
+
+imperialistic = {
+	name = "Imperialistic"
+	types = {
+		personality
+		ruler
+	}
+	icon = globe
+	attribute = martial
+	max_scaling = 5
+	attribute_bonuses = {
+		martial = 1
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			leadership_output_modifier = 5
+		}
+	}
+}
+
+just = {
+	name = "Just"
+	types = {
+		personality
+	}
+	icon = courthouse
+	attribute_bonuses = {
+		stewardship = 2
+		learning = 1
+	}
+}
+
+kind = {
+	name = "Kind"
+	types = {
+		personality
+	}
+	icon = love
+	attribute_bonuses = {
+		diplomacy = 2
+		intrigue = -2
+	}
+}
+
+lapsed = {
+	name = "Lapsed"
+	types = {
+		personality
+		ruler
+	}
+	icon = skull
+	conditions = {
+		not = {
+			trait = devout
+		}
+	}
+	attribute_bonuses = {
+		learning = -1
+	}
+	office_modifiers = {
+		ruler = {
+			piety_output_modifier = -10
+		}
+	}
+}
+
+libertarian = {
+	name = "Libertarian"
+	types = {
+		personality
+		ruler
+	}
+	icon = courthouse
+	attribute = diplomacy
+	max_scaling = 5
+	attribute_bonuses = {
+		diplomacy = 1
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			statesmanship_output_modifier = 5
+		}
+	}
+}
+
+narrow_minded = {
+	name = "Narrow-Minded"
+	types = {
+		personality
+		ruler
+	}
+	icon = cattle
+	attribute_bonuses = {
+		martial = 1
+		learning = -1
+	}
+	office_modifiers = {
+		ruler = {
+			research_output_modifier = -10
+		}
+	}
+}
+
+prominent = {
+	name = "Prominent"
+	types = {
+		personality
+		governor
+	}
+	icon = flag
+	attribute_bonuses = {
+		diplomacy = 1
+	}
+	governor_modifier = {
+		trade_output_modifier = 10
+	}
+}
+
+proud = {
+	name = "Proud"
+	types = {
+		personality
+	}
+	icon = heater_shield
+}
+
+reckless = {
+	name = "Reckless"
+	types = {
+		personality
+		ruler
+	}
+	icon = saber
+	attribute_bonuses = {
+		martial = 1
+	}
+	office_modifiers = {
+		ruler = {
+			diplomatic_penalty_for_expansion_modifier = 10
+		}
+	}
+}
+
+scholar = {
+	name = "Scholar"
+	types = {
+		personality
+		ruler
+		governor
+	}
+	icon = university
+	attribute_bonuses = {
+		martial = -1
+		learning = 3
+	}
+	office_modifiers = {
+		ruler = {
+			research_output_modifier = 5
+		}
+	}
+	governor_modifier = {
+		research_output_modifier = 10
+	}
+}
+
+shy = {
+	name = "Shy"
+	types = {
+		personality
+	}
+	icon = wall
+	attribute_bonuses = {
+		diplomacy = -2
+	}
+}
+
+skeptical = {
+	name = "Skeptical"
+	types = {
+		personality
+		ruler
+	}
+	icon = philosophy
+	attribute_bonuses = {
+		intrigue = 1
+	}
+	office_modifiers = {
+		ruler = {
+			piety_output_modifier = -5
+		}
+	}
+}
+
+strict = {
+	name = "Strict"
+	types = {
+		personality
+		ruler
+	}
+	icon = saber
+	attribute_bonuses = {
+		diplomacy = -1
+		martial = 1
+	}
+	office_modifiers = {
+		ruler = {
+			military_unit_stat = {
+				domain = land
+				stat = discipline
+				value = 5
+			}
+		}
+	}
+}
+
+stubborn = {
+	name = "Stubborn"
+	types = {
+		personality
+	}
+	icon = wall
+	attribute_bonuses = {
+		diplomacy = -1
+		stewardship = 1
+	}
+}
+
+submissive = {
+	name = "Submissive"
+	types = {
+		personality
+		ruler
+		governor
+	}
+	icon = skull
+	conditions = {
+		not = {
+			trait = assertive
+		}
+	}
+	attribute_bonuses = {
+		diplomacy = -1
+	}
+	office_modifiers = {
+		ruler = {
+			trade_output_modifier = -5
+		}
+	}
+	governor_modifier = {
+		trade_output_modifier = -5
+	}
+}
+
+temperate = {
+	name = "Temperate"
+	types = {
+		personality
+	}
+	icon = philosophy
+	attribute_bonuses = {
+		stewardship = 2
+	}
+}
+
+unnoticeable = {
+	name = "Unnoticeable"
+	types = {
+		personality
+		governor
+	}
+	icon = skull
+	attribute_bonuses = {
+		diplomacy = -1
+	}
+	governor_modifier = {
+		trade_output_modifier = -10
+	}
+}
+
+wroth = {
+	name = "Wroth"
+	types = {
+		personality
+	}
+	icon = blood
+	attribute_bonuses = {
+		diplomacy = -1
+		martial = 3
+		intrigue = -1
+	}
+}
+
+zealous = {
+	name = "Zealous"
+	types = {
+		personality
+	}
+	icon = wooden_cross
+	attribute_bonuses = {
+		martial = 2
+	}
+}

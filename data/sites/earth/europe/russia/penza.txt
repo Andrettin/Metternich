@@ -1,0 +1,6 @@
+penza = {
+	name = "Penza"
+	world = earth
+	geocoordinate = { 44.99998164750 53.18002138170 } #from Natural Earth
+	type = settlement
+}

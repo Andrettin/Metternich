@@ -1,0 +1,6 @@
+titan = {
+	name = "Titan"
+	supertaxon = abyssal
+	era = holocene
+	sapient = true
+}

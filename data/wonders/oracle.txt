@@ -1,0 +1,11 @@
+oracle = {
+	name = "Oracle"
+	portrait = temple
+	building = temple
+	required_technology = mysticism
+	obsolescence_technology = theology
+	country_modifier = {
+		amenities_per_temple = 2
+		amenities_per_cathedral = 2
+	}
+}

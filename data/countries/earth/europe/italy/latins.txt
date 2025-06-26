@@ -1,0 +1,15 @@
+latins = {
+	name = "Latins"
+	type = tribe
+	culture = roman
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = rome
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		latium
+	}
+}

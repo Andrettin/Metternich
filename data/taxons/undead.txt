@@ -1,0 +1,14 @@
+undead = {
+	name = "Undead"
+	rank = empire
+	adulthood_age = 110 #as Elf
+	middle_age = 175
+	old_age = 263
+	venerable_age = 350
+	maximum_age_modifier = 4d100
+	starting_age_modifiers = {
+		intuitive = 4d6
+		self_taught = 6d6
+		trained = 10d6
+	}
+}

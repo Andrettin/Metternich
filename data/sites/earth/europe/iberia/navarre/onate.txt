@@ -1,0 +1,16 @@
+onate = {
+	name = "Onate" #"Oñate"
+	world = earth
+	geocoordinate = { -2.411667 43.032778 }
+	province = navarre
+	
+	history = {
+		1542 = {
+			buildings += university #Minor university founded in Oñate in 1542; Source: "The Cambridge Modern History Atlas", 1912, p. 9; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+		
+		1807 = {
+			buildings -= university #Minor university abolished in Oñate in 1807; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

@@ -1,0 +1,29 @@
+avisa_relation_oder_zeitung = { #Source: Henry Kamen, "Early Modern European Society", 2021, p. 308.
+	name = "Avisa Relation oder Zeitung"
+	portrait = trading_post
+	description = "The ~<Avisa Relation oder Zeitung~> was a newspaper founded in Helmstedt in 1609."
+	preconditions = {
+		owns_site = hanover #Helmstedt
+	}
+	built_settlement_buildings = {
+		hanover = newspaper
+	}
+	completion_effects = {
+		statesmanship += 5
+	}
+}
+
+frankfurter_zeitung = { #Source: Henry Kamen, "Early Modern European Society", 2021, p. 308.
+	name = "Frankfurter Zeitung"
+	portrait = trading_post
+	description = "The ~<Frankfurter Zeitung~> was a weekly newspaper founded by Egenolf Emmel in 1615."
+	preconditions = {
+		owns_site = frankfurt
+	}
+	built_settlement_buildings = {
+		frankfurt = newspaper
+	}
+	completion_effects = {
+		statesmanship += 5
+	}
+}

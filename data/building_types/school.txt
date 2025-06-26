@@ -1,0 +1,198 @@
+school = {
+	name = "School"
+	building_class = school
+	portrait = university
+	icon = university
+	provincial = true
+	settlement_types = {
+		village
+		campus
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = research
+			}
+			capital = true
+		}
+	}
+	education_types = {
+		trained_workers
+		expert_workers
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = paper
+			value = 1
+		}
+	}
+	province_modifier = {
+		research_output_modifier = 25
+	}
+}
+
+college = {
+	name = "College"
+	building_class = college
+	portrait = university
+	icon = university
+	provincial = true
+	required_building = school
+	settlement_types = {
+		campus
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = research
+			}
+			capital = true
+		}
+	}
+	education_types = {
+		trained_workers
+		expert_workers
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = paper
+			value = 1
+		}
+	}
+	province_modifier = {
+		research_output_modifier = 50
+	}
+	settlement_modifier = {
+		profession_capacity = {
+			profession = academics
+			value = 2
+		}
+	}
+}
+
+university = {
+	name = "University"
+	building_class = university
+	portrait = university
+	icon = university
+	provincial = true
+	required_building = college
+	required_technology = university
+	settlement_types = {
+		campus
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = research
+			}
+			capital = true
+		}
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = philosophical
+			}
+		}
+	}
+	education_types = {
+		trained_workers
+		expert_workers
+		academics
+		bureaucrats
+		clergymen
+		officers
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = paper
+			value = 1
+		}
+	}
+	province_modifier = {
+		research_output_modifier = 100
+	}
+	settlement_modifier = {
+		profession_capacity = {
+			profession = academics
+			value = 3
+		}
+		housing_bonus = 1
+	}
+}
+
+monastic_school = {
+	name = "Monastic School"
+	building_class = monastic_school
+	portrait = university
+	icon = university
+	provincial = true
+	required_technology = monastic_school
+	settlement_types = {
+		monastery
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = research
+			}
+			capital = true
+		}
+	}
+	education_types = {
+		trained_workers
+		expert_workers
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = paper
+			value = 1
+		}
+	}
+	province_modifier = {
+		research_output_modifier = 25
+	}
+}
+
+cathedral_school = {
+	name = "Cathedral School"
+	building_class = cathedral_school
+	portrait = university
+	icon = university
+	provincial = true
+	required_building = monastic_school
+	required_technology = cathedral_school
+	settlement_types = {
+		monastery
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = research
+			}
+			capital = true
+		}
+	}
+	education_types = {
+		trained_workers
+		expert_workers
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = paper
+			value = 1
+		}
+	}
+	province_modifier = {
+		research_output_modifier = 50
+	}
+}

@@ -1,0 +1,25 @@
+medenine = {
+	name = "Medenine"
+	color = { 247 205 101 }
+	provincial_capital = medenine
+	regions = {
+		tunisia
+	}
+	
+	history = {
+		owner = carthage
+		culture = carthaginian
+		religion = pagan
+		
+		526 = {
+			owner = vandalia #part of the Kingdom of the Vandals in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = vandal
+		}
+		
+		1360 = {
+			owner = tunisia #part of Tunis in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = arabic
+			religion = sunni
+		}
+	}
+}

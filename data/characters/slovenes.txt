@@ -1,0 +1,35 @@
+janez_v_valvasor = {
+	name = "Janez"
+	surname = "V. Valvasor"
+	role = advisor
+	character_type = natural_scientist
+	culture = slovene
+	religion = catholic
+	home_settlement = laibach
+	gender = male
+	birth_date = 1641.5.28
+	death_date = 1693.9.16
+	skill_multiplier = 0.5
+	required_technology = scientific_method
+	traits = {
+		natural_scientist
+	}
+}
+
+jurij_vega = {
+	name = "Jurij"
+	surname = "Vega"
+	role = advisor
+	character_type = natural_scientist
+	culture = slovene
+	religion = catholic
+	home_settlement = laibach
+	gender = male
+	birth_date = 1754.3.23
+	death_date = 1802.9.26
+	skill_multiplier = 0.33
+	required_technology = mathematics
+	traits = {
+		natural_scientist
+	}
+}

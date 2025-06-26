@@ -1,0 +1,18 @@
+cunhambebe = {
+	name = "Cunhambebe"
+	role = ruler
+	character_type = general
+	culture = tupi
+	religion = pagan
+	portrait = cunhambebe
+	home_site = santos #Ubatuba
+	gender = male
+	death_date = 1555
+	rulable_countries = {
+		tupi
+	}
+	traits = {
+		prosperous
+		indulgent
+	}
+}

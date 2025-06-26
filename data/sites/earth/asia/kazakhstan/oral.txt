@@ -1,0 +1,6 @@
+oral = {
+	name = "Oral"
+	world = earth
+	geocoordinate = { 51.33499548220 51.27111981110 } #from Natural Earth
+	type = settlement
+}

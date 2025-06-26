@@ -1,0 +1,6 @@
+salt_lake_city = {
+	name = "Salt Lake City"
+	world = earth
+	geocoordinate = { -111.93005192200 40.77501629540 } #from Natural Earth
+	type = settlement
+}

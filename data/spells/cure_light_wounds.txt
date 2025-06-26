@@ -1,0 +1,12 @@
+cure_light_wounds = {
+	name = "Cure Light Wounds"
+	target = ally
+	icon = wooden_cross
+	mana_cost = 5
+	range = 1
+	military_unit_categories = {
+	}
+	effects = {
+		healing = 10
+	}
+}

@@ -1,0 +1,3 @@
+general_napoleonic = {
+	filepath = "icons/units/troops/general_napoleonic.png"
+}

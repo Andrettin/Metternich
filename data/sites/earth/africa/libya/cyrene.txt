@@ -1,0 +1,9 @@
+cyrene = {
+	name = "Cyrene"
+	world = earth
+	geocoordinate = { 21.86216914740 32.82813702290 } #from Natural Earth (Shahhat)
+	type = settlement
+	cultural_names = {
+		#arabic = "Shahhat"
+	}
+}

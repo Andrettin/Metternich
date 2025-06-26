@@ -1,0 +1,12 @@
+mistra = {
+	name = "Mistra"
+	world = earth
+	#geocoordinate = { 22.3673 37.074 }
+	province = peloponnese
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

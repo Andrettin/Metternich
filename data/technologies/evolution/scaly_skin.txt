@@ -1,0 +1,13 @@
+scaly_skin = {
+	name = "Scaly Skin"
+	subcategory = back_protection
+	portrait = building_slot
+	icon = lion
+	period = devonian
+	year = -215000000 #Coelophysis
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+}

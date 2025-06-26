@@ -1,0 +1,14 @@
+south_sudan = {
+	name = "South Sudan"
+	color = { 87 9 43 }
+	provincial_capital = juba
+	regions = {
+		sudan
+	}
+	
+	history = {
+		owner = egypt
+		culture = dinka
+		religion = pagan
+	}
+}

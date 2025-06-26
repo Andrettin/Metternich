@@ -1,0 +1,7 @@
+drammen = {
+	name = "Drammen"
+	world = earth
+	geocoordinate = { 10.19073685570 59.75724265460 } #from Natural Earth
+	type = resource
+	resource = grain
+}

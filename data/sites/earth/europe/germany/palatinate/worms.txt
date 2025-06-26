@@ -1,0 +1,17 @@
+worms = {
+	name = "Worms"
+	world = earth
+	geocoordinate = { 8.3652777777778 49.631944444444 }
+	type = resource
+	resource = timber
+	province = palatinate
+	cultural_names = {
+		roman = "Borbetomagus"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

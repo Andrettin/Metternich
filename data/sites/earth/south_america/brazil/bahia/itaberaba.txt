@@ -1,0 +1,6 @@
+itaberaba = {
+	name = "Itaberaba"
+	world = earth
+	geocoordinate = { -40.29997969720 -12.51961179720 } #from Natural Earth
+	province = bahia
+}

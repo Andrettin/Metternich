@@ -1,0 +1,5 @@
+refined_sugar = {
+	name = "Refined Sugar"
+	icon = refined_sugar
+	base_price = 300
+}

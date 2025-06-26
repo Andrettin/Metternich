@@ -1,0 +1,6 @@
+tromso = {
+	name = "Tromso" #"Tromsø"
+	world = earth
+	geocoordinate = { 18.99202524580 69.63507622700 } #from Natural Earth
+	type = settlement
+}

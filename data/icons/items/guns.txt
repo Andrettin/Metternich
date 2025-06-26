@@ -1,0 +1,7 @@
+musket = {
+	filepath = "icons/items/musket.png"
+}
+
+rifle = {
+	filepath = "icons/items/rifle.png"
+}

@@ -1,0 +1,19 @@
+pictland = {
+	name = "Pictland"
+	type = minor_nation
+	culture = pictish
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = ayr
+	short_names = {
+		tribe = "Picts"
+	}
+	eras = {
+		ancient_era
+		medieval_era
+	}
+	core_provinces = {
+		highlands
+	}
+}

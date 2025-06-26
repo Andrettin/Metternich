@@ -1,0 +1,14 @@
+pavia = {
+	name = "Pavia"
+	world = earth
+	#geocoordinate = { 9.155 45.185280555556 }
+	type = resource
+	resource = grain
+	province = lombardy
+	
+	history = {
+		1815 = {
+			developed = true #important settlement in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

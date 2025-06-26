@@ -1,0 +1,16 @@
+chaumont_en_bassigny = {
+	name = "Chaumont" #"Chaumont-en-Bassigny"
+	world = earth
+	geocoordinate = { 5.1386111111111 48.110833333333 }
+	type = resource
+	resource = iron_ore
+	province = champagne
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 2400
+			}
+		}
+	}
+}

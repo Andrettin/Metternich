@@ -1,0 +1,9 @@
+greererpeton = {
+	name = "Greererpeton"
+	supertaxon = amphibia
+	pre_evolutions = {
+		acanthostega
+		ichthyostega
+		tulerpeton
+	}
+}

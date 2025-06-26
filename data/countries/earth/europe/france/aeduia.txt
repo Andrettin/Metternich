@@ -1,0 +1,18 @@
+aeduia = {
+	name = "Aeduia"
+	type = minor_nation
+	culture = haedui
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = dijon #Macon
+	short_names = {
+		tribe = "Aedui"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		burgundy
+	}
+}

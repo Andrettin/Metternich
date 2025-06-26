@@ -1,0 +1,8 @@
+kotka = {
+	name = "Kotka"
+	world = earth
+	geocoordinate = { 26.945833333333 60.466666666667 }
+	type = resource
+	resource = timber
+	province = savonia
+}

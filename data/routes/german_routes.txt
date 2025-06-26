@@ -1,0 +1,4 @@
+german_route_network = { #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	name = "Central European Route Network"
+	color = { 43 171 85 }
+}

@@ -1,0 +1,11 @@
+great_lighthouse = {
+	name = "Great Lighthouse"
+	portrait = dock
+	building = lighthouse
+	required_technology = cartography
+	obsolescence_technology = magnetism
+	country_modifier = {
+		free_warship_promotion = veteran_1
+		ship_movement_modifier = 1
+	}
+}

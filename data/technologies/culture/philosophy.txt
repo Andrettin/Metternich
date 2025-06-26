@@ -1,0 +1,250 @@
+philosophy = {
+	name = "Philosophy"
+	subcategory = philosophy
+	portrait = scholar
+	icon = philosophy
+	period = 1_500
+	free_technologies = 1
+	cost = 175
+	cost_commodity = research
+	prerequisites = {
+		literature
+		mysticism
+	}
+}
+
+aristotelian_logic = {
+	name = "Aristotelian Logic"
+	subcategory = philosophy
+	portrait = scholar
+	icon = philosophy
+	period = 1000_1100
+	cost_commodity = research
+	prerequisites = {
+		philosophy
+		
+		monotheism
+	}
+}
+
+scholastics = {
+	name = "Scholastics"
+	subcategory = philosophy
+	portrait = frankish_cleric
+	icon = wooden_cross
+	period = 1100_1200
+	cost_commodity = research
+	prerequisites = {
+		aristotelian_logic
+		theology
+	}
+}
+
+natural_philosophy = {
+	name = "Natural Philosophy"
+	subcategory = philosophy
+	portrait = scholar
+	icon = philosophy
+	period = 1300_1400
+	cost_commodity = research
+	prerequisites = {
+		astrology
+		mathematics
+	}
+}
+
+scientific_method = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 252.
+	name = "Scientific Method"
+	subcategory = philosophy
+	portrait = engineering
+	icon = research
+	period = 1600_1650
+	year = 1620
+	free_technologies = 2
+	cost = 1600
+	cost_commodity = research
+	prerequisites = {
+		natural_philosophy
+		
+		printing_press
+		apprentice_workers
+		moneylending
+		
+		astronomy
+		
+		#free_thought
+	}
+	modifier = {
+		research_output_modifier = 5
+	}
+}
+
+rationalism = {
+	name = "Rationalism"
+	subcategory = philosophy
+	portrait = university
+	icon = research
+	free_technologies = 1
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		natural_philosophy
+	}
+}
+
+humanism = {
+	name = "Humanism"
+	subcategory = philosophy
+	portrait = university
+	icon = research
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		rationalism
+	}
+	modifier = {
+		amenities_per_school = 1
+		amenities_per_college = 1
+		amenities_per_university = 1
+		amenities_per_observatory = 1
+	}
+}
+
+free_thought = {
+	name = "Free Thought"
+	subcategory = philosophy
+	portrait = university
+	icon = research
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		humanism
+	}
+	modifier = {
+		research_per_fur_trading_post = 1
+		research_per_spice_factory = 1
+	}
+}
+
+enlightenment_philosophy = {
+	name = "Enlightenment Philosophy"
+	subcategory = philosophy
+	portrait = scholar
+	icon = research
+	period = 1750_1800
+	cost = 360
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		rationalism
+		scientific_method
+		
+		nationalism #to put this technology in the correct technological period
+	}
+	modifier = {
+		research_output_modifier = 5
+	}
+}
+
+idealism = {
+	name = "Idealism"
+	subcategory = philosophy
+	portrait = scholar
+	icon = research
+	period = 1800_1825
+	cost = 720
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		enlightenment_philosophy
+	}
+	modifier = {
+		research_output_modifier = 5
+	}
+}
+
+empiricism = {
+	name = "Empiricism"
+	subcategory = philosophy
+	portrait = scholar
+	icon = research
+	period = 1825_1850
+	cost = 1080
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		idealism
+	}
+	modifier = {
+		research_output_modifier = 5
+	}
+}
+
+analytic_philosophy = {
+	name = "Analytic Philosophy"
+	subcategory = philosophy
+	portrait = scholar
+	icon = research
+	period = 1850_1875
+	cost = 1440
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		empiricism
+	}
+	modifier = {
+		research_output_modifier = 5
+	}
+}
+
+phenomenology = {
+	name = "Phenomenology"
+	subcategory = philosophy
+	portrait = scholar
+	icon = research
+	period = 1875_1900
+	shared_prestige = 20
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		analytic_philosophy
+	}
+	modifier = {
+		research_output_modifier = 3
+	}
+}
+
+hermeneutics = {
+	name = "Hermeneutics"
+	subcategory = philosophy
+	portrait = scholar
+	icon = research
+	period = 1875_1900
+	shared_prestige = 20
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		analytic_philosophy
+	}
+	modifier = {
+		research_output_modifier = 2
+	}
+}
+
+anti_rationalism = {
+	name = "Anti-Rationalism"
+	subcategory = philosophy
+	portrait = scholar
+	icon = research
+	period = 1900_1925
+	cost = 2160
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		phenomenology
+		hermeneutics
+	}
+	modifier = {
+		research_output_modifier = 5
+	}
+}

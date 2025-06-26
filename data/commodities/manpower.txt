@@ -1,0 +1,5 @@
+manpower = {
+	name = "Manpower"
+	icon = labor
+	abstract = true
+}

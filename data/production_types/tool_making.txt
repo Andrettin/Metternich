@@ -1,0 +1,9 @@
+tool_making = {
+	name = "Tool Making"
+	input_commodities = {
+		labor = 2
+		steel = 2
+	}
+	output_commodity = tools
+	output_value = 1
+}

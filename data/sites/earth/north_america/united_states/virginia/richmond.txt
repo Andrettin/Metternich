@@ -1,0 +1,8 @@
+richmond = {
+	name = "Richmond"
+	world = earth
+	geocoordinate = { -77.44998600430 37.55001934720 } #from Natural Earth
+	type = settlement
+	#resource = tobacco
+	province = virginia
+}

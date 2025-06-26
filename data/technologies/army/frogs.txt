@@ -1,0 +1,36 @@
+frogs = {
+	name = "Frogs"
+	subcategory = infantry
+	portrait = engineering
+	icon = frog
+	discovery = true
+	period = copper_age
+	required_game_rule = additional_technologies
+	cultures = {
+		tupi
+	}
+}
+
+tupi_poison_arrow_frogs = {
+	name = "Tupi Poison Arrow Frogs"
+	subcategory = infantry
+	portrait = helmet
+	icon = frog
+	period = iron_age
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	cultures = {
+		tupi
+	}
+	prerequisites = {
+		shortbow
+		frogs
+	}
+	modifier = {
+		military_unit_stat = {
+			category = bowmen
+			stat = firepower_modifier
+			value = 10
+		}
+	}
+}

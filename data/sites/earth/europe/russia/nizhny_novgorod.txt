@@ -1,0 +1,14 @@
+nizhny_novgorod = {
+	name = "Nizhny Novgorod"
+	world = earth
+	geocoordinate = { 44.00009435910 56.33300722160 } #from Natural Earth
+	type = settlement
+	#resource = timber
+	province = nizhegorod
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

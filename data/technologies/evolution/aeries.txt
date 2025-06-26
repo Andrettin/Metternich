@@ -1,0 +1,15 @@
+aeries = {
+	name = "Aeries"
+	subcategory = aerial_animals
+	portrait = building_slot
+	icon = lion
+	period = cretaceous
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		true_flight
+		fortified_nesting
+	}
+}

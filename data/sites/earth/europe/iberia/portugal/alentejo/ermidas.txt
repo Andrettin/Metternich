@@ -1,0 +1,6 @@
+ermidas = {
+	name = "Ermidas"
+	world = earth
+	#geocoordinate = { -8.4166666666667 38 }
+	province = alentejo
+}

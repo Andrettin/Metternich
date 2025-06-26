@@ -1,0 +1,29 @@
+wheel = {
+	name = "Wheel"
+	subcategory = cavalry
+	portrait = engineering
+	icon = cog
+	period = copper_age
+	cost = 55
+	cost_commodity = research
+}
+
+chariot_mastery = {
+	name = "Chariot Mastery"
+	subcategory = cavalry
+	portrait = helmet
+	icon = horses
+	period = bronze_age
+	cost_commodity = leadership
+	required_game_rule = additional_technologies
+	prerequisites = {
+		wheel
+	}
+	modifier = {
+		military_unit_stat = {
+			type = chariots
+			stat = discipline
+			value = 10
+		}
+	}
+}

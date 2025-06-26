@@ -1,0 +1,14 @@
+waterford = {
+	name = "Waterford"
+	world = earth
+	geocoordinate = { -7.11192793927 52.25829469720 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = munster
+	
+	history = {
+		802 = {
+			developed = true #existed c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+		}
+	}
+}

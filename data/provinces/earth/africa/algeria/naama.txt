@@ -1,0 +1,25 @@
+naama = {
+	name = "Naama"
+	color = { 108 9 31 }
+	provincial_capital = sefra
+	regions = {
+		algeria
+	}
+	
+	history = {
+		owner = mauretanians
+		culture = maurian
+		religion = pagan
+		
+		526 = {
+			owner = mauretanians #territory of the Mauretanians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = maurian
+		}
+		
+		1360 = {
+			owner = algeria #part of Algeria in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = arabic
+			religion = sunni
+		}
+	}
+}

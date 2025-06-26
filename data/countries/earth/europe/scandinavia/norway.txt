@@ -1,0 +1,31 @@
+norway = {
+	name = "Norway"
+	type = minor_nation
+	culture = norwegian
+	default_religion = protestant
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = oslo
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		akershus
+		rogaland
+		hordaland
+		trondelag
+		nordland
+		troms
+		finnmark
+	}
+	
+	history = {
+		1814 = {
+			#united with Sweden as the Kingdom of Sweden and Norway in 1814/1815; Source: William R. Shepherd, "Historical Atlas", 1911, p. 157.
+			diplomacy_state = {
+				country = sweden
+				subject_type = personal_union_subject
+			}
+		}
+	}
+}

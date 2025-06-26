@@ -1,0 +1,25 @@
+uruguay = {
+	name = "Uruguay"
+	color = { 187 199 73 }
+	provincial_capital = montevideo
+	regions = {
+		south_america
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = tupi
+			culture = tupi
+		}
+		
+		1790 = {
+			owner = la_plata #part of the Viceroyalty of La Plata c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = castillian
+			religion = catholic
+		}
+	}
+}

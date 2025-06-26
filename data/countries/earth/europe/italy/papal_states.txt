@@ -1,0 +1,19 @@
+papal_states = {
+	name = "Papal States"
+	type = minor_nation
+	culture = italian
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = theocracy
+	default_capital = rome
+	short_name = true
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		latium
+		romagna
+	}
+}

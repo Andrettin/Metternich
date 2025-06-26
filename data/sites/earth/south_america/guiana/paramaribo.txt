@@ -1,0 +1,6 @@
+paramaribo = {
+	name = "Paramaribo"
+	world = earth
+	geocoordinate = { -55.16703088540 5.83503012992 } #from Natural Earth
+	type = settlement
+}

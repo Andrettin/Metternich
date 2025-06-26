@@ -1,0 +1,8 @@
+holyhead = {
+	name = "Holyhead"
+	world = earth
+	geocoordinate = { -4.6333333333333 53.316666666667 }
+	type = resource
+	resource = fish
+	province = wales
+}

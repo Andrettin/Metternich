@@ -1,0 +1,12 @@
+sluys = {
+	name = "Sluys"
+	world = earth
+	#geocoordinate = { 3.3883 51.3089 }
+	province = zeeland
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

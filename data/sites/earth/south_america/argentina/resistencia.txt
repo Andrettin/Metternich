@@ -1,0 +1,6 @@
+resistencia = {
+	name = "Resistencia"
+	world = earth
+	geocoordinate = { -58.99002750820 -27.45999184290 } #from Natural Earth
+	type = settlement
+}

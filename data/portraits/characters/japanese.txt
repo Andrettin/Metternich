@@ -1,0 +1,7 @@
+tokugawa_ieyasu = {
+	filepath = "portraits/characters/tokugawa_ieyasu.png"
+	character_conditions = {
+		gender = male
+		cultural_group = asian
+	}
+}

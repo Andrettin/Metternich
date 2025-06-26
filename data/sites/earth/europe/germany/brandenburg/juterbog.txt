@@ -1,0 +1,12 @@
+juterbog = {
+	name = "Juterbog" #"Jüterbog"
+	world = earth
+	geocoordinate = { 13.072777777778 51.993333333333 }
+	
+	history = {
+		919 = {
+			#settlement_type = castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

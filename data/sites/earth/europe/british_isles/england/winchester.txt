@@ -1,0 +1,23 @@
+winchester = {
+	name = "Winchester"
+	world = earth
+	geocoordinate = { -1.3086111111111 51.063333333333 }
+	type = resource
+	resource = timber
+	province = somerset
+	cultural_names = {
+		anglo_saxon = "Wintanceaster" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 734.
+		briton = "Venta Belgarum"
+		roman = "Venta Belgarum" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 51.
+	}
+	
+	history = {
+		660 = {
+			buildings += cathedral #Winchester was a bishopric as of c. 660; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 122.
+		}
+		
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

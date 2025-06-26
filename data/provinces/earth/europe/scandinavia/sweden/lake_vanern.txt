@@ -1,0 +1,5 @@
+lake_vanern = {
+	name = "Lake Vanern" #"Vänern"
+	color = { 20 26 228 }
+	lake = true
+}

@@ -1,0 +1,15 @@
+head_crest = {
+	name = "Head Crest"
+	subcategory = head_protection
+	portrait = building_slot
+	icon = lion
+	period = triassic
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		bony_knobs
+		duck_bill
+	}
+}

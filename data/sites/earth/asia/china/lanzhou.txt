@@ -1,0 +1,8 @@
+lanzhou = {
+	name = "Lanzhou"
+	world = earth
+	geocoordinate = { 103.79200028400 36.05602785140 } #from Natural Earth
+	type = settlement
+	#resource = coal
+	province = gansu
+}

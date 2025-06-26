@@ -1,0 +1,42 @@
+aristocrats = {
+	name = "Aristocrats"
+	aliases += aristocrat
+	population_class = aristocrats
+	color = { 11 40 93 }
+	literate = true
+	icon = rifle_infantry_light
+	small_icon = rifle_infantry_light_small
+	max_modifier_multiplier = 5
+	required_game_rule = additional_population_types
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 1
+		furniture = 1
+		tools = 1
+		brass_lamps = 1
+		coffee = 1
+		opium = 1
+		salt = 1
+		tea = 1
+	}
+	country_modifier = {
+		resource_output_modifier = 10
+	}
+	phenotype_icons = {
+		afro_european = rifle_infantry_medium
+		amerindian = rifle_infantry_medium
+		south_asian = rifle_infantry_medium
+		african = rifle_infantry_dark
+	}
+	phenotype_small_icons = {
+		afro_european = rifle_infantry_medium_small
+		amerindian = rifle_infantry_medium_small
+		south_asian = rifle_infantry_medium_small
+		african = rifle_infantry_dark_small
+	}
+}

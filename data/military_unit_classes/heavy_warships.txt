@@ -1,0 +1,29 @@
+galleon = {
+	name = "Galleon"
+	domain = water
+	category = heavy_warship
+}
+
+ship_of_the_line = {
+	name = "Ship-of-the-Line"
+	domain = water
+	category = heavy_warship
+}
+
+ironclad = {
+	name = "Ironclad"
+	domain = water
+	category = heavy_warship
+}
+
+advanced_ironclad = {
+	name = "Advanced Ironclad"
+	domain = water
+	category = heavy_warship
+}
+
+dreadnought = {
+	name = "Dreadnought"
+	domain = water
+	category = heavy_warship
+}

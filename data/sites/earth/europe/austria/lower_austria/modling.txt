@@ -1,0 +1,12 @@
+modling = {
+	name = "Modling" #"Mödling"
+	world = earth
+	#geocoordinate = { 16.283055555556 48.085555555556 }
+	province = lower_austria
+	
+	history = {
+		1900 = {
+			population = 15304 #Mödling had a population of 15,304 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

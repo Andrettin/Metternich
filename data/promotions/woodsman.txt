@@ -1,0 +1,34 @@
+woodsman_1 = {
+	name = "Woodsman I"
+	icon = mountains
+	conditions = {
+		infantry = true
+	}
+	modifier = {
+		forest_defense_modifier = 20
+	}
+}
+
+woodsman_2 = {
+	name = "Woodsman II"
+	icon = mountains
+	conditions = {
+		infantry = true
+		promotion = woodsman_1
+	}
+	modifier = {
+		forest_defense_modifier = 30
+	}
+}
+
+woodsman_3 = {
+	name = "Woodsman III"
+	icon = mountains
+	conditions = {
+		infantry = true
+		promotion = woodsman_2
+	}
+	modifier = {
+		forest_attack_modifier = 50
+	}
+}

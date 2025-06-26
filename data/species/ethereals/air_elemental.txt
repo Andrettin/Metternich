@@ -1,0 +1,6 @@
+air_elemental = {
+	name = "Air Elemental"
+	supertaxon = auran
+	era = holocene
+	sapient = true
+}

@@ -1,0 +1,28 @@
+spain = {
+	name = "Spain"
+	type = great_power
+	color = { 255 173 41 }
+	culture = castillian
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = madrid
+	eras = {
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		castille
+		leon
+		asturias
+		extremadura
+		galicia
+		andalusia
+		murcia
+		granada
+		navarre
+		aragon
+		catalonia
+		valencia
+	}
+}

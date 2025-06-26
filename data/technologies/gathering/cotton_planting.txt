@@ -1,0 +1,49 @@
+cotton = {
+	name = "Cotton"
+	subcategory = farming
+	portrait = engineering
+	icon = cotton
+	discovery = true
+	period = copper_age
+}
+
+cotton_planting = {
+	name = "Cotton Planting"
+	subcategory = farming
+	portrait = engineering
+	icon = cotton
+	period = bronze_age
+	cost = 9
+	cost_commodity = research
+	prerequisites = {
+		cotton
+	}
+}
+
+large_cotton_plantations = {
+	name = "Large Cotton Plantations"
+	subcategory = farming
+	portrait = engineering
+	icon = cotton
+	period = 1550_1600
+	cost_commodity = research
+	prerequisites = {
+		cotton_planting
+		
+		colonization
+	}
+}
+
+cotton_gin = {
+	name = "Cotton Gin"
+	subcategory = farming
+	portrait = engineering
+	icon = cotton
+	period = 1650_1700
+	cost = 10
+	cost_commodity = research
+	prerequisites = {
+		large_cotton_plantations
+		trained_journeymen
+	}
+}

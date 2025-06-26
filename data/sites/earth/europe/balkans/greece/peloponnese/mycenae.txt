@@ -1,0 +1,12 @@
+mycenae = {
+	name = "Mycenae"
+	world = earth
+	geocoordinate = { 22.756111111111 37.730833333333 }
+	province = peloponnese
+	
+	history = {
+		-1450 = {
+			developed = true #existed c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+	}
+}

@@ -1,0 +1,14 @@
+guadalajara = {
+	name = "Guadalajara"
+	world = earth
+	geocoordinate = { -103.33003422200 20.67001609190 } #from Natural Earth
+	type = settlement
+	#resource = grain #Corn and beans; Source: Map No. 503497 of the Perry-Castañeda Library Map Collection, 1978.
+	
+	history = {
+		1791 = {
+			buildings += college #College or seminary founded in Guadalajara in 1791; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+	}
+}

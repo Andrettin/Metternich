@@ -1,0 +1,23 @@
+calivermen = {
+	name = "Calivermen"
+	domain = land
+	category = light_infantry
+}
+
+skirmishers = {
+	name = "Skirmishers"
+	domain = land
+	category = light_infantry
+}
+
+sharpshooters = {
+	name = "Sharpshooters"
+	domain = land
+	category = light_infantry
+}
+
+rangers = {
+	name = "Rangers"
+	domain = land
+	category = light_infantry
+}

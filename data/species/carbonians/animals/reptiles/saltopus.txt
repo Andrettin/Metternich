@@ -1,0 +1,9 @@
+saltopus = {
+	name = "Saltopus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		edaphosaurus
+		petrolacosaurus
+		thadeosaurus
+	}
+}

@@ -1,0 +1,3 @@
+fruit = {
+	filepath = "icons/commodities/fruit.png"
+}

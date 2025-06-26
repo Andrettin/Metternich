@@ -1,0 +1,6 @@
+trade = {
+	name = "Trade"
+	icon = wealth
+	wealth_value = 25
+	required_game_rule = trade_commodity
+}

@@ -1,0 +1,6 @@
+vampire = {
+	name = "Vampire"
+	supertaxon = undead
+	era = holocene
+	sapient = true
+}

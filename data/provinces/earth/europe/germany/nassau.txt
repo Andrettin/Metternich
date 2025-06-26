@@ -1,0 +1,42 @@
+nassau = {
+	name = "Nassau"
+	color = { 245 217 121 }
+	provincial_capital = wiesbaden
+	regions = {
+		germany
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = frankish
+			religion = catholic
+		}
+		
+		919 = {
+			owner = franconia #part of the Duchy of Franconia in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+		}
+		
+		1477 = {
+			owner = nassau #part of the County of Nassau c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1815 = {
+			owner = nassau #part of the Duchy of Nassau in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			religion = protestant
+		}
+		
+		1866 = {
+			owner = prussia #part of Prussia in 1866; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

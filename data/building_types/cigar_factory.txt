@@ -1,0 +1,39 @@
+tobacconists_house = {
+	name = "Tobacconist's House"
+	building_class = tobacconists_house
+	portrait = factory
+	icon = tobacco
+	production_types = {
+		cigar_production
+	}
+	base_capacity = 2
+	required_technology = cigar_production
+}
+
+tobacconists_shop = {
+	name = "Tobacconist's Shop"
+	building_class = tobacconists_shop
+	portrait = factory
+	icon = tobacco
+	production_types = {
+		cigar_production
+	}
+	base_capacity = 4
+	required_building = tobacconists_house
+	required_technology = cigar_production
+}
+
+cigar_factory = {
+	name = "Cigar Factory"
+	building_class = cigar_factory
+	portrait = factory
+	icon = tobacco
+	production_types = {
+		cigar_production
+	}
+	base_capacity = 8
+	capacity_increment = 8
+	expandable = true
+	required_building = tobacconists_shop
+	required_technology = cigar_production
+}

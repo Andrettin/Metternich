@@ -1,0 +1,29 @@
+currency = {
+	name = "Currency"
+	category = finance
+	icon = wealth
+}
+
+commerce = {
+	name = "Commerce"
+	category = finance
+	icon = wealth
+}
+
+banking = {
+	name = "Banking"
+	category = finance
+	icon = chest
+}
+
+economics = {
+	name = "Economics"
+	category = finance
+	icon = wealth
+}
+
+market_functionality = {
+	name = "Market Functionality"
+	category = finance
+	icon = wealth
+}

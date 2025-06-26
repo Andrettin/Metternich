@@ -1,0 +1,143 @@
+andaman_sea = {
+	name = "Andaman Sea"
+	color = { 49 246 242 }
+	sea = true
+	regions = {
+		indian_ocean
+	}
+}
+
+arabian_sea = {
+	name = "Arabian Sea"
+	color = { 19 65 206 }
+	sea = true
+	regions = {
+		indian_ocean
+	}
+}
+
+bass_strait = {
+	name = "Bass Strait"
+	color = { 49 150 206 }
+	bay = true
+	regions = {
+		indian_ocean
+	}
+}
+
+bay_of_bengal = {
+	name = "Bay of Bengal"
+	color = { 52 232 206 }
+	bay = true
+	regions = {
+		indian_ocean
+	}
+}
+
+great_australian_bight = {
+	name = "Great Australian Bight"
+	color = { 116 199 222 }
+	bay = true
+	regions = {
+		indian_ocean
+	}
+}
+
+gulf_of_aden = {
+	name = "Gulf of Aden"
+	color = { 130 195 185 }
+	bay = true
+	regions = {
+		indian_ocean
+	}
+}
+
+gulf_of_mannar = {
+	name = "Gulf of Mannar"
+	color = { 142 251 228 }
+	bay = true
+	regions = {
+		indian_ocean
+	}
+}
+
+gulf_of_oman = {
+	name = "Gulf of Oman"
+	color = { 139 192 179 }
+	bay = true
+	regions = {
+		indian_ocean
+	}
+}
+
+indian_ocean = {
+	name = "Indian Ocean"
+	color = { 35 77 224 }
+	sea = true
+	regions = {
+		indian_ocean
+	}
+}
+
+laccadive_sea = {
+	name = "Laccadive Sea"
+	color = { 18 22 192 }
+	sea = true
+	regions = {
+		indian_ocean
+	}
+}
+
+mozambique_channel = {
+	name = "Mozambique Channel"
+	color = { 50 106 122 }
+	bay = true
+	regions = {
+		indian_ocean
+	}
+}
+
+persian_gulf = {
+	name = "Persian Gulf"
+	color = { 79 163 131 }
+	bay = true
+	regions = {
+		indian_ocean
+	}
+}
+
+red_sea = {
+	name = "Red Sea"
+	color = { 148 210 250 }
+	sea = true
+	regions = {
+		indian_ocean
+	}
+}
+
+savu_sea = {
+	name = "Savu Sea"
+	color = { 143 214 238 }
+	sea = true
+	regions = {
+		indian_ocean
+	}
+}
+
+strait_of_malacca = {
+	name = "Strait of Malacca"
+	color = { 1 156 168 }
+	bay = true
+	regions = {
+		indian_ocean
+	}
+}
+
+timor_sea = {
+	name = "Timor Sea"
+	color = { 116 200 239 }
+	sea = true
+	regions = {
+		indian_ocean
+	}
+}

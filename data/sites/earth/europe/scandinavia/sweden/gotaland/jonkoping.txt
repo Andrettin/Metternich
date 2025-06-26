@@ -1,0 +1,7 @@
+jonkoping = {
+	name = "Jonkoping" #"Jönköping"
+	world = earth
+	geocoordinate = { 14.16501623400 57.77134319980 } #from Natural Earth
+	type = resource
+	resource = cattle #Principally meadow and pasture; Source: Map No. 500866 of the Perry-Castañeda Library Map Collection, 1973.
+}

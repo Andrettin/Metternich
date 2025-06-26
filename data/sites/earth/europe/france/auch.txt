@@ -1,0 +1,6 @@
+auch = {
+	name = "Auch"
+	world = earth
+	geocoordinate = { 0.58861111111111 43.645277777778 }
+	type = settlement
+}

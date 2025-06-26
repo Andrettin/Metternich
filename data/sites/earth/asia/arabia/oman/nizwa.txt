@@ -1,0 +1,8 @@
+nizwa = {
+	name = "Nizwa"
+	world = earth
+	geocoordinate = { 57.53141312540 22.92638999330 } #from Natural Earth
+	type = resource
+	resource = opium
+	province = oman
+}

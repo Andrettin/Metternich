@@ -1,0 +1,8 @@
+poti = {
+	name = "Poti"
+	world = earth
+	geocoordinate = { 41.67160599650 42.15565553700 } #from Natural Earth
+	type = resource
+	resource = tea
+	province = georgia_caucasus
+}

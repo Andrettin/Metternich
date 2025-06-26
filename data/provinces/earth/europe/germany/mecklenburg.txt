@@ -1,0 +1,43 @@
+mecklenburg = {
+	name = "Mecklenburg"
+	color = { 224 128 160 }
+	provincial_capital = schwerin
+	resources = {
+		grain = 3
+		fruit = 3
+		cattle = 1
+	}
+	regions = {
+		germany
+	}
+	
+	history = {
+		owner = slavs
+		culture = slavic
+		religion = pagan
+		
+		526 = {
+			owner = slavs #territory of Slavic peoples in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = slavic
+		}
+		
+		919 = {
+			owner = march_of_the_billungs #part of the March of the Billungs in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1477 = {
+			owner = mecklenburg #part of the Duchy of Mecklenburg c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = german
+			religion = catholic
+		}
+		
+		1815 = {
+			owner = mecklenburg #part of the Grand Duchy of Mecklenburg-Schwerin in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			religion = protestant
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

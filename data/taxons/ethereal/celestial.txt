@@ -1,0 +1,6 @@
+celestial = {
+	name = "Celestial"
+	common_name = "Celestial"
+	rank = kingdom
+	supertaxon = ethereal
+}

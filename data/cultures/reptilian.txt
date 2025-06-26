@@ -1,0 +1,7 @@
+reptilian = {
+	name = "Reptilian"
+	default_phenotype = reptile
+	species = {
+		petrolacosaurus
+	}
+}

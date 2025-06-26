@@ -1,0 +1,16 @@
+chateauroux = {
+	name = "Chateauroux" #"Châteauroux"
+	world = earth
+	geocoordinate = { 1.6902777777778 46.809722222222 }
+	type = resource
+	resource = grain
+	province = berry
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 5000
+			}
+		}
+	}
+}

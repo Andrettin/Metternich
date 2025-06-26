@@ -1,0 +1,60 @@
+teeth = {
+	name = "Teeth"
+	subcategory = teeth
+	portrait = building_slot
+	icon = lion
+	period = permian
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		beaks
+	}
+}
+
+curved_teeth = {
+	name = "Curved Teeth"
+	subcategory = teeth
+	portrait = building_slot
+	icon = lion
+	period = jurassic
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		omophagia
+	}
+}
+
+ridged_teeth = {
+	name = "Ridged Teeth"
+	subcategory = teeth
+	portrait = building_slot
+	icon = lion
+	period = cretaceous
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		curved_teeth
+	}
+}
+
+serrated_teeth = {
+	name = "Serrated Teeth"
+	subcategory = teeth
+	portrait = building_slot
+	icon = lion
+	period = paleogene
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		ridged_teeth
+	}
+}

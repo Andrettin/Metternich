@@ -1,0 +1,12 @@
+nordhausen = {
+	name = "Nordhausen"
+	world = earth
+	geocoordinate = { 10.791111111111 51.505 }
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			#castle or estate belonging to the Ludolfing monarchs in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,21 @@
+le_mans = {
+	name = "Le Mans"
+	world = earth
+	geocoordinate = { 0.09998327495 48.00041505850 } #from Natural Earth
+	type = resource
+	#resource = cattle #Grassland; Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
+	resource = grain
+	province = anjou
+	
+	history = {
+		1789 = {
+			buildings += courthouse #Chief court of the salt tax existent in Le Mans in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 4400
+			}
+		}
+	}
+}

@@ -1,0 +1,6 @@
+guanambi = {
+	name = "Guanambi"
+	world = earth
+	geocoordinate = { -42.78998274900 -14.22958494180 } #from Natural Earth
+	province = bahia
+}

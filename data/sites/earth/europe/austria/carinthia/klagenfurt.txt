@@ -1,0 +1,14 @@
+klagenfurt = {
+	name = "Klagenfurt"
+	world = earth
+	geocoordinate = { 14.31002030300 46.62034425770 } #from Natural Earth
+	type = settlement
+	#resource = coal
+	province = carinthia
+	
+	history = {
+		1815 = {
+			population = 11000 #Klagenfurth had a population of 11,000 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 85.
+		}
+	}
+}

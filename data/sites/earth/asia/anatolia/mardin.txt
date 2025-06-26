@@ -1,0 +1,8 @@
+mardin = {
+	name = "Mardin"
+	world = earth
+	geocoordinate = { 40.74272212600 37.31150677390 } #from Natural Earth
+	type = resource
+	resource = cattle #Grazing area with scattered cultivation; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
+	province = amida
+}

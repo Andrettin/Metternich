@@ -1,0 +1,12 @@
+lindau = {
+	name = "Lindau"
+	world = earth
+	geocoordinate = { 9.6838888888889 47.545833333333 }
+	province = augsburg
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

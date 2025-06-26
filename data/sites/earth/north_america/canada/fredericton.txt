@@ -1,0 +1,6 @@
+fredericton = {
+	name = "Fredericton"
+	world = earth
+	geocoordinate = { -66.63330774090 45.94999757800 } #from Natural Earth
+	type = settlement
+}

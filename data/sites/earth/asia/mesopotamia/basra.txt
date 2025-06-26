@@ -1,0 +1,14 @@
+basra = {
+	name = "Basra"
+	world = earth
+	geocoordinate = { 47.81355668010 30.51352378240 } #from Natural Earth
+	type = settlement
+	#resource = fruit
+	province = chaldea
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

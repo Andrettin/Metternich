@@ -1,0 +1,14 @@
+bahr_el_ghazal = {
+	name = "Bahr el Ghazal"
+	color = { 239 227 211 }
+	provincial_capital = wau
+	regions = {
+		sudan
+	}
+	
+	history = {
+		owner = egypt
+		culture = dinka
+		religion = pagan
+	}
+}

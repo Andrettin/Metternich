@@ -1,0 +1,8 @@
+bam = {
+	name = "Bam"
+	world = earth
+	geocoordinate = { 58.36195674520 29.10769228010 } #from Natural Earth
+	type = resource
+	resource = cotton
+	province = kerman
+}

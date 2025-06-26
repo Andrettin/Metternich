@@ -1,0 +1,6 @@
+dili = {
+	name = "Dili"
+	world = earth
+	geocoordinate = { 125.57945593200 -8.55938840855 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,12 @@
+sens = {
+	name = "Sens"
+	world = earth
+	geocoordinate = { 3.2833333333333 48.197222222222 }
+	province = champagne
+	
+	history = {
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

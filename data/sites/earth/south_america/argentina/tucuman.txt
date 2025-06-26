@@ -1,0 +1,6 @@
+tucuman = {
+	name = "Tucuman" #"Tucumán"
+	world = earth
+	geocoordinate = { -65.21662418790 -26.81600014360 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,113 @@
+squires = {
+	name = "Squires"
+	unit_class = squires
+	icon = knights
+	stats = {
+		melee = 4
+		range = 1
+		defense = 4
+		movement = 6
+	}
+	required_technology = chivalry
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		cast_iron = 1
+		horses = 1
+	}
+	upgrades = {
+		cossacks
+	}
+}
+
+cossacks = {
+	name = "Cossacks"
+	unit_class = cossacks
+	icon = hussars
+	stats = {
+		melee = 5
+		range = 1
+		defense = 5
+		movement = 8
+	}
+	required_technology = recruit_steppe_horsemen
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		cast_iron = 1
+		horses = 2
+	}
+	upgrades = {
+		hussars
+	}
+}
+
+hussars = {
+	name = "Hussars"
+	unit_class = hussars
+	icon = hussars
+	stats = {
+		firepower = 7
+		melee = 10
+		range = 3
+		defense = 7
+		movement = 11
+	}
+	required_technology = hussars
+	wealth_cost = 100
+	upkeep = 25
+	commodity_costs = {
+		manpower = 1
+		muskets = 1
+		horses = 1
+	}
+	upgrades = {
+		scouts
+	}
+}
+
+scouts = {
+	name = "Scouts"
+	unit_class = scouts
+	icon = hussars
+	stats = {
+		firepower = 10
+		melee = 13
+		range = 5
+		defense = 7
+		movement = 11
+	}
+	required_technology = scouting
+	wealth_cost = 2000
+	upkeep = 50
+	commodity_costs = {
+		manpower = 1
+		rifles = 2
+		horses = 1
+	}
+	upgrades = {
+		mechanized_infantry
+	}
+}
+
+mechanized_infantry = {
+	name = "Mechanized Infantry"
+	unit_class = mechanized_infantry
+	icon = hussars
+	stats = {
+		firepower = 22
+		melee = 28
+		range = 10
+		defense = 10
+		movement = 11
+	}
+	entrenchment_bonus = 2
+	required_technology = internal_combustion
+	wealth_cost = 5000
+	upkeep = 100
+	commodity_costs = {
+		manpower = 1
+		rifles = 4
+		fuel = 4
+	}
+}

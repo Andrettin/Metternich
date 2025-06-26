@@ -1,0 +1,12 @@
+arad = {
+	name = "Arad"
+	world = earth
+	geocoordinate = { 21.31998001980 46.17000998850 } #from Natural Earth
+	province = pest
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

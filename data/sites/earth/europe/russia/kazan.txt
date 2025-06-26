@@ -1,0 +1,14 @@
+kazan = {
+	name = "Kazan"
+	world = earth
+	geocoordinate = { 49.12634476600 55.74994203600 } #from Natural Earth
+	type = settlement
+	#resource = grain
+	province = tatarstan
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

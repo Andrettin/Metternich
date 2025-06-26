@@ -1,0 +1,4 @@
+coffee_house = {
+	name = "Coffee House"
+	slot_type = coffee_house
+}

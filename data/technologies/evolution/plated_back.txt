@@ -1,0 +1,15 @@
+plated_back = {
+	name = "Plated Back"
+	subcategory = back_protection
+	portrait = building_slot
+	icon = lion
+	period = permian
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		back_protection
+		bony_plates
+	}
+}

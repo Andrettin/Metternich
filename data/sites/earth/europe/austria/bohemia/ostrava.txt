@@ -1,0 +1,5 @@
+ostrava = {
+	name = "Ostrava"
+	world = earth
+	geocoordinate = { 18.24998653020 49.83035504060 } #from Natural Earth
+}

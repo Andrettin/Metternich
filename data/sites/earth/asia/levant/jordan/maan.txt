@@ -1,0 +1,7 @@
+maan = {
+	name = "Maan"
+	world = earth
+	geocoordinate = { 35.73600357520 30.19200311560 } #from Natural Earth
+	type = resource
+	resource = grain
+}

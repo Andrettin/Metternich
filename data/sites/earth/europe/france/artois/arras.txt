@@ -1,0 +1,28 @@
+arras = {
+	name = "Arras"
+	world = earth
+	geocoordinate = { 2.78333369814 50.28332480780 } #from Natural Earth
+	type = resource
+	resource = coal
+	province = picardy
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1789 = {
+			buildings += courthouse #Parlement or conseil souverain existent in Arras in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1815 = {
+			population = 19958 #Arras had a population of 19,958 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 82.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 4500
+			}
+		}
+	}
+}

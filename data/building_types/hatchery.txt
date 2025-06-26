@@ -1,0 +1,20 @@
+hatchery = {
+	name = "Hatchery"
+	building_class = hatchery
+	culture = reptilian
+	portrait = building_slot
+	icon = heart
+	provincial = true
+	required_technology = egg_laying
+	settlement_types = {
+		village
+		town
+		city
+		metropolis
+		castle
+		monastery
+	}
+	settlement_modifier = {
+		amenities_bonus = 1
+	}
+}

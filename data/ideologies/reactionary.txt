@@ -1,0 +1,36 @@
+reactionary = {
+	name = "Reactionary"
+	color = { 30 30 100 }
+	weight_factor = {
+		base_value = 100
+		
+		modifier = {
+			factor = 0.5
+			militancy < 6
+		}
+		modifier = {
+			factor = 0.5
+			consciousness >= 6
+		}
+		modifier = {
+			factor = 1.1
+			militancy >= 6
+			consciousness < 4
+		}
+		modifier = {
+			factor = 1.1
+			militancy >= 7
+			consciousness < 4
+		}
+		modifier = {
+			factor = 1.1
+			militancy >= 8
+			consciousness < 4
+		}
+		modifier = {
+			factor = 1.1
+			militancy >= 9
+			consciousness < 4
+		}
+	}
+}

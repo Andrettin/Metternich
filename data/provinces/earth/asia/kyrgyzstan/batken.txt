@@ -1,0 +1,14 @@
+batken = {
+	name = "Batken"
+	color = { 161 114 101 }
+	provincial_capital = batken
+	regions = {
+		kyrgyzstan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

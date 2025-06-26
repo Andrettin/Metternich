@@ -1,0 +1,12 @@
+pembroke = {
+	name = "Pembroke"
+	world = earth
+	geocoordinate = { -4.9158 51.676038888889 }
+	province = wales
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

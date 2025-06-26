@@ -1,0 +1,52 @@
+corsica = {
+	name = "Corsica"
+	color = { 239 64 32 }
+	provincial_capital = ajaccio
+	resources = {
+		grain = 1
+		fruit = 2
+		cattle = 1
+		
+		fish = 1
+	}
+	regions = {
+		france
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = vandalia #part of the Kingdom of the Vandals in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = vandal
+		}
+		
+		1360 = {
+			owner = genoa #part of Genoa in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = italian
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = genoa #part of the Republic of Genoa c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1768 = {
+			owner = france #became part of France in 1768; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			culture = italian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 400
+				clergymen.french.catholic = 2000
+				officers.french.catholic = 200
+			}
+		}
+	}
+}

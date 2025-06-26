@@ -1,0 +1,14 @@
+nimburg = {
+	name = "Nimburg"
+	world = earth
+	geocoordinate = { 15.041747256066 50.186115487846 }
+	cultural_names = {
+		czech = "Nymburk"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

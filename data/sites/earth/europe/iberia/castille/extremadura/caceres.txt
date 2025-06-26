@@ -1,0 +1,8 @@
+caceres = {
+	name = "Caceres"
+	world = earth
+	geocoordinate = { -6.3711111111111 39.473055555556 }
+	type = resource
+	resource = iron_ore
+	province = extremadura
+}

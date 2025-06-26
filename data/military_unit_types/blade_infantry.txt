@@ -1,0 +1,66 @@
+axemen = {
+	name = "Axemen"
+	unit_class = axemen
+	icon = longswordsmen
+	stats = {
+		melee = 4
+		range = 1
+		defense = 5
+		movement = 4
+		bonus_vs_infantry = 50
+	}
+	entrench = true
+	required_technology = handaxe
+	commodity_costs = {
+		manpower = 1
+	}
+	upgrades = {
+		swordsmen
+	}
+}
+
+swordsmen = {
+	name = "Swordsmen"
+	unit_class = swordsmen
+	icon = longswordsmen
+	stats = {
+		melee = 5
+		range = 1
+		defense = 5
+		movement = 3
+		bonus_vs_infantry = 50
+	}
+	entrench = true
+	required_technology = shortsword
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		cast_iron = 1
+	}
+	upgrades = {
+		two_handed_swordsmen
+	}
+}
+
+two_handed_swordsmen = {
+	name = "Two-Handed Swordsmen"
+	unit_class = two_handed_swordsmen
+	icon = longswordsmen
+	stats = {
+		melee = 7
+		range = 1
+		defense = 6
+		movement = 4
+		bonus_vs_infantry = 50
+	}
+	entrench = true
+	required_technology = bastard_sword
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		cast_iron = 2
+	}
+	upgrades = {
+		grenadiers
+	}
+}

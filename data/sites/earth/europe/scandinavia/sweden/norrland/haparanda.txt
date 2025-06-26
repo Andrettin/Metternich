@@ -1,0 +1,7 @@
+haparanda = {
+	name = "Haparanda"
+	world = earth
+	geocoordinate = { 24.117032965922 65.834178177938 }
+	type = resource
+	resource = cattle #Principally meadow and pasture; Source: Map No. 500866 of the Perry-Castañeda Library Map Collection, 1973.
+}

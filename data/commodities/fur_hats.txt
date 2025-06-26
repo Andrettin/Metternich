@@ -1,0 +1,5 @@
+fur_hats = {
+	name = "Fur Hats"
+	icon = fur_hats
+	base_price = 300
+}

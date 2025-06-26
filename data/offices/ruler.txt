@@ -1,0 +1,4 @@
+ruler = {
+	name = "Ruler"
+	attribute = diplomacy
+}

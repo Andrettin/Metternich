@@ -1,0 +1,47 @@
+friedrich_von_wittelsbach = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.
+	name = "Friedrich"
+	dynasty = wittelsbach
+	culture = german #Rhenish
+	religion = catholic
+	home_site = kaiserslautern
+	gender = male
+	start_date = 1752.5.10 #birth of child
+}
+
+maximilian_joseph_von_wittelsbach = { #Source: "Almanach de Gotha pour l'année 1847", 1847, p. 15.
+	name = "Maximilian Joseph"
+	dynasty = wittelsbach
+	culture = german #Bavarian #from Bavaria
+	religion = catholic
+	home_settlement = munich
+	gender = male
+	father = friedrich_von_wittelsbach #presumably, since he is the father of this character's sister
+	birth_date = 1756.5.27
+	start_date = 1786.8.25 #married
+	death_date = 1825.10.13 #succeeded by his son
+	
+	history = {
+		1786.8.25 = { #married to Marie Wilhelmine Auguste von Hessen-Darmstadt, and they had their first child on 1786.8.25; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 10.
+			#spouse = 10000535 #Marie Wilhelmine Auguste von Hessen-Darmstadt
+		}
+		
+		1797.3.9 = { #married a second time to Friederike Wilhelmine Karoline von Zähringen on 1797.3.9; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 10.
+			#spouse = 10000013 #Friederike Wilhelmine Karoline von Zähringen
+		}
+	}
+}
+
+caroline_von_wittelsbach = { #Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
+	name = "Caroline"
+	dynasty = wittelsbach
+	culture = german #Bavarian
+	religion = catholic
+	home_settlement = munich
+	gender = female
+	father = maximilian_joseph_von_wittelsbach
+	#mother = 10000535 #Marie Wilhelmine Auguste von Hessen-Darmstadt; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 10-11.
+	birth_date = 1792.2.8
+	start_date = 1816.10.29 #married
+	
+	#crowned Queen (consort) of Hungary on 1825.9.25
+}

@@ -1,0 +1,12 @@
+orsova = {
+	name = "Orsova"
+	world = earth
+	geocoordinate = { 22.396111111111 44.725277777778 }
+	province = banat
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

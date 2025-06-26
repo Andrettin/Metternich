@@ -1,0 +1,7 @@
+book = {
+	filepath = "icons/items/book.png"
+}
+
+book_red = {
+	filepath = "icons/items/book_red.png"
+}

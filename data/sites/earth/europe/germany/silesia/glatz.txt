@@ -1,0 +1,14 @@
+glatz = {
+	name = "Glatz"
+	world = earth
+	geocoordinate = { 16.652777777778 50.437777777778 }
+	cultural_names = {
+		polish = "Klodzko" #"Kłodzko"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

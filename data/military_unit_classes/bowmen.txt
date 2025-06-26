@@ -1,0 +1,11 @@
+archers = {
+	name = "Archers"
+	domain = land
+	category = bowmen
+}
+
+crossbowmen = {
+	name = "Crossbowmen"
+	domain = land
+	category = bowmen
+}

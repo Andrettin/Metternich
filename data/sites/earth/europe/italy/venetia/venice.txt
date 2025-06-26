@@ -1,0 +1,25 @@
+venice = {
+	name = "Venice"
+	world = earth
+	geocoordinate = { 12.33499873720 45.43865928050 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+	
+	history = {
+		919 = {
+			settlement_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1500 = {
+			population = 100000 #Venice had a population of 100,000+ in 1500; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1600 = {
+			population = 100000 #Venice had a population of 100,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+	}
+}

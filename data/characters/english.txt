@@ -1,0 +1,305 @@
+henry_viii_of_england = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 207-209, 211.
+	name = "Henry"
+	epithet = "VIII"
+	culture = english
+	religion = protestant
+	home_settlement = london
+	gender = male
+	birth_date = 1491
+	death_date = 1547
+	
+	#became king of England in 1509
+	#had his marriage with Catherine of Aragon dissolved in 1531, and subsequently married Anne Boleyn
+	#started a process in 1534 that resulted in the establishment of Anglicanism in England
+	#executed Anne Boleyn in 1536 and subsequently married Jane Seymour
+	#married Anne of Cleves and divorced her in 1540, subsequently marrying Catherine Howard
+	#had Catherine Howard executed in 1542 for committing adultery
+	#married Catherine Parr in 1543
+}
+
+anne_boleyn = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 207.
+	name = "Anne"
+	surname = "Boleyn"
+	culture = english
+	religion = protestant
+	home_settlement = london
+	gender = female
+	birth_date = 1507
+	start_date = 1531 #marriage
+	death_date = 1536
+}
+
+jane_seymour = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 208.
+	name = "Jane"
+	surname = "Seymour"
+	culture = english
+	religion = protestant
+	home_settlement = london
+	gender = female
+	birth_date = 1509
+	start_date = 1536 #marriage?
+	death_date = 1537
+}
+
+catherine_parr = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
+	name = "Catherine"
+	surname = "Parr"
+	culture = english
+	religion = protestant
+	home_settlement = london
+	gender = female
+	birth_date = 1512
+	death_date = 1548
+}
+
+catherine_howard = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 209.
+	name = "Catherine"
+	surname = "Howard"
+	culture = english
+	religion = protestant
+	home_settlement = london
+	gender = female
+	birth_date = 1520
+	start_date = 1540 #marriage, presumably
+	death_date = 1542
+}
+
+elizabeth_i_of_england = {
+	name = "Elizabeth"
+	epithet = "I"
+	role = ruler
+	character_type = treasurer
+	culture = english
+	religion = protestant
+	portrait = elizabeth_i_of_england
+	home_settlement = london
+	gender = female
+	birth_date = 1533
+	death_date = 1603
+	obsolescence_technology = individualism
+	rulable_countries = {
+		england
+		great_britain
+	}
+	traits = {
+		financial
+		philosophical
+	}
+}
+
+edward_kelley = {
+	name = "Edward"
+	surname = "Kelley"
+	role = advisor
+	character_type = merchant
+	culture = english
+	religion = protestant
+	home_settlement = prague
+	gender = male
+	birth_date = 1552
+	death_date = 1597
+	skill_multiplier = 0.17
+	required_technology = merchant_companies
+	traits = {
+		merchant
+	}
+}
+
+francis_bacon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 252.
+	name = "Francis"
+	surname = "Bacon"
+	role = advisor
+	character_type = philosopher
+	culture = english
+	religion = protestant
+	home_settlement = london
+	gender = male
+	birth_date = 1561
+	death_date = 1626
+	required_technology = scientific_method #developed the scientific method
+	skill_multiplier = 0.83
+	traits = {
+		philosopher
+	}
+	
+	history = {
+		1620 = {
+			country = england #published his "Novum Organum" in 1620
+		}
+	}
+}
+
+henry_hudson = {
+	name = "Henry"
+	surname = "Hudson"
+	role = advisor
+	character_type = navigator
+	culture = english
+	religion = protestant
+	portrait = henry_hudson
+	home_settlement = london
+	gender = male
+	birth_date = 1565
+	death_date = 1611
+	required_technology = navigation
+	traits = {
+		henry_hudson
+	}
+}
+
+francis_drake = {
+	name = "Francis"
+	surname = "Drake"
+	role = advisor
+	character_type = privateer
+	culture = english
+	religion = protestant
+	portrait = francis_drake
+	home_site = exeter #Tavistock
+	gender = male
+	birth_date = 1540
+	death_date = 1596
+	skill = 10 #+50% Light Warship Damage Bonus
+	required_technology = privateering_companies
+	traits = {
+		privateer
+	}
+}
+
+william_brewster = {
+	name = "William"
+	surname = "Brewster"
+	#character_type = theologian
+	culture = english
+	religion = protestant
+	home_site = new_bedford #Plymouth, Massachusetts
+	gender = male
+	birth_date = 1567
+	death_date = 1644
+}
+
+john_rolfe = {
+	name = "John"
+	surname = "Rolfe"
+	role = advisor
+	character_type = farmer
+	culture = english
+	religion = protestant
+	home_site = norfolk #Jamestown, Virginia
+	gender = male
+	birth_date = 1585
+	death_date = 1622
+	skill = 5 #+25% Tobacco
+	required_technology = large_tobacco_plantations
+	traits = {
+		tobacco_planter
+	}
+}
+
+john_winthrop = {
+	name = "John"
+	surname = "Winthrop"
+	role = advisor
+	character_type = statesman
+	culture = english
+	religion = protestant
+	home_settlement = boston
+	gender = male
+	birth_date = 1587
+	death_date = 1649
+	required_technology = propaganda
+	traits = {
+		john_winthrop
+	}
+}
+
+john_harvard = {
+	name = "John"
+	surname = "Harvard"
+	role = advisor
+	character_type = theologian
+	culture = english
+	religion = protestant
+	home_settlement = boston #Cambridge, Massachusetts
+	gender = male
+	birth_date = 1607
+	death_date = 1638
+	required_technology = university
+	traits = {
+		john_harvard
+	}
+}
+
+william_penn = {
+	name = "William"
+	surname = "Penn"
+	role = advisor
+	character_type = theologian
+	culture = english
+	religion = protestant #Quaker
+	portrait = william_penn
+	home_settlement = philadelphia
+	gender = male
+	birth_date = 1644
+	death_date = 1718
+	skill = 10 #+50% Piety
+	traits = {
+		theologian
+	}
+}
+
+isaac_newton = {
+	name = "Isaac"
+	surname = "Newton"
+	role = advisor
+	character_type = natural_scientist
+	culture = english
+	religion = protestant
+	home_site = lincoln_england #Grantham, Lincolnshire
+	gender = male
+	birth_date = 1669
+	death_date = 1727.3.31
+	required_technology = theory_of_gravity
+	traits = {
+		isaac_newton
+	}
+}
+
+charles_darwin = {
+	name = "Charles"
+	surname = "Darwin"
+	role = advisor
+	character_type = natural_scientist
+	culture = english
+	religion = protestant
+	home_site = shrewsbury
+	gender = male
+	birth_date = 1809
+	death_date = 1882
+	required_technology = merchant_steamships
+	traits = {
+		charles_darwin
+	}
+}
+
+victoria_i_of_great_britain = {
+	name = "Victoria"
+	epithet = "I"
+	role = ruler
+	character_type = treasurer
+	culture = english
+	religion = protestant
+	home_settlement = london
+	gender = female
+	birth_date = 1819
+	death_date = 1901
+	required_technology = individualism
+	rulable_countries = {
+		england
+		great_britain
+	}
+	traits = {
+		financial
+		imperialistic
+	}
+}

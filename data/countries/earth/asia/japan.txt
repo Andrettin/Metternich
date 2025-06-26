@@ -1,0 +1,22 @@
+japan = {
+	name = "Japan"
+	type = great_power
+	color = { 255 191 191 }
+	culture = japanese
+	default_religion = pagan
+	default_tier = empire
+	default_government_type = monarchy
+	default_capital = tokyo
+	short_names = {
+		tribe = "Japanese"
+	}
+	eras = {
+		ancient_era
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		honshu
+	}
+}

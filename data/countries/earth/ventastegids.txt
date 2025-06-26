@@ -1,0 +1,14 @@
+ventastegids = {
+	name = "Ventastegids"
+	type = clade
+	color = { 245 167 97 }
+	culture = amphibian
+	default_religion = pagan
+	default_tier = barony
+	max_tier = empire
+	default_government_type = clade
+	default_capital = riga
+	core_provinces = {
+		livonia
+	}
+}

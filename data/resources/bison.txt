@@ -1,0 +1,12 @@
+bison = {
+	name = "Bison"
+	commodity = meat
+	tiny_icon = garrison
+	terrain_types = {
+		plains
+		#grassland
+	}
+	site_types = {
+		resource
+	}
+}

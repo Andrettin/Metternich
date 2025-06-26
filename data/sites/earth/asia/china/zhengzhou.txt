@@ -1,0 +1,6 @@
+zhengzhou = {
+	name = "Zhengzhou"
+	world = earth
+	geocoordinate = { 113.66509273200 34.75499615380 } #from Natural Earth
+	type = settlement
+}

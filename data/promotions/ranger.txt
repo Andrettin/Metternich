@@ -1,0 +1,37 @@
+ranger_1 = {
+	name = "Ranger I"
+	icon = mountains
+	conditions = {
+		infantry = true
+	}
+	modifier = {
+		forest_attack_modifier = 20
+		forest_defense_modifier = 20
+	}
+}
+
+ranger_2 = {
+	name = "Ranger II"
+	icon = mountains
+	conditions = {
+		infantry = true
+		promotion = ranger_1
+	}
+	modifier = {
+		forest_attack_modifier = 25
+		forest_defense_modifier = 25
+	}
+}
+
+ranger_3 = {
+	name = "Ranger III"
+	icon = mountains
+	conditions = {
+		infantry = true
+		promotion = ranger_2
+	}
+	modifier = {
+		forest_attack_modifier = 30
+		forest_defense_modifier = 30
+	}
+}

@@ -1,0 +1,33 @@
+marseilles = {
+	name = "Marseilles"
+	world = earth
+	geocoordinate = { 5.37501013044 43.28997906400 } #from Natural Earth
+	type = settlement
+	#resource = fruit
+	province = provence
+	cultural_names = {
+		frankish = "Massilia"
+		gaulish = "Massilia"
+		greek = "Massilia"
+		roman = "Massilia" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Marseilles was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 2800
+				clergymen.french.catholic = 3600
+				officers.french.catholic = 1200
+			}
+		}
+	}
+}

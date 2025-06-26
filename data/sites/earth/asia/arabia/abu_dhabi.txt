@@ -1,0 +1,7 @@
+abu_dhabi = {
+	name = "Abu Dhabi"
+	world = earth
+	geocoordinate = { 54.36659338260 24.46668357240 } #from Natural Earth
+	type = settlement
+	province = abu_dhabi
+}

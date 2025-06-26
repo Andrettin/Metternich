@@ -1,0 +1,7 @@
+kingdom = {
+	name = "Kingdom"
+	icon = crown_royal
+	modifier = {
+		capital_prestige_bonus = 4
+	}
+}

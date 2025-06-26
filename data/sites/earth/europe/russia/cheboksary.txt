@@ -1,0 +1,6 @@
+cheboksary = {
+	name = "Cheboksary"
+	world = earth
+	geocoordinate = { 47.25002518590 56.12997051910 } #from Natural Earth
+	type = settlement
+}

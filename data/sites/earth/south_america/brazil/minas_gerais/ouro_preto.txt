@@ -1,0 +1,19 @@
+ouro_preto = {
+	name = "Ouro Preto"
+	world = earth
+	geocoordinate = { -43.503611111111 -20.385277777778 }
+	type = settlement
+	#resource = coffee
+	province = minas_gerais
+	
+	history = {
+		1839 = {
+			buildings += college #Escola de Farmácia de Ouro Preto founded in 1839; Source: Keila Grinberg; Ricardo Salles, "O Brasil Imperial", vol. I, 2009, p. 296.
+			settlement_type = campus
+		}
+		
+		1876 = {
+			#Escola de Minas de Ouro Preto founded in 1876; Source: Keila Grinberg; Ricardo Salles, "O Brasil Imperial", vol. I, 2009, pp. 292, 296.
+		}
+	}
+}

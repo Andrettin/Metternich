@@ -1,0 +1,7 @@
+funchal = {
+	name = "Funchal"
+	world = earth
+	geocoordinate = { -16.88003971500 32.64998252260 } #from Natural Earth
+	type = settlement
+	province = madeira
+}

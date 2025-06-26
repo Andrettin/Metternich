@@ -1,0 +1,6 @@
+vinnitsa = {
+	name = "Vinnitsa"
+	world = earth
+	geocoordinate = { 28.48155838900 49.22537904770 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,53 @@
+utrecht = {
+	name = "Utrecht"
+	color = { 192 64 33 }
+	provincial_capital = utrecht
+	regions = {
+		netherlands
+	}
+	
+	history = {
+		owner = ichthyostegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = ichthyostegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = gaul
+			culture = gaulish
+		}
+		
+		526 = {
+			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = frankish
+			religion = catholic
+		}
+		
+		919 = {
+			owner = friesland #part of Friesland in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = dutch
+		}
+		
+		1477 = {
+			owner = utrecht #part of the Bishopric of Utrecht c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1609 = {
+			owner = netherlands #part of the United Netherlands in 1609; Source: William R. Shepherd, "Historical Atlas", 1911, p. 117.
+			religion = protestant
+		}
+		
+		1740 = {
+			owner = netherlands #part of the United Netherlands c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = netherlands #part of the Kingdom of the Netherlands in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

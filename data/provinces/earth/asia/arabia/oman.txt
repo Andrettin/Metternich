@@ -1,0 +1,20 @@
+oman = {
+	name = "Oman"
+	color = { 240 78 161 }
+	provincial_capital = muscat
+	resources = {
+		opium = 1
+	}
+	regions = {
+		asia
+		middle_east
+	}
+	
+	history = {
+		-1450 = {
+			owner = arabia #Arabic territory c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = arabic
+			religion = pagan
+		}
+	}
+}

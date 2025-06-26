@@ -1,0 +1,158 @@
+cavalry_leader = {
+	name = "Cavalry Leader"
+	types = {
+		expertise
+	}
+	icon = horses
+	attribute = martial
+	max_scaling = 4
+	conditions = {
+		military_unit_category = general
+	}
+	attribute_bonuses = {
+		martial = 1
+	}
+	scaled_leader_modifier = {
+		military_unit_stat = {
+			category = spear_cavalry
+			stat = damage_bonus
+			value = 5
+		}
+		military_unit_stat = {
+			category = light_cavalry
+			stat = damage_bonus
+			value = 5
+		}
+		military_unit_stat = {
+			category = heavy_cavalry
+			stat = damage_bonus
+			value = 5
+		}
+	}
+}
+
+drillmaster = {
+	name = "Drillmaster"
+	types = {
+		expertise
+	}
+	icon = horses
+	attribute = martial
+	max_scaling = 4
+	conditions = {
+		military_unit_category = general
+	}
+	attribute_bonuses = {
+		martial = 1
+	}
+	scaled_leader_modifier = {
+		morale_recovery_modifier = 5
+	}
+}
+
+duelist = {
+	name = "Duelist"
+	types = {
+		expertise
+	}
+	icon = saber
+	conditions = {
+		primary_attribute = martial
+	}
+	attribute_bonuses = {
+		martial = 3
+	}
+	military_unit_modifier = {
+		melee = 1
+		defense = 1
+	}
+}
+
+heavy_infantry_leader = {
+	name = "Heavy Infantry Leader"
+	types = {
+		expertise
+	}
+	icon = saber
+	attribute = martial
+	max_scaling = 4
+	conditions = {
+		military_unit_category = general
+	}
+	attribute_bonuses = {
+		martial = 1
+	}
+	scaled_leader_modifier = {
+		military_unit_stat = {
+			category = blade_infantry
+			stat = damage_bonus
+			value = 5
+		}
+		military_unit_stat = {
+			category = heavy_infantry
+			stat = damage_bonus
+			value = 5
+		}
+	}
+}
+
+hunter = {
+	name = "Hunter"
+	types = {
+		expertise
+	}
+	icon = bow
+	conditions = {
+		or = {
+			primary_attribute = martial
+			primary_attribute = diplomacy
+		}
+	}
+	attribute_bonuses = {
+		martial = 2
+		diplomacy = 1
+	}
+}
+
+light_infantry_leader = {
+	name = "Light Infantry Leader"
+	types = {
+		expertise
+	}
+	icon = saber
+	attribute = martial
+	max_scaling = 4
+	conditions = {
+		military_unit_category = general
+	}
+	attribute_bonuses = {
+		martial = 1
+	}
+	scaled_leader_modifier = {
+		military_unit_stat = {
+			category = militia
+			stat = damage_bonus
+			value = 5
+		}
+		military_unit_stat = {
+			category = light_infantry
+			stat = damage_bonus
+			value = 5
+		}
+	}
+}
+
+strategist = {
+	name = "Strategist"
+	types = {
+		expertise
+	}
+	icon = crossed_sabers
+	conditions = {
+		character_type = none
+		character_type = privateer
+		not = {
+			trait = brilliant_strategist
+		}
+	}
+}

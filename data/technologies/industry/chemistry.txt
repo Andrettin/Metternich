@@ -1,0 +1,13 @@
+alchemy = {
+	name = "Alchemy"
+	subcategory = metallurgy
+	portrait = engineering
+	icon = philosophy
+	period = 500_1000
+	cost = 80
+	cost_commodity = research
+	prerequisites = {
+		philosophy
+		ironworking
+	}
+}

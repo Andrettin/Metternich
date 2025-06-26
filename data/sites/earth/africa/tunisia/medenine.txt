@@ -1,0 +1,6 @@
+medenine = {
+	name = "Medenine"
+	world = earth
+	geocoordinate = { 10.41669955760 33.39999900250 } #from Natural Earth
+	type = settlement
+}

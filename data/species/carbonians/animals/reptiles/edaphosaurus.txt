@@ -1,0 +1,9 @@
+edaphosaurus = {
+	name = "Edaphosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		hylonomus
+		pantylus
+		tuditanus
+	}
+}

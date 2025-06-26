@@ -1,0 +1,15 @@
+goddess_of_festivals = {
+	icon = music
+	conditions = {
+		or = {
+			has_resource = grapes
+			has_resource = incense
+		}
+	}
+	modifier = {
+		culture_per_improved_grapes = 1
+		piety_per_improved_grapes = 1
+		culture_per_improved_incense = 1
+		piety_per_improved_incense = 1
+	}
+}

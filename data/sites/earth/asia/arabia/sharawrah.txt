@@ -1,0 +1,8 @@
+sharawrah = {
+	name = "Sharawrah"
+	world = earth
+	geocoordinate = { 47.13333 17.25 }
+	type = settlement
+	#resource = sheep
+	province = najran
+}

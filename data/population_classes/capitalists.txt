@@ -1,0 +1,3 @@
+capitalists = {
+	name = "Capitalists"
+}

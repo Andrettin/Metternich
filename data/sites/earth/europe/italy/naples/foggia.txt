@@ -1,0 +1,9 @@
+foggia = {
+	name = "Foggia"
+	world = earth
+	geocoordinate = { 15.55996984730 41.46047833160 } #from Natural Earth
+	pos_offset = { 1 0 } #so that it is on a river tile
+	type = resource
+	resource = fish
+	province = naples
+}

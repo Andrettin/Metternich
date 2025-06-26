@@ -1,0 +1,18 @@
+aragon = {
+	name = "Aragon"
+	type = minor_nation
+	culture = aragonese
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = zaragoza
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		aragon
+		catalonia
+		valencia
+	}
+}

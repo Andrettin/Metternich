@@ -1,0 +1,9 @@
+is_northern_european = {
+	or = {
+		cultural_group = baltic
+		cultural_group = celtic
+		cultural_group = finnic
+		cultural_group = germanic
+		cultural_group = slavic
+	}
+}

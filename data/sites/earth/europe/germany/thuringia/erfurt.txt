@@ -1,0 +1,21 @@
+erfurt = {
+	name = "Erfurt"
+	world = earth
+	geocoordinate = { 11.02996211610 50.97005291660 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		919 = {
+			settlement_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1379 = {
+			buildings += university #University founded in Erfurt in 1379; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			settlement_type = campus
+		}
+	}
+}

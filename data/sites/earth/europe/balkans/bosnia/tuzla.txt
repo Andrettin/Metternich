@@ -1,0 +1,6 @@
+tuzla = {
+	name = "Tuzla"
+	world = earth
+	geocoordinate = { 18.68003779980 44.55047060050 } #from Natural Earth
+	province = bosnia
+}

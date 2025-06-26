@@ -1,0 +1,6 @@
+uba = {
+	name = "Uba" #"Ubá"
+	world = earth
+	geocoordinate = { -42.95002465980 -21.11960365920 } #from Natural Earth
+	province = minas_gerais
+}

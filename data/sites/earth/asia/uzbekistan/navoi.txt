@@ -1,0 +1,6 @@
+navoi = {
+	name = "Navoi"
+	world = earth
+	geocoordinate = { 65.35496659230 40.11040569970 } #from Natural Earth
+	type = settlement
+}

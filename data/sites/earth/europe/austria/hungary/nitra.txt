@@ -1,0 +1,7 @@
+nitra = {
+	name = "Nitra"
+	world = earth
+	geocoordinate = { 18.0875 48.314722222222 }
+	type = resource
+	resource = grain
+}

@@ -1,0 +1,13 @@
+quito = {
+	name = "Quito"
+	world = earth
+	geocoordinate = { -78.50005110850 -0.21498818065 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1769 = {
+			buildings += university #University S. Gregorio founded in Quito in 1769; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+	}
+}

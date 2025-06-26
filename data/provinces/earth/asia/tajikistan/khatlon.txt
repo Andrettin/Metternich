@@ -1,0 +1,17 @@
+khatlon = {
+	name = "Khatlon"
+	color = { 75 185 61 }
+	provincial_capital = kulob
+	resources = {
+		grain = 1
+	}
+	regions = {
+		tajikistan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

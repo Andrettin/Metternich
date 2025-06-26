@@ -1,0 +1,12 @@
+reichenau_an_der_rax = {
+	name = "Reichenau an der Rax"
+	world = earth
+	geocoordinate = { 15.833333333333 47.7 }
+	province = lower_austria
+	
+	history = {
+		1900 = {
+			population = 7457 #Reichenau had a population of 7457 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

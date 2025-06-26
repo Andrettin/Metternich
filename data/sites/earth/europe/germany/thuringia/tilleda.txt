@@ -1,0 +1,12 @@
+tilleda = {
+	name = "Tilleda"
+	world = earth
+	#geocoordinate = { 11.143333333333 51.420555555556 }
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			#castle or estate belonging to the Ludolfing monarchs in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

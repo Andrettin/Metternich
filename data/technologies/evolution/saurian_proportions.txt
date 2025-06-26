@@ -1,0 +1,15 @@
+saurian_proportions = {
+	name = "Saurian Proportions"
+	subcategory = body_proportions
+	portrait = building_slot
+	icon = lion
+	period = cretaceous
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		long_necks
+		phytophagia
+	}
+}

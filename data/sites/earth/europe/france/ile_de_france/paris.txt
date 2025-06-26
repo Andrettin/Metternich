@@ -1,0 +1,62 @@
+paris = {
+	name = "Paris"
+	world = earth
+	geocoordinate = { 2.33333532574 48.86669293120 } #from Natural Earth
+	type = settlement
+	#resource = grain
+	province = ile_de_france
+	cultural_names = {
+		frankish = "Parisii"
+		gaulish = "Lutetia"
+		roman = "Lutetia" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		919 = {
+			settlement_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1250 = {
+			buildings += university #University existent in Paris in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
+		}
+		
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1500 = {
+			population = 100000 #Paris had a population of 100,000+ in 1500; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1600 = {
+			population = 200000 #Paris had a population of 200,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1631 = {
+			buildings += newspaper #the newspaper "Gazette de France" was founded in 1631; Source: Henry Kamen, "Early Modern European Society", 2021, p. 309.
+		}
+		
+		1700 = {
+			population = 500000 #Paris had a population of 500,000 in 1700; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1789 = {
+			population = 500000 #Paris had a population of 500,000 in 1789; Source: Eric J. Hobsbawm, "The Age of Revolution, Europe 1789-1848", p. 28.
+			
+			buildings += courthouse #Parlement or conseil souverain, cour des aides, cambre des comptes, court of admiralty, cour des monnaies, prévôt des maréchaux and chief court of the salt tax existent in Paris in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1815 = {
+			population = 649412 #Paris had a population of 649,412 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 88.
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 6000
+				clergymen.french.catholic = 16000
+				clergymen.french.jewish = 200
+				officers.french.catholic = 3200
+			}
+		}
+	}
+}

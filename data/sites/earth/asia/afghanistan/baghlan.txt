@@ -1,0 +1,8 @@
+baghlan = {
+	name = "Baghlan"
+	world = earth
+	geocoordinate = { 68.69925858450 36.13933026030 } #from Natural Earth
+	type = resource
+	resource = grain #Mixed dry farming and grazing; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	province = afghanistan
+}

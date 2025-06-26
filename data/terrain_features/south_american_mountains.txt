@@ -1,0 +1,65 @@
+cuchilla_grande = {
+	name = "Cuchilla Grande"
+	terrain_type = barren_hills
+	color = { 139 252 143 }
+}
+
+serra_acarai = {
+	name = "Serra Acarai" #"Serra Acaraí"
+	terrain_type = barren_hills
+	color = { 7 84 68 }
+}
+
+serra_de_curupira = {
+	name = "Serra de Curupira"
+	terrain_type = barren_hills
+	color = { 208 151 162 }
+}
+
+serra_do_espinhaco = {
+	name = "Serra do Espinhaco" #"Serra do Espinhaço"
+	terrain_type = barren_hills
+	color = { 133 86 97 }
+}
+
+serra_da_ibiapaba = {
+	name = "Serra da Ibiapaba"
+	terrain_type = barren_hills
+	color = { 199 252 75 }
+}
+
+serra_da_mantiqueira = {
+	name = "Serra da Mantiqueira"
+	terrain_type = barren_hills
+	color = { 193 56 24 }
+}
+
+serra_do_cachimbo = {
+	name = "Serra do Cachimbo"
+	terrain_type = barren_hills
+	color = { 44 135 106 }
+}
+
+serra_do_piaui = {
+	name = "Serra do Piaui"
+	terrain_type = barren_hills
+	color = { 159 126 46 }
+}
+
+serra_dos_gradaus = {
+	name = "Serra dos Gradaus" #"Serra dos Gradaús"
+	terrain_type = barren_hills
+	color = { 239 208 174 }
+}
+
+serra_dourada = {
+	name = "Serra Dourada"
+	terrain_type = barren_hills
+	color = { 136 34 151 }
+}
+
+tumuc_humac_mountains = {
+	name = "Tumuc-Humac Mountains"
+	terrain_type = mountains
+	color = { 247 208 29 }
+}

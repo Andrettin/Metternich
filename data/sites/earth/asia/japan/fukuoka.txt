@@ -1,0 +1,6 @@
+fukuoka = {
+	name = "Fukuoka"
+	world = earth
+	geocoordinate = { 130.41001379300 33.59501527810 } #from Natural Earth
+	type = settlement
+}

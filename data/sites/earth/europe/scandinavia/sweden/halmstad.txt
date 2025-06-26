@@ -1,0 +1,6 @@
+halmstad = {
+	name = "Halmstad"
+	world = earth
+	geocoordinate = { 12.85558711610 56.67177207350 } #from Natural Earth
+	type = settlement
+}

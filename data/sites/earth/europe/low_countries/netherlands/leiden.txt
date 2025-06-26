@@ -1,0 +1,14 @@
+leiden = {
+	name = "Leiden"
+	world = earth
+	#geocoordinate = { 4.49 52.16 }
+	type = resource
+	resource = cattle #Cattle raising or mixed use with pasture dominant; Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
+	province = holland
+	
+	history = {
+		1575 = {
+			buildings += university #University founded in Leiden in 1575; Source: Henry Kamen, "Early Modern European Society", 2021, p. 291; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

@@ -1,0 +1,6 @@
+halifax = {
+	name = "Halifax"
+	world = earth
+	geocoordinate = { -63.60000451830 44.65002524730 } #from Natural Earth
+	type = settlement
+}

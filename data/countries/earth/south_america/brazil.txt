@@ -1,0 +1,72 @@
+brazil = {
+	name = "Brazil"
+	type = minor_nation
+	culture = brazilian
+	default_religion = catholic
+	default_tier = empire
+	min_tier = kingdom
+	default_government_type = monarchy
+	default_capital = rio_de_janeiro
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		rio_de_janeiro
+		acre
+		alagoas
+		amapa
+		amazonas
+		bahia
+		ceara
+		espirito_santo
+		goias
+		maranhao
+		mato_grosso
+		mato_grosso_do_sul
+		minas_gerais
+		para
+		paraiba
+		parana
+		pernambuco
+		piaui
+		rio_grande_do_norte
+		rio_grande_do_sul
+		rondonia
+		roraima
+		santa_catarina
+		sao_paulo
+		sergipe
+		tocantins
+	}
+	
+	
+	history = {
+		1567 = {
+			#Rio de Janeiro founded by the Portuguese in 1567; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			diplomacy_state = {
+				country = portugal
+				subject_type = colony
+			}
+			
+			tier = kingdom
+		}
+		
+		1790 = {
+			#Portuguese colony c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			diplomacy_state = {
+				country = portugal
+				subject_type = colony
+			}
+		}
+		
+		1822 = {
+			#became independent in 1822; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			diplomacy_state = {
+				country = portugal
+				state = peace
+			}
+			
+			tier = empire
+		}
+	}
+}

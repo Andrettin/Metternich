@@ -1,0 +1,6 @@
+regina = {
+	name = "Regina"
+	world = earth
+	geocoordinate = { -104.61700993000 50.45003297840 } #from Natural Earth
+	type = settlement
+}

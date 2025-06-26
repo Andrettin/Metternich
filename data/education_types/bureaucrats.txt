@@ -1,0 +1,19 @@
+bureaucrats = {
+	name = "Bureaucrats"
+	input_population_type = trained_workers
+	input_wealth = 100
+	input_commodities = {
+		paper = 1
+	}
+	output_population_type = bureaucrats
+}
+
+elder_statesmen = {
+	name = "Elder Statesmen"
+	input_population_type = bureaucrats
+	input_wealth = 1000
+	input_commodities = {
+		paper = 10
+	}
+	output_population_type = elder_statesmen
+}

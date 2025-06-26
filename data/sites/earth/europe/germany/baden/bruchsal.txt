@@ -1,0 +1,12 @@
+bruchsal = {
+	name = "Bruchsal"
+	world = earth
+	geocoordinate = { 8.6 49.133333333333 }
+	province = baden
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

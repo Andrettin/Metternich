@@ -1,0 +1,153 @@
+adriatic_sea = {
+	name = "Adriatic Sea"
+	color = { 45 97 244 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+aegean_sea = {
+	name = "Aegean Sea"
+	color = { 229 77 76 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+alboran_sea = {
+	name = "Alboran Sea"
+	color = { 121 56 135 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+balearic_sea = {
+	name = "Balearic Sea"
+	color = { 125 215 106 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+black_sea = {
+	name = "Black Sea"
+	color = { 0 104 136 }
+	sea = true
+	cultural_names = {
+		roman = "Pontus Euxinos" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	regions = {
+		mediterranean_sea
+	}
+}
+
+eastern_mediterranean_sea = {
+	name = "Eastern Mediterranean Sea"
+	color = { 193 100 102 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+gulf_of_gabes = {
+	name = "Gulf of Gabes" #"Gulf of Gabès"
+	color = { 71 246 83 }
+	bay = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+gulf_of_lion = {
+	name = "Gulf of Lion"
+	color = { 57 58 13 }
+	bay = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+gulf_of_sidra = {
+	name = "Gulf of Sidra"
+	color = { 192 164 26 }
+	bay = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+ionian_sea = {
+	name = "Ionian Sea"
+	color = { 37 18 13 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+ligurian_sea = {
+	name = "Ligurian Sea"
+	color = { 200 75 128 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+sea_of_azov = {
+	name = "Sea of Azov"
+	color = { 68 210 89 }
+	sea = true
+	cultural_names = {
+		greek = "Lake Maeotis"
+		roman = "Lake Maeotis" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+	}
+	regions = {
+		mediterranean_sea
+	}
+}
+
+sea_of_crete = {
+	name = "Sea of Crete"
+	color = { 192 190 18 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+sea_of_marmara = {
+	name = "Sea of Marmara"
+	color = { 52 106 206 }
+	sea = true
+	cultural_names = {
+		greek = "Propontis" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+	}
+	regions = {
+		mediterranean_sea
+	}
+}
+
+tyrrhenian_sea = {
+	name = "Tyrrhenian Sea"
+	color = { 162 50 140 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+western_mediterranean_sea = {
+	name = "Western Mediterranean Sea"
+	color = { 0 144 104 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}

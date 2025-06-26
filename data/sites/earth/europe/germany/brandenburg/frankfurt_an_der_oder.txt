@@ -1,0 +1,12 @@
+frankfurt_an_der_oder = {
+	name = "Frankfurt an der Oder"
+	world = earth
+	geocoordinate = { 14.551666666666666 52.342083333333335 }
+	province = brandenburg
+	
+	history = {
+		1506 = {
+			buildings += university #University founded in Frankfort-on-the-Oder in 1506; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

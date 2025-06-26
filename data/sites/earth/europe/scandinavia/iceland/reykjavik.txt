@@ -1,0 +1,6 @@
+reykjavik = {
+	name = "Reykjavik"
+	world = earth
+	geocoordinate = { -21.95001448720 64.15002361970 } #from Natural Earth
+	type = settlement
+}

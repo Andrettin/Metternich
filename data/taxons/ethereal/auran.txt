@@ -1,0 +1,6 @@
+auran = {
+	name = "Aer" #"air" in Latin
+	common_name = "Auran"
+	rank = kingdom
+	supertaxon = ethereal
+}

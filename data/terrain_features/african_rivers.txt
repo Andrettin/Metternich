@@ -1,0 +1,44 @@
+atbara_river = {
+	name = "Atbara River"
+	river = true
+}
+
+awash_river = {
+	name = "Awash River"
+	river = true
+}
+
+blue_nile_river = {
+	name = "Blue Nile River"
+	river = true
+}
+
+damietta_branch = {
+	name = "Damietta Branch"
+	river = true
+}
+
+nile_river = {
+	name = "Nile River"
+	river = true
+}
+
+rosetta_branch = {
+	name = "Rosetta Branch"
+	river = true
+}
+
+setit_river = {
+	name = "Setit River"
+	river = true
+}
+
+tekeze_river = {
+	name = "Tekeze River"
+	river = true
+}
+
+white_nile_river = {
+	name = "White Nile River"
+	river = true
+}

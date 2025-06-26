@@ -1,0 +1,8 @@
+the_weald = {
+	name = "The Weald"
+	world = earth
+	geocoordinate = { 0.4 51 }
+	type = resource
+	terrain_type = conifer_forest
+	resource = timber
+}

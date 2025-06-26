@@ -1,0 +1,12 @@
+new_romania = {
+	name = "New Romania"
+	type = minor_nation
+	culture = romanian
+	default_religion = orthodox
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = kingston
+	core_provinces = {
+		jamaica
+	}
+}

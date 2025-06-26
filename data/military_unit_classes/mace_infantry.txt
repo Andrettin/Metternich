@@ -1,0 +1,11 @@
+clubmen = {
+	name = "Clubmen"
+	domain = land
+	category = mace_infantry
+}
+
+macemen = {
+	name = "Macemen"
+	domain = land
+	category = mace_infantry
+}

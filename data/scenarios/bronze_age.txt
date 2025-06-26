@@ -1,0 +1,28 @@
+bronze_age = {
+	name = "Bronze Age"
+	start_date = -1450
+	map_template = earth
+	hidden = true
+	default_countries = {
+		assyria
+		babylonia
+		egypt
+		#mycenae
+		phoenicia
+	}
+}
+
+mycenaean_greece_and_the_orient = {
+	name = "Mycenaean Greece and the Orient"
+	parent_scenario = bronze_age
+	start_date = -1450
+	map_template = earth
+	hidden = true
+	default_countries = {
+		assyria
+		babylonia
+		egypt
+		#mycenae
+		phoenicia
+	}
+}

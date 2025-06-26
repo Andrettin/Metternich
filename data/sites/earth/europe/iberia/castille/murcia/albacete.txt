@@ -1,0 +1,8 @@
+albacete = {
+	name = "Albacete"
+	world = earth
+	geocoordinate = { -1.86999983866 39.00034425770 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = murcia
+}

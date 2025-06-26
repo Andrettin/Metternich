@@ -1,0 +1,7 @@
+lodz = {
+	name = "Lodz" #"Łódź"
+	world = earth
+	geocoordinate = { 19.45136022820 51.77499086420 } #from Natural Earth
+	type = settlement
+	province = lodz
+}

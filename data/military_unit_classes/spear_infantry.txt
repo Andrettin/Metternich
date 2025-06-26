@@ -1,0 +1,17 @@
+spearmen = {
+	name = "Spearmen"
+	domain = land
+	category = spear_infantry
+}
+
+pikemen = {
+	name = "Pikemen"
+	domain = land
+	category = spear_infantry
+}
+
+halberdiers = {
+	name = "Halberdiers"
+	domain = land
+	category = spear_infantry
+}

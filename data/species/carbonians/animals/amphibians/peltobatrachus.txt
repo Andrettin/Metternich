@@ -1,0 +1,9 @@
+peltobatrachus = {
+	name = "Peltobatrachus"
+	supertaxon = amphibia
+	pre_evolutions = {
+		cacops
+		eogyrinus
+		greererpeton
+	}
+}

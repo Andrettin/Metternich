@@ -1,0 +1,8 @@
+usak = {
+	name = "Usak" #"Uşak"
+	world = earth
+	geocoordinate = { 29.42000239940 38.68036378890 } #from Natural Earth
+	type = resource
+	resource = grain #Arable land; Source: "CIA Atlas of the Middle East", 1993.
+	province = germiyan
+}

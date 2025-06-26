@@ -1,0 +1,17 @@
+ragusa = {
+	name = "Ragusa"
+	world = earth
+	geocoordinate = { 18.09139155950 42.66094769190 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = dalmatia
+	cultural_names = {
+		croatian = "Dubrovnik"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,179 @@
+marco_polo = {
+	name = "Marco"
+	surname = "Polo"
+	role = advisor
+	character_type = merchant
+	culture = italian
+	religion = catholic
+	home_settlement = venice
+	gender = male
+	birth_date = 1254.9.15
+	death_date = 1324.1.9
+	required_technology = trade
+	obsolescence_technology = communism
+	traits = {
+		marco_polo
+	}
+}
+
+viridis_visconti = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	name = "Viridis"
+	dynasty = visconti
+	culture = italian
+	religion = catholic
+	home_settlement = milan #correct?
+	gender = female
+	start_date = 1377 #married Leopold III of Austria, and had her son Ernst with him in 1377; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+}
+
+antonio_bonfini = {
+	name = "Antonio"
+	surname = "Bonfini"
+	role = advisor
+	character_type = philosopher
+	culture = italian
+	religion = catholic
+	home_site = pecs
+	gender = male
+	birth_date = 1428
+	death_date = 1503.6.6
+	skill_multiplier = 0.5
+	required_technology = philosophy
+	conditions = {
+		country = hungary
+	}
+	traits = {
+		philosopher
+	}
+}
+
+leonardo_da_vinci = {
+	name = "Leonardo"
+	surname = "da Vinci"
+	role = advisor
+	character_type = engineer
+	culture = italian
+	religion = catholic
+	home_settlement = florence
+	gender = male
+	birth_date = 1450.4.15
+	death_date = 1519.5.2
+	required_technology = invention
+	obsolescence_technology = internal_combustion #automobile
+	conditions = {
+		not = {
+			culture = greek
+		}
+	}
+	traits = {
+		leonardo_da_vinci
+	}
+}
+
+amerigo_vespucci = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 199.
+	name = "Amerigo"
+	surname = "Vespucci"
+	#character_type = navigator
+	culture = italian
+	religion = catholic
+	home_settlement = florence
+	gender = male
+	birth_date = 1454
+	death_date = 1512
+	
+	#went on an expedition to explore the coast of South America in 1497
+}
+
+mercurino_gattinara = {
+	name = "Mercurino"
+	surname = "Gattinara"
+	role = advisor
+	character_type = statesman
+	culture = italian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1465
+	death_date = 1530
+	skill_multiplier = 0.83
+	required_technology = feudalism
+	traits = {
+		statesman
+	}
+}
+
+pope_paul_iii = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 210.
+	name = "Paul"
+	epithet = "II"
+	culture = italian
+	religion = catholic
+	home_settlement = rome
+	gender = male
+	birth_date = 1468
+	death_date = 1549
+	
+	#pope
+}
+
+giovanni_da_verrazano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
+	name = "Giovanni"
+	surname = "da Verrazano"
+	role = advisor
+	character_type = navigator
+	culture = italian
+	religion = catholic
+	home_settlement = florence
+	gender = male
+	birth_date = 1485
+	death_date = 1528
+	required_technology = navigation
+	traits = {
+		giovanni_da_verrazano
+	}
+	
+	#explored the North American eastern coast in 1524, and discovered New York Bay
+}
+
+niccolo_tartaglia = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 206.
+	name = "Niccolo" #"Niccolò"
+	surname = "Tartaglia"
+	role = advisor
+	character_type = philosopher #mathematician
+	culture = italian
+	religion = catholic
+	home_site = brescia
+	gender = male
+	birth_date = 1499
+	death_date = 1557
+	required_technology = mathematics #inventor of method to solve cubic equations
+	skill_multiplier = 0.33
+	conditions = {
+		culture = italian
+	}
+	traits = {
+		philosopher
+	}
+}
+
+geronimo_cardano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 206, 212.
+	name = "Geronimo"
+	surname = "Cardano"
+	role = advisor
+	character_type = philosopher #mathematician
+	culture = italian
+	religion = catholic
+	home_settlement = milan #Pavia
+	gender = male
+	birth_date = 1501
+	death_date = 1576
+	required_technology = mathematics #developed the concept of negative numbers
+	skill_multiplier = 0.67
+	conditions = {
+		culture = italian
+	}
+	traits = {
+		philosopher
+	}
+	
+	#published Niccolò Tartaglia's method to solve cubic equations
+}

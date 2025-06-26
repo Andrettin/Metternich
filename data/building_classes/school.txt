@@ -1,0 +1,24 @@
+school = {
+	name = "School"
+	slot_type = school
+}
+
+college = {
+	name = "College"
+	slot_type = school
+}
+
+university = {
+	name = "University"
+	slot_type = school
+}
+
+monastic_school = {
+	name = "Monastic School"
+	slot_type = school
+}
+
+cathedral_school = {
+	name = "Cathedral School"
+	slot_type = school
+}

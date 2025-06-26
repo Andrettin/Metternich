@@ -1,0 +1,6 @@
+khartoum = {
+	name = "Khartoum"
+	world = earth
+	geocoordinate = { 32.53417923860 15.58807822570 } #from Natural Earth
+	type = settlement
+}

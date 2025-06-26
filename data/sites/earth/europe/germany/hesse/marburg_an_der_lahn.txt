@@ -1,0 +1,12 @@
+marburg_an_der_lahn = {
+	name = "Marburg an der Lahn"
+	world = earth
+	#geocoordinate = { 8.7666666666667 50.816666666667 }
+	province = hesse
+	
+	history = {
+		1527 = {
+			buildings += university #University founded in Marburg in 1527; Source: Henry Kamen, "Early Modern European Society", 2021, p. 295; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

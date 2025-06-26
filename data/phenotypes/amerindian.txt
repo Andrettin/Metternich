@@ -1,0 +1,4 @@
+amerindian = {
+	name = "Amerindian"
+	species = human
+}

@@ -1,0 +1,33 @@
+jutland = {
+	name = "Jutland"
+	color = { 128 65 224 }
+	provincial_capital = aarhus
+	regions = {
+		denmark
+	}
+	
+	history = {
+		owner = jutes
+		culture = anglian
+		religion = pagan
+		
+		526 = {
+			owner = jutes #territory of the Jutes in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = anglian
+		}
+		
+		1360 = {
+			owner = denmark #part of Denmark in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = danish
+			religion = catholic
+		}
+		
+		1560 = {
+			religion = protestant #Lutheran c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, p. 116.
+		}
+		
+		1740 = {
+			owner = denmark #part of the Kingdom of Denmark c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

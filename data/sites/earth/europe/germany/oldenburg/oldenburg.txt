@@ -1,0 +1,6 @@
+oldenburg = {
+	name = "Oldenburg"
+	world = earth
+	geocoordinate = { 8.22000443384 53.12999859530 } #from Natural Earth
+	type = settlement
+}

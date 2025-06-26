@@ -1,0 +1,10 @@
+udvarhely = {
+	name = "Udvarhely"
+	world = earth
+	geocoordinate = { 25.301666666667 46.313888888889 }
+	type = resource
+	resource = sheep
+	cultural_names = {
+		romanian = "Odorhei"
+	}
+}

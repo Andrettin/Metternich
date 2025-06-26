@@ -1,0 +1,6 @@
+karlsruhe = {
+	name = "Karlsruhe"
+	world = earth
+	geocoordinate = { 8.39999344751 48.99999228830 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,11 @@
+gustav_adolf_of_sweden = {
+	filepath = "portraits/characters/gustav_adolf_of_sweden.png"
+	character_conditions = {
+		gender = male
+		or = {
+			culture = swedish
+			culture = russian
+		}
+		is_ruler = true
+	}
+}

@@ -1,0 +1,7 @@
+deva = {
+	name = "Deva"
+	world = earth
+	geocoordinate = { 22.91667357040 45.88332304240 } #from Natural Earth
+	type = resource
+	resource = grain
+}

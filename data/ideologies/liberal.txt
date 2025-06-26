@@ -1,0 +1,35 @@
+liberal = {
+	name = "Liberal"
+	color = { 255 255 0 }
+	conditions = {
+		technology = rights_of_man
+	}
+	weight_factor = {
+		base_value = 110
+		
+		modifier = {
+			factor = 1.2
+			consciousness >= 9 
+		}
+		modifier = {
+			factor = 0.5
+			militancy >= 6
+		}
+		modifier = {
+			factor = 1.2
+			consciousness >= 8
+		}
+		modifier = {
+			factor = 1.2
+			consciousness >= 7
+		}
+		modifier = {
+			factor = 1.2
+			consciousness >= 6
+		}
+		modifier = {
+			factor = 1.2
+			consciousness >= 5
+		}
+	}
+}

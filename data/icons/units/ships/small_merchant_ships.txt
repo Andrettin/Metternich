@@ -1,0 +1,3 @@
+carrack = {
+	filepath = "icons/units/ships/carrack.png"
+}

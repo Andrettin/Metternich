@@ -1,0 +1,37 @@
+iron_mining = {
+	name = "Iron Mining"
+	subcategory = mining
+	portrait = factory
+	icon = iron_ore
+	period = 1550_1600
+	cost_commodity = research
+	prerequisites = {
+		mine_engineering
+	}
+}
+
+steam_in_mining = {
+	name = "Steam in Mining"
+	subcategory = mining
+	portrait = factory
+	icon = iron_ore
+	period = 1600_1650
+	cost = 33
+	cost_commodity = research
+	prerequisites = {
+		iron_mining
+	}
+}
+
+industrial_iron_mining = {
+	name = "Industrial Iron Mining"
+	subcategory = mining
+	portrait = factory
+	icon = iron_ore
+	period = 1800_1825
+	cost_commodity = research
+	prerequisites = {
+		steam_in_mining
+		dynamite
+	}
+}

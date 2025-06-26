@@ -1,0 +1,6 @@
+florianopolis = {
+	name = "Florianopolis" #"Florianópolis"
+	world = earth
+	geocoordinate = { -48.52002059080 -27.57998451860 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,21 @@
+cordoba = {
+	name = "Cordoba" #"Córdoba"
+	world = earth
+	geocoordinate = { -4.77000370423 37.87999920560 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = andalusia
+	cultural_names = {
+		roman = "Corduba" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1572 = {
+			buildings += university #Minor university founded in Cordoba in 1572; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

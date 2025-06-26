@@ -1,0 +1,7 @@
+kiruna = {
+	name = "Kiruna"
+	world = earth
+	geocoordinate = { 20.302777777777777 67.8488888888889 }
+	type = resource
+	resource = timber #Over 50% forest; Source: Map No. 500866 of the Perry-Castañeda Library Map Collection, 1973.
+}

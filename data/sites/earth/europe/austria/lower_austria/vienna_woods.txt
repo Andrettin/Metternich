@@ -1,0 +1,9 @@
+vienna_woods = {
+	name = "Vienna Woods"
+	world = earth
+	geocoordinate = { 15.91194 48.08722 }
+	type = resource
+	terrain_type = conifer_forest
+	resource = timber
+	province = lower_austria
+}

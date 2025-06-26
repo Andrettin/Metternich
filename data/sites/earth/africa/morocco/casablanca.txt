@@ -1,0 +1,7 @@
+casablanca = {
+	name = "Casablanca"
+	world = earth
+	geocoordinate = { -7.61636743309 33.59997621560 } #from Natural Earth
+	type = settlement
+	province = casablanca
+}

@@ -1,0 +1,8 @@
+logrono = {
+	name = "Logrono" #Logroño
+	world = earth
+	geocoordinate = { -2.42999149719 42.47036500960 } #from Natural Earth
+	type = resource
+	resource = iron_ore
+	province = castille
+}

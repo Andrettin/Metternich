@@ -1,0 +1,4 @@
+east_asian = {
+	name = "East Asian"
+	species = human
+}

@@ -1,0 +1,3 @@
+bell = {
+	filepath = "icons/bell.png"
+}

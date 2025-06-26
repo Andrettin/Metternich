@@ -1,0 +1,28 @@
+northern_cape = {
+	name = "Northern Cape"
+	color = { 203 77 40 }
+	provincial_capital = kimberley
+	resources = {
+		cattle = 1
+	}
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = megazostrodontids
+		culture = mammalian
+		religion = pagan
+		
+		-201400000 = { #Megazostrodon lived in South Africa in the Jurassic; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:39752
+			owner = megazostrodontids
+			culture = mammalian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = zululand
+			culture = zulu
+		}
+	}
+}

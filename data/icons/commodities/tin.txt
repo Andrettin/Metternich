@@ -1,0 +1,3 @@
+tin = {
+	filepath = "icons/commodities/tin.png"
+}

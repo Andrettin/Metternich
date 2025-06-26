@@ -1,0 +1,7 @@
+orcish = {
+	name = "Orcish"
+	species = {
+		orc
+		half_orc
+	}
+}

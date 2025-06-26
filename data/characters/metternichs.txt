@@ -1,0 +1,71 @@
+franz_georg_von_metternich = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 84.
+	name = "Franz Georg" #"Franz Georg Karl"
+	dynasty = metternich
+	culture = german #Rhenish
+	religion = catholic
+	home_settlement = vienna #correct?
+	gender = male
+	birth_date = 1746.3.9
+	start_date = 1771.1.9 #married
+	
+	#became imperial prince ("Reichfürst") of Metternich-Winneburg on 1803.6
+	
+	history = {
+		1771.1.9 = { #married on 1771.1.9 to Marie Beatrix von Kageneck
+			#spouse = marie_beatrix_von_kageneck
+		}
+	}
+}
+
+clemens_wenceslaus_von_metternich = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 84-85.
+	name = "Clemens Wenceslaus" #"Clemens Wenceslaus Lothar"
+	dynasty = metternich
+	role = advisor
+	character_type = diplomat
+	culture = german #Rhenish
+	religion = catholic
+	portrait = metternich
+	home_settlement = vienna
+	gender = male
+	father = franz_georg_von_metternich
+	mother = marie_beatrix_von_kageneck
+	birth_date = 1773.5.15
+	start_date = 1795.9.27 #married
+	skill_multiplier = 1
+	conditions = {
+		country = austria
+	}
+	traits = {
+		diplomat
+	}
+	
+	history = {
+		1795.9.27 = { #married on 1795.9.27 to Marie Eleonore, daughter of prince Ernst of Kaunitz-Rietberg
+			#spouse = marie_eleonore_von_kaunitz
+		}
+	}
+}
+
+pauline_von_metternich = { #Source: "Almanach de Gotha pour l'année 1847", 1847, p. 83.
+	name = "Pauline"
+	dynasty = metternich
+	culture = german #Rhenish
+	religion = catholic
+	home_settlement = vienna #correct?
+	gender = female
+	father = franz_georg_von_metternich
+	mother = marie_beatrix_von_kageneck #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 84.
+	birth_date = 1771.11.22
+}
+
+joseph_von_metternich = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 84-85.
+	name = "Joseph"
+	dynasty = metternich
+	culture = german #Rhenish
+	religion = catholic
+	home_settlement = vienna #correct?
+	gender = male
+	father = franz_georg_von_metternich
+	mother = marie_beatrix_von_kageneck
+	birth_date = 1774.11.14
+}

@@ -1,0 +1,68 @@
+lower_silesia = {
+	name = "Lower Silesia"
+	color = { 110 97 127 }
+	provincial_capital = breslau
+	resources = {
+		grain = 1
+		cattle = 1
+		sheep = 2
+		timber = 3
+		iron_ore = 1
+	}
+	regions = {
+		poland
+	}
+	
+	history = {
+		owner = ventastegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = ventastegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = bavarians
+			culture = suebi
+		}
+		
+		526 = {
+			owner = bavarians #territory of the Bavarians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = suebi
+		}
+		
+		999 = {
+			owner = poland #became part of Poland in 999; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = polish
+		}
+		
+		1477 = {
+			owner = hungary #Hungarian possession c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			religion = catholic
+		}
+		
+		1490 = {
+			owner = bohemia #became part of the Kingdom of Bohemia in 1490; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1742 = {
+			owner = prussia #became a Prussian possession in 1742; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = protestant
+		}
+		
+		1815 = {
+			owner = prussia #part of the Kingdom of Prussia in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

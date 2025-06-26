@@ -1,0 +1,12 @@
+ahlat = {
+	name = "Ahlat" #also known as Kelat
+	world = earth
+	geocoordinate = { 42.487735 38.754156 }
+	province = amida
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

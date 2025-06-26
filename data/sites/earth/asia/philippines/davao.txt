@@ -1,0 +1,6 @@
+davao = {
+	name = "Davao"
+	world = earth
+	geocoordinate = { 125.62999548200 7.11001690564 } #from Natural Earth
+	type = settlement
+}

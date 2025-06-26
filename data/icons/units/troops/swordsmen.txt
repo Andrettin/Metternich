@@ -1,0 +1,3 @@
+longswordsmen = {
+	filepath = "icons/units/troops/longswordsmen.png"
+}

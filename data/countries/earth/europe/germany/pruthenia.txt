@@ -1,0 +1,18 @@
+pruthenia = {
+	name = "Pruthenia"
+	type = minor_nation
+	culture = prussian
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = konigsberg
+	short_names = {
+		tribe = "Prussians"
+	}
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		east_prussia
+	}
+}

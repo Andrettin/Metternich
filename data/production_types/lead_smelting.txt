@@ -1,0 +1,9 @@
+lead_smelting = {
+	name = "Lead Smelting"
+	input_commodities = {
+		labor = 2
+		lead = 2
+	}
+	output_commodity = lead_ingots
+	output_value = 1
+}

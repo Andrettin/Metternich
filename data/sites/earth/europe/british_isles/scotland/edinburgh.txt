@@ -1,0 +1,17 @@
+edinburgh = {
+	name = "Edinburgh"
+	world = earth
+	geocoordinate = { -3.21909061829 55.94832785960 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1583 = {
+			buildings += university #University founded in Edinburgh in 1583; Source: Henry Kamen, "Early Modern European Society", 2021, p. 291.
+			#The Cambridge Modern History Atlas gives the year as 1582 instead; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

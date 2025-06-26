@@ -1,0 +1,8 @@
+byelorussian = {
+	name = "Byelorussian"
+	group = east_slavic
+	color = { 100 140 110 }
+	species = {
+		human
+	}
+}

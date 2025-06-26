@@ -1,0 +1,36 @@
+expert_fur_trappers = {
+	name = "Expert Fur Trappers"
+	population_class = expert_fur_trappers
+	literate = true
+	icon = slaves_light
+	small_icon = slaves_light_small
+	resource_output_value = 2
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 0.125
+		furniture = 0.125
+		tools = 0.125
+		brass_lamps = 0.0625
+		coffee = 0.125
+		opium = 0.0625
+		salt = 0.125
+		tea = 0.125
+	}
+	phenotype_icons = {
+		afro_european = slaves_medium
+		amerindian = slaves_medium
+		south_asian = slaves_medium
+		african = slaves_dark
+	}
+	phenotype_small_icons = {
+		afro_european = slaves_medium_small
+		amerindian = slaves_medium_small
+		south_asian = slaves_medium_small
+		african = slaves_dark_small
+	}
+}

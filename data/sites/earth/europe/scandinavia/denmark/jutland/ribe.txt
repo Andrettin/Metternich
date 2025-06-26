@@ -1,0 +1,14 @@
+ribe = {
+	name = "Ribe"
+	world = earth
+	geocoordinate = { 8.763056 55.327222 }
+	type = resource
+	resource = cattle
+	province = schleswig
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

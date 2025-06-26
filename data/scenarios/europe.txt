@@ -1,0 +1,15 @@
+europe_1360 = {
+	name = "Europe"
+	start_date = 1360
+	map_template = earth
+	hidden = true
+	default_countries = {
+		byzantium
+		castille
+		england
+		france
+		muscovy
+		portugal
+		sweden
+	}
+}

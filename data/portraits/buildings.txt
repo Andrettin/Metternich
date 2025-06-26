@@ -1,0 +1,43 @@
+aristocratic_palace = {
+	filepath = "portraits/buildings/aristocratic_palace.png"
+}
+
+building_slot = {
+	filepath = "portraits/buildings/building_slot.png"
+}
+
+city = {
+	filepath = "portraits/buildings/city.png"
+}
+
+dock = {
+	filepath = "portraits/buildings/dock.png"
+}
+
+factory = {
+	filepath = "portraits/buildings/factory.png"
+}
+
+fort = {
+	filepath = "portraits/buildings/fort.png"
+}
+
+hospital = {
+	filepath = "portraits/buildings/hospital.png"
+}
+
+temple = {
+	filepath = "portraits/buildings/temple.png"
+}
+
+town = {
+	filepath = "portraits/buildings/town.png"
+}
+
+trading_post = {
+	filepath = "portraits/buildings/trading_post.png"
+}
+
+university = {
+	filepath = "portraits/buildings/university.png"
+}

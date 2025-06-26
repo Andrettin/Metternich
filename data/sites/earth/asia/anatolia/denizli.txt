@@ -1,0 +1,6 @@
+denizli = {
+	name = "Denizli"
+	world = earth
+	geocoordinate = { 29.08002315140 37.77039349270 } #from Natural Earth
+	type = settlement
+}

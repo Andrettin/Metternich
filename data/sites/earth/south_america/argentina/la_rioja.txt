@@ -1,0 +1,6 @@
+la_rioja = {
+	name = "La Rioja"
+	world = earth
+	geocoordinate = { -66.84996118330 -29.40995033900 } #from Natural Earth
+	type = settlement
+}

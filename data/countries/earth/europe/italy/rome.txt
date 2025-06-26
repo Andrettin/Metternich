@@ -1,0 +1,29 @@
+rome = {
+	name = "Rome"
+	type = great_power
+	color = { 139 16 13 }
+	culture = roman
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = republic
+	default_capital = rome
+	max_tier = empire
+	short_names = {
+		monarchy = {
+			empire = "Roman Empire"
+		}
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		latium
+	}
+	
+	history = {
+		-58 = {
+			#Silver currency existent in the Roman Republic during Caesar's time, and he issued gold currency during his campaigns in Gaul; Source: F. Seebohm, "On the early currencies of the German Tribes", 1903, p. 190.
+			#technologies += coinage
+		}
+	}
+}

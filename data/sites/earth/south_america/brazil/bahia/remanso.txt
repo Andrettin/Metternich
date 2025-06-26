@@ -1,0 +1,6 @@
+remanso = {
+	name = "Remanso"
+	world = earth
+	geocoordinate = { -42.10999841470 -9.59958331415 } #from Natural Earth
+	province = bahia
+}

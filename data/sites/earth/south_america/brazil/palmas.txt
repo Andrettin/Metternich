@@ -1,0 +1,6 @@
+palmas = {
+	name = "Palmas"
+	world = earth
+	geocoordinate = { -48.28778670410 -10.23773557650 }
+	type = settlement
+}

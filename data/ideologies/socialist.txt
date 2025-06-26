@@ -1,0 +1,27 @@
+socialist = {
+	name = "Socialist"
+	color = { 255 0 0 }
+	conditions = {
+		technology = collectivism
+	}
+	weight_factor = {
+		base_value = 100
+		
+		modifier = {
+			factor = 0.5
+			militancy >= 6
+		}
+		modifier = {
+			factor = 1.05
+			consciousness >= 9 
+		}
+		modifier = {
+			factor = 1.05
+			consciousness >= 8
+		}
+		modifier = {
+			factor = 1.05
+			consciousness >= 7
+		}
+	}
+}

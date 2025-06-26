@@ -1,0 +1,11 @@
+flarchheim = {
+	name = "Flarchheim"
+	world = earth
+	#geocoordinate = { 10.478216 51.126776 }
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

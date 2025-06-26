@@ -1,0 +1,13 @@
+grodno = {
+	name = "Grodno"
+	world = earth
+	geocoordinate = { 23.83409012730 53.67787213040 } #from Natural Earth
+	type = settlement
+	province = grodno
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,6 @@
+leiria = {
+	name = "Leiria"
+	world = earth
+	geocoordinate = { -8.80499646187 39.73899602850 } #from Natural Earth
+	province = estremadura
+}

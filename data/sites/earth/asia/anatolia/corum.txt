@@ -1,0 +1,6 @@
+corum = {
+	name = "Corum" #"Çorum"
+	world = earth
+	geocoordinate = { 34.95000077180 40.51999310210 } #from Natural Earth
+	type = settlement
+}

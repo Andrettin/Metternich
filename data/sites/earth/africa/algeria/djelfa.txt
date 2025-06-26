@@ -1,0 +1,6 @@
+djelfa = {
+	name = "Djelfa"
+	world = earth
+	geocoordinate = { 3.25002355817 34.67998781230 } #from Natural Earth
+	type = settlement
+}

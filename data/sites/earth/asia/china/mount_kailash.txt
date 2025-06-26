@@ -1,0 +1,7 @@
+mount_kailash = {
+	name = "Mount Kailash"
+	world = earth
+	geocoordinate = { 81.312510613 31.066595770 } #from Natural Earth
+	type = resource
+	resource = mount_kailash
+}

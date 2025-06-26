@@ -1,0 +1,15 @@
+kent = {
+	name = "Kent"
+	type = minor_nation
+	culture = anglo_saxon
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = canterbury
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		kent
+	}
+}

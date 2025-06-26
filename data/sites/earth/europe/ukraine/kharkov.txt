@@ -1,0 +1,6 @@
+kharkov = {
+	name = "Kharkov"
+	world = earth
+	geocoordinate = { 36.25002477900 49.99998292960 } #from Natural Earth
+	type = settlement
+}

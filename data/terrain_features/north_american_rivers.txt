@@ -1,0 +1,69 @@
+colorado_river = {
+	name = "Colorado River"
+	river = true
+}
+
+columbia_river = {
+	name = "Columbia River"
+	river = true
+}
+
+green_river = {
+	name = "Green River"
+	river = true
+}
+
+madison_river = {
+	name = "Madison River"
+	river = true
+}
+
+mississippi_river = {
+	name = "Mississippi River"
+	river = true
+}
+
+missouri_river = {
+	name = "Missouri River"
+	river = true
+}
+
+nelson_river = {
+	name = "Nelson River"
+	river = true
+}
+
+north_saskatchewan_river = {
+	name = "North Saskatchewan River"
+	river = true
+}
+
+ohio_river = {
+	name = "Ohio River"
+	river = true
+}
+
+rio_grande = {
+	name = "Rio Grande"
+	river = true
+}
+
+saint_johns_river = {
+	name = "Saint Johns River"
+	river = true
+}
+
+saint_lawrence_river = {
+	name = "Saint Lawrence River"
+	river = true
+}
+
+saskatchewan_river = {
+	name = "Saskatchewan River"
+	river = true
+}
+
+south_saskatchewan_river = {
+	name = "South Saskatchewan River"
+	river = true
+}

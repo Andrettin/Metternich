@@ -1,0 +1,15 @@
+constance = {
+	name = "Constance" #also known as Konstanz
+	world = earth
+	geocoordinate = { 9.1752777777778 47.663333333333 }
+	province = baden
+	cultural_group_names = {
+		#german = "Konstanz"
+	}
+	
+	history = {
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

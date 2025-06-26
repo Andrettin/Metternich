@@ -1,0 +1,6 @@
+cobija = {
+	name = "Cobija"
+	world = earth
+	geocoordinate = { -68.73330875820 -11.03334592810 } #from Natural Earth
+	type = settlement
+}

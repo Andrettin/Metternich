@@ -1,0 +1,16 @@
+camp = {
+	name = "Camp"
+	image_filepath = "tiles/settlements/hamlet.png"
+	free_resource_improvement_level = 1
+	population_classes = {
+		tribesmen
+	}
+	build_conditions = {
+		or = {
+			country = {
+				scripted_condition = is_tribe
+			}
+			country = none
+		}
+	}
+}

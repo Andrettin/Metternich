@@ -1,0 +1,19 @@
+magallanes = {
+	name = "Magallanes"
+	color = { 110 49 187 }
+	provincial_capital = punta_arenas
+	regions = {
+		chile
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = mapuche
+			culture = mapuche
+		}
+	}
+}

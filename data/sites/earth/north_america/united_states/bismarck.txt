@@ -1,0 +1,6 @@
+bismarck = {
+	name = "Bismarck"
+	world = earth
+	geocoordinate = { -100.78331628600 46.80831728020 } #from Natural Earth
+	type = settlement
+}

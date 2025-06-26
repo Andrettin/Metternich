@@ -1,0 +1,60 @@
+basilican_structures = {
+	name = "Basilican Structures"
+	subcategory = architecture
+	portrait = temple
+	icon = architecture
+	period = 1000_1100
+	cost_commodity = research
+	prerequisites = {
+		monotheism
+		invention
+	}
+}
+
+brickwork_structures = {
+	name = "Brickwork Structures"
+	subcategory = architecture
+	portrait = temple
+	icon = architecture
+	period = 1100_1200
+	cost_commodity = research
+	prerequisites = {
+		basilican_structures
+	}
+}
+
+romanesque_vaulting = {
+	name = "Romanesque Vaulting"
+	subcategory = architecture
+	portrait = temple
+	icon = architecture
+	period = 1200_1300
+	cost_commodity = research
+	prerequisites = {
+		brickwork_structures
+	}
+}
+
+cylindrical_structures = {
+	name = "Cylindrical Structures"
+	subcategory = architecture
+	portrait = temple
+	icon = architecture
+	period = 1300_1400
+	cost_commodity = research
+	prerequisites = {
+		romanesque_vaulting
+	}
+}
+
+gothic_buttresses = {
+	name = "Gothic Buttresses"
+	subcategory = architecture
+	portrait = temple
+	icon = architecture
+	period = 1400_1500
+	cost_commodity = research
+	prerequisites = {
+		cylindrical_structures
+	}
+}

@@ -1,0 +1,8 @@
+carlos_a_carrillo = {
+	name = "Carlos A. Carrillo"
+	world = earth
+	geocoordinate = { -95.754444444444 18.374722222222 }
+	type = resource
+	resource = grain #Corn and beans; Source: Map No. 503497 of the Perry-Castañeda Library Map Collection, 1978.
+	province = veracruz
+}

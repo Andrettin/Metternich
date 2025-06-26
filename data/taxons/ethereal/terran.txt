@@ -1,0 +1,6 @@
+terran = {
+	name = "Terra" #"earth" in Latin
+	common_name = "Terran"
+	rank = kingdom
+	supertaxon = ethereal
+}

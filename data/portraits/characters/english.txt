@@ -1,0 +1,55 @@
+elizabeth_i_of_england = {
+	filepath = "portraits/characters/elizabeth_i_of_england.png"
+	character_conditions = {
+		gender = female
+		not = {
+			cultural_group = african
+		}
+		is_ruler = true
+	}
+}
+
+francis_drake = {
+	filepath = "portraits/characters/francis_drake.png"
+	character_conditions = {
+		gender = male
+		not = {
+			cultural_group = african
+			cultural_group = asian
+		}
+		is_ruler = false
+		or = {
+			character_type = admiral
+			character_type = privateer
+		}
+	}
+}
+
+henry_hudson = {
+	filepath = "portraits/characters/henry_hudson.png"
+	character_conditions = {
+		gender = male
+		not = {
+			cultural_group = african
+			cultural_group = asian
+		}
+		is_ruler = false
+		character_type = navigator
+	}
+}
+
+william_penn = {
+	filepath = "portraits/characters/william_penn.png"
+	character_conditions = {
+		gender = male
+		not = {
+			cultural_group = african
+			cultural_group = asian
+		}
+		religion = protestant
+		or = {
+			character_type = inquisitor
+			character_type = theologian
+		}
+	}
+}

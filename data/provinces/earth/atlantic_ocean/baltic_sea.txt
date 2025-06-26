@@ -1,0 +1,61 @@
+baltic_sea = {
+	name = "Baltic Sea"
+	color = { 16 120 144 }
+	sea = true
+	cultural_names = {
+		roman = "Suebic Sea" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+		suebi = "Suebic Sea" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	regions = {
+		baltic_sea
+	}
+}
+
+bay_of_mecklenburg = {
+	name = "Bay of Mecklenburg"
+	color = { 125 150 29 }
+	bay = true
+	regions = {
+		baltic_sea
+	}
+}
+
+gulf_of_bothnia = {
+	name = "Gulf of Bothnia"
+	color = { 16 144 144 }
+	bay = true
+	cultural_names = {
+		roman = "Suebic Sea" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+		suebi = "Suebic Sea" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	regions = {
+		baltic_sea
+	}
+}
+
+gulf_of_finland = {
+	name = "Gulf of Finland"
+	color = { 40 109 108 }
+	bay = true
+	regions = {
+		baltic_sea
+	}
+}
+
+gulf_of_riga = {
+	name = "Gulf of Riga"
+	color = { 212 140 167 }
+	bay = true
+	regions = {
+		baltic_sea
+	}
+}
+
+oresund = {
+	name = "Oresund"
+	color = { 138 237 62 }
+	sea = true
+	regions = {
+		baltic_sea
+	}
+}

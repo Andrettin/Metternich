@@ -1,0 +1,86 @@
+prestige = {
+	name = "Prestige"
+	default_value = true
+	description = "Allow countries to accrue Prestige, which impacts score and trade order"
+}
+
+advisors = {
+	name = "Advisors"
+	group = advisors
+	default_value = true
+	description = "Allow advisors to be recruited with Statesmanship"
+}
+
+offices = {
+	name = "Offices"
+	group = advisors
+	default_value = false
+	description = "Allow characters to be appointed to offices"
+	hidden = true
+}
+
+laws = {
+	name = "Laws"
+	default_value = false
+	description = "Allow countries to enact laws"
+	hidden = true
+}
+
+research_organizations = {
+	name = "Research Organizations"
+	default_value = true
+	description = "Allow countries to select research organizations"
+}
+
+research_commodity = {
+	name = "Research Commodity"
+	default_value = true
+	description = "Allow the Research commodity, which is used for acquiring technologies"
+}
+
+trade_commodity = {
+	name = "Trade Commodity"
+	default_value = true
+	description = "Allow the Trade commodity, which is directly converted into wealth"
+}
+
+amenities = {
+	name = "Amenities"
+	default_value = false
+	description = "Allow provinces to have Amenities, which are required by their population"
+	hidden = true
+}
+
+myths_enabled = {
+	name = "Myths Enabled"
+	default_value = true
+	description = "Enable mythical elements in the game"
+}
+
+ruler_traits = {
+	name = "Ruler Traits"
+	default_value = false
+	description = "Allow rulers to have traits"
+	hidden = true
+}
+
+additional_settlement_types = {
+	name = "Additional Settlement Types"
+	default_value = false
+	description = "Allow additional settlement types"
+	hidden = true
+}
+
+additional_technologies = {
+	name = "Additional Technologies"
+	default_value = false
+	description = "Allow additional technologies"
+	hidden = true
+}
+
+additional_population_types = {
+	name = "Additional Population Types"
+	default_value = false
+	description = "Allow additional population types"
+	hidden = true
+}

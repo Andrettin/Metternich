@@ -1,0 +1,12 @@
+tundra = {
+	name = "Tundra"
+	color = { 192 192 192 }
+	icon = mountains
+	image_filepath = "tiles/terrain/plains.png"
+	elevation_type = flatlands
+	temperature_type = cold
+	tiles = { 0 }
+	fallback_terrains = {
+		plains
+	}
+}

@@ -1,0 +1,16 @@
+aix_en_provence = {
+	name = "Aix-en-Provence"
+	world = earth
+	#geocoordinate = { 5.44999263370 43.51999086410 } #from Natural Earth
+	province = provence
+	
+	history = {
+		1409 = {
+			buildings += university #University founded in Aix-en-Provence in 1409; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1789 = {
+			buildings += courthouse #Parlement or conseil souverain, chambre des comptes, court of admiralty, chief court of the salt tax and prévôt des maréchaux existent in Aix-en-Provence in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+	}
+}

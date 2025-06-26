@@ -1,0 +1,8 @@
+lithuanian = {
+	name = "Lithuanian"
+	group = baltic
+	color = { 17 162 48 }
+	species = {
+		human
+	}
+}

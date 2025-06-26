@@ -1,0 +1,12 @@
+crecy = { #Crécy-en-Ponthieu
+	name = "Crecy" #"Crécy"
+	world = earth
+	geocoordinate = { 1.8830555555556 50.252222222222 }
+	province = picardy
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

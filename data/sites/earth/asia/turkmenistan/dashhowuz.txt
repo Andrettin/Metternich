@@ -1,0 +1,7 @@
+dashhowuz = {
+	name = "Dashhowuz" #also known as Dasoguz
+	world = earth
+	geocoordinate = { 59.96495967490 41.83999005030 } #from Natural Earth
+	type = settlement
+	province = dashhowuz
+}

@@ -1,0 +1,26 @@
+#stock_exchange = {
+#	name = "Stock Exchange"
+#	category = finance
+#	portrait = coinage
+#	prerequisites = {
+#		banking
+#	}
+#}
+
+#business_banking = {
+#	name = "Business Banking"
+#	category = finance
+#	portrait = coinage
+#	prerequisites = {
+#		stock_exchange
+#	}
+#}
+
+#investment_banking = {
+#	name = "Investment Banking"
+#	category = finance
+#	portrait = coinage
+#	prerequisites = {
+#		business_banking
+#	}
+#}

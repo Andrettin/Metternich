@@ -1,0 +1,42 @@
+besancon = {
+	name = "Besancon" #"Besançon"
+	world = earth
+	geocoordinate = { 6.03000890974 47.22999696770 } #from Natural Earth
+	type = settlement
+	#resource = coal
+	province = franche_comte
+	cultural_names = {
+		frankish = "Vesontio"
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Besançon was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		919 = {
+			settlement_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1485 = {
+			buildings += university #University founded in Besançon in 1485; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1789 = {
+			buildings += courthouse #Parlement or conseil souverain and prévôt des maréchaux existent in Besançon in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 2200
+				clergymen.french.catholic = 5800
+				officers.french.catholic = 1000
+			}
+		}
+	}
+}

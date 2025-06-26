@@ -1,0 +1,7 @@
+beersheba = {
+	name = "Beersheba"
+	world = earth
+	geocoordinate = { 34.83000809610 31.25001629540 } #from Natural Earth
+	type = settlement
+	province = hadarom
+}

@@ -1,0 +1,178 @@
+desert = {
+	name = "Desert"
+	color = { 255 255 0 }
+	icon = mountains
+	image_filepath = "tiles/terrain/desert_sand.png"
+	desert = true
+	elevation_type = flatlands
+	moisture_type = arid
+	fallback_terrains = {
+		plains
+		barren_hills
+		mountains
+	}
+	subtiles = { 17 20 23 }
+	adjacency_subtiles = {
+		0 = {
+			north = other
+			south = same
+			west = other
+			east = same
+			northwest = any
+			northeast = any
+			southwest = any
+			southeast = same
+			variations = { 3 }
+		}
+		1 = {
+			north = other
+			south = same
+			west = same
+			east = same
+			northwest = any
+			northeast = any
+			southwest = same
+			southeast = same
+			variations = { 4 7 }
+		}
+		2 = {
+			north = other
+			south = same
+			west = same
+			east = other
+			northwest = any
+			northeast = any
+			southwest = same
+			southeast = any
+			variations = { 5 }
+		}
+		16 = {
+			north = same
+			south = same
+			west = other
+			east = same
+			northwest = any
+			northeast = same
+			southwest = any
+			southeast = same
+			variations = { 19 22 }
+		}
+		17 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = same
+			northeast = same
+			southwest = same
+			southeast = same
+			variations = { 20 23 }
+		}
+		18 = {
+			north = same
+			south = same
+			west = same
+			east = other
+			northwest = same
+			northeast = any
+			southwest = same
+			southeast = any
+			variations = { 21 24 }
+		}
+		32 = {
+			north = same
+			south = other
+			west = other
+			east = same
+			northwest = any
+			northeast = same
+			southwest = any
+			southeast = any
+			variations = { 35 }
+		}
+		33 = {
+			north = same
+			south = other
+			west = same
+			east = same
+			northwest = same
+			northeast = same
+			southwest = any
+			southeast = any
+			variations = { 36 39 }
+		}
+		34 = {
+			north = same
+			south = other
+			west = same
+			east = other
+			northwest = same
+			northeast = any
+			southwest = any
+			southeast = any
+			variations = { 37 }
+		}
+		48 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = other
+			northeast = same
+			southwest = same
+			southeast = same
+		}
+		49 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = same
+			northeast = other
+			southwest = same
+			southeast = same
+		}
+		64 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = same
+			northeast = same
+			southwest = other
+			southeast = same
+		}
+		65 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = same
+			northeast = same
+			southwest = same
+			southeast = other
+		}
+		80 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = same
+			northeast = other
+			southwest = other
+			southeast = same
+			variations = { 96 }
+		}
+		81 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = other
+			northeast = same
+			southwest = same
+			southeast = other
+			variations = { 97 }
+		}
+	}
+}

@@ -1,0 +1,3 @@
+anchor = {
+	filepath = "icons/anchor.png"
+}

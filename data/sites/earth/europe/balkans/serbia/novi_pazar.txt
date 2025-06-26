@@ -1,0 +1,6 @@
+novi_pazar = {
+	name = "Novi Pazar"
+	world = earth
+	geocoordinate = { 20.516666666667 43.15 }
+	type = settlement
+}

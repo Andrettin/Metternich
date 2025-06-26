@@ -1,0 +1,8 @@
+nanjing = {
+	name = "Nanjing"
+	world = earth
+	geocoordinate = { 118.77997432400 32.05001914370 } #from Natural Earth
+	type = settlement
+	#resource = tea
+	province = jiangsu
+}

@@ -1,0 +1,19 @@
+chambery = {
+	name = "Chambery" #"Chambéry"
+	world = earth
+	geocoordinate = { 5.9208333333333 45.566388888889 }
+	type = settlement
+	province = savoy
+	
+	history = {
+		1280 = {
+			settlement_type = town #existed in the 1280-1748 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 130.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 2300
+			}
+		}
+	}
+}

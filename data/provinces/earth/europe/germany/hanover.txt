@@ -1,0 +1,50 @@
+hanover = {
+	name = "Hanover"
+	color = { 105 75 145 }
+	provincial_capital = hanover
+	resources = {
+		grain = 4
+		fruit = 1
+	}
+	regions = {
+		germany
+	}
+	
+	history = {
+		owner = saxons
+		culture = saxon
+		religion = pagan
+		
+		526 = {
+			owner = saxons #territory of the Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = saxon
+		}
+		
+		919 = {
+			owner = saxony #part of the Duchy of Saxony in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		1477 = {
+			owner = brunswick #part of the Duchy of Brunswick-Kalenberg c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = hanover #part of Hanover c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = protestant
+		}
+		
+		1815 = {
+			owner = hanover #part of the Kingdom of Hanover in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1866 = {
+			owner = prussia #part of Prussia in 1866; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

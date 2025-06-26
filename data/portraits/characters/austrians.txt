@@ -1,0 +1,17 @@
+metternich = {
+	filepath = "portraits/characters/metternich.png"
+	character_conditions = {
+		gender = male
+		not = {
+			cultural_group = african
+			cultural_group = asian
+		}
+		is_ruler = false
+		or = {
+			character_type = diplomat
+			character_type = high_judge
+			character_type = spymaster
+			character_type = statesman
+		}
+	}
+}

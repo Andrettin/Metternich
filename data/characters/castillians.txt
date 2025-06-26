@@ -1,0 +1,204 @@
+juan_de_bermudez = {
+	name = "Juan"
+	surname = "de Bermudez"
+	role = advisor
+	character_type = navigator
+	culture = castillian
+	religion = catholic
+	home_site = huelva #Palos de la Frontera
+	gender = male
+	birth_date = 1450
+	death_date = 1520
+	required_technology = navigation
+	traits = {
+		juan_de_bermudez
+	}
+}
+
+isabella_i_of_castille = {
+	name = "Isabella"
+	epithet = "I"
+	role = ruler
+	character_type = statesman
+	culture = castillian
+	religion = catholic
+	home_settlement = madrid
+	gender = female
+	birth_date = 1451.4.22
+	death_date = 1504.11.26
+	rulable_countries = {
+		castille
+		spain
+	}
+	traits = {
+		expansive
+		spiritual
+	}
+}
+
+juan_ponce_de_leon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 201.
+	name = "Juan Ponce"
+	surname = "de Leon" #"de León"
+	#conquistador
+	culture = castillian
+	religion = catholic
+	home_settlement = valladolid
+	gender = male
+	birth_date = 1460
+	death_date = 1521
+	#slave trader
+}
+
+vasco_nunez_de_balboa = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 201.
+	name = "Vasco Nunez" #"Vasco Nuñez"
+	surname = "de Balboa"
+	#character_type = navigator
+	culture = castillian
+	religion = catholic
+	home_site = badajoz
+	gender = male
+	birth_date = 1475
+	death_date = 1519
+}
+
+francisco_fernandez_de_cordoba = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
+	name = "Francisco Fernandez" #"Francisco Fernández"
+	surname = "de Cordoba" #"de Córdoba"
+	#character_type = navigator
+	culture = castillian
+	religion = catholic
+	home_site = cordoba
+	gender = male
+	birth_date = 1475
+	death_date = 1526
+}
+
+francisco_pizarro = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
+	name = "Francisco"
+	surname = "Pizarro"
+	#conquistador
+	culture = castillian
+	religion = catholic
+	home_site = caceres
+	gender = male
+	birth_date = 1475
+	death_date = 1541
+}
+
+juan_sebastian_de_elcano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 203.
+	name = "Juan Sebastian" #"Juan Sebastián"
+	surname = "de Elcano"
+	#character_type = navigator
+	culture = castillian
+	religion = catholic
+	home_site = bilbao
+	gender = male
+	birth_date = 1476
+	death_date = 1526
+}
+
+bartolome_de_las_casas = {
+	name = "Bartolome"
+	surname = "de las Casas"
+	role = advisor
+	character_type = theologian
+	culture = castillian
+	religion = catholic
+	home_settlement = seville
+	gender = male
+	birth_date = 1484
+	death_date = 1566
+	skill_multiplier = 0.5
+	traits = {
+		theologian
+		compassionate
+	}
+}
+
+hernan_cortes = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
+	name = "Hernan" #"Hernán"
+	surname = "Cortes" #"Cortés"
+	#conquistador
+	culture = castillian
+	religion = catholic
+	home_site = almendralejo
+	gender = male
+	birth_date = 1485
+	death_date = 1547
+}
+
+francisco_de_orellana = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 209.
+	name = "Francisco"
+	surname = "de Orellana"
+	#conquistador
+	culture = castillian
+	religion = catholic
+	home_site = caceres
+	gender = male
+	birth_date = 1490
+	death_date = 1546
+}
+
+juan_de_sepulveda = {
+	name = "Juan"
+	surname = "de Sepulveda"
+	role = advisor
+	character_type = theologian
+	culture = castillian
+	religion = catholic
+	home_site = cordoba
+	gender = male
+	birth_date = 1494
+	death_date = 1573
+	skill_multiplier = 0.5
+	traits = {
+		theologian
+	}
+}
+
+gonzalo_jimenez_de_quesada = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 205-206.
+	name = "Gonzalo Jimenez" #"Gonzalo Jiménez"
+	surname = "de Quesada"
+	#explorer
+	culture = castillian
+	religion = catholic
+	home_settlement = granada
+	gender = male
+	birth_date = 1495
+	death_date = 1579
+	
+	#discovered potatoes in 1530
+	#founded the city of Bogotá
+}
+
+hernando_de_soto = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 208.
+	name = "Hernando"
+	surname = "de Soto"
+	#explorer
+	culture = castillian
+	religion = catholic
+	home_site = badajoz
+	gender = male
+	birth_date = 1500
+	death_date = 1542
+	
+	#hired by Charles V in 1539 to acquire Florida for Spain
+	#discovered the Mississippi River in 1541
+}
+
+francisco_de_coronado = {
+	name = "Francisco"
+	surname = "de Coronado"
+	role = advisor
+	character_type = conquistador
+	culture = castillian
+	religion = catholic
+	home_site = salamanca
+	gender = male
+	birth_date = 1510
+	death_date = 1544
+	required_technology = colonization
+	traits = {
+		francisco_de_coronado
+	}
+}

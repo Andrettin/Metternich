@@ -1,0 +1,15 @@
+road = {
+	filepath = "icons/pathways/road.png"
+}
+
+gravel_road = {
+	filepath = "icons/pathways/gravel_road.png"
+}
+
+paved_road = {
+	filepath = "icons/pathways/paved_road.png"
+}
+
+railroad = {
+	filepath = "icons/pathways/railroad.png"
+}

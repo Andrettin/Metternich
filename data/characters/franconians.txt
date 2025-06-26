@@ -1,0 +1,47 @@
+erkinger = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
+	name = "Erkinger"
+	surname = "von Seinsheim"
+	culture = german #Franconian
+	religion = catholic
+	home_site = aschaffenburg #Seinsheim
+	gender = male
+	birth_date = 1362
+	#founder of the Schwarzenberg dynasty
+	#soldier under emperor Sigismund
+	#bought the lordship of Schwarzenberg in Franconia in 1420
+}
+
+regiomontanus = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
+	name = "Johann"
+	surname = "Muller" #"Müller"
+	nickname = "Regiomontanus"
+	role = advisor
+	character_type = natural_scientist #astronomer
+	culture = german
+	religion = catholic
+	home_site = aschaffenburg #born in Königsberg, in Franconia
+	gender = male
+	birth_date = 1436.6.6
+	death_date = 1476.7.6 #died in Rome on 1476.7.6
+	required_technology = mathematics
+	skill_multiplier = 0.5
+	traits = {
+		natural_scientist
+	}
+	
+	#text based on that of the Encyclopædia Britannica, in the public domain
+	description = "German astronomer, he was the pupil and associate of George Purbach from 1452 at Vienna, and they jointly undertook a reform of astronomy rendered necessary by the errors they detected in the Alphonsine Tables. In 1471 Regiomontanus settled at Nuremberg. Bernhard Walther, a rich patrician, became his pupil and patron; and they together equipped the first European observatory, for which Regiomontanus himself constructed instruments of an improved type. His observations of the great comet of January 1472 supplied the basis of modern cometary astronomy."
+	
+	history = {
+		#became the pupil and associate of George Purbach in 1452, at Vienna
+		#accompanied Cardinal Bessarion to Italy in 1462
+		#completed at Venice in 1463 Purbach's "Epitome in Cl. Ptolemaei magnam compositionem", which was printed at Venice in 1496
+		#wrote "De Triangulis" in 1463, which was printed in Nuremberg in 1533
+		#wrote "Tabulae Directionum", which was printed in Nuremberg in 1475
+		#went back to Vienna in 1468, subsequently moving to Buda at the request of Matthias Corvinus, king of Hungary
+		#moved to Nuremberg in 1471
+		#summoned to Rome by Pope Sixtus IV in 1472
+		#published "Ephemerides" in 1474
+		#wrote "Scripta", which was published posthumously in Nuremberg in 1544
+	}
+}

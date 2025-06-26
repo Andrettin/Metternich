@@ -1,0 +1,17 @@
+central_europe_919 = {
+	name = "Central Europe"
+	start_date = 919
+	map_template = earth
+	hidden = true
+	default_countries = {
+	}
+}
+
+central_europe_1125 = {
+	name = "Central Europe"
+	start_date = 1125
+	map_template = earth
+	hidden = true
+	default_countries = {
+	}
+}

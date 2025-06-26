@@ -1,0 +1,18 @@
+konya = {
+	name = "Konya"
+	world = earth
+	geocoordinate = { 32.47500972370 37.87501242990 } #from Natural Earth
+	type = resource
+	resource = grain #Wheat; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
+	province = karaman
+	cultural_names = {
+		greek = "Iconium"
+		roman = "Iconium" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

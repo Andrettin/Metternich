@@ -1,0 +1,8 @@
+hufuf = {
+	name = "Hufuf"
+	world = earth
+	geocoordinate = { 49.58559321980 25.34874859520 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = riyadh
+}

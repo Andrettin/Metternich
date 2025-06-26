@@ -1,0 +1,7 @@
+kolkoi = {
+	name = "Kolkoi"
+	world = earth
+	geocoordinate = { 78.066666666667 8.6333333333333 }
+	type = resource
+	resource = amber
+}

@@ -1,0 +1,3 @@
+whitecoats = {
+	filepath = "icons/units/troops/whitecoats.png"
+}

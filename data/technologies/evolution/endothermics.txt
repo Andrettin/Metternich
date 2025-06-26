@@ -1,0 +1,16 @@
+endothermics = {
+	name = "Endothermics"
+	subcategory = organs
+	portrait = building_slot
+	icon = lion
+	period = triassic
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		chambered_heart
+		ectothermics
+	}
+}

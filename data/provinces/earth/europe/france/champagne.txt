@@ -1,0 +1,48 @@
+champagne = {
+	name = "Champagne"
+	color = { 239 0 223 }
+	provincial_capital = troyes
+	resources = {
+		timber = 1
+	}
+	regions = {
+		france
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = frankish
+			religion = catholic
+		}
+		
+		919 = {
+			owner = france #part of the Kingdom of France in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = french
+		}
+		
+		1328 = {
+			owner = france #part of France in 1328; Source: William R. Shepherd, "Historical Atlas", 1911, p. 76.
+		}
+		
+		1360 = {
+			owner = france #part of France in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1477 = {
+			owner = france #part of the Kingdom of France c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = france #part of the Kingdom of France c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = france #part of France in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

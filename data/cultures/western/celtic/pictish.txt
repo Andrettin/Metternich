@@ -1,0 +1,13 @@
+pictish = {
+	name = "Pictish"
+	group = brythonic
+	color = { 51 153 153 }
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			theocracy = "Druid"
+		}
+	}
+}

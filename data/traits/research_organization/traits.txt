@@ -1,0 +1,63 @@
+military_industrial_complex = {
+	name = "Military-Industrial Complex"
+	icon = crossed_sabers
+	hidden_name = true
+	modifier = {
+		technology_cost_modifier = {
+			category = army
+			value = -15
+		}
+		technology_cost_modifier = {
+			category = industry
+			value = -10
+		}
+	}
+}
+
+merchant_marine = {
+	name = "Merchant Marine"
+	icon = anchor
+	hidden_name = true
+	modifier = {
+		technology_cost_modifier = {
+			category = navy
+			value = -15
+		}
+		technology_cost_modifier = {
+			category = finance
+			value = -10
+		}
+	}
+}
+
+business_schools = {
+	name = "Business Schools"
+	icon = wealth
+	hidden_name = true
+	modifier = {
+		technology_cost_modifier = {
+			category = finance
+			value = -10
+		}
+		technology_cost_modifier = {
+			category = culture
+			value = -10
+		}
+		technology_cost_modifier = {
+			category = industry
+			value = -5
+		}
+	}
+}
+
+avantgarde_intelligentsia = {
+	name = "Avantgarde Intelligentsia"
+	icon = university
+	hidden_name = true
+	modifier = {
+		technology_cost_modifier = {
+			category = culture
+			value = -5
+		}
+	}
+}

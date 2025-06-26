@@ -1,0 +1,8 @@
+estonian = {
+	name = "Estonian"
+	group = finnic
+	color = { 40 30 60 }
+	species = {
+		human
+	}
+}

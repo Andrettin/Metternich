@@ -1,0 +1,8 @@
+georgian = {
+	name = "Georgian"
+	group = caucasian
+	color = { 70 110 70 }
+	species = {
+		human
+	}
+}

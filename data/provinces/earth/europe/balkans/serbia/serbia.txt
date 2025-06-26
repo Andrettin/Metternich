@@ -1,0 +1,47 @@
+serbia = {
+	name = "Serbia"
+	color = { 207 226 120 }
+	provincial_capital = belgrade
+	resources = {
+		grain = 4
+		fruit = 2
+		timber = 4
+		coal = 2
+	}
+	regions = {
+		serbia
+	}
+	
+	history = {
+		culture = greek
+		religion = pagan
+		
+		526 = {
+			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			religion = orthodox
+		}
+		
+		1360 = {
+			owner = hungary #part of Hungary in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = serbian
+		}
+		
+		1718 = {
+			owner = austria #became an Austrian possession in 1718; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1739 = {
+			owner = ottoman_empire #became part of the Ottoman Empire in 1739; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			culture = serbian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = austria #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

@@ -1,0 +1,6 @@
+ciudad_bolivar = {
+	name = "Ciudad Bolivar" #"Ciudad Bolívar"
+	world = earth
+	geocoordinate = { -63.60000451830 8.09998231906 } #from Natural Earth
+	type = settlement
+}

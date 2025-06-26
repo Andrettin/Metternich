@@ -1,0 +1,6 @@
+asmara = {
+	name = "Asmara"
+	world = earth
+	geocoordinate = { 38.93332352580 15.33333925270 } #from Natural Earth
+	type = settlement
+}

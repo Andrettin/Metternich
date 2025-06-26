@@ -1,0 +1,14 @@
+hubei = {
+	name = "Hubei"
+	color = { 38 217 95 }
+	provincial_capital = wuhan
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

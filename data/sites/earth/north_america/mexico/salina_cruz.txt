@@ -1,0 +1,8 @@
+salina_cruz = {
+	name = "Salina Cruz"
+	world = earth
+	geocoordinate = { -95.19998783550 16.16706097310 } #from Natural Earth
+	type = resource
+	resource = fish #Shrimp fishing; Source: Map No. 503497 of the Perry-Castañeda Library Map Collection, 1978.
+	province = oaxaca
+}

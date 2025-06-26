@@ -1,0 +1,8 @@
+polynesian = {
+	name = "Polynesian"
+	group = oceanic
+	color = { 89 35 168 }
+	species = {
+		human
+	}
+}

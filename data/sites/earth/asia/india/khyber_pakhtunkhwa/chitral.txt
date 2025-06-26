@@ -1,0 +1,8 @@
+chitral = {
+	name = "Chitral"
+	world = earth
+	geocoordinate = { 71.78888888888889 35.85111111111111 }
+	type = resource
+	resource = grain
+	province = khyber_pakhtunkhwa
+}

@@ -1,0 +1,12 @@
+iroquois = {
+	name = "Iroquois"
+	type = tribe
+	culture = iroquois
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = new_york
+	eras = {
+		renaissance_era
+	}
+}

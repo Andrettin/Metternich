@@ -1,0 +1,9 @@
+oppeln = {
+	name = "Oppeln"
+	world = earth
+	geocoordinate = { 17.93134964870 50.68497987780 } #from Natural Earth
+	type = settlement
+	cultural_names = {
+		polish = "Opole"
+	}
+}

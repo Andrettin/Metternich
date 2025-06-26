@@ -1,0 +1,9 @@
+aveiro = {
+	name = "Aveiro"
+	world = earth
+	geocoordinate = { -8.65099753409 40.64100310520 } #from Natural Earth
+	type = resource
+	resource = fish #Source: Map No. 500530 of the Perry-Castañeda Library Map Collection, 1972.
+	province = beira
+	max_tier = marquisate #Duchy
+}

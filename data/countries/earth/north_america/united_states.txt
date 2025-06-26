@@ -1,0 +1,63 @@
+united_states = {
+	name = "United States"
+	type = great_power
+	color = { 66 94 193 }
+	culture = american
+	default_religion = protestant
+	default_tier = empire
+	default_government_type = republic
+	default_capital = baltimore
+	short_name = true
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		maryland
+		alabama
+		arizona
+		arkansas
+		california
+		colorado
+		connecticut
+		delaware
+		florida
+		georgia
+		idaho
+		illinois
+		indiana
+		iowa
+		kansas
+		kentucky
+		louisiana
+		maine
+		massachusetts
+		michigan
+		minnesota
+		mississippi
+		missouri
+		montana
+		nebraska
+		nevada
+		new_hampshire
+		new_jersey
+		new_mexico
+		new_york
+		north_carolina
+		north_dakota
+		ohio
+		oklahoma
+		oregon
+		pennsylvania
+		south_carolina
+		south_dakota
+		tennessee
+		texas
+		utah
+		vermont
+		virginia
+		washington
+		west_virginia
+		wisconsin
+		wyoming
+	}
+}

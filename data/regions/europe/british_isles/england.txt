@@ -1,0 +1,24 @@
+england = {
+	superregions = {
+		england_and_wales
+		great_britain
+	}
+	
+	history = {
+		1301 = {
+			population = 4000000 #4 million people lived in England during the 14th century; Source: Josiah Cox Russell, "Medieval Population", 1937, p. 504.
+		}
+		
+		1533 = {
+			literacy_rate = 60 #Sir Thomas More claimed in 1533 that 3/5ths of English people (though the figure is not correct, we use it here nevertheless in lieu of a better one); Source: Henry Kamen, "Early Modern European Society", 2021, p. 290.
+		}
+		
+		1600 = {
+			population = 5000000 #5 million people lived in England around 1600; Source: Josiah Cox Russell, "Medieval Population", 1937, p. 504.
+		}
+		
+		1850 = {
+			literacy_rate = 60 #50-70% of adults; Source: Eric J. Hobsbawm, "A Era do Capital 1848-1875", 1977, p. 522.
+		}
+	}
+}

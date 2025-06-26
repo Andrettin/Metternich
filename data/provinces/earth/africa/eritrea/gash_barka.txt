@@ -1,0 +1,14 @@
+gash_barka = {
+	name = "Gash-Barka"
+	color = { 81 255 115 }
+	provincial_capital = asmara
+	regions = {
+		eritrea
+	}
+	
+	history = {
+		owner = egypt
+		culture = tigray
+		religion = pagan
+	}
+}

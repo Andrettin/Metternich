@@ -1,0 +1,8 @@
+armenian = {
+	name = "Armenian"
+	group = caucasian #note though that Armenian is an Indo-European language
+	color = { 135 125 20 }
+	species = {
+		human
+	}
+}

@@ -1,0 +1,7 @@
+bukhara = {
+	name = "Bukhara"
+	world = earth
+	geocoordinate = { 64.43001013070 39.78001242990 } #from Natural Earth
+	type = settlement
+	province = bukhara
+}

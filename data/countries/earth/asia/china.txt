@@ -1,0 +1,22 @@
+china = {
+	name = "China"
+	type = great_power
+	color = { 255 234 154 }
+	culture = chinese
+	default_religion = pagan
+	default_tier = empire
+	default_government_type = monarchy
+	default_capital = beijing
+	short_names = {
+		tribe = "Chinese"
+	}
+	eras = {
+		ancient_era
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		hebei
+	}
+}

@@ -1,0 +1,14 @@
+great_pyramid = {
+	name = "Great Pyramid"
+	portrait = temple
+	building = monument
+	required_technology = masonry
+	conditions = {
+		not = {
+			scripted_condition = is_northern_european
+		}
+	}
+	country_modifier = {
+		free_building_class = granary
+	}
+}

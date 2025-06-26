@@ -1,0 +1,12 @@
+ingolstadt = {
+	name = "Ingolstadt"
+	world = earth
+	geocoordinate = { 11.44998815780 48.77041973780 } #from Natural Earth
+	province = bavaria
+	
+	history = {
+		1459 = {
+			buildings += university #University founded in Ingolstadt in 1459; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

@@ -1,0 +1,4 @@
+renaissance_era = {
+	name = "Renaissance Era"
+	start_date = 1492
+}

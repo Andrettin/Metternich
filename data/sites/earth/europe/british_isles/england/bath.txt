@@ -1,0 +1,13 @@
+bath = {
+	name = "Bath"
+	world = earth
+	geocoordinate = { -2.35002221822 51.38374859530 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = somerset
+	cultural_names = {
+		anglo_saxon = "Bathum" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 731.
+		briton = "Aquae Solis"
+		roman = "Aquae Solis" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 51.
+	}
+}

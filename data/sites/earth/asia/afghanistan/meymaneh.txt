@@ -1,0 +1,8 @@
+meymaneh = {
+	name = "Meymaneh"
+	world = earth
+	geocoordinate = { 64.77009273160 35.93022157700 } #from Natural Earth
+	type = resource
+	resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	province = afghanistan
+}

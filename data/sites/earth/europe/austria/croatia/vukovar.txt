@@ -1,0 +1,7 @@
+vukovar = {
+	name = "Vukovar"
+	world = earth
+	geocoordinate = { 19.003333333333 45.35 }
+	type = resource
+	resource = cattle
+}

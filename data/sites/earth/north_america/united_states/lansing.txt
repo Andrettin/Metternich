@@ -1,0 +1,6 @@
+lansing = {
+	name = "Lansing"
+	world = earth
+	geocoordinate = { -84.54673628920 42.73352724110 } #from Natural Earth
+	type = settlement
+}

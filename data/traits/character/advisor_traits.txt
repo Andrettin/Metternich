@@ -1,0 +1,508 @@
+architect = {
+	name = "Architect"
+	types = {
+		background
+		advisor
+	}
+	icon = architecture
+	attribute = stewardship
+	conditions = {
+		character_type = architect
+	}
+	attribute_bonuses = {
+		stewardship = 2
+		martial = 1
+	}
+	scaled_advisor_modifier = {
+		technology_cost_modifier = {
+			subcategory = architecture
+			value = -5
+		}
+		technology_cost_modifier = {
+			subcategory = infrastructure
+			value = -5
+		}
+	}
+	scaled_office_modifiers = {
+		chief_builder = {
+			technology_cost_modifier = {
+				subcategory = architecture
+				value = -5
+			}
+			technology_cost_modifier = {
+				subcategory = infrastructure
+				value = -5
+			}
+		}
+	}
+}
+
+benjamin_franklin = {
+	name = "Benjamin Franklin"
+	types = {
+		advisor
+	}
+	icon = bell
+	hidden_name = true
+	conditions = {
+		character = benjamin_franklin
+	}
+	advisor_modifier = {
+		statesmanship_per_printing_press = 3
+		statesmanship_per_newspaper = 3
+	}
+}
+
+charles_darwin = {
+	name = "Charles Darwin"
+	types = {
+		advisor
+	}
+	icon = research
+	hidden_name = true
+	conditions = {
+		character = charles_darwin
+	}
+	advisor_effects = {
+		free_technologies = 2
+	}
+}
+
+cotton_planter = {
+	name = "Cotton Planter"
+	types = {
+		advisor
+	}
+	icon = cotton
+	attribute = stewardship
+	conditions = {
+		character_type = farmer
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			cotton_output_modifier = 5
+		}
+	}
+	scaled_advisor_modifier = {
+		cotton_output_modifier = 5
+	}
+}
+
+cyrus_mccormick = {
+	name = "Cyrus McCormick"
+	types = {
+		advisor
+	}
+	icon = grain
+	hidden_name = true
+	conditions = {
+		character = cyrus_mccormick
+	}
+	advisor_modifier = {
+		grain_bonus_for_tile_threshold = 2
+		potatoes_bonus_for_tile_threshold = 2
+		fruit_bonus_for_tile_threshold = 2
+		sugar_cane_output_modifier = 50
+	}
+}
+
+ferdinand_magellan = {
+	name = "Ferdinand Magellan"
+	types = {
+		advisor
+	}
+	icon = anchor
+	hidden_name = true
+	conditions = {
+		or = {
+			character = ferdinand_magellan
+			character = perseus
+		}
+	}
+	advisor_modifier = {
+		ship_movement_modifier = 1
+	}
+}
+
+francisco_de_coronado = {
+	name = "Francisco de Coronado"
+	types = {
+		advisor
+	}
+	icon = crossed_sabers
+	hidden_name = true
+	conditions = {
+		character = francisco_de_coronado
+	}
+	advisor_modifier = {
+		military_unit_stat = {
+			category = heavy_cavalry
+			stat = movement
+			value = 1
+		}
+	}
+}
+
+giovanni_da_verrazano = {
+	name = "Giovanni da Verrazano"
+	types = {
+		advisor
+	}
+	icon = anchor
+	hidden_name = true
+	conditions = {
+		character = giovanni_da_verrazano
+	}
+	advisor_effects = {
+		create_transporter = carrack #caravel
+	}
+}
+
+henry_hudson = {
+	name = "Henry Hudson"
+	types = {
+		advisor
+	}
+	icon = furs
+	hidden_name = true
+	conditions = {
+		character = henry_hudson
+	}
+	advisor_modifier = {
+		furs_output_modifier = 100
+	}
+}
+
+isaac_newton = {
+	name = "Isaac Newton"
+	types = {
+		advisor
+	}
+	icon = research
+	hidden_name = true
+	conditions = {
+		character = isaac_newton
+	}
+	advisor_modifier = {
+		capital_research_output_modifier = 100
+	}
+}
+
+jacques_marquette = {
+	name = "Jacques Marquette"
+	types = {
+		advisor
+	}
+	icon = crossed_sabers
+	hidden_name = true
+	conditions = {
+		character = jacques_marquette
+	}
+	advisor_modifier = {
+		military_unit_stat = {
+			category = light_cavalry
+			stat = movement
+			value = 1
+		}
+	}
+}
+
+johann_sebastian_bach = {
+	name = "Johann Sebastian Bach"
+	types = {
+		advisor
+	}
+	icon = music
+	hidden_name = true
+	conditions = {
+		character = johann_sebastian_bach
+	}
+	advisor_modifier = {
+		amenities_per_cathedral = 2
+	}
+}
+
+john_harvard = {
+	name = "John Harvard"
+	types = {
+		advisor
+	}
+	icon = wooden_cross
+	hidden_name = true
+	conditions = {
+		character = john_harvard
+	}
+	advisor_modifier = {
+		free_building_class = school
+	}
+}
+
+john_jacob_astor = {
+	name = "John Jacob Astor"
+	types = {
+		advisor
+	}
+	icon = furs
+	hidden_name = true
+	conditions = {
+		character = john_jacob_astor
+	}
+	advisor_modifier = {
+		furs_output_modifier = 50
+	}
+}
+
+john_paul_jones = {
+	name = "John Paul Jones"
+	types = {
+		advisor
+	}
+	icon = anchor
+	hidden_name = true
+	conditions = {
+		character = john_paul_jones
+	}
+	advisor_effects = {
+		create_military_unit = frigate
+	}
+}
+
+john_winthrop = {
+	name = "John Winthrop"
+	types = {
+		advisor
+	}
+	icon = wooden_cross
+	hidden_name = true
+	conditions = {
+		character = john_winthrop
+	}
+	advisor_modifier = {
+		piety_per_town_hall = 1
+		piety_per_city_hall = 1
+		piety_per_state_house = 1
+		piety_per_capitol = 1
+	}
+}
+
+juan_de_bermudez = {
+	name = "Juan de Bermudez"
+	types = {
+		advisor
+	}
+	icon = anchor
+	hidden_name = true
+	conditions = {
+		character = juan_de_bermudez
+	}
+	advisor_modifier = {
+		merchant_ship_movement_modifier = 1
+	}
+}
+
+leonardo_da_vinci = {
+	name = "Leonardo da Vinci"
+	types = {
+		advisor
+	}
+	icon = cog
+	hidden_name = true
+	conditions = {
+		character_type = engineer
+	}
+	advisor_modifier = {
+		unit_upgrade_cost_modifier = -50
+	}
+}
+
+marco_polo = {
+	name = "Marco Polo"
+	types = {
+		advisor
+	}
+	icon = wealth
+	hidden_name = true
+	conditions = {
+		character = marco_polo
+	}
+	advisor_modifier = {
+		free_consulate = embassy
+	}
+}
+
+natural_scientist = {
+	name = "Natural Scientist"
+	types = {
+		advisor
+	}
+	icon = research
+	attribute = learning
+	conditions = {
+		character_type = natural_scientist
+	}
+	scaled_advisor_modifier = {
+		technology_cost_modifier = {
+			category = gathering
+			value = -5
+		}
+		technology_cost_modifier = {
+			category = industry
+			value = -5
+		}
+	}
+	scaled_office_modifiers = {
+		court_scholar = {
+			technology_cost_modifier = {
+				category = gathering
+				value = -5
+			}
+			technology_cost_modifier = {
+				category = industry
+				value = -5
+			}
+		}
+	}
+}
+
+nicolaus_copernicus = {
+	name = "Nicolaus Copernicus"
+	types = {
+		advisor
+	}
+	icon = research
+	hidden_name = true
+	conditions = {
+		character = nicolaus_copernicus
+	}
+	advisor_modifier = {
+		capital_research_output_modifier = 50
+	}
+}
+
+patrick_henry = {
+	name = "Patrick Henry"
+	types = {
+		advisor
+	}
+	icon = bell
+	hidden_name = true
+	conditions = {
+		character = patrick_henry
+	}
+	advisor_modifier = {
+		statesmanship_per_village_hall = 1
+		statesmanship_per_town_hall = 2
+		statesmanship_per_city_hall = 3
+		statesmanship_per_state_house = 3
+		statesmanship_per_capitol = 3
+	}
+}
+
+philosopher = {
+	name = "Philosopher"
+	types = {
+		advisor
+	}
+	icon = philosophy
+	attribute = learning
+	conditions = {
+		character_type = philosopher
+	}
+	scaled_advisor_modifier = {
+		research_output_modifier = 5
+	}
+	scaled_office_modifiers = {
+		court_scholar = {
+			research_output_modifier = 5
+		}
+	}
+}
+
+sieur_de_la_salle = {
+	name = "Sieur de La Salle"
+	types = {
+		advisor
+	}
+	icon = crossed_sabers
+	hidden_name = true
+	conditions = {
+		character = sieur_de_la_salle
+	}
+	advisor_modifier = {
+		free_building_class = stockade
+	}
+}
+
+sun_tzu = {
+	name = "Sun Tzu"
+	types = {
+		advisor
+	}
+	icon = crossed_sabers
+	hidden_name = true
+	conditions = {
+		character = sun_tzu
+	}
+	advisor_modifier = {
+		free_infantry_promotion = veteran_1
+		free_cavalry_promotion = veteran_1
+		free_artillery_promotion = veteran_1
+	}
+}
+
+theologian = {
+	name = "Theologian"
+	types = {
+		advisor
+	}
+	icon = wooden_cross
+	attribute = learning
+	conditions = {
+		character_type = theologian
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			piety_output_modifier = 5
+		}
+	}
+	scaled_advisor_modifier = {
+		piety_output_modifier = 5
+	}
+}
+
+tobacco_planter = {
+	name = "Tobacco Planter"
+	types = {
+		advisor
+	}
+	icon = tobacco
+	attribute = stewardship
+	conditions = {
+		character_type = farmer
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			tobacco_output_modifier = 5
+		}
+	}
+	scaled_advisor_modifier = {
+		tobacco_output_modifier = 5
+	}
+}
+
+washington_irving = {
+	name = "Washington Irving"
+	types = {
+		advisor
+	}
+	icon = bell
+	hidden_name = true
+	conditions = {
+		character = washington_irving
+	}
+	advisor_modifier = {
+		statesmanship_per_school = 1
+		statesmanship_per_college = 2
+		statesmanship_per_university = 3
+	}
+}

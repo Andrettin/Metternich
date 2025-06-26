@@ -1,0 +1,8 @@
+asturian = {
+	name = "Asturian"
+	group = celtiberian
+	color = { 221 209 93 }
+	species = {
+		human
+	}
+}

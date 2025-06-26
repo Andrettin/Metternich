@@ -1,0 +1,14 @@
+silver = {
+	name = "Silver"
+	commodity = silver
+	tiny_icon = trade_consulate
+	discovery_technology = precious_metals
+	prospectable = true
+	terrain_types = {
+		barren_hills
+		mountains
+	}
+	site_types = {
+		resource
+	}
+}

@@ -1,0 +1,8 @@
+eindhoven = {
+	name = "Eindhoven"
+	world = earth
+	geocoordinate = { 5.50001542016 51.42997316400 } #from Natural Earth
+	type = resource
+	resource = grain #Agriculture (horticulture and cereals); Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
+	province = zeeland
+}

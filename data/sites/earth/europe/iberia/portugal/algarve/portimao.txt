@@ -1,0 +1,8 @@
+portimao = {
+	name = "Portimao" #"Portimão"
+	world = earth
+	geocoordinate = { -8.5333333333333 37.133333333333 }
+	type = resource
+	resource = fish #Source: Map No. 500530 of the Perry-Castañeda Library Map Collection, 1972.
+	province = algarve
+}

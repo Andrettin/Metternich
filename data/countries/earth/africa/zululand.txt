@@ -1,0 +1,19 @@
+zululand = {
+	name = "Zululand"
+	type = great_power
+	color = { 113 91 160 }
+	culture = zulu
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = ulundi
+	short_names = {
+		tribe = "Zulus"
+	}
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		zululand
+	}
+}

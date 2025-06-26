@@ -1,0 +1,7 @@
+kulob = {
+	name = "Kulob"
+	world = earth
+	geocoordinate = { 69.77573034550 37.92115948390 } #from Natural Earth
+	type = settlement
+	province = khatlon
+}

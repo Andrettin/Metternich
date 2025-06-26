@@ -1,0 +1,22 @@
+bremen = {
+	name = "Bremen"
+	world = earth
+	geocoordinate = { 8.80002070988 53.08000164700 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+	
+	history = {
+		785 = {
+			buildings += cathedral #Willehad became bishop of Bremen in 785; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 176.
+			settlement_type = city
+		}
+		
+		919 = {
+			settlement_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

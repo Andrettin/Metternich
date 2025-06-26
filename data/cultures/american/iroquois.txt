@@ -1,0 +1,8 @@
+iroquois = {
+	name = "Iroquois"
+	group = iroquoian
+	color = { 233 116 10 }
+	species = {
+		human
+	}
+}

@@ -1,0 +1,14 @@
+karlsbad = {
+	name = "Karlsbad"
+	world = earth
+	geocoordinate = { 12.8725 50.230555555556 }
+	type = resource
+	resource = iron_ore
+	province = pilsen
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

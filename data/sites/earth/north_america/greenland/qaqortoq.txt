@@ -1,0 +1,6 @@
+qaqortoq = {
+	name = "Qaqortoq"
+	world = earth
+	geocoordinate = { -46.03641168380 60.72890972870 } #from Natural Earth
+	type = settlement
+}

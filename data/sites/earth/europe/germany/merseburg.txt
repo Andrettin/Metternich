@@ -1,0 +1,13 @@
+merseburg = {
+	name = "Merseburg"
+	world = earth
+	geocoordinate = { 11.992777777778 51.35444444444 }
+	province = magdeburg
+	
+	history = {
+		919 = {
+			#settlement_type = castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

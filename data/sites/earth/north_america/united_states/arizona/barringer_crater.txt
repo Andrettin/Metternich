@@ -1,0 +1,8 @@
+barringer_crater = {
+	name = "Barringer Crater"
+	world = earth
+	geocoordinate = { -111.02333333333333 35.028055555555554 }
+	type = resource
+	resource = barringer_crater
+	province = arizona
+}

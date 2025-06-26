@@ -1,0 +1,21 @@
+orthodox = {
+	name = "Orthodox"
+	group = christian
+	color = { 0 57 166 }
+	icon = wooden_cross
+	title_names = {
+		theocracy = {
+			kingdom = "Patriarchate"
+		}
+	}
+	office_title_names = {
+		ruler = {
+			theocracy = {
+				kingdom = {
+					male = "Patriarch"
+					female = "Matriarch"
+				}
+			}
+		}
+	}
+}

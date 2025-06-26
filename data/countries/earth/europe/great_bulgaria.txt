@@ -1,0 +1,29 @@
+great_bulgaria = {
+	name = "Great Bulgaria"
+	type = tribe
+	culture = bolghar
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = kazan
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		tatarstan
+		penza
+		samara
+		saratov
+		ulyanovsk
+	}
+	
+	history = {
+		1360 = {
+			#part of the Khanate of the Golden Horde in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			#diplomacy_state = {
+			#	country = golden_horde
+			#	subject_type = vassal
+			#}
+		}
+	}
+}

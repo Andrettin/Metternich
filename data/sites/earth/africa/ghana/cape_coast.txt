@@ -1,0 +1,6 @@
+cape_coast = {
+	name = "Cape Coast"
+	world = earth
+	geocoordinate = { -1.24998600402 5.11037151989 } #from Natural Earth
+	type = settlement
+}

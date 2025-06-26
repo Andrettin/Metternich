@@ -1,0 +1,8 @@
+galway = {
+	name = "Galway"
+	world = earth
+	geocoordinate = { -9.04881229800 53.27239300450 } #from Natural Earth
+	type = resource
+	resource = cattle
+	province = connaught
+}

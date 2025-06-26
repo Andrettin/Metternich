@@ -1,0 +1,12 @@
+bruck_an_der_leitha = {
+	name = "Bruck an der Leitha"
+	world = earth
+	geocoordinate = { 16.778972222222 48.0255 }
+	province = lower_austria
+	
+	history = {
+		1900 = {
+			population = 5134 #Bruck on the Leitha had a population of 5134 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

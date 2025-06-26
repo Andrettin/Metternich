@@ -1,0 +1,8 @@
+alicante = {
+	name = "Alicante"
+	world = earth
+	geocoordinate = { -0.48364072142 38.35121989530 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = valencia
+}

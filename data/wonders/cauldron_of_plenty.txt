@@ -1,0 +1,14 @@
+cauldron_of_plenty = {
+	name = "Cauldron of Plenty"
+	portrait = red_potion
+	building = artifact
+	required_technology = pottery
+	conditions = {
+		scripted_condition = is_northern_european
+	}
+	country_modifier = {
+		free_building_class = granary
+	}
+	
+	#the cauldron of Dagda
+}

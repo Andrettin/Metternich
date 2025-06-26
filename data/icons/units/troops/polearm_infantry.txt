@@ -1,0 +1,11 @@
+spearmen = {
+	filepath = "icons/units/troops/spearmen.png"
+}
+
+pikemen = {
+	filepath = "icons/units/troops/pikemen.png"
+}
+
+halberdiers = {
+	filepath = "icons/units/troops/halberdiers.png"
+}

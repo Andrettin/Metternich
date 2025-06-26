@@ -1,0 +1,17 @@
+chinese = {
+	name = "Chinese"
+	group = asian
+	default_phenotype = east_asian
+	color = { 145 30 30 }
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			communism = {
+				male = "Chairman"
+				female = "Chairwoman"
+			}
+		}
+	}
+}

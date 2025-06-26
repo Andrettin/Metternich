@@ -1,0 +1,6 @@
+chisinau = {
+	name = "Chisinau"
+	world = earth
+	geocoordinate = { 28.85771113970 47.00502361970 } #from Natural Earth
+	type = settlement
+}

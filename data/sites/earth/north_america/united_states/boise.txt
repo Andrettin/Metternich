@@ -1,0 +1,6 @@
+boise = {
+	name = "Boise"
+	world = earth
+	geocoordinate = { -116.22748987000 43.60859010730 } #from Natural Earth
+	type = settlement
+}

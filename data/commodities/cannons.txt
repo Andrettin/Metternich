@@ -1,0 +1,20 @@
+bronze_cannons = {
+	name = "Bronze Cannons"
+	icon = cannon
+	base_price = 900
+	required_technology = gunpowder
+}
+
+iron_cannons = {
+	name = "Iron Cannons"
+	icon = cannon
+	base_price = 900
+	required_technology = heavy_artillery
+}
+
+steel_cannons = {
+	name = "Steel Cannons"
+	icon = cannon
+	base_price = 900
+	required_technology = rifled_artillery
+}

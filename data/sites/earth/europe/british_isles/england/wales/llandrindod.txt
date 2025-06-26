@@ -1,0 +1,6 @@
+llandrindod = {
+	name = "Llandrindod"
+	world = earth
+	geocoordinate = { -3.3854694444444 52.243538888889 }
+	province = wales
+}

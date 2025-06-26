@@ -1,0 +1,17 @@
+bozen = {
+	name = "Bozen"
+	world = earth
+	geocoordinate = { 11.36001948920 46.50042909660 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = south_tyrol
+	cultural_names = {
+		italian = "Bolzano"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

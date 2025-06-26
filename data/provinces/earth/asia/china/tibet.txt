@@ -1,0 +1,14 @@
+tibet = {
+	name = "Tibet"
+	color = { 29 182 33 }
+	provincial_capital = lhasa
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

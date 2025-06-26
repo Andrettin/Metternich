@@ -1,0 +1,43 @@
+archers = {
+	name = "Archers"
+	unit_class = archers
+	icon = archers
+	stats = {
+		firepower = 2
+		melee = 1
+		range = 4
+		defense = 2
+		movement = 4
+	}
+	entrench = true
+	required_technology = shortbow
+	commodity_costs = {
+		manpower = 1
+	}
+	upgrades = {
+		crossbowmen
+	}
+}
+
+crossbowmen = {
+	name = "Crossbowmen"
+	unit_class = crossbowmen
+	icon = crossbowmen
+	stats = {
+		firepower = 3
+		melee = 1
+		range = 4
+		defense = 2
+		movement = 3
+	}
+	entrench = true
+	required_technology = light_crossbow
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		lumber = 1
+	}
+	upgrades = {
+		musketeers
+	}
+}

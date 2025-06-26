@@ -1,0 +1,7 @@
+polokwane = {
+	name = "Polokwane"
+	world = earth
+	geocoordinate = { 29.45002640660 -23.89002887080 } #from Natural Earth
+	type = settlement
+	province = limpopo
+}

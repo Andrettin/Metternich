@@ -1,0 +1,13 @@
+cuzco = {
+	name = "Cuzco"
+	world = earth
+	geocoordinate = { -71.97215499030 -13.52502846390 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1692 = {
+			buildings += college #College or seminary founded in Cuzco in 1692; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+	}
+}

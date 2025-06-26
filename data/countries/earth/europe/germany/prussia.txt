@@ -1,0 +1,44 @@
+prussia = {
+	name = "Prussia"
+	type = great_power
+	color = { 245 167 97 }
+	culture = german
+	default_religion = protestant
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = berlin
+	eras = {
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		brandenburg
+		east_prussia
+		west_prussia
+		magdeburg
+		lower_silesia
+		upper_silesia
+		rhineland
+		westphalia
+	}
+	
+	history = {
+		1820 = {
+			wealth = 4000
+			
+			commodities = {
+				horses = 4
+				canned_food = 20
+				fabric = 3
+				lumber = 15
+				paper = 8
+				steel = 10
+				clothing = 2
+				furniture = 2
+				tools = 2
+				muskets = 1
+				iron_cannons = 1
+			}
+		}
+	}
+}

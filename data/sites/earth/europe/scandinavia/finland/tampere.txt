@@ -1,0 +1,8 @@
+tampere = {
+	name = "Tampere"
+	world = earth
+	geocoordinate = { 23.75001257190 61.50000449540 } #from Natural Earth
+	type = resource
+	resource = timber
+	province = satakunta
+}

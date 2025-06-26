@@ -1,0 +1,19 @@
+glogau = {
+	name = "Glogau"
+	world = earth
+	geocoordinate = { 16.080277777778 51.658888888889 }
+	province = lower_silesia
+	cultural_names = {
+		polish = "Glogow" #"Głogów"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

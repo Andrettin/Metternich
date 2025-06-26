@@ -1,0 +1,6 @@
+la_serena = {
+	name = "La Serena"
+	world = earth
+	geocoordinate = { -71.24997684900 -29.89999794640 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,20 @@
+basel = {
+	name = "Basel"
+	world = earth
+	geocoordinate = { 7.59001704777 47.58038901680 } #from Natural Earth
+	province = bern
+	
+	history = {
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1459 = {
+			buildings += university #University founded in Basel in 1459; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

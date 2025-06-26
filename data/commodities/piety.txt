@@ -1,0 +1,5 @@
+piety = {
+	name = "Piety"
+	icon = wooden_cross
+	abstract = true
+}

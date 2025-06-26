@@ -1,0 +1,6 @@
+aquan = {
+	name = "Aqua" #"water" in Latin
+	common_name = "Aquan"
+	rank = kingdom
+	supertaxon = ethereal
+}

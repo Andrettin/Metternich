@@ -1,0 +1,38 @@
+ankara = {
+	name = "Ankara"
+	color = { 247 33 249 }
+	provincial_capital = ankara
+	regions = {
+		anatolia
+	}
+	
+	history = {
+		owner = phrygians
+		culture = phrygian
+		religion = pagan
+		
+		-750 = {
+			owner = phrygians #Phrygian territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+			culture = phrygian
+		}
+		
+		526 = {
+			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			religion = orthodox
+		}
+		
+		1360 = {
+			owner = ottoman_turks #territory of the Ottoman Turks in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = turkish
+			religion = sunni
+		}
+		
+		1740 = {
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			culture = turkish #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

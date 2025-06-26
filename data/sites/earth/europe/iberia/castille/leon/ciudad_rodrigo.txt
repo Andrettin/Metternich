@@ -1,0 +1,11 @@
+ciudad_rodrigo = {
+	name = "Ciudad Rodrigo"
+	world = earth
+	geocoordinate = { -6.5225 40.596944444444 }
+	type = resource
+	resource = gold
+	province = salamanca
+	cultural_names = {
+		roman = "Mirobriga"
+	}
+}

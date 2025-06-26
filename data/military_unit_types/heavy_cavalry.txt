@@ -1,0 +1,92 @@
+harquebusiers = {
+	name = "Harquebusiers"
+	unit_class = harquebusiers
+	icon = cuirassiers
+	stats = {
+		firepower = 2
+		melee = 6
+		range = 3
+		defense = 5
+		movement = 6
+	}
+	required_technology = improved_cavalry_tactics
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		arquebuses = 1
+		horses = 2
+	}
+	upgrades = {
+		cuirassiers
+	}
+}
+
+cuirassiers = {
+	name = "Cuirassiers"
+	unit_class = cuirassiers
+	icon = cuirassiers
+	stats = {
+		firepower = 15
+		melee = 19
+		range = 3
+		defense = 5
+		movement = 9
+	}
+	required_technology = improved_cavalry_weapons
+	wealth_cost = 500
+	upkeep = 25
+	commodity_costs = {
+		manpower = 1
+		muskets = 1
+		horses = 1
+	}
+	upgrades = {
+		carbine_cavalry
+	}
+}
+
+carbine_cavalry = {
+	name = "Carbine Cavalry"
+	unit_class = carbine_cavalry
+	icon = cuirassiers
+	stats = {
+		firepower = 20
+		melee = 26
+		range = 5
+		defense = 5
+		movement = 9
+	}
+	required_technology = repeating_cavalry_carbine
+	wealth_cost = 3500
+	upkeep = 50
+	commodity_costs = {
+		manpower = 1
+		rifles = 2
+		horses = 1
+	}
+	upgrades = {
+		armor
+	}
+}
+
+armor = {
+	name = "Armor"
+	unit_class = armor
+	icon = cuirassiers
+	stats = {
+		firepower = 45
+		melee = 60
+		range = 12
+		defense = 20
+		movement = 9
+	}
+	entrenchment_bonus = 5
+	required_technology = mobile_warfare
+	wealth_cost = 9000
+	upkeep = 250
+	commodity_costs = {
+		manpower = 1
+		steel_cannons = 10
+		fuel = 4
+	}
+}

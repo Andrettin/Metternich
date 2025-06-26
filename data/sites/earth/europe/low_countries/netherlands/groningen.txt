@@ -1,0 +1,18 @@
+groningen = {
+	name = "Groningen"
+	world = earth
+	geocoordinate = { 6.58000117862 53.22040651360 } #from Natural Earth
+	type = settlement
+	province = groningen
+	
+	history = {
+		919 = {
+			settlement_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1614 = {
+			buildings += university #University founded in Groningen in 1614; Source: Henry Kamen, "Early Modern European Society", 2021, p. 291.
+			settlement_type = campus
+		}
+	}
+}

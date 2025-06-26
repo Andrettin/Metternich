@@ -1,0 +1,48 @@
+carpenters_house = {
+	name = "Carpenter's House"
+	building_class = carpenters_house
+	portrait = factory
+	icon = furniture
+	base_capacity = 2
+	commodity_costs = {
+		lumber = 2
+		cast_iron = 2
+	}
+	production_types = {
+		furniture_making
+	}
+}
+
+carpenters_shop = {
+	name = "Carpenter's Shop"
+	building_class = carpenters_shop
+	portrait = factory
+	icon = furniture
+	base_capacity = 4
+	required_building = carpenters_house
+	commodity_costs = {
+		lumber = 4
+		cast_iron = 4
+	}
+	production_types = {
+		furniture_making
+	}
+}
+
+furniture_factory = {
+	name = "Furniture Factory"
+	building_class = furniture_factory
+	portrait = factory
+	icon = furniture
+	base_capacity = 8
+	capacity_increment = 8
+	expandable = true
+	required_building = carpenters_shop
+	commodity_costs = {
+		lumber = 8
+		steel = 8
+	}
+	production_types = {
+		furniture_making
+	}
+}

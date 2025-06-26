@@ -1,0 +1,102 @@
+shrine = {
+	name = "Shrine"
+	building_class = shrine
+	portrait = temple
+	icon = wooden_cross
+	provincial = true
+	required_technology = ceremonial_burial
+	settlement_types = {
+		village
+		campus
+		castle
+		monastery
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = piety
+			}
+			capital = true
+		}
+	}
+	province_modifier = {
+		piety_output_modifier = 25
+	}
+}
+
+temple = {
+	name = "Temple"
+	building_class = temple
+	portrait = temple
+	icon = wooden_cross
+	provincial = true
+	required_building = shrine
+	required_technology = ceremonial_burial
+	settlement_types = {
+		monastery
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = piety
+			}
+			capital = true
+		}
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = spiritual
+			}
+		}
+	}
+	province_modifier = {
+		piety_output_modifier = 50
+	}
+	settlement_modifier = {
+		amenities_bonus = 1
+		profession_capacity = {
+			profession = clergymen
+			value = 2
+		}
+	}
+}
+
+cathedral = {
+	name = "Cathedral"
+	building_class = cathedral
+	portrait = temple
+	icon = golden_cross_detailed
+	provincial = true
+	required_building = temple
+	required_technology = monotheism
+	settlement_types = {
+		monastery
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = piety
+			}
+			capital = true
+		}
+	}
+	province_modifier = {
+		piety_output_modifier = 100
+	}
+	settlement_modifier = {
+		amenities_bonus = 4
+		profession_capacity = {
+			profession = clergymen
+			value = 3
+		}
+	}
+}

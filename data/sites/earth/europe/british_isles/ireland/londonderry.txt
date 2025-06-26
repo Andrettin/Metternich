@@ -1,0 +1,8 @@
+londonderry = {
+	name = "Londonderry"
+	world = earth
+	geocoordinate = { -7.33328393699 55.00037538570 } #from Natural Earth
+	type = resource
+	resource = cattle
+	province = ulster
+}

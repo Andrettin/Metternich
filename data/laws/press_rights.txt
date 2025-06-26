@@ -1,0 +1,48 @@
+state_press = {
+	name = "State Press"
+	group = press_rights
+	icon = newspaper
+	required_technology = printing_press
+	commodity_costs = {
+		statesmanship = 50
+	}
+	conditions = {
+		game_rule = laws
+	}
+	modifier = {
+	}
+}
+
+censored_press = {
+	name = "Censored Press"
+	group = press_rights
+	icon = newspaper
+	required_technology = printing_press
+	commodity_costs = {
+		statesmanship = 50
+	}
+	conditions = {
+		game_rule = laws
+	}
+	modifier = {
+		statesmanship_per_printing_press = 1
+		statesmanship_per_newspaper = 1
+	}
+}
+
+free_press = {
+	name = "Free Press"
+	group = press_rights
+	icon = newspaper
+	required_technology = printing_press
+	commodity_costs = {
+		statesmanship = 50
+	}
+	conditions = {
+		game_rule = laws
+	}
+	modifier = {
+		statesmanship_per_printing_press = 2
+		statesmanship_per_newspaper = 2
+	}
+}

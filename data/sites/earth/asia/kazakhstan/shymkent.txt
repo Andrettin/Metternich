@@ -1,0 +1,8 @@
+shymkent = {
+	name = "Shymkent"
+	world = earth
+	geocoordinate = { 69.59501786180 42.32001242990 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = south_kazakhstan
+}

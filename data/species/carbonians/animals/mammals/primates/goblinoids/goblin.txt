@@ -1,0 +1,16 @@
+goblin = {
+	name = "Goblin"
+	supertaxon = goblinoid
+	era = holocene
+	sapient = true
+	adulthood_age = 12
+	middle_age = 20
+	old_age = 30
+	venerable_age = 40
+	maximum_age_modifier = 1d20
+	starting_age_modifiers = {
+		intuitive = 1d4
+		self_taught = 1d6
+		trained = 2d6
+	}
+}

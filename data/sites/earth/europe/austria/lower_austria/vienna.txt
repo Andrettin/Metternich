@@ -1,0 +1,59 @@
+vienna = {
+	name = "Vienna"
+	world = earth
+	geocoordinate = { 16.36663895540 48.20001527820 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+	terrain_type = plains
+	province = lower_austria
+	cultural_names = {
+		gaulish = "Vindobona"
+		roman = "Vindobona" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		919 = {
+			settlement_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1160 = {
+			buildings += cathedral #Stephansdom
+			settlement_type = city
+		}
+		
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1365 = {
+			buildings += university #University founded in Vienna in 1365; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1700 = {
+			population = 100000 #Vienna had a population of 100,000+ in 1700; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+
+		1720.9 = {
+			buildings += newspaper #the "Wiener Diarium" existed in September 1720; Source: Josef Dullinger, "Die Handelskompagnien Oesterreichs nach dem Oriente und nach Ostindien in der ersten Hälfte des 18. Jahrhunderts", 1900, pp. 51-52.
+		}
+		
+		1815 = {
+			population = 237743 #Vienna had a population of 237,743 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p.
+		}
+		
+		1839.7.7 = {
+			#the first trains from Vienna arrived in Brno on 1839.7.7; Source: Chad Bryant, "Into an Uncertain Future: Railroads and Vormärz Liberalism in Brno, Vienna, and Prague", 2009, p. 183.
+			improvements += rail_depot
+		}
+		
+		1844 = {
+			population = 374378 #the Austrian Kreis of "Haupt- und Residenstadt Wien" had 374,378 inhabitants in 1844 (excluding military personnel); Source: "Tafeln zur Statistik der österreichischen Monarchie für das Jahr 1844", 1848, Tafel 50.
+		}
+		
+		1900 = {
+			population = 1662269 #Vienna had a population of 1,662,269 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+			
+			#Floridsdorf had a population of 36,599 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

@@ -1,0 +1,8 @@
+ghowri = {
+	name = "Ghowri"
+	world = earth
+	geocoordinate = { 64.16222222222222222222222222222222 35.59222222222222222222222222222222 }
+	type = resource
+	resource = grain #Mixed dry farming and grazing; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	province = afghanistan
+}

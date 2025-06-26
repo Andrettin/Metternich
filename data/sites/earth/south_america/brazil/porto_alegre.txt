@@ -1,0 +1,6 @@
+porto_alegre = {
+	name = "Porto Alegre"
+	world = earth
+	geocoordinate = { -51.20001204590 -30.05001462930 } #from Natural Earth
+	type = settlement
+}

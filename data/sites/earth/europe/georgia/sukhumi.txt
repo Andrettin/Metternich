@@ -1,0 +1,8 @@
+sukhumi = {
+	name = "Sukhumi"
+	world = earth
+	geocoordinate = { 41.02001786170 43.02002138170 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = georgia_caucasus
+}

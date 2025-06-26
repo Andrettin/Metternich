@@ -1,0 +1,35 @@
+trireme = {
+	name = "Trireme"
+	domain = water
+	category = light_warship
+}
+
+sloop = {
+	name = "Sloop"
+	domain = water
+	category = light_warship
+}
+
+frigate = {
+	name = "Frigate"
+	domain = water
+	category = light_warship
+}
+
+raider = {
+	name = "Raider"
+	domain = water
+	category = light_warship
+}
+
+armored_cruiser = {
+	name = "Armored Cruiser"
+	domain = water
+	category = light_warship
+}
+
+battlecruiser = {
+	name = "Battlecruiser"
+	domain = water
+	category = light_warship
+}

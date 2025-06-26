@@ -1,0 +1,21 @@
+grenoble = {
+	name = "Grenoble"
+	world = earth
+	geocoordinate = { 5.72000199242 45.18038047190 } #from Natural Earth
+	type = settlement
+	#resource = tobacco
+	province = dauphiny
+	
+	history = {
+		1339 = {
+			buildings += university #University founded in Grenoble in 1339; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			settlement_type = campus
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 7000
+			}
+		}
+	}
+}

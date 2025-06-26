@@ -1,0 +1,8 @@
+mount_fuji = {
+	name = "Mount Fuji"
+	world = earth
+	geocoordinate = { 138.730967644 35.357916571 } #from Natural Earth
+	type = resource
+	resource = mount_fuji
+	province = honshu
+}

@@ -1,0 +1,29 @@
+puerto_rico = {
+	name = "Puerto Rico"
+	color = { 180 106 222 }
+	provincial_capital = san_juan
+	regions = {
+		caribbean
+	}
+	
+	history = {
+		owner = arawaks
+		culture = arawak
+		religion = pagan
+		
+		1513 = {
+			owner = puerto_rico #the Spanish were established in Puerto Rico by 1513; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 201.
+			culture = castillian
+			religion = catholic
+		}
+		
+		1600 = {
+			owner = puerto_rico #part of Spanish Puerto Rico in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = castillian
+		}
+		
+		1898 = {
+			owner = puerto_rico #part of Puerto Rico in 1898; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 198-199.
+		}
+	}
+}

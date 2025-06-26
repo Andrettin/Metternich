@@ -1,0 +1,47 @@
+precious_stones = {
+	name = "Precious Stones"
+	subcategory = mining
+	portrait = factory
+	icon = gems
+	discovery = true
+	period = copper_age
+}
+
+precious_stone_mining = {
+	name = "Precious Stone Mining"
+	subcategory = mining
+	portrait = factory
+	icon = gems
+	period = bronze_age
+	cost_commodity = research
+	prerequisites = {
+		precious_stones
+	}
+}
+
+large_precious_stone_mines = {
+	name = "Large Precious Stone Mines"
+	subcategory = mining
+	portrait = factory
+	icon = gems
+	period = 1650_1700
+	cost = 48
+	cost_commodity = research
+	prerequisites = {
+		precious_stone_mining
+		scientific_method
+	}
+}
+
+geological_prospecting = {
+	name = "Geological Prospecting"
+	subcategory = mining
+	portrait = factory
+	icon = gems
+	period = 1800_1825
+	cost_commodity = research
+	prerequisites = {
+		large_precious_stone_mines
+		dynamite
+	}
+}

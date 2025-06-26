@@ -1,0 +1,24 @@
+triangel_fuchs = { #Source: Josef Dullinger, "Die Handelskompagnien Oesterreichs nach dem Oriente und nach Ostindien in der ersten Hälfte des 18. Jahrhunderts", 1900, pp. 50-51.
+	name = "Triangel"
+	surname = "Fuchs"
+	role = civilian
+	character_type = merchant
+	culture = german #Bavarian?
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	#German merchant, suffered failures in Vienna
+	start_date = 1664 #was one of the two directors of Austria's oriental company, which was founded in 1664
+	#skill = 1 #since he suffered failures in Vienna, and was the director of an important, but short-lived company
+	required_technology = merchant_companies
+	conditions = {
+		country = austria
+	}
+	
+	history = {
+		1664 = {
+			country = austria #was one of the two directors of Austria's oriental company, which was founded in 1664
+			deployment_site = vienna
+		}
+	}
+}

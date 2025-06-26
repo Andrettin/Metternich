@@ -1,0 +1,8 @@
+sukkur = {
+	name = "Sukkur"
+	world = earth
+	geocoordinate = { 68.84855179740 27.71356548970 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = sindh
+}

@@ -1,0 +1,6 @@
+viana_do_castelo = {
+	name = "Viana do Castelo"
+	world = earth
+	geocoordinate = { -8.84413748436 41.69623514270 } #from Natural Earth
+	province = minho
+}

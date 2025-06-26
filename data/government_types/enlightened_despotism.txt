@@ -1,0 +1,22 @@
+enlightened_despotism = {
+	name = "Enlightened Despotism"
+	group = monarchy
+	icon = crown_imperial
+	required_technology = monarchy
+	default_laws = {
+		ruling_class = aristocracy
+		centralization = centralization
+		serfdom = free_subjects
+		press_rights = free_press
+	}
+	forbidden_laws = {
+		decentralization
+	}
+	conditions = {
+		not = {
+			country_type = clade
+			country_type = tribe
+			subject_type = colony
+		}
+	}
+}

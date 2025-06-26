@@ -1,0 +1,6 @@
+yellowknife = {
+	name = "Yellowknife"
+	world = earth
+	geocoordinate = { -114.39698144700 62.44201417960 } #from Natural Earth
+	type = settlement
+}

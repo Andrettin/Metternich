@@ -1,0 +1,29 @@
+lighthouse = {
+	name = "Lighthouse"
+	building_class = lighthouse
+	portrait = dock
+	icon = anchor
+	provincial = true
+	required_technology = cartography
+	settlement_types = {
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		coastal = true
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = organized
+			}
+		}
+	}
+	province_modifier = {
+		fish_bonus_for_tile_threshold = 1
+	}
+	settlement_modifier = {
+		housing_bonus = 3
+	}
+}

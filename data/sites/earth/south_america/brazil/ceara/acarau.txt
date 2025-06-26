@@ -1,0 +1,6 @@
+acarau = {
+	name = "Acarau" #"Acaraú"
+	world = earth
+	geocoordinate = { -40.11999068350 -2.88960528678 } #from Natural Earth
+	province = ceara
+}

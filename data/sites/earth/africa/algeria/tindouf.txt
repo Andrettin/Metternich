@@ -1,0 +1,7 @@
+tindouf = {
+	name = "Tindouf"
+	world = earth
+	geocoordinate = { -8.14778202456 27.67418804830 } #from Natural Earth
+	type = settlement
+	province = tindouf
+}

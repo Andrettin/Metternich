@@ -1,0 +1,12 @@
+steterburg = {
+	name = "Steterburg"
+	world = earth
+	#geocoordinate = { 10.47361088 52.19361115 }
+	province = hanover
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

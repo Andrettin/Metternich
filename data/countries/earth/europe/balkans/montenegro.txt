@@ -1,0 +1,15 @@
+montenegro = {
+	name = "Montenegro"
+	type = minor_nation
+	culture = serbian
+	default_religion = orthodox
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = podgorica
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		montenegro
+	}
+}

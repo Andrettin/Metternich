@@ -1,0 +1,31 @@
+labrador = {
+	name = "Labrador"
+	color = { 84 51 136 }
+	provincial_capital = happy_valley
+	regions = {
+		canada
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = huron
+			culture = huron
+		}
+		
+		1600 = {
+			owner = new_france #part of New France in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = french
+			religion = catholic
+		}
+	}
+}

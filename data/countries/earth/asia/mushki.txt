@@ -1,0 +1,16 @@
+mushki = {
+	name = "Mushki"
+	type = tribe
+	culture = phrygian
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = sivas
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		sivas
+		kayseri
+	}
+}

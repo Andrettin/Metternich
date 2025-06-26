@@ -1,0 +1,17 @@
+zara = {
+	name = "Zara"
+	world = earth
+	geocoordinate = { 15.26226192080 44.12013511050 } #from Natural Earth
+	type = settlement
+	#resource = fruit
+	province = dalmatia
+	cultural_names = {
+		croatian = "Zadar"
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

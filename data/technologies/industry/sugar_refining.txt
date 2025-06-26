@@ -1,0 +1,15 @@
+sugar_refining = {
+	name = "Sugar Refining"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = refined_sugar
+	period = 1500_1550
+	cost_commodity = research
+	prerequisites = {
+		sugar_cane
+		
+		invention
+		
+		academic_disciplines #university
+	}
+}

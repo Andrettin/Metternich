@@ -1,0 +1,18 @@
+carlisle = {
+	name = "Carlisle"
+	world = earth
+	geocoordinate = { -2.92998681783 54.87999513660 } #from Natural Earth
+	type = settlement
+	province = cumberland
+	cultural_names = {
+		anglo_saxon = "Luel" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
+		briton = "Luguvallium"
+		roman = "Luguvallium" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 51.
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

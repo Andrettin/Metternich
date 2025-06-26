@@ -1,0 +1,92 @@
+horse_artillery = {
+	name = "Horse Artillery"
+	unit_class = horse_artillery
+	icon = artillery
+	stats = {
+		firepower = 5
+		melee = 2
+		range = 7
+		defense = 2
+		movement = 3
+	}
+	required_technology = horse_artillery
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		bronze_cannons = 2
+		horses = 3
+	}
+	upgrades = {
+		light_artillery
+	}
+}
+
+light_artillery = {
+	name = "Light Artillery"
+	unit_class = light_artillery
+	icon = artillery
+	stats = {
+		firepower = 10
+		melee = 3
+		range = 9
+		defense = 3
+		movement = 5
+	}
+	required_technology = light_artillery_tactics
+	wealth_cost = 1000
+	upkeep = 50
+	commodity_costs = {
+		manpower = 1
+		iron_cannons = 2
+		horses = 1
+	}
+	upgrades = {
+		field_artillery
+	}
+}
+
+field_artillery = {
+	name = "Field Artillery"
+	unit_class = field_artillery
+	icon = artillery
+	stats = {
+		firepower = 17
+		melee = 5
+		range = 12
+		defense = 3
+		movement = 6
+	}
+	required_technology = field_artillery_tactics
+	wealth_cost = 5000
+	upkeep = 100
+	commodity_costs = {
+		manpower = 1
+		steel_cannons = 4
+		horses = 1
+	}
+	upgrades = {
+		mobile_artillery
+	}
+}
+
+mobile_artillery = {
+	name = "Mobile Artillery"
+	unit_class = mobile_artillery
+	icon = artillery
+	stats = {
+		firepower = 25
+		melee = 8
+		range = 15
+		defense = 20
+		movement = 8
+	}
+	entrenchment_bonus = 5
+	required_technology = large_artillery
+	wealth_cost = 5000
+	upkeep = 150
+	commodity_costs = {
+		manpower = 1
+		steel_cannons = 6
+		fuel = 4
+	}
+}

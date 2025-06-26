@@ -1,0 +1,17 @@
+khyber_pakhtunkhwa = {
+	name = "Khyber Pakhtunkhwa"
+	color = { 242 213 48 }
+	provincial_capital = peshawar
+	resources = {
+		grain = 1
+	}
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = india
+		culture = indian
+		religion = pagan
+	}
+}

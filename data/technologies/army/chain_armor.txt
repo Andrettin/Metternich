@@ -1,0 +1,195 @@
+chained_leather_armor = {
+	name = "Chained Leather Armor"
+	subcategory = infantry
+	portrait = helmet
+	icon = heater_shield
+	period = 1000_1100
+	cost_commodity = research
+	prerequisites = {
+		feudalism
+		ironworking
+	}
+	modifier = {
+		military_unit_stat = {
+			category = mace_infantry
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = spearmen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = pikemen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = axemen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = squires
+			stat = defense
+			value = 0.2
+		}
+	}
+}
+
+light_chainmail = {
+	name = "Light Chainmail"
+	subcategory = infantry
+	portrait = helmet
+	icon = heater_shield
+	period = 1100_1200
+	cost_commodity = research
+	prerequisites = {
+		chained_leather_armor
+	}
+	modifier = {
+		military_unit_stat = {
+			category = mace_infantry
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = spearmen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = pikemen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = axemen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = squires
+			stat = defense
+			value = 0.2
+		}
+	}
+}
+
+chainmail = {
+	name = "Chainmail"
+	subcategory = infantry
+	portrait = helmet
+	icon = heater_shield
+	period = 1200_1300
+	cost_commodity = research
+	prerequisites = {
+		light_chainmail
+	}
+	modifier = {
+		military_unit_stat = {
+			category = mace_infantry
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = spearmen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = pikemen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = axemen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = squires
+			stat = defense
+			value = 0.2
+		}
+	}
+}
+
+full_chainmail = {
+	name = "Full Chainmail"
+	subcategory = infantry
+	portrait = helmet
+	icon = heater_shield
+	period = 1300_1400
+	cost_commodity = research
+	prerequisites = {
+		chainmail
+	}
+	modifier = {
+		military_unit_stat = {
+			category = mace_infantry
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = spearmen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = pikemen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = axemen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = squires
+			stat = defense
+			value = 0.2
+		}
+	}
+}
+
+plated_chainmail = {
+	name = "Plated Chainmail"
+	subcategory = infantry
+	portrait = helmet
+	icon = heater_shield
+	period = 1400_1500
+	cost_commodity = research
+	prerequisites = {
+		full_chainmail
+	}
+	modifier = {
+		military_unit_stat = {
+			category = mace_infantry
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = spearmen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = pikemen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = axemen
+			stat = defense
+			value = 0.2
+		}
+		military_unit_stat = {
+			type = squires
+			stat = defense
+			value = 0.2
+		}
+	}
+}

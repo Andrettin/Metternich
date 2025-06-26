@@ -1,0 +1,12 @@
+muhldorf_am_inn = {
+	name = "Muhldorf am Inn" #"Mühldorf am Inn"
+	world = earth
+	geocoordinate = { 12.522777777778 48.245555555556 }
+	province = bavaria
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

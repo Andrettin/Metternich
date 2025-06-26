@@ -1,0 +1,20 @@
+caqueta = {
+	name = "Caqueta" #"Caquetá"
+	color = { 35 222 120 }
+	provincial_capital = florencia
+	regions = {
+		amazon_basin
+		colombia
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = arawaks
+			culture = arawak
+		}
+	}
+}

@@ -1,0 +1,8 @@
+lake_erie = {
+	name = "Lake Erie"
+	color = { 150 246 250 }
+	lake = true
+	regions = {
+		north_america
+	}
+}

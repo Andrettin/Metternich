@@ -1,0 +1,7 @@
+mostar = {
+	name = "Mostar"
+	world = earth
+	geocoordinate = { 17.82003861360 43.35049216620 } #from Natural Earth
+	type = settlement
+	province = herzegovina
+}

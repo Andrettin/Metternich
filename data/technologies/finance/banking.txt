@@ -1,0 +1,61 @@
+moneylending = {
+	name = "Moneylending"
+	subcategory = banking
+	portrait = coinage
+	icon = chest
+	period = 1550_1600
+	cost_commodity = research
+	prerequisites = {
+		merchant_companies
+		land_enclosure
+	}
+}
+
+banking = {
+	name = "Banking"
+	subcategory = banking
+	portrait = coinage
+	icon = chest
+	period = 1700_1750
+	cost = 70
+	cost_commodity = research
+	prerequisites = {
+		moneylending
+		national_bureaucracy
+		trade_fairs
+		master_artisans
+		
+		republic
+	}
+}
+
+modern_military_funding = {
+	name = "Modern Military Funding"
+	subcategory = banking
+	portrait = coinage
+	icon = chest
+	period = 1750_1800
+	cost = 102
+	cost_commodity = research
+	prerequisites = {
+		banking
+		large_precious_stone_mines
+		modern_fortifications
+	}
+}
+
+industrial_funding_of_research = {
+	name = "Industrial Funding of Research"
+	subcategory = banking
+	portrait = coinage
+	icon = chest
+	period = 1700_1750
+	cost_commodity = research
+	prerequisites = {
+		industrial_machinery
+		crucible_process
+	}
+	modifier = {
+		research_output_modifier = 50
+	}
+}

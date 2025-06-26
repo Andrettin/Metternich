@@ -1,0 +1,22 @@
+wurzburg = {
+	name = "Wurzburg" #"Würzburg"
+	world = earth
+	geocoordinate = { 9.95002803411 49.80043438630 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = franconia
+	
+	history = {
+		919 = {
+			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1402 = {
+			buildings += university #University founded in Wurzburg in 1402; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1582 = {
+			#University founded in Würzburg in 1582; Source: Henry Kamen, "Early Modern European Society", 2021, pp. 291-292.
+		}
+	}
+}

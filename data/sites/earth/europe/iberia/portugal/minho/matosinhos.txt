@@ -1,0 +1,9 @@
+matosinhos = {
+	name = "Matosinhos"
+	world = earth
+	geocoordinate = { -8.684444444444445 41.18666666666667 }
+	pos_offset = { 0 -1 } #so that it doesn't conflict with Oporto
+	type = resource
+	resource = fish #Source: Map No. 500530 of the Perry-Castañeda Library Map Collection, 1972.
+	province = minho
+}

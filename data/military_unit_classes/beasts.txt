@@ -1,0 +1,35 @@
+beasts = {
+	name = "Beasts"
+	domain = land
+	category = beasts
+}
+
+colossal_beasts = {
+	name = "Colossal Beasts"
+	domain = land
+	category = colossal_beasts
+}
+
+sea_beasts = {
+	name = "Sea Beasts"
+	domain = water
+	category = sea_beasts
+}
+
+colossal_sea_beasts = {
+	name = "Colossal Sea Beasts"
+	domain = water
+	category = colossal_sea_beasts
+}
+
+flying_beasts = {
+	name = "Flying Beasts"
+	domain = air
+	category = flying_beasts
+}
+
+colossal_flying_beasts = {
+	name = "Colossal Flying Beasts"
+	domain = air
+	category = colossal_flying_beasts
+}

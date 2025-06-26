@@ -1,0 +1,12 @@
+polling = {
+	name = "Polling"
+	world = earth
+	geocoordinate = { 11.130833333333 47.811111111111 }
+	province = bavaria
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,15 @@
+alchemist = {
+	filepath = "portraits/characters/alchemist.png"
+	character_conditions = {
+		gender = male
+		not = {
+			cultural_group = african
+			cultural_group = asian
+		}
+		is_ruler = false
+		or = {
+			character_type = engineer
+			character_type = natural_scientist
+		}
+	}
+}

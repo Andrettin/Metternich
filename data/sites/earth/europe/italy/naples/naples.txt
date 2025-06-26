@@ -1,0 +1,35 @@
+naples = {
+	name = "Naples"
+	world = earth
+	geocoordinate = { 14.24501135120 40.84002524730 } #from Natural Earth
+	type = settlement
+	#resource = fish
+	province = naples
+	cultural_names = {
+		greek = "Neapolis"
+		roman = "Neapolis" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		1224 = {
+			buildings += university #University founded in Naples in 1224; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			settlement_type = campus
+		}
+		
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1500 = {
+			population = 100000 #Naples had a population of 100,000+ in 1500; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1600 = {
+			population = 200000 #Naples had a population of 200,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1700 = {
+			population = 500000 #Naples had a population of 500,000 in 1700; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+	}
+}

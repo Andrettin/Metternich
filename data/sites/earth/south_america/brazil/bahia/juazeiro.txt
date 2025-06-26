@@ -1,0 +1,6 @@
+juazeiro = {
+	name = "Juazeiro"
+	world = earth
+	geocoordinate = { -40.49996749020 -9.42000771194 } #from Natural Earth
+	province = bahia
+}

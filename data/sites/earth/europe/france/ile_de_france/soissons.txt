@@ -1,0 +1,16 @@
+soissons = {
+	name = "Soissons"
+	world = earth
+	geocoordinate = { 3.3225 49.381111111111 }
+	province = ile_de_france
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1789 = {
+			buildings += courthouse #Prévôt des maréchaux and chief court of the salt tax existent in Soissons in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+	}
+}

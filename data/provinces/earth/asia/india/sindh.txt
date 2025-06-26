@@ -1,0 +1,17 @@
+sindh = {
+	name = "Sindh"
+	color = { 123 198 91 }
+	provincial_capital = karachi
+	resources = {
+		fruit = 1
+	}
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = india
+		culture = indian
+		religion = pagan
+	}
+}

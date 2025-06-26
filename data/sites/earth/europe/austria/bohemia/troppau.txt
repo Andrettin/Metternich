@@ -1,0 +1,16 @@
+troppau = {
+	name = "Troppau"
+	world = earth
+	geocoordinate = { 17.904444444444 49.938055555556 }
+	type = resource
+	resource = coal
+	cultural_names = {
+		czech = "Opava"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,31 @@
+accra = {
+	name = "Accra"
+	color = { 230 217 208 }
+	provincial_capital = accra
+	resources = {
+		cattle = 1
+	}
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = carthage
+		culture = akan
+		religion = pagan
+		
+		1482 = {
+			owner = portugal #Portuguese possession in the 1340-1600 period; São Jorge da Minha founded by the Portuguese in 1482; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			religion = catholic
+		}
+		
+		1648 = {
+			owner = sweden #Christiansborg became a Swedish possession c. 1648; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			religion = protestant
+		}
+		
+		1884.11 = {
+			owner = gold_coast #part of the British Gold Coast by 1884.11; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 174-175.
+		}
+	}
+}

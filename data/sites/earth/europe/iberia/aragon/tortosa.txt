@@ -1,0 +1,19 @@
+tortosa = {
+	name = "Tortosa"
+	world = earth
+	geocoordinate = { 0.52111111111111 40.8125 }
+	province = catalonia
+	cultural_names = {
+		roman = "Dertosa"
+	}
+	
+	history = {
+		1645 = {
+			buildings += university #Minor university founded in Tortosa in 1645; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+		
+		1717 = {
+			buildings -= university #Minor university in Tortosa abolished in 1717; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

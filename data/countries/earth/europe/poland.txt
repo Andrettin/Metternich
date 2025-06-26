@@ -1,0 +1,45 @@
+poland = {
+	name = "Poland"
+	type = minor_nation
+	culture = polish
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = warsaw
+	eras = {
+		renaissance_era
+	}
+	core_provinces = {
+		warsaw
+		lodz
+		czenstochowa
+		lublin
+	}
+	
+	history = {
+		1025 = {
+			tier = kingdom #Poland became a kingdom in 1025; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			government_type = monarchy
+		}
+		
+		1548.4.2 = {
+			offices = {
+				ruler = zygmunt_ii_of_poland
+			}
+		}
+		
+		1733.10.5 = {
+			offices = {
+				ruler = august_iii_of_poland
+			}
+		}
+		
+		1815 = {
+			#subject to the Russian Empire in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			diplomacy_state = {
+				country = russia
+				subject_type = personal_union_subject
+			}
+		}
+	}
+}

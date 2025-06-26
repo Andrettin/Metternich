@@ -1,0 +1,7 @@
+kiel = {
+	name = "Kiel"
+	world = earth
+	geocoordinate = { 10.13001704780 54.33039044100 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+}

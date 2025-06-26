@@ -1,0 +1,14 @@
+ravenna = {
+	name = "Ravenna"
+	world = earth
+	geocoordinate = { 12.22001867540 44.42037518220 } #from Natural Earth
+	type = resource
+	resource = sheep
+	province = romagna
+	
+	history = {
+		768 = {
+			buildings += cathedral #Archbishopric existent in Ravenna during 768-814 AD; Source: "Medieval Warfare V.2", 2013, pp. 8-9.
+		}
+	}
+}

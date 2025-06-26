@@ -1,0 +1,7 @@
+bureaucrats = {
+	name = "Bureaucrats"
+}
+
+elder_statesmen = {
+	name = "Elder Statesmen"
+}

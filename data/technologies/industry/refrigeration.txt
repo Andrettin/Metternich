@@ -1,0 +1,19 @@
+refrigeration = {
+	name = "Refrigeration"
+	subcategory = infrastructure
+	portrait = engineering
+	icon = research
+	period = 1875_1900
+	cost = 3100
+	cost_commodity = research
+	prerequisites = {
+		food_packing_system
+		electricity
+		sanitation
+	}
+	modifier = {
+		meat_output_modifier = 20
+		fruit_output_modifier = 20
+		fish_output_modifier = 20
+	}
+}

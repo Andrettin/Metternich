@@ -1,0 +1,12 @@
+hylonomus = {
+	name = "Hylonomus"
+	supertaxon = amphibia
+	pre_evolutions = {
+		diadectes
+		pantylus
+		peltobatrachus
+		platyhystrix
+		seymouria
+		tuditanus
+	}
+}

@@ -1,0 +1,8 @@
+birjand = {
+	name = "Birjand"
+	world = earth
+	geocoordinate = { 59.21994055060 32.88002016100 } #from Natural Earth
+	type = settlement
+	#resource = cotton
+	province = south_khorasan
+}

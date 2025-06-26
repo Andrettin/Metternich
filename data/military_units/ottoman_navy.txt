@@ -1,0 +1,11 @@
+ottoman_dardanelles_frigates = {
+	type = frigate
+	country = ottoman_empire
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = sea_of_marmara
+		}
+	}
+}

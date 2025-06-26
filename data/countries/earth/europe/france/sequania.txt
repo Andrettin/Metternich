@@ -1,0 +1,18 @@
+sequania = {
+	name = "Sequania"
+	type = minor_nation
+	culture = helvetian
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = besancon
+	short_names = {
+		tribe = "Sequani"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		franche_comte
+	}
+}

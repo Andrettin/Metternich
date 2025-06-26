@@ -1,0 +1,16 @@
+march_of_the_billungs = {
+	name = "March of the Billungs"
+	type = minor_nation
+	culture = german
+	default_religion = catholic
+	default_tier = duchy #march
+	default_government_type = monarchy
+	default_capital = schwerin
+	short_name = true
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		mecklenburg
+	}
+}

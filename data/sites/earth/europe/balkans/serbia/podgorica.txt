@@ -1,0 +1,6 @@
+podgorica = {
+	name = "Podgorica"
+	world = earth
+	geocoordinate = { 19.26630692410 42.46597251290 } #from Natural Earth
+	type = settlement
+}

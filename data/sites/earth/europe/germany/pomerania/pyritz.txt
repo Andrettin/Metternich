@@ -1,0 +1,14 @@
+pyritz = {
+	name = "Pyritz"
+	world = earth
+	geocoordinate = { 14.891666666666667 53.141666666666666 }
+	cultural_names = {
+		polish = "Pyrzyce"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

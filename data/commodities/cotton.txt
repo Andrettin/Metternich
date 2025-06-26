@@ -1,0 +1,6 @@
+cotton = {
+	name = "Cotton"
+	icon = cotton
+	base_price = 100
+	required_technology = cotton
+}

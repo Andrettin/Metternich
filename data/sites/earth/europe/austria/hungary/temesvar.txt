@@ -1,0 +1,10 @@
+temesvar = {
+	name = "Temesvar"
+	world = earth
+	geocoordinate = { 21.22344844430 45.75882061670 } #from Natural Earth
+	type = settlement
+	#resource = grain
+	cultural_names = {
+		romanian = "Timisoara" #"Timișoara"
+	}
+}

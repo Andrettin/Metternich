@@ -1,0 +1,6 @@
+des_moines = {
+	name = "Des Moines"
+	world = earth
+	geocoordinate = { -93.61998091810 41.57998008120 } #from Natural Earth
+	type = settlement
+}

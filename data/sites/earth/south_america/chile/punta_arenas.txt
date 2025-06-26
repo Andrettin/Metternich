@@ -1,0 +1,6 @@
+punta_arenas = {
+	name = "Punta Arenas"
+	world = earth
+	geocoordinate = { -70.93999576990 -53.16498614640 } #from Natural Earth
+	type = settlement
+}

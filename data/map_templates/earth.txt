@@ -1,0 +1,15 @@
+earth = {
+	name = "Earth"
+	size = { 1024 529 }
+	world = earth
+	map_projection = miller
+	min_longitude = -180
+	max_longitude = 180
+	min_latitude = -60.05
+	max_latitude = 85
+	geocoordinate_x_offset = -32 #shift all positions derived from geocoordinates by this offset
+	terrain_image_filepath = "earth/terrain.png"
+	river_image_filepath = "earth/rivers.png"
+	route_image_filepath = "earth/routes.png"
+	province_image_filepath = "earth/provinces.png"
+}

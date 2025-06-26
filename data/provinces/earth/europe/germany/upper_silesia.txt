@@ -1,0 +1,68 @@
+upper_silesia = {
+	name = "Upper Silesia"
+	color = { 175 159 32 }
+	provincial_capital = oppeln
+	resources = {
+		grain = 2
+		cattle = 2
+		iron_ore = 1
+		coal = 1
+	}
+	regions = {
+		poland
+	}
+	
+	history = {
+		owner = ventastegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = ventastegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = slavs
+			culture = slavic
+		}
+		
+		526 = {
+			owner = slavs #territory of Slavic peoples in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = slavic
+		}
+		
+		999 = {
+			owner = poland #became part of Poland in 999; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = polish
+		}
+		
+		1477 = {
+			owner = hungary #Hungarian possession c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			religion = catholic
+		}
+		
+		1490 = {
+			owner = bohemia #became part of the Kingdom of Bohemia in 1490; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1742 = {
+			owner = prussia #became a Prussian possession in 1742; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = prussia #part of the Kingdom of Prussia in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = polish #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

@@ -1,0 +1,4 @@
+artifact = {
+	name = "Artifact"
+	slot_type = artifact
+}

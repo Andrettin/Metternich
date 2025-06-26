@@ -1,0 +1,14 @@
+ancona = {
+	name = "Ancona"
+	world = earth
+	geocoordinate = { 13.49994055040 43.60037355460 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = romagna
+	
+	history = {
+		1815 = {
+			population = 20000 #Ancona had a population of 20,000 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 81.
+		}
+	}
+}

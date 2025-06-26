@@ -1,0 +1,37 @@
+zealand = {
+	name = "Zealand"
+	color = { 128 192 224 }
+	provincial_capital = copenhagen
+	regions = {
+		denmark
+	}
+	
+	history = {
+		owner = danes
+		culture = norse
+		religion = pagan
+		
+		526 = {
+			owner = danes #territory of the Danes in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = norse
+		}
+		
+		1360 = {
+			owner = denmark #part of Denmark in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = danish
+			religion = catholic
+		}
+		
+		1560 = {
+			religion = protestant #Lutheran c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, p. 116.
+		}
+		
+		1740 = {
+			owner = denmark #part of the Kingdom of Denmark c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = denmark #part of the Kingdom of Denmark in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

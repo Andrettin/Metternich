@@ -1,0 +1,8 @@
+duqm = {
+	name = "Duqm"
+	world = earth
+	geocoordinate = { 57.7 19.65 }
+	type = resource
+	resource = fish
+	province = oman
+}

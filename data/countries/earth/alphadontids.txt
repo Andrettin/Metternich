@@ -1,0 +1,14 @@
+alphadontids = {
+	name = "Alphadontids"
+	type = clade
+	color = { 66 94 193 }
+	culture = mammalian
+	default_religion = pagan
+	default_tier = barony
+	max_tier = empire
+	default_government_type = clade
+	default_capital = helena #Carter County, Montana
+	core_provinces = {
+		montana
+	}
+}

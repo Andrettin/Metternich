@@ -1,0 +1,27 @@
+limoges = {
+	name = "Limoges"
+	world = earth
+	geocoordinate = { 1.24999059918 45.82997906400 } #from Natural Earth
+	type = settlement
+	#resource = cattle
+	province = limousin
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1789 = {
+			buildings += courthouse #Prévôt des maréchaux existent in Limoges in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+			settlement_type = city
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 3800
+				clergymen.french.catholic = 2800
+				officers.french.catholic = 1800
+			}
+		}
+	}
+}

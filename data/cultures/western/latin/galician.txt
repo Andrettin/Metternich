@@ -1,0 +1,14 @@
+galician = {
+	name = "Galician"
+	group = iberian
+	color = { 93 179 191 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = galicia
+		}
+	}
+}

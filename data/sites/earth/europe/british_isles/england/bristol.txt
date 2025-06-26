@@ -1,0 +1,17 @@
+bristol = {
+	name = "Bristol"
+	world = earth
+	geocoordinate = { -2.58331547180 51.44999778150 } #from Natural Earth
+	type = resource
+	resource = iron_ore
+	province = warwickshire
+	cultural_names = {
+		anglo_saxon = "Brycgstow" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 731.
+	}
+	
+	history = {
+		1909 = {
+			buildings += university #University founded in Bristol in 1909; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
+		}
+	}
+}

@@ -1,0 +1,200 @@
+defensive_terrain = {
+	name = "Defensive Terrain"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = mountains
+	period = 1000_1100
+	cost_commodity = leadership
+	prerequisites = {
+		feudalism
+	}
+	modifier = {
+		military_unit_stat = {
+			category = bowmen
+			stat = shock
+			value = 5
+		}
+		military_unit_stat = {
+			category = spear_infantry
+			stat = discipline
+			value = 5
+		}
+		military_unit_stat = {
+			type = peasant_levies
+			stat = discipline
+			value = 10
+		}
+	}
+}
+
+positional_combat = {
+	name = "Positional Combat"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = crossed_sabers
+	period = 1100_1200
+	cost_commodity = leadership
+	prerequisites = {
+		defensive_terrain
+	}
+	modifier = {
+		military_unit_stat = {
+			category = spear_infantry
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			category = blade_infantry
+			stat = discipline
+			value = 10
+		}
+	}
+}
+
+missile_barrage = {
+	name = "Missile Barrage"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = bow
+	period = 1200_1300
+	cost_commodity = leadership
+	prerequisites = {
+		positional_combat
+	}
+	modifier = {
+		military_unit_stat = {
+			category = bowmen
+			stat = shock
+			value = 10
+		}
+	}
+}
+
+drilled_pikemen = {
+	name = "Drilled Pikemen"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = saber
+	period = 1300_1400
+	cost_commodity = leadership
+	prerequisites = {
+		missile_barrage
+		pike
+	}
+	modifier = {
+		military_unit_stat = {
+			type = pikemen
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			type = halberdiers
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			type = pikemen
+			stat = shock
+			value = 20
+		}
+		military_unit_stat = {
+			type = halberdiers
+			stat = shock
+			value = 20
+		}
+	}
+}
+
+pike_square = {
+	name = "Pike Square"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = saber
+	period = 1400_1500
+	cost_commodity = leadership
+	prerequisites = {
+		drilled_pikemen
+	}
+	modifier = {
+		military_unit_stat = {
+			type = pikemen
+			stat = discipline
+			value = 5
+		}
+		military_unit_stat = {
+			type = halberdiers
+			stat = discipline
+			value = 5
+		}
+	}
+}
+
+unit_organization = {
+	name = "Unit Organization"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = saber
+	period = 1400_1500
+	cost_commodity = leadership
+	prerequisites = {
+		drilled_pikemen
+	}
+	modifier = {
+		military_unit_stat = {
+			type = peasant_levies
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			category = spear_infantry
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			category = blade_infantry
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			category = spear_cavalry
+			stat = discipline
+			value = 10
+		}
+	}
+}
+
+pike_and_shot = {
+	name = "Pike and Shot"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = saber
+	period = 1500_1550
+	cost_commodity = leadership
+	prerequisites = {
+		pike_square
+		standardized_pikes
+		arquebus
+	}
+	modifier = {
+		military_unit_stat = {
+			type = pikemen
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			type = halberdiers
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			type = arquebusiers
+			stat = discipline
+			value = 10
+		}
+		military_unit_stat = {
+			type = musketeers
+			stat = discipline
+			value = 10
+		}
+	}
+}

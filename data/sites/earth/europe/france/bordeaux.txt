@@ -1,0 +1,36 @@
+bordeaux = {
+	name = "Bordeaux"
+	world = earth
+	geocoordinate = { -0.59501306294 44.85001304020 } #from Natural Earth
+	type = settlement
+	#resource = fruit
+	province = guyenne
+	cultural_names = {
+		frankish = "Burdegala"
+		gaulish = "Burdigala"
+		roman = "Burdigala" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Bordeaux was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1441 = {
+			buildings += university #University founded in Bordeaux in 1441; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 4400
+				clergymen.french.catholic = 6400
+				officers.french.catholic = 2000
+			}
+		}
+	}
+}

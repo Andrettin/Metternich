@@ -1,0 +1,18 @@
+wiener_neustadt = {
+	name = "Wiener Neustadt"
+	world = earth
+	geocoordinate = { 16.24995357120 47.81598187160 } #from Natural Earth
+	type = resource
+	resource = cattle #Meadow and pasture; Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
+	province = lower_austria
+	
+	history = {
+		1807 = {
+			population = 10680 #(Wiener) Neustadt had a population of 10,680 (3225 native men, 6802 native women and 653 foreigners) in 1807 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 11.
+		}
+		
+		1900 = {
+			population = 28438 #Wiener-Neustadt had a population of 28,438 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

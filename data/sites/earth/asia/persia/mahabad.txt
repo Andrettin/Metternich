@@ -1,0 +1,8 @@
+mahabad = {
+	name = "Mahabad"
+	world = earth
+	geocoordinate = { 45.72004105510 36.77037701320 } #from Natural Earth
+	type = resource
+	resource = sheep
+	province = west_azarbaijan
+}

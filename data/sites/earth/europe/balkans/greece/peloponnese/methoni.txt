@@ -1,0 +1,15 @@
+methoni = {
+	name = "Methoni"
+	world = earth
+	geocoordinate = { 21.706944444444 36.821666666667 }
+	province = peloponnese
+	cultural_names = {
+		italian = "Modon"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

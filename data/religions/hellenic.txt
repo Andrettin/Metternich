@@ -1,0 +1,6 @@
+hellenic = {
+	name = "Hellenic"
+	group = pagan
+	color = { 153 25 25 }
+	icon = philosophy
+}

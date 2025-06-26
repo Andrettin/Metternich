@@ -1,0 +1,20 @@
+valencia = {
+	name = "Valencia"
+	world = earth
+	geocoordinate = { -0.40001204569 39.48501751610 } #from Natural Earth
+	type = settlement
+	cultural_names = {
+		roman = "Valentia" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1500 = {
+			buildings += university #University founded in Valencia in 1500; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			settlement_type = campus
+		}
+	}
+}

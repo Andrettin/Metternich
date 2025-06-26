@@ -1,0 +1,8 @@
+zulu = {
+	name = "Zulu"
+	group = southern_african
+	color = { 113 91 160 }
+	species = {
+		human
+	}
+}

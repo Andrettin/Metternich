@@ -1,0 +1,20 @@
+alencon = {
+	name = "Alencon"
+	world = earth
+	geocoordinate = { 0.091944444444444 48.429722222222 }
+	type = resource
+	resource = cotton
+	province = normandy
+	
+	history = {
+		1789 = {
+			buildings += courthouse #Prévôt des maréchaux and chief court of the salt tax existent in Alençon in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 4400
+			}
+		}
+	}
+}

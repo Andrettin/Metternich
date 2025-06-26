@@ -1,0 +1,8 @@
+phoenician = {
+	name = "Phoenician"
+	group = levantine
+	color = { 204 161 197 }
+	species = {
+		human
+	}
+}

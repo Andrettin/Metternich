@@ -1,0 +1,25 @@
+monarchy = {
+	name = "Monarchy"
+	group = monarchy
+	icon = crown_royal
+	required_technology = monarchy
+	default_laws = {
+		ruling_class = aristocracy
+		press_rights = censored_press
+	}
+	forbidden_laws = {
+		plutocracy
+	}
+	conditions = {
+		not = {
+			country_type = clade
+			country_type = tribe
+			subject_type = colony
+		}
+	}
+	modifier = {
+		housing_per_stockade = 1
+		housing_per_fort = 2
+		housing_per_fortress = 3
+	}
+}

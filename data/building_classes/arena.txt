@@ -1,0 +1,4 @@
+arena = {
+	name = "Arena"
+	slot_type = arena
+}

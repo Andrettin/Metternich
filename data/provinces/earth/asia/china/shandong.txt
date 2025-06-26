@@ -1,0 +1,17 @@
+shandong = {
+	name = "Shandong"
+	color = { 121 27 157 }
+	provincial_capital = jinan
+	resources = {
+		cotton = 1
+	}
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

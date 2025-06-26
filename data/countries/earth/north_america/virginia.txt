@@ -1,0 +1,43 @@
+virginia = {
+	name = "Virginia"
+	type = minor_nation
+	culture = american
+	default_religion = protestant
+	default_tier = duchy
+	default_government_type = republic
+	default_capital = richmond
+	eras = {
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		virginia
+		west_virginia
+	}
+	
+	history = {
+		1585 = {
+			#Raleigh's Colony of Virginia founded in 1585; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			diplomacy_state = {
+				country = england
+				subject_type = colony
+			}
+		}
+		
+		1587 = {
+			#Raleigh's Colony of Virginia abolished in 1585; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			diplomacy_state = {
+				country = england
+				state = peace
+			}
+		}
+		
+		1607 = {
+			#Jamestown founded in 1607; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			diplomacy_state = {
+				country = england
+				subject_type = colony
+			}
+		}
+	}
+}

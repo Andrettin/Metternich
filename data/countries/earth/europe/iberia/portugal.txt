@@ -1,0 +1,43 @@
+portugal = {
+	name = "Portugal"
+	type = great_power
+	color = { 0 66 24 }
+	culture = portuguese
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = lisbon
+	min_tier = county
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		estremadura
+		beira
+		minho
+		tras_os_montes
+		alentejo
+		madeira
+		azores
+	}
+	
+	history = {
+		1580 = {
+			#became a Spanish possession in 1580; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+			diplomacy_state = {
+				country = spain
+				subject_type = personal_union_subject
+			}
+		}
+		
+		1640 = {
+			#ceased to be a Spanish possession in 1640; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+			diplomacy_state = {
+				country = spain
+				state = peace
+			}
+		}
+	}
+}

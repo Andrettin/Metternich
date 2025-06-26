@@ -1,0 +1,117 @@
+galleon = {
+	name = "Galleon"
+	unit_class = galleon
+	icon = ship_of_the_line
+	stats = {
+		firepower = 7
+		melee = 7
+		range = 4
+		resistance = 15
+		movement = 2
+	}
+	hit_points = 50
+	required_technology = convoying
+	commodity_costs = {
+		lumber = 8
+		bronze_cannons = 2
+		fabric = 3
+	}
+	upgrades = {
+		ship_of_the_line
+	}
+}
+
+ship_of_the_line = {
+	name = "Ship-of-the-Line"
+	unit_class = ship_of_the_line
+	icon = ship_of_the_line
+	stats = {
+		firepower = 6
+		melee = 6
+		range = 6
+		resistance = 20
+		movement = 3
+	}
+	hit_points = 65
+	required_technology = ship_of_the_line
+	upkeep = 125
+	commodity_costs = {
+		fabric = 3
+		lumber = 8
+		iron_cannons = 5
+	}
+	upgrades = {
+		ironclad
+	}
+}
+
+ironclad = {
+	name = "Ironclad"
+	unit_class = ironclad
+	icon = ironclad
+	stats = {
+		firepower = 5
+		melee = 5
+		range = 8
+		resistance = 55
+		movement = 5
+	}
+	hit_points = 50
+	required_technology = advanced_iron_working
+	upkeep = 150
+	commodity_costs = {
+		lumber = 4
+		steel_cannons = 6
+		steel = 4
+		coal = 10
+	}
+	upgrades = {
+		advanced_ironclad
+	}
+}
+
+advanced_ironclad = {
+	name = "Advanced Ironclad"
+	unit_class = advanced_ironclad
+	icon = ironclad
+	stats = {
+		firepower = 10
+		melee = 10
+		range = 10
+		resistance = 60
+		movement = 6
+	}
+	hit_points = 70
+	required_technology = steel_armor_plate
+	upkeep = 375
+	commodity_costs = {
+		lumber = 8
+		steel_cannons = 15
+		steel = 10
+		coal = 20
+	}
+	upgrades = {
+		dreadnought
+	}
+}
+
+dreadnought = {
+	name = "Dreadnought"
+	unit_class = dreadnought
+	icon = dreadnought
+	stats = {
+		firepower = 20
+		melee = 20
+		range = 13
+		resistance = 70
+		movement = 7
+	}
+	hit_points = 115
+	required_technology = improved_range_finding
+	upkeep = 600
+	commodity_costs = {
+		steel_cannons = 24
+		steel = 30
+		fuel = 20
+	}
+}

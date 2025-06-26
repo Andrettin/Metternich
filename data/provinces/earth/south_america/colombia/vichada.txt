@@ -1,0 +1,19 @@
+vichada = {
+	name = "Vichada"
+	color = { 193 196 122 }
+	provincial_capital = puerto_carreno
+	regions = {
+		colombia
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = arawaks
+			culture = arawak
+		}
+	}
+}

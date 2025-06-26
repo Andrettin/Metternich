@@ -1,0 +1,9 @@
+black_forest = {
+	name = "Black Forest"
+	world = earth
+	geocoordinate = { 8.15 48.3 }
+	type = resource
+	terrain_type = conifer_forest
+	resource = timber
+	province = baden
+}

@@ -1,0 +1,6 @@
+jefferson_city = {
+	name = "Jefferson City"
+	world = earth
+	geocoordinate = { -92.17332503430 38.57662335110 } #from Natural Earth
+	type = settlement
+}

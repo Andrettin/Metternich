@@ -1,0 +1,9 @@
+clothing_making = {
+	name = "Clothing Making"
+	input_commodities = {
+		labor = 2
+		fabric = 2
+	}
+	output_commodity = clothing
+	output_value = 1
+}

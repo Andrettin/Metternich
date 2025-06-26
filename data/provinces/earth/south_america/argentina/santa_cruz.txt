@@ -1,0 +1,25 @@
+santa_cruz_argentina = {
+	name = "Santa Cruz"
+	color = { 239 160 16 }
+	provincial_capital = rio_gallegos
+	regions = {
+		argentina
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = mapuche
+			culture = mapuche
+		}
+		
+		1911 = {
+			owner = argentina #part of the Argentine Republic in 1911; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = castillian
+			religion = catholic
+		}
+	}
+}

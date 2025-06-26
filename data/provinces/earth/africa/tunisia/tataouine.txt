@@ -1,0 +1,14 @@
+tataouine = {
+	name = "Tataouine"
+	color = { 153 119 104 }
+	provincial_capital = tataouine
+	regions = {
+		tunisia
+	}
+	
+	history = {
+		owner = carthage
+		culture = carthaginian
+		religion = pagan
+	}
+}

@@ -1,0 +1,4 @@
+wagon = {
+	name = "Wagon"
+	category = land_transporter
+}

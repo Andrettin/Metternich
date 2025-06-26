@@ -1,0 +1,48 @@
+texas = {
+	name = "Texas"
+	color = { 0 176 64 }
+	provincial_capital = austin
+	regions = {
+		united_states
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-143100000 = { #Alphadon lived in Texas in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=487156
+			owner = alphadontids
+			culture = mammalian
+		}
+		
+		-4000 = {
+			owner = apache
+			culture = apache
+		}
+		
+		1600 = {
+			owner = new_spain #part of New Spain in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = castillian
+			religion = catholic
+		}
+		
+		1845 = {
+			owner = united_states #became part of the United States in 1845; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 198-199.
+			culture = american
+			religion = protestant
+		}
+		
+		my_country_tis_of_thee = {
+			1920 = {
+				owner = new_prussia #Source: "Life Magazine", 1916.
+			}
+		}
+	}
+}

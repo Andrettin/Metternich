@@ -1,0 +1,6 @@
+celestial = {
+	name = "Celestial"
+	species = {
+		archon
+	}
+}

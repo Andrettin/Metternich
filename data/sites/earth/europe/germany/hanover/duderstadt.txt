@@ -1,0 +1,12 @@
+duderstadt = {
+	name = "Duderstadt"
+	world = earth
+	#geocoordinate = { 10.259722222222 51.5125 }
+	province = hanover
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,6 @@
+philosopher = {
+	name = "Philosopher"
+	advisor_category = political #not very fitting
+	attribute = learning
+	starting_age_category = trained
+}

@@ -1,0 +1,21 @@
+granada = {
+	name = "Granada"
+	world = earth
+	geocoordinate = { -3.58501143535 37.16497825020 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1526 = {
+			buildings += university #University founded in Granada in 1526, containing law studies; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+			#The Cambridge Modern History Atlas gives 1531 as the university's foundation date instead; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+		
+		1679 = {
+			population = 100000 #Granada had a population of c. 100,000 in 1679; Source: Henry Kamen, "Early Modern European Society", 2021, p. 248.
+		}
+	}
+}

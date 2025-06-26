@@ -1,0 +1,11 @@
+ship_of_the_line = {
+	filepath = "icons/units/ships/ship_of_the_line.png"
+}
+
+ironclad = {
+	filepath = "icons/units/ships/ironclad.png"
+}
+
+dreadnought = {
+	filepath = "icons/units/ships/dreadnought.png"
+}

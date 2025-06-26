@@ -1,0 +1,7 @@
+ivanovo = {
+	name = "Ivanovo"
+	world = earth
+	geocoordinate = { 41.00999263380 57.01002016110 } #from Natural Earth
+	type = settlement
+	province = ivanovo
+}

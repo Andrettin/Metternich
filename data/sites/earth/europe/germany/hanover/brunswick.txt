@@ -1,0 +1,14 @@
+brunswick = {
+	name = "Brunswick" #"Braunschweig" in German
+	world = earth
+	geocoordinate = { 10.50002030300 52.24997479160 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = hanover
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

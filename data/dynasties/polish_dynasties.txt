@@ -1,0 +1,4 @@
+jagiellon = {
+	name = "Jagiellon"
+	culture = polish
+}

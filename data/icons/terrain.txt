@@ -1,0 +1,11 @@
+mountains = {
+	filepath = "icons/terrain/mountains.png"
+}
+
+oasis = {
+	filepath = "icons/terrain/oasis.png"
+}
+
+pine_tree = {
+	filepath = "icons/terrain/pine_tree.png"
+}

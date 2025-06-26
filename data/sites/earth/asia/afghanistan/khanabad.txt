@@ -1,0 +1,8 @@
+khanabad = {
+	name = "Khanabad"
+	world = earth
+	geocoordinate = { 69.163611111111 36.683055555556 }
+	type = resource
+	resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	province = afghanistan
+}

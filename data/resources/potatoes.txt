@@ -1,0 +1,13 @@
+potatoes = {
+	name = "Potatoes"
+	commodity = potatoes
+	tiny_icon = trade_consulate
+	discovery_technology = potatoes
+	required_technology = potatoes
+	terrain_types = {
+		plains
+	}
+	site_types = {
+		resource
+	}
+}

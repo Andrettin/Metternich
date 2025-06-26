@@ -1,0 +1,14 @@
+bronze_foundry = {
+	name = "Bronze Foundry"
+	building_class = bronze_foundry
+	portrait = factory
+	icon = bronze
+	production_types = {
+		bronze_making
+		brass_making
+	}
+	base_capacity = 8
+	capacity_increment = 8
+	expandable = true
+	required_technology = bronzeworking
+}

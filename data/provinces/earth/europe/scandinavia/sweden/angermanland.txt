@@ -1,0 +1,23 @@
+angermanland = {
+	name = "Angermanland"
+	color = { 168 27 82 }
+	provincial_capital = harnosand
+	regions = {
+		sweden
+	}
+	
+	history = {
+		culture = norse
+		religion = pagan
+		
+		1524 = {
+			owner = sweden #part of Sweden in 1524; Source: William R. Shepherd, "Historical Atlas", 1911, p. 120.
+			culture = swedish
+			religion = protestant
+		}
+		
+		1740 = {
+			owner = sweden #part of the Kingdom of Sweden c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

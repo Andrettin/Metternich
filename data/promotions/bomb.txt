@@ -1,0 +1,34 @@
+bomb_1 = {
+	name = "Bomb I"
+	icon = cannon
+	conditions = {
+		artillery = true
+	}
+	modifier = {
+		bonus_vs_fortifications = 20
+	}
+}
+
+bomb_2 = {
+	name = "Bomb II"
+	icon = cannon
+	conditions = {
+		artillery = true
+		promotion = bomb_1
+	}
+	modifier = {
+		bonus_vs_fortifications = 25
+	}
+}
+
+bomb_3 = {
+	name = "Bomb III"
+	icon = cannon
+	conditions = {
+		artillery = true
+		promotion = bomb_2
+	}
+	modifier = {
+		bonus_vs_fortifications = 30
+	}
+}

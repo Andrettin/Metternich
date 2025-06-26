@@ -1,0 +1,16 @@
+is_civilized = {
+	not = {
+		scripted_condition = is_tribe
+	}
+}
+
+is_tribe = {
+	or = {
+		country_type = tribe
+		government_type = tribal_despotism
+	}
+}
+
+is_power = {
+	country_type = great_power
+}

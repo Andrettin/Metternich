@@ -1,0 +1,43 @@
+washington = {
+	name = "Washington"
+	color = { 0 160 0 }
+	provincial_capital = seattle
+	regions = {
+		united_states
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = kwakiutl
+			culture = kwakiutl
+		}
+		
+		1300 = {
+			owner = kwakiutl #territory of the Northwest Coast cultural group (to which the Kwakiutl belonged) in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
+			culture = kwakiutl
+			religion = pagan
+		}
+		
+		1811 = {
+			owner = united_states #became part of the United States in 1811; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 198-199.
+			culture = american
+			religion = protestant
+		}
+		
+		my_country_tis_of_thee = {
+			1920 = {
+				owner = japonica #Source: "Life Magazine", 1916.
+			}
+		}
+	}
+}

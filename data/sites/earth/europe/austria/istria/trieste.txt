@@ -1,0 +1,48 @@
+trieste = {
+	name = "Trieste"
+	world = earth
+	geocoordinate = { 13.80002559270 45.65037762360 } #from Natural Earth
+	type = settlement
+	province = istria
+	cultural_names = {
+		roman = "Tergeste" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1719 = {
+			buildings += dock #Karl VI of the Holy Roman Empire made Trieste a free port ("Freihafen") in 1719; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464.
+		}
+		
+		1758 = {
+			population = 6424 #Trieste's population was 6,424 in 1758; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 466.
+		}
+
+		1800 = {
+			population = 20900 #Trieste's population was 20,900 in 1800; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 466.
+		}
+		
+		1815 = {
+			population = 23700 #Trieste had a population of 23,700 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 90.
+		}
+		
+		1818 = {
+			population = 33510 #Trieste's population was 33,510 in 1818; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 466.
+		}
+
+		1838 = {
+			population = 54387 #Trieste's population was 54,387 in 1838; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 466.
+		}
+		
+		1853 = {
+			population = 60860 #Trieste's population was 60,860 in 1853; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 466.
+		}
+		
+		1857 = {
+			improvements += rail_depot #Vienna-Trieste railroad built in 1857; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
+		}
+	}
+}

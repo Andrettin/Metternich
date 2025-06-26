@@ -1,0 +1,8 @@
+driller = {
+	name = "Driller"
+	unit_class = driller
+	icon = miners
+	improvable_resources = {
+		oil
+	}
+}

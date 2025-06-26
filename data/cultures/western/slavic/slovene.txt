@@ -1,0 +1,8 @@
+slovene = {
+	name = "Slovene"
+	group = south_slavic
+	color = { 0 90 128 }
+	species = {
+		human
+	}
+}

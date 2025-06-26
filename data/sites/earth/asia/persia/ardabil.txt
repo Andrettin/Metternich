@@ -1,0 +1,7 @@
+ardabil = {
+	name = "Ardabil"
+	world = earth
+	geocoordinate = { 48.30003861370 38.25000246080 } #from Natural Earth
+	type = settlement
+	province = ardabil
+}

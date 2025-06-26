@@ -1,0 +1,10 @@
+scrub_forest = {
+	name = "Scrub Forest"
+	color = { 0 255 0 }
+	icon = pine_tree
+	image_filepath = "tiles/terrain/scrub_forest.png"
+	elevation_type = flatlands
+	moisture_type = semi_arid
+	forestation_type = forest
+	tiles = { 0 1 2 3 }
+}

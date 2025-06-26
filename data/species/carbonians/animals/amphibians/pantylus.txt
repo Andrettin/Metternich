@@ -1,0 +1,8 @@
+pantylus = {
+	name = "Pantylus"
+	supertaxon = amphibia
+	pre_evolutions = {
+		aistopod
+		diplocaulus
+	}
+}

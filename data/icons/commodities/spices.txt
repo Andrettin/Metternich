@@ -1,0 +1,3 @@
+spices = {
+	filepath = "icons/commodities/spices.png"
+}

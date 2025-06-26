@@ -1,0 +1,7 @@
+#clipstone_colliery = { #commented out because it would occupy the same tile as Sherwood Forest
+#	name = "Clipstone"
+#	world = earth
+#	geocoordinate = { -1.1104 53.1629 }
+#	type = resource
+#	resource = coal #Clipstone Colliery
+#}

@@ -1,0 +1,6 @@
+villahermosa = {
+	name = "Villahermosa"
+	world = earth
+	geocoordinate = { -92.89997318700 17.99997235000 } #from Natural Earth
+	type = settlement
+}

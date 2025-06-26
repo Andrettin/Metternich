@@ -1,0 +1,5 @@
+shanghai = {
+	name = "Shanghai"
+	world = earth
+	geocoordinate = { 121.43650467800 31.21645245260 } #from Natural Earth
+}

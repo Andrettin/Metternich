@@ -1,0 +1,6 @@
+yerevan = {
+	name = "Yerevan"
+	world = earth
+	geocoordinate = { 44.51355139040 40.18115073550 } #from Natural Earth
+	type = settlement
+}

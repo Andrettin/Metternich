@@ -1,0 +1,8 @@
+torshavn = {
+	name = "Torshavn" #"Tórshavn"
+	world = earth
+	geocoordinate = { -6.82003361147 62.03002382320 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = highlands
+}

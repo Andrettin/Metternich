@@ -1,0 +1,171 @@
+chilia_branch = {
+	name = "Chilia Branch"
+	river = true
+	color = { 182 1 26 }
+}
+
+danube_river = {
+	name = "Danube River"
+	river = true
+	color = { 0 128 144 }
+	#cultural_names = {
+	#	gothic = "Donawi River" #"Dōnawi"; Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, 2.7.3.
+	#	roman = "Danuvius River" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+	#}
+}
+
+douro_river = { #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 82-83.
+	name = "Douro River"
+	river = true
+	color = { 148 164 57 }
+	#cultural_names = {
+	#	castillian = "Duero River" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 82-83.
+	#}
+}
+
+elbe_river = {
+	name = "Elbe River"
+	river = true
+	color = { 0 144 176 }
+	#cultural_names = {
+	#	roman = "Albis River" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+	#}
+}
+
+great_ouse_river = {
+	name = "Great Ouse River"
+	river = true
+	color = { 0 160 208 }
+	hidden = true
+}
+
+guadiana_river = {
+	name = "Guadiana River"
+	river = true
+	color = { 188 197 58 }
+	hidden = true
+	#cultural_names = {
+	#	roman = "Anas River" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+	#}
+}
+
+loire_river = {
+	name = "Loire River"
+	river = true
+}
+
+meuse_river = {
+	name = "Meuse River"
+	river = true
+	color = { 218 134 30 }
+	hidden = true
+	#cultural_group_names = {
+	#	german = "Maas River"
+	#}
+}
+
+minho_river = {
+	name = "Minho River"
+	river = true
+	color = { 156 50 103 }
+}
+
+oder_river = {
+	name = "Oder River"
+	river = true
+	color = { 94 212 172 }
+}
+
+ofanto_river = {
+	name = "Ofanto River"
+	river = true
+	color = { 83 131 67 }
+}
+
+piave_river = {
+	name = "Piave River"
+	river = true
+}
+
+po_river = {
+	name = "Po River"
+	river = true
+	color = { 0 128 208 }
+}
+
+rhine_river = {
+	name = "Rhine River"
+	river = true
+	color = { 0 128 212 }
+	#cultural_names = {
+	#	roman = "Rhenus River" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+	#}
+}
+
+seine_river = {
+	name = "Seine River"
+	river = true
+}
+
+severn_river = {
+	name = "Severn River"
+	river = true
+	color = { 0 144 208 }
+	hidden = true
+	#cultural_names = {
+	#	anglo_saxon = "Saefern River" #"Sæfern"; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 733.
+	#}
+}
+
+st_george_branch = {
+	name = "St. George Branch"
+	river = true
+	color = { 54 218 58 }
+}
+
+sulina_branch = {
+	name = "Sulina Branch"
+	river = true
+	color = { 98 125 77 }
+}
+
+tagus_river = {
+	name = "Tagus River"
+	river = true
+	color = { 200 55 246 }
+}
+
+thames_river = {
+	name = "Thames River"
+	river = true
+	color = { 0 176 208 }
+	#cultural_names = {
+	#	anglo_saxon = "Temes River" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 733.
+	#}
+}
+
+trent_river = {
+	name = "Trent River"
+	river = true
+	color = { 116 168 203 }
+	hidden = true
+}
+
+waal_river = {
+	name = "Waal River"
+	river = true
+	color = { 140 255 154 }
+}
+
+vistula_river = {
+	name = "Vistula River"
+	river = true
+	color = { 250 246 67 }
+}
+
+zancara_river = {
+	name = "Zancara River"
+	river = true
+	color = { 223 141 48 }
+	hidden = true
+}

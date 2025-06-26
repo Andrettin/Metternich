@@ -1,0 +1,16 @@
+digne = {
+	name = "Digne" #"Digne-les-Bains"
+	world = earth
+	geocoordinate = { 6.2355555555556 44.0925 }
+	type = resource
+	resource = silk
+	province = provence
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 1200
+			}
+		}
+	}
+}

@@ -1,0 +1,6 @@
+sao_joao_del_rei = {
+	name = "Sao Joao del Rei" #"São João del Rei"
+	world = earth
+	geocoordinate = { -44.24999699050 -21.13004229860 } #from Natural Earth
+	province = minas_gerais
+}

@@ -1,0 +1,11 @@
+dundalk = {
+	name = "Dundalk"
+	world = earth
+	geocoordinate = { -6.41667321921 54.00041058260 } #from Natural Earth
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

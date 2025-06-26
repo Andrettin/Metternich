@@ -1,0 +1,14 @@
+frankish = {
+	name = "Frankish"
+	group = west_germanic
+	color = { 76 76 127 }
+	species = {
+		human
+		half_elf
+	}
+	derived_cultures = {
+		dutch
+		flemish
+		german
+	}
+}

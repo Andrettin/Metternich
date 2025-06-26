@@ -1,0 +1,12 @@
+trade = {
+	name = "Trade"
+	subcategory = commerce
+	portrait = coinage
+	icon = wealth
+	period = iron_age
+	cost_commodity = research
+	prerequisites = {
+		coinage
+		code_of_laws
+	}
+}

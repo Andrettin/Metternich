@@ -1,0 +1,11 @@
+petrolacosaurus = {
+	name = "Petrolacosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		hylonomus
+		pantylus
+		peltobatrachus
+		platyhystrix
+		tuditanus
+	}
+}

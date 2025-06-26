@@ -1,0 +1,50 @@
+habsburg = {
+	name = "Habsburg"
+	prefix = "von"
+	culture = german #Swabian/Swiss
+}
+
+kageneck = {
+	name = "Kageneck"
+	prefix = "von"
+	culture = german #Rhenish
+}
+
+kaunitz = {
+	name = "Kaunitz"
+	prefix = "von"
+	culture = german #German-Bohemian
+}
+
+metternich = {
+	name = "Metternich"
+	prefix = "von"
+	culture = german #Rhenish
+}
+
+schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
+	name = "Schwarzenberg"
+	prefix = "zu"
+	culture = german #Franconian
+	
+	#carries its name since 1437
+	#raised to princely rank in 1670
+}
+
+wettin = {
+	name = "Wettin"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+wittelsbach = {
+	name = "Wittelsbach"
+	prefix = "von"
+	culture = german #Swabian
+}
+
+wurtemberg = {
+	name = "Wurtemberg"
+	prefix = "von"
+	culture = german #Swabian
+}

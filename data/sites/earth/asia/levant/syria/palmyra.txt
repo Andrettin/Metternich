@@ -1,0 +1,11 @@
+palmyra = {
+	name = "Palmyra"
+	world = earth
+	geocoordinate = { 38.28333736040 34.55040915840 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = syria
+	cultural_names = {
+		arabic = "Tadmur"
+	}
+}

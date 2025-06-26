@@ -1,0 +1,7 @@
+belfast = {
+	name = "Belfast"
+	world = earth
+	geocoordinate = { -5.96003442527 54.60001222650 } #from Natural Earth
+	type = settlement
+	province = ulster
+}

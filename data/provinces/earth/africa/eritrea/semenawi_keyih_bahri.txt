@@ -1,0 +1,20 @@
+semenawi_keyih_bahri = {
+	name = "Semenawi Keyih Bahri"
+	color = { 205 15 34 }
+	provincial_capital = massawa
+	resources = {
+		fruit = 1
+	}
+	regions = {
+		eritrea
+	}
+	
+	history = {
+		culture = tigray
+		religion = pagan
+		
+		-1450 = {
+			owner = egypt #subject to Egypt c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+	}
+}

@@ -1,0 +1,45 @@
+elven_archers = {
+	name = "Elven Archers"
+	unit_class = archers
+	culture = elven
+	icon = archers
+	stats = {
+		firepower = 3
+		melee = 1
+		range = 4
+		defense = 2
+		movement = 4
+	}
+	entrench = true
+	required_technology = shortbow
+	commodity_costs = {
+		manpower = 1
+	}
+	upgrades = {
+		elven_marksmen
+	}
+}
+
+elven_marksmen = {
+	name = "Elven Marksmen"
+	unit_class = crossbowmen
+	culture = elven
+	icon = archers
+	stats = {
+		firepower = 4
+		melee = 1
+		range = 4
+		defense = 2
+		movement = 4
+	}
+	entrench = true
+	required_technology = longbow
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		lumber = 1
+	}
+	upgrades = {
+		musketeers
+	}
+}

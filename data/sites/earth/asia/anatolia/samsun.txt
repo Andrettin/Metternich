@@ -1,0 +1,6 @@
+samsun = {
+	name = "Samsun"
+	world = earth
+	geocoordinate = { 36.34366247430 41.27999839180 } #from Natural Earth
+	type = settlement
+}

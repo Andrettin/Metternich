@@ -1,0 +1,49 @@
+expert_drillers = {
+	name = "Expert Drillers"
+	input_population_type = laborers
+	input_wealth = 1000
+	input_commodities = {
+		paper = 2
+	}
+	output_population_type = expert_drillers
+}
+
+expert_fishermen = {
+	name = "Expert Fishermen"
+	input_population_type = laborers
+	input_wealth = 1000
+	input_commodities = {
+		paper = 2
+	}
+	output_population_type = expert_fishermen
+}
+
+expert_fur_trappers = {
+	name = "Expert Fur Trappers"
+	input_population_type = laborers
+	input_wealth = 1000
+	input_commodities = {
+		paper = 2
+	}
+	output_population_type = expert_fur_trappers
+}
+
+expert_lumberjacks = {
+	name = "Expert Lumberjacks"
+	input_population_type = laborers
+	input_wealth = 1000
+	input_commodities = {
+		paper = 2
+	}
+	output_population_type = expert_lumberjacks
+}
+
+expert_miners = {
+	name = "Expert Miners"
+	input_population_type = laborers
+	input_wealth = 1000
+	input_commodities = {
+		paper = 2
+	}
+	output_population_type = expert_miners
+}

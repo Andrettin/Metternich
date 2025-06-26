@@ -1,0 +1,12 @@
+simon_bolivar = {
+	filepath = "portraits/characters/simon_bolivar.png"
+	character_conditions = {
+		gender = male
+		or = {
+			culture = castillian #Colombian/Venezuelan
+			culture = brazilian
+		}
+		is_ruler = true
+		birth_year >= 1750
+	}
+}

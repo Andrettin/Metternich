@@ -1,0 +1,6 @@
+ottawa = {
+	name = "Ottawa"
+	world = earth
+	geocoordinate = { -75.70001530120 45.41669679670 } #from Natural Earth
+	type = settlement
+}

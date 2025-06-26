@@ -1,0 +1,35 @@
+minho = {
+	name = "Minho"
+	color = { 208 160 0 }
+	provincial_capital = oporto
+	resources = {
+		grain = 3
+		cattle = 2
+		sheep = 4
+		timber = 1
+	}
+	regions = {
+		portugal
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = suebi #territory of the Suebi in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = suebi
+		}
+		
+		1140 = {
+			owner = portugal #became part of the Kingdom of Portugal in 1140; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 82-83.
+			culture = portuguese
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = portugal #part of the Kingdom of Portugal c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

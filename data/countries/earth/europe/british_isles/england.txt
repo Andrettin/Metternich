@@ -1,0 +1,37 @@
+england = {
+	name = "England"
+	type = great_power
+	color = { 206 8 8 }
+	culture = english
+	default_religion = protestant
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = london
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		middlesex
+		somerset
+		devon
+		kent
+		east_anglia
+		warwickshire
+		derbyshire
+		lancashire
+		yorkshire
+		northumberland
+		cumberland
+		cornwall
+	}
+	
+	history = {
+		1553 = {
+			consulate = { #England sent a trade mission to Muscovy in 1553; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
+				country = muscovy
+				consulate = trade_consulate
+			}
+		}
+	}
+}

@@ -1,0 +1,8 @@
+sheberghan = {
+	name = "Sheberghan"
+	world = earth
+	geocoordinate = { 65.73830236700 36.65798077290 } #from Natural Earth
+	type = resource
+	resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	province = afghanistan
+}

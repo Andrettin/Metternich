@@ -1,0 +1,17 @@
+medicine = {
+	name = "Medicine"
+	subcategory = philosophy
+	portrait = engineering
+	icon = heart
+	period = 1500_1550
+	year = 1543 #modern anatomy; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
+	#year = 1545 #surgery; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 212-213.
+	cost = 1000
+	cost_commodity = research
+	prerequisites = {
+		philosophy
+		trade
+		
+		academic_disciplines #university
+	}
+}

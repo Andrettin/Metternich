@@ -1,0 +1,12 @@
+baena = {
+	name = "Baena"
+	world = earth
+	geocoordinate = { -4.3260458 37.6194451 }
+	province = andalusia
+	
+	history = {
+		1553 = {
+			buildings += university #University founded in Baena in 1553; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+	}
+}

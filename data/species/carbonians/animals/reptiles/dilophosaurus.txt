@@ -1,0 +1,8 @@
+dilophosaurus = {
+	name = "Dilophosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		ornithosuchus
+		saltopus
+	}
+}

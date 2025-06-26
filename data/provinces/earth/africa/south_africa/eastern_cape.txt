@@ -1,0 +1,29 @@
+eastern_cape = {
+	name = "Eastern Cape"
+	color = { 179 58 142 }
+	provincial_capital = bhisho
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = megazostrodontids
+		culture = mammalian
+		religion = pagan
+		
+		-201400000 = { #Megazostrodon lived in South Africa in the Jurassic; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:39752
+			owner = megazostrodontids
+			culture = mammalian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = zululand
+			culture = zulu
+		}
+		
+		1795 = {
+			owner = great_britain #became a British possession in 1795-1806; Source: William R. Shepherd, "Historical Atlas", 1911, p. 152.
+		}
+	}
+}

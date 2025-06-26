@@ -1,0 +1,8 @@
+vaxjo = {
+	name = "Vaxjo" #"Växjö"
+	world = earth
+	geocoordinate = { 14.81670772160 56.88369712230 } #from Natural Earth
+	type = resource
+	resource = cattle #Dairying predominant; Source: Map No. 500866 of the Perry-Castañeda Library Map Collection, 1973.
+	province = smaland
+}

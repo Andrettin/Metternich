@@ -1,0 +1,53 @@
+divine_duty = {
+	name = "Divine Duty"
+	subcategory = popular_customs
+	portrait = baronial_crown
+	icon = crown_baronial
+	period = 1000_1100
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		feudalism
+	}
+	modifier = {
+		untrained_workers_militancy_modifier = -0.01
+		trained_workers_militancy_modifier = -0.01
+		expert_workers_militancy_modifier = -0.01
+	}
+}
+
+miracle_plays = {
+	name = "Miracle Plays"
+	subcategory = popular_customs
+	portrait = engineering
+	icon = music
+	period = 1300_1400
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		troubadours
+	}
+	modifier = {
+		untrained_workers_militancy_modifier = -0.02
+		trained_workers_militancy_modifier = -0.02
+		expert_workers_militancy_modifier = -0.02
+	}
+}
+
+carnivals = {
+	name = "Carnivals"
+	subcategory = popular_customs
+	portrait = engineering
+	icon = music
+	period = 1400_1500
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		miracle_plays
+	}
+	modifier = {
+		untrained_workers_militancy_modifier = -0.02
+		trained_workers_militancy_modifier = -0.02
+		expert_workers_militancy_modifier = -0.02
+	}
+}

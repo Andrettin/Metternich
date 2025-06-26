@@ -1,0 +1,5 @@
+brass_lamps = {
+	name = "Brass Lamps"
+	icon = fuel
+	base_price = 900
+}

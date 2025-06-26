@@ -1,0 +1,6 @@
+juba = {
+	name = "Juba"
+	world = earth
+	geocoordinate = { 31.58002559280 4.82997519828 } #from Natural Earth
+	type = settlement
+}

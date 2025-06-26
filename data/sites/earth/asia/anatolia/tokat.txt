@@ -1,0 +1,8 @@
+tokat = {
+	name = "Tokat"
+	world = earth
+	geocoordinate = { 36.56300452150 40.30599616520 } #from Natural Earth
+	type = resource
+	resource = grain #Cultivated areas with livestock grazing; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
+	province = corum
+}

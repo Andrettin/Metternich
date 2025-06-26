@@ -1,0 +1,6 @@
+puerto_carreno = {
+	name = "Puerto Carreno" #"Puerto Carreño"
+	world = earth
+	geocoordinate = { -67.49302270680 6.18503460584 } #from Natural Earth
+	type = settlement
+}

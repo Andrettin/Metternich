@@ -1,0 +1,5 @@
+clothing = {
+	name = "Clothing"
+	icon = clothing
+	base_price = 900
+}

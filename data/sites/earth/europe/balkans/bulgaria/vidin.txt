@@ -1,0 +1,12 @@
+vidin = {
+	name = "Vidin"
+	world = earth
+	geocoordinate = { 22.874058 43.98869 }
+	province = bulgaria
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,29 @@
+la_pampa = {
+	name = "La Pampa"
+	color = { 240 1 16 }
+	provincial_capital = santa_rosa
+	regions = {
+		argentina
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = charrua
+			culture = charruan
+		}
+		
+		1790 = {
+			owner = la_plata #part of the Viceroyalty of La Plata c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = castillian
+			religion = catholic
+		}
+		
+		1810 = {
+			owner = argentina #Argentina became independent in 1810/1816; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+		}
+	}
+}

@@ -1,0 +1,29 @@
+gold_coast = {
+	name = "Gold Coast"
+	type = minor_nation
+	culture = akan
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = accra
+	eras = {
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		accra
+		western_gold_coast
+		central_gold_coast
+		ashanti
+	}
+	
+	history = {
+		1884.11 = {
+			#British possession by 1884.11; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 174-175.
+			diplomacy_state = {
+				country = great_britain
+				subject_type = colony
+			}
+		}
+	}
+}

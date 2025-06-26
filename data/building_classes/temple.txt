@@ -1,0 +1,14 @@
+shrine = {
+	name = "Shrine"
+	slot_type = temple
+}
+
+temple = {
+	name = "Temple"
+	slot_type = temple
+}
+
+cathedral = {
+	name = "Cathedral"
+	slot_type = temple
+}

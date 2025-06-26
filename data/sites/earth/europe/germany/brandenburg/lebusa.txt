@@ -1,0 +1,14 @@
+lebusa = {
+	name = "Lebusa"
+	world = earth
+	geocoordinate = { 13.433055555556 51.799722222222 }
+	
+	history = {
+		919 = {
+			#settlement_type = castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+			
+			#burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

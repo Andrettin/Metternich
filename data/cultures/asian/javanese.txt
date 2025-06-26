@@ -1,0 +1,8 @@
+javanese = {
+	name = "Javanese"
+	group = malay
+	color = { 154 32 88 }
+	species = {
+		human
+	}
+}

@@ -1,0 +1,6 @@
+high_middle_ages = {
+	name = "High Middle Ages"
+	start_date = 1066.12.26
+	map_template = earth
+	hidden = true
+}

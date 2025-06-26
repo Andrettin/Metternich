@@ -1,0 +1,4 @@
+lead_smelter = {
+	name = "Lead Smelter"
+	slot_type = lead_smelter
+}

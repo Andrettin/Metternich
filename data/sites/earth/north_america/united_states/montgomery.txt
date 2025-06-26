@@ -1,0 +1,6 @@
+montgomery = {
+	name = "Montgomery"
+	world = earth
+	geocoordinate = { -86.27918868180 32.36160219220 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,9 @@
+academics = {
+	name = "Academics"
+	input_population_type = trained_workers
+	input_wealth = 100
+	input_commodities = {
+		paper = 1
+	}
+	output_population_type = academics
+}

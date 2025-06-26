@@ -1,0 +1,14 @@
+birmingham = {
+	name = "Birmingham"
+	world = earth
+	geocoordinate = { -1.91999678690 52.47497397780 } #from Natural Earth
+	type = resource
+	resource = coal
+	province = warwickshire
+	
+	history = {
+		1900 = {
+			buildings += university #University founded in Birmingham in 1900; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
+		}
+	}
+}

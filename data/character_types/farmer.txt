@@ -1,0 +1,7 @@
+farmer = {
+	name = "Farmer"
+	advisor_category = trade
+	attribute = stewardship
+	civilian_unit_class = farmer
+	starting_age_category = self_taught
+}

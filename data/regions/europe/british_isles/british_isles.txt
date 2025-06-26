@@ -1,0 +1,42 @@
+british_isles = {
+	superregions = {
+		europe
+		west_and_central_europe
+	}
+	
+	history = {
+		-4000 = {
+			#the British Isles had between 2,750 and 5,500 people at the end of the Mesolithic; Source: "Ancient Europe 8000 B.C.-A.D. 1000: Encyclopedia of the Barbarian World", 2004, vol. 1, p. 148.
+			population = 4125
+		}
+		
+		-3000 = {
+			population = 0
+		}
+	}
+}
+
+great_britain = {
+	superregions = {
+		british_isles
+	}
+}
+
+scotland = {
+	superregions = {
+		great_britain
+	}
+}
+
+wales = {
+	superregions = {
+		england_and_wales
+		great_britain
+	}
+}
+
+ireland = {
+	superregions = {
+		british_isles
+	}
+}

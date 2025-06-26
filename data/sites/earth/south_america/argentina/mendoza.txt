@@ -1,0 +1,6 @@
+mendoza = {
+	name = "Mendoza"
+	world = earth
+	geocoordinate = { -68.81661116710 -32.88333005900 } #from Natural Earth
+	type = settlement
+}

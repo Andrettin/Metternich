@@ -1,0 +1,11 @@
+gryphons = {
+	name = "Gryphons"
+	unit_class = flying_beasts
+	icon = lion
+	stats = {
+		melee = 2
+		range = 1
+		defense = 3
+		movement = 4
+	}
+}

@@ -1,0 +1,9 @@
+coatzacoalcos = {
+	name = "Coatzacoalcos"
+	world = earth
+	geocoordinate = { -94.42000960470 18.12040427550 } #from Natural Earth
+	type = resource
+	resource = grain #Corn and beans; Source: Map No. 503497 of the Perry-Castañeda Library Map Collection, 1978.
+	#resource = fish #Shrimp fishing; Source: Map No. 503497 of the Perry-Castañeda Library Map Collection, 1978.
+	province = veracruz
+}

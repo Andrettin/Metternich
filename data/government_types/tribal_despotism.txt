@@ -1,0 +1,17 @@
+tribal_despotism = {
+	name = "Tribal Despotism"
+	group = tribe
+	icon = bow
+	default_laws = {
+		ruling_class = aristocracy
+		centralization = decentralization
+		serfdom = free_subjects
+		press_rights = censored_press
+	}
+	conditions = {
+		not = {
+			subject_type = colony
+			country_type = clade
+		}
+	}
+}

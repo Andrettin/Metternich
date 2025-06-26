@@ -1,0 +1,5 @@
+bourbon = {
+	name = "Bourbon"
+	prefix = "de"
+	culture = french
+}

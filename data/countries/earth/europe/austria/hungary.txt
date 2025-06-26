@@ -1,0 +1,30 @@
+hungary = {
+	name = "Hungary"
+	type = minor_nation
+	culture = magyar
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = pest
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era #since after 1867 it had substantial autonomy
+	}
+	core_provinces = {
+		pest
+		buda
+		pressburg
+		kesmark
+		banat
+		transylvania
+	}
+	
+	history = {
+		1490 = {
+			offices = { #Tamás Bakócz became the leading statesman of Hungary in 1490; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
+				chancellor = tamas_bakocz
+			}
+		}
+	}
+}

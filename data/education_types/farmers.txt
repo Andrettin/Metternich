@@ -1,0 +1,49 @@
+expert_farmers = {
+	name = "Expert Farmers"
+	input_population_type = farmers
+	input_wealth = 1000
+	input_commodities = {
+		paper = 2
+	}
+	output_population_type = expert_farmers
+}
+
+master_cotton_planters = {
+	name = "Master Cotton Planters"
+	input_population_type = farmers
+	input_wealth = 1000
+	input_commodities = {
+		paper = 2
+	}
+	output_population_type = master_cotton_planters
+}
+
+master_ranchers = {
+	name = "Master Ranchers"
+	input_population_type = farmers
+	input_wealth = 1000
+	input_commodities = {
+		paper = 2
+	}
+	output_population_type = master_ranchers
+}
+
+master_sugar_planters = {
+	name = "Master Sugar Planters"
+	input_population_type = farmers
+	input_wealth = 1000
+	input_commodities = {
+		paper = 2
+	}
+	output_population_type = master_sugar_planters
+}
+
+master_tobacco_planters = {
+	name = "Master Tobacco Planters"
+	input_population_type = farmers
+	input_wealth = 1000
+	input_commodities = {
+		paper = 2
+	}
+	output_population_type = master_tobacco_planters
+}

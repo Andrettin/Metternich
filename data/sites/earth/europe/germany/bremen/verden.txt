@@ -1,0 +1,12 @@
+verden = {
+	name = "Verden"
+	world = earth
+	geocoordinate = { 9.2305555555556 52.921111111111 }
+	province = bremen
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,6 @@
+low_countries = {
+	superregions = {
+		europe
+		west_and_central_europe
+	}
+}

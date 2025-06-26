@@ -1,0 +1,25 @@
+self_governing_colony = {
+	name = "Self-Governing Colony"
+	group = republic
+	icon = settlement
+	required_technology = republic
+	conditions = {
+		subject_type = colony
+		not = {
+			country_type = clade
+			country_type = tribe
+		}
+	}
+	title_names = {
+		duchy = "Colony"
+		kingdom = "Dominion"
+		empire = "Grand Dominion"
+	}
+	office_title_names = {
+		ruler = {
+			duchy = "Colonial Governor"
+			kingdom = "Governor General"
+			empire = "Grand Governor General"
+		}
+	}
+}

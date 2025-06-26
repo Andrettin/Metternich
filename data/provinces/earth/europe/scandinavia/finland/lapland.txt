@@ -1,0 +1,28 @@
+lapland = {
+	name = "Lapland"
+	color = { 195 43 164 }
+	provincial_capital = rovaniemi
+	regions = {
+		finland
+	}
+	
+	history = {
+		culture = finnish
+		religion = pagan
+		
+		1524 = {
+			owner = sweden #part of Sweden in 1524; Source: William R. Shepherd, "Historical Atlas", 1911, p. 120.
+			religion = protestant
+		}
+		
+		1808 = {
+			owner = russia #became part of Russia in 1808; Source: William R. Shepherd, "Historical Atlas", 1911, p. 152.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

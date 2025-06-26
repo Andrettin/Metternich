@@ -1,0 +1,16 @@
+britons = {
+	name = "Britons"
+	type = tribe
+	culture = briton
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = london
+	eras = {
+		ancient_era
+		medieval_era
+	}
+	core_provinces = {
+		wales
+	}
+}

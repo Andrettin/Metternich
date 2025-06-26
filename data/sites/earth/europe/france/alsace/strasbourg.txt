@@ -1,0 +1,64 @@
+strasbourg = {
+	name = "Strasbourg"
+	world = earth
+	geocoordinate = { 7.75000728215 48.57996624660 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+	province = alsace
+	cultural_names = {
+		frankish = "Argentoratum"
+		gaulish = "Argentoratum"
+		roman = "Argentoratum" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+	}
+	cultural_group_names = {
+		german = "Strassburg"
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Strassburg was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			settlement_type = city
+		}
+		
+		919 = {
+			settlement_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1538 = {
+			buildings += college #Education establishment founded in Strasbourg in 1538; Source: Henry Kamen, "Early Modern European Society", 2021, p. 292.
+		}
+		
+		1609 = {
+			buildings += newspaper #the newspaper "Relation" was founded in Strasbourg in 1609; Source: Henry Kamen, "Early Modern European Society", 2021, p. 308.
+		}
+		
+		1621 = {
+			buildings += university #Education establishment in Strasbourg elevated to a university in 1621; Source: Henry Kamen, "Early Modern European Society", 2021, p. 292.
+		}
+		
+		1789 = {
+			#Bureau de finance and chambre du domaine existent in Strasbourg in 1789. Source: William R. Shepherd, Historical Atlas, 1911, p. 147.
+			#Prévôt des maréchaux existent in Strasbourg in 1789. Source: William R. Shepherd, Historical Atlas, 1911, p. 147.
+			buildings += courthouse
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.alsatian.catholic = 1000
+				bureaucrats.alsatian.protestant = 800
+				bureaucrats.french.catholic = 600
+				clergymen.alsatian.catholic = 1500
+				clergymen.alsatian.protestant = 1600
+				clergymen.alsatian.jewish = 100
+				clergymen.french.catholic = 1000
+				officers.alsatian.catholic = 240
+				officers.alsatian.protestant = 240
+				officers.french.catholic = 320
+			}
+		}
+	}
+}

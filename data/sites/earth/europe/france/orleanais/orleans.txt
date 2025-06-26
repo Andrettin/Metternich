@@ -1,0 +1,35 @@
+orleans = {
+	name = "Orleans" #"Orléans"
+	world = earth
+	geocoordinate = { 1.90002844098 47.90042116200 } #from Natural Earth
+	type = settlement
+	#resource = timber
+	province = orleanais
+	cultural_names = {
+		frankish = "Aurehani"
+	}
+	
+	history = {
+		1305 = {
+			buildings += university #University founded in Orléans in 1305; Source: "Atlas de História Mundial", 2001, p. 144.
+			settlement_type = campus
+		}
+		
+		1360 = {
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1789 = {
+			buildings += courthouse #Prévôt des maréchaux and chief court of the salt tax existent in Orléans in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+			settlement_type = city
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 2800
+				clergymen.french.catholic = 3000
+				officers.french.catholic = 1200
+			}
+		}
+	}
+}

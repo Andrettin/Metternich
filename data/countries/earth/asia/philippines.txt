@@ -1,0 +1,27 @@
+philippines = {
+	name = "Philippines"
+	type = minor_nation
+	culture = filipino
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = republic
+	default_capital = manila
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		luzon
+		mindanao
+		palawan
+	}
+	
+	history = {
+		1898 = {
+			#became an American possession in 1898; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 198-199.
+			diplomacy_state = {
+				country = united_states
+				subject_type = colony
+			}
+		}
+	}
+}

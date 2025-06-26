@@ -1,0 +1,4 @@
+library = {
+	name = "Library"
+	slot_type = library
+}

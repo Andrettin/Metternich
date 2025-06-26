@@ -1,0 +1,12 @@
+suioni = {
+	name = "Suioni"
+	group = scandinavian
+	color = { 150 108 150 }
+	species = {
+		human
+		half_elf
+	}
+	derived_cultures = {
+		norse
+	}
+}

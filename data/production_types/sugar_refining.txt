@@ -1,0 +1,9 @@
+sugar_refining = {
+	name = "Sugar Refining"
+	input_commodities = {
+		labor = 2
+		sugar_cane = 2
+	}
+	output_commodity = refined_sugar
+	output_value = 1
+}

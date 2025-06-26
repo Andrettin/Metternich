@@ -1,0 +1,23 @@
+russian_baltic_sea_frigates = {
+	type = frigate
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = baltic_sea
+		}
+	}
+}
+
+russian_black_sea_frigates = {
+	type = frigate
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = black_sea
+		}
+	}
+}

@@ -1,0 +1,7 @@
+almaty = {
+	name = "Almaty" #also known as Alma Ata
+	world = earth
+	geocoordinate = { 76.91503617240 43.32498984690 } #from Natural Earth
+	type = settlement
+	province = almaty
+}

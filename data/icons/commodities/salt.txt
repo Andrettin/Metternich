@@ -1,0 +1,3 @@
+salt = {
+	filepath = "icons/commodities/salt.png"
+}

@@ -1,0 +1,4 @@
+ancient_era = {
+	name = "Ancient Era"
+	start_date = -1450
+}

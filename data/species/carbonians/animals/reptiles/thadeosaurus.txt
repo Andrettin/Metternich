@@ -1,0 +1,9 @@
+thadeosaurus = {
+	name = "Thadeosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		diadectes
+		petrolacosaurus
+		seymouria
+	}
+}

@@ -1,0 +1,13 @@
+tangier = {
+	name = "Tangier"
+	world = earth
+	geocoordinate = { -5.83270369610 35.74728700670 } #from Natural Earth
+	type = settlement
+	province = tangier
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

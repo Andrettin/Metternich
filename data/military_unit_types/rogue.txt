@@ -1,0 +1,12 @@
+rogue = {
+	name = "Rogue"
+	unit_class = rogue
+	icon = longswordsmen
+	stats = {
+		melee = 10
+		range = 1
+		defense = 4
+		movement = 5
+	}
+	entrench = true
+}

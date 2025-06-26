@@ -1,0 +1,18 @@
+greece = {
+	name = "Greece"
+	type = great_power
+	color = { 122 180 210 }
+	culture = greek
+	default_religion = orthodox
+	default_tier = kingdom
+	default_government_type = republic
+	default_capital = athens
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		attica
+		peloponnese
+		thessaly
+	}
+}

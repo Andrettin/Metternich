@@ -1,0 +1,7 @@
+aracati = {
+	name = "Aracati"
+	world = earth
+	geocoordinate = { -37.77003076330 -4.55999428418 } #from Natural Earth
+	province = ceara
+	max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 50-51.
+}

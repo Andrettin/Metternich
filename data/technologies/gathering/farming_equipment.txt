@@ -1,0 +1,55 @@
+pitchfork = {
+	name = "Pitchfork"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = 1300_1400
+	cost_commodity = research
+	prerequisites = {
+		iron_plow
+		
+		stripe_plowing
+	}
+	modifier = {
+		grain_output_modifier = 1
+		potatoes_output_modifier = 1
+		fruit_output_modifier = 1
+	}
+}
+
+harrow = {
+	name = "Harrow"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = 1300_1400
+	cost_commodity = research
+	prerequisites = {
+		iron_plow
+		
+		stripe_plowing
+	}
+	modifier = {
+		grain_output_modifier = 1
+		potatoes_output_modifier = 1
+		fruit_output_modifier = 1
+	}
+}
+
+padded_horse_collar = {
+	name = "Padded Horse Collar"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = 1400_1500
+	cost_commodity = research
+	prerequisites = {
+		pitchfork
+		harrow
+	}
+	modifier = {
+		grain_output_modifier = 3
+		potatoes_output_modifier = 3
+		fruit_output_modifier = 3
+	}
+}

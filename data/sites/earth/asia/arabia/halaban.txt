@@ -1,0 +1,8 @@
+halaban = {
+	name = "Halaban"
+	world = earth
+	geocoordinate = { 44.37259125 23.47929754 }
+	type = resource
+	resource = sheep
+	province = riyadh
+}

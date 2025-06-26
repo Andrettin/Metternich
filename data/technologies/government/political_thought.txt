@@ -1,0 +1,232 @@
+monarchy = {
+	name = "Monarchy"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = crown_royal
+	period = 1_500
+	cost = 240
+	cost_commodity = statesmanship
+	prerequisites = {
+		code_of_laws
+		warrior_code
+		polytheism
+	}
+}
+
+republic = {
+	name = "Republic"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = philosophy
+	period = 1_500
+	cost = 280
+	cost_commodity = statesmanship
+	prerequisites = {
+		code_of_laws
+		literature
+	}
+}
+
+feudalism = {
+	name = "Feudalism"
+	subcategory = political_thought
+	portrait = ducal_crown
+	icon = crown_ducal
+	period = 500_1000
+	cost = 320
+	cost_commodity = statesmanship
+	prerequisites = {
+		monarchy
+		warrior_code
+	}
+}
+
+order_of_the_golden_fleece = {
+	name = "Order of the Golden Fleece"
+	subcategory = political_thought
+	portrait = helmet
+	icon = saber
+	cost_commodity = statesmanship
+	required_game_rule = additional_technologies
+	cultures = {
+		austrian
+		castillian
+		french #Burgundian
+	}
+	prerequisites = {
+		noble_knights
+	}
+	modifier = {
+		capital_prestige_bonus = 1
+	}
+}
+
+nationalism = {
+	name = "Nationalism"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = flag
+	period = 1700_1750
+	cost = 70
+	cost_commodity = statesmanship
+	prerequisites = {
+		propaganda
+		master_artisans
+		modern_fortifications
+	}
+	modifier = {
+		deployment_limit = 2
+	}
+}
+
+rights_of_man = {
+	name = "Rights of Man"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = treaty
+	period = 1750_1800
+	cost = 360
+	cost_commodity = statesmanship
+	prerequisites = {
+		nationalism
+	}
+	modifier = {
+		statesmanship_output_modifier = 5
+	}
+}
+
+constitutionalism = {
+	name = "Constitutionalism"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = treaty
+	period = 1750_1800
+	cost_commodity = statesmanship
+	prerequisites = {
+		nationalism
+	}
+	modifier = {
+		statesmanship_output_modifier = 5
+	}
+}
+
+egalitarianism = {
+	name = "Egalitarianism"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = treaty
+	period = 1750_1800
+	cost_commodity = statesmanship
+	prerequisites = {
+		nationalism
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			government_type = democratic_republic
+		}
+	}
+	modifier = {
+		statesmanship_output_modifier = 5
+	}
+}
+
+paternalism = {
+	name = "Paternalism"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = crown_royal
+	period = 1750_1800
+	cost_commodity = statesmanship
+	prerequisites = {
+		nationalism
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.33
+			consciousness < 3
+		}
+	}
+	modifier = {
+		military_unit_stat = {
+			domain = land
+			stat = morale_recovery_modifier
+			value = 5
+		}
+	}
+}
+
+democracy = {
+	name = "Democracy"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = philosophy
+	period = 1800_1825
+	cost = 680
+	cost_commodity = statesmanship
+	prerequisites = {
+		republic
+		
+		rights_of_man
+		constitutionalism
+		
+		banking
+		invention
+	}
+}
+
+collectivism = {
+	name = "Collectivism"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = treaty
+	period = 1800_1825
+	cost_commodity = statesmanship
+	prerequisites = {
+		egalitarianism
+	}
+	modifier = {
+		statesmanship_output_modifier = 5
+	}
+}
+
+individualism = {
+	name = "Individualism"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = treaty
+	period = 1800_1825
+	cost_commodity = statesmanship
+	prerequisites = {
+		rights_of_man
+		constitutionalism
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.67
+			consciousness >= 2
+		}
+	}
+	modifier = {
+		statesmanship_output_modifier = 5
+	}
+}
+
+communism = {
+	name = "Communism"
+	subcategory = political_thought
+	portrait = grand_ducal_crown
+	icon = treaty
+	period = 1825_1850
+	cost = 1200
+	cost_commodity = statesmanship
+	prerequisites = {
+		collectivism
+		
+		philosophy
+		industrial_machinery
+	}
+	modifier = {
+		amenities_per_cathedral = -1
+	}
+}

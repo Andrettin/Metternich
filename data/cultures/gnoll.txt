@@ -1,0 +1,6 @@
+gnoll = {
+	name = "Gnoll"
+	species = {
+		gnoll
+	}
+}

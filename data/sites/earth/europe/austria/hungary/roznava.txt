@@ -1,0 +1,7 @@
+roznava = {
+	name = "Roznava"
+	world = earth
+	geocoordinate = { 20.531388888889 48.658611111111 }
+	type = resource
+	resource = coal
+}

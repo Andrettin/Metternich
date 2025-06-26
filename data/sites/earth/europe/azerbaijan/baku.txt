@@ -1,0 +1,7 @@
+baku = {
+	name = "Baku"
+	world = earth
+	geocoordinate = { 49.86221716190 40.39527203270 } #from Natural Earth
+	type = settlement
+	province = azerbaijan
+}

@@ -1,0 +1,90 @@
+blacksmiths_house = {
+	name = "Blacksmith's House"
+	building_class = blacksmiths_house
+	portrait = factory
+	icon = tools
+	base_capacity = 1
+	commodity_costs = {
+		lumber = 1
+		steel = 1
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = industrious
+			}
+		}
+	}
+	production_types = {
+		arquebus_production
+		musket_production
+		rifle_production
+		bronze_cannon_production
+		iron_cannon_production
+		steel_cannon_production
+		tool_making
+	}
+}
+
+blacksmiths_shop = {
+	name = "Blacksmith's Shop"
+	building_class = blacksmiths_shop
+	portrait = factory
+	icon = tools
+	base_capacity = 2
+	required_building = blacksmiths_house
+	commodity_costs = {
+		lumber = 2
+		steel = 2
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = industrious
+			}
+		}
+	}
+	production_types = {
+		arquebus_production
+		musket_production
+		rifle_production
+		bronze_cannon_production
+		iron_cannon_production
+		steel_cannon_production
+		tool_making
+	}
+}
+
+metalworks = {
+	name = "Metalworks"
+	building_class = metalworks
+	portrait = factory
+	icon = tools
+	base_capacity = 4
+	capacity_increment = 4
+	expandable = true
+	required_building = blacksmiths_shop
+	commodity_costs = {
+		lumber = 4
+		steel = 4
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = industrious
+			}
+		}
+	}
+	production_types = {
+		arquebus_production
+		musket_production
+		rifle_production
+		bronze_cannon_production
+		iron_cannon_production
+		steel_cannon_production
+		tool_making
+	}
+}

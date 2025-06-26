@@ -1,0 +1,16 @@
+sun_tzu = {
+	name = "Sun Tzu"
+	role = advisor
+	character_type = general
+	culture = chinese
+	religion = pagan
+	home_settlement = jinan #correct?
+	gender = male
+	birth_date = -771
+	death_date = -256
+	required_technology = feudalism
+	obsolescence_technology = mobile_warfare
+	traits = {
+		sun_tzu
+	}
+}

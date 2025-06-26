@@ -1,0 +1,14 @@
+desert_warrior = {
+	name = "Desert Warrior"
+	icon = mountains
+	conditions = {
+		or = {
+			infantry = true
+			cavalry = true
+		}
+	}
+	modifier = {
+		desert_attack_modifier = 50
+		desert_defense_modifier = 50
+	}
+}

@@ -1,0 +1,19 @@
+narbonne = {
+	name = "Narbonne"
+	world = earth
+	geocoordinate = { 3.0036111111111 43.184722222222 }
+	province = lower_languedoc
+	cultural_names = {
+		frankish = "Namnetes"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1789 = {
+			buildings += courthouse #Chief court of the salt tax existent in Narbonne in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+	}
+}

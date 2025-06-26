@@ -1,0 +1,7 @@
+athena = {
+	filepath = "portraits/characters/athena.png"
+}
+
+athena_short_hair = {
+	filepath = "portraits/characters/athena_short_hair.png"
+}

@@ -1,0 +1,14 @@
+cassel = {
+	name = "Cassel" #also known as Kassel
+	world = earth
+	geocoordinate = { 9.50002966171 51.30000693670 } #from Natural Earth
+	type = resource
+	resource = coal
+	province = hesse
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

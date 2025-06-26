@@ -1,0 +1,14 @@
+sao_paulo = {
+	name = "Sao Paulo" #"São Paulo"
+	world = earth
+	geocoordinate = { -46.62501998040 -23.55867958700 } #from Natural Earth
+	type = settlement
+	province = sao_paulo
+	
+	history = {
+		1827 = {
+			buildings += college #Law college existent in São Paulo in 1827; Source: Otávio Tarquínio de Sousa, "Bernardo Pereira de Vasconcelos", p. 66.
+			settlement_type = campus
+		}
+	}
+}

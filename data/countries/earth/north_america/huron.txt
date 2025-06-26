@@ -1,0 +1,12 @@
+huron = {
+	name = "Huron"
+	type = tribe
+	culture = huron
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = quebec
+	eras = {
+		renaissance_era
+	}
+}

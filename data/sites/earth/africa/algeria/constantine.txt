@@ -1,0 +1,7 @@
+constantine = {
+	name = "Constantine"
+	world = earth
+	geocoordinate = { 6.59994828149 36.35998862610 } #from Natural Earth
+	type = settlement
+	province = constantine
+}

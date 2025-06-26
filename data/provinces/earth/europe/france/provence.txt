@@ -1,0 +1,32 @@
+provence = {
+	name = "Provence"
+	color = { 49 192 223 }
+	provincial_capital = marseilles
+	resources = {
+		fruit = 1
+	}
+	regions = {
+		france
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		1481 = {
+			owner = france #became part of the Kingdom of France in 1481; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = french
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = france #part of the Kingdom of France c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

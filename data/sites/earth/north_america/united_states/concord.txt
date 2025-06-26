@@ -1,0 +1,6 @@
+concord = {
+	name = "Concord"
+	world = earth
+	geocoordinate = { -71.53804712080 43.20807191880 } #from Natural Earth
+	type = settlement
+}

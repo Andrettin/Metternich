@@ -1,0 +1,7 @@
+sundsvall = {
+	name = "Sundsvall"
+	world = earth
+	geocoordinate = { 17.31665848660 62.40005291660 } #from Natural Earth
+	type = resource
+	resource = timber
+}

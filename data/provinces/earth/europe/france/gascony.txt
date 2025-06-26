@@ -1,0 +1,37 @@
+gascony = {
+	name = "Gascony"
+	color = { 24 124 255 }
+	provincial_capital = auch
+	regions = {
+		france
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = frankish
+			religion = catholic
+		}
+		
+		1188 = {
+			owner = england #English possession in 1188; Source: William R. Shepherd, "Historical Atlas", 1911, p. 76.
+		}
+		
+		1328 = {
+			owner = england #English possession in 1328; Source: William R. Shepherd, "Historical Atlas", 1911, p. 76.
+		}
+		
+		1360 = {
+			owner = england #English possession in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = french
+		}
+		
+		1740 = {
+			owner = france #part of the Kingdom of France c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

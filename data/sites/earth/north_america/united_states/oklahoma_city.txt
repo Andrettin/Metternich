@@ -1,0 +1,6 @@
+oklahoma_city = {
+	name = "Oklahoma City"
+	world = earth
+	geocoordinate = { -97.51868351420 35.47004294740 } #from Natural Earth
+	type = settlement
+}

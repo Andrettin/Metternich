@@ -1,0 +1,6 @@
+charleston = {
+	name = "Charleston"
+	world = earth
+	geocoordinate = { -81.63272811050 38.34973797510 } #from Natural Earth
+	type = settlement
+}

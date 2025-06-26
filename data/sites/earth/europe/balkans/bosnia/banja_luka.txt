@@ -1,0 +1,6 @@
+banja_luka = {
+	name = "Banja Luka"
+	world = earth
+	geocoordinate = { 17.17997432320 44.78040488590 } #from Natural Earth
+	province = bosnia
+}

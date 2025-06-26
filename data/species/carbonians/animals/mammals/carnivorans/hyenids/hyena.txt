@@ -1,0 +1,9 @@
+hyena = {
+	name = "Hyena"
+	supertaxon = hyaenidae
+	era = holocene
+	pre_evolutions = {
+		protictitherium #earlier hyenid
+	}
+	#scavenger
+}

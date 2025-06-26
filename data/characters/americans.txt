@@ -1,0 +1,219 @@
+benjamin_franklin = {
+	name = "Benjamin"
+	surname = "Franklin"
+	role = advisor
+	character_type = statesman
+	culture = american
+	religion = protestant
+	home_settlement = boston
+	gender = male
+	birth_date = 1706
+	death_date = 1790
+	required_technology = constitutionalism
+	traits = {
+		benjamin_franklin
+	}
+}
+
+george_washington = {
+	name = "George"
+	surname = "Washington"
+	role = ruler
+	character_type = general
+	culture = american
+	religion = protestant
+	portrait = george_washington
+	home_site = fredericksburg
+	gender = male
+	birth_date = 1732
+	death_date = 1799
+	skill = 10 #Disciplined: -50% Infantry Cost
+	obsolescence_technology = individualism
+	rulable_countries = {
+		united_states
+	}
+	traits = {
+		disciplined
+		expansive
+	}
+}
+
+john_adams = {
+	name = "John"
+	surname = "Adams"
+	role = ruler
+	character_type = statesman
+	culture = american
+	religion = protestant
+	home_settlement = boston #Braintree
+	gender = male
+	birth_date = 1735
+	death_date = 1826
+	required_technology = individualism
+	rulable_countries = {
+		united_states
+	}
+	traits = {
+		libertarian
+	}
+}
+
+patrick_henry = {
+	name = "Patrick"
+	surname = "Henry"
+	role = advisor
+	character_type = statesman
+	culture = american
+	religion = protestant
+	home_settlement = richmond #Studley
+	gender = male
+	birth_date = 1736
+	death_date = 1799
+	required_technology = rights_of_man
+	traits = {
+		patrick_henry
+	}
+}
+
+thomas_jefferson = {
+	name = "Thomas"
+	surname = "Jefferson"
+	role = advisor
+	character_type = statesman
+	culture = american
+	religion = protestant
+	home_settlement = richmond #Tuckahoe
+	gender = male
+	birth_date = 1743
+	death_date = 1826
+	skill = 10 #+50% Statesmanship
+	required_technology = constitutionalism
+	traits = {
+		statesman
+	}
+}
+
+john_jay = {
+	name = "John"
+	surname = "Jay"
+	role = advisor
+	character_type = statesman
+	culture = american
+	religion = protestant
+	home_settlement = new_york
+	gender = male
+	birth_date = 1745
+	death_date = 1829
+	skill = 5 #+25% Statesmanship
+	required_technology = constitutionalism
+	traits = {
+		statesman
+	}
+}
+
+john_paul_jones = {
+	name = "John Paul"
+	surname = "Jones"
+	role = advisor
+	character_type = admiral
+	culture = scottish
+	religion = protestant
+	home_site = fredericksburg
+	gender = male
+	birth_date = 1747
+	death_date = 1792
+	required_technology = advanced_hull_design
+	traits = {
+		john_paul_jones
+	}
+}
+
+john_jacob_astor = {
+	name = "John Jacob"
+	surname = "Astor"
+	role = advisor
+	character_type = merchant
+	culture = german
+	religion = protestant
+	home_settlement = new_york
+	gender = male
+	birth_date = 1763
+	death_date = 1848
+	required_technology = excessive_fur_harvesting
+	traits = {
+		john_jacob_astor
+	}
+}
+
+eli_whitney = {
+	name = "Eli"
+	surname = "Whitney"
+	role = advisor
+	character_type = farmer
+	culture = american
+	religion = protestant
+	home_site = pittsfield #Westborough
+	gender = male
+	birth_date = 1765
+	death_date = 1825
+	skill = 10 #+50% Cotton
+	required_technology = cotton_gin
+	traits = {
+		cotton_planter
+	}
+}
+
+washington_irving = {
+	name = "Washington"
+	surname = "Irving"
+	role = advisor
+	character_type = statesman
+	culture = american
+	religion = protestant
+	home_settlement = richmond #Studley
+	gender = male
+	birth_date = 1783
+	death_date = 1859
+	required_technology = romanticism
+	traits = {
+		washington_irving
+	}
+}
+
+abraham_lincoln = {
+	name = "Abraham"
+	surname = "Lincoln"
+	role = ruler
+	character_type = statesman
+	culture = american
+	religion = protestant
+	home_site = louisville #Hodgenville
+	gender = male
+	birth_date = 1809
+	death_date = 1865
+	required_technology = individualism
+	rulable_countries = {
+		united_states
+	}
+	traits = {
+		philosophical
+		charismatic
+	}
+}
+
+cyrus_mccormick = {
+	name = "Cyrus"
+	surname = "McCormick"
+	role = advisor
+	character_type = natural_scientist
+	culture = american
+	religion = protestant
+	home_settlement = chicago
+	gender = male
+	birth_date = 1809
+	death_date = 1884
+	required_technology = mechanical_reaper
+	traits = {
+		cyrus_mccormick
+	}
+}

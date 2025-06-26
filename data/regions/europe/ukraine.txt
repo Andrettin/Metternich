@@ -1,0 +1,7 @@
+ukraine = {
+	superregions = {
+		europe
+		commonwealth_of_independent_states
+		soviet_union
+	}
+}

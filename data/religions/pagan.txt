@@ -1,0 +1,6 @@
+pagan = {
+	name = "Pagan"
+	group = pagan
+	color = { 112 194 49 }
+	icon = pine_tree
+}

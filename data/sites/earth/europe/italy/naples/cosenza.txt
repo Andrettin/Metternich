@@ -1,0 +1,6 @@
+cosenza = {
+	name = "Cosenza"
+	world = earth
+	geocoordinate = { 16.25 39.3 }
+	type = settlement
+}

@@ -1,0 +1,28 @@
+cairo = {
+	name = "Cairo"
+	color = { 66 184 92 }
+	provincial_capital = cairo
+	cultural_names = {
+		egyptian = "Memphis"
+	}
+	resources = {
+		grain = 1
+	}
+	regions = {
+		egypt
+	}
+	
+	history = {
+		-1450 = {
+			owner = egypt #part of Egypt c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = egyptian
+			religion = pagan
+		}
+		
+		1360 = {
+			owner = egypt_arabic #part of the Mameluke Sultanates in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = arabic
+			religion = sunni
+		}
+	}
+}

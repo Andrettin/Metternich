@@ -1,0 +1,6 @@
+hargeysa = {
+	name = "Hargeysa"
+	world = earth
+	geocoordinate = { 44.06531001670 9.56002239882 } #from Natural Earth
+	type = settlement
+}

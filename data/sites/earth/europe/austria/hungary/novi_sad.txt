@@ -1,0 +1,7 @@
+novi_sad = {
+	name = "Novi Sad"
+	world = earth
+	geocoordinate = { 19.84994055040 45.25037619940 } #from Natural Earth
+	type = resource
+	resource = sheep
+}

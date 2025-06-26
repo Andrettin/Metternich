@@ -1,0 +1,12 @@
+klosterneuburg = {
+	name = "Klosterneuburg"
+	world = earth
+	geocoordinate = { 16.316666666667 48.304166666667 }
+	province = lower_austria
+	
+	history = {
+		1900 = {
+			population = 11595 #Klosterneuburg had a population of 11,595 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
+		}
+	}
+}

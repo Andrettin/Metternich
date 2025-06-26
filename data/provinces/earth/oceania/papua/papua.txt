@@ -1,0 +1,13 @@
+papua = {
+	name = "Papua"
+	color = { 194 54 135 }
+	provincial_capital = port_moresby
+	regions = {
+		oceania
+	}
+	
+	history = {
+		culture = moluccan
+		religion = pagan
+	}
+}

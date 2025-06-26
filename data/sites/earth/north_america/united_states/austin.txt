@@ -1,0 +1,6 @@
+austin = {
+	name = "Austin"
+	world = earth
+	geocoordinate = { -97.74277836280 30.26694968570 } #from Natural Earth
+	type = settlement
+}

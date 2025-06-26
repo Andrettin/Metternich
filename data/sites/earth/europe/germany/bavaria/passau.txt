@@ -1,0 +1,12 @@
+passau = {
+	name = "Passau"
+	world = earth
+	geocoordinate = { 13.46660925160 48.56704713860 } #from Natural Earth
+	province = bavaria
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

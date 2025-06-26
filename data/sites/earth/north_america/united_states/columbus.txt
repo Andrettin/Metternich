@@ -1,0 +1,6 @@
+columbus = {
+	name = "Columbus"
+	world = earth
+	geocoordinate = { -82.99000960460 39.97997438460 } #from Natural Earth
+	type = settlement
+}

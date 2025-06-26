@@ -1,0 +1,22 @@
+perpignan = {
+	name = "Perpignan"
+	world = earth
+	geocoordinate = { 2.89996740582 42.69998923650 } #from Natural Earth
+	type = resource
+	#resource = fruit #Market gardening (fruits, vegetables, flowers); Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
+	resource = grain
+	province = lower_languedoc
+	
+	history = {
+		1349 = {
+			buildings += university #University founded in Perpignan in 1349; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.catalan.catholic = 1100
+				clergymen.french.catholic = 500
+			}
+		}
+	}
+}

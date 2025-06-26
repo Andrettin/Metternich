@@ -1,0 +1,6 @@
+romania = { #the territory of modern Romania
+	superregions = {
+		europe
+		west_and_central_europe
+	}
+}

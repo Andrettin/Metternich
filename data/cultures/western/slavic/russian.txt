@@ -1,0 +1,25 @@
+russian = {
+	name = "Russian"
+	group = east_slavic
+	color = { 111 177 210 }
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			monarchy = {
+					empire = {
+						male = "Czar"
+						female = "Czarina"
+					}
+			}
+		}
+	}
+	
+	personal_names = {
+		male = {
+			#Novgorodian names
+			"Onfim"
+		}
+	}
+}

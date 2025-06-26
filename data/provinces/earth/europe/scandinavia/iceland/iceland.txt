@@ -1,0 +1,13 @@
+iceland = {
+	name = "Iceland"
+	color = { 128 64 64 }
+	provincial_capital = reykjavik
+	regions = {
+		iceland
+	}
+	
+	history = {
+		culture = icelandic
+		religion = pagan
+	}
+}

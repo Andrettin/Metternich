@@ -1,0 +1,49 @@
+genoa = {
+	name = "Genoa"
+	color = { 144 64 97 }
+	provincial_capital = genoa
+	cultural_names = {
+		roman = "Genua" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+	}
+	resources = {
+		grain = 4
+		fruit = 1
+		cattle = 2
+		iron_ore = 1
+		coal = 1
+	}
+	regions = {
+		italy
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		1477 = {
+			owner = genoa #part of the Republic of Genoa c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = italian
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = genoa #part of the Republic of Genoa c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = sardinia #part of the Kingdom of Sardinia in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = italian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		1861 = {
+			owner = italy #became part of the Kingdom of Italy in 1861; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

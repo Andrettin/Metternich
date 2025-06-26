@@ -1,0 +1,12 @@
+salt = {
+	name = "Salt"
+	commodity = salt
+	tiny_icon = trade_consulate
+	prospectable = true
+	terrain_types = {
+		desert
+	}
+	site_types = {
+		resource
+	}
+}

@@ -1,0 +1,6 @@
+pozo_colorado = {
+	name = "Pozo Colorado"
+	world = earth
+	geocoordinate = { -58.85998376630 -23.43000527060 } #from Natural Earth
+	type = settlement
+}

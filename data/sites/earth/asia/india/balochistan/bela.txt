@@ -1,0 +1,8 @@
+bela = {
+	name = "Bela"
+	world = earth
+	geocoordinate = { 66.31055555555555 26.226666666666667 }
+	type = resource
+	resource = tea
+	province = balochistan
+}

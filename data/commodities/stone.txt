@@ -1,0 +1,5 @@
+stone = {
+	name = "Stone"
+	icon = stone
+	base_price = 100
+}

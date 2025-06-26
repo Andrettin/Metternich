@@ -1,0 +1,22 @@
+messina = {
+	name = "Messina"
+	world = earth
+	geocoordinate = { 15.54999629580 38.20047060040 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = sicily
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1548 = {
+			buildings += university #University founded in Messina in 1548; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+		
+		1600 = {
+			population = 100000 #Messina had a population of 100,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+	}
+}

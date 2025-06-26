@@ -1,0 +1,56 @@
+carrack = {
+	name = "Carrack"
+	transporter_class = carrack
+	icon = carrack
+	hit_points = 25
+	stats = {
+		resistance = 5
+		movement = 3
+	}
+	cargo = 3
+	commodity_costs = {
+		lumber = 4
+		cast_iron = 2
+		fabric = 2
+	}
+	upgrades = {
+		trader
+	}
+}
+
+trader = {
+	name = "Trader"
+	transporter_class = trader
+	icon = carrack
+	hit_points = 30
+	stats = {
+		resistance = 10
+		movement = 4
+	}
+	cargo = 4
+	required_technology = improved_sail_design
+	commodity_costs = {
+		fabric = 2
+		lumber = 4
+	}
+	upgrades = {
+		clipper
+	}
+}
+
+clipper = {
+	name = "Clipper"
+	transporter_class = clipper
+	icon = carrack
+	hit_points = 35
+	stats = {
+		resistance = 10
+		movement = 7
+	}
+	cargo = 6
+	required_technology = streamlined_hulls
+	commodity_costs = {
+		fabric = 2
+		lumber = 6
+	}
+}

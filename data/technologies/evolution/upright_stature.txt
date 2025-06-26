@@ -1,0 +1,15 @@
+upright_stature = {
+	name = "Upright Stature"
+	subcategory = body_proportions
+	portrait = building_slot
+	icon = lion
+	period = carboniferous
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		tail_weapons
+	}
+}

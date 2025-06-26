@@ -1,0 +1,25 @@
+boqueron = {
+	name = "Boqueron" #"Boquerón"
+	color = { 232 131 19 }
+	provincial_capital = mariscal_estigarribia
+	regions = {
+		paraguay
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = tupi
+			culture = tupi
+		}
+		
+		1790 = {
+			owner = la_plata #part of the Viceroyalty of La Plata c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = castillian
+			religion = catholic
+		}
+	}
+}

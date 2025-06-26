@@ -1,0 +1,8 @@
+arawak = {
+	name = "Arawak"
+	group = arawakan
+	color = { 105 138 195 }
+	species = {
+		human
+	}
+}

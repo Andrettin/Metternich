@@ -1,0 +1,13 @@
+caracas = {
+	name = "Caracas"
+	world = earth
+	geocoordinate = { -66.91703719240 10.50099855440 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		1721 = {
+			buildings += university #University founded in Caracas in 1721; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			settlement_type = campus
+		}
+	}
+}

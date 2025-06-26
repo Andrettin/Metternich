@@ -1,0 +1,20 @@
+nineveh = {
+	name = "Nineveh"
+	world = earth
+	geocoordinate = { 43.14500443400 36.34500246080 } #from Natural Earth (Mosul)
+	type = settlement
+	province = assyria
+	cultural_names = {
+		arabic = "Mosul"
+	}
+	
+	history = {
+		-1450 = {
+			settlement_type = city #important settlement c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+		
+		1360 = {
+			settlement_type = town #Mosul existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

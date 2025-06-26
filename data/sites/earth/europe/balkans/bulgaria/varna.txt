@@ -1,0 +1,12 @@
+varna = {
+	name = "Varna"
+	world = earth
+	geocoordinate = { 27.89528926460 43.21564251610 } #from Natural Earth
+	province = bulgaria
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

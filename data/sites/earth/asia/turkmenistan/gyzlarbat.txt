@@ -1,0 +1,7 @@
+gyzlarbat = {
+	name = "Gyzlarbat" #also known as Kizil Arvat
+	world = earth
+	geocoordinate = { 56.27779455450 38.97553957020 } #from Natural Earth
+	type = settlement
+	province = balkan
+}

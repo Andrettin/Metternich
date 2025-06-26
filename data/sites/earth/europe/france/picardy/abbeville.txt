@@ -1,0 +1,12 @@
+abbeville = {
+	name = "Abbeville"
+	world = earth
+	geocoordinate = { 1.8352777777778 50.105277777778 }
+	province = picardy
+	
+	history = {
+		1789 = {
+			buildings += courthouse #Chief court of the salt tax existent in Abbeville in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+	}
+}

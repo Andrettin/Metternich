@@ -1,0 +1,6 @@
+anchorage = {
+	name = "Anchorage"
+	world = earth
+	geocoordinate = { -149.90021488600 61.21996990880 } #from Natural Earth
+	type = settlement
+}

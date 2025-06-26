@@ -1,0 +1,298 @@
+jongleurs = {
+	name = "Jongleurs"
+	subcategory = popular_customs
+	portrait = engineering
+	icon = music
+	period = 1100_1200
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		divine_duty
+	}
+	modifier = {
+		untrained_workers_militancy_modifier = -0.01
+		trained_workers_militancy_modifier = -0.01
+		expert_workers_militancy_modifier = -0.01
+	}
+}
+
+music_notation_system = {
+	name = "Music Notation System"
+	subcategory = aesthetics
+	portrait = temple
+	icon = music
+	period = 1100_1200
+	cost_commodity = culture
+	prerequisites = {
+		relics
+	}
+	modifier = {
+		clergymen_militancy_modifier = -0.01
+		firebrand_preachers_militancy_modifier = -0.01
+	}
+}
+
+ballads = {
+	name = "Ballads"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = music
+	period = 1200_1300
+	cost_commodity = culture
+	prerequisites = {
+		music_notation_system
+	}
+	modifier = {
+		bureaucrats_militancy_modifier = -0.01
+		elder_statesmen_militancy_modifier = -0.01
+		academics_militancy_modifier = -0.01
+		capitalists_militancy_modifier = -0.01
+	}
+}
+
+choir_songs = {
+	name = "Choir Songs"
+	subcategory = aesthetics
+	portrait = temple
+	icon = music
+	period = 1200_1300
+	cost_commodity = culture
+	prerequisites = {
+		music_notation_system
+	}
+	modifier = {
+		clergymen_militancy_modifier = -0.01
+		firebrand_preachers_militancy_modifier = -0.01
+	}
+}
+
+troubadours = {
+	name = "Troubadours"
+	subcategory = popular_customs
+	portrait = engineering
+	icon = music
+	period = 1200_1300
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		jongleurs
+		music_notation_system
+	}
+	modifier = {
+		untrained_workers_militancy_modifier = -0.01
+		trained_workers_militancy_modifier = -0.01
+		expert_workers_militancy_modifier = -0.01
+	}
+}
+
+tapestries = {
+	name = "Tapestries"
+	subcategory = aesthetics
+	portrait = temple
+	icon = painting
+	period = 1300_1400
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		choir_songs
+	}
+	modifier = {
+		clergymen_militancy_modifier = -0.01
+		firebrand_preachers_militancy_modifier = -0.01
+		piety_output_modifier = 5
+	}
+}
+
+music_theory = {
+	name = "Music Theory"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = music
+	period = 1500_1550
+	cost = 400
+	cost_commodity = culture
+	prerequisites = {
+		ballads
+		choir_songs
+		
+		academic_disciplines #university
+	}
+}
+
+classicism = {
+	name = "Classicism"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = 1750_1800
+	cost = 360
+	cost_commodity = culture
+	prerequisites = {
+		music_theory
+		
+		nationalism #to properly place this in its period
+	}
+	modifier = {
+		prestige_output_modifier = 5
+	}
+}
+
+romanticism = {
+	name = "Romanticism"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = 1800_1825
+	shared_prestige = 15
+	cost = 720
+	cost_commodity = culture
+	prerequisites = {
+		classicism
+	}
+	modifier = {
+		prestige_output_modifier = 5
+	}
+}
+
+realism = {
+	name = "Realism"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = 1825_1850
+	shared_prestige = 30
+	cost = 1080
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		romanticism
+	}
+	modifier = {
+		prestige_output_modifier = 5
+	}
+}
+
+impressionism = {
+	name = "Impressionism"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = 1850_1875
+	shared_prestige = 45
+	cost = 1440
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		realism
+	}
+	modifier = {
+		prestige_output_modifier = 5
+	}
+}
+
+expressionism = {
+	name = "Expressionism"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = 1875_1900
+	shared_prestige = 60
+	cost = 1800
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		impressionism
+	}
+	modifier = {
+		prestige_output_modifier = 5
+	}
+}
+
+mass_culture = {
+	name = "Mass Culture"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = music
+	period = 1900_1925
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		expressionism
+	}
+	modifier = {
+		prestige_output_modifier = 3
+	}
+}
+
+avant_garde_art = {
+	name = "Avant-garde Art"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = 1900_1925
+	shared_prestige = 75
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		expressionism
+	}
+	modifier = {
+		prestige_output_modifier = 2
+	}
+}
+
+jazz = {
+	name = "Jazz"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = music
+	period = 1900_1925
+	shared_prestige = 25
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		expressionism
+	}
+}
+
+modern_design = {
+	name = "Modern Design"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = 1900_1925
+	shared_prestige = 25
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		expressionism
+	}
+}
+
+socialist_realism = {
+	name = "Socialist Realism"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = 1900_1925
+	shared_prestige = 25
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		expressionism
+	}
+}
+
+surrealism = {
+	name = "Surrealism"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = 1900_1925
+	shared_prestige = 25
+	cost_commodity = culture
+	required_game_rule = additional_technologies
+	prerequisites = {
+		expressionism
+	}
+}

@@ -1,0 +1,14 @@
+guatemala = {
+	name = "Guatemala"
+	color = { 171 41 192 }
+	provincial_capital = guatemala
+	regions = {
+		central_america
+	}
+	
+	history = {
+		owner = mayas
+		culture = maya
+		religion = pagan
+	}
+}

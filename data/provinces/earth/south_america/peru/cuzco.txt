@@ -1,0 +1,25 @@
+cuzco = {
+	name = "Cuzco"
+	color = { 231 106 125 }
+	provincial_capital = cuzco
+	regions = {
+		peru
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = inca_empire
+			culture = inca
+		}
+		
+		1790 = {
+			owner = peru #part of the Viceroyalty of Peru c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			culture = castillian
+			religion = catholic
+		}
+	}
+}

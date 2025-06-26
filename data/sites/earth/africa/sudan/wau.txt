@@ -1,0 +1,6 @@
+wau = {
+	name = "Wau"
+	world = earth
+	geocoordinate = { 27.98996048860 7.69998089490 } #from Natural Earth
+	type = settlement
+}

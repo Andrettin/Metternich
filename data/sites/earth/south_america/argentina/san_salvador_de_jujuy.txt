@@ -1,0 +1,6 @@
+san_salvador_de_jujuy = {
+	name = "San Salvador de Jujuy"
+	world = earth
+	geocoordinate = { -65.30002994960 -24.18334430050 } #from Natural Earth
+	type = settlement
+}

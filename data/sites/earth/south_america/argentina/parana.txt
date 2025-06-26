@@ -1,0 +1,6 @@
+parana = {
+	name = "Parana" #"Paraná"
+	world = earth
+	geocoordinate = { -60.53334415860 -31.73332273480 } #from Natural Earth
+	type = settlement
+}

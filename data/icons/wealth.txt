@@ -1,0 +1,3 @@
+wealth = {
+	filepath = "icons/wealth.png"
+}

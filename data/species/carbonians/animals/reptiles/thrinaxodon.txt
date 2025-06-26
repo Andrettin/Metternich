@@ -1,0 +1,9 @@
+thrinaxodon = {
+	name = "Thrinaxodon"
+	supertaxon = reptilia
+	pre_evolutions = {
+		edaphosaurus
+		pareiasaurus
+		sphenacodon
+	}
+}

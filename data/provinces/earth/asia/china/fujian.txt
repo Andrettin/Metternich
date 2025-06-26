@@ -1,0 +1,17 @@
+fujian = {
+	name = "Fujian"
+	color = { 222 119 2 }
+	provincial_capital = fuzhou
+	resources = {
+		tea = 1
+	}
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

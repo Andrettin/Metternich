@@ -1,0 +1,31 @@
+french = {
+	name = "French"
+	group = french
+	color = { 87 139 166 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = france
+		}
+	}
+	office_title_names = {
+		ruler = {
+			democratic_republic = "Premier"
+		}
+	}
+
+	personal_names = {
+		male = {
+			"Bellaud" #Source: http://www.cnrtl.fr/definition/lourdaud//1
+			"Bonnaud" #Source: http://www.cnrtl.fr/definition/lourdaud//1
+			"Renaud" #Source: http://www.cnrtl.fr/definition/lourdaud//1
+		}
+		
+		female = {
+			"Anne"
+		}
+	}
+}

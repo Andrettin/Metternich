@@ -1,0 +1,8 @@
+khiva = {
+	name = "Khiva"
+	world = earth
+	geocoordinate = { 60.35573685590 41.39112855940 } #from Natural Earth
+	type = resource
+	resource = sheep
+	province = karakalpakstan
+}

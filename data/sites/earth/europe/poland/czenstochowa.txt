@@ -1,0 +1,6 @@
+czenstochowa = {
+	name = "Czenstochowa"
+	world = earth
+	geocoordinate = { 19.12217 50.80964 }
+	type = settlement
+}

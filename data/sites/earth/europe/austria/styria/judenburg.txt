@@ -1,0 +1,6 @@
+judenburg = {
+	name = "Judenburg"
+	world = earth
+	geocoordinate = { 14.660277777778 47.1725 }
+	province = styria
+}

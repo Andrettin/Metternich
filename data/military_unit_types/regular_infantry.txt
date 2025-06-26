@@ -1,0 +1,69 @@
+regulars = {
+	name = "Regulars"
+	unit_class = regulars
+	icon = whitecoats
+	stats = {
+		firepower = 10
+		melee = 10
+		range = 5
+		defense = 5
+		movement = 4
+	}
+	entrench = true
+	required_technology = bayonet
+	wealth_cost = 500
+	upkeep = 25
+	commodity_costs = {
+		manpower = 1
+		muskets = 1
+	}
+	upgrades = {
+		rifle_infantry
+	}
+}
+
+rifle_infantry = {
+	name = "Rifle Infantry"
+	unit_class = rifle_infantry
+	icon = rifle_infantry_light
+	stats = {
+		firepower = 15
+		melee = 15
+		range = 8
+		defense = 7
+		movement = 4
+	}
+	entrench = true
+	required_technology = needle_gun
+	wealth_cost = 3000
+	upkeep = 50
+	commodity_costs = {
+		manpower = 1
+		rifles = 2
+	}
+	upgrades = {
+		infantry
+	}
+}
+
+infantry = {
+	name = "Infantry"
+	unit_class = infantry
+	icon = rifle_infantry_light
+	stats = {
+		firepower = 22
+		melee = 22
+		range = 10
+		defense = 20
+		movement = 5
+	}
+	entrench = true
+	entrenchment_bonus = 5
+	required_technology = machine_gun
+	wealth_cost = 5000
+	upkeep = 100
+	commodity_costs = {
+		manpower = 1
+		rifles = 4
+	}
+}

@@ -1,0 +1,14 @@
+saaz = {
+	name = "Saaz"
+	world = earth
+	geocoordinate = { 13.545859487384 50.327264913574 }
+	cultural_names = {
+		czech = "Zatec" #"Žatec"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

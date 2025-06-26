@@ -1,0 +1,5 @@
+mesoamerican = {
+	name = "Mesoamerican"
+	rank = group
+	upper_group = american
+}

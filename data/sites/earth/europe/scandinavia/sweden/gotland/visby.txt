@@ -1,0 +1,14 @@
+visby = {
+	name = "Visby"
+	world = earth
+	geocoordinate = { 18.30000931670 57.63365134600 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+	province = gotland
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

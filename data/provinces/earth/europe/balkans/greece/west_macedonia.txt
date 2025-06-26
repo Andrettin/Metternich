@@ -1,0 +1,31 @@
+west_macedonia = {
+	name = "West Macedonia"
+	color = { 161 235 105 }
+	provincial_capital = kozani
+	regions = {
+		greece
+	}
+	
+	history = {
+		culture = greek
+		religion = pagan
+		
+		-750 = {
+			owner = macedon #part of Macedonia in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+			culture = greek
+		}
+		
+		526 = {
+			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			religion = orthodox
+		}
+		
+		1360 = {
+			owner = serbia #part of the Serbian Principalities in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1740 = {
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

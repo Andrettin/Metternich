@@ -1,0 +1,14 @@
+shikoku = {
+	name = "Shikoku"
+	color = { 219 104 24 }
+	provincial_capital = matsuyama
+	regions = {
+		japan
+	}
+	
+	history = {
+		owner = japan
+		culture = japanese
+		religion = pagan
+	}
+}

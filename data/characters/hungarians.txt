@@ -1,0 +1,105 @@
+tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
+	name = "Tamas" #"Tamás"
+	surname = "Bakocz" #"Bakócz"
+	role = advisor
+	character_type = statesman
+	culture = magyar
+	religion = catholic
+	home_site = gyor
+	gender = male
+	birth_date = 1442
+	death_date = 1521
+	skill_multiplier = 0.5
+	required_technology = feudalism
+	conditions = {
+		country = hungary
+	}
+	traits = {
+		statesman
+	}
+	
+	#text based on that of the Encyclopædia Britannica, in the public domain
+	description = "Hungarian ecclesiastic and statesman, was the son of a wagoner, adopted by his uncle, who trained him for the priesthood and whom he succeeded as rector of Tétel in 1480. Shortly afterwards he became one of the secretaries of King Matthias I, who made him bishop of Gyor and a member of the royal council in 1490. From 1490 to his death in 1521 he was the leading statesman of Hungary and mainly responsible for her foreign policy. It was solely through his efforts that Hungary did not accede to the league of Cambrai, was consistently friendly with Venice, and formed a family compact with the Habsburgs."
+	
+	history = {
+		#succeeded his uncle as rector of Tétel in 1480
+		#became bishop of Gyor and a member of the Hungarian royal council in 1490
+		#became the leading statesman of Hungary in 1490
+		#became bishop of Eger under Wladislaus II
+		#became archbishop of Esztergom in 1497
+		#became cardinal in 1500
+		#became titular patriarch of Constantinople in 1510
+	}
+}
+
+istvan_bathory = {
+	name = "Istvan" #"István"
+	surname = "Bathory" #"Báthory"
+	role = advisor
+	character_type = statesman
+	culture = magyar
+	religion = catholic
+	home_site = pecs
+	gender = male
+	birth_date = 1473
+	death_date = 1534
+	skill_multiplier = 0.33
+	required_technology = national_bureaucracy
+	traits = {
+		statesman
+	}
+}
+
+juraj_thurzo = {
+	name = "Juraj"
+	surname = "Thurzo"
+	role = advisor
+	character_type = statesman
+	culture = magyar
+	religion = catholic
+	home_settlement = laibach
+	gender = male
+	birth_date = 1567
+	death_date = 1616
+	skill_multiplier = 0.33
+	required_technology = national_bureaucracy
+	traits = {
+		statesman
+	}
+}
+
+palffy_janos_iv = {
+	name = "Palffy Janos" #"Pálffy János"
+	epithet = "IV"
+	role = advisor
+	character_type = statesman
+	culture = magyar
+	religion = catholic
+	home_site = varazdin
+	gender = male
+	birth_date = 1678
+	death_date = 1750.3.24
+	skill_multiplier = 0.5
+	required_technology = national_bureaucracy
+	traits = {
+		statesman
+	}
+}
+
+franciszek_rakoczy = {
+	name = "Franciszek"
+	surname = "Rakoczy"
+	role = advisor
+	character_type = statesman
+	culture = magyar
+	religion = catholic
+	home_site = pecs
+	gender = male
+	birth_date = 1676
+	death_date = 1738
+	skill_multiplier = 0.33
+	required_technology = national_bureaucracy
+	traits = {
+		statesman
+	}
+}

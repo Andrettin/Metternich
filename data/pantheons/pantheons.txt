@@ -1,0 +1,23 @@
+aesir = {
+	name = "Aesir"
+}
+
+olympian = {
+	name = "Olympian"
+}
+
+pharaonic = {
+	name = "Pharaonic"
+}
+
+protogenoi = {
+	name = "Protogenoi" #primordial deities
+}
+
+titan = {
+	name = "Titan"
+}
+
+vanir = {
+	name = "Vanir"
+}

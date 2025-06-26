@@ -1,0 +1,14 @@
+romanian = {
+	name = "Romanian"
+	group = latin
+	color = { 240 240 140 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = romania
+		}
+	}
+}

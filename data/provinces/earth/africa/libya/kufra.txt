@@ -1,0 +1,14 @@
+kufra = {
+	name = "Kufra"
+	color = { 253 208 165 }
+	provincial_capital = al_jawf
+	regions = {
+		libya
+	}
+	
+	history = {
+		owner = egypt
+		culture = egyptian
+		religion = pagan
+	}
+}

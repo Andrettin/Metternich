@@ -1,0 +1,3 @@
+painting = {
+	filepath = "icons/painting.png"
+}

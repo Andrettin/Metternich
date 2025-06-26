@@ -1,0 +1,14 @@
+el_salvador = {
+	name = "El Salvador"
+	color = { 23 219 53 }
+	provincial_capital = san_salvador
+	regions = {
+		central_america
+	}
+	
+	history = {
+		owner = arawaks
+		culture = arawak
+		religion = pagan
+	}
+}

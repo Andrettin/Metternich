@@ -1,0 +1,46 @@
+zamora = {
+	name = "Zamora"
+	color = { 140 80 36 }
+	provincial_capital = zamora
+	resources = {
+		fruit = 1
+	}
+	regions = {
+		spain
+	}
+	
+	history = {
+		owner = crusafontids
+		culture = mammalian
+		religion = pagan
+		
+		-143100000 = { #Crusafontia lived in Spain in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:39892
+			owner = crusafontids
+			culture = mammalian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = gaul
+			culture = gaulish
+		}
+		
+		526 = {
+			owner = visigothia #part of the Kingdom of the West Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+		}
+		
+		1360 = {
+			owner = castille #part of Castille in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = castillian
+			religion = catholic
+		}
+		
+		1560 = {
+			owner = spain #part of the Kingdom of Spain c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+		}
+		
+		1740 = {
+			owner = spain #part of the Kingdom of Spain c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

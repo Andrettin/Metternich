@@ -1,0 +1,6 @@
+makassar = {
+	name = "Makassar"
+	world = earth
+	geocoordinate = { 119.43202754600 -5.13995888379 } #from Natural Earth (Ujungpandang)
+	type = settlement
+}

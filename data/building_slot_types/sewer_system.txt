@@ -1,0 +1,3 @@
+sewer_system = {
+	name = "Sewer System"
+}

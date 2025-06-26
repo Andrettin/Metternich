@@ -1,0 +1,16 @@
+spines = {
+	name = "Spines"
+	subcategory = back_protection
+	portrait = building_slot
+	icon = lion
+	period = carboniferous
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		spiny_fins
+		scaly_skin
+	}
+}

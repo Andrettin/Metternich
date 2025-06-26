@@ -1,0 +1,38 @@
+albania = {
+	name = "Albania"
+	color = { 106 17 180 }
+	provincial_capital = tirana
+	regions = {
+		albania
+	}
+	
+	history = {
+		culture = albanian
+		religion = pagan
+		
+		526 = {
+			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			religion = orthodox
+		}
+		
+		1360 = {
+			owner = albania #part of the Albanian Principalities in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = albanian
+		}
+		
+		1740 = {
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = sunni
+		}
+		
+		1815 = {
+			culture = albanian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = austria #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

@@ -1,0 +1,16 @@
+hobgoblin = {
+	name = "Hobgoblin"
+	supertaxon = goblinoid
+	era = holocene
+	sapient = true
+	adulthood_age = 15
+	middle_age = 30
+	old_age = 45
+	venerable_age = 60
+	maximum_age_modifier = 2d10
+	starting_age_modifiers = {
+		intuitive = 1d4
+		self_taught = 1d6
+		trained = 2d6
+	}
+}

@@ -1,0 +1,15 @@
+nordmark = {
+	name = "Nordmark"
+	type = minor_nation
+	culture = german
+	default_religion = catholic
+	default_tier = duchy #march
+	default_government_type = monarchy
+	default_capital = berlin
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		brandenburg
+	}
+}

@@ -1,0 +1,47 @@
+oldenburg = {
+	name = "Oldenburg"
+	color = { 231 184 84 }
+	provincial_capital = oldenburg
+	resources = {
+		grain = 2
+		fruit = 1
+		sheep = 1
+	}
+	regions = {
+		germany
+	}
+	
+	history = {
+		owner = saxons
+		culture = saxon
+		religion = pagan
+		
+		526 = {
+			owner = saxons #territory of the Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = saxon
+		}
+		
+		919 = {
+			owner = saxony #part of the Duchy of Saxony in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		1477 = {
+			owner = oldenburg #part of the County of Oldenburg c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = denmark #Danish possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = protestant
+		}
+		
+		1815 = {
+			owner = oldenburg #part of the Grand Duchy of Oldenburg in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

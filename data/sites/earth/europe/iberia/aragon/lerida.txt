@@ -1,0 +1,14 @@
+lerida = {
+	name = "Lerida" #"Lérida"
+	world = earth
+	geocoordinate = { 0.63333333333333 41.616666666667 }
+	type = resource
+	resource = fruit
+	province = catalonia
+	
+	history = {
+		1300 = {
+			buildings += university #Major university founded in Lerida in 1300; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

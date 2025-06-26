@@ -1,0 +1,8 @@
+arverni = {
+	name = "Arverni"
+	group = gallic
+	color = { 11 12 150 }
+	species = {
+		human
+	}
+}

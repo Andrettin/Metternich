@@ -1,0 +1,37 @@
+argentina = {
+	name = "Argentina"
+	type = minor_nation
+	culture = castillian
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = republic
+	default_capital = buenos_aires
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		buenos_aires
+		cordoba_argentina
+		santa_fe
+		mendoza
+		tucuman
+		salta
+		entre_rios
+		misiones
+		chaco
+		corrientes
+		santiago_del_estero
+		san_juan
+		jujuy
+		rio_negro
+		neuquen
+		formosa
+		chubut
+		san_luis
+		catamarca
+		la_rioja
+		la_pampa
+		santa_cruz_argentina
+		tierra_del_fuego
+	}
+}

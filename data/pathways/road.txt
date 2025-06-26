@@ -1,0 +1,8 @@
+road = {
+	name = "Road"
+	image_filepath = "tiles/pathways/road.png"
+	transport_level = 2
+	required_pathway = trail
+	required_technology = road_construction
+	river_crossing_required_technology = bridge_building
+}

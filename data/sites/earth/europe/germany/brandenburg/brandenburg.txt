@@ -1,0 +1,12 @@
+brandenburg = {
+	name = "Brandenburg" #Brandenburg an der Havel
+	world = earth
+	geocoordinate = { 12.554083333333333 52.414138888888886 }
+	
+	history = {
+		919 = {
+			#settlement_type = castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

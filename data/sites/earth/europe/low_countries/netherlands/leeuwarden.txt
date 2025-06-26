@@ -1,0 +1,6 @@
+leeuwarden = {
+	name = "Leeuwarden"
+	world = earth
+	geocoordinate = { 5.78335729841 53.25037884430 } #from Natural Earth
+	type = settlement
+}

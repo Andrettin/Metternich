@@ -1,0 +1,14 @@
+fergana = {
+	name = "Fergana"
+	color = { 6 173 27 }
+	provincial_capital = fergana
+	regions = {
+		uzbekistan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

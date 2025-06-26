@@ -1,0 +1,7 @@
+admiral = {
+	name = "Admiral"
+	advisor_category = military
+	attribute = martial
+	military_unit_category = heavy_warship
+	starting_age_category = self_taught
+}

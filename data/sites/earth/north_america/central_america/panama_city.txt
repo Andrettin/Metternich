@@ -1,0 +1,6 @@
+panama_city = {
+	name = "Panama City"
+	world = earth
+	geocoordinate = { -79.53303715180 8.96801719048 } #from Natural Earth
+	type = settlement
+}

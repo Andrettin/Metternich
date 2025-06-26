@@ -1,0 +1,30 @@
+handaxe = {
+	name = "Handaxe"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = bronze_age
+	cost_commodity = research
+	prerequisites = {
+		warrior_code
+	}
+}
+
+battleaxe = {
+	name = "Battleaxe"
+	subcategory = infantry
+	portrait = helmet
+	icon = saber
+	period = iron_age
+	cost_commodity = research
+	prerequisites = {
+		handaxe
+	}
+	modifier = {
+		military_unit_stat = {
+			type = axemen
+			stat = melee
+			value = 0.5
+		}
+	}
+}

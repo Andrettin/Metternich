@@ -1,0 +1,6 @@
+neuquen = {
+	name = "Neuquen" #"Neuquén"
+	world = earth
+	geocoordinate = { -68.05999068370 -38.95003985720 } #from Natural Earth
+	type = settlement
+}

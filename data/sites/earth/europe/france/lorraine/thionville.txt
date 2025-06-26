@@ -1,0 +1,15 @@
+thionville = {
+	name = "Thionville"
+	world = earth
+	geocoordinate = { 6.1683333333333 49.358055555556 }
+	province = moselle
+	cultural_group_names = {
+		german = "Diedenhofen" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

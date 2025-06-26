@@ -1,0 +1,7 @@
+benghazi = {
+	name = "Benghazi"
+	world = earth
+	geocoordinate = { 20.06672318390 32.11673341780 } #from Natural Earth
+	type = settlement
+	province = benghazi
+}

@@ -1,0 +1,18 @@
+freiburg = {
+	name = "Freiburg"
+	world = earth
+	geocoordinate = { 7.86994828149 48.00041505850 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = baden
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1455 = {
+			buildings += university #University founded in Freiburg in 1455; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

@@ -1,0 +1,19 @@
+atacama = {
+	name = "Atacama"
+	color = { 123 112 64 }
+	provincial_capital = copiapo
+	regions = {
+		chile
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = inca_empire
+			culture = inca
+		}
+	}
+}

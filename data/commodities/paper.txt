@@ -1,0 +1,5 @@
+paper = {
+	name = "Paper"
+	icon = paper
+	base_price = 300
+}

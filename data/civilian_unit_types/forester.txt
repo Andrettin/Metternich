@@ -1,0 +1,12 @@
+forester = {
+	name = "Forester"
+	unit_class = forester
+	icon = slaves_light
+	improvable_resources = {
+		beavers
+		bison
+		deer
+		ivory
+		timber
+	}
+}

@@ -1,0 +1,34 @@
+ferdinand_i_of_the_two_sicilies = { #King Ferdinand I (IV) of the Two Sicilies; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 27.
+	name = "Ferdinando"
+	epithet = "I"
+	dynasty = bourbon
+	culture = italian
+	religion = catholic
+	home_settlement = naples
+	gender = male
+	start_date = 1782.4.26 #birth of child
+}
+
+maria_amelia_de_bourbon = { #Princess Maria Amelia of the Two Sicilies; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 27.
+	name = "Maria Amelia"
+	dynasty = bourbon
+	culture = italian
+	religion = catholic
+	home_settlement = naples
+	gender = female
+	father = ferdinand_i_of_the_two_sicilies #King Ferdinand I (IV) of the Two Sicilies
+	birth_date = 1782.4.26
+	start_date = 1809.11.25 #married
+}
+
+maria_theresa_de_bourbon = { #Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
+	name = "Maria Theresa"
+	dynasty = bourbon
+	culture = italian #daughter of king Ferdinand I (IV) of the Two Sicilies
+	religion = catholic
+	home_settlement = naples
+	gender = female
+	father = ferdinand_i_of_the_two_sicilies #King Ferdinand I (IV) of the Two Sicilies
+	start_date = 1791.12.12 #birth of her first child
+	death_date = 1816.10.29 #date of her husband's second marriage
+}

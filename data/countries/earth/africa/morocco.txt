@@ -1,0 +1,22 @@
+morocco = {
+	name = "Morocco"
+	type = minor_nation
+	culture = arabic
+	default_religion = sunni
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = rabat
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		rabat
+		casablanca
+		fez
+		guelmim
+		marrakech
+		tangier
+	}
+}

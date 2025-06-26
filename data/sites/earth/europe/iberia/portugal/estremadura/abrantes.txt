@@ -1,0 +1,8 @@
+abrantes = {
+	name = "Abrantes"
+	world = earth
+	geocoordinate = { -8.1978194444444 39.464444444444 }
+	type = resource
+	resource = grain
+	province = estremadura
+}

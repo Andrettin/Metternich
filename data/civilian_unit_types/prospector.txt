@@ -1,0 +1,7 @@
+prospector = {
+	name = "Prospector"
+	unit_class = prospector
+	icon = miners
+	prospector = true
+	required_technology = geological_prospecting
+}

@@ -1,0 +1,8 @@
+vila_real_de_santo_antonio = {
+	name = "Vila Real de Santo Antonio" #"Vila Real de Santo António"
+	world = earth
+	#geocoordinate = { -7.4166666666667 37.2 }
+	type = resource
+	resource = fish #Source: Map No. 500530 of the Perry-Castañeda Library Map Collection, 1972.
+	province = algarve
+}

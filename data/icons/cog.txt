@@ -1,0 +1,3 @@
+cog = {
+	filepath = "icons/cog.png"
+}

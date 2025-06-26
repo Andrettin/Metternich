@@ -1,0 +1,11 @@
+dagger = {
+	filepath = "icons/items/dagger.png"
+}
+
+dagger_bloody = {
+	filepath = "icons/items/dagger_bloody.png"
+}
+
+dagger_poison = {
+	filepath = "icons/items/dagger_poison.png"
+}

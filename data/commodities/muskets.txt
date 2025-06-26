@@ -1,0 +1,6 @@
+muskets = {
+	name = "Muskets"
+	icon = musket
+	base_price = 900
+	required_technology = weapon_craftsmanship
+}

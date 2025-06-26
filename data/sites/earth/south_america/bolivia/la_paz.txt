@@ -1,0 +1,6 @@
+la_paz = {
+	name = "La Paz"
+	world = earth
+	geocoordinate = { -68.14998519050 -16.49797361370 } #from Natural Earth
+	type = settlement
+}

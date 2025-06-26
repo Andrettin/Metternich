@@ -1,0 +1,23 @@
+clade = {
+	name = "Clade"
+	clade = true
+	title_names = {
+		barony = "Family"
+		county = "Order"
+		duchy = "Class"
+		kingdom = "Phylum"
+		empire = "Kingdom"
+	}
+	office_title_names = {
+		ruler = {
+			barony = "Chief"
+			county = "Chief"
+			duchy = "Chief"
+			kingdom = "Chief"
+			empire = {
+				male = "Rex"
+				female = "Regina"
+			}
+		}
+	}
+}

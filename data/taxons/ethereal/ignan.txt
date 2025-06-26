@@ -1,0 +1,6 @@
+ignan = {
+	name = "Ignis" #"fire" in Latin
+	common_name = "Ignan"
+	rank = kingdom
+	supertaxon = ethereal
+}

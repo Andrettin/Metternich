@@ -1,0 +1,20 @@
+cairo = {
+	name = "Cairo"
+	world = earth
+	geocoordinate = { 31.24996821970 30.04996034650 } #from Natural Earth
+	type = settlement
+	province = cairo
+	cultural_names = {
+		egyptian = "Memphis" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+	}
+	
+	history = {
+		-1450 = {
+			settlement_type = city #Memphis was an important settlement c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+		
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

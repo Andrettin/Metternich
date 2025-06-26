@@ -1,0 +1,11 @@
+pareiasaurus = {
+	name = "Pareiasaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		diadectes
+		hylonomus
+		pantylus
+		platyhystrix
+		tuditanus
+	}
+}

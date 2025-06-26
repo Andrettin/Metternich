@@ -1,0 +1,22 @@
+bologna = {
+	name = "Bologna"
+	world = earth
+	geocoordinate = { 11.34002070990 44.50042197580 } #from Natural Earth
+	type = settlement
+	#resource = timber
+	province = romagna
+	cultural_names = {
+		roman = "Bononia" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
+	}
+	
+	history = {
+		1250 = {
+			buildings += university #University existent in Bologna in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
+			settlement_type = campus
+		}
+		
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

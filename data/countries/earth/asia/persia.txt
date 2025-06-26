@@ -1,0 +1,40 @@
+persia = {
+	name = "Persia"
+	type = great_power
+	color = { 229 170 87 }
+	culture = persian
+	default_religion = shiite
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = teheran
+	max_tier = empire
+	short_names = {
+		tribe = "Persians"
+	}
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		teheran
+		elam
+		fars
+		hamadan
+		hormozgan
+		isfahan
+		kerman
+		kermanshah
+		khuzestan
+		lorestan
+		north_khorasan
+		razavi_khorasan
+		south_khorasan
+		west_baluchistan
+		yazd
+	}
+	
+	history = {
+		1801 = {
+			government_type = monarchy
+		}
+	}
+}

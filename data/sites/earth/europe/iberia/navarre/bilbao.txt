@@ -1,0 +1,8 @@
+bilbao = {
+	name = "Bilbao"
+	world = earth
+	geocoordinate = { -2.92998681783 43.24998150540 } #from Natural Earth
+	type = resource
+	resource = iron_ore
+	province = navarre
+}

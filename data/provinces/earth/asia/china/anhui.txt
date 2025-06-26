@@ -1,0 +1,14 @@
+anhui = {
+	name = "Anhui"
+	color = { 60 121 59 }
+	provincial_capital = hefei
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = china
+		culture = chinese
+		religion = pagan
+	}
+}

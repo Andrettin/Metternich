@@ -1,0 +1,8 @@
+abha = {
+	name = "Abha"
+	world = earth
+	geocoordinate = { 42.50013423540 18.23008750300 } #from Natural Earth
+	type = settlement
+	#resource = sheep
+	province = asir
+}

@@ -1,0 +1,145 @@
+dwarven_guardsmen = {
+	name = "Dwarven Guardsmen"
+	unit_class = spearmen
+	culture = dwarven
+	icon = pikemen
+	stats = {
+		melee = 4
+		range = 1
+		defense = 6
+		movement = 4
+		bonus_vs_cavalry = 100
+	}
+	entrench = true
+	required_technology = warrior_code
+	commodity_costs = {
+		manpower = 1
+	}
+	upgrades = {
+		dwarven_stalwarts
+	}
+}
+
+dwarven_stalwarts = {
+	name = "Dwarven Stalwarts"
+	unit_class = pikemen
+	culture = dwarven
+	icon = pikemen
+	stats = {
+		melee = 5
+		range = 1
+		defense = 6
+		movement = 3
+		bonus_vs_cavalry = 100
+	}
+	entrench = true
+	required_technology = pike
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		cast_iron = 1
+	}
+	upgrades = {
+		dwarven_sentinels
+	}
+}
+
+dwarven_sentinels = {
+	name = "Dwarven Sentinels"
+	unit_class = halberdiers
+	culture = dwarven
+	icon = halberdiers
+	stats = {
+		melee = 7
+		range = 1
+		defense = 7
+		movement = 4
+		bonus_vs_cavalry = 100
+	}
+	entrench = true
+	required_technology = halberd
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		cast_iron = 2
+	}
+	upgrades = {
+		regulars
+	}
+}
+
+dwarven_thunderers = {
+	name = "Dwarven Thunderers"
+	unit_class = arquebusiers
+	culture = dwarven
+	icon = arquebusiers
+	stats = {
+		firepower = 6
+		melee = 1
+		range = 3
+		defense = 3
+		movement = 2
+	}
+	entrench = true
+	required_technology = arquebus
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		arquebuses = 1
+	}
+	upgrades = {
+		dwarven_thunderguards
+	}
+}
+
+dwarven_thunderguards = {
+	name = "Dwarven Thunderguards"
+	unit_class = musketeers
+	culture = dwarven
+	icon = musketeers
+	stats = {
+		firepower = 8
+		melee = 2
+		range = 4
+		defense = 4
+		movement = 3
+	}
+	entrench = true
+	required_technology = weapon_craftsmanship
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		muskets = 1
+	}
+	upgrades = {
+		dwarven_dragonguards
+	}
+}
+
+dwarven_dragonguards = {
+	name = "Dwarven Dragonguards"
+	unit_class = grenadiers
+	culture = dwarven
+	icon = grenadiers
+	stats = {
+		firepower = 13
+		melee = 12
+		range = 5
+		defense = 5
+		movement = 4
+	}
+	entrench = true
+	required_technology = explosives
+	wealth_cost = 1000
+	upkeep = 25
+	commodity_costs = {
+		manpower = 1
+		muskets = 1
+	}
+	free_promotions = {
+		grenadier_1
+	}
+	upgrades = {
+		guards
+	}
+}

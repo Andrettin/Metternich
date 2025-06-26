@@ -1,0 +1,31 @@
+moravia = {
+	superregions = {
+		bohemia
+	}
+	
+	history = {
+		1801 = {
+			population = 1640785 #Moravia and (Austrian) Silesia had a population of 1,640,785 in 1801 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1803 = {
+			population = 1640785 #Moravia and (Austrian) Silesia had a population of 1,707,849 in 1803 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1805 = {
+			population = 1793134 #Moravia and (Austrian) Silesia had a population of 1,793,1(3?)4 in 1805 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1806 = {
+			population = 1713172 #Moravia and (Austrian) Silesia had a population of 1,713,172 in 1806 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1807 = {
+			population = 1704923 #Moravia and (Austrian) Silesia had a population of 1,704,923 in 1806 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1809 = {
+			population = 1712000 #Moravia and (Austrian) Silesia had an estimated population of 1,712,000 in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+	}
+}

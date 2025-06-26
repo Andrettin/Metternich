@@ -1,0 +1,7 @@
+charlottenberg = {
+	name = "Charlottenberg"
+	world = earth
+	geocoordinate = { 12.302007920447 59.884790030722 }
+	type = resource
+	resource = cattle #Dairying predominant; Source: Map No. 500866 of the Perry-Castañeda Library Map Collection, 1973.
+}

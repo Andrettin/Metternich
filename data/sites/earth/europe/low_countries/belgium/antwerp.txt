@@ -1,0 +1,30 @@
+antwerp = {
+	name = "Antwerp"
+	world = earth
+	geocoordinate = { 4.41501704776 51.22037355460 } #from Natural Earth
+	type = resource
+	resource = cattle
+	province = brabant
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1600 = {
+			population = 100000 #Antwerp had a population of 100,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1815 = {
+			population = 56318 #Antwerp had a population of 56,318 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 82.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.ashkenazi.jewish = 100
+				clergymen.flemish.catholic = 3500
+				clergymen.walloon.catholic = 200
+			}
+		}
+	}
+}

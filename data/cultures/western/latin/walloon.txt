@@ -1,0 +1,14 @@
+walloon = {
+	name = "Walloon"
+	group = french
+	color = { 190 90 20 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = belgium
+		}
+	}
+}

@@ -1,0 +1,39 @@
+portugal = {
+	superregions = {
+		iberia
+	}
+	
+	history = {
+		1 = {
+			population = 500000 #Portugal had a population of 500,000 in 1 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1000 = {
+			population = 600000 #Portugal had a population of 600,000 in 1000 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1415 = {
+			population = 1000000 #Portugal had barely a million people in 1415; Source: Henry Kamen, "Early Modern European Society", 2021, p. 3.
+		}
+		
+		1500 = {
+			population = 1000000 #Portugal had a population of 1,000,000 in 1500 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1600 = {
+			population = 1100000 #Portugal had a population of 1,100,000 in 1600 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1700 = {
+			population = 2000000 #Portugal had a population of 2,000,000 in 1700 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1850 = {
+			literacy_rate = 50 #50%- of adults; Source: Eric J. Hobsbawm, "A Era do Capital 1848-1875", 1977, p. 522.
+		}
+		
+		2003 = {
+			literacy_rate = 93 #Source: Philip's International School Atlas, p. 143.
+		}
+	}
+}

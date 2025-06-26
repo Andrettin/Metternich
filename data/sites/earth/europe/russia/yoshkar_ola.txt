@@ -1,0 +1,6 @@
+yoshkar_ola = {
+	name = "Yoshkar-Ola"
+	world = earth
+	geocoordinate = { 47.87494828170 56.63539186520 } #from Natural Earth
+	type = settlement
+}

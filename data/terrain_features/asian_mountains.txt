@@ -1,0 +1,71 @@
+al_hajar_mountains = {
+	name = "Al Hajar Mountains"
+	terrain_type = mountains
+	color = { 39 149 23 }
+}
+
+asir_mountains = {
+	name = "Asir Mountains"
+	terrain_type = mountains
+	color = { 52 20 117 }
+}
+
+elburz_mountains = {
+	name = "Elburz Mountains"
+	terrain_type = mountains
+	color = { 3 43 103 }
+}
+
+hadhramaut = {
+	name = "Hadhramaut"
+	terrain_type = mountains
+	color = { 97 104 7 }
+}
+
+hejaz_mountains = {
+	name = "Hejaz Mountains"
+	terrain_type = mountains
+	color = { 40 55 21 }
+}
+
+kuh_rud_mountains = {
+	name = "Kuh Rud Mountains"
+	terrain_type = mountains
+	color = { 78 191 186 }
+}
+
+lebanon_mountains = {
+	name = "Lebanon Mountains"
+	terrain_type = mountains
+	color = { 195 211 247 }
+}
+
+lesser_caucasus_mountains = {
+	name = "Lesser Caucasus Mountains"
+	terrain_type = mountains
+	color = { 29 226 146 }
+}
+
+pontic_mountains = {
+	name = "Pontic Mountains"
+	terrain_type = mountains
+	color = { 78 193 68 }
+}
+
+taurus_mountains = {
+	name = "Taurus Mountains"
+	terrain_type = mountains
+	color = { 146 160 64 }
+}
+
+tuwayq_mountains = {
+	name = "Tuwayq Mountains"
+	terrain_type = mountains
+	color = { 197 72 37 }
+}
+
+zagros_mountains = {
+	name = "Zagros Mountains"
+	terrain_type = mountains
+	color = { 145 136 16 }
+}

@@ -1,0 +1,16 @@
+strasbourg = {
+	name = "Strasbourg"
+	type = minor_nation
+	culture = alsatian
+	default_religion = catholic
+	default_tier = county #bishopric
+	default_government_type = theocracy
+	default_capital = strasbourg
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		alsace
+	}
+}

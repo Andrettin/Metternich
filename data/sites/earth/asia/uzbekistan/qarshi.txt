@@ -1,0 +1,8 @@
+qarshi = {
+	name = "Qarshi"
+	world = earth
+	geocoordinate = { 65.80000402720 38.87042970690 } #from Natural Earth
+	type = settlement
+	#resource = sheep
+	province = kashkadarya
+}

@@ -1,0 +1,37 @@
+lisbon = {
+	name = "Lisbon"
+	world = earth
+	geocoordinate = { -9.14486630549 38.72272287790 } #from Natural Earth
+	type = settlement
+	resource = center_of_trade
+	#resource = fish #Source: Map No. 500530 of the Perry-Castañeda Library Map Collection, 1972.
+	cultural_names = {
+		roman = "Olisipo" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1600 = {
+			population = 100000 #Lisbon had a population of 100,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1633 = {
+			population = 100000 #Lisbon had a population of 100,000 in 1633; Source: Henry Kamen, "Early Modern European Society", 2021, p. 273.
+			
+			population_groups = {
+				slaves.african = 15000 #15,000 slaves lived in Lisbon in 1633; Source: Henry Kamen, "Early Modern European Society", 2021, p. 273.
+			}
+		}
+		
+		1815 = {
+			population = 350000 #Lisbon had a population of 350,000 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 86.
+		}
+		
+		1911 = {
+			buildings += university #University founded in Lisbon in 1911; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
+		}
+	}
+}

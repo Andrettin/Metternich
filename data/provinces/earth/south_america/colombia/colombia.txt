@@ -1,0 +1,25 @@
+colombia = {
+	name = "Colombia"
+	color = { 228 215 255 }
+	provincial_capital = bogota
+	regions = {
+		colombia
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = arawaks
+			culture = arawak
+		}
+		
+		1836 = {
+			owner = colombia
+			culture = castillian
+			religion = catholic
+		}
+	}
+}

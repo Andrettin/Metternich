@@ -1,0 +1,6 @@
+triton = {
+	name = "Triton"
+	supertaxon = aquan
+	era = holocene
+	sapient = true
+}

@@ -1,0 +1,36 @@
+canada = {
+	name = "Canada"
+	superregions = {
+		north_america
+	}
+	
+	history = {
+		1 = {
+			population = 80000 #Canada had a population of 80,000 in 1 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1000 = {
+			population = 160000 #Canada had a population of 160,000 in 1000 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1500 = {
+			population = 250000 #Canada had a population of 250,000 in 1500 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1600 = {
+			population = 250000 #Canada had a population of 250,000 in 1600 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1700 = {
+			population = 200000 #Canada had a population of 200,000 in 1700 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		1820 = {
+			population = 816000 #Canada had a population of 816,000 in 1820 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
+		}
+		
+		2003 = {
+			literacy_rate = 97 #Source: Philip's International School Atlas, p. 141.
+		}
+	}
+}

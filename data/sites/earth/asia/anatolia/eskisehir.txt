@@ -1,0 +1,18 @@
+eskisehir = {
+	name = "Eskisehir"
+	world = earth
+	geocoordinate = { 30.52996048860 39.79499859520 } #from Natural Earth
+	type = settlement
+	#resource = grain #Cultivated areas with livestock grazing; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
+	cultural_names = {
+		greek = "Dorylaeum"
+		phrygian = "Dorylaeum"
+		roman = "Dorylaeum" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

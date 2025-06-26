@@ -1,0 +1,7 @@
+fishermen = {
+	filepath = "icons/population/fishermen.png"
+}
+
+fishermen_small = {
+	filepath = "icons/population/fishermen_small.png"
+}

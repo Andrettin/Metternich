@@ -1,0 +1,9 @@
+diplocaulus = {
+	name = "Diplocaulus"
+	supertaxon = amphibia
+	pre_evolutions = {
+		elginerpeton
+		ichthyostega
+		tulerpeton
+	}
+}

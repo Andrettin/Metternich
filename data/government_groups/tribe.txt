@@ -1,0 +1,19 @@
+tribe = {
+	name = "Tribe"
+	tribal = true
+	title_names = {
+		barony = "Band"
+		county = "Clan"
+		duchy = "Tribe"
+		kingdom = "Grand Tribe"
+	}
+	office_title_names = {
+		ruler = {
+			barony = "Chief"
+			county = "Chief"
+			duchy = "Chief"
+			kingdom = "Chief"
+			empire = "Chief"
+		}
+	}
+}

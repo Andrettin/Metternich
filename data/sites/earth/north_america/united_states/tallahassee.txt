@@ -1,0 +1,8 @@
+tallahassee = {
+	name = "Tallahassee"
+	world = earth
+	geocoordinate = { -84.28003422210 30.44998760890 } #from Natural Earth
+	type = settlement
+	#resource = cotton
+	province = florida
+}

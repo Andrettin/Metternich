@@ -1,0 +1,12 @@
+viborg = {
+	name = "Viborg"
+	world = earth
+	geocoordinate = { 9.39998408879 56.43333701490 } #from Natural Earth
+	province = jutland
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,33 @@
+hadarom = {
+	name = "Hadarom"
+	color = { 210 162 55 }
+	provincial_capital = beersheba
+	resources = {
+		grain = 1
+	}
+	regions = {
+		asia
+		middle_east
+	}
+	
+	history = {
+		culture = hebrew
+		religion = jewish
+		
+		-1450 = {
+			owner = egypt #subject to Egypt c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+		
+		-953 = {
+			owner = judah #part of the Kingdom of Judah in the 953-722 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 6-7.
+			culture = hebrew
+			religion = jewish
+		}
+		
+		1360 = {
+			owner = egypt_arabic #part of the Mameluke Sultanates in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = arabic
+			religion = sunni
+		}
+	}
+}

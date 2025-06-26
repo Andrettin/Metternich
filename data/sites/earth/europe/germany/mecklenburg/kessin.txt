@@ -1,0 +1,11 @@
+kessin = {
+	name = "Kessin"
+	world = earth
+	#geocoordinate = { 12.183333333333 54.066666666667 }
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

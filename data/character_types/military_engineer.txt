@@ -1,0 +1,7 @@
+military_engineer = {
+	name = "Military Engineer"
+	advisor_category = military
+	attribute = martial
+	military_unit_category = general
+	starting_age_category = trained
+}

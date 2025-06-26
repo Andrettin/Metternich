@@ -1,0 +1,31 @@
+trade_consulate = {
+	filepath = "icons/diplomacy/trade_consulate.png"
+}
+
+embassy = {
+	filepath = "icons/diplomacy/embassy.png"
+}
+
+alliance = {
+	filepath = "icons/diplomacy/alliance.png"
+}
+
+empire = {
+	filepath = "icons/diplomacy/empire.png"
+}
+
+non_aggression_pact = {
+	filepath = "icons/diplomacy/non_aggression_pact.png"
+}
+
+non_aggression_pact_shield = {
+	filepath = "icons/diplomacy/non_aggression_pact_shield.png"
+}
+
+peace = {
+	filepath = "icons/diplomacy/peace.png"
+}
+
+war = {
+	filepath = "icons/diplomacy/war.png"
+}

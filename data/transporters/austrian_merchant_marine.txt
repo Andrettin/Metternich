@@ -1,0 +1,11 @@
+austrian_traders = {
+	type = trader
+	country = austria
+	quantity = 2
+	
+	history = {
+		1820 = {
+			active = true
+		}
+	}
+}

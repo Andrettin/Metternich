@@ -1,0 +1,18 @@
+steyr = {
+	name = "Steyr" #also known as Steier
+	world = earth
+	geocoordinate = { 14.416666666667 48.05 }
+	type = resource
+	resource = grain #Crop cultivation with livestock; Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
+	province = upper_austria
+	
+	history = {
+		919 = {
+			buildings += fort #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1815 = {
+			population = 6958 #Steyer had a population of 6,958 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 89.
+		}
+	}
+}

@@ -1,0 +1,86 @@
+indulgent_wastrel = {
+	name = "Indulgent Wastrel"
+	types = {
+		background
+	}
+	icon = chest
+	conditions = {
+		primary_attribute = stewardship
+		not = {
+			trait = thrifty_clerk
+			trait = fortune_builder
+			trait = midas_touched
+		}
+	}
+	attribute_bonuses = {
+		stewardship = 2
+	}
+}
+
+thrifty_clerk = {
+	name = "Thrifty Clerk"
+	types = {
+		background
+	}
+	icon = chest
+	conditions = {
+		or = {
+			character_type = banker
+			character_type = farmer
+			character_type = master_of_mint
+			character_type = merchant
+			character_type = pioneer
+			character_type = treasurer
+		}
+		not = {
+			trait = indulgent_wastrel
+			trait = fortune_builder
+			trait = midas_touched
+		}
+	}
+	attribute_bonuses = {
+		stewardship = 4
+	}
+}
+
+fortune_builder = {
+	name = "Fortune Builder"
+	types = {
+		background
+	}
+	icon = chest
+	conditions = {
+		primary_attribute = stewardship
+		not = {
+			trait = indulgent_wastrel
+			trait = thrifty_clerk
+			trait = midas_touched
+		}
+	}
+	attribute_bonuses = {
+		stewardship = 6
+		martial = 1
+		learning = 1
+	}
+}
+
+midas_touched = {
+	name = "Midas Touched"
+	types = {
+		background
+	}
+	icon = chest
+	conditions = {
+		primary_attribute = stewardship
+		not = {
+			trait = indulgent_wastrel
+			trait = thrifty_clerk
+			trait = fortune_builder
+		}
+	}
+	attribute_bonuses = {
+		stewardship = 8
+		martial = 2
+		learning = 2
+	}
+}

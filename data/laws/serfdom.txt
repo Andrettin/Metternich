@@ -1,0 +1,43 @@
+serfdom = {
+	name = "Serfdom"
+	group = serfdom
+	icon = labor
+	required_technology = feudalism
+	commodity_costs = {
+		statesmanship = 50
+	}
+	conditions = {
+		game_rule = laws
+	}
+	modifier = {
+		infantry_cost_modifier = -30
+		military_unit_stat = {
+			domain = land
+			stat = discipline
+			value = -20
+		}
+		technology_cost_modifier = 20
+	}
+}
+
+free_subjects = {
+	name = "Free Subjects"
+	group = serfdom
+	icon = labor
+	required_technology = feudalism
+	commodity_costs = {
+		statesmanship = 50
+	}
+	conditions = {
+		game_rule = laws
+	}
+	modifier = {
+		infantry_cost_modifier = 30
+		military_unit_stat = {
+			domain = land
+			stat = discipline
+			value = 20
+		}
+		technology_cost_modifier = -20
+	}
+}

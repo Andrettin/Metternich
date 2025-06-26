@@ -1,0 +1,17 @@
+brindisi = {
+	name = "Brindisi"
+	world = earth
+	geocoordinate = { 17.93000606150 40.64034751290 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = taranto
+	cultural_names = {
+		roman = "Brundisium" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

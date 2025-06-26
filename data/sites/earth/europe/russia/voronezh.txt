@@ -1,0 +1,6 @@
+voronezh = {
+	name = "Voronezh"
+	world = earth
+	geocoordinate = { 39.26999548210 51.72998069160 } #from Natural Earth
+	type = settlement
+}

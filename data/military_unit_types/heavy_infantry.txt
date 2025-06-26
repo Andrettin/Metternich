@@ -1,0 +1,118 @@
+arquebusiers = {
+	name = "Arquebusiers"
+	unit_class = arquebusiers
+	icon = arquebusiers
+	stats = {
+		firepower = 5
+		melee = 1
+		range = 3
+		defense = 3
+		movement = 2
+	}
+	entrench = true
+	required_technology = arquebus
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		arquebuses = 1
+	}
+	upgrades = {
+		musketeers
+	}
+}
+
+musketeers = {
+	name = "Musketeers"
+	unit_class = musketeers
+	icon = musketeers
+	stats = {
+		firepower = 7
+		melee = 2
+		range = 4
+		defense = 4
+		movement = 3
+	}
+	entrench = true
+	required_technology = weapon_craftsmanship
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+		muskets = 1
+	}
+	upgrades = {
+		grenadiers
+	}
+}
+
+grenadiers = {
+	name = "Grenadiers"
+	unit_class = grenadiers
+	icon = grenadiers
+	stats = {
+		firepower = 12
+		melee = 12
+		range = 5
+		defense = 5
+		movement = 4
+	}
+	entrench = true
+	required_technology = explosives
+	wealth_cost = 1000
+	upkeep = 25
+	commodity_costs = {
+		manpower = 1
+		muskets = 1
+	}
+	free_promotions = {
+		grenadier_1
+	}
+	upgrades = {
+		guards
+	}
+}
+
+guards = {
+	name = "Guards"
+	unit_class = guards
+	icon = rifle_infantry_light
+	stats = {
+		firepower = 17
+		melee = 17
+		range = 8
+		defense = 7
+		movement = 4
+	}
+	entrench = true
+	required_technology = elite_military_training
+	wealth_cost = 4000
+	upkeep = 50
+	commodity_costs = {
+		manpower = 1
+		rifles = 2
+	}
+	upgrades = {
+		machine_gunners
+	}
+}
+
+machine_gunners = {
+	name = "Machine Gunners"
+	unit_class = machine_gunners
+	icon = rifle_infantry_light
+	stats = {
+		firepower = 25
+		melee = 25
+		range = 10
+		defense = 20
+		movement = 4
+	}
+	entrench = true
+	entrenchment_bonus = 5
+	required_technology = machine_gun
+	wealth_cost = 7000
+	upkeep = 100
+	commodity_costs = {
+		manpower = 1
+		rifles = 4
+	}
+}

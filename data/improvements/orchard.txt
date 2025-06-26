@@ -1,0 +1,105 @@
+orchard = {
+	name = "Orchard"
+	slot = resource
+	resources = {
+		fruit
+		grapes
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/orchard.png"
+	default_population_class = farmers
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		farmers
+		expert_farmers
+	}
+	commodity_costs = {
+		lumber = 1
+		cast_iron = 1
+	}
+	modifier = {
+		housing_bonus = 1
+	}
+}
+
+improved_orchard = {
+	name = "Improved Orchard"
+	slot = resource
+	resources = {
+		fruit
+		grapes
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/orchard.png"
+	default_population_class = farmers
+	required_improvement = orchard
+	required_technology = seed_drill
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		farmers
+		expert_farmers
+	}
+	commodity_costs = {
+		lumber = 4
+		cast_iron = 4
+	}
+	modifier = {
+		housing_bonus = 2
+	}
+}
+
+mechanized_orchard = {
+	name = "Mechanized Orchard"
+	slot = resource
+	resources = {
+		fruit
+		grapes
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/orchard.png"
+	default_population_class = farmers
+	required_improvement = improved_orchard
+	required_technology = moldboard_plow
+	wealth_cost = 1000
+	population_classes = {
+		slaves
+		farmers
+		expert_farmers
+	}
+	commodity_costs = {
+		lumber = 8
+		cast_iron = 8
+	}
+	modifier = {
+		housing_bonus = 3
+	}
+}
+
+industrial_orchard = {
+	name = "Industrial Orchard"
+	slot = resource
+	resources = {
+		fruit
+		grapes
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/orchard.png"
+	default_population_class = farmers
+	required_improvement = mechanized_orchard
+	required_technology = commercial_fertilizer
+	wealth_cost = 5000
+	population_classes = {
+		slaves
+		farmers
+		expert_farmers
+	}
+	commodity_costs = {
+		lumber = 16
+		cast_iron = 16
+	}
+	modifier = {
+		housing_bonus = 4
+	}
+}

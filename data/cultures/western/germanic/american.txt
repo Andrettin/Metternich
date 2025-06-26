@@ -1,0 +1,14 @@
+american = {
+	name = "American"
+	group = anglo_saxon
+	color = { 65 65 129 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = colonization
+		province = {
+			core = united_states
+		}
+	}
+}

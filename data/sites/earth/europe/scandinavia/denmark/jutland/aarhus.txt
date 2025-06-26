@@ -1,0 +1,6 @@
+aarhus = {
+	name = "Aarhus"
+	world = earth
+	geocoordinate = { 10.21068395860 56.15720399890 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,12 @@
+bar = {
+	name = "Bar" #Bar-le-Duc
+	world = earth
+	geocoordinate = { 5.1672222222222 48.771666666667 }
+	province = lorraine
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

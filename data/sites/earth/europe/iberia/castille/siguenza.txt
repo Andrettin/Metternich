@@ -1,0 +1,18 @@
+siguenza = {
+	name = "Siguenza"
+	world = earth
+	geocoordinate = { -2.6391666666667 41.069166666667 }
+	type = resource
+	resource = grain
+	province = castille
+	
+	history = {
+		1489 = {
+			buildings += university #Minor university founded in Siguenza in 1489; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+		
+		1703 = {
+			buildings -= university #Minor university abolished in Siguenza in 1703; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+	}
+}

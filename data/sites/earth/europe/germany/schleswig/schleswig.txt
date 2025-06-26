@@ -1,0 +1,12 @@
+schleswig = {
+	name = "Schleswig"
+	world = earth
+	geocoordinate = { 9.5697222222222 54.515277777778 }
+	province = schleswig
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

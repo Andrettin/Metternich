@@ -1,0 +1,15 @@
+famagusta = {
+	name = "Famagusta"
+	world = earth
+	geocoordinate = { 33.95001013060 35.12502524720 } #from Natural Earth
+	province = cyprus
+	cultural_names = {
+		greek = Ammochostos
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,24 @@
+louis_xiv = {
+	filepath = "portraits/characters/louis_xiv.png"
+	character_conditions = {
+		gender = male
+		culture = french
+		is_ruler = true
+	}
+}
+
+cardinal_richelieu = {
+	filepath = "portraits/characters/cardinal_richelieu.png"
+	character_conditions = {
+		gender = male
+		not = {
+			cultural_group = african
+			cultural_group = asian
+		}
+		religion = catholic #because of the cardinal's hat
+		or = {
+			character_type = inquisitor
+			character_type = theologian
+		}
+	}
+}

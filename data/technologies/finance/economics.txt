@@ -1,0 +1,85 @@
+economics = {
+	name = "Economics"
+	subcategory = economics
+	portrait = coinage
+	icon = wealth
+	period = 1750_1800
+	cost = 1150
+	cost_commodity = research
+	prerequisites = {
+		banking
+		university
+	}
+	modifier = {
+		capitalist_bonus = 2
+	}
+}
+
+collectivist_theory = {
+	name = "Collectivist Theory"
+	subcategory = economics
+	portrait = coinage
+	icon = wealth
+	period = 1825_1850
+	cost = 1080
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		economics
+		collectivism
+	}
+	modifier = {
+		capitalist_bonus = 2
+	}
+}
+
+historical_theory = {
+	name = "Historical Theory"
+	subcategory = economics
+	portrait = coinage
+	icon = wealth
+	period = 1850_1875
+	cost = 1440
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		collectivist_theory
+	}
+	modifier = {
+		capitalist_bonus = 2
+	}
+}
+
+neoclassical_theory = {
+	name = "Neoclassical Theory"
+	subcategory = economics
+	portrait = coinage
+	icon = wealth
+	period = 1875_1900
+	cost = 1800
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		historical_theory
+	}
+	modifier = {
+		capitalist_bonus = 2
+	}
+}
+
+keynesian_economics = {
+	name = "Keynesian Economics"
+	subcategory = economics
+	portrait = coinage
+	icon = wealth
+	period = 1900_1925
+	cost = 2160
+	cost_commodity = research
+	required_game_rule = additional_technologies
+	prerequisites = {
+		neoclassical_theory
+	}
+	modifier = {
+		capitalist_bonus = 2
+	}
+}

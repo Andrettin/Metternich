@@ -1,0 +1,6 @@
+joao_pessoa = {
+	name = "Joao Pessoa" #"João Pessoa"
+	world = earth
+	geocoordinate = { -34.87607116640 -7.10113512954 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,13 @@
+troms = {
+	name = "Troms"
+	color = { 126 114 224 }
+	provincial_capital = tromso
+	regions = {
+		norway
+	}
+	
+	history = {
+		culture = norse
+		religion = pagan
+	}
+}

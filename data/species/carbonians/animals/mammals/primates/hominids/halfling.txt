@@ -1,0 +1,19 @@
+halfling = {
+	name = "Halfling"
+	supertaxon = homo
+	era = holocene
+	sapient = true
+	adulthood_age = 20
+	middle_age = 50
+	old_age = 75
+	venerable_age = 100
+	maximum_age_modifier = 5d20
+	starting_age_modifiers = {
+		intuitive = 2d4
+		self_taught = 3d6
+		trained = 4d6
+	}
+	pre_evolutions = {
+		homo_floresiensis
+	}
+}

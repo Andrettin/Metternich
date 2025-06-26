@@ -1,0 +1,7 @@
+allosaurus = {
+	name = "Allosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		saltopus
+	}
+}

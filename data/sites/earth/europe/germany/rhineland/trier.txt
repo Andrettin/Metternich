@@ -1,0 +1,30 @@
+trier = {
+	name = "Trier"
+	world = earth
+	geocoordinate = { 6.6413888888889 49.756666666667 }
+	type = resource
+	resource = iron_ore
+	province = rhineland
+	cultural_names = {
+		frankish = "Treveri"
+		french = "Treves" #"Trèves"
+	}
+	
+	history = {
+		395 = {
+			buildings += cathedral #Trèves was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+		}
+		
+		768 = {
+			#archbishopric existent in Trier during 768-814 AD; Source: "Medieval Warfare V.2", 2013, pp. 8-9.
+		}
+		
+		919 = {
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1454 = {
+			buildings += university #University founded in Trier in 1454; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

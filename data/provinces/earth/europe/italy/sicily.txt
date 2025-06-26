@@ -1,0 +1,52 @@
+sicily = {
+	name = "Sicily"
+	color = { 192 144 160 }
+	provincial_capital = palermo
+	resources = {
+		grain = 2
+		fruit = 1
+		sheep = 1
+		cotton = 2
+		
+		fish = 1
+	}
+	regions = {
+		italy
+	}
+	
+	history = {
+		culture = gothic
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		1204 = {
+			owner = two_sicilies #part of the Kingdom of the Two Sicilies in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+			culture = italian
+			religion = catholic
+		}
+		
+		1360 = {
+			owner = sicily #part of the Kingdom of Sicily in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1714 = {
+			owner = savoy #became a Savoyard possession in 1714; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1720 = {
+			owner = austria #became an Austrian possession in 1720; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1735 = {
+			owner = two_sicilies #became part of the Kingdom of the Two Sicilies under the Spanish Bourbons in 1735; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			culture = italian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

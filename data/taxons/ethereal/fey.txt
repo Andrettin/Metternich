@@ -1,0 +1,6 @@
+fey = {
+	name = "Fey"
+	common_name = "Fey"
+	rank = kingdom
+	supertaxon = ethereal
+}

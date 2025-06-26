@@ -1,0 +1,32 @@
+kyiv = {
+	name = "Kyiv"
+	color = { 1 224 224 }
+	provincial_capital = kyiv
+	cultural_names = {
+		russian = "Kiev"
+	}
+	regions = {
+		ukraine
+	}
+	
+	history = {
+		culture = slavic
+		religion = pagan
+		
+		1360 = {
+			owner = lithuania #part of Lithuania in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = ukrainian
+			religion = orthodox
+		}
+		
+		1740 = {
+			owner = russia #part of the Russian Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

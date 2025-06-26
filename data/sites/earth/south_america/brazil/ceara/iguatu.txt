@@ -1,0 +1,6 @@
+iguatu = {
+	name = "Iguatu"
+	world = earth
+	geocoordinate = { -39.29998905590 -6.35998777377 } #from Natural Earth
+	province = ceara
+}

@@ -1,0 +1,6 @@
+boa_vista = {
+	name = "Boa Vista"
+	world = earth
+	geocoordinate = { -60.66599756030 2.81609295543 }
+	type = settlement
+}

@@ -1,0 +1,21 @@
+budweis = {
+	name = "Budweis"
+	world = earth
+	geocoordinate = { 14.46003698590 48.98001934720 } #from Natural Earth
+	type = settlement
+	#resource = coal
+	province = budweis
+	cultural_names = {
+		czech = "Budejovice" #Budějovice
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1832 = {
+			improvements += rail_depot #Linz-Budweiser Pferdeeisenbahn commissioned in 1832; Source: Hans Peter Hye, "Die Wende zur Industrie- und Wissensgesselschaft", 2010, p. 23.
+		}
+	}
+}

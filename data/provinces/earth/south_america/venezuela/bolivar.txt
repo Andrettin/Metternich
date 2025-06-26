@@ -1,0 +1,19 @@
+bolivar = {
+	name = "Bolivar" #"Bolívar"
+	color = { 110 84 136 }
+	provincial_capital = ciudad_bolivar
+	regions = {
+		venezuela
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = arawaks
+			culture = arawak
+		}
+	}
+}

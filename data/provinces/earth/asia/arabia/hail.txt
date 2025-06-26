@@ -1,0 +1,20 @@
+hail = {
+	name = "Hail"
+	color = { 112 246 94 }
+	provincial_capital = hail
+	resources = {
+		sheep = 1
+	}
+	regions = {
+		asia
+		middle_east
+	}
+	
+	history = {
+		-1450 = {
+			owner = arabia #Arabic territory c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = arabic
+			religion = pagan
+		}
+	}
+}

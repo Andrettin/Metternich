@@ -1,0 +1,6 @@
+ajdabiya = {
+	name = "Ajdabiya"
+	world = earth
+	geocoordinate = { 20.21999548210 30.76999391580 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,10 @@
+diadectes = {
+	name = "Diadectes"
+	supertaxon = amphibia
+	pre_evolutions = {
+		cacops
+		diplocaulus
+		eogyrinus
+		greererpeton
+	}
+}

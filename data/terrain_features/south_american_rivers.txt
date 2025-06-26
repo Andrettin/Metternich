@@ -1,0 +1,9 @@
+parana_river = {
+	name = "Parana River"
+	river = true
+}
+
+tiete_river = {
+	name = "Tiete River"
+	river = true
+}

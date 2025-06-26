@@ -1,0 +1,21 @@
+republic = {
+	name = "Republic"
+	group = republic
+	icon = philosophy
+	required_technology = republic
+	default_laws = {
+		ruling_class = plutocracy
+		serfdom = free_subjects
+		press_rights = censored_press
+	}
+	conditions = {
+		not = {
+			country_type = clade
+			country_type = tribe
+			subject_type = colony
+		}
+	}
+	modifier = {
+		trade_bonus_for_tile_threshold = 1
+	}
+}

@@ -1,0 +1,8 @@
+cerro_de_potosi = {
+	name = "Cerro de Potosi"
+	world = earth
+	geocoordinate = { -65.749687 -19.618901 }
+	pos_offset = { 0 1 } #so that its position doesn't conflict with that of the settlement of Potosi
+	type = resource
+	resource = cerro_de_potosi
+}

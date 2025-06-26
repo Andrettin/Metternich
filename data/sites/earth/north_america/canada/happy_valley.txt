@@ -1,0 +1,6 @@
+happy_valley = {
+	name = "Happy Valley"
+	world = earth
+	geocoordinate = { -60.29999922850 53.29998821930 } #from Natural Earth
+	type = settlement
+}

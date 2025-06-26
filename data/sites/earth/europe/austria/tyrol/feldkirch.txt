@@ -1,0 +1,8 @@
+feldkirch = {
+	name = "Feldkirch"
+	world = earth
+	geocoordinate = { 9.5983333333333 47.238055555556 }
+	type = resource
+	resource = timber #Forest; Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
+	province = tyrol
+}

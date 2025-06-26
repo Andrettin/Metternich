@@ -1,0 +1,33 @@
+chernigov = {
+	name = "Chernigov"
+	color = { 224 128 97 }
+	provincial_capital = chernigov
+	regions = {
+		ukraine
+	}
+	
+	history = {
+		culture = slavic
+		religion = pagan
+		
+		1360 = {
+			owner = lithuania #part of Lithuania in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = ukrainian
+			religion = orthodox
+		}
+		
+		1560 = {
+			owner = muscovy #part of the Muscovite Dominions c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+		}
+		
+		1740 = {
+			owner = russia #part of the Russian Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

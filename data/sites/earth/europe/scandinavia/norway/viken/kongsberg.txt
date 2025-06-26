@@ -1,0 +1,7 @@
+kongsberg = {
+	name = "Kongsberg"
+	world = earth
+	geocoordinate = { 9.6463888888889 59.665 }
+	type = resource
+	resource = silver #Kongsberg Sølvverk
+}

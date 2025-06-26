@@ -1,0 +1,8 @@
+taizz = {
+	name = "Taizz"
+	world = earth
+	geocoordinate = { 44.03942012410 13.60445253390 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = yemen
+}

@@ -1,0 +1,8 @@
+wychwood_forest = {
+	name = "Wychwood Forest"
+	world = earth
+	geocoordinate = { -1.513 51.851 }
+	type = resource
+	terrain_type = conifer_forest
+	resource = timber
+}

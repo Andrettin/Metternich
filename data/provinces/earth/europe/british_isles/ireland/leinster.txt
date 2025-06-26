@@ -1,0 +1,35 @@
+leinster = {
+	name = "Leinster"
+	color = { 243 211 122 }
+	provincial_capital = dublin
+	regions = {
+		ireland
+	}
+	
+	history = {
+		owner = elginerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = elginerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = scots
+			culture = irish
+		}
+		
+		526 = {
+			owner = scots #territory of the Scots in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = irish
+		}
+		
+		1360 = {
+			owner = ireland #part of Ireland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			religion = catholic
+		}
+	}
+}

@@ -1,0 +1,12 @@
+stavoren = {
+	name = "Stavoren"
+	world = earth
+	#geocoordinate = { 5.3583 52.8833 }
+	province = friesland
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

@@ -1,0 +1,16 @@
+croatia = {
+	name = "Croatia"
+	type = minor_nation
+	culture = croatian
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = zagreb
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		croatia
+		slavonia
+	}
+}

@@ -1,0 +1,16 @@
+colossus = {
+	name = "Colossus"
+	portrait = dock
+	building = monument
+	required_technology = bronzeworking
+	#obsolescence_technology = flight
+	required_game_rule = trade_commodity
+	conditions = {
+		not = {
+			scripted_condition = is_northern_european
+		}
+	}
+	province_modifier = {
+		trade_bonus_for_tile_threshold = 1
+	}
+}

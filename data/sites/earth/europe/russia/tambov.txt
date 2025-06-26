@@ -1,0 +1,6 @@
+tambov = {
+	name = "Tambov"
+	world = earth
+	geocoordinate = { 41.43001867550 52.73002300930 } #from Natural Earth
+	type = settlement
+}

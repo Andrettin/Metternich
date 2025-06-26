@@ -1,0 +1,11 @@
+swedish_carracks = {
+	type = carrack
+	country = sweden
+	quantity = 3
+	
+	history = {
+		1492 = {
+			active = true
+		}
+	}
+}

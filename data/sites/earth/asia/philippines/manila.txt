@@ -1,0 +1,6 @@
+manila = {
+	name = "Manila"
+	world = earth
+	geocoordinate = { 120.98221716200 14.60415895480 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,38 @@
+general_napoleonic = {
+	name = "General"
+	unit_class = general_napoleonic
+	icon = general_napoleonic
+	stats = {
+		range = 1
+		defense = 5
+		movement = 7
+	}
+	upgrades = {
+		general_victorian
+	}
+}
+
+general_victorian = {
+	name = "General"
+	unit_class = general_victorian
+	icon = general_napoleonic
+	stats = {
+		range = 1
+		defense = 7
+		movement = 9
+	}
+	upgrades = {
+		general_modern
+	}
+}
+
+general_modern = {
+	name = "General"
+	unit_class = general_modern
+	icon = general_napoleonic
+	stats = {
+		range = 1
+		defense = 20
+		movement = 11
+	}
+}

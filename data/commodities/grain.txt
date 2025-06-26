@@ -1,0 +1,6 @@
+grain = {
+	name = "Grain"
+	icon = grain
+	food_type = starch
+	base_price = 100
+}

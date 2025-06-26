@@ -1,0 +1,12 @@
+bautzen = {
+	name = "Bautzen"
+	world = earth
+	geocoordinate = { 14.423888888889 51.181388888889 }
+	
+	history = {
+		919 = {
+			#settlement_type = castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

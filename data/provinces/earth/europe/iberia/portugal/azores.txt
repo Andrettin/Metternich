@@ -1,0 +1,18 @@
+azores = {
+	name = "Azores"
+	color = { 144 160 128 }
+	provincial_capital = ponta_delgada
+	regions = {
+		portugal
+	}
+	
+	history = {
+		culture = portuguese
+		religion = pagan
+		
+		1431 = {
+			owner = portugal #became a Portuguese possession in 1431; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			religion = catholic
+		}
+	}
+}

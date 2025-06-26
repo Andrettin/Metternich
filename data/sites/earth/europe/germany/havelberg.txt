@@ -1,0 +1,12 @@
+havelberg = {
+	name = "Havelberg"
+	world = earth
+	geocoordinate = { 12.074444444444 52.825 }
+	
+	history = {
+		919 = {
+			#settlement_type = castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

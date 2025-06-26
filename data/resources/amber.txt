@@ -1,0 +1,16 @@
+amber = {
+	name = "Amber"
+	commodity = amber
+	tiny_icon = trade_consulate
+	prospectable = true
+	discovery_technology = precious_stones
+	terrain_types = {
+		swamp
+	}
+	site_types = {
+		resource
+	}
+	improved_modifier = {
+		culture_bonus = 1
+	}
+}

@@ -1,0 +1,13 @@
+poland_lithuania = {
+	superregions = {
+		europe
+	}
+	
+	history = {
+		1620 = {
+			population_groups = {
+				scottish = 30000 #30,000 Scots lived in Poland in 1620; Source: Henry Kamen, "Early Modern European Society", 2021, p. 68.
+			}
+		}
+	}
+}

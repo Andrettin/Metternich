@@ -1,0 +1,18 @@
+elven = {
+	name = "Elven"
+	species = {
+		elf
+		#high_elf
+		#gray_elf
+		#wild_elf
+		#wood_elf
+		half_elf
+	}
+	
+	personal_names = {
+		male = {
+			"Egil" #elven archer from Norse mythology brother of Slagfid and Volund
+			"Slagfid" #from Norse mythology brother of Egil and Volund
+		}
+	}
+}

@@ -1,0 +1,27 @@
+monarchy = {
+	name = "Monarchy"
+	office_title_names = {
+		chief_builder = {
+			kingdom = "Royal Architect"
+			empire = "Imperial Architect"
+		}
+	}
+	landholder_title_names = {
+		barony = {
+			male = "Baron"
+			female = "Baroness"
+		}
+		viscounty = {
+			male = "Viscount"
+			female = "Viscountess"
+		}
+		county = {
+			male = "Count"
+			female = "Countess"
+		}
+		marquisate = {
+			male = "Marquis"
+			female = "Marquise"
+		}
+	}
+}

@@ -1,0 +1,35 @@
+grenadier_1 = {
+	name = "Grenadier I"
+	icon = musket
+	conditions = {
+		infantry = true
+	}
+	modifier = {
+		bonus_vs_fortifications = 20
+	}
+}
+
+grenadier_2 = {
+	name = "Grenadier II"
+	icon = musket
+	conditions = {
+		infantry = true
+		promotion = grenadier_1
+	}
+	modifier = {
+		bonus_vs_fortifications = 25
+	}
+}
+
+grenadier_3 = {
+	name = "Grenadier III"
+	icon = musket
+	conditions = {
+		infantry = true
+		promotion = grenadier_2
+	}
+	modifier = {
+		bonus_vs_fortifications = 30
+		bonus_vs_infantry = 10
+	}
+}

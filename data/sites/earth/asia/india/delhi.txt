@@ -1,0 +1,7 @@
+delhi = {
+	name = "Delhi"
+	world = earth
+	geocoordinate = { 77.23000402720 28.66999289860 } #from Natural Earth
+	type = settlement
+	province = haryana
+}

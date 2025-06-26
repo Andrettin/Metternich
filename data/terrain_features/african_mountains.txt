@@ -1,0 +1,41 @@
+al_jabal_al_akhdar = {
+	name = "Al Jabal al Akhdar"
+	terrain_type = mountains
+	color = { 208 143 195 }
+}
+
+anti_atlas = {
+	name = "Anti Atlas"
+	terrain_type = mountains
+	color = { 51 31 97 }
+}
+
+er_rif = {
+	name = "Er Rif"
+	terrain_type = mountains
+	color = { 89 63 176 }
+}
+
+high_atlas = {
+	name = "High Atlas"
+	terrain_type = mountains
+	color = { 69 126 142 }
+}
+
+middle_atlas = {
+	name = "Middle Atlas"
+	terrain_type = mountains
+	color = { 224 109 222 }
+}
+
+saharan_atlas = {
+	name = "Saharan Atlas"
+	terrain_type = mountains
+	color = { 132 48 221 }
+}
+
+tell_atlas = {
+	name = "Tell Atlas"
+	terrain_type = mountains
+	color = { 149 201 55 }
+}

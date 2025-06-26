@@ -1,0 +1,6 @@
+al_jawf = {
+	name = "Al Jawf"
+	world = earth
+	geocoordinate = { 23.28998897170 24.19998150530 } #from Natural Earth
+	type = settlement
+}

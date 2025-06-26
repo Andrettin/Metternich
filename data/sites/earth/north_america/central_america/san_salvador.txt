@@ -1,0 +1,6 @@
+san_salvador = {
+	name = "San Salvador"
+	world = earth
+	geocoordinate = { -89.20304122080 13.71000164690 } #from Natural Earth
+	type = settlement
+}

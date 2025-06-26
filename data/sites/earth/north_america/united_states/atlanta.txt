@@ -1,0 +1,8 @@
+atlanta = {
+	name = "Atlanta"
+	world = earth
+	geocoordinate = { -84.39994938330 33.83001385400 } #from Natural Earth
+	type = settlement
+	#resource = cotton
+	province = georgia
+}

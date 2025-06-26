@@ -1,0 +1,6 @@
+great_power = {
+	name = "Great Power"
+	priority = 10
+	average_score_threshold = 2.5
+	relative_score_threshold = 0.5
+}

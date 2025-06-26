@@ -1,0 +1,8 @@
+fredericksburg = {
+	name = "Fredericksburg"
+	world = earth
+	geocoordinate = { -77.46078637870 38.30351340640 } #from Natural Earth
+	type = resource
+	resource = tobacco
+	province = virginia
+}

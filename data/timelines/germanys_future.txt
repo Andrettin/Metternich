@@ -1,0 +1,6 @@
+germanys_future = { #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+	name = "Germany's Future"
+	point_of_divergence = 1917
+	
+	#timeline based on the pamphlet "Germany's Future", circulated in 1917
+}

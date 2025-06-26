@@ -1,0 +1,251 @@
+lithuanian_artillery = {
+	type = artillery
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = lithuania
+		}
+	}
+}
+
+lithuanian_hussars = {
+	type = hussars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = lithuania
+		}
+	}
+}
+
+kovno_regulars = {
+	type = regulars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = lithuania
+		}
+	}
+}
+
+moscow_regulars = {
+	type = regulars
+	country = russia
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = moscow
+		}
+	}
+}
+
+moscow_cuirassiers = {
+	type = cuirassiers
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = moscow
+		}
+	}
+}
+
+moscow_artillery = {
+	type = artillery
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = moscow
+		}
+	}
+}
+
+kievan_regulars = {
+	type = regulars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = kyiv
+		}
+	}
+}
+
+chernigov_hussars = {
+	type = hussars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = chernigov
+		}
+	}
+}
+
+krivoy_rog_hussars = {
+	type = hussars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = krivoy_rog
+		}
+	}
+}
+
+bessarabian_regulars = {
+	type = regulars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = bessarabia
+		}
+	}
+}
+
+bessarabian_artillery = {
+	type = artillery
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = bessarabia
+		}
+	}
+}
+
+odessa_hussars = {
+	type = hussars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = odessa
+		}
+	}
+}
+
+vinnitsa_regulars = {
+	type = regulars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = vinnitsa
+		}
+	}
+}
+
+belostok_regulars = {
+	type = regulars
+	#country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = warsaw
+		}
+	}
+}
+
+vilna_hussars = {
+	type = hussars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = lithuania
+		}
+	}
+}
+
+minsk_hussars = {
+	type = hussars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = minsk
+		}
+	}
+}
+
+belorussian_hussars = {
+	type = hussars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = minsk
+		}
+	}
+}
+
+kharkov_hussars = {
+	type = hussars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = kharkov
+		}
+	}
+}
+
+voronezh_hussars = {
+	type = hussars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = voronezh
+		}
+	}
+}
+
+grodno_regulars = {
+	type = regulars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = grodno
+		}
+	}
+}
+
+north_belorussian_hussars = {
+	type = hussars
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = vitebsk
+		}
+	}
+}

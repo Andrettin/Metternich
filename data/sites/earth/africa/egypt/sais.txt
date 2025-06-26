@@ -1,0 +1,14 @@
+sais = {
+	name = "Sais"
+	world = earth
+	geocoordinate = { 30.768333333333 30.964722222222 }
+	type = resource
+	resource = fruit
+	province = cairo
+	
+	history = {
+		-1450 = {
+			developed = true #existed c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+	}
+}

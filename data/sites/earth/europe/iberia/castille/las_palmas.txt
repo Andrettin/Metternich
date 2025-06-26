@@ -1,0 +1,6 @@
+las_palmas = {
+	name = "Las Palmas"
+	world = earth
+	geocoordinate = { -15.42999902490 28.09997601220 } #from Natural Earth
+	type = settlement
+}

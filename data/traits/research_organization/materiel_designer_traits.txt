@@ -1,0 +1,10 @@
+artillery_designer = {
+	name = "Artillery Designer"
+	icon = cannon
+	scaled_modifier = {
+		technology_cost_modifier = {
+			subcategory = siege_weapons
+			value = -5
+		}
+	}
+}

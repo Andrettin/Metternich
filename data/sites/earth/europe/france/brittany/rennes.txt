@@ -1,0 +1,25 @@
+rennes = {
+	name = "Rennes"
+	world = earth
+	geocoordinate = { -1.67001204569 48.10002138170 } #from Natural Earth
+	type = resource
+	#resource = cattle #Grassland and crops; Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
+	resource = grain
+	province = brittany
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1789 = {
+			buildings += courthouse #Parlement or conseil souverain, court of admiralty and prévôt des maréchaux existent in Rennes in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 5400
+			}
+		}
+	}
+}

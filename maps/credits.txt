@@ -1,0 +1,3 @@
+/maps/earth/provinces/germany.geojson (www.naturalearthdata.com and gdz.bkg.bund.de) (licensed under the DL-DE-BY-2.0)
+/maps/earth/provinces/ (www.naturalearthdata.com and www.github.com/OpenHistoricalMap/data) (licensed under the CC0)
+/maps/earth/terrain/ (www.naturalearthdata.com) (released to the public domain)

@@ -1,0 +1,21 @@
+lotharingia = {
+	name = "Lotharingia"
+	type = minor_nation
+	culture = frankish
+	default_religion = catholic
+	default_tier = kingdom
+	min_tier = duchy
+	default_government_type = monarchy
+	default_capital = cologne #Aachen
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		rhineland
+		brabant
+		liege
+		lorraine
+		luxembourg
+		moselle
+	}
+}

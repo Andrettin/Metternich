@@ -1,0 +1,59 @@
+lublin = {
+	name = "Lublin"
+	color = { 81 160 224 }
+	provincial_capital = lublin
+	resources = {
+		grain = 4
+		fruit = 1
+		iron_ore = 1
+	}
+	regions = {
+		galicia_and_west_galicia
+		poland
+		poland_lithuania
+	}
+	
+	history = {
+		owner = ventastegids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = ventastegids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = slavs
+			culture = slavic
+		}
+		
+		526 = {
+			owner = slavs #territory of Slavic peoples in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = slavic
+		}
+		
+		1360 = {
+			owner = poland #part of Poland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = polish
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = poland #part of the Kingdom of Poland c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = poland #part of the Kingdom of Poland in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = polish #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

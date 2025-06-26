@@ -1,0 +1,6 @@
+diplomat = {
+	name = "Diplomat"
+	advisor_category = political
+	attribute = diplomacy
+	starting_age_category = trained
+}

@@ -1,0 +1,6 @@
+saltillo = {
+	name = "Saltillo"
+	world = earth
+	geocoordinate = { -101.00498234200 25.41995871890 } #from Natural Earth
+	type = settlement
+}

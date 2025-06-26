@@ -1,0 +1,15 @@
+basques = {
+	name = "Basques"
+	type = tribe
+	culture = basque
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = pamplona
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		navarre
+	}
+}

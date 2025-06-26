@@ -1,0 +1,15 @@
+sweden = {
+	superregions = {
+		scandinavia
+	}
+	
+	history = {
+		1850 = {
+			literacy_rate = 90 #Source: Eric J. Hobsbawm, "A Era do Capital 1848-1875", 1977, p. 48.
+		}
+		
+		2003 = {
+			literacy_rate = 99 #Source: Philip's International School Atlas, p. 145.
+		}
+	}
+}

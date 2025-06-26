@@ -1,0 +1,7 @@
+yaroslavl = {
+	name = "Yaroslavl"
+	world = earth
+	geocoordinate = { 39.87001053750 57.61998292960 } #from Natural Earth
+	type = settlement
+	province = yaroslavl
+}

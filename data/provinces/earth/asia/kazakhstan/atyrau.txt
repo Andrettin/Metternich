@@ -1,0 +1,19 @@
+atyrau = {
+	name = "Atyrau"
+	color = { 79 80 45 }
+	provincial_capital = atyrau
+	regions = {
+		kazakhstan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+		
+		1360 = {
+			owner = golden_horde #part of the Khanate of the Golden Horde in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = mongol
+		}
+	}
+}

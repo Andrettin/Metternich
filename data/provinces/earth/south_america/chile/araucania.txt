@@ -1,0 +1,19 @@
+araucania = {
+	name = "Araucania" #"Araucanía"
+	color = { 177 118 209 }
+	provincial_capital = temuco
+	regions = {
+		chile
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = inca_empire
+			culture = inca
+		}
+	}
+}

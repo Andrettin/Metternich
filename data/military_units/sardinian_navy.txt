@@ -1,0 +1,11 @@
+sardinian_tyrrhenian_sea_frigates = {
+	type = frigate
+	country = sardinia
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = tyrrhenian_sea
+		}
+	}
+}

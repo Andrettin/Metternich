@@ -1,0 +1,7 @@
+merchant = {
+	name = "Merchant"
+	unit_class = merchant
+	icon = rifle_infantry_light
+	developer = true
+	required_technology = merchant_companies
+}

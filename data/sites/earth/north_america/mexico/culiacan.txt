@@ -1,0 +1,6 @@
+culiacan = {
+	name = "Culiacan" #"Culiacán"
+	world = earth
+	geocoordinate = { -107.37996789700 24.82999472960 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,12 @@
+hohenmolsen = {
+	name = "Hohenmolsen" #"Hohenmölsen"
+	world = earth
+	#geocoordinate = { 12.098055555556 51.156388888889 }
+	
+	history = {
+		919 = {
+			#settlement_type = castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

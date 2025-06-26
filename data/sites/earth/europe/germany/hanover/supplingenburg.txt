@@ -1,0 +1,13 @@
+supplingenburg = {
+	name = "Supplingenburg" #"Süpplingenburg"
+	world = earth
+	#geocoordinate = { 10.916666666667 52.25 }
+	province = hanover
+	
+	history = {
+		919 = {
+			#settlement_type = castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

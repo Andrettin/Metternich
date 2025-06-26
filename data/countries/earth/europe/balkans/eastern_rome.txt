@@ -1,0 +1,58 @@
+eastern_rome = {
+	name = "Eastern Rome"
+	type = great_power
+	color = { 170 148 214 }
+	culture = roman
+	default_religion = orthodox
+	default_tier = empire
+	default_government_type = monarchy
+	default_capital = constantinople
+	short_names = {
+		monarchy = {
+			empire = "Eastern Roman Empire"
+		}
+	}
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		thrace
+		afyonkarahisar
+		albania
+		alexandria
+		ankara
+		antalya
+		attica
+		aydin
+		benghazi
+		bulgaria
+		burdur
+		bursa
+		central_macedonia
+		crete
+		cyrenaica
+		denizli
+		dobruja
+		east_macedonia
+		eastern_rumelia
+		epirus
+		eskisehir
+		germiyan
+		karasi
+		kastamonu
+		kosovo
+		montenegro
+		mugla
+		nis
+		north_macedonia
+		novi_pazar
+		peloponnese
+		saruhan
+		serbia
+		smyrna
+		thessaly
+		tobruk
+		troad
+		west_macedonia
+	}
+}

@@ -1,0 +1,20 @@
+kars = {
+	name = "Kars"
+	color = { 53 113 51 }
+	provincial_capital = kars
+	regions = {
+		anatolia
+	}
+	
+	history = {
+		owner = persia
+		culture = persian
+		religion = pagan
+		
+		1360 = {
+			owner = qara_qoyunlu #territory of the Qara Qoyunlu in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = turkish
+			religion = sunni
+		}
+	}
+}

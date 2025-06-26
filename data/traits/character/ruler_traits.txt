@@ -1,0 +1,210 @@
+aggressive = {
+	name = "Aggressive"
+	types = {
+		ruler
+	}
+	icon = crossed_sabers
+	office_modifiers = {
+		ruler = {
+			free_infantry_promotion = veteran_1
+		}
+	}
+}
+
+charismatic = {
+	name = "Charismatic"
+	types = {
+		ruler
+	}
+	icon = music
+	office_modifiers = {
+		ruler = {
+			commodity_bonus_per_settlement = {
+				commodity = amenities
+				value = 1
+			}
+			
+			amenities_per_monument = 1
+		}
+	}
+}
+
+creative = {
+	name = "Creative"
+	types = {
+		ruler
+	}
+	icon = music
+	office_modifiers = {
+		ruler = {
+			commodity_bonus_per_settlement = {
+				commodity = culture
+				value = 2
+			}
+		}
+	}
+}
+
+expansive = {
+	name = "Expansive"
+	types = {
+		ruler
+	}
+	icon = settlement
+	office_modifiers = {
+		ruler = {
+			commodity_bonus_per_settlement = {
+				commodity = housing
+				value = 2
+			}
+		}
+	}
+}
+
+financial = {
+	name = "Financial"
+	types = {
+		ruler
+	}
+	icon = chest
+	office_modifiers = {
+		ruler = {
+			trade_bonus_for_tile_threshold = 2
+		}
+	}
+}
+
+impressionable = {
+	name = "Impressionable"
+	types = {
+		ruler
+	}
+	icon = painting
+	office_modifiers = {
+		ruler = {
+			free_infantry_promotion = grenadier_1
+		}
+	}
+}
+
+indulgent = {
+	name = "Indulgent"
+	types = {
+		ruler
+	}
+	icon = treaty
+	office_modifiers = {
+		ruler = {
+			free_infantry_promotion = formation
+		}
+	}
+}
+
+industrious = {
+	name = "Industrious"
+	types = {
+		ruler
+	}
+	icon = cog
+	office_modifiers = {
+		ruler = {
+			throughput_modifier = 10
+		}
+	}
+}
+
+militaristic = {
+	name = "Militaristic"
+	types = {
+		ruler
+	}
+	icon = crossed_sabers
+	office_modifiers = {
+		ruler = {
+			free_infantry_promotion = grenadier_1
+		}
+	}
+}
+
+organized = {
+	name = "Organized"
+	types = {
+		ruler
+	}
+	icon = philosophy
+	office_modifiers = {
+		ruler = {
+			law_cost_modifier = -50
+		}
+	}
+}
+
+philosophical = {
+	name = "Philosophical"
+	types = {
+		ruler
+	}
+	icon = philosophy
+	office_modifiers = {
+		ruler = {
+			statesmanship_output_modifier = 25
+		}
+	}
+}
+
+prosperous = {
+	name = "Prosperous"
+	types = {
+		ruler
+	}
+	icon = wealth
+	office_modifiers = {
+		ruler = {
+			free_infantry_promotion = minuteman_1
+		}
+	}
+}
+
+protective = {
+	name = "Protective"
+	types = {
+		ruler
+	}
+	icon = heater_shield
+	office_modifiers = {
+		ruler = {
+			free_infantry_promotion = city_garrison_1
+		}
+	}
+}
+
+spiritual = {
+	name = "Spiritual"
+	types = {
+		ruler
+	}
+	icon = wooden_cross
+	attribute = learning
+	max_scaling = 5
+	attribute_bonuses = {
+		learning = 1
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			piety_output_modifier = 5
+		}
+	}
+}
+
+well_connected = {
+	name = "Well-Connected"
+	types = {
+		ruler
+	}
+	icon = music
+	office_modifiers = {
+		ruler = {
+			advisor_cost_modifier = -20
+		}
+	}
+}

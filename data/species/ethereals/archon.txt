@@ -1,0 +1,6 @@
+archon = {
+	name = "Archon"
+	supertaxon = celestial
+	era = holocene
+	sapient = true
+}

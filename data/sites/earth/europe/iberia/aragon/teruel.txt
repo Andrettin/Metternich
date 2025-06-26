@@ -1,0 +1,8 @@
+teruel = {
+	name = "Teruel"
+	world = earth
+	geocoordinate = { -1.1072222222222 40.343611111111 }
+	type = resource
+	resource = grain
+	province = aragon
+}

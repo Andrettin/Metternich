@@ -1,0 +1,31 @@
+uppland = {
+	name = "Uppland"
+	color = { 96 64 96 }
+	provincial_capital = stockholm
+	regions = {
+		sweden
+	}
+	
+	history = {
+		owner = suionia
+		culture = suioni
+		religion = pagan
+		
+		-264 = {
+			owner = suionia #territory of the Suiones in the 264 BC - 180 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+			culture = suioni
+			religion = pagan
+		}
+		
+		1360 = {
+			owner = sweden #part of Sweden in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = swedish
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = sweden #part of the Kingdom of Sweden c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			religion = protestant
+		}
+	}
+}

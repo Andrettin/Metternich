@@ -1,0 +1,19 @@
+ashanti = {
+	name = "Ashanti"
+	color = { 230 22 101 }
+	provincial_capital = kumasi
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = carthage
+		culture = akan
+		religion = pagan
+		
+		1898 = {
+			owner = gold_coast #became part of the British Gold Coast in 1898; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 174-175.
+			religion = protestant
+		}
+	}
+}

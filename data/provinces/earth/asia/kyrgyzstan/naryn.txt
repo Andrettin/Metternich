@@ -1,0 +1,17 @@
+naryn = {
+	name = "Naryn"
+	color = { 10 135 14 }
+	provincial_capital = naryn
+	resources = {
+		grain = 1
+	}
+	regions = {
+		kyrgyzstan
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

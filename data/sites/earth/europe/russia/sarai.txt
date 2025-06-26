@@ -1,0 +1,12 @@
+sarai = {
+	name = "Sarai"
+	world = earth
+	geocoordinate = { 47.454586 47.174355 }
+	type = settlement
+	
+	history = {
+		1360 = {
+			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

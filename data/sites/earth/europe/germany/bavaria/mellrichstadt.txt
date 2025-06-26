@@ -1,0 +1,12 @@
+mellrichstadt = {
+	name = "Mellrichstadt"
+	world = earth
+	geocoordinate = { 10.3027 50.4278 }
+	province = franconia
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

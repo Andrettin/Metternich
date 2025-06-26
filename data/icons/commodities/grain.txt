@@ -1,0 +1,3 @@
+grain = {
+	filepath = "icons/commodities/grain.png"
+}

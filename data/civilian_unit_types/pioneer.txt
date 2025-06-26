@@ -1,0 +1,8 @@
+pioneer = {
+	name = "Pioneer"
+	unit_class = pioneer
+	icon = craftsmen_light
+	buildable_pathways = {
+		trail
+	}
+}

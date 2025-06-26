@@ -1,0 +1,36 @@
+kabardino_balkaria = {
+	name = "Kabardino-Balkaria"
+	color = { 183 219 14 }
+	provincial_capital = nalchik
+	regions = {
+		european_russia
+	}
+	
+	history = {
+		owner = tulerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = tulerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = mongolia
+			culture = mongol
+		}
+		
+		1360 = {
+			owner = golden_horde #part of the Khanate of the Golden Horde in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = mongol
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

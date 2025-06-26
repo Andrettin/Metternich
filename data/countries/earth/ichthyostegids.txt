@@ -1,0 +1,14 @@
+ichthyostegids = {
+	name = "Ichthyostegids"
+	type = clade
+	color = { 255 90 8 }
+	culture = amphibian
+	default_religion = pagan
+	default_tier = barony
+	max_tier = empire
+	default_government_type = clade
+	default_capital = brussels
+	core_provinces = {
+		brabant
+	}
+}

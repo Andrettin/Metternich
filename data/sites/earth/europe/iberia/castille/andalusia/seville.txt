@@ -1,0 +1,32 @@
+seville = {
+	name = "Seville"
+	world = earth
+	geocoordinate = { -5.98000736635 37.40501527820 } #from Natural Earth
+	type = settlement
+	cultural_names = {
+		roman = "Hispalis"
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1504 = {
+			buildings += university #Major university founded in Seville in 1504; Source: "The Cambridge Modern History Atlas", 1912, p. 9; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+			settlement_type = campus
+		}
+		
+		1565 = {
+			population_groups = {
+				slaves.african = 6327 #6,327 slaves lived in Seville in 1565 (most of whom were black), comprising 7.4% of the population; Source: Henry Kamen, "Early Modern European Society", 2021, p. 273.
+			}
+			
+			population = 85500 #6,327 * 100 / 7.4 = 85,500
+		}
+		
+		1600 = {
+			population = 100000 #Seville had a population of 100,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+	}
+}

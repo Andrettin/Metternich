@@ -1,0 +1,8 @@
+apache = {
+	name = "Apache"
+	group = american
+	color = { 195 174 134 }
+	species = {
+		human
+	}
+}

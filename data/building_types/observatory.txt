@@ -1,0 +1,25 @@
+observatory = {
+	name = "Observatory"
+	building_class = observatory
+	portrait = university
+	icon = research
+	provincial = true
+	required_technology = astronomy
+	settlement_types = {
+		city
+		metropolis
+		campus
+	}
+	conditions = {
+		game_rule = research_commodity
+	}
+	settlement_conditions = {
+		or = {
+			terrain = mountains
+			adjacent_terrain = mountains
+		}
+	}
+	settlement_modifier = {
+		research_bonus = 1
+	}
+}

@@ -1,0 +1,6 @@
+capitan_pablo_lagerenza = {
+	name = "Capitan Pablo Lagerenza"
+	world = earth
+	geocoordinate = { -60.78327722330 -19.91611122760 } #from Natural Earth
+	type = settlement
+}

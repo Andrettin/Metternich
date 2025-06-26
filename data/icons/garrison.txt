@@ -1,0 +1,3 @@
+garrison = {
+	filepath = "icons/garrison.png"
+}

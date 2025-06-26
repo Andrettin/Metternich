@@ -1,0 +1,7 @@
+ternopil = {
+	name = "Ternopil"
+	world = earth
+	geocoordinate = { 25.58214880240 49.53598024400 } #from Natural Earth
+	type = resource
+	resource = grain
+}

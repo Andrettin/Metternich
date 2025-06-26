@@ -1,0 +1,8 @@
+kajaani = {
+	name = "Kajaani"
+	world = earth
+	geocoordinate = { 27.733333333333 64.225 }
+	type = resource
+	resource = timber
+	province = ostrobothnia
+}

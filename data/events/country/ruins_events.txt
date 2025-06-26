@@ -1,0 +1,36 @@
+ruins_explored = {
+	name = "Ruins Explored!"
+	description = "We have explored the ruins of a lost civilization, and found valuable artifacts and precious metals."
+	trigger = site_visited
+	random = true
+	conditions = {
+		source_site = {
+			improvement = ruins
+		}
+	}
+	option = {
+		name = "Gold and glory!"
+		effects = {
+			wealth += 500
+			prestige += 1
+		}
+	}
+}
+
+expedition_to_tribal_village = {
+	name = "Expedition to Tribal Village"
+	description = "Our expedition to a tribal village has been greeted warmly by the local chieftain, who has given us a gift."
+	trigger = site_visited
+	random = true
+	conditions = {
+		source_site = {
+			improvement = tribal_village
+		}
+	}
+	option = {
+		name = "To a lasting friendship!"
+		effects = {
+			wealth += 100
+		}
+	}
+}

@@ -1,0 +1,5 @@
+route = {
+	name = "Route"
+	image_filepath = "tiles/pathways/road.png"
+	transport_level = 0
+}

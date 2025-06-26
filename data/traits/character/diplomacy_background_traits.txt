@@ -1,0 +1,79 @@
+naive_appeaser = {
+	name = "Naive Appeaser"
+	types = {
+		background
+	}
+	icon = treaty
+	conditions = {
+		primary_attribute = diplomacy
+		not = {
+			trait = underhanded_rogue
+			trait = charismatic_negotiator
+			trait = grey_eminence
+		}
+	}
+	attribute_bonuses = {
+		diplomacy = 2
+	}
+}
+
+underhanded_rogue = {
+	name = "Underhanded Rogue"
+	types = {
+		background
+	}
+	icon = treaty
+	conditions = {
+		primary_attribute = diplomacy
+		not = {
+			trait = naive_appeaser
+			trait = charismatic_negotiator
+			trait = grey_eminence
+		}
+	}
+	attribute_bonuses = {
+		diplomacy = 4
+	}
+}
+
+charismatic_negotiator = {
+	name = "Charismatic Negotiator"
+	types = {
+		background
+	}
+	icon = treaty
+	conditions = {
+		primary_attribute = diplomacy
+		not = {
+			trait = naive_appeaser
+			trait = underhanded_rogue
+			trait = grey_eminence
+		}
+	}
+	attribute_bonuses = {
+		diplomacy = 6
+		intrigue = 1
+		learning = 1
+	}
+}
+
+grey_eminence = {
+	name = "Grey Eminence"
+	types = {
+		background
+	}
+	icon = treaty
+	conditions = {
+		primary_attribute = diplomacy
+		not = {
+			trait = naive_appeaser
+			trait = underhanded_rogue
+			trait = grey_eminence
+		}
+	}
+	attribute_bonuses = {
+		diplomacy = 8
+		intrigue = 2
+		learning = 2
+	}
+}

@@ -1,0 +1,6 @@
+iquitos = {
+	name = "Iquitos"
+	world = earth
+	geocoordinate = { -73.25000980800 -3.75001788444 } #from Natural Earth
+	type = settlement
+}

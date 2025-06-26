@@ -1,0 +1,20 @@
+ottoman_turks = {
+	name = "Ottoman Turks"
+	type = tribe
+	culture = turkish
+	default_religion = sunni
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = bursa
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		bursa
+		ankara
+		eskisehir
+		germiyan
+		karasi
+		troad
+	}
+}

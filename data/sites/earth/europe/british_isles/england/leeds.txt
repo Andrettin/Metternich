@@ -1,0 +1,17 @@
+leeds = {
+	name = "Leeds"
+	world = earth
+	geocoordinate = { -1.58001753886 53.83000754710 } #from Natural Earth
+	type = resource
+	resource = coal
+	province = yorkshire
+	cultural_names = {
+		anglo_saxon = "Loidis" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
+	}
+	
+	history = {
+		1904 = {
+			buildings += university #University founded in Leeds in 1904; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
+		}
+	}
+}

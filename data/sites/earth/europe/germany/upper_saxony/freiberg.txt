@@ -1,0 +1,16 @@
+freiberg = {
+	name = "Freiberg"
+	world = earth
+	geocoordinate = { 13.34277777777 50.911944444444 }
+	type = resource
+	resource = silver
+	province = upper_saxony
+	
+	history = {
+		1629 = {
+			population_groups = {
+				czech = 528 #Source: Henry Kamen, "The Iron Century", p. 425.
+			}
+		}
+	}
+}

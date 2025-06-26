@@ -1,0 +1,23 @@
+horse_artillery = {
+	name = "Horse Artillery"
+	domain = land
+	category = light_artillery
+}
+
+light_artillery = {
+	name = "Light Artillery"
+	domain = land
+	category = light_artillery
+}
+
+field_artillery = {
+	name = "Field Artillery"
+	domain = land
+	category = light_artillery
+}
+
+mobile_artillery = {
+	name = "Mobile Artillery"
+	domain = land
+	category = light_artillery
+}

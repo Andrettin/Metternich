@@ -1,0 +1,37 @@
+barony_of_paty_do_alferes = {
+	name = "Barony of Paty do Alferes"
+	portrait = baronial_crown
+	preconditions = {
+		or = {
+			owns_site = paty_do_alferes
+			any_subject_country = {
+				owns_site = paty_do_alferes
+			}
+		}
+	}
+	built_resource_site_levels = {
+		paty_do_alferes = 1
+	}
+	completion_effects = {
+		prestige += 1
+	}
+}
+
+barony_of_vassouras = {
+	name = "Barony of Vassouras"
+	portrait = baronial_crown
+	preconditions = {
+		or = {
+			owns_site = vassouras
+			any_subject_country = {
+				owns_site = vassouras
+			}
+		}
+	}
+	built_resource_site_levels = {
+		vassouras = 1
+	}
+	completion_effects = {
+		prestige += 1
+	}
+}

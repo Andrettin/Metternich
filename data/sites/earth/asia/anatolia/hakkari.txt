@@ -1,0 +1,8 @@
+hakkari = {
+	name = "Hakkari" #"Hakkâri"
+	world = earth
+	geocoordinate = { 43.74083369830 37.57443646140 } #from Natural Earth
+	type = resource
+	resource = cattle #Meadows and pastures; Source: "CIA Atlas of the Middle East", 1993.
+	province = amida
+}

@@ -1,0 +1,6 @@
+formosa = {
+	name = "Formosa"
+	world = earth
+	geocoordinate = { -58.18281579750 -26.17283526730 } #from Natural Earth
+	type = settlement
+}

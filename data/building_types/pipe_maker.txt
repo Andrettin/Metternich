@@ -1,0 +1,13 @@
+pipe_maker = {
+	name = "Pipe Maker"
+	building_class = pipe_maker
+	portrait = factory
+	icon = tools
+	production_types = {
+		lead_pipe_making
+	}
+	base_capacity = 8
+	capacity_increment = 8
+	expandable = true
+	required_technology = sanitation
+}

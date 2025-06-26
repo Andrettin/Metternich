@@ -1,0 +1,6 @@
+puerto_princesa = {
+	name = "Puerto Princesa"
+	world = earth
+	geocoordinate = { 118.74438397300 9.75426778273 } #from Natural Earth
+	type = settlement
+}

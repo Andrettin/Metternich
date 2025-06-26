@@ -1,0 +1,7 @@
+uzhgorod = {
+	name = "Uzhgorod"
+	world = earth
+	geocoordinate = { 22.25000077180 48.62998903310 } #from Natural Earth
+	type = resource
+	resource = coal
+}

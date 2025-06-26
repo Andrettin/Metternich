@@ -1,0 +1,14 @@
+inner_mongolia = {
+	name = "Inner Mongolia"
+	color = { 196 208 41 }
+	provincial_capital = hohhot
+	regions = {
+		asia
+	}
+	
+	history = {
+		owner = mongolia
+		culture = mongol
+		religion = pagan
+	}
+}

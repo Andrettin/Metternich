@@ -1,0 +1,57 @@
+araxes_river = {
+	name = "Araxes River"
+	river = true
+}
+
+cyrus_river = {
+	name = "Cyrus River"
+	river = true
+}
+
+euphrates_river = {
+	name = "Euphrates River"
+	river = true
+	color = { 165 29 48 }
+}
+
+jordan_river = {
+	name = "Jordan River"
+	river = true
+}
+
+karkheh_river = {
+	name = "Karkheh River"
+	river = true
+}
+
+kizilirmak_river = {
+	name = "Kizilirmak River"
+	river = true
+}
+
+maeander_river = {
+	name = "Maeander River"
+	river = true
+}
+
+murat_river = {
+	name = "Murat River"
+	river = true
+}
+
+sakarya_river = {
+	name = "Sakarya River"
+	river = true
+}
+
+shatt_al_arab_river = {
+	name = "Shatt al-Arab River"
+	river = true
+	color = { 48 237 141 }
+}
+
+tigris_river = {
+	name = "Tigris River"
+	river = true
+	color = { 100 118 228 }
+}

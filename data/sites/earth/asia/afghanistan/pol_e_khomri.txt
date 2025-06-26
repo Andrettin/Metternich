@@ -1,0 +1,8 @@
+pol_e_khomri = {
+	name = "Pol-e Khomri"
+	world = earth
+	geocoordinate = { 68.70111893600 35.95107301740 } #from Natural Earth
+	type = resource
+	resource = grain #Mixed dry farming and grazing; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	province = afghanistan
+}

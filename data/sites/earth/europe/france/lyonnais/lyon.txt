@@ -1,0 +1,36 @@
+lyon = {
+	name = "Lyon"
+	world = earth
+	geocoordinate = { 4.83003047549 45.77000856430 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = auvergne
+	cultural_names = {
+		frankish = "Lugdunum"
+		gaulish = "Lugdunum"
+		roman = "Lugdunum" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	
+	history = {
+		919 = {
+			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1330 = {
+			buildings += university #University founded in Lyon in 1330; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+		}
+		
+		1789 = {
+			buildings += courthouse #Chief court of the salt tax existent in Lyon in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 6600
+				clergymen.french.catholic = 8000
+				clergymen.french.jewish = 100
+				officers.french.catholic = 2800
+			}
+		}
+	}
+}

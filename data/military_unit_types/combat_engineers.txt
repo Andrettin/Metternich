@@ -1,0 +1,63 @@
+sappers = {
+	name = "Sappers"
+	unit_class = sappers
+	icon = artillerist
+	stats = {
+		range = 5
+		defense = 3
+		movement = 4
+	}
+	entrench = true
+	required_technology = explosives
+	wealth_cost = 5000
+	upkeep = 50
+	commodity_costs = {
+		manpower = 1
+		muskets = 2
+	}
+	upgrades = {
+		combat_engineers
+	}
+}
+
+combat_engineers = {
+	name = "Combat Engineers"
+	unit_class = combat_engineers
+	icon = artillerist
+	stats = {
+		range = 8
+		defense = 4
+		movement = 4
+	}
+	entrench = true
+	required_technology = bessemer_converter
+	wealth_cost = 7000
+	upkeep = 50
+	commodity_costs = {
+		manpower = 1
+		rifles = 2
+	}
+	upgrades = {
+		saboteurs
+	}
+}
+
+saboteurs = {
+	name = "Saboteurs"
+	unit_class = saboteurs
+	icon = artillerist
+	stats = {
+		range = 10
+		defense = 10
+		movement = 5
+	}
+	entrench = true
+	entrenchment_bonus = 2
+	required_technology = machine_gun
+	wealth_cost = 9000
+	upkeep = 75
+	commodity_costs = {
+		manpower = 1
+		rifles = 3
+	}
+}

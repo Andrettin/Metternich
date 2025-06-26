@@ -1,0 +1,11 @@
+austrian_gulf_of_venice_frigates = {
+	type = frigate
+	country = austria
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = adriatic_sea
+		}
+	}
+}

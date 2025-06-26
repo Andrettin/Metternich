@@ -1,0 +1,74 @@
+stockade = {
+	name = "Stockade"
+	building_class = stockade
+	portrait = fort
+	icon = wall
+	provincial = true
+	fort_level = 1
+	settlement_types = {
+		village
+		town
+		city
+		metropolis
+		campus
+		castle
+		monastery
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = protective
+			}
+		}
+	}
+}
+
+fort = {
+	name = "Fort"
+	building_class = fort
+	portrait = fort
+	icon = wall
+	provincial = true
+	fort_level = 2
+	required_building = stockade
+	required_technology = mine_engineering
+	settlement_types = {
+		town
+		city
+		metropolis
+		castle
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = protective
+			}
+		}
+	}
+}
+
+fortress = {
+	name = "Fortress"
+	building_class = fortress
+	portrait = fort
+	icon = wall
+	provincial = true
+	fort_level = 3
+	required_building = fort
+	required_technology = modern_fortifications
+	settlement_types = {
+		city
+		metropolis
+		castle
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = protective
+			}
+		}
+	}
+}

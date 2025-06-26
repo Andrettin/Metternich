@@ -1,0 +1,12 @@
+vicenza = {
+	name = "Vicenza"
+	world = earth
+	geocoordinate = { 11.55 45.55 }
+	province = venetia
+	
+	history = {
+		1204 = {
+			buildings += university #University founded in Vicenza in 1204; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

@@ -1,0 +1,6 @@
+santiago_del_estero = {
+	name = "Santiago del Estero"
+	world = earth
+	geocoordinate = { -64.26665633310 -27.78333127970 } #from Natural Earth
+	type = settlement
+}

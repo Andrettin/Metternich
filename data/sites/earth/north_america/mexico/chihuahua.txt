@@ -1,0 +1,6 @@
+chihuahua = {
+	name = "Chihuahua"
+	world = earth
+	geocoordinate = { -106.08498234200 28.64498150530 } #from Natural Earth
+	type = settlement
+}

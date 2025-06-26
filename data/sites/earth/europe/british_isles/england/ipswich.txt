@@ -1,0 +1,8 @@
+ipswich = {
+	name = "Ipswich"
+	world = earth
+	geocoordinate = { 1.16999548199 52.07034751290 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = east_anglia
+}

@@ -1,0 +1,34 @@
+kherson = {
+	name = "Kherson"
+	color = { 173 45 162 }
+	provincial_capital = kherson
+	regions = {
+		ukraine
+	}
+	
+	history = {
+		culture = mongol
+		religion = pagan
+		
+		1360 = {
+			owner = golden_horde #part of the Khanate of the Golden Horde in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = mongol
+		}
+		
+		1740 = {
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1796 = {
+			owner = russia #became part of Russia between 1762 and 1796; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 138-139.
+			culture = ukrainian
+			religion = orthodox
+		}
+		
+		germanys_future = {
+			1918 = {
+				owner = germany #Source: "The British Dominions Year Book 1918", 1918, Map 11.
+			}
+		}
+	}
+}

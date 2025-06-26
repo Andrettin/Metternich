@@ -1,0 +1,22 @@
+atlantic_ocean = {
+	name = "Atlantic Ocean"
+	ocean = true
+}
+
+baltic_sea = {
+	superregions = {
+		atlantic_ocean
+	}
+}
+
+mediterranean_sea = {
+	superregions = {
+		atlantic_ocean
+	}
+}
+
+north_sea = {
+	superregions = {
+		atlantic_ocean
+	}
+}

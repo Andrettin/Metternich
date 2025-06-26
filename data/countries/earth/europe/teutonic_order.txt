@@ -1,0 +1,17 @@
+teutonic_order = {
+	name = "Teutonic Order"
+	type = minor_nation
+	culture = german
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = konigsberg
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		east_prussia
+		west_prussia
+	}
+}

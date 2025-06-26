@@ -1,0 +1,10 @@
+gothic_war = {
+	name = "Gothic War"
+	start_date = 535
+	map_template = earth
+	hidden = true
+	default_countries = {
+		eastern_rome
+		ostrogothia
+	}
+}

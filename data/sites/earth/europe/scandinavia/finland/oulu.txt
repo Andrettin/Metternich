@@ -1,0 +1,8 @@
+oulu = {
+	name = "Oulu"
+	world = earth
+	geocoordinate = { 25.47001094430 64.99999757810 } #from Natural Earth
+	type = resource
+	resource = timber
+	province = ostrobothnia
+}

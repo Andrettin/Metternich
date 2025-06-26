@@ -1,0 +1,61 @@
+asia = {
+}
+
+japan = {
+	superregions = {
+		asia
+	}
+	
+	history = {
+		2003 = {
+			literacy_rate = 99 #Source: Philip's International School Atlas, p. 143.
+		}
+	}
+}
+
+kazakhstan = {
+	superregions = {
+		asia
+		commonwealth_of_independent_states
+		soviet_union
+	}
+}
+
+kyrgyzstan = {
+	superregions = {
+		asia
+		commonwealth_of_independent_states
+		soviet_union
+	}
+}
+
+persia = {
+	superregions = {
+		asia
+		middle_east
+	}
+}
+
+tajikistan = {
+	superregions = {
+		asia
+		commonwealth_of_independent_states
+		soviet_union
+	}
+}
+
+turkmenistan = {
+	superregions = {
+		asia
+		commonwealth_of_independent_states
+		soviet_union
+	}
+}
+
+uzbekistan = {
+	superregions = {
+		asia
+		commonwealth_of_independent_states
+		soviet_union
+	}
+}

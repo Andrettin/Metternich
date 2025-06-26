@@ -1,0 +1,26 @@
+new_france = {
+	name = "New France"
+	type = great_power
+	color = { 194 140 86 }
+	culture = french
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = quebec
+	eras = {
+		renaissance_era
+	}
+	core_provinces = {
+		quebec
+	}
+	
+	history = {
+		1600 = {
+			#French possession in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			diplomacy_state = {
+				country = france
+				subject_type = colony
+			}
+		}
+	}
+}

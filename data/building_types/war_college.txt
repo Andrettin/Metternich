@@ -1,0 +1,29 @@
+war_college = {
+	name = "War College"
+	building_class = war_college
+	portrait = fort
+	icon = wall
+	provincial = true
+	provincial_capital_only = true
+	settlement_types = {
+		city
+		metropolis
+		castle
+	}
+	settlement_conditions = {
+		or = {
+			province = {
+				produces_commodity = leadership
+			}
+			capital = true
+		}
+	}
+	settlement_modifier = {
+		leadership_output_modifier = 100
+		housing_bonus = 1
+		profession_capacity = {
+			profession = officers
+			value = 3
+		}
+	}
+}

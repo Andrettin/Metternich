@@ -1,0 +1,8 @@
+hull = { #Kingston upon Hull
+	name = "Hull"
+	world = earth
+	geocoordinate = { -0.32999047993 53.75042584140 } #from Natural Earth
+	type = resource
+	resource = coal
+	province = yorkshire
+}

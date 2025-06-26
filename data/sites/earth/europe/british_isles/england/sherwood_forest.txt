@@ -1,0 +1,8 @@
+sherwood_forest = {
+	name = "Sherwood Forest"
+	world = earth
+	geocoordinate = { -1.0727611111111 53.204469444444 }
+	type = resource
+	terrain_type = conifer_forest
+	resource = timber
+}

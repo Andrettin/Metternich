@@ -1,0 +1,6 @@
+lizardfolk = {
+	name = "Lizardfolk"
+	species = {
+		lizardfolk
+	}
+}

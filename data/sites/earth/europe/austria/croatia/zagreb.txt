@@ -1,0 +1,33 @@
+zagreb = {
+	name = "Zagreb"
+	world = earth
+	geocoordinate = { 15.99999466820 45.80000673330 } #from Natural Earth
+	type = settlement
+	#resource = timber
+	province = croatia
+	cultural_names = {
+		roman = "Celeta" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+	}
+	cultural_group_names = {
+		german = "Agram"
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1815 = {
+			population = 18000 #Zagreb had a population of 18,000 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 81.
+		}
+		
+		1873 = {
+			improvements += rail_depot #Pest-Zagreb-Fiume railroad built in 1873; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
+		}
+		
+		1874 = {
+			buildings += university #University founded in Zagreb in 1874; Source: A.J.P. Taylor, "The Habsburg Monarchy, 1809-1918", 1964,
+			settlement_type = campus
+		}
+	}
+}

@@ -1,0 +1,36 @@
+new_brunswick = {
+	name = "New Brunswick"
+	color = { 240 192 64 }
+	provincial_capital = fredericton
+	regions = {
+		canada
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = iroquois
+			culture = iroquois
+		}
+		
+		1300 = {
+			owner = iroquois #territory of the Northeastern cultural group (to which the Iroquois belonged) in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
+			culture = iroquois
+		}
+		
+		1600 = {
+			owner = new_france #part of New France in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = french
+			religion = catholic
+		}
+	}
+}

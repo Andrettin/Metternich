@@ -1,0 +1,5 @@
+andean = {
+	name = "Andean"
+	rank = group
+	upper_group = american
+}

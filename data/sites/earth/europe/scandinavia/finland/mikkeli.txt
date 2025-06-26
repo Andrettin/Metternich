@@ -1,0 +1,8 @@
+mikkeli = {
+	name = "Mikkeli"
+	world = earth
+	geocoordinate = { 27.28500347630 61.68999616710 } #from Natural Earth
+	type = resource
+	resource = timber
+	province = savonia
+}

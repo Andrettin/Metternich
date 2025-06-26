@@ -1,0 +1,7 @@
+zanjan = {
+	name = "Zanjan"
+	world = earth
+	geocoordinate = { 48.50002640670 36.67002138170 } #from Natural Earth
+	type = settlement
+	province = zanjan
+}

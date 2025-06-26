@@ -1,0 +1,20 @@
+cahors = {
+	name = "Cahors"
+	world = earth
+	geocoordinate = { 1.4405555555556 44.4475 }
+	type = resource
+	resource = timber
+	province = guyenne
+	
+	history = {
+		1332 = {
+			buildings += university #University founded in Cahors in 1332; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 2900
+			}
+		}
+	}
+}

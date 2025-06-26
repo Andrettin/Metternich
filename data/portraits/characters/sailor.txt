@@ -1,0 +1,3 @@
+sailor = {
+	filepath = "portraits/characters/sailor.png"
+}

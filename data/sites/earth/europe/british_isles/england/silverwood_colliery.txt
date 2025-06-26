@@ -1,0 +1,7 @@
+silverwood_colliery = {
+	name = "Silverwood"
+	world = earth
+	#geocoordinate = { -1.28388889 53.44055556 }
+	type = resource
+	resource = coal #Silverwood Colliery
+}

@@ -1,0 +1,14 @@
+sacred_menhir = {
+	name = "Sacred Menhir"
+	portrait = temple
+	building = monument
+	required_technology = bronzeworking
+	#obsolescence_technology = warp_spell
+	required_game_rule = trade_commodity
+	conditions = {
+		scripted_condition = is_northern_european
+	}
+	province_modifier = {
+		trade_bonus_for_tile_threshold = 1
+	}
+}

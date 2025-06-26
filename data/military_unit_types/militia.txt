@@ -1,0 +1,74 @@
+peasant_levies = {
+	name = "Peasant Levies"
+	unit_class = peasant_levies
+	icon = pikemen
+	stats = {
+		melee = 3
+		range = 1
+		defense = 3
+		movement = 3
+	}
+	entrench = true
+	commodity_costs = {
+		manpower = 1
+		fabric = 1
+	}
+	upgrades = {
+		minutemen
+	}
+}
+
+minutemen = {
+	name = "Minutemen"
+	unit_class = minutemen
+	icon = whitecoats
+	stats = {
+		firepower = 5
+		melee = 5
+		range = 5
+		defense = 4
+		movement = 4
+	}
+	entrench = true
+	required_technology = conscription
+	free_promotions = {
+		minuteman_1
+	}
+	upgrades = {
+		militia
+	}
+}
+
+militia = {
+	name = "Militia"
+	unit_class = militia
+	icon = rifle_infantry_light
+	stats = {
+		firepower = 7
+		melee = 7
+		range = 8
+		defense = 4
+		movement = 4
+	}
+	entrench = true
+	required_technology = needle_gun
+	upgrades = {
+		conscripts
+	}
+}
+
+conscripts = {
+	name = "Conscripts"
+	unit_class = conscripts
+	icon = rifle_infantry_light
+	stats = {
+		firepower = 10
+		melee = 10
+		range = 10
+		defense = 10
+		movement = 5
+	}
+	entrench = true
+	entrenchment_bonus = 2
+	required_technology = machine_gun
+}

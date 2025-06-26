@@ -1,0 +1,8 @@
+mitrovica = {
+	name = "Mitrovica"
+	world = earth
+	geocoordinate = { 19.6125 44.97 }
+	type = resource
+	resource = timber
+	province = slavonia
+}

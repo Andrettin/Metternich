@@ -1,0 +1,23 @@
+marrakech = {
+	name = "Marrakech"
+	color = { 237 89 2 }
+	provincial_capital = marrakech
+	resources = {
+		fruit = 1
+	}
+	regions = {
+		morocco
+	}
+	
+	history = {
+		owner = carthage
+		culture = maurian
+		religion = pagan
+		
+		1360 = {
+			owner = morocco #part of Morocco in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = arabic
+			religion = sunni
+		}
+	}
+}

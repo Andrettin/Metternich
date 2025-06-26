@@ -1,0 +1,5 @@
+finnic = {
+	name = "Finnic"
+	rank = group
+	upper_group = western
+}

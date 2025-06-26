@@ -1,0 +1,9 @@
+herat = {
+	name = "Herat"
+	world = earth
+	geocoordinate = { 62.16999304080 34.33000917460 } #from Natural Earth
+	type = resource
+	#resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	resource = fruit
+	province = afghanistan
+}

@@ -1,0 +1,15 @@
+amphibians = {
+	name = "Amphibians"
+	subcategory = amphibious_animals
+	portrait = building_slot
+	icon = frog
+	period = carboniferous
+	cost_commodity = research
+	cultures = {
+		mammalian
+		reptilian
+	}
+	prerequisites = {
+		ectothermics
+	}
+}

@@ -1,0 +1,450 @@
+ulrich_von_cilli = { #Source: "Encyclopædia Britannica", 1911, vol. 6, p. 366.
+	name = "Ulrich"
+	surname = "von Cilli"
+	role = advisor
+	character_type = statesman
+	culture = austrian
+	religion = catholic
+	home_site = cilli
+	gender = male
+	#son of Frederick II, count of Cilli, and Elizabeth Frangepan
+	birth_date = 1406
+	death_date = 1456.11.9 #died at Belgrade on 1456.11.9
+	skill_multiplier = 0.5
+	required_technology = feudalism
+	conditions = {
+		or = {
+			country = austria
+			country = hungary
+		}
+	}
+	traits = {
+		statesman
+	}
+	
+	#count of Cilli
+	
+	#text based on that of the Encyclopædia Britannica, in the public domain
+	description = "Count of Cilli, his influence in the troubled affairs of Hungary and the Empire early overshadowed that of his father, Frederick II. He established an alliance with the Habsburg king Albert II, who made Ulrich for a short while his lieutenant in Bohemia. After Albert's death in 1439, Ulrich presided at the coronation of his infant son Ladislaus V Posthumus in 1440. Count Ulrich was able to lead a successful crusade, nominally in the Habsburg interest, into Hungary in 1450. In 1452 he forced the emperor Frederick III to hand over the boy king Ladislaus V to his keeping, and became thus practically ruler of Hungary."
+	
+	history = {
+		#married Catherine, daughter of George Brankovich (despot of Serbia), in 1432
+		#made a prince of the Empire by emperor Sigismund in 1436
+		
+		1439 = {
+			#took up the cause of Albert II's widow Elizabeth in 1439
+		}
+	
+		#succeeded his father in 1454
+	}
+}
+
+georg_peurbach = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
+	name = "Georg"
+	surname = "Peurbach"
+	role = advisor
+	character_type = natural_scientist
+	culture = austrian
+	religion = catholic
+	home_settlement = linz #Peuerbach
+	gender = male
+	birth_date = 1423
+	death_date = 1461
+	skill_multiplier = 0.33
+	required_technology = astronomy
+	conditions = {
+		country = austria
+	}
+	traits = {
+		natural_scientist
+	}
+	
+	#text based on that of the Encyclopædia Britannica, in the public domain
+	description = "Austrian astronomer, Regiomontanus was his pupil at Vienna from 1452, and they jointly undertook a reform of astronomy rendered necessary by the errors they detected in the Alphonsine Tables."
+	
+	history = {
+		1452 = {
+			#lived in Vienna as of 1452
+		}
+		
+		#his "Epitome in Cl. Ptolemaei magnam compositionem" was completed by Regiomontanus at Venice in 1463, and the work was printed at Venice in 1496
+		#published "Theoricae planetarum novae" in 1472 or 1473
+	}
+}
+
+andreas_stoberl = {
+	name = "Andreas"
+	surname = "Stoberl"
+	role = advisor
+	character_type = natural_scientist
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1465
+	death_date = 1515
+	skill_multiplier = 0.33
+	required_technology = astronomy
+	conditions = {
+		country = austria
+	}
+	traits = {
+		natural_scientist
+	}
+}
+
+johannes_cuspinianus = {
+	name = "Johannes"
+	surname = "Cuspinianus"
+	role = advisor
+	character_type = natural_scientist
+	culture = austrian
+	religion = catholic
+	home_settlement = linz
+	gender = male
+	birth_date = 1473
+	death_date = 1529
+	skill_multiplier = 0.33
+	required_technology = medicine
+	conditions = {
+		country = austria
+	}
+	traits = {
+		natural_scientist
+	}
+}
+
+georg_tannstetter = {
+	name = "Georg"
+	surname = "Tannstetter"
+	role = advisor
+	character_type = natural_scientist
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1482
+	death_date = 1535.3.26
+	skill_multiplier = 0.33
+	required_technology = mathematics
+	conditions = {
+		country = austria
+	}
+	traits = {
+		natural_scientist
+	}
+}
+
+conrad_haas = {
+	name = "Conrad"
+	surname = "Haas"
+	role = advisor
+	character_type = general
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1509
+	death_date = 1576
+	skill_multiplier = 0.67
+	required_technology = mine_engineering
+	conditions = {
+		country = austria
+	}
+	traits = {
+		army_reformer
+	}
+}
+
+rheticus = {
+	name = "Rheticus"
+	role = advisor
+	character_type = admiral
+	culture = austrian
+	religion = catholic
+	home_site = kosice
+	gender = male
+	birth_date = 1514
+	death_date = 1574
+	skill_multiplier = 0.17
+	required_technology = navigation
+	conditions = {
+		country = austria
+	}
+	traits = {
+		naval_reformer
+	}
+}
+
+wolfgang_von_rumpf = {
+	name = "Wolfgang"
+	surname = "von Rumpf"
+	role = advisor
+	character_type = statesman
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1550.11.30
+	death_date = 1607
+	skill_multiplier = 0.33
+	required_technology = national_bureaucracy
+	conditions = {
+		country = austria
+	}
+	traits = {
+		statesman
+	}
+}
+
+hans_von_eggenberg = {
+	name = "Hans"
+	surname = "von Eggenberg"
+	role = advisor
+	character_type = statesman
+	culture = austrian
+	religion = catholic
+	home_settlement = salzburg
+	gender = male
+	birth_date = 1568
+	death_date = 1634
+	skill_multiplier = 0.33
+	required_technology = national_bureaucracy
+	conditions = {
+		country = austria
+	}
+	traits = {
+		statesman
+	}
+}
+
+katharina_galler = {
+	name = "Katharina"
+	surname = "Galler"
+	role = advisor
+	character_type = treasurer
+	culture = austrian
+	religion = catholic
+	home_settlement = graz
+	gender = female
+	birth_date = 1607
+	death_date = 1672.2.12
+	skill_multiplier = 0.33
+	required_technology = feudalism
+	conditions = {
+		country = austria
+	}
+	traits = {
+		treasurer
+	}
+}
+
+philipp_von_hornigk = {
+	name = "Philipp"
+	surname = "von Hornigk" #"von Hörnigk"
+	role = advisor
+	character_type = treasurer
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1640
+	death_date = 1714.10.23
+	skill_multiplier = 0.33
+	required_technology = propaganda
+	conditions = {
+		country = austria
+	}
+	traits = {
+		treasurer
+	}
+}
+
+johann_von_eggenberg = {
+	name = "Johann"
+	surname = "von Eggenberg"
+	role = advisor
+	character_type = merchant
+	culture = austrian
+	religion = catholic
+	home_settlement = salzburg
+	gender = male
+	birth_date = 1641
+	death_date = 1710.12.14
+	skill_multiplier = 0.33
+	required_technology = merchant_companies
+	conditions = {
+		country = austria
+	}
+	traits = {
+		merchant
+	}
+}
+
+franz_ferdinand_von_rummel = {
+	name = "Franz Ferdinand"
+	surname = "von Rummel"
+	role = advisor
+	character_type = philosopher
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1644
+	death_date = 1716.3.15
+	skill_multiplier = 0.33
+	required_technology = philosophy
+	conditions = {
+		country = austria
+	}
+	traits = {
+		philosopher
+	}
+}
+
+joseph_harrach = {
+	name = "Joseph"
+	surname = "Harrach"
+	role = advisor
+	character_type = statesman
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1678
+	death_date = 1764.8.8
+	skill_multiplier = 0.33
+	required_technology = national_bureaucracy
+	conditions = {
+		country = austria
+	}
+	traits = {
+		statesman
+	}
+}
+
+josef_wenzel = {
+	name = "Josef"
+	surname = "Wenzel"
+	role = advisor
+	character_type = general
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1696.8.9
+	death_date = 1772.2.10
+	skill_multiplier = 0.5
+	required_technology = heavy_artillery
+	conditions = {
+		country = austria
+	}
+	traits = {
+		army_reformer
+	}
+}
+
+gerard_van_swieten = {
+	name = "Gerard"
+	surname = "van Swieten"
+	role = advisor
+	character_type = natural_scientist
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1700.5.7
+	death_date = 1772.6.18
+	skill_multiplier = 0.33
+	required_technology = medicine
+	conditions = {
+		country = austria
+	}
+	traits = {
+		natural_scientist
+	}
+}
+
+wenzel_anton_kaunitz = {
+	name = "Wenzel Anton"
+	surname = "Kaunitz"
+	role = advisor
+	character_type = statesman
+	culture = austrian
+	religion = catholic
+	home_settlement = brunn
+	gender = male
+	birth_date = 1711.2.2
+	death_date = 1794.6.27
+	skill_multiplier = 0.83
+	required_technology = national_bureaucracy
+	conditions = {
+		country = austria
+	}
+	traits = {
+		statesman
+	}
+}
+
+leopold_auenbrugger = {
+	name = "Leopold"
+	surname = "Auenbrugger"
+	role = advisor
+	character_type = natural_scientist
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1722.11.19
+	death_date = 1809.5.17
+	skill_multiplier = 0.5
+	required_technology = medicine
+	conditions = {
+		country = austria
+	}
+	traits = {
+		natural_scientist
+	}
+}
+
+franz_mesmer = {
+	name = "Franz"
+	surname = "Mesmer"
+	role = advisor
+	character_type = natural_scientist
+	culture = austrian
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1734.5.23
+	death_date = 1815.3.5
+	skill_multiplier = 0.5
+	required_technology = medicine
+	conditions = {
+		country = austria
+	}
+	traits = {
+		natural_scientist
+	}
+}
+
+joseph_eckhel = {
+	name = "Joseph"
+	surname = "Eckhel"
+	role = advisor
+	character_type = treasurer
+	culture = austrian
+	religion = catholic
+	home_settlement = graz
+	gender = male
+	birth_date = 1735
+	death_date = 1798.5.16
+	skill_multiplier = 0.17
+	required_technology = banking
+	conditions = {
+		country = austria
+	}
+	traits = {
+		treasurer
+	}
+}

@@ -1,0 +1,12 @@
+lund = {
+	name = "Lund"
+	world = earth
+	#geocoordinate = { 13.199164196669 55.708313018551 }
+	province = scania
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

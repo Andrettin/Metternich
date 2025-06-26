@@ -1,0 +1,6 @@
+gaziantep = {
+	name = "Gaziantep"
+	world = earth
+	geocoordinate = { 37.38499426140 37.07498374330 } #from Natural Earth
+	type = settlement
+}

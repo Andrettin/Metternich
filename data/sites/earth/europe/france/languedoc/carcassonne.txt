@@ -1,0 +1,16 @@
+carcassonne = {
+	name = "Carcassonne"
+	world = earth
+	geocoordinate = { 2.3513888888889 43.215833333333 }
+	type = resource
+	resource = grain
+	province = lower_languedoc
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 3000
+			}
+		}
+	}
+}

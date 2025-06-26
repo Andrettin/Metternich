@@ -1,0 +1,6 @@
+elista = {
+	name = "Elista"
+	world = earth
+	geocoordinate = { 44.20871211630 46.32865663560 } #from Natural Earth
+	type = settlement
+}

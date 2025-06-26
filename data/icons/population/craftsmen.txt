@@ -1,0 +1,23 @@
+craftsmen_dark = {
+	filepath = "icons/population/craftsmen_dark.png"
+}
+
+craftsmen_dark_small = {
+	filepath = "icons/population/craftsmen_dark_small.png"
+}
+
+craftsmen_light = {
+	filepath = "icons/population/craftsmen_light.png"
+}
+
+craftsmen_light_small = {
+	filepath = "icons/population/craftsmen_light_small.png"
+}
+
+craftsmen_medium = {
+	filepath = "icons/population/craftsmen_medium.png"
+}
+
+craftsmen_medium_small = {
+	filepath = "icons/population/craftsmen_medium_small.png"
+}

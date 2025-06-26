@@ -1,0 +1,6 @@
+mariscal_estigarribia = {
+	name = "Mariscal Estigarribia"
+	world = earth
+	geocoordinate = { -60.60999554910 -22.03000205060 } #from Natural Earth
+	type = settlement
+}

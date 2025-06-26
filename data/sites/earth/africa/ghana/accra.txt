@@ -1,0 +1,7 @@
+accra = {
+	name = "Accra"
+	world = earth
+	geocoordinate = { -0.21671574035 5.55003460583 } #from Natural Earth
+	type = settlement
+	province = accra
+}

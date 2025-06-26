@@ -1,0 +1,8 @@
+#ballistics = {
+#	name = "Ballistics"
+#	category = army
+#	portrait = engineering
+#	prerequisites = {
+#		#mathematics
+#	}
+#}

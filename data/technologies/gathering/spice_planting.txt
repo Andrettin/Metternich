@@ -1,0 +1,50 @@
+spices = {
+	name = "Spices"
+	subcategory = farming
+	portrait = engineering
+	icon = spices
+	discovery = true
+	period = copper_age
+}
+
+improved_sea_routes = {
+	name = "Improved Sea Routes"
+	subcategory = farming
+	portrait = engineering
+	icon = spices
+	period = 1500_1550
+	cost_commodity = research
+	prerequisites = {
+		spices
+		
+		cartography
+		trade
+		foreign_accreditation
+	}
+}
+
+large_spice_plantations = {
+	name = "Large Spice Plantations"
+	subcategory = farming
+	portrait = engineering
+	icon = spices
+	period = 1600_1650
+	cost_commodity = research
+	prerequisites = {
+		improved_sea_routes
+		seed_drill
+	}
+}
+
+improved_food_preservation = {
+	name = "Improved Food Preservation"
+	subcategory = farming
+	portrait = engineering
+	icon = spices
+	period = 1700_1750
+	cost_commodity = research
+	prerequisites = {
+		large_spice_plantations
+		industrial_machinery
+	}
+}

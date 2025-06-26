@@ -1,0 +1,25 @@
+crown_colony = {
+	name = "Crown Colony"
+	group = monarchy
+	icon = settlement
+	required_technology = monarchy
+	conditions = {
+		subject_type = colony
+		not = {
+			country_type = clade
+			country_type = tribe
+		}
+	}
+	title_names = {
+		duchy = "Captaincy General"
+		kingdom = "Viceroyalty"
+		empire = "Grand Viceroyalty"
+	}
+	office_title_names = {
+		ruler = {
+			duchy = "Captain General"
+			kingdom = "Viceroy"
+			empire = "Grand Viceroy"
+		}
+	}
+}

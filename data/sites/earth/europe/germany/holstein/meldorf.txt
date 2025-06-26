@@ -1,0 +1,12 @@
+meldorf = {
+	name = "Meldorf"
+	world = earth
+	geocoordinate = { 9.066666666666666 54.083333333333336 }
+	province = holstein
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

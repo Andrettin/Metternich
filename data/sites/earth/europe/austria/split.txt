@@ -1,0 +1,8 @@
+split = {
+	name = "Split"
+	world = earth
+	geocoordinate = { 16.46999181990 43.52040427560 } #from Natural Earth
+	pos_offset = { 0 -1 }
+	type = resource
+	resource = fish
+}

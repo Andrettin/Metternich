@@ -1,0 +1,24 @@
+liege = {
+	name = "Liege" #"Liège"
+	world = earth
+	geocoordinate = { 5.58001053734 50.62999615390 } #from Natural Earth
+	type = settlement
+	
+	history = {
+		919 = {
+			settlement_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			#settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.dutch.protestant = 300
+				clergymen.flemish.catholic = 600
+				clergymen.walloon.catholic = 3400
+			}
+		}
+	}
+}

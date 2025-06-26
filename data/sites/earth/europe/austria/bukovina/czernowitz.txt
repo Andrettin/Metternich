@@ -1,0 +1,11 @@
+czernowitz = {
+	name = "Czernowitz"
+	world = earth
+	geocoordinate = { 25.92155960970 48.30530600900 } #from Natural Earth
+	type = settlement
+	#resource = fruit
+	province = bukovina
+	cultural_names = {
+		romanian = "Cernauti"
+	}
+}

@@ -1,0 +1,6 @@
+matsuyama = {
+	name = "Matsuyama"
+	world = earth
+	geocoordinate = { 132.76583898800 33.84554262190 } #from Natural Earth
+	type = settlement
+}

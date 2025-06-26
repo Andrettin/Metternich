@@ -1,0 +1,14 @@
+guelmim = {
+	name = "Guelmim"
+	color = { 236 245 80 }
+	provincial_capital = guelmim
+	regions = {
+		morocco
+	}
+	
+	history = {
+		owner = carthage
+		culture = maurian
+		religion = pagan
+	}
+}

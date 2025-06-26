@@ -1,0 +1,26 @@
+stone_quarry = {
+	name = "Stone Quarry"
+	slot = resource
+	resources = {
+		stone
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/quarry.png"
+	terrain_image_filepaths = {
+		#mountains = "tiles/improvements/quarry_mountains.png"
+	}
+	default_population_class = laborers
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		laborers
+		expert_miners
+	}
+	commodity_costs = {
+		lumber = 1
+		cast_iron = 1
+	}
+	modifier = {
+		housing_bonus = 1
+	}
+}

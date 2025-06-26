@@ -1,0 +1,29 @@
+clermont = {
+	name = "Clermont"
+	world = earth
+	geocoordinate = { 3.08000809593 45.77998211580 } #from Natural Earth
+	type = settlement
+	#resource = coal
+	province = auvergne
+	cultural_names = {
+		frankish = "Arverni"
+	}
+	
+	history = {
+		919 = {
+			settlement_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1836 = {
+			population_groups = {
+				bureaucrats.french.catholic = 3400
+				clergymen.french.catholic = 7000
+				officers.french.catholic = 1600
+			}
+		}
+	}
+}

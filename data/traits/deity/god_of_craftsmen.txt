@@ -1,0 +1,22 @@
+god_of_craftsmen = {
+	name = "God of Craftsmen"
+	icon = labor_hammer
+	conditions = {
+		or = {
+			has_resource = coal
+			has_resource = copper
+			has_resource = iron_ore
+			has_resource = tin
+		}
+	}
+	modifier = {
+		copper_per_improved_copper = 1
+		piety_per_improved_copper = 1
+		tin_per_improved_tin = 1
+		piety_per_improved_tin = 1
+		iron_ore_per_improved_iron_ore = 1
+		piety_per_improved_iron_ore = 1
+		coal_per_improved_coal = 1
+		piety_per_improved_coal = 1
+	}
+}

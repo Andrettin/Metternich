@@ -1,0 +1,6 @@
+malay = {
+	name = "Malay"
+	rank = group
+	upper_group = asian
+	default_phenotype = east_asian
+}

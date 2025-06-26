@@ -1,0 +1,16 @@
+dunkirk = {
+	name = "Dunkirk"
+	world = earth
+	geocoordinate = { 2.3763888888889 51.037777777778 }
+	type = resource
+	resource = fish
+	province = picardy
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 4200
+			}
+		}
+	}
+}

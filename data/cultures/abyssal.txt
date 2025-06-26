@@ -1,0 +1,6 @@
+abyssal = {
+	name = "Abyssal"
+	species = {
+		titan
+	}
+}

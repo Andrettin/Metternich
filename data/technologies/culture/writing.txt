@@ -1,0 +1,50 @@
+writing = {
+	name = "Writing"
+	subcategory = education
+	portrait = engineering
+	icon = treaty
+	period = copper_age
+	cost = 55
+	cost_commodity = research
+}
+
+alphabet = {
+	name = "Alphabet"
+	subcategory = education
+	portrait = engineering
+	icon = treaty
+	period = bronze_age
+	cost = 50
+	cost_commodity = research
+	prerequisites = {
+		writing
+	}
+}
+
+literature = {
+	name = "Literature"
+	subcategory = education
+	portrait = engineering
+	icon = treaty
+	period = iron_age
+	cost = 100
+	cost_commodity = culture
+	prerequisites = {
+		writing
+		code_of_laws
+	}
+}
+
+printing_press = {
+	name = "Printing Press"
+	subcategory = education
+	portrait = engineering
+	icon = newspaper
+	period = 1550_1600
+	cost = 780
+	cost_commodity = research
+	prerequisites = {
+		alphabet
+		saw_mill
+	}
+}

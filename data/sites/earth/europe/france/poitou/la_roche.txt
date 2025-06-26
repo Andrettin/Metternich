@@ -1,0 +1,16 @@
+la_roche_sur_yon = {
+	name = "La Roche" "La Roche-sur-Yon"
+	world = earth
+	geocoordinate = { -1.4277777777778 46.66972222222 }
+	type = resource
+	resource = grain
+	province = poitou
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 3400
+			}
+		}
+	}
+}

@@ -1,0 +1,23 @@
+spain = {
+	superregions = {
+		iberia
+	}
+	
+	history = {
+		1797 = {
+			population_groups = {
+				#apprentice_blacksmiths = 12000 #Spain had less than 12,000 blacksmiths in 1797; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España II", 2000, p. 49.
+				#apprentice_carpenters = 31000 #Spain had 31,000 carpenters in 1797; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España II", 2000, p. 49.
+				#apprentice_weavers = 104000 #Spain had 57,000 wool weavers, 33,000 tailors and 14,000 silk weavers in 1797, totalling 104,000; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España II", 2000, p. 49.
+			}
+		}
+		
+		1850 = {
+			literacy_rate = 50 #50%- of adults; Source: Eric J. Hobsbawm, "A Era do Capital 1848-1875", 1977, p. 522.
+		}
+		
+		2003 = {
+			literacy_rate = 98 #Source: Philip's International School Atlas, p. 145.
+		}
+	}
+}

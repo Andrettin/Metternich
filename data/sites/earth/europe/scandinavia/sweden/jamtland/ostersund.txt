@@ -1,0 +1,7 @@
+ostersund = {
+	name = "Ostersund" #"Östersund"
+	world = earth
+	geocoordinate = { 14.64999955110 63.18331260090 } #from Natural Earth
+	type = settlement
+	province = jamtland
+}

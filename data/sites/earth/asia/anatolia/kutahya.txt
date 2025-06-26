@@ -1,0 +1,6 @@
+kutahya = {
+	name = "Kutahya" #"Kütahya"
+	world = earth
+	geocoordinate = { 29.92999710970 39.42000856430 } #from Natural Earth
+	type = settlement
+}

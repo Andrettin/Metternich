@@ -1,0 +1,3 @@
+love = {
+	filepath = "icons/love.png"
+}

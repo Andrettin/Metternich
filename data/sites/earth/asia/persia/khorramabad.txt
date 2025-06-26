@@ -1,0 +1,8 @@
+khorramabad = {
+	name = "Khorramabad" #also known as Khoramabad
+	world = earth
+	geocoordinate = { 48.35000972370 33.48042278950 } #from Natural Earth
+	type = settlement
+	#resource = cotton
+	province = lorestan
+}

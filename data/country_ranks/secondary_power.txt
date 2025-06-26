@@ -1,0 +1,6 @@
+secondary_power = {
+	name = "Secondary Power"
+	priority = 5
+	average_score_threshold = 0.6
+	relative_score_threshold = 0.15
+}

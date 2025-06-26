@@ -1,0 +1,9 @@
+researching = {
+	name = "Researching"
+	input_wealth = 100
+	input_commodities = {
+		labor = 2
+	}
+	output_commodity = research
+	output_value = 1
+}

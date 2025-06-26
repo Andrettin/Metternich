@@ -1,0 +1,72 @@
+de_corporis_humani_fabrica = {
+	name = "De Corporis Humani Fabrica"
+	portrait = engineering
+	preconditions = {
+		game_rule = research_commodity
+	}
+	recruited_characters = {
+		andreas_vesalius
+	}
+	researched_technologies = {
+		medicine
+	}
+	completion_effects = {
+		research += 1
+	}
+}
+
+de_revolutionibus_orbium_coelestium = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 210.
+	name = "De Revolutionibus Orbium Coelestium"
+	portrait = engineering
+	description = "In 1543 Nicolaus Copernicus published a book called \"De Revolutionibus Orbium Coelestium\", in which he described a new model for planetary movement, with the Sun, rather than the Earth, at the center."
+	preconditions = {
+		game_rule = research_commodity
+	}
+	recruited_characters = {
+		nicolaus_copernicus
+	}
+	researched_technologies = {
+		astronomy
+	}
+	completion_effects = {
+		research += 5
+	}
+}
+
+epitome_in_cl__ptolemaei_magnam_compositionem = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
+	name = "Epitome in Cl. Ptolemaei magnam compositionem"
+	portrait = alchemist
+	description = "Our advisor Georg Peurbach has published a book called \"Epitome in Cl. Ptolemaei magnam compositionem\"."
+	completion_random_chance = 25
+	preconditions = {
+		game_rule = research_commodity
+	}
+	recruited_characters = {
+		georg_peurbach
+	}
+	researched_technologies = {
+		astronomy
+	}
+	completion_effects = {
+		research += 1
+	}
+}
+
+theoricae_planetarum_novae = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
+	name = "Theoricae planetarum novae"
+	portrait = alchemist
+	description = "Our advisor Georg Peurbach has published a book called \"Theoricae planetarum novae\"."
+	completion_random_chance = 25
+	preconditions = {
+		game_rule = research_commodity
+	}
+	recruited_characters = {
+		georg_peurbach
+	}
+	researched_technologies = {
+		astronomy
+	}
+	completion_effects = {
+		research += 1
+	}
+}

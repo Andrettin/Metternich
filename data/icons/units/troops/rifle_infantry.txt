@@ -1,0 +1,23 @@
+rifle_infantry_dark = {
+	filepath = "icons/units/troops/rifle_infantry_dark.png"
+}
+
+rifle_infantry_dark_small = {
+	filepath = "icons/units/troops/rifle_infantry_dark_small.png"
+}
+
+rifle_infantry_light = {
+	filepath = "icons/units/troops/rifle_infantry_light.png"
+}
+
+rifle_infantry_light_small = {
+	filepath = "icons/units/troops/rifle_infantry_light_small.png"
+}
+
+rifle_infantry_medium = {
+	filepath = "icons/units/troops/rifle_infantry_medium.png"
+}
+
+rifle_infantry_medium_small = {
+	filepath = "icons/units/troops/rifle_infantry_medium_small.png"
+}

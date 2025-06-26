@@ -1,0 +1,6 @@
+puerto_aisen = {
+	name = "Puerto Aisen" #"Puerto Aisén"
+	world = earth
+	geocoordinate = { -72.70001753910 -45.39993040090 } #from Natural Earth
+	type = settlement
+}

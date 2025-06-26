@@ -1,0 +1,6 @@
+copiapo = {
+	name = "Copiapo" #"Copiapó"
+	world = earth
+	geocoordinate = { -70.33998071460 -27.35999794640 } #from Natural Earth
+	type = settlement
+}

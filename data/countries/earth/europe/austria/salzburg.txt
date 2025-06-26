@@ -1,0 +1,16 @@
+salzburg = {
+	name = "Salzburg"
+	type = minor_nation
+	culture = austrian
+	default_religion = catholic
+	default_tier = duchy #archbishopric
+	default_government_type = theocracy
+	default_capital = salzburg
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		salzburg
+	}
+}

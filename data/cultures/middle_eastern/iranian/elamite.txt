@@ -1,0 +1,7 @@
+elamite = {
+	name = "Elamite"
+	group = iranian
+	species = {
+		human
+	}
+}

@@ -1,0 +1,16 @@
+skopje = {
+	name = "Skopje"
+	world = earth
+	geocoordinate = { 21.43346146510 42.00000612290 } #from Natural Earth
+	type = settlement
+	cultural_names = {
+		roman = "Scupi" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+		turkish = "Uskub"
+	}
+	
+	history = {
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

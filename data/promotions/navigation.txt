@@ -1,0 +1,34 @@
+navigation_1 = {
+	name = "Navigation I"
+	icon = anchor
+	conditions = {
+		military_unit_domain = water
+	}
+	modifier = {
+		movement = 1
+	}
+}
+
+navigation_2 = {
+	name = "Navigation II"
+	icon = anchor
+	conditions = {
+		military_unit_domain = water
+		promotion = navigation_1
+	}
+	modifier = {
+		movement = 1
+	}
+}
+
+navigation_3 = {
+	name = "Navigation III"
+	icon = anchor
+	conditions = {
+		military_unit_domain = water
+		promotion = navigation_2
+	}
+	modifier = {
+		movement = 1
+	}
+}

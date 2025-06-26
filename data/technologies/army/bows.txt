@@ -1,0 +1,90 @@
+shortbow = {
+	name = "Shortbow"
+	subcategory = infantry
+	portrait = helmet
+	icon = bow
+	period = bronze_age
+	cost_commodity = research
+	prerequisites = {
+		warrior_code
+	}
+}
+
+composite_bow = {
+	name = "Composite Bow"
+	subcategory = infantry
+	portrait = helmet
+	icon = bow
+	period = iron_age
+	cost_commodity = research
+	prerequisites = {
+		shortbow
+	}
+	modifier = {
+		military_unit_stat = {
+			type = archers
+			stat = firepower
+			value = 0.25
+		}
+	}
+}
+
+longbow = {
+	name = "Longbow"
+	subcategory = infantry
+	portrait = helmet
+	icon = bow
+	period = 1000_1100
+	cost_commodity = research
+	prerequisites = {
+		composite_bow
+		feudalism
+	}
+	modifier = {
+		military_unit_stat = {
+			type = archers
+			stat = firepower
+			value = 0.25
+		}
+	}
+}
+
+reinforced_longbow = {
+	name = "Reinforced Longbow"
+	subcategory = infantry
+	portrait = helmet
+	icon = bow
+	period = 1300_1400
+	cost_commodity = research
+	prerequisites = {
+		longbow
+		
+		missile_barrage
+	}
+	modifier = {
+		military_unit_stat = {
+			type = archers
+			stat = firepower
+			value = 0.25
+		}
+	}
+}
+
+marksman_longbow = {
+	name = "Marksman Longbow"
+	subcategory = infantry
+	portrait = helmet
+	icon = bow
+	period = 1400_1500
+	cost_commodity = research
+	prerequisites = {
+		reinforced_longbow
+	}
+	modifier = {
+		military_unit_stat = {
+			type = archers
+			stat = firepower
+			value = 0.25
+		}
+	}
+}

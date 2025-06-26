@@ -1,0 +1,6 @@
+san_luis = {
+	name = "San Luis"
+	world = earth
+	geocoordinate = { -66.35001753910 -33.29999713260 } #from Natural Earth
+	type = settlement
+}

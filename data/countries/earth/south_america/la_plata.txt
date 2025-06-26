@@ -1,0 +1,53 @@
+la_plata = {
+	name = "La Plata"
+	type = minor_nation
+	culture = castillian
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = buenos_aires
+	core_provinces = {
+		buenos_aires
+		cordoba_argentina
+		santa_fe
+		mendoza
+		tucuman
+		salta
+		entre_rios
+		misiones
+		chaco
+		corrientes
+		santiago_del_estero
+		san_juan
+		jujuy
+		rio_negro
+		neuquen
+		formosa
+		chubut
+		san_luis
+		catamarca
+		la_rioja
+		la_pampa
+		santa_cruz_argentina
+		tierra_del_fuego
+	}
+	
+	
+	history = {
+		1600 = {
+			#Spanish possession in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			diplomacy_state = {
+				country = spain
+				subject_type = colony
+			}
+		}
+		
+		1790 = {
+			#Spanish colony c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
+			diplomacy_state = {
+				country = spain
+				subject_type = colony
+			}
+		}
+	}
+}

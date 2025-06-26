@@ -1,0 +1,8 @@
+porto_seguro = {
+	name = "Porto Seguro"
+	world = earth
+	geocoordinate = { -39.08002832190 -16.42960569370 } #from Natural Earth
+	type = resource
+	resource = coffee
+	province = bahia
+}

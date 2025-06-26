@@ -1,0 +1,9 @@
+fur_hat_production = {
+	name = "Fur Hat Production"
+	input_commodities = {
+		labor = 2
+		furs = 2
+	}
+	output_commodity = fur_hats
+	output_value = 1
+}

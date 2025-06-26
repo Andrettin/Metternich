@@ -1,0 +1,6 @@
+aljustrel = {
+	name = "Aljustrel"
+	world = earth
+	geocoordinate = { -8.1666666666667 37.883333333333 }
+	province = alentejo
+}

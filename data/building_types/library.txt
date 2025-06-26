@@ -1,0 +1,32 @@
+library = {
+	name = "Library"
+	building_class = library
+	portrait = university
+	icon = book
+	provincial = true
+	required_technology = writing
+	settlement_types = {
+		city
+		metropolis
+		campus
+	}
+	conditions = {
+		game_rule = research_commodity
+	}
+	settlement_conditions = {
+		province = {
+			#produces_commodity = research
+		}
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = creative
+			}
+		}
+	}
+	settlement_modifier = {
+		research_output_modifier = 25
+	}
+}

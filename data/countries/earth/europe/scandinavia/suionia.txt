@@ -1,0 +1,19 @@
+suionia = {
+	name = "Suionia"
+	type = great_power
+	color = { 0 173 198 }
+	culture = suioni
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = stockholm
+	short_names = {
+		tribe = "Suiones"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		uppland
+	}
+}

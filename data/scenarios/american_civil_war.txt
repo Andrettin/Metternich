@@ -1,0 +1,9 @@
+american_civil_war = {
+	name = "American Civil War"
+	parent_scenario = restoration_of_europe
+	start_date = 1861
+	map_template = earth
+	default_countries = {
+		united_states
+	}
+}

@@ -1,0 +1,55 @@
+great_britain = {
+	name = "Great Britain"
+	type = great_power
+	#color = { 254 249 69 }
+	color = { 206 8 8 }
+	culture = english
+	default_religion = protestant
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = london
+	eras = {
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		middlesex
+		somerset
+		devon
+		kent
+		east_anglia
+		warwickshire
+		derbyshire
+		lancashire
+		yorkshire
+		northumberland
+		cumberland
+		cornwall
+		wales
+		lothian
+		ayrshire
+		highlands
+	}
+	
+	history = {
+		1820 = {
+			wealth = 10000
+			
+			commodities = {
+				cotton = 8
+				wool = 8
+				horses = 2
+				canned_food = 20
+				fabric = 10
+				lumber = 20
+				paper = 10
+				steel = 15
+				clothing = 8
+				furniture = 5
+				tools = 5
+				muskets = 1
+				iron_cannons = 1
+			}
+		}
+	}
+}

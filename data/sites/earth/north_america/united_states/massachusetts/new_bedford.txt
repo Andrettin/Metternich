@@ -1,0 +1,8 @@
+new_bedford = {
+	name = "New Bedford"
+	world = earth
+	geocoordinate = { -70.94469832530 41.65612530420 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = massachusetts
+}

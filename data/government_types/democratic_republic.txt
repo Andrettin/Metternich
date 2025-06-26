@@ -1,0 +1,34 @@
+democratic_republic = {
+	name = "Democratic Republic"
+	group = republic
+	icon = philosophy
+	required_technology = democracy
+	default_laws = {
+		ruling_class = plutocracy
+		serfdom = free_subjects
+		press_rights = free_press
+	}
+	forbidden_laws = {
+		aristocracy
+		censored_press
+		serfdom
+		state_press
+	}
+	conditions = {
+		not = {
+			country_type = clade
+			country_type = tribe
+			subject_type = colony
+		}
+	}
+	modifier = {
+		trade_bonus_for_tile_threshold = 1
+	}
+	office_title_names = {
+		ruler = {
+			duchy = "President"
+			kingdom = "President"
+			empire = "President"
+		}
+	}
+}

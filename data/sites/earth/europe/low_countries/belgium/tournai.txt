@@ -1,0 +1,21 @@
+tournai = {
+	name = "Tournai"
+	world = earth
+	geocoordinate = { 3.388055555555556 50.605555555555554 }
+	type = resource
+	resource = coal
+	province = brabant
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.flemish.catholic = 400
+				clergymen.walloon.catholic = 2500
+			}
+		}
+	}
+}

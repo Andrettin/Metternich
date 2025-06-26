@@ -1,0 +1,8 @@
+salisbury = {
+	name = "Salisbury"
+	world = earth
+	geocoordinate = { -1.7936 51.074 }
+	type = resource
+	resource = grain
+	province = somerset
+}

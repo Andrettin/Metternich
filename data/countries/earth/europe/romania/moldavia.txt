@@ -1,0 +1,18 @@
+moldavia = {
+	name = "Moldavia"
+	type = minor_nation
+	culture = romanian
+	default_religion = orthodox
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = iasi
+	eras = {
+		medieval_era
+		renaissance_era
+		industrial_era
+	}
+	core_provinces = {
+		moldavia
+		bessarabia
+	}
+}

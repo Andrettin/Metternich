@@ -1,0 +1,15 @@
+babylon = {
+	name = "Babylon"
+	world = earth
+	geocoordinate = { 44.42172237020 32.47213808090 } #from Natural Earth (Al Hillah)
+	type = settlement
+	cultural_names = {
+		arabic = "Al Hillah"
+	}
+	
+	history = {
+		-1450 = {
+			settlement_type = city #important settlement c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+	}
+}

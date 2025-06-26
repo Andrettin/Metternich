@@ -1,0 +1,17 @@
+dover = {
+	name = "Dover"
+	world = earth
+	#geocoordinate = { 1.30001338563 51.13371217760 } #from Natural Earth
+	province = kent
+	cultural_names = {
+		anglo_saxon = "Dofras" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
+		briton = "Dubrae"
+		roman = "Dubrae" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 51.
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

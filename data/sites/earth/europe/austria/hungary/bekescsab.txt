@@ -1,0 +1,8 @@
+bekescsab = {
+	name = "Bekescsab"
+	world = earth
+	geocoordinate = { 21.10100456840 46.67200211030 } #from Natural Earth
+	type = resource
+	resource = fruit
+	province = pest
+}

@@ -1,0 +1,18 @@
+l_aquila = {
+	name = "L'Aquila"
+	world = earth
+	geocoordinate = { 13.39002477890 42.35039817210 } #from Natural Earth
+	type = resource
+	resource = sheep
+	province = naples
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1815 = {
+			population = 13615 #Aquila had a population of 13,615 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 82.
+		}
+	}
+}

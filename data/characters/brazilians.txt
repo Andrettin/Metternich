@@ -1,0 +1,164 @@
+bernardo_pereira_de_vasconcelos = {
+	name = "Bernardo"
+	surname = "Pereira de Vasconcelos"
+	role = advisor
+	character_type = statesman
+	culture = brazilian
+	religion = catholic
+	home_site = ouro_preto
+	gender = male
+	birth_date = 1795.8.27
+	skill_multiplier = 1
+	required_technology = constitutionalism
+	conditions = {
+		country = brazil
+	}
+	traits = {
+		statesman
+	}
+}
+
+belchior_goncalves = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Belchior"
+	surname = "Goncalves" #"Gonçalves"
+	culture = brazilian
+	religion = catholic
+	home_site = sao_joao_del_rei #his grandson was born there
+	gender = male
+	
+	history = {
+		#spouse = helena_teixeira
+	}
+}
+
+helena_teixeira = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Helena"
+	surname = "Teixeira"
+	culture = brazilian
+	religion = catholic
+	home_site = sao_joao_del_rei #her grandson was born there
+	gender = female
+}
+
+manuel_martins_de_carvalho = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Manuel"
+	surname = "Martins de Carvalho"
+	culture = brazilian
+	religion = catholic
+	home_site = sao_joao_del_rei #his grandson was born there
+	gender = male
+	
+	history = {
+		#spouse = josepha_de_souza_monteiro
+	}
+}
+
+josepha_de_souza_monteiro = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Josepha"
+	surname = "de Souza Monteiro"
+	culture = brazilian
+	religion = catholic
+	home_site = sao_joao_del_rei #her grandson was born there
+	gender = female
+}
+
+francisco_jose_teixeira_father = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Francisco Jose" #"Francisco José"
+	surname = "Teixeira"
+	culture = brazilian
+	religion = catholic
+	home_site = sao_joao_del_rei #his son was born there
+	gender = male
+	father = belchior_goncalves
+	mother = helena_teixeira
+	
+	#captain
+	
+	history = {
+		1780.9.6 = { #date that their first child was born
+			#spouse = anna_josepha_de_souza
+		}
+	}
+}
+
+anna_josepha_de_souza = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Anna Josepha"
+	surname = "de Souza"
+	culture = brazilian
+	religion = catholic
+	home_site = sao_joao_del_rei #her son was born there
+	gender = female
+	father = manuel_martins_de_carvalho
+	mother = josepha_de_souza_monteiro
+}
+
+francisco_jose_teixeira = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Francisco Jose" #"Francisco José"
+	surname = "Teixeira"
+	role = landholder
+	character_type = farmer #prestigious liberal political leader, landowner and banker
+	culture = brazilian
+	religion = catholic
+	home_site = sao_joao_del_rei
+	gender = male
+	father = francisco_jose_teixeira_father
+	mother = anna_josepha_de_souza
+	birth_date = 1780.9.6
+	death_date = 1866.3.22
+	holdable_site = itambe #baron of Itambé
+	
+	#was "comendador"/commander of the (Brazilian) Imperial Order of the Rose
+	
+	history = {
+		1802.9.13 = {
+			#spouse = francisca_bernardina_do_sacramento_leite_ribeiro
+		}
+	}
+}
+
+francisca_bernardina_do_sacramento_leite_ribeiro = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Francisca Bernardina"
+	surname = "do Sacramento Leite Ribeiro"
+	culture = brazilian
+	religion = catholic
+	home_site = sao_joao_del_rei #her husband was born there
+	gender = female
+	father = jose_leite_ribeiro
+	mother = escholastica_maria_de_jesus
+	birth_date = 1781.6.4
+	death_date = 1864.9.6
+}
+
+francisco_jose_teixeira_leite = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 532.
+	name = "Francisco Jose" #"Francisco José"
+	surname = "Teixeira Leite"
+	role = landholder
+	character_type = farmer #coffee plantation owner
+	culture = brazilian
+	religion = catholic
+	home_site = sao_joao_del_rei
+	gender = male
+	father = francisco_jose_teixeira
+	mother = francisca_bernardina_do_sacramento_leite_ribeiro
+	birth_date = 1804.11.13
+	death_date = 1884.5.2
+	holdable_site = vassouras #baron of Vassouras
+	
+	#was dignitary of the (Brazilian) Imperial Order of the Rose
+	#was knight of the (Brazilian) Imperial Order of Christ
+}
+
+ernesto_justiniano_da_silva_freire = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	name = "Ernesto Justiniano"
+	surname = "da Silva Freire"
+	role = landholder
+	character_type = farmer
+	culture = brazilian
+	religion = catholic
+	home_site = recife #born in Pernambuco
+	gender = male
+	start_date = 1880.3.8 #date he became baron
+	holdable_site = itambe #(second) baron of Itambé
+	
+	#was colonel of the (Brazilian) National Guard
+}

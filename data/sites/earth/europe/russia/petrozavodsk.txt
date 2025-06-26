@@ -1,0 +1,6 @@
+petrozavodsk = {
+	name = "Petrozavodsk"
+	world = earth
+	geocoordinate = { 34.28001582720 61.84998313310 } #from Natural Earth
+	type = settlement
+}

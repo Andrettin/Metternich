@@ -1,0 +1,16 @@
+angouleme = {
+	name = "Angouleme" #"Angoulême"
+	world = earth
+	geocoordinate = { 0.15944444444444 45.649444444444 }
+	type = resource
+	resource = cattle
+	province = poitou
+	
+	history = {
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 3600
+			}
+		}
+	}
+}

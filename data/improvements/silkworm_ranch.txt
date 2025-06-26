@@ -1,0 +1,23 @@
+silkworm_ranch = {
+	name = "Silkworm Ranch"
+	slot = resource
+	resources = {
+		silk
+	}
+	icon = trade_consulate
+	image_filepath = "tiles/improvements/cotton_plantation.png"
+	default_population_class = farmers
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		farmers
+		master_ranchers
+	}
+	commodity_costs = {
+		lumber = 1
+		cast_iron = 1
+	}
+	modifier = {
+		housing_bonus = 1
+	}
+}

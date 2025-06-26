@@ -1,0 +1,239 @@
+nikolaus_von_kues = { #Source: "Encyclopædia Britannica", 1911, vol. 7, pp. 665-666.
+	name = "Nikolaus"
+	surname = "von Kues"
+	role = advisor
+	character_type = natural_scientist #scholar, cardinal and theologian
+	culture = german
+	religion = catholic
+	home_site = trier #born in Kues, in the Archbishopric of Trier
+	gender = male
+	#son of a poor fisherman called Krypffs or Krebs
+	birth_date = 1401
+	death_date = 1464.8.11 #died at Lodi in Umbria on 1464.8.11
+	skill_multiplier = 0.83
+	required_technology = astronomy
+	traits = {
+		natural_scientist
+	}
+	
+	#text based on that of the Encyclopædia Britannica, in the public domain
+	description = "Cardinal, theologian and scholar, he was a member of the council of Basel, and was entrusted with various missions in the interests of Catholic unity. In 1448, in recognition of his services, Nicholas V. raised him to the cardinalate; and in 1450 he was appointed bishop of Brixen.\n\nAlthough one of the great leaders in the reform movement of the 15th century, Nikolaus von Kues' interest for later times lies in his philosophical much more than in his political or ecclesiastical activity. In mathematical and physical science Kues was much in advance of his age. He proposed the reform of the calendar after a method resembling that adopted by Gregory. Most noteworthy, however, in this connexion is the fact that he anticipated Copernicus by maintaining the theory of the rotation of the earth."
+	
+	history = {
+		#wrote "De concordantia Catholica", presenting it at the Council of Basel
+		#wrote "Reparatio Calendarii", presenting it at the Council of Basel
+		#wrote "De Quadratura Circuli"
+		#wrote "Conjectura de novissimis diebus"
+		#wrote "De docta ignorantia" in 1440
+		#published "De conjecturis libri" in 1440
+		#raised to a cardinal by Nicholas V in 1448
+		#appointed bishop of Brixen in 1450
+		#acted as governor of Rome in 1459
+		#wrote "Crebratio Alcorani"
+	}
+}
+
+johann_widman = {
+	name = "Johann"
+	surname = "Widman"
+	role = advisor
+	character_type = natural_scientist
+	culture = german
+	religion = catholic
+	home_settlement = prague
+	gender = male
+	birth_date = 1460
+	death_date = 1498
+	skill_multiplier = 0.17
+	required_technology = mathematics
+	traits = {
+		natural_scientist
+	}
+}
+
+martin_waldseemuller = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 199.
+	name = "Martin"
+	surname = "Waldseemuller" #"Waldseemüller"
+	#character_type = navigator #geographer
+	culture = german
+	religion = catholic
+	home_site = freiburg
+	gender = male
+	birth_date = 1470
+	death_date = 1518
+	
+	#published a map in 1507 depicting the Americas as a new continent for the first time
+}
+
+martin_luther = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 204.
+	name = "Martin"
+	surname = "Luther"
+	role = advisor
+	character_type = theologian
+	culture = german
+	religion = protestant
+	home_site = wittenberg #where he presented his 95 theses
+	gender = male
+	birth_date = 1483
+	death_date = 1546
+	required_technology = printing_press
+	skill_multiplier = 1
+	conditions = {
+		or = {
+			country = prussia
+			country = germany
+		}
+	}
+	traits = {
+		theologian
+	}
+	#monk
+	
+	#presented his 95 theses in Wittenberg on 1517.10.31, starting the protestant reformation
+}
+
+anton_fugger = {
+	name = "Anton"
+	surname = "Fugger"
+	role = advisor
+	character_type = treasurer
+	culture = german
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1493
+	death_date = 1560.9.14
+	skill_multiplier = 0.67
+	required_technology = banking
+	traits = {
+		treasurer
+	}
+}
+
+peter_bennewitz = { #also known as Petrus Apianus; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 207.
+	name = "Peter"
+	surname = "Bennewitz"
+	#character_type = natural_scientist #astronomer
+	culture = german
+	religion = protestant
+	home_site = leipzig
+	gender = male
+	birth_date = 1501
+	death_date = 1552
+	conditions = {
+		or = {
+			country = prussia
+			country = germany
+		}
+	}
+	traits = {
+		#natural_scientist
+	}
+	
+	#published a book in 1540 in which he stated that comet tails are always in the opposite direction to the sun
+}
+
+anne_of_cleves = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 209.
+	name = "Anne"
+	surname = "of Cleves"
+	culture = german
+	religion = protestant
+	home_site = cleves
+	gender = female
+	birth_date = 1515
+	death_date = 1577
+}
+
+franz_dietrichstein = {
+	name = "Franz"
+	surname = "Dietrichstein"
+	role = advisor
+	character_type = treasurer
+	culture = german
+	religion = catholic
+	home_settlement = olmutz
+	gender = male
+	birth_date = 1570
+	death_date = 1636.9.19
+	skill_multiplier = 0.33
+	required_technology = national_bureaucracy
+	traits = {
+		treasurer
+	}
+}
+
+johann_sebastian_bach = {
+	name = "Johann Sebastian"
+	surname = "Bach"
+	role = advisor
+	character_type = artist #composer
+	culture = german
+	religion = protestant
+	home_site = erfurt #Eisenach
+	gender = male
+	birth_date = 1685
+	death_date = 1750
+	required_technology = theology
+	conditions = {
+		or = {
+			country = prussia
+			country = germany
+		}
+	}
+	traits = {
+		johann_sebastian_bach
+	}
+}
+
+maximilian_hell = {
+	name = "Maximilian"
+	surname = "Hell"
+	role = advisor
+	character_type = natural_scientist
+	culture = german
+	religion = catholic
+	home_settlement = pressburg
+	gender = male
+	birth_date = 1720.5.15
+	death_date = 1792.4.14
+	skill_multiplier = 0.5
+	required_technology = astronomy
+	traits = {
+		natural_scientist
+	}
+}
+
+franz_joseph_gall = {
+	name = "Franz Joseph"
+	surname = "Gall"
+	role = advisor
+	character_type = natural_scientist
+	culture = german
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	death_date = 1828.8.22
+	skill_multiplier = 0.67
+	required_technology = medicine
+	traits = {
+		natural_scientist
+	}
+}
+
+johann_spurzheim = {
+	name = "Johann"
+	surname = "Spurzheim"
+	role = advisor
+	character_type = natural_scientist
+	culture = german
+	religion = catholic
+	home_settlement = vienna
+	gender = male
+	birth_date = 1776.12.3
+	death_date = 1832
+	skill_multiplier = 0.33
+	required_technology = medicine
+	traits = {
+		natural_scientist
+	}
+}

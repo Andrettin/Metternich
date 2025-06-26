@@ -1,0 +1,143 @@
+bering_sea = {
+	name = "Bering Sea"
+	color = { 34 15 222 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+bohai_sea = {
+	name = "Bohai Sea"
+	color = { 34 138 170 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+east_china_sea = {
+	name = "East China Sea"
+	color = { 81 123 181 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+gulf_of_alaska = {
+	name = "Gulf of Alaska"
+	color = { 67 148 209 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+gulf_of_california = {
+	name = "Gulf of California"
+	color = { 53 37 186 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+gulf_of_tonkin = {
+	name = "Gulf of Tonkin"
+	color = { 148 249 244 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+north_pacific_ocean = {
+	name = "North Pacific Ocean"
+	color = { 133 250 255 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+philippine_sea = {
+	name = "Philippine Sea"
+	color = { 0 108 208 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+sea_of_japan = {
+	name = "Sea of Japan"
+	color = { 121 180 247 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+sea_of_okhotsk = {
+	name = "Sea of Okhotsk"
+	color = { 44 171 234 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+shelikhova_gulf = {
+	name = "Shelikhova Gulf"
+	color = { 12 191 230 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+south_china_sea = {
+	name = "South China Sea"
+	color = { 98 195 222 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+south_pacific_ocean = {
+	name = "South Pacific Ocean"
+	color = { 140 213 210 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+taiwan_strait = {
+	name = "Taiwan Strait"
+	color = { 112 161 232 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+uchiura_bay = {
+	name = "Uchiura Bay"
+	color = { 19 114 245 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+yellow_sea = {
+	name = "Yellow Sea"
+	color = { 36 39 159 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}

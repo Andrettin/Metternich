@@ -1,0 +1,6 @@
+aquan = {
+	name = "Aquan"
+	species = {
+		triton
+	}
+}

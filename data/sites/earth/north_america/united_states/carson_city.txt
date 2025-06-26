@@ -1,0 +1,6 @@
+carson_city = {
+	name = "Carson City"
+	world = earth
+	geocoordinate = { -119.76639530600 39.16384848940 } #from Natural Earth
+	type = settlement
+}

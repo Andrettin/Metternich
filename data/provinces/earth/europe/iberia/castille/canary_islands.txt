@@ -1,0 +1,14 @@
+canary_islands = {
+	name = "Canary Islands"
+	color = { 32 239 1 }
+	provincial_capital = las_palmas
+	regions = {
+		spain
+	}
+	
+	history = {
+		owner = carthage
+		culture = carthaginian
+		religion = pagan
+	}
+}

@@ -1,0 +1,12 @@
+dole = {
+	name = "Dole" #"Dôle"
+	world = earth
+	geocoordinate = { 5.4897222222222 47.092222222222 }
+	province = franche_comte
+	
+	history = {
+		1422 = {
+			buildings += university #University founded in Dôle in 1422; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

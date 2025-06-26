@@ -1,0 +1,15 @@
+hussars = {
+	filepath = "icons/units/troops/hussars.png"
+}
+
+knights = {
+	filepath = "icons/units/troops/knights.png"
+}
+
+cuirassiers = {
+	filepath = "icons/units/troops/cuirassiers.png"
+}
+
+cuirassiers_ranged = {
+	filepath = "icons/units/troops/cuirassiers_ranged.png"
+}

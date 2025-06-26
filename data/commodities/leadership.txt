@@ -1,0 +1,5 @@
+leadership = {
+	name = "Leadership"
+	icon = flag
+	abstract = true
+}

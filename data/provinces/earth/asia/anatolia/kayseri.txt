@@ -1,0 +1,31 @@
+kayseri = {
+	name = "Kayseri"
+	color = { 218 129 14 }
+	provincial_capital = kayseri
+	regions = {
+		anatolia
+	}
+	
+	history = {
+		-1450 = {
+			owner = cilicia #part of Cilicia c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = cilician
+			religion = pagan
+		}
+		
+		-750 = {
+			owner = mushki #Mushki territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+			culture = phrygian
+		}
+		
+		1360 = {
+			owner = seljuk_turks #territory of the Seljuk Turks in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = turkish
+			religion = sunni
+		}
+		
+		1815 = {
+			culture = turkish #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

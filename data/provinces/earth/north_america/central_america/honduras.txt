@@ -1,0 +1,14 @@
+honduras = {
+	name = "Honduras"
+	color = { 241 234 90 }
+	provincial_capital = tegucigalpa
+	regions = {
+		central_america
+	}
+	
+	history = {
+		owner = arawaks
+		culture = arawak
+		religion = pagan
+	}
+}

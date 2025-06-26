@@ -1,0 +1,6 @@
+temuco = {
+	name = "Temuco"
+	world = earth
+	geocoordinate = { -72.57999902510 -38.73000160850 } #from Natural Earth
+	type = settlement
+}

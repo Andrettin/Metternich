@@ -1,0 +1,8 @@
+vigo = {
+	name = "Vigo"
+	world = earth
+	geocoordinate = { -8.72999454898 42.22001853340 } #from Natural Earth
+	type = resource
+	resource = fish
+	province = galicia
+}

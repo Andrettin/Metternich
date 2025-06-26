@@ -1,0 +1,4 @@
+spice_factory = {
+	name = "Spice Factory"
+	slot_type = spice_factory
+}

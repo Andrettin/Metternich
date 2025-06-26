@@ -1,0 +1,16 @@
+serbia = {
+	name = "Serbia"
+	type = minor_nation
+	culture = serbian
+	default_religion = orthodox
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = belgrade
+	eras = {
+		medieval_era
+		industrial_era
+	}
+	core_provinces = {
+		serbia
+	}
+}

@@ -1,0 +1,10 @@
+dimetrodon = {
+	name = "Dimetrodon"
+	supertaxon = reptilia
+	pre_evolutions = {
+		edaphosaurus
+		hylonomus
+		petrolacosaurus
+		sphenacodon
+	}
+}

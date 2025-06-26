@@ -1,0 +1,23 @@
+arena = {
+	name = "Arena"
+	building_class = arena
+	portrait = fort
+	icon = architecture
+	provincial = true
+	required_technology = architecture
+	settlement_types = {
+		city
+		metropolis
+	}
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			ruler = {
+				trait = creative
+			}
+		}
+	}
+	settlement_modifier = {
+		amenities_bonus = 3
+	}
+}

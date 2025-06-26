@@ -1,0 +1,9 @@
+jalalabad = {
+	name = "Jalalabad"
+	world = earth
+	geocoordinate = { 70.43610347380 34.44152691550 } #from Natural Earth
+	type = resource
+	#resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
+	resource = grain
+	province = afghanistan
+}

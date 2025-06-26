@@ -1,0 +1,18 @@
+mangas_coloradas = {
+	name = "Mangas Coloradas"
+	role = ruler
+	character_type = general
+	culture = apache
+	religion = pagan
+	home_site = albuquerque
+	gender = male
+	birth_date = 1793
+	death_date = 1863
+	rulable_countries = {
+		apache
+	}
+	traits = {
+		impressionable
+		indulgent
+	}
+}

@@ -1,0 +1,52 @@
+dalmatia = {
+	name = "Dalmatia"
+	color = { 201 182 138 }
+	provincial_capital = zara
+	resources = {
+		fruit = 1
+	}
+	regions = {
+		cisleithania
+		croatia
+	}
+	
+	history = {
+		culture = gothic
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+		}
+		
+		1204 = {
+			owner = hungary #part of Hungary in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+			culture = croatian
+			religion = catholic
+		}
+		
+		1360 = {
+			owner = hungary #part of Hungary in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1477 = {
+			owner = hungary #part of the Kingdom of Hungary c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1494 = {
+			owner = venice #part of the Venetian Republic c. 1494; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 90-91.
+		}
+		
+		1740 = {
+			owner = venice #Venetian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1814 = {
+			owner = austria #became part of the Empire of Austria in 1814; Source: William R. Shepherd, "Historical Atlas", 1911, p. 157.
+		}
+		
+		1815 = {
+			culture = croatian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

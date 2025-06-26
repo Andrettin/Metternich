@@ -1,0 +1,12 @@
+ochrida = {
+	name = "Ochrida"
+	world = earth
+	geocoordinate = { 20.801944444444 41.116944444444 }
+	province = north_macedonia
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

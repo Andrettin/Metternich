@@ -1,0 +1,6 @@
+mexicali = {
+	name = "Mexicali"
+	world = earth
+	geocoordinate = { -115.48001611500 32.64998252260 } #from Natural Earth
+	type = settlement
+}

@@ -1,0 +1,101 @@
+fishing_wharf = {
+	name = "Fishing Wharf"
+	slot = resource
+	resources = {
+		fish
+	}
+	icon = garrison
+	image_filepath = "tiles/improvements/fishing_wharf.png"
+	default_population_class = laborers
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		laborers
+		expert_fishermen
+	}
+	commodity_costs = {
+		lumber = 1
+		cast_iron = 1
+	}
+	modifier = {
+		housing_bonus = 1
+	}
+}
+
+improved_fishing_wharf = {
+	name = "Improved Fishing Wharf"
+	slot = resource
+	resources = {
+		fish
+	}
+	icon = garrison
+	image_filepath = "tiles/improvements/fishing_wharf.png"
+	default_population_class = laborers
+	required_improvement = fishing_wharf
+	required_technology = seafaring
+	wealth_cost = 100
+	population_classes = {
+		slaves
+		laborers
+		expert_fishermen
+	}
+	commodity_costs = {
+		lumber = 4
+		cast_iron = 4
+	}
+	modifier = {
+		housing_bonus = 2
+	}
+}
+
+advanced_fishing_wharf = {
+	name = "Advanced Fishing Wharf"
+	slot = resource
+	resources = {
+		fish
+	}
+	icon = garrison
+	image_filepath = "tiles/improvements/fishing_wharf.png"
+	default_population_class = laborers
+	required_improvement = improved_fishing_wharf
+	required_technology = cartography
+	wealth_cost = 1000
+	population_classes = {
+		slaves
+		laborers
+		expert_fishermen
+	}
+	commodity_costs = {
+		lumber = 8
+		cast_iron = 8
+	}
+	modifier = {
+		housing_bonus = 3
+	}
+}
+
+industrial_fishing_wharf = {
+	name = "Industrial Fishing Wharf"
+	slot = resource
+	resources = {
+		fish
+	}
+	icon = garrison
+	image_filepath = "tiles/improvements/fishing_wharf.png"
+	default_population_class = laborers
+	required_improvement = advanced_fishing_wharf
+	required_technology = cartography
+	wealth_cost = 5000
+	population_classes = {
+		slaves
+		laborers
+		expert_fishermen
+	}
+	commodity_costs = {
+		lumber = 16
+		cast_iron = 16
+	}
+	modifier = {
+		housing_bonus = 4
+	}
+}

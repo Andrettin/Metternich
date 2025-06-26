@@ -1,0 +1,41 @@
+ayrshire = {
+	name = "Ayrshire"
+	color = { 228 160 173 }
+	provincial_capital = ayr
+	regions = {
+		scotland
+	}
+	
+	history = {
+		owner = elginerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-419200000 = {
+			owner = elginerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = pictland
+			culture = pictish
+		}
+		
+		526 = {
+			owner = pictland #territory of the Picts in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = pictish
+		}
+		
+		802 = {
+			owner = strathclyde #part of Strathclyde c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+			culture = cumbrian
+		}
+		
+		1360 = {
+			owner = alba #part of Scotland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = highlander
+			religion = catholic
+		}
+	}
+}

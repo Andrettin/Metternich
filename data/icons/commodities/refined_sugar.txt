@@ -1,0 +1,3 @@
+refined_sugar = {
+	filepath = "icons/commodities/refined_sugar.png"
+}

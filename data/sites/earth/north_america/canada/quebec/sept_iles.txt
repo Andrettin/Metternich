@@ -1,0 +1,6 @@
+sept_iles = {
+	name = "Sept-Iles" #Sept-Îles
+	world = earth
+	geocoordinate = { -66.36001692880 50.31608766590 } #from Natural Earth
+	province = quebec
+}

@@ -1,0 +1,14 @@
+mizda = {
+	name = "Mizda"
+	color = { 253 63 236 }
+	provincial_capital = mizda
+	regions = {
+		libya
+	}
+	
+	history = {
+		owner = carthage
+		culture = carthaginian
+		religion = pagan
+	}
+}

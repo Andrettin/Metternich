@@ -1,0 +1,45 @@
+west_galicia = {
+	name = "West Galicia"
+	color = { 144 96 96 }
+	provincial_capital = cracow
+	resources = {
+		grain = 2
+		fruit = 2
+		coal = 1
+		oil = 1
+	}
+	regions = {
+		galicia
+		poland
+		poland_lithuania
+	}
+	
+	history = {
+		owner = lombards
+		culture = lombard
+		religion = pagan
+		
+		526 = {
+			owner = lombards #territory of the Lombards in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = lombard
+		}
+		
+		999 = {
+			owner = poland #became part of Poland in 999; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = polish
+		}
+		
+		1360 = {
+			owner = poland #part of Poland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = poland #part of the Kingdom of Poland c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

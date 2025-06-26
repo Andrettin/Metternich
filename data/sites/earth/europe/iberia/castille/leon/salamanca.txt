@@ -1,0 +1,17 @@
+salamanca = {
+	name = "Salamanca"
+	world = earth
+	geocoordinate = { -5.67000044903 40.97040488590 } #from Natural Earth
+	type = settlement
+	province = salamanca
+	cultural_names = {
+		roman = "Salmantica"
+	}
+	
+	history = {
+		1230 = {
+			buildings += university #University founded in Salamanca in 1230; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			settlement_type = campus
+		}
+	}
+}

@@ -1,0 +1,14 @@
+amphibian = {
+	name = "Amphibian"
+	species = acanthostega
+}
+
+mammal = {
+	name = "Mammal"
+	species = alphadon
+}
+
+reptile = {
+	name = "Reptile"
+	species = petrolacosaurus
+}

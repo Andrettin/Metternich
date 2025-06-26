@@ -1,0 +1,7 @@
+trained_workers = {
+	filepath = "icons/population/trained_workers.png"
+}
+
+trained_workers_small = {
+	filepath = "icons/population/trained_workers_small.png"
+}

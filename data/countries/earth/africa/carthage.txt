@@ -1,0 +1,19 @@
+carthage = {
+	name = "Carthage"
+	type = great_power
+	color = { 74 174 85 }
+	culture = carthaginian
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = republic
+	default_capital = carthage
+	short_names = {
+		tribe = "Carthaginians"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		tunisia
+	}
+}

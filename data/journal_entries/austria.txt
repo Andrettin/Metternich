@@ -1,0 +1,167 @@
+austrian_netherlands = {
+	name = "Austrian Netherlands"
+	portrait = dock
+	preconditions = {
+		country = austria
+	}
+	owned_provinces = {
+		brabant
+		flanders
+		luxembourg
+	}
+	completion_effects = {
+		wealth += 1000
+	}
+}
+
+duchy_of_milan = {
+	name = "Duchy of Milan"
+	portrait = ducal_crown
+	preconditions = {
+		country = austria
+	}
+	owned_provinces = {
+		lombardy
+	}
+	completion_effects = {
+		wealth += 1000
+	}
+}
+
+duchy_of_silesia = {
+	name = "Duchy of Silesia"
+	portrait = ducal_crown
+	preconditions = {
+		country = austria
+	}
+	conditions = {
+		owns_province = bohemia
+		owns_province = brunn
+		owns_province = budweis
+		owns_province = moravia
+		owns_province = pilsen
+	}
+	owned_provinces = {
+		lower_silesia
+		upper_silesia
+	}
+	completion_effects = {
+		wealth += 1000
+	}
+}
+
+grand_principality_of_transylvania = {
+	name = "Grand Principality of Transylvania"
+	portrait = grand_ducal_crown
+	preconditions = {
+		country = austria
+	}
+	conditions = {
+		owns_province = buda
+		owns_province = kesmark
+		owns_province = pest
+		owns_province = pressburg
+		owns_province = banat
+	}
+	owned_provinces = {
+		transylvania
+	}
+	completion_effects = {
+		wealth += 1000
+	}
+}
+
+kingdom_of_bohemia = {
+	name = "Kingdom of Bohemia"
+	portrait = grand_ducal_crown
+	preconditions = {
+		country = austria
+	}
+	owned_provinces = {
+		bohemia
+		brunn
+		budweis
+		moravia
+		pilsen
+	}
+	completion_effects = {
+		wealth += 1000
+	}
+}
+
+kingdom_of_croatia = {
+	name = "Kingdom of Croatia"
+	portrait = grand_ducal_crown
+	preconditions = {
+		country = austria
+	}
+	conditions = {
+		owns_province = buda
+		owns_province = kesmark
+		owns_province = pest
+		owns_province = pressburg
+		owns_province = banat
+	}
+	owned_provinces = {
+		croatia
+		slavonia
+	}
+	completion_effects = {
+		wealth += 1000
+	}
+}
+
+kingdom_of_galicia_and_lodomeria = {
+	name = "Kingdom of Galicia and Lodomeria"
+	portrait = grand_ducal_crown
+	preconditions = {
+		country = austria
+	}
+	conditions = {
+		owns_province = bohemia
+		owns_province = brunn
+		owns_province = budweis
+		owns_province = moravia
+		owns_province = pilsen
+	}
+	owned_provinces = {
+		west_galicia
+		east_galicia
+	}
+	completion_effects = {
+		wealth += 1000
+	}
+}
+
+kingdom_of_hungary = {
+	name = "Kingdom of Hungary"
+	portrait = grand_ducal_crown
+	preconditions = {
+		country = austria
+	}
+	owned_provinces = {
+		buda
+		kesmark
+		pest
+		pressburg
+		banat
+	}
+	completion_effects = {
+		wealth += 1000
+	}
+}
+
+linzer_wollzeugfabrik = { #Source: Josef Dullinger, "Die Handelskompagnien Oesterreichs nach dem Oriente und nach Ostindien in der ersten Hälfte des 18. Jahrhunderts", 1900, p. 57.
+	name = "Linzer Wollzeugfabrik"
+	portrait = factory
+	description = "The Linzer Wollzeugfabrik was a wool textile mill located in Linz, which was founded by Christian Sind in 1672."
+	preconditions = {
+		owns_province = upper_austria
+	}
+	built_buildings = {
+		textile_mill
+	}
+	completion_effects = {
+		wealth += 1000
+	}
+}

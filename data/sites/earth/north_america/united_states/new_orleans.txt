@@ -1,0 +1,6 @@
+new_orleans = {
+	name = "New Orleans"
+	world = earth
+	geocoordinate = { -90.03996688000 29.99500246070 } #from Natural Earth
+	type = settlement
+}

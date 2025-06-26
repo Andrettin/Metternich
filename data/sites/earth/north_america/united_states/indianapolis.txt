@@ -1,0 +1,6 @@
+indianapolis = {
+	name = "Indianapolis"
+	world = earth
+	geocoordinate = { -86.17004805680 39.74998842270 } #from Natural Earth
+	type = settlement
+}

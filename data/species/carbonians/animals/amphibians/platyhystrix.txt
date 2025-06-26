@@ -1,0 +1,9 @@
+platyhystrix = {
+	name = "Platyhystrix"
+	supertaxon = amphibia
+	pre_evolutions = {
+		cacops
+		eogyrinus
+		greererpeton
+	}
+}

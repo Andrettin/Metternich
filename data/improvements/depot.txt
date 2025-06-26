@@ -1,0 +1,21 @@
+caravansary = {
+	name = "Caravansary"
+	slot = depot
+	icon = trade_consulate
+	wealth_cost = 200
+	modifier = {
+		depot_level = 2
+	}
+}
+
+rail_depot = {
+	name = "Rail Depot"
+	slot = depot
+	icon = trade_consulate
+	required_improvement = caravansary
+	required_technology = high_pressure_steam_engine
+	wealth_cost = 2000
+	modifier = {
+		depot_level = 4
+	}
+}

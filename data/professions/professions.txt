@@ -1,0 +1,19 @@
+academics = {
+	name = "Academics"
+}
+
+bureaucrats = {
+	name = "Bureaucrats"
+}
+
+clergymen = {
+	name = "Clergymen"
+}
+
+officers = {
+	name = "Officers"
+}
+
+soldiers = {
+	name = "Soldiers"
+}

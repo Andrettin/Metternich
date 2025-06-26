@@ -1,0 +1,7 @@
+artillerist = {
+	filepath = "icons/units/troops/artillerist.png"
+}
+
+artillery = {
+	filepath = "icons/units/troops/artillery.png"
+}

@@ -1,0 +1,18 @@
+cantabria = {
+	name = "Cantabria"
+	type = minor_nation
+	culture = cantabrian
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = santander
+	short_names = {
+		tribe = "Cantabri"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		cantabria
+	}
+}

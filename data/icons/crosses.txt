@@ -1,0 +1,27 @@
+bronze_cross = {
+	filepath = "icons/bronze_cross.png"
+}
+
+bronze_cross_detailed = {
+	filepath = "icons/bronze_cross_detailed.png"
+}
+
+golden_cross = {
+	filepath = "icons/golden_cross.png"
+}
+
+golden_cross_detailed = {
+	filepath = "icons/golden_cross_detailed.png"
+}
+
+silver_cross = {
+	filepath = "icons/silver_cross.png"
+}
+
+silver_cross_detailed = {
+	filepath = "icons/silver_cross_detailed.png"
+}
+
+wooden_cross = {
+	filepath = "icons/wooden_cross.png"
+}

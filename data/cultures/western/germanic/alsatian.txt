@@ -1,0 +1,14 @@
+alsatian = {
+	name = "Alsatian"
+	group = german
+	color = { 246 223 15 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = feudalism
+		province = {
+			core = strasbourg
+		}
+	}
+}

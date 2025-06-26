@@ -1,0 +1,8 @@
+potatoes = {
+	name = "Potatoes"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	discovery = true
+	period = copper_age
+}

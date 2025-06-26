@@ -1,0 +1,17 @@
+greece = {
+	superregions = {
+		europe
+		west_and_central_europe
+	}
+	
+	history = {
+		-27 = {
+			#3 million people lived in Greece at the "Time of Augustus"; Source: Josiah Cox Russell, "Medieval Population", 1937, p. 504.
+			population = 3000000
+		}
+		
+		2003 = {
+			literacy_rate = 98 #Source: Philip's International School Atlas, p. 141.
+		}
+	}
+}

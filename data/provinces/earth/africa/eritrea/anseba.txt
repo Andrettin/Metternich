@@ -1,0 +1,14 @@
+anseba = {
+	name = "Anseba"
+	color = { 155 40 204 }
+	provincial_capital = keren
+	regions = {
+		eritrea
+	}
+	
+	history = {
+		owner = egypt
+		culture = tigray
+		religion = pagan
+	}
+}

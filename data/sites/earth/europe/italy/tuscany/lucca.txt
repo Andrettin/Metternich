@@ -1,0 +1,14 @@
+lucca = {
+	name = "Lucca"
+	world = earth
+	geocoordinate = { 10.516666666667 43.85 }
+	type = resource
+	resource = grain
+	province = tuscany
+	
+	history = {
+		1369 = {
+			buildings += university #University founded in Lucca in 1369; Source: "Atlas de História Mundial", 2001, p. 144.
+		}
+	}
+}

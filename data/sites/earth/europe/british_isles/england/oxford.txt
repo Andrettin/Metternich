@@ -1,0 +1,14 @@
+oxford = {
+	name = "Oxford"
+	world = earth
+	geocoordinate = { -1.24998600402 51.77041749990 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = warwickshire
+	
+	history = {
+		1250 = {
+			buildings += university #University existent in Oxford in 1250; Source: "Atlas de História Mundial", p. 144.
+		}
+	}
+}

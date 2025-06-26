@@ -1,0 +1,6 @@
+rio_branco = {
+	name = "Rio Branco"
+	world = earth
+	geocoordinate = { -67.80000655280 -9.96658933629 }
+	type = settlement
+}

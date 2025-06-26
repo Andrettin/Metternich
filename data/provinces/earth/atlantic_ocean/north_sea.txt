@@ -1,0 +1,40 @@
+danish_waters = {
+	name = "Danish Waters"
+	color = { 247 251 87 }
+	sea = true
+	regions = {
+		north_sea
+	}
+}
+
+kattegat = {
+	name = "Kattegat"
+	color = { 16 144 120 }
+	sea = true
+	regions = {
+		north_sea
+	}
+}
+
+north_sea = {
+	name = "North Sea"
+	color = { 0 144 120 }
+	sea = true
+	cultural_names = {
+		gothic = "German Ocean"
+		roman = "German Ocean" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+		suebi = "German Ocean"
+	}
+	regions = {
+		north_sea
+	}
+}
+
+skagerrak = {
+	name = "Skagerrak"
+	color = { 0 120 144 }
+	sea = true
+	regions = {
+		north_sea
+	}
+}

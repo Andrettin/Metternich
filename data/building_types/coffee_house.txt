@@ -1,0 +1,27 @@
+coffee_house = {
+	name = "Coffee House"
+	building_class = coffee_house
+	portrait = trading_post
+	icon = coffee
+	provincial = true
+	required_technology = economics
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			has_resource = coffee
+		}
+	}
+	country_modifier = {
+		commodity_demand = {
+			commodity = coffee
+			value = 1
+		}
+	}
+	province_modifier = {
+		culture_per_improved_coffee = 1
+	}
+}

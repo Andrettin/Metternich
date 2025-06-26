@@ -1,0 +1,6 @@
+hermosillo = {
+	name = "Hermosillo"
+	world = earth
+	geocoordinate = { -110.95406498400 29.09888144840 } #from Natural Earth
+	type = settlement
+}

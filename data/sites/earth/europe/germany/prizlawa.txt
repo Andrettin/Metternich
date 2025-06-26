@@ -1,0 +1,11 @@
+prizlawa = {
+	name = "Prizlawa" #also known as Prizlava
+	world = earth
+	#geocoordinate = { 12.026752777777778 52.87432777777778 } #Kolonie Neu-Werben
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

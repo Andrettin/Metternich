@@ -1,0 +1,21 @@
+verdun = {
+	name = "Verdun"
+	world = earth
+	geocoordinate = { 5.3827777777778 49.159722222222 }
+	type = resource
+	resource = grain
+	province = lorraine
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1836 = {
+			population_groups = {
+				clergymen.french.catholic = 2500
+				clergymen.german.catholic = 200
+			}
+		}
+	}
+}

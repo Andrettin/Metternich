@@ -1,0 +1,14 @@
+damietta = {
+	name = "Damietta" #also known as Dumyat
+	world = earth
+	geocoordinate = { 31.82001094440 31.42039349270 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = cairo
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

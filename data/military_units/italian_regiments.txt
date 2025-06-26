@@ -1,0 +1,159 @@
+florence_spearmen = {
+	type = spearmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = tuscany
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+florence_arquebusiers = {
+	type = arquebusiers
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = tuscany
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+florence_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = tuscany
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+genoa_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = genoa
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+milan_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = lombardy
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+savoy_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = savoy
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+corsican_crossbowmen = {
+	type = crossbowmen
+	quantity = 2
+	
+	history = {
+		1492 = {
+			province = corsica
+		}
+		
+		1820 = {
+			province = none
+		}
+	}
+}
+
+romagna_regulars = {
+	type = regulars
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = romagna
+		}
+	}
+}
+
+savoy_regulars = {
+	type = regulars
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = savoy
+		}
+	}
+}
+
+genoa_regulars = {
+	type = regulars
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = genoa
+		}
+	}
+}
+
+rome_regulars = {
+	type = regulars
+	quantity = 2
+	
+	history = {
+		1820 = {
+			province = latium
+		}
+	}
+}
+
+rome_artillery = {
+	type = artillery
+	quantity = 1
+	
+	history = {
+		1820 = {
+			province = latium
+		}
+	}
+}

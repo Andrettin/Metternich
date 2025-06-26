@@ -1,0 +1,8 @@
+lengeh = {
+	name = "Lengeh"
+	world = earth
+	geocoordinate = { 54.88055555555555 26.558055555555555 }
+	type = resource
+	resource = fish
+	province = hormozgan
+}

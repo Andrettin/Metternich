@@ -1,0 +1,6 @@
+sao_luis = {
+	name = "Sao Luis" #"São Luís"
+	world = earth
+	geocoordinate = { -44.26599084630 -2.51598468131 } #from Natural Earth
+	type = settlement
+}

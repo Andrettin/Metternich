@@ -1,0 +1,6 @@
+pouso_alegre = {
+	name = "Pouso Alegre"
+	world = earth
+	geocoordinate = { -45.94002303220 -22.22000160850 } #from Natural Earth
+	province = minas_gerais
+}

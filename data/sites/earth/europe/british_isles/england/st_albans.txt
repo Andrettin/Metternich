@@ -1,0 +1,8 @@
+st_albans = {
+	name = "St. Albans"
+	world = earth
+	geocoordinate = { -0.336 51.755 }
+	type = resource
+	resource = grain
+	province = middlesex
+}

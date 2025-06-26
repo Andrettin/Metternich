@@ -1,0 +1,199 @@
+ceremonial_burial = {
+	name = "Ceremonial Burial"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	period = copper_age
+	cost = 20
+	cost_commodity = piety
+}
+
+mysticism = {
+	name = "Mysticism"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	period = bronze_age
+	cost = 40
+	cost_commodity = piety
+	prerequisites = {
+		ceremonial_burial
+	}
+	modifier = {
+		amenities_per_temple = 1
+		amenities_per_cathedral = 1
+	}
+}
+
+ancestor_worship = {
+	name = "Ancestor Worship"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	cost_commodity = piety
+	required_game_rule = additional_technologies
+	prerequisites = {
+		ceremonial_burial
+	}
+	modifier = {
+		culture_per_shrine = 1
+		culture_per_temple = 1
+		culture_per_cathedral = 1
+	}
+}
+
+oral_tradition = {
+	name = "Oral Tradition"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	cost_commodity = piety
+	required_game_rule = additional_technologies
+	prerequisites = {
+		ceremonial_burial
+	}
+	modifier = {
+		culture_per_improved_coffee = 1
+		culture_per_improved_cotton = 1
+		culture_per_improved_dye = 1
+		culture_per_improved_opium = 1
+		culture_per_improved_spices = 1
+		culture_per_improved_sugar_cane = 1
+		culture_per_improved_tea = 1
+		culture_per_improved_tobacco = 1
+	}
+}
+
+religious_idols = {
+	name = "Religious Idols"
+	subcategory = religion
+	portrait = temple
+	icon = golden_cross_detailed
+	cost_commodity = piety
+	required_game_rule = additional_technologies
+	prerequisites = {
+		ceremonial_burial
+		
+		precious_metal_mining
+	}
+	modifier = {
+		culture_per_improved_gold = 1
+		piety_per_improved_gold = 1
+		culture_per_improved_silver = 1
+		piety_per_improved_silver = 1
+		culture_per_improved_cerro_de_potosi = 1
+		piety_per_improved_cerro_de_potosi = 1
+	}
+}
+
+polytheism = {
+	name = "Polytheism"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	period = iron_age
+	cost = 120
+	cost_commodity = piety
+	prerequisites = {
+		mysticism
+	}
+}
+
+tears_of_the_gods = {
+	name = "Tears of the Gods"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	cost_commodity = piety
+	required_game_rule = additional_technologies
+	religious_groups = {
+		pagan
+	}
+	prerequisites = {
+		polytheism
+	}
+	modifier = {
+		piety_per_improved_amber = 2
+		piety_per_improved_diamonds = 2
+		piety_per_improved_gems = 2
+		#piety_per_improved_pearls = 2
+	}
+}
+
+monotheism = {
+	name = "Monotheism"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	period = 500_1000
+	cost = 360
+	cost_commodity = piety
+	prerequisites = {
+		polytheism
+		philosophy
+	}
+}
+
+organized_religion = {
+	name = "Organized Religion"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	cost_commodity = piety
+	prerequisites = {
+		monotheism
+	}
+	modifier = {
+		piety_per_shrine = 1
+		piety_per_temple = 1
+		piety_per_cathedral = 1
+	}
+}
+
+relics = {
+	name = "Relics"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	period = 1000_1100
+	cost_commodity = piety
+	prerequisites = {
+		monotheism
+	}
+	modifier = {
+		clergymen_militancy_modifier = -0.01
+		firebrand_preachers_militancy_modifier = -0.01
+	}
+}
+
+theology = {
+	name = "Theology"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	period = 1000_1100
+	cost = 275
+	cost_commodity = piety
+	prerequisites = {
+		monotheism
+		feudalism
+	}
+	modifier = {
+		amenities_per_cathedral = 1
+	}
+}
+
+fundamentalism = {
+	name = "Fundamentalism"
+	subcategory = religion
+	portrait = temple
+	icon = wooden_cross
+	period = 1800_1825
+	cost_commodity = piety
+	prerequisites = {
+		monotheism
+		conscription
+		
+		organized_religion
+	}
+}

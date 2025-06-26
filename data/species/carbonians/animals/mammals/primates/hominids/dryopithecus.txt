@@ -1,0 +1,8 @@
+dryopithecus = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=40893
+	name = "Dryopithecus"
+	supertaxon = dryopithecus
+	era = miocene
+	pre_evolutions = {
+		plesiadapis
+	}
+}

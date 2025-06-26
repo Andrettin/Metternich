@@ -1,0 +1,6 @@
+prestige = {
+	name = "Prestige"
+	icon = heater_shield
+	abstract = true
+	required_game_rule = prestige
+}

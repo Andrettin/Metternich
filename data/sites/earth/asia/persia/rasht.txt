@@ -1,0 +1,8 @@
+rasht = {
+	name = "Rasht"
+	world = earth
+	geocoordinate = { 49.62998327520 37.29998292950 } #from Natural Earth
+	type = settlement
+	#resource = timber
+	province = gilan
+}

@@ -1,0 +1,6 @@
+macapa = {
+	name = "Macapa" #"Macapá"
+	world = earth
+	geocoordinate = { -51.05002120120 0.03300701792 }
+	type = settlement
+}

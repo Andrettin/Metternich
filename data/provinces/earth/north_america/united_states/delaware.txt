@@ -1,0 +1,80 @@
+delaware = {
+	name = "Delaware"
+	color = { 112 128 0 }
+	provincial_capital = dover_delaware
+	regions = {
+		thirteen_colonies
+		united_states
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-4000 = {
+			owner = iroquois
+			culture = iroquois
+		}
+		
+		1300 = {
+			owner = iroquois #territory of the Northeastern cultural group (to which the Iroquois belonged) in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
+			culture = iroquois
+		}
+		
+		1585 = {
+			owner = virginia #became part of Raleigh's Colony of Virginia in 1585; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			culture = american
+			religion = protestant
+		}
+		
+		1587 = {
+			owner = iroquois #ceased to be part of Raleigh's Colony of Virginia in 1587; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			culture = iroquois
+			religion = pagan
+		}
+		
+		1638 = {
+			owner = new_sweden #became part of New Sweden in 1638; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = swedish
+			religion = protestant
+		}
+		
+		1655 = {
+			owner = new_netherland #became part of New Netherland in 1655; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+		}
+		
+		1664 = {
+			owner = new_england #became an English possession in 1664; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+		}
+		
+		1673 = {
+			owner = new_netherland #restored to New Netherland in 1673; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+		}
+		
+		1674 = {
+			owner = new_england #became an English possession in 1674; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = american
+		}
+		
+		1776 = {
+			culture = none #handled by region
+		}
+		
+		1783 = {
+			owner = united_states #became part of the United States in 1783; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 198-199.
+		}
+		
+		my_country_tis_of_thee = {
+			1920 = {
+				owner = new_prussia #Source: "Life Magazine", 1916.
+			}
+		}
+	}
+}

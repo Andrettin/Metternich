@@ -1,0 +1,47 @@
+utah = {
+	name = "Utah"
+	color = { 120 30 245 }
+	provincial_capital = salt_lake_city
+	regions = {
+		united_states
+	}
+	
+	history = {
+		owner = hylerpetontids
+		culture = amphibian
+		religion = pagan
+		
+		-358900000 = {
+			owner = hylerpetontids
+			culture = amphibian
+			religion = pagan
+		}
+		
+		-86300000 = { #Alphadon lived there in the Santonian period; Source: https://fossilworks.org/?a=samplePage&sample_no=4596
+			owner = alphadontids
+			culture = mammalian
+		}
+		
+		-70600000 = { #Alphadon lived there in the Lancian period; Source: https://fossilworks.org/?a=samplePage&sample_no=4558 ; Source: https://fossilworks.org/?a=samplePage&sample_no=4583
+			owner = alphadontids
+			culture = mammalian
+		}
+		
+		-4000 = {
+			owner = apache
+			culture = apache
+		}
+		
+		1848 = {
+			owner = united_states #became part of the United States in 1848; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 198-199.
+			culture = american
+			religion = protestant
+		}
+		
+		my_country_tis_of_thee = {
+			1920 = {
+				owner = new_prussia #Source: "Life Magazine", 1916.
+			}
+		}
+	}
+}

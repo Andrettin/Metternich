@@ -1,0 +1,7 @@
+orenburg = {
+	name = "Orenburg"
+	world = earth
+	geocoordinate = { 55.11001053750 51.77997763990 } #from Natural Earth
+	type = settlement
+	province = orenburg
+}

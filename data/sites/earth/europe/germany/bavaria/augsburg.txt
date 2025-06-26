@@ -1,0 +1,19 @@
+augsburg = {
+	name = "Augsburg"
+	world = earth
+	geocoordinate = { 10.89999588890 48.35000612290 } #from Natural Earth
+	type = settlement
+	cultural_names = {
+		roman = "Augusta Vindelicorum" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+	}
+	
+	history = {
+		919 = {
+			settlement_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1360 = {
+			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

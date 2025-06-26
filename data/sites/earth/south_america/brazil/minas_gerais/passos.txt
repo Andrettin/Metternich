@@ -1,0 +1,6 @@
+passos = {
+	name = "Passos"
+	world = earth
+	geocoordinate = { -46.60998213860 -20.71001625690 } #from Natural Earth
+	province = minas_gerais
+}

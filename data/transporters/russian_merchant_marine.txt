@@ -1,0 +1,11 @@
+russian_traders = {
+	type = trader
+	country = russia
+	quantity = 1
+	
+	history = {
+		1820 = {
+			active = true
+		}
+	}
+}

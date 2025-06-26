@@ -1,0 +1,3 @@
+heart = {
+	filepath = "icons/heart.png"
+}

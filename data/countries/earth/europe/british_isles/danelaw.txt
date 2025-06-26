@@ -1,0 +1,18 @@
+danelaw = {
+	name = "Danelaw"
+	type = minor_nation
+	culture = norse
+	default_religion = pagan
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = york
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		yorkshire
+		lancashire
+		derbyshire
+		east_anglia
+	}
+}

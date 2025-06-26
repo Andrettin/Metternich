@@ -1,0 +1,15 @@
+lombards = {
+	name = "Lombards"
+	type = tribe
+	culture = lombard
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = hanover #Brunswick
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		hanover
+	}
+}

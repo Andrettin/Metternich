@@ -1,0 +1,23 @@
+misrata = {
+	name = "Misrata"
+	color = { 144 67 111 }
+	provincial_capital = misrata
+	resources = {
+		fruit = 1
+	}
+	regions = {
+		libya
+	}
+	
+	history = {
+		owner = carthage
+		culture = carthaginian
+		religion = pagan
+		
+		1360 = {
+			owner = tunisia #part of Tunis in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = arabic
+			religion = sunni
+		}
+	}
+}

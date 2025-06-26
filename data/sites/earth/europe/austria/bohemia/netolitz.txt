@@ -1,0 +1,14 @@
+netolitz = {
+	name = "Netolitz"
+	world = earth
+	#geocoordinate = { 14.197010553654 49.049384935494 }
+	cultural_names = {
+		czech = "Netolice"
+	}
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

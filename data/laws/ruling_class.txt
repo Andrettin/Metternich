@@ -1,0 +1,34 @@
+aristocracy = {
+	name = "Aristocracy"
+	group = ruling_class
+	icon = crown_baronial
+	required_technology = monarchy
+	commodity_costs = {
+		statesmanship = 50
+	}
+	conditions = {
+		game_rule = laws
+	}
+	modifier = {
+		cavalry_cost_modifier = -25
+		warship_cost_modifier = 10
+	}
+}
+
+plutocracy = {
+	name = "Plutocracy"
+	group = ruling_class
+	icon = wealth
+	required_technology = republic
+	commodity_costs = {
+		statesmanship = 50
+	}
+	conditions = {
+		game_rule = laws
+	}
+	modifier = {
+		cavalry_cost_modifier = 25
+		warship_cost_modifier = -10
+		trade_output_modifier = 5
+	}
+}

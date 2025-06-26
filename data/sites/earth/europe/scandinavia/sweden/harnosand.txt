@@ -1,0 +1,6 @@
+harnosand = {
+	name = "Harnosand" #"Härnösand"
+	world = earth
+	geocoordinate = { 17.93400361750 62.63399703910 } #from Natural Earth
+	type = settlement
+}

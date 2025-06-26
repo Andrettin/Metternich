@@ -1,0 +1,132 @@
+#Ancient Era
+
+copper_age = {
+	start_year = -4000
+	end_year = -2000
+}
+
+bronze_age = {
+	parent_period = copper_age
+	start_year = -2000
+	end_year = -1000
+}
+
+#Classical Era
+
+iron_age = {
+	parent_period = bronze_age
+	start_year = -1000
+	end_year = 1
+}
+
+1_500 = {
+	parent_period = iron_age
+	start_year = 1
+	end_year = 500
+}
+
+#Medieval Era
+
+500_1000 = {
+	parent_period = 1_500
+	start_year = 500
+	end_year = 1000
+}
+
+1000_1100 = {
+	parent_period = 500_1000
+	start_year = 1000
+	end_year = 1100
+}
+
+1100_1200 = {
+	parent_period = 1000_1100
+	start_year = 1100
+	end_year = 1200
+}
+
+1200_1300 = {
+	parent_period = 1100_1200
+	start_year = 1200
+	end_year = 1300
+}
+
+1300_1400 = {
+	parent_period = 1200_1300
+	start_year = 1300
+	end_year = 1400
+}
+
+1400_1500 = {
+	parent_period = 1300_1400
+	start_year = 1400
+	end_year = 1500
+}
+
+#Age of Discovery
+
+1500_1550 = {
+	parent_period = 1400_1500
+	start_year = 1500
+	end_year = 1550
+}
+
+1550_1600 = {
+	parent_period = 1500_1550
+	start_year = 1550
+	end_year = 1600
+}
+
+1600_1650 = {
+	parent_period = 1550_1600
+	start_year = 1600
+	end_year = 1650
+}
+
+1650_1700 = {
+	parent_period = 1600_1650
+	start_year = 1650
+	end_year = 1700
+}
+
+1700_1750 = {
+	parent_period = 1650_1700
+	start_year = 1700
+	end_year = 1750
+}
+
+1750_1800 = {
+	parent_period = 1700_1750
+	start_year = 1750
+	end_year = 1800
+}
+
+1800_1825 = {
+	parent_period = 1750_1800
+	start_year = 1800
+	end_year = 1825
+}
+
+1825_1850 = {
+	parent_period = 1800_1825
+	start_year = 1825
+	end_year = 1850
+}
+
+1850_1875 = {
+	parent_period = 1825_1850
+	start_year = 1850
+	end_year = 1875
+}
+
+1875_1900 = {
+	parent_period = 1850_1875
+	start_year = 1875
+	end_year = 1900
+}
+
+1900_1925 = {
+	parent_period = 1875_1900
+	start_year = 1900
+	end_year = 1925
+}

@@ -1,0 +1,5 @@
+ranger = {
+	name = "Ranger"
+	domain = land
+	category = ranger
+}

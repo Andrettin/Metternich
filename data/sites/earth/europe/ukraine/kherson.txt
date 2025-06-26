@@ -1,0 +1,6 @@
+kherson = {
+	name = "Kherson"
+	world = earth
+	geocoordinate = { 32.60066488720 46.63253717980 } #from Natural Earth
+	type = settlement
+}

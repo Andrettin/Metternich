@@ -1,0 +1,6 @@
+guarda = {
+	name = "Guarda"
+	world = earth
+	geocoordinate = { -7.26200051152 40.54100414320 } #from Natural Earth
+	province = beira
+}

@@ -1,0 +1,17 @@
+cunhambebe = {
+	filepath = "portraits/characters/cunhambebe.png"
+	character_conditions = {
+		gender = male
+		or = {
+			culture = tupi
+			and = {
+				cultural_group = american
+				not = {
+					cultural_group = mesoamerican
+					cultural_group = andean
+				}
+			}
+		}
+		is_ruler = true
+	}
+}

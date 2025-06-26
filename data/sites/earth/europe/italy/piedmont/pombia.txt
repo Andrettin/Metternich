@@ -1,0 +1,12 @@
+pombia = {
+	name = "Pombia"
+	world = earth
+	geocoordinate = { 8.6333333333333 45.65 }
+	province = piedmont
+	
+	history = {
+		919 = {
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+	}
+}

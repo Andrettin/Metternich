@@ -1,0 +1,23 @@
+gaulish = {
+	name = "Gaulish"
+	group = gallic
+	color = { 44 102 30 }
+	species = {
+		human
+	}
+	
+	personal_names = {
+		male = {
+			"Ambiorix"
+			"Brennus"
+			"Dumnorix"
+			"Leonnorius"
+			"Orgetorix"
+			"Vercingetorix"
+		}
+		
+		female = {
+			"Julia" #Julia Pacata
+		}
+	}
+}

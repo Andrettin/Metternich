@@ -1,0 +1,12 @@
+catania = {
+	name = "Catania"
+	world = earth
+	geocoordinate = { 15.07999914420 37.49997072250 } #from Natural Earth
+	province = sicily
+	
+	history = {
+		1444 = {
+			buildings += university #University founded in Catania in 1444; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

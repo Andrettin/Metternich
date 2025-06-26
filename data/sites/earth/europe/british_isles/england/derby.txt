@@ -1,0 +1,6 @@
+derby = {
+	name = "Derby"
+	world = earth
+	geocoordinate = { -1.4766666666666666 52.92166666666667 }
+	type = settlement
+}

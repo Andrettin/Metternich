@@ -1,0 +1,12 @@
+mecklenburg = {
+	name = "Mecklenburg"
+	world = earth
+	geocoordinate = { 11.4633 53.8427 }
+	
+	history = {
+		919 = {
+			#settlement_type = castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += fort
+		}
+	}
+}

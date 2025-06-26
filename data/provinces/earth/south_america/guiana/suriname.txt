@@ -1,0 +1,19 @@
+suriname = {
+	name = "Suriname"
+	color = { 143 235 35 }
+	provincial_capital = paramaribo
+	regions = {
+		south_america
+	}
+	
+	history = {
+		owner = gondwana
+		culture = reptilian
+		religion = pagan
+		
+		-4000 = {
+			owner = arawaks
+			culture = arawak
+		}
+	}
+}

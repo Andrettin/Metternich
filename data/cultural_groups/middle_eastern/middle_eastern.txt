@@ -1,0 +1,19 @@
+middle_eastern = {
+	name = "Middle Eastern"
+	rank = supergroup
+	default_phenotype = middle_eastern
+	
+	history = {
+		explored_regions += middle_east
+		explored_regions += egypt
+		explored_regions += sudan
+		explored_regions += eritrea
+		explored_regions += libya
+		explored_regions += mediterranean_sea
+		explored_regions += greece
+		explored_provinces += persian_gulf
+		explored_provinces += red_sea
+		explored_provinces += djibouti
+		explored_provinces += somaliland
+	}
+}

@@ -1,0 +1,6 @@
+wiesbaden = {
+	name = "Wiesbaden"
+	world = earth
+	geocoordinate = { 8.25002844100 50.08039145820 } #from Natural Earth
+	type = settlement
+}

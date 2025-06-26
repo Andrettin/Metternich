@@ -1,0 +1,8 @@
+rotterdam = {
+	name = "Rotterdam"
+	world = earth
+	geocoordinate = { 4.47997432315 51.91996909500 } #from Natural Earth
+	type = resource
+	resource = cattle #Cattle raising or mixed use with pasture dominant; Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
+	province = holland
+}

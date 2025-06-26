@@ -1,0 +1,16 @@
+frogs = {
+	name = "Frogs"
+	icon = frog
+	tiny_icon = garrison
+	discovery_technology = frogs
+	required_game_rule = research_commodity
+	terrain_types = {
+		swamp
+	}
+	site_types = {
+		resource
+	}
+	modifier = {
+		research_bonus = 1
+	}
+}

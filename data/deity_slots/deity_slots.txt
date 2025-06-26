@@ -1,0 +1,31 @@
+major_deity = {
+	name = "Major Deity"
+	major = true
+	conditions = {
+		religious_group = pagan
+	}
+}
+
+minor_deity_1 = {
+	name = "Minor Deity"
+	conditions = {
+		religious_group = pagan
+		technology = polytheism
+	}
+}
+
+minor_deity_2 = {
+	name = "Minor Deity"
+	conditions = {
+		religious_group = pagan
+		technology = polytheism
+	}
+}
+
+minor_deity_3 = {
+	name = "Minor Deity"
+	conditions = {
+		religious_group = pagan
+		technology = polytheism
+	}
+}

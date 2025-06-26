@@ -1,0 +1,19 @@
+barracks = {
+	name = "Barracks"
+	building_class = barracks
+	portrait = fort
+	icon = crossed_sabers
+	provincial = true
+	settlement_types = {
+		city
+		metropolis
+		castle
+	}
+	settlement_modifier = {
+		housing_bonus = 1
+		profession_capacity = {
+			profession = soldiers
+			value = 3
+		}
+	}
+}

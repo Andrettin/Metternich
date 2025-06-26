@@ -1,0 +1,8 @@
+khorugh = {
+	name = "Khorugh" #also known as Khorug
+	world = earth
+	geocoordinate = { 71.54756017950 37.48751670230 } #from Natural Earth
+	type = settlement
+	#resource = cattle
+	province = gorno_badakhshan
+}

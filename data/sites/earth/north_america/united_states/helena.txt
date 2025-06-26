@@ -1,0 +1,6 @@
+helena = {
+	name = "Helena"
+	world = earth
+	geocoordinate = { -112.03529097700 46.59274904280 } #from Natural Earth
+	type = settlement
+}

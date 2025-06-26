@@ -1,0 +1,6 @@
+port_moresby = {
+	name = "Port Moresby"
+	world = earth
+	geocoordinate = { 147.19250362100 -9.46470782587 } #from Natural Earth
+	type = settlement
+}

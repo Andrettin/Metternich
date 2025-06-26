@@ -1,0 +1,12 @@
+greifswald = {
+	name = "Greifswald"
+	world = earth
+	geocoordinate = { 13.383333333333 54.083333333333 }
+	province = hither_pomerania
+	
+	history = {
+		1456 = {
+			buildings += university #University founded in Greifswald in 1456; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

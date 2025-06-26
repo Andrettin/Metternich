@@ -1,0 +1,16 @@
+horns = {
+	name = "Horns"
+	subcategory = head_protection
+	portrait = building_slot
+	icon = lion
+	period = jurassic
+	year = -68000000 #Triceratops
+	cost_commodity = research
+	cultures = {
+		reptilian
+	}
+	prerequisites = {
+		bony_neck_frill
+		bony_knobs
+	}
+}
