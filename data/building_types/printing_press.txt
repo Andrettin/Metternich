@@ -11,21 +11,13 @@ printing_press = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		province = {
-			or = {
-				produces_commodity = research
-				produces_commodity = statesmanship
-			}
-		}
-	}
 	country_modifier = {
 		commodity_demand = {
 			commodity = paper
 			value = 1
 		}
 	}
-	settlement_modifier = {
+	weighted_country_modifier = {
 		statesmanship_output_modifier = 50
 		research_output_modifier = 22
 	}
@@ -44,18 +36,13 @@ newspaper = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		province = {
-			produces_commodity = statesmanship
-		}
-	}
 	country_modifier = {
 		commodity_demand = {
 			commodity = paper
 			value = 1
 		}
 	}
-	settlement_modifier = {
+	weighted_country_modifier = {
 		statesmanship_output_modifier = 100
 		research_output_modifier = 22
 	}
