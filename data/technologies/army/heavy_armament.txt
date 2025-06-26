@@ -121,6 +121,7 @@ massed_battery = {
 	icon = cannon
 	period = 1800_1825
 	cost_commodity = leadership
+	required_game_rule = additional_technologies
 	prerequisites = {
 		heavy_artillery
 	}
