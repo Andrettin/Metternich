@@ -13,11 +13,6 @@ library = {
 	conditions = {
 		game_rule = research_commodity
 	}
-	settlement_conditions = {
-		province = {
-			#produces_commodity = research
-		}
-	}
 	cost_factor = {
 		modifier = {
 			factor = 0.5
@@ -27,7 +22,7 @@ library = {
 			}
 		}
 	}
-	settlement_modifier = {
-		research_output_modifier = 25
+	weighted_country_modifier = {
+		research_output_modifier = 50
 	}
 }
