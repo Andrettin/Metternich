@@ -4,6 +4,7 @@ village_hall = {
 	portrait = town
 	icon = flag
 	provincial = true
+	free_in_capital = true
 	settlement_types = {
 		village
 		town
@@ -30,6 +31,7 @@ town_hall = {
 	icon = flag
 	provincial = true
 	required_building = village_hall
+	free_in_capital = true
 	settlement_types = {
 		town
 		city
