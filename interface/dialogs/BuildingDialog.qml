@@ -117,7 +117,7 @@ DialogBase {
 			model: building_slot ? building_slot.available_production_types : []
 			
 			Item {
-				width: Math.max(production_slider.width, production_formula_row.width)
+				width: Math.max(production_slider.default_width, production_formula_row.width)
 				height: production_slider.height + 8 * scale_factor + production_formula_row.height
 				anchors.horizontalCenter: content_column.horizontalCenter
 				
@@ -339,7 +339,7 @@ DialogBase {
 			model: building_slot ? building_slot.available_education_types : []
 			
 			Item {
-				width: Math.max(education_slider.width, education_formula_row.width)
+				width: Math.max(education_slider.default_width, education_formula_row.width)
 				height: education_slider.height + 8 * scale_factor + education_formula_row.height
 				anchors.horizontalCenter: content_column.horizontalCenter
 				
