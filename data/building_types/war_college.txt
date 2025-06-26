@@ -10,16 +10,13 @@ war_college = {
 		metropolis
 		castle
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = leadership
-			}
-			capital = true
-		}
+	production_types = {
+		leadership
+	}
+	country_modifier = {
+		war_college_capacity = 3
 	}
 	settlement_modifier = {
-		leadership_output_modifier = 100
 		housing_bonus = 1
 		profession_capacity = {
 			profession = officers
