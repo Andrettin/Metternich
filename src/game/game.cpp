@@ -1339,7 +1339,6 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 
 			if (literacy_rate != 0) {
 				const int literate_population_unit_count = (population_unit_count * literacy_rate / 100).to_int();
-				population_unit_count -= literate_population_unit_count;
 
 				for (int i = 0; i < literate_population_unit_count; ++i) {
 					const metternich::culture *population_unit_culture = culture;
@@ -1349,12 +1348,18 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 
 					const metternich::population_type *unit_population_type = population_unit_culture->get_population_class_type(literate_population_class);
 
+					if (!unit_population_type->is_enabled()) {
+						continue;
+					}
+
 					const metternich::phenotype *population_unit_phenotype = phenotype;
 					if (population_unit_phenotype == nullptr && !culture_weighted_phenotypes[population_unit_culture].empty()) {
 						population_unit_phenotype = vector::get_random(culture_weighted_phenotypes[population_unit_culture]);
 					}
 
 					site_game_data->create_population_unit(unit_population_type, population_unit_culture, religion, population_unit_phenotype);
+
+					--population_unit_count;
 				}
 			}
 		}
