@@ -262,19 +262,26 @@ void country_game_data::do_education()
 
 		for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
 			for (const education_type *education_type : building_slot->get_available_education_types()) {
-				int output = building_slot->get_education_type_output(education_type);
+				const int output = building_slot->get_education_type_output(education_type);
 				if (output == 0) {
 					continue;
 				}
 
-				while (output > 0) {
+				int remaining_output = output;
+
+				while (remaining_output > 0) {
 					population_unit *population_unit = this->choose_education_population_unit(education_type);
+					if (population_unit == nullptr) {
+						break;
+					}
 					population_unit->set_type(education_type->get_output_population_type());
 
-					--output;
+					--remaining_output;
 				}
 
-				building_slot->change_education(education_type, -building_slot->get_education_type_employed_capacity(education_type), false);
+				building_slot->change_education(education_type, -(building_slot->get_education_type_employed_capacity(education_type) - remaining_output), false);
+				building_slot->change_education(education_type, -remaining_output, true);
+				assert_throw(building_slot->get_education_type_employed_capacity(education_type) == 0);
 			}
 		}
 
