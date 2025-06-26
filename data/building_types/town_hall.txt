@@ -10,22 +10,16 @@ village_hall = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = statesmanship
-			}
-			capital = true
-		}
+	production_types = {
+		statesmanship
 	}
 	country_modifier = {
+		town_hall_capacity = 1
+		
 		commodity_demand = {
 			commodity = furniture
 			value = 1
 		}
-	}
-	province_modifier = {
-		statesmanship_output_modifier = 25
 	}
 }
 
@@ -41,22 +35,16 @@ town_hall = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = statesmanship
-			}
-			capital = true
-		}
+	production_types = {
+		statesmanship
 	}
 	country_modifier = {
+		town_hall_capacity = 2
+		
 		commodity_demand = {
 			commodity = furniture
 			value = 1
 		}
-	}
-	province_modifier = {
-		statesmanship_output_modifier = 50
 	}
 	settlement_modifier = {
 		profession_capacity = {
@@ -77,22 +65,16 @@ city_hall = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = statesmanship
-			}
-			capital = true
-		}
+	production_types = {
+		statesmanship
 	}
 	country_modifier = {
+		town_hall_capacity = 3
+		
 		commodity_demand = {
 			commodity = furniture
 			value = 1
 		}
-	}
-	province_modifier = {
-		statesmanship_output_modifier = 100
 	}
 	settlement_modifier = {
 		profession_capacity = {
@@ -114,27 +96,21 @@ state_house = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = statesmanship
-			}
-			capital = true
-		}
+	production_types = {
+		statesmanship
 	}
 	country_modifier = {
+		town_hall_capacity = 4
+		
 		commodity_demand = {
 			commodity = furniture
 			value = 1
 		}
 	}
-	province_modifier = {
-		statesmanship_output_modifier = 150
-	}
 	settlement_modifier = {
 		profession_capacity = {
 			profession = bureaucrats
-			value = 3
+			value = 4
 		}
 	}
 }
@@ -151,27 +127,21 @@ capitol = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
-		or = {
-			province = {
-				produces_commodity = statesmanship
-			}
-			capital = true
-		}
+	production_types = {
+		statesmanship
 	}
 	country_modifier = {
+		town_hall_capacity = 5
+		
 		commodity_demand = {
 			commodity = furniture
 			value = 1
 		}
 	}
-	province_modifier = {
-		statesmanship_output_modifier = 200
-	}
 	settlement_modifier = {
 		profession_capacity = {
 			profession = bureaucrats
-			value = 3
+			value = 5
 		}
 	}
 }

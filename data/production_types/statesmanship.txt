@@ -1,0 +1,8 @@
+statesmanship = {
+	name = "Statesmanship"
+	input_commodities = {
+		labor = 2
+	}
+	output_commodity = statesmanship
+	output_value = 1
+}
