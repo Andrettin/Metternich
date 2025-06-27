@@ -47,8 +47,7 @@ great_britain = {
 				clothing = 8
 				furniture = 5
 				tools = 5
-				muskets = 1
-				iron_cannons = 1
+				armament = 2
 			}
 		}
 	}

@@ -58,7 +58,7 @@ hussars = {
 	upkeep = 25
 	commodity_costs = {
 		manpower = 1
-		muskets = 1
+		armament = 1
 		horses = 1
 	}
 	upgrades = {
@@ -82,7 +82,7 @@ scouts = {
 	upkeep = 50
 	commodity_costs = {
 		manpower = 1
-		rifles = 2
+		armament = 2
 		horses = 1
 	}
 	upgrades = {
@@ -107,7 +107,7 @@ mechanized_infantry = {
 	upkeep = 100
 	commodity_costs = {
 		manpower = 1
-		rifles = 4
+		armament = 4
 		fuel = 4
 	}
 }

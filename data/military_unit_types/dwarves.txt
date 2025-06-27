@@ -85,7 +85,7 @@ dwarven_thunderers = {
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
-		arquebuses = 1
+		bronze = 1
 	}
 	upgrades = {
 		dwarven_thunderguards
@@ -109,7 +109,7 @@ dwarven_thunderguards = {
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
-		muskets = 1
+		bronze = 2
 	}
 	upgrades = {
 		dwarven_dragonguards
@@ -134,7 +134,7 @@ dwarven_dragonguards = {
 	upkeep = 25
 	commodity_costs = {
 		manpower = 1
-		muskets = 1
+		armament = 1
 	}
 	free_promotions = {
 		grenadier_1

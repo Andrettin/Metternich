@@ -14,7 +14,7 @@ arquebusiers = {
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
-		arquebuses = 1
+		bronze = 1
 	}
 	upgrades = {
 		musketeers
@@ -37,7 +37,7 @@ musketeers = {
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
-		muskets = 1
+		bronze = 2
 	}
 	upgrades = {
 		grenadiers
@@ -61,7 +61,7 @@ grenadiers = {
 	upkeep = 25
 	commodity_costs = {
 		manpower = 1
-		muskets = 1
+		armament = 1
 	}
 	free_promotions = {
 		grenadier_1
@@ -88,7 +88,7 @@ guards = {
 	upkeep = 50
 	commodity_costs = {
 		manpower = 1
-		rifles = 2
+		armament = 2
 	}
 	upgrades = {
 		machine_gunners
@@ -113,6 +113,6 @@ machine_gunners = {
 	upkeep = 100
 	commodity_costs = {
 		manpower = 1
-		rifles = 4
+		armament = 4
 	}
 }

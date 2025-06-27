@@ -1,6 +1,0 @@
-rifles = {
-	name = "Rifles"
-	icon = rifle
-	base_price = 900
-	required_technology = flintlock_rifle
-}

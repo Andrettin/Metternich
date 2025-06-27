@@ -30,8 +30,7 @@ russia = {
 				clothing = 1
 				furniture = 1
 				tools = 1
-				muskets = 3
-				iron_cannons = 2
+				armament = 5
 			}
 		}
 	}

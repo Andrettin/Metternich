@@ -31,7 +31,7 @@ sloop = {
 	required_technology = navigation
 	commodity_costs = {
 		lumber = 3
-		bronze_cannons = 1
+		bronze = 2
 		fabric = 1
 	}
 	upgrades = {
@@ -56,7 +56,7 @@ frigate = {
 	commodity_costs = {
 		fabric = 2
 		lumber = 5
-		iron_cannons = 2
+		armament = 2
 	}
 	upgrades = {
 		raider
@@ -79,7 +79,7 @@ raider = {
 	upkeep = 75
 	commodity_costs = {
 		lumber = 6
-		steel_cannons = 3
+		armament = 3
 		coal = 10
 	}
 	upgrades = {
@@ -103,7 +103,7 @@ armored_cruiser = {
 	upkeep = 200
 	commodity_costs = {
 		lumber = 2
-		steel_cannons = 8
+		armament = 8
 		steel = 6
 		coal = 20
 	}
@@ -127,7 +127,7 @@ battlecruiser = {
 	required_technology = improved_range_finding
 	upkeep = 450
 	commodity_costs = {
-		steel_cannons = 18
+		armament = 18
 		steel = 22
 		fuel = 20
 	}

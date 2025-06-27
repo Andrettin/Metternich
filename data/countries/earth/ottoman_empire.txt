@@ -35,8 +35,7 @@ ottoman_empire = {
 				lumber = 15
 				paper = 4
 				steel = 4
-				muskets = 2
-				iron_cannons = 2
+				armament = 4
 			}
 		}
 	}

@@ -13,7 +13,7 @@ horse_artillery = {
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
-		bronze_cannons = 2
+		bronze = 4
 		horses = 3
 	}
 	upgrades = {
@@ -37,7 +37,7 @@ light_artillery = {
 	upkeep = 50
 	commodity_costs = {
 		manpower = 1
-		iron_cannons = 2
+		armament = 2
 		horses = 1
 	}
 	upgrades = {
@@ -61,7 +61,7 @@ field_artillery = {
 	upkeep = 100
 	commodity_costs = {
 		manpower = 1
-		steel_cannons = 4
+		armament = 4
 		horses = 1
 	}
 	upgrades = {
@@ -86,7 +86,7 @@ mobile_artillery = {
 	upkeep = 150
 	commodity_costs = {
 		manpower = 1
-		steel_cannons = 6
+		armament = 6
 		fuel = 4
 	}
 }

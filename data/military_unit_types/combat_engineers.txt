@@ -13,7 +13,7 @@ sappers = {
 	upkeep = 50
 	commodity_costs = {
 		manpower = 1
-		muskets = 2
+		armament = 2
 	}
 	upgrades = {
 		combat_engineers
@@ -35,7 +35,7 @@ combat_engineers = {
 	upkeep = 50
 	commodity_costs = {
 		manpower = 1
-		rifles = 2
+		armament = 2
 	}
 	upgrades = {
 		saboteurs
@@ -58,6 +58,6 @@ saboteurs = {
 	upkeep = 75
 	commodity_costs = {
 		manpower = 1
-		rifles = 3
+		armament = 3
 	}
 }

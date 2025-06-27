@@ -18,12 +18,7 @@ blacksmiths_house = {
 		}
 	}
 	production_types = {
-		arquebus_production
-		musket_production
-		rifle_production
-		bronze_cannon_production
-		iron_cannon_production
-		steel_cannon_production
+		armament_production
 		tool_making
 	}
 }
@@ -49,12 +44,7 @@ blacksmiths_shop = {
 		}
 	}
 	production_types = {
-		arquebus_production
-		musket_production
-		rifle_production
-		bronze_cannon_production
-		iron_cannon_production
-		steel_cannon_production
+		armament_production
 		tool_making
 	}
 }
@@ -82,12 +72,7 @@ metalworks = {
 		}
 	}
 	production_types = {
-		arquebus_production
-		musket_production
-		rifle_production
-		bronze_cannon_production
-		iron_cannon_production
-		steel_cannon_production
+		armament_production
 		tool_making
 	}
 }
