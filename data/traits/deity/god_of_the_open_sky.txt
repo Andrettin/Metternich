@@ -2,6 +2,7 @@ god_of_the_open_sky = {
 	name = "God of the Open Sky"
 	icon = horses
 	conditions = {
+		game_rule = culture_commodity
 		or = {
 			has_resource = cattle
 			has_resource = horses

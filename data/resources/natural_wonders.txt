@@ -57,6 +57,7 @@ mount_ararat = {
 	icon = mountains
 	tiny_icon = alliance
 	natural_wonder = true
+	required_game_rule = culture_commodity
 	terrain_types = {
 		mountains
 	}
@@ -160,6 +161,7 @@ old_faithful = {
 	icon = mountains
 	tiny_icon = alliance
 	natural_wonder = true
+	required_game_rule = research_commodity
 	terrain_types = {
 		mountains
 	}

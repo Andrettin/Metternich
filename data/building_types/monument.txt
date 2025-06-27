@@ -13,6 +13,7 @@ monument = {
 		monastery
 	}
 	conditions = {
+		game_rule = culture_commodity
 		game_rule = additional_buildings
 	}
 	settlement_modifier = {

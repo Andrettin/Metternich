@@ -28,7 +28,7 @@ literature = {
 	icon = treaty
 	period = iron_age
 	cost = 100
-	cost_commodity = culture
+	cost_commodity = research
 	prerequisites = {
 		writing
 		code_of_laws

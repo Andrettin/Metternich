@@ -32,6 +32,13 @@ research_organizations = {
 	description = "Allow countries to select research organizations"
 }
 
+culture_commodity = {
+	name = "Culture Commodity"
+	default_value = false
+	description = "Allow the Culture commodity"
+	hidden = true
+}
+
 research_commodity = {
 	name = "Research Commodity"
 	default_value = true
