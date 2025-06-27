@@ -2,4 +2,5 @@ zinc = {
 	name = "Zinc"
 	icon = tin
 	base_price = 100
+	required_game_rule = brass_commodity
 }

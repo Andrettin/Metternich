@@ -3,6 +3,7 @@ zinc = {
 	commodity = zinc
 	tiny_icon = trade_consulate
 	prospectable = true
+	required_game_rule = brass_commodity
 	terrain_types = {
 		swamp
 	}

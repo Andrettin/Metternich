@@ -18,6 +18,9 @@ arena = {
 			}
 		}
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
 	settlement_modifier = {
 		amenities_bonus = 3
 	}

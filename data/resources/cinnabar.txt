@@ -3,6 +3,7 @@ cinnabar = {
 	commodity = cinnabar
 	tiny_icon = trade_consulate
 	prospectable = true
+	required_game_rule = mercury_commodity
 	terrain_types = {
 		barren_hills #correct?
 	}

@@ -10,4 +10,7 @@ lead_smelter = {
 	capacity_increment = 8
 	expandable = true
 	required_technology = ironworking
+	conditions = {
+		game_rule = lead_commodity
+	}
 }

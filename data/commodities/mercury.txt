@@ -2,4 +2,5 @@ mercury = {
 	name = "Mercury"
 	icon = iron
 	base_price = 300
+	required_game_rule = mercury_commodity
 }

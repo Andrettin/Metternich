@@ -2,4 +2,5 @@ lead_pipes = {
 	name = "Lead Pipes"
 	icon = tools
 	base_price = 900
+	required_game_rule = lead_commodity
 }

@@ -2,10 +2,12 @@ lead = {
 	name = "Lead"
 	icon = iron_ore
 	base_price = 100
+	required_game_rule = lead_commodity
 }
 
 lead_ingots = {
 	name = "Lead Ingots"
 	icon = iron
 	base_price = 300
+	required_game_rule = lead_commodity
 }

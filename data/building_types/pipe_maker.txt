@@ -10,4 +10,7 @@ pipe_maker = {
 	capacity_increment = 8
 	expandable = true
 	required_technology = sanitation
+	conditions = {
+		game_rule = lead_commodity
+	}
 }

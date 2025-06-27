@@ -16,8 +16,10 @@ granary = {
 		city
 		metropolis
 	}
-	settlement_conditions = {
+	conditions = {
 		game_rule = additional_buildings
+	}
+	settlement_conditions = {
 		province = {
 			has_resource = grain
 		}

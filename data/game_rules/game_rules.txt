@@ -44,6 +44,27 @@ trade_commodity = {
 	description = "Allow the Trade commodity, which is directly converted into wealth"
 }
 
+brass_commodity = {
+	name = "Brass Commodity"
+	default_value = false
+	description = "Allow the Zinc, Brass and Brass Lamps commodities"
+	hidden = true
+}
+
+lead_commodity = {
+	name = "Lead Commodity"
+	default_value = false
+	description = "Allow the Lead, Lead Ingots and Lead Pipes commodities"
+	hidden = true
+}
+
+mercury_commodity = {
+	name = "Mercury Commodity"
+	default_value = false
+	description = "Allow the Cinnabar and Mercury commodities"
+	hidden = true
+}
+
 amenities = {
 	name = "Amenities"
 	default_value = false
@@ -53,8 +74,9 @@ amenities = {
 
 myths_enabled = {
 	name = "Myths Enabled"
-	default_value = true
+	default_value = false
 	description = "Enable mythical elements in the game"
+	hidden = true
 }
 
 ruler_traits = {

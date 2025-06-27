@@ -10,4 +10,7 @@ mercury_refinery = {
 	capacity_increment = 8
 	expandable = true
 	required_technology = alchemy
+	conditions = {
+		game_rule = mercury_commodity
+	}
 }

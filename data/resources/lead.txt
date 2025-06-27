@@ -3,6 +3,7 @@ lead = {
 	commodity = lead
 	tiny_icon = trade_consulate
 	prospectable = true
+	required_game_rule = lead_commodity
 	terrain_types = {
 		barren_hills #correct?
 		mountains #correct?
