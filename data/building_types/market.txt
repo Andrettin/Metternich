@@ -13,6 +13,7 @@ market = {
 	}
 	conditions = {
 		game_rule = trade_commodity
+		game_rule = additional_buildings
 	}
 	settlement_conditions = {
 		province = {

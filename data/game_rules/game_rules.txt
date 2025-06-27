@@ -84,3 +84,10 @@ additional_population_types = {
 	description = "Allow additional population types"
 	hidden = true
 }
+
+additional_buildings = {
+	name = "Additional Buildings"
+	default_value = false
+	description = "Allow additional buildings"
+	hidden = true
+}

@@ -3,6 +3,9 @@ great_pyramid = {
 	portrait = temple
 	building = monument
 	required_technology = masonry
+	required_game_rules = {
+		additional_buildings
+	}
 	conditions = {
 		not = {
 			scripted_condition = is_northern_european

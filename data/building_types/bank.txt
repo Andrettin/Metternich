@@ -11,6 +11,7 @@ bank = {
 	}
 	conditions = {
 		game_rule = trade_commodity
+		game_rule = additional_buildings
 	}
 	build_conditions = {
 		has_building_class = market

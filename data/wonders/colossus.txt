@@ -4,7 +4,10 @@ colossus = {
 	building = monument
 	required_technology = bronzeworking
 	#obsolescence_technology = flight
-	required_game_rule = trade_commodity
+	required_game_rules = {
+		trade_commodity
+		additional_buildings
+	}
 	conditions = {
 		not = {
 			scripted_condition = is_northern_european

@@ -12,6 +12,7 @@ library = {
 	}
 	conditions = {
 		game_rule = research_commodity
+		game_rule = additional_buildings
 	}
 	cost_factor = {
 		modifier = {

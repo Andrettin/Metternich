@@ -9,6 +9,9 @@ sewer_system = {
 		city
 		metropolis
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
 	country_modifier = {
 		commodity_demand = {
 			commodity = lead_pipes

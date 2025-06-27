@@ -4,6 +4,9 @@ great_lighthouse = {
 	building = lighthouse
 	required_technology = cartography
 	obsolescence_technology = magnetism
+	required_game_rules = {
+		additional_buildings
+	}
 	country_modifier = {
 		free_warship_promotion = veteran_1
 		ship_movement_modifier = 1

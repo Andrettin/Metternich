@@ -11,6 +11,9 @@ printing_press = {
 		city
 		metropolis
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
 	country_modifier = {
 		commodity_demand = {
 			commodity = paper
@@ -35,6 +38,9 @@ newspaper = {
 		campus
 		city
 		metropolis
+	}
+	conditions = {
+		game_rule = additional_buildings
 	}
 	country_modifier = {
 		commodity_demand = {

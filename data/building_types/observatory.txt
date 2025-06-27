@@ -12,6 +12,7 @@ observatory = {
 	}
 	conditions = {
 		game_rule = research_commodity
+		game_rule = additional_buildings
 	}
 	settlement_conditions = {
 		or = {

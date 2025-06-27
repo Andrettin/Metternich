@@ -15,4 +15,7 @@ artifact = {
 		city
 		metropolis
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
 }

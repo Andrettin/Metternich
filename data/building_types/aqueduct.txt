@@ -10,6 +10,9 @@ aqueduct = {
 		city
 		metropolis
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
 	settlement_modifier = {
 		housing_bonus = 2
 	}

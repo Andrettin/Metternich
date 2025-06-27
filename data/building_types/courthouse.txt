@@ -10,6 +10,7 @@ courthouse = {
 		metropolis
 	}
 	settlement_conditions = {
+		game_rule = additional_buildings
 		province = {
 			produces_commodity = statesmanship
 		}

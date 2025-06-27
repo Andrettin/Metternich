@@ -3,6 +3,9 @@ cauldron_of_plenty = {
 	portrait = red_potion
 	building = artifact
 	required_technology = pottery
+	required_game_rules = {
+		additional_buildings
+	}
 	conditions = {
 		scripted_condition = is_northern_european
 	}

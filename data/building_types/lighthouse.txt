@@ -10,6 +10,7 @@ lighthouse = {
 		metropolis
 	}
 	settlement_conditions = {
+		game_rule = additional_buildings
 		coastal = true
 	}
 	cost_factor = {

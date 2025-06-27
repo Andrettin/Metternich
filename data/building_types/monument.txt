@@ -12,6 +12,9 @@ monument = {
 		castle
 		monastery
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
 	settlement_modifier = {
 		culture_bonus = 2
 	}

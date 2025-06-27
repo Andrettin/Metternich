@@ -11,6 +11,7 @@ coffee_house = {
 		metropolis
 	}
 	settlement_conditions = {
+		game_rule = additional_buildings
 		province = {
 			has_resource = coffee
 		}
