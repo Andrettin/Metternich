@@ -6,6 +6,7 @@
 #include "country/country_game_data.h"
 #include "economy/commodity.h"
 #include "game/game.h"
+#include "game/game_rule.h"
 #include "game/game_rules.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
@@ -28,8 +29,14 @@ wonder::~wonder()
 void wonder::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "commodity_costs") {
+	if (tag == "required_game_rules") {
+		for (const std::string &value : values) {
+			game_rule *rule = game_rule::get(value);
+			this->required_game_rules.push_back(rule);
+		}
+	} else if (tag == "commodity_costs") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = std::stoi(property.get_value());
@@ -131,8 +138,12 @@ commodity_map<int> wonder::get_commodity_costs_for_country(const country *countr
 
 bool wonder::is_enabled() const
 {
-	if (this->required_game_rule != nullptr && game::get()->get_rules() != nullptr) {
-		return game::get()->get_rules()->get_value(this->required_game_rule);
+	if (game::get()->get_rules() != nullptr) {
+		for (const game_rule *rule : this->required_game_rules) {
+			if (!game::get()->get_rules()->get_value(rule)) {
+				return false;
+			}
+		}
 	}
 
 	return true;
