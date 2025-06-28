@@ -114,11 +114,16 @@ void character_game_data::apply_history()
 					country_game_data->add_technology_with_prerequisites(type->get_required_technology());
 				}
 
-				const QPoint tile_pos = deployment_site->get_game_data()->get_tile_pos();
+				QPoint tile_pos = deployment_site->get_game_data()->get_tile_pos();
 
 				if (map::get()->get_tile(tile_pos)->get_civilian_unit() != nullptr) {
-					log::log_error(std::format("Cannot deploy civilian character \"{}\" to site \"{}\", since that site's tile is already occupied by another civilian unit.", this->character->get_identifier(), deployment_site->get_identifier()));
-					return;
+					const std::optional<QPoint> nearest_tile_pos = map::get()->get_nearest_available_tile_pos_for_civilian_unit(tile_pos);
+					if (!nearest_tile_pos.has_value()) {
+						log::log_error(std::format("Cannot deploy civilian character \"{}\", since the tile of its deployment site (\"{}\") is already occupied by another civilian unit, and so are any valid tiles near it.", this->character->get_identifier(), deployment_site->get_identifier()));
+						return;
+					}
+
+					tile_pos = nearest_tile_pos.value();
 				}
 
 				auto civilian_unit = make_qunique<metternich::civilian_unit>(this->character, country);

@@ -615,11 +615,16 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 			assert_throw(phenotype != nullptr);
 
-			const QPoint tile_pos = site->get_game_data()->get_tile_pos();
+			QPoint tile_pos = site->get_game_data()->get_tile_pos();
 
 			if (map::get()->get_tile(tile_pos)->get_civilian_unit() != nullptr) {
 				//tile already occupied
-				continue;
+				const std::optional<QPoint> nearest_tile_pos = map::get()->get_nearest_available_tile_pos_for_civilian_unit(tile_pos);
+				if (!nearest_tile_pos.has_value()) {
+					continue;
+				}
+
+				tile_pos = nearest_tile_pos.value();
 			}
 
 			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, phenotype);

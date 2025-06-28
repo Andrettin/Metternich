@@ -936,11 +936,60 @@ void map::calculate_tile_country_border_directions(const QPoint &tile_pos)
 	});
 }
 
+std::optional<QPoint> map::get_nearest_available_tile_pos_for_civilian_unit(const QPoint &starting_tile_pos) const
+{
+	const metternich::tile *starting_tile = this->get_tile(starting_tile_pos);
+
+	std::vector<QPoint> potential_tiles = { starting_tile_pos };
+	std::vector<QPoint> valid_tiles;
+	point_set added_tiles = { starting_tile_pos };
+
+	assert_throw(!this->is_tile_water(starting_tile_pos));
+
+	while (!potential_tiles.empty() && valid_tiles.empty()) {
+		for (const QPoint &tile_pos : potential_tiles) {
+			const metternich::tile *tile = this->get_tile(tile_pos);
+			if (tile->get_civilian_unit() == nullptr) {
+				valid_tiles.push_back(tile_pos);
+			}
+		}
+
+		if (valid_tiles.empty()) {
+			std::vector<QPoint> next_potential_tiles;
+
+			for (const QPoint &tile_pos : potential_tiles) {
+				point::for_each_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
+					if (is_tile_water(adjacent_pos)) {
+						return;
+					}
+
+					const tile *adjacent_tile = this->get_tile(adjacent_pos);
+					if (adjacent_tile->get_owner() != starting_tile->get_owner()) {
+						return;
+					}
+
+					if (!added_tiles.contains(adjacent_pos)) {
+						next_potential_tiles.push_back(adjacent_pos);
+						added_tiles.insert(adjacent_pos);
+					}
+				});
+			}
+
+			potential_tiles = next_potential_tiles;
+		}
+	}
+
+	if (valid_tiles.empty()) {
+		return std::nullopt;
+	}
+
+	return vector::get_random(valid_tiles);
+}
+
 QVariantList map::get_provinces_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_provinces());
 }
-
 
 void map::initialize_diplomatic_map()
 {
