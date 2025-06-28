@@ -1,0 +1,9 @@
+ottoman_prospector = {
+	type = prospector
+	
+	history = {
+		1820 = {
+			site = constantinople
+		}
+	}
+}

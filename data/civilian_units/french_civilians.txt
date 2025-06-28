@@ -1,9 +1,53 @@
-french_builders = {
+french_builder = {
 	type = builder
 	
 	history = {
 		1492 = {
 			site = paris
+		}
+		
+		1820 = {
+			site = none
+		}
+	}
+}
+
+french_engineer = {
+	type = engineer
+	
+	history = {
+		1820 = {
+			site = paris
+		}
+	}
+}
+
+french_farmer = {
+	type = farmer
+	
+	history = {
+		1820 = {
+			site = paris
+		}
+	}
+}
+
+french_miner = {
+	type = miner
+	
+	history = {
+		1820 = {
+			site = nancy
+		}
+	}
+}
+
+french_prospector = {
+	type = prospector
+	
+	history = {
+		1820 = {
+			site = nancy
 		}
 	}
 }

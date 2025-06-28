@@ -1,8 +1,32 @@
-austrian_builders = {
+austrian_builder = {
 	type = builder
 	
 	history = {
 		1492 = {
+			site = vienna
+		}
+		
+		1820 = {
+			site = none
+		}
+	}
+}
+
+austrian_farmer = {
+	type = farmer
+	
+	history = {
+		1820 = {
+			site = vienna
+		}
+	}
+}
+
+austrian_prospector = {
+	type = prospector
+	
+	history = {
+		1820 = {
 			site = vienna
 		}
 	}

@@ -1,0 +1,63 @@
+english_builder = {
+	type = builder
+	
+	history = {
+		1492 = {
+			site = london
+		}
+		
+		1820 = {
+			site = none
+		}
+	}
+}
+
+british_prospector = {
+	type = prospector
+	
+	history = {
+		1820 = {
+			site = newcastle
+		}
+	}
+}
+
+british_northern_engineer = {
+	type = engineer
+	
+	history = {
+		1820 = {
+			site = newcastle
+		}
+	}
+}
+
+british_miner = {
+	type = miner
+	
+	history = {
+		1820 = {
+			site = newcastle
+		}
+	}
+}
+
+british_southern_engineer = {
+	type = engineer
+	
+	history = {
+		1820 = {
+			site = london
+		}
+	}
+}
+
+british_farmer = {
+	type = farmer
+	
+	history = {
+		1820 = {
+			site = london
+		}
+	}
+}

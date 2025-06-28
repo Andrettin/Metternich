@@ -1,0 +1,39 @@
+prussian_engineer = {
+	type = engineer
+	
+	history = {
+		1820 = {
+			site = berlin
+		}
+	}
+}
+
+prussian_farmer = {
+	type = farmer
+	
+	history = {
+		1820 = {
+			site = berlin
+		}
+	}
+}
+
+prussian_prospector = {
+	type = prospector
+	
+	history = {
+		1820 = {
+			site = breslau
+		}
+	}
+}
+
+prussian_miner = {
+	type = miner
+	
+	history = {
+		1820 = {
+			site = oppeln
+		}
+	}
+}

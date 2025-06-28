@@ -1,0 +1,9 @@
+sardinian_prospector = {
+	type = prospector
+	
+	history = {
+		1820 = {
+			site = genoa
+		}
+	}
+}

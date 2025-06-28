@@ -1,4 +1,4 @@
-castillian_builders = {
+castillian_builder = {
 	type = builder
 	
 	history = {
