@@ -26,7 +26,8 @@ class map_template final : public named_data_entry, public data_type<map_templat
 	Q_OBJECT
 
 	Q_PROPERTY(QSize size MEMBER size READ get_size)
-	Q_PROPERTY(metternich::world* world MEMBER world)
+	Q_PROPERTY(const metternich::world* world MEMBER world READ get_world NOTIFY changed)
+	Q_PROPERTY(bool universe MEMBER universe READ is_universe NOTIFY changed)
 	Q_PROPERTY(archimedes::map_projection* map_projection MEMBER map_projection)
 	Q_PROPERTY(archimedes::decimillesimal_int min_longitude READ get_min_longitude WRITE set_min_longitude)
 	Q_PROPERTY(archimedes::decimillesimal_int max_longitude READ get_max_longitude WRITE set_max_longitude)
@@ -38,6 +39,12 @@ class map_template final : public named_data_entry, public data_type<map_templat
 	Q_PROPERTY(std::filesystem::path border_river_image_filepath MEMBER border_river_image_filepath WRITE set_border_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path route_image_filepath MEMBER route_image_filepath WRITE set_route_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_image_filepath MEMBER province_image_filepath WRITE set_province_image_filepath)
+	Q_PROPERTY(bool randomly_generated READ is_randomly_generated CONSTANT)
+	Q_PROPERTY(int land_percent MEMBER land_percent READ get_land_percent NOTIFY changed)
+	Q_PROPERTY(int steepness MEMBER steepness READ get_steepness NOTIFY changed)
+	Q_PROPERTY(int average_temperature MEMBER average_temperature READ get_average_temperature NOTIFY changed)
+	Q_PROPERTY(bool separate_poles MEMBER separate_poles READ are_poles_separate NOTIFY changed)
+	Q_PROPERTY(int pole_flattening MEMBER pole_flattening READ get_pole_flattening NOTIFY changed)
 
 public:
 	using province_geodata_map_type = province_map<std::vector<std::unique_ptr<QGeoShape>>>;
@@ -65,6 +72,11 @@ public:
 	const metternich::world *get_world() const
 	{
 		return this->world;
+	}
+
+	bool is_universe() const
+	{
+		return this->universe;
 	}
 
 	const metternich::map_projection *get_map_projection() const
@@ -160,6 +172,36 @@ public:
 	void set_province_image_filepath(const std::filesystem::path &filepath);
 	Q_INVOKABLE void write_province_image();
 
+	bool is_randomly_generated() const
+	{
+		return this->get_map_projection() == nullptr;
+	}
+
+	int get_land_percent() const
+	{
+		return this->land_percent;
+	}
+
+	int get_steepness() const
+	{
+		return this->steepness;
+	}
+
+	int get_average_temperature() const
+	{
+		return this->average_temperature;
+	}
+
+	bool are_poles_separate() const
+	{
+		return this->separate_poles;
+	}
+
+	int get_pole_flattening() const
+	{
+		return this->pole_flattening;
+	}
+
 	void apply() const;
 	void apply_terrain() const;
 	void apply_site_terrain() const;
@@ -169,10 +211,16 @@ public:
 	void apply_provinces() const;
 	void generate_resource_sites() const;
 	bool generate_resource_sites(const resource_map<int> &resource_counts, std::vector<const site *> &available_sites, const std::map<const site *, QPoint> &site_positions) const;
+	void generate_additional_sites() const;
+	void generate_site(const site *site) const;
+
+signals:
+	void changed();
 
 private:
 	QSize size = QSize(0, 0);
-	metternich::world *world = nullptr;
+	const metternich::world *world = nullptr;
+	bool universe = false;
 	archimedes::map_projection *map_projection = nullptr;
 	archimedes::georectangle georectangle = archimedes::georectangle(geocoordinate(geocoordinate::min_longitude, geocoordinate::min_latitude), geocoordinate(geocoordinate::max_longitude, geocoordinate::max_latitude));
 	int geocoordinate_x_offset = 0;
@@ -181,6 +229,11 @@ private:
 	std::filesystem::path border_river_image_filepath;
 	std::filesystem::path route_image_filepath;
 	std::filesystem::path province_image_filepath;
+	int land_percent = 30;
+	int steepness = 30;
+	int average_temperature = 50;
+	bool separate_poles = false; //whether the poles are ensured to be separate continents
+	int pole_flattening = 0;
 	point_map<const site *> sites_by_position;
 };
 

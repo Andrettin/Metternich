@@ -7,8 +7,10 @@
 #include "economy/resource_container.h"
 #include "map/direction.h"
 #include "map/map.h"
+#include "map/map_generator.h"
 #include "map/map_projection.h"
 #include "map/province.h"
+#include "map/province_map_data.h"
 #include "map/region.h"
 #include "map/route.h"
 #include "map/route_container.h"
@@ -23,12 +25,14 @@
 #include "map/tile.h"
 #include "map/world.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/exception_util.h"
 #include "util/geoshape_util.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
 #include "util/point_util.h"
 #include "util/rect_util.h"
+#include "util/set_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -65,9 +69,9 @@ bool map_template::is_site_in_province(const site *site, const province *provinc
 
 void map_template::initialize()
 {
-	const QRect map_rect(QPoint(0, 0), this->get_size());
-
 	if (!this->get_province_image_filepath().empty()) {
+		const QRect map_rect(QPoint(0, 0), this->get_size());
+
 		const QImage province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
 
 		const province_geodata_map_type province_geodata_map = this->get_world()->parse_provinces_geojson_folder();
@@ -191,8 +195,6 @@ void map_template::initialize()
 
 			this->sites_by_position[tile_pos] = site;
 		}
-	} else {
-		log::log_error(std::format("Map template \"{}\" has no province image filepath.", this->get_identifier()));
 	}
 
 	named_data_entry::initialize();
@@ -200,8 +202,13 @@ void map_template::initialize()
 
 void map_template::check() const
 {
-	assert_throw(this->map_projection != nullptr);
-	this->map_projection->validate_area(this->get_georectangle(), this->get_size());
+	if (this->map_projection != nullptr) {
+		this->map_projection->validate_area(this->get_georectangle(), this->get_size());
+	}
+
+	if (this->get_world() == nullptr && !this->is_universe()) {
+		throw std::runtime_error(std::format("Map template \"{}\" has neither a world, nor is it a universe map template.", this->get_identifier()));
+	}
 }
 
 QPoint map_template::get_geocoordinate_pos(const geocoordinate &geocoordinate) const
@@ -249,6 +256,7 @@ void map_template::write_terrain_image()
 		} else {
 			const terrain_type *terrain_type = std::get<const metternich::terrain_type *>(terrain_variant);
 			color = terrain_type->get_color();
+			assert_throw(color.isValid());
 		}
 
 		if (!color.isValid()) {
@@ -636,13 +644,20 @@ void map_template::apply() const
 	map->set_size(this->get_size());
 	map->create_tiles();
 
-	this->apply_terrain();
-	this->generate_resource_sites();
-	this->apply_site_terrain();
-	this->apply_rivers();
-	this->apply_border_rivers();
-	this->apply_routes();
-	this->apply_provinces();
+	if (this->is_randomly_generated()) {
+		map_generator map_generator(this);
+		map_generator.generate();
+	} else {
+		this->apply_terrain();
+		this->generate_resource_sites();
+		this->apply_site_terrain();
+		this->apply_rivers();
+		this->apply_border_rivers();
+		this->apply_routes();
+		this->apply_provinces();
+	}
+
+	this->generate_additional_sites();
 }
 
 void map_template::apply_terrain() const
@@ -1010,6 +1025,102 @@ bool map_template::generate_resource_sites(const resource_map<int> &resource_cou
 	}
 
 	return true;
+}
+
+void map_template::generate_additional_sites() const
+{
+	if (this->get_world() == nullptr) {
+		return;
+	}
+
+	//generate sites which belong to other worlds, but can be generated on this one
+	std::vector<const site *> potential_sites;
+	for (const site *site : site::get_all()) {
+		if (site->get_map_data()->is_on_map()) {
+			continue;
+		}
+
+		if (site->get_world() == this->get_world()) {
+			continue;
+		}
+
+		if (!site->can_be_generated_on_world(this->get_world())) {
+			continue;
+		}
+
+		potential_sites.push_back(site);
+	}
+
+	vector::shuffle(potential_sites);
+
+	for (const site *site : potential_sites) {
+		this->generate_site(site);
+	}
+}
+
+void map_template::generate_site(const site *site) const
+{
+	std::set<const province *> province_set;
+
+	for (const region *region : site->get_generation_regions()) {
+		set::merge(province_set, region->get_provinces());
+	}
+
+	std::vector<const province *> potential_provinces = container::to_vector(province_set);
+	vector::shuffle(potential_provinces);
+
+	map *map = map::get();
+
+	for (const province *province : potential_provinces) {
+		const province_map_data *province_map_data = province->get_map_data();
+		if (!province_map_data->is_on_map()) {
+			continue;
+		}
+
+		const resource *resource = site->get_map_data()->get_resource();
+		const bool is_near_water = resource != nullptr && resource->is_near_water();
+		const bool is_coastal = resource != nullptr && resource->is_coastal();
+		const std::vector<const terrain_type *> &site_terrains = site->get_terrain_types();
+
+		const std::vector<QPoint> province_tiles = vector::shuffled(province_map_data->get_tiles());
+
+		if (!site_terrains.empty()) {
+			bool has_terrain = false;
+			for (const terrain_type *terrain : site_terrains) {
+				if (province_map_data->get_tile_terrain_counts().contains(terrain)) {
+					has_terrain = true;
+					break;
+				}
+			}
+			if (!has_terrain) {
+				continue;
+			}
+		}
+
+		for (const QPoint &tile_pos : province_tiles) {
+			const tile *tile = map->get_tile(tile_pos);
+			if (tile->get_site() != nullptr) {
+				continue;
+			}
+
+			if (!site_terrains.empty() && !vector::contains(site_terrains, tile->get_terrain())) {
+				continue;
+			}
+
+			if (is_coastal) {
+				if (!map->is_tile_coastal(tile_pos)) {
+					continue;
+				}
+			} else if (is_near_water) {
+				if (!map->is_tile_near_water(tile_pos)) {
+					continue;
+				}
+			}
+
+			map->set_tile_site(tile_pos, site);
+			return;
+		}
+	}
 }
 
 }
