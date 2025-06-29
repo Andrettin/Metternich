@@ -35,9 +35,13 @@ void region::process_gsml_scope(const gsml_data &scope)
 void region::initialize()
 {
 	for (region *subregion : this->subregions) {
-		//initialize subregions, so that the sites of their own subregions are added to them
+		//initialize subregions, so that the provinces of their own subregions are added to them
 		if (!subregion->is_initialized()) {
 			subregion->initialize();
+		}
+
+		if (subregion->get_world() == nullptr && this->get_world() != nullptr) {
+			subregion->world = this->get_world();
 		}
 
 		//add provinces from subregions

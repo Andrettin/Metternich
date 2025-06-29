@@ -14,6 +14,8 @@ class region final : public named_data_entry, public data_type<region>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::world* world MEMBER world READ get_world NOTIFY changed)
+	Q_PROPERTY(bool continent MEMBER continent READ is_continent)
 	Q_PROPERTY(bool ocean MEMBER ocean READ is_ocean)
 	Q_PROPERTY(std::vector<metternich::region *> superregions READ get_superregions)
 
@@ -37,6 +39,16 @@ public:
 	}
 
 	virtual void reset_history() override;
+
+	const metternich::world *get_world() const
+	{
+		return this->world;
+	}
+
+	bool is_continent() const
+	{
+		return this->continent;
+	}
 
 	bool is_ocean() const
 	{
@@ -80,6 +92,8 @@ public:
 	}
 
 private:
+	const metternich::world *world = nullptr;
+	bool continent = false;
 	bool ocean = false;
 	std::vector<province *> provinces; //provinces located in the region
 	std::vector<region *> subregions; //subregions of this region
