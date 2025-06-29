@@ -3,9 +3,11 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "util/geocoordinate.h"
+#include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("economy/resource.h")
+Q_MOC_INCLUDE("map/celestial_body_type.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site_game_data.h")
 Q_MOC_INCLUDE("map/site_map_data.h")
@@ -14,11 +16,13 @@ Q_MOC_INCLUDE("map/world.h")
 
 namespace metternich {
 
+class celestial_body_type;
 class cultural_group;
 class culture;
 class government_group;
 class government_type;
 class province;
+class region;
 class resource;
 class site_game_data;
 class site_history;
@@ -35,8 +39,12 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(metternich::world* world MEMBER world)
 	Q_PROPERTY(archimedes::geocoordinate geocoordinate MEMBER geocoordinate READ get_geocoordinate)
 	Q_PROPERTY(QPoint pos_offset MEMBER pos_offset READ get_pos_offset)
+	Q_PROPERTY(archimedes::geocoordinate astrocoordinate MEMBER astrocoordinate READ get_astrocoordinate)
+	Q_PROPERTY(std::optional<archimedes::centesimal_int> astrodistance MEMBER astrodistance READ get_astrodistance)
 	Q_PROPERTY(metternich::site_type type MEMBER type READ get_type)
 	Q_PROPERTY(bool settlement READ is_settlement NOTIFY changed)
+	Q_PROPERTY(bool celestial_body READ is_celestial_body NOTIFY changed)
+	Q_PROPERTY(const metternich::celestial_body_type* celestial_body_type MEMBER celestial_body_type READ get_celestial_body_type)
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(metternich::province* province MEMBER province NOTIFY changed)
@@ -98,12 +106,28 @@ public:
 		return this->pos_offset;
 	}
 
+	const geocoordinate &get_astrocoordinate() const
+	{
+		return this->astrocoordinate;
+	}
+
+	const std::optional<centesimal_int> &get_astrodistance() const
+	{
+		return this->astrodistance;
+	}
+
 	site_type get_type() const
 	{
 		return this->type;
 	}
 
 	bool is_settlement() const;
+	bool is_celestial_body() const;
+
+	const metternich::celestial_body_type *get_celestial_body_type() const
+	{
+		return this->celestial_body_type;
+	}
 
 	const metternich::terrain_type *get_terrain_type() const
 	{
@@ -130,6 +154,11 @@ public:
 		return this->max_tier;
 	}
 
+	const std::vector<const metternich::terrain_type *> &get_terrain_types() const
+	{
+		return this->terrain_types;
+	}
+
 	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture *culture) const;
 	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
@@ -146,6 +175,13 @@ public:
 		this->landholders.push_back(character);
 	}
 
+	const std::vector<const region *> &get_generation_regions() const
+	{
+		return this->generation_regions;
+	}
+
+	bool can_be_generated_on_world(const metternich::world *world) const;
+
 signals:
 	void changed();
 
@@ -153,15 +189,20 @@ private:
 	metternich::world *world = nullptr;
 	archimedes::geocoordinate geocoordinate;
 	QPoint pos_offset = QPoint(0, 0);
+	archimedes::geocoordinate astrocoordinate; //the site's position as an astrocoordinate
+	std::optional<centesimal_int> astrodistance; //the site's distance from its map template's center (in light-years)
 	site_type type;
+	const metternich::celestial_body_type *celestial_body_type = nullptr;
 	metternich::terrain_type *terrain_type = nullptr;
 	metternich::resource *resource = nullptr;
 	metternich::province *province = nullptr;
 	site_tier max_tier{};
+	std::vector<const metternich::terrain_type *> terrain_types;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	landholder_title_name_map landholder_title_names;
 	std::vector<const character *> landholders;
+	std::vector<const region *> generation_regions; //regions other than its own province where this site can be generated; this is used if the map's world is not the site's own world
 	qunique_ptr<site_history> history;
 	qunique_ptr<site_map_data> map_data;
 	qunique_ptr<site_game_data> game_data;
