@@ -6,7 +6,9 @@ enum class site_type {
 	none,
 	settlement,
 	terrain,
-	resource
+	resource,
+	habitable_world,
+	celestial_body
 };
 
 }

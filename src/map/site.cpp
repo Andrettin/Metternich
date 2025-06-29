@@ -114,6 +114,8 @@ void site::check() const
 				throw std::runtime_error(std::format("Resource site \"{}\" has no resource.", this->get_identifier()));
 			}
 			break;
+		case site_type::celestial_body:
+			break;
 		default:
 			assert_throw(this->get_resource() == nullptr);
 			break;

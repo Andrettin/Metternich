@@ -594,7 +594,7 @@ void province_game_data::allocate_population()
 			continue;
 		}
 
-		if (site->get_map_data()->get_type() != site_type::resource) {
+		if (site->get_map_data()->get_type() != site_type::resource && site->get_map_data()->get_type() != site_type::celestial_body) {
 			continue;
 		}
 
@@ -936,7 +936,7 @@ QVariantList province_game_data::get_entering_armies_qvariant_list() const
 void province_game_data::calculate_site_commodity_outputs()
 {
 	for (const site *site : this->get_sites()) {
-		if (site->get_map_data()->get_type() != site_type::settlement && site->get_map_data()->get_type() != site_type::resource) {
+		if (site->get_map_data()->get_type() != site_type::settlement && site->get_map_data()->get_type() != site_type::resource && site->get_map_data()->get_type() != site_type::celestial_body) {
 			continue;
 		}
 
@@ -947,7 +947,7 @@ void province_game_data::calculate_site_commodity_outputs()
 void province_game_data::calculate_site_commodity_output(const commodity *commodity)
 {
 	for (const site *site : this->get_sites()) {
-		if (site->get_map_data()->get_type() != site_type::settlement && site->get_map_data()->get_type() != site_type::resource) {
+		if (site->get_map_data()->get_type() != site_type::settlement && site->get_map_data()->get_type() != site_type::resource && site->get_map_data()->get_type() != site_type::celestial_body) {
 			continue;
 		}
 

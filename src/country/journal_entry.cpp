@@ -173,7 +173,7 @@ void journal_entry::check() const
 	}
 
 	for (const auto &[site, level] : this->get_built_resource_site_levels()) {
-		if (site->get_type() != site_type::resource) {
+		if (site->get_type() != site_type::resource && (site->get_type() != site_type::celestial_body || site->get_resource() == nullptr)) {
 			throw std::runtime_error(std::format("Journal entry \"{}\" requires developing resource site \"{}\" to a certain level, but that site is not a resource site.", this->get_identifier(), site->get_identifier()));
 		}
 	}

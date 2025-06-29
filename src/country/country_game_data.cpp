@@ -4484,7 +4484,7 @@ void country_game_data::check_characters()
 		province->get_game_data()->check_governor();
 
 		for (const site *site : province->get_map_data()->get_sites()) {
-			if (site->get_map_data()->get_type() == site_type::resource) {
+			if (site->get_map_data()->get_type() == site_type::resource || site->get_map_data()->get_type() == site_type::celestial_body) {
 				site->get_game_data()->check_landholder();
 			}
 		}

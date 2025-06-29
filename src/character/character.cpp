@@ -307,6 +307,10 @@ void character::check() const
 			if (this->get_holdable_site()->get_type() == site_type::settlement) {
 				throw std::runtime_error(std::format("The holdable site for character \"{}\" is a settlement.", this->get_identifier()));
 			}
+
+			if (this->get_holdable_site()->get_type() == site_type::habitable_world) {
+				throw std::runtime_error(std::format("The holdable site for character \"{}\" is a habitable world.", this->get_identifier()));
+			}
 			break;
 		}
 		case character_role::leader:

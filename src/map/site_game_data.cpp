@@ -1128,7 +1128,7 @@ void site_game_data::remove_scripted_modifier(const scripted_site_modifier *modi
 
 bool site_game_data::can_have_population() const
 {
-	return this->site->is_settlement() || this->site->get_map_data()->get_type() == site_type::resource;
+	return this->site->is_settlement() || this->site->get_map_data()->get_type() == site_type::resource || (this->site->get_map_data()->get_type() == site_type::celestial_body && this->get_resource() != nullptr);
 }
 
 bool site_game_data::can_have_population_type(const population_type *type) const
@@ -1234,7 +1234,7 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 		this->change_base_commodity_output(type->get_output_commodity(), centesimal_int(type->get_output_value()) * change);
 	}
 
-	if (type->get_resource_output_value() > 0 && this->site->get_map_data()->get_type() == site_type::resource) {
+	if (type->get_resource_output_value() > 0 && (this->site->get_map_data()->get_type() == site_type::resource || this->site->get_map_data()->get_type() == site_type::celestial_body)) {
 		assert_throw(this->get_resource_improvement() != nullptr);
 		assert_throw(this->get_resource() != nullptr);
 		assert_throw(this->get_resource()->get_commodity() != nullptr);
@@ -1406,7 +1406,7 @@ void site_game_data::set_landholder(const character *landholder)
 
 void site_game_data::check_landholder()
 {
-	if (this->get_owner() == nullptr || this->get_owner()->get_game_data()->is_under_anarchy() || !this->is_built()) {
+	if (this->get_owner() == nullptr || this->get_owner()->get_game_data()->is_under_anarchy() || !this->is_built() || this->get_resource() == nullptr) {
 		this->set_landholder(nullptr);
 		return;
 	}
@@ -1604,7 +1604,7 @@ void site_game_data::calculate_commodity_outputs()
 			output /= 100;
 		}
 
-		if (commodity->is_labor() && this->site->get_map_data()->get_type() == site_type::resource) {
+		if (commodity->is_labor() && (this->site->get_map_data()->get_type() == site_type::resource || this->site->get_map_data()->get_type() == site_type::celestial_body)) {
 			//population units in resource sites do not produce labor
 			output = centesimal_int(0);
 		}

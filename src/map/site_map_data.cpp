@@ -53,6 +53,7 @@ void site_map_data::set_type(const site_type type)
 	}
 
 	assert_throw(type != site_type::settlement);
+	assert_throw(type != site_type::habitable_world);
 	this->type = type;
 }
 
