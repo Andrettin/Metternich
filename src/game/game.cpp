@@ -196,23 +196,6 @@ gsml_data game::to_gsml_data() const
 	return data;
 }
 
-QCoro::Task<void> game::create_random_map_coro(const QSize map_size, metternich::era *era)
-{
-	try {
-		this->clear();
-
-		map_generator map_generator(map_size, era);
-		map_generator.generate();
-
-		this->date = game::normalize_date(era->get_start_date());
-
-		co_await this->on_setup_finished();
-	} catch (...) {
-		exception::report(std::current_exception());
-		QApplication::exit(EXIT_FAILURE);
-	}
-}
-
 QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
 {
 	try {
@@ -221,7 +204,11 @@ QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
 		this->clear();
 		this->scenario = scenario;
 
-		if (old_scenario == nullptr || old_scenario->get_map_template() != scenario->get_map_template()) {
+		this->date = game::normalize_date(scenario->get_start_date());
+
+		database::get()->load_history(scenario->get_start_date(), scenario->get_timeline(), this->get_rules());
+
+		if (old_scenario == nullptr || old_scenario->get_map_template() != scenario->get_map_template() || scenario->get_map_template()->is_randomly_generated()) {
 			scenario->get_map_template()->apply();
 			map::get()->initialize();
 
@@ -352,10 +339,6 @@ void game::reset_game_data()
 void game::apply_history(const metternich::scenario *scenario)
 {
 	try {
-		this->date = game::normalize_date(scenario->get_start_date());
-
-		database::get()->load_history(scenario->get_start_date(), scenario->get_timeline(), this->get_rules());
-
 		for (const province *province : map::get()->get_provinces()) {
 			try {
 				const province_history *province_history = province->get_history();
