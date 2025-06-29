@@ -126,6 +126,7 @@ source_group(language FILES ${language_SRCS})
 set_source_files_properties(${language_SRCS} PROPERTIES UNITY_GROUP "language")
 
 set(map_SRCS
+	src/map/celestial_body_type.cpp
 	src/map/diplomatic_map_image_provider.cpp
 	src/map/map.cpp
 	src/map/map_country_model.cpp
@@ -441,6 +442,7 @@ set(language_HDRS
 source_group(language FILES ${language_HDRS})
 
 set(map_HDRS
+	src/map/celestial_body_type.h
 	src/map/diplomatic_map_image_provider.h
 	src/map/diplomatic_map_mode.h
 	src/map/elevation_type.h

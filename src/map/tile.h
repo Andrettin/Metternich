@@ -80,10 +80,7 @@ public:
 		return this->site;
 	}
 
-	void set_site(const metternich::site *site)
-	{
-		this->site = site;
-	}
+	void set_site(const metternich::site *site);
 
 	const metternich::site *get_settlement() const;
 	const settlement_type *get_settlement_type() const;

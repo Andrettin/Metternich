@@ -8,6 +8,7 @@
 #include "economy/resource.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
+#include "map/celestial_body_type.h"
 #include "map/direction.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -59,6 +60,23 @@ const country *tile::get_owner() const
 	}
 
 	return this->get_province()->get_game_data()->get_owner();
+}
+
+void tile::set_site(const metternich::site *site)
+{
+	if (site == this->get_site()) {
+		return;
+	}
+
+	this->site = site;
+
+	if (site != nullptr && site->get_game_data()->get_main_improvement() == nullptr && site->is_celestial_body()) {
+		if (site->get_celestial_body_type()->get_variation_count() > 1) {
+			this->improvement_variation = random::get()->generate(site->get_celestial_body_type()->get_variation_count());
+		} else {
+			this->improvement_variation = 0;
+		}
+	}
 }
 
 const metternich::site *tile::get_settlement() const
