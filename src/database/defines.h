@@ -50,6 +50,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
 	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
+	Q_PROPERTY(const metternich::terrain_type* default_space_terrain MEMBER default_space_terrain READ get_default_space_terrain NOTIFY changed)
 	Q_PROPERTY(metternich::pathway* route_pathway MEMBER route_pathway NOTIFY changed)
 	Q_PROPERTY(const archimedes::game_rule* advisors_game_rule MEMBER advisors_game_rule READ get_advisors_game_rule NOTIFY changed)
 	Q_PROPERTY(const archimedes::game_rule* ruler_traits_game_rule MEMBER ruler_traits_game_rule READ get_ruler_traits_game_rule NOTIFY changed)
@@ -173,6 +174,11 @@ public:
 	const terrain_type *get_default_water_zone_terrain() const
 	{
 		return this->default_water_zone_terrain;
+	}
+
+	const terrain_type *get_default_space_terrain() const
+	{
+		return this->default_space_terrain;
 	}
 
 	const pathway *get_route_pathway() const
@@ -415,6 +421,7 @@ private:
 	terrain_type *unexplored_terrain = nullptr;
 	terrain_type *default_province_terrain = nullptr;
 	terrain_type *default_water_zone_terrain = nullptr;
+	const terrain_type *default_space_terrain = nullptr;
 	pathway *route_pathway = nullptr;
 	const game_rule *advisors_game_rule = nullptr;
 	const game_rule *ruler_traits_game_rule = nullptr;
