@@ -1,0 +1,7 @@
+space = {
+	name = "Space"
+	color = { 17 1 25 }
+	icon = mountains
+	image_filepath = "tiles/terrain/space.png"
+	subtiles = { 9 10 11 13 16 19 21 22 }
+}

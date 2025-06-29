@@ -8,6 +8,7 @@ default_base_terrain = plains
 unexplored_terrain = unexplored
 default_province_terrain = plains
 default_water_zone_terrain = ocean
+default_space_terrain = space
 route_pathway = route
 
 default_start_date = 1815.11.20
