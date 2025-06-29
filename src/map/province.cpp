@@ -13,11 +13,17 @@
 #include "map/site.h"
 #include "map/site_type.h"
 #include "map/terrain_feature.h"
+#include "map/terrain_type.h"
+#include "map/world.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
+
+const std::set<std::string> province::database_dependencies = {
+	region::class_identifier
+};
 
 province::province(const std::string &identifier) : named_data_entry(identifier)
 {
@@ -32,8 +38,13 @@ province::~province()
 void province::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "cultural_names") {
+	if (tag == "terrain_types") {
+		for (const std::string &value : values) {
+			this->terrain_types.push_back(terrain_type::get(value));
+		}
+	} else if (tag == "cultural_names") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const culture *culture = culture::get(property.get_key());
 			this->cultural_names[culture] = property.get_value();
@@ -55,6 +66,10 @@ void province::process_gsml_scope(const gsml_data &scope)
 			this->border_rivers[border_province] = border_river;
 			border_province->border_rivers[this] = border_river;
 		});
+	} else if (tag == "generation_worlds") {
+		for (const std::string &value : values) {
+			this->generation_worlds.push_back(world::get(value));
+		}
 	} else {
 		named_data_entry::process_gsml_scope(scope);
 	}
@@ -66,6 +81,31 @@ void province::initialize()
 		assert_throw(this->get_provincial_capital()->get_province() == nullptr || this->get_provincial_capital()->get_province() == this);
 
 		this->provincial_capital->set_province(this);
+
+		if (this->provincial_capital->is_initialized()) {
+			//site is already initialized, so it won't add itself to this province's site list
+			this->add_site(this->provincial_capital);
+		}
+	}
+
+	if (this->get_primary_star() != nullptr) {
+		assert_throw(this->get_primary_star()->get_province() == nullptr || this->get_primary_star()->get_province() == this);
+
+		this->primary_star->set_province(this);
+
+		if (this->primary_star->is_initialized()) {
+			//site is already initialized, so it won't add itself to this province's site list
+			this->add_site(this->primary_star);
+		}
+	}
+
+	if (this->get_world() == nullptr) {
+		for (const region *region : this->get_regions()) {
+			if (region->get_world() != nullptr) {
+				this->world = region->get_world();
+				break;
+			}
+		}
 	}
 
 	named_data_entry::initialize();
@@ -76,11 +116,15 @@ void province::check() const
 	if (this->get_provincial_capital() == nullptr && !this->is_water_zone()) {
 		throw std::runtime_error(std::format("Province \"{}\" has no provincial capital.", this->get_identifier()));
 	} else if (this->get_provincial_capital() != nullptr && this->is_water_zone()) {
-		throw std::runtime_error("Water zone \"" + this->get_identifier() + "\" has a provincial capital.");
+		throw std::runtime_error(std::format("Water zone \"{}\" has a provincial capital.", this->get_identifier()));
 	}
 
 	if (this->get_provincial_capital() != nullptr && !this->get_provincial_capital()->is_settlement()) {
 		throw std::runtime_error(std::format("Province \"{}\" has a provincial capital (\"{}\") which is not a settlement.", this->get_identifier(), this->get_provincial_capital()->get_identifier()));
+	}
+
+	if (this->get_primary_star() != nullptr && !this->get_primary_star()->is_celestial_body()) {
+		throw std::runtime_error(std::format("Province \"{}\" has a primary star (\"{}\") which is not a celestial body.", this->get_identifier(), this->get_primary_star()->get_identifier()));
 	}
 
 	for (const auto &[border_province, border_river] : this->border_rivers) {
@@ -166,6 +210,11 @@ void province::remove_region(region *region)
 {
 	std::erase(this->regions, region);
 	region->remove_province(this);
+}
+
+std::vector<const region *> province::get_shared_regions_with(const province *other_province) const
+{
+	return vector::intersected<region *, std::vector<const region *>>(this->get_regions(), other_province->get_regions());
 }
 
 bool province::has_core_country_of_culture(const culture *culture) const

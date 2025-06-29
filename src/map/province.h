@@ -23,17 +23,23 @@ class province_map_data;
 class region;
 class site;
 class terrain_feature;
+class terrain_type;
+class world;
 
 class province final : public named_data_entry, public data_type<province>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::world* world MEMBER world READ get_world NOTIFY changed)
 	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
 	Q_PROPERTY(bool sea MEMBER sea READ is_sea NOTIFY changed)
 	Q_PROPERTY(bool bay MEMBER bay READ is_bay NOTIFY changed)
 	Q_PROPERTY(bool lake MEMBER lake READ is_lake NOTIFY changed)
 	Q_PROPERTY(bool water_zone READ is_water_zone NOTIFY changed)
 	Q_PROPERTY(metternich::site* provincial_capital MEMBER provincial_capital NOTIFY changed)
+	Q_PROPERTY(metternich::site* primary_star MEMBER primary_star NOTIFY changed)
+	Q_PROPERTY(bool coastal MEMBER coastal READ is_coastal NOTIFY changed)
+	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
 	Q_PROPERTY(std::vector<metternich::region *> regions READ get_regions NOTIFY changed)
 	Q_PROPERTY(metternich::province_map_data* map_data READ get_map_data NOTIFY changed)
 	Q_PROPERTY(metternich::province_game_data* game_data READ get_game_data NOTIFY changed)
@@ -43,6 +49,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::province*";
 	static constexpr const char database_folder[] = "provinces";
 	static constexpr bool history_enabled = true;
+
+	static const std::set<std::string> database_dependencies;
 
 	static province *get_by_color(const QColor &color)
 	{
@@ -104,6 +112,16 @@ public:
 		return this->game_data.get();
 	}
 
+	const metternich::world *get_world() const
+	{
+		return this->world;
+	}
+
+	void set_world(const metternich::world *world)
+	{
+		this->world = world;
+	}
+
 	const QColor &get_color() const
 	{
 		return this->color;
@@ -148,6 +166,31 @@ public:
 		return this->provincial_capital;
 	}
 
+	const site *get_primary_star() const
+	{
+		return this->primary_star;
+	}
+
+	bool is_star_system() const
+	{
+		return this->get_primary_star() != nullptr;
+	}
+
+	bool is_coastal() const
+	{
+		return this->coastal;
+	}
+
+	bool is_hidden() const
+	{
+		return this->hidden;
+	}
+
+	const std::vector<const metternich::terrain_type *> &get_terrain_types() const
+	{
+		return this->terrain_types;
+	}
+
 	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture *culture) const;
 	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
@@ -164,6 +207,7 @@ public:
 
 	Q_INVOKABLE void add_region(region *region);
 	Q_INVOKABLE void remove_region(region *region);
+	std::vector<const region *> get_shared_regions_with(const province *other_province) const;
 
 	const std::vector<const country *> &get_core_countries() const
 	{
@@ -180,6 +224,11 @@ public:
 	const province_map<const terrain_feature *> &get_border_rivers() const
 	{
 		return this->border_rivers;
+	}
+
+	const std::vector<const metternich::world *> &get_generation_worlds() const
+	{
+		return this->generation_worlds;
 	}
 
 	const std::vector<const site *> &get_sites() const
@@ -206,17 +255,23 @@ signals:
 	void changed();
 
 private:
+	const metternich::world *world = nullptr;
 	QColor color;
 	bool sea = false;
 	bool bay = false;
 	bool lake = false;
 	site *provincial_capital = nullptr;
+	site *primary_star = nullptr;
+	bool coastal = false;
+	bool hidden = false;
+	std::vector<const metternich::terrain_type *> terrain_types;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	resource_map<int> resource_counts;
 	std::vector<region *> regions; //regions where this province is located
 	std::vector<const country *> core_countries;
 	province_map<const terrain_feature *> border_rivers;
+	std::vector<const metternich::world *> generation_worlds; //worlds other than its own where this province can be generated
 	std::vector<const site *> sites; //sites located in this province, used for map generation
 	std::vector<const character *> governors;
 	qunique_ptr<province_history> history;
