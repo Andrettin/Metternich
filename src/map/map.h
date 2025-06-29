@@ -91,8 +91,10 @@ public:
 	bool is_tile_water(const QPoint &tile_pos) const;
 	bool is_tile_near_water(const QPoint &tile_pos) const;
 	bool is_tile_coastal(const QPoint &tile_pos) const;
+	bool is_tile_near_celestial_body(const QPoint &tile_pos) const;
 
 	bool is_tile_on_country_border(const QPoint &tile_pos) const;
+	bool is_tile_on_province_border(const QPoint &tile_pos) const;
 	bool is_tile_on_province_border_with(const QPoint &tile_pos, const province *other_province) const;
 	void calculate_tile_country_border_directions(const QPoint &tile_pos);
 

@@ -65,6 +65,7 @@ public:
 	}
 
 	void add_tile(const QPoint &tile_pos);
+	void process_site_tile(const QPoint &tile_pos);
 
 	const std::vector<QPoint> &get_border_tiles() const
 	{

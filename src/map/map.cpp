@@ -126,7 +126,9 @@ void map::initialize()
 				this->update_tile_terrain_tile(tile_pos);
 			}
 
-			tile_province->get_map_data()->add_tile(tile_pos);
+			if (tile->get_site() != nullptr) {
+				tile_province->get_map_data()->process_site_tile(tile_pos);
+			}
 
 			if (is_border_tile) {
 				tile->sort_border_directions();
@@ -529,9 +531,10 @@ void map::set_tile_province(const QPoint &tile_pos, const province *province)
 {
 	tile *tile = this->get_tile(tile_pos);
 	tile->set_province(province);
+	province->get_map_data()->add_tile(tile_pos);
 
 	if (tile->get_terrain()->is_water() != province->is_water_zone()) {
-		log::log_error("Tile " + point::to_string(tile_pos) + " has terrain type \"" + tile->get_terrain()->get_identifier() + "\", which has a water value that doesn't match the tile's \"" + province->get_identifier() + "\" province.");
+		log::log_error(std::format("Tile {} has terrain type \"{}\", which has a water value that doesn't match the tile's \"{}\" province.", point::to_string(tile_pos), tile->get_terrain()->get_identifier(), province->get_identifier()));
 	}
 }
 
@@ -540,12 +543,13 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 	tile *tile = this->get_tile(tile_pos);
 	tile->set_site(site);
 
-	if (site->get_province() != nullptr && site->get_province() != tile->get_province()) {
+	if (site->get_province() != nullptr && site->get_province() != tile->get_province() && site->get_province()->get_map_data()->is_on_map()) {
 		log::log_error(std::format("Site \"{}\" was not placed within its province.", site->get_identifier()));
 	}
 
 	switch (site->get_map_data()->get_type()) {
 		case site_type::settlement:
+		case site_type::habitable_world:
 			if (tile->get_province() == nullptr || (site->get_province() != nullptr && tile->get_province() != site->get_province())) {
 				log::log_error(std::format("Settlement \"{}\" {} was not placed within its province.", site->get_identifier(), point::to_string(tile_pos)));
 			}
@@ -861,6 +865,28 @@ bool map::is_tile_coastal(const QPoint &tile_pos) const
 	return result;
 }
 
+bool map::is_tile_near_celestial_body(const QPoint &tile_pos) const
+{
+	bool result = false;
+
+	point::for_each_adjacent_until(tile_pos, [this, &result](const QPoint &adjacent_pos) {
+		if (!this->contains(adjacent_pos)) {
+			return false;
+		}
+
+		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+
+		if (adjacent_tile->get_site() != nullptr && adjacent_tile->get_site()->is_celestial_body()) {
+			result = true;
+			return true;
+		}
+
+		return false;
+	});
+
+	return result;
+}
+
 bool map::is_tile_on_country_border(const QPoint &tile_pos) const
 {
 	const tile *tile = this->get_tile(tile_pos);
@@ -882,6 +908,32 @@ bool map::is_tile_on_country_border(const QPoint &tile_pos) const
 		const country *adjacent_country = adjacent_tile->get_owner();
 
 		if (tile_country != adjacent_country) {
+			result = true;
+			return true;
+		}
+
+		return false;
+	});
+
+	return result;
+}
+
+bool map::is_tile_on_province_border(const QPoint &tile_pos) const
+{
+	const tile *tile = this->get_tile(tile_pos);
+	const province *tile_province = tile->get_province();
+
+	bool result = false;
+
+	point::for_each_adjacent_until(tile_pos, [this, tile_province, &result](const QPoint &adjacent_pos) {
+		if (!this->contains(adjacent_pos)) {
+			return false;
+		}
+
+		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+		const province *adjacent_province = adjacent_tile->get_province();
+
+		if (adjacent_province != tile_province) {
 			result = true;
 			return true;
 		}
