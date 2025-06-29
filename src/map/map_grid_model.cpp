@@ -152,7 +152,13 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 
 				if (tile->get_site() != nullptr) {
-					if (tile->get_settlement_type() != nullptr) {
+					if (tile->get_site() != nullptr && tile->get_site()->is_celestial_body()) {
+						QString image_source = "tile/celestial_body/" + tile->get_site()->get_celestial_body_type()->get_identifier_qstring();
+
+						image_source += "/" + QString::number(tile->get_improvement_variation());
+
+						object_image_sources.push_back(std::move(image_source));
+					} else if (tile->get_settlement_type() != nullptr) {
 						QString image_source = "tile/settlement/" + tile->get_settlement_type()->get_identifier_qstring() + "/0";
 						object_image_sources.push_back(std::move(image_source));
 					} else if (tile->get_site()->get_game_data()->get_main_improvement() != nullptr) {
@@ -167,7 +173,14 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 						object_image_sources.push_back(std::move(image_source));
 					}
 
-					if (tile->get_resource() != nullptr && tile->is_resource_discovered() && ((tile->get_settlement_type() == nullptr && tile->get_site()->get_game_data()->get_main_improvement() == nullptr) || tile->get_resource()->is_natural_wonder())) {
+					if (
+						tile->get_resource() != nullptr
+						&& tile->is_resource_discovered()
+						&& (
+							(tile->get_settlement_type() == nullptr && tile->get_site()->get_game_data()->get_main_improvement() == nullptr && !tile->get_site()->is_celestial_body())
+							|| tile->get_resource()->is_natural_wonder()
+						)
+					) {
 						object_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
 					}
 				}
