@@ -45,6 +45,10 @@ public:
 	{
 		Q_UNUSED(parent);
 
+		if (!this->hasIndex(row, column, parent)) {
+			return QModelIndex();
+		}
+
 		return this->createIndex(row, column);
 	}
 

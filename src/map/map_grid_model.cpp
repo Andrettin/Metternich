@@ -11,6 +11,7 @@
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/settlement_type.h"
+#include "map/celestial_body_type.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -225,6 +226,11 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 
 				const metternich::tile *upper_tile = map::get()->get_tile(upper_tile_pos);
+
+				if (upper_tile->get_site() != nullptr && upper_tile->get_site()->is_celestial_body()) {
+					return upper_tile->get_site()->get_game_data()->get_current_cultural_name_qstring();
+				}
+
 				const province *upper_tile_province = upper_tile->get_province();
 
 				if (upper_tile_province != nullptr && upper_tile_province->get_game_data()->get_center_tile_pos() == upper_tile_pos) {
