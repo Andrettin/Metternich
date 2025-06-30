@@ -62,7 +62,6 @@ void preferences::save() const
 	gsml_data data(preferences_path.filename().stem().string());
 
 	data.add_property("scale_factor", this->get_scale_factor().to_string());
-	data.add_property("major_scenarios_only", string::from_bool(this->major_scenarios_only));
 
 	data.add_child("game_rules", this->get_game_rules()->to_gsml_data());
 

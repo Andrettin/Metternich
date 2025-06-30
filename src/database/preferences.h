@@ -21,7 +21,6 @@ class preferences final : public QObject, public singleton<preferences>
 
 	Q_PROPERTY(archimedes::centesimal_int scale_factor READ get_scale_factor WRITE set_scale_factor NOTIFY scale_factor_changed)
 	Q_PROPERTY(QString scale_factor_string READ get_scale_factor_qstring WRITE set_scale_factor_qstring NOTIFY scale_factor_changed)
-	Q_PROPERTY(bool major_scenarios_only MEMBER major_scenarios_only WRITE set_major_scenarios_only NOTIFY major_scenarios_only_changed)
 	Q_PROPERTY(metternich::game_rules* game_rules READ get_game_rules CONSTANT)
 
 public:
@@ -53,17 +52,6 @@ public:
 		this->set_scale_factor(centesimal_int(factor_str.toStdString()));
 	}
 
-	void set_major_scenarios_only(const bool value)
-	{
-		if (value == this->major_scenarios_only) {
-			return;
-		}
-
-		this->major_scenarios_only = value;
-
-		emit major_scenarios_only_changed();
-	}
-
 	game_rules *get_game_rules()
 	{
 		return this->game_rules.get();
@@ -76,11 +64,9 @@ public:
 
 signals:
 	void scale_factor_changed();
-	void major_scenarios_only_changed();
 
 private:
 	centesimal_int scale_factor = centesimal_int(2);
-	bool major_scenarios_only = false;
 	qunique_ptr<game_rules> game_rules;
 };
 
