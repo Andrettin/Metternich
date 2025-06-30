@@ -1,0 +1,4 @@
+star = {
+	name = "Star"
+	image_filepath = "tiles/celestial_bodies/star.png"
+}

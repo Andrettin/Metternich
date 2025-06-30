@@ -1,0 +1,9 @@
+barren_world = {
+	name = "Barren World"
+	image_filepath = "tiles/celestial_bodies/iron_barren_world.png"
+}
+
+terrestrial_world = {
+	name = "Terrestrial World"
+	image_filepath = "tiles/celestial_bodies/iron_barren_world.png"
+}
