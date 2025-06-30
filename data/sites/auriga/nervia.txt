@@ -1,0 +1,7 @@
+nervia = {
+	name = "Nervia"
+	astrocoordinate = { 102.8772 40.8678 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 144
+	type = celestial_body
+	celestial_body_type = star #yellow dwarf star
+}

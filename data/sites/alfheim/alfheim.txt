@@ -1,0 +1,6 @@
+alfheim = {
+	name = "Alfheim"
+	type = habitable_world
+	celestial_body_type = terrestrial_world
+	province = alfheim_system
+}

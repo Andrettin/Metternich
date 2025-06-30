@@ -1,0 +1,11 @@
+helvetios_system = {
+	name = "Helvetios System"
+	primary_star = helvetios
+	provincial_capital = dimidium
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

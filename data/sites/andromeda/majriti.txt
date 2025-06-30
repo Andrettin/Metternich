@@ -1,0 +1,7 @@
+majriti = {
+	name = "Majriti"
+	type = habitable_world
+	celestial_body_type = terrestrial_world #so that there is a habitable world in the system
+	province = titawin_system
+	#distance_from_orbit_center = 380 #average; apastron of 478 Gm and periastron of 282 Gm
+}

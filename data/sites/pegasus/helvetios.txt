@@ -1,0 +1,7 @@
+helvetios = {
+	name = "Helvetios"
+	astrocoordinate = { -15.6334 20.7688 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 50.45
+	type = celestial_body
+	celestial_body_type = star
+}

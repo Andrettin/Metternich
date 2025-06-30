@@ -1,0 +1,6 @@
+sol = {
+	name = "Sol"
+	astrodistance = 0
+	type = celestial_body
+	celestial_body_type = star #yellow dwarf star
+}

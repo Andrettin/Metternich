@@ -1,0 +1,10 @@
+sirius = { #Alpha Canis Majoris
+	name = "Sirius"
+	astrocoordinate = { 101.2872 -16.7161 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 8.6 #light-years
+	type = celestial_body
+	celestial_body_type = star #class A dwarf star
+	cultural_names = {
+		norse = "Lokabrenna" #the name means "the Conflagration of Loki"; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 79.
+	}
+}

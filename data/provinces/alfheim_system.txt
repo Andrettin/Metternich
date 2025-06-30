@@ -1,0 +1,11 @@
+alfheim_system = {
+	name = "Alfheim System"
+	primary_star = fairwheel
+	provincial_capital = alfheim
+	
+	history = {
+		owner = alfheim
+		culture = elven
+		religion = pagan
+	}
+}

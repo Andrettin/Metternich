@@ -1,0 +1,7 @@
+hunor = {
+	name = "Hunor"
+	astrocoordinate = { -114.8485 41.0481 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 418
+	type = celestial_body
+	celestial_body_type = star #yellow-white dwarf star #F8V
+}

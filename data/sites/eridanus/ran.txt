@@ -1,0 +1,7 @@
+ran = { #Epsilon Eridani
+	name = "Ran"
+	astrocoordinate = { 53.2327 -9.4583 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 10.475
+	type = celestial_body
+	celestial_body_type = star #orange dwarf star
+}

@@ -1,0 +1,11 @@
+belenos_system = {
+	name = "Belenos System"
+	primary_star = belenos
+	provincial_capital = belisama
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

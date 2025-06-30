@@ -1,0 +1,14 @@
+terran_federation = {
+	name = "Terran Federation"
+	type = great_power
+	color = { 87 139 166 }
+	culture = terran
+	default_religion = atheist
+	default_tier = empire
+	default_government_type = republic
+	default_capital = terra
+	short_name = true
+	core_provinces = {
+		sol_system
+	}
+}

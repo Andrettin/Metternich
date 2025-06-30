@@ -1,0 +1,11 @@
+jotunheim_system = {
+	name = "Jotunheim System"
+	primary_star = everbright
+	provincial_capital = jotunheim
+	
+	history = {
+		owner = jotunheim
+		culture = giant
+		religion = pagan
+	}
+}

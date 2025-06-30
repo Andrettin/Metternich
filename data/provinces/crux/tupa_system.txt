@@ -1,0 +1,11 @@
+tupa_system = {
+	name = "Tupa System"
+	primary_star = tupa
+	provincial_capital = tumearandu
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

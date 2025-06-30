@@ -1,0 +1,7 @@
+tupa = {
+	name = "Tupa" #"Tupã"
+	astrocoordinate = { -173.5572 -64.0221 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 126
+	type = celestial_body
+	celestial_body_type = star #yellow-white dwarf star
+}

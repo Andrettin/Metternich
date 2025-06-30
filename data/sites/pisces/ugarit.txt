@@ -1,0 +1,6 @@
+ugarit_world = {
+	name = "Ugarit"
+	type = habitable_world #so that there is a habitable world in the system
+	celestial_body_type = terrestrial_world
+	province = ebla_system
+}

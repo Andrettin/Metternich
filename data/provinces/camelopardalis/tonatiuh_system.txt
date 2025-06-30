@@ -1,0 +1,11 @@
+tonatiuh_system = {
+	name = "Tonatiuh System"
+	primary_star = tonatiuh
+	provincial_capital = meztli
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

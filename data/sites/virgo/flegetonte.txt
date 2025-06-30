@@ -1,0 +1,7 @@
+flegetonte = {
+	name = "Flegetonte"
+	astrocoordinate = { 176.4262 2.8215 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 95.8
+	type = celestial_body
+	celestial_body_type = star #orange dwarf star
+}

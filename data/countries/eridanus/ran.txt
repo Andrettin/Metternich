@@ -1,0 +1,14 @@
+ran = {
+	name = "Ran"
+	type = minor_nation
+	culture = aquan
+	default_religion = asatru
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = aegir
+	min_tier = barony
+	max_tier = empire
+	core_provinces = {
+		ran_system
+	}
+}

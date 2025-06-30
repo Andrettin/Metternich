@@ -1,0 +1,5 @@
+everbright = {
+	name = "Everbright" #giant/ettin name for the sun in the Lay of Alvis, here used as the sun of the giant/ettin homeworld, Jotunheim
+	type = celestial_body
+	celestial_body_type = star
+}

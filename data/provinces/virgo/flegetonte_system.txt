@@ -1,0 +1,11 @@
+flegetonte_system = {
+	name = "Flegetonte System"
+	primary_star = flegetonte
+	provincial_capital = lete
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

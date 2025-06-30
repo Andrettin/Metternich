@@ -1,0 +1,10 @@
+venus = {
+	name = "Venus"
+	type = celestial_body
+	celestial_body_type = barren_world
+	province = sol_system
+	#distance_from_orbit_center = 108 #108 million kilometers
+	cultural_names = {
+		norse = "Friggjarstjarna" #the name means "Frigg's Star"; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 174.
+	}
+}

@@ -1,0 +1,11 @@
+nidavellir_system = {
+	name = "Nidavellir System"
+	primary_star = dvalins_deceiver
+	provincial_capital = nidavellir
+	
+	history = {
+		owner = nidavellir
+		culture = dwarven
+		religion = pagan
+	}
+}

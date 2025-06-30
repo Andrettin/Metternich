@@ -1,0 +1,7 @@
+lusitania = {
+	name = "Lusitania" #"Lusitânia"
+	astrocoordinate = { 97.305 10.9339 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 113.8
+	type = celestial_body
+	celestial_body_type = star #yellow dwarf star
+}

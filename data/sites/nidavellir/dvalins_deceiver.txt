@@ -1,0 +1,5 @@
+dvalins_deceiver = {
+	name = "Dvalin's Deceiver" #dwarven name for the sun in the Lay of Alvis, here used as the sun of the dwarven homeworld, Nidavellir
+	type = celestial_body
+	celestial_body_type = star
+}

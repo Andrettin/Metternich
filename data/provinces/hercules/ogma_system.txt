@@ -1,0 +1,11 @@
+ogma_system = {
+	name = "Ogma System"
+	primary_star = ogma
+	provincial_capital = smertrios
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

@@ -1,0 +1,7 @@
+tapecue = {
+	name = "Tapecue"
+	astrocoordinate = { 116.9572 -54.2641 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 108
+	type = celestial_body
+	celestial_body_type = star #yellow-white dwarf star
+}

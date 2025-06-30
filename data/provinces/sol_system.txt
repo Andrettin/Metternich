@@ -1,0 +1,11 @@
+sol_system = {
+	name = "Sol System"
+	primary_star = sol
+	provincial_capital = terra
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

@@ -1,0 +1,8 @@
+jupiter = {
+	name = "Jupiter"
+	type = celestial_body
+	celestial_body_type = gas_giant
+	province = sol_system
+	#distance_from_orbit_center = 778 #778 million kilometers
+	#mass_jm = 1 #in Jovian masses
+}

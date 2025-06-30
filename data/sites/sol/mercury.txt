@@ -1,0 +1,7 @@
+mercury = {
+	name = "Mercury"
+	type = celestial_body
+	celestial_body_type = barren_world
+	province = sol_system
+	#distance_from_orbit_center = 58 #58 million kilometers
+}

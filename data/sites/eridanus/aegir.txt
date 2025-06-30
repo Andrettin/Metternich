@@ -1,0 +1,7 @@
+aegir = {
+	name = "Aegir" #"Ægir"
+	type = habitable_world #so that there is a habitable world in the system
+	celestial_body_type = terrestrial_world #gas giant
+	province = ran_system
+	#mass_jm = 1.19
+}

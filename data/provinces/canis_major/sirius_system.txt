@@ -1,0 +1,11 @@
+sirius_system = {
+	name = "Sirius System"
+	primary_star = sirius
+	provincial_capital = kairet
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

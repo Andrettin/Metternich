@@ -1,0 +1,11 @@
+hunor_system = {
+	name = "Hunor System"
+	primary_star = hunor
+	provincial_capital = magor
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

@@ -1,0 +1,6 @@
+viriato = {
+	name = "Viriato"
+	type = habitable_world #so that there is a habitable world in the system
+	celestial_body_type = terrestrial_world #gas giant
+	province = lusitania_system
+}

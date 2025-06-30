@@ -1,0 +1,9 @@
+dimidium = {
+	name = "Dimidium"
+	type = habitable_world #so that there is a habitable world in the system
+	celestial_body_type = terrestrial_world #gas giant
+	province = helvetios_system
+	#distance_from_orbit_center_au = 0.0527 #average; apastron of 0.0534 AU and periastron of 0.0520
+	#mass_jm = 0.46
+	#also known as Bellerophon
+}

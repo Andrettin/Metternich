@@ -1,0 +1,6 @@
+jotunheim = {
+	name = "Jotunheim"
+	type = habitable_world
+	celestial_body_type = terrestrial_world
+	province = jotunheim_system
+}

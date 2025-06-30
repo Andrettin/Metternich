@@ -1,0 +1,15 @@
+alfheim = {
+	name = "Alfheim"
+	type = great_power
+	color = { 142 167 80 }
+	culture = elven
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = alfheim
+	min_tier = barony
+	max_tier = empire
+	core_provinces = {
+		alfheim_system
+	}
+}

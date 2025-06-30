@@ -1,0 +1,7 @@
+terran = {
+	name = "Terran"
+	group = western
+	species = {
+		human
+	}
+}

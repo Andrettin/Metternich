@@ -1,0 +1,15 @@
+lusitania_space = {
+	name = "Lusitania"
+	type = great_power
+	color = { 0 66 24 }
+	culture = portuguese
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = republic
+	default_capital = viriato
+	min_tier = barony
+	max_tier = empire
+	core_provinces = {
+		lusitania_system
+	}
+}

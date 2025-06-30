@@ -1,0 +1,11 @@
+ran_system = {
+	name = "Ran System"
+	primary_star = ran
+	provincial_capital = aegir
+	
+	history = {
+		owner = ran
+		culture = aquan
+		religion = asatru
+	}
+}

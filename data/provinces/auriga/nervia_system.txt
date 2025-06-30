@@ -1,0 +1,11 @@
+nervia_system = {
+	name = "Nervia System"
+	primary_star = nervia
+	provincial_capital = eburonia
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

@@ -1,0 +1,6 @@
+nidavellir = {
+	name = "Nidavellir"
+	type = habitable_world
+	celestial_body_type = terrestrial_world
+	province = nidavellir_system
+}

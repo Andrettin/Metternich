@@ -1,0 +1,5 @@
+fairwheel = {
+	name = "Fairwheel" #elven name for the sun in the Lay of Alvis, here used as the sun of the elven homeworld, Alfheim
+	type = celestial_body
+	celestial_body_type = star
+}

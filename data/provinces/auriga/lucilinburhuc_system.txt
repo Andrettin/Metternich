@@ -1,0 +1,11 @@
+lucilinburhuc_system = {
+	name = "Lucilinburhuc System"
+	primary_star = lucilinburhuc
+	provincial_capital = peitruss
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

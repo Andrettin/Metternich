@@ -1,0 +1,7 @@
+ebla_star = {
+	name = "Ebla"
+	astrocoordinate = { -12.7053 -2.2607 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 94.1
+	type = celestial_body
+	celestial_body_type = star #orange dwarf star
+}

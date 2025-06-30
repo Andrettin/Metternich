@@ -1,0 +1,7 @@
+lucilinburhuc = {
+	name = "Lucilinburhuc"
+	astrocoordinate = { 97.1905 38.963 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 160
+	type = celestial_body
+	celestial_body_type = star #yellow giant star
+}

@@ -1,0 +1,7 @@
+eburonia = {
+	name = "Eburonia"
+	type = habitable_world
+	celestial_body_type = terrestrial_world #so that there is a habitable world in the system
+	province = nervia_system
+	#distance_from_orbit_center_au = 0.0580 #semi-major axis
+}

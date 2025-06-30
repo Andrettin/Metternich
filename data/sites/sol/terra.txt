@@ -1,0 +1,7 @@
+terra = {
+	name = "Terra"
+	type = habitable_world
+	celestial_body_type = terrestrial_world
+	province = sol_system
+	#distance_from_orbit_center = 149.598023 #in millions of kilometers; semi-major axis
+}

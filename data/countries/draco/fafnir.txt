@@ -1,0 +1,14 @@
+fafnir = {
+	name = "Fafnir"
+	type = minor_nation
+	culture = draconic
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = orbitar
+	min_tier = barony
+	max_tier = empire
+	core_provinces = {
+		fafnir_system
+	}
+}

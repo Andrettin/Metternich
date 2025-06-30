@@ -1,0 +1,11 @@
+tapecue_system = {
+	name = "Tapecue System"
+	primary_star = tapecue
+	provincial_capital = yvaga
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}

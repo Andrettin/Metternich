@@ -1,0 +1,7 @@
+tupi = {
+	name = "Tupi"
+	astrocoordinate = { 54.9296 -52.9158 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 109.2
+	type = celestial_body
+	celestial_body_type = star #yellow-white dwarf star
+}

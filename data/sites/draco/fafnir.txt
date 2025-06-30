@@ -1,0 +1,7 @@
+fafnir = {
+	name = "Fafnir"
+	astrocoordinate = { -83.5036 65.5635 } #from www.github.com/ofrohn/d3-celestial
+	astrodistance = 315
+	type = celestial_body
+	celestial_body_type = star #orange giant star
+}

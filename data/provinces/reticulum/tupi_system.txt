@@ -1,0 +1,11 @@
+tupi_system = {
+	name = "Tupi System"
+	primary_star = tupi
+	provincial_capital = guarani
+	
+	history = {
+		owner = terran_federation
+		culture = terran
+		religion = atheist
+	}
+}
