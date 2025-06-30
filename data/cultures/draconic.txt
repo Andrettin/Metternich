@@ -1,0 +1,6 @@
+draconic = {
+	name = "Draconic"
+	species = {
+		kobold #FIXME: use other draconic species instead
+	}
+}
