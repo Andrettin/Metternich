@@ -48,8 +48,8 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::building_class* building_class MEMBER building_class NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
-	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
-	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList education_types READ get_education_types_qvariant_list NOTIFY changed)
@@ -311,8 +311,8 @@ private:
 	building_class *building_class = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
-	metternich::portrait *portrait = nullptr;
-	metternich::icon *icon = nullptr;
+	const metternich::portrait *portrait = nullptr;
+	const metternich::icon *icon = nullptr;
 	bool provincial = false;
 	int level = 0;
 	std::vector<const settlement_type *> settlement_types;
