@@ -1,0 +1,6 @@
+frost_giant = {
+	name = "Frost Giant"
+	supertaxon = giant
+	era = holocene
+	sapient = true
+}
