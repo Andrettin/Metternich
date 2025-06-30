@@ -421,7 +421,9 @@ MenuBase {
 	Connections {
 		target: metternich.game
 		function onSetup_finished() {
-			if (selected_scenario.map_template.identifier !== diplomatic_map.ocean_suffix) {
+			if (selected_scenario.map_template.randomly_generated) {
+				diplomatic_map.ocean_suffix = scenario_menu.setup_count
+			} else if (selected_scenario.map_template.identifier !== diplomatic_map.ocean_suffix) {
 				diplomatic_map.ocean_suffix = selected_scenario.map_template.identifier
 			}
 			
