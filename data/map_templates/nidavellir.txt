@@ -1,0 +1,10 @@
+nidavellir = {
+	name = "Nidavellir"
+	size = { 256 256 }
+	world = nidavellir
+	land_percent = 30
+	steepness = 50
+	average_temperature = 45
+	separate_poles = true
+	pole_flattening = 100
+}

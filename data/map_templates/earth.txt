@@ -13,3 +13,14 @@ earth = {
 	route_image_filepath = "earth/routes.png"
 	province_image_filepath = "earth/provinces.png"
 }
+
+earth_random = {
+	name = "Earth"
+	size = { 256 256 }
+	world = earth
+	land_percent = 30
+	steepness = 30
+	average_temperature = 45
+	separate_poles = true
+	pole_flattening = 100
+}
