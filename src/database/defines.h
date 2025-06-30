@@ -46,10 +46,10 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QSize scaled_tile_size READ get_scaled_tile_size NOTIFY scaled_tile_size_changed)
 	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn NOTIFY changed)
 	Q_PROPERTY(QDate default_start_date MEMBER default_start_date READ get_default_start_date)
-	Q_PROPERTY(metternich::terrain_type* default_base_terrain MEMBER default_base_terrain)
-	Q_PROPERTY(metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain)
-	Q_PROPERTY(metternich::terrain_type* default_province_terrain MEMBER default_province_terrain)
-	Q_PROPERTY(metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain)
+	Q_PROPERTY(const metternich::terrain_type* default_base_terrain MEMBER default_base_terrain READ get_default_base_terrain NOTIFY changed)
+	Q_PROPERTY(const metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain READ get_unexplored_terrain NOTIFY changed)
+	Q_PROPERTY(const metternich::terrain_type* default_province_terrain MEMBER default_province_terrain  READ get_default_province_terrain NOTIFY changed)
+	Q_PROPERTY(const metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain  READ get_default_water_zone_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_space_terrain MEMBER default_space_terrain READ get_default_space_terrain NOTIFY changed)
 	Q_PROPERTY(metternich::pathway* route_pathway MEMBER route_pathway NOTIFY changed)
 	Q_PROPERTY(const archimedes::game_rule* advisors_game_rule MEMBER advisors_game_rule READ get_advisors_game_rule NOTIFY changed)
@@ -417,10 +417,10 @@ private:
 	int default_months_per_turn = 3;
 	std::map<int, int> months_per_turn_from_year;
 	QDate default_start_date;
-	terrain_type *default_base_terrain = nullptr;
-	terrain_type *unexplored_terrain = nullptr;
-	terrain_type *default_province_terrain = nullptr;
-	terrain_type *default_water_zone_terrain = nullptr;
+	const terrain_type *default_base_terrain = nullptr;
+	const terrain_type *unexplored_terrain = nullptr;
+	const terrain_type *default_province_terrain = nullptr;
+	const terrain_type *default_water_zone_terrain = nullptr;
 	const terrain_type *default_space_terrain = nullptr;
 	pathway *route_pathway = nullptr;
 	const game_rule *advisors_game_rule = nullptr;
