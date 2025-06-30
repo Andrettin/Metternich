@@ -78,6 +78,10 @@ void resource::check() const
 	if (this->get_site_types().empty()) {
 		throw std::runtime_error(std::format("Resource \"{}\" has no site types.", this->get_identifier()));
 	}
+
+	if (this->get_improvements().empty() && this->get_site_types().contains(site_type::resource)) {
+		throw std::runtime_error(std::format("Resource \"{}\" is available for resource sites, but has no improvements which can be built on it.", this->get_identifier()));
+	}
 }
 
 const metternich::icon *resource::get_icon() const
