@@ -1,0 +1,9 @@
+the_struggle_for_empire = {
+	name = "The Struggle for Empire"
+	start_date = 2236
+	map_template = universe
+	hidden = true
+	default_countries = {
+		terran_federation
+	}
+}

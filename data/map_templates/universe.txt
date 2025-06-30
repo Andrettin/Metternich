@@ -1,0 +1,5 @@
+universe = {
+	name = "Universe"
+	size = { 256 256 }
+	universe = true
+}
