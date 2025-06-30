@@ -198,7 +198,7 @@ void province_game_data::do_events()
 
 void province_game_data::do_ai_turn()
 {
-	//visit ruins (if any) with military units of this province's owner
+	//visit visitable sites (if any) with military units of this province's owner
 	if (this->get_owner() != nullptr && this->has_country_military_unit(this->get_owner())) {
 		for (const site *site : this->get_sites()) {
 			site_game_data *site_game_data = site->get_game_data();
