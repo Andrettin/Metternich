@@ -100,11 +100,11 @@ void improvement::check() const
 	}
 
 	if (!this->get_resources().empty() && this->get_slot() != improvement_slot::resource) {
-		throw std::runtime_error(std::format("Improvement \"{}\" has a resource, but is not a resource improvement.", this->get_identifier()));
+		throw std::runtime_error(std::format("Improvement \"{}\" has resources, but is not a resource improvement.", this->get_identifier()));
 	}
 
-	if (this->is_ruins() && this->get_slot() != improvement_slot::main) {
-		throw std::runtime_error(std::format("Improvement \"{}\" is ruins, but is not a main improvement.", this->get_identifier()));
+	if (this->is_visitable() && this->get_slot() != improvement_slot::main) {
+		throw std::runtime_error(std::format("Improvement \"{}\" is visitable, but is not a main improvement.", this->get_identifier()));
 	}
 
 	if ((this->get_slot() == improvement_slot::main || this->get_slot() == improvement_slot::resource) && this->get_image_filepath().empty()) {
@@ -112,12 +112,7 @@ void improvement::check() const
 	}
 
 	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
-		bool found = false;
-
-		if (vector::contains(this->get_terrain_types(), terrain)) {
-			found = true;
-		}
-
+		bool found = vector::contains(this->get_terrain_types(), terrain);
 		if (!found) {
 			for (const resource *resource : this->get_resources()) {
 				if (vector::contains(resource->get_terrain_types(), terrain)) {

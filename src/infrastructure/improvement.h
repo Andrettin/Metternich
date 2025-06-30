@@ -29,7 +29,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::improvement_slot slot MEMBER slot READ get_slot NOTIFY changed)
-	Q_PROPERTY(bool ruins MEMBER ruins READ is_ruins NOTIFY changed)
+	Q_PROPERTY(bool visitable MEMBER visitable READ is_visitable NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
@@ -67,9 +67,9 @@ public:
 		return this->resources;
 	}
 
-	bool is_ruins() const
+	bool is_visitable() const
 	{
-		return this->ruins;
+		return this->visitable;
 	}
 
 	const metternich::icon *get_icon() const
@@ -146,12 +146,12 @@ public:
 		return this->commodity_costs;
 	}
 
-	const modifier<const site> *get_modifier() const
+	const metternich::modifier<const site> *get_modifier() const
 	{
 		return this->modifier.get();
 	}
 
-	const modifier<const country> *get_country_modifier() const
+	const metternich::modifier<const country> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
 	}
@@ -165,7 +165,7 @@ private:
 	improvement_slot slot{};
 	int level = 0;
 	std::vector<const resource *> resources; //the resources for which this improvement can be built
-	bool ruins = false; //if true, this improvement can be explored by troops, yielding some bonus (or malus)
+	bool visitable = false; //if true, this improvement can be visited by an adventurer
 	const metternich::icon *icon = nullptr;
 	std::filesystem::path image_filepath;
 	std::map<const terrain_type *, std::filesystem::path> terrain_image_filepaths;
@@ -178,7 +178,7 @@ private:
 	technology *required_technology = nullptr;
 	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
-	std::unique_ptr<modifier<const site>> modifier;
+	std::unique_ptr<metternich::modifier<const site>> modifier;
 	std::unique_ptr<metternich::modifier<const country>> country_modifier;
 };
 
