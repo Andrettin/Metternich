@@ -1869,15 +1869,42 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 
 	QImage scaled_exploration_diplomatic_map_image;
 
-	const centesimal_int final_scale_factor = tile_pixel_size * preferences::get()->get_scale_factor();
-
-	co_await QtConcurrent::run([this, final_scale_factor, &scaled_exploration_diplomatic_map_image]() {
-		scaled_exploration_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->exploration_diplomatic_map_image, final_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([this, tile_pixel_size, &scaled_exploration_diplomatic_map_image]() {
+		scaled_exploration_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->exploration_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
 
 	this->exploration_diplomatic_map_image = std::move(scaled_exploration_diplomatic_map_image);
+
+	//make semi-transparent pixels non-transparent
+	for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
+		for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
+			const QPoint pixel_pos(x, y);
+			QColor pixel_color = this->exploration_diplomatic_map_image.pixelColor(pixel_pos);
+
+			if (pixel_color.alpha() == 0 || pixel_color.alpha() == 255) {
+				continue;
+			}
+
+			pixel_color.setAlpha(255);
+			this->exploration_diplomatic_map_image.setPixelColor(pixel_pos, pixel_color);
+		}
+	}
+
+	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+
+	co_await QtConcurrent::run([this, scale_factor, &scaled_exploration_diplomatic_map_image]() {
+		scaled_exploration_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->exploration_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	this->exploration_diplomatic_map_image = std::move(scaled_exploration_diplomatic_map_image);
+
+	assert_throw(this->exploration_diplomatic_map_image.size() == map::get()->get_diplomatic_map_image_size() * preferences::get()->get_scale_factor());
+	assert_throw(this->exploration_diplomatic_map_image.size
+	() == map::get()->get_ocean_diplomatic_map_image().size());
 }
 
 void game::process_delayed_effects()
