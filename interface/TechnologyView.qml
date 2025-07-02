@@ -91,7 +91,7 @@ Item {
 					anchors.left: technology_label.right
 					anchors.leftMargin: 16 * scale_factor
 					visible: researchable_technologies.includes(technology)
-				
+					
 					contentItem: Item {
 						id: research_technology_button_item
 						anchors.verticalCenter: research_technology_button.verticalCenter
@@ -156,7 +156,7 @@ Item {
 							if (country_game_data.can_research_technology(technology)) {
 								country_game_data.add_current_research(technology)
 							} else {
-								add_notification("Costs", country_game_data.interior_minister_portrait, "Your Excellency, we unfortunately cannot pay for the costs of researching the " + technology.name + " technology.", technology_view)
+								add_notification("Costs", country_game_data.interior_minister_portrait, "Your Excellency, we unfortunately cannot afford the costs of researching the " + technology.name + " technology.", technology_view)
 							}
 						}
 					}

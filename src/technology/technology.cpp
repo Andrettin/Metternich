@@ -51,44 +51,6 @@ namespace metternich {
 void technology::initialize_all()
 {
 	data_type::initialize_all();
-	std::vector<technology *> costless_technologies = technology::get_all();
-	std::erase_if(costless_technologies, [](const technology *technology) {
-		return technology->is_discovery() || technology->cost != 0;
-	});
-
-	bool changed = true;
-	while (changed) {
-		while (changed) {
-			changed = false;
-
-			for (technology *technology : costless_technologies) {
-				if (technology->cost != 0) {
-					continue;
-				}
-
-				const bool success = technology->initialize_cost_from_prerequisites();
-				if (success) {
-					changed = true;
-				}
-			}
-
-			std::erase_if(costless_technologies, [](const technology *technology) {
-				return technology->cost != 0;
-			});
-		}
-
-		changed = false;
-		for (technology *technology : costless_technologies) {
-			const bool success = technology->initialize_cost_from_dependents();
-			if (success) {
-				changed = true;
-			}
-		}
-
-		std::erase_if(costless_technologies, [](const technology *technology) {
-			return technology->cost != 0;
-		});
-	}
 
 	technology::sort_instances([](const technology *lhs, const technology *rhs) {
 		if (lhs->get_category() != rhs->get_category() && lhs->get_category() != nullptr && rhs->get_category() != nullptr) {
@@ -192,6 +154,10 @@ void technology::initialize()
 
 	for (technology *prerequisite : this->get_prerequisites()) {
 		prerequisite->leads_to.push_back(this);
+	}
+
+	if (!this->is_discovery() && this->cost == 0) {
+		this->calculate_cost();
 	}
 
 	std::sort(this->enabled_pathways.begin(), this->enabled_pathways.end(), pathway_compare());
@@ -475,100 +441,10 @@ QVariantList technology::get_commodity_costs_for_country_qvariant_list(const cou
 	return archimedes::map::to_qvariant_list(this->get_commodity_costs_for_country(country));
 }
 
-bool technology::initialize_cost_from_prerequisites()
+void technology::calculate_cost()
 {
-	bool changed = false;
-
-	if (this->cost == 0) {
-		int highest_prerequisite_cost = 0;
-		int cost_modifier = 0;
-
-		for (const technology *prerequisite : this->get_prerequisites()) {
-			if (prerequisite->get_total_prerequisite_depth() != (this->get_total_prerequisite_depth() - 1)) {
-				continue;
-			}
-
-			if (prerequisite->cost == 0) {
-				continue;
-			}
-
-			highest_prerequisite_cost = std::max(prerequisite->cost, highest_prerequisite_cost);
-
-			int prerequisite_cost_modifier = 0;
-			for (const technology *subprerequisite : prerequisite->get_prerequisites()) {
-				if (subprerequisite->get_total_prerequisite_depth() != (prerequisite->get_total_prerequisite_depth() - 1)) {
-					continue;
-				}
-
-				if (subprerequisite->cost == 0) {
-					continue;
-				}
-
-				if (subprerequisite->cost > prerequisite->cost) {
-					continue;
-				}
-
-				prerequisite_cost_modifier = std::max(prerequisite->cost * 100 / subprerequisite->cost, prerequisite_cost_modifier);
-			}
-
-			cost_modifier = std::max(prerequisite_cost_modifier, cost_modifier);
-		}
-
-		if (cost_modifier != 0) {
-			this->cost = std::max(1, highest_prerequisite_cost * cost_modifier / 100);
-			changed = true;
-		}
-	}
-
-	return changed;
-}
-
-bool technology::initialize_cost_from_dependents()
-{
-	bool changed = false;
-
-	if (this->cost == 0) {
-		int highest_dependent_cost = 0;
-		int cost_modifier = 0;
-
-		for (const technology *dependent : this->get_leads_to()) {
-			if (dependent->get_total_prerequisite_depth() != (this->get_total_prerequisite_depth() + 1)) {
-				continue;
-			}
-
-			if (dependent->cost == 0) {
-				continue;
-			}
-
-			highest_dependent_cost = std::max(dependent->cost, highest_dependent_cost);
-
-			int dependent_cost_modifier = 0;
-			for (const technology *subdependent : dependent->get_leads_to()) {
-				if (subdependent->get_total_prerequisite_depth() != (dependent->get_total_prerequisite_depth() + 1)) {
-					continue;
-				}
-
-				if (subdependent->cost == 0) {
-					continue;
-				}
-
-				if (subdependent->cost < dependent->cost) {
-					continue;
-				}
-
-				dependent_cost_modifier = std::max(dependent->cost * 100 / subdependent->cost, dependent_cost_modifier);
-			}
-
-			cost_modifier = std::max(dependent_cost_modifier, cost_modifier);
-		}
-
-		if (cost_modifier != 0) {
-			this->cost = std::max(1, highest_dependent_cost * cost_modifier / 100);
-			changed = true;
-		}
-	}
-
-	return changed;
+	const int depth = this->get_total_prerequisite_depth();
+	this->cost = (depth + 2) * number::sqrt(depth + 2) * 10;
 }
 
 QVariantList technology::get_enabled_buildings_qvariant_list() const

@@ -86,8 +86,6 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::technology*";
 	static constexpr const char database_folder[] = "technologies";
 
-	static constexpr int base_cost = 10;
-
 public:
 	static void initialize_all();
 
@@ -197,8 +195,7 @@ public:
 	commodity_map<int> get_commodity_costs_for_country(const country *country) const;
 	Q_INVOKABLE QVariantList get_commodity_costs_for_country_qvariant_list(const metternich::country *country) const;
 
-	bool initialize_cost_from_prerequisites();
-	bool initialize_cost_from_dependents();
+	void calculate_cost();
 
 	const factor<country> *get_cost_factor() const
 	{
