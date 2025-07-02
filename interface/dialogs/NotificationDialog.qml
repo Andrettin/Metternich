@@ -30,6 +30,7 @@ DialogBase {
 			portrait_identifier: notification_dialog.portrait_identifier
 			visible: portrait_identifier.length > 0
 			tooltip: is_character ? portrait_object.full_name : ""
+			enabled: false
 			
 			readonly property bool is_character: portrait_object !== null && portrait_object.class_name === "metternich::character"
 		}

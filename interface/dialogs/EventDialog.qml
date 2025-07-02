@@ -27,6 +27,7 @@ DialogBase {
 		portrait_identifier: (event_instance && event_instance.event && event_instance.event.portrait) ? event_instance.event.portrait.identifier : ""
 		visible: portrait_identifier.length > 0
 		circle: event_instance && event_instance.event && event_instance.event.circular_portrait
+		enabled: false
 	}
 	
 	SmallText {
