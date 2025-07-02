@@ -156,7 +156,7 @@ void technology::initialize()
 		prerequisite->leads_to.push_back(this);
 	}
 
-	if (!this->is_discovery() && this->cost == 0) {
+	if (!this->is_discovery()) {
 		this->calculate_cost();
 	}
 
