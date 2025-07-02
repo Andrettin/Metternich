@@ -100,7 +100,7 @@ void technology::process_gsml_property(const gsml_property &property)
 
 	if (key == "cost_commodity") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
-		this->commodity_cost_weights[commodity::get(value)] = 3;
+		this->commodity_cost_weights[commodity::get(value)] = technology::default_commodity_cost_weight;
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}

@@ -85,6 +85,9 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::technology*";
 	static constexpr const char database_folder[] = "technologies";
 
+	static constexpr int default_wealth_cost_weight = 1;
+	static constexpr int default_commodity_cost_weight = 3;
+
 public:
 	static void initialize_all();
 
@@ -505,7 +508,7 @@ private:
 	int total_prerequisite_depth = 0;
 	std::vector<const technology *> leads_to;
 	int cost = 0;
-	int wealth_cost_weight = 1;
+	int wealth_cost_weight = technology::default_wealth_cost_weight;
 	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const factor<country>> cost_factor;
 	std::vector<const commodity *> enabled_commodities;
