@@ -81,7 +81,6 @@ trade_fairs = {
 	portrait = coinage
 	icon = wealth
 	period = 1550_1600
-	cost = 20
 	cost_commodity = research
 	prerequisites = {
 		merchant_companies

@@ -4,7 +4,6 @@ electricity = {
 	portrait = engineering
 	icon = research
 	period = 1850_1875
-	cost = 2350
 	cost_commodity = research
 	prerequisites = {
 		magnetism

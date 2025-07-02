@@ -19,7 +19,6 @@ wind_saw_mill = {
 	portrait = engineering
 	icon = lumber
 	period = 1550_1600
-	cost = 20
 	cost_commodity = research
 	prerequisites = {
 		saw_mill

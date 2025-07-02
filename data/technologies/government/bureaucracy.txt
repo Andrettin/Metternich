@@ -4,7 +4,6 @@ national_bureaucracy = {
 	portrait = grand_ducal_crown
 	icon = crown_royal
 	period = 1600_1650
-	cost = 33
 	cost_commodity = statesmanship
 	prerequisites = {
 		diplomatic_expertise

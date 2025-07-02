@@ -4,7 +4,6 @@ fur_hat_production = {
 	portrait = engineering
 	icon = fur_hats
 	period = bronze_age
-	cost = 9
 	cost_commodity = research
 	prerequisites = {
 		furs

@@ -17,7 +17,6 @@ astronomy = {
 	icon = research
 	period = 1500_1550
 	year = 1543 #development of the Heliocentric Model; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 209-211.
-	cost = 780
 	cost_commodity = research
 	prerequisites = {
 		astrology

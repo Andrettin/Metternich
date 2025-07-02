@@ -13,7 +13,6 @@ improved_trapping_techniques = {
 	portrait = engineering
 	icon = furs
 	period = 1500_1550
-	cost = 9
 	cost_commodity = research
 	prerequisites = {
 		furs
@@ -28,7 +27,6 @@ riverboats = {
 	portrait = unload
 	icon = furs
 	period = 1700_1750
-	cost = 70
 	cost_commodity = research
 	prerequisites = {
 		improved_trapping_techniques

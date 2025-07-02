@@ -25,7 +25,6 @@ large_tobacco_plantations = {
 	portrait = engineering
 	icon = tobacco
 	period = 1600_1650
-	cost = 33
 	cost_commodity = research
 	prerequisites = {
 		tobacco_planting

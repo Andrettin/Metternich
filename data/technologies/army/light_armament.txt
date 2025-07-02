@@ -5,7 +5,6 @@ gunpowder = {
 	icon = musket
 	period = 1300_1400
 	cost_commodity = research
-	cost = 780
 	prerequisites = {
 		alchemy
 		invention
@@ -113,7 +112,6 @@ needle_gun = {
 	portrait = engineering
 	icon = rifle
 	period = 1750_1800
-	cost = 120
 	cost_commodity = research
 	prerequisites = {
 		bayonet
@@ -141,7 +139,6 @@ machine_gun = {
 	portrait = engineering
 	icon = rifle
 	period = 1875_1900
-	cost = 1000
 	cost_commodity = research
 	prerequisites = {
 		needle_gun

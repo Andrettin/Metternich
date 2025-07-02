@@ -4,7 +4,6 @@ coinage = {
 	portrait = coinage
 	icon = wealth
 	period = bronze_age
-	cost = 175
 	cost_commodity = research
 	prerequisites = {
 		precious_metals

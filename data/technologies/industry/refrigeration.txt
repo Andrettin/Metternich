@@ -4,7 +4,6 @@ refrigeration = {
 	portrait = engineering
 	icon = research
 	period = 1875_1900
-	cost = 3100
 	cost_commodity = research
 	prerequisites = {
 		food_packing_system

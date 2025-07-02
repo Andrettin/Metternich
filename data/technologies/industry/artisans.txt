@@ -17,7 +17,6 @@ trained_journeymen = {
 	portrait = engineering
 	icon = craftsmen_light_small
 	period = 1600_1650
-	cost = 33
 	cost_commodity = research
 	prerequisites = {
 		apprentice_workers
@@ -32,7 +31,6 @@ master_artisans = {
 	portrait = engineering
 	icon = craftsmen_light_small
 	period = 1650_1700
-	cost = 48
 	cost_commodity = research
 	prerequisites = {
 		trained_journeymen

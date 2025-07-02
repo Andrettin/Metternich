@@ -4,7 +4,6 @@ physics = {
 	portrait = engineering
 	icon = research
 	period = 1600_1650
-	cost = 485
 	cost_commodity = research
 	prerequisites = {
 		astronomy
@@ -19,7 +18,6 @@ theory_of_gravity = {
 	portrait = engineering
 	icon = research
 	period = 1650_1700
-	cost = 680
 	cost_commodity = research
 	prerequisites = {
 		physics
@@ -34,7 +32,6 @@ atomic_theory = {
 	portrait = engineering
 	icon = research
 	period = 1700_1750
-	cost = 5100
 	cost_commodity = research
 	prerequisites = {
 		theory_of_gravity

@@ -25,7 +25,6 @@ large_precious_stone_mines = {
 	portrait = factory
 	icon = gems
 	period = 1650_1700
-	cost = 48
 	cost_commodity = research
 	prerequisites = {
 		precious_stone_mining

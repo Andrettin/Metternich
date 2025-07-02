@@ -4,7 +4,6 @@ coal_mining = {
 	portrait = factory
 	icon = coal
 	period = 1550_1600
-	cost = 20
 	cost_commodity = research
 	prerequisites = {
 		mine_engineering
@@ -30,7 +29,6 @@ square_set_timbering = {
 	portrait = factory
 	icon = coal
 	period = 1650_1700
-	cost = 15
 	cost_commodity = research
 	prerequisites = {
 		large_coal_mines

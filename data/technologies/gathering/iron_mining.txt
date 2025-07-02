@@ -16,7 +16,6 @@ steam_in_mining = {
 	portrait = factory
 	icon = iron_ore
 	period = 1600_1650
-	cost = 33
 	cost_commodity = research
 	prerequisites = {
 		iron_mining

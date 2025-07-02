@@ -33,7 +33,6 @@ high_pressure_steam_engine = {
 	portrait = engineering
 	icon = railroad
 	period = 1650_1700
-	cost = 48
 	cost_commodity = research
 	prerequisites = {
 		road_construction
@@ -48,7 +47,6 @@ iron_railroad_bridge = {
 	subcategory = infrastructure
 	portrait = engineering
 	icon = railroad
-	cost = 15
 	cost_commodity = research
 	prerequisites = {
 		bridge_building
@@ -62,7 +60,6 @@ compound_steam_engine = {
 	portrait = engineering
 	icon = railroad
 	period = 1700_1750
-	cost = 70
 	cost_commodity = research
 	prerequisites = {
 		high_pressure_steam_engine
@@ -78,7 +75,6 @@ dynamite = {
 	portrait = engineering
 	icon = railroad
 	period = 1750_1800
-	cost = 400
 	cost_commodity = research
 	prerequisites = {
 		compound_steam_engine

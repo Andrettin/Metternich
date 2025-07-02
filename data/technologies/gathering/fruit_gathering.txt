@@ -4,7 +4,6 @@ commercial_fertilizer = {
 	portrait = engineering
 	icon = fruit
 	period = 1850_1875
-	cost = 120
 	cost_commodity = research
 	prerequisites = {
 		moldboard_plow

@@ -145,7 +145,6 @@ light_artillery_tactics = {
 	portrait = engineering
 	icon = cannon
 	period = 1700_1750
-	cost = 70
 	cost_commodity = leadership
 	prerequisites = {
 		horse_artillery
@@ -160,7 +159,6 @@ heavy_emplaced_artillery = {
 	portrait = engineering
 	icon = cannon
 	period = 1650_1700
-	cost = 48
 	cost_commodity = research
 	prerequisites = {
 		siege_engineering
@@ -189,7 +187,6 @@ rifled_artillery = {
 	portrait = engineering
 	icon = cannon
 	period = 1800_1825
-	cost = 100
 	cost_commodity = research
 	prerequisites = {
 		heavy_artillery
@@ -204,7 +201,6 @@ field_artillery_tactics = {
 	portrait = engineering
 	icon = cannon
 	period = 1800_1825
-	cost = 147
 	cost_commodity = leadership
 	prerequisites = {
 		light_artillery_tactics
@@ -231,7 +227,6 @@ large_artillery = {
 	portrait = engineering
 	icon = cannon
 	period = 1850_1875
-	cost = 400
 	cost_commodity = research
 	prerequisites = {
 		rifled_artillery

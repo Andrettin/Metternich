@@ -13,7 +13,6 @@ cotton_planting = {
 	portrait = engineering
 	icon = cotton
 	period = bronze_age
-	cost = 9
 	cost_commodity = research
 	prerequisites = {
 		cotton
@@ -40,7 +39,6 @@ cotton_gin = {
 	portrait = engineering
 	icon = cotton
 	period = 1650_1700
-	cost = 10
 	cost_commodity = research
 	prerequisites = {
 		large_cotton_plantations

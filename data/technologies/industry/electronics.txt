@@ -4,7 +4,6 @@ electronics = {
 	portrait = engineering
 	icon = research
 	period = 1875_1900
-	cost = 4100
 	cost_commodity = research
 	prerequisites = {
 		electricity

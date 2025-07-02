@@ -115,7 +115,6 @@ moldboard_plow = {
 	portrait = engineering
 	icon = grain
 	period = 1825_1850
-	cost = 30
 	cost_commodity = research
 	prerequisites = {
 		seed_drill
@@ -142,7 +141,6 @@ mechanical_reaper = {
 	portrait = engineering
 	icon = grain
 	period = 1850_1875
-	cost = 120
 	cost_commodity = research
 	prerequisites = {
 		moldboard_plow

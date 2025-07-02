@@ -42,7 +42,6 @@ university = {
 	portrait = university
 	icon = university
 	period = 1300_1400
-	cost = 33
 	cost_commodity = research
 	prerequisites = {
 		cathedral_school

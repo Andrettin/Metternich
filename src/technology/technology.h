@@ -69,7 +69,6 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(int free_technologies MEMBER free_technologies READ get_free_technologies NOTIFY changed)
 	Q_PROPERTY(int shared_prestige MEMBER shared_prestige READ get_shared_prestige NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
-	Q_PROPERTY(int cost MEMBER cost NOTIFY changed)
 	Q_PROPERTY(int wealth_cost_weight MEMBER wealth_cost_weight NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)

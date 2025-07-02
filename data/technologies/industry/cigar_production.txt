@@ -4,7 +4,6 @@ cigar_production = {
 	portrait = engineering
 	icon = tobacco
 	period = bronze_age
-	cost = 9
 	cost_commodity = research
 	prerequisites = {
 		tobacco

@@ -33,7 +33,6 @@ empire_building = {
 	portrait = grand_ducal_crown
 	icon = crown_imperial
 	period = 1750_1800
-	cost = 102
 	cost_commodity = statesmanship
 	prerequisites = {
 		nationalism

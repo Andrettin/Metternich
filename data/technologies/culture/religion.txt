@@ -4,7 +4,6 @@ ceremonial_burial = {
 	portrait = temple
 	icon = wooden_cross
 	period = copper_age
-	cost = 20
 	cost_commodity = piety
 }
 
@@ -14,7 +13,6 @@ mysticism = {
 	portrait = temple
 	icon = wooden_cross
 	period = bronze_age
-	cost = 40
 	cost_commodity = piety
 	prerequisites = {
 		ceremonial_burial
@@ -92,7 +90,6 @@ polytheism = {
 	portrait = temple
 	icon = wooden_cross
 	period = iron_age
-	cost = 120
 	cost_commodity = piety
 	prerequisites = {
 		mysticism
@@ -126,7 +123,6 @@ monotheism = {
 	portrait = temple
 	icon = wooden_cross
 	period = 500_1000
-	cost = 360
 	cost_commodity = piety
 	prerequisites = {
 		polytheism
@@ -172,7 +168,6 @@ theology = {
 	portrait = temple
 	icon = wooden_cross
 	period = 1000_1100
-	cost = 275
 	cost_commodity = piety
 	prerequisites = {
 		monotheism

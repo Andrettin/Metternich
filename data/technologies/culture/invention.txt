@@ -5,7 +5,6 @@ invention = {
 	icon = cog
 	#year = 1450
 	period = 500_1000
-	cost = 440
 	cost_commodity = research
 	prerequisites = {
 		engineering

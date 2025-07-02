@@ -13,7 +13,6 @@ precious_metal_mining = {
 	portrait = coinage
 	icon = gold_ore
 	period = bronze_age
-	cost = 24
 	cost_commodity = research
 	prerequisites = {
 		precious_metals

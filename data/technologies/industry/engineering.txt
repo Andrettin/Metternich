@@ -4,7 +4,6 @@ engineering = {
 	portrait = engineering
 	icon = cog
 	period = 1_500
-	cost = 175
 	cost_commodity = research
 	prerequisites = {
 		wheel

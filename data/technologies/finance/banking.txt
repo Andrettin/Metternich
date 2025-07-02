@@ -17,7 +17,6 @@ banking = {
 	portrait = coinage
 	icon = chest
 	period = 1700_1750
-	cost = 70
 	cost_commodity = research
 	prerequisites = {
 		moneylending
@@ -35,7 +34,6 @@ modern_military_funding = {
 	portrait = coinage
 	icon = chest
 	period = 1750_1800
-	cost = 102
 	cost_commodity = research
 	prerequisites = {
 		banking

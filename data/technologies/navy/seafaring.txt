@@ -4,7 +4,6 @@ seafaring = {
 	portrait = unload
 	icon = anchor
 	period = bronze_age
-	cost = 55
 	cost_commodity = research
 	prerequisites = {
 		pottery
@@ -17,7 +16,6 @@ cartography = {
 	portrait = unload
 	icon = globe
 	period = iron_age
-	cost = 120
 	cost_commodity = research
 	prerequisites = {
 		seafaring
@@ -44,7 +42,6 @@ navigation = {
 	portrait = unload
 	icon = compass
 	period = 1550_1600
-	cost = 1150
 	cost_commodity = research
 	prerequisites = {
 		superior_hull_design
@@ -59,7 +56,6 @@ magnetism = {
 	portrait = engineering
 	icon = compass
 	period = 1650_1700
-	cost = 375
 	cost_commodity = research
 	prerequisites = {
 		physics

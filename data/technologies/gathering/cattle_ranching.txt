@@ -41,7 +41,6 @@ feed_grasses = {
 	portrait = engineering
 	icon = cattle
 	period = 1800_1825
-	cost = 15
 	cost_commodity = research
 	prerequisites = {
 		scientific_cattle_breeding
@@ -71,7 +70,6 @@ barbed_wire = {
 	portrait = engineering
 	icon = cattle
 	period = 1850_1875
-	cost = 200
 	cost_commodity = research
 	prerequisites = {
 		feed_grasses

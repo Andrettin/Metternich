@@ -4,7 +4,6 @@ warrior_code = {
 	portrait = helmet
 	icon = saber
 	period = copper_age
-	cost = 50
 	cost_commodity = leadership
 }
 
@@ -14,7 +13,6 @@ horseback_riding = {
 	portrait = helmet
 	icon = horses
 	period = bronze_age
-	cost = 105
 	cost_commodity = leadership
 	prerequisites = {
 		wheel
@@ -28,7 +26,6 @@ chivalry = {
 	portrait = helmet
 	icon = heater_shield
 	period = 1000_1100
-	cost = 485
 	cost_commodity = leadership
 	prerequisites = {
 		horseback_riding

@@ -4,7 +4,6 @@ code_of_laws = {
 	portrait = grand_ducal_crown
 	icon = treaty
 	period = bronze_age
-	cost = 100
 	cost_commodity = statesmanship
 	prerequisites = {
 		writing

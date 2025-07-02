@@ -32,7 +32,6 @@ large_hulls = {
 	portrait = unload
 	icon = anchor
 	period = 1600_1650
-	cost = 33
 	cost_commodity = research
 	prerequisites = {
 		navigation
@@ -74,7 +73,6 @@ streamlined_hulls = {
 	portrait = unload
 	icon = anchor
 	period = 1700_1750
-	cost = 15
 	cost_commodity = research
 	prerequisites = {
 		advanced_hull_design
@@ -88,7 +86,6 @@ paddlewheels = {
 	portrait = unload
 	icon = anchor
 	period = 1700_1750
-	cost = 30
 	cost_commodity = research
 	prerequisites = {
 		advanced_hull_design
@@ -115,7 +112,6 @@ advanced_iron_working = {
 	portrait = unload
 	icon = anchor
 	period = 1750_1800
-	cost = 120
 	cost_commodity = research
 	prerequisites = {
 		ship_of_the_line
@@ -130,7 +126,6 @@ steel_armor_plate = {
 	portrait = unload
 	icon = anchor
 	period = 1850_1875
-	cost = 400
 	cost_commodity = research
 	prerequisites = {
 		advanced_iron_working
@@ -143,7 +138,6 @@ marine_engineering = {
 	portrait = unload
 	icon = anchor
 	period = 1875_1900
-	cost = 400
 	cost_commodity = research
 	prerequisites = {
 		steel_armor_plate
@@ -156,7 +150,6 @@ improved_range_finding = {
 	portrait = unload
 	icon = anchor
 	period = 1900_1925
-	cost = 1500
 	cost_commodity = research
 	prerequisites = {
 		marine_engineering

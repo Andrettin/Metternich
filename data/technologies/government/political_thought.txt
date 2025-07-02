@@ -4,7 +4,6 @@ monarchy = {
 	portrait = grand_ducal_crown
 	icon = crown_royal
 	period = 1_500
-	cost = 240
 	cost_commodity = statesmanship
 	prerequisites = {
 		code_of_laws
@@ -19,7 +18,6 @@ republic = {
 	portrait = grand_ducal_crown
 	icon = philosophy
 	period = 1_500
-	cost = 280
 	cost_commodity = statesmanship
 	prerequisites = {
 		code_of_laws
@@ -33,7 +31,6 @@ feudalism = {
 	portrait = ducal_crown
 	icon = crown_ducal
 	period = 500_1000
-	cost = 320
 	cost_commodity = statesmanship
 	prerequisites = {
 		monarchy
@@ -67,7 +64,6 @@ nationalism = {
 	portrait = grand_ducal_crown
 	icon = flag
 	period = 1700_1750
-	cost = 70
 	cost_commodity = statesmanship
 	prerequisites = {
 		propaganda
@@ -85,7 +81,6 @@ rights_of_man = {
 	portrait = grand_ducal_crown
 	icon = treaty
 	period = 1750_1800
-	cost = 360
 	cost_commodity = statesmanship
 	prerequisites = {
 		nationalism
@@ -162,7 +157,6 @@ democracy = {
 	portrait = grand_ducal_crown
 	icon = philosophy
 	period = 1800_1825
-	cost = 680
 	cost_commodity = statesmanship
 	prerequisites = {
 		republic
@@ -218,7 +212,6 @@ communism = {
 	portrait = grand_ducal_crown
 	icon = treaty
 	period = 1825_1850
-	cost = 1200
 	cost_commodity = statesmanship
 	prerequisites = {
 		collectivism
