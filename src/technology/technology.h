@@ -505,7 +505,7 @@ private:
 	int total_prerequisite_depth = 0;
 	std::vector<const technology *> leads_to;
 	int cost = 0;
-	int wealth_cost_weight = 0;
+	int wealth_cost_weight = 1;
 	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const factor<country>> cost_factor;
 	std::vector<const commodity *> enabled_commodities;
