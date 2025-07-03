@@ -52,7 +52,7 @@ void technology::initialize_all()
 {
 	data_type::initialize_all();
 
-	technology::sort_instances([](const technology *lhs, const technology *rhs) {
+	const auto sort_function = [](const technology *lhs, const technology *rhs) {
 		if (lhs->get_category() != rhs->get_category() && lhs->get_category() != nullptr && rhs->get_category() != nullptr) {
 			return lhs->get_category()->get_identifier() < rhs->get_category()->get_identifier();
 		}
@@ -62,7 +62,16 @@ void technology::initialize_all()
 		}
 
 		return lhs->get_identifier() < rhs->get_identifier();
-	});
+	};
+
+	technology::sort_instances(sort_function);
+	std::sort(technology::top_level_technologies.begin(), technology::top_level_technologies.end(), sort_function);
+
+	for (technology *technology : technology::get_all()) {
+		if (!technology->child_technologies.empty()) {
+			std::sort(technology->child_technologies.begin(), technology->child_technologies.end(), sort_function);
+		}
+	}
 
 	commodity_map<int> research_commodity_counts;
 	for (const technology *technology : technology::get_all()) {
@@ -148,6 +157,14 @@ void technology::initialize()
 {
 	if (this->subcategory != nullptr) {
 		this->subcategory->add_technology(this);
+	}
+	
+	if (!this->get_prerequisites().empty()) {
+		technology *parent_technology = this->get_prerequisites().at(0);
+		this->parent_technology = parent_technology;
+		parent_technology->child_technologies.push_back(this);
+	} else {
+		technology::top_level_technologies.push_back(this);
 	}
 
 	this->calculate_total_prerequisite_depth();
@@ -803,7 +820,7 @@ std::string technology::get_modifier_string(const country *country) const
 	return this->get_modifier()->get_string(country);
 }
 
-QString technology::get_effects_string(metternich::country *country) const
+QString technology::get_effects_string(const metternich::country *country) const
 {
 	std::string str = this->get_modifier_string(country);
 

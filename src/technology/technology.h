@@ -91,12 +91,18 @@ public:
 public:
 	static void initialize_all();
 
+	static const std::vector<const technology *> &get_top_level_technologies()
+	{
+		return technology::top_level_technologies;
+	}
+
 	static const std::vector<const commodity *> &get_research_commodities()
 	{
 		return technology::research_commodities;
 	}
 
 private:
+	static inline std::vector<const technology *> top_level_technologies;
 	static inline std::vector<const commodity *> research_commodities;
 
 public:
@@ -188,6 +194,16 @@ public:
 	const std::vector<const technology *> &get_leads_to() const
 	{
 		return this->leads_to;
+	}
+
+	const technology *get_parent_technology() const
+	{
+		return this->parent_technology;
+	}
+	
+	const std::vector<const technology *> &get_child_technologies() const
+	{
+		return this->child_technologies;
 	}
 
 	int get_wealth_cost_weight() const;
@@ -441,7 +457,7 @@ public:
 	}
 
 	std::string get_modifier_string(const country *country) const;
-	Q_INVOKABLE QString get_effects_string(metternich::country *country) const;
+	Q_INVOKABLE QString get_effects_string(const metternich::country *country) const;
 	void write_character_effects_string(const character_role role, const std::string_view &role_name, const country *country, std::string &str) const;
 
 	virtual named_data_entry *get_tree_parent() const override
@@ -508,6 +524,8 @@ private:
 	std::vector<technology *> prerequisites;
 	int total_prerequisite_depth = 0;
 	std::vector<const technology *> leads_to;
+	const technology *parent_technology = nullptr;
+	std::vector<const technology *> child_technologies;
 	int cost = 0;
 	int wealth_cost_weight = technology::default_wealth_cost_weight;
 	commodity_map<int> commodity_cost_weights;

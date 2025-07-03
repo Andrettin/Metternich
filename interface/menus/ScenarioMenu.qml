@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls.Material
-import scenario_model 1.0
+import scenario_model
 import ".."
 import "../dialogs"
 

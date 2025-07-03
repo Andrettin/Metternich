@@ -72,6 +72,7 @@
 #include "technology/research_organization.h"
 #include "technology/technology.h"
 #include "technology/technology_category.h"
+#include "technology/technology_model.h"
 #include "time/era.h"
 #include "ui/icon.h"
 #include "ui/icon_image_provider.h"
@@ -229,6 +230,7 @@ int main(int argc, char **argv)
 		qmlRegisterType<map_province_model>("map_province_model", 1, 0, "MapProvinceModel");
 		qmlRegisterType<map_site_model>("map_site_model", 1, 0, "MapSiteModel");
 		qmlRegisterType<scenario_model>("scenario_model", 1, 0, "ScenarioModel");
+		qmlRegisterType<technology_model>("technology_model", 1, 0, "TechnologyModel");
 		qmlRegisterType<MaskedMouseArea>("MaskedMouseArea", 1, 0, "MaskedMouseArea");
 
 		engine.rootContext()->setContextProperty("metternich", engine_interface::get());

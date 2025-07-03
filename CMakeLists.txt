@@ -247,6 +247,7 @@ set(technology_SRCS
 	src/technology/technology.cpp
 	src/technology/technology_category.cpp
 	src/technology/technology_container.cpp
+	src/technology/technology_model.cpp
 	src/technology/technology_subcategory.cpp
 )
 source_group(technology FILES ${technology_SRCS})
@@ -778,6 +779,7 @@ set(technology_HDRS
 	src/technology/technology.h
 	src/technology/technology_category.h
 	src/technology/technology_container.h
+	src/technology/technology_model.h
 	src/technology/technology_subcategory.h
 )
 source_group(technology FILES ${technology_HDRS})
