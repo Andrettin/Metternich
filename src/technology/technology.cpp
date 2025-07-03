@@ -350,13 +350,7 @@ int technology::get_wealth_cost_weight() const
 	int weight = this->wealth_cost_weight;
 
 	if (weight == 0) {
-		bool has_commodity_cost_weight = false;
-		for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
-			if (commodity->is_enabled()) {
-				has_commodity_cost_weight = true;
-				break;
-			}
-		}
+		const bool has_commodity_cost_weight = !this->get_commodity_cost_weights().empty();
 		if (!has_commodity_cost_weight) {
 			weight = 1;
 		}
@@ -365,11 +359,31 @@ int technology::get_wealth_cost_weight() const
 	return weight;
 }
 
+commodity_map<int> technology::get_commodity_cost_weights() const
+{
+	commodity_map<int> weights;
+
+	for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+		if (!commodity->is_enabled()) {
+			continue;
+		}
+
+		weights[commodity] = cost_weight;
+	}
+
+	if (!this->commodity_cost_weights.empty() && weights.empty() && defines::get()->get_default_research_commodity()->is_enabled()) {
+		//if the technology has commodity cost weights, but those commodities are disabled, use the default research commodity instead
+		weights[defines::get()->get_default_research_commodity()] = technology::default_commodity_cost_weight;
+	}
+
+	return weights;
+}
+
 int technology::get_total_cost_weights() const
 {
 	int cost_weights = this->get_wealth_cost_weight();
 
-	for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+	for (const auto &[commodity, cost_weight] : this->get_commodity_cost_weights()) {
 		if (!commodity->is_enabled()) {
 			continue;
 		}
@@ -418,7 +432,7 @@ commodity_map<int> technology::get_commodity_costs_for_country(const country *co
 
 	commodity_map<int> costs;
 
-	for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+	for (const auto &[commodity, cost_weight] : this->get_commodity_cost_weights()) {
 		if (!commodity->is_enabled()) {
 			continue;
 		}

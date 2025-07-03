@@ -191,6 +191,7 @@ public:
 	}
 
 	int get_wealth_cost_weight() const;
+	commodity_map<int> get_commodity_cost_weights() const;
 	int get_total_cost_weights() const;
 	centesimal_int get_cost_for_country(const country *country) const;
 	Q_INVOKABLE int get_wealth_cost_for_country(const metternich::country *country) const;
