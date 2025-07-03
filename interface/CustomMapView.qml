@@ -225,10 +225,12 @@ Item {
 				return
 			}
 			
+			var effects_string = technology.get_effects_string(metternich.game.player_country)
+			
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: technology.discovery ? "Discovery" : "Technology Researched",
 				portrait_object: metternich.game.player_country.game_data.interior_minister_portrait,
-				text: technology.discovery ? ("Your Excellency, we have discovered " + technology.name + "!") : ("Your Excellency, our scholars have made a breakthrough in the research of the " + technology.name + " technology!"),
+				text: technology.discovery ? ("Your Excellency, we have discovered " + technology.name + "!") : ("Your Excellency, our scholars have made a breakthrough in the research of the " + technology.name + " technology!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string): "")),
 				second_button_text: "View Technologies",
 				second_button_effects: () => {
 					if (!technology.discovery && !(menu_stack.currentItem instanceof TechnologyView)) {
