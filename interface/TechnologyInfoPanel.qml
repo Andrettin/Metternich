@@ -7,6 +7,8 @@ Rectangle {
 	width: 64 * scale_factor
 	clip: true
 	
+	readonly property var research_commodities: filter_research_commodities(metternich.get_research_commodities())
+	
 	PanelTiledBackground {
 	}
 	
@@ -25,10 +27,10 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.top: parent.top
 		anchors.topMargin: 16 * scale_factor
-		spacing: metternich.get_research_commodities().length >= 5 ? (4 * scale_factor) : (8 * scale_factor)
+		spacing: research_commodities.length >= 5 ? (4 * scale_factor) : (8 * scale_factor)
 		
 		Repeater {
-			model: metternich.get_research_commodities()
+			model: research_commodities
 			
 			IndustryCounter {
 				name: commodity.name
@@ -41,107 +43,99 @@ Rectangle {
 		}
 	}
 	
-	IconButton {
-		id: researched_mode_button
-		anchors.top: commodity_counter_column.bottom
-		anchors.topMargin: 8 * scale_factor
+	Column {
+		anchors.bottom: back_button.top
+		anchors.bottomMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: "architecture"
-		highlighted: technology_view_mode === TechnologyView.Mode.Researched
+		spacing: 4 * scale_factor
 		
-		onClicked: {
-			technology_view_mode = TechnologyView.Mode.Researched
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Researched Technologies"
-			} else {
-				status_text = ""
+		IconButton {
+			id: researched_mode_button
+			icon_identifier: "architecture"
+			highlighted: technology_view_mode === TechnologyView.Mode.Researched
+			
+			onClicked: {
+				technology_view_mode = TechnologyView.Mode.Researched
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Researched Technologies"
+				} else {
+					status_text = ""
+				}
 			}
 		}
-	}
-	
-	IconButton {
-		id: available_mode_button
-		anchors.top: researched_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: "research"
-		highlighted: technology_view_mode === TechnologyView.Mode.Available
 		
-		onClicked: {
-			technology_view_mode = TechnologyView.Mode.Available
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Available Technologies"
-			} else {
-				status_text = ""
+		IconButton {
+			id: available_mode_button
+			icon_identifier: "research"
+			highlighted: technology_view_mode === TechnologyView.Mode.Available
+			
+			onClicked: {
+				technology_view_mode = TechnologyView.Mode.Available
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Available Technologies"
+				} else {
+					status_text = ""
+				}
 			}
 		}
-	}
-	
-	IconButton {
-		id: future_mode_button
-		anchors.top: available_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: "philosophy"
-		highlighted: technology_view_mode === TechnologyView.Mode.Future
 		
-		onClicked: {
-			technology_view_mode = TechnologyView.Mode.Future
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Future Technologies"
-			} else {
-				status_text = ""
+		IconButton {
+			id: future_mode_button
+			icon_identifier: "philosophy"
+			highlighted: technology_view_mode === TechnologyView.Mode.Future
+			
+			onClicked: {
+				technology_view_mode = TechnologyView.Mode.Future
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Future Technologies"
+				} else {
+					status_text = ""
+				}
 			}
 		}
-	}
-	
-	IconButton {
-		id: show_all_mode_button
-		anchors.top: future_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: "university"
-		highlighted: technology_view_mode === TechnologyView.Mode.ShowAll
 		
-		onClicked: {
-			technology_view_mode = TechnologyView.Mode.ShowAll
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Show All"
-			} else {
-				status_text = ""
+		IconButton {
+			id: show_all_mode_button
+			icon_identifier: "university"
+			highlighted: technology_view_mode === TechnologyView.Mode.ShowAll
+			
+			onClicked: {
+				technology_view_mode = TechnologyView.Mode.ShowAll
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Show All"
+				} else {
+					status_text = ""
+				}
 			}
 		}
-	}
-	
-	IconButton {
-		id: tech_tree_mode_button
-		anchors.top: show_all_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: "cog"
-		highlighted: technology_view_mode === TechnologyView.Mode.TechTree
 		
-		onClicked: {
-			technology_view_mode = TechnologyView.Mode.TechTree
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Technology Tree"
-			} else {
-				status_text = ""
+		IconButton {
+			id: tech_tree_mode_button
+			icon_identifier: "cog"
+			highlighted: technology_view_mode === TechnologyView.Mode.TechTree
+			
+			onClicked: {
+				technology_view_mode = TechnologyView.Mode.TechTree
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Technology Tree"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 	}
@@ -158,5 +152,17 @@ Rectangle {
 		onClicked: {
 			menu_stack.pop()
 		}
+	}
+	
+	function filter_research_commodities(research_commodities) {
+		var commodities = []
+		
+		for (var commodity of research_commodities) {
+			if (commodity.enabled) {
+				commodities.push(commodity)
+			}
+		}
+		
+		return commodities
 	}
 }

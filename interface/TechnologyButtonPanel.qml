@@ -55,6 +55,25 @@ Rectangle {
 				}
 			}
 		}
+		
+		IconButton {
+			id: no_category_button
+			icon_identifier: "university"
+			highlighted: technology_view_category === null
+			visible: technology_view_mode !== TechnologyView.Mode.TechTree
+			
+			onClicked: {
+				technology_view_category = null
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Show All"
+				} else {
+					status_text = ""
+				}
+			}
+		}
 	}
 	
 	Column {
@@ -88,50 +107,23 @@ Rectangle {
 				}
 			}
 		}
-	}
-	
-	IconButton {
-		id: no_category_button
-		anchors.top: category_button_column.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.horizontalCenterOffset: 24 * scale_factor
-		icon_identifier: "university"
-		highlighted: technology_view_category === null
-		visible: technology_view_mode !== TechnologyView.Mode.TechTree
 		
-		onClicked: {
-			technology_view_category = null
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Show All"
-			} else {
-				status_text = ""
+		IconButton {
+			id: no_subcategory_button
+			icon_identifier: "university"
+			highlighted: technology_view_subcategory === null
+			visible: technology_view_mode !== TechnologyView.Mode.TechTree && technology_view_category !== null
+			
+			onClicked: {
+				technology_view_subcategory = null
 			}
-		}
-	}
-	
-	IconButton {
-		id: no_subcategory_button
-		anchors.top: subcategory_button_column.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.horizontalCenterOffset: -24 * scale_factor
-		icon_identifier: "university"
-		highlighted: technology_view_subcategory === null
-		visible: technology_view_mode !== TechnologyView.Mode.TechTree && technology_view_category !== null
-		
-		onClicked: {
-			technology_view_subcategory = null
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Show All"
-			} else {
-				status_text = ""
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Show All"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 	}
