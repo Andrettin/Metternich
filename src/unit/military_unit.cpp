@@ -335,7 +335,8 @@ bool military_unit::can_move_to(const metternich::province *province) const
 			}
 			break;
 		case military_unit_domain::air:
-			//air units can move both on land and water
+		case military_unit_domain::space:
+			//air and space units can move both on land and water
 			break;
 		default:
 			assert_throw(false);

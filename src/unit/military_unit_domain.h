@@ -6,7 +6,8 @@ enum class military_unit_domain {
 	none,
 	land,
 	water,
-	air
+	air,
+	space
 };
 
 inline std::string get_military_unit_domain_name(const military_unit_domain domain)
@@ -18,6 +19,8 @@ inline std::string get_military_unit_domain_name(const military_unit_domain doma
 			return "Water";
 		case military_unit_domain::air:
 			return "Air";
+		case military_unit_domain::space:
+			return "Space";
 		default:
 			break;
 	}
