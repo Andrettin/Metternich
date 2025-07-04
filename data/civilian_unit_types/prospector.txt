@@ -3,5 +3,9 @@ prospector = {
 	unit_class = prospector
 	icon = miners
 	prospector = true
+	wealth_cost = 500
+	commodity_costs = {
+		paper = 2
+	}
 	required_technology = geological_prospecting
 }

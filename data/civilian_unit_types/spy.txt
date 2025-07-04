@@ -3,4 +3,8 @@ spy = {
 	unit_class = spy
 	icon = rifle_infantry_light
 	spy = true
+	wealth_cost = 500
+	commodity_costs = {
+		paper = 3
+	}
 }

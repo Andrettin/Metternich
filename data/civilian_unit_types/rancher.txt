@@ -2,6 +2,10 @@ rancher = {
 	name = "Rancher"
 	unit_class = rancher
 	icon = slaves_light
+	wealth_cost = 1000
+	commodity_costs = {
+		paper = 2
+	}
 	improvable_resources = {
 		cattle
 		horses

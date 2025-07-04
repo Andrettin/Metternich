@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/pathway_container.h"
 
@@ -32,6 +33,7 @@ class civilian_unit_type final : public named_data_entry, public data_type<civil
 	Q_PROPERTY(bool developer MEMBER developer READ is_developer NOTIFY changed)
 	Q_PROPERTY(bool spy MEMBER spy READ is_spy NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "civilian_unit_type";
@@ -92,6 +94,16 @@ public:
 		return this->required_technology;
 	}
 
+	int get_wealth_cost() const
+	{
+		return this->wealth_cost;
+	}
+
+	const commodity_map<int> &get_commodity_costs() const
+	{
+		return this->commodity_costs;
+	}
+
 	const resource_set &get_improvable_resources() const
 	{
 		return this->improvable_resources;
@@ -125,6 +137,8 @@ private:
 	bool developer = false;
 	bool spy = false;
 	technology *required_technology = nullptr;
+	int wealth_cost = 0;
+	commodity_map<int> commodity_costs;
 	resource_set improvable_resources;
 	pathway_set buildable_pathways;
 };

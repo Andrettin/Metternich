@@ -3,6 +3,10 @@ engineer = {
 	unit_class = engineer
 	icon = craftsmen_light
 	required_technology = engineering
+	wealth_cost = 2000
+	commodity_costs = {
+		paper = 2
+	}
 	buildable_pathways = {
 		trail
 		road

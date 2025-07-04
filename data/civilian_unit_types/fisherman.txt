@@ -2,6 +2,10 @@ fisherman = {
 	name = "Fisherman"
 	unit_class = fisherman
 	icon = fishermen
+	wealth_cost = 1000
+	commodity_costs = {
+		paper = 2
+	}
 	improvable_resources = {
 		fish
 		whales

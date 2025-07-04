@@ -4,6 +4,7 @@
 
 #include "country/cultural_group.h"
 #include "country/culture.h"
+#include "economy/commodity.h"
 #include "economy/resource.h"
 #include "infrastructure/pathway.h"
 #include "technology/technology.h"
@@ -17,7 +18,12 @@ void civilian_unit_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "improvable_resources") {
+	if (tag == "commodity_costs") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->commodity_costs[commodity] = std::stoi(property.get_value());
+		});
+	} else if (tag == "improvable_resources") {
 		for (const std::string &value : values) {
 			this->improvable_resources.insert(resource::get(value));
 		}
