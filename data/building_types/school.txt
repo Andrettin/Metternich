@@ -89,12 +89,15 @@ university = {
 	}
 	recruited_civilian_unit_types = {
 		miner
+		#explorer
 		prospector
 		farmer
 		forester
 		#engineer
 		#rancher
 		#driller
+		#spy
+		#merchant
 	}
 	cost_factor = {
 		modifier = {
