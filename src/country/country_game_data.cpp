@@ -4669,11 +4669,11 @@ std::vector<const character *> country_game_data::get_appointable_office_holders
 
 	for (const character *character : character::get_all()) {
 		if (office->is_ruler()) {
-			if (character->get_role() != character_role::ruler) {
+			if (!character->has_role(character_role::ruler)) {
 				continue;
 			}
 		} else {
-			if (character->get_role() != character_role::advisor) {
+			if (!character->has_role(character_role::advisor)) {
 				continue;
 			}
 		}
@@ -4942,7 +4942,7 @@ void country_game_data::add_advisor(const character *advisor)
 {
 	try {
 		assert_throw(this->can_have_advisors());
-		assert_throw(advisor->get_role() == character_role::advisor);
+		assert_throw(advisor->has_role(character_role::advisor));
 
 		const character *replaced_advisor = this->get_replaced_advisor_for(advisor);
 		if (replaced_advisor != nullptr) {
@@ -4962,6 +4962,10 @@ void country_game_data::add_advisor(const character *advisor)
 void country_game_data::remove_advisor(const character *advisor)
 {
 	assert_throw(advisor->get_game_data()->get_country() == this->country);
+
+	if (advisor->get_game_data()->get_civilian_unit() != nullptr) {
+		advisor->get_game_data()->get_civilian_unit()->disband(false);
+	}
 
 	std::erase(this->advisors, advisor);
 	advisor->get_game_data()->set_country(nullptr);
@@ -5004,7 +5008,7 @@ void country_game_data::choose_next_advisor()
 	std::map<advisor_category, std::vector<const character *>> potential_advisors_per_category;
 
 	for (const character *character : character::get_all()) {
-		if (character->get_role() != character_role::advisor) {
+		if (!character->has_role(character_role::advisor)) {
 			continue;
 		}
 
@@ -5301,7 +5305,7 @@ void country_game_data::choose_next_leader()
 	std::map<military_unit_category, std::vector<const character *>> potential_leaders_per_category;
 
 	for (const character *character : character::get_all()) {
-		if (character->get_role() != character_role::leader) {
+		if (!character->has_role(character_role::leader)) {
 			continue;
 		}
 
@@ -5555,7 +5559,7 @@ bool country_game_data::create_civilian_unit(const civilian_unit_type *civilian_
 	std::vector<const character *> potential_characters;
 
 	for (const character *character : character::get_all()) {
-		if (character->get_role() != character_role::civilian) {
+		if (!character->has_role(character_role::civilian)) {
 			continue;
 		}
 
@@ -5568,6 +5572,11 @@ bool country_game_data::create_civilian_unit(const civilian_unit_type *civilian_
 		}
 
 		if (character->get_game_data()->get_civilian_unit() != nullptr) {
+			continue;
+		}
+
+		if (character->has_role(character_role::advisor) && character->get_game_data()->get_country() != this->country) {
+			//if the character is an advisor, they must already have been recruited by the country as an advisor before being usable as a civilian unit
 			continue;
 		}
 

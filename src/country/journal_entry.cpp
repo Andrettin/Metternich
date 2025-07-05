@@ -179,13 +179,8 @@ void journal_entry::check() const
 	}
 
 	for (const character *character : this->get_recruited_characters()) {
-		switch (character->get_role()) {
-			case character_role::advisor:
-			case character_role::leader:
-			case character_role::civilian:
-				break;
-			default:
-				throw std::runtime_error(std::format("Journal entry \"{}\" requires the recruiting \"{}\" character, but that character does not have a recruitable role.", this->get_identifier(), character->get_identifier()));
+		if (!character->has_role(character_role::advisor) && !character->has_role(character_role::leader) && !character->has_role(character_role::civilian)) {
+			throw std::runtime_error(std::format("Journal entry \"{}\" requires the recruiting \"{}\" character, but that character does not have a recruitable role.", this->get_identifier(), character->get_identifier()));
 		}
 	}
 }
@@ -212,7 +207,7 @@ bool journal_entry::check_preconditions(const country *country) const
 			return false;
 		}
 
-		if (character->get_role() == character_role::advisor && !can_recruit_advisors) {
+		if (character->has_role(character_role::advisor) && !can_recruit_advisors) {
 			return false;
 		}
 	}
@@ -321,24 +316,30 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 	}
 
 	for (const character *character : this->get_recruited_characters()) {
-		switch (character->get_role()) {
-			case character_role::advisor:
-				if (!vector::contains(country_game_data->get_advisors(), character)) {
-					return false;
-				}
+		bool recruited = false;
+
+		for (const character_role role : character->get_roles()) {
+			switch (role) {
+				case character_role::advisor:
+					recruited = vector::contains(country_game_data->get_advisors(), character);
+					break;
+				case character_role::leader:
+					recruited = vector::contains(country_game_data->get_leaders(), character);
+					break;
+				case character_role::civilian:
+					recruited = country_game_data->has_civilian_character(character);
+					break;
+				default:
+					break;
+			}
+
+			if (recruited) {
 				break;
-			case character_role::leader:
-				if (!vector::contains(country_game_data->get_leaders(), character)) {
-					return false;
-				}
-				break;
-			case character_role::civilian:
-				if (!country_game_data->has_civilian_character(character)) {
-					return false;
-				}
-				break;
-			default:
-				break;
+			}
+		}
+
+		if (!recruited) {
+			return false;
 		}
 	}
 
@@ -429,18 +430,12 @@ QString journal_entry::get_completion_conditions_string() const
 
 		std::string character_type_name;
 
-		switch (character->get_role()) {
-			case character_role::advisor:
-				character_type_name = "Advisor";
-				break;
-			case character_role::leader:
-				character_type_name = character->get_leader_type_name();
-				break;
-			case character_role::civilian:
-				character_type_name = character->get_civilian_unit_type()->get_name();
-				break;
-			default:
-				break;
+		if (character->has_role(character_role::advisor)) {
+			character_type_name = "Advisor";
+		} else if (character->has_role(character_role::leader)) {
+			character_type_name = character->get_leader_type_name();
+		} else if (character->has_role(character_role::civilian)) {
+			character_type_name = character->get_civilian_unit_type()->get_name();
 		}
 
 		str += std::format("Recruit {} ({})", character->get_full_name(), character_type_name);

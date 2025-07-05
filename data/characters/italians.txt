@@ -1,7 +1,10 @@
 marco_polo = {
 	name = "Marco"
 	surname = "Polo"
-	role = advisor
+	roles = {
+		advisor
+		civilian
+	}
 	character_type = merchant
 	culture = italian
 	religion = catholic

@@ -62,7 +62,7 @@ void character_game_data::apply_history()
 
 	const metternich::country *country = character_history->get_country();
 
-	if ((this->character->get_role() == character_role::advisor || this->character->get_role() == character_role::leader || this->character->get_role() == character_role::civilian) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
+	if ((this->character->has_role(character_role::advisor) || this->character->has_role(character_role::leader) || this->character->has_role(character_role::civilian)) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
 		country_game_data *country_game_data = country->get_game_data();
 		const technology *obsolescence_technology = this->character->get_obsolescence_technology();
 
@@ -73,11 +73,11 @@ void character_game_data::apply_history()
 		if (obsolescence_technology != nullptr && country_game_data->has_technology(obsolescence_technology)) {
 			this->set_dead(true);
 		} else {
-			if (this->character->get_role() == character_role::advisor) {
+			if (this->character->has_role(character_role::advisor)) {
 				if (country_game_data->can_have_advisors() && !country_game_data->has_incompatible_advisor_to(this->character)) {
 					country_game_data->add_advisor(this->character);
 				}
-			} else if (this->character->get_role() == character_role::leader) {
+			} else if (this->character->has_role(character_role::leader)) {
 				const province *deployment_province = character_history->get_deployment_province();
 				if (deployment_province == nullptr && country_game_data->get_capital_province() != nullptr) {
 					deployment_province = country_game_data->get_capital_province();
@@ -91,7 +91,7 @@ void character_game_data::apply_history()
 					assert_throw(this->get_country() != nullptr);
 					this->deploy_to_province(deployment_province);
 				}
-			} else if (this->character->get_role() == character_role::civilian) {
+			} else if (this->character->has_role(character_role::civilian)) {
 				const site *deployment_site = character_history->get_deployment_site();
 				if (deployment_site == nullptr && country_game_data->get_capital() != nullptr) {
 					deployment_site = country_game_data->get_capital();
@@ -146,11 +146,11 @@ void character_game_data::on_setup_finished()
 	}
 
 	std::vector<character_trait_type> generated_trait_types{ character_trait_type::background, character_trait_type::personality, character_trait_type::expertise };
-	if (this->character->get_role() == character_role::ruler) {
+	if (this->character->has_role(character_role::ruler)) {
 		generated_trait_types.insert(generated_trait_types.begin(), character_trait_type::ruler);
-	} else if (this->character->get_role() == character_role::advisor) {
+	} else if (this->character->has_role(character_role::advisor)) {
 		generated_trait_types.insert(generated_trait_types.begin(), character_trait_type::advisor);
-	} else if (this->character->get_role() == character_role::governor) {
+	} else if (this->character->has_role(character_role::governor)) {
 		generated_trait_types.insert(generated_trait_types.begin(), character_trait_type::governor);
 	}
 
@@ -180,19 +180,19 @@ void character_game_data::on_setup_finished()
 		}
 	}
 
-	if (this->character->get_role() == character_role::ruler) {
+	if (this->character->has_role(character_role::ruler)) {
 		for (const character_trait *trait : this->get_traits_of_type(character_trait_type::ruler)) {
 			if (trait->get_office_modifier(defines::get()->get_ruler_office()) == nullptr && trait->get_scaled_office_modifier(defines::get()->get_ruler_office()) != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
 				throw std::runtime_error(std::format("Character \"{}\" is a ruler with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
 			}
 		}
-	} else if (this->character->get_role() == character_role::advisor) {
+	} else if (this->character->has_role(character_role::advisor)) {
 		for (const character_trait *trait : this->get_traits_of_type(character_trait_type::advisor)) {
 			if (trait->get_advisor_modifier() == nullptr && trait->get_advisor_effects() == nullptr && trait->get_scaled_advisor_modifier() != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
 				throw std::runtime_error(std::format("Character \"{}\" is an advisor with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
 			}
 		}
-	} else if (this->character->get_role() == character_role::governor) {
+	} else if (this->character->has_role(character_role::governor)) {
 		for (const character_trait *trait : this->get_traits_of_type(character_trait_type::governor)) {
 			if (trait->get_governor_modifier() == nullptr && trait->get_scaled_governor_modifier() != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
 				throw std::runtime_error(std::format("Character \"{}\" is a governor with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
@@ -242,7 +242,7 @@ bool character_game_data::is_current_portrait_valid() const
 
 void character_game_data::check_portrait()
 {
-	if (this->character->get_role() != character_role::ruler && this->character->get_role() != character_role::advisor && this->character->get_role() != character_role::governor && this->character->get_role() != character_role::landholder) {
+	if (!this->character->has_role(character_role::ruler) && !this->character->has_role(character_role::advisor) && !this->character->has_role(character_role::governor) && !this->character->has_role(character_role::landholder)) {
 		//only rulers, advisors, governors and landholders need portraits
 		return;
 	}
@@ -341,7 +341,7 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	if (this->is_landholder()) {
 		this->apply_landholder_modifier(this->character->get_holdable_site(), -1);
 	}
-	if (this->character->get_role() == character_role::leader) {
+	if (this->character->has_role(character_role::leader)) {
 		for (const character_trait *trait : this->get_traits()) {
 			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
 				this->apply_modifier(trait->get_scaled_leader_modifier(), -std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
@@ -367,7 +367,7 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	if (this->is_landholder()) {
 		this->apply_landholder_modifier(this->character->get_holdable_site(), 1);
 	}
-	if (this->character->get_role() == character_role::leader) {
+	if (this->character->has_role(character_role::leader)) {
 		for (const character_trait *trait : this->get_traits()) {
 			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
 				this->apply_modifier(trait->get_scaled_leader_modifier(), std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
@@ -446,15 +446,15 @@ bool character_game_data::can_gain_trait(const character_trait *trait) const
 	}
 
 	for (const character_trait_type trait_type : trait->get_types()) {
-		if (trait_type == character_trait_type::ruler && this->character->get_role() != character_role::ruler) {
+		if (trait_type == character_trait_type::ruler && !this->character->has_role(character_role::ruler)) {
 			continue;
 		}
 
-		if (trait_type == character_trait_type::advisor && this->character->get_role() != character_role::advisor) {
+		if (trait_type == character_trait_type::advisor && !this->character->has_role(character_role::advisor)) {
 			continue;
 		}
 
-		if (trait_type == character_trait_type::governor && this->character->get_role() != character_role::governor) {
+		if (trait_type == character_trait_type::governor && !this->character->has_role(character_role::governor)) {
 			continue;
 		}
 
@@ -554,7 +554,7 @@ void character_game_data::on_trait_gained(const character_trait *trait, const in
 		this->apply_modifier(trait->get_modifier(), multiplier);
 	}
 
-	if (this->character->get_role() == character_role::leader) {
+	if (this->character->has_role(character_role::leader)) {
 		if (trait->get_leader_modifier() != nullptr) {
 			this->apply_modifier(trait->get_leader_modifier(), multiplier);
 		}
@@ -703,13 +703,13 @@ void character_game_data::set_office(const metternich::office *office)
 std::string character_game_data::get_office_modifier_string(const metternich::country *country, const metternich::office *office) const
 {
 	if (office->is_ruler()) {
-		assert_throw(this->character->get_role() == character_role::ruler);
+		assert_throw(this->character->has_role(character_role::ruler));
 
 		if (defines::get()->get_ruler_traits_game_rule() != nullptr && !game::get()->get_rules()->get_value(defines::get()->get_ruler_traits_game_rule())) {
 			return {};
 		}
 	} else {
-		assert_throw(this->character->get_role() == character_role::advisor);
+		assert_throw(this->character->has_role(character_role::advisor));
 	}
 
 	assert_throw(office != nullptr);
@@ -758,9 +758,9 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 void character_game_data::apply_office_modifier(const metternich::country *country, const metternich::office *office, const int multiplier) const
 {
 	if (office->is_ruler()) {
-		assert_throw(this->character->get_role() == character_role::ruler);
+		assert_throw(this->character->has_role(character_role::ruler));
 	} else {
-		assert_throw(this->character->get_role() == character_role::advisor);
+		assert_throw(this->character->has_role(character_role::advisor));
 	}
 
 	assert_throw(country != nullptr);
@@ -793,7 +793,7 @@ bool character_game_data::is_advisor() const
 
 QString character_game_data::get_advisor_effects_string(const metternich::country *country) const
 {
-	assert_throw(this->character->get_role() == character_role::advisor);
+	assert_throw(this->character->has_role(character_role::advisor));
 
 	std::string str;
 
@@ -853,7 +853,7 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 
 void character_game_data::apply_advisor_modifier(const metternich::country *country, const int multiplier) const
 {
-	assert_throw(this->character->get_role() == character_role::advisor);
+	assert_throw(this->character->has_role(character_role::advisor));
 	assert_throw(country != nullptr);
 
 	for (const character_trait *trait : this->get_traits()) {
@@ -879,7 +879,7 @@ bool character_game_data::is_governor() const
 
 std::string character_game_data::get_governor_modifier_string(const metternich::province *province) const
 {
-	assert_throw(this->character->get_role() == character_role::governor);
+	assert_throw(this->character->has_role(character_role::governor));
 
 	std::string str;
 
@@ -906,7 +906,7 @@ std::string character_game_data::get_governor_modifier_string(const metternich::
 
 void character_game_data::apply_governor_modifier(const metternich::province *province, const int multiplier) const
 {
-	assert_throw(this->character->get_role() == character_role::governor);
+	assert_throw(this->character->has_role(character_role::governor));
 	assert_throw(province != nullptr);
 
 	for (const character_trait *trait : this->get_traits()) {
@@ -932,7 +932,7 @@ bool character_game_data::is_landholder() const
 
 std::string character_game_data::get_landholder_modifier_string(const metternich::site *site) const
 {
-	assert_throw(this->character->get_role() == character_role::landholder);
+	assert_throw(this->character->has_role(character_role::landholder));
 	assert_throw(site != nullptr);
 
 	std::string str;
@@ -946,7 +946,7 @@ std::string character_game_data::get_landholder_modifier_string(const metternich
 
 void character_game_data::apply_landholder_modifier(const metternich::site *site, const int multiplier) const
 {
-	assert_throw(this->character->get_role() == character_role::landholder);
+	assert_throw(this->character->has_role(character_role::landholder));
 	assert_throw(site != nullptr);
 
 	if (defines::get()->get_scaled_landholder_modifier() != nullptr) {

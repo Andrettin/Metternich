@@ -60,7 +60,6 @@ class character final : public character_base, public data_type<character>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::dynasty* dynasty MEMBER dynasty NOTIFY changed)
-	Q_PROPERTY(metternich::character_role role MEMBER role READ get_role NOTIFY changed)
 	Q_PROPERTY(const metternich::character_type* character_type MEMBER character_type READ get_character_type NOTIFY changed)
 	Q_PROPERTY(metternich::species* species MEMBER species NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
@@ -96,6 +95,7 @@ public:
 	explicit character(const std::string &identifier);
 	~character();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -125,9 +125,14 @@ public:
 
 	virtual bool is_surname_first() const override;
 
-	character_role get_role() const
+	const std::set<character_role> &get_roles() const
 	{
-		return this->role;
+		return this->roles;
+	}
+
+	bool has_role(const character_role role) const
+	{
+		return this->get_roles().contains(role);
 	}
 
 	const metternich::character_type *get_character_type() const
@@ -266,7 +271,7 @@ signals:
 
 private:
 	metternich::dynasty *dynasty = nullptr;
-	metternich::character_role role;
+	std::set<character_role> roles;
 	const metternich::character_type *character_type = nullptr;
 	metternich::species *species = nullptr;
 	metternich::culture *culture = nullptr;

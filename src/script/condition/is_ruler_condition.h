@@ -26,7 +26,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return (scope->get_role() == character_role::ruler) == this->value;
+		return scope->has_role(character_role::ruler) == this->value;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

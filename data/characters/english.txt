@@ -90,7 +90,10 @@ elizabeth_i_of_england = {
 edward_kelley = {
 	name = "Edward"
 	surname = "Kelley"
-	role = advisor
+	roles = {
+		advisor
+		civilian
+	}
 	character_type = merchant
 	culture = english
 	religion = protestant
@@ -181,7 +184,10 @@ william_brewster = {
 john_rolfe = {
 	name = "John"
 	surname = "Rolfe"
-	role = advisor
+	roles = {
+		advisor
+		civilian
+	}
 	character_type = farmer
 	culture = english
 	religion = protestant

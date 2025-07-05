@@ -99,7 +99,7 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 }
 
 character::character(const std::string &identifier)
-	: character_base(identifier), role(character_role::none)
+	: character_base(identifier)
 {
 	this->reset_game_data();
 }
@@ -108,12 +108,29 @@ character::~character()
 {
 }
 
+void character::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "role") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		this->roles = { magic_enum::enum_cast<character_role>(value).value() };
+	} else {
+		character_base::process_gsml_property(property);
+	}
+}
+
 void character::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "rulable_countries") {
+	if (tag == "roles") {
+		for (const std::string &value : values) {
+			this->roles.insert(magic_enum::enum_cast<character_role>(value).value());
+		}
+	} else if (tag == "rulable_countries") {
 		for (const std::string &value : values) {
 			this->add_rulable_country(country::get(value));
 		}
@@ -210,13 +227,13 @@ void character::initialize()
 		}
 	}
 
-	if (this->get_role() != character_role::none) {
+	for (const character_role role : this->get_roles()) {
 		if (this->required_technology != nullptr) {
-			this->required_technology->add_enabled_character(this->get_role(), this);
+			this->required_technology->add_enabled_character(role, this);
 		}
 
 		if (this->obsolescence_technology != nullptr) {
-			this->obsolescence_technology->add_retired_character(this->get_role(), this);
+			this->obsolescence_technology->add_retired_character(role, this);
 		}
 	}
 
@@ -233,113 +250,119 @@ void character::initialize()
 
 void character::check() const
 {
-	if (this->get_role() != character_role::none) {
+	if (!this->get_roles().empty()) {
 		if (this->get_character_type() == nullptr) {
 			throw std::runtime_error(std::format("Character \"{}\" has a role, but has no character type.", this->get_identifier()));
 		}
+
+		if (this->get_roles().size() > 1 && this->get_roles() != std::set<character_role>{ character_role::advisor, character_role::civilian }) {
+			throw std::runtime_error(std::format("Character \"{}\" has multiple roles, but those aren't advisor and civilian, the only combination allowed.", this->get_identifier()));
+		}
 	}
 
-	switch (this->get_role()) {
-		case character_role::ruler: {
-			if (this->get_rulable_countries().empty()) {
-				throw std::runtime_error(std::format("Character \"{}\" is a ruler, but has no rulable countries.", this->get_identifier()));
-			}
+	for (const character_role role : this->get_roles()) {
+		switch (role) {
+			case character_role::ruler: {
+				if (this->get_rulable_countries().empty()) {
+					throw std::runtime_error(std::format("Character \"{}\" is a ruler, but has no rulable countries.", this->get_identifier()));
+				}
 
-			std::vector<const character_trait *> ruler_traits = this->get_traits();
-			std::erase_if(ruler_traits, [](const character_trait *trait) {
-				return !trait->get_types().contains(character_trait_type::ruler);
-			});
-			const int ruler_trait_count = static_cast<int>(ruler_traits.size());
-			const int min_ruler_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::ruler);
-			const int max_ruler_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::ruler);
+				std::vector<const character_trait *> ruler_traits = this->get_traits();
+				std::erase_if(ruler_traits, [](const character_trait *trait) {
+					return !trait->get_types().contains(character_trait_type::ruler);
+				});
+				const int ruler_trait_count = static_cast<int>(ruler_traits.size());
+				const int min_ruler_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::ruler);
+				const int max_ruler_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::ruler);
 
-			if (ruler_trait_count < min_ruler_traits) {
-				log::log_error(std::format("Ruler character \"{}\" only has {} ruler {}, less than the expected minimum of {}.", this->get_identifier(), ruler_trait_count, ruler_trait_count == 1 ? "trait" : "traits", min_ruler_traits));
-			} else if (ruler_trait_count > max_ruler_traits) {
-				log::log_error(std::format("Ruler character \"{}\" has {} ruler {}, more than the expected maximum of {}.", this->get_identifier(), ruler_trait_count, ruler_trait_count == 1 ? "trait" : "traits", max_ruler_traits));
+				if (ruler_trait_count < min_ruler_traits) {
+					log::log_error(std::format("Ruler character \"{}\" only has {} ruler {}, less than the expected minimum of {}.", this->get_identifier(), ruler_trait_count, ruler_trait_count == 1 ? "trait" : "traits", min_ruler_traits));
+				} else if (ruler_trait_count > max_ruler_traits) {
+					log::log_error(std::format("Ruler character \"{}\" has {} ruler {}, more than the expected maximum of {}.", this->get_identifier(), ruler_trait_count, ruler_trait_count == 1 ? "trait" : "traits", max_ruler_traits));
+				}
+				break;
 			}
-			break;
+			case character_role::advisor:
+			{
+				std::vector<const character_trait *> advisor_traits = this->get_traits();
+				std::erase_if(advisor_traits, [](const character_trait *trait) {
+					return !trait->get_types().contains(character_trait_type::advisor);
+				});
+				const int advisor_trait_count = static_cast<int>(advisor_traits.size());
+				const int min_advisor_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::advisor);
+				const int max_advisor_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::advisor);
+
+				if (advisor_trait_count < min_advisor_traits) {
+					throw std::runtime_error(std::format("Advisor character \"{}\" only has {} advisor {}, less than the expected minimum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", min_advisor_traits));
+				} else if (advisor_trait_count > max_advisor_traits) {
+					throw std::runtime_error(std::format("Advisor character \"{}\" has {} advisor {}, more than the expected maximum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", max_advisor_traits));
+				}
+				break;
+			}
+			case character_role::governor:
+			{
+				if (this->get_governable_province() == nullptr) {
+					throw std::runtime_error(std::format("Character \"{}\" is a governor, but has no governable province.", this->get_identifier()));
+				}
+
+				std::vector<const character_trait *> governor_traits = this->get_traits();
+				std::erase_if(governor_traits, [](const character_trait *trait) {
+					return !trait->get_types().contains(character_trait_type::governor);
+				});
+				const int governor_trait_count = static_cast<int>(governor_traits.size());
+				const int min_governor_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::governor);
+				const int max_governor_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::governor);
+
+				if (governor_trait_count < min_governor_traits) {
+					throw std::runtime_error(std::format("Governor character \"{}\" only has {} governor {}, less than the expected minimum of {}.", this->get_identifier(), governor_trait_count, governor_trait_count == 1 ? "trait" : "traits", min_governor_traits));
+				} else if (governor_trait_count > max_governor_traits) {
+					throw std::runtime_error(std::format("Governor character \"{}\" has {} governor {}, more than the expected maximum of {}.", this->get_identifier(), governor_trait_count, governor_trait_count == 1 ? "trait" : "traits", max_governor_traits));
+				}
+				break;
+			}
+			case character_role::landholder:
+			{
+				if (this->get_holdable_site() == nullptr) {
+					throw std::runtime_error(std::format("Character \"{}\" is a landholder, but has no holdable site.", this->get_identifier()));
+				}
+
+				if (this->get_holdable_site()->get_type() == site_type::settlement) {
+					throw std::runtime_error(std::format("The holdable site for character \"{}\" is a settlement.", this->get_identifier()));
+				}
+
+				if (this->get_holdable_site()->get_type() == site_type::habitable_world) {
+					throw std::runtime_error(std::format("The holdable site for character \"{}\" is a habitable world.", this->get_identifier()));
+				}
+				break;
+			}
+			case character_role::leader:
+				if (this->get_military_unit_category() == military_unit_category::none) {
+					throw std::runtime_error(std::format("Character \"{}\" is a leader, but has no military unit category.", this->get_identifier()));
+				}
+				break;
+			case character_role::civilian:
+				if (this->get_civilian_unit_class() == nullptr) {
+					throw std::runtime_error(std::format("Character \"{}\" is a civilian, but has no civilian unit class.", this->get_identifier()));
+				}
+
+				if (this->get_civilian_unit_type() == nullptr) {
+					throw std::runtime_error(std::format("Character \"{}\" is a civilian, but its culture (\"{}\") has no civilian unit type for its civilian unit class (\"{}\").", this->get_identifier(), this->get_culture()->get_identifier(), this->get_civilian_unit_class()->get_identifier()));
+				}
+				break;
+			default:
+				break;
 		}
-		case character_role::advisor:
-		{
-			std::vector<const character_trait *> advisor_traits = this->get_traits();
-			std::erase_if(advisor_traits, [](const character_trait *trait) {
-				return !trait->get_types().contains(character_trait_type::advisor);
-			});
-			const int advisor_trait_count = static_cast<int>(advisor_traits.size());
-			const int min_advisor_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::advisor);
-			const int max_advisor_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::advisor);
-
-			if (advisor_trait_count < min_advisor_traits) {
-				throw std::runtime_error(std::format("Advisor character \"{}\" only has {} advisor {}, less than the expected minimum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", min_advisor_traits));
-			} else if (advisor_trait_count > max_advisor_traits) {
-				throw std::runtime_error(std::format("Advisor character \"{}\" has {} advisor {}, more than the expected maximum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", max_advisor_traits));
-			}
-			break;
-		}
-		case character_role::governor:
-		{
-			if (this->get_governable_province() == nullptr) {
-				throw std::runtime_error(std::format("Character \"{}\" is a governor, but has no governable province.", this->get_identifier()));
-			}
-
-			std::vector<const character_trait *> governor_traits = this->get_traits();
-			std::erase_if(governor_traits, [](const character_trait *trait) {
-				return !trait->get_types().contains(character_trait_type::governor);
-			});
-			const int governor_trait_count = static_cast<int>(governor_traits.size());
-			const int min_governor_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::governor);
-			const int max_governor_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::governor);
-
-			if (governor_trait_count < min_governor_traits) {
-				throw std::runtime_error(std::format("Governor character \"{}\" only has {} governor {}, less than the expected minimum of {}.", this->get_identifier(), governor_trait_count, governor_trait_count == 1 ? "trait" : "traits", min_governor_traits));
-			} else if (governor_trait_count > max_governor_traits) {
-				throw std::runtime_error(std::format("Governor character \"{}\" has {} governor {}, more than the expected maximum of {}.", this->get_identifier(), governor_trait_count, governor_trait_count == 1 ? "trait" : "traits", max_governor_traits));
-			}
-			break;
-		}
-		case character_role::landholder:
-		{
-			if (this->get_holdable_site() == nullptr) {
-				throw std::runtime_error(std::format("Character \"{}\" is a landholder, but has no holdable site.", this->get_identifier()));
-			}
-
-			if (this->get_holdable_site()->get_type() == site_type::settlement) {
-				throw std::runtime_error(std::format("The holdable site for character \"{}\" is a settlement.", this->get_identifier()));
-			}
-
-			if (this->get_holdable_site()->get_type() == site_type::habitable_world) {
-				throw std::runtime_error(std::format("The holdable site for character \"{}\" is a habitable world.", this->get_identifier()));
-			}
-			break;
-		}
-		case character_role::leader:
-			if (this->get_military_unit_category() == military_unit_category::none) {
-				throw std::runtime_error(std::format("Character \"{}\" is a leader, but has no military unit category.", this->get_identifier()));
-			}
-			break;
-		case character_role::civilian:
-			if (this->get_civilian_unit_class() == nullptr) {
-				throw std::runtime_error(std::format("Character \"{}\" is a civilian, but has no civilian unit class.", this->get_identifier()));
-			}
-
-			if (this->get_civilian_unit_type() == nullptr) {
-				throw std::runtime_error(std::format("Character \"{}\" is a civilian, but its culture (\"{}\") has no civilian unit type for its civilian unit class (\"{}\").", this->get_identifier(), this->get_culture()->get_identifier(), this->get_civilian_unit_class()->get_identifier()));
-			}
-			break;
-		default:
-			break;
 	}
 
-	if (this->get_role() != character_role::ruler && !this->get_rulable_countries().empty()) {
+	if (!this->has_role(character_role::ruler) && !this->get_rulable_countries().empty()) {
 		throw std::runtime_error(std::format("Character \"{}\" has rulable countries, but is not a ruler.", this->get_identifier()));
 	}
 
-	if (this->get_role() != character_role::governor && this->get_governable_province() != nullptr) {
+	if (!this->has_role(character_role::governor) && this->get_governable_province() != nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has a governable province, but is not a governor.", this->get_identifier()));
 	}
 
-	if (this->get_role() != character_role::landholder && this->get_holdable_site() != nullptr) {
+	if (!this->has_role(character_role::landholder) && this->get_holdable_site() != nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has a holdable site, but is not a landholder.", this->get_identifier()));
 	}
 
@@ -592,7 +615,7 @@ bool character::is_explorer() const
 
 std::string_view character::get_leader_type_name() const
 {
-	assert_throw(this->get_role() == character_role::leader);
+	assert_throw(this->has_role(character_role::leader));
 
 	if (this->is_admiral()) {
 		return "Admiral";

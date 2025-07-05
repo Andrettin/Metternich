@@ -32,7 +32,7 @@ public:
 			return scope->get_category() == this->military_unit_category;
 		} else {
 			if constexpr (std::is_same_v<scope_type, character>) {
-				if (scope->get_role() != character_role::leader) {
+				if (!scope->has_role(character_role::leader)) {
 					return false;
 				}
 			}

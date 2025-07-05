@@ -692,7 +692,7 @@ void province_game_data::check_governor()
 		std::vector<const character *> potential_governors;
 
 		for (const character *character : this->province->get_governors()) {
-			assert_throw(character->get_role() == character_role::governor);
+			assert_throw(character->has_role(character_role::governor));
 
 			const character_game_data *character_game_data = character->get_game_data();
 			if (character_game_data->get_country() != nullptr) {

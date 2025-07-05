@@ -31,7 +31,7 @@ public:
 			return false;
 		}
 
-		if (scope->get_role() != character_role::advisor) {
+		if (!scope->has_role(character_role::advisor)) {
 			return false;
 		}
 

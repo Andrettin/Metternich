@@ -1430,7 +1430,7 @@ void site_game_data::check_landholder()
 		std::vector<const character *> potential_landholders;
 
 		for (const character *character : this->site->get_landholders()) {
-			assert_throw(character->get_role() == character_role::landholder);
+			assert_throw(character->has_role(character_role::landholder));
 
 			const character_game_data *character_game_data = character->get_game_data();
 			if (character_game_data->get_country() != nullptr) {
