@@ -5552,18 +5552,54 @@ bool country_game_data::create_civilian_unit(const civilian_unit_type *civilian_
 		tile_pos = nearest_tile_pos.value();
 	}
 
-	if (phenotype == nullptr) {
-		const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_weighted_phenotypes();
-		if (weighted_phenotypes.empty()) {
-			return false;
+	std::vector<const character *> potential_characters;
+
+	for (const character *character : character::get_all()) {
+		if (character->get_role() != character_role::civilian) {
+			continue;
 		}
 
-		phenotype = vector::get_random(weighted_phenotypes);
+		if (character->get_civilian_unit_type() != civilian_unit_type) {
+			continue;
+		}
+
+		if (character->get_game_data()->get_country() != nullptr && character->get_game_data()->get_country() != this->country) {
+			continue;
+		}
+
+		if (character->get_game_data()->get_civilian_unit() != nullptr) {
+			continue;
+		}
+
+		if (phenotype != nullptr && character->get_phenotype() != phenotype) {
+			continue;
+		}
+
+		potential_characters.push_back(character);
 	}
 
-	assert_throw(phenotype != nullptr);
+	qunique_ptr<civilian_unit> civilian_unit;
 
-	auto civilian_unit = make_qunique<metternich::civilian_unit>(civilian_unit_type, this->country, phenotype);
+	if (!potential_characters.empty()) {
+		const character *character = vector::get_random(potential_characters);
+		civilian_unit = make_qunique<metternich::civilian_unit>(character, this->country);
+	} else {
+		if (phenotype == nullptr) {
+			const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_weighted_phenotypes();
+			if (weighted_phenotypes.empty()) {
+				return false;
+			}
+
+			phenotype = vector::get_random(weighted_phenotypes);
+		}
+
+		assert_throw(phenotype != nullptr);
+
+		civilian_unit = make_qunique<metternich::civilian_unit>(civilian_unit_type, this->country, phenotype);
+	}
+
+	assert_throw(civilian_unit != nullptr);
+
 	civilian_unit->set_tile_pos(tile_pos);
 
 	this->add_civilian_unit(std::move(civilian_unit));
