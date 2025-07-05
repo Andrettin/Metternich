@@ -6,8 +6,11 @@
 #include "character/character_game_data.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/cultural_group.h"
+#include "country/culture.h"
 #include "economy/resource.h"
 #include "infrastructure/improvement.h"
+#include "language/name_generator.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -19,6 +22,8 @@
 #include "unit/civilian_unit_type.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
+#include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/point_util.h"
 #include "util/vector_util.h"
@@ -31,6 +36,8 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owne
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_owner() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
+
+	this->generate_name();
 
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
 
@@ -47,6 +54,7 @@ civilian_unit::civilian_unit(const metternich::character *character, const count
 	: civilian_unit(character->get_civilian_unit_type(), owner, character->get_phenotype())
 {
 	this->character = character;
+	this->name = character->get_full_name();
 
 	character_game_data *character_game_data = this->get_character()->get_game_data();
 	character_game_data->set_civilian_unit(this);
@@ -118,9 +126,54 @@ void civilian_unit::do_ai_turn()
 	}
 }
 
+void civilian_unit::generate_name()
+{
+	const culture_base *culture = this->get_culture();
+	if (culture == nullptr) {
+		culture = this->get_cultural_group();
+	}
+
+	if (culture == nullptr) {
+		return;
+	}
+
+	this->name = culture->generate_personal_name(gender::male, {});
+
+	if (!this->get_name().empty()) {
+		log_trace(std::format("Generated name \"{}\" for civilian unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), culture->get_identifier()));
+	}
+}
+
 const icon *civilian_unit::get_icon() const
 {
 	return this->get_type()->get_icon();
+}
+
+const metternich::culture *civilian_unit::get_culture() const
+{
+	if (this->get_owner() != nullptr) {
+		return this->get_owner()->get_culture();
+	}
+
+	if (this->get_type()->get_culture() != nullptr) {
+		return this->get_type()->get_culture();
+	}
+
+	return nullptr;
+}
+
+const metternich::cultural_group *civilian_unit::get_cultural_group() const
+{
+	const culture *culture = this->get_culture();
+	if (culture != nullptr) {
+		return culture->get_group();
+	}
+
+	if (this->get_type()->get_cultural_group() != nullptr) {
+		return this->get_type()->get_cultural_group();
+	}
+
+	return nullptr;
 }
 
 void civilian_unit::set_tile_pos(const QPoint &tile_pos)

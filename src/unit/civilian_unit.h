@@ -21,6 +21,7 @@ class civilian_unit final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString name READ get_name_qstring CONSTANT)
 	Q_PROPERTY(const metternich::civilian_unit_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::country* owner READ get_owner CONSTANT)
@@ -41,6 +42,18 @@ public:
 
 	void do_turn();
 	void do_ai_turn();
+
+	const std::string &get_name() const
+	{
+		return this->name;
+	}
+
+	QString get_name_qstring() const
+	{
+		return QString::fromStdString(this->get_name());
+	}
+
+	void generate_name();
 
 	const civilian_unit_type *get_type() const
 	{
@@ -63,6 +76,9 @@ public:
 	{
 		return this->owner;
 	}
+
+	const metternich::culture *get_culture() const;
+	const metternich::cultural_group *get_cultural_group() const;
 
 	const metternich::phenotype *get_phenotype() const
 	{
@@ -153,6 +169,7 @@ signals:
 	void task_completion_turns_changed();
 
 private:
+	std::string name;
 	const civilian_unit_type *type = nullptr;
 	const country *owner = nullptr;
 	const metternich::phenotype *phenotype = nullptr;

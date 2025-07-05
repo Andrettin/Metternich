@@ -172,7 +172,7 @@ Rectangle {
 					selected_site.map_data.resource ? (selected_site.map_data.resource.natural_wonder ? "Natural Wonder" : selected_site.map_data.resource.name) : ""
 				)
 			)
-		) : (selected_civilian_unit && selected_civilian_unit.character ? selected_civilian_unit.character.full_name : "")
+		) : (selected_civilian_unit ? selected_civilian_unit.name : "")
 		visible: !population_info_text.visible
 	}
 	
