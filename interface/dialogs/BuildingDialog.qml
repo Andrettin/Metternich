@@ -65,7 +65,7 @@ DialogBase {
 		}
 		
 		Grid {
-			id: commodities_grid
+			id: commodity_grid
 			anchors.horizontalCenter: parent.horizontalCenter
 			columns: 4
 			visible: building && building.warehouse
@@ -107,6 +107,77 @@ DialogBase {
 						
 						onExited: {
 							status_text = ""
+						}
+					}
+				}
+			}
+		}
+		
+		Grid {
+			id: civilian_unit_grid
+			anchors.horizontalCenter: parent.horizontalCenter
+			columns: 2
+			visible: building && building.recruited_civilian_unit_types.length > 0
+			spacing: 16 * scale_factor
+			
+			Repeater {
+				model: building ? building.recruited_civilian_unit_types : []
+				
+				Column {
+					readonly property var civilian_unit_type: model.modelData
+					spacing: 2 * scale_factor
+					
+					IconButton {
+						id: civilian_unit_button
+						width: 64 * scale_factor + 6 * scale_factor
+						height: 64 * scale_factor + 6 * scale_factor
+						icon_identifier: civilian_unit_type.icon.identifier
+						
+						onClicked: {
+						}
+						
+						onHoveredChanged: {
+							if (hovered) {
+								status_text = civilian_unit_type.name
+							} else {
+								status_text = ""
+							}
+						}
+					}
+					
+					Row {
+						anchors.horizontalCenter: parent.horizontalCenter
+						
+						IconButton {
+							id: decrement_button
+							anchors.verticalCenter: parent.verticalCenter
+							width: 16 * scale_factor
+							height: 16 * scale_factor
+							icon_identifier: "trade_consulate"
+							use_opacity_mask: false
+							
+							onReleased: {
+							}
+						}
+						
+						SmallText {
+							id: civilian_unit_recruiting_count_label
+							anchors.verticalCenter: parent.verticalCenter
+							text: number_string(0)
+							width: 24 * scale_factor
+							horizontalAlignment: Text.AlignHCenter
+						}
+						
+						IconButton {
+							id: increment_button
+							anchors.verticalCenter: parent.verticalCenter
+							width: 16 * scale_factor
+							height: 16 * scale_factor
+							icon_identifier: "trade_consulate"
+							use_opacity_mask: false
+							
+							onReleased: {
+							}
 						}
 					}
 				}
