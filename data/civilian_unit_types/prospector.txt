@@ -7,5 +7,4 @@ prospector = {
 	commodity_costs = {
 		paper = 2
 	}
-	required_technology = geological_prospecting
 }

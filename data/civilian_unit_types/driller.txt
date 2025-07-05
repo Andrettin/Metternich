@@ -2,6 +2,7 @@ driller = {
 	name = "Driller"
 	unit_class = driller
 	icon = miners
+	required_technology = oil_drilling
 	wealth_cost = 5000
 	commodity_costs = {
 		paper = 2
