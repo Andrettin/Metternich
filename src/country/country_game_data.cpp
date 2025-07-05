@@ -5584,6 +5584,14 @@ bool country_game_data::create_civilian_unit(const civilian_unit_type *civilian_
 			continue;
 		}
 
+		if (character->get_game_data()->is_dead()) {
+			continue;
+		}
+
+		if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->country, read_only_context(this->country))) {
+			continue;
+		}
+
 		potential_characters.push_back(character);
 	}
 
