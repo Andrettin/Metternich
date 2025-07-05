@@ -16,6 +16,7 @@ namespace metternich {
 
 class building_class;
 class building_slot_type;
+class civilian_unit_type;
 class country;
 class cultural_group;
 class culture;
@@ -53,6 +54,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList education_types READ get_education_types_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList recruited_civilian_unit_types READ get_recruited_civilian_unit_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
 	Q_PROPERTY(int capacity_increment MEMBER capacity_increment READ get_capacity_increment NOTIFY changed)
 	Q_PROPERTY(bool capitol MEMBER capitol READ is_capitol NOTIFY changed)
@@ -140,6 +142,13 @@ public:
 	}
 
 	QVariantList get_education_types_qvariant_list() const;
+
+	const std::vector<const civilian_unit_type *> &get_recruited_civilian_unit_types() const
+	{
+		return this->recruited_civilian_unit_types;
+	}
+
+	QVariantList get_recruited_civilian_unit_types_qvariant_list() const;
 
 	int get_base_capacity() const
 	{
@@ -318,6 +327,7 @@ private:
 	std::vector<const settlement_type *> settlement_types;
 	std::vector<const production_type *> production_types;
 	std::vector<const education_type *> education_types;
+	std::vector<const civilian_unit_type *> recruited_civilian_unit_types;
 	int base_capacity = 0;
 	int capacity_increment = 0;
 	bool capitol = false;
