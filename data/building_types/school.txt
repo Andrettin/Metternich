@@ -11,12 +11,12 @@ school = {
 		city
 		metropolis
 	}
+	production_types = {
+		researching
+	}
 	education_types = {
 		trained_workers
 		expert_workers
-	}
-	production_types = {
-		researching
 	}
 	country_modifier = {
 		school_capacity = 1
@@ -40,12 +40,12 @@ college = {
 		city
 		metropolis
 	}
+	production_types = {
+		researching
+	}
 	education_types = {
 		trained_workers
 		expert_workers
-	}
-	production_types = {
-		researching
 	}
 	country_modifier = {
 		school_capacity = 2
@@ -76,6 +76,9 @@ university = {
 		city
 		metropolis
 	}
+	production_types = {
+		researching
+	}
 	education_types = {
 		trained_workers
 		expert_workers
@@ -84,8 +87,14 @@ university = {
 		clergymen
 		officers
 	}
-	production_types = {
-		researching
+	recruited_civilian_unit_types = {
+		miner
+		prospector
+		farmer
+		forester
+		#engineer
+		#rancher
+		#driller
 	}
 	cost_factor = {
 		modifier = {
@@ -123,12 +132,12 @@ monastic_school = {
 	settlement_types = {
 		monastery
 	}
+	production_types = {
+		researching
+	}
 	education_types = {
 		trained_workers
 		expert_workers
-	}
-	production_types = {
-		researching
 	}
 	country_modifier = {
 		school_capacity = 1
@@ -151,12 +160,12 @@ cathedral_school = {
 	settlement_types = {
 		monastery
 	}
+	production_types = {
+		researching
+	}
 	education_types = {
 		trained_workers
 		expert_workers
-	}
-	production_types = {
-		researching
 	}
 	country_modifier = {
 		school_capacity = 2
