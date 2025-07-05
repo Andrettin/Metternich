@@ -40,7 +40,7 @@ DialogBase {
 			id: built_label
 			anchors.horizontalCenter: parent.horizontalCenter
 			text: building && building.provincial ? ("Built: " + get_settlement_building_count(building) + "/" + country_game_data.provinces.length) : ""
-			visible: building && building.provincial
+			visible: false//building && building.provincial
 		}
 		
 		SmallText {
