@@ -6,7 +6,7 @@ ModifierDialog {
 	id: character_dialog
 	title: character ? character.game_data.titled_name : ""
 	portrait_identifier: character ? (character.game_data.portrait.identifier + (is_appointee ? "/grayscale" : "")) : ""
-	date_string: character ? ("Lived: " + date_year_range_string(character.birth_date, character.death_date)) : ""
+	//date_string: character ? ("Lived: " + date_year_range_string(character.birth_date, character.death_date)) : ""
 	description: character ? character.description : ""
 	ok_button_top_anchor: office ? appoint_button.bottom : default_ok_button_top_anchor
 	ok_button_top_margin: office ? 8 * scale_factor : 16 * scale_factor
