@@ -200,6 +200,7 @@ public:
 	void do_turn();
 	void do_production();
 	void do_education();
+	void do_civilian_unit_recruitment();
 	void do_research();
 	void do_population_growth();
 	void do_food_consumption(const int food_consumption);
@@ -1689,8 +1690,26 @@ public:
 		return this->civilian_units;
 	}
 
+	bool create_civilian_unit(const civilian_unit_type *civilian_unit_type, const site *deployment_site, const phenotype *phenotype);
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
+
+	Q_INVOKABLE int get_civilian_unit_recruitment_count(const metternich::civilian_unit_type *civilian_unit_type) const
+	{
+		const auto find_iterator = this->civilian_unit_recruitment_counts.find(civilian_unit_type);
+
+		if (find_iterator != this->civilian_unit_recruitment_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_civilian_unit_recruitment_count(const civilian_unit_type *civilian_unit_type, const int change, const bool change_input_storage = true);
+	Q_INVOKABLE bool can_increase_civilian_unit_recruitment(const metternich::civilian_unit_type *civilian_unit_type) const;
+	Q_INVOKABLE void increase_civilian_unit_recruitment(const metternich::civilian_unit_type *civilian_unit_type);
+	Q_INVOKABLE bool can_decrease_civilian_unit_recruitment(const metternich::civilian_unit_type *civilian_unit_type) const;
+	Q_INVOKABLE void decrease_civilian_unit_recruitment(const metternich::civilian_unit_type *civilian_unit_type, const bool restore_inputs);
 
 	const std::vector<qunique_ptr<military_unit>> &get_military_units() const
 	{
@@ -2683,6 +2702,7 @@ private:
 	commodity_map<int> offers;
 	commodity_map<int> commodity_needs;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
+	data_entry_map<civilian_unit_type, int> civilian_unit_recruitment_counts;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	std::set<std::string> military_unit_names;
 	std::vector<qunique_ptr<army>> armies;

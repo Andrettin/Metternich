@@ -40,6 +40,8 @@ void country_ai::do_turn()
 {
 	assert_throw(this->get_game_data()->is_ai());
 
+	//FIXME: add AI for recruiting civilian units
+
 	this->choose_current_research();
 	this->appoint_office_holders();
 	this->appoint_ideas();

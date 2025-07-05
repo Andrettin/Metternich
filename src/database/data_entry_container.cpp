@@ -8,6 +8,7 @@
 #include "game/game_rule.h"
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
+#include "unit/civilian_unit_type.h"
 
 namespace metternich {
 
@@ -17,6 +18,7 @@ bool data_entry_compare<T>::operator()(const T *lhs, const T *rhs) const
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
+template struct data_entry_compare<civilian_unit_type>;
 template struct data_entry_compare<cultural_group>;
 template struct data_entry_compare<game_rule>;
 template struct data_entry_compare<idea_slot>;

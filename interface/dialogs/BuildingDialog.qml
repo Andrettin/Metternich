@@ -124,8 +124,10 @@ DialogBase {
 				model: building ? building.recruited_civilian_unit_types : []
 				
 				Column {
-					readonly property var civilian_unit_type: model.modelData
 					spacing: 2 * scale_factor
+					
+					readonly property var civilian_unit_type: model.modelData
+					property int civilian_unit_recruitment_count: country_game_data.get_civilian_unit_recruitment_count(civilian_unit_type)
 					
 					IconButton {
 						id: civilian_unit_button
@@ -157,13 +159,17 @@ DialogBase {
 							use_opacity_mask: false
 							
 							onReleased: {
+								if (country_game_data.can_decrease_civilian_unit_recruitment(civilian_unit_type)) {
+									country_game_data.decrease_civilian_unit_recruitment(civilian_unit_type, true)
+									civilian_unit_recruitment_count = country_game_data.get_civilian_unit_recruitment_count(civilian_unit_type)
+								}
 							}
 						}
 						
 						SmallText {
 							id: civilian_unit_recruiting_count_label
 							anchors.verticalCenter: parent.verticalCenter
-							text: number_string(0)
+							text: number_string(civilian_unit_recruitment_count)
 							width: 24 * scale_factor
 							horizontalAlignment: Text.AlignHCenter
 						}
@@ -177,6 +183,10 @@ DialogBase {
 							use_opacity_mask: false
 							
 							onReleased: {
+								if (country_game_data.can_increase_civilian_unit_recruitment(civilian_unit_type)) {
+									country_game_data.increase_civilian_unit_recruitment(civilian_unit_type)
+									civilian_unit_recruitment_count = country_game_data.get_civilian_unit_recruitment_count(civilian_unit_type)
+								}
 							}
 						}
 					}

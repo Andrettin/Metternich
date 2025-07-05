@@ -156,6 +156,7 @@ void country_game_data::do_turn()
 
 		this->do_education();
 		this->do_production();
+		this->do_civilian_unit_recruitment();
 		this->do_research();
 		this->do_population_growth();
 		this->do_everyday_consumption();
@@ -288,7 +289,31 @@ void country_game_data::do_education()
 		this->population_type_inputs.clear();
 		this->population_type_outputs.clear();
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Error doing education for country \"" + this->country->get_identifier() + "\"."));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing education recruitment for country \"{}\".", this->country->get_identifier())));
+	}
+}
+
+void country_game_data::do_civilian_unit_recruitment()
+{
+	try {
+		if (this->is_under_anarchy()) {
+			return;
+		}
+
+		const data_entry_map<civilian_unit_type, int> recruitment_counts = this->civilian_unit_recruitment_counts;
+		for (const auto &[civilian_unit_type, recruitment_count] : recruitment_counts) {
+			assert_throw(recruitment_count > 0);
+
+			for (int i = 0; i < recruitment_count; ++i) {
+				const bool created = this->create_civilian_unit(civilian_unit_type, nullptr, nullptr);
+				const bool restore_costs = !created;
+				this->change_civilian_unit_recruitment_count(civilian_unit_type, -1, restore_costs);
+			}
+		}
+
+		assert_throw(this->civilian_unit_recruitment_counts.empty());
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error doing civilian unit recruitment for country \"{}\".", this->country->get_identifier())));
 	}
 }
 
@@ -5503,6 +5528,49 @@ void country_game_data::calculate_commodity_needs()
 	this->commodity_needs.clear();
 }
 
+bool country_game_data::create_civilian_unit(const civilian_unit_type *civilian_unit_type, const site *deployment_site, const phenotype *phenotype)
+{
+	if (this->is_under_anarchy()) {
+		return false;
+	}
+
+	if (deployment_site == nullptr) {
+		deployment_site = this->get_capital();
+	}
+
+	assert_throw(deployment_site != nullptr);
+
+	QPoint tile_pos = deployment_site->get_game_data()->get_tile_pos();
+
+	if (map::get()->get_tile(tile_pos)->get_civilian_unit() != nullptr) {
+		//tile already occupied
+		const std::optional<QPoint> nearest_tile_pos = map::get()->get_nearest_available_tile_pos_for_civilian_unit(tile_pos);
+		if (!nearest_tile_pos.has_value()) {
+			return false;
+		}
+
+		tile_pos = nearest_tile_pos.value();
+	}
+
+	if (phenotype == nullptr) {
+		const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_weighted_phenotypes();
+		if (weighted_phenotypes.empty()) {
+			return false;
+		}
+
+		phenotype = vector::get_random(weighted_phenotypes);
+	}
+
+	assert_throw(phenotype != nullptr);
+
+	auto civilian_unit = make_qunique<metternich::civilian_unit>(civilian_unit_type, this->country, phenotype);
+	civilian_unit->set_tile_pos(tile_pos);
+
+	this->add_civilian_unit(std::move(civilian_unit));
+
+	return true;
+}
+
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
 	if (civilian_unit->get_character() != nullptr) {
@@ -5526,6 +5594,86 @@ void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 			this->civilian_units.erase(this->civilian_units.begin() + i);
 			return;
 		}
+	}
+}
+
+void country_game_data::change_civilian_unit_recruitment_count(const civilian_unit_type *civilian_unit_type, const int change, const bool change_input_storage)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->civilian_unit_recruitment_counts[civilian_unit_type] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->civilian_unit_recruitment_counts.erase(civilian_unit_type);
+	}
+
+	if (change_input_storage) {
+		const commodity_map<int> &commodity_costs = civilian_unit_type->get_commodity_costs();
+		for (const auto &[commodity, cost] : commodity_costs) {
+			assert_throw(commodity->is_storable());
+
+			const int cost_change = cost * change;
+
+			this->change_stored_commodity(commodity, -cost_change);
+		}
+
+		if (civilian_unit_type->get_wealth_cost() > 0) {
+			const int wealth_cost_change = civilian_unit_type->get_wealth_cost() * change;
+			this->change_wealth_inflated(-wealth_cost_change);
+		}
+	}
+}
+
+bool country_game_data::can_increase_civilian_unit_recruitment(const civilian_unit_type *civilian_unit_type) const
+{
+	//FIXME: check whether the country has a building capable of training the civilian unit type
+
+	for (const auto &[commodity, cost] : civilian_unit_type->get_commodity_costs()) {
+		assert_throw(commodity->is_storable());
+		if (this->get_stored_commodity(commodity) < cost) {
+			return false;
+		}
+	}
+
+	if (civilian_unit_type->get_wealth_cost() != 0 && this->get_wealth_with_credit() < this->get_inflated_value(civilian_unit_type->get_wealth_cost())) {
+		return false;
+	}
+
+	return true;
+}
+
+void country_game_data::increase_civilian_unit_recruitment(const civilian_unit_type *civilian_unit_type)
+{
+	try {
+		assert_throw(this->can_increase_civilian_unit_recruitment(civilian_unit_type));
+
+		this->change_civilian_unit_recruitment_count(civilian_unit_type, 1);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" civilian unit type for country \"{}\".", civilian_unit_type->get_identifier(), this->country->get_identifier())));
+	}
+}
+
+bool country_game_data::can_decrease_civilian_unit_recruitment(const civilian_unit_type *civilian_unit_type) const
+{
+	if (this->get_civilian_unit_recruitment_count(civilian_unit_type) == 0) {
+		return false;
+	}
+
+	return true;
+}
+
+void country_game_data::decrease_civilian_unit_recruitment(const civilian_unit_type *civilian_unit_type, const bool restore_inputs)
+{
+	try {
+		assert_throw(this->can_decrease_civilian_unit_recruitment(civilian_unit_type));
+
+		this->change_civilian_unit_recruitment_count(civilian_unit_type, -1, restore_inputs);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" civilian unit type for country \"{}\".", civilian_unit_type->get_identifier(), this->country->get_identifier())));
 	}
 }
 

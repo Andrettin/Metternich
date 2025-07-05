@@ -591,29 +591,8 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			const phenotype *phenotype = historical_civilian_unit->get_phenotype();
-			if (phenotype == nullptr) {
-				const std::vector<const metternich::phenotype *> weighted_phenotypes = owner_game_data->get_weighted_phenotypes();
-				assert_throw(!weighted_phenotypes.empty());
-				phenotype = vector::get_random(weighted_phenotypes);
-			}
-			assert_throw(phenotype != nullptr);
-
-			QPoint tile_pos = site->get_game_data()->get_tile_pos();
-
-			if (map::get()->get_tile(tile_pos)->get_civilian_unit() != nullptr) {
-				//tile already occupied
-				const std::optional<QPoint> nearest_tile_pos = map::get()->get_nearest_available_tile_pos_for_civilian_unit(tile_pos);
-				if (!nearest_tile_pos.has_value()) {
-					continue;
-				}
-
-				tile_pos = nearest_tile_pos.value();
-			}
-
-			auto civilian_unit = make_qunique<metternich::civilian_unit>(historical_civilian_unit->get_type(), owner, phenotype);
-			civilian_unit->set_tile_pos(tile_pos);
-
-			owner_game_data->add_civilian_unit(std::move(civilian_unit));
+			const bool created = owner_game_data->create_civilian_unit(historical_civilian_unit->get_type(), site, phenotype);
+			assert_throw(created);
 		}
 
 		for (const historical_military_unit *historical_military_unit : historical_military_unit::get_all()) {
