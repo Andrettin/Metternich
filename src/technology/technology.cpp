@@ -1060,7 +1060,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 	this->write_character_effects_string(character_role::governor, "governor", country, str);
 	this->write_character_effects_string(character_role::landholder, "landholder", country, str);
 	this->write_character_effects_string(character_role::leader, "leader", country, str);
-	this->write_character_effects_string(character_role::civilian, "civilian", country, str);
+	//this->write_character_effects_string(character_role::civilian, "civilian", country, str);
 
 	return QString::fromStdString(str);
 }
