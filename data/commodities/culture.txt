@@ -1,5 +1,6 @@
 culture = {
 	name = "Culture"
+	type = good
 	icon = music
 	abstract = true
 	required_game_rule = culture_commodity

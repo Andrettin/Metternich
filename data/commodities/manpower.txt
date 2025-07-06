@@ -1,5 +1,6 @@
 manpower = {
 	name = "Manpower"
+	type = resource
 	icon = labor
 	abstract = true
 }

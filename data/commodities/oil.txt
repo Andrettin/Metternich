@@ -1,5 +1,6 @@
 oil = {
 	name = "Oil"
+	type = resource
 	icon = oil
 	base_price = 100
 }

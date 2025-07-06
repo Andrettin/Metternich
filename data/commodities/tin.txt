@@ -1,5 +1,6 @@
 tin = {
 	name = "Tin"
+	type = resource
 	icon = tin
 	base_price = 100
 }

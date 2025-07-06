@@ -1,5 +1,6 @@
 steel = {
 	name = "Steel"
+	type = material
 	icon = steel
 	base_price = 300
 }

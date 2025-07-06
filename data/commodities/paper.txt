@@ -1,5 +1,6 @@
 paper = {
 	name = "Paper"
+	type = material
 	icon = paper
 	base_price = 300
 }

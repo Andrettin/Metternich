@@ -1,5 +1,6 @@
 tobacco = {
 	name = "Tobacco"
+	type = resource
 	icon = tobacco
 	base_price = 100
 	required_technology = tobacco

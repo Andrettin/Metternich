@@ -1,5 +1,6 @@
 furs = {
 	name = "Furs"
+	type = resource
 	icon = furs
 	base_price = 100
 	required_technology = furs

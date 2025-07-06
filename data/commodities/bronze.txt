@@ -1,5 +1,6 @@
 bronze = {
 	name = "Bronze"
+	type = material
 	icon = bronze
 	base_price = 300
 }

@@ -1,11 +1,13 @@
 iron_ore = {
 	name = "Iron Ore"
+	type = resource
 	icon = iron_ore
 	base_price = 100
 }
 
 cast_iron = {
 	name = "Cast Iron"
+	type = material
 	icon = iron
 	base_price = 300
 }

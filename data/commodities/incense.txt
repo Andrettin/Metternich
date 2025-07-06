@@ -1,5 +1,6 @@
 incense = {
 	name = "Incense"
+	type = resource
 	icon = spices
 	wealth_value = 25
 }

@@ -1,5 +1,6 @@
 opium = {
 	name = "Opium"
+	type = resource
 	icon = cotton
 	base_price = 100
 }

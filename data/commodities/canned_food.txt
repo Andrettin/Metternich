@@ -1,5 +1,6 @@
 canned_food = {
 	name = "Canned Food"
+	type = material
 	icon = canned_food
 	base_price = 100
 }

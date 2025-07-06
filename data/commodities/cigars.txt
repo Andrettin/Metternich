@@ -1,5 +1,6 @@
 cigars = {
 	name = "Cigars"
+	type = material
 	icon = cigars
 	base_price = 300
 }

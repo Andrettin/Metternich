@@ -1,5 +1,6 @@
 meat = {
 	name = "Meat"
+	type = resource
 	icon = cattle
 	food_type = meat
 	base_price = 100

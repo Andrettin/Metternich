@@ -1,5 +1,6 @@
 dye = {
 	name = "Dye"
+	type = resource
 	icon = cotton
 	base_price = 100
 }

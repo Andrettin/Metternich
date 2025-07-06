@@ -1,5 +1,6 @@
 fabric = {
 	name = "Fabric"
+	type = material
 	icon = fabric
 	base_price = 300
 }

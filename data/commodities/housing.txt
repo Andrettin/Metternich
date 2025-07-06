@@ -1,5 +1,6 @@
 housing = {
 	name = "Housing"
+	type = resource
 	icon = settlement
 	abstract = true
 	storable = false

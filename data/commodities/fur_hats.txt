@@ -1,5 +1,6 @@
 fur_hats = {
 	name = "Fur Hats"
+	type = material
 	icon = fur_hats
 	base_price = 300
 }

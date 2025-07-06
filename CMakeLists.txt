@@ -387,6 +387,7 @@ source_group(database FILES ${database_HDRS})
 set(economy_HDRS
 	src/economy/commodity.h
 	src/economy/commodity_container.h
+	src/economy/commodity_type.h
 	src/economy/expense_transaction.h
 	src/economy/expense_transaction_type.h
 	src/economy/food_type.h

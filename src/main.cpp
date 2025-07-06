@@ -27,6 +27,7 @@
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
+#include "economy/commodity_type.h"
 #include "economy/food_type.h"
 #include "economy/production_type.h"
 #include "engine_interface.h"
@@ -156,6 +157,7 @@ int main(int argc, char **argv)
 		database::get()->register_enum<character_attribute>();
 		database::get()->register_enum<character_role>();
 		database::get()->register_enum<character_trait_type>();
+		database::get()->register_enum<commodity_type>();
 		database::get()->register_enum<country_tier>();
 		database::get()->register_enum<country_type>();
 		database::get()->register_enum<cultural_group_rank>();

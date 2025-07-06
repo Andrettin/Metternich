@@ -1,5 +1,6 @@
 silver = {
 	name = "Silver"
+	type = resource
 	icon = silver
 	wealth_value = 100
 	required_technology = precious_metals

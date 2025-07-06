@@ -2,6 +2,7 @@
 
 #include "economy/commodity.h"
 
+#include "economy/commodity_type.h"
 #include "economy/food_type.h"
 #include "game/game.h"
 #include "game/game_rules.h"
@@ -30,6 +31,7 @@ void commodity::initialize()
 
 void commodity::check() const
 {
+	assert_throw(this->get_type() != commodity_type::none);
 	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_wealth_value() >= 0);
 

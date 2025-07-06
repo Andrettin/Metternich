@@ -1,5 +1,6 @@
 brass_lamps = {
 	name = "Brass Lamps"
+	type = good
 	icon = fuel
 	base_price = 900
 	required_game_rule = brass_commodity

@@ -1,5 +1,6 @@
 timber = {
 	name = "Timber"
+	type = resource
 	icon = timber
 	base_price = 100
 }

@@ -1,5 +1,6 @@
 clothing = {
 	name = "Clothing"
+	type = good
 	icon = clothing
 	base_price = 900
 }

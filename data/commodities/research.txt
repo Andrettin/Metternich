@@ -1,5 +1,6 @@
 research = {
 	name = "Research"
+	type = good
 	icon = research
 	abstract = true
 	required_game_rule = research_commodity

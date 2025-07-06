@@ -1,5 +1,6 @@
 amenities = {
 	name = "Amenities"
+	type = resource
 	icon = music
 	abstract = true
 	storable = false

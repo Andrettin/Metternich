@@ -1,5 +1,6 @@
 fuel = {
 	name = "Fuel"
+	type = material
 	icon = fuel
 	base_price = 300
 }

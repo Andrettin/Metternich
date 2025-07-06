@@ -1,5 +1,6 @@
 fruit = {
 	name = "Fruit"
+	type = resource
 	icon = fruit
 	food_type = fruit
 	base_price = 100

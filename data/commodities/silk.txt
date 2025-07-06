@@ -1,5 +1,6 @@
 silk = {
 	name = "Silk"
+	type = resource
 	icon = silk
 	base_price = 100
 }

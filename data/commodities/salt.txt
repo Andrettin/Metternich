@@ -1,5 +1,6 @@
 salt = {
 	name = "Salt"
+	type = resource
 	icon = salt
 	base_price = 100
 }

@@ -1,5 +1,6 @@
 ivory = {
 	name = "Ivory"
+	type = resource
 	icon = amber
 	wealth_value = 25
 }

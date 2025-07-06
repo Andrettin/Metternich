@@ -1,5 +1,6 @@
 diamonds = {
 	name = "Diamonds"
+	type = resource
 	icon = diamonds
 	wealth_value = 400
 	required_technology = precious_stones

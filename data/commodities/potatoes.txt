@@ -1,5 +1,6 @@
 potatoes = {
 	name = "Potatoes"
+	type = resource
 	icon = grain
 	food_type = starch
 	base_price = 100

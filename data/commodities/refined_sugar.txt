@@ -1,5 +1,6 @@
 refined_sugar = {
 	name = "Refined Sugar"
+	type = material
 	icon = refined_sugar
 	base_price = 300
 }

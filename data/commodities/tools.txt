@@ -1,5 +1,6 @@
 tools = {
 	name = "Tools"
+	type = good
 	icon = tools
 	base_price = 900
 }
