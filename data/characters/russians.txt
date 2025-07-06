@@ -31,3 +31,44 @@ peter_the_great_of_russia = {
 		philosophical
 	}
 }
+
+paul_of_russia = { #Emperor Paul of Russia; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 60.
+	name = "Paul"
+	dynasty = romanov
+	culture = russian
+	religion = orthodox
+	home_settlement = moscow
+	gender = male
+	start_date = 1786.2.16 #had a daughter (Princess Maria of Russia) on 1786.2.16
+}
+
+constantin_of_russia = { #Grand Duke Constantin of Russia; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 2.
+	name = "Constantin"
+	dynasty = romanov
+	culture = russian
+	religion = orthodox
+	home_settlement = moscow
+	gender = male
+	death_date = 1831.6.27
+	
+	history = {
+		1796.2.26 = {
+			#spouse = juliane_von_sachsen_saalfeld_coburg #married on 1796.2.26 to Juliane von Sachsen-Saalfeld-Coburg
+		}
+		
+		1820.4.1 = {
+			#spouse = none #divorced on 1820.4.1
+		}
+	}
+}
+
+nicolas_i_of_russia = { #Emperor Nicolas I of Russia; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 80.
+	name = "Nicolas"
+	epithet = "I"
+	dynasty = romanov
+	culture = russian
+	religion = orthodox
+	home_settlement = moscow
+	gender = male
+	start_date = 1822.9.11 #had a daughter on 1822.9.11
+}
