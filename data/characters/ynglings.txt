@@ -1,0 +1,103 @@
+ingiald_the_evil_adviser = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 248-254.
+	name = "Ingiald"
+	epithet = "the Evil-Adviser"
+	dynasty = yngling
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	
+	#married to Gauthild
+}
+
+olaf_treefeller = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 253-256.
+	name = "Olaf"
+	epithet = "Treefeller"
+	dynasty = yngling
+	culture = norse
+	religion = asatru
+	home_site = gothenburg #West Gotland
+	gender = male
+	father = ingiald_the_evil_adviser
+	
+	#his foster-father was Bove, who lived in West Gotland
+	#married to Solveig
+}
+
+halfdan_huitbein = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 255-257.
+	name = "Halfdan"
+	surname = "Huitbein"
+	dynasty = yngling
+	culture = norse
+	religion = asatru
+	home_site = hamar #Hedemark
+	gender = male
+	father = olaf_treefeller
+	
+	#(apparently) from Vermeland
+	#ruled over Hedemark, and conquered Thoten, Hadeland and much of Westfold
+	#married to Asa
+}
+
+eystein_halfdanson = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 257-258.
+	name = "Eystein"
+	surname = "Halfdanson" #to differentiate him from the other Eystein Yngling
+	dynasty = yngling
+	culture = norse
+	religion = asatru
+	home_site = kristiansand #Vestfold
+	gender = male
+	father = halfdan_huitbein
+	
+	#his father ruled over Hedemark
+	#became king in Raumarige and Westfold after his father's death
+	#married to Hilde, daughter of Eric Agnarson
+}
+
+halfdan_the_mild = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, p. 259.
+	name = "Halfdan"
+	epithet = "the Mild" #also known as "the Bad Entertainer"
+	dynasty = yngling
+	culture = norse
+	religion = asatru
+	home_site = kristiansand #Vestfold
+	gender = male
+	father = eystein_halfdanson
+	
+	#his father ruled over Vestfold
+	#married to Hlif, daughter of King Dag of Westmor
+	#his chief house was Holtar (in Vestfold, Norway)
+}
+
+gudrod_the_magnificent = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 259-260, 262.
+	name = "Gudrod"
+	epithet = "the Magnificent" #also known as "the Hunter"
+	dynasty = yngling
+	culture = norse
+	religion = asatru
+	home_site = kristiansand #Vestfold
+	gender = male
+	father = halfdan_the_mild
+	death_date = 824 #died murdered by a man under the orders of his wife Aasa; Halfdan the Black was one year old when Gudrod died, which would place his death in 824
+	
+	#his father ruled over Vestfold
+	#married to Alfhild, and after her death married Aasa (daughter of Harald Redbeard)
+	#described as proud
+}
+
+halfdan_the_black = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 260-262.
+	name = "Halfdan"
+	epithet = "the Black"
+	dynasty = yngling
+	culture = norse
+	religion = asatru
+	home_site = kristiansand #Agder
+	gender = male
+	father = gudrod_the_magnificent
+	birth_date = 823 #began his reign when he was 18 years old, so he would have been born in 823
+	start_date = 841 #reign began
+	death_date = 863 #reign ended
+	
+	#his father ruled over Vestfold
+	#became king of Agder in 841
+}
