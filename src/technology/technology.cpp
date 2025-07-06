@@ -13,6 +13,7 @@
 #include "country/office.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
+#include "economy/commodity_type.h"
 #include "economy/production_type.h"
 #include "economy/resource.h"
 #include "game/game.h"
@@ -461,6 +462,18 @@ commodity_map<int> technology::get_commodity_costs_for_country(const country *co
 		centesimal_int commodity_cost = cost;
 		commodity_cost *= cost_weight;
 		commodity_cost /= total_cost_weights;
+
+		switch (commodity->get_type()) {
+			case commodity_type::material:
+				commodity_cost /= 2;
+				break;
+			case commodity_type::good:
+				commodity_cost /= 4;
+				break;
+			default:
+				break;
+		}
+
 		costs[commodity] = std::max(1, commodity_cost.to_int());
 	}
 

@@ -86,7 +86,7 @@ public:
 	static constexpr const char database_folder[] = "technologies";
 
 	static constexpr int default_wealth_cost_weight = 1;
-	static constexpr int default_commodity_cost_weight = 3;
+	static constexpr int default_commodity_cost_weight = 1;
 
 public:
 	static void initialize_all();
