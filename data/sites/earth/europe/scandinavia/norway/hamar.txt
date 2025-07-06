@@ -4,4 +4,5 @@ hamar = {
 	geocoordinate = { 11.06900155610 60.82000206970 } #from Natural Earth
 	type = resource
 	resource = grain
+	province = akershus
 }
