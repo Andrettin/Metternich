@@ -5898,18 +5898,21 @@ void country_game_data::change_military_unit_recruitment_count(const military_un
 	}
 
 	if (change_input_storage) {
-		const commodity_map<int> &commodity_costs = military_unit_type->get_commodity_costs();
-		for (const auto &[commodity, cost] : commodity_costs) {
+		const int old_count = count - change;
+		const commodity_map<int> old_commodity_costs = this->get_military_unit_type_commodity_costs(military_unit_type, old_count);
+		const commodity_map<int> new_commodity_costs = this->get_military_unit_type_commodity_costs(military_unit_type, count);
+
+		for (const auto &[commodity, cost] : new_commodity_costs) {
 			assert_throw(commodity->is_storable());
 
-			const int cost_change = cost * change;
+			const int cost_change = cost - old_commodity_costs.find(commodity)->second;
 
 			this->change_stored_commodity(commodity, -cost_change);
 		}
 
 		if (military_unit_type->get_wealth_cost() > 0) {
-			const int wealth_cost_change = military_unit_type->get_wealth_cost() * change;
-			this->change_wealth_inflated(-wealth_cost_change);
+			const int wealth_cost_change = this->get_military_unit_type_wealth_cost(military_unit_type, count) - this->get_military_unit_type_wealth_cost(military_unit_type, old_count);
+			this->change_wealth(-wealth_cost_change);
 		}
 	}
 }
@@ -5920,15 +5923,27 @@ bool country_game_data::can_increase_military_unit_recruitment(const military_un
 		return false;
 	}
 
-	for (const auto &[commodity, cost] : military_unit_type->get_commodity_costs()) {
+	const int old_count = this->get_military_unit_recruitment_count(military_unit_type);
+	const int new_count = old_count + 1;
+	const commodity_map<int> old_commodity_costs = this->get_military_unit_type_commodity_costs(military_unit_type, old_count);
+	const commodity_map<int> new_commodity_costs = this->get_military_unit_type_commodity_costs(military_unit_type, new_count);
+
+	for (const auto &[commodity, cost] : new_commodity_costs) {
 		assert_throw(commodity->is_storable());
-		if (this->get_stored_commodity(commodity) < cost) {
+
+		const int cost_change = cost - old_commodity_costs.find(commodity)->second;
+
+		if (this->get_stored_commodity(commodity) < cost_change) {
 			return false;
 		}
 	}
 
-	if (military_unit_type->get_wealth_cost() != 0 && this->get_wealth_with_credit() < this->get_inflated_value(military_unit_type->get_wealth_cost())) {
-		return false;
+	if (military_unit_type->get_wealth_cost() > 0) {
+		const int wealth_cost_change = this->get_military_unit_type_wealth_cost(military_unit_type, new_count) - this->get_military_unit_type_wealth_cost(military_unit_type, old_count);
+
+		if (this->get_wealth_with_credit() < wealth_cost_change) {
+			return false;
+		}
 	}
 
 	return true;
@@ -5963,6 +5978,49 @@ void country_game_data::decrease_military_unit_recruitment(const military_unit_t
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" military unit type for country \"{}\".", military_unit_type->get_identifier(), this->country->get_identifier())));
 	}
+}
+
+int country_game_data::get_military_unit_type_cost_modifier(const military_unit_type *military_unit_type) const
+{
+	if (military_unit_type->is_infantry()) {
+		return this->get_infantry_cost_modifier();
+	} else if (military_unit_type->is_cavalry()) {
+		return this->get_cavalry_cost_modifier();
+	} else if (military_unit_type->is_artillery()) {
+		return this->get_artillery_cost_modifier();
+	} else if (military_unit_type->is_ship()) {
+		return this->get_warship_cost_modifier();
+	}
+
+	return 0;
+}
+
+int country_game_data::get_military_unit_type_wealth_cost(const military_unit_type *military_unit_type, const int quantity) const
+{
+	int wealth_cost = military_unit_type->get_wealth_cost() * quantity;
+
+	const int cost_modifier = this->get_military_unit_type_cost_modifier(military_unit_type);
+	wealth_cost *= 100 + cost_modifier;
+	wealth_cost /= 100;
+
+	return this->get_inflated_value(wealth_cost);
+}
+
+commodity_map<int> country_game_data::get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const
+{
+	commodity_map<int> commodity_costs = military_unit_type->get_commodity_costs();
+
+	for (auto &[commodity, cost] : commodity_costs) {
+		assert_throw(commodity->is_storable());
+
+		cost *= quantity;
+
+		const int cost_modifier = this->get_military_unit_type_cost_modifier(military_unit_type);
+		cost *= 100 + cost_modifier;
+		cost /= 100;
+	}
+
+	return commodity_costs;
 }
 
 void country_game_data::add_army(qunique_ptr<army> &&army)
