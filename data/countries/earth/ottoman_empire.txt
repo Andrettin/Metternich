@@ -17,12 +17,18 @@ ottoman_empire = {
 	}
 	
 	history = {
+		1512 = {
+			offices = {
+				#ruler = selim_i_of_the_ottoman_empire #Selim I became Sultan of the Ottoman Empire in 1512; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 204.
+			}
+			
+			government_type = monarchy
+		}
+	
 		1520 = {
 			offices = {
 				ruler = suleiman_i_of_the_ottoman_empire #Suleiman I became Sultan of the Ottoman Empire in 1520; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
 			}
-			
-			government_type = monarchy
 		}
 	
 		1820 = {
