@@ -5650,6 +5650,21 @@ void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 	}
 }
 
+bool country_game_data::can_gain_civilian_unit(const civilian_unit_type *civilian_unit_type) const
+{
+	if (civilian_unit_type->get_required_technology() != nullptr && !this->has_technology(civilian_unit_type->get_required_technology())) {
+		return false;
+	}
+
+	if (this->country->get_culture()->get_civilian_class_unit_type(civilian_unit_type->get_unit_class()) != civilian_unit_type) {
+		return false;
+	}
+
+	//FIXME: check whether the country has a building capable of training the civilian unit type
+
+	return true;
+}
+
 void country_game_data::change_civilian_unit_recruitment_count(const civilian_unit_type *civilian_unit_type, const int change, const bool change_input_storage)
 {
 	if (change == 0) {
@@ -5683,7 +5698,9 @@ void country_game_data::change_civilian_unit_recruitment_count(const civilian_un
 
 bool country_game_data::can_increase_civilian_unit_recruitment(const civilian_unit_type *civilian_unit_type) const
 {
-	//FIXME: check whether the country has a building capable of training the civilian unit type
+	if (!this->can_gain_civilian_unit(civilian_unit_type)) {
+		return false;
+	}
 
 	for (const auto &[commodity, cost] : civilian_unit_type->get_commodity_costs()) {
 		assert_throw(commodity->is_storable());

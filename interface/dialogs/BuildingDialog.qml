@@ -125,6 +125,7 @@ DialogBase {
 				
 				Column {
 					spacing: 2 * scale_factor
+					visible: country_game_data.can_gain_civilian_unit(civilian_unit_type)
 					
 					readonly property var civilian_unit_type: model.modelData
 					property int civilian_unit_recruitment_count: country_game_data.get_civilian_unit_recruitment_count(civilian_unit_type)
