@@ -4,6 +4,7 @@ library = {
 	portrait = university
 	icon = book
 	provincial = true
+	free_on_start = true
 	required_technology = writing
 	settlement_types = {
 		city
@@ -12,7 +13,6 @@ library = {
 	}
 	conditions = {
 		game_rule = research_commodity
-		game_rule = additional_buildings
 	}
 	cost_factor = {
 		modifier = {
@@ -22,6 +22,12 @@ library = {
 				trait = creative
 			}
 		}
+	}
+	production_types = {
+		researching
+	}
+	country_modifier = {
+		library_capacity = 1
 	}
 	weighted_country_modifier = {
 		research_output_modifier = 50

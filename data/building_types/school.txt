@@ -11,20 +11,24 @@ school = {
 		city
 		metropolis
 	}
-	production_types = {
-		researching
+	settlement_conditions = {
+		or = {
+			capital = true
+			game_rule = research_commodity
+		}
 	}
 	education_types = {
 		trained_workers
 		expert_workers
 	}
 	country_modifier = {
-		school_capacity = 1
-		
 		commodity_demand = {
 			commodity = paper
 			value = 1
 		}
+	}
+	weighted_country_modifier = {
+		research_output_modifier = 12.5
 	}
 }
 
@@ -40,16 +44,17 @@ college = {
 		city
 		metropolis
 	}
-	production_types = {
-		researching
+	settlement_conditions = {
+		or = {
+			capital = true
+			game_rule = research_commodity
+		}
 	}
 	education_types = {
 		trained_workers
 		expert_workers
 	}
 	country_modifier = {
-		school_capacity = 2
-		
 		commodity_demand = {
 			commodity = paper
 			value = 1
@@ -60,6 +65,9 @@ college = {
 			profession = academics
 			value = 2
 		}
+	}
+	weighted_country_modifier = {
+		research_output_modifier = 25
 	}
 }
 
@@ -76,8 +84,11 @@ university = {
 		city
 		metropolis
 	}
-	production_types = {
-		researching
+	settlement_conditions = {
+		or = {
+			capital = true
+			game_rule = research_commodity
+		}
 	}
 	education_types = {
 		trained_workers
@@ -109,8 +120,6 @@ university = {
 		}
 	}
 	country_modifier = {
-		school_capacity = 3
-		
 		commodity_demand = {
 			commodity = paper
 			value = 1
@@ -122,6 +131,9 @@ university = {
 			value = 3
 		}
 		housing_bonus = 1
+	}
+	weighted_country_modifier = {
+		research_output_modifier = 50
 	}
 }
 
@@ -135,20 +147,24 @@ monastic_school = {
 	settlement_types = {
 		monastery
 	}
-	production_types = {
-		researching
+	settlement_conditions = {
+		or = {
+			capital = true
+			game_rule = research_commodity
+		}
 	}
 	education_types = {
 		trained_workers
 		expert_workers
 	}
 	country_modifier = {
-		school_capacity = 1
-		
 		commodity_demand = {
 			commodity = paper
 			value = 1
 		}
+	}
+	weighted_country_modifier = {
+		research_output_modifier = 12.5
 	}
 }
 
@@ -163,19 +179,23 @@ cathedral_school = {
 	settlement_types = {
 		monastery
 	}
-	production_types = {
-		researching
+	settlement_conditions = {
+		or = {
+			capital = true
+			game_rule = research_commodity
+		}
 	}
 	education_types = {
 		trained_workers
 		expert_workers
 	}
 	country_modifier = {
-		school_capacity = 2
-		
 		commodity_demand = {
 			commodity = paper
 			value = 1
 		}
+	}
+	weighted_country_modifier = {
+		research_output_modifier = 25
 	}
 }
