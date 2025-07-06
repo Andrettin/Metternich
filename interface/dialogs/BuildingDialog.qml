@@ -116,7 +116,7 @@ DialogBase {
 		Grid {
 			id: civilian_unit_grid
 			anchors.horizontalCenter: parent.horizontalCenter
-			columns: 2
+			columns: 3
 			visible: building && building.recruited_civilian_unit_types.length > 0
 			spacing: 16 * scale_factor
 			
