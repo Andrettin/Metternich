@@ -77,12 +77,13 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	this->check_free_promotions();
 }
 
-military_unit::military_unit(const military_unit_type *type, const metternich::character *character)
-	: military_unit(type, character->get_game_data()->get_country(), character->get_phenotype())
+military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::character *character)
+	: military_unit(type, country, character->get_phenotype())
 {
 	this->character = character;
 	this->name = character->get_full_name();
 
+	character->get_game_data()->set_military_unit(this);
 	character->get_game_data()->apply_military_unit_modifier(this, 1);
 
 	//character military units do not have any province set as their home province, since they don't consume food

@@ -630,22 +630,10 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			const phenotype *phenotype = historical_military_unit->get_phenotype();
-			if (phenotype == nullptr) {
-				const std::vector<const metternich::phenotype *> weighted_phenotypes = country_game_data->get_weighted_phenotypes();
-				assert_throw(!weighted_phenotypes.empty());
-				phenotype = vector::get_random(weighted_phenotypes);
-			}
-			assert_throw(phenotype != nullptr);
 
 			for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
-				auto military_unit = make_qunique<metternich::military_unit>(type, country, phenotype);
-				military_unit->set_province(province);
-
-				for (const promotion *promotion : historical_military_unit_history->get_promotions()) {
-					military_unit->add_promotion(promotion);
-				}
-
-				country_game_data->add_military_unit(std::move(military_unit));
+				const bool created = country_game_data->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
+				assert_throw(created);
 			}
 		}
 

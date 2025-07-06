@@ -25,6 +25,7 @@
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
 #include "technology/technology.h"
 #include "unit/civilian_unit_type.h"
+#include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/vector_util.h"
@@ -59,6 +60,10 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "recruited_civilian_unit_types") {
 		for (const std::string &value : values) {
 			this->recruited_civilian_unit_types.push_back(civilian_unit_type::get(value));
+		}
+	} else if (tag == "recruited_military_unit_categories") {
+		for (const std::string &value : values) {
+			this->recruited_military_unit_categories.push_back(magic_enum::enum_cast<military_unit_category>(value).value());
 		}
 	} else if (tag == "commodity_costs") {
 		scope.for_each_property([&](const gsml_property &property) {
@@ -256,6 +261,11 @@ QVariantList building_type::get_education_types_qvariant_list() const
 QVariantList building_type::get_recruited_civilian_unit_types_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_recruited_civilian_unit_types());
+}
+
+QVariantList building_type::get_recruited_military_unit_categories_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_recruited_military_unit_categories());
 }
 
 int building_type::get_wealth_cost_for_country(const country *country) const

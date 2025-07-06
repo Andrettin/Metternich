@@ -195,6 +195,89 @@ DialogBase {
 			}
 		}
 		
+		Grid {
+			id: military_unit_grid
+			anchors.horizontalCenter: parent.horizontalCenter
+			columns: 3
+			visible: building && building.recruited_military_unit_categories.length > 0
+			spacing: 16 * scale_factor
+			
+			Repeater {
+				model: building ? building.recruited_military_unit_categories : []
+				
+				Column {
+					spacing: 2 * scale_factor
+					visible: military_unit_type !== null
+					
+					readonly property var military_unit_category: model.modelData
+					readonly property var military_unit_type: country_game_data.get_best_military_unit_category_type(military_unit_category)
+					property int military_unit_recruitment_count: military_unit_type !== null ? country_game_data.get_military_unit_recruitment_count(military_unit_type) : 0
+					
+					IconButton {
+						id: military_unit_button
+						width: 64 * scale_factor + 6 * scale_factor
+						height: 64 * scale_factor + 6 * scale_factor
+						icon_identifier: military_unit_type !== null ? military_unit_type.icon.identifier : "skull"
+						
+						onClicked: {
+						}
+						
+						onHoveredChanged: {
+							if (hovered) {
+								status_text = military_unit_type.name
+							} else {
+								status_text = ""
+							}
+						}
+					}
+					
+					Row {
+						anchors.horizontalCenter: parent.horizontalCenter
+						
+						IconButton {
+							id: decrement_button
+							anchors.verticalCenter: parent.verticalCenter
+							width: 16 * scale_factor
+							height: 16 * scale_factor
+							icon_identifier: "trade_consulate"
+							use_opacity_mask: false
+							
+							onReleased: {
+								if (country_game_data.can_decrease_military_unit_recruitment(military_unit_type)) {
+									country_game_data.decrease_military_unit_recruitment(military_unit_type, true)
+									military_unit_recruitment_count = country_game_data.get_military_unit_recruitment_count(military_unit_type)
+								}
+							}
+						}
+						
+						SmallText {
+							id: military_unit_recruiting_count_label
+							anchors.verticalCenter: parent.verticalCenter
+							text: number_string(military_unit_recruitment_count)
+							width: 24 * scale_factor
+							horizontalAlignment: Text.AlignHCenter
+						}
+						
+						IconButton {
+							id: increment_button
+							anchors.verticalCenter: parent.verticalCenter
+							width: 16 * scale_factor
+							height: 16 * scale_factor
+							icon_identifier: "trade_consulate"
+							use_opacity_mask: false
+							
+							onReleased: {
+								if (country_game_data.can_increase_military_unit_recruitment(military_unit_type)) {
+									country_game_data.increase_military_unit_recruitment(military_unit_type)
+									military_unit_recruitment_count = country_game_data.get_military_unit_recruitment_count(military_unit_type)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
 		Repeater {
 			model: building_slot ? building_slot.available_production_types : []
 			

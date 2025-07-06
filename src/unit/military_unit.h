@@ -43,7 +43,7 @@ public:
 
 	explicit military_unit(const military_unit_type *type);
 	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::phenotype *phenotype);
-	explicit military_unit(const military_unit_type *type, const character *character);
+	explicit military_unit(const military_unit_type *type, const metternich::country *country, const character *character);
 
 	void do_turn();
 	void do_ai_turn();

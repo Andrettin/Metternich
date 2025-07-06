@@ -69,20 +69,7 @@ public:
 			return;
 		}
 
-		const province *province = scope->get_game_data()->get_capital_province();
-
-		assert_throw(province != nullptr);
-		assert_throw(province->get_game_data()->is_on_map());
-
-		const std::vector<const metternich::phenotype *> weighted_phenotypes = scope->get_game_data()->get_weighted_phenotypes();
-		assert_throw(!weighted_phenotypes.empty());
-		const phenotype *phenotype = vector::get_random(weighted_phenotypes);
-		assert_throw(phenotype != nullptr);
-
-		auto military_unit = make_qunique<metternich::military_unit>(type, scope, phenotype);
-		military_unit->set_province(province);
-
-		scope->get_game_data()->add_military_unit(std::move(military_unit));
+		scope->get_game_data()->create_military_unit(type, nullptr, nullptr, {});
 	}
 
 	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

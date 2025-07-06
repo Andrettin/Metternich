@@ -201,6 +201,7 @@ public:
 	void do_production();
 	void do_education();
 	void do_civilian_unit_recruitment();
+	void do_military_unit_recruitment();
 	void do_research();
 	void do_population_growth();
 	void do_food_consumption(const int food_consumption);
@@ -1718,8 +1719,26 @@ public:
 		return this->military_units;
 	}
 
+	bool create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions);
 	void add_military_unit(qunique_ptr<military_unit> &&military_unit);
 	void remove_military_unit(military_unit *military_unit);
+
+	Q_INVOKABLE int get_military_unit_recruitment_count(const metternich::military_unit_type *military_unit_type) const
+	{
+		const auto find_iterator = this->military_unit_recruitment_counts.find(military_unit_type);
+
+		if (find_iterator != this->military_unit_recruitment_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_military_unit_recruitment_count(const military_unit_type *military_unit_type, const int change, const bool change_input_storage = true);
+	Q_INVOKABLE bool can_increase_military_unit_recruitment(const metternich::military_unit_type *military_unit_type) const;
+	Q_INVOKABLE void increase_military_unit_recruitment(const metternich::military_unit_type *military_unit_type);
+	Q_INVOKABLE bool can_decrease_military_unit_recruitment(const metternich::military_unit_type *military_unit_type) const;
+	Q_INVOKABLE void decrease_military_unit_recruitment(const metternich::military_unit_type *military_unit_type, const bool restore_inputs);
 
 	const std::set<std::string> &get_military_unit_names() const
 	{
@@ -1733,7 +1752,7 @@ public:
 	void remove_transporter(transporter *transporter);
 
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const;
-	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category) const;
+	Q_INVOKABLE const metternich::military_unit_type *get_best_military_unit_category_type(const metternich::military_unit_category category) const;
 
 	const transporter_type *get_best_transporter_category_type(const transporter_category category, const culture *culture) const;
 	const transporter_type *get_best_transporter_category_type(const transporter_category category) const;
@@ -2706,6 +2725,7 @@ private:
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	data_entry_map<civilian_unit_type, int> civilian_unit_recruitment_counts;
 	std::vector<qunique_ptr<military_unit>> military_units;
+	military_unit_type_map<int> military_unit_recruitment_counts;
 	std::set<std::string> military_unit_names;
 	std::vector<qunique_ptr<army>> armies;
 	std::vector<qunique_ptr<transporter>> transporters;

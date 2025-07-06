@@ -972,12 +972,11 @@ void character_game_data::deploy_to_province(const province *province)
 
 	const military_unit_type *military_unit_type = this->get_country()->get_game_data()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
 
-	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->character);
+	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->get_country(), this->character);
 
 	assert_throw(military_unit->can_move_to(province));
 
 	military_unit->set_province(province);
-	this->military_unit = military_unit.get();
 
 	this->get_country()->get_game_data()->add_military_unit(std::move(military_unit));
 }

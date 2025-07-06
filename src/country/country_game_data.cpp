@@ -157,6 +157,7 @@ void country_game_data::do_turn()
 		this->do_education();
 		this->do_production();
 		this->do_civilian_unit_recruitment();
+		this->do_military_unit_recruitment();
 		this->do_research();
 		this->do_population_growth();
 		this->do_everyday_consumption();
@@ -314,6 +315,30 @@ void country_game_data::do_civilian_unit_recruitment()
 		assert_throw(this->civilian_unit_recruitment_counts.empty());
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing civilian unit recruitment for country \"{}\".", this->country->get_identifier())));
+	}
+}
+
+void country_game_data::do_military_unit_recruitment()
+{
+	try {
+		if (this->is_under_anarchy()) {
+			return;
+		}
+
+		const military_unit_type_map<int> recruitment_counts = this->military_unit_recruitment_counts;
+		for (const auto &[military_unit_type, recruitment_count] : recruitment_counts) {
+			assert_throw(recruitment_count > 0);
+
+			for (int i = 0; i < recruitment_count; ++i) {
+				const bool created = this->create_military_unit(military_unit_type, nullptr, nullptr, {});
+				const bool restore_costs = !created;
+				this->change_military_unit_recruitment_count(military_unit_type, -1, restore_costs);
+			}
+		}
+
+		assert_throw(this->military_unit_recruitment_counts.empty());
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\".", this->country->get_identifier())));
 	}
 }
 
@@ -5626,7 +5651,7 @@ bool country_game_data::create_civilian_unit(const civilian_unit_type *civilian_
 
 void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
-	if (civilian_unit->get_character() != nullptr) {
+	if (civilian_unit->get_character() != nullptr && !civilian_unit->get_character()->has_role(character_role::advisor)) {
 		civilian_unit->get_character()->get_game_data()->set_country(this->country);
 	}
 
@@ -5637,7 +5662,7 @@ void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 {
 	assert_throw(civilian_unit != nullptr);
 
-	if (civilian_unit->get_character() != nullptr) {
+	if (civilian_unit->get_character() != nullptr && !civilian_unit->get_character()->has_role(character_role::advisor)) {
 		assert_throw(civilian_unit->get_character()->get_game_data()->get_country() == this->country);
 		civilian_unit->get_character()->get_game_data()->set_country(nullptr);
 	}
@@ -5747,14 +5772,107 @@ void country_game_data::decrease_civilian_unit_recruitment(const civilian_unit_t
 	}
 }
 
+bool country_game_data::create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions)
+{
+	if (deployment_province == nullptr) {
+		deployment_province = this->get_capital_province();
+	}
+
+	assert_throw(deployment_province != nullptr);
+	assert_throw(deployment_province->get_game_data()->is_on_map());
+
+	const character *chosen_character = nullptr;
+
+	if (military_unit_type->get_unit_class()->is_leader()) {
+		std::vector<const metternich::character *> potential_characters;
+
+		for (const metternich::character *character : character::get_all()) {
+			if (!character->has_role(character_role::leader)) {
+				continue;
+			}
+
+			if (character->get_military_unit_category() != military_unit_type->get_category()) {
+				continue;
+			}
+
+			if (character->get_game_data()->get_country() != nullptr && character->get_game_data()->get_country() != this->country) {
+				continue;
+			}
+
+			if (character->get_game_data()->get_military_unit() != nullptr) {
+				continue;
+			}
+
+			if (character->has_role(character_role::advisor) && character->get_game_data()->get_country() != this->country) {
+				//if the character is an advisor, they must already have been recruited by the country as an advisor before being usable as a military unit
+				continue;
+			}
+
+			if (phenotype != nullptr && character->get_phenotype() != phenotype) {
+				continue;
+			}
+
+			if (character->get_game_data()->is_dead()) {
+				continue;
+			}
+
+			if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->country, read_only_context(this->country))) {
+				continue;
+			}
+
+			potential_characters.push_back(character);
+		}
+
+		if (!potential_characters.empty()) {
+			chosen_character = vector::get_random(potential_characters);
+		}
+	}
+
+	qunique_ptr<military_unit> military_unit;
+
+	if (chosen_character != nullptr) {
+		military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->country, chosen_character);
+	} else {
+		if (phenotype == nullptr) {
+			const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_weighted_phenotypes();
+			assert_throw(!weighted_phenotypes.empty());
+			phenotype = vector::get_random(weighted_phenotypes);
+		}
+		assert_throw(phenotype != nullptr);
+
+		military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->country, phenotype);
+	}
+
+	assert_throw(military_unit != nullptr);
+
+	military_unit->set_province(deployment_province);
+
+	for (const promotion *promotion : promotions) {
+		military_unit->add_promotion(promotion);
+	}
+
+	this->add_military_unit(std::move(military_unit));
+
+	return true;
+}
+
 void country_game_data::add_military_unit(qunique_ptr<military_unit> &&military_unit)
 {
+	if (military_unit->get_character() != nullptr && !military_unit->get_character()->has_role(character_role::advisor)) {
+		military_unit->get_character()->get_game_data()->set_country(this->country);
+	}
+
 	this->military_unit_names.insert(military_unit->get_name());
 	this->military_units.push_back(std::move(military_unit));
 }
 
 void country_game_data::remove_military_unit(military_unit *military_unit)
 {
+	if (military_unit->get_character() != nullptr && !military_unit->get_character()->has_role(character_role::advisor)) {
+		assert_throw(military_unit->get_character()->get_game_data()->get_country() == this->country);
+		military_unit->get_character()->get_game_data()->set_country(nullptr);
+	}
+
 	this->military_unit_names.erase(military_unit->get_name());
 
 	for (size_t i = 0; i < this->military_units.size(); ++i) {
@@ -5762,6 +5880,88 @@ void country_game_data::remove_military_unit(military_unit *military_unit)
 			this->military_units.erase(this->military_units.begin() + i);
 			return;
 		}
+	}
+}
+
+void country_game_data::change_military_unit_recruitment_count(const military_unit_type *military_unit_type, const int change, const bool change_input_storage)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->military_unit_recruitment_counts[military_unit_type] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->military_unit_recruitment_counts.erase(military_unit_type);
+	}
+
+	if (change_input_storage) {
+		const commodity_map<int> &commodity_costs = military_unit_type->get_commodity_costs();
+		for (const auto &[commodity, cost] : commodity_costs) {
+			assert_throw(commodity->is_storable());
+
+			const int cost_change = cost * change;
+
+			this->change_stored_commodity(commodity, -cost_change);
+		}
+
+		if (military_unit_type->get_wealth_cost() > 0) {
+			const int wealth_cost_change = military_unit_type->get_wealth_cost() * change;
+			this->change_wealth_inflated(-wealth_cost_change);
+		}
+	}
+}
+
+bool country_game_data::can_increase_military_unit_recruitment(const military_unit_type *military_unit_type) const
+{
+	if (this->get_best_military_unit_category_type(military_unit_type->get_category()) != military_unit_type) {
+		return false;
+	}
+
+	for (const auto &[commodity, cost] : military_unit_type->get_commodity_costs()) {
+		assert_throw(commodity->is_storable());
+		if (this->get_stored_commodity(commodity) < cost) {
+			return false;
+		}
+	}
+
+	if (military_unit_type->get_wealth_cost() != 0 && this->get_wealth_with_credit() < this->get_inflated_value(military_unit_type->get_wealth_cost())) {
+		return false;
+	}
+
+	return true;
+}
+
+void country_game_data::increase_military_unit_recruitment(const military_unit_type *military_unit_type)
+{
+	try {
+		assert_throw(this->can_increase_military_unit_recruitment(military_unit_type));
+
+		this->change_military_unit_recruitment_count(military_unit_type, 1);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" military unit type for country \"{}\".", military_unit_type->get_identifier(), this->country->get_identifier())));
+	}
+}
+
+bool country_game_data::can_decrease_military_unit_recruitment(const military_unit_type *military_unit_type) const
+{
+	if (this->get_military_unit_recruitment_count(military_unit_type) == 0) {
+		return false;
+	}
+
+	return true;
+}
+
+void country_game_data::decrease_military_unit_recruitment(const military_unit_type *military_unit_type, const bool restore_inputs)
+{
+	try {
+		assert_throw(this->can_decrease_military_unit_recruitment(military_unit_type));
+
+		this->change_military_unit_recruitment_count(military_unit_type, -1, restore_inputs);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" military unit type for country \"{}\".", military_unit_type->get_identifier(), this->country->get_identifier())));
 	}
 }
 
