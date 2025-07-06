@@ -31,12 +31,6 @@ schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
 	#raised to princely rank in 1670
 }
 
-wettin = {
-	name = "Wettin"
-	prefix = "von"
-	culture = german #Saxon
-}
-
 wittelsbach = {
 	name = "Wittelsbach"
 	prefix = "von"

@@ -1,0 +1,185 @@
+anhalt_bernburg = {
+	name = "Anhalt-Bernburg"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+anhalt_bernburg_schaumburg = {
+	name = "Anhalt-Bernburg-Schaumburg"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+anhalt_dessau = {
+	name = "Anhalt-Dessau"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+anhalt_kothen = {
+	name = "Anhalt-Kothen" #"Anhalt-Köthen"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+anhalt_pless = {
+	name = "Anhalt-Pless"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+brandenburg = {
+	name = "Brandenburg"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+braunschweig = {
+	name = "Braunschweig"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+braunschweig_luneburg = {
+	name = "Braunschweig-Luneburg" #"Braunschweig-Lüneburg"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+braunschweig_wolfenbuttel = {
+	name = "Braunschweig-Wolfenbuttel" #"Braunschweig-Wolfenbüttel"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+curland = {
+	name = "Curland"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+hochberg_zu_furstenstein = {
+	name = "Hochberg zu Furstenstein" #"Hochberg zu Fürstenstein"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+hohenstein = {
+	name = "Hohenstein"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+holstein_beck = {
+	name = "Holstein-Beck"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+holstein_glucksburg = {
+	name = "Holstein-Glucksburg" #"Holstein-Glücksburg"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+holstein_gottorp_oldenburg = {
+	name = "Holstein-Gottorp-Oldenburg"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+mecklenburg_schwerin = {
+	name = "Mecklenburg-Schwerin"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+mecklenburg_strelitz = {
+	name = "Mecklenburg-Strelitz"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+richthofen = {
+	name = "Richthofen"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+sachsen_altenburg = {
+	name = "Sachsen-Altenburg"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+sachsen_coburg_und_gotha = {
+	name = "Sachsen-Coburg und Gotha"
+	prefix = "zu"
+	culture = german #Saxon
+}
+
+sachsen_gotha_altenburg = {
+	name = "Sachsen-Gotha-Altenburg"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+sachsen_hildburghausen = {
+	name = "Sachsen-Hildburghausen"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+sachsen_meiningen = {
+	name = "Sachsen-Meiningen"
+	prefix = "zu"
+	culture = german #Saxon
+}
+
+sachsen_saalfeld_coburg = {
+	name = "Sachsen-Saalfeld-Coburg"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+sachsen_weimar_eisenach = {
+	name = "Sachsen-Weimar-Eisenach"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+schaumburg_lippe = {
+	name = "Schaumburg-Lippe"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+scheel = {
+	name = "Scheel"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+sobeck_und_kornitz = {
+	name = "Sobeck und Kornitz"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+stollberg_wernigerode = {
+	name = "Stollberg-Wernigerode"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+stolzenberg = {
+	name = "Stolzenberg"
+	prefix = "von"
+	culture = german #Saxon
+}
+
+wettin = {
+	name = "Wettin"
+	prefix = "von"
+	culture = german #Saxon
+}

@@ -1,0 +1,4 @@
+yngling = {
+	name = "Yngling"
+	culture = norse
+}

@@ -1,5 +1,64 @@
+bonaparte = {
+	name = "Bonaparte"
+	culture = french
+}
+
 bourbon = {
 	name = "Bourbon"
+	prefix = "de"
+	culture = french
+}
+
+bourbon_conde = {
+	name = "Bourbon-Conde" #"Bourbon-Condé"
+	prefix = "de"
+	culture = french
+}
+
+bourbon_orleans = {
+	name = "Bourbon-Orleans" #"Bourbon-Orléans"
+	prefix = "de"
+	culture = french
+}
+
+bourgogne = {
+	name = "Bourgogne"
+	prefix = "de"
+	culture = french
+}
+
+nemours = {
+	name = "Nemours"
+	prefix = "de"
+	culture = french
+}
+
+penthievre = {
+	name = "Penthievre" #"Penthièvre"
+	prefix = "de"
+	culture = french
+}
+
+rohan_soubise = {
+	name = "Rohan-Soubise"
+	prefix = "de"
+	culture = french
+}
+
+valois = {
+	name = "Valois"
+	prefix = "de"
+	culture = french
+}
+
+ville_sur_illon = {
+	name = "Ville sur Illon"
+	prefix = "de la"
+	culture = french
+}
+
+wagram = {
+	name = "Wagram"
 	prefix = "de"
 	culture = french
 }

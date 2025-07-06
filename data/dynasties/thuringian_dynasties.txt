@@ -1,0 +1,41 @@
+erdmannsdorff = {
+	name = "Erdmannsdorff"
+	prefix = "von"
+	culture = german #Thuringian
+}
+
+reuss_greiz = {
+	name = "Reuss-Greiz"
+	prefix = "von"
+	culture = german #Thuringian
+}
+
+reuss_zu_ebersdorf = {
+	name = "Reuss zu Ebersdorf"
+	prefix = "von"
+	culture = german #Thuringian
+}
+
+reuss_schleiz_kostritz = {
+	name = "Reuss-Schleiz-Kostritz" #"Reuss-Schleiz-Köstritz"
+	prefix = "von"
+	culture = german #Thuringian
+}
+
+schlieben = {
+	name = "Schlieben"
+	prefix = "von"
+	culture = german #Thuringian
+}
+
+schwarzburg_rudolstadt = {
+	name = "Schwarzburg-Rudolstadt"
+	prefix = "von"
+	culture = german #Thuringian
+}
+
+taubenheim = {
+	name = "Taubenheim"
+	prefix = "von"
+	culture = german #Thuringian
+}
