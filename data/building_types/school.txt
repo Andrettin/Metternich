@@ -104,9 +104,9 @@ university = {
 		prospector
 		farmer
 		forester
-		#engineer
-		#rancher
-		#driller
+		engineer
+		rancher
+		driller
 		#spy
 		#merchant
 	}
