@@ -180,3 +180,17 @@ geronimo_cardano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 	
 	#published Niccolò Tartaglia's method to solve cubic equations
 }
+
+lelio_de_luca = { #Source: Josef Dullinger, "Die Handelskompagnien Oesterreichs nach dem Oriente und nach Ostindien in der ersten Hälfte des 18. Jahrhunderts", 1900, pp. 50-51.
+	name = "Lelio"
+	surname = "de Luca"
+	role = civilian
+	character_type = merchant
+	culture = italian #correct?
+	religion = catholic
+	home_settlement = vienna #correct?
+	gender = male
+	start_date = 1664
+	
+	#was one of the two directors of Austria's oriental company, which was founded in 1664
+}
