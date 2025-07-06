@@ -1,0 +1,16 @@
+louise_de_penthievre = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 15-16.
+	name = "Louise"
+	dynasty = penthievre
+	culture = french
+	religion = catholic
+	home_settlement = nantes #Penthièvre
+	gender = female
+	#daughter of the duke of Penthièvre
+	birth_date = 1753.3.13
+	
+	history = {
+		1770.8.23 = { #married to duke Philippe of Orléans, and they had their first known child on 1770.8.23
+			#spouse = philippe_de_bourbon_orleans
+		}
+	}
+}

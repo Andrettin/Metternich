@@ -1,0 +1,25 @@
+heinrich_von_reuss_zu_ebersdorf = { #Heinrich von Reuss zu Ebersdorf; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
+	name = "Heinrich"
+	dynasty = reuss_zu_ebersdorf
+	culture = german #Thuringian
+	religion = protestant
+	home_settlement = erfurt #Ebersdorf
+	gender = male
+	#count of Reuss zu Ebersdorf, as Heinrich XXIV
+}
+
+auguste_karoline_von_reuss_zu_ebersdorf = { #Auguste Karoline von Reuss zu Ebersdorf; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
+	name = "Auguste Karoline"
+	dynasty = reuss_zu_ebersdorf
+	culture = german #Thuringian
+	religion = protestant
+	home_settlement = erfurt #Ebersdorf
+	gender = female
+	father = heinrich_von_reuss_zu_ebersdorf
+	
+	history = {
+		1778.8.19 = {
+			#spouse = franz_von_sachsen_saalfeld_coburg #had her first child on 1778.8.19 with her husband Franz von Sachsen-Saalfeld-Coburg
+		}
+	}
+}

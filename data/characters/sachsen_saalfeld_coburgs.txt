@@ -1,0 +1,38 @@
+franz_von_sachsen_saalfeld_coburg = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
+	name = "Franz"
+	dynasty = sachsen_saalfeld_coburg
+	culture = german #Thuringian
+	religion = protestant #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
+	home_settlement = erfurt #Saalfeld
+	gender = male
+	death_date = 1806.12.9 #succeeded by his son on 1806.12.9; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
+	
+	history = {
+		1778.8.19 = {
+			#spouse = auguste_karoline_von_reuss_zu_ebersdorf #had his first child on 1778.8.19 with his wife Auguste Karoline von Reuss zu Ebersdorf
+		}
+	}
+}
+
+juliane_von_sachsen_saalfeld_coburg = { #Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 1-2.
+	name = "Juliane"
+	dynasty = sachsen_saalfeld_coburg
+	culture = german #Thuringian
+	religion = protestant
+	home_settlement = erfurt #Saalfeld
+	gender = female
+	father = franz_von_sachsen_saalfeld_coburg #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
+	mother = auguste_karoline_von_reuss_zu_ebersdorf #Auguste Karoline von Reuss zu Ebersdorf; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
+	birth_date = 1781.9.23
+	
+	history = {
+		#married on 1796.2.26 to the grand duke Constantin of Russia
+		#divorced on 1820.4.1
+		
+		1826.11.12 = { #the head of the dynasty became duke of Sachsen-Coburg und Gotha through the convention of 1826.11.12
+			#dynasty = zu_sachsen_coburg_und_gotha
+		}
+		
+		#her residence was Elfenau (near Bern in Switzerland) as of 1847
+	}
+}

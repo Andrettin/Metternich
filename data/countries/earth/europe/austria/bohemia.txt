@@ -25,6 +25,16 @@ bohemia = {
 			government_type = monarchy
 		}
 		
+		1152 = {
+			offices = {
+				#ruler = vlatislav_ii_of_bohemia
+			}
+		}
+		
+		1158 = {
+			tier = kingdom #Frederick I of the Holy Roman Empire granted a personal elevation to king to Vladislav II of Bohemia in 1158; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 207.
+		}
+		
 		1477 = {
 			tier = kingdom #Bohemia was a kingdom c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
 		}

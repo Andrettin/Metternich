@@ -1,0 +1,40 @@
+philippe_de_bourbon_orleans = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 15-16.
+	name = "Philippe"
+	dynasty = bourbon_orleans
+	culture = french
+	religion = catholic
+	home_settlement = orleans
+	gender = male
+	death_date = 1793.11.6
+	#duke of Orléans
+	
+	history = {
+		1770.8.23 = { #married to Louise, daughter of the duke of Penthièvre, and they had their first known child on 1770.8.23
+			#spouse = louise_de_penthievre
+		}
+	}
+}
+
+louise_marie_de_bourbon_orleans = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 15-16.
+	name = "Louise Marie"
+	dynasty = bourbon_orleans
+	culture = french
+	religion = catholic
+	home_settlement = orleans
+	gender = female
+	birth_date = 1750.7.9
+	#sister of duke Philippe of Orléans
+	#since 1780 separated wife of the duke of Bourbon-Condé
+}
+
+eugenie_de_bourbon_orleans = { #Eugénie de Bourbon-Orléans; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 15-16.
+	name = "Eugenie" #"Eugénie"
+	dynasty = bourbon_orleans
+	culture = french
+	religion = catholic
+	home_settlement = orleans
+	gender = female
+	father = philippe_de_bourbon_orleans
+	mother = louise_de_penthievre
+	birth_date = 1770.8.23
+}
