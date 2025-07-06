@@ -4,7 +4,6 @@ library = {
 	portrait = university
 	icon = book
 	provincial = true
-	free_on_start = true
 	required_technology = writing
 	settlement_types = {
 		city
