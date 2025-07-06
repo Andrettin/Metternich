@@ -9,6 +9,21 @@ barracks = {
 		metropolis
 		castle
 	}
+	recruited_military_unit_categories = {
+		mace_infantry
+		spear_infantry
+		blade_infantry
+		light_infantry
+		regular_infantry
+		heavy_infantry
+		bowmen
+		light_cavalry
+		heavy_cavalry
+		spear_cavalry
+		light_artillery
+		heavy_artillery
+		combat_engineers
+	}
 	settlement_modifier = {
 		housing_bonus = 1
 		profession_capacity = {
