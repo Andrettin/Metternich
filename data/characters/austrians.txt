@@ -33,6 +33,7 @@ ulrich_von_cilli = { #Source: "Encyclopædia Britannica", 1911, vol. 6, p. 366.
 		
 		1439 = {
 			#took up the cause of Albert II's widow Elizabeth in 1439
+			country = austria
 		}
 	
 		#succeeded his father in 1454
@@ -65,6 +66,7 @@ georg_peurbach = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
 	history = {
 		1452 = {
 			#lived in Vienna as of 1452
+			country = austria
 		}
 		
 		#his "Epitome in Cl. Ptolemaei magnam compositionem" was completed by Regiomontanus at Venice in 1463, and the work was printed at Venice in 1496
