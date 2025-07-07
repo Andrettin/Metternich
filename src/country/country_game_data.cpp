@@ -5847,6 +5847,8 @@ int country_game_data::get_military_unit_type_cost_modifier(const military_unit_
 		return this->get_artillery_cost_modifier();
 	} else if (military_unit_type->is_ship()) {
 		return this->get_warship_cost_modifier();
+	} else if (military_unit_type->get_unit_class()->is_leader()) {
+		return this->get_leader_cost_modifier();
 	}
 
 	return 0;
