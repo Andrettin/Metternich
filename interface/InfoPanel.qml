@@ -546,7 +546,7 @@ Rectangle {
 		
 		onHoveredChanged: {
 			if (hovered) {
-				status_text = "View Site Population"
+				status_text = "View " + (selected_site !== null && selected_site.settlement ? "Settlement" : "Site") + " Population"
 			} else {
 				status_text = ""
 			}
