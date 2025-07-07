@@ -6003,6 +6003,10 @@ int country_game_data::get_military_unit_type_wealth_cost(const military_unit_ty
 	wealth_cost *= 100 + cost_modifier;
 	wealth_cost /= 100;
 
+	if (quantity > 0) {
+		wealth_cost = std::max(wealth_cost, 1);
+	}
+
 	return this->get_inflated_value(wealth_cost);
 }
 
@@ -6010,14 +6014,25 @@ commodity_map<int> country_game_data::get_military_unit_type_commodity_costs(con
 {
 	commodity_map<int> commodity_costs = military_unit_type->get_commodity_costs();
 
-	for (auto &[commodity, cost] : commodity_costs) {
+	for (auto &[commodity, cost_int] : commodity_costs) {
 		assert_throw(commodity->is_storable());
 
+		centesimal_int cost(cost_int);
 		cost *= quantity;
 
 		const int cost_modifier = this->get_military_unit_type_cost_modifier(military_unit_type);
 		cost *= 100 + cost_modifier;
 		cost /= 100;
+
+		cost_int = cost.to_int();
+
+		if (cost_modifier < 0 && cost.get_fractional_value() > 0) {
+			cost_int += 1;
+		}
+
+		if (quantity > 0) {
+			cost_int = std::max(cost_int, 1);
+		}
 	}
 
 	return commodity_costs;
