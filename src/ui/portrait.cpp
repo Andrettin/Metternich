@@ -24,7 +24,7 @@ void portrait::process_gsml_scope(const gsml_data &scope)
 		database::process_gsml_data(conditions, scope);
 		this->character_conditions = std::move(conditions);
 	} else {
-		data_entry::process_gsml_scope(scope);
+		icon_base::process_gsml_scope(scope);
 	}
 }
 
@@ -44,6 +44,8 @@ void portrait::check() const
 	if (this->get_character_conditions() != nullptr) {
 		this->get_character_conditions()->check_validity();
 	}
+
+	icon_base::check();
 }
 
 }

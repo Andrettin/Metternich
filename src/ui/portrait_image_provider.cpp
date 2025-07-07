@@ -48,6 +48,10 @@ QCoro::Task<void> portrait_image_provider::load_image(const std::string id)
 	QImage image(path::to_qstring(filepath));
 	assert_throw(!image.isNull());
 
+	if (portrait->get_hue_rotation() != 0) {
+		image::rotate_hue(image, portrait->get_hue_rotation(), portrait->get_hue_ignored_colors());
+	}
+
 	if (id_list.size() >= 2) {
 		const std::string &state = id_list.back();
 		if (state == "grayscale") {
