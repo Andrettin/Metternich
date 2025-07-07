@@ -23,6 +23,7 @@ barracks = {
 		light_artillery
 		heavy_artillery
 		combat_engineers
+		general
 	}
 	settlement_modifier = {
 		housing_bonus = 1

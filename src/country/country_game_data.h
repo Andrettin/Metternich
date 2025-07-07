@@ -172,9 +172,6 @@ class country_game_data final : public QObject
 	Q_PROPERTY(const metternich::portrait* interior_minister_portrait READ get_interior_minister_portrait NOTIFY office_holders_changed)
 	Q_PROPERTY(const metternich::portrait* war_minister_portrait READ get_war_minister_portrait NOTIFY office_holders_changed)
 	Q_PROPERTY(QVariantList leaders READ get_leaders_qvariant_list NOTIFY leaders_changed)
-	Q_PROPERTY(int leader_cost READ get_leader_cost NOTIFY leaders_changed)
-	Q_PROPERTY(const metternich::character* next_leader READ get_next_leader WRITE set_next_leader NOTIFY next_leader_changed)
-	Q_PROPERTY(const metternich::military_unit_type* next_leader_military_unit_type READ get_next_leader_military_unit_type NOTIFY next_leader_changed)
 	Q_PROPERTY(QVariantList bids READ get_bids_qvariant_list NOTIFY bids_changed)
 	Q_PROPERTY(QVariantList offers READ get_offers_qvariant_list NOTIFY offers_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier_int NOTIFY output_modifier_changed)
@@ -190,7 +187,6 @@ public:
 	static constexpr int base_deity_cost = 200;
 	static constexpr int deity_cost_increment = 100;
 	static constexpr int base_advisor_cost = 80;
-	static constexpr int base_leader_cost = 80;
 	static constexpr int base_deployment_limit = 10;
 	static constexpr int vassal_tax_rate = 50;
 
@@ -1553,40 +1549,6 @@ public:
 	void remove_leader(const character *leader);
 	void clear_leaders();
 
-	int get_leader_cost() const
-	{
-		int cost = 0;
-
-		if (this->get_leaders().empty()) {
-			cost = country_game_data::base_leader_cost / 2;
-		} else {
-			cost = country_game_data::base_leader_cost * static_cast<int>(this->get_leaders().size() + 1);
-		}
-
-		cost *= 100 + this->get_leader_cost_modifier();
-		cost /= 100;
-
-		return std::max(0, cost);
-	}
-
-	const character *get_next_leader() const
-	{
-		return this->next_leader;
-	}
-
-	void set_next_leader(const character *leader)
-	{
-		if (leader == this->get_next_leader()) {
-			return;
-		}
-
-		this->next_leader = leader;
-		emit next_leader_changed();
-	}
-
-	void choose_next_leader();
-	const military_unit_type *get_next_leader_military_unit_type() const;
-
 	bool has_civilian_character(const character *character) const;
 	std::vector<const character *> get_civilian_characters() const;
 	void check_civilian_characters();
@@ -2630,7 +2592,6 @@ signals:
 	void next_advisor_changed();
 	void advisor_recruited(const character *advisor);
 	void leaders_changed();
-	void next_leader_changed();
 	void leader_recruited(const character *leader);
 	void bids_changed();
 	void offers_changed();
@@ -2722,7 +2683,6 @@ private:
 	std::vector<const character *> advisors;
 	const character *next_advisor = nullptr;
 	std::vector<const character *> leaders;
-	const character *next_leader = nullptr;
 	commodity_map<int> bids;
 	commodity_map<int> offers;
 	commodity_map<int> commodity_needs;

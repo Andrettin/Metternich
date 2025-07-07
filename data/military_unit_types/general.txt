@@ -7,6 +7,9 @@ general_napoleonic = {
 		defense = 5
 		movement = 7
 	}
+	commodity_costs = {
+		leadership = 20
+	}
 	upgrades = {
 		general_victorian
 	}
@@ -21,6 +24,9 @@ general_victorian = {
 		defense = 7
 		movement = 9
 	}
+	commodity_costs = {
+		leadership = 20
+	}
 	upgrades = {
 		general_modern
 	}
@@ -34,5 +40,8 @@ general_modern = {
 		range = 1
 		defense = 20
 		movement = 11
+	}
+	commodity_costs = {
+		leadership = 20
 	}
 }

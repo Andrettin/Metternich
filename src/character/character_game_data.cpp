@@ -86,10 +86,8 @@ void character_game_data::apply_history()
 				assert_throw(deployment_province != nullptr);
 
 				if (deployment_province->is_water_zone() || deployment_province->get_game_data()->get_owner() == country) {
-					country_game_data->add_leader(this->character);
-
-					assert_throw(this->get_country() != nullptr);
-					this->deploy_to_province(deployment_province);
+					assert_throw(country != nullptr);
+					this->deploy_to_province(country, deployment_province);
 				}
 			} else if (this->character->has_role(character_role::civilian)) {
 				const site *deployment_site = character_history->get_deployment_site();
@@ -963,22 +961,24 @@ bool character_game_data::is_deployable() const
 	return true;
 }
 
-void character_game_data::deploy_to_province(const province *province)
+void character_game_data::deploy_to_province(const metternich::country *country, const province *province)
 {
+	assert_throw(country != nullptr);
 	assert_throw(province != nullptr);
-	assert_throw(this->get_country() != nullptr);
 	assert_throw(!this->is_deployed());
 	assert_throw(this->is_deployable());
 
-	const military_unit_type *military_unit_type = this->get_country()->get_game_data()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
+	const military_unit_type *military_unit_type = country->get_game_data()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
 
-	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->get_country(), this->character);
+	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, country, this->character);
 
 	assert_throw(military_unit->can_move_to(province));
 
 	military_unit->set_province(province);
 
-	this->get_country()->get_game_data()->add_military_unit(std::move(military_unit));
+	country->get_game_data()->add_military_unit(std::move(military_unit));
+
+	assert_throw(this->get_country() != nullptr);
 }
 
 void character_game_data::undeploy()

@@ -156,15 +156,13 @@ int military_unit_type::get_score() const
 	int score = this->get_wealth_cost();
 
 	for (const auto &[commodity, cost] : this->get_commodity_costs()) {
-		if (commodity->get_base_price() == 0) {
-			continue;
+		if (commodity->get_base_price() != 0) {
+			score += cost * commodity->get_base_price();
+		} else if (commodity->is_abstract()) {
+			if (this->get_category() != military_unit_category::none && is_leader_military_unit_category(this->get_category())) {
+				score += cost * commodity::abstract_commodity_value;
+			}
 		}
-
-		score += cost * commodity->get_base_price();
-	}
-
-	if (this->get_category() != military_unit_category::none && is_leader_military_unit_category(this->get_category())) {
-		score += country_game_data::base_leader_cost * commodity::abstract_commodity_value;
 	}
 
 	return score;

@@ -44,7 +44,6 @@ prestige_commodity = prestige
 piety_commodity = piety
 default_research_commodity = research
 advisor_commodity = statesmanship
-leader_commodity = leadership
 
 great_power_commodity_demand_divisor = 2
 

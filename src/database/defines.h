@@ -63,7 +63,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::commodity* piety_commodity MEMBER piety_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* default_research_commodity MEMBER default_research_commodity READ get_default_research_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* advisor_commodity MEMBER advisor_commodity NOTIFY changed)
-	Q_PROPERTY(const metternich::commodity* leader_commodity MEMBER leader_commodity NOTIFY changed)
 	Q_PROPERTY(int great_power_commodity_demand_divisor MEMBER great_power_commodity_demand_divisor READ get_great_power_commodity_demand_divisor NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* tariff_icon MEMBER tariff_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* treasure_fleet_icon MEMBER treasure_fleet_icon NOTIFY changed)
@@ -252,11 +251,6 @@ public:
 		return this->advisor_commodity;
 	}
 
-	const commodity *get_leader_commodity() const
-	{
-		return this->leader_commodity;
-	}
-
 	int get_great_power_commodity_demand_divisor() const
 	{
 		return this->great_power_commodity_demand_divisor;
@@ -442,7 +436,6 @@ private:
 	const commodity *piety_commodity = nullptr;
 	const commodity *default_research_commodity = nullptr;
 	const commodity *advisor_commodity = nullptr;
-	const commodity *leader_commodity = nullptr;
 	int great_power_commodity_demand_divisor = 1;
 	const icon *tariff_icon = nullptr;
 	const icon *treasure_fleet_icon = nullptr;

@@ -202,7 +202,7 @@ public:
 		return this->get_military_unit() != nullptr;
 	}
 
-	void deploy_to_province(const province *province);
+	void deploy_to_province(const metternich::country *country, const province *province);
 	void undeploy();
 
 	metternich::civilian_unit *get_civilian_unit() const

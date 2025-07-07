@@ -135,10 +135,6 @@ Item {
 		id: advisor_choice_dialog
 	}
 	
-	LeaderChoiceDialog {
-		id: leader_choice_dialog
-	}
-	
 	CharacterDialog {
 		id: character_dialog
 	}
@@ -208,11 +204,6 @@ Item {
 		function onNext_advisor_choosable(potential_advisors) {
 			advisor_choice_dialog.potential_advisors = potential_advisors
 			advisor_choice_dialog.open()
-		}
-		
-		function onNext_leader_choosable(potential_leaders) {
-			leader_choice_dialog.potential_leaders = potential_leaders
-			leader_choice_dialog.open()
 		}
 	}
 	
