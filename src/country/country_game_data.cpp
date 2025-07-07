@@ -5862,7 +5862,7 @@ int country_game_data::get_military_unit_type_wealth_cost(const military_unit_ty
 	wealth_cost *= 100 + cost_modifier;
 	wealth_cost /= 100;
 
-	if (quantity > 0) {
+	if (military_unit_type->get_wealth_cost() > 0 && quantity > 0) {
 		wealth_cost = std::max(wealth_cost, 1);
 	}
 
