@@ -251,8 +251,12 @@ ApplicationWindow {
 		return name_list
 	}
 	
-	function costs_to_string(costs, modifier) {
+	function costs_to_string(costs, modifier, wealth_cost = 0) {
 		var str = "Costs:"
+		
+		if (wealth_cost > 0) {
+			str += "\n\t$" + number_string(wealth_cost)
+		}
 		
 		for (var i = 0; i < costs.length; i++) {
 			var commodity = costs[i].key

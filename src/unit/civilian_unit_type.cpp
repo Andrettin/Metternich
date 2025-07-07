@@ -10,6 +10,7 @@
 #include "technology/technology.h"
 #include "unit/civilian_unit_class.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 
 namespace metternich {
 
@@ -65,6 +66,11 @@ void civilian_unit_type::initialize()
 void civilian_unit_type::check() const
 {
 	assert_throw(this->get_icon() != nullptr);
+}
+
+QVariantList civilian_unit_type::get_commodity_costs_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_commodity_costs());
 }
 
 }

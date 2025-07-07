@@ -539,8 +539,9 @@ void country_building_slot::change_education(const education_type *education_typ
 	country_game_data->change_wealth_income(-input_wealth_change);
 
 	const int new_output = this->get_education_type_output(education_type);
-	country_game_data->change_population_type_input(education_type->get_input_population_type(), new_output - old_output);
-	country_game_data->change_population_type_output(education_type->get_output_population_type(), new_output - old_output);
+	const int output_change = new_output - old_output;
+	country_game_data->change_population_type_input(education_type->get_input_population_type(), output_change);
+	country_game_data->change_population_type_output(education_type->get_output_population_type(), output_change);
 }
 
 bool country_building_slot::can_increase_education(const education_type *education_type) const

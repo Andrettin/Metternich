@@ -5897,6 +5897,11 @@ commodity_map<int> country_game_data::get_military_unit_type_commodity_costs(con
 	return commodity_costs;
 }
 
+QVariantList country_game_data::get_military_unit_type_commodity_costs_qvariant_list(const military_unit_type *military_unit_type, const int quantity) const
+{
+	return archimedes::map::to_qvariant_list(this->get_military_unit_type_commodity_costs(military_unit_type, quantity));
+}
+
 void country_game_data::add_army(qunique_ptr<army> &&army)
 {
 	this->armies.push_back(std::move(army));

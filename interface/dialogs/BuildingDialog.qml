@@ -135,6 +135,10 @@ DialogBase {
 						width: 64 * scale_factor + 6 * scale_factor
 						height: 64 * scale_factor + 6 * scale_factor
 						icon_identifier: civilian_unit_type.icon.identifier
+						tooltip: tooltip_string.length > 0 ? format_text(small_text(tooltip_string)) : ""
+						
+						readonly property string costs_string: civilian_unit_type !== null ? costs_to_string(civilian_unit_type.commodity_costs, undefined, civilian_unit_type.wealth_cost) : ""
+						readonly property string tooltip_string: costs_string
 						
 						onClicked: {
 						}
@@ -218,6 +222,10 @@ DialogBase {
 						width: 64 * scale_factor + 6 * scale_factor
 						height: 64 * scale_factor + 6 * scale_factor
 						icon_identifier: military_unit_type !== null ? military_unit_type.icon.identifier : "skull"
+						tooltip: tooltip_string.length > 0 ? format_text(small_text(tooltip_string)) : ""
+						
+						readonly property string costs_string: military_unit_type !== null ? costs_to_string(country_game_data.get_military_unit_type_commodity_costs_qvariant_list(military_unit_type, 1), undefined, country_game_data.get_military_unit_type_wealth_cost(military_unit_type, 1)) : ""
+						readonly property string tooltip_string: costs_string
 						
 						onClicked: {
 						}

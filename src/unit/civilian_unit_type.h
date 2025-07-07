@@ -34,6 +34,7 @@ class civilian_unit_type final : public named_data_entry, public data_type<civil
 	Q_PROPERTY(bool spy MEMBER spy READ is_spy NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
+	Q_PROPERTY(QVariantList commodity_costs READ get_commodity_costs_qvariant_list CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "civilian_unit_type";
@@ -103,6 +104,8 @@ public:
 	{
 		return this->commodity_costs;
 	}
+
+	QVariantList get_commodity_costs_qvariant_list() const;
 
 	const resource_set &get_improvable_resources() const
 	{
