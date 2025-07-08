@@ -1,3 +1,4 @@
 silk = {
 	filepath = "icons/commodities/silk.png"
+	scale_factor = 1.5
 }

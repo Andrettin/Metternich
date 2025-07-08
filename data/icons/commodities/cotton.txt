@@ -1,3 +1,4 @@
 cotton = {
 	filepath = "icons/commodities/cotton.png"
+	scale_factor = 1.5
 }
