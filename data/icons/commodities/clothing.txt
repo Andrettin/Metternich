@@ -1,6 +1,5 @@
 clothing = {
 	filepath = "icons/commodities/clothing.png"
-	scale_factor = 1.5
 }
 
 fur_hats = {
