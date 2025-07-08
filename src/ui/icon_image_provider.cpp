@@ -35,6 +35,7 @@ QCoro::Task<void> icon_image_provider::load_image(const std::string id)
 	assert_throw(std::filesystem::exists(filepath));
 
 	centesimal_int scale_factor = preferences::get()->get_scale_factor();
+	scale_factor *= icon->get_scale_factor();
 
 	if (id_list.size() >= 2 && id_list.at(1) == "small") {
 		scale_factor /= 2;
