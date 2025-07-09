@@ -2,4 +2,5 @@ universe = {
 	name = "Universe"
 	size = { 256 256 }
 	universe = true
+	randomly_generated = true
 }

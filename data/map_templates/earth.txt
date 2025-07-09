@@ -18,6 +18,7 @@ earth_random = {
 	name = "Earth"
 	size = { 256 256 }
 	world = earth
+	randomly_generated = true
 	land_percent = 30
 	steepness = 30
 	average_temperature = 45

@@ -39,7 +39,7 @@ class map_template final : public named_data_entry, public data_type<map_templat
 	Q_PROPERTY(std::filesystem::path border_river_image_filepath MEMBER border_river_image_filepath WRITE set_border_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path route_image_filepath MEMBER route_image_filepath WRITE set_route_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_image_filepath MEMBER province_image_filepath WRITE set_province_image_filepath)
-	Q_PROPERTY(bool randomly_generated READ is_randomly_generated CONSTANT)
+	Q_PROPERTY(bool randomly_generated MEMBER randomly_generated READ is_randomly_generated NOTIFY changed)
 	Q_PROPERTY(int land_percent MEMBER land_percent READ get_land_percent NOTIFY changed)
 	Q_PROPERTY(int steepness MEMBER steepness READ get_steepness NOTIFY changed)
 	Q_PROPERTY(int average_temperature MEMBER average_temperature READ get_average_temperature NOTIFY changed)
@@ -174,7 +174,7 @@ public:
 
 	bool is_randomly_generated() const
 	{
-		return this->get_map_projection() == nullptr;
+		return this->randomly_generated;
 	}
 
 	int get_land_percent() const
@@ -229,6 +229,7 @@ private:
 	std::filesystem::path border_river_image_filepath;
 	std::filesystem::path route_image_filepath;
 	std::filesystem::path province_image_filepath;
+	bool randomly_generated = false;
 	int land_percent = 30;
 	int steepness = 30;
 	int average_temperature = 50;
