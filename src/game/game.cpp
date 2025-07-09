@@ -557,83 +557,98 @@ void game::apply_history(const metternich::scenario *scenario)
 		}
 
 		for (const historical_civilian_unit *historical_civilian_unit : historical_civilian_unit::get_all()) {
-			const historical_civilian_unit_history *historical_civilian_unit_history = historical_civilian_unit->get_history();
+			try {
+				const historical_civilian_unit_history *historical_civilian_unit_history = historical_civilian_unit->get_history();
 
-			if (!historical_civilian_unit_history->is_active()) {
-				continue;
+				if (!historical_civilian_unit_history->is_active()) {
+					continue;
+				}
+
+				const site *site = historical_civilian_unit_history->get_site();
+
+				assert_throw(site != nullptr);
+
+				if (!site->get_game_data()->is_on_map()) {
+					continue;
+				}
+
+				const country *owner = historical_civilian_unit->get_owner();
+
+				if (owner == nullptr) {
+					owner = site->get_game_data()->get_owner();
+				}
+
+				assert_throw(owner != nullptr);
+
+				country_game_data *owner_game_data = owner->get_game_data();
+
+				assert_throw(owner_game_data->is_alive());
+
+				if (owner_game_data->is_under_anarchy()) {
+					continue;
+				}
+
+				const civilian_unit_type *type = historical_civilian_unit->get_type();
+				assert_throw(type != nullptr);
+
+				if (type->get_required_technology() != nullptr) {
+					owner_game_data->add_technology_with_prerequisites(type->get_required_technology());
+				}
+
+				const phenotype *phenotype = historical_civilian_unit->get_phenotype();
+				const bool created = owner_game_data->create_civilian_unit(historical_civilian_unit->get_type(), site, phenotype);
+				assert_throw(created);
+			} catch (...) {
+				std::throw_with_nested(std::runtime_error(std::format("Failed to apply historical civilian unit \"{}\".", historical_civilian_unit->get_identifier())));
 			}
-
-			const site *site = historical_civilian_unit_history->get_site();
-
-			assert_throw(site != nullptr);
-
-			if (!site->get_game_data()->is_on_map()) {
-				continue;
-			}
-
-			const country *owner = historical_civilian_unit->get_owner();
-
-			if (owner == nullptr) {
-				owner = site->get_game_data()->get_owner();
-			}
-
-			assert_throw(owner != nullptr);
-
-			country_game_data *owner_game_data = owner->get_game_data();
-
-			assert_throw(owner_game_data->is_alive());
-
-			const civilian_unit_type *type = historical_civilian_unit->get_type();
-			assert_throw(type != nullptr);
-
-			if (type->get_required_technology() != nullptr) {
-				owner_game_data->add_technology_with_prerequisites(type->get_required_technology());
-			}
-
-			const phenotype *phenotype = historical_civilian_unit->get_phenotype();
-			const bool created = owner_game_data->create_civilian_unit(historical_civilian_unit->get_type(), site, phenotype);
-			assert_throw(created);
 		}
 
 		for (const historical_military_unit *historical_military_unit : historical_military_unit::get_all()) {
-			const historical_military_unit_history *historical_military_unit_history = historical_military_unit->get_history();
+			try {
+				const historical_military_unit_history *historical_military_unit_history = historical_military_unit->get_history();
 
-			if (!historical_military_unit_history->is_active()) {
-				continue;
-			}
+				if (!historical_military_unit_history->is_active()) {
+					continue;
+				}
 
-			const province *province = historical_military_unit_history->get_province();
+				const province *province = historical_military_unit_history->get_province();
 
-			assert_throw(province != nullptr);
+				assert_throw(province != nullptr);
 
-			if (!province->get_game_data()->is_on_map()) {
-				continue;
-			}
+				if (!province->get_game_data()->is_on_map()) {
+					continue;
+				}
 
-			const country *country = historical_military_unit->get_country();
+				const country *country = historical_military_unit->get_country();
+				if (country != nullptr && !country->get_game_data()->is_alive()) {
+					continue;
+				}
 
-			if (country == nullptr) {
-				country = province->get_game_data()->get_owner();
-			}
+				if (country == nullptr) {
+					country = province->get_game_data()->get_owner();
+				}
 
-			assert_throw(country != nullptr);
+				assert_throw(country != nullptr);
 
-			country_game_data *country_game_data = country->get_game_data();
+				country_game_data *country_game_data = country->get_game_data();
 
-			assert_throw(country_game_data->is_alive());
+				assert_throw(country_game_data->is_alive());
 
-			const military_unit_type *type = historical_military_unit->get_type();
-			assert_throw(type != nullptr);
+				const military_unit_type *type = historical_military_unit->get_type();
+				assert_throw(type != nullptr);
 
-			if (type->get_required_technology() != nullptr) {
-				country_game_data->add_technology_with_prerequisites(type->get_required_technology());
-			}
+				if (type->get_required_technology() != nullptr) {
+					country_game_data->add_technology_with_prerequisites(type->get_required_technology());
+				}
 
-			const phenotype *phenotype = historical_military_unit->get_phenotype();
+				const phenotype *phenotype = historical_military_unit->get_phenotype();
 
-			for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
-				const bool created = country_game_data->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
-				assert_throw(created);
+				for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
+					const bool created = country_game_data->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
+					assert_throw(created);
+				}
+			} catch (...) {
+				std::throw_with_nested(std::runtime_error(std::format("Failed to apply historical military unit \"{}\".", historical_military_unit->get_identifier())));
 			}
 		}
 
