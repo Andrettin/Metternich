@@ -74,8 +74,6 @@ void map_template::initialize()
 
 		const QImage province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
 
-		const province_geodata_map_type province_geodata_map = this->get_world()->parse_provinces_geojson_folder();
-
 		for (const site *site : this->get_world()->get_sites()) {
 			assert_throw(site->get_geocoordinate().is_valid());
 
@@ -99,41 +97,7 @@ void map_template::initialize()
 			if (site->get_province() != nullptr) {
 				site_province = site->get_province();
 			} else {
-				province_set adjacent_provinces;
-				point::for_each_adjacent(tile_pos, [&site_province, &map_rect, &province_image, site, &province_geodata_map, &adjacent_provinces, tile_province](const QPoint &adjacent_pos) {
-					if (!map_rect.contains(adjacent_pos)) {
-						return;
-					}
-
-					const province *adjacent_province = province::try_get_by_color(province_image.pixelColor(adjacent_pos));
-
-					if (adjacent_province == nullptr) {
-						return;
-					}
-
-					if (adjacent_province == tile_province) {
-						return;
-					}
-
-					if (adjacent_province->is_water_zone()) {
-						return;
-					}
-
-					if (adjacent_provinces.contains(adjacent_province)) {
-						return;
-					}
-
-					adjacent_provinces.insert(adjacent_province);
-				});
-
-				if (!adjacent_provinces.empty() && (tile_province == nullptr || !map_template::is_site_in_province(site, tile_province, province_geodata_map))) {
-					for (const province *adjacent_province : adjacent_provinces) {
-						if (map_template::is_site_in_province(site, adjacent_province, province_geodata_map)) {
-							site_province = adjacent_province;
-							break;
-						}
-					}
-				}
+				continue;
 			}
 
 			//if the site is not placed in its province, nudge its position to be in the nearest point in its province
