@@ -4,6 +4,7 @@ barracks = {
 	portrait = fort
 	icon = crossed_sabers
 	provincial = true
+	free_in_capital = true
 	settlement_types = {
 		city
 		metropolis
