@@ -1,3 +1,14 @@
+maria_theresia = {
+	filepath = "portraits/characters/maria_theresia.png"
+	character_conditions = {
+		gender = female
+		not = {
+			cultural_group = african
+		}
+		is_ruler = true
+	}
+}
+
 metternich = {
 	filepath = "portraits/characters/metternich.png"
 	character_conditions = {

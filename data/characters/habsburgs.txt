@@ -106,6 +106,7 @@ maria_theresia_of_austria = { #Empress Maria Theresia of the Holy Roman Empire; 
 	dynasty = habsburg
 	culture = austrian
 	religion = catholic
+	portrait = maria_theresia
 	home_settlement = vienna
 	gender = female
 	father = karl_vi_of_the_holy_roman_empire #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.

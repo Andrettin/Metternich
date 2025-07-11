@@ -233,6 +233,7 @@
 /graphics/portraits/characters/jakob_fugger.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/jp_morgan.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/louis_xiv.png (by Jinn) (licensed under the CC0)
+/graphics/portraits/characters/maria_theresia.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/metternich.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/montezuma_ii.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/otto_von_bismarck.png (by Jinn) (licensed under the CC0)
