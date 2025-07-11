@@ -1,7 +1,7 @@
 rancher = {
 	name = "Rancher"
 	unit_class = rancher
-	icon = slaves_light
+	icon = rancher
 	wealth_cost = 1000
 	commodity_costs = {
 		paper = 2

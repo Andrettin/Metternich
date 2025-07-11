@@ -1,7 +1,7 @@
 forester = {
 	name = "Forester"
 	unit_class = forester
-	icon = slaves_light
+	icon = forester
 	wealth_cost = 1000
 	commodity_costs = {
 		paper = 2

@@ -1,0 +1,15 @@
+forester = {
+	filepath = "icons/units/civilians/forester.png"
+}
+
+forester_small = {
+	filepath = "icons/units/civilians/forester_small.png"
+}
+
+rancher = {
+	filepath = "icons/units/civilians/rancher.png"
+}
+
+rancher_small = {
+	filepath = "icons/units/civilians/rancher_small.png"
+}
