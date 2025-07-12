@@ -1,4 +1,4 @@
-english += {
+french += {
 	ship_names = {
 		"Grande Hermine"
 		# J. Cartier, Quebec
