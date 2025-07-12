@@ -458,14 +458,14 @@ std::string culture_base::generate_military_unit_name(const military_unit_type *
 	return std::string();
 }
 
-std::string culture_base::generate_transporter_name(const transporter_type *type) const
+std::string culture_base::generate_transporter_name(const transporter_type *type, const std::set<std::string> &used_names) const
 {
 	const transporter_class *transporter_class = type->get_transporter_class();
 
 	const name_generator *name_generator = this->get_transporter_class_name_generator(transporter_class);
 
 	if (name_generator != nullptr) {
-		return name_generator->generate_name();
+		return name_generator->generate_name(used_names);
 	}
 
 	return std::string();

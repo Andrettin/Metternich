@@ -26,6 +26,7 @@
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/point_util.h"
+#include "util/set_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -128,6 +129,8 @@ void civilian_unit::do_ai_turn()
 
 void civilian_unit::generate_name()
 {
+	const std::set<std::string> &used_names = this->get_owner() ? this->get_owner()->get_game_data()->get_unit_names() : set::empty_string_set;
+
 	const culture_base *culture = this->get_culture();
 	if (culture == nullptr) {
 		culture = this->get_cultural_group();
@@ -137,7 +140,7 @@ void civilian_unit::generate_name()
 		return;
 	}
 
-	this->name = culture->generate_personal_name(gender::male, {});
+	this->name = culture->generate_personal_name(gender::male, used_names);
 
 	if (!this->get_name().empty()) {
 		log_trace(std::format("Generated name \"{}\" for civilian unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), culture->get_identifier()));

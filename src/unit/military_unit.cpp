@@ -118,7 +118,7 @@ void military_unit::do_ai_turn()
 
 void military_unit::generate_name()
 {
-	const std::set<std::string> &used_names = this->get_country() ? this->get_country()->get_game_data()->get_military_unit_names() : set::empty_string_set;
+	const std::set<std::string> &used_names = this->get_country() ? this->get_country()->get_game_data()->get_unit_names() : set::empty_string_set;
 
 	const culture_base *culture = this->get_culture();
 	if (culture == nullptr) {

@@ -1710,11 +1710,6 @@ public:
 	commodity_map<int> get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const;
 	Q_INVOKABLE QVariantList get_military_unit_type_commodity_costs_qvariant_list(const metternich::military_unit_type *military_unit_type, const int quantity) const;
 
-	const std::set<std::string> &get_military_unit_names() const
-	{
-		return this->military_unit_names;
-	}
-
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const;
 	Q_INVOKABLE const metternich::military_unit_type *get_best_military_unit_category_type(const metternich::military_unit_category category) const;
 
@@ -1750,6 +1745,11 @@ public:
 
 	const transporter_type *get_best_transporter_category_type(const transporter_category category, const culture *culture) const;
 	Q_INVOKABLE const metternich::transporter_type *get_best_transporter_category_type(const metternich::transporter_category category) const;
+
+	const std::set<std::string> &get_unit_names() const
+	{
+		return this->unit_names;
+	}
 
 	int get_deployment_limit() const
 	{
@@ -2719,10 +2719,10 @@ private:
 	data_entry_map<civilian_unit_type, int> civilian_unit_recruitment_counts;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	military_unit_type_map<int> military_unit_recruitment_counts;
-	std::set<std::string> military_unit_names;
 	std::vector<qunique_ptr<army>> armies;
 	std::vector<qunique_ptr<transporter>> transporters;
 	transporter_type_map<int> transporter_recruitment_counts;
+	std::set<std::string> unit_names;
 	int deployment_limit = country_game_data::base_deployment_limit;
 	int entrenchment_bonus_modifier = 0;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> military_unit_type_stat_modifiers;
