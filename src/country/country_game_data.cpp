@@ -156,6 +156,7 @@ void country_game_data::do_turn()
 
 		this->do_education();
 		this->do_production();
+		this->do_transporter_recruitment();
 		this->do_civilian_unit_recruitment();
 		this->do_military_unit_recruitment();
 		this->do_research();
@@ -339,6 +340,30 @@ void country_game_data::do_military_unit_recruitment()
 		assert_throw(this->military_unit_recruitment_counts.empty());
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\".", this->country->get_identifier())));
+	}
+}
+
+void country_game_data::do_transporter_recruitment()
+{
+	try {
+		if (this->is_under_anarchy()) {
+			return;
+		}
+
+		const transporter_type_map<int> recruitment_counts = this->transporter_recruitment_counts;
+		for (const auto &[transporter_type, recruitment_count] : recruitment_counts) {
+			assert_throw(recruitment_count > 0);
+
+			for (int i = 0; i < recruitment_count; ++i) {
+				const bool created = this->create_transporter(transporter_type, nullptr);
+				const bool restore_costs = !created;
+				this->change_transporter_recruitment_count(transporter_type, -1, restore_costs);
+			}
+		}
+
+		assert_throw(this->transporter_recruitment_counts.empty());
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error doing transporter recruitment for country \"{}\".", this->country->get_identifier())));
 	}
 }
 
@@ -5902,48 +5927,6 @@ QVariantList country_game_data::get_military_unit_type_commodity_costs_qvariant_
 	return archimedes::map::to_qvariant_list(this->get_military_unit_type_commodity_costs(military_unit_type, quantity));
 }
 
-void country_game_data::add_army(qunique_ptr<army> &&army)
-{
-	this->armies.push_back(std::move(army));
-}
-
-void country_game_data::remove_army(army *army)
-{
-	for (size_t i = 0; i < this->armies.size(); ++i) {
-		if (this->armies[i].get() == army) {
-			this->armies.erase(this->armies.begin() + i);
-			return;
-		}
-	}
-}
-
-void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
-{
-	if (transporter->is_ship()) {
-		this->change_sea_transport_capacity(transporter->get_cargo());
-	} else {
-		this->change_land_transport_capacity(transporter->get_cargo());
-	}
-
-	this->transporters.push_back(std::move(transporter));
-}
-
-void country_game_data::remove_transporter(transporter *transporter)
-{
-	if (transporter->is_ship()) {
-		this->change_sea_transport_capacity(-transporter->get_cargo());
-	} else {
-		this->change_land_transport_capacity(-transporter->get_cargo());
-	}
-
-	for (size_t i = 0; i < this->transporters.size(); ++i) {
-		if (this->transporters[i].get() == transporter) {
-			this->transporters.erase(this->transporters.begin() + i);
-			return;
-		}
-	}
-}
-
 const military_unit_type *country_game_data::get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const
 {
 	const military_unit_type *best_type = nullptr;
@@ -5995,6 +5978,228 @@ const military_unit_type *country_game_data::get_best_military_unit_category_typ
 const military_unit_type *country_game_data::get_best_military_unit_category_type(const military_unit_category category) const
 {
 	return this->get_best_military_unit_category_type(category, this->country->get_culture());
+}
+
+void country_game_data::add_army(qunique_ptr<army> &&army)
+{
+	this->armies.push_back(std::move(army));
+}
+
+void country_game_data::remove_army(army *army)
+{
+	for (size_t i = 0; i < this->armies.size(); ++i) {
+		if (this->armies[i].get() == army) {
+			this->armies.erase(this->armies.begin() + i);
+			return;
+		}
+	}
+}
+
+bool country_game_data::create_transporter(const transporter_type *transporter_type, const phenotype *phenotype)
+{
+	assert_throw(transporter_type != nullptr);
+
+	if (this->is_under_anarchy()) {
+		return false;
+	}
+
+	qunique_ptr<transporter> transporter;
+
+	if (phenotype == nullptr) {
+		const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_weighted_phenotypes();
+		assert_throw(!weighted_phenotypes.empty());
+		phenotype = vector::get_random(weighted_phenotypes);
+	}
+	assert_throw(phenotype != nullptr);
+
+	transporter = make_qunique<metternich::transporter>(transporter_type, this->country, phenotype);
+
+	assert_throw(transporter != nullptr);
+
+	this->add_transporter(std::move(transporter));
+
+	return true;
+}
+
+void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
+{
+	if (transporter->is_ship()) {
+		this->change_sea_transport_capacity(transporter->get_cargo());
+	} else {
+		this->change_land_transport_capacity(transporter->get_cargo());
+	}
+
+	this->transporters.push_back(std::move(transporter));
+}
+
+void country_game_data::remove_transporter(transporter *transporter)
+{
+	if (transporter->is_ship()) {
+		this->change_sea_transport_capacity(-transporter->get_cargo());
+	} else {
+		this->change_land_transport_capacity(-transporter->get_cargo());
+	}
+
+	for (size_t i = 0; i < this->transporters.size(); ++i) {
+		if (this->transporters[i].get() == transporter) {
+			this->transporters.erase(this->transporters.begin() + i);
+			return;
+		}
+	}
+}
+
+void country_game_data::change_transporter_recruitment_count(const transporter_type *transporter_type, const int change, const bool change_input_storage)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->transporter_recruitment_counts[transporter_type] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->transporter_recruitment_counts.erase(transporter_type);
+	}
+
+	if (change_input_storage) {
+		const int old_count = count - change;
+		const commodity_map<int> old_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, old_count);
+		const commodity_map<int> new_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, count);
+
+		for (const auto &[commodity, cost] : new_commodity_costs) {
+			assert_throw(commodity->is_storable());
+
+			const int cost_change = cost - old_commodity_costs.find(commodity)->second;
+
+			this->change_stored_commodity(commodity, -cost_change);
+		}
+
+		if (transporter_type->get_wealth_cost() > 0) {
+			const int wealth_cost_change = this->get_transporter_type_wealth_cost(transporter_type, count) - this->get_transporter_type_wealth_cost(transporter_type, old_count);
+			this->change_wealth(-wealth_cost_change);
+		}
+	}
+}
+
+bool country_game_data::can_increase_transporter_recruitment(const transporter_type *transporter_type) const
+{
+	if (this->get_best_transporter_category_type(transporter_type->get_category()) != transporter_type) {
+		return false;
+	}
+
+	const int old_count = this->get_transporter_recruitment_count(transporter_type);
+	const int new_count = old_count + 1;
+	const commodity_map<int> old_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, old_count);
+	const commodity_map<int> new_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, new_count);
+
+	for (const auto &[commodity, cost] : new_commodity_costs) {
+		assert_throw(commodity->is_storable());
+
+		const int cost_change = cost - old_commodity_costs.find(commodity)->second;
+
+		if (this->get_stored_commodity(commodity) < cost_change) {
+			return false;
+		}
+	}
+
+	if (transporter_type->get_wealth_cost() > 0) {
+		const int wealth_cost_change = this->get_transporter_type_wealth_cost(transporter_type, new_count) - this->get_transporter_type_wealth_cost(transporter_type, old_count);
+
+		if (this->get_wealth_with_credit() < wealth_cost_change) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void country_game_data::increase_transporter_recruitment(const transporter_type *transporter_type)
+{
+	try {
+		assert_throw(this->can_increase_transporter_recruitment(transporter_type));
+
+		this->change_transporter_recruitment_count(transporter_type, 1);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" transporter type for country \"{}\".", transporter_type->get_identifier(), this->country->get_identifier())));
+	}
+}
+
+bool country_game_data::can_decrease_transporter_recruitment(const transporter_type *transporter_type) const
+{
+	if (this->get_transporter_recruitment_count(transporter_type) == 0) {
+		return false;
+	}
+
+	return true;
+}
+
+void country_game_data::decrease_transporter_recruitment(const transporter_type *transporter_type, const bool restore_inputs)
+{
+	try {
+		assert_throw(this->can_decrease_transporter_recruitment(transporter_type));
+
+		this->change_transporter_recruitment_count(transporter_type, -1, restore_inputs);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" transporter type for country \"{}\".", transporter_type->get_identifier(), this->country->get_identifier())));
+	}
+}
+
+int country_game_data::get_transporter_type_cost_modifier(const transporter_type *transporter_type) const
+{
+	//FIXME: implement cost modifiers for transporters
+
+	Q_UNUSED(transporter_type);
+
+	return 0;
+}
+
+int country_game_data::get_transporter_type_wealth_cost(const transporter_type *transporter_type, const int quantity) const
+{
+	int wealth_cost = transporter_type->get_wealth_cost() * quantity;
+
+	const int cost_modifier = this->get_transporter_type_cost_modifier(transporter_type);
+	wealth_cost *= 100 + cost_modifier;
+	wealth_cost /= 100;
+
+	if (transporter_type->get_wealth_cost() > 0 && quantity > 0) {
+		wealth_cost = std::max(wealth_cost, 1);
+	}
+
+	return this->get_inflated_value(wealth_cost);
+}
+
+commodity_map<int> country_game_data::get_transporter_type_commodity_costs(const transporter_type *transporter_type, const int quantity) const
+{
+	commodity_map<int> commodity_costs = transporter_type->get_commodity_costs();
+
+	for (auto &[commodity, cost_int] : commodity_costs) {
+		assert_throw(commodity->is_storable());
+
+		centesimal_int cost(cost_int);
+		cost *= quantity;
+
+		const int cost_modifier = this->get_transporter_type_cost_modifier(transporter_type);
+		cost *= 100 + cost_modifier;
+		cost /= 100;
+
+		cost_int = cost.to_int();
+
+		if (cost_modifier < 0 && cost.get_fractional_value() > 0) {
+			cost_int += 1;
+		}
+
+		if (quantity > 0) {
+			cost_int = std::max(cost_int, 1);
+		}
+	}
+
+	return commodity_costs;
+}
+
+QVariantList country_game_data::get_transporter_type_commodity_costs_qvariant_list(const transporter_type *transporter_type, const int quantity) const
+{
+	return archimedes::map::to_qvariant_list(this->get_transporter_type_commodity_costs(transporter_type, quantity));
 }
 
 const transporter_type *country_game_data::get_best_transporter_category_type(const transporter_category category, const culture *culture) const

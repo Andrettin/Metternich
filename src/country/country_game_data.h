@@ -39,6 +39,7 @@ Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 Q_MOC_INCLUDE("unit/military_unit_type.h")
+Q_MOC_INCLUDE("unit/transporter_type.h")
 
 namespace metternich {
 
@@ -198,6 +199,7 @@ public:
 	void do_education();
 	void do_civilian_unit_recruitment();
 	void do_military_unit_recruitment();
+	void do_transporter_recruitment();
 	void do_research();
 	void do_population_growth();
 	void do_food_consumption(const int food_consumption);
@@ -1712,17 +1714,40 @@ public:
 		return this->military_unit_names;
 	}
 
-	void add_army(qunique_ptr<army> &&army);
-	void remove_army(army *army);
-
-	void add_transporter(qunique_ptr<transporter> &&transporter);
-	void remove_transporter(transporter *transporter);
-
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const;
 	Q_INVOKABLE const metternich::military_unit_type *get_best_military_unit_category_type(const metternich::military_unit_category category) const;
 
+	void add_army(qunique_ptr<army> &&army);
+	void remove_army(army *army);
+
+	bool create_transporter(const transporter_type *transporter_type, const phenotype *phenotype);
+	void add_transporter(qunique_ptr<transporter> &&transporter);
+	void remove_transporter(transporter *transporter);
+
+	Q_INVOKABLE int get_transporter_recruitment_count(const metternich::transporter_type *transporter_type) const
+	{
+		const auto find_iterator = this->transporter_recruitment_counts.find(transporter_type);
+
+		if (find_iterator != this->transporter_recruitment_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_transporter_recruitment_count(const transporter_type *transporter_type, const int change, const bool change_input_storage = true);
+	Q_INVOKABLE bool can_increase_transporter_recruitment(const metternich::transporter_type *transporter_type) const;
+	Q_INVOKABLE void increase_transporter_recruitment(const metternich::transporter_type *transporter_type);
+	Q_INVOKABLE bool can_decrease_transporter_recruitment(const metternich::transporter_type *transporter_type) const;
+	Q_INVOKABLE void decrease_transporter_recruitment(const metternich::transporter_type *transporter_type, const bool restore_inputs);
+
+	int get_transporter_type_cost_modifier(const transporter_type *transporter_type) const;
+	Q_INVOKABLE int get_transporter_type_wealth_cost(const metternich::transporter_type *transporter_type, const int quantity) const;
+	commodity_map<int> get_transporter_type_commodity_costs(const transporter_type *transporter_type, const int quantity) const;
+	Q_INVOKABLE QVariantList get_transporter_type_commodity_costs_qvariant_list(const metternich::transporter_type *transporter_type, const int quantity) const;
+
 	const transporter_type *get_best_transporter_category_type(const transporter_category category, const culture *culture) const;
-	const transporter_type *get_best_transporter_category_type(const transporter_category category) const;
+	Q_INVOKABLE const metternich::transporter_type *get_best_transporter_category_type(const metternich::transporter_category category) const;
 
 	int get_deployment_limit() const
 	{
@@ -2694,6 +2719,7 @@ private:
 	std::set<std::string> military_unit_names;
 	std::vector<qunique_ptr<army>> armies;
 	std::vector<qunique_ptr<transporter>> transporters;
+	transporter_type_map<int> transporter_recruitment_counts;
 	int deployment_limit = country_game_data::base_deployment_limit;
 	int entrenchment_bonus_modifier = 0;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> military_unit_type_stat_modifiers;

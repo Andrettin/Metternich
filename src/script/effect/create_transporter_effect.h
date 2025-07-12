@@ -67,14 +67,7 @@ public:
 			return;
 		}
 
-		const std::vector<const metternich::phenotype *> weighted_phenotypes = scope->get_game_data()->get_weighted_phenotypes();
-		assert_throw(!weighted_phenotypes.empty());
-		const phenotype *phenotype = vector::get_random(weighted_phenotypes);
-		assert_throw(phenotype != nullptr);
-
-		auto transporter = make_qunique<metternich::transporter>(type, scope, phenotype);
-
-		scope->get_game_data()->add_transporter(std::move(transporter));
+		scope->get_game_data()->create_transporter(type, nullptr);
 	}
 
 	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

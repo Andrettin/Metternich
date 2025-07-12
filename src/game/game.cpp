@@ -668,6 +668,10 @@ void game::apply_history(const metternich::scenario *scenario)
 				continue;
 			}
 
+			if (country_game_data->is_under_anarchy()) {
+				continue;
+			}
+
 			const transporter_type *type = historical_transporter->get_type();
 			assert_throw(type != nullptr);
 
@@ -676,17 +680,10 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			const phenotype *phenotype = historical_transporter->get_phenotype();
-			if (phenotype == nullptr) {
-				const std::vector<const metternich::phenotype *> weighted_phenotypes = country_game_data->get_weighted_phenotypes();
-				assert_throw(!weighted_phenotypes.empty());
-				phenotype = vector::get_random(weighted_phenotypes);
-			}
-			assert_throw(phenotype != nullptr);
 
 			for (int i = 0; i < historical_transporter->get_quantity(); ++i) {
-				auto transporter = make_qunique<metternich::transporter>(type, country, phenotype);
-
-				country_game_data->add_transporter(std::move(transporter));
+				const bool created = country_game_data->create_transporter(type, phenotype);
+				assert_throw(created);
 			}
 		}
 	} catch (...) {

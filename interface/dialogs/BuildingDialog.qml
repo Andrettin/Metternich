@@ -200,6 +200,93 @@ DialogBase {
 		}
 		
 		Grid {
+			id: transporter_grid
+			anchors.horizontalCenter: parent.horizontalCenter
+			columns: 3
+			visible: building && building.recruited_transporter_categories.length > 0
+			spacing: 16 * scale_factor
+			
+			Repeater {
+				model: building ? building.recruited_transporter_categories : []
+				
+				Column {
+					spacing: 2 * scale_factor
+					visible: transporter_type !== null
+					
+					readonly property var transporter_category: model.modelData
+					readonly property var transporter_type: country_game_data.get_best_transporter_category_type(transporter_category)
+					property int transporter_recruitment_count: transporter_type !== null ? country_game_data.get_transporter_recruitment_count(transporter_type) : 0
+					
+					IconButton {
+						id: transporter_button
+						width: 64 * scale_factor + 6 * scale_factor
+						height: 64 * scale_factor + 6 * scale_factor
+						icon_identifier: transporter_type !== null ? transporter_type.icon.identifier : "skull"
+						tooltip: tooltip_string.length > 0 ? format_text(small_text(tooltip_string)) : ""
+						
+						readonly property string costs_string: transporter_type !== null ? costs_to_string(country_game_data.get_transporter_type_commodity_costs_qvariant_list(transporter_type, 1), undefined, country_game_data.get_transporter_type_wealth_cost(transporter_type, 1)) : ""
+						readonly property string tooltip_string: costs_string
+						
+						onClicked: {
+						}
+						
+						onHoveredChanged: {
+							if (hovered) {
+								status_text = transporter_type.name
+							} else {
+								status_text = ""
+							}
+						}
+					}
+					
+					Row {
+						anchors.horizontalCenter: parent.horizontalCenter
+						
+						IconButton {
+							id: decrement_button
+							anchors.verticalCenter: parent.verticalCenter
+							width: 16 * scale_factor
+							height: 16 * scale_factor
+							icon_identifier: "trade_consulate"
+							use_opacity_mask: false
+							
+							onReleased: {
+								if (country_game_data.can_decrease_transporter_recruitment(transporter_type)) {
+									country_game_data.decrease_transporter_recruitment(transporter_type, true)
+									transporter_recruitment_count = country_game_data.get_transporter_recruitment_count(transporter_type)
+								}
+							}
+						}
+						
+						SmallText {
+							id: transporter_recruiting_count_label
+							anchors.verticalCenter: parent.verticalCenter
+							text: number_string(transporter_recruitment_count)
+							width: 24 * scale_factor
+							horizontalAlignment: Text.AlignHCenter
+						}
+						
+						IconButton {
+							id: increment_button
+							anchors.verticalCenter: parent.verticalCenter
+							width: 16 * scale_factor
+							height: 16 * scale_factor
+							icon_identifier: "trade_consulate"
+							use_opacity_mask: false
+							
+							onReleased: {
+								if (country_game_data.can_increase_transporter_recruitment(transporter_type)) {
+									country_game_data.increase_transporter_recruitment(transporter_type)
+									transporter_recruitment_count = country_game_data.get_transporter_recruitment_count(transporter_type)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		Grid {
 			id: military_unit_grid
 			anchors.horizontalCenter: parent.horizontalCenter
 			columns: 3
