@@ -7,6 +7,7 @@
 #include "country/culture.h"
 #include "country/ideology.h"
 #include "economy/commodity.h"
+#include "economy/employment_location.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "map/province.h"
@@ -17,6 +18,7 @@
 #include "map/site_type.h"
 #include "population/population.h"
 #include "population/population_type.h"
+#include "population/profession.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/factor.h"
@@ -80,9 +82,23 @@ void population_unit::set_type(const population_type *type)
 
 	this->get_site()->get_game_data()->get_population()->change_type_count(this->get_type(), -1);
 
+	if (this->get_employment_location() != nullptr) {
+		this->get_employment_location()->on_employee_added(this, -1);
+	}
+
 	this->type = type;
 
 	this->get_site()->get_game_data()->get_population()->change_type_count(this->get_type(), 1);
+
+	if (this->get_employment_location() != nullptr) {
+		this->get_employment_location()->on_employee_added(this, 1);
+
+		const profession *profession = this->get_employment_location()->get_employment_profession();
+		assert_throw(profession != nullptr);
+		if (!profession->can_employ(type)) {
+			this->set_employment_location(nullptr);
+		}
+	}
 
 	emit type_changed();
 }
@@ -289,13 +305,44 @@ void population_unit::set_militancy(const centesimal_int &militancy)
 	}
 }
 
+void population_unit::set_employment_location(metternich::employment_location *employment_location)
+{
+	if (employment_location == this->get_employment_location()) {
+		return;
+	}
+
+	if (this->get_employment_location() != nullptr) {
+		this->get_employment_location()->remove_employee(this);
+	}
+
+	this->employment_location = employment_location;
+
+	if (this->get_employment_location() != nullptr) {
+		this->get_employment_location()->add_employee(this);
+	}
+}
+
+const profession *population_unit::get_profession() const
+{
+	if (this->get_employment_location() != nullptr) {
+		return this->get_employment_location()->get_employment_profession();
+	}
+
+	return nullptr;
+}
+
 bool population_unit::is_food_producer() const
 {
 	if (this->get_type()->get_output_commodity() != nullptr) {
 		return this->get_type()->get_output_commodity()->is_food();
 	}
 
-	if (this->get_type()->get_resource_output_value() > 0 && this->get_site() != nullptr && (this->get_site()->get_map_data()->get_type() == site_type::resource || this->get_site()->get_map_data()->get_type() == site_type::celestial_body)) {
+	const profession *profession = this->get_profession();
+	if (profession != nullptr) {
+		return profession->get_output_commodity()->is_food();
+	}
+
+	if (this->get_type()->get_resource_output_bonus() > 0 && this->get_site() != nullptr && (this->get_site()->get_map_data()->get_type() == site_type::resource || this->get_site()->get_map_data()->get_type() == site_type::celestial_body)) {
 		assert_throw(this->get_site()->get_map_data()->get_resource() != nullptr);
 		assert_throw(this->get_site()->get_map_data()->get_resource()->get_commodity() != nullptr);
 		return this->get_site()->get_map_data()->get_resource()->get_commodity()->is_food();

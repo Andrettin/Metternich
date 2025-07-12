@@ -555,10 +555,6 @@ bool country_building_slot::can_increase_education(const education_type *educati
 		return false;
 	}
 
-	if (education_type->get_output_population_type()->get_profession() != nullptr && country_game_data->get_available_profession_capacity(education_type->get_output_population_type()->get_profession()) < 1) {
-		return false;
-	}
-
 	for (const auto &[input_commodity, input_value] : education_type->get_input_commodities()) {
 		if (input_commodity->is_storable()) {
 			if (country_game_data->get_stored_commodity(input_commodity) < input_value) {

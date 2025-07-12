@@ -14,6 +14,7 @@
 #include "map/site_container.h"
 #include "map/terrain_type_container.h"
 #include "population/population_type_container.h"
+#include "population/profession_container.h"
 #include "script/opinion_modifier_container.h"
 #include "script/scripted_modifier_container.h"
 #include "technology/technology_container.h"
@@ -735,19 +736,6 @@ public:
 	{
 		return this->get_stored_food() - this->get_net_food_consumption();
 	}
-
-	int get_profession_capacity(const profession *profession) const
-	{
-		const auto find_iterator = this->profession_capacities.find(profession);
-		if (find_iterator != this->profession_capacities.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void change_profession_capacity(const profession *profession, const int change);
-	int get_available_profession_capacity(const profession *profession) const;
 
 	const population_type_map<int> &get_population_type_inputs() const
 	{
@@ -2097,6 +2085,41 @@ public:
 
 	void change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change);
 
+	const profession_map<commodity_map<decimillesimal_int>> &get_profession_commodity_bonuses() const
+	{
+		return this->profession_commodity_bonuses;
+	}
+
+	const commodity_map<decimillesimal_int> &get_profession_commodity_bonuses(const profession *profession) const
+	{
+		const auto find_iterator = this->profession_commodity_bonuses.find(profession);
+
+		if (find_iterator != this->profession_commodity_bonuses.end()) {
+			return find_iterator->second;
+		}
+
+		static const commodity_map<decimillesimal_int> empty_map;
+		return empty_map;
+	}
+
+	const decimillesimal_int &get_profession_commodity_bonus(const profession *profession, const commodity *commodity) const
+	{
+		const auto find_iterator = this->profession_commodity_bonuses.find(profession);
+
+		if (find_iterator != this->profession_commodity_bonuses.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(commodity);
+
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second;
+			}
+		}
+
+		static constexpr decimillesimal_int zero;
+		return zero;
+	}
+
+	void change_profession_commodity_bonus(const profession *profession, const commodity *commodity, const decimillesimal_int &change);
+
 	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
 	{
 		const auto find_iterator = this->commodity_bonuses_for_tile_thresholds.find(commodity);
@@ -2687,7 +2710,6 @@ private:
 	int population_growth = 0; //population growth counter
 	centesimal_int housing;
 	int food_consumption = 0;
-	std::map<const profession *, int> profession_capacities;
 	population_type_map<int> population_type_inputs;
 	population_type_map<int> population_type_outputs;
 	std::vector<qunique_ptr<country_building_slot>> building_slots;
@@ -2755,6 +2777,7 @@ private:
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	improvement_map<commodity_map<centesimal_int>> improvement_commodity_bonuses;
 	building_type_map<commodity_map<int>> building_commodity_bonuses;
+	profession_map<commodity_map<decimillesimal_int>> profession_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	commodity_map<centesimal_int> commodity_bonuses_per_population;
 	commodity_map<centesimal_int> settlement_commodity_bonuses;

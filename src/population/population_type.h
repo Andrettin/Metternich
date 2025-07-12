@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "population/profession_container.h"
 #include "species/phenotype_container.h"
 #include "util/fractional_int.h"
 
@@ -11,7 +12,6 @@ Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("population/population_class.h")
-Q_MOC_INCLUDE("population/profession.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace archimedes {
@@ -25,7 +25,6 @@ class culture;
 class icon;
 class phenotype;
 class population_class;
-class profession;
 
 template <typename scope_type>
 class modifier;
@@ -37,7 +36,6 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(metternich::population_class* population_class MEMBER population_class NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
-	Q_PROPERTY(metternich::profession* profession MEMBER profession NOTIFY changed)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 	Q_PROPERTY(bool literate MEMBER literate READ is_literate NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
@@ -45,7 +43,7 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(int everyday_wealth_consumption MEMBER everyday_wealth_consumption READ get_everyday_wealth_consumption NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
-	Q_PROPERTY(int resource_output_value MEMBER resource_output_value READ get_resource_output_value NOTIFY changed)
+	Q_PROPERTY(int resource_output_bonus MEMBER resource_output_bonus READ get_resource_output_bonus NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int max_modifier_multiplier MEMBER max_modifier_multiplier READ get_max_modifier_multiplier NOTIFY changed)
 	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
 	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
@@ -78,11 +76,6 @@ public:
 	const metternich::cultural_group *get_cultural_group() const
 	{
 		return this->cultural_group;
-	}
-
-	const metternich::profession *get_profession() const
-	{
-		return this->profession;
 	}
 
 	const QColor &get_color() const
@@ -188,9 +181,40 @@ public:
 		return this->output_value;
 	}
 
-	int get_resource_output_value() const
+	int get_resource_output_bonus() const
 	{
-		return this->resource_output_value;
+		return this->resource_output_bonus;
+	}
+
+	const profession_map<centesimal_int> &get_profession_output_bonuses() const
+	{
+		return this->profession_output_bonuses;
+	}
+
+	const centesimal_int &get_profession_output_bonus(const profession *profession) const
+	{
+		const auto find_iterator = this->get_profession_output_bonuses().find(profession);
+		if (find_iterator != this->get_profession_output_bonuses().end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
+	const profession_map<int> &get_profession_output_modifiers() const
+	{
+		return this->profession_output_modifiers;
+	}
+
+	int get_profession_output_modifier(const profession *profession) const
+	{
+		const auto find_iterator = this->get_profession_output_modifiers().find(profession);
+		if (find_iterator != this->get_profession_output_modifiers().end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
 	}
 
 	const centesimal_int &get_max_modifier_multiplier() const
@@ -214,7 +238,6 @@ private:
 	population_class *population_class = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
-	metternich::profession *profession = nullptr;
 	QColor color;
 	bool literate = false;
 	metternich::icon *icon = nullptr;
@@ -227,7 +250,9 @@ private:
 	commodity_map<decimillesimal_int> commodity_demands;
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
-	int resource_output_value = 0;
+	int resource_output_bonus = 0;
+	profession_map<centesimal_int> profession_output_bonuses;
+	profession_map<int> profession_output_modifiers;
 	centesimal_int max_modifier_multiplier = centesimal_int(0);
 	std::unique_ptr<modifier<const country>> country_modifier;
 	const game_rule *required_game_rule = nullptr;

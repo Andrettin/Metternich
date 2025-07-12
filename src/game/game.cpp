@@ -248,6 +248,10 @@ QCoro::Task<void> game::start_coro()
 		for (const country *country : this->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
 
+			for (const province *province : country_game_data->get_provinces()) {
+				province->get_game_data()->check_employment();
+			}
+
 			for (population_unit *population_unit : country_game_data->get_population_units()) {
 				population_unit->choose_ideology();
 			}
@@ -1173,9 +1177,6 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	}
 
 	int population_unit_count = population / defines::get()->get_population_per_unit();
-	if (group_key.type != nullptr && group_key.type->get_profession() != nullptr) {
-		population_unit_count = std::min(population_unit_count, site_game_data->get_available_profession_capacity(group_key.type->get_profession()));
-	}
 
 	this->apply_historical_population_units_to_site(group_key, population_unit_count, site);
 
@@ -1403,6 +1404,8 @@ QCoro::Task<void> game::on_setup_finished()
 					settlement->get_game_data()->check_free_building(building);
 				}
 			}
+
+			province->get_game_data()->check_employment();
 		}
 
 		for (const building_type *building : building_type::get_all()) {

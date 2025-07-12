@@ -1,6 +1,7 @@
 #pragma once
 
 #include "economy/commodity_container.h"
+#include "economy/employment_location.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/qunique_ptr.h"
@@ -23,7 +24,6 @@ class phenotype;
 class population;
 class population_type;
 class population_unit;
-class profession;
 class province;
 class religion;
 class resource;
@@ -34,7 +34,7 @@ class site;
 class tile;
 enum class improvement_slot;
 
-class site_game_data final : public QObject
+class site_game_data final : public QObject, public employment_location
 {
 	Q_OBJECT
 
@@ -246,6 +246,16 @@ public:
 
 	population_unit *choose_population_unit_for_reallocation() const;
 
+	virtual const site *get_employment_site() const override;
+	virtual const profession *get_employment_profession() const override;
+
+	virtual bool is_resource_employment() const override
+	{
+		return true;
+	}
+
+	virtual int get_employment_output_multiplier() const override;
+
 	const centesimal_int &get_housing() const
 	{
 		return this->housing;
@@ -272,24 +282,6 @@ public:
 	{
 		this->free_food_consumption += change;
 	}
-
-	const std::map<const profession *, int> &get_profession_capacities() const
-	{
-		return this->profession_capacities;
-	}
-
-	int get_profession_capacity(const profession *profession) const
-	{
-		const auto find_iterator = this->profession_capacities.find(profession);
-		if (find_iterator != this->profession_capacities.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void change_profession_capacity(const profession *profession, const int change);
-	int get_available_profession_capacity(const profession *profession) const;
 
 	const character *get_landholder() const
 	{
@@ -541,7 +533,6 @@ private:
 	qunique_ptr<metternich::population> population;
 	centesimal_int housing;
 	int free_food_consumption = 0;
-	std::map<const profession *, int> profession_capacities;
 	const character *landholder = nullptr;
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;

@@ -36,6 +36,7 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "population/profession.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/effect_list.h"
@@ -1061,6 +1062,12 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 		}
 	}
 
+	if (improvement->get_employment_profession() != nullptr) {
+		assert_throw(this->get_resource() != nullptr);
+		assert_throw(improvement->get_slot() == improvement_slot::resource);
+		this->change_employment_capacity(improvement->get_employment_capacity() * multiplier);
+	}
+
 	if (this->get_owner() != nullptr) {
 		const country_game_data *country_game_data = this->get_owner()->get_game_data();
 
@@ -1186,6 +1193,7 @@ qunique_ptr<population_unit> site_game_data::pop_population_unit(population_unit
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
 			this->population_units.erase(this->population_units.begin() + i);
 
+			population_unit->set_employment_location(nullptr);
 			population_unit->set_site(nullptr);
 
 			this->get_population()->on_population_unit_lost(population_unit);
@@ -1234,11 +1242,11 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 		this->change_base_commodity_output(type->get_output_commodity(), centesimal_int(type->get_output_value()) * change);
 	}
 
-	if (type->get_resource_output_value() > 0 && (this->site->get_map_data()->get_type() == site_type::resource || this->site->get_map_data()->get_type() == site_type::celestial_body)) {
+	if (type->get_resource_output_bonus() > 0 && (this->site->get_map_data()->get_type() == site_type::resource || this->site->get_map_data()->get_type() == site_type::celestial_body)) {
 		assert_throw(this->get_resource_improvement() != nullptr);
 		assert_throw(this->get_resource() != nullptr);
 		assert_throw(this->get_resource()->get_commodity() != nullptr);
-		this->change_base_commodity_output(this->get_resource()->get_commodity(), centesimal_int(type->get_resource_output_value()) * change);
+		this->change_base_commodity_output(this->get_resource()->get_commodity(), centesimal_int(1 + type->get_resource_output_bonus()) * change);
 
 		//resource workers do not cost food
 		this->change_free_food_consumption(change);
@@ -1312,7 +1320,7 @@ population_unit *site_game_data::choose_population_unit_for_reallocation() const
 			continue;
 		}
 
-		const int output_value = this->site->is_settlement() ? population_unit->get_type()->get_output_value() : population_unit->get_type()->get_resource_output_value();
+		const int output_value = this->site->is_settlement() ? population_unit->get_type()->get_output_value() : (1 + population_unit->get_type()->get_resource_output_bonus());
 		assert_throw(output_value > 0);
 
 		if (output_value > lowest_output_value) {
@@ -1332,6 +1340,28 @@ population_unit *site_game_data::choose_population_unit_for_reallocation() const
 	return vector::get_random(population_units);
 }
 
+const site *site_game_data::get_employment_site() const
+{
+	return this->site;
+}
+
+const profession *site_game_data::get_employment_profession() const
+{
+	const improvement *resource_improvement = this->get_resource_improvement();
+
+	if (resource_improvement != nullptr) {
+		return resource_improvement->get_employment_profession();
+	}
+
+	return nullptr;
+}
+
+int site_game_data::get_employment_output_multiplier() const
+{
+	assert_throw(this->get_resource_improvement() != nullptr);
+	return 1;
+}
+
 void site_game_data::change_housing(const centesimal_int &change)
 {
 	if (change == 0) {
@@ -1345,30 +1375,6 @@ void site_game_data::change_housing(const centesimal_int &change)
 	}
 
 	emit housing_changed();
-}
-
-void site_game_data::change_profession_capacity(const profession *profession, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->profession_capacities[profession] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->profession_capacities.erase(profession);
-	}
-
-	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_profession_capacity(profession, change);
-	}
-}
-
-int site_game_data::get_available_profession_capacity(const profession *profession) const
-{
-	return this->get_profession_capacity(profession) - this->get_population()->get_profession_count(profession);
 }
 
 void site_game_data::set_landholder(const character *landholder)

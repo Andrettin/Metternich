@@ -10,7 +10,6 @@
 namespace metternich {
 
 class population_unit;
-class profession;
 
 //a class which keeps track of population counts
 class population final : public QObject
@@ -62,23 +61,6 @@ public:
 	}
 
 	void change_type_count(const population_type *type, const int change);
-
-	const std::map<const profession *, int> &get_profession_counts() const
-	{
-		return this->profession_counts;
-	}
-
-	int get_profession_count(const profession *profession) const
-	{
-		const auto find_iterator = this->get_profession_counts().find(profession);
-		if (find_iterator != this->get_profession_counts().end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void change_profession_count(const profession *profession, const int change);
 
 	const culture_map<int> &get_culture_counts() const
 	{
@@ -288,7 +270,6 @@ private:
 	int population_unit_count = 0;
 	int64_t size = 0;
 	population_type_map<int> type_counts;
-	std::map<const profession *, int> profession_counts;
 	culture_map<int> culture_counts;
 	const culture *main_culture = nullptr;
 	religion_map<int> religion_counts;

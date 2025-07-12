@@ -1254,10 +1254,6 @@ void country_game_data::on_site_gained(const site *site, const int multiplier)
 		}
 
 		this->change_housing(site_game_data->get_housing() * multiplier);
-
-		for (const auto &[profession, capacity] : site_game_data->get_profession_capacities()) {
-			this->change_profession_capacity(profession, capacity * multiplier);
-		}
 	}
 
 	const resource *site_resource = site->get_game_data()->get_resource();
@@ -2490,26 +2486,6 @@ int country_game_data::get_net_food_consumption() const
 	return food_consumption;
 }
 
-void country_game_data::change_profession_capacity(const profession *profession, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->profession_capacities[profession] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->profession_capacities.erase(profession);
-	}
-}
-
-int country_game_data::get_available_profession_capacity(const profession *profession) const
-{
-	return this->get_profession_capacity(profession) - this->get_population()->get_profession_count(profession);
-}
-
 QVariantList country_game_data::get_population_type_inputs_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_population_type_inputs());
@@ -2568,10 +2544,6 @@ population_unit *country_game_data::choose_education_population_unit(const educa
 		}
 
 		if (!population_unit->get_site()->get_game_data()->can_have_population_type(education_type->get_output_population_type())) {
-			continue;
-		}
-
-		if (education_type->get_output_population_type()->get_profession() != nullptr && population_unit->get_site()->get_game_data()->get_available_profession_capacity(education_type->get_output_population_type()->get_profession()) < 1) {
 			continue;
 		}
 
@@ -6615,6 +6587,39 @@ void country_game_data::change_building_commodity_bonus(const building_type *bui
 			if (settlement->get_game_data()->has_building(building)) {
 				settlement->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
 			}
+		}
+	}
+}
+
+void country_game_data::change_profession_commodity_bonus(const profession *profession, const commodity *commodity, const decimillesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const decimillesimal_int &count = (this->profession_commodity_bonuses[profession][commodity] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->profession_commodity_bonuses[profession].erase(commodity);
+
+		if (this->profession_commodity_bonuses[profession].empty()) {
+			this->profession_commodity_bonuses.erase(profession);
+		}
+	}
+
+	for (const province *province : this->get_provinces()) {
+		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+			if (employment_location->get_employee_count() == 0) {
+				continue;
+			}
+
+			if (employment_location->get_employment_profession() != profession) {
+				continue;
+			}
+
+			employment_location->calculate_total_employee_commodity_outputs();
 		}
 	}
 }

@@ -5,6 +5,7 @@
 #include "economy/commodity_container.h"
 
 Q_MOC_INCLUDE("population/population_class.h")
+Q_MOC_INCLUDE("population/profession.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
@@ -14,6 +15,7 @@ class commodity;
 class country;
 class icon;
 class population_class;
+class profession;
 class resource;
 class technology;
 class terrain_type;
@@ -32,6 +34,8 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_PROPERTY(bool visitable MEMBER visitable READ is_visitable NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
+	Q_PROPERTY(const metternich::profession* employment_profession MEMBER employment_profession READ get_employment_profession NOTIFY changed)
+	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
 	Q_PROPERTY(const metternich::population_class* default_population_class MEMBER default_population_class READ get_default_population_class NOTIFY changed)
 	Q_PROPERTY(metternich::improvement* required_improvement MEMBER required_improvement NOTIFY changed)
@@ -97,6 +101,16 @@ public:
 	bool has_terrain_image_filepath(const terrain_type *terrain) const
 	{
 		return this->terrain_image_filepaths.contains(terrain);
+	}
+
+	const profession *get_employment_profession() const
+	{
+		return this->employment_profession;
+	}
+
+	int get_employment_capacity() const
+	{
+		return this->employment_capacity;
 	}
 
 	const std::vector<const terrain_type *> &get_terrain_types() const
@@ -169,6 +183,8 @@ private:
 	const metternich::icon *icon = nullptr;
 	std::filesystem::path image_filepath;
 	std::map<const terrain_type *, std::filesystem::path> terrain_image_filepaths;
+	const profession *employment_profession = nullptr;
+	int employment_capacity = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
 	int variation_count = 1;
 	const population_class *default_population_class = nullptr;
