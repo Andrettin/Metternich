@@ -3,8 +3,8 @@ dock = {
 	building_class = dock
 	portrait = dock
 	icon = anchor
-	free_in_capital = true
 	provincial = true
+	free_in_capital = true
 	required_technology = seafaring
 	settlement_types = {
 		camp
@@ -46,6 +46,7 @@ shipyard = {
 	icon = anchor
 	provincial = true
 	capital_only = true
+	free_in_capital = true
 	required_building = dock
 	required_technology = seafaring
 	settlement_types = {
