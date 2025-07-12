@@ -54,6 +54,7 @@ friedrich_iii_of_the_holy_roman_empire = { #Source: Eva Demmerle, "Das Haus Habs
 	mother = cymburgis_of_masovia #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	birth_date = 1415.9.21 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 47, 245.
 	death_date = 1493 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	obsolescence_technology = national_bureaucracy
 	rulable_countries = {
 		austria
 	}
@@ -104,6 +105,8 @@ karl_vi_of_the_holy_roman_empire = { #Emperor Karl VI of the Holy Roman Empire; 
 maria_theresia_of_austria = { #Empress Maria Theresia of the Holy Roman Empire; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 	name = "Maria Theresia"
 	dynasty = habsburg
+	role = ruler
+	character_type = statesman
 	culture = austrian
 	religion = catholic
 	portrait = maria_theresia
@@ -113,6 +116,10 @@ maria_theresia_of_austria = { #Empress Maria Theresia of the Holy Roman Empire; 
 	birth_date = 1717 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 	start_date = 1740
 	death_date = 1780 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+	required_technology = national_bureaucracy
+	rulable_countries = {
+		austria
+	}
 	
 	#became queen of Bohemia and Hungary on 1740; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 	#became empress of the HRE in 1745; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
