@@ -8,7 +8,7 @@ DialogBase {
 	width: 492 * scale_factor
 	height: 492 * scale_factor
 	
-	readonly property var military_units_model: (selected_province !== null && selected_garrison) ? selected_province.game_data.military_units : []
+	readonly property var military_units_model: (selected_province !== null && selected_garrison && selected_province.game_data.military_units.length > 0) ? selected_province.game_data.get_country_military_units_qvariant_list(metternich.game.player_country) : []
 	
 	IconButton {
 		id: close_button

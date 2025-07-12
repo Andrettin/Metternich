@@ -198,6 +198,8 @@ public:
 	}
 
 	QVariantList get_military_units_qvariant_list() const;
+	std::vector<military_unit *> get_country_military_units(const country *country) const;
+	Q_INVOKABLE QVariantList get_country_military_units_qvariant_list(const metternich::country *country) const;
 
 	void add_military_unit(military_unit *military_unit);
 	void remove_military_unit(military_unit *military_unit);

@@ -735,6 +735,22 @@ QVariantList province_game_data::get_military_units_qvariant_list() const
 	return container::to_qvariant_list(this->get_military_units());
 }
 
+std::vector<military_unit *> province_game_data::get_country_military_units(const country *country) const
+{
+	std::vector<military_unit *> country_military_units = this->get_military_units();
+
+	std::erase_if(country_military_units, [country](const military_unit *military_unit) {
+		return military_unit->get_country() != country;
+	});
+
+	return country_military_units;
+}
+
+QVariantList province_game_data::get_country_military_units_qvariant_list(const country *country) const
+{
+	return container::to_qvariant_list(this->get_country_military_units(country));
+}
+
 void province_game_data::add_military_unit(military_unit *military_unit)
 {
 	this->military_units.push_back(military_unit);
@@ -806,8 +822,8 @@ QVariantList province_game_data::get_country_military_unit_category_counts(mette
 {
 	std::map<military_unit_category, int> counts;
 
-	for (const military_unit *military_unit : this->get_military_units()) {
-		if (military_unit->get_country() == country && !military_unit->is_moving()) {
+	for (const military_unit *military_unit : this->get_country_military_units(country)) {
+		if (!military_unit->is_moving()) {
 			++counts[military_unit->get_category()];
 		}
 	}
