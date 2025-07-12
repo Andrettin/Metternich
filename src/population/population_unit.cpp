@@ -342,12 +342,6 @@ bool population_unit::is_food_producer() const
 		return profession->get_output_commodity()->is_food();
 	}
 
-	if (this->get_type()->get_resource_output_bonus() > 0 && this->get_site() != nullptr && (this->get_site()->get_map_data()->get_type() == site_type::resource || this->get_site()->get_map_data()->get_type() == site_type::celestial_body)) {
-		assert_throw(this->get_site()->get_map_data()->get_resource() != nullptr);
-		assert_throw(this->get_site()->get_map_data()->get_resource()->get_commodity() != nullptr);
-		return this->get_site()->get_map_data()->get_resource()->get_commodity()->is_food();
-	}
-
 	return false;
 }
 

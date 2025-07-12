@@ -1242,16 +1242,6 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 		this->change_base_commodity_output(type->get_output_commodity(), centesimal_int(type->get_output_value()) * change);
 	}
 
-	if (type->get_resource_output_bonus() > 0 && (this->site->get_map_data()->get_type() == site_type::resource || this->site->get_map_data()->get_type() == site_type::celestial_body)) {
-		assert_throw(this->get_resource_improvement() != nullptr);
-		assert_throw(this->get_resource() != nullptr);
-		assert_throw(this->get_resource()->get_commodity() != nullptr);
-		this->change_base_commodity_output(this->get_resource()->get_commodity(), centesimal_int(1 + type->get_resource_output_bonus()) * change);
-
-		//resource workers do not cost food
-		this->change_free_food_consumption(change);
-	}
-
 	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
 		if (commodity->is_local() && !commodity->is_provincial()) {
 			this->change_local_everyday_consumption(commodity, value * change);
@@ -1304,7 +1294,8 @@ population_unit *site_game_data::choose_population_unit_for_reallocation() const
 
 	std::vector<population_unit *> population_units;
 
-	int lowest_output_value = std::numeric_limits<int>::max();
+	decimillesimal_int lowest_output_value = decimillesimal_int::from_value(std::numeric_limits<int64_t>::max());
+
 	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
 		if (population_unit->get_type()->get_output_commodity() != nullptr) {
 			if (!population_unit->get_type()->get_output_commodity()->is_labor()) {
@@ -1320,8 +1311,14 @@ population_unit *site_game_data::choose_population_unit_for_reallocation() const
 			continue;
 		}
 
-		const int output_value = this->site->is_settlement() ? population_unit->get_type()->get_output_value() : (1 + population_unit->get_type()->get_resource_output_bonus());
-		assert_throw(output_value > 0);
+		decimillesimal_int output_value(0);
+
+		const profession *profession = population_unit->get_profession();
+		if (profession != nullptr) {
+			output_value = population_unit->get_employment_location()->get_employee_main_commodity_output(population_unit->get_type());
+		} else {
+			output_value = decimillesimal_int(population_unit->get_type()->get_output_value());
+		}
 
 		if (output_value > lowest_output_value) {
 			continue;
@@ -1354,12 +1351,6 @@ const profession *site_game_data::get_employment_profession() const
 	}
 
 	return nullptr;
-}
-
-int site_game_data::get_employment_output_multiplier() const
-{
-	assert_throw(this->get_resource_improvement() != nullptr);
-	return 1;
 }
 
 void site_game_data::change_housing(const centesimal_int &change)

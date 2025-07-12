@@ -64,6 +64,7 @@ public:
 	}
 
 	commodity_map<centesimal_int> get_employee_commodity_outputs(const population_type *population_type) const;
+	decimillesimal_int get_employee_main_commodity_output(const population_type *population_type) const;
 
 	const commodity_map<centesimal_int> &get_total_employee_commodity_outputs() const
 	{

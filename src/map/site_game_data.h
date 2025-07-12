@@ -254,8 +254,6 @@ public:
 		return true;
 	}
 
-	virtual int get_employment_output_multiplier() const override;
-
 	const centesimal_int &get_housing() const
 	{
 		return this->housing;
