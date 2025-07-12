@@ -1,0 +1,286 @@
+english += {
+	ship_names = {
+		"Grande Hermine"
+		# J. Cartier, Quebec
+		"L'Anne-Madeleine"
+		"L'Espoir"
+		#grenville
+		"L'Estendue"
+		"L'Émérillon"
+		"La Bonne-Aventure"
+		"La Bonne-Renommée"
+		"La Cardinale"
+		"La Charlotte"
+		"La Couronne"
+		"La Dauphine"
+		#verrazzano
+		"La Flamengue"
+		"Pompeux;"
+		#1707 -- far easier to replace this duplicate
+		"La Grande-Roberge"
+		#villegaignon
+		"La Lèchefraye"
+		"La Marie des Bonnes Nouvelles"
+		"La Marye"
+		"La Michelle"
+		"La Normanda"
+		"La Pensée"
+		#aubert
+		"La Perle"
+		"La Petite-Hermine"
+		"La Petite-Roberge"
+		"La Rosée"
+		"La Sainte-Anne"
+		"La Salamandre"
+		"La Sibille"
+		#misc
+		"La Trinité"
+		#ribault
+		"La Valentine"
+		#roberval
+		"La Vicaille"
+		#kertk
+		"La Victoire"
+		"La Vierge"
+		"Le Bastien"
+		"Le Bonaventure"
+		#court
+		"Le Catholique"
+		#d'enambuc
+		"Le Corbin"
+		#bardeliere
+		"Le Don-de-Dieu"
+		"Le Flibot"
+		"Le Griffon"
+		#la sale
+		"Le Jacques"
+		"Le Jonas"
+		#champlain
+		"Le Lion Couronné"
+		"Le Lévrier"
+		"Le Prince"
+		"Le Régent"
+		#razilli
+		"Le Sacre"
+		#parmentier
+		"Le Saint-Brieuc"
+		"Le Saint-François"
+		"Le Saint-Georges"
+		"Le Saint-Louis"
+		"Le Vicaire"
+		#1661
+		"Juste"
+		#1661
+		"Royale"
+		#1663
+		"Saint-Philippe"
+		#1664
+		"Rubis"
+		#1664
+		"Dauphin"
+		#1664
+		"Diamant"
+		#1665
+		"Thérèse"
+		#1665
+		"Bourbon"
+		#1666
+		"Neptune"
+		#1666
+		"Normand"
+		#1666
+		"Prince"
+		#1666
+		"Courtisan"
+		#1666
+		"Frédéric"
+		#1667
+		"Princesse"
+		#1668
+		"Monarque"
+		#1668
+		"Royal-Duc"
+		#1668
+		"Dauphin-Royal"
+		#1669
+		"Isle-de-France"
+		#1669
+		"Paris"
+		#1669
+		"Soleil-Royal"
+		#1669
+		"Charente"
+		#1669
+		"Couronne"
+		#1669
+		"Fort"
+		#1669
+		"François"
+		#1669
+		"Henry"
+		#1670
+		"Joly"
+		#1670
+		"Louvre"
+		#1670
+		"Madame"
+		#1670
+		"Navarrais"
+		#1670
+		"Royale-Thérèse"
+		#1670
+		"Rubis"
+		#1670
+		"Sceptre"
+		#1671
+		"Parfait"
+		#1671
+		"Vermandois"
+		#1673
+		"Magnanime"
+		#1673
+		"Saint-Michel"
+		#1675
+		"Victorieux"
+		#1675
+		"Brave"
+		#1678
+		"Admirable"
+		#1679
+		"Glorieux"
+		#1680
+		"Magnifique"
+		#1680
+		"Ardent"
+		#1680
+		"Grand"
+		#1682
+		"Arrogant"
+		#1685
+		"Marquis"
+		#1685
+		"Modéré"
+		#1686
+		"Content"
+		#1687
+		"Sérieux"
+		#1688
+		"Maure"
+		#1688
+		"Conquérant"
+		#1688
+		"Éclatant"
+		#1688
+		"Henri"
+		#1689
+		"Fleuron"
+		#1689
+		"Fortuné"
+		#1690
+		"Intrépide"
+		#1690
+		"Invincible"
+		#1690
+		"Laurier"
+		#1690
+		"Perle"
+		#1690
+		"Superbe"
+		#1690
+		"Aimable"
+		#1690
+		"Brillant"
+		#1690
+		"Constant"
+		#1690
+		"Gaillard"
+		#1690
+		"Heureux"
+		#1691
+		"Lys"
+		#1691
+		"Merveilleux"
+		#1691
+		"Orgueilleux"
+		#1691
+		"Saint-Esprit"
+		#1691
+		"Sirène"
+		#1691
+		"Ambitieux"
+		#1691
+		"Écueil"
+		#1691
+		"Entendu"
+		#1691
+		"Formidable"
+		#1691
+		"Foudroyant"
+		#1691
+		"Fulminant"
+		#1692
+		"Prompt"
+		#1692
+		"Royal-Louis"
+		#1692
+		"Saint-Louis"
+		#1692
+		"Vainqueur"
+		#1692
+		"Bizarre"
+		#1692
+		"Capable"
+		#1692
+		"Indien"
+		#1693
+		"Terrible"
+		#1693
+		"Tonnant"
+		#1693
+		"Triomphant"
+		#1693
+		"Bon"
+		#1693
+		"Éole"
+		#1694
+		"Fier"
+		#1695
+		"Solide"
+		#1695
+		"Téméraire"
+		#1695
+		"Trident"
+		#1695
+		"Fougueux"
+		#1696
+		"Mercure"
+		#1697
+		"Prudent"
+		#1699
+		"Oriflamme"
+		#1699
+		"Hasardeux"
+		#1700
+		"Amphitrite"
+		#1700
+		"Ferme"
+		#1701
+		"Parfait"
+		#1703
+		"Toulouse"
+		#1703
+		"Triton"
+		#1704
+		"Jason"
+		#1704
+		"Auguste"
+		#1705
+		"Mars"
+		#1705
+		"Achille"
+		#1705
+		"Hercule"
+		#1706
+		"Dauphine"
+	}
+}

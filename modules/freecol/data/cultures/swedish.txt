@@ -1,0 +1,304 @@
+swedish += {
+	ship_names = {
+		"Kalmar Nyckel"
+		#1653
+		"Amarant"
+		#1659
+		"Andromeda"
+		#1654
+		"Apollo"
+		#1661
+		"Äpple"
+		#1603
+		"Äpplet"
+		#1784
+		"Äran"
+		#1682
+		"Bleking"
+		"Bramare"
+		#1705
+		"Bremen"
+		"Bruna Lejon"
+		#Peter Minuit, Delaware
+		"Calmare Nyckel"
+		#1819
+		"Carl XIII"
+		#1678
+		"Carolus IX"
+		"Carolus IX"
+		"Carolus XI"
+		#1648
+		"Cesar"
+		#Nya Sverige
+		"Charitas"
+		"Christina"
+		#1655
+		"Drake"
+		#1785
+		"Dristigheten"
+		#1774
+		"Dronning Sofia Magdalena"
+		#1680
+		"Drottning Hedvig Eleanora"
+		#1680
+		"Drottning Ulrika Eleanora"
+		#1731
+		"Drottningholm"
+		#1784
+		"Dygd"
+		#1557
+		"Elefant"
+		"Elfsborg"
+		#Africa
+		"Elisabeth"
+		"Engel"
+		"Enhörning"
+		"Enigheten"
+		#1683
+		"Estland"
+		#1783
+		"Fadnerslandet"
+		#1652
+		"Falk"
+		#St Barts
+		"Fama"
+		#1650
+		"Fenix"
+		#1735
+		"Finland"
+		"Finska Memnon"
+		"Finska Svan"
+		"Förgylta Dufva"
+		#1825
+		"Försiktigheten"
+		#1730
+		"Fred"
+		#1698
+		"Frederika Amalia"
+		"Fredrik Rex"
+		"Freedenburg"
+		#1731
+		"Frihet"
+		#1634
+		"Göta Ark"
+		#1658
+		"Göteborg"
+		#1702
+		"Götha Lejon"
+		#1682
+		"Gotland"
+		#1748
+		"Greve Sparre"
+		"Grippen"
+		#1832
+		"Gustav den Store"
+		"Gyllene Hajen"
+		#1682
+		"Halland"
+		"Halmstad"
+		"Hector"
+		#1781
+		"Hedvig Elisabet Charlotta"
+		#1651
+		"Herkules"
+		#1779
+		"Hertig Ferdinand"
+		#1731
+		"Hessen Cassel"
+		#1675
+		"Hieronymus"
+		"Hjort"
+		"Hoffi"
+		"Hollands Galej"
+		"Jonas von Emden"
+		#1633
+		"Jupiter"
+		#1677
+		"Kalmar"
+		"Kalmar Bark"
+		#1824
+		"Karl XIV Johan"
+		"Karlskrona"
+		"Kattan"
+		#1775
+		"Konung Adolph Fredrik"
+		#1732
+		"Konung Fredrik"
+		#1777
+		"Konung Gustaf III"
+		#1799
+		"Konung Gustaf IV"
+		#1683
+		"Konung Karl"
+		#1633
+		"Kristina"
+		#1633
+		"Krona Ark"
+		#1668
+		"Kronan"
+		#1782
+		"Kronprins Gustaf Adolph"
+		#1711
+		"Kronskepp"
+		#1677
+		"Lax"
+		#1682
+		"Lifland"
+		"Lilia"
+		"Lilla Hjort"
+		"Lilla Svan"
+		#1789
+		"Louisa Ulrika"
+		#1655
+		"Mane"
+		#1785
+		"Manligheten"
+		#1648
+		"Maria"
+		#1633
+		"Mars"
+		"Memnon"
+		"Mercurius"
+		#1640
+		"Monikendam"
+		#1673
+		"Neptunus"
+		#1703
+		"Nordstjerna"
+		#1698
+		"Norrkoping"
+		#1665
+		"Nyckel"
+		#1681
+		"Öland"
+		#1628
+		"Oldenrg"
+		#1783
+		"Ömheten"
+		"Onlyfer"
+		"Örnen"
+		#1683
+		"Osel"
+		#1616
+		"Patentia"
+		#1658
+		"Pelikan"
+		#1692
+		"Pommern"
+		"Princessa Hedvig"
+		#1682
+		"Prins Carl"
+		#1704
+		"Prins Carl Fredrik"
+		#1774
+		"Prins Fredrik Adolph"
+		#1758
+		"Prins Gustaf"
+		#1694
+		"Prins Karl"
+		#1830
+		"Prins Oscar"
+		"Prins Wilhelm"
+		"Prinsessa Fredrika von Hessen"
+		#1694
+		"Prinsessa Hedvig Sophia"
+		#1694
+		"Prinsessa Ulrika"
+		#1764
+		"Prinsessin Sophia Albertina"
+		"Prints Gustav"
+		#1692
+		"Prinzessin Ulrika Eleanora"
+		#1783
+		"Rättvisan"
+		#1727
+		"Reilt"
+		#1708
+		"Riga"
+		#1570
+		"Röda Drake"
+		"Röda Hund"
+		"Roda Lejon"
+		#1649
+		"Sankt Anna"
+		#1662
+		"Saturnus"
+		#1636
+		"Scepter"
+		#1697
+		"Skåne"
+		#1564
+		"Skotska Pincka"
+		#1694
+		"Småland"
+		#1693
+		"Södermanland"
+		#1667
+		"Sol"
+		#1725
+		"Sophia Charlotta"
+		#1666
+		"Spes"
+		"Sprengeporten"
+		"St Christopher"
+		#1560
+		"St Erik"
+		#1695
+		"Stettin"
+		"Stockholm"
+		"Suanen"
+		#1662
+		"Svärdet"
+		#1559
+		"Svenska Hektor"
+		"Svenska Lejon"
+		"Svenska Morian"
+		#1734
+		"Sverige"
+		#1785
+		"Tapperheten"
+		"Tranheje"
+		#1706
+		"Tre Kroner"
+		#1642
+		"Tre Lejon"
+		#1598
+		"Trekronor"
+		#1719
+		"Ulrika Eleonora"
+		#1642
+		"Ulven"
+		"Upland"
+		#1749
+		"Uppland"
+		#1600
+		"Vasa"
+		#1667
+		"Venus"
+		#1647
+		"Vestervik"
+		#1658
+		"Viktoria"
+		"Vogel Grip"
+		#1681
+		"Wachtmeister"
+		#1719
+		"Warberg"
+		#1778
+		"Wasa"
+		#1684
+		"Wenden"
+		#1696
+		"Westmanland"
+		#1649
+		"Wismar"
+		#1788
+		"Wladislaff"
+		#1664
+		"Wrangel"
+		#1675
+		"Wrangels Pallats"
+		#1697
+		"Wrede"
+	}
+}

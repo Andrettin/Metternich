@@ -1,0 +1,224 @@
+dutch += {
+	ship_names = {
+		"Halve Maen"
+		# Henry Hudson, New York
+		"Abrahams Offerhande"
+		"Aker"
+		"Angel Gabriel"
+		"Bever"
+		"Blauwe Duif"
+		"Blauwen Haen"
+		"Blijde Boodschap"
+		"Bonte Coe"
+		"Bonte Koe"
+		#1629
+		"Brak"
+		"Brandaris"
+		"Brant van Toyen"
+		"Bruynvisch"
+		"Calmer Sleutel"
+		"Coninck David"
+		"Coninck Salomon"
+		"Coopman"
+		"de Eendracht"
+		"Doel"
+		"Dolphijn"
+		"Draetvadt"
+		"Drie Koningen"
+		#1646
+		"Dromedaris"
+		#1627
+		"Dubbele Arend"
+		#1636
+		"Duif"
+		#1595
+		"Duifje"
+		#christiaensen
+		"Eekhoorntje"
+		"Eenhoorn"
+		"Elbinck"
+		"Eyckenboom"
+		"Faem"
+		"Fortuyn"
+		"Gekruyste Hart"
+		"Gelderlant"
+		"Gelderse Blom"
+		"Gideon"
+		"Goede Faem"
+		#hudson
+		"Goede Hoop"
+		#1644
+		"Gouden Gans"
+		"Gratie"
+		#1607
+		"Griffioen"
+		"Groote Christoffel"
+		"Groote Gerrit"
+		#mossel
+		"Grote Maan"
+		"Gulden Arent"
+		#1620
+		"Haan"
+		"Halve Maen"
+		"Haring"
+		#1620
+		"Heilbot"
+		"Hoff van Cleef"
+		"Hoop"
+		"Houttuin"
+		"Jager"
+		"Jonge Tobias"
+		#1645
+		"Juffer"
+		"Juffrouw Leonora"
+		#1625
+		"Kameel"
+		"Kath"
+		#sval
+		#1627
+		"Kemphaan"
+		#1640
+		"Kievit"
+		"Kock"
+		"Koe"
+		#1646
+		"Koe"
+		#1601
+		"Lam"
+		#american-built
+		#1598
+		"Leeuw"
+		#1642
+		"Leeuwerik"
+		"Liefde"
+		#1642
+		"Luipaard"
+		"Mackreel"
+		"Maecht van Enckhuysen"
+		"Margriet"
+		"Meeuwken"
+		"Melckmeyt"
+		"Merimin"
+		"Moesman"
+		"Morgenster"
+		"Nachtegael"
+		"Naerden"
+		"Neptunus"
+		"Nieu Nederlandt"
+		"Nieu Neerlantsche Fortuyn"
+		"Nieu Swol"
+		"Nieuwer Amster"
+		"Noorthollandt"
+		"Onrust"
+		"Oranjeboom"
+		"Ouwde Wagen"
+		#rijser
+		"Paerel"
+		"Pauwe"
+		"Peereboom"
+		"Pijnappel"
+		"Posthoorn"
+		#1649
+		"Potvis"
+		"Purmerlander Kerck"
+		#1601
+		"Ram"
+		"Reael"
+		#1648
+		"Reiger"
+		"Rensselaerwijck"
+		#block
+		#1645
+		"Rob"
+		#1601
+		"Rode Leeuw"
+		#1638
+		"Roek"
+		"Roode Roosenboom"
+		#1640
+		"Salamander"
+		"Salm"
+		"Schaekerloo"
+		"Schaep"
+		#1644
+		"Schelvis"
+		"Schildpad"
+		"Schotsen Duytsman"
+		"Sevenster"
+		"Sint Beninjo"
+		"Sint Jacob"
+		"Sint Jan Baptist"
+		"Sint Joris"
+		"Sint Martijn"
+		"Sint Pieter"
+		#1650
+		"Smient"
+		#1640
+		"Snoek"
+		"Soutberch"
+		#1648
+		"Sperwer"
+		"Sphera Mundi"
+		"Statijn"
+		"Swanenburch"
+		"Swarte Arent"
+		"Swarte Beer"
+		"Swarte Paert"
+		"Swol"
+		"T'Amandare"
+		#1645
+		"Tonijn"
+		#1623
+		"Tortelduif"
+		"Trouw"
+		"Tyjger"
+		"Valckenier"
+		#1636
+		"Valk"
+		"Vergulde Beer"
+		"Vergulde Bever"
+		"Vergulde Meulen"
+		"Vergulde Otter"
+		#1648
+		"Vergulde Pelikaan"
+		"Vergulde Sonne"
+		"Vergulde Star"
+		"Visscher"
+		#1627
+		"Vliegende Draak"
+		"Vogel Struys"
+		"Vogelgrijp"
+		"Vogelsangh"
+		"Vos"
+		"Vosje"
+		"Waegh"
+		"Walvis"
+		"Wapen de Amsterdam"
+		"Wapen van Leeuwarden"
+		"Wapen van Nieu Nederlandt"
+		"Wapen van Noorwegen"
+		"Wapen van Rensselaerswijck"
+		"Wasbleecker"
+		"Waterhond"
+		"Westindische Raven"
+		#1600
+		"Witte Arend"
+		"Witte Doffer"
+		"Witte Duyf"
+		"Witte Kloodt"
+		"Witte Paert"
+		"Witte Valk"
+		#1621
+		"Woerden"
+		#1629
+		"Zalm"
+		"Zeehond"
+		#1643
+		"Zeemeeuw"
+		#1617
+		"Zeewolf"
+		#1600
+		"Zwarte Arend"
+		"Zwarte Raaf"
+	}
+}

@@ -1,0 +1,200 @@
+english += {
+	ship_names = {
+		"Matthew"
+		# J. Cabot, Newfoundland
+		"Abigall"
+		"Aduenture"
+		"Ambrose"
+		"An Fraunces"
+		"Angel"
+		"Ann and Sarah"
+		"Anne"
+		"Anne Aucher"
+		#gilbert 1
+		"Arbella"
+		"Armenell"
+		#1590
+		"Ascension"
+		"Ayde"
+		#frobisher 2
+		"Bachelor's Delight"
+		"Beare"
+		"Blessing"
+		"Bonauenture"
+		"Bonny Bessie"
+		"Braue"
+		#1588
+		"Bull"
+		#roanoke 2
+		"Carlisle"
+		"Catch"
+		#1590
+		"Centurion"
+		#supply 3
+		"Charity"
+		"Charls"
+		#foxe
+		"Coach"
+		"Concord"
+		#gosnold
+		"Content"
+		"Crane"
+		"Darling"
+		"De-La-Warre"
+		"Defiance"
+		"Delight"
+		"Deliuerance"
+		"Diana"
+		"Dionyse"
+		#frobisher 3
+		"Discouerie"
+		#1591
+		"Dolphin"
+		#hudson
+		"Dorothie"
+		"Dorset"
+		"Doue"
+		"Due Return"
+		"Duty"
+		"Eaglet"
+		#stannard
+		"Elizabeth"
+		"Ellen"
+		#davis 3
+		"Emanuell"
+		"Ffaulcon"
+		"Ffortune"
+		"Ffraunces"
+		"Ffurthurance"
+		#1603
+		"Foresight"
+		"Gabriell"
+		#frobisher 1
+		"Garland"
+		#hawkins 2
+		"George"
+		"Gift"
+		"Gift of God"
+		"God Speed"
+		#weymouth
+		"Golden Hinde"
+		"Great Hopewel"
+		"Harts-ease"
+		#hall
+		"Henrietta Maria"
+		"Herckules"
+		"Hoapwell"
+		"Hoppe"
+		"Imploy"
+		"Iudith"
+		#hawkins 3
+		"Jacob"
+		"James"
+		"Jewel"
+		"Joan Bonauenture"
+		"John and Francis"
+		"Joseph"
+		"Little James"
+		"Loyalty"
+		"Lyon"
+		#grenville / ralegh
+		"Lyons Whelp"
+		#1577
+		"Make-speed"
+		#hawkeridge
+		"Margaret"
+		"Margaret and John"
+		"Marmaduke"
+		"Mary and John"
+		"Mary Guilford"
+		#rut
+		"Mary Rose"
+		#hawkins 1
+		"May-Flower"
+		"Mermayde"
+		#davis 2
+		"Messenger"
+		#gillam
+		"Moone"
+		"Moonelight"
+		"Mooneshine"
+		"Mychaell"
+		"Neptune"
+		"Nonpareill"
+		"Nonsuch"
+		"North Starre"
+		"Patience"
+		"Pelickan"
+		#drake
+		"Phoenix"
+		"Plough"
+		"Porkupine"
+		"Primrose"
+		#frobisher 4
+		"Prosperous"
+		"Quittance"
+		"Rainbouu"
+		"Ralegh"
+		#gilbert 3
+		"Red Lyon"
+		"Relief"
+		"Resolution"
+		#button
+		"Return"
+		"Reuenge"
+		"Richard"
+		#pre-1645
+		"Roe"
+		"Rowbuck"
+		#roanoke 1
+		"Salomon"
+		#hawkins 1
+		"Sampson"
+		"Samuel"
+		"Sarah"
+		"Sarah Constant"
+		#virginia
+		"Sea Flower"
+		"Searchthrift"
+		#1586
+		"Serpent"
+		#burrough
+		"Southampton"
+		"Sparrow"
+		"Sparrow-Hawk"
+		"Speed Well"
+		"Squirrel"
+		#gilbert 2
+		"Star"
+		"Sturgeon"
+		"Success"
+		"Sunneshine"
+		#davis 1
+		"Supply"
+		"Susan"
+		"Swallow"
+		"Swan"
+		"Swan of Barnstable"
+		"Swiftsure"
+		"Talbot"
+		"Tempurance"
+		"Thomas"
+		"Thomas and John"
+		"Thomas Alline"
+		"Treasurer"
+		"Tyger"
+		#1558
+		"Unicorn"
+		#1590
+		"Violet"
+		#hawkins 2
+		"Vnity of Deal"
+		"Waruuick"
+		"Whale"
+		#1603
+		"White Bear"
+		"William and Francis"
+		"William and John"
+		"Yonas"
+	}
+}
