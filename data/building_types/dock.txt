@@ -52,6 +52,14 @@ shipyard = {
 		city
 		metropolis
 	}
+	recruited_transporter_categories = {
+		small_merchant_ship
+		large_merchant_ship
+	}
+	recruited_military_unit_categories = {
+		light_warship
+		heavy_warship
+	}
 	settlement_conditions = {
 		near_water = true
 	}
