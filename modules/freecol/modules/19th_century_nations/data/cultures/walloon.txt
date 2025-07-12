@@ -1,0 +1,25 @@
+walloon += { #Belgian
+	ship_names = {
+		"Antwerp"
+		"Flanders"
+		"Flemish"
+		"Brabant"
+		"Limburg"
+		"Hainaut"
+		"Liege"
+		"Luxembourg"
+		"Namur"
+		"Wallon"
+		"Leopold"
+		"Brussels"
+		"Vlamms"
+		"Vlanderen"
+		"Henegowen"
+		"Luttich"
+		"Arlon"
+		"Wavre"
+		"Herve"
+		"Berx"
+		"Decaluwe"
+	}
+}
