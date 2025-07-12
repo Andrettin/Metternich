@@ -40,6 +40,26 @@ Rectangle {
 		count: country_game_data.sea_transport_capacity //FIXME: should be the available capacity, not the total capacity
 	}
 	
+	IconButton {
+		id: transporters_button
+		anchors.bottom: back_button.top
+		anchors.bottomMargin: 16 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		icon_identifier: "anchor"
+		
+		onClicked: {
+			transporters_dialog.open()
+		}
+		
+		onHoveredChanged: {
+			if (hovered) {
+				status_text = "View Transporters"
+			} else {
+				status_text = ""
+			}
+		}
+	}
+	
 	TextButton {
 		id: back_button
 		anchors.horizontalCenter: parent.horizontalCenter

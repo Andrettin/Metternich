@@ -5995,6 +5995,11 @@ void country_game_data::remove_army(army *army)
 	}
 }
 
+QVariantList country_game_data::get_transporters_qvariant_list() const
+{
+	return container::to_qvariant_list(this->transporters);
+}
+
 bool country_game_data::create_transporter(const transporter_type *transporter_type, const phenotype *phenotype)
 {
 	assert_throw(transporter_type != nullptr);
@@ -6030,6 +6035,8 @@ void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
 	}
 
 	this->transporters.push_back(std::move(transporter));
+
+	emit transporters_changed();
 }
 
 void country_game_data::remove_transporter(transporter *transporter)
@@ -6046,6 +6053,8 @@ void country_game_data::remove_transporter(transporter *transporter)
 			return;
 		}
 	}
+
+	emit transporters_changed();
 }
 
 void country_game_data::change_transporter_recruitment_count(const transporter_type *transporter_type, const int change, const bool change_input_storage)

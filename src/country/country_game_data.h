@@ -175,6 +175,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList leaders READ get_leaders_qvariant_list NOTIFY leaders_changed)
 	Q_PROPERTY(QVariantList bids READ get_bids_qvariant_list NOTIFY bids_changed)
 	Q_PROPERTY(QVariantList offers READ get_offers_qvariant_list NOTIFY offers_changed)
+	Q_PROPERTY(QVariantList transporters READ get_transporters_qvariant_list NOTIFY transporters_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier_int NOTIFY output_modifier_changed)
 	Q_PROPERTY(int resource_output_modifier READ get_resource_output_modifier NOTIFY resource_output_modifier_changed)
 	Q_PROPERTY(int industrial_output_modifier READ get_industrial_output_modifier NOTIFY industrial_output_modifier_changed)
@@ -1720,6 +1721,7 @@ public:
 	void add_army(qunique_ptr<army> &&army);
 	void remove_army(army *army);
 
+	QVariantList get_transporters_qvariant_list() const;
 	bool create_transporter(const transporter_type *transporter_type, const phenotype *phenotype);
 	void add_transporter(qunique_ptr<transporter> &&transporter);
 	void remove_transporter(transporter *transporter);
@@ -2621,6 +2623,7 @@ signals:
 	void leader_recruited(const character *leader);
 	void bids_changed();
 	void offers_changed();
+	void transporters_changed();
 	void output_modifier_changed();
 	void resource_output_modifier_changed();
 	void industrial_output_modifier_changed();
