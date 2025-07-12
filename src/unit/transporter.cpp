@@ -16,7 +16,7 @@
 #include "unit/transporter_type.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
-#include "util/set_util.h"
+#include "util/map_util.h"
 
 namespace metternich {
 
@@ -60,7 +60,7 @@ void transporter::do_turn()
 
 void transporter::generate_name()
 {
-	const std::set<std::string> &used_names = this->get_country() ? this->get_country()->get_game_data()->get_unit_names() : set::empty_string_set;
+	const std::map<std::string, int> &used_name_counts = this->get_country() ? this->get_country()->get_game_data()->get_unit_name_counts() : archimedes::map::empty_string_to_int_map;
 
 	const culture_base *culture = this->get_culture();
 
@@ -68,7 +68,7 @@ void transporter::generate_name()
 		return;
 	}
 
-	this->name = culture->generate_transporter_name(this->get_type(), used_names);
+	this->name = culture->generate_transporter_name(this->get_type(), used_name_counts);
 
 	if (!this->get_name().empty()) {
 		log_trace(std::format("Generated name \"{}\" for transporter of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), culture->get_identifier()));

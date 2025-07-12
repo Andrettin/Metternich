@@ -1746,9 +1746,22 @@ public:
 	const transporter_type *get_best_transporter_category_type(const transporter_category category, const culture *culture) const;
 	Q_INVOKABLE const metternich::transporter_type *get_best_transporter_category_type(const metternich::transporter_category category) const;
 
-	const std::set<std::string> &get_unit_names() const
+	const std::map<std::string, int> &get_unit_name_counts() const
 	{
-		return this->unit_names;
+		return this->unit_name_counts;
+	}
+
+	void add_unit_name(const std::string &name)
+	{
+		++this->unit_name_counts[name];
+	}
+
+	void remove_unit_name(const std::string &name)
+	{
+		const int count = (this->unit_name_counts[name] -= 1);
+		if (count == 0) {
+			this->unit_name_counts.erase(name);
+		}
 	}
 
 	int get_deployment_limit() const
@@ -2722,7 +2735,7 @@ private:
 	std::vector<qunique_ptr<army>> armies;
 	std::vector<qunique_ptr<transporter>> transporters;
 	transporter_type_map<int> transporter_recruitment_counts;
-	std::set<std::string> unit_names;
+	std::map<std::string, int> unit_name_counts;
 	int deployment_limit = country_game_data::base_deployment_limit;
 	int entrenchment_bonus_modifier = 0;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> military_unit_type_stat_modifiers;

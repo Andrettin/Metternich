@@ -417,7 +417,7 @@ const transporter_type *culture_base::get_transporter_class_type(const transport
 
 }
 
-std::string culture_base::generate_personal_name(const gender gender, const std::set<std::string> &used_names) const
+std::string culture_base::generate_personal_name(const gender gender, const std::map<std::string, int> &used_name_counts) const
 {
 	const name_generator *name_generator = this->get_personal_name_generator(gender);
 	const archimedes::name_generator *surname_generator = this->get_surname_generator(gender);
@@ -426,46 +426,46 @@ std::string culture_base::generate_personal_name(const gender gender, const std:
 		if (surname_generator != nullptr) {
 			const size_t potential_full_name_count = name_generator->get_name_count() * surname_generator->get_name_count();
 
-			if (potential_full_name_count > used_names.size()) {
+			if (potential_full_name_count > used_name_counts.size()) {
 				std::string full_name;
 				do {
 					full_name = std::format("{} {}", name_generator->generate_name(), surname_generator->generate_name());
-				} while (used_names.contains(full_name));
+				} while (used_name_counts.contains(full_name));
 				return full_name;
 			}
 		} else {
-			return name_generator->generate_name(used_names);
+			return name_generator->generate_name(used_name_counts);
 		}
 	}
 
 	return std::string();
 }
 
-std::string culture_base::generate_military_unit_name(const military_unit_type *type, const std::set<std::string> &used_names) const
+std::string culture_base::generate_military_unit_name(const military_unit_type *type, const std::map<std::string, int> &used_name_counts) const
 {
 	const military_unit_class *unit_class = type->get_unit_class();
 
 	if (unit_class->is_leader()) {
-		return this->generate_personal_name(gender::male, used_names);
+		return this->generate_personal_name(gender::male, used_name_counts);
 	} else {
 		const name_generator *name_generator = this->get_military_unit_class_name_generator(unit_class);
 
 		if (name_generator != nullptr) {
-			return name_generator->generate_name(used_names);
+			return name_generator->generate_name(used_name_counts);
 		}
 	}
 
 	return std::string();
 }
 
-std::string culture_base::generate_transporter_name(const transporter_type *type, const std::set<std::string> &used_names) const
+std::string culture_base::generate_transporter_name(const transporter_type *type, const std::map<std::string, int> &used_name_counts) const
 {
 	const transporter_class *transporter_class = type->get_transporter_class();
 
 	const name_generator *name_generator = this->get_transporter_class_name_generator(transporter_class);
 
 	if (name_generator != nullptr) {
-		return name_generator->generate_name(used_names);
+		return name_generator->generate_name(used_name_counts);
 	}
 
 	return std::string();

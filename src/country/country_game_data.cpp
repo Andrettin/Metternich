@@ -5525,7 +5525,7 @@ void country_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_
 		civilian_unit->get_character()->get_game_data()->set_country(this->country);
 	}
 
-	this->unit_names.insert(civilian_unit->get_name());
+	this->add_unit_name(civilian_unit->get_name());
 	this->civilian_units.push_back(std::move(civilian_unit));
 }
 
@@ -5538,7 +5538,7 @@ void country_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 		civilian_unit->get_character()->get_game_data()->set_country(nullptr);
 	}
 
-	this->unit_names.erase(civilian_unit->get_name());
+	this->remove_unit_name(civilian_unit->get_name());
 
 	for (size_t i = 0; i < this->civilian_units.size(); ++i) {
 		if (this->civilian_units[i].get() == civilian_unit) {
@@ -5743,7 +5743,7 @@ void country_game_data::add_military_unit(qunique_ptr<military_unit> &&military_
 		military_unit->get_character()->get_game_data()->set_country(this->country);
 	}
 
-	this->unit_names.insert(military_unit->get_name());
+	this->add_unit_name(military_unit->get_name());
 	this->military_units.push_back(std::move(military_unit));
 }
 
@@ -5758,7 +5758,7 @@ void country_game_data::remove_military_unit(military_unit *military_unit)
 		military_unit->get_character()->get_game_data()->set_country(nullptr);
 	}
 
-	this->unit_names.erase(military_unit->get_name());
+	this->remove_unit_name(military_unit->get_name());
 
 	for (size_t i = 0; i < this->military_units.size(); ++i) {
 		if (this->military_units[i].get() == military_unit) {
@@ -6037,7 +6037,7 @@ void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
 		this->change_land_transport_capacity(transporter->get_cargo());
 	}
 
-	this->unit_names.insert(transporter->get_name());
+	this->add_unit_name(transporter->get_name());
 	this->transporters.push_back(std::move(transporter));
 
 	emit transporters_changed();
@@ -6051,7 +6051,7 @@ void country_game_data::remove_transporter(transporter *transporter)
 		this->change_land_transport_capacity(-transporter->get_cargo());
 	}
 
-	this->unit_names.erase(transporter->get_name());
+	this->remove_unit_name(transporter->get_name());
 
 	for (size_t i = 0; i < this->transporters.size(); ++i) {
 		if (this->transporters[i].get() == transporter) {
