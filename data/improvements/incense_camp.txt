@@ -10,6 +10,7 @@ incense_camp = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}

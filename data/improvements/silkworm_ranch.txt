@@ -6,10 +6,13 @@ silkworm_ranch = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/cotton_plantation.png"
+	employment_profession = silkworm_rancher
+	employment_capacity = 1
 	default_population_class = farmers
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_ranchers
 	}

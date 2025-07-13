@@ -7,11 +7,14 @@ potato_farm = {
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/grain_farm.png"
 	variation_count = 4
+	employment_profession = potato_farmer
+	employment_capacity = 1
 	default_population_class = farmers
 	required_technology = potatoes
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -33,12 +36,15 @@ potato_estate = {
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/grain_farm.png"
 	variation_count = 4
+	employment_profession = potato_farmer
+	employment_capacity = 2
 	default_population_class = farmers
 	required_improvement = potato_farm
 	required_technology = land_enclosure
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -60,12 +66,15 @@ mechanized_potato_estate = {
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/grain_farm.png"
 	variation_count = 4
+	employment_profession = potato_farmer
+	employment_capacity = 3
 	default_population_class = farmers
 	required_improvement = potato_estate
 	required_technology = seed_drill
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -87,12 +96,15 @@ industrial_potato_estate = {
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/grain_farm.png"
 	variation_count = 4
+	employment_profession = potato_farmer
+	employment_capacity = 4
 	default_population_class = farmers
 	required_improvement = mechanized_potato_estate
 	required_technology = mechanical_reaper
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}

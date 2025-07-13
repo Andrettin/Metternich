@@ -10,6 +10,7 @@ small_coffee_plantation = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -35,6 +36,7 @@ coffee_plantation = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -60,6 +62,7 @@ large_coffee_plantation = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}

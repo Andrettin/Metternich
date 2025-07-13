@@ -11,6 +11,7 @@ cotton_plantation = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_cotton_planters
 	}
@@ -37,6 +38,7 @@ large_cotton_plantation = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_cotton_planters
 	}
@@ -63,6 +65,7 @@ mechanized_cotton_plantation = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_cotton_planters
 	}
@@ -89,6 +92,7 @@ industrial_cotton_plantation = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_cotton_planters
 	}

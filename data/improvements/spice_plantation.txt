@@ -11,6 +11,7 @@ spice_plantation = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -37,6 +38,7 @@ improved_spice_plantation = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -63,6 +65,7 @@ large_spice_plantation = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -89,6 +92,7 @@ mechanized_spice_plantation = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}

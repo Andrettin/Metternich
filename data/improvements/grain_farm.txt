@@ -13,6 +13,7 @@ grain_farm = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -42,6 +43,7 @@ grain_estate = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -71,6 +73,7 @@ mechanized_grain_estate = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}
@@ -100,6 +103,7 @@ industrial_grain_estate = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		expert_farmers
 	}

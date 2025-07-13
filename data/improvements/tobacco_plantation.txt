@@ -11,6 +11,7 @@ tobacco_plantation = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_tobacco_planters
 	}
@@ -37,6 +38,7 @@ large_tobacco_plantation = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_tobacco_planters
 	}
@@ -63,6 +65,7 @@ mechanized_tobacco_plantation = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_tobacco_planters
 	}
@@ -89,6 +92,7 @@ industrial_tobacco_plantation = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_tobacco_planters
 	}

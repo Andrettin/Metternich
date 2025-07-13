@@ -1,0 +1,11 @@
+sheep_rancher = {
+	name = "Sheep Rancher"
+	output_commodity = wool
+	output_value = 1
+	employees = {
+		slaves
+		tribesmen
+		farmers
+		master_ranchers
+	}
+}

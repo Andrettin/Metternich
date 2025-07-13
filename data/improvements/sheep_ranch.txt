@@ -6,11 +6,14 @@ sheep_ranch = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/cattle_ranch.png"
+	employment_profession = sheep_rancher
+	employment_capacity = 1
 	default_population_class = farmers
 	required_technology = sheep_ranching
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_ranchers
 	}
@@ -31,12 +34,15 @@ improved_sheep_ranch = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/cattle_ranch.png"
+	employment_profession = sheep_rancher
+	employment_capacity = 2
 	default_population_class = farmers
 	required_improvement = sheep_ranch
 	required_technology = scientific_sheep_breeding
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_ranchers
 	}
@@ -57,12 +63,15 @@ advanced_sheep_ranch = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/cattle_ranch.png"
+	employment_profession = sheep_rancher
+	employment_capacity = 3
 	default_population_class = farmers
 	required_improvement = improved_sheep_ranch
 	required_technology = feed_grasses
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_ranchers
 	}
@@ -83,12 +92,15 @@ industrial_sheep_ranch = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/cattle_ranch.png"
+	employment_profession = sheep_rancher
+	employment_capacity = 4
 	default_population_class = farmers
 	required_improvement = advanced_sheep_ranch
 	required_technology = feed_grasses
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		farmers
 		master_ranchers
 	}
