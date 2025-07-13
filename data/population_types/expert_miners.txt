@@ -4,7 +4,13 @@ expert_miners = {
 	literate = true
 	icon = miners
 	small_icon = miners_small
-	resource_output_value = 2
+	profession_output_modifiers = {
+		coal_miner = 100
+		copper_miner = 100
+		iron_miner = 100
+		salt_miner = 100
+		tin_miner = 100
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

@@ -10,6 +10,7 @@ fishing_wharf = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fishermen
 	}
@@ -36,6 +37,7 @@ improved_fishing_wharf = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fishermen
 	}
@@ -62,6 +64,7 @@ advanced_fishing_wharf = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fishermen
 	}
@@ -88,6 +91,7 @@ industrial_fishing_wharf = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fishermen
 	}

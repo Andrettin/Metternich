@@ -1,0 +1,11 @@
+salt_miner = {
+	name = "Salt Miner"
+	output_commodity = salt
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		laborers
+		expert_miners
+	}
+}

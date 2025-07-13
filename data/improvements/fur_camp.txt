@@ -12,6 +12,7 @@ fur_camp = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fur_trappers
 	}
@@ -39,6 +40,7 @@ improved_fur_camp = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fur_trappers
 	}
@@ -66,6 +68,7 @@ advanced_fur_camp = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fur_trappers
 	}
@@ -93,6 +96,7 @@ industrial_fur_camp = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fur_trappers
 	}

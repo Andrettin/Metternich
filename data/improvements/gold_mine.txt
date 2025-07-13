@@ -14,6 +14,7 @@ gold_mine = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}
@@ -43,6 +44,7 @@ large_gold_mine = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}
@@ -72,6 +74,7 @@ steam_pumped_gold_mine = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}
@@ -101,6 +104,7 @@ industrial_gold_mine = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}

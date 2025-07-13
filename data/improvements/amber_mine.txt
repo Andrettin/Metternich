@@ -11,6 +11,7 @@ amber_mine = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}
@@ -37,6 +38,7 @@ large_amber_mine = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}
@@ -63,6 +65,7 @@ mechanized_amber_mine = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}
@@ -89,6 +92,7 @@ industrial_amber_mine = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}

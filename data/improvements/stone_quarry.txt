@@ -13,6 +13,7 @@ stone_quarry = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}

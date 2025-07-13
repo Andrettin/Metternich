@@ -9,15 +9,13 @@ salt_mine = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
+	employment_profession = salt_miner
+	employment_capacity = 1
 	default_population_class = laborers
 	wealth_cost = 100
 	population_classes = {
 		slaves
-		laborers
-		expert_miners
-	}
-	population_classes = {
-		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}
@@ -41,17 +39,15 @@ steam_pumped_salt_mine = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
+	employment_profession = salt_miner
+	employment_capacity = 3
 	default_population_class = laborers
 	required_improvement = salt_mine
 	required_technology = steam_in_mining
 	wealth_cost = 1000
 	population_classes = {
 		slaves
-		laborers
-		expert_miners
-	}
-	population_classes = {
-		slaves
+		tribesmen
 		laborers
 		expert_miners
 	}

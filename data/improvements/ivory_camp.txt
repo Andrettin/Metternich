@@ -10,6 +10,7 @@ ivory_camp = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fur_trappers
 	}
@@ -36,6 +37,7 @@ improved_ivory_camp = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fur_trappers
 	}
@@ -62,6 +64,7 @@ advanced_ivory_camp = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fur_trappers
 	}
@@ -88,6 +91,7 @@ industrial_ivory_camp = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_fur_trappers
 	}

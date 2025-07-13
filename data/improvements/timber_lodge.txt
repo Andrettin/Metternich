@@ -10,6 +10,7 @@ timber_lodge = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_lumberjacks
 	}
@@ -36,6 +37,7 @@ improved_timber_lodge = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_lumberjacks
 	}
@@ -62,6 +64,7 @@ advanced_timber_lodge = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_lumberjacks
 	}
@@ -88,6 +91,7 @@ mechanized_timber_lodge = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_lumberjacks
 	}

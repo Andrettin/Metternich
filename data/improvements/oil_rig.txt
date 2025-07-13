@@ -11,6 +11,7 @@ oil_rig = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_drillers
 	}
@@ -37,6 +38,7 @@ improved_oil_rig = {
 	wealth_cost = 100
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_drillers
 	}
@@ -63,6 +65,7 @@ advanced_oil_rig = {
 	wealth_cost = 1000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_drillers
 	}
@@ -89,6 +92,7 @@ industrial_oil_rig = {
 	wealth_cost = 5000
 	population_classes = {
 		slaves
+		tribesmen
 		laborers
 		expert_drillers
 	}
