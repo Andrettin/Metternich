@@ -435,6 +435,10 @@ public:
 		return this->get_commodity_outputs().contains(commodity);
 	}
 
+	std::vector<employment_location *> get_employment_locations();
+	void check_employment();
+	void check_available_employment(const std::vector<employment_location *> &employment_locations, std::vector<population_unit *> &unemployed_population_units);
+
 	int get_depot_level() const
 	{
 		return this->depot_level;

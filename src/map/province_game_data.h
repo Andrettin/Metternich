@@ -448,7 +448,6 @@ public:
 
 	std::vector<employment_location *> get_employment_locations() const;
 	void check_employment();
-	void check_available_employment(const std::vector<employment_location *> &employment_locations, std::vector<population_unit *> &unemployed_population_units);
 
 	province_game_data &operator =(const province_game_data &other) = delete;
 

@@ -1648,6 +1648,107 @@ void site_game_data::change_local_luxury_consumption(const commodity *commodity,
 	}
 }
 
+std::vector<employment_location *> site_game_data::get_employment_locations()
+{
+	switch (this->site->get_map_data()->get_type()) {
+		case site_type::settlement:
+		case site_type::habitable_world:
+		{
+			std::vector<employment_location *> employment_locations;
+
+			for (const qunique_ptr<settlement_building_slot> &building_slot : this->get_building_slots()) {
+				if (building_slot->get_employment_capacity() > 0) {
+					employment_locations.push_back(building_slot.get());
+				}
+			}
+
+			return employment_locations;
+		}
+		case site_type::resource:
+		case site_type::celestial_body:
+			if (this->get_resource() != nullptr && this->get_employment_capacity() > 0) {
+				return { this };
+			}
+			break;
+		default:
+			break;
+	}
+
+	return {};
+}
+
+void site_game_data::check_employment()
+{
+	const std::vector<employment_location *> employment_locations = this->get_employment_locations();
+
+	std::vector<population_unit *> unemployed_population_units;
+
+	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
+		if (population_unit->is_unemployed()) {
+			unemployed_population_units.push_back(population_unit.get());
+		}
+	}
+
+	std::vector<employment_location *> food_employment_locations = employment_locations;
+	std::erase_if(food_employment_locations, [this](const employment_location *employment_location) {
+		return !employment_location->get_employment_profession()->get_output_commodity()->is_food();
+	});
+
+	std::vector<employment_location *> non_food_employment_locations = employment_locations;
+	std::erase_if(non_food_employment_locations, [this](const employment_location *employment_location) {
+		return employment_location->get_employment_profession()->get_output_commodity()->is_food();
+	});
+
+	this->check_available_employment(food_employment_locations, unemployed_population_units);
+	this->check_available_employment(non_food_employment_locations, unemployed_population_units);
+}
+
+void site_game_data::check_available_employment(const std::vector<employment_location *> &employment_locations, std::vector<population_unit *> &unemployed_population_units)
+{
+	for (employment_location *employment_location : employment_locations) {
+		int available_employment_capacity = employment_location->get_available_employment_capacity();
+		assert_throw(available_employment_capacity >= 0);
+		if (available_employment_capacity == 0) {
+			continue;
+		}
+
+		const profession *profession = employment_location->get_employment_profession();
+		assert_throw(profession != nullptr);
+
+		const commodity *output_commodity = profession->get_output_commodity();
+
+		std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;
+		for (population_unit *population_unit : unemployed_population_units) {
+			const population_type *converted_population_type = nullptr;
+			if (!profession->can_employ_with_conversion(population_unit->get_type(), converted_population_type)) {
+				continue;
+			}
+
+			unemployed_population_units_by_output[employment_location->get_employee_commodity_outputs(converted_population_type ? converted_population_type : population_unit->get_type())[output_commodity]].push_back(population_unit);
+		}
+
+		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
+			for (population_unit *population_unit : output_population_units) {
+				population_unit->set_employment_location(employment_location);
+				--available_employment_capacity;
+				std::erase(unemployed_population_units, population_unit);
+
+				if (available_employment_capacity == 0) {
+					break;
+				}
+			}
+
+			if (available_employment_capacity == 0) {
+				break;
+			}
+		}
+
+		if (unemployed_population_units.empty()) {
+			break;
+		}
+	}
+}
+
 void site_game_data::set_depot_level(const int level)
 {
 	if (level == this->get_depot_level()) {
