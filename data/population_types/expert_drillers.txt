@@ -4,7 +4,9 @@ expert_drillers = {
 	literate = true
 	icon = miners
 	small_icon = miners_small
-	resource_output_value = 2
+	profession_output_modifiers = {
+		oil_driller = 100
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

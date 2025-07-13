@@ -4,7 +4,9 @@ expert_fishermen = {
 	literate = true
 	icon = fishermen
 	small_icon = fishermen_small
-	resource_output_value = 2
+	profession_output_modifiers = {
+		fisherman = 100
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

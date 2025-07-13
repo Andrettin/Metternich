@@ -1,0 +1,11 @@
+ivory_trapper = {
+	name = "Ivory Trapper"
+	output_commodity = ivory
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		laborers
+		expert_fur_trappers
+	}
+}

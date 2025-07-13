@@ -4,7 +4,10 @@ expert_fur_trappers = {
 	literate = true
 	icon = forester
 	small_icon = forester_small
-	resource_output_value = 2
+	profession_output_modifiers = {
+		fur_trapper = 100
+		ivory_trapper = 100
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

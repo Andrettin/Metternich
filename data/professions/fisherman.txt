@@ -1,0 +1,11 @@
+fisherman = {
+	name = "Fisherman"
+	output_commodity = fish
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		laborers
+		expert_fishermen
+	}
+}

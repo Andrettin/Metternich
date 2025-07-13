@@ -1,0 +1,11 @@
+lumberjack = {
+	name = "Lumberjack"
+	output_commodity = timber
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		laborers
+		expert_lumberjacks
+	}
+}

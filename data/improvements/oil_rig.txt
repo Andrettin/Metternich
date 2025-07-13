@@ -6,6 +6,8 @@ oil_rig = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/quarry.png"
+	employment_profession = oil_driller
+	employment_capacity = 1
 	default_population_class = laborers
 	required_technology = oil_drilling
 	wealth_cost = 100
@@ -32,6 +34,8 @@ improved_oil_rig = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/quarry.png"
+	employment_profession = oil_driller
+	employment_capacity = 2
 	default_population_class = laborers
 	required_improvement = oil_rig
 	required_technology = oil_drilling
@@ -59,6 +63,8 @@ advanced_oil_rig = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/quarry.png"
+	employment_profession = oil_driller
+	employment_capacity = 3
 	default_population_class = laborers
 	required_improvement = improved_oil_rig
 	required_technology = chemistry
@@ -86,6 +92,8 @@ industrial_oil_rig = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/quarry.png"
+	employment_profession = oil_driller
+	employment_capacity = 4
 	default_population_class = laborers
 	required_improvement = advanced_oil_rig
 	required_technology = internal_combustion
