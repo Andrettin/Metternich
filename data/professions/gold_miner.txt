@@ -1,0 +1,11 @@
+gold_miner = {
+	name = "Gold Miner"
+	output_commodity = gold
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		laborers
+		expert_miners
+	}
+}
