@@ -1,12 +1,14 @@
 soldiers = {
 	name = "Soldiers"
 	population_class = soldiers
-	profession = soldiers
 	color = { 200 187 157 }
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
-	output_commodity = manpower
-	output_value = 1
+	equivalent_population_types = {
+		farmers
+		laborers
+		untrained_workers
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

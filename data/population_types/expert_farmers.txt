@@ -4,7 +4,11 @@ expert_farmers = {
 	literate = true
 	icon = slaves_light
 	small_icon = slaves_light_small
-	resource_output_value = 2
+	profession_output_modifiers = {
+		fruit_grower = 100
+		grain_farmer = 100
+		potato_farmer = 100
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

@@ -5,6 +5,8 @@ barracks = {
 	icon = crossed_sabers
 	provincial = true
 	free_in_capital = true
+	employment_profession = soldier
+	employment_capacity = 3
 	settlement_types = {
 		city
 		metropolis
@@ -28,9 +30,5 @@ barracks = {
 	}
 	settlement_modifier = {
 		housing_bonus = 1
-		profession_capacity = {
-			profession = soldiers
-			value = 3
-		}
 	}
 }

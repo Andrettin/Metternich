@@ -1,0 +1,12 @@
+officer = {
+	name = "Officer"
+	output_commodity = leadership
+	output_value = 0.5
+	population_types = {
+		tribesmen
+		untrained_workers
+		trained_workers
+		expert_workers
+		officers
+	}
+}

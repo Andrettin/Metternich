@@ -1,0 +1,11 @@
+potato_farmer = {
+	name = "Potato Farmer"
+	output_commodity = potatoes
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		farmers
+		expert_farmers
+	}
+}

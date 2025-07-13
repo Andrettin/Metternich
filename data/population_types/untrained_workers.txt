@@ -6,6 +6,11 @@ untrained_workers = {
 	small_icon = craftsmen_light_small
 	output_commodity = labor
 	output_value = 1
+	equivalent_population_types = {
+		farmers
+		laborers
+		soldiers
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

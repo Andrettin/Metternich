@@ -5,6 +5,8 @@ war_college = {
 	icon = wall
 	provincial = true
 	provincial_capital_only = true
+	employment_profession = officer
+	employment_capacity = 3
 	settlement_types = {
 		city
 		metropolis
@@ -18,9 +20,5 @@ war_college = {
 	}
 	settlement_modifier = {
 		housing_bonus = 1
-		profession_capacity = {
-			profession = officers
-			value = 3
-		}
 	}
 }

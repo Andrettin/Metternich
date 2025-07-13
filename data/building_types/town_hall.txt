@@ -5,6 +5,8 @@ village_hall = {
 	icon = flag
 	provincial = true
 	free_in_capital = true
+	employment_profession = statesman
+	employment_capacity = 1
 	settlement_types = {
 		village
 		town
@@ -32,6 +34,8 @@ town_hall = {
 	provincial = true
 	required_building = village_hall
 	free_in_capital = true
+	employment_profession = statesman
+	employment_capacity = 2
 	settlement_types = {
 		town
 		city
@@ -48,12 +52,6 @@ town_hall = {
 			value = 1
 		}
 	}
-	settlement_modifier = {
-		profession_capacity = {
-			profession = bureaucrats
-			value = 2
-		}
-	}
 }
 
 city_hall = {
@@ -62,6 +60,8 @@ city_hall = {
 	portrait = city
 	icon = flag
 	provincial = true
+	employment_profession = statesman
+	employment_capacity = 3
 	required_building = town_hall
 	settlement_types = {
 		city
@@ -78,12 +78,6 @@ city_hall = {
 			value = 1
 		}
 	}
-	settlement_modifier = {
-		profession_capacity = {
-			profession = bureaucrats
-			value = 3
-		}
-	}
 }
 
 state_house = {
@@ -93,6 +87,8 @@ state_house = {
 	icon = flag
 	provincial = true
 	provincial_capitol = true
+	employment_profession = statesman
+	employment_capacity = 4
 	required_building = city_hall
 	settlement_types = {
 		city
@@ -109,12 +105,6 @@ state_house = {
 			value = 1
 		}
 	}
-	settlement_modifier = {
-		profession_capacity = {
-			profession = bureaucrats
-			value = 4
-		}
-	}
 }
 
 capitol = {
@@ -124,6 +114,8 @@ capitol = {
 	icon = flag
 	provincial = true
 	capitol = true
+	employment_profession = statesman
+	employment_capacity = 5
 	required_building = state_house
 	settlement_types = {
 		city
@@ -138,12 +130,6 @@ capitol = {
 		commodity_demand = {
 			commodity = furniture
 			value = 1
-		}
-	}
-	settlement_modifier = {
-		profession_capacity = {
-			profession = bureaucrats
-			value = 5
 		}
 	}
 }

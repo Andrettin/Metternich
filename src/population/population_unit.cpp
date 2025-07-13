@@ -315,6 +315,15 @@ void population_unit::set_employment_location(metternich::employment_location *e
 		this->get_employment_location()->remove_employee(this);
 	}
 
+	if (employment_location != nullptr) {
+		const population_type *converted_population_type = nullptr;
+		const bool can_be_employed = employment_location->get_employment_profession()->can_employ_with_conversion(this->get_type(), converted_population_type);
+		assert_throw(can_be_employed);
+		if (converted_population_type != nullptr) {
+			this->set_type(converted_population_type);
+		}
+	}
+
 	this->employment_location = employment_location;
 
 	if (this->get_employment_location() != nullptr) {

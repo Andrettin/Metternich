@@ -1,0 +1,13 @@
+preacher = {
+	name = "Preacher"
+	output_commodity = piety
+	output_value = 0.5
+	population_types = {
+		tribesmen
+		untrained_workers
+		trained_workers
+		expert_workers
+		clergymen
+		firebrand_preachers
+	}
+}

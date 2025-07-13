@@ -4,6 +4,8 @@ shrine = {
 	portrait = temple
 	icon = wooden_cross
 	provincial = true
+	employment_profession = preacher
+	employment_capacity = 1
 	required_technology = ceremonial_burial
 	settlement_types = {
 		village
@@ -28,6 +30,8 @@ temple = {
 	portrait = temple
 	icon = wooden_cross
 	provincial = true
+	employment_profession = preacher
+	employment_capacity = 2
 	required_building = shrine
 	required_technology = ceremonial_burial
 	settlement_types = {
@@ -52,10 +56,6 @@ temple = {
 	}
 	settlement_modifier = {
 		amenities_bonus = 1
-		profession_capacity = {
-			profession = clergymen
-			value = 2
-		}
 	}
 }
 
@@ -65,6 +65,8 @@ cathedral = {
 	portrait = temple
 	icon = golden_cross_detailed
 	provincial = true
+	employment_profession = preacher
+	employment_capacity = 3
 	required_building = temple
 	required_technology = monotheism
 	settlement_types = {
@@ -80,9 +82,5 @@ cathedral = {
 	}
 	settlement_modifier = {
 		amenities_bonus = 4
-		profession_capacity = {
-			profession = clergymen
-			value = 3
-		}
 	}
 }

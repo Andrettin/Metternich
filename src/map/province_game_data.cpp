@@ -1175,11 +1175,12 @@ void province_game_data::check_available_employment(const std::vector<employment
 
 		std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;
 		for (population_unit *population_unit : unemployed_population_units) {
-			if (!profession->can_employ(population_unit->get_type())) {
+			const population_type *converted_population_type = nullptr;
+			if (!profession->can_employ_with_conversion(population_unit->get_type(), converted_population_type)) {
 				continue;
 			}
 
-			unemployed_population_units_by_output[employment_location->get_employee_commodity_outputs(population_unit->get_type())[output_commodity]].push_back(population_unit);
+			unemployed_population_units_by_output[employment_location->get_employee_commodity_outputs(converted_population_type ? converted_population_type : population_unit->get_type())[output_commodity]].push_back(population_unit);
 		}
 
 		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {

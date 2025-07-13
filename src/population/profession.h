@@ -59,8 +59,10 @@ public:
 
 	bool can_employ(const population_type *population_type) const
 	{
-		return this->employees.contains(population_type);
+		return this->population_types.contains(population_type);
 	}
+
+	bool can_employ_with_conversion(const population_type *population_type, const metternich::population_type *&converted_population_type) const;
 
 	bool is_industrial() const
 	{
@@ -75,7 +77,7 @@ private:
 	int input_wealth = 0;
 	commodity *output_commodity = nullptr;
 	centesimal_int output_value = centesimal_int(1);
-	std::set<const population_type *> employees;
+	std::set<const population_type *> population_types;
 	bool industrial = false;
 };
 

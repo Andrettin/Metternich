@@ -1,14 +1,14 @@
 academics = {
 	name = "Academics"
 	population_class = academics
-	profession = academics
 	color = { 94 46 63 }
 	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
-	output_commodity = research
-	output_value = 1
 	required_game_rule = additional_population_types
+	profession_output_modifiers = {
+		researcher = 300
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

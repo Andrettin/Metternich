@@ -229,6 +229,11 @@ public:
 
 	Q_INVOKABLE QString get_country_modifier_string(const metternich::country *country) const;
 
+	const std::vector<const population_type *> &get_equivalent_population_types() const
+	{
+		return this->equivalent_population_types;
+	}
+
 	bool is_enabled() const;
 
 signals:
@@ -255,6 +260,7 @@ private:
 	profession_map<int> profession_output_modifiers;
 	centesimal_int max_modifier_multiplier = centesimal_int(0);
 	std::unique_ptr<modifier<const country>> country_modifier;
+	std::vector<const population_type *> equivalent_population_types;
 	const game_rule *required_game_rule = nullptr;
 };
 

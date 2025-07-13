@@ -40,6 +40,7 @@ population_type::~population_type()
 void population_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "everyday_consumption") {
 		scope.for_each_property([&](const gsml_property &property) {
@@ -89,6 +90,10 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
 		database::process_gsml_data(this->country_modifier, scope);
+	} else if (tag == "equivalent_population_types") {
+		for (const std::string &value : values) {
+			this->equivalent_population_types.push_back(population_type::get(value));
+		}
 	} else if (tag == "phenotype_icons") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();

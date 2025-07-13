@@ -24,9 +24,9 @@ void profession::process_gsml_scope(const gsml_data &scope)
 
 			this->input_commodities[commodity] = value_int;
 		});
-	} else if (tag == "employees") {
+	} else if (tag == "population_types") {
 		for (const std::string &value : values) {
-			this->employees.insert(population_type::get(value));
+			this->population_types.insert(population_type::get(value));
 		}
 	} else {
 		data_entry::process_gsml_scope(scope);
@@ -48,7 +48,7 @@ void profession::initialize()
 
 void profession::check() const
 {
-	assert_throw(!this->employees.empty());
+	assert_throw(!this->population_types.empty());
 	assert_throw(this->get_output_commodity() != nullptr);
 	assert_throw(this->get_output_value() > 0);
 }
@@ -56,6 +56,24 @@ void profession::check() const
 QVariantList profession::get_input_commodities_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_input_commodities());
+}
+
+bool profession::can_employ_with_conversion(const population_type *population_type, const metternich::population_type *&converted_population_type) const
+{
+	converted_population_type = nullptr;
+
+	if (this->can_employ(population_type)) {
+		return true;
+	}
+
+	for (const metternich::population_type *equivalent_population_type : population_type->get_equivalent_population_types()) {
+		if (this->can_employ(equivalent_population_type)) {
+			converted_population_type = equivalent_population_type;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 }

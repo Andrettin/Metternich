@@ -1,14 +1,14 @@
 officers = {
 	name = "Officers"
 	population_class = officers
-	profession = officers
 	color = { 119 98 34 }
 	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
-	output_commodity = leadership
-	output_value = 1
 	required_game_rule = additional_population_types
+	profession_output_modifiers = {
+		officer = 300
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

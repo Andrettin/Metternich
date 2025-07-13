@@ -1,14 +1,14 @@
 bureaucrats = {
 	name = "Bureaucrats"
 	population_class = bureaucrats
-	profession = bureaucrats
 	color = { 136 136 136 }
 	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
-	output_commodity = statesmanship
-	output_value = 1
 	required_game_rule = additional_population_types
+	profession_output_modifiers = {
+		statesman = 300
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

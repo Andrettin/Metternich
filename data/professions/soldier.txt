@@ -1,0 +1,9 @@
+soldier = {
+	name = "Soldier"
+	output_commodity = manpower
+	output_value = 1
+	population_types = {
+		tribesmen
+		soldiers
+	}
+}

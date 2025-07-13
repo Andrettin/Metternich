@@ -4,7 +4,11 @@ farmers = {
 	color = { 75 193 237 }
 	icon = slaves_light
 	small_icon = slaves_light_small
-	resource_output_value = 1
+	equivalent_population_types = {
+		laborers
+		soldiers
+		untrained_workers
+	}
 	everyday_consumption = {
 		amenities = 1
 	}
