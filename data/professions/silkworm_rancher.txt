@@ -2,7 +2,7 @@ silkworm_rancher = {
 	name = "Silkworm Rancher"
 	output_commodity = silk
 	output_value = 1
-	employees = {
+	population_types = {
 		slaves
 		tribesmen
 		farmers

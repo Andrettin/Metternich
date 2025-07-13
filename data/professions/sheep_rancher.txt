@@ -2,7 +2,7 @@ sheep_rancher = {
 	name = "Sheep Rancher"
 	output_commodity = wool
 	output_value = 1
-	employees = {
+	population_types = {
 		slaves
 		tribesmen
 		farmers
