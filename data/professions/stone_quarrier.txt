@@ -1,0 +1,11 @@
+stone_quarrier = {
+	name = "Stone Quarrier"
+	output_commodity = stone
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		laborers
+		expert_miners
+	}
+}

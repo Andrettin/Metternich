@@ -9,6 +9,8 @@ lead_mine = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
+	employment_profession = lead_miner
+	employment_capacity = 1
 	default_population_class = laborers
 	required_technology = iron_mining
 	wealth_cost = 100
@@ -38,6 +40,8 @@ steam_pumped_lead_mine = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
+	employment_profession = lead_miner
+	employment_capacity = 3
 	default_population_class = laborers
 	required_improvement = lead_mine
 	required_technology = steam_in_mining
