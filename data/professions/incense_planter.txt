@@ -1,0 +1,11 @@
+incense_planter = {
+	name = "Incense Planter"
+	output_commodity = incense
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		farmers
+		expert_farmers
+	}
+}

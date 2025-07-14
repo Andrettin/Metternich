@@ -6,6 +6,8 @@ incense_camp = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/coffee_plantation.png"
+	employment_profession = incense_planter
+	employment_capacity = 1
 	default_population_class = farmers
 	wealth_cost = 100
 	population_classes = {

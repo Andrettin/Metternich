@@ -9,6 +9,7 @@ expert_farmers = {
 		dye_planter = 100
 		fruit_grower = 100
 		grain_farmer = 100
+		incense_planter = 100
 		opium_planter = 100
 		potato_farmer = 100
 		spice_planter = 100
