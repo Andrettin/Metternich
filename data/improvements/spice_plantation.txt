@@ -6,6 +6,8 @@ spice_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/coffee_plantation.png"
+	employment_profession = spice_planter
+	employment_capacity = 1
 	default_population_class = farmers
 	required_technology = spices
 	wealth_cost = 100
@@ -32,6 +34,8 @@ improved_spice_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/coffee_plantation.png"
+	employment_profession = spice_planter
+	employment_capacity = 2
 	default_population_class = farmers
 	required_improvement = spice_plantation
 	required_technology = improved_sea_routes
@@ -59,6 +63,8 @@ large_spice_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/coffee_plantation.png"
+	employment_profession = spice_planter
+	employment_capacity = 3
 	default_population_class = farmers
 	required_improvement = improved_spice_plantation
 	required_technology = large_spice_plantations
@@ -86,6 +92,8 @@ mechanized_spice_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/coffee_plantation.png"
+	employment_profession = spice_planter
+	employment_capacity = 4
 	default_population_class = farmers
 	required_improvement = large_spice_plantation
 	required_technology = improved_food_preservation

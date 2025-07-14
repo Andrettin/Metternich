@@ -1,0 +1,11 @@
+cotton_planter = {
+	name = "Cotton Planter"
+	output_commodity = cotton
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		farmers
+		master_cotton_planters
+	}
+}

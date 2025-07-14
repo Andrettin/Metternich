@@ -1,0 +1,11 @@
+opium_planter = {
+	name = "Opium Planter"
+	output_commodity = opium
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		farmers
+		expert_farmers
+	}
+}

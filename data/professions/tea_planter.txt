@@ -1,0 +1,11 @@
+tea_planter = {
+	name = "Tea Planter"
+	output_commodity = tea
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		farmers
+		expert_farmers
+	}
+}

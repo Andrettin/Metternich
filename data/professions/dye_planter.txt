@@ -1,0 +1,11 @@
+dye_planter = {
+	name = "Dye Planter"
+	output_commodity = dye
+	output_value = 1
+	population_types = {
+		slaves
+		tribesmen
+		farmers
+		expert_farmers
+	}
+}
