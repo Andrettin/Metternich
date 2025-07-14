@@ -17,6 +17,8 @@ class settlement_building_slot final : public building_slot, public employment_l
 	Q_PROPERTY(const metternich::wonder* wonder READ get_wonder NOTIFY wonder_changed)
 	Q_PROPERTY(const metternich::wonder* under_construction_wonder READ get_under_construction_wonder WRITE set_under_construction_wonder NOTIFY under_construction_wonder_changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string NOTIFY country_modifier_changed)
+	Q_PROPERTY(QVariantList employees READ get_employees_qvariant_list NOTIFY building_changed)
+	Q_PROPERTY(int employment_capacity READ get_employment_capacity NOTIFY building_changed)
 
 public:
 	explicit settlement_building_slot(const building_slot_type *type, const site *settlement);

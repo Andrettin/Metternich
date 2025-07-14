@@ -40,6 +40,7 @@ public:
 		return this->employees;
 	}
 
+	QVariantList get_employees_qvariant_list() const;
 	void add_employee(population_unit *employee);
 
 	void remove_employee(population_unit *employee)

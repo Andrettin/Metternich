@@ -12,6 +12,7 @@
 #include "population/population_unit.h"
 #include "population/profession.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 
 namespace metternich {
 
@@ -23,6 +24,11 @@ const country *employment_location::get_employment_country() const
 const province *employment_location::get_employment_province() const
 {
 	return this->get_employment_site()->get_game_data()->get_province();
+}
+
+QVariantList employment_location::get_employees_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_employees());
 }
 
 void employment_location::add_employee(population_unit *employee)
