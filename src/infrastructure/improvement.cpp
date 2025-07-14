@@ -108,6 +108,10 @@ void improvement::check() const
 		throw std::runtime_error(std::format("Improvement \"{}\" is visitable, but is not a main improvement.", this->get_identifier()));
 	}
 
+	if (this->get_slot() == improvement_slot::resource && this->get_employment_profession() == nullptr) {
+		throw std::runtime_error(std::format("Resource improvement \"{}\" has no employment profession.", this->get_identifier()));
+	}
+
 	if (this->get_employment_profession() != nullptr && this->get_employment_capacity() == 0) {
 		throw std::runtime_error(std::format("Improvement \"{}\" has an employment profession, but no employment capacity.", this->get_identifier()));
 	}
