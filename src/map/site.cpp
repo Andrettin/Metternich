@@ -25,7 +25,7 @@
 
 namespace metternich {
 
-site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::none), max_tier(site_tier::barony)
+site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::none), max_tier(site_tier::none)
 {
 	this->reset_map_data();
 	this->reset_game_data();
@@ -54,6 +54,8 @@ void site::process_gsml_scope(const gsml_data &scope)
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
 		});
+	} else if (tag == "title_names") {
+		government_type::process_site_title_name_scope(this->title_names, scope);
 	} else if (tag == "landholder_title_names") {
 		government_type::process_landholder_title_name_scope(this->landholder_title_names, scope);
 	} else if (tag == "generation_regions") {
@@ -196,6 +198,36 @@ const std::string &site::get_cultural_name(const cultural_group *cultural_group)
 	}
 
 	return this->get_name();
+}
+
+const std::string &site::get_title_name(const government_type *government_type, const site_tier tier, const culture *culture) const
+{
+	auto find_iterator = this->title_names.find(government_type);
+	if (find_iterator == this->title_names.end()) {
+		find_iterator = this->title_names.find(government_type->get_group());
+	}
+
+	if (find_iterator != this->title_names.end()) {
+		auto sub_find_iterator = find_iterator->second.find(tier);
+		if (sub_find_iterator == find_iterator->second.end()) {
+			sub_find_iterator = find_iterator->second.find(site_tier::none);
+		}
+
+		if (sub_find_iterator != find_iterator->second.end()) {
+			return sub_find_iterator->second;
+		}
+	}
+
+	if (culture != nullptr) {
+		const std::string &culture_title_name = culture->get_site_title_name(government_type, tier);
+		if (!culture_title_name.empty()) {
+			return culture_title_name;
+		}
+	}
+
+	assert_throw(government_type != nullptr);
+
+	return government_type->get_site_title_name(tier);
 }
 
 const std::string &site::get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender, const culture *culture) const

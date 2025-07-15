@@ -7,6 +7,8 @@
 #include "country/government_type.h"
 #include "country/office.h"
 #include "database/defines.h"
+#include "map/site_tier.h"
+#include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/string_util.h"
 
@@ -18,6 +20,8 @@ void government_group::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "title_names") {
 		government_type::process_title_name_scope(this->title_names, scope);
+	} else if (tag == "site_title_names") {
+		government_type::process_site_title_name_scope(this->site_title_names, scope);
 	} else if (tag == "office_title_names") {
 		government_type::process_office_title_name_scope(this->office_title_names, scope);
 	} else if (tag == "landholder_title_names") {
@@ -37,8 +41,47 @@ const std::string &government_group::get_title_name(const country_tier tier) con
 	return country_tier_data::get(tier)->get_name();
 }
 
+const std::string &government_group::get_site_title_name(const site_tier tier) const
+{
+	const auto find_iterator = this->site_title_names.find(tier);
+	if (find_iterator != this->site_title_names.end()) {
+		return find_iterator->second;
+	}
 
-const std::string &government_group::get_office_title_name(const office *office, const country_tier tier, const gender gender) const
+	switch (tier) {
+		case site_tier::barony:
+		{
+			static const std::string str = "Barony";
+			return str;
+		}
+		case site_tier::viscounty:
+		{
+			static const std::string str = "Viscounty";
+			return str;
+		}
+		case site_tier::county:
+		{
+			static const std::string str = "County";
+			return str;
+		}
+		case site_tier::marquisate:
+		{
+			static const std::string str = "Marquisate";
+			return str;
+		}
+		case site_tier::duchy:
+		{
+			static const std::string str = "Duchy";
+			return str;
+		}
+		default:
+			break;
+	}
+
+	return string::empty_str;
+}
+
+const std::string &government_group::get_office_title_name(const metternich::office *office, const country_tier tier, const gender gender) const
 {
 	const auto office_find_iterator = this->office_title_names.find(office);
 	if (office_find_iterator != this->office_title_names.end()) {

@@ -75,6 +75,11 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
 	}
 
+	connect(this, &site_game_data::owner_changed, this, &site_game_data::title_name_changed);
+	connect(this, &site_game_data::culture_changed, this, &site_game_data::title_name_changed);
+	connect(this, &site_game_data::religion_changed, this, &site_game_data::title_name_changed);
+
+	connect(this, &site_game_data::owner_changed, this, &site_game_data::landholder_title_name_changed);
 	connect(this, &site_game_data::culture_changed, this, &site_game_data::landholder_title_name_changed);
 	connect(this, &site_game_data::religion_changed, this, &site_game_data::landholder_title_name_changed);
 	connect(this, &site_game_data::landholder_changed, this, &site_game_data::landholder_title_name_changed);
@@ -278,6 +283,12 @@ site_tier site_game_data::get_tier() const
 	}
 
 	return tier;
+}
+
+const std::string &site_game_data::get_title_name() const
+{
+	const site_tier tier = this->get_tier();
+	return this->site->get_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, tier, this->get_culture());
 }
 
 const std::string &site_game_data::get_landholder_title_name() const

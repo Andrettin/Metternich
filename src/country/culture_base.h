@@ -47,6 +47,7 @@ class culture_base : public named_data_entry
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
 	using title_name_map = std::map<government_variant, std::map<country_tier, std::string>>;
+	using site_title_name_map = std::map<government_variant, std::map<site_tier, std::string>>;
 	using office_title_name_map = data_entry_map<office, std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>>;
 	using landholder_title_name_map = std::map<government_variant, std::map<site_tier, std::map<gender, std::string>>>;
 
@@ -77,6 +78,7 @@ public:
 	phenotype *get_default_phenotype() const;
 
 	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
+	const std::string &get_site_title_name(const government_type *government_type, const site_tier tier) const;
 	const std::string &get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender) const;
 	const std::string &get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender) const;
 
@@ -170,6 +172,7 @@ private:
 	cultural_group *group = nullptr;
 	phenotype *default_phenotype = nullptr;
 	title_name_map title_names;
+	site_title_name_map site_title_names;
 	office_title_name_map office_title_names;
 	landholder_title_name_map landholder_title_names;
 	building_class_map<const building_type *> building_class_types;

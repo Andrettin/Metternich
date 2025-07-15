@@ -41,6 +41,7 @@ class site_game_data final : public QObject, public employment_location
 
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos CONSTANT)
 	Q_PROPERTY(const metternich::province* province READ get_province CONSTANT)
+	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString landholder_title_name READ get_landholder_title_name_qstring NOTIFY landholder_title_name_changed)
 	Q_PROPERTY(const metternich::country* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
@@ -90,6 +91,13 @@ public:
 	bool can_be_capital() const;
 
 	site_tier get_tier() const;
+
+	const std::string &get_title_name() const;
+
+	QString get_title_name_qstring() const
+	{
+		return QString::fromStdString(this->get_title_name());
+	}
 
 	const std::string &get_landholder_title_name() const;
 
@@ -511,6 +519,7 @@ public:
 	}
 
 signals:
+	void title_name_changed();
 	void landholder_title_name_changed();
 	void owner_changed();
 	void culture_changed();
