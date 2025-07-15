@@ -169,16 +169,20 @@ Rectangle {
 		anchors.top: icon.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		text: (selected_site && !selected_garrison) ? (
+		horizontalAlignment: Text.AlignHCenter
+		text: format_text((selected_site && !selected_garrison) ? (
 			selected_site.settlement ? "" : (
 				selected_site.game_data.improvement ? (
 					selected_site.game_data.improvement.name
+					//+ (site_title_name.length > 0 ? ("\n\n" + site_title_name) : "")
 				) : (
 					selected_site.map_data.resource ? (selected_site.map_data.resource.natural_wonder ? "Natural Wonder" : selected_site.map_data.resource.name) : ""
 				)
 			)
-		) : (selected_civilian_unit ? selected_civilian_unit.name : "")
+		) : (selected_civilian_unit ? selected_civilian_unit.name : ""))
 		visible: !population_info_text.visible
+		
+		readonly property string site_title_name: selected_site_game_data ? selected_site_game_data.title_name : ""
 	}
 	
 	ScriptedModifierRow {
