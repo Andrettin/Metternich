@@ -263,13 +263,26 @@ bool site_game_data::can_be_capital() const
 	return true;
 }
 
-const std::string &site_game_data::get_landholder_title_name() const
+site_tier site_game_data::get_tier() const
 {
-	site_tier tier = this->get_resource_improvement() ? static_cast<site_tier>(this->get_resource_improvement()->get_level()) : site_tier::none;
+	site_tier tier = site_tier::none;
+
+	if (this->get_settlement_type() != nullptr) {
+		tier = static_cast<site_tier>(this->get_settlement_type()->get_level());
+	} else if (this->get_resource_improvement() != nullptr) {
+		tier = static_cast<site_tier>(this->get_resource_improvement()->get_level());
+	}
+
 	if (tier > this->site->get_max_tier()) {
 		tier = this->site->get_max_tier();
 	}
 
+	return tier;
+}
+
+const std::string &site_game_data::get_landholder_title_name() const
+{
+	const site_tier tier = this->get_tier();
 	const gender gender = this->get_landholder() != nullptr ? this->get_landholder()->get_gender() : gender::male;
 	return this->site->get_landholder_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, tier, gender, this->get_culture());
 }

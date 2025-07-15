@@ -33,6 +33,7 @@ class settlement_type;
 class site;
 class tile;
 enum class improvement_slot;
+enum class site_tier;
 
 class site_game_data final : public QObject, public employment_location
 {
@@ -87,6 +88,8 @@ public:
 	bool is_provincial_capital() const;
 	bool is_capital() const;
 	bool can_be_capital() const;
+
+	site_tier get_tier() const;
 
 	const std::string &get_landholder_title_name() const;
 
