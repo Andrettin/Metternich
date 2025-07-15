@@ -120,9 +120,9 @@ Rectangle {
 		anchors.top: industry_button.bottom
 		anchors.topMargin: 8 * scale_factor
 		anchors.left: parent.left
-		anchors.leftMargin: 4 * scale_factor
+		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right
-		anchors.rightMargin: 4 * scale_factor
+		anchors.rightMargin: 8 * scale_factor
 		horizontalAlignment: Text.AlignHCenter
 		wrapMode: Text.WordWrap
 		text: selected_garrison ? "Garrison" : (

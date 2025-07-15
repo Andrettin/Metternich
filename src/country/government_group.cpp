@@ -48,36 +48,6 @@ const std::string &government_group::get_site_title_name(const site_tier tier) c
 		return find_iterator->second;
 	}
 
-	switch (tier) {
-		case site_tier::barony:
-		{
-			static const std::string str = "Barony";
-			return str;
-		}
-		case site_tier::viscounty:
-		{
-			static const std::string str = "Viscounty";
-			return str;
-		}
-		case site_tier::county:
-		{
-			static const std::string str = "County";
-			return str;
-		}
-		case site_tier::marquisate:
-		{
-			static const std::string str = "Marquisate";
-			return str;
-		}
-		case site_tier::duchy:
-		{
-			static const std::string str = "Duchy";
-			return str;
-		}
-		default:
-			break;
-	}
-
 	return string::empty_str;
 }
 

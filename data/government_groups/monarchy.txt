@@ -1,5 +1,12 @@
 monarchy = {
 	name = "Monarchy"
+	site_title_names = {
+		barony = "Barony"
+		viscounty = "Viscounty"
+		county = "County"
+		marquisate = "Marquisate"
+		duchy = "Duchy"
+	}
 	office_title_names = {
 		chief_builder = {
 			kingdom = "Royal Architect"
