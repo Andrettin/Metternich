@@ -1,4 +1,10 @@
 french_route_network = { #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	name = "Gallic Route Network"
 	color = { 221 190 218 }
+	
+	history = {
+		1000 = {
+			pathway = road
+		}
+	}
 }

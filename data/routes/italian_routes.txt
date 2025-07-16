@@ -45,4 +45,10 @@ flaminian_way = {
 postumian_way = {
 	name = "Postumian Way"
 	color = { 87 243 152 }
+	
+	history = {
+		500 = {
+			pathway = road
+		}
+	}
 }

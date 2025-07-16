@@ -25,6 +25,10 @@ vienna_brunn = {
 	color = { 139 105 112 }
 	
 	history = {
+		1000 = {
+			pathway = road
+		}
+		
 		1839.7.7 = {
 			pathway = railroad #the first trains from Vienna arrived in Brno on 1839.7.7; Source: Chad Bryant, "Into an Uncertain Future: Railroads and Vormärz Liberalism in Brno, Vienna, and Prague", 2009, p. 183.
 		}
@@ -36,6 +40,10 @@ vienna_trieste = {
 	color = { 191 242 151 }
 	
 	history = {
+		1000 = {
+			pathway = road
+		}
+		
 		1857 = {
 			pathway = railroad #railroad built in 1857; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
 		}

@@ -1,4 +1,10 @@
 mesopotamian_route_network = {
 	name = "Mesopotamian Route Network"
 	color = { 232 226 208 }
+	
+	history = {
+		1000 = {
+			pathway = road
+		}
+	}
 }

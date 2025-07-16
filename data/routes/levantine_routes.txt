@@ -1,4 +1,10 @@
 levantine_route_network = {
 	name = "Levantine Route Network"
 	color = { 108 254 113 }
+	
+	history = {
+		1000 = {
+			pathway = road
+		}
+	}
 }
