@@ -7,6 +7,7 @@
 #include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_ai.h"
+#include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
 #include "country/country_rank.h"
@@ -19,6 +20,7 @@
 #include "country/government_type.h"
 #include "country/law.h"
 #include "country/office.h"
+#include "database/database.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
@@ -451,7 +453,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 			}
 
-			country_game_data->set_wealth(country_history->get_wealth());
+			country_game_data->get_economy()->set_wealth(country_history->get_wealth());
 
 			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
 				if (!other_country->get_game_data()->is_alive()) {
@@ -551,7 +553,7 @@ void game::apply_history(const metternich::scenario *scenario)
 		//set stored commodities from history after the initial buildings have been constructed, so that buildings granting storage capacity (e.g. warehouses) will already be present
 		for (const country *country : this->get_countries()) {
 			for (const auto &[commodity, quantity] : country->get_history()->get_commodities()) {
-				country->get_game_data()->set_stored_commodity(commodity, quantity);
+				country->get_game_data()->get_economy()->set_stored_commodity(commodity, quantity);
 			}
 		}
 
@@ -1424,10 +1426,10 @@ QCoro::Task<void> game::on_setup_finished()
 		country_game_data->calculate_tile_transport_levels();
 
 		//assign transport orders for countries, here rather than on start so that food output can be calculated correctly, for decreasing the population
-		country_game_data->assign_transport_orders();
+		country_game_data->get_economy()->assign_transport_orders();
 
 		//decrease population if there's too much for the starting food output
-		while ((country_game_data->get_food_output() - country_game_data->get_net_food_consumption()) < 0) {
+		while ((country_game_data->get_economy()->get_food_output() - country_game_data->get_net_food_consumption()) < 0) {
 			country_game_data->decrease_population(false);
 		}
 
@@ -1540,8 +1542,8 @@ void game::do_trade()
 	std::sort(trade_countries.begin(), trade_countries.end(), [&](const metternich::country *lhs, const metternich::country *rhs) {
 		if (defines::get()->get_prestige_commodity()->is_enabled()) {
 			//give trade priority by prestige
-			const int lhs_prestige = lhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
-			const int rhs_prestige = rhs->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity());
+			const int lhs_prestige = lhs->get_game_data()->get_economy()->get_stored_commodity(defines::get()->get_prestige_commodity());
+			const int rhs_prestige = rhs->get_game_data()->get_economy()->get_stored_commodity(defines::get()->get_prestige_commodity());
 
 			if (lhs_prestige != rhs_prestige) {
 				return lhs_prestige > rhs_prestige;
@@ -1557,8 +1559,8 @@ void game::do_trade()
 	for (const country *country : trade_countries) {
 		country_game_data *country_game_data = country->get_game_data();
 
-		for (const auto &[commodity, demand] : country_game_data->get_commodity_demands()) {
-			if (!country_game_data->can_trade_commodity(commodity)) {
+		for (const auto &[commodity, demand] : country_game_data->get_economy()->get_commodity_demands()) {
+			if (!country_game_data->get_economy()->can_trade_commodity(commodity)) {
 				continue;
 			}
 

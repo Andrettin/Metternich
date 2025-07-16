@@ -8,7 +8,7 @@ Rectangle {
 	clip: true
 	
 	property bool prestige_visible: true
-	readonly property var stored_commodities: metternich.game.player_country.game_data.stored_commodities
+	readonly property var stored_commodities: metternich.game.player_country.game_data.economy.stored_commodities
 	
 	PanelTiledBackground {
 	}
@@ -44,7 +44,7 @@ Rectangle {
 	
 	SmallText {
 		id: wealth_label
-		text: (metternich.game.player_country.game_data.wealth < 0 ? "-" : "") + "$" + number_string(Math.abs(metternich.game.player_country.game_data.wealth))
+		text: (metternich.game.player_country.game_data.economy.wealth < 0 ? "-" : "") + "$" + number_string(Math.abs(metternich.game.player_country.game_data.wealth))
 		anchors.top: parent.top
 		anchors.topMargin: 1 * scale_factor
 		anchors.left: date_label.left
@@ -74,7 +74,7 @@ Rectangle {
 
 	SmallText {
 		id: prestige_label
-		text: metternich.game.player_country.game_data.stored_commodities.length > 0 ? number_string(metternich.game.player_country.game_data.get_stored_commodity(metternich.defines.prestige_commodity)) : 0 //refer to the stored commodities to ensure the counter is updated when prestige changes
+		text: metternich.game.player_country.game_data.economy.stored_commodities.length > 0 ? number_string(metternich.game.player_country.game_data.economy.get_stored_commodity(metternich.defines.prestige_commodity)) : 0 //refer to the stored commodities to ensure the counter is updated when prestige changes
 		anchors.top: parent.top
 		anchors.topMargin: 1 * scale_factor
 		anchors.left: prestige_icon.right

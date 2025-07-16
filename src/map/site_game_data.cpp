@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "character/character_role.h"
 #include "country/country.h"
+#include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/country_turn_data.h"
 #include "country/culture.h"
@@ -344,7 +345,7 @@ void site_game_data::set_owner(const country *owner)
 				continue;
 			}
 
-			old_owner->get_game_data()->change_transportable_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+			old_owner->get_game_data()->get_economy()->change_transportable_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
 		}
 	}
 
@@ -360,7 +361,7 @@ void site_game_data::set_owner(const country *owner)
 				continue;
 			}
 
-			this->get_owner()->get_game_data()->change_transportable_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+			this->get_owner()->get_game_data()->get_economy()->change_transportable_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
 		}
 
 		for (const auto &[improvement, commodity_bonuses] : this->get_owner()->get_game_data()->get_improvement_commodity_bonuses()) {
@@ -1326,7 +1327,7 @@ population_unit *site_game_data::choose_population_unit_for_reallocation() const
 				continue;
 			}
 
-			if (this->get_owner() != nullptr && this->get_owner()->get_game_data()->get_net_commodity_output(population_unit->get_type()->get_output_commodity()) < population_unit->get_type()->get_output_value()) {
+			if (this->get_owner() != nullptr && this->get_owner()->get_game_data()->get_economy()->get_net_commodity_output(population_unit->get_type()->get_output_commodity()) < population_unit->get_type()->get_output_value()) {
 				continue;
 			}
 		}
@@ -1537,7 +1538,7 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		}
 	} else {
 		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_game_data()->change_transportable_commodity_output(commodity, transportable_change);
+			this->get_owner()->get_game_data()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
 		}
 	}
 
@@ -1826,7 +1827,7 @@ void site_game_data::set_transport_level(const int level)
 			}
 		} else {
 			if (this->get_owner() != nullptr) {
-				this->get_owner()->get_game_data()->change_transportable_commodity_output(commodity, transportable_change);
+				this->get_owner()->get_game_data()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
 			}
 		}
 	}
@@ -1859,7 +1860,7 @@ void site_game_data::set_sea_transport_level(const int level)
 			}
 		} else {
 			if (this->get_owner() != nullptr) {
-				this->get_owner()->get_game_data()->change_transportable_commodity_output(commodity, transportable_change);
+				this->get_owner()->get_game_data()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
 			}
 		}
 	}

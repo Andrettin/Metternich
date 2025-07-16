@@ -21,7 +21,7 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_inflation_change(this->value * multiplier);
+		scope->get_game_data()->get_economy()->change_inflation_change(this->value * multiplier);
 	}
 
 	virtual std::string get_base_string(const country *scope) const override

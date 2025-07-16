@@ -12,6 +12,7 @@
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/country_ai.h"
+#include "country/country_economy.h"
 #include "country/country_rank.h"
 #include "country/country_tier.h"
 #include "country/country_tier_data.h"
@@ -98,6 +99,7 @@
 #include "util/image_util.h"
 #include "util/map_util.h"
 #include "util/point_util.h"
+#include "util/qunique_ptr.h"
 #include "util/rect_util.h"
 #include "util/size_util.h"
 #include "util/string_util.h"
@@ -114,6 +116,8 @@ namespace metternich {
 country_game_data::country_game_data(metternich::country *country)
 	: country(country), tier(country_tier::none), religion(country->get_default_religion())
 {
+	this->economy = make_qunique<country_economy>(country);
+
 	connect(this, &country_game_data::tier_changed, this, &country_game_data::title_name_changed);
 	connect(this, &country_game_data::tier_changed, this, &country_game_data::office_title_names_changed);
 	connect(this, &country_game_data::government_type_changed, this, &country_game_data::title_name_changed);
@@ -122,22 +126,6 @@ country_game_data::country_game_data(metternich::country *country)
 	connect(this, &country_game_data::religion_changed, this, &country_game_data::office_title_names_changed);
 	connect(this, &country_game_data::office_holders_changed, this, &country_game_data::office_title_names_changed);
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
-
-	for (const commodity *commodity : commodity::get_all()) {
-		if (!commodity->is_enabled()) {
-			continue;
-		}
-
-		if (commodity->get_required_technology() != nullptr) {
-			continue;
-		}
-
-		this->add_available_commodity(commodity);
-
-		if (commodity->is_tradeable()) {
-			this->add_tradeable_commodity(commodity);
-		}
-	}
 
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::type_count_changed, this, &country_game_data::on_population_type_count_changed);
@@ -155,14 +143,14 @@ void country_game_data::do_turn()
 		}
 
 		this->do_education();
-		this->do_production();
+		this->get_economy()->do_production();
 		this->do_transporter_recruitment();
 		this->do_civilian_unit_recruitment();
 		this->do_military_unit_recruitment();
 		this->do_research();
 		this->do_population_growth();
-		this->do_everyday_consumption();
-		this->do_luxury_consumption();
+		this->get_economy()->do_everyday_consumption();
+		this->get_economy()->do_luxury_consumption();
 		this->do_construction();
 		this->do_cultural_change();
 
@@ -193,65 +181,6 @@ void country_game_data::do_turn()
 		this->check_ideas();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->country->get_identifier())));
-	}
-}
-
-void country_game_data::do_production()
-{
-	try {
-		//FIXME: add preference for production being automatically assigned for person players
-		if (this->is_ai()) {
-			this->assign_production();
-		}
-
-		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
-			if (!commodity->is_storable()) {
-				assert_throw(output >= 0);
-				continue;
-			}
-
-			this->change_stored_commodity(commodity, output.to_int());
-		}
-
-		//decrease consumption of commodities for which we no longer have enough in storage
-		while (this->get_wealth_income() < 0 && (this->get_wealth_income() * -1) > this->get_wealth_with_credit()) {
-			this->decrease_wealth_consumption(false);
-		}
-
-		const std::vector<const commodity *> input_commodities = archimedes::map::get_keys(this->get_commodity_inputs());
-
-		for (const commodity *commodity : input_commodities) {
-			if (!commodity->is_storable() || commodity->is_negative_allowed()) {
-				continue;
-			}
-
-			while (this->get_commodity_input(commodity) > this->get_stored_commodity(commodity)) {
-				this->decrease_commodity_consumption(commodity, false);
-			}
-		}
-
-		//reduce inputs from the storage for the next turn (for production this turn it had already been subtracted)
-		if (this->get_wealth_income() != 0) {
-			this->change_wealth(this->get_wealth_income());
-		}
-
-		for (const auto &[commodity, input] : this->get_commodity_inputs()) {
-			try {
-				if (!commodity->is_storable()) {
-					const int output = this->get_commodity_output(commodity).to_int();
-					if (input > output) {
-						throw std::runtime_error(std::format("Input for non-storable commodity \"{}\" ({}) is greater than its output ({}).", commodity->get_identifier(), input, output));
-					}
-					continue;
-				}
-
-				this->change_stored_commodity(commodity, -input);
-			} catch (...) {
-				std::throw_with_nested(std::runtime_error("Error processing input storage reduction for commodity \"" + commodity->get_identifier()  + "\"."));
-			}
-		}
-	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Error doing production for country \"" + this->country->get_identifier() + "\"."));
 	}
 }
 
@@ -431,12 +360,12 @@ void country_game_data::do_food_consumption(const int food_consumption)
 	int remaining_food_consumption = food_consumption;
 
 	//this is a copy because we may need to erase elements from the map in the subsequent code
-	const commodity_map<int> stored_commodities = this->get_stored_commodities();
+	const commodity_map<int> stored_commodities = this->get_economy()->get_stored_commodities();
 
 	for (const auto &[commodity, quantity] : stored_commodities) {
 		if (commodity->is_food()) {
 			const int consumed_food = std::min(remaining_food_consumption, quantity);
-			this->change_stored_commodity(commodity, -consumed_food);
+			this->get_economy()->change_stored_commodity(commodity, -consumed_food);
 
 			remaining_food_consumption -= consumed_food;
 
@@ -468,194 +397,6 @@ void country_game_data::do_starvation()
 		const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 		engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
-	}
-}
-
-void country_game_data::do_everyday_consumption()
-{
-	if (this->get_population_units().empty()) {
-		return;
-	}
-
-	const std::vector<population_unit *> population_units = vector::shuffled(this->get_population_units());
-
-	for (population_unit *population_unit : population_units) {
-		population_unit->set_everyday_consumption_fulfilled(true);
-	}
-
-	const int inflated_everyday_wealth_consumption = this->get_inflated_value(this->get_everyday_wealth_consumption());
-
-	if (inflated_everyday_wealth_consumption > 0) {
-		const int effective_consumption = std::max(0, std::min(inflated_everyday_wealth_consumption, this->get_wealth_with_credit()));
-
-		if (effective_consumption > 0) {
-			this->change_wealth(-effective_consumption);
-
-			for (const auto &[population_type, count] : this->get_population()->get_type_counts()) {
-				if (population_type->get_everyday_wealth_consumption() == 0) {
-					continue;
-				}
-
-				const int population_type_consumption = this->get_inflated_value(population_type->get_everyday_wealth_consumption() * count);
-				this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::population_upkeep, population_type_consumption, population_type, count);
-			}
-
-			int remaining_consumption = inflated_everyday_wealth_consumption - effective_consumption;
-			if (remaining_consumption != 0) {
-				for (population_unit *population_unit : population_units) {
-					const int pop_consumption = this->get_inflated_value(population_unit->get_type()->get_everyday_wealth_consumption());
-					if (pop_consumption == 0) {
-						continue;
-					}
-
-					population_unit->set_everyday_consumption_fulfilled(false);
-					const int remaining_consumption_change = std::min(remaining_consumption, pop_consumption);
-					remaining_consumption -= remaining_consumption_change;
-
-					this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::population_upkeep, -remaining_consumption_change, population_unit->get_type(), -1);
-
-					if (remaining_consumption <= 0) {
-						break;
-					}
-				}
-			}
-		}
-	}
-
-	for (const auto &[commodity, consumption] : this->get_everyday_consumption()) {
-		if (!commodity->is_enabled()) {
-			continue;
-		}
-
-		//local consumption is handled separately
-		assert_throw(!commodity->is_local());
-
-		int effective_consumption = 0;
-
-		if (commodity->is_storable()) {
-			effective_consumption = std::min(consumption.to_int(), this->get_stored_commodity(commodity));
-			this->change_stored_commodity(commodity, -effective_consumption);
-		} else {
-			effective_consumption = std::min(consumption.to_int(), this->get_net_commodity_output(commodity));
-		}
-
-		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
-		if (remaining_consumption == 0) {
-			continue;
-		}
-
-		//go through population units belonging to the country in random order, set whether their consumption was fulfilled
-		for (population_unit *population_unit : population_units) {
-			const centesimal_int pop_consumption = population_unit->get_type()->get_everyday_consumption(commodity);
-			if (pop_consumption == 0) {
-				continue;
-			}
-
-			population_unit->set_everyday_consumption_fulfilled(false);
-			remaining_consumption -= pop_consumption;
-
-			if (remaining_consumption <= 0) {
-				break;
-			}
-		}
-	}
-
-	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->do_everyday_consumption();
-
-		for (const site *site : province->get_game_data()->get_sites()) {
-			if (!site->get_game_data()->can_have_population() || !site->get_game_data()->is_built()) {
-				continue;
-			}
-
-			site->get_game_data()->do_everyday_consumption();
-		}
-	}
-
-	static const centesimal_int militancy_change_for_unfulfilled_consumption("0.1");
-	static const centesimal_int militancy_change_for_fulfilled_consumption("-0.1");
-
-	for (population_unit *population_unit : population_units) {
-		if (population_unit->is_everyday_consumption_fulfilled()) {
-			population_unit->change_militancy(militancy_change_for_fulfilled_consumption);
-		} else {
-			population_unit->change_militancy(militancy_change_for_unfulfilled_consumption);
-		}
-	}
-
-	//FIXME: make population units which couldn't have their consumption fulfilled be unhappy/refuse to work for the turn (and possibly demote when demotion is implemented)
-}
-
-void country_game_data::do_luxury_consumption()
-{
-	if (this->get_population_units().empty()) {
-		return;
-	}
-
-	const std::vector<population_unit *> population_units = vector::shuffled(this->get_population_units());
-
-	for (population_unit *population_unit : population_units) {
-		population_unit->set_luxury_consumption_fulfilled(true);
-	}
-
-	for (const auto &[commodity, consumption] : this->get_luxury_consumption()) {
-		if (!commodity->is_enabled()) {
-			continue;
-		}
-
-		//local consumption is handled separately
-		assert_throw(!commodity->is_local());
-
-		int effective_consumption = 0;
-
-		if (commodity->is_storable()) {
-			effective_consumption = std::min(consumption.to_int(), this->get_stored_commodity(commodity));
-			this->change_stored_commodity(commodity, -effective_consumption);
-		} else {
-			effective_consumption = std::min(consumption.to_int(), this->get_net_commodity_output(commodity));
-		}
-
-		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
-		if (remaining_consumption == 0) {
-			continue;
-		}
-
-		//go through population units belonging to the country in random order, set whether their consumption was fulfilled
-		for (population_unit *population_unit : population_units) {
-			const centesimal_int pop_consumption = population_unit->get_type()->get_luxury_consumption(commodity);
-			if (pop_consumption == 0) {
-				continue;
-			}
-
-			population_unit->set_luxury_consumption_fulfilled(false);
-			remaining_consumption -= pop_consumption;
-
-			if (remaining_consumption <= 0) {
-				break;
-			}
-		}
-	}
-
-	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->do_luxury_consumption();
-
-		for (const site *site : province->get_game_data()->get_sites()) {
-			if (!site->get_game_data()->can_have_population() || !site->get_game_data()->is_built()) {
-				continue;
-			}
-
-			site->get_game_data()->do_luxury_consumption();
-		}
-	}
-
-	static const centesimal_int consciousness_change_for_fulfilled_consumption("0.1");
-	static const centesimal_int militancy_change_for_fulfilled_consumption("-0.2");
-
-	for (population_unit *population_unit : population_units) {
-		if (population_unit->is_luxury_consumption_fulfilled()) {
-			population_unit->change_consciousness(consciousness_change_for_fulfilled_consumption);
-			population_unit->change_militancy(militancy_change_for_fulfilled_consumption);
-		}
 	}
 }
 
@@ -769,7 +510,7 @@ void country_game_data::do_trade(country_map<commodity_map<int>> &country_luxury
 				const int bid = other_country_game_data->get_bid(commodity);
 				if (bid != 0) {
 					int sold_quantity = std::min(offer, bid);
-					sold_quantity = std::min(sold_quantity, other_country_game_data->get_wealth_with_credit() / price);
+					sold_quantity = std::min(sold_quantity, other_country_game_data->get_economy()->get_wealth_with_credit() / price);
 
 					if (sold_quantity > 0) {
 						this->do_sale(other_country, commodity, sold_quantity, true);
@@ -812,9 +553,9 @@ void country_game_data::do_inflation()
 		}
 
 		this->country->get_turn_data()->calculate_inflation();
-		this->change_inflation(this->country->get_turn_data()->get_total_inflation_change());
+		this->get_economy()->change_inflation(this->country->get_turn_data()->get_total_inflation_change());
 
-		this->change_inflation(this->get_inflation_change());
+		this->get_economy()->change_inflation(this->get_economy()->get_inflation_change());
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing trade for country \"{}\".", this->country->get_identifier())));
 	}
@@ -1864,7 +1605,7 @@ void country_game_data::remove_opinion_modifier(const metternich::country *other
 int country_game_data::get_opinion_weighted_prestige_for(const metternich::country *other) const
 {
 	const int opinion = this->get_opinion_of(other);
-	const int prestige = std::max(1, other->get_game_data()->get_stored_commodity(defines::get()->get_prestige_commodity()));
+	const int prestige = std::max(1, other->get_game_data()->get_economy()->get_stored_commodity(defines::get()->get_prestige_commodity()));
 
 	const int opinion_weighted_prestige = prestige * (opinion - country::min_opinion) / (country::max_opinion - country::min_opinion);
 	return opinion_weighted_prestige;
@@ -2232,7 +1973,7 @@ void country_game_data::remove_population_unit(population_unit *population_unit)
 
 void country_game_data::on_population_type_count_changed(const population_type *type, const int change)
 {
-	this->change_everyday_wealth_consumption(type->get_everyday_wealth_consumption() * change);
+	this->get_economy()->change_everyday_wealth_consumption(type->get_everyday_wealth_consumption() * change);
 
 	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
 		if (!commodity->is_enabled()) {
@@ -2244,7 +1985,7 @@ void country_game_data::on_population_type_count_changed(const population_type *
 			continue;
 		}
 
-		this->change_everyday_consumption(commodity, value * change);
+		this->get_economy()->change_everyday_consumption(commodity, value * change);
 	}
 
 	for (const auto &[commodity, value] : type->get_luxury_consumption()) {
@@ -2257,12 +1998,12 @@ void country_game_data::on_population_type_count_changed(const population_type *
 			continue;
 		}
 
-		this->change_luxury_consumption(commodity, value * change);
+		this->get_economy()->change_luxury_consumption(commodity, value * change);
 	}
 
 	//countries generate demand in the world market depending on population commodity demand
 	for (const auto &[commodity, value] : type->get_commodity_demands()) {
-		this->change_commodity_demand(commodity, value * change);
+		this->get_economy()->change_commodity_demand(commodity, value * change);
 	}
 
 	this->change_food_consumption(change);
@@ -2484,6 +2225,11 @@ int country_game_data::get_net_food_consumption() const
 	}
 
 	return food_consumption;
+}
+
+int country_game_data::get_available_food() const
+{
+	return this->get_economy()->get_stored_food() - this->get_net_food_consumption();
 }
 
 QVariantList country_game_data::get_population_type_inputs_qvariant_list() const
@@ -2752,656 +2498,6 @@ void country_game_data::on_wonder_gained(const wonder *wonder, const int multipl
 	}
 }
 
-void country_game_data::add_taxable_wealth(const int taxable_wealth, const income_transaction_type tax_income_type)
-{
-	assert_throw(taxable_wealth >= 0);
-	assert_throw(tax_income_type == income_transaction_type::tariff || tax_income_type == income_transaction_type::treasure_fleet);
-
-	if (taxable_wealth == 0) {
-		return;
-	}
-
-	if (this->get_overlord() == nullptr) {
-		this->change_wealth(taxable_wealth);
-		return;
-	}
-
-	const int tax = taxable_wealth * country_game_data::vassal_tax_rate / 100;
-	const int taxed_wealth = taxable_wealth - tax;
-
-	this->get_overlord()->get_game_data()->add_taxable_wealth(tax, tax_income_type);
-
-	this->change_wealth(taxed_wealth);
-
-	if (tax != 0) {
-		this->get_overlord()->get_turn_data()->add_income_transaction(tax_income_type, tax, nullptr, 0, this->country);
-		this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::tax, tax, nullptr, 0, this->get_overlord());
-	}
-}
-
-void country_game_data::set_inflation(const centesimal_int &inflation)
-{
-	if (inflation == this->get_inflation()) {
-		return;
-	}
-
-	if (inflation < 0) {
-		this->set_inflation(centesimal_int(0));
-		return;
-	}
-
-	if (!this->country->is_great_power()) {
-		//minor nations cannot be affected by inflation
-		this->set_inflation(centesimal_int(0));
-		return;
-	}
-
-	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			const int input_wealth = building_slot->get_production_type_input_wealth(production_type);
-			this->change_wealth(input_wealth);
-			this->change_wealth_income(input_wealth);
-		}
-
-		for (const education_type *education_type : building_slot->get_available_education_types()) {
-			if (education_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			const int input_wealth = building_slot->get_education_type_input_wealth(education_type);
-			this->change_wealth(input_wealth);
-			this->change_wealth_income(input_wealth);
-		}
-	}
-
-	this->inflation = inflation;
-
-	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			const int input_wealth = building_slot->get_production_type_input_wealth(production_type);
-			this->change_wealth(-input_wealth);
-			this->change_wealth_income(-input_wealth);
-		}
-
-		for (const education_type *education_type : building_slot->get_available_education_types()) {
-			if (education_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			const int input_wealth = building_slot->get_education_type_input_wealth(education_type);
-			this->change_wealth(-input_wealth);
-			this->change_wealth_income(-input_wealth);
-		}
-	}
-
-	emit inflation_changed();
-}
-
-void country_game_data::set_inflation_change(const centesimal_int &inflation_change)
-{
-	if (inflation_change == this->get_inflation_change()) {
-		return;
-	}
-
-	this->inflation_change = inflation_change;
-}
-
-QVariantList country_game_data::get_available_commodities_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_available_commodities());
-}
-
-QVariantList country_game_data::get_tradeable_commodities_qvariant_list() const
-{
-	std::vector<const commodity *> tradeable_commodities = container::to_vector(this->get_tradeable_commodities());
-
-	std::sort(tradeable_commodities.begin(), tradeable_commodities.end(), [](const commodity *lhs, const commodity *rhs) {
-		if (lhs->get_base_price() != rhs->get_base_price()) {
-			return lhs->get_base_price() > rhs->get_base_price();
-		}
-
-		return lhs->get_identifier() < rhs->get_identifier();
-	});
-
-	return container::to_qvariant_list(tradeable_commodities);
-}
-
-QVariantList country_game_data::get_stored_commodities_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_stored_commodities());
-}
-
-void country_game_data::set_stored_commodity(const commodity *commodity, const int value)
-{
-	if (!commodity->is_enabled()) {
-		return;
-	}
-
-	if (value == this->get_stored_commodity(commodity)) {
-		return;
-	}
-
-	if (value < 0 && !commodity->is_negative_allowed()) {
-		throw std::runtime_error("Tried to set the storage of commodity \"" + commodity->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\" to a negative number.");
-	}
-
-	if (commodity->is_convertible_to_wealth()) {
-		assert_throw(value > 0);
-		const int wealth_conversion_income = commodity->get_wealth_value() * value;
-		this->add_taxable_wealth(wealth_conversion_income, income_transaction_type::treasure_fleet);
-		this->country->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, wealth_conversion_income, commodity, value);
-		return;
-	}
-
-	if (value > this->get_storage_capacity() && !commodity->is_abstract()) {
-		this->set_stored_commodity(commodity, this->get_storage_capacity());
-		return;
-	}
-
-	if (commodity == defines::get()->get_prestige_commodity()) {
-		this->change_score(-this->get_stored_commodity(commodity));
-	}
-
-	if (value <= 0) {
-		this->stored_commodities.erase(commodity);
-	} else {
-		this->stored_commodities[commodity] = value;
-	}
-
-	if (commodity == defines::get()->get_prestige_commodity()) {
-		this->change_score(value);
-	}
-
-	if (this->get_offer(commodity) > value) {
-		this->set_offer(commodity, value);
-	}
-
-	if (game::get()->is_running()) {
-		emit stored_commodities_changed();
-	}
-}
-
-int country_game_data::get_stored_food() const
-{
-	int stored_food = 0;
-
-	for (const auto &[commodity, quantity] : this->get_stored_commodities()) {
-		if (commodity->is_food()) {
-			stored_food += quantity;
-		}
-	}
-
-	return stored_food;
-}
-
-void country_game_data::set_storage_capacity(const int capacity)
-{
-	if (capacity == this->get_storage_capacity()) {
-		return;
-	}
-
-	this->storage_capacity = capacity;
-
-	if (game::get()->is_running()) {
-		emit storage_capacity_changed();
-	}
-}
-
-QVariantList country_game_data::get_commodity_inputs_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_commodity_inputs());
-}
-
-int country_game_data::get_commodity_input(const QString &commodity_identifier) const
-{
-	return this->get_commodity_input(commodity::get(commodity_identifier.toStdString()));
-}
-
-void country_game_data::change_commodity_input(const commodity *commodity, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->commodity_inputs[commodity] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->commodity_inputs.erase(commodity);
-	}
-
-	if (commodity->get_base_price() != 0) {
-		this->change_economic_score(-change * commodity->get_base_price());
-	}
-
-	if (game::get()->is_running()) {
-		emit commodity_inputs_changed();
-	}
-}
-
-QVariantList country_game_data::get_transportable_commodity_outputs_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_transportable_commodity_outputs());
-}
-
-int country_game_data::get_transportable_commodity_output(const QString &commodity_identifier) const
-{
-	return this->get_transportable_commodity_output(commodity::get(commodity_identifier.toStdString())).to_int();
-}
-
-void country_game_data::change_transportable_commodity_output(const commodity *commodity, const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	if (commodity->is_abstract()) {
-		this->change_commodity_output(commodity, change);
-		return;
-	}
-
-	const centesimal_int new_output = (this->transportable_commodity_outputs[commodity] += change);
-
-	assert_throw(new_output >= 0);
-
-	if (new_output == 0) {
-		this->transportable_commodity_outputs.erase(commodity);
-	}
-
-	const int transported_output = this->get_transported_commodity_output(commodity);
-	if (new_output < transported_output) {
-		this->change_transported_commodity_output(commodity, new_output.to_int() - transported_output);
-	}
-
-	if (game::get()->is_running()) {
-		emit transportable_commodity_outputs_changed();
-	}
-}
-
-QVariantList country_game_data::get_transported_commodity_outputs_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_transported_commodity_outputs());
-}
-
-void country_game_data::change_transported_commodity_output(const commodity *commodity, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int new_output = (this->transported_commodity_outputs[commodity] += change);
-
-	assert_throw(new_output >= 0);
-	assert_throw(new_output <= this->get_transportable_commodity_output(commodity).to_int());
-
-	if (new_output == 0) {
-		this->transported_commodity_outputs.erase(commodity);
-	}
-
-	this->change_commodity_output(commodity, centesimal_int(change));
-
-	if (game::get()->is_running()) {
-		emit transported_commodity_outputs_changed();
-	}
-}
-
-QVariantList country_game_data::get_commodity_outputs_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
-}
-
-int country_game_data::get_commodity_output(const QString &commodity_identifier) const
-{
-	return this->get_commodity_output(commodity::get(commodity_identifier.toStdString())).to_int();
-}
-
-void country_game_data::change_commodity_output(const commodity *commodity, const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const centesimal_int old_output = this->get_commodity_output(commodity);
-
-	if (commodity->get_base_price() != 0 || commodity->get_wealth_value() != 0) {
-		const int commodity_value = commodity->get_base_price() != 0 ? commodity->get_base_price() : commodity->get_wealth_value();
-		this->change_economic_score(-old_output.to_int() * commodity_value);
-	}
-
-	const centesimal_int &new_output = (this->commodity_outputs[commodity] += change);
-
-	assert_throw(new_output >= 0);
-
-	if (new_output == 0) {
-		this->commodity_outputs.erase(commodity);
-	}
-
-	if (commodity->get_base_price() != 0 || commodity->get_wealth_value() != 0) {
-		const int commodity_value = commodity->get_base_price() != 0 ? commodity->get_base_price() : commodity->get_wealth_value();
-		this->change_economic_score(new_output.to_int() * commodity_value);
-	}
-
-	if (game::get()->is_running()) {
-		emit commodity_outputs_changed();
-	}
-
-	if (change < 0 && !commodity->is_storable() && !commodity->is_negative_allowed()) {
-		//decrease consumption of non-storable commodities immediately if the net output goes below zero, since for those commodities consumption cannot be fulfilled by storage
-		while (this->get_net_commodity_output(commodity) < 0) {
-			this->decrease_commodity_consumption(commodity);
-		}
-	}
-}
-
-void country_game_data::calculate_site_commodity_outputs()
-{
-	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->calculate_site_commodity_outputs();
-	}
-}
-
-void country_game_data::calculate_site_commodity_output(const commodity *commodity)
-{
-	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->calculate_site_commodity_output(commodity);
-	}
-}
-
-int country_game_data::get_food_output() const
-{
-	int food_output = 0;
-
-	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
-		if (commodity->is_food()) {
-			food_output += output.to_int();
-		}
-	}
-
-	return food_output;
-}
-
-void country_game_data::change_everyday_wealth_consumption(const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->everyday_wealth_consumption += change;
-
-	if (game::get()->is_running()) {
-		emit everyday_wealth_consumption_changed();
-	}
-}
-
-QVariantList country_game_data::get_everyday_consumption_qvariant_list() const
-{
-	commodity_map<int> int_everyday_consumption;
-
-	for (const auto &[commodity, consumption] : this->get_everyday_consumption()) {
-		int_everyday_consumption[commodity] = consumption.to_int();
-	}
-
-	return archimedes::map::to_qvariant_list(int_everyday_consumption);
-}
-
-int country_game_data::get_everyday_consumption(const QString &commodity_identifier) const
-{
-	return this->get_everyday_consumption(commodity::get(commodity_identifier.toStdString())).to_int();
-}
-
-void country_game_data::change_everyday_consumption(const commodity *commodity, const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const centesimal_int count = (this->everyday_consumption[commodity] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->everyday_consumption.erase(commodity);
-	}
-
-	if (game::get()->is_running()) {
-		emit everyday_consumption_changed();
-	}
-}
-
-QVariantList country_game_data::get_luxury_consumption_qvariant_list() const
-{
-	commodity_map<int> int_luxury_consumption;
-
-	for (const auto &[commodity, consumption] : this->get_luxury_consumption()) {
-		int_luxury_consumption[commodity] = consumption.to_int();
-	}
-
-	return archimedes::map::to_qvariant_list(int_luxury_consumption);
-}
-
-int country_game_data::get_luxury_consumption(const QString &commodity_identifier) const
-{
-	return this->get_luxury_consumption(commodity::get(commodity_identifier.toStdString())).to_int();
-}
-
-void country_game_data::change_luxury_consumption(const commodity *commodity, const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const centesimal_int count = (this->luxury_consumption[commodity] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->luxury_consumption.erase(commodity);
-	}
-
-	if (game::get()->is_running()) {
-		emit luxury_consumption_changed();
-	}
-}
-
-void country_game_data::change_commodity_demand(const commodity *commodity, const decimillesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const decimillesimal_int count = (this->commodity_demands[commodity] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->commodity_demands.erase(commodity);
-	}
-}
-
-void country_game_data::assign_production()
-{
-	bool changed = true;
-
-	while (changed) {
-		changed = false;
-
-		for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
-			const building_type *building_type = building_slot->get_building();
-
-			if (building_type == nullptr) {
-				continue;
-			}
-
-			for (const production_type *production_type : building_slot->get_available_production_types()) {
-				if (!building_slot->can_increase_production(production_type)) {
-					continue;
-				}
-
-				building_slot->increase_production(production_type);
-				changed = true;
-			}
-		}
-	}
-}
-
-void country_game_data::decrease_wealth_consumption(const bool restore_inputs)
-{
-	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
-		const building_type *building_type = building_slot->get_building();
-
-		if (building_type == nullptr) {
-			continue;
-		}
-
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			if (!building_slot->can_decrease_production(production_type)) {
-				continue;
-			}
-
-			building_slot->decrease_production(production_type, restore_inputs);
-			return;
-		}
-
-		for (const education_type *education_type : building_slot->get_available_education_types()) {
-			if (education_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			if (!building_slot->can_decrease_education(education_type)) {
-				continue;
-			}
-
-			building_slot->decrease_education(education_type, restore_inputs);
-			return;
-		}
-	}
-
-	assert_throw(false);
-}
-
-void country_game_data::decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs)
-{
-	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
-		const building_type *building_type = building_slot->get_building();
-
-		if (building_type == nullptr) {
-			continue;
-		}
-
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (!production_type->get_input_commodities().contains(commodity)) {
-				continue;
-			}
-
-			if (!building_slot->can_decrease_production(production_type)) {
-				continue;
-			}
-
-			building_slot->decrease_production(production_type, restore_inputs);
-			return;
-		}
-
-		for (const education_type *education_type : building_slot->get_available_education_types()) {
-			if (!education_type->get_input_commodities().contains(commodity)) {
-				continue;
-			}
-
-			if (!building_slot->can_decrease_education(education_type)) {
-				continue;
-			}
-
-			building_slot->decrease_education(education_type, restore_inputs);
-			return;
-		}
-	}
-
-	assert_throw(false);
-}
-
-bool country_game_data::produces_commodity(const commodity *commodity) const
-{
-	if (this->get_commodity_output(commodity).to_int() > 0) {
-		return true;
-	}
-
-	for (const province *province : this->get_provinces()) {
-		if (province->get_game_data()->produces_commodity(commodity)) {
-			return true;
-		}
-	}
-
-	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_output_commodity() == commodity && building_slot->get_production_type_output(production_type).to_int() > 0) {
-				return true;
-			}
-		}
-	}
-
-	return false;
-}
-
-void country_game_data::set_land_transport_capacity(const int capacity)
-{
-	if (capacity == this->get_land_transport_capacity()) {
-		return;
-	}
-
-	this->land_transport_capacity = capacity;
-
-	if (game::get()->is_running()) {
-		emit land_transport_capacity_changed();
-	}
-}
-
-void country_game_data::set_sea_transport_capacity(const int capacity)
-{
-	if (capacity == this->get_sea_transport_capacity()) {
-		return;
-	}
-
-	this->sea_transport_capacity = capacity;
-
-	if (game::get()->is_running()) {
-		emit sea_transport_capacity_changed();
-	}
-}
-
-void country_game_data::assign_transport_orders()
-{
-	if (this->is_under_anarchy()) {
-		return;
-	}
-
-	for (const auto &[commodity, transportable_output] : this->get_transportable_commodity_outputs()) {
-		const int available_transportable_output = transportable_output.to_int() - this->get_transported_commodity_output(commodity);
-		assert_throw(available_transportable_output >= 0);
-		if (available_transportable_output == 0) {
-			continue;
-		}
-
-		const int available_transport_capacity = this->get_available_transport_capacity();
-		if (available_transport_capacity == 0) {
-			break;
-		}
-
-		this->change_transported_commodity_output(commodity, std::min(available_transportable_output, available_transport_capacity));
-	}
-}
-
 bool country_game_data::can_declare_war_on(const metternich::country *other_country) const
 {
 	if (!this->country->can_declare_war()) {
@@ -3439,10 +2535,10 @@ void country_game_data::add_technology(const technology *technology)
 			continue;
 		}
 
-		this->add_available_commodity(enabled_commodity);
+		this->get_economy()->add_available_commodity(enabled_commodity);
 
 		if (enabled_commodity->is_tradeable()) {
-			this->add_tradeable_commodity(enabled_commodity);
+			this->get_economy()->add_tradeable_commodity(enabled_commodity);
 		}
 	}
 
@@ -3584,10 +2680,10 @@ void country_game_data::remove_technology(const technology *technology)
 			continue;
 		}
 
-		this->remove_available_commodity(enabled_commodity);
+		this->get_economy()->remove_available_commodity(enabled_commodity);
 
 		if (enabled_commodity->is_tradeable()) {
-			this->remove_tradeable_commodity(enabled_commodity);
+			this->get_economy()->remove_tradeable_commodity(enabled_commodity);
 		}
 	}
 
@@ -3647,12 +2743,12 @@ bool country_game_data::can_research_technology(const technology *technology) co
 	}
 
 	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-	if (wealth_cost > 0 && this->get_inflated_value(wealth_cost) > this->get_wealth_with_credit()) {
+	if (wealth_cost > 0 && this->get_economy()->get_inflated_value(wealth_cost) > this->get_economy()->get_wealth_with_credit()) {
 		return false;
 	}
 
 	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
-		if (cost > this->get_stored_commodity(commodity)) {
+		if (cost > this->get_economy()->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -3727,10 +2823,10 @@ void country_game_data::add_current_research(const technology *technology)
 	assert_throw(this->can_research_technology(technology));
 
 	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-	this->change_wealth_inflated(-wealth_cost);
+	this->get_economy()->change_wealth_inflated(-wealth_cost);
 
 	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
-		this->change_stored_commodity(commodity, -cost);
+		this->get_economy()->change_stored_commodity(commodity, -cost);
 	}
 
 	this->current_researches.insert(technology);
@@ -3743,10 +2839,10 @@ void country_game_data::remove_current_research(const technology *technology, co
 
 	if (restore_costs) {
 		const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-		this->change_wealth_inflated(wealth_cost);
+		this->get_economy()->change_wealth_inflated(wealth_cost);
 
 		for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
-			this->change_stored_commodity(commodity, cost);
+			this->get_economy()->change_stored_commodity(commodity, cost);
 		}
 	}
 
@@ -3783,7 +2879,7 @@ void country_game_data::on_technology_researched(const technology *technology)
 	}
 
 	if (technology->get_shared_prestige() > 0 && defines::get()->get_prestige_commodity()->is_enabled()) {
-		this->change_stored_commodity(defines::get()->get_prestige_commodity(), technology->get_shared_prestige_for_country(this->country));
+		this->get_economy()->change_stored_commodity(defines::get()->get_prestige_commodity(), technology->get_shared_prestige_for_country(this->country));
 	}
 
 	emit technology_researched(technology);
@@ -4020,7 +3116,7 @@ bool country_game_data::can_enact_law(const metternich::law *law) const
 	}
 
 	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		if (this->get_stored_commodity(commodity) < (cost * this->get_total_law_cost_modifier() / 100)) {
+		if (this->get_economy()->get_stored_commodity(commodity) < (cost * this->get_total_law_cost_modifier() / 100)) {
 			return false;
 		}
 	}
@@ -4031,7 +3127,7 @@ bool country_game_data::can_enact_law(const metternich::law *law) const
 void country_game_data::enact_law(const law *law)
 {
 	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		this->change_stored_commodity(commodity, -cost * this->get_total_law_cost_modifier() / 100);
+		this->get_economy()->change_stored_commodity(commodity, -cost * this->get_total_law_cost_modifier() / 100);
 	}
 
 	this->set_law(law->get_group(), law);
@@ -4162,7 +3258,7 @@ void country_game_data::set_appointed_idea(const idea_slot *slot, const idea *id
 	if (idea != nullptr) {
 		const commodity_map<int> commodity_costs = this->get_idea_commodity_costs(idea);
 		for (const auto &[commodity, cost] : commodity_costs) {
-			this->change_stored_commodity(commodity, -cost);
+			this->get_economy()->change_stored_commodity(commodity, -cost);
 		}
 
 		this->appointed_ideas[slot->get_idea_type()][slot] = idea;
@@ -4176,7 +3272,7 @@ void country_game_data::set_appointed_idea(const idea_slot *slot, const idea *id
 	if (old_idea != nullptr) {
 		const commodity_map<int> commodity_costs = this->get_idea_commodity_costs(old_idea);
 		for (const auto &[commodity, cost] : commodity_costs) {
-			this->change_stored_commodity(commodity, cost);
+			this->get_economy()->change_stored_commodity(commodity, cost);
 		}
 	}
 
@@ -4346,7 +3442,7 @@ bool country_game_data::can_appoint_idea(const idea_slot *slot, const idea *idea
 
 	const commodity_map<int> commodity_costs = this->get_idea_commodity_costs(idea);
 	for (const auto &[commodity, cost] : commodity_costs) {
-		if (this->get_stored_commodity(commodity) < cost) {
+		if (this->get_economy()->get_stored_commodity(commodity) < cost) {
 			return false;
 		}
 	}
@@ -4633,7 +3729,7 @@ void country_game_data::set_appointed_office_holder(const office *office, const 
 	if (character != nullptr) {
 		const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
 		for (const auto &[commodity, cost] : commodity_costs) {
-			this->change_stored_commodity(commodity, -cost);
+			this->get_economy()->change_stored_commodity(commodity, -cost);
 		}
 
 		this->appointed_office_holders[office] = character;
@@ -4644,7 +3740,7 @@ void country_game_data::set_appointed_office_holder(const office *office, const 
 	if (old_appointee != nullptr) {
 		const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
 		for (const auto &[commodity, cost] : commodity_costs) {
-			this->change_stored_commodity(commodity, cost);
+			this->get_economy()->change_stored_commodity(commodity, cost);
 		}
 	}
 
@@ -4828,7 +3924,7 @@ bool country_game_data::can_appoint_office_holder(const office *office, const ch
 
 	const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
 	for (const auto &[commodity, cost] : commodity_costs) {
-		if (this->get_stored_commodity(commodity) < cost) {
+		if (this->get_economy()->get_stored_commodity(commodity) < cost) {
 			return false;
 		}
 	}
@@ -4936,8 +4032,8 @@ void country_game_data::check_advisors()
 
 			this->set_next_advisor(nullptr);
 		} else {
-			if (this->get_stored_commodity(defines::get()->get_advisor_commodity()) >= this->get_advisor_cost()) {
-				this->change_stored_commodity(defines::get()->get_advisor_commodity(), -this->get_advisor_cost());
+			if (this->get_economy()->get_stored_commodity(defines::get()->get_advisor_commodity()) >= this->get_advisor_cost()) {
+				this->get_economy()->change_stored_commodity(defines::get()->get_advisor_commodity(), -this->get_advisor_cost());
 
 				this->add_advisor(this->get_next_advisor());
 
@@ -4954,7 +4050,7 @@ void country_game_data::check_advisors()
 			}
 		}
 	} else {
-		if (this->get_commodity_output(defines::get()->get_advisor_commodity()).to_int() > 0 || this->get_stored_commodity(defines::get()->get_advisor_commodity()) > 0) {
+		if (this->get_economy()->get_commodity_output(defines::get()->get_advisor_commodity()).to_int() > 0 || this->get_economy()->get_stored_commodity(defines::get()->get_advisor_commodity()) > 0) {
 			this->choose_next_advisor();
 		}
 	}
@@ -5348,8 +4444,8 @@ void country_game_data::set_offer(const commodity *commodity, const int value)
 		return;
 	}
 
-	if (value > this->get_stored_commodity(commodity)) {
-		this->set_offer(commodity, this->get_stored_commodity(commodity));
+	if (value > this->get_economy()->get_stored_commodity(commodity)) {
+		this->set_offer(commodity, this->get_economy()->get_stored_commodity(commodity));
 		return;
 	}
 
@@ -5367,11 +4463,11 @@ void country_game_data::set_offer(const commodity *commodity, const int value)
 
 void country_game_data::do_sale(const metternich::country *other_country, const commodity *commodity, const int sold_quantity, const bool state_purchase)
 {
-	this->change_stored_commodity(commodity, -sold_quantity);
+	this->get_economy()->change_stored_commodity(commodity, -sold_quantity);
 
 	const int price = game::get()->get_price(commodity);
 	const int sale_income = price * sold_quantity;
-	this->add_taxable_wealth(sale_income, income_transaction_type::tariff);
+	this->get_economy()->add_taxable_wealth(sale_income, income_transaction_type::tariff);
 	this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity, other_country != this->country ? other_country : nullptr);
 
 	this->change_offer(commodity, -sold_quantity);
@@ -5379,9 +4475,9 @@ void country_game_data::do_sale(const metternich::country *other_country, const 
 	country_game_data *other_country_game_data = other_country->get_game_data();
 
 	if (state_purchase) {
-		other_country_game_data->change_stored_commodity(commodity, sold_quantity);
-		const int purchase_expense = other_country_game_data->get_inflated_value(price * sold_quantity);
-		other_country_game_data->change_wealth(-purchase_expense);
+		other_country_game_data->get_economy()->change_stored_commodity(commodity, sold_quantity);
+		const int purchase_expense = other_country_game_data->get_economy()->get_inflated_value(price * sold_quantity);
+		other_country_game_data->get_economy()->change_wealth(-purchase_expense);
 		other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->country);
 
 		other_country_game_data->change_bid(commodity, -sold_quantity);
@@ -5556,12 +4652,12 @@ void country_game_data::change_civilian_unit_recruitment_count(const civilian_un
 
 			const int cost_change = cost * change;
 
-			this->change_stored_commodity(commodity, -cost_change);
+			this->get_economy()->change_stored_commodity(commodity, -cost_change);
 		}
 
 		if (civilian_unit_type->get_wealth_cost() > 0) {
 			const int wealth_cost_change = civilian_unit_type->get_wealth_cost() * change;
-			this->change_wealth_inflated(-wealth_cost_change);
+			this->get_economy()->change_wealth_inflated(-wealth_cost_change);
 		}
 	}
 }
@@ -5574,12 +4670,12 @@ bool country_game_data::can_increase_civilian_unit_recruitment(const civilian_un
 
 	for (const auto &[commodity, cost] : civilian_unit_type->get_commodity_costs()) {
 		assert_throw(commodity->is_storable());
-		if (this->get_stored_commodity(commodity) < cost) {
+		if (this->get_economy()->get_stored_commodity(commodity) < cost) {
 			return false;
 		}
 	}
 
-	if (civilian_unit_type->get_wealth_cost() != 0 && this->get_wealth_with_credit() < this->get_inflated_value(civilian_unit_type->get_wealth_cost())) {
+	if (civilian_unit_type->get_wealth_cost() != 0 && this->get_economy()->get_wealth_with_credit() < this->get_economy()->get_inflated_value(civilian_unit_type->get_wealth_cost())) {
 		return false;
 	}
 
@@ -5764,12 +4860,12 @@ void country_game_data::change_military_unit_recruitment_count(const military_un
 
 			const int cost_change = cost - old_commodity_costs.find(commodity)->second;
 
-			this->change_stored_commodity(commodity, -cost_change);
+			this->get_economy()->change_stored_commodity(commodity, -cost_change);
 		}
 
 		if (military_unit_type->get_wealth_cost() > 0) {
 			const int wealth_cost_change = this->get_military_unit_type_wealth_cost(military_unit_type, count) - this->get_military_unit_type_wealth_cost(military_unit_type, old_count);
-			this->change_wealth(-wealth_cost_change);
+			this->get_economy()->change_wealth(-wealth_cost_change);
 		}
 	}
 }
@@ -5790,7 +4886,7 @@ bool country_game_data::can_increase_military_unit_recruitment(const military_un
 
 		const int cost_change = cost - old_commodity_costs.find(commodity)->second;
 
-		if (this->get_stored_commodity(commodity) < cost_change) {
+		if (this->get_economy()->get_stored_commodity(commodity) < cost_change) {
 			return false;
 		}
 	}
@@ -5798,7 +4894,7 @@ bool country_game_data::can_increase_military_unit_recruitment(const military_un
 	if (military_unit_type->get_wealth_cost() > 0) {
 		const int wealth_cost_change = this->get_military_unit_type_wealth_cost(military_unit_type, new_count) - this->get_military_unit_type_wealth_cost(military_unit_type, old_count);
 
-		if (this->get_wealth_with_credit() < wealth_cost_change) {
+		if (this->get_economy()->get_wealth_with_credit() < wealth_cost_change) {
 			return false;
 		}
 	}
@@ -5866,7 +4962,7 @@ int country_game_data::get_military_unit_type_wealth_cost(const military_unit_ty
 		wealth_cost = std::max(wealth_cost, 1);
 	}
 
-	return this->get_inflated_value(wealth_cost);
+	return this->get_economy()->get_inflated_value(wealth_cost);
 }
 
 commodity_map<int> country_game_data::get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const
@@ -6004,9 +5100,9 @@ bool country_game_data::create_transporter(const transporter_type *transporter_t
 void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
 {
 	if (transporter->is_ship()) {
-		this->change_sea_transport_capacity(transporter->get_cargo());
+		this->get_economy()->change_sea_transport_capacity(transporter->get_cargo());
 	} else {
-		this->change_land_transport_capacity(transporter->get_cargo());
+		this->get_economy()->change_land_transport_capacity(transporter->get_cargo());
 	}
 
 	this->add_unit_name(transporter->get_name());
@@ -6018,9 +5114,9 @@ void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
 void country_game_data::remove_transporter(transporter *transporter)
 {
 	if (transporter->is_ship()) {
-		this->change_sea_transport_capacity(-transporter->get_cargo());
+		this->get_economy()->change_sea_transport_capacity(-transporter->get_cargo());
 	} else {
-		this->change_land_transport_capacity(-transporter->get_cargo());
+		this->get_economy()->change_land_transport_capacity(-transporter->get_cargo());
 	}
 
 	this->remove_unit_name(transporter->get_name());
@@ -6059,12 +5155,12 @@ void country_game_data::change_transporter_recruitment_count(const transporter_t
 
 			const int cost_change = cost - old_commodity_costs.find(commodity)->second;
 
-			this->change_stored_commodity(commodity, -cost_change);
+			this->get_economy()->change_stored_commodity(commodity, -cost_change);
 		}
 
 		if (transporter_type->get_wealth_cost() > 0) {
 			const int wealth_cost_change = this->get_transporter_type_wealth_cost(transporter_type, count) - this->get_transporter_type_wealth_cost(transporter_type, old_count);
-			this->change_wealth(-wealth_cost_change);
+			this->get_economy()->change_wealth(-wealth_cost_change);
 		}
 	}
 }
@@ -6085,7 +5181,7 @@ bool country_game_data::can_increase_transporter_recruitment(const transporter_t
 
 		const int cost_change = cost - old_commodity_costs.find(commodity)->second;
 
-		if (this->get_stored_commodity(commodity) < cost_change) {
+		if (this->get_economy()->get_stored_commodity(commodity) < cost_change) {
 			return false;
 		}
 	}
@@ -6093,7 +5189,7 @@ bool country_game_data::can_increase_transporter_recruitment(const transporter_t
 	if (transporter_type->get_wealth_cost() > 0) {
 		const int wealth_cost_change = this->get_transporter_type_wealth_cost(transporter_type, new_count) - this->get_transporter_type_wealth_cost(transporter_type, old_count);
 
-		if (this->get_wealth_with_credit() < wealth_cost_change) {
+		if (this->get_economy()->get_wealth_with_credit() < wealth_cost_change) {
 			return false;
 		}
 	}
@@ -6153,7 +5249,7 @@ int country_game_data::get_transporter_type_wealth_cost(const transporter_type *
 		wealth_cost = std::max(wealth_cost, 1);
 	}
 
-	return this->get_inflated_value(wealth_cost);
+	return this->get_economy()->get_inflated_value(wealth_cost);
 }
 
 commodity_map<int> country_game_data::get_transporter_type_commodity_costs(const transporter_type *transporter_type, const int quantity) const
@@ -6306,7 +5402,7 @@ void country_game_data::set_output_modifier(const centesimal_int &value)
 
 	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
 		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			this->change_commodity_output(production_type->get_output_commodity(), -building_slot->get_production_type_output(production_type));
+			this->get_economy()->change_commodity_output(production_type->get_output_commodity(), -building_slot->get_production_type_output(production_type));
 		}
 	}
 
@@ -6314,11 +5410,11 @@ void country_game_data::set_output_modifier(const centesimal_int &value)
 
 	for (const qunique_ptr<country_building_slot> &building_slot : this->building_slots) {
 		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			this->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
+			this->get_economy()->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
 		}
 	}
 
-	this->calculate_site_commodity_outputs();
+	this->get_economy()->calculate_site_commodity_outputs();
 
 	if (game::get()->is_running()) {
 		emit output_modifier_changed();
@@ -6333,7 +5429,7 @@ void country_game_data::set_resource_output_modifier(const int value)
 
 	this->resource_output_modifier = value;
 
-	this->calculate_site_commodity_outputs();
+	this->get_economy()->calculate_site_commodity_outputs();
 
 	if (game::get()->is_running()) {
 		emit resource_output_modifier_changed();
@@ -6352,7 +5448,7 @@ void country_game_data::set_industrial_output_modifier(const int value)
 				continue;
 			}
 
-			this->change_commodity_output(production_type->get_output_commodity(), -building_slot->get_production_type_output(production_type));
+			this->get_economy()->change_commodity_output(production_type->get_output_commodity(), -building_slot->get_production_type_output(production_type));
 		}
 	}
 
@@ -6364,7 +5460,7 @@ void country_game_data::set_industrial_output_modifier(const int value)
 				continue;
 			}
 
-			this->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
+			this->get_economy()->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
 		}
 	}
 
@@ -6385,7 +5481,7 @@ void country_game_data::set_commodity_output_modifier(const commodity *commodity
 				continue;
 			}
 
-			this->change_commodity_output(production_type->get_output_commodity(), -building_slot->get_production_type_output(production_type));
+			this->get_economy()->change_commodity_output(production_type->get_output_commodity(), -building_slot->get_production_type_output(production_type));
 		}
 	}
 
@@ -6401,11 +5497,11 @@ void country_game_data::set_commodity_output_modifier(const commodity *commodity
 				continue;
 			}
 
-			this->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
+			this->get_economy()->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
 		}
 	}
 
-	this->calculate_site_commodity_output(commodity);
+	this->get_economy()->calculate_site_commodity_output(commodity);
 }
 
 void country_game_data::set_capital_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
@@ -6436,9 +5532,9 @@ void country_game_data::set_throughput_modifier(const int value)
 			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
 			for (const auto &[input_commodity, input_value] : inputs) {
 				if (input_commodity->is_storable()) {
-					this->change_stored_commodity(input_commodity, input_value);
+					this->get_economy()->change_stored_commodity(input_commodity, input_value);
 				}
-				this->change_commodity_input(input_commodity, -input_value);
+				this->get_economy()->change_commodity_input(input_commodity, -input_value);
 			}
 		}
 	}
@@ -6450,9 +5546,9 @@ void country_game_data::set_throughput_modifier(const int value)
 			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
 			for (const auto &[input_commodity, input_value] : inputs) {
 				if (input_commodity->is_storable()) {
-					this->change_stored_commodity(input_commodity, -input_value);
+					this->get_economy()->change_stored_commodity(input_commodity, -input_value);
 				}
-				this->change_commodity_input(input_commodity, input_value);
+				this->get_economy()->change_commodity_input(input_commodity, input_value);
 			}
 		}
 	}
@@ -6477,9 +5573,9 @@ void country_game_data::set_commodity_throughput_modifier(const commodity *commo
 			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
 			for (const auto &[input_commodity, input_value] : inputs) {
 				if (input_commodity->is_storable()) {
-					this->change_stored_commodity(input_commodity, input_value);
+					this->get_economy()->change_stored_commodity(input_commodity, input_value);
 				}
-				this->change_commodity_input(input_commodity, -input_value);
+				this->get_economy()->change_commodity_input(input_commodity, -input_value);
 			}
 		}
 	}
@@ -6499,9 +5595,9 @@ void country_game_data::set_commodity_throughput_modifier(const commodity *commo
 			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
 			for (const auto &[input_commodity, input_value] : inputs) {
 				if (input_commodity->is_storable()) {
-					this->change_stored_commodity(input_commodity, -input_value);
+					this->get_economy()->change_stored_commodity(input_commodity, -input_value);
 				}
-				this->change_commodity_input(input_commodity, input_value);
+				this->get_economy()->change_commodity_input(input_commodity, input_value);
 			}
 		}
 	}

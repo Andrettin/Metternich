@@ -3,6 +3,7 @@
 #include "script/modifier_effect/modifier_effect.h"
 
 #include "character/character.h"
+#include "database/database_util.h"
 #include "script/modifier_effect/advisor_cost_modifier_effect.h"
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
@@ -278,7 +279,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		throw std::runtime_error(std::format("Invalid scope modifier effect: \"{}\".", tag));
 	}
 
-	database::process_gsml_data(modifier_effect, scope);
+	database_util::process_gsml_data(modifier_effect, scope);
 
 	return modifier_effect;
 }

@@ -22,17 +22,17 @@ public:
 
 	virtual void do_assignment_effect(const scope_type *scope) const override
 	{
-		scope->get_game_data()->set_wealth(this->quantity);
+		scope->get_game_data()->get_economy()->set_wealth(this->quantity);
 	}
 
 	virtual void do_addition_effect(const scope_type *scope) const override
 	{
-		scope->get_game_data()->change_wealth(this->quantity);
+		scope->get_game_data()->get_economy()->change_wealth(this->quantity);
 	}
 
 	virtual void do_subtraction_effect(const scope_type *scope) const override
 	{
-		scope->get_game_data()->change_wealth(-this->quantity);
+		scope->get_game_data()->get_economy()->change_wealth(-this->quantity);
 	}
 
 	virtual std::string get_assignment_string() const override

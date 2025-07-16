@@ -5,7 +5,7 @@ ListView {
 	id: trade_orders_view
 	boundsBehavior: Flickable.StopAtBounds
 	clip: true
-	model: country_game_data.tradeable_commodities
+	model: country_game_data.economy.tradeable_commodities
 	delegate: Item {
 		width: trade_orders_view.width
 		height: commodity_icon.height + 4 * scale_factor * 2
@@ -67,11 +67,11 @@ ListView {
 			width: 48 * scale_factor
 			height: 24 * scale_factor
 			highlighted: country_game_data.offers.length > 0 && country_game_data.get_offer(commodity) > 0
-			visible: country_game_data.stored_commodities.length > 0 && country_game_data.get_stored_commodity(commodity)
+			visible: country_game_data.economy.stored_commodities.length > 0 && country_game_data.economy.get_stored_commodity(commodity)
 			
 			onClicked: {
 				if (country_game_data.get_offer(commodity) === 0) {
-					country_game_data.set_offer(commodity, country_game_data.get_stored_commodity(commodity))
+					country_game_data.set_offer(commodity, country_game_data.economy.get_stored_commodity(commodity))
 				} else {
 					country_game_data.set_offer(commodity, 0)
 				}
@@ -121,7 +121,7 @@ ListView {
 			
 			SmallText {
 				id: available_label
-				text: number_string(country_game_data.get_stored_commodity(commodity))
+				text: number_string(country_game_data.economy.get_stored_commodity(commodity))
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.right: parent.right
 				anchors.rightMargin: 32 * scale_factor
@@ -152,7 +152,7 @@ ListView {
 				anchors.right: parent.right
 				anchors.rightMargin: 16 * scale_factor
 				value: country_game_data.bids.length > 0 && is_bid ? country_game_data.get_bid(commodity) : (country_game_data.offers.length > 0 && is_offer ? country_game_data.get_offer(commodity) : 0)
-				max_value: is_bid ? 10 : Math.max(10, country_game_data.stored_commodities.length > 0 ? country_game_data.get_stored_commodity(commodity) : 0)
+				max_value: is_bid ? 10 : Math.max(10, country_game_data.economy.stored_commodities.length > 0 ? country_game_data.economy.get_stored_commodity(commodity) : 0)
 				visible: is_bid || is_offer
 				
 				readonly property bool is_bid: country_game_data.bids.length > 0 && country_game_data.get_bid(commodity) > 0

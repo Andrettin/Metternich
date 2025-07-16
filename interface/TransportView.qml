@@ -32,7 +32,7 @@ Item {
 		width: (176 * scale_factor + 32 * scale_factor + 16 * scale_factor) * columns + spacing * 2
 		
 		Repeater {
-			model: country_game_data ? country_game_data.transportable_commodity_outputs : []
+			model: country_game_data ? country_game_data.economy.transportable_commodity_outputs : []
 			
 			Item {
 				width: commodity_transport_slider.width + 16 * scale_factor + commodity_icon.width
@@ -40,7 +40,7 @@ Item {
 				
 				readonly property var commodity: model.modelData.key
 				readonly property int transportable_output: model.modelData.value
-				property int transported_output: country_game_data.get_transported_commodity_output(commodity)
+				property int transported_output: country_game_data.economy.get_transported_commodity_output(commodity)
 				
 				Image {
 					id: commodity_icon
@@ -73,15 +73,15 @@ Item {
 					
 					onDecremented: {
 						if (transported_output >= 0) {
-							country_game_data.change_transported_commodity_output(commodity, -1)
-							transported_output = country_game_data.get_transported_commodity_output(commodity)
+							country_game_data.economy.change_transported_commodity_output(commodity, -1)
+							transported_output = country_game_data.economy.get_transported_commodity_output(commodity)
 						}
 					}
 					
 					onIncremented: {
 						if (transported_output < transportable_output) {
-							country_game_data.change_transported_commodity_output(commodity, 1)
-							transported_output = country_game_data.get_transported_commodity_output(commodity)
+							country_game_data.economy.change_transported_commodity_output(commodity, 1)
+							transported_output = country_game_data.economy.get_transported_commodity_output(commodity)
 						}
 					}
 					
@@ -92,8 +92,8 @@ Item {
 						target_value = Math.max(target_value, 0)
 						
 						if (target_value !== transported_output) {
-							country_game_data.change_transported_commodity_output(commodity, target_value - transported_output)
-							transported_output = country_game_data.get_transported_commodity_output(commodity)
+							country_game_data.economy.change_transported_commodity_output(commodity, target_value - transported_output)
+							transported_output = country_game_data.economy.get_transported_commodity_output(commodity)
 						}
 						
 						status_text = commodity.name + ": " + transported_output + "/" + transportable_output

@@ -23,17 +23,17 @@ public:
 
 	virtual void do_assignment_effect(const country *scope) const override
 	{
-		scope->get_game_data()->set_inflation(this->quantity);
+		scope->get_game_data()->get_economy()->set_inflation(this->quantity);
 	}
 
 	virtual void do_addition_effect(const country *scope) const override
 	{
-		scope->get_game_data()->change_inflation(this->quantity);
+		scope->get_game_data()->get_economy()->change_inflation(this->quantity);
 	}
 
 	virtual void do_subtraction_effect(const country *scope) const override
 	{
-		scope->get_game_data()->change_inflation(-this->quantity);
+		scope->get_game_data()->get_economy()->change_inflation(-this->quantity);
 	}
 
 	virtual std::string get_assignment_string() const override

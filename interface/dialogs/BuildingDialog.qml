@@ -53,7 +53,7 @@ DialogBase {
 		SmallText {
 			id: storage_capacity_label
 			anchors.horizontalCenter: parent.horizontalCenter
-			text: "Storage Capacity: " + number_string(country_game_data.storage_capacity)
+			text: "Storage Capacity: " + number_string(country_game_data.economy.storage_capacity)
 			visible: building && building.warehouse
 		}
 		
@@ -71,7 +71,7 @@ DialogBase {
 			visible: building && building.warehouse
 			
 			Repeater {
-				model: country_game_data.stored_commodities
+				model: country_game_data.economy.stored_commodities
 				
 				Item {
 					width: 64 * scale_factor
@@ -441,7 +441,7 @@ DialogBase {
 							
 							NormalText {
 								id: input_wealth_label
-								text: "$" + number_string(country_game_data.get_inflated_value(production_type.input_wealth))
+								text: "$" + number_string(country_game_data.economy.get_inflated_value(production_type.input_wealth))
 								anchors.verticalCenter: parent.verticalCenter
 								anchors.horizontalCenter: parent.horizontalCenter
 							}
@@ -668,7 +668,7 @@ DialogBase {
 							
 							NormalText {
 								id: input_wealth_label
-								text: "$" + number_string(country_game_data.get_inflated_value(education_type.input_wealth))
+								text: "$" + number_string(country_game_data.economy.get_inflated_value(education_type.input_wealth))
 								anchors.verticalCenter: parent.verticalCenter
 								anchors.horizontalCenter: parent.horizontalCenter
 							}
@@ -857,7 +857,7 @@ DialogBase {
 				str += " + "
 			}
 			
-			str += "$" + number_string(country_game_data.get_inflated_value(production_type.input_wealth))
+			str += "$" + number_string(country_game_data.economy.get_inflated_value(production_type.input_wealth))
 		}
 		
 		str += " makes " + production_type.output_value + " " + production_type.output_commodity.name
@@ -888,7 +888,7 @@ DialogBase {
 				str += " + "
 			}
 			
-			str += "$" + number_string(country_game_data.get_inflated_value(education_type.input_wealth))
+			str += "$" + number_string(country_game_data.economy.get_inflated_value(education_type.input_wealth))
 		}
 		
 		str += " makes 1 " + education_type.output_population_type.name

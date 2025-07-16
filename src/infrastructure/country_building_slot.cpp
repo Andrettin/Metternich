@@ -3,6 +3,7 @@
 #include "infrastructure/country_building_slot.h"
 
 #include "country/country.h"
+#include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
 #include "database/defines.h"
@@ -292,7 +293,7 @@ int country_building_slot::get_production_type_input_wealth(const production_typ
 		return 0;
 	}
 
-	return this->get_country()->get_game_data()->get_inflated_value(production_type->get_input_wealth() * employed_capacity);
+	return this->get_country()->get_game_data()->get_economy()->get_inflated_value(production_type->get_input_wealth() * employed_capacity);
 }
 
 centesimal_int country_building_slot::get_production_type_output(const production_type *production_type) const
@@ -344,20 +345,20 @@ void country_building_slot::change_production(const production_type *production_
 		const int input_change = new_input - old_input;
 
 		if (input_commodity->is_storable() && change_input_storage) {
-			country_game_data->change_stored_commodity(input_commodity, -input_change);
+			country_game_data->get_economy()->change_stored_commodity(input_commodity, -input_change);
 		}
-		country_game_data->change_commodity_input(input_commodity, input_change);
+		country_game_data->get_economy()->change_commodity_input(input_commodity, input_change);
 	}
 
 	const int new_input_wealth = this->get_production_type_input_wealth(production_type);
 	const int input_wealth_change = new_input_wealth - old_input_wealth;
 	if (change_input_storage) {
-		country_game_data->change_wealth(-input_wealth_change);
+		country_game_data->get_economy()->change_wealth(-input_wealth_change);
 	}
-	country_game_data->change_wealth_income(-input_wealth_change);
+	country_game_data->get_economy()->change_wealth_income(-input_wealth_change);
 
 	const centesimal_int new_output = this->get_production_type_output(production_type);
-	country_game_data->change_commodity_output(production_type->get_output_commodity(), new_output - old_output);
+	country_game_data->get_economy()->change_commodity_output(production_type->get_output_commodity(), new_output - old_output);
 
 }
 
@@ -374,18 +375,18 @@ bool country_building_slot::can_increase_production(const production_type *produ
 
 	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
 		if (input_commodity->is_storable()) {
-			if (country_game_data->get_stored_commodity(input_commodity) < input_value) {
+			if (country_game_data->get_economy()->get_stored_commodity(input_commodity) < input_value) {
 				return false;
 			}
 		} else {
 			//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
-			if (country_game_data->get_net_commodity_output(input_commodity) < input_value) {
+			if (country_game_data->get_economy()->get_net_commodity_output(input_commodity) < input_value) {
 				return false;
 			}
 		}
 	}
 
-	if (production_type->get_input_wealth() != 0 && country_game_data->get_wealth_with_credit() < country_game_data->get_inflated_value(production_type->get_input_wealth())) {
+	if (production_type->get_input_wealth() != 0 && country_game_data->get_economy()->get_wealth_with_credit() < country_game_data->get_economy()->get_inflated_value(production_type->get_input_wealth())) {
 		return false;
 	}
 
@@ -495,7 +496,7 @@ int country_building_slot::get_education_type_input_wealth(const education_type 
 		return 0;
 	}
 
-	return this->get_country()->get_game_data()->get_inflated_value(education_type->get_input_wealth() * employed_capacity);
+	return this->get_country()->get_game_data()->get_economy()->get_inflated_value(education_type->get_input_wealth() * employed_capacity);
 }
 
 int country_building_slot::get_education_type_output(const education_type *education_type) const
@@ -526,17 +527,17 @@ void country_building_slot::change_education(const education_type *education_typ
 		const int input_change = new_input - old_input;
 
 		if (input_commodity->is_storable() && change_input_storage) {
-			country_game_data->change_stored_commodity(input_commodity, -input_change);
+			country_game_data->get_economy()->change_stored_commodity(input_commodity, -input_change);
 		}
-		country_game_data->change_commodity_input(input_commodity, input_change);
+		country_game_data->get_economy()->change_commodity_input(input_commodity, input_change);
 	}
 
 	const int new_input_wealth = this->get_education_type_input_wealth(education_type);
 	const int input_wealth_change = new_input_wealth - old_input_wealth;
 	if (change_input_storage) {
-		country_game_data->change_wealth(-input_wealth_change);
+		country_game_data->get_economy()->change_wealth(-input_wealth_change);
 	}
-	country_game_data->change_wealth_income(-input_wealth_change);
+	country_game_data->get_economy()->change_wealth_income(-input_wealth_change);
 
 	const int new_output = this->get_education_type_output(education_type);
 	const int output_change = new_output - old_output;
@@ -557,18 +558,18 @@ bool country_building_slot::can_increase_education(const education_type *educati
 
 	for (const auto &[input_commodity, input_value] : education_type->get_input_commodities()) {
 		if (input_commodity->is_storable()) {
-			if (country_game_data->get_stored_commodity(input_commodity) < input_value) {
+			if (country_game_data->get_economy()->get_stored_commodity(input_commodity) < input_value) {
 				return false;
 			}
 		} else {
 			//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
-			if (country_game_data->get_net_commodity_output(input_commodity) < input_value) {
+			if (country_game_data->get_economy()->get_net_commodity_output(input_commodity) < input_value) {
 				return false;
 			}
 		}
 	}
 
-	if (education_type->get_input_wealth() != 0 && country_game_data->get_wealth_with_credit() < country_game_data->get_inflated_value(education_type->get_input_wealth())) {
+	if (education_type->get_input_wealth() != 0 && country_game_data->get_economy()->get_wealth_with_credit() < country_game_data->get_economy()->get_inflated_value(education_type->get_input_wealth())) {
 		return false;
 	}
 

@@ -37,31 +37,31 @@ public:
 
 	virtual void do_assignment_effect(const country *scope) const override
 	{
-		scope->get_game_data()->set_stored_commodity(this->commodity, this->get_quantity(scope));
+		scope->get_game_data()->get_economy()->set_stored_commodity(this->commodity, this->get_quantity(scope));
 	}
 
 	virtual void do_addition_effect(const country *scope) const override
 	{
 		int change = this->get_quantity(scope);
 
-		const int storage = scope->get_game_data()->get_stored_commodity(this->commodity);
+		const int storage = scope->get_game_data()->get_economy()->get_stored_commodity(this->commodity);
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
 
-		scope->get_game_data()->change_stored_commodity(this->commodity, change);
+		scope->get_game_data()->get_economy()->change_stored_commodity(this->commodity, change);
 	}
 
 	virtual void do_subtraction_effect(const country *scope) const override
 	{
 		int change = -this->get_quantity(scope);
 
-		const int storage = scope->get_game_data()->get_stored_commodity(this->commodity);
+		const int storage = scope->get_game_data()->get_economy()->get_stored_commodity(this->commodity);
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
 
-		scope->get_game_data()->change_stored_commodity(this->commodity, change);
+		scope->get_game_data()->get_economy()->change_stored_commodity(this->commodity, change);
 	}
 
 	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

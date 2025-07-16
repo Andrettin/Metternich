@@ -26,7 +26,11 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->produces_commodity(this->commodity);
+		if constexpr (std::is_same_v<scope_type, country>) {
+			return scope->get_game_data()->get_economy()->produces_commodity(this->commodity);
+		} else {
+			return scope->get_game_data()->produces_commodity(this->commodity);
+		}
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

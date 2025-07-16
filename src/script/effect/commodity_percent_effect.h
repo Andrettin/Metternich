@@ -31,7 +31,7 @@ public:
 
 	int get_quantity(const country *scope) const
 	{
-		const int stored_commodity = scope->get_game_data()->get_stored_commodity(this->commodity);
+		const int stored_commodity = scope->get_game_data()->get_economy()->get_stored_commodity(this->commodity);
 		return stored_commodity * this->percent / 100;
 	}
 
@@ -41,7 +41,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->set_stored_commodity(this->commodity, this->get_quantity(scope));
+		scope->get_game_data()->get_economy()->set_stored_commodity(this->commodity, this->get_quantity(scope));
 	}
 
 	virtual void do_addition_effect(const country *scope) const override
@@ -50,7 +50,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->change_stored_commodity(this->commodity, this->get_quantity(scope));
+		scope->get_game_data()->get_economy()->change_stored_commodity(this->commodity, this->get_quantity(scope));
 	}
 
 	virtual void do_subtraction_effect(const country *scope) const override
@@ -59,7 +59,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->change_stored_commodity(this->commodity, this->get_quantity(scope) * -1);
+		scope->get_game_data()->get_economy()->change_stored_commodity(this->commodity, this->get_quantity(scope) * -1);
 	}
 
 	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

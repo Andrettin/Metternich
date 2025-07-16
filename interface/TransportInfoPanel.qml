@@ -27,7 +27,7 @@ Rectangle {
 		anchors.topMargin: 96 * scale_factor
 		name: "Available Land Transport Capacity"
 		icon_identifier: "road"
-		count: country_game_data.land_transport_capacity //FIXME: should be the available capacity, not the total capacity
+		count: country_game_data.economy.land_transport_capacity //FIXME: should be the available capacity, not the total capacity
 	}
 	
 	IndustryCounter {
@@ -37,7 +37,7 @@ Rectangle {
 		anchors.topMargin: 16 * scale_factor
 		name: "Available Sea Transport Capacity"
 		icon_identifier: "anchor"
-		count: country_game_data.sea_transport_capacity //FIXME: should be the available capacity, not the total capacity
+		count: country_game_data.economy.sea_transport_capacity //FIXME: should be the available capacity, not the total capacity
 	}
 	
 	IconButton {

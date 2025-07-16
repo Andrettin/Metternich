@@ -27,7 +27,7 @@ Rectangle {
 		anchors.topMargin: 96 * scale_factor
 		name: "Available Labor"
 		icon_identifier: "labor"
-		count: (country_game_data.commodity_outputs && country_game_data.commodity_inputs) ? (country_game_data.get_commodity_output("labor") - country_game_data.get_commodity_input("labor")) : 0 //the conditional is there to make the counter be updated when the labor output or input changes
+		count: (country_game_data.economy.commodity_outputs && country_game_data.economy.commodity_inputs) ? (country_game_data.economy.get_commodity_output("labor") - country_game_data.economy.get_commodity_input("labor")) : 0 //the conditional is there to make the counter be updated when the labor output or input changes
 	}
 	
 	ListView {

@@ -29,7 +29,7 @@ Rectangle {
 		anchors.topMargin: 16 * scale_factor
 		name: advisor_commodity.name
 		icon_identifier: advisor_commodity.icon.identifier
-		count: country_game_data.stored_commodities.length > 0 ? country_game_data.get_stored_commodity(advisor_commodity) : 0
+		count: country_game_data.economy.stored_commodities.length > 0 ? country_game_data.economy.get_stored_commodity(advisor_commodity) : 0
 	}
 	
 	SmallText {

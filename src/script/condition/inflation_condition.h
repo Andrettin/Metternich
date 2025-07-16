@@ -22,7 +22,7 @@ public:
 
 	virtual int get_scope_value(const country *scope) const override
 	{
-		return scope->get_game_data()->get_inflation().to_int();
+		return scope->get_game_data()->get_economy()->get_inflation().to_int();
 	}
 
 	virtual std::string get_value_name() const override

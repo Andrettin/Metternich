@@ -37,6 +37,7 @@ set(country_SRCS
 	src/country/country.cpp
 	src/country/country_ai.cpp
 	src/country/country_container.cpp
+	src/country/country_economy.cpp
 	src/country/country_game_data.cpp
 	src/country/country_history.cpp
 	src/country/country_rank.cpp
@@ -348,6 +349,7 @@ set(country_HDRS
 	src/country/country.h
 	src/country/country_ai.h
 	src/country/country_container.h
+	src/country/country_economy.h
 	src/country/country_game_data.h
 	src/country/country_history.h
 	src/country/country_rank.h

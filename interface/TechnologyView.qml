@@ -112,7 +112,7 @@ Item {
 								text: "$" + number_string(wealth_cost)
 								visible: wealth_cost > 0
 								
-								readonly property var wealth_cost: country_game_data.get_inflated_value(technology.get_wealth_cost_for_country(country))
+								readonly property var wealth_cost: country_game_data.economy.get_inflated_value(technology.get_wealth_cost_for_country(country))
 							}
 							
 							Repeater {

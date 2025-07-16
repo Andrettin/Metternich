@@ -3,6 +3,7 @@
 #include "infrastructure/settlement_building_slot.h"
 
 #include "country/country.h"
+#include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
 #include "database/defines.h"
@@ -212,12 +213,12 @@ bool settlement_building_slot::can_build_wonder(const metternich::wonder *wonder
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
 	const int wealth_cost = wonder->get_wealth_cost_for_country(this->get_country());
-	if (wealth_cost > 0 && country_game_data->get_inflated_value(wealth_cost) > country_game_data->get_wealth_with_credit()) {
+	if (wealth_cost > 0 && country_game_data->get_economy()->get_inflated_value(wealth_cost) > country_game_data->get_economy()->get_wealth_with_credit()) {
 		return false;
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_country(this->get_country())) {
-		if (cost > country_game_data->get_stored_commodity(commodity)) {
+		if (cost > country_game_data->get_economy()->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -234,11 +235,11 @@ void settlement_building_slot::build_wonder(const metternich::wonder *wonder)
 	country_game_data *country_game_data = this->get_country()->get_game_data();
 	const int wealth_cost = wonder->get_wealth_cost_for_country(this->get_country());
 	if (wealth_cost > 0) {
-		country_game_data->change_wealth_inflated(-wealth_cost);
+		country_game_data->get_economy()->change_wealth_inflated(-wealth_cost);
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_country(this->get_country())) {
-		country_game_data->change_stored_commodity(commodity, -cost);
+		country_game_data->get_economy()->change_stored_commodity(commodity, -cost);
 	}
 
 	this->set_under_construction_wonder(wonder);
@@ -250,11 +251,11 @@ void settlement_building_slot::cancel_construction()
 		country_game_data *country_game_data = this->get_country()->get_game_data();
 		const int wealth_cost = this->get_under_construction_wonder()->get_wealth_cost_for_country(this->get_country());
 		if (wealth_cost > 0) {
-			country_game_data->change_wealth(wealth_cost);
+			country_game_data->get_economy()->change_wealth(wealth_cost);
 		}
 
 		for (const auto &[commodity, cost] : this->get_under_construction_wonder()->get_commodity_costs_for_country(this->get_country())) {
-			country_game_data->change_stored_commodity(commodity, cost);
+			country_game_data->get_economy()->change_stored_commodity(commodity, cost);
 		}
 
 		this->set_under_construction_wonder(nullptr);

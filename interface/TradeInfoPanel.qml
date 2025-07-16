@@ -22,7 +22,7 @@ Rectangle {
 	
 	SmallText {
 		id: inflation_label
-		text: "Inflation: +" + country_game_data.inflation + "%"
+		text: "Inflation: +" + country_game_data.economy.inflation + "%"
 		anchors.top: parent.top
 		anchors.topMargin: 24 * scale_factor
 		anchors.left: parent.left

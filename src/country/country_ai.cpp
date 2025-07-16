@@ -3,6 +3,7 @@
 #include "country/country_ai.h"
 
 #include "country/country.h"
+#include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/idea_type.h"
 #include "country/journal_entry.h"
@@ -114,7 +115,7 @@ void country_ai::do_turn()
 		}
 	}
 
-	this->get_game_data()->assign_transport_orders();
+	this->get_game_data()->get_economy()->assign_transport_orders();
 	this->assign_trade_orders();
 }
 
@@ -222,8 +223,8 @@ void country_ai::assign_trade_orders()
 		return;
 	}
 
-	for (const auto &[commodity, value] : this->get_game_data()->get_stored_commodities()) {
-		if (!this->get_game_data()->can_trade_commodity(commodity)) {
+	for (const auto &[commodity, value] : this->get_game_data()->get_economy()->get_stored_commodities()) {
+		if (!this->get_game_data()->get_economy()->can_trade_commodity(commodity)) {
 			continue;
 		}
 

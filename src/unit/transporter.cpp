@@ -3,6 +3,7 @@
 #include "unit/transporter.h"
 
 #include "country/country.h"
+#include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
@@ -85,9 +86,9 @@ void transporter::set_type(const transporter_type *type)
 
 	if (this->get_country() != nullptr) {
 		if (this->is_ship()) {
-			this->get_country()->get_game_data()->change_sea_transport_capacity(-this->get_cargo());
+			this->get_country()->get_game_data()->get_economy()->change_sea_transport_capacity(-this->get_cargo());
 		} else {
-			this->get_country()->get_game_data()->change_land_transport_capacity(-this->get_cargo());
+			this->get_country()->get_game_data()->get_economy()->change_land_transport_capacity(-this->get_cargo());
 		}
 	}
 
@@ -108,9 +109,9 @@ void transporter::set_type(const transporter_type *type)
 
 	if (this->get_country() != nullptr) {
 		if (this->is_ship()) {
-			this->get_country()->get_game_data()->change_sea_transport_capacity(this->get_cargo());
+			this->get_country()->get_game_data()->get_economy()->change_sea_transport_capacity(this->get_cargo());
 		} else {
-			this->get_country()->get_game_data()->change_land_transport_capacity(this->get_cargo());
+			this->get_country()->get_game_data()->get_economy()->change_land_transport_capacity(this->get_cargo());
 		}
 	}
 
