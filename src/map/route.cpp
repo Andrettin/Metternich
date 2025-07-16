@@ -6,6 +6,15 @@
 
 namespace metternich {
 
+route::route(const std::string &identifier) : named_data_entry(identifier)
+{
+	this->reset_game_data();
+}
+
+route::~route()
+{
+}
+
 void route::check() const
 {
 	if (!this->get_color().isValid()) {

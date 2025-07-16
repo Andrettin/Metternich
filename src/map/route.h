@@ -57,10 +57,8 @@ private:
 	static inline color_map<route *> routes_by_color;
 
 public:
-	explicit route(const std::string &identifier) : named_data_entry(identifier)
-	{
-		this->reset_game_data();
-	}
+	explicit route(const std::string &identifier);
+	~route();
 
 	virtual void check() const override;
 	virtual data_entry_history *get_history_base() override;
@@ -71,7 +69,6 @@ public:
 	}
 
 	virtual void reset_history() override;
-
 
 	void reset_game_data();
 

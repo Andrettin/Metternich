@@ -2,6 +2,7 @@
 
 #include "technology/technology_subcategory.h"
 
+#include "technology/technology.h"
 #include "technology/technology_category.h"
 #include "util/container_util.h"
 #include "util/log_util.h"

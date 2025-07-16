@@ -14,6 +14,10 @@ Q_MOC_INCLUDE("map/site_map_data.h")
 Q_MOC_INCLUDE("map/terrain_type.h")
 Q_MOC_INCLUDE("map/world.h")
 
+namespace archimedes {
+	enum class gender;
+}
+
 namespace metternich {
 
 class celestial_body_type;

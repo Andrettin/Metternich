@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/resource_container.h"
 #include "map/province_container.h"
 #include "util/fractional_int.h"
 #include "util/georectangle.h"

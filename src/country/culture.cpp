@@ -6,6 +6,7 @@
 #include "infrastructure/building_class.h"
 #include "population/population_class.h"
 #include "script/condition/and_condition.h"
+#include "species/phenotype.h"
 #include "species/species.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"

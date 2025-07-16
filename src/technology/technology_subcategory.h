@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("technology/technology_category.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
