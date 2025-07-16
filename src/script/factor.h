@@ -29,6 +29,7 @@ public:
 
 	void process_gsml_property(const gsml_property &property);
 	void process_gsml_scope(const gsml_data &scope);
+	void process_gsml_data(const gsml_data &data);
 	void check() const;
 
 	void set_base_value(centesimal_int &&value)

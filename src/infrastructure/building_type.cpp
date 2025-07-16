@@ -6,7 +6,6 @@
 #include "country/country_game_data.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
-#include "database/database_util.h"
 #include "economy/commodity.h"
 #include "economy/production_type.h"
 #include "infrastructure/building_class.h"
@@ -81,39 +80,39 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "cost_factor") {
 		auto factor = std::make_unique<metternich::factor<country>>(100);
-		database_util::process_gsml_data(factor, scope);
+		factor->process_gsml_data(scope);
 		this->cost_factor = std::move(factor);
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
-		database_util::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "settlement_conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
-		database_util::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->settlement_conditions = std::move(conditions);
 	} else if (tag == "province_conditions") {
 		auto conditions = std::make_unique<and_condition<province>>();
-		database_util::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->province_conditions = std::move(conditions);
 	} else if (tag == "build_conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
-		database_util::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->build_conditions = std::move(conditions);
 	} else if (tag == "settlement_modifier") {
 		this->settlement_modifier = std::make_unique<modifier<const site>>();
-		database_util::process_gsml_data(this->settlement_modifier, scope);
+		this->settlement_modifier->process_gsml_data(scope);
 	} else if (tag == "province_modifier") {
 		this->province_modifier = std::make_unique<modifier<const province>>();
-		database_util::process_gsml_data(this->province_modifier, scope);
+		this->province_modifier->process_gsml_data(scope);
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
-		database_util::process_gsml_data(this->country_modifier, scope);
+		this->country_modifier->process_gsml_data(scope);
 	} else if (tag == "weighted_country_modifier") {
 		this->weighted_country_modifier = std::make_unique<modifier<const country>>();
-		database_util::process_gsml_data(this->weighted_country_modifier, scope);
+		this->weighted_country_modifier->process_gsml_data(scope);
 	} else if (tag == "effects") {
 		auto effect_list = std::make_unique<metternich::effect_list<const site>>();
-		database_util::process_gsml_data(effect_list, scope);
+		effect_list->process_gsml_data(scope);
 		this->effects = std::move(effect_list);
 	} else {
 		data_entry::process_gsml_scope(scope);

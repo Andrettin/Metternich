@@ -5,7 +5,6 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "country/country_game_data.h"
-#include "database/database.h"
 #include "database/gsml_operator.h"
 #include "database/named_data_entry.h"
 #include "map/province.h"
@@ -419,7 +418,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	}
 
 	if (condition != nullptr) {
-		database::process_gsml_data(condition, scope);
+		condition->process_gsml_data(scope);
 		return condition;
 	}
 

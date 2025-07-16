@@ -32,6 +32,12 @@ void modifier<scope_type>::process_gsml_scope(const gsml_data &scope)
 }
 
 template <typename scope_type>
+void modifier<scope_type>::process_gsml_data(const gsml_data &data)
+{
+	data.process(this);
+}
+
+template <typename scope_type>
 void modifier<scope_type>::apply(scope_type *scope, const centesimal_int &multiplier) const
 {
 	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {

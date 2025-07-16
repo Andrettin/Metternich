@@ -2,7 +2,6 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
-#include "database/database.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -32,7 +31,7 @@ public:
 		const std::string &tag = scope.get_tag();
 
 		if (tag == "conditions") {
-			database::process_gsml_data(this->conditions, scope);
+			this->conditions.process_gsml_data(scope);
 		} else {
 			scope_effect_base<const country, const site>::process_gsml_scope(scope);
 		}

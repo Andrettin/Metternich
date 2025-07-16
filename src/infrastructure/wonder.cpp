@@ -4,7 +4,6 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
-#include "database/database_util.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "game/game_rule.h"
@@ -44,22 +43,22 @@ void wonder::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "cost_factor") {
 		auto factor = std::make_unique<metternich::factor<country>>(100);
-		database_util::process_gsml_data(factor, scope);
+		factor->process_gsml_data(scope);
 		this->cost_factor = std::move(factor);
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
-		database_util::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "province_conditions") {
 		auto conditions = std::make_unique<and_condition<province>>();
-		database_util::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->province_conditions = std::move(conditions);
 	} else if (tag == "province_modifier") {
 		this->province_modifier = std::make_unique<modifier<const province>>();
-		database_util::process_gsml_data(this->province_modifier, scope);
+		this->province_modifier->process_gsml_data(scope);
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
-		database_util::process_gsml_data(this->country_modifier, scope);
+		this->country_modifier->process_gsml_data(scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

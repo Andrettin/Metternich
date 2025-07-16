@@ -2,6 +2,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "database/database.h"
 #include "script/condition/condition.h"
 #include "script/flag.h"
 #include "util/string_util.h"

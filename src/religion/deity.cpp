@@ -8,7 +8,6 @@
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "country/idea_type.h"
-#include "database/database_util.h"
 #include "religion/deity_slot.h"
 #include "religion/deity_trait.h"
 #include "religion/religion.h"
@@ -61,7 +60,7 @@ void deity::process_gsml_scope(const gsml_data &scope)
 			this->add_trait(deity_trait::get(value));
 		}
 	} else if (tag == "character") {
-		database_util::process_gsml_data(this->character, scope);
+		this->character->process_gsml_data(scope);
 	} else {
 		idea::process_gsml_scope(scope);
 	}

@@ -31,7 +31,7 @@ public:
 		const std::string &tag = scope.get_tag();
 
 		if (tag == "conditions") {
-			database::process_gsml_data(this->conditions, scope);
+			this->conditions.process_gsml_data(scope);
 		} else {
 			this->effects.process_gsml_scope(scope);
 		}

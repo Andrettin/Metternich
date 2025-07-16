@@ -31,6 +31,7 @@ public:
 
 	void process_gsml_property(const gsml_property &property);
 	void process_gsml_scope(const gsml_data &scope);
+	void process_gsml_data(const gsml_data &data);
 
 	void apply(scope_type *scope, const centesimal_int &multiplier) const;
 	void apply(scope_type *scope, const int multiplier = 1) const;

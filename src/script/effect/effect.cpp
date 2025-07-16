@@ -7,7 +7,6 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/office.h"
-#include "database/database.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -239,7 +238,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		throw std::runtime_error(std::format("Invalid scope effect: \"{}\".", effect_identifier));
 	}
 
-	database::process_gsml_data(effect, scope);
+	scope.process(effect.get());
 
 	return effect;
 }

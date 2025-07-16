@@ -3,7 +3,6 @@
 #include "country/law.h"
 
 #include "country/law_group.h"
-#include "database/database_util.h"
 #include "economy/commodity.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
@@ -31,11 +30,11 @@ void law::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
-		database_util::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
-		database_util::process_gsml_data(modifier, scope);
+		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
 	} else {
 		data_entry::process_gsml_scope(scope);

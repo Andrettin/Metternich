@@ -1,6 +1,5 @@
 #include "spell/spell_effect.h"
 
-#include "database/database.h"
 #include "database/gsml_data.h"
 #include "database/gsml_operator.h"
 #include "database/gsml_property.h"
@@ -41,7 +40,7 @@ qunique_ptr<spell_effect> spell_effect::from_gsml_scope(const gsml_data &scope)
 		throw std::runtime_error("Invalid spell effect: \"" + tag + "\".");
 	}
 
-	database::process_gsml_data(effect, scope);
+	scope.process(effect.get());
 
 	return effect;
 }

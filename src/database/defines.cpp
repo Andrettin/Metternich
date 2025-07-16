@@ -77,7 +77,7 @@ void defines::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "scaled_landholder_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const site>>();
-		database::process_gsml_data(modifier, scope);
+		modifier->process_gsml_data(scope);
 		this->scaled_landholder_modifier = std::move(modifier);
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([&](const gsml_data &child_scope) {

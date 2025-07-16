@@ -6,7 +6,6 @@
 #include "country/country_game_data.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
-#include "database/database_util.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "game/game.h"
@@ -90,7 +89,7 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const country>>();
-		database_util::process_gsml_data(this->country_modifier, scope);
+		this->country_modifier->process_gsml_data(scope);
 	} else if (tag == "equivalent_population_types") {
 		for (const std::string &value : values) {
 			this->equivalent_population_types.push_back(population_type::get(value));

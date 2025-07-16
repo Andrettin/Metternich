@@ -9,6 +9,7 @@ namespace metternich {
 
 class character;
 class country;
+class province;
 class site;
 struct context;
 struct read_only_context;
@@ -27,6 +28,7 @@ public:
 
 	void process_gsml_property(const gsml_property &property);
 	void process_gsml_scope(const gsml_data &scope);
+	void process_gsml_data(const gsml_data &data);
 	void check() const;
 	void do_effects(scope_type *scope, context &ctx) const;
 	std::string get_effects_string(const scope_type *scope, const read_only_context &ctx, const size_t indent = 0, const std::string &prefix = "", const bool indent_first_line = true) const;
@@ -38,6 +40,7 @@ private:
 
 extern template class effect_list<const character>;
 extern template class effect_list<const country>;
+extern template class effect_list<const province>;
 extern template class effect_list<const site>;
 
 }

@@ -4,7 +4,6 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "database/database.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "game/character_event.h"
@@ -84,7 +83,7 @@ void delayed_effect_instance<scope_type>::process_gsml_scope(const gsml_data &sc
 
 	if (tag == "context") {
 		this->context = metternich::context();
-		database::process_gsml_data(this->context, scope);
+		scope.process(&this->context);
 	} else {
 		throw std::runtime_error("Invalid delayed effect instance scope: \"" + scope.get_tag() + "\".");
 	}

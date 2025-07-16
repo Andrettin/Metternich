@@ -3,7 +3,6 @@
 #include "country/country_tier_data.h"
 
 #include "country/country_tier.h"
-#include "database/database_util.h"
 #include "script/modifier.h"
 
 namespace metternich {
@@ -22,7 +21,7 @@ void country_tier_data::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
-		database_util::process_gsml_data(modifier, scope);
+		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
 	} else {
 		data_entry::process_gsml_scope(scope);

@@ -2,7 +2,6 @@
 
 #include "script/scripted_scoped_modifier.h"
 
-#include "database/database.h"
 #include "database/gsml_data.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -26,7 +25,7 @@ bool scripted_scoped_modifier<scope_type>::process_gsml_scope(const gsml_data &s
 
 	if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const scope_type>>();
-		database::process_gsml_data(this->modifier, scope);
+		this->modifier->process_gsml_data(scope);
 		return true;
 	} else {
 		return false;

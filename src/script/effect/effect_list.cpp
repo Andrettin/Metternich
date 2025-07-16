@@ -32,6 +32,12 @@ void effect_list<scope_type>::process_gsml_scope(const gsml_data &scope)
 }
 
 template <typename scope_type>
+void effect_list<scope_type>::process_gsml_data(const gsml_data &data)
+{
+	data.process(this);
+}
+
+template <typename scope_type>
 void effect_list<scope_type>::check() const
 {
 	for (const std::unique_ptr<effect<scope_type>> &effect : this->effects) {
@@ -91,6 +97,7 @@ void effect_list<scope_type>::add_effect(std::unique_ptr<effect<scope_type>> &&e
 
 template class effect_list<const character>;
 template class effect_list<const country>;
+template class effect_list<const province>;
 template class effect_list<const site>;
 
 }

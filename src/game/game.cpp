@@ -134,30 +134,30 @@ void game::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "rules") {
 		auto rules = make_qunique<game_rules>();
-		database::process_gsml_data(rules, scope);
+		scope.process(rules.get());
 		this->rules = std::move(rules);
 	} else if (tag == "character_delayed_effects") {
 		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const character>>();
-			database::process_gsml_data(delayed_effect, delayed_effect_data);
+			delayed_effect_data.process(delayed_effect.get());
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
 	} else if (tag == "country_delayed_effects") {
 		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const country>>();
-			database::process_gsml_data(delayed_effect, delayed_effect_data);
+			delayed_effect_data.process(delayed_effect.get());
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
 	} else if (tag == "province_delayed_effects") {
 		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const province>>();
-			database::process_gsml_data(delayed_effect, delayed_effect_data);
+			delayed_effect_data.process(delayed_effect.get());
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
 	} else if (tag == "site_delayed_effects") {
 		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const site>>();
-			database::process_gsml_data(delayed_effect, delayed_effect_data);
+			delayed_effect_data.process(delayed_effect.get());
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
 	} else {

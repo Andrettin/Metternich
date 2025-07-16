@@ -2,7 +2,6 @@
 
 #include "script/factor.h"
 
-#include "database/database.h"
 #include "database/gsml_data.h"
 #include "database/gsml_operator.h"
 #include "database/gsml_property.h"
@@ -50,11 +49,17 @@ void factor<scope_type>::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "modifier") {
 		auto modifier = std::make_unique<factor_modifier<scope_type>>();
-		database::process_gsml_data(modifier, scope);
+		modifier->process_gsml_data(scope);
 		this->modifiers.push_back(std::move(modifier));
 	} else {
 		throw std::runtime_error("Invalid factor scope: \"" + scope.get_tag() + "\".");
 	}
+}
+
+template <typename scope_type>
+void factor<scope_type>::process_gsml_data(const gsml_data &data)
+{
+	data.process(this);
 }
 
 template <typename scope_type>

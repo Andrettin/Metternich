@@ -4,7 +4,6 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
-#include "database/database.h"
 #include "database/gsml_data.h"
 #include "game/event_option.h"
 #include "game/event_random_group.h"
@@ -178,24 +177,24 @@ bool scoped_event_base<scope_type>::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "random_weight_factor") {
 		this->random_weight_factor = std::make_unique<factor<std::remove_const_t<scope_type>>>();
-		database::process_gsml_data(this->random_weight_factor, scope);
+		this->random_weight_factor->process_gsml_data(scope);
 		return true;
 	} else if (tag == "mean_time_to_happen") {
 		this->mean_time_to_happen = std::make_unique<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>>();
-		database::process_gsml_data(this->mean_time_to_happen, scope);
+		scope.process(this->mean_time_to_happen.get());
 		return true;
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<std::remove_const_t<scope_type>>>();
-		database::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 		return true;
 	} else if (tag == "immediate_effects") {
 		this->immediate_effects = std::make_unique<effect_list<scope_type>>();
-		database::process_gsml_data(this->immediate_effects, scope);
+		this->immediate_effects->process_gsml_data(scope);
 		return true;
 	} else if (tag == "option") {
 		auto option = std::make_unique<event_option<scope_type>>();
-		database::process_gsml_data(option, scope);
+		scope.process(option.get());
 		this->options.push_back(std::move(option));
 		return true;
 	} else {

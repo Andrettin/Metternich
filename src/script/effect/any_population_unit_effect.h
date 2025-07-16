@@ -1,6 +1,5 @@
 #pragma once
 
-#include "database/database.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/scope_effect_base.h"
 #include "util/string_util.h"
@@ -29,7 +28,7 @@ public:
 		const std::string &tag = scope.get_tag();
 
 		if (tag == "conditions") {
-			database::process_gsml_data(this->conditions, scope);
+			this->conditions.process_gsml_data(scope);
 		} else {
 			scope_effect_base<upper_scope_type, population_unit>::process_gsml_scope(scope);
 		}

@@ -45,35 +45,35 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "preconditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
-		database::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->preconditions = std::move(conditions);
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
-		database::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "completion_conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
-		database::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->completion_conditions = std::move(conditions);
 	} else if (tag == "failure_conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
-		database::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->failure_conditions = std::move(conditions);
 	} else if (tag == "completion_effects") {
 		auto effects = std::make_unique<effect_list<const country>>();
-		database::process_gsml_data(effects, scope);
+		effects->process_gsml_data(scope);
 		this->completion_effects = std::move(effects);
 	} else if (tag == "failure_effects") {
 		auto effects = std::make_unique<effect_list<const country>>();
-		database::process_gsml_data(effects, scope);
+		effects->process_gsml_data(scope);
 		this->failure_effects = std::move(effects);
 	} else if (tag == "active_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
-		database::process_gsml_data(modifier, scope);
+		modifier->process_gsml_data(scope);
 		this->active_modifier = std::move(modifier);
 	} else if (tag == "completion_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
-		database::process_gsml_data(modifier, scope);
+		modifier->process_gsml_data(scope);
 		this->completion_modifier = std::move(modifier);
 	} else if (tag == "owned_provinces") {
 		for (const std::string &value : values) {

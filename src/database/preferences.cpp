@@ -52,7 +52,7 @@ void preferences::load_file()
 		log::log_error("Failed to parse preferences file.");
 	}
 
-	database::process_gsml_data(this, data);
+	data.process(this);
 }
 
 void preferences::save() const
@@ -89,7 +89,7 @@ void preferences::process_gsml_scope(const gsml_data &scope)
 		const std::string &tag = scope.get_tag();
 
 		if (tag == "game_rules") {
-			database::process_gsml_data(this->game_rules, scope);
+			scope.process(this->game_rules.get());
 		} else {
 			database::get()->process_gsml_scope_for_object(this, scope);
 		}

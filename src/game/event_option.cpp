@@ -4,7 +4,6 @@
 
 #include "character/character.h"
 #include "character/character_trait.h"
-#include "database/database.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "game/event.h"
@@ -53,10 +52,10 @@ void event_option<scope_type>::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "conditions") {
 		this->conditions = std::make_unique<and_condition<std::remove_const_t<scope_type>>>();
-		database::process_gsml_data(this->conditions, scope);
+		this->conditions->process_gsml_data(scope);
 	} else if (tag == "effects") {
 		this->effects = std::make_unique<effect_list<scope_type>>();
-		database::process_gsml_data(this->effects, scope);
+		this->effects->process_gsml_data(scope);
 	} else {
 		throw std::runtime_error("Invalid event option scope: \"" + tag + "\".");
 	}

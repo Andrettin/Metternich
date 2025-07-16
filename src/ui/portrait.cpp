@@ -21,7 +21,7 @@ void portrait::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "character_conditions") {
 		auto conditions = std::make_unique<and_condition<character>>();
-		database::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->character_conditions = std::move(conditions);
 	} else {
 		icon_base::process_gsml_scope(scope);

@@ -3,7 +3,6 @@
 #include "country/office.h"
 
 #include "character/character_attribute.h"
-#include "database/database_util.h"
 #include "database/defines.h"
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
@@ -24,11 +23,11 @@ void office::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
-		database_util::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "holder_conditions") {
 		auto conditions = std::make_unique<and_condition<character>>();
-		database_util::process_gsml_data(conditions, scope);
+		conditions->process_gsml_data(scope);
 		this->holder_conditions = std::move(conditions);
 	} else {
 		data_entry::process_gsml_scope(scope);

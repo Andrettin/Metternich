@@ -1,6 +1,5 @@
 #pragma once
 
-#include "database/database.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "game/game.h"
@@ -59,10 +58,10 @@ public:
 			});
 		} else if (tag == "victory") {
 			this->victory_effects = std::make_unique<effect_list<scope_type>>();
-			database::process_gsml_data(this->victory_effects, scope);
+			this->victory_effects->process_gsml_data(scope);
 		} else if (tag == "defeat") {
 			this->defeat_effects = std::make_unique<effect_list<scope_type>>();
-			database::process_gsml_data(this->defeat_effects, scope);
+			this->defeat_effects->process_gsml_data(scope);
 		} else {
 			effect<scope_type>::process_gsml_scope(scope);
 		}
