@@ -25,6 +25,7 @@
 #include "country/law.h"
 #include "country/law_group.h"
 #include "database/database.h"
+#include "database/database_enum_util.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity_type.h"
@@ -153,32 +154,32 @@ int main(int argc, char **argv)
 		enum_converter<gender>();
 		enum_converter<log_level>();
 
-		database::get()->register_enum<advisor_category>();
-		database::get()->register_enum<character_attribute>();
-		database::get()->register_enum<character_role>();
-		database::get()->register_enum<character_trait_type>();
-		database::get()->register_enum<commodity_type>();
-		database::get()->register_enum<country_tier>();
-		database::get()->register_enum<country_type>();
-		database::get()->register_enum<cultural_group_rank>();
-		database::get()->register_enum<diplomacy_state>();
-		database::get()->register_enum<elevation_type>();
-		database::get()->register_enum<event_trigger>();
-		database::get()->register_enum<food_type>();
-		database::get()->register_enum<forestation_type>();
-		database::get()->register_enum<geological_era>();
-		database::get()->register_enum<idea_type>();
-		database::get()->register_enum<improvement_slot>();
-		database::get()->register_enum<military_unit_category>();
-		database::get()->register_enum<military_unit_domain>();
-		database::get()->register_enum<moisture_type>();
-		database::get()->register_enum<site_tier>();
-		database::get()->register_enum<site_type>();
-		database::get()->register_enum<spell_target>();
-		database::get()->register_enum<starting_age_category>();
-		database::get()->register_enum<taxonomic_rank>();
-		database::get()->register_enum<temperature_type>();
-		database::get()->register_enum<transporter_category>();
+		database_util::register_enum<advisor_category>();
+		database_util::register_enum<character_attribute>();
+		database_util::register_enum<character_role>();
+		database_util::register_enum<character_trait_type>();
+		database_util::register_enum<commodity_type>();
+		database_util::register_enum<country_tier>();
+		database_util::register_enum<country_type>();
+		database_util::register_enum<cultural_group_rank>();
+		database_util::register_enum<diplomacy_state>();
+		database_util::register_enum<elevation_type>();
+		database_util::register_enum<event_trigger>();
+		database_util::register_enum<food_type>();
+		database_util::register_enum<forestation_type>();
+		database_util::register_enum<geological_era>();
+		database_util::register_enum<idea_type>();
+		database_util::register_enum<improvement_slot>();
+		database_util::register_enum<military_unit_category>();
+		database_util::register_enum<military_unit_domain>();
+		database_util::register_enum<moisture_type>();
+		database_util::register_enum<site_tier>();
+		database_util::register_enum<site_type>();
+		database_util::register_enum<spell_target>();
+		database_util::register_enum<starting_age_category>();
+		database_util::register_enum<taxonomic_rank>();
+		database_util::register_enum<temperature_type>();
+		database_util::register_enum<transporter_category>();
 
 		QCoro::Qml::registerTypes();
 

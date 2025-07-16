@@ -2,6 +2,7 @@
 
 #include "unit/promotion.h"
 
+#include "database/database_util.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -23,11 +24,11 @@ void promotion::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<military_unit>>();
-		database::process_gsml_data(conditions, scope);
+		database_util::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
-		database::process_gsml_data(modifier, scope);
+		database_util::process_gsml_data(modifier, scope);
 		this->modifier = std::move(modifier);
 	} else {
 		data_entry::process_gsml_scope(scope);

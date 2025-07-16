@@ -2,6 +2,8 @@
 
 #include "infrastructure/settlement_type.h"
 
+#include "database/database.h"
+#include "database/database_util.h"
 #include "map/tile_image_provider.h"
 #include "population/population_class.h"
 #include "population/population_type.h"
@@ -38,15 +40,15 @@ void settlement_type::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
-		database::process_gsml_data(conditions, scope);
+		database_util::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "build_conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
-		database::process_gsml_data(conditions, scope);
+		database_util::process_gsml_data(conditions, scope);
 		this->build_conditions = std::move(conditions);
 	} else if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const site>>();
-		database::process_gsml_data(this->modifier, scope);
+		database_util::process_gsml_data(this->modifier, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

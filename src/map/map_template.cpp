@@ -2,6 +2,7 @@
 
 #include "map/map_template.h"
 
+#include "database/database.h"
 #include "database/defines.h"
 #include "economy/resource.h"
 #include "economy/resource_container.h"

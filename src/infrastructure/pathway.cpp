@@ -2,6 +2,7 @@
 
 #include "infrastructure/pathway.h"
 
+#include "database/database.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "map/terrain_type.h"

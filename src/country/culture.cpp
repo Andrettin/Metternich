@@ -3,6 +3,7 @@
 #include "country/culture.h"
 
 #include "country/cultural_group.h"
+#include "database/database_util.h"
 #include "infrastructure/building_class.h"
 #include "population/population_class.h"
 #include "script/condition/and_condition.h"
@@ -41,7 +42,7 @@ void culture::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "derivation_conditions") {
 		auto conditions = std::make_unique<and_condition<population_unit>>();
-		database::process_gsml_data(conditions, scope);
+		database_util::process_gsml_data(conditions, scope);
 		this->derivation_conditions = std::move(conditions);
 	} else {
 		culture_base::process_gsml_scope(scope);

@@ -2,6 +2,7 @@
 
 #include "infrastructure/improvement.h"
 
+#include "database/database.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "infrastructure/improvement_slot.h"

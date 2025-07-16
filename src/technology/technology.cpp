@@ -11,6 +11,7 @@
 #include "country/government_type.h"
 #include "country/law.h"
 #include "country/office.h"
+#include "database/database_util.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/commodity_type.h"
@@ -143,11 +144,11 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "cost_factor") {
 		auto factor = std::make_unique<metternich::factor<country>>(100);
-		database::process_gsml_data(factor, scope);
+		database_util::process_gsml_data(factor, scope);
 		this->cost_factor = std::move(factor);
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
-		database::process_gsml_data(modifier, scope);
+		database_util::process_gsml_data(modifier, scope);
 		this->modifier = std::move(modifier);
 	} else {
 		data_entry::process_gsml_scope(scope);

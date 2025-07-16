@@ -7,11 +7,14 @@
 #include "country/idea_trait.h"
 #include "country/idea_slot.h"
 #include "country/idea_type.h"
+#include "database/database_util.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -27,7 +30,7 @@ void idea::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
-		database::process_gsml_data(conditions, scope);
+		database_util::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
 	} else {
 		data_entry::process_gsml_scope(scope);

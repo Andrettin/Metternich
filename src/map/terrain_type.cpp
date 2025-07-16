@@ -15,6 +15,8 @@
 #include "util/image_util.h"
 #include "util/path_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 terrain_type *terrain_type::get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type)

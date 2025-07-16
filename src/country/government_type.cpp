@@ -7,6 +7,7 @@
 #include "country/law.h"
 #include "country/law_group.h"
 #include "country/office.h"
+#include "database/database_util.h"
 #include "map/site_tier.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
@@ -228,7 +229,7 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 			this->forbidden_laws.push_back(law::get(value));
 		}
 		auto conditions = std::make_unique<and_condition<country>>();
-		database::process_gsml_data(conditions, scope);
+		database_util::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "default_laws") {
 		scope.for_each_property([&](const gsml_property &property) {
@@ -242,11 +243,11 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<country>>();
-		database::process_gsml_data(conditions, scope);
+		database_util::process_gsml_data(conditions, scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
-		database::process_gsml_data(modifier, scope);
+		database_util::process_gsml_data(modifier, scope);
 		this->modifier = std::move(modifier);
 	} else if (tag == "title_names") {
 		government_type::process_title_name_scope(this->title_names, scope);

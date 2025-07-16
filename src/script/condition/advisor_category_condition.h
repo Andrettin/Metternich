@@ -6,6 +6,8 @@
 #include "character/character_type.h"
 #include "script/condition/condition.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 class advisor_category_condition final : public condition<character>

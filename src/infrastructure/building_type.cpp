@@ -32,6 +32,8 @@
 #include "util/container_util.h"
 #include "util/vector_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 building_type::building_type(const std::string &identifier) : named_data_entry(identifier)

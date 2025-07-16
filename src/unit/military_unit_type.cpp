@@ -14,6 +14,8 @@
 #include "unit/promotion.h"
 #include "util/assert_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 void military_unit_type::process_gsml_scope(const gsml_data &scope)

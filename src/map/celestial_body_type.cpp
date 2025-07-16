@@ -2,6 +2,7 @@
 
 #include "map/celestial_body_type.h"
 
+#include "database/database.h"
 #include "map/tile_image_provider.h"
 
 namespace metternich {
