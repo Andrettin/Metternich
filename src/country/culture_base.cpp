@@ -381,7 +381,16 @@ const building_type *culture_base::get_building_class_type(const building_class 
 	}
 
 	return building_class->get_default_building_type();
+}
 
+void culture_base::set_building_class_type(const building_class *building_class, const building_type *building_type)
+{
+	if (building_type == nullptr) {
+		this->building_class_types.erase(building_class);
+		return;
+	}
+
+	this->building_class_types[building_class] = building_type;
 }
 
 const population_type *culture_base::get_population_class_type(const population_class *population_class) const
@@ -396,7 +405,16 @@ const population_type *culture_base::get_population_class_type(const population_
 	}
 
 	return population_class->get_default_population_type();
+}
 
+void culture_base::set_population_class_type(const population_class *population_class, const population_type *population_type)
+{
+	if (population_type == nullptr) {
+		this->population_class_types.erase(population_class);
+		return;
+	}
+
+	this->population_class_types[population_class] = population_type;
 }
 
 const civilian_unit_type *culture_base::get_civilian_class_unit_type(const civilian_unit_class *unit_class) const
@@ -411,7 +429,16 @@ const civilian_unit_type *culture_base::get_civilian_class_unit_type(const civil
 	}
 
 	return unit_class->get_default_unit_type();
+}
 
+void culture_base::set_civilian_class_unit_type(const civilian_unit_class *unit_class, const civilian_unit_type *unit_type)
+{
+	if (unit_type == nullptr) {
+		this->civilian_class_unit_types.erase(unit_class);
+		return;
+	}
+
+	this->civilian_class_unit_types[unit_class] = unit_type;
 }
 
 const military_unit_type *culture_base::get_military_class_unit_type(const military_unit_class *unit_class) const
@@ -426,7 +453,16 @@ const military_unit_type *culture_base::get_military_class_unit_type(const milit
 	}
 
 	return unit_class->get_default_unit_type();
+}
 
+void culture_base::set_military_class_unit_type(const military_unit_class *unit_class, const military_unit_type *unit_type)
+{
+	if (unit_type == nullptr) {
+		this->military_class_unit_types.erase(unit_class);
+		return;
+	}
+
+	this->military_class_unit_types[unit_class] = unit_type;
 }
 
 const transporter_type *culture_base::get_transporter_class_type(const transporter_class *transporter_class) const
@@ -441,7 +477,16 @@ const transporter_type *culture_base::get_transporter_class_type(const transport
 	}
 
 	return transporter_class->get_default_transporter_type();
+}
 
+void culture_base::set_transporter_class_type(const transporter_class *transporter_class, const transporter_type *transporter_type)
+{
+	if (transporter_type == nullptr) {
+		this->transporter_class_types.erase(transporter_class);
+		return;
+	}
+
+	this->transporter_class_types[transporter_class] = transporter_type;
 }
 
 std::string culture_base::generate_personal_name(const gender gender, const std::map<std::string, int> &used_name_counts) const

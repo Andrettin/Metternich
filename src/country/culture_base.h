@@ -1,7 +1,6 @@
 #pragma once
 
 #include "database/data_entry_container.h"
-#include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "infrastructure/building_class_container.h"
 #include "language/name_variant.h"
@@ -83,64 +82,19 @@ public:
 	const std::string &get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender) const;
 
 	const building_type *get_building_class_type(const building_class *building_class) const;
-
-	void set_building_class_type(const building_class *building_class, const building_type *building_type)
-	{
-		if (building_type == nullptr) {
-			this->building_class_types.erase(building_class);
-			return;
-		}
-
-		this->building_class_types[building_class] = building_type;
-	}
+	void set_building_class_type(const building_class *building_class, const building_type *building_type);
 
 	const population_type *get_population_class_type(const population_class *population_class) const;
-
-	void set_population_class_type(const population_class *population_class, const population_type *population_type)
-	{
-		if (population_type == nullptr) {
-			this->population_class_types.erase(population_class);
-			return;
-		}
-
-		this->population_class_types[population_class] = population_type;
-	}
+	void set_population_class_type(const population_class *population_class, const population_type *population_type);
 
 	const civilian_unit_type *get_civilian_class_unit_type(const civilian_unit_class *unit_class) const;
-
-	void set_civilian_class_unit_type(const civilian_unit_class *unit_class, const civilian_unit_type *unit_type)
-	{
-		if (unit_type == nullptr) {
-			this->civilian_class_unit_types.erase(unit_class);
-			return;
-		}
-
-		this->civilian_class_unit_types[unit_class] = unit_type;
-	}
+	void set_civilian_class_unit_type(const civilian_unit_class *unit_class, const civilian_unit_type *unit_type);
 
 	const military_unit_type *get_military_class_unit_type(const military_unit_class *unit_class) const;
-
-	void set_military_class_unit_type(const military_unit_class *unit_class, const military_unit_type *unit_type)
-	{
-		if (unit_type == nullptr) {
-			this->military_class_unit_types.erase(unit_class);
-			return;
-		}
-
-		this->military_class_unit_types[unit_class] = unit_type;
-	}
+	void set_military_class_unit_type(const military_unit_class *unit_class, const military_unit_type *unit_type);
 
 	const transporter_type *get_transporter_class_type(const transporter_class *transporter_class) const;
-
-	void set_transporter_class_type(const transporter_class *transporter_class, const transporter_type *transporter_type)
-	{
-		if (transporter_type == nullptr) {
-			this->transporter_class_types.erase(transporter_class);
-			return;
-		}
-
-		this->transporter_class_types[transporter_class] = transporter_type;
-	}
+	void set_transporter_class_type(const transporter_class *transporter_class, const transporter_type *transporter_type);
 
 	std::string generate_personal_name(const gender gender, const std::map<std::string, int> &used_name_counts) const;
 	std::string generate_military_unit_name(const military_unit_type *type, const std::map<std::string, int> &used_name_counts) const;
