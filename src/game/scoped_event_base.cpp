@@ -15,6 +15,7 @@
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/delayed_effect_instance.h"
+#include "script/effect/effect_list.h"
 #include "script/factor.h"
 #include "script/mean_time_to_happen.h"
 #include "util/assert_util.h"

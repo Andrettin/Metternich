@@ -2,6 +2,7 @@
 
 #include "map/world.h"
 
+#include "database/database.h"
 #include "map/equirectangular_map_projection.h"
 #include "map/province.h"
 #include "map/route.h"

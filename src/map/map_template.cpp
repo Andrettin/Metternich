@@ -30,6 +30,7 @@
 #include "util/exception_util.h"
 #include "util/geoshape_util.h"
 #include "util/log_util.h"
+#include "util/number_util.h"
 #include "util/path_util.h"
 #include "util/point_util.h"
 #include "util/rect_util.h"

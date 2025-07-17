@@ -3,6 +3,7 @@
 #include "database/data_entry_history.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "population/population_group_map.h"
+#include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("infrastructure/settlement_type.h")

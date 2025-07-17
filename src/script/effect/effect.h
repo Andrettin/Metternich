@@ -12,6 +12,7 @@ namespace metternich {
 
 class country;
 class event;
+class population_unit;
 class province;
 struct context;
 struct read_only_context;
