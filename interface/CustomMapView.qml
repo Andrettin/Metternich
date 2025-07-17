@@ -277,21 +277,6 @@ Item {
 			dialog.open()
 		}
 		
-		function onLeader_recruited(leader) {
-			if (notification_dialog_component.status == Component.Error) {
-				console.error(notification_dialog_component.errorString())
-				return
-			}
-			
-			var dialog = notification_dialog_component.createObject(map_view, {
-				title: leader.leader_type_name + " Recruited",
-				portrait_object: metternich.game.player_country.game_data.war_minister_portrait,
-				text: "Your Excellency, the " + leader.leader_type_name.toLowerCase() + " " + leader.full_name  + " has joined our nation!"
-			})
-			
-			dialog.open()
-		}
-		
 		function onJournal_entry_completed(journal_entry) {
 			if (notification_dialog_component.status == Component.Error) {
 				console.error(notification_dialog_component.errorString())
@@ -303,6 +288,25 @@ Item {
 				portrait_object: journal_entry.portrait,
 				text: journal_entry.description,
 				effects_text: journal_entry.get_completion_effects_string(metternich.game.player_country)
+			})
+			
+			dialog.open()
+		}
+	}
+	
+	Connections {
+		target: metternich.game.player_country.game_data.military
+		
+		function onLeader_recruited(leader) {
+			if (notification_dialog_component.status == Component.Error) {
+				console.error(notification_dialog_component.errorString())
+				return
+			}
+			
+			var dialog = notification_dialog_component.createObject(map_view, {
+				title: leader.leader_type_name + " Recruited",
+				portrait_object: metternich.game.player_country.game_data.war_minister_portrait,
+				text: "Your Excellency, the " + leader.leader_type_name.toLowerCase() + " " + leader.full_name  + " has joined our nation!"
 			})
 			
 			dialog.open()
