@@ -1,0 +1,17 @@
+weaver = {
+	name = "Weaver"
+	input_commodities = {
+		wool = 1
+	}
+	output_commodity = fabric
+	output_value = 0.5
+	population_types = {
+		tribesmen
+		untrained_workers
+		trained_workers
+		expert_workers
+		apprentice_weavers
+		journeyman_weavers
+		master_weavers
+	}
+}

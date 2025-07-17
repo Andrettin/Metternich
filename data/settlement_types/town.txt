@@ -49,6 +49,9 @@ town = {
 		untrained_workers
 		trained_workers
 		expert_workers
+		apprentice_weavers
+		journeyman_weavers
+		master_weavers
 		bureaucrats
 		elder_statesmen
 		capitalists
@@ -83,6 +86,9 @@ city = {
 		trained_workers
 		expert_workers
 		soldiers
+		apprentice_weavers
+		journeyman_weavers
+		master_weavers
 		academics
 		bureaucrats
 		clergymen
@@ -111,6 +117,9 @@ metropolis = {
 		trained_workers
 		expert_workers
 		soldiers
+		apprentice_weavers
+		journeyman_weavers
+		master_weavers
 		academics
 		bureaucrats
 		clergymen
