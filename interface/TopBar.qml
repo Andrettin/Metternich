@@ -44,7 +44,7 @@ Rectangle {
 	
 	SmallText {
 		id: wealth_label
-		text: (metternich.game.player_country.game_data.economy.wealth < 0 ? "-" : "") + "$" + number_string(Math.abs(metternich.game.player_country.game_data.wealth))
+		text: (metternich.game.player_country.game_data.economy.wealth < 0 ? "-" : "") + "$" + number_string(Math.abs(metternich.game.player_country.game_data.economy.wealth))
 		anchors.top: parent.top
 		anchors.topMargin: 1 * scale_factor
 		anchors.left: date_label.left
