@@ -33,7 +33,7 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
-	static void process_database(const bool definition);
+	static void process_database(const bool definition, const data_module_map<std::vector<gsml_data>> &gsml_data_to_process);
 
 	static std::map<const taxon *, int> get_supertaxon_counts(const std::vector<const species *> &source_species_list, const std::vector<const taxon *> &taxons);
 	static std::vector<std::string> get_name_list(const std::vector<const species *> &species_list);
