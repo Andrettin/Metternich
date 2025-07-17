@@ -3,7 +3,7 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_military.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
@@ -96,7 +96,7 @@ public:
 			if constexpr (std::is_same_v<scope_type, const character>) {
 				scope->get_game_data()->change_commanded_military_unit_type_stat_modifier(military_unit_type, this->stat, this->value * multiplier);
 			} else if constexpr (std::is_same_v<scope_type, const country>) {
-				scope->get_game_data()->change_military_unit_type_stat_modifier(military_unit_type, this->stat, this->value * multiplier);
+				scope->get_military()->change_military_unit_type_stat_modifier(military_unit_type, this->stat, this->value * multiplier);
 			} else {
 				assert_throw(false);
 			}

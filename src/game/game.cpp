@@ -10,6 +10,7 @@
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/country_history.h"
+#include "country/country_military.h"
 #include "country/country_rank.h"
 #include "country/country_tier.h"
 #include "country/country_turn_data.h"
@@ -639,6 +640,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				assert_throw(country != nullptr);
 
 				country_game_data *country_game_data = country->get_game_data();
+				country_military *country_military = country->get_military();
 
 				assert_throw(country_game_data->is_alive());
 
@@ -652,7 +654,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				const phenotype *phenotype = historical_military_unit->get_phenotype();
 
 				for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
-					const bool created = country_game_data->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
+					const bool created = country_military->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
 					assert_throw(created);
 				}
 			} catch (...) {
@@ -1689,7 +1691,7 @@ void game::remove_country(country *country)
 	}
 
 	country->get_game_data()->clear_advisors();
-	country->get_game_data()->clear_leaders();
+	country->get_military()->clear_leaders();
 
 	for (const metternich::country *other_country : this->get_countries()) {
 		country_game_data *other_country_game_data = other_country->get_game_data();

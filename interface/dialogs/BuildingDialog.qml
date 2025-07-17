@@ -301,8 +301,8 @@ DialogBase {
 					visible: military_unit_type !== null
 					
 					readonly property var military_unit_category: model.modelData
-					readonly property var military_unit_type: country_game_data.get_best_military_unit_category_type(military_unit_category)
-					property int military_unit_recruitment_count: military_unit_type !== null ? country_game_data.get_military_unit_recruitment_count(military_unit_type) : 0
+					readonly property var military_unit_type: country_game_data.military.get_best_military_unit_category_type(military_unit_category)
+					property int military_unit_recruitment_count: military_unit_type !== null ? country_game_data.military.get_military_unit_recruitment_count(military_unit_type) : 0
 					
 					IconButton {
 						id: military_unit_button
@@ -311,7 +311,7 @@ DialogBase {
 						icon_identifier: military_unit_type !== null ? military_unit_type.icon.identifier : "skull"
 						tooltip: tooltip_string.length > 0 ? format_text(small_text(tooltip_string)) : ""
 						
-						readonly property string costs_string: military_unit_type !== null ? costs_to_string(country_game_data.get_military_unit_type_commodity_costs_qvariant_list(military_unit_type, 1), undefined, country_game_data.get_military_unit_type_wealth_cost(military_unit_type, 1)) : ""
+						readonly property string costs_string: military_unit_type !== null ? costs_to_string(country_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(military_unit_type, 1), undefined, country_game_data.military.get_military_unit_type_wealth_cost(military_unit_type, 1)) : ""
 						readonly property string tooltip_string: costs_string
 						
 						onClicked: {
@@ -338,9 +338,9 @@ DialogBase {
 							use_opacity_mask: false
 							
 							onReleased: {
-								if (country_game_data.can_decrease_military_unit_recruitment(military_unit_type)) {
-									country_game_data.decrease_military_unit_recruitment(military_unit_type, true)
-									military_unit_recruitment_count = country_game_data.get_military_unit_recruitment_count(military_unit_type)
+								if (country_game_data.military.can_decrease_military_unit_recruitment(military_unit_type)) {
+									country_game_data.military.decrease_military_unit_recruitment(military_unit_type, true)
+									military_unit_recruitment_count = country_game_data.military.get_military_unit_recruitment_count(military_unit_type)
 								}
 							}
 						}
@@ -362,9 +362,9 @@ DialogBase {
 							use_opacity_mask: false
 							
 							onReleased: {
-								if (country_game_data.can_increase_military_unit_recruitment(military_unit_type)) {
-									country_game_data.increase_military_unit_recruitment(military_unit_type)
-									military_unit_recruitment_count = country_game_data.get_military_unit_recruitment_count(military_unit_type)
+								if (country_game_data.military.can_increase_military_unit_recruitment(military_unit_type)) {
+									country_game_data.military.increase_military_unit_recruitment(military_unit_type)
+									military_unit_recruitment_count = country_game_data.military.get_military_unit_recruitment_count(military_unit_type)
 								}
 							}
 						}

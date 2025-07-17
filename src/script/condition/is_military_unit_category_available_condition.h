@@ -1,5 +1,6 @@
 #pragma once
 
+#include "country/country_military.h"
 #include "script/condition/condition.h"
 #include "unit/military_unit_category.h"
 
@@ -24,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_best_military_unit_category_type(this->category) != nullptr;
+		return scope->get_military()->get_best_military_unit_category_type(this->category) != nullptr;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

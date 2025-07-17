@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_military.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
@@ -31,7 +31,7 @@ public:
 	{
 		for (const military_unit_type *military_unit_type : military_unit_type::get_all()) {
 			if (military_unit_type->is_ship()) {
-				scope->get_game_data()->change_military_unit_type_stat_modifier(military_unit_type, this->military_unit_stat, this->value * multiplier);
+				scope->get_military()->change_military_unit_type_stat_modifier(military_unit_type, this->military_unit_stat, this->value * multiplier);
 			}
 		}
 

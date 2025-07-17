@@ -4,7 +4,7 @@
 
 #include "country/consulate.h"
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_military.h"
 #include "country/country_tier.h"
 #include "country/country_tier_data.h"
 #include "country/law_group.h"
@@ -265,7 +265,7 @@ void engine_interface::move_selected_military_units_to(const QPoint &tile_pos)
 
 	if (!std::holds_alternative<std::monostate>(target)) {
 		auto army = make_qunique<metternich::army>(this->get_selected_military_units(), std::move(target));
-		this->get_selected_military_units().front()->get_country()->get_game_data()->add_army(std::move(army));
+		this->get_selected_military_units().front()->get_country()->get_military()->add_army(std::move(army));
 	}
 
 	this->clear_selected_military_units();

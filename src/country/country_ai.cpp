@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
+#include "country/country_military.h"
 #include "country/idea_type.h"
 #include "country/journal_entry.h"
 #include "country/office.h"
@@ -101,7 +102,7 @@ void country_ai::do_turn()
 		civilian_unit->do_ai_turn();
 	}
 
-	for (const qunique_ptr<military_unit> &military_unit : this->get_game_data()->get_military_units()) {
+	for (const qunique_ptr<military_unit> &military_unit : this->get_game_data()->get_military()->get_military_units()) {
 		military_unit->do_ai_turn();
 	}
 

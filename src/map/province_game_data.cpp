@@ -7,6 +7,7 @@
 #include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_military.h"
 #include "country/country_turn_data.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -225,7 +226,7 @@ void province_game_data::do_ai_turn()
 
 			if (!military_units.empty()) {
 				auto army = make_qunique<metternich::army>(military_units, site);
-				this->get_owner()->get_game_data()->add_army(std::move(army));
+				this->get_owner()->get_military()->add_army(std::move(army));
 			}
 			break;
 		}

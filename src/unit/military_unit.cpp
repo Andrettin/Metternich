@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_military.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
@@ -536,13 +537,13 @@ void military_unit::check_free_promotions()
 	const promotion_map<int> *free_promotion_map = nullptr;
 	if (this->get_country() != nullptr) {
 		if (this->get_type()->is_infantry()) {
-			free_promotion_map = &this->get_country()->get_game_data()->get_free_infantry_promotion_counts();
+			free_promotion_map = &this->get_country()->get_military()->get_free_infantry_promotion_counts();
 		} else if (this->get_type()->is_cavalry()) {
-			free_promotion_map = &this->get_country()->get_game_data()->get_free_cavalry_promotion_counts();
+			free_promotion_map = &this->get_country()->get_military()->get_free_cavalry_promotion_counts();
 		} else if (this->get_type()->is_artillery()) {
-			free_promotion_map = &this->get_country()->get_game_data()->get_free_artillery_promotion_counts();
+			free_promotion_map = &this->get_country()->get_military()->get_free_artillery_promotion_counts();
 		} else if (this->get_type()->is_ship()) {
-			free_promotion_map = &this->get_country()->get_game_data()->get_free_warship_promotion_counts();
+			free_promotion_map = &this->get_country()->get_military()->get_free_warship_promotion_counts();
 		}
 	}
 
@@ -639,7 +640,7 @@ void military_unit::attack(military_unit *target, const bool ranged, const bool 
 	}
 	if (target_entrenched) {
 		int entrenchment_bonus = target->get_type()->get_entrenchment_bonus();
-		entrenchment_bonus *= 100 + target->get_effective_stat(military_unit_stat::entrenchment_bonus_modifier).to_int() + (target->get_country() ? target->get_country()->get_game_data()->get_entrenchment_bonus_modifier() : 0);
+		entrenchment_bonus *= 100 + target->get_effective_stat(military_unit_stat::entrenchment_bonus_modifier).to_int() + (target->get_country() ? target->get_country()->get_military()->get_entrenchment_bonus_modifier() : 0);
 		entrenchment_bonus /= 100;
 		defense += entrenchment_bonus;
 	}
@@ -698,7 +699,7 @@ void military_unit::disband(const bool dead)
 
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->change_military_score(-this->get_score());
-		this->get_country()->get_game_data()->remove_military_unit(this);
+		this->get_country()->get_military()->remove_military_unit(this);
 	}
 }
 

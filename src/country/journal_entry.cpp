@@ -7,6 +7,7 @@
 #include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_military.h"
 #include "country/office.h"
 #include "database/defines.h"
 #include "game/game.h"
@@ -258,6 +259,7 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 	}
 
 	const country_game_data *country_game_data = country->get_game_data();
+	const country_military *country_military = country->get_military();
 
 	for (const province *province : this->owned_provinces) {
 		if (province->get_game_data()->get_owner() != country) {
@@ -324,7 +326,7 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 					recruited = vector::contains(country_game_data->get_advisors(), character);
 					break;
 				case character_role::leader:
-					recruited = vector::contains(country_game_data->get_leaders(), character);
+					recruited = vector::contains(country_military->get_leaders(), character);
 					break;
 				case character_role::civilian:
 					recruited = country_game_data->has_civilian_character(character);

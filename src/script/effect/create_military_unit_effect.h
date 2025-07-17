@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_military.h"
 #include "country/culture.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -68,7 +68,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->create_military_unit(type, nullptr, nullptr, {});
+		scope->get_military()->create_military_unit(type, nullptr, nullptr, {});
 	}
 
 	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
@@ -93,7 +93,7 @@ public:
 		} else if (this->unit_class != nullptr) {
 			return scope->get_culture()->get_military_class_unit_type(this->unit_class);
 		} else if (this->category != military_unit_category::none) {
-			return scope->get_game_data()->get_best_military_unit_category_type(this->category);
+			return scope->get_military()->get_best_military_unit_category_type(this->category);
 		} else {
 			assert_throw(false);
 			return nullptr;

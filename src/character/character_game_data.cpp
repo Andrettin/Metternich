@@ -11,6 +11,7 @@
 #include "character/character_type.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_military.h"
 #include "country/office.h"
 #include "database/defines.h"
 #include "game/character_event.h"
@@ -968,7 +969,7 @@ void character_game_data::deploy_to_province(const metternich::country *country,
 	assert_throw(!this->is_deployed());
 	assert_throw(this->is_deployable());
 
-	const military_unit_type *military_unit_type = country->get_game_data()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
+	const military_unit_type *military_unit_type = country->get_military()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
 
 	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, country, this->character);
 
@@ -976,7 +977,7 @@ void character_game_data::deploy_to_province(const metternich::country *country,
 
 	military_unit->set_province(province);
 
-	country->get_game_data()->add_military_unit(std::move(military_unit));
+	country->get_military()->add_military_unit(std::move(military_unit));
 
 	assert_throw(this->get_country() != nullptr);
 }

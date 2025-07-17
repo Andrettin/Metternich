@@ -22,7 +22,7 @@ public:
 	{
 		const int change = (this->value * multiplier).to_int();
 
-		scope->get_game_data()->change_entrenchment_bonus_modifier(change);
+		scope->get_military()->change_entrenchment_bonus_modifier(change);
 	}
 
 	virtual std::string get_base_string(const country *scope) const override

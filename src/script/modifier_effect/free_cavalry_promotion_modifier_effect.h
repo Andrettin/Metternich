@@ -1,8 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
-#include "country/consulate.h"
+#include "country/country_military.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/promotion.h"
@@ -26,7 +25,7 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_free_cavalry_promotion_count(this->promotion, (this->value * multiplier).to_int());
+		scope->get_military()->change_free_cavalry_promotion_count(this->promotion, (this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string(const country *scope) const override
