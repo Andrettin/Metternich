@@ -86,6 +86,7 @@
 #include "util/image_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/number_util.h"
 #include "util/path_util.h"
 #include "util/size_util.h"
 #include "util/vector_random_util.h"

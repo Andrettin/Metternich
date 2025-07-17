@@ -115,7 +115,7 @@ void world::write_province_image(const double min_geoshape_width, const double m
 
 		const equirectangular_map_projection *map_projection = equirectangular_map_projection::get();
 
-		static constexpr archimedes::georectangle georectangle = georectangle::get_global_georectangle();
+		static const archimedes::georectangle georectangle = georectangle::get_global_georectangle();
 
 		static constexpr int geocoordinate_size_multiplier = 25;
 		static constexpr QSize map_size(geocoordinate::longitude_size * geocoordinate_size_multiplier, geocoordinate::latitude_size * geocoordinate_size_multiplier);

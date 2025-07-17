@@ -1860,7 +1860,7 @@ public:
 			return find_iterator->second;
 		}
 
-		static constexpr centesimal_int one(1);
+		static const centesimal_int one(1);
 		return one;
 	}
 

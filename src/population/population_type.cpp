@@ -19,6 +19,7 @@
 #include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
+#include "util/number_util.h"
 #include "util/random.h"
 #include "util/string_util.h"
 

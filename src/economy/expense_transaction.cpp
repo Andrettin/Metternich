@@ -7,6 +7,7 @@
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/expense_transaction_type.h"
+#include "util/number_util.h"
 
 namespace metternich {
 

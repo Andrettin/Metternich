@@ -98,6 +98,7 @@
 #include "util/gender.h"
 #include "util/image_util.h"
 #include "util/map_util.h"
+#include "util/number_util.h"
 #include "util/point_util.h"
 #include "util/qunique_ptr.h"
 #include "util/rect_util.h"

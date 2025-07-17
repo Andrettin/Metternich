@@ -34,6 +34,7 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/number_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {

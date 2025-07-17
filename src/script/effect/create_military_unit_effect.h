@@ -3,7 +3,6 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/culture.h"
-#include "database/defines.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "script/effect/effect.h"
