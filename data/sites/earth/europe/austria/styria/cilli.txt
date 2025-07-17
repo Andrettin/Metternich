@@ -3,13 +3,19 @@ cilli = {
 	world = earth
 	geocoordinate = { 15.264128741 46.22909194 }
 	type = resource
-	resource = grapes
+	#resource = grapes
+	resource = fruit
+	max_tier = county
 	province = styria
 	cultural_names = {
 		slovene = "Celje"
 	}
 	
 	history = {
+		1454 = {
+			tier = county #Ulrich von Cilli, count of Cilli, succeeded his father in 1454, presumably to the county of Cilli; Source: "Encyclopædia Britannica", 1911, vol. 6, p. 366.
+		}
+		
 		1815 = {
 			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
 		}
