@@ -23,6 +23,7 @@ namespace metternich {
 
 class character;
 class country_ai;
+class country_economy;
 class country_game_data;
 class country_history;
 class country_turn_data;
@@ -94,6 +95,8 @@ public:
 	{
 		return this->game_data.get();
 	}
+
+	country_economy *get_economy() const;
 
 	void reset_turn_data();
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_economy.h"
 #include "script/effect/effect.h"
 
 namespace metternich {
@@ -23,17 +23,17 @@ public:
 
 	virtual void do_assignment_effect(const country *scope) const override
 	{
-		scope->get_game_data()->get_economy()->set_inflation(this->quantity);
+		scope->get_economy()->set_inflation(this->quantity);
 	}
 
 	virtual void do_addition_effect(const country *scope) const override
 	{
-		scope->get_game_data()->get_economy()->change_inflation(this->quantity);
+		scope->get_economy()->change_inflation(this->quantity);
 	}
 
 	virtual void do_subtraction_effect(const country *scope) const override
 	{
-		scope->get_game_data()->get_economy()->change_inflation(-this->quantity);
+		scope->get_economy()->change_inflation(-this->quantity);
 	}
 
 	virtual std::string get_assignment_string() const override

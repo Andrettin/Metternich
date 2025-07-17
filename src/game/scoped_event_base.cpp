@@ -3,7 +3,6 @@
 #include "game/scoped_event_base.h"
 
 #include "country/country.h"
-#include "country/country_game_data.h"
 #include "database/gsml_data.h"
 #include "game/event_option.h"
 #include "game/event_random_group.h"

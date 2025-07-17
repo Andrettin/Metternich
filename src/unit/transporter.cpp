@@ -86,9 +86,9 @@ void transporter::set_type(const transporter_type *type)
 
 	if (this->get_country() != nullptr) {
 		if (this->is_ship()) {
-			this->get_country()->get_game_data()->get_economy()->change_sea_transport_capacity(-this->get_cargo());
+			this->get_country()->get_economy()->change_sea_transport_capacity(-this->get_cargo());
 		} else {
-			this->get_country()->get_game_data()->get_economy()->change_land_transport_capacity(-this->get_cargo());
+			this->get_country()->get_economy()->change_land_transport_capacity(-this->get_cargo());
 		}
 	}
 
@@ -109,9 +109,9 @@ void transporter::set_type(const transporter_type *type)
 
 	if (this->get_country() != nullptr) {
 		if (this->is_ship()) {
-			this->get_country()->get_game_data()->get_economy()->change_sea_transport_capacity(this->get_cargo());
+			this->get_country()->get_economy()->change_sea_transport_capacity(this->get_cargo());
 		} else {
-			this->get_country()->get_game_data()->get_economy()->change_land_transport_capacity(this->get_cargo());
+			this->get_country()->get_economy()->change_land_transport_capacity(this->get_cargo());
 		}
 	}
 

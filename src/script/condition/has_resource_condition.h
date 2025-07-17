@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_economy.h"
 #include "economy/resource.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -30,7 +30,7 @@ public:
 		Q_UNUSED(ctx);
 
 		if constexpr (std::is_same_v<scope_type, country>) {
-			return scope->get_game_data()->get_economy()->get_resource_counts().contains(this->resource);
+			return scope->get_economy()->get_resource_counts().contains(this->resource);
 		} else {
 			return scope->get_game_data()->get_resource_counts().contains(this->resource);
 		}

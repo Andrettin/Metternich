@@ -21,17 +21,17 @@ public:
 
 	virtual void do_assignment_effect(const country *scope) const override
 	{
-		scope->get_game_data()->get_economy()->set_wealth(scope->get_game_data()->get_economy()->get_inflated_value(this->quantity));
+		scope->get_economy()->set_wealth(scope->get_economy()->get_inflated_value(this->quantity));
 	}
 
 	virtual void do_addition_effect(const country *scope) const override
 	{
-		scope->get_game_data()->get_economy()->change_wealth_inflated(this->quantity);
+		scope->get_economy()->change_wealth_inflated(this->quantity);
 	}
 
 	virtual void do_subtraction_effect(const country *scope) const override
 	{
-		scope->get_game_data()->get_economy()->change_wealth_inflated(-this->quantity);
+		scope->get_economy()->change_wealth_inflated(-this->quantity);
 	}
 
 	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
@@ -40,7 +40,7 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return std::format("Set {} to {}", string::highlight("Wealth"), scope->get_game_data()->get_economy()->get_inflated_value(this->quantity));
+		return std::format("Set {} to {}", string::highlight("Wealth"), scope->get_economy()->get_inflated_value(this->quantity));
 	}
 
 	virtual std::string get_addition_string(const country *scope, const read_only_context &ctx, const size_t indent) const override
@@ -48,14 +48,14 @@ public:
 		Q_UNUSED(ctx);
 		Q_UNUSED(indent);
 
-		return std::format("Gain {} {}", scope->get_game_data()->get_economy()->get_inflated_value(this->quantity), string::highlight("Wealth"));
+		return std::format("Gain {} {}", scope->get_economy()->get_inflated_value(this->quantity), string::highlight("Wealth"));
 	}
 
 	virtual std::string get_subtraction_string(const country *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		return std::format("Lose {} {}", scope->get_game_data()->get_economy()->get_inflated_value(this->quantity), string::highlight("Wealth"));
+		return std::format("Lose {} {}", scope->get_economy()->get_inflated_value(this->quantity), string::highlight("Wealth"));
 	}
 
 private:

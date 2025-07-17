@@ -212,14 +212,14 @@ bool settlement_building_slot::can_build_wonder(const metternich::wonder *wonder
 		return false;
 	}
 
-	const country_game_data *country_game_data = this->get_country()->get_game_data();
+	const country_economy *country_economy = this->get_country()->get_economy();
 	const int wealth_cost = wonder->get_wealth_cost_for_country(this->get_country());
-	if (wealth_cost > 0 && country_game_data->get_economy()->get_inflated_value(wealth_cost) > country_game_data->get_economy()->get_wealth_with_credit()) {
+	if (wealth_cost > 0 && country_economy->get_inflated_value(wealth_cost) > country_economy->get_wealth_with_credit()) {
 		return false;
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_country(this->get_country())) {
-		if (cost > country_game_data->get_economy()->get_stored_commodity(commodity)) {
+		if (cost > country_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -233,14 +233,14 @@ void settlement_building_slot::build_wonder(const metternich::wonder *wonder)
 		this->cancel_construction();
 	}
 
-	country_game_data *country_game_data = this->get_country()->get_game_data();
+	country_economy *country_economy = this->get_country()->get_economy();
 	const int wealth_cost = wonder->get_wealth_cost_for_country(this->get_country());
 	if (wealth_cost > 0) {
-		country_game_data->get_economy()->change_wealth_inflated(-wealth_cost);
+		country_economy->change_wealth_inflated(-wealth_cost);
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_country(this->get_country())) {
-		country_game_data->get_economy()->change_stored_commodity(commodity, -cost);
+		country_economy->change_stored_commodity(commodity, -cost);
 	}
 
 	this->set_under_construction_wonder(wonder);
@@ -249,14 +249,14 @@ void settlement_building_slot::build_wonder(const metternich::wonder *wonder)
 void settlement_building_slot::cancel_construction()
 {
 	if (this->get_under_construction_wonder() != nullptr) {
-		country_game_data *country_game_data = this->get_country()->get_game_data();
+		country_economy *country_economy = this->get_country()->get_economy();
 		const int wealth_cost = this->get_under_construction_wonder()->get_wealth_cost_for_country(this->get_country());
 		if (wealth_cost > 0) {
-			country_game_data->get_economy()->change_wealth(wealth_cost);
+			country_economy->change_wealth(wealth_cost);
 		}
 
 		for (const auto &[commodity, cost] : this->get_under_construction_wonder()->get_commodity_costs_for_country(this->get_country())) {
-			country_game_data->get_economy()->change_stored_commodity(commodity, cost);
+			country_economy->change_stored_commodity(commodity, cost);
 		}
 
 		this->set_under_construction_wonder(nullptr);
@@ -347,7 +347,7 @@ QString settlement_building_slot::get_modifier_string() const
 		}
 	}
 
-	const commodity_map<int> building_commodity_bonuses = this->get_country()->get_game_data()->get_economy()->get_building_commodity_bonuses(this->get_building());
+	const commodity_map<int> building_commodity_bonuses = this->get_country()->get_economy()->get_building_commodity_bonuses(this->get_building());
 	for (const auto &[commodity, bonus] : building_commodity_bonuses) {
 		const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
 

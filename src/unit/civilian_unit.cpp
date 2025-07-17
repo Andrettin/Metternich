@@ -43,7 +43,7 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owne
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
 
 	connect(this->get_owner()->get_game_data(), &country_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
-	connect(this->get_owner()->get_game_data()->get_economy(), &country_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
+	connect(this->get_owner()->get_economy(), &country_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_game_data(), &country_game_data::technologies_changed, this, &civilian_unit::improvable_resources_changed);
 
 	connect(this->get_owner()->get_game_data(), &country_game_data::provinces_changed, this, &civilian_unit::prospectable_tiles_changed);
@@ -288,16 +288,18 @@ void civilian_unit::build_on_tile()
 bool civilian_unit::can_build_improvement(const improvement *improvement) const
 {
 	const country_game_data *country_game_data = this->get_owner()->get_game_data();
+	const country_economy *country_economy = this->get_owner()->get_economy();
+
 	if (improvement->get_required_technology() != nullptr && !country_game_data->has_technology(improvement->get_required_technology())) {
 		return false;
 	}
 
-	if (improvement->get_wealth_cost() > 0 && improvement->get_wealth_cost() > country_game_data->get_economy()->get_wealth_with_credit()) {
+	if (improvement->get_wealth_cost() > 0 && improvement->get_wealth_cost() > country_economy->get_wealth_with_credit()) {
 		return false;
 	}
 
 	for (const auto &[commodity, cost] : improvement->get_commodity_costs()) {
-		if (cost > country_game_data->get_economy()->get_stored_commodity(commodity)) {
+		if (cost > country_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -332,26 +334,27 @@ void civilian_unit::build_improvement(const improvement *improvement)
 	//FIXME: set the task completion turns as a field for each improvement?
 	this->set_task_completion_turns(civilian_unit::improvement_construction_turns);
 
-	country_game_data *country_game_data = this->get_owner()->get_game_data();
+	country_economy *country_economy = this->get_owner()->get_economy();
+
 	if (improvement->get_wealth_cost() > 0) {
-		country_game_data->get_economy()->change_wealth_inflated(-improvement->get_wealth_cost());
+		country_economy->change_wealth_inflated(-improvement->get_wealth_cost());
 	}
 
 	for (const auto &[commodity, cost] : improvement->get_commodity_costs()) {
-		country_game_data->get_economy()->change_stored_commodity(commodity, -cost);
+		country_economy->change_stored_commodity(commodity, -cost);
 	}
 }
 
 void civilian_unit::cancel_work()
 {
 	if (this->improvement_under_construction != nullptr) {
-		country_game_data *country_game_data = this->get_owner()->get_game_data();
+		country_economy *country_economy = this->get_owner()->get_economy();
 		if (this->improvement_under_construction->get_wealth_cost() > 0) {
-			country_game_data->get_economy()->change_wealth(this->improvement_under_construction->get_wealth_cost());
+			country_economy->change_wealth(this->improvement_under_construction->get_wealth_cost());
 		}
 
 		for (const auto &[commodity, cost] : this->improvement_under_construction->get_commodity_costs()) {
-			country_game_data->get_economy()->change_stored_commodity(commodity, cost);
+			country_economy->change_stored_commodity(commodity, cost);
 		}
 	}
 

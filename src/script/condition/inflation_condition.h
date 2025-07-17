@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_economy.h"
 #include "script/condition/numerical_condition.h"
 
 namespace metternich {
@@ -22,7 +22,7 @@ public:
 
 	virtual int get_scope_value(const country *scope) const override
 	{
-		return scope->get_game_data()->get_economy()->get_inflation().to_int();
+		return scope->get_economy()->get_inflation().to_int();
 	}
 
 	virtual std::string get_value_name() const override

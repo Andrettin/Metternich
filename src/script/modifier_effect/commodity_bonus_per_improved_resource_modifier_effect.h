@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_economy.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "map/province.h"
@@ -33,7 +33,7 @@ public:
 		}
 
 		if constexpr (std::is_same_v<scope_type, const country>) {
-			scope->get_game_data()->get_economy()->change_improved_resource_commodity_bonus(this->resource, this->commodity, (this->value * multiplier).to_int());
+			scope->get_economy()->change_improved_resource_commodity_bonus(this->resource, this->commodity, (this->value * multiplier).to_int());
 		} else {
 			scope->get_game_data()->change_improved_resource_commodity_bonus(this->resource, this->commodity, (this->value * multiplier).to_int());
 		}

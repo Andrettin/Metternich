@@ -21,7 +21,7 @@ public:
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
 		if constexpr (std::is_same_v<scope_type, const country>) {
-			scope->get_game_data()->get_economy()->change_output_modifier(this->value * multiplier);
+			scope->get_economy()->change_output_modifier(this->value * multiplier);
 		} else {
 			scope->get_game_data()->change_output_modifier(this->value * multiplier);
 		}

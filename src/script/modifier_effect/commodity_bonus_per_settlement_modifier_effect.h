@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_economy.h"
 #include "economy/commodity.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "util/number_util.h"
@@ -38,7 +38,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->get_economy()->change_settlement_commodity_bonus(this->commodity, (this->value * multiplier));
+		scope->get_economy()->change_settlement_commodity_bonus(this->commodity, (this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const scope_type *scope) const override

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_economy.h"
 #include "script/modifier_effect/modifier_effect.h"
 
 namespace metternich {
@@ -21,7 +21,7 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->get_economy()->change_inflation_change(this->value * multiplier);
+		scope->get_economy()->change_inflation_change(this->value * multiplier);
 	}
 
 	virtual std::string get_base_string(const country *scope) const override

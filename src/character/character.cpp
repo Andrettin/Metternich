@@ -12,7 +12,6 @@
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
 #include "country/country.h"
-#include "country/country_game_data.h"
 #include "country/culture.h"
 #include "database/defines.h"
 #include "map/province.h"

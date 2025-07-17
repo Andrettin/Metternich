@@ -24,7 +24,7 @@ public:
 
 	virtual int get_scope_value(const country *scope) const override
 	{
-		return scope->get_game_data()->get_economy()->get_stored_commodity(this->commodity);
+		return scope->get_economy()->get_stored_commodity(this->commodity);
 	}
 
 	virtual int get_value(const country *scope) const override

@@ -570,7 +570,7 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 		this->get_overlord()->get_game_data()->change_economic_score(-this->get_economic_score() * country_game_data::vassal_tax_rate / 100);
 
 		for (const auto &[resource, count] : this->get_economy()->get_resource_counts()) {
-			this->get_overlord()->get_game_data()->get_economy()->change_vassal_resource_count(resource, -count);
+			this->get_overlord()->get_economy()->change_vassal_resource_count(resource, -count);
 		}
 	}
 
@@ -580,7 +580,7 @@ void country_game_data::set_overlord(const metternich::country *overlord)
 		this->get_overlord()->get_game_data()->change_economic_score(this->get_economic_score() * country_game_data::vassal_tax_rate / 100);
 
 		for (const auto &[resource, count] : this->get_economy()->get_resource_counts()) {
-			this->get_overlord()->get_game_data()->get_economy()->change_vassal_resource_count(resource, count);
+			this->get_overlord()->get_economy()->change_vassal_resource_count(resource, count);
 		}
 	} else {
 		this->set_subject_type(nullptr);
@@ -850,7 +850,7 @@ void country_game_data::on_province_gained(const province *province, const int m
 		this->get_economy()->change_resource_count(resource, count * multiplier);
 
 		if (this->get_overlord() != nullptr) {
-			this->get_overlord()->get_game_data()->get_economy()->change_vassal_resource_count(resource, count * multiplier);
+			this->get_overlord()->get_economy()->change_vassal_resource_count(resource, count * multiplier);
 		}
 	}
 
@@ -1496,7 +1496,7 @@ void country_game_data::remove_opinion_modifier(const metternich::country *other
 int country_game_data::get_opinion_weighted_prestige_for(const metternich::country *other) const
 {
 	const int opinion = this->get_opinion_of(other);
-	const int prestige = std::max(1, other->get_game_data()->get_economy()->get_stored_commodity(defines::get()->get_prestige_commodity()));
+	const int prestige = std::max(1, other->get_economy()->get_stored_commodity(defines::get()->get_prestige_commodity()));
 
 	const int opinion_weighted_prestige = prestige * (opinion - country::min_opinion) / (country::max_opinion - country::min_opinion);
 	return opinion_weighted_prestige;

@@ -21,7 +21,7 @@ public:
 
 	virtual int get_scope_value(const scope_type *scope) const override
 	{
-		return scope->get_game_data()->get_economy()->get_wealth();
+		return scope->get_economy()->get_wealth();
 	}
 
 	virtual std::string get_value_name() const override

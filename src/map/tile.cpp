@@ -3,7 +3,6 @@
 #include "map/tile.h"
 
 #include "country/country.h"
-#include "country/country_game_data.h"
 #include "database/defines.h"
 #include "economy/resource.h"
 #include "infrastructure/improvement.h"

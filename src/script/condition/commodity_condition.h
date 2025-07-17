@@ -2,7 +2,6 @@
 
 #include "country/country.h"
 #include "country/country_economy.h"
-#include "country/country_game_data.h"
 #include "economy/commodity.h"
 #include "script/condition/numerical_condition.h"
 
@@ -24,7 +23,7 @@ public:
 
 	virtual int get_scope_value(const country *scope) const override
 	{
-		return scope->get_game_data()->get_economy()->get_stored_commodity(this->commodity);
+		return scope->get_economy()->get_stored_commodity(this->commodity);
 	}
 
 	virtual std::string get_value_name() const override

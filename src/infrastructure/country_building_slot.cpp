@@ -247,13 +247,13 @@ commodity_map<int> country_building_slot::get_production_type_inputs(const produ
 		return inputs;
 	}
 
-	const country_game_data *country_game_data = this->get_country()->get_game_data();
+	const country_economy *country_economy = this->get_country()->get_economy();
 
 	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
 		int total_input = input_value * employed_capacity;
 
 		if (input_commodity->is_labor()) {
-			const int throughput_modifier = country_game_data->get_economy()->get_throughput_modifier() + country_game_data->get_economy()->get_commodity_throughput_modifier(production_type->get_output_commodity());
+			const int throughput_modifier = country_economy->get_throughput_modifier() + country_economy->get_commodity_throughput_modifier(production_type->get_output_commodity());
 
 			if (throughput_modifier != 0) {
 				assert_throw(throughput_modifier > -100);
@@ -293,7 +293,7 @@ int country_building_slot::get_production_type_input_wealth(const production_typ
 		return 0;
 	}
 
-	return this->get_country()->get_game_data()->get_economy()->get_inflated_value(production_type->get_input_wealth() * employed_capacity);
+	return this->get_country()->get_economy()->get_inflated_value(production_type->get_input_wealth() * employed_capacity);
 }
 
 centesimal_int country_building_slot::get_production_type_output(const production_type *production_type) const
@@ -304,11 +304,11 @@ centesimal_int country_building_slot::get_production_type_output(const productio
 		return centesimal_int(0);
 	}
 
-	const country_game_data *country_game_data = this->get_country()->get_game_data();
+	const country_economy *country_economy = this->get_country()->get_economy();
 
-	centesimal_int output_modifier = country_game_data->get_economy()->get_output_modifier() + country_game_data->get_economy()->get_commodity_output_modifier(production_type->get_output_commodity());
+	centesimal_int output_modifier = country_economy->get_output_modifier() + country_economy->get_commodity_output_modifier(production_type->get_output_commodity());
 	if (production_type->is_industrial()) {
-		output_modifier += country_game_data->get_economy()->get_industrial_output_modifier();
+		output_modifier += country_economy->get_industrial_output_modifier();
 	}
 
 	if (output_modifier != 0) {
@@ -336,7 +336,7 @@ void country_building_slot::change_production(const production_type *production_
 		this->production_type_employed_capacities.erase(production_type);
 	}
 
-	country_game_data *country_game_data = this->get_country()->get_game_data();
+	country_economy *country_economy = this->get_country()->get_economy();
 
 	const commodity_map<int> new_inputs = this->get_production_type_inputs(production_type);
 	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
@@ -345,20 +345,20 @@ void country_building_slot::change_production(const production_type *production_
 		const int input_change = new_input - old_input;
 
 		if (input_commodity->is_storable() && change_input_storage) {
-			country_game_data->get_economy()->change_stored_commodity(input_commodity, -input_change);
+			country_economy->change_stored_commodity(input_commodity, -input_change);
 		}
-		country_game_data->get_economy()->change_commodity_input(input_commodity, input_change);
+		country_economy->change_commodity_input(input_commodity, input_change);
 	}
 
 	const int new_input_wealth = this->get_production_type_input_wealth(production_type);
 	const int input_wealth_change = new_input_wealth - old_input_wealth;
 	if (change_input_storage) {
-		country_game_data->get_economy()->change_wealth(-input_wealth_change);
+		country_economy->change_wealth(-input_wealth_change);
 	}
-	country_game_data->get_economy()->change_wealth_income(-input_wealth_change);
+	country_economy->change_wealth_income(-input_wealth_change);
 
 	const centesimal_int new_output = this->get_production_type_output(production_type);
-	country_game_data->get_economy()->change_commodity_output(production_type->get_output_commodity(), new_output - old_output);
+	country_economy->change_commodity_output(production_type->get_output_commodity(), new_output - old_output);
 
 }
 
@@ -371,22 +371,22 @@ bool country_building_slot::can_increase_production(const production_type *produ
 		return false;
 	}
 
-	const country_game_data *country_game_data = this->get_country()->get_game_data();
+	const country_economy *country_economy = this->get_country()->get_economy();
 
 	for (const auto &[input_commodity, input_value] : production_type->get_input_commodities()) {
 		if (input_commodity->is_storable()) {
-			if (country_game_data->get_economy()->get_stored_commodity(input_commodity) < input_value) {
+			if (country_economy->get_stored_commodity(input_commodity) < input_value) {
 				return false;
 			}
 		} else {
 			//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
-			if (country_game_data->get_economy()->get_net_commodity_output(input_commodity) < input_value) {
+			if (country_economy->get_net_commodity_output(input_commodity) < input_value) {
 				return false;
 			}
 		}
 	}
 
-	if (production_type->get_input_wealth() != 0 && country_game_data->get_economy()->get_wealth_with_credit() < country_game_data->get_economy()->get_inflated_value(production_type->get_input_wealth())) {
+	if (production_type->get_input_wealth() != 0 && country_economy->get_wealth_with_credit() < country_economy->get_inflated_value(production_type->get_input_wealth())) {
 		return false;
 	}
 
@@ -496,7 +496,7 @@ int country_building_slot::get_education_type_input_wealth(const education_type 
 		return 0;
 	}
 
-	return this->get_country()->get_game_data()->get_economy()->get_inflated_value(education_type->get_input_wealth() * employed_capacity);
+	return this->get_country()->get_economy()->get_inflated_value(education_type->get_input_wealth() * employed_capacity);
 }
 
 int country_building_slot::get_education_type_output(const education_type *education_type) const
@@ -519,6 +519,7 @@ void country_building_slot::change_education(const education_type *education_typ
 	}
 
 	country_game_data *country_game_data = this->get_country()->get_game_data();
+	country_economy *country_economy = this->get_country()->get_economy();
 
 	const commodity_map<int> new_inputs = this->get_education_type_inputs(education_type);
 	for (const auto &[input_commodity, input_value] : education_type->get_input_commodities()) {
@@ -527,17 +528,17 @@ void country_building_slot::change_education(const education_type *education_typ
 		const int input_change = new_input - old_input;
 
 		if (input_commodity->is_storable() && change_input_storage) {
-			country_game_data->get_economy()->change_stored_commodity(input_commodity, -input_change);
+			country_economy->change_stored_commodity(input_commodity, -input_change);
 		}
-		country_game_data->get_economy()->change_commodity_input(input_commodity, input_change);
+		country_economy->change_commodity_input(input_commodity, input_change);
 	}
 
 	const int new_input_wealth = this->get_education_type_input_wealth(education_type);
 	const int input_wealth_change = new_input_wealth - old_input_wealth;
 	if (change_input_storage) {
-		country_game_data->get_economy()->change_wealth(-input_wealth_change);
+		country_economy->change_wealth(-input_wealth_change);
 	}
-	country_game_data->get_economy()->change_wealth_income(-input_wealth_change);
+	country_economy->change_wealth_income(-input_wealth_change);
 
 	const int new_output = this->get_education_type_output(education_type);
 	const int output_change = new_output - old_output;
@@ -551,6 +552,7 @@ bool country_building_slot::can_increase_education(const education_type *educati
 	assert_throw(vector::contains(this->get_building()->get_education_types(), education_type));
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
+	const country_economy *country_economy = this->get_country()->get_economy();
 
 	if (country_game_data->get_population()->get_type_count(education_type->get_input_population_type()) - country_game_data->get_population_type_input(education_type->get_input_population_type()) < 1) {
 		return false;
@@ -558,18 +560,18 @@ bool country_building_slot::can_increase_education(const education_type *educati
 
 	for (const auto &[input_commodity, input_value] : education_type->get_input_commodities()) {
 		if (input_commodity->is_storable()) {
-			if (country_game_data->get_economy()->get_stored_commodity(input_commodity) < input_value) {
+			if (country_economy->get_stored_commodity(input_commodity) < input_value) {
 				return false;
 			}
 		} else {
 			//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
-			if (country_game_data->get_economy()->get_net_commodity_output(input_commodity) < input_value) {
+			if (country_economy->get_net_commodity_output(input_commodity) < input_value) {
 				return false;
 			}
 		}
 	}
 
-	if (education_type->get_input_wealth() != 0 && country_game_data->get_economy()->get_wealth_with_credit() < country_game_data->get_economy()->get_inflated_value(education_type->get_input_wealth())) {
+	if (education_type->get_input_wealth() != 0 && country_economy->get_wealth_with_credit() < country_economy->get_inflated_value(education_type->get_input_wealth())) {
 		return false;
 	}
 

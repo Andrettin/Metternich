@@ -308,7 +308,7 @@ void site_game_data::set_owner(const country *owner)
 	const country *old_owner = this->get_owner();
 
 	if (old_owner != nullptr) {
-		for (const auto &[improvement, commodity_bonuses] : old_owner->get_game_data()->get_economy()->get_improvement_commodity_bonuses()) {
+		for (const auto &[improvement, commodity_bonuses] : old_owner->get_economy()->get_improvement_commodity_bonuses()) {
 			if (!this->has_improvement(improvement)) {
 				continue;
 			}
@@ -323,11 +323,11 @@ void site_game_data::set_owner(const country *owner)
 		}
 
 		if (this->site->is_settlement()) {
-			for (const auto &[commodity, bonus] : old_owner->get_game_data()->get_economy()->get_settlement_commodity_bonuses()) {
+			for (const auto &[commodity, bonus] : old_owner->get_economy()->get_settlement_commodity_bonuses()) {
 				this->change_base_commodity_output(commodity, -bonus);
 			}
 
-			for (const auto &[building, commodity_bonuses] : old_owner->get_game_data()->get_economy()->get_building_commodity_bonuses()) {
+			for (const auto &[building, commodity_bonuses] : old_owner->get_economy()->get_building_commodity_bonuses()) {
 				if (!this->has_building(building)) {
 					continue;
 				}
@@ -345,7 +345,7 @@ void site_game_data::set_owner(const country *owner)
 				continue;
 			}
 
-			old_owner->get_game_data()->get_economy()->change_transportable_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+			old_owner->get_economy()->change_transportable_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
 		}
 	}
 
@@ -361,10 +361,10 @@ void site_game_data::set_owner(const country *owner)
 				continue;
 			}
 
-			this->get_owner()->get_game_data()->get_economy()->change_transportable_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+			this->get_owner()->get_economy()->change_transportable_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
 		}
 
-		for (const auto &[improvement, commodity_bonuses] : this->get_owner()->get_game_data()->get_economy()->get_improvement_commodity_bonuses()) {
+		for (const auto &[improvement, commodity_bonuses] : this->get_owner()->get_economy()->get_improvement_commodity_bonuses()) {
 			if (!this->has_improvement(improvement)) {
 				continue;
 			}
@@ -379,11 +379,11 @@ void site_game_data::set_owner(const country *owner)
 		}
 
 		if (this->site->is_settlement()) {
-			for (const auto &[commodity, bonus] : this->get_owner()->get_game_data()->get_economy()->get_settlement_commodity_bonuses()) {
+			for (const auto &[commodity, bonus] : this->get_owner()->get_economy()->get_settlement_commodity_bonuses()) {
 				this->change_base_commodity_output(commodity, bonus);
 			}
 
-			for (const auto &[building, commodity_bonuses] : this->get_owner()->get_game_data()->get_economy()->get_building_commodity_bonuses()) {
+			for (const auto &[building, commodity_bonuses] : this->get_owner()->get_economy()->get_building_commodity_bonuses()) {
 				if (!this->has_building(building)) {
 					continue;
 				}
@@ -1029,7 +1029,7 @@ void site_game_data::on_settlement_built(const int multiplier)
 		}
 
 		if (this->get_owner() != nullptr) {
-			for (const auto &[commodity, bonus] : this->get_owner()->get_game_data()->get_economy()->get_settlement_commodity_bonuses()) {
+			for (const auto &[commodity, bonus] : this->get_owner()->get_economy()->get_settlement_commodity_bonuses()) {
 				this->change_base_commodity_output(commodity, bonus);
 			}
 		}
@@ -1044,9 +1044,10 @@ void site_game_data::on_building_gained(const building_type *building, const int
 
 	if (this->get_owner() != nullptr) {
 		country_game_data *country_game_data = this->get_owner()->get_game_data();
+		country_economy *country_economy = this->get_owner()->get_economy();
 		country_game_data->change_settlement_building_count(building, multiplier);
 
-		for (const auto &[commodity, bonus] : country_game_data->get_economy()->get_building_commodity_bonuses(building)) {
+		for (const auto &[commodity, bonus] : country_economy->get_building_commodity_bonuses(building)) {
 			this->change_base_commodity_output(commodity, centesimal_int(bonus) * multiplier);
 		}
 	}
@@ -1094,9 +1095,9 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 	}
 
 	if (this->get_owner() != nullptr) {
-		const country_game_data *country_game_data = this->get_owner()->get_game_data();
+		const country_economy *country_economy = this->get_owner()->get_economy();
 
-		for (const auto &[commodity, bonus] : country_game_data->get_economy()->get_improvement_commodity_bonuses(improvement)) {
+		for (const auto &[commodity, bonus] : country_economy->get_improvement_commodity_bonuses(improvement)) {
 			this->change_base_commodity_output(commodity, bonus * multiplier);
 		}
 	}
@@ -1327,7 +1328,7 @@ population_unit *site_game_data::choose_population_unit_for_reallocation() const
 				continue;
 			}
 
-			if (this->get_owner() != nullptr && this->get_owner()->get_game_data()->get_economy()->get_net_commodity_output(population_unit->get_type()->get_output_commodity()) < population_unit->get_type()->get_output_value()) {
+			if (this->get_owner() != nullptr && this->get_owner()->get_economy()->get_net_commodity_output(population_unit->get_type()->get_output_commodity()) < population_unit->get_type()->get_output_value()) {
 				continue;
 			}
 		}
@@ -1538,7 +1539,7 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		}
 	} else {
 		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_game_data()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
+			this->get_owner()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
 		}
 	}
 
@@ -1566,20 +1567,20 @@ void site_game_data::calculate_commodity_outputs()
 	}
 
 	if (this->get_owner() != nullptr) {
-		for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_economy()->get_commodity_bonuses_per_population()) {
+		for (const auto &[commodity, value] : this->get_owner()->get_economy()->get_commodity_bonuses_per_population()) {
 			outputs[commodity] += (value * this->get_population_unit_count());
 		}
 
 		if (this->is_capital()) {
-			for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_economy()->get_capital_commodity_bonuses()) {
+			for (const auto &[commodity, value] : this->get_owner()->get_economy()->get_capital_commodity_bonuses()) {
 				outputs[commodity] += value;
 			}
 
-			for (const auto &[commodity, value] : this->get_owner()->get_game_data()->get_economy()->get_capital_commodity_bonuses_per_population()) {
+			for (const auto &[commodity, value] : this->get_owner()->get_economy()->get_capital_commodity_bonuses_per_population()) {
 				outputs[commodity] += (value * this->get_population_unit_count());
 			}
 
-			for (const auto &[commodity, modifier] : this->get_owner()->get_game_data()->get_economy()->get_capital_commodity_output_modifiers()) {
+			for (const auto &[commodity, modifier] : this->get_owner()->get_economy()->get_capital_commodity_output_modifiers()) {
 				commodity_output_modifiers[commodity] += modifier;
 			}
 		}
@@ -1607,13 +1608,13 @@ void site_game_data::calculate_commodity_outputs()
 	}
 
 	if (this->get_owner() != nullptr) {
-		output_modifier += this->get_owner()->get_game_data()->get_economy()->get_output_modifier();
+		output_modifier += this->get_owner()->get_economy()->get_output_modifier();
 
 		if (this->get_resource() != nullptr && this->get_resource()->get_commodity() != nullptr) {
-			commodity_output_modifiers[this->get_resource()->get_commodity()] += this->get_owner()->get_game_data()->get_economy()->get_resource_output_modifier();
+			commodity_output_modifiers[this->get_resource()->get_commodity()] += this->get_owner()->get_economy()->get_resource_output_modifier();
 		}
 
-		for (const auto &[commodity, modifier] : this->get_owner()->get_game_data()->get_economy()->get_commodity_output_modifiers()) {
+		for (const auto &[commodity, modifier] : this->get_owner()->get_economy()->get_commodity_output_modifiers()) {
 			commodity_output_modifiers[commodity] += modifier;
 		}
 	}
@@ -1827,7 +1828,7 @@ void site_game_data::set_transport_level(const int level)
 			}
 		} else {
 			if (this->get_owner() != nullptr) {
-				this->get_owner()->get_game_data()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
+				this->get_owner()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
 			}
 		}
 	}
@@ -1860,7 +1861,7 @@ void site_game_data::set_sea_transport_level(const int level)
 			}
 		} else {
 			if (this->get_owner() != nullptr) {
-				this->get_owner()->get_game_data()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
+				this->get_owner()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
 			}
 		}
 	}

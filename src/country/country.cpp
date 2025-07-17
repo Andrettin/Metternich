@@ -141,6 +141,11 @@ void country::reset_game_data()
 	this->get_game_data()->initialize_building_slots();
 }
 
+country_economy *country::get_economy() const
+{
+	return this->get_game_data()->get_economy();
+}
+
 void country::reset_turn_data()
 {
 	this->turn_data = make_qunique<country_turn_data>(this);

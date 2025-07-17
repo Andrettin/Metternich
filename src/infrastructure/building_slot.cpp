@@ -115,14 +115,14 @@ bool building_slot::can_build_building(const building_type *building) const
 		return false;
 	}
 
-	const country_game_data *country_game_data = this->get_country()->get_game_data();
+	const country_economy *country_economy = this->get_country()->get_economy();
 	const int wealth_cost = building->get_wealth_cost_for_country(this->get_country());
-	if (wealth_cost > 0 && country_game_data->get_economy()->get_inflated_value(wealth_cost) > country_game_data->get_economy()->get_wealth_with_credit()) {
+	if (wealth_cost > 0 && country_economy->get_inflated_value(wealth_cost) > country_economy->get_wealth_with_credit()) {
 		return false;
 	}
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_country(this->get_country())) {
-		if (cost > country_game_data->get_economy()->get_stored_commodity(commodity)) {
+		if (cost > country_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -155,14 +155,14 @@ void building_slot::build_building(const building_type *building)
 		this->cancel_construction();
 	}
 
-	country_game_data *country_game_data = this->get_country()->get_game_data();
+	country_economy *country_economy = this->get_country()->get_economy();
 	const int wealth_cost = building->get_wealth_cost_for_country(this->get_country());
 	if (wealth_cost > 0) {
-		country_game_data->get_economy()->change_wealth_inflated(-wealth_cost);
+		country_economy->change_wealth_inflated(-wealth_cost);
 	}
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_country(this->get_country())) {
-		country_game_data->get_economy()->change_stored_commodity(commodity, -cost);
+		country_economy->change_stored_commodity(commodity, -cost);
 	}
 
 	this->set_under_construction_building(building);
@@ -174,14 +174,14 @@ void building_slot::cancel_construction()
 		return;
 	}
 
-	country_game_data *country_game_data = this->get_country()->get_game_data();
+	country_economy *country_economy = this->get_country()->get_economy();
 	const int wealth_cost = this->get_under_construction_building()->get_wealth_cost_for_country(this->get_country());
 	if (wealth_cost > 0) {
-		country_game_data->get_economy()->change_wealth(wealth_cost);
+		country_economy->change_wealth(wealth_cost);
 	}
 
 	for (const auto &[commodity, cost] : this->get_under_construction_building()->get_commodity_costs_for_country(this->get_country())) {
-		country_game_data->get_economy()->change_stored_commodity(commodity, cost);
+		country_economy->change_stored_commodity(commodity, cost);
 	}
 
 	this->set_under_construction_building(nullptr);

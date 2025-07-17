@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_economy.h"
 #include "economy/commodity.h"
 #include "script/modifier_effect/modifier_effect.h"
 
@@ -28,7 +28,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->get_economy()->change_commodity_throughput_modifier(this->commodity, (this->value * multiplier).to_int());
+		scope->get_economy()->change_commodity_throughput_modifier(this->commodity, (this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string(const scope_type *scope) const override

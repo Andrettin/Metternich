@@ -352,8 +352,7 @@ void country_economy::do_trade(country_map<commodity_map<int>> &country_luxury_d
 			const int price = game::get()->get_price(commodity);
 
 			for (const metternich::country *other_country : countries) {
-				country_game_data *other_country_game_data = other_country->get_game_data();
-				country_economy *other_country_economy = other_country_game_data->get_economy();
+				country_economy *other_country_economy = other_country->get_economy();
 
 				const int bid = other_country_economy->get_bid(commodity);
 				if (bid != 0) {
@@ -436,7 +435,7 @@ void country_economy::add_taxable_wealth(const int taxable_wealth, const income_
 	const int tax = taxable_wealth * country_game_data::vassal_tax_rate / 100;
 	const int taxed_wealth = taxable_wealth - tax;
 
-	this->get_game_data()->get_overlord()->get_game_data()->get_economy()->add_taxable_wealth(tax, tax_income_type);
+	this->get_game_data()->get_overlord()->get_economy()->add_taxable_wealth(tax, tax_income_type);
 
 	this->change_wealth(taxed_wealth);
 
@@ -1147,7 +1146,7 @@ void country_economy::do_sale(const metternich::country *other_country, const co
 	this->change_offer(commodity, -sold_quantity);
 
 	country_game_data *other_country_game_data = other_country->get_game_data();
-	country_economy *other_country_economy = other_country_game_data->get_economy();
+	country_economy *other_country_economy = other_country->get_economy();
 
 	if (state_purchase) {
 		other_country_economy->change_stored_commodity(commodity, sold_quantity);

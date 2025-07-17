@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_economy.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "population/profession.h"
@@ -37,7 +37,7 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->get_economy()->change_profession_commodity_bonus(this->profession, this->commodity, (this->value * multiplier));
+		scope->get_economy()->change_profession_commodity_bonus(this->profession, this->commodity, (this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const country *scope) const override

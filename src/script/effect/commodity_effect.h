@@ -2,7 +2,6 @@
 
 #include "country/country.h"
 #include "country/country_economy.h"
-#include "country/country_game_data.h"
 #include "economy/commodity.h"
 #include "script/effect/effect.h"
 #include "util/string_util.h"
@@ -35,7 +34,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->get_economy()->set_stored_commodity(this->commodity, this->quantity);
+		scope->get_economy()->set_stored_commodity(this->commodity, this->quantity);
 	}
 
 	virtual void do_addition_effect(const country *scope) const override
@@ -46,12 +45,12 @@ public:
 
 		int change = this->quantity;
 
-		const int storage = scope->get_game_data()->get_economy()->get_stored_commodity(this->commodity);
+		const int storage = scope->get_economy()->get_stored_commodity(this->commodity);
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
 
-		scope->get_game_data()->get_economy()->change_stored_commodity(this->commodity, change);
+		scope->get_economy()->change_stored_commodity(this->commodity, change);
 	}
 
 	virtual void do_subtraction_effect(const country *scope) const override
@@ -62,12 +61,12 @@ public:
 
 		int change = -this->quantity;
 
-		const int storage = scope->get_game_data()->get_economy()->get_stored_commodity(this->commodity);
+		const int storage = scope->get_economy()->get_stored_commodity(this->commodity);
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
 
-		scope->get_game_data()->get_economy()->change_stored_commodity(this->commodity, change);
+		scope->get_economy()->change_stored_commodity(this->commodity, change);
 	}
 
 	virtual std::string get_assignment_string() const override
