@@ -44,7 +44,7 @@ class country_economy final : public QObject
 	Q_PROPERTY(int throughput_modifier READ get_throughput_modifier NOTIFY throughput_modifier_changed)
 
 public:
-	explicit country_economy(const metternich::country *country);
+	explicit country_economy(const metternich::country *country, const country_game_data *game_data);
 	~country_economy();
 
 	country_game_data *get_game_data() const;

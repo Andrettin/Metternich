@@ -29,11 +29,11 @@
 
 namespace metternich {
 
-country_economy::country_economy(const metternich::country *country)
+country_economy::country_economy(const metternich::country *country, const country_game_data *game_data)
 	: country(country)
 {
-	connect(this->get_game_data(), &country_game_data::provinces_changed, this, &country_economy::resource_counts_changed);
-	connect(this->get_game_data(), &country_game_data::diplomacy_states_changed, this, &country_economy::vassal_resource_counts_changed);
+	connect(game_data, &country_game_data::provinces_changed, this, &country_economy::resource_counts_changed);
+	connect(game_data, &country_game_data::diplomacy_states_changed, this, &country_economy::vassal_resource_counts_changed);
 
 	for (const commodity *commodity : commodity::get_all()) {
 		if (!commodity->is_enabled()) {

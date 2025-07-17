@@ -112,7 +112,7 @@ namespace metternich {
 country_game_data::country_game_data(metternich::country *country)
 	: country(country), tier(country_tier::none), religion(country->get_default_religion())
 {
-	this->economy = make_qunique<country_economy>(country);
+	this->economy = make_qunique<country_economy>(country, this);
 	this->military = make_qunique<country_military>(country);
 
 	connect(this, &country_game_data::tier_changed, this, &country_game_data::title_name_changed);
