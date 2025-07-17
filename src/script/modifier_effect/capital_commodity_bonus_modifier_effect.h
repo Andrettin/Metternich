@@ -2,6 +2,7 @@
 
 #include "economy/commodity.h"
 #include "country/country.h"
+#include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "script/modifier_effect/modifier_effect.h"
 
@@ -27,7 +28,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->change_capital_commodity_bonus(this->commodity, this->value * multiplier);
+		scope->get_game_data()->get_economy()->change_capital_commodity_bonus(this->commodity, this->value * multiplier);
 	}
 
 	virtual std::string get_base_string(const country *scope) const override

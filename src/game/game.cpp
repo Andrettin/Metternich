@@ -1459,14 +1459,14 @@ QCoro::Task<void> game::do_turn_coro()
 		for (country *country : this->get_countries()) {
 			country->reset_turn_data();
 
-			country->get_game_data()->calculate_commodity_needs();
+			country->get_game_data()->get_economy()->calculate_commodity_needs();
 
 			if (country->get_game_data()->is_ai()) {
 				country->get_ai()->do_turn();
 			}
 
-			old_bids[country] = country->get_game_data()->get_bids();
-			old_offers[country] = country->get_game_data()->get_offers();
+			old_bids[country] = country->get_game_data()->get_economy()->get_bids();
+			old_offers[country] = country->get_game_data()->get_economy()->get_offers();
 		}
 
 		this->do_trade();
@@ -1477,7 +1477,7 @@ QCoro::Task<void> game::do_turn_coro()
 
 		for (const country *country : this->get_countries()) {
 			//do inflation after processing the normal turn for all countries, since subjects can send treasure fleets to their overlords, causing inflation in the latter
-			country->get_game_data()->do_inflation();
+			country->get_game_data()->get_economy()->do_inflation();
 
 			if (country->get_turn_data()->is_transport_level_recalculation_needed()) {
 				country->get_game_data()->calculate_tile_transport_levels();
@@ -1491,11 +1491,11 @@ QCoro::Task<void> game::do_turn_coro()
 
 			//restore old bids and offers, if possible
 			for (const auto &[commodity, bid] : old_bids[country]) {
-				country->get_game_data()->set_bid(commodity, bid);
+				country->get_game_data()->get_economy()->set_bid(commodity, bid);
 			}
 
 			for (const auto &[commodity, offer] : old_offers[country]) {
-				country->get_game_data()->set_offer(commodity, offer);
+				country->get_game_data()->get_economy()->set_offer(commodity, offer);
 			}
 		}
 
@@ -1579,7 +1579,7 @@ void game::do_trade()
 				continue;
 			}
 
-			const int offer = country_game_data->get_offer(commodity);
+			const int offer = country_game_data->get_economy()->get_offer(commodity);
 			if (offer > 0) {
 				const int sold_quantity = std::min(offer, effective_demand_int);
 
@@ -1587,7 +1587,7 @@ void game::do_trade()
 					continue;
 				}
 
-				country_game_data->do_sale(country, commodity, sold_quantity, false);
+				country_game_data->get_economy()->do_sale(country, commodity, sold_quantity, false);
 
 				effective_demand_int -= sold_quantity;
 			}
@@ -1599,17 +1599,17 @@ void game::do_trade()
 	}
 
 	for (const country *country : trade_countries) {
-		country->get_game_data()->do_trade(country_luxury_demands);
+		country->get_game_data()->get_economy()->do_trade(country_luxury_demands);
 	}
 
 	//change commodity prices based on whether there were unfulfilled bids/offers
 	commodity_map<int> remaining_demands;
 	for (const country *country : trade_countries) {
-		for (const auto &[commodity, bid] : country->get_game_data()->get_bids()) {
+		for (const auto &[commodity, bid] : country->get_game_data()->get_economy()->get_bids()) {
 			remaining_demands[commodity] += bid;
 		}
 
-		for (const auto &[commodity, offer] : country->get_game_data()->get_offers()) {
+		for (const auto &[commodity, offer] : country->get_game_data()->get_economy()->get_offers()) {
 			remaining_demands[commodity] -= offer;
 		}
 	}

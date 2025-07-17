@@ -28,7 +28,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->change_commodity_throughput_modifier(this->commodity, (this->value * multiplier).to_int());
+		scope->get_game_data()->get_economy()->change_commodity_throughput_modifier(this->commodity, (this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string(const scope_type *scope) const override

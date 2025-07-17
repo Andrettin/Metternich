@@ -169,7 +169,7 @@ MenuBase {
 				+ "\nPopulation: " + number_string(selected_country.game_data.population.size)
 				+ get_subject_type_counts_string(selected_country.game_data.subject_type_counts)
 				+ "\n" + selected_country.game_data.provinces.length + " " + (selected_country.game_data.provinces.length > 1 ? "Provinces" : "Province")
-				+ get_resource_counts_string(selected_country.game_data.resource_counts)
+				+ get_resource_counts_string(selected_country.game_data.economy.resource_counts)
 			) : ""
 			
 			function get_subject_type_counts_string(subject_type_counts) {

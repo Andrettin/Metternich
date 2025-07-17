@@ -564,7 +564,7 @@ DialogBase {
 							text += base_quantity + " " + commodity.name
 							
 							if (quantity !== base_quantity) {
-								var modifier = Math.floor(100 * 100 / (100 + country_game_data.throughput_modifier + country_game_data.get_commodity_throughput_modifier(output_commodity)) - 100)
+								var modifier = Math.floor(100 * 100 / (100 + country_game_data.economy.throughput_modifier + country_game_data.economy.get_commodity_throughput_modifier(output_commodity)) - 100)
 								text += " " + (modifier > 0 ? "+" : "-") + " " + Math.abs(modifier) + "% = " + quantity + " " + commodity.name 										
 								text += ")"
 							}
@@ -582,9 +582,9 @@ DialogBase {
 						text += " → " + employed_capacity + " " + output_commodity.name
 						
 						if (output_value !== employed_capacity) {
-							var modifier = country_game_data.output_modifier + country_game_data.get_commodity_output_modifier(output_commodity)
+							var modifier = country_game_data.economy.output_modifier + country_game_data.economy.get_commodity_output_modifier(output_commodity)
 							if (production_type.industrial) {
-								modifier += country_game_data.industrial_output_modifier
+								modifier += country_game_data.economy.industrial_output_modifier
 							}
 							text += " " + (modifier > 0 ? "+" : "-") + " " + Math.abs(modifier) + "% = " + output_value + " " + output_commodity.name
 						}
@@ -791,7 +791,7 @@ DialogBase {
 							text += base_quantity + " " + commodity.name
 							
 							if (quantity !== base_quantity) {
-								var modifier = Math.floor(100 * 100 / (100 + country_game_data.throughput_modifier + country_game_data.get_commodity_throughput_modifier(output_commodity)) - 100)
+								var modifier = Math.floor(100 * 100 / (100 + country_game_data.economy.throughput_modifier + country_game_data.economy.get_commodity_throughput_modifier(output_commodity)) - 100)
 								text += " " + (modifier > 0 ? "+" : "-") + " " + Math.abs(modifier) + "% = " + quantity + " " + commodity.name 										
 								text += ")"
 							}

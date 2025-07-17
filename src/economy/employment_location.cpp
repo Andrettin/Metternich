@@ -3,6 +3,7 @@
 #include "economy/employment_location.h"
 
 #include "country/country.h"
+#include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "economy/commodity.h"
 #include "map/province.h"
@@ -88,7 +89,7 @@ commodity_map<centesimal_int> employment_location::get_employee_commodity_output
 
 	const country *employment_country = this->get_employment_country();
 	if (employment_country != nullptr) {
-		const commodity_map<decimillesimal_int> &commodity_bonuses = employment_country->get_game_data()->get_profession_commodity_bonuses(profession);
+		const commodity_map<decimillesimal_int> &commodity_bonuses = employment_country->get_game_data()->get_economy()->get_profession_commodity_bonuses(profession);
 		for (auto &[commodity, bonus] : commodity_bonuses) {
 			outputs[commodity] += bonus;
 		}

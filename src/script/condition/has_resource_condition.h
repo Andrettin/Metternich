@@ -29,7 +29,11 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_resource_counts().contains(this->resource);
+		if constexpr (std::is_same_v<scope_type, country>) {
+			return scope->get_game_data()->get_economy()->get_resource_counts().contains(this->resource);
+		} else {
+			return scope->get_game_data()->get_resource_counts().contains(this->resource);
+		}
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

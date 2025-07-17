@@ -30,7 +30,11 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->change_commodity_output_modifier(this->commodity, this->value * multiplier);
+		if constexpr (std::is_same_v<scope_type, const country>) {
+			scope->get_game_data()->get_economy()->change_commodity_output_modifier(this->commodity, this->value * multiplier);
+		} else {
+			scope->get_game_data()->change_commodity_output_modifier(this->commodity, this->value * multiplier);
+		}
 	}
 
 	virtual std::string get_base_string(const scope_type *scope) const override

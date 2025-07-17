@@ -21,6 +21,7 @@
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
+#include "util/number_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
@@ -346,7 +347,7 @@ QString settlement_building_slot::get_modifier_string() const
 		}
 	}
 
-	const commodity_map<int> building_commodity_bonuses = this->get_country()->get_game_data()->get_building_commodity_bonuses(this->get_building());
+	const commodity_map<int> building_commodity_bonuses = this->get_country()->get_game_data()->get_economy()->get_building_commodity_bonuses(this->get_building());
 	for (const auto &[commodity, bonus] : building_commodity_bonuses) {
 		const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
 

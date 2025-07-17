@@ -216,8 +216,8 @@ void country_ai::assign_trade_orders()
 {
 	assert_throw(this->get_game_data()->is_ai());
 
-	this->get_game_data()->clear_bids();
-	this->get_game_data()->clear_offers();
+	this->get_game_data()->get_economy()->clear_bids();
+	this->get_game_data()->get_economy()->clear_offers();
 
 	if (this->get_game_data()->is_under_anarchy()) {
 		return;
@@ -228,10 +228,10 @@ void country_ai::assign_trade_orders()
 			continue;
 		}
 
-		const int need = this->get_game_data()->get_commodity_need(commodity);
+		const int need = this->get_game_data()->get_economy()->get_commodity_need(commodity);
 
 		if (value > need) {
-			this->get_game_data()->set_offer(commodity, value);
+			this->get_game_data()->get_economy()->set_offer(commodity, value);
 		}
 	}
 }

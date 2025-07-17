@@ -253,7 +253,7 @@ commodity_map<int> country_building_slot::get_production_type_inputs(const produ
 		int total_input = input_value * employed_capacity;
 
 		if (input_commodity->is_labor()) {
-			const int throughput_modifier = country_game_data->get_throughput_modifier() + country_game_data->get_commodity_throughput_modifier(production_type->get_output_commodity());
+			const int throughput_modifier = country_game_data->get_economy()->get_throughput_modifier() + country_game_data->get_economy()->get_commodity_throughput_modifier(production_type->get_output_commodity());
 
 			if (throughput_modifier != 0) {
 				assert_throw(throughput_modifier > -100);
@@ -306,9 +306,9 @@ centesimal_int country_building_slot::get_production_type_output(const productio
 
 	const country_game_data *country_game_data = this->get_country()->get_game_data();
 
-	centesimal_int output_modifier = country_game_data->get_output_modifier() + country_game_data->get_commodity_output_modifier(production_type->get_output_commodity());
+	centesimal_int output_modifier = country_game_data->get_economy()->get_output_modifier() + country_game_data->get_economy()->get_commodity_output_modifier(production_type->get_output_commodity());
 	if (production_type->is_industrial()) {
-		output_modifier += country_game_data->get_industrial_output_modifier();
+		output_modifier += country_game_data->get_economy()->get_industrial_output_modifier();
 	}
 
 	if (output_modifier != 0) {

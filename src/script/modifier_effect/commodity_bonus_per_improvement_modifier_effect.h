@@ -41,7 +41,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->change_improvement_commodity_bonus(this->improvement, this->commodity, (this->value * multiplier));
+		scope->get_game_data()->get_economy()->change_improvement_commodity_bonus(this->improvement, this->commodity, (this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const scope_type *scope) const override

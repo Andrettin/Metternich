@@ -37,7 +37,7 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_profession_commodity_bonus(this->profession, this->commodity, (this->value * multiplier));
+		scope->get_game_data()->get_economy()->change_profession_commodity_bonus(this->profession, this->commodity, (this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const country *scope) const override

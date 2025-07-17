@@ -47,13 +47,13 @@ ListView {
 			text: qsTr("Bid")
 			width: 48 * scale_factor
 			height: 24 * scale_factor
-			highlighted: country_game_data.bids.length > 0 && country_game_data.get_bid(commodity) > 0
+			highlighted: country_game_data.economy.bids.length > 0 && country_game_data.economy.get_bid(commodity) > 0
 			
 			onClicked: {
-				if (country_game_data.get_bid(commodity) === 0) {
-					country_game_data.set_bid(commodity, 10)
+				if (country_game_data.economy.get_bid(commodity) === 0) {
+					country_game_data.economy.set_bid(commodity, 10)
 				} else {
-					country_game_data.set_bid(commodity, 0)
+					country_game_data.economy.set_bid(commodity, 0)
 				}
 			}
 		}
@@ -66,14 +66,14 @@ ListView {
 			text: qsTr("Offer")
 			width: 48 * scale_factor
 			height: 24 * scale_factor
-			highlighted: country_game_data.offers.length > 0 && country_game_data.get_offer(commodity) > 0
+			highlighted: country_game_data.economy.offers.length > 0 && country_game_data.economy.get_offer(commodity) > 0
 			visible: country_game_data.economy.stored_commodities.length > 0 && country_game_data.economy.get_stored_commodity(commodity)
 			
 			onClicked: {
-				if (country_game_data.get_offer(commodity) === 0) {
-					country_game_data.set_offer(commodity, country_game_data.economy.get_stored_commodity(commodity))
+				if (country_game_data.economy.get_offer(commodity) === 0) {
+					country_game_data.economy.set_offer(commodity, country_game_data.economy.get_stored_commodity(commodity))
 				} else {
-					country_game_data.set_offer(commodity, 0)
+					country_game_data.economy.set_offer(commodity, 0)
 				}
 			}
 		}
@@ -151,34 +151,34 @@ ListView {
 				anchors.leftMargin: 16 * scale_factor
 				anchors.right: parent.right
 				anchors.rightMargin: 16 * scale_factor
-				value: country_game_data.bids.length > 0 && is_bid ? country_game_data.get_bid(commodity) : (country_game_data.offers.length > 0 && is_offer ? country_game_data.get_offer(commodity) : 0)
+				value: country_game_data.economy.bids.length > 0 && is_bid ? country_game_data.economy.get_bid(commodity) : (country_game_data.economy.offers.length > 0 && is_offer ? country_game_data.economy.get_offer(commodity) : 0)
 				max_value: is_bid ? 10 : Math.max(10, country_game_data.economy.stored_commodities.length > 0 ? country_game_data.economy.get_stored_commodity(commodity) : 0)
 				visible: is_bid || is_offer
 				
-				readonly property bool is_bid: country_game_data.bids.length > 0 && country_game_data.get_bid(commodity) > 0
-				readonly property bool is_offer: country_game_data.offers.length > 0 && country_game_data.get_offer(commodity) > 0
+				readonly property bool is_bid: country_game_data.economy.bids.length > 0 && country_game_data.economy.get_bid(commodity) > 0
+				readonly property bool is_offer: country_game_data.economy.offers.length > 0 && country_game_data.economy.get_offer(commodity) > 0
 				
 				onDecremented: {
 					if (is_bid) {
-						if (country_game_data.get_bid(commodity) == 1) {
+						if (country_game_data.economy.get_bid(commodity) == 1) {
 							return
 						}
 						
-						country_game_data.change_bid(commodity, -1)
+						country_game_data.economy.change_bid(commodity, -1)
 					} else if (is_offer) {
-						if (country_game_data.get_offer(commodity) == 1) {
+						if (country_game_data.economy.get_offer(commodity) == 1) {
 							return
 						}
 						
-						country_game_data.change_offer(commodity, -1)
+						country_game_data.economy.change_offer(commodity, -1)
 					}
 				}
 				
 				onIncremented: {
 					if (is_bid) {
-						country_game_data.change_bid(commodity, 1)
+						country_game_data.economy.change_bid(commodity, 1)
 					} else if (is_offer) {
-						country_game_data.change_offer(commodity, 1)
+						country_game_data.economy.change_offer(commodity, 1)
 					}
 				}
 				
@@ -188,9 +188,9 @@ ListView {
 					}
 					
 					if (is_bid) {
-						country_game_data.set_bid(commodity, target_value)
+						country_game_data.economy.set_bid(commodity, target_value)
 					} else if (is_offer) {
-						country_game_data.set_offer(commodity, target_value)
+						country_game_data.economy.set_offer(commodity, target_value)
 					}
 				}
 			}
