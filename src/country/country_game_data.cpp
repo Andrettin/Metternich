@@ -453,6 +453,8 @@ void country_game_data::do_events()
 	if (is_last_turn_of_quarter) {
 		country_event::check_events_for_scope(this->country, event_trigger::quarterly_pulse);
 	}
+
+	country_event::check_events_for_scope(this->country, event_trigger::per_turn_pulse);
 }
 
 bool country_game_data::is_ai() const

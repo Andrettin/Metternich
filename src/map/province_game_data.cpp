@@ -198,6 +198,8 @@ void province_game_data::do_events()
 	if (is_last_turn_of_quarter) {
 		province_event::check_events_for_scope(this->province, event_trigger::quarterly_pulse);
 	}
+
+	province_event::check_events_for_scope(this->province, event_trigger::per_turn_pulse);
 }
 
 void province_game_data::do_ai_turn()
