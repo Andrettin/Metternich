@@ -12,6 +12,7 @@ trained_workers = {
 		preacher = 100
 		researcher = 100
 		statesman = 100
+		weaver = 100
 	}
 	everyday_consumption = {
 		amenities = 1
