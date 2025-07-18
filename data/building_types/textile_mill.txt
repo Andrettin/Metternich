@@ -3,7 +3,16 @@ weavers_house = {
 	building_class = weavers_house
 	portrait = factory
 	icon = fabric
+	provincial = true
+	employment_profession = weaver
+	employment_capacity = 1
 	base_capacity = 2
+	settlement_types = {
+		village
+		town
+		city
+		metropolis
+	}
 	commodity_costs = {
 		lumber = 2
 		cast_iron = 2
@@ -20,8 +29,16 @@ weavers_shop = {
 	building_class = weavers_shop
 	portrait = factory
 	icon = fabric
+	provincial = true
+	employment_profession = weaver
+	employment_capacity = 2
 	base_capacity = 4
 	required_building = weavers_house
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
 	commodity_costs = {
 		lumber = 4
 		cast_iron = 4
@@ -38,10 +55,18 @@ textile_mill = {
 	building_class = textile_mill
 	portrait = factory
 	icon = fabric
+	provincial = true
+	employment_profession = weaver
+	employment_capacity = 3
 	base_capacity = 8
 	capacity_increment = 8
 	expandable = true
 	required_building = weavers_shop
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
 	commodity_costs = {
 		lumber = 8
 		steel = 8
