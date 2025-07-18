@@ -13,6 +13,7 @@
 #include "population/profession.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/vector_random_util.h"
 
 namespace metternich {
 
@@ -31,6 +32,51 @@ QVariantList employment_location::get_employees_qvariant_list() const
 	return container::to_qvariant_list(this->get_employees());
 }
 
+bool employment_location::can_employ(const population_unit *population_unit, const population_type *&converted_population_type) const
+{
+	const profession *profession = this->get_employment_profession();
+	assert_throw(profession != nullptr);
+
+	if (!profession->can_employ_with_conversion(population_unit->get_type(), converted_population_type)) {
+		return false;
+	}
+
+	if (population_unit->get_employment_location() != this) {
+		if (this->get_available_employment_capacity() == 0) {
+			return false;
+		}
+
+		const commodity_map<int> inputs = this->get_employee_commodity_inputs(population_unit->get_type());
+
+		if (!inputs.empty() || profession->get_input_wealth() > 0) {
+			if (this->get_employment_country() == nullptr) {
+				return false;
+			}
+
+			const country_economy *country_economy = this->get_employment_country()->get_economy();
+
+			for (const auto &[input_commodity, input_value] : inputs) {
+				if (input_commodity->is_storable()) {
+					if (country_economy->get_stored_commodity(input_commodity) < input_value) {
+						return false;
+					}
+				} else {
+					//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
+					if (country_economy->get_net_commodity_output(input_commodity) < input_value) {
+						return false;
+					}
+				}
+			}
+
+			if (profession->get_input_wealth() != 0 && country_economy->get_wealth_with_credit() < country_economy->get_inflated_value(profession->get_input_wealth())) {
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
 void employment_location::add_employee(population_unit *employee)
 {
 	const profession *profession = this->get_employment_profession();
@@ -39,13 +85,13 @@ void employment_location::add_employee(population_unit *employee)
 
 	this->employees.push_back(employee);
 
-	this->on_employee_added(employee, 1);
+	this->on_employee_added(employee, 1, true);
 
 	assert_throw(this->get_available_employment_capacity() >= 0);
 }
 
 
-void employment_location::on_employee_added(population_unit *employee, const int multiplier)
+void employment_location::on_employee_added(population_unit *employee, const int multiplier, const bool change_input_storage)
 {
 	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
@@ -58,6 +104,27 @@ void employment_location::on_employee_added(population_unit *employee, const int
 	if (profession->get_output_commodity()->is_food() && this->is_resource_employment()) {
 		//workers employed in resource food production do not need food themselves
 		this->get_employment_province()->get_provincial_capital()->get_game_data()->change_free_food_consumption(1 * multiplier);
+	}
+
+	assert_throw(this->get_employment_country() != nullptr);
+	country_economy *country_economy = this->get_employment_country()->get_economy();
+
+	const commodity_map<int> inputs = this->get_employee_commodity_inputs(employee->get_type());
+	for (const auto &[input_commodity, input_value] : inputs) {
+		if (input_commodity->is_storable() && change_input_storage) {
+			country_economy->change_stored_commodity(input_commodity, -input_value * multiplier);
+		}
+		country_economy->change_commodity_input(input_commodity, input_value * multiplier);
+	}
+
+	const int input_wealth = profession->get_input_wealth();
+	//FIXME: apply production modifiers to input wealth
+
+	if (input_wealth != 0) {
+		if (change_input_storage) {
+			country_economy->change_wealth(-input_wealth * multiplier);
+		}
+		country_economy->change_wealth_income(-input_wealth * multiplier);
 	}
 }
 
@@ -72,6 +139,43 @@ void employment_location::change_employment_capacity(const int change)
 	if (this->get_available_employment_capacity() < 0) {
 		this->check_excess_employment();
 	}
+}
+
+commodity_map<int> employment_location::get_employee_commodity_inputs(const population_type *population_type) const
+{
+	assert_throw(population_type != nullptr);
+
+	const profession *profession = this->get_employment_profession();
+	assert_throw(profession != nullptr);
+
+	if (profession->get_input_commodities().empty()) {
+		return {};
+	}
+
+	commodity_map<decimillesimal_int> inputs;
+
+	for (const auto &[commodity, input] : profession->get_input_commodities()) {
+		inputs[commodity] += input;
+	}
+
+	const int output_modifier = population_type->get_profession_output_modifier(profession);
+
+	for (auto &[commodity, input] : inputs) {
+		input *= this->get_employment_output_multiplier();
+
+		if (output_modifier != 0) {
+			input *= 100 + output_modifier;
+			input /= 100;
+		}
+	}
+
+	commodity_map<int> ret_inputs;
+	for (const auto &[commodity, input] : inputs) {
+		assert_throw(input.get_fractional_value() == 0);
+		ret_inputs[commodity] = input.to_int();
+	}
+
+	return ret_inputs;
 }
 
 commodity_map<centesimal_int> employment_location::get_employee_commodity_outputs(const population_type *population_type) const
@@ -173,9 +277,38 @@ void employment_location::check_excess_employment()
 {
 	//remove employees in excess of capacity
 	while (this->get_available_employment_capacity() < 0) {
-		assert_throw(this->get_employees().size() > 0);
-		this->get_employees().back()->set_employment_location(nullptr);
+		this->decrease_employment(true);
 	}
+}
+
+void employment_location::decrease_employment(const bool change_input_storage)
+{
+	assert_throw(this->get_employee_count() > 0);
+
+	std::vector<population_unit *> potential_employees;
+
+	centesimal_int lowest_output_value = centesimal_int::from_value(std::numeric_limits<int64_t>::max());
+
+	const profession *profession = this->get_employment_profession();
+	assert_throw(profession != nullptr);
+
+	for (population_unit *employee : this->get_employees()) {
+		const centesimal_int output_value = this->get_employee_commodity_outputs(employee->get_type())[profession->get_output_commodity()];
+
+		if (output_value > lowest_output_value) {
+			continue;
+		} else if (output_value < lowest_output_value) {
+			lowest_output_value = output_value;
+			potential_employees.clear();
+		}
+
+		potential_employees.push_back(employee);
+	}
+
+	assert_throw(!potential_employees.empty());
+
+	population_unit *employee_to_remove = vector::get_random(potential_employees);
+	employee_to_remove->set_employment_location(nullptr, change_input_storage);
 }
 
 }

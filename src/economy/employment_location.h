@@ -41,16 +41,17 @@ public:
 	}
 
 	QVariantList get_employees_qvariant_list() const;
+	bool can_employ(const population_unit *population_unit, const population_type *&converted_population_type) const;
 	void add_employee(population_unit *employee);
 
-	void remove_employee(population_unit *employee)
+	void remove_employee(population_unit *employee, const bool change_input_storage)
 	{
 		std::erase(this->employees, employee);
 
-		this->on_employee_added(employee, -1);
+		this->on_employee_added(employee, -1, change_input_storage);
 	}
 
-	void on_employee_added(population_unit *employee, const int multiplier);
+	void on_employee_added(population_unit *employee, const int multiplier, const bool change_input_storage);
 
 	int get_employment_capacity() const
 	{
@@ -64,6 +65,7 @@ public:
 		return this->get_employment_capacity() - this->get_employee_count();
 	}
 
+	commodity_map<int> get_employee_commodity_inputs(const population_type *population_type) const;
 	commodity_map<centesimal_int> get_employee_commodity_outputs(const population_type *population_type) const;
 	decimillesimal_int get_employee_main_commodity_output(const population_type *population_type) const;
 
@@ -76,6 +78,7 @@ public:
 	void calculate_total_employee_commodity_outputs();
 
 	void check_excess_employment();
+	void decrease_employment(const bool change_input_storage);
 
 private:
 	std::vector<population_unit *> employees;

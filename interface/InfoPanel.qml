@@ -234,7 +234,7 @@ Rectangle {
 					}
 					
 					onClicked: {
-						if (building !== null && building_slot.modifier_string.length > 0) {
+						if (building !== null && (building_slot.modifier_string.length > 0 || building_slot.employment_capacity > 0)) {
 							modifier_dialog.title = wonder ? wonder.name : building.name
 							modifier_dialog.modifier_string = building_slot.modifier_string
 							if (building_slot.employment_capacity > 0) {

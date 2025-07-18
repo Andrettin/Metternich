@@ -140,7 +140,7 @@ public:
 		return this->get_employment_location() == nullptr;
 	}
 
-	void set_employment_location(metternich::employment_location *employment_location);
+	void set_employment_location(metternich::employment_location *employment_location, const bool change_input_storage);
 
 	const profession *get_profession() const;
 	bool is_food_producer() const;

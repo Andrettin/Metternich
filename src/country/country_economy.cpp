@@ -22,6 +22,7 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "population/profession.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/map_util.h"
@@ -116,7 +117,7 @@ void country_economy::do_production()
 			}
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Error doing production for country \"" + this->country->get_identifier() + "\"."));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing production for country \"{}\".", this->country->get_identifier())));
 	}
 }
 
@@ -1006,6 +1007,21 @@ void country_economy::decrease_commodity_consumption(const commodity *commodity,
 
 			building_slot->decrease_education(education_type, restore_inputs);
 			return;
+		}
+	}
+
+	const std::vector<const province *> provinces = vector::shuffled(this->get_game_data()->get_provinces());
+	for (const province *province : provinces) {
+		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+			if (employment_location->get_employee_count() == 0) {
+				continue;
+			}
+
+			if (!employment_location->get_employment_profession()->get_input_commodities().contains(commodity)) {
+				continue;
+			}
+
+			employment_location->decrease_employment(restore_inputs);
 		}
 	}
 

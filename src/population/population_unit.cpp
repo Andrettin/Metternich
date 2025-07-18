@@ -83,7 +83,7 @@ void population_unit::set_type(const population_type *type)
 	this->get_site()->get_game_data()->get_population()->change_type_count(this->get_type(), -1);
 
 	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->on_employee_added(this, -1);
+		this->get_employment_location()->on_employee_added(this, -1, true);
 	}
 
 	this->type = type;
@@ -91,12 +91,12 @@ void population_unit::set_type(const population_type *type)
 	this->get_site()->get_game_data()->get_population()->change_type_count(this->get_type(), 1);
 
 	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->on_employee_added(this, 1);
+		this->get_employment_location()->on_employee_added(this, 1, true);
 
 		const profession *profession = this->get_employment_location()->get_employment_profession();
 		assert_throw(profession != nullptr);
 		if (!profession->can_employ(type)) {
-			this->set_employment_location(nullptr);
+			this->set_employment_location(nullptr, true);
 		}
 	}
 
@@ -305,14 +305,14 @@ void population_unit::set_militancy(const centesimal_int &militancy)
 	}
 }
 
-void population_unit::set_employment_location(metternich::employment_location *employment_location)
+void population_unit::set_employment_location(metternich::employment_location *employment_location, const bool change_input_storage)
 {
 	if (employment_location == this->get_employment_location()) {
 		return;
 	}
 
 	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->remove_employee(this);
+		this->get_employment_location()->remove_employee(this, change_input_storage);
 	}
 
 	if (employment_location != nullptr) {

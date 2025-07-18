@@ -1219,7 +1219,7 @@ qunique_ptr<population_unit> site_game_data::pop_population_unit(population_unit
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
 			this->population_units.erase(this->population_units.begin() + i);
 
-			population_unit->set_employment_location(nullptr);
+			population_unit->set_employment_location(nullptr, true);
 			population_unit->set_site(nullptr);
 
 			this->get_population()->on_population_unit_lost(population_unit);
@@ -1320,7 +1320,7 @@ population_unit *site_game_data::choose_population_unit_for_reallocation() const
 
 	std::vector<population_unit *> population_units;
 
-	decimillesimal_int lowest_output_value = decimillesimal_int::from_value(std::numeric_limits<int64_t>::max());
+	centesimal_int lowest_output_value = centesimal_int::from_value(std::numeric_limits<int64_t>::max());
 
 	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
 		if (population_unit->get_type()->get_output_commodity() != nullptr) {
@@ -1337,13 +1337,13 @@ population_unit *site_game_data::choose_population_unit_for_reallocation() const
 			continue;
 		}
 
-		decimillesimal_int output_value(0);
+		centesimal_int output_value(0);
 
 		const profession *profession = population_unit->get_profession();
 		if (profession != nullptr) {
-			output_value = population_unit->get_employment_location()->get_employee_main_commodity_output(population_unit->get_type());
+			output_value = population_unit->get_employment_location()->get_employee_commodity_outputs(population_unit->get_type())[population_unit->get_profession()->get_output_commodity()];
 		} else {
-			output_value = decimillesimal_int(population_unit->get_type()->get_output_value());
+			output_value = centesimal_int(population_unit->get_type()->get_output_value());
 		}
 
 		if (output_value > lowest_output_value) {
@@ -1746,7 +1746,7 @@ void site_game_data::check_available_employment(const std::vector<employment_loc
 		std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;
 		for (population_unit *population_unit : unemployed_population_units) {
 			const population_type *converted_population_type = nullptr;
-			if (!profession->can_employ_with_conversion(population_unit->get_type(), converted_population_type)) {
+			if (!employment_location->can_employ(population_unit, converted_population_type)) {
 				continue;
 			}
 
@@ -1755,7 +1755,7 @@ void site_game_data::check_available_employment(const std::vector<employment_loc
 
 		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
 			for (population_unit *population_unit : output_population_units) {
-				population_unit->set_employment_location(employment_location);
+				population_unit->set_employment_location(employment_location, true);
 				--available_employment_capacity;
 				std::erase(unemployed_population_units, population_unit);
 
