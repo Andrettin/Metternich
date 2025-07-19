@@ -97,6 +97,7 @@ province_border_image_filepath = "tiles/borders/province_border.png"
 min_diplomatic_map_tile_scale = 2
 
 event_trigger_none_random_weights = {
+	per_turn_pulse = 5000
 	quarterly_pulse = 5000
 	yearly_pulse = 5000
 }
