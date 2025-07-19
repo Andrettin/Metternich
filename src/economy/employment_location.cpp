@@ -46,32 +46,46 @@ bool employment_location::can_employ(const population_unit *population_unit, con
 			return false;
 		}
 
-		const commodity_map<int> inputs = this->get_employee_commodity_inputs(population_unit->get_type());
+		if (!this->can_fulfill_inputs_for_employment(population_unit)) {
+			return false;
+		}
+	}
 
-		if (!inputs.empty() || profession->get_input_wealth() > 0) {
-			if (this->get_employment_country() == nullptr) {
+	return true;
+}
+
+bool employment_location::can_fulfill_inputs_for_employment(const population_unit *population_unit) const
+{
+	const profession *profession = this->get_employment_profession();
+	assert_throw(profession != nullptr);
+
+	const commodity_map<int> inputs = this->get_employee_commodity_inputs(population_unit->get_type());
+
+	if (inputs.empty() && profession->get_input_wealth() > 0) {
+		return true;
+	}
+
+	if (this->get_employment_country() == nullptr) {
+		return false;
+	}
+
+	const country_economy *country_economy = this->get_employment_country()->get_economy();
+
+	for (const auto &[input_commodity, input_value] : inputs) {
+		if (input_commodity->is_storable()) {
+			if (country_economy->get_stored_commodity(input_commodity) < input_value) {
 				return false;
 			}
-
-			const country_economy *country_economy = this->get_employment_country()->get_economy();
-
-			for (const auto &[input_commodity, input_value] : inputs) {
-				if (input_commodity->is_storable()) {
-					if (country_economy->get_stored_commodity(input_commodity) < input_value) {
-						return false;
-					}
-				} else {
-					//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
-					if (country_economy->get_net_commodity_output(input_commodity) < input_value) {
-						return false;
-					}
-				}
-			}
-
-			if (profession->get_input_wealth() != 0 && country_economy->get_wealth_with_credit() < country_economy->get_inflated_value(profession->get_input_wealth())) {
+		} else {
+			//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
+			if (country_economy->get_net_commodity_output(input_commodity) < input_value) {
 				return false;
 			}
 		}
+	}
+
+	if (profession->get_input_wealth() != 0 && country_economy->get_wealth_with_credit() < country_economy->get_inflated_value(profession->get_input_wealth())) {
+		return false;
 	}
 
 	return true;

@@ -42,6 +42,7 @@ public:
 
 	QVariantList get_employees_qvariant_list() const;
 	bool can_employ(const population_unit *population_unit, const population_type *&converted_population_type) const;
+	bool can_fulfill_inputs_for_employment(const population_unit *population_unit) const;
 	void add_employee(population_unit *employee);
 
 	void remove_employee(population_unit *employee, const bool change_input_storage)
