@@ -1022,6 +1022,7 @@ void country_economy::decrease_commodity_consumption(const commodity *commodity,
 			}
 
 			employment_location->decrease_employment(restore_inputs);
+			return;
 		}
 	}
 
