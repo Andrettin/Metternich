@@ -1,0 +1,19 @@
+expanding_sun_will_explode_some_day_tesla_predicts = {
+	name = "Expanding Sun Will Explode Some Day Tesla Predicts"
+	description = "\tBy Nikola Tesla\n\nCondensation of the primary substance is going on continuously, this being in a measure proved, for I have established by experiments which admit of no doubt that the sun and other celestial bodies steadily increase in mass and energy and ultimately must explode, reverting to the primary substance."
+	trigger = per_turn_pulse
+	random = true
+	only_once = true
+	news = true
+	newspaper = "The New York Herald Tribune"
+	conditions = {
+		technology = astronomy
+		technology = atomic_theory
+		technology = electricity #because of Tesla
+	}
+	option = {
+		effects = {
+			research += 1
+		}
+	}
+}
