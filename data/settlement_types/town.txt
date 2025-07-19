@@ -49,6 +49,12 @@ town = {
 		untrained_workers
 		trained_workers
 		expert_workers
+		apprentice_carpenters
+		journeyman_carpenters
+		master_carpenters
+		apprentice_tobacconists
+		journeyman_tobacconists
+		master_tobacconists
 		apprentice_weavers
 		journeyman_weavers
 		master_weavers
@@ -86,6 +92,12 @@ city = {
 		trained_workers
 		expert_workers
 		soldiers
+		apprentice_carpenters
+		journeyman_carpenters
+		master_carpenters
+		apprentice_tobacconists
+		journeyman_tobacconists
+		master_tobacconists
 		apprentice_weavers
 		journeyman_weavers
 		master_weavers
@@ -117,6 +129,12 @@ metropolis = {
 		trained_workers
 		expert_workers
 		soldiers
+		apprentice_carpenters
+		journeyman_carpenters
+		master_carpenters
+		apprentice_tobacconists
+		journeyman_tobacconists
+		master_tobacconists
 		apprentice_weavers
 		journeyman_weavers
 		master_weavers

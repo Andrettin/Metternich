@@ -1,0 +1,17 @@
+carpenter = {
+	name = "Carpenter"
+	input_commodities = {
+		lumber = 1
+	}
+	output_commodity = furniture
+	output_value = 0.5
+	population_types = {
+		tribesmen
+		untrained_workers
+		trained_workers
+		expert_workers
+		apprentice_carpenters
+		journeyman_carpenters
+		master_carpenters
+	}
+}

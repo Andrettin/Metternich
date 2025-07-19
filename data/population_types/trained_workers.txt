@@ -8,10 +8,12 @@ trained_workers = {
 	output_commodity = labor
 	output_value = 2
 	profession_output_modifiers = {
+		carpenter = 100
 		officer = 100
 		preacher = 100
 		researcher = 100
 		statesman = 100
+		tobacconist = 100
 		weaver = 100
 	}
 	everyday_consumption = {

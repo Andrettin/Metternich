@@ -1,0 +1,11 @@
+apprentice_carpenters = {
+	name = "Apprentice Carpenters"
+}
+
+journeyman_carpenters = {
+	name = "Journeyman Carpenters"
+}
+
+master_carpenters = {
+	name = "Master Carpenters"
+}

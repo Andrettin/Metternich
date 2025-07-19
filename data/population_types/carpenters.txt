@@ -1,0 +1,80 @@
+apprentice_carpenters = {
+	name = "Apprentice Carpenters"
+	population_class = apprentice_carpenters
+	literate = true
+	icon = expert_workers
+	small_icon = expert_workers_small
+	required_game_rule = additional_population_types
+	profession_output_modifiers = {
+		carpenter = 300
+	}
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 0.25
+		furniture = 0.25
+		brass_lamps = 0.125
+		coffee = 0.25
+		opium = 0.125
+		salt = 0.25
+		tea = 0.25
+	}
+}
+
+journeyman_carpenters = {
+	name = "Journeyman Carpenters"
+	population_class = journeyman_carpenters
+	literate = true
+	icon = expert_workers
+	small_icon = expert_workers_small
+	required_game_rule = additional_population_types
+	profession_output_modifiers = {
+		carpenter = 500
+	}
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 0.25
+		furniture = 0.25
+		brass_lamps = 0.125
+		coffee = 0.25
+		opium = 0.125
+		salt = 0.25
+		tea = 0.25
+	}
+}
+
+master_carpenters = {
+	name = "Master Carpenters"
+	population_class = master_carpenters
+	literate = true
+	icon = expert_workers
+	small_icon = expert_workers_small
+	required_game_rule = additional_population_types
+	profession_output_modifiers = {
+		carpenter = 700
+	}
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 0.25
+		furniture = 0.25
+		brass_lamps = 0.125
+		coffee = 0.25
+		opium = 0.125
+		salt = 0.25
+		tea = 0.25
+	}
+}

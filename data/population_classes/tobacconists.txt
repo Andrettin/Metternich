@@ -1,0 +1,11 @@
+apprentice_tobacconists = {
+	name = "Apprentice Tobacconists"
+}
+
+journeyman_tobacconists = {
+	name = "Journeyman Tobacconists"
+}
+
+master_tobacconists = {
+	name = "Master Tobacconists"
+}

@@ -7,8 +7,8 @@ spain = {
 		1797 = {
 			population_groups = {
 				#apprentice_blacksmiths = 12000 #Spain had less than 12,000 blacksmiths in 1797; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España II", 2000, p. 49.
-				#apprentice_carpenters = 31000 #Spain had 31,000 carpenters in 1797; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España II", 2000, p. 49.
-				#apprentice_weavers = 104000 #Spain had 57,000 wool weavers, 33,000 tailors and 14,000 silk weavers in 1797, totalling 104,000; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España II", 2000, p. 49.
+				apprentice_carpenters = 31000 #Spain had 31,000 carpenters in 1797; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España II", 2000, p. 49.
+				apprentice_weavers = 104000 #Spain had 57,000 wool weavers, 33,000 tailors and 14,000 silk weavers in 1797, totalling 104,000; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España II", 2000, p. 49.
 			}
 		}
 		
