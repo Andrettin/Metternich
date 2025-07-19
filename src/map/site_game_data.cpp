@@ -1763,6 +1763,12 @@ void site_game_data::check_available_employment(const std::vector<employment_loc
 
 		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
 			for (population_unit *population_unit : output_population_units) {
+				const population_type *converted_population_type = nullptr;
+				if (!employment_location->can_employ(population_unit, converted_population_type)) {
+					//if we could employ them in the previous check, and can't now, and we still have employment capacity, then it must be because inputs are no longer available, in which case it is pointless to check other potential employees with the same output value
+					break;
+				}
+
 				population_unit->set_employment_location(employment_location, true);
 				--available_employment_capacity;
 				std::erase(unemployed_population_units, population_unit);
@@ -1777,8 +1783,9 @@ void site_game_data::check_available_employment(const std::vector<employment_loc
 			}
 		}
 
+		employment_location->check_superfluous_employment();
+
 		if (unemployed_population_units.empty()) {
-			employment_location->check_superfluous_employment();
 			break;
 		}
 	}
