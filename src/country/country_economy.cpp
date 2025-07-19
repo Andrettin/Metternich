@@ -971,6 +971,22 @@ void country_economy::decrease_wealth_consumption(const bool restore_inputs)
 		}
 	}
 
+	const std::vector<const province *> provinces = vector::shuffled(this->get_game_data()->get_provinces());
+	for (const province *province : provinces) {
+		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+			if (employment_location->get_employee_count() == 0) {
+				continue;
+			}
+
+			if (employment_location->get_employment_profession()->get_input_wealth() == 0) {
+				continue;
+			}
+
+			employment_location->decrease_employment(restore_inputs);
+			return;
+		}
+	}
+
 	assert_throw(false);
 }
 
