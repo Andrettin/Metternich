@@ -26,6 +26,8 @@ class event : public named_data_entry
 	Q_PROPERTY(bool random READ is_random WRITE set_random)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden)
 	Q_PROPERTY(bool only_once MEMBER only_once READ fires_only_once)
+	Q_PROPERTY(bool news MEMBER news READ is_news NOTIFY changed)
+	Q_PROPERTY(QString newspaper READ get_newspaper_qstring NOTIFY changed)
 
 public:
 	static constexpr int default_random_weight = 100;
@@ -93,6 +95,26 @@ public:
 		return this->only_once;
 	}
 
+	bool is_news() const
+	{
+		return this->news;
+	}
+
+	const std::string &get_newspaper() const
+	{
+		return this->newspaper;
+	}
+
+	Q_INVOKABLE void set_newspaper(const std::string &newspaper)
+	{
+		this->newspaper = newspaper;
+	}
+
+	QString get_newspaper_qstring() const
+	{
+		return QString::fromStdString(this->get_newspaper());
+	}
+
 	virtual int get_option_count() const = 0;
 	virtual bool is_option_available(const int option_index, const read_only_context &ctx) const = 0;
 	virtual const std::string &get_option_name(const int option_index) const = 0;
@@ -112,6 +134,8 @@ private:
 	event_random_group *random_group = nullptr;
 	bool hidden = false;
 	bool only_once = false;
+	bool news = false;
+	std::string newspaper;
 };
 
 }

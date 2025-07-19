@@ -5,12 +5,11 @@ import ".."
 DialogBase {
 	id: event_dialog
 	panel: 5
-	width: Math.max(content_width, default_width)
+	width: Math.max(max_button_width, default_width)
 	height: Math.max(content_height, default_height)
-	title: event_instance ? event_instance.name : ""
+	title: event_instance ? (event_instance.event.news ? event_instance.event.newspaper : event_instance.name) : ""
 	
 	readonly property int max_button_width: calculate_max_button_width(option_column) + 8 * scale_factor * 2
-	readonly property int content_width: Math.max(max_button_width, title_item.contentWidth + 8 * scale_factor * 2)
 	readonly property int content_height: description.y + description.contentHeight + 16 * scale_factor + option_column.height + 8 * scale_factor
 	
 	property var event_instance: null
@@ -19,9 +18,22 @@ DialogBase {
 	
 	property bool option_picked: false
 	
+	NormalText {
+		id: subtitle_text
+		text: event_instance && event_instance.event.news ? event_instance.name : ""
+		anchors.top: title_item.bottom
+		anchors.topMargin: 16 * scale_factor
+		anchors.left: parent.left
+		anchors.leftMargin: 8 * scale_factor
+		anchors.right: parent.right
+		anchors.rightMargin: 8 * scale_factor
+		horizontalAlignment: Text.AlignHCenter
+		wrapMode: Text.WordWrap
+	}
+	
 	PortraitButton {
 		id: portrait
-		anchors.top: title_item.bottom
+		anchors.top: subtitle_text.text.length > 0 ? subtitle_text.bottom : title_item.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		portrait_identifier: (event_instance && event_instance.event && event_instance.event.portrait) ? event_instance.event.portrait.identifier : ""
@@ -32,7 +44,7 @@ DialogBase {
 	
 	SmallText {
 		id: description
-		anchors.top: portrait.visible ? portrait.bottom : title_item.bottom
+		anchors.top: portrait.visible ? portrait.bottom : (subtitle_text.text.length > 0 ? subtitle_text.bottom : title_item.bottom)
 		anchors.topMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.leftMargin: 8 * scale_factor

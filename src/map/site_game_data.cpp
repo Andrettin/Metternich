@@ -1763,7 +1763,6 @@ void site_game_data::check_available_employment(const std::vector<employment_loc
 
 		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
 			for (population_unit *population_unit : output_population_units) {
-				const population_type *converted_population_type = nullptr;
 				if (!employment_location->can_fulfill_inputs_for_employment(population_unit)) {
 					//if the inputs are not available, it is pointless to check other potential employees with the same output value
 					break;
