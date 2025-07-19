@@ -1707,6 +1707,10 @@ void site_game_data::check_employment()
 {
 	const std::vector<employment_location *> employment_locations = this->get_employment_locations();
 
+	for (employment_location *employment_location : employment_locations) {
+		employment_location->check_superfluous_employment();
+	}
+
 	std::vector<population_unit *> unemployed_population_units;
 
 	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
