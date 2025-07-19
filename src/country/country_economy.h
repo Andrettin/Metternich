@@ -12,6 +12,7 @@ namespace metternich {
 
 class country;
 class country_game_data;
+class employment_location;
 enum class income_transaction_type;
 
 class country_economy final : public QObject
@@ -435,8 +436,8 @@ public:
 	void change_commodity_demand(const commodity *commodity, const decimillesimal_int &change);
 
 	void assign_production();
-	void decrease_wealth_consumption(const bool restore_inputs = true);
-	void decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs = true);
+	employment_location * decrease_wealth_consumption(const bool restore_inputs = true);
+	employment_location * decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs = true);
 
 	bool produces_commodity(const commodity *commodity) const;
 

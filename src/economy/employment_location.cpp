@@ -277,17 +277,44 @@ void employment_location::check_excess_employment()
 {
 	//remove employees in excess of capacity
 	while (this->get_available_employment_capacity() < 0) {
-		this->decrease_employment(true);
+		this->decrease_employment(true, std::nullopt);
 	}
 }
 
-void employment_location::decrease_employment(const bool change_input_storage)
+void employment_location::check_superfluous_employment()
+{
+	if (this->get_employee_count() == 0) {
+		return;
+	}
+
+	//remove employees who only produce fractional output, if together with others they don't contribute to integer output
+	//for example, if the employment location has a single employee who produces 0.5 of a commodity, then this may result superfluous production: inputs will still be consumed, but 0 output will be available for transport (since transport uses integers)
+
+	const profession *profession = this->get_employment_profession();
+	assert_throw(profession != nullptr);
+
+	centesimal_int main_commodity_output = this->get_total_employee_commodity_outputs().find(profession->get_output_commodity())->second;
+
+	bool changed = true;
+	while (this->get_employee_count() > 0 && main_commodity_output.get_fractional_value() > 0 && changed) {
+		changed = this->decrease_employment(true, centesimal_int::from_value(main_commodity_output.get_fractional_value()));
+
+		if (changed && this->get_employee_count() > 0) {
+			main_commodity_output = this->get_total_employee_commodity_outputs().find(profession->get_output_commodity())->second;
+		}
+	}
+}
+
+bool employment_location::decrease_employment(const bool change_input_storage, const std::optional<centesimal_int> &max_employee_output_value)
 {
 	assert_throw(this->get_employee_count() > 0);
 
 	std::vector<population_unit *> potential_employees;
 
 	centesimal_int lowest_output_value = centesimal_int::from_value(std::numeric_limits<int64_t>::max());
+	if (max_employee_output_value.has_value()) {
+		lowest_output_value = max_employee_output_value.value();
+	}
 
 	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
@@ -305,10 +332,18 @@ void employment_location::decrease_employment(const bool change_input_storage)
 		potential_employees.push_back(employee);
 	}
 
-	assert_throw(!potential_employees.empty());
+	if (!max_employee_output_value.has_value()) {
+		assert_throw(!potential_employees.empty());
+	}
+
+	if (potential_employees.empty()) {
+		return false;
+	}
 
 	population_unit *employee_to_remove = vector::get_random(potential_employees);
 	employee_to_remove->set_employment_location(nullptr, change_input_storage);
+
+	return true;
 }
 
 }

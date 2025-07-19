@@ -78,7 +78,8 @@ public:
 	void calculate_total_employee_commodity_outputs();
 
 	void check_excess_employment();
-	void decrease_employment(const bool change_input_storage);
+	void check_superfluous_employment();
+	bool decrease_employment(const bool change_input_storage, const std::optional<centesimal_int> &max_employee_output_value);
 
 private:
 	std::vector<population_unit *> employees;

@@ -26,6 +26,7 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/map_util.h"
+#include "util/vector_util.h"
 #include "util/vector_random_util.h"
 
 namespace metternich {
@@ -79,9 +80,14 @@ void country_economy::do_production()
 			this->change_stored_commodity(commodity, output.to_int());
 		}
 
+		std::vector<employment_location *> changed_employment_locations;
+
 		//decrease consumption of commodities for which we no longer have enough in storage
 		while (this->get_wealth_income() < 0 && (this->get_wealth_income() * -1) > this->get_wealth_with_credit()) {
-			this->decrease_wealth_consumption(false);
+			employment_location *affected_employment_location = this->decrease_wealth_consumption(false);
+			if (affected_employment_location != nullptr && !vector::contains(changed_employment_locations, affected_employment_location)) {
+				changed_employment_locations.push_back(affected_employment_location);
+			}
 		}
 
 		const std::vector<const commodity *> input_commodities = archimedes::map::get_keys(this->get_commodity_inputs());
@@ -92,7 +98,10 @@ void country_economy::do_production()
 			}
 
 			while (this->get_commodity_input(commodity) > this->get_stored_commodity(commodity)) {
-				this->decrease_commodity_consumption(commodity, false);
+				employment_location *affected_employment_location = this->decrease_commodity_consumption(commodity, false);
+				if (affected_employment_location != nullptr && !vector::contains(changed_employment_locations, affected_employment_location)) {
+					changed_employment_locations.push_back(affected_employment_location);
+				}
 			}
 		}
 
@@ -115,6 +124,11 @@ void country_economy::do_production()
 			} catch (...) {
 				std::throw_with_nested(std::runtime_error("Error processing input storage reduction for commodity \"" + commodity->get_identifier() + "\"."));
 			}
+		}
+
+		for (employment_location *employment_location : changed_employment_locations) {
+			//check if employment has become superfluous due to decrease
+			employment_location->check_superfluous_employment();
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing production for country \"{}\".", this->country->get_identifier())));
@@ -935,7 +949,7 @@ void country_economy::assign_production()
 	}
 }
 
-void country_economy::decrease_wealth_consumption(const bool restore_inputs)
+employment_location *country_economy::decrease_wealth_consumption(const bool restore_inputs)
 {
 	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
 		const building_type *building_type = building_slot->get_building();
@@ -954,7 +968,7 @@ void country_economy::decrease_wealth_consumption(const bool restore_inputs)
 			}
 
 			building_slot->decrease_production(production_type, restore_inputs);
-			return;
+			return nullptr;
 		}
 
 		for (const education_type *education_type : building_slot->get_available_education_types()) {
@@ -967,7 +981,7 @@ void country_economy::decrease_wealth_consumption(const bool restore_inputs)
 			}
 
 			building_slot->decrease_education(education_type, restore_inputs);
-			return;
+			return nullptr;
 		}
 	}
 
@@ -982,15 +996,16 @@ void country_economy::decrease_wealth_consumption(const bool restore_inputs)
 				continue;
 			}
 
-			employment_location->decrease_employment(restore_inputs);
-			return;
+			employment_location->decrease_employment(restore_inputs, std::nullopt);
+			return employment_location;
 		}
 	}
 
 	assert_throw(false);
+	return nullptr;
 }
 
-void country_economy::decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs)
+employment_location *country_economy::decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs)
 {
 	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
 		const building_type *building_type = building_slot->get_building();
@@ -1009,7 +1024,7 @@ void country_economy::decrease_commodity_consumption(const commodity *commodity,
 			}
 
 			building_slot->decrease_production(production_type, restore_inputs);
-			return;
+			return nullptr;
 		}
 
 		for (const education_type *education_type : building_slot->get_available_education_types()) {
@@ -1022,7 +1037,7 @@ void country_economy::decrease_commodity_consumption(const commodity *commodity,
 			}
 
 			building_slot->decrease_education(education_type, restore_inputs);
-			return;
+			return nullptr;
 		}
 	}
 
@@ -1037,12 +1052,13 @@ void country_economy::decrease_commodity_consumption(const commodity *commodity,
 				continue;
 			}
 
-			employment_location->decrease_employment(restore_inputs);
-			return;
+			employment_location->decrease_employment(restore_inputs, std::nullopt);
+			return employment_location;
 		}
 	}
 
 	assert_throw(false);
+	return nullptr;
 }
 
 bool country_economy::produces_commodity(const commodity *commodity) const

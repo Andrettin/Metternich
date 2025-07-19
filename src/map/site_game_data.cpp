@@ -1731,6 +1731,10 @@ void site_game_data::check_employment()
 
 void site_game_data::check_available_employment(const std::vector<employment_location *> &employment_locations, std::vector<population_unit *> &unemployed_population_units)
 {
+	if (unemployed_population_units.empty()) {
+		return;
+	}
+
 	for (employment_location *employment_location : employment_locations) {
 		int available_employment_capacity = employment_location->get_available_employment_capacity();
 		assert_throw(available_employment_capacity >= 0);
@@ -1770,6 +1774,7 @@ void site_game_data::check_available_employment(const std::vector<employment_loc
 		}
 
 		if (unemployed_population_units.empty()) {
+			employment_location->check_superfluous_employment();
 			break;
 		}
 	}
