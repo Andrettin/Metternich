@@ -58,6 +58,11 @@ english = {
 		"Williams"
 	}
 	
+	ship_names = {
+		"Captain" #Source: "The Times", 1878.3.26.
+		"Eurydice" #Source: "The Times", 1878.3.26.
+	}
+	
 	history = {
 		1180 = {
 			#the English scholar Alexander Neckam (1157-1217) wrote about the uses of magnetism for ascertaining the north/south direction in 1180; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 164-165.
