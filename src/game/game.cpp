@@ -1635,9 +1635,14 @@ void game::do_trade()
 	}
 }
 
+int game::get_current_months_per_turn() const
+{
+	return defines::get()->get_months_per_turn(this->get_year());
+}
+
 QDate game::get_next_date() const
 {
-	return this->get_date().addMonths(defines::get()->get_months_per_turn(this->get_year()));
+	return this->get_date().addMonths(this->get_current_months_per_turn());
 }
 
 void game::increment_turn()
@@ -1653,8 +1658,8 @@ void game::increment_turn()
 
 std::string game::get_date_string() const
 {
-	if (defines::get()->get_months_per_turn(this->get_year()) % 12 != 0) {
-		if (defines::get()->get_months_per_turn(this->get_year()) == 3) {
+	if (this->get_current_months_per_turn() % 12 != 0) {
+		if (this->get_current_months_per_turn() == 3) {
 			return std::format("{}, {}", date::get_month_season_string(this->get_date().month()), date::year_to_labeled_string(this->get_year()));
 		} else {
 			return std::format("{}, {}", date::get_month_name(this->get_date().month()), date::year_to_labeled_string(this->get_year()));

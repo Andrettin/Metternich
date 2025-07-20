@@ -124,6 +124,7 @@ public:
 		return this->get_date().year();
 	}
 
+	int get_current_months_per_turn() const;
 	QDate get_next_date() const;
 
 	int get_turn() const

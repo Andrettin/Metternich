@@ -74,6 +74,7 @@
 #include "script/condition/military_unit_category_condition.h"
 #include "script/condition/military_unit_domain_condition.h"
 #include "script/condition/military_unit_type_condition.h"
+#include "script/condition/month_condition.h"
 #include "script/condition/near_water_condition.h"
 #include "script/condition/owns_province_condition.h"
 #include "script/condition/owns_site_condition.h"
@@ -337,6 +338,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return std::make_unique<game_rule_condition<scope_type>>(value, condition_operator);
 	} else if (key == "law") {
 		return std::make_unique<law_condition<scope_type>>(value, condition_operator);
+	} else if (key == "month") {
+		return std::make_unique<month_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religion") {
 		return std::make_unique<religion_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religious_group") {
