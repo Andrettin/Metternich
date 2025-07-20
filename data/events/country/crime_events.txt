@@ -1,0 +1,23 @@
+the_latest_murder = { #Source: "The Olean Democrat", 1889.9.12.
+	name = "The Latest Murder"
+	description = "London, Sept. 11. Although the murder discovered early yesterday morning in the Whitechapel street is generally spoken of as the mysterious \"Jack the Ripper\", a close examination of all the facts leads that this murder is not of the ripper series. The police and the medical men familiar with the details of the recent London horrors of this class say that this murder must be classified with those known as the embankment murders, of which there have now been four in all."
+	trigger = per_turn_pulse
+	#random = true
+	only_once = true
+	news = true
+	newspaper = "The Olean Democrat"
+	conditions = {
+		or = {
+			country = great_britain
+			country = england
+		}
+		owns_site = london
+		technology = medicine #doctors examinated the evidence to be able to distinguish the two sets of murders
+		month >= september
+	}
+	option = {
+		effects = {
+			prestige -= 1
+		}
+	}
+}
