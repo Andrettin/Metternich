@@ -55,6 +55,11 @@ public:
 		return event::get_name();
 	}
 
+	virtual const event *get_event_pointer() const override
+	{
+		return this;
+	}
+
 	virtual event_trigger get_trigger() const override
 	{
 		return event::get_trigger();

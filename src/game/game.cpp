@@ -302,6 +302,7 @@ void game::clear()
 		this->rules = preferences::get()->get_game_rules()->duplicate();
 
 		this->clear_delayed_effects();
+		this->fired_events.clear();
 
 		this->reset_game_data();
 
@@ -1935,6 +1936,16 @@ void game::clear_delayed_effects()
 	this->country_delayed_effects.clear();
 	this->province_delayed_effects.clear();
 	this->site_delayed_effects.clear();
+}
+
+bool game::has_fired_event(const metternich::event *event) const
+{
+	return this->fired_events.contains(event);
+}
+
+void game::add_fired_event(const metternich::event *event)
+{
+	this->fired_events.insert(event);
 }
 
 bool game::do_battle(army *attacking_army, army *defending_army)

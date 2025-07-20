@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "database/gsml_data.h"
+#include "game/event.h"
 #include "game/event_option.h"
 #include "game/event_random_group.h"
 #include "game/event_trigger.h"
@@ -268,7 +269,7 @@ void scoped_event_base<scope_type>::set_random_weight(const int weight)
 template <typename scope_type>
 bool scoped_event_base<scope_type>::can_fire(const scope_type *scope, const read_only_context &ctx) const
 {
-	if (this->fires_only_once() && this->has_fired()) {
+	if (this->fires_only_once() && game::get()->has_fired_event(this->get_event_pointer())) {
 		return false;
 	}
 
@@ -324,10 +325,10 @@ template <typename scope_type>
 void scoped_event_base<scope_type>::fire(const scope_type *scope, const context &ctx) const
 {
 	if (this->fires_only_once()) {
-		assert_throw(!this->has_fired());
+		assert_throw(!game::get()->has_fired_event(this->get_event_pointer()));
 	}
 
-	scoped_event_base::fired_events.insert(this);
+	game::get()->add_fired_event(this->get_event_pointer());
 
 	context event_ctx = ctx;
 

@@ -8,6 +8,7 @@ namespace metternich {
 
 class character;
 class country;
+class event;
 class province;
 class site;
 enum class event_trigger;
@@ -85,7 +86,6 @@ private:
 	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_events;
 	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_random_events;
 	static inline std::vector<const scoped_event_base *> mtth_events;
-	static inline std::set<const scoped_event_base *> fired_events;
 
 public:
 	scoped_event_base();
@@ -97,6 +97,7 @@ public:
 
 	virtual const std::string &get_identifier() const = 0;
 	virtual const std::string &get_name() const = 0;
+	virtual const event *get_event_pointer() const = 0;
 
 	virtual event_trigger get_trigger() const = 0;
 	virtual event_random_group *get_random_group() const = 0;
@@ -144,11 +145,6 @@ public:
 	const std::string &get_option_name(const int option_index) const;
 	std::string get_option_tooltip(const int option_index, const read_only_context &ctx) const;
 	void do_option_effects(const int option_index, context &ctx) const;
-
-	bool has_fired() const
-	{
-		return scoped_event_base::fired_events.contains(this);
-	}
 
 	void fire(const scope_type *scope, const context &ctx) const;
 	virtual void create_instance(const context &ctx) const = 0;

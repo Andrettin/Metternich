@@ -40,7 +40,7 @@ public:
 		Q_UNUSED(scope);
 		Q_UNUSED(ctx);
 
-		return this->event->has_fired();
+		return game::get()->has_fired_event(this->event->get_event_pointer());
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

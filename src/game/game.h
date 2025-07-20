@@ -17,6 +17,7 @@ namespace metternich {
 class army;
 class character;
 class country;
+class event;
 class game_rules;
 class province;
 class scenario;
@@ -253,8 +254,10 @@ public:
 	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const country>> &&delayed_effect);
 	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const province>> &&delayed_effect);
 	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const site>> &&delayed_effect);
-
 	void clear_delayed_effects();
+
+	bool has_fired_event(const metternich::event *event) const;
+	void add_fired_event(const metternich::event *event);
 
 	bool do_battle(army *attacking_army, army *defending_army);
 
@@ -284,6 +287,7 @@ private:
 	std::vector<std::unique_ptr<delayed_effect_instance<const country>>> country_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const province>>> province_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const site>>> site_delayed_effects;
+	std::set<const metternich::event *> fired_events;
 };
 
 }
