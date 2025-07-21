@@ -1,9 +1,0 @@
-leadership = {
-	name = "Leadership"
-	input_commodities = {
-		labor = 2
-		paper = 2
-	}
-	output_commodity = leadership
-	output_value = 1
-}

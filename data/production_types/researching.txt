@@ -1,9 +1,0 @@
-researching = {
-	name = "Researching"
-	input_commodities = {
-		labor = 2
-		paper = 2
-	}
-	output_commodity = research
-	output_value = 1
-}

@@ -12,12 +12,6 @@ war_college = {
 		metropolis
 		castle
 	}
-	production_types = {
-		leadership
-	}
-	country_modifier = {
-		war_college_capacity = 3
-	}
 	settlement_modifier = {
 		housing_bonus = 1
 	}

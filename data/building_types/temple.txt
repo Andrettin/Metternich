@@ -16,12 +16,6 @@ shrine = {
 		city
 		metropolis
 	}
-	production_types = {
-		preaching
-	}
-	country_modifier = {
-		temple_capacity = 1
-	}
 }
 
 temple = {
@@ -39,9 +33,6 @@ temple = {
 		city
 		metropolis
 	}
-	production_types = {
-		preaching
-	}
 	cost_factor = {
 		modifier = {
 			factor = 0.5
@@ -50,9 +41,6 @@ temple = {
 				trait = spiritual
 			}
 		}
-	}
-	country_modifier = {
-		temple_capacity = 2
 	}
 	settlement_modifier = {
 		amenities_bonus = 1
@@ -73,12 +61,6 @@ cathedral = {
 		monastery
 		city
 		metropolis
-	}
-	production_types = {
-		preaching
-	}
-	country_modifier = {
-		temple_capacity = 3
 	}
 	settlement_modifier = {
 		amenities_bonus = 4

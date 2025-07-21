@@ -22,12 +22,6 @@ library = {
 			}
 		}
 	}
-	production_types = {
-		researching
-	}
-	country_modifier = {
-		library_capacity = 1
-	}
 	weighted_country_modifier = {
 		research_output_modifier = 50
 	}

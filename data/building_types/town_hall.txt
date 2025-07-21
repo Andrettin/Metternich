@@ -13,12 +13,7 @@ village_hall = {
 		city
 		metropolis
 	}
-	production_types = {
-		statesmanship
-	}
 	country_modifier = {
-		town_hall_capacity = 1
-		
 		commodity_demand = {
 			commodity = furniture
 			value = 1
@@ -41,12 +36,7 @@ town_hall = {
 		city
 		metropolis
 	}
-	production_types = {
-		statesmanship
-	}
 	country_modifier = {
-		town_hall_capacity = 2
-		
 		commodity_demand = {
 			commodity = furniture
 			value = 1
@@ -67,12 +57,7 @@ city_hall = {
 		city
 		metropolis
 	}
-	production_types = {
-		statesmanship
-	}
 	country_modifier = {
-		town_hall_capacity = 3
-		
 		commodity_demand = {
 			commodity = furniture
 			value = 1
@@ -94,12 +79,7 @@ state_house = {
 		city
 		metropolis
 	}
-	production_types = {
-		statesmanship
-	}
 	country_modifier = {
-		town_hall_capacity = 4
-		
 		commodity_demand = {
 			commodity = furniture
 			value = 1
@@ -121,12 +101,7 @@ capitol = {
 		city
 		metropolis
 	}
-	production_types = {
-		statesmanship
-	}
 	country_modifier = {
-		town_hall_capacity = 5
-		
 		commodity_demand = {
 			commodity = furniture
 			value = 1

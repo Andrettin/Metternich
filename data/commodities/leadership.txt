@@ -1,6 +1,6 @@
 leadership = {
 	name = "Leadership"
-	type = good
+	type = resource
 	icon = flag
 	abstract = true
 }

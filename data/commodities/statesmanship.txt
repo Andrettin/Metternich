@@ -1,6 +1,6 @@
 statesmanship = {
 	name = "Statesmanship"
-	type = good
+	type = resource
 	icon = bell
 	abstract = true
 }
