@@ -1,7 +1,4 @@
 empire = {
 	name = "Empire"
 	icon = crown_imperial
-	modifier = {
-		capital_prestige_bonus = 5
-	}
 }

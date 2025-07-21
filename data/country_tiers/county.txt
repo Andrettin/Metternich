@@ -1,7 +1,4 @@
 county = {
 	name = "County"
 	icon = crown_comital
-	modifier = {
-		capital_prestige_bonus = 2
-	}
 }

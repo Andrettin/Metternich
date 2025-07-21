@@ -1,7 +1,4 @@
 barony = {
 	name = "Barony"
 	icon = crown_baronial
-	modifier = {
-		capital_prestige_bonus = 1
-	}
 }

@@ -477,13 +477,19 @@ void country_game_data::set_tier(const country_tier tier)
 	assert_throw(tier <= this->country->get_max_tier());
 
 	if (this->get_tier() != country_tier::none) {
-		country_tier_data::get(this->get_tier())->get_modifier()->remove(this->country);
+		const country_tier_data *tier_data = country_tier_data::get(this->get_tier());
+		if (tier_data->get_modifier() != nullptr) {
+			tier_data->get_modifier()->remove(this->country);
+		}
 	}
 
 	this->tier = tier;
 
 	if (this->get_tier() != country_tier::none) {
-		country_tier_data::get(this->get_tier())->get_modifier()->apply(this->country);
+		const country_tier_data *tier_data = country_tier_data::get(this->get_tier());
+		if (tier_data->get_modifier() != nullptr) {
+			tier_data->get_modifier()->apply(this->country);
+		}
 	}
 
 	if (game::get()->is_running()) {

@@ -35,12 +35,16 @@ void country_tier_data::check() const
 	}
 
 	if (this->get_modifier() == nullptr) {
-		throw std::runtime_error(std::format("Country tier \"{}\" does not have a modifier.", this->get_identifier()));
+		//throw std::runtime_error(std::format("Country tier \"{}\" does not have a modifier.", this->get_identifier()));
 	}
 }
 
 QString country_tier_data::get_modifier_string(metternich::country *country) const
 {
+	if (this->get_modifier() == nullptr) {
+		return QString();
+	}
+
 	return QString::fromStdString(this->get_modifier()->get_string(country));
 }
 
