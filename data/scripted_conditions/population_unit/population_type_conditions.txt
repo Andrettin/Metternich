@@ -28,3 +28,33 @@ is_upper_strata = {
 		}
 	}
 }
+
+is_craftsmen = {
+	or = {
+		population_type = untrained_workers
+		population_type = trained_workers
+		population_type = expert_workers
+	}
+}
+
+is_farmers = {
+	or = {
+		population_type = farmers
+		population_type = expert_farmers
+		population_type = master_cotton_planters
+		population_type = master_ranchers
+		population_type = master_sugar_planters
+		population_type = master_tobacco_planters
+	}
+}
+
+is_laborers = {
+	or = {
+		population_type = laborers
+		population_type = expert_drillers
+		population_type = expert_fishermen
+		population_type = expert_fur_trappers
+		population_type = expert_lumberjacks
+		population_type = expert_miners
+	}
+}

@@ -1,0 +1,21 @@
+has_farmers = {
+	or = {
+		has_population_type = farmers
+		has_population_type = expert_farmers
+		has_population_type = master_cotton_planters
+		has_population_type = master_ranchers
+		has_population_type = master_sugar_planters
+		has_population_type = master_tobacco_planters
+	}
+}
+
+has_laborers = {
+	or = {
+		has_population_type = laborers
+		has_population_type = expert_drillers
+		has_population_type = expert_fishermen
+		has_population_type = expert_fur_trappers
+		has_population_type = expert_lumberjacks
+		has_population_type = expert_miners
+	}
+}
