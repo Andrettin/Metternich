@@ -20,7 +20,7 @@ printing_press = {
 			value = 1
 		}
 	}
-	weighted_country_modifier = {
+	province_modifier = {
 		statesmanship_output_modifier = 50
 		research_output_modifier = 22
 	}
@@ -48,7 +48,7 @@ newspaper = {
 			value = 1
 		}
 	}
-	weighted_country_modifier = {
+	province_modifier = {
 		statesmanship_output_modifier = 100
 		research_output_modifier = 22
 	}

@@ -29,7 +29,7 @@ school = {
 			value = 1
 		}
 	}
-	weighted_country_modifier = {
+	province_modifier = {
 		research_output_modifier = 12.5
 	}
 }
@@ -64,7 +64,7 @@ college = {
 			value = 1
 		}
 	}
-	weighted_country_modifier = {
+	province_modifier = {
 		research_output_modifier = 25
 	}
 }
@@ -128,7 +128,7 @@ university = {
 	settlement_modifier = {
 		housing_bonus = 1
 	}
-	weighted_country_modifier = {
+	province_modifier = {
 		research_output_modifier = 50
 	}
 }
@@ -161,7 +161,7 @@ monastic_school = {
 			value = 1
 		}
 	}
-	weighted_country_modifier = {
+	province_modifier = {
 		research_output_modifier = 12.5
 	}
 }
@@ -195,7 +195,7 @@ cathedral_school = {
 			value = 1
 		}
 	}
-	weighted_country_modifier = {
+	province_modifier = {
 		research_output_modifier = 25
 	}
 }

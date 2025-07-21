@@ -22,7 +22,7 @@ library = {
 			}
 		}
 	}
-	weighted_country_modifier = {
+	province_modifier = {
 		research_output_modifier = 50
 	}
 }
