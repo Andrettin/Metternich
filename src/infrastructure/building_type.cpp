@@ -209,12 +209,12 @@ void building_type::check() const
 		throw std::runtime_error(std::format("Building type \"{}\" is provincial, but does not have any settlement types listed for it.", this->get_identifier()));
 	}
 
-	if (this->get_employment_profession() != nullptr && this->get_employment_capacity() == 0) {
-		throw std::runtime_error(std::format("Building type \"{}\" has an employment profession, but no employment capacity.", this->get_identifier()));
+	if (this->get_employment_profession() != nullptr && this->get_production_capacity() == 0) {
+		throw std::runtime_error(std::format("Building type \"{}\" has an employment profession, but no production capacity.", this->get_identifier()));
 	}
 
-	if (this->get_employment_capacity() > 0 && this->get_employment_profession() == nullptr) {
-		throw std::runtime_error(std::format("Building type \"{}\" has an employment capacity, but no employment profession.", this->get_identifier()));
+	if (this->get_production_capacity() > 0 && this->get_employment_profession() == nullptr) {
+		throw std::runtime_error(std::format("Building type \"{}\" has a production capacity, but no employment profession.", this->get_identifier()));
 	}
 
 	if (!this->is_provincial() && !this->get_settlement_types().empty()) {

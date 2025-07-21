@@ -1120,7 +1120,7 @@ std::vector<employment_location *> province_game_data::get_employment_locations(
 		const site *resource_site = tile->get_site();
 		site_game_data *resource_site_game_data = resource_site->get_game_data();
 
-		if (resource_site_game_data->get_employment_capacity() > 0) {
+		if (resource_site_game_data->get_production_capacity() > 0) {
 			employment_locations.push_back(resource_site_game_data);
 		}
 	}
@@ -1128,7 +1128,7 @@ std::vector<employment_location *> province_game_data::get_employment_locations(
 	const site_game_data *provincial_capital_game_data = this->province->get_provincial_capital()->get_game_data();
 
 	for (const qunique_ptr<settlement_building_slot> &building_slot : provincial_capital_game_data->get_building_slots()) {
-		if (building_slot->get_employment_capacity() > 0) {
+		if (building_slot->get_production_capacity() > 0) {
 			employment_locations.push_back(building_slot.get());
 		}
 	}

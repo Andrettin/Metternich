@@ -5,14 +5,14 @@ carpenters_house = {
 	icon = furniture
 	provincial = true
 	employment_profession = carpenter
-	employment_capacity = 1
+	production_capacity = 1
 	settlement_types = {
 		village
 		town
 		city
 		metropolis
 	}
-	base_capacity = 2
+	base_capacity = 1
 	commodity_costs = {
 		lumber = 2
 		cast_iron = 2
@@ -29,8 +29,8 @@ carpenters_shop = {
 	icon = furniture
 	provincial = true
 	employment_profession = carpenter
-	employment_capacity = 2
-	base_capacity = 4
+	production_capacity = 2
+	base_capacity = 2
 	required_building = carpenters_house
 	settlement_types = {
 		town
@@ -53,9 +53,9 @@ furniture_factory = {
 	icon = furniture
 	provincial = true
 	employment_profession = carpenter
-	employment_capacity = 3
-	base_capacity = 8
-	capacity_increment = 8
+	production_capacity = 4
+	base_capacity = 4
+	capacity_increment = 4
 	expandable = true
 	required_building = carpenters_shop
 	settlement_types = {

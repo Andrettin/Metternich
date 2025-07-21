@@ -1091,7 +1091,7 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 	if (improvement->get_employment_profession() != nullptr) {
 		assert_throw(this->get_resource() != nullptr);
 		assert_throw(improvement->get_slot() == improvement_slot::resource);
-		this->change_employment_capacity(improvement->get_employment_capacity() * multiplier);
+		this->change_production_capacity(improvement->get_production_capacity() * multiplier);
 	}
 
 	if (this->get_owner() != nullptr) {
@@ -1683,7 +1683,7 @@ std::vector<employment_location *> site_game_data::get_employment_locations()
 			std::vector<employment_location *> employment_locations;
 
 			for (const qunique_ptr<settlement_building_slot> &building_slot : this->get_building_slots()) {
-				if (building_slot->get_employment_capacity() > 0) {
+				if (building_slot->get_production_capacity() > 0) {
 					employment_locations.push_back(building_slot.get());
 				}
 			}
@@ -1692,7 +1692,7 @@ std::vector<employment_location *> site_game_data::get_employment_locations()
 		}
 		case site_type::resource:
 		case site_type::celestial_body:
-			if (this->get_resource() != nullptr && this->get_employment_capacity() > 0) {
+			if (this->get_resource() != nullptr && this->get_production_capacity() > 0) {
 				return { this };
 			}
 			break;
@@ -1740,9 +1740,9 @@ void site_game_data::check_available_employment(const std::vector<employment_loc
 	}
 
 	for (employment_location *employment_location : employment_locations) {
-		int available_employment_capacity = employment_location->get_available_employment_capacity();
-		assert_throw(available_employment_capacity >= 0);
-		if (available_employment_capacity == 0) {
+		centesimal_int available_production_capacity = employment_location->get_available_production_capacity();
+		assert_throw(available_production_capacity >= 0);
+		if (available_production_capacity == 0) {
 			continue;
 		}
 
@@ -1763,21 +1763,21 @@ void site_game_data::check_available_employment(const std::vector<employment_loc
 
 		for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
 			for (population_unit *population_unit : output_population_units) {
+				if (available_production_capacity < output) {
+					break;
+				}
+
 				if (!employment_location->can_fulfill_inputs_for_employment(population_unit)) {
 					//if the inputs are not available, it is pointless to check other potential employees with the same output value
 					break;
 				}
 
 				population_unit->set_employment_location(employment_location, true);
-				--available_employment_capacity;
+				available_production_capacity -= output;
 				std::erase(unemployed_population_units, population_unit);
-
-				if (available_employment_capacity == 0) {
-					break;
-				}
 			}
 
-			if (available_employment_capacity == 0) {
+			if (available_production_capacity == 0) {
 				break;
 			}
 		}

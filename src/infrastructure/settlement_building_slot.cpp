@@ -121,7 +121,7 @@ bool settlement_building_slot::can_build_building(const building_type *building)
 void settlement_building_slot::on_building_gained(const building_type *building, const int multiplier)
 {
 	if (building->get_employment_profession() != nullptr) {
-		this->change_employment_capacity(building->get_employment_capacity() * multiplier);
+		this->change_production_capacity(building->get_production_capacity() * multiplier);
 	}
 
 	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();

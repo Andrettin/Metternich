@@ -54,17 +54,10 @@ public:
 
 	void on_employee_added(population_unit *employee, const int multiplier, const bool change_input_storage);
 
-	int get_employment_capacity() const
-	{
-		return this->employment_capacity;
-	}
-
-	void change_employment_capacity(const int change);
-
-	int get_available_employment_capacity() const
-	{
-		return this->get_employment_capacity() - this->get_employee_count();
-	}
+	int get_production_capacity() const;
+	void change_production_capacity(const int change);
+	int get_employed_production_capacity() const;
+	centesimal_int get_available_production_capacity() const;
 
 	commodity_map<int> get_employee_commodity_inputs(const population_type *population_type) const;
 	commodity_map<centesimal_int> get_employee_commodity_outputs(const population_type *population_type) const;
@@ -78,13 +71,15 @@ public:
 	void change_total_employee_commodity_output(const commodity *commodity, const centesimal_int &change);
 	void calculate_total_employee_commodity_outputs();
 
+	const centesimal_int &get_total_employee_main_commodity_output() const;
+
 	void check_excess_employment();
 	void check_superfluous_employment();
 	bool decrease_employment(const bool change_input_storage, const std::optional<centesimal_int> &max_employee_output_value);
 
 private:
 	std::vector<population_unit *> employees;
-	int employment_capacity = 0;
+	int production_capacity = 0;
 	commodity_map<centesimal_int> total_employee_commodity_outputs;
 };
 

@@ -35,7 +35,7 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(const metternich::profession* employment_profession MEMBER employment_profession READ get_employment_profession NOTIFY changed)
-	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
+	Q_PROPERTY(int production_capacity MEMBER production_capacity READ get_production_capacity NOTIFY changed)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
 	Q_PROPERTY(const metternich::population_class* default_population_class MEMBER default_population_class READ get_default_population_class NOTIFY changed)
 	Q_PROPERTY(metternich::improvement* required_improvement MEMBER required_improvement NOTIFY changed)
@@ -108,9 +108,9 @@ public:
 		return this->employment_profession;
 	}
 
-	int get_employment_capacity() const
+	int get_production_capacity() const
 	{
-		return this->employment_capacity;
+		return this->production_capacity;
 	}
 
 	const std::vector<const terrain_type *> &get_terrain_types() const
@@ -184,7 +184,7 @@ private:
 	std::filesystem::path image_filepath;
 	std::map<const terrain_type *, std::filesystem::path> terrain_image_filepaths;
 	const profession *employment_profession = nullptr;
-	int employment_capacity = 0;
+	int production_capacity = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
 	int variation_count = 1;
 	const population_class *default_population_class = nullptr;

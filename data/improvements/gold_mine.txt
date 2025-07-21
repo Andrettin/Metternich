@@ -10,7 +10,7 @@ gold_mine = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
 	employment_profession = gold_miner
-	employment_capacity = 1
+	production_capacity = 1
 	default_population_class = laborers
 	required_technology = precious_metal_mining
 	wealth_cost = 100
@@ -41,7 +41,7 @@ large_gold_mine = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
 	employment_profession = gold_miner
-	employment_capacity = 2
+	production_capacity = 2
 	default_population_class = laborers
 	required_improvement = gold_mine
 	required_technology = extraction_of_precious_metals
@@ -73,7 +73,7 @@ steam_pumped_gold_mine = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
 	employment_profession = gold_miner
-	employment_capacity = 3
+	production_capacity = 3
 	default_population_class = laborers
 	required_improvement = large_gold_mine
 	required_technology = amalgamation_process
@@ -105,7 +105,7 @@ industrial_gold_mine = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
 	employment_profession = gold_miner
-	employment_capacity = 4
+	production_capacity = 4
 	default_population_class = laborers
 	required_improvement = steam_pumped_gold_mine
 	required_technology = amalgamation_process

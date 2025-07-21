@@ -57,7 +57,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(const metternich::profession* employment_profession MEMBER employment_profession READ get_employment_profession NOTIFY changed)
-	Q_PROPERTY(int employment_capacity MEMBER employment_capacity READ get_employment_capacity NOTIFY changed)
+	Q_PROPERTY(int production_capacity MEMBER production_capacity READ get_production_capacity NOTIFY changed)
 	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList education_types READ get_education_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList recruited_civilian_unit_types READ get_recruited_civilian_unit_types_qvariant_list NOTIFY changed)
@@ -142,9 +142,9 @@ public:
 		return this->employment_profession;
 	}
 
-	int get_employment_capacity() const
+	int get_production_capacity() const
 	{
-		return this->employment_capacity;
+		return this->production_capacity;
 	}
 
 	const std::vector<const production_type *> &get_production_types() const
@@ -358,7 +358,7 @@ private:
 	int level = 0;
 	std::vector<const settlement_type *> settlement_types;
 	const profession *employment_profession = nullptr;
-	int employment_capacity = 0;
+	int production_capacity = 0;
 	std::vector<const production_type *> production_types;
 	std::vector<const education_type *> education_types;
 	std::vector<const civilian_unit_type *> recruited_civilian_unit_types;

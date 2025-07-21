@@ -113,12 +113,12 @@ void improvement::check() const
 		throw std::runtime_error(std::format("Resource improvement \"{}\" has no employment profession.", this->get_identifier()));
 	}
 
-	if (this->get_employment_profession() != nullptr && this->get_employment_capacity() == 0) {
-		throw std::runtime_error(std::format("Improvement \"{}\" has an employment profession, but no employment capacity.", this->get_identifier()));
+	if (this->get_employment_profession() != nullptr && this->get_production_capacity() == 0) {
+		throw std::runtime_error(std::format("Improvement \"{}\" has an employment profession, but no production capacity.", this->get_identifier()));
 	}
 
-	if (this->get_employment_capacity() > 0 && this->get_employment_profession() == nullptr) {
-		throw std::runtime_error(std::format("Improvement \"{}\" has an employment capacity, but no employment profession.", this->get_identifier()));
+	if (this->get_production_capacity() > 0 && this->get_employment_profession() == nullptr) {
+		throw std::runtime_error(std::format("Improvement \"{}\" has a production capacity, but no employment profession.", this->get_identifier()));
 	}
 
 	if ((this->get_slot() == improvement_slot::main || this->get_slot() == improvement_slot::resource) && this->get_image_filepath().empty()) {

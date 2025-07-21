@@ -42,7 +42,7 @@ bool employment_location::can_employ(const population_unit *population_unit, con
 	}
 
 	if (population_unit->get_employment_location() != this) {
-		if (this->get_available_employment_capacity() == 0) {
+		if (this->get_available_production_capacity() == 0) {
 			return false;
 		}
 
@@ -101,7 +101,7 @@ void employment_location::add_employee(population_unit *employee)
 
 	this->on_employee_added(employee, 1, true);
 
-	assert_throw(this->get_available_employment_capacity() >= 0);
+	assert_throw(this->get_available_production_capacity() >= 0);
 }
 
 
@@ -142,17 +142,32 @@ void employment_location::on_employee_added(population_unit *employee, const int
 	}
 }
 
-void employment_location::change_employment_capacity(const int change)
+int employment_location::get_production_capacity() const
+{
+	return this->production_capacity;
+}
+
+void employment_location::change_production_capacity(const int change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	this->employment_capacity += change;
+	this->production_capacity += change;
 
-	if (this->get_available_employment_capacity() < 0) {
+	if (this->get_available_production_capacity() < 0) {
 		this->check_excess_employment();
 	}
+}
+
+int employment_location::get_employed_production_capacity() const
+{
+	return this->get_total_employee_main_commodity_output().to_int();
+}
+
+centesimal_int employment_location::get_available_production_capacity() const
+{
+	return this->get_production_capacity() - this->get_total_employee_main_commodity_output();
 }
 
 commodity_map<int> employment_location::get_employee_commodity_inputs(const population_type *population_type) const
@@ -287,10 +302,26 @@ void employment_location::calculate_total_employee_commodity_outputs()
 	}
 }
 
+const centesimal_int &employment_location::get_total_employee_main_commodity_output() const
+{
+	const profession *profession = this->get_employment_profession();
+	assert_throw(profession != nullptr);
+
+	const commodity *main_output_commodity = profession->get_output_commodity();
+
+	const auto find_iterator = this->get_total_employee_commodity_outputs().find(main_output_commodity);
+	if (find_iterator != this->get_total_employee_commodity_outputs().end()) {
+		return find_iterator->second;
+	}
+
+	static constexpr centesimal_int zero;
+	return zero;
+}
+
 void employment_location::check_excess_employment()
 {
 	//remove employees in excess of capacity
-	while (this->get_available_employment_capacity() < 0) {
+	while (this->get_available_production_capacity() < 0) {
 		this->decrease_employment(true, std::nullopt);
 	}
 }

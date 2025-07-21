@@ -5,7 +5,7 @@ tobacconists_house = {
 	icon = tobacco
 	provincial = true
 	employment_profession = tobacconist
-	employment_capacity = 1
+	production_capacity = 2
 	settlement_types = {
 		village
 		town
@@ -26,7 +26,7 @@ tobacconists_shop = {
 	icon = tobacco
 	provincial = true
 	employment_profession = tobacconist
-	employment_capacity = 2
+	production_capacity = 4
 	settlement_types = {
 		town
 		city
@@ -47,7 +47,7 @@ cigar_factory = {
 	icon = tobacco
 	provincial = true
 	employment_profession = tobacconist
-	employment_capacity = 3
+	production_capacity = 8
 	settlement_types = {
 		town
 		city

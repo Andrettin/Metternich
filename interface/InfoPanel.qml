@@ -234,14 +234,14 @@ Rectangle {
 					}
 					
 					onClicked: {
-						if (building !== null && (building_slot.modifier_string.length > 0 || building_slot.employment_capacity > 0)) {
+						if (building !== null && (building_slot.modifier_string.length > 0 || building_slot.production_capacity > 0)) {
 							modifier_dialog.title = wonder ? wonder.name : building.name
 							modifier_dialog.modifier_string = building_slot.modifier_string
-							if (building_slot.employment_capacity > 0) {
+							if (building_slot.production_capacity > 0) {
 								if (modifier_dialog.modifier_string.length > 0) {
 									modifier_dialog.modifier_string += "\n\n"
 								}
-								modifier_dialog.modifier_string += "Employment: " + building_slot.employees.length + "/" + building_slot.employment_capacity
+								modifier_dialog.modifier_string += "Production: " + building_slot.employed_production_capacity + "/" + building_slot.production_capacity
 							}
 							modifier_dialog.open()
 						}
@@ -275,7 +275,7 @@ Rectangle {
 		text: format_text(
 			selected_site_game_data ? (
 				(selected_site_game_data.commodity_outputs.length > 0 ? get_commodity_outputs_string(selected_site_game_data.commodity_outputs) : "")
-				+ (selected_site.map_data.resource && selected_site.map_data.resource.commodity && selected_site.game_data.resource_improvement ? ("\nEmployment: " + selected_site_game_data.employees.length + "/" + selected_site_game_data.employment_capacity) : "")
+				+ (selected_site.map_data.resource && selected_site.map_data.resource.commodity && selected_site.game_data.resource_improvement ? ("\nProduction: " + selected_site_game_data.employed_production_capacity + "/" + selected_site_game_data.production_capacity) : "")
 			) : ""
 		)
 		visible: selected_site && !selected_garrison && !selected_site.settlement && !viewing_population

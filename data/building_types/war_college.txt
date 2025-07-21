@@ -6,7 +6,7 @@ war_college = {
 	provincial = true
 	provincial_capital_only = true
 	employment_profession = officer
-	employment_capacity = 3
+	production_capacity = 4
 	settlement_types = {
 		city
 		metropolis
