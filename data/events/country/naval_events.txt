@@ -1,6 +1,6 @@
 the_loss_of_the_eurydice = { #Source: "The Times", 1878.3.26.
 	name = "The Loss of the Eurydice"
-	description = "The wreck of the Eurydice, the training-ship for young ordinary seamen, off the Isle of Wight, and almost within sight of Spithead, for which place she was standing, at the end of a pleasant and successful cruise to the West Indies, is a disaster which calls vividly to mind the loss of the Captain off Cape Finisterre."
+	description = "The wreck of the Eurydice, the training-ship for young ordinary seamen, off the Isle of Wight, and almost within sight of Spithead, for which place she was standing, at the end of a pleasant and successful cruise to the West Indies, is a disaster which calls vividly to mind the loss of the Captain off Cape Finisterre. With this exception, there is nothing to compare with the calamity which occurred on Sunday afternoon, so far as the Navy is concerned."
 	trigger = per_turn_pulse
 	random = true
 	only_once = true
