@@ -992,12 +992,14 @@ employment_location *country_economy::decrease_wealth_consumption(const bool res
 				continue;
 			}
 
-			if (employment_location->get_employment_profession()->get_input_wealth() == 0) {
-				continue;
-			}
+			for (const profession *profession : employment_location->get_employment_professions()) {
+				if (profession->get_input_wealth() == 0) {
+					continue;
+				}
 
-			employment_location->decrease_employment(restore_inputs, std::nullopt);
-			return employment_location;
+				employment_location->decrease_employment(profession, restore_inputs, std::nullopt);
+				return employment_location;
+			}
 		}
 	}
 
@@ -1048,12 +1050,14 @@ employment_location *country_economy::decrease_commodity_consumption(const commo
 				continue;
 			}
 
-			if (!employment_location->get_employment_profession()->get_input_commodities().contains(commodity)) {
-				continue;
-			}
+			for (const profession *profession : employment_location->get_employment_professions()) {
+				if (!profession->get_input_commodities().contains(commodity)) {
+					continue;
+				}
 
-			employment_location->decrease_employment(restore_inputs, std::nullopt);
-			return employment_location;
+				employment_location->decrease_employment(profession, restore_inputs, std::nullopt);
+				return employment_location;
+			}
 		}
 	}
 
@@ -1535,7 +1539,7 @@ void country_economy::change_profession_commodity_bonus(const profession *profes
 				continue;
 			}
 
-			if (employment_location->get_employment_profession() != profession) {
+			if (!vector::contains(employment_location->get_employment_professions(), profession)) {
 				continue;
 			}
 

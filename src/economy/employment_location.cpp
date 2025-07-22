@@ -13,6 +13,7 @@
 #include "population/profession.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/vector_util.h"
 #include "util/vector_random_util.h"
 
 namespace metternich {
@@ -32,10 +33,10 @@ QVariantList employment_location::get_employees_qvariant_list() const
 	return container::to_qvariant_list(this->get_employees());
 }
 
-bool employment_location::can_employ(const population_unit *population_unit, const population_type *&converted_population_type) const
+bool employment_location::can_employ(const population_unit *population_unit, const profession *profession, const population_type * &converted_population_type) const
 {
-	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
+	assert_throw(vector::contains(this->get_employment_professions(), profession));
 
 	if (!profession->can_employ_with_conversion(population_unit->get_type(), converted_population_type)) {
 		return false;
@@ -46,7 +47,7 @@ bool employment_location::can_employ(const population_unit *population_unit, con
 			return false;
 		}
 
-		if (!this->can_fulfill_inputs_for_employment(population_unit)) {
+		if (!this->can_fulfill_inputs_for_employment(population_unit, profession)) {
 			return false;
 		}
 	}
@@ -54,12 +55,12 @@ bool employment_location::can_employ(const population_unit *population_unit, con
 	return true;
 }
 
-bool employment_location::can_fulfill_inputs_for_employment(const population_unit *population_unit) const
+bool employment_location::can_fulfill_inputs_for_employment(const population_unit *population_unit, const profession *profession) const
 {
-	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
+	assert_throw(vector::contains(this->get_employment_professions(), profession));
 
-	const commodity_map<int> inputs = this->get_employee_commodity_inputs(population_unit->get_type());
+	const commodity_map<int> inputs = this->get_employee_commodity_inputs(population_unit->get_type(), profession);
 
 	if (inputs.empty() && profession->get_input_wealth() > 0) {
 		return true;
@@ -91,31 +92,31 @@ bool employment_location::can_fulfill_inputs_for_employment(const population_uni
 	return true;
 }
 
-void employment_location::add_employee(population_unit *employee)
+void employment_location::add_employee(population_unit *employee, const profession *profession)
 {
-	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
+	assert_throw(vector::contains(this->get_employment_professions(), profession));
 	assert_throw(profession->can_employ(employee->get_type()));
 
 	this->employees.push_back(employee);
 
-	this->on_employee_added(employee, 1, true);
+	this->on_employee_added(employee, profession, 1, true);
 
 	assert_throw(this->get_available_production_capacity() >= 0);
 }
 
 
-void employment_location::on_employee_added(population_unit *employee, const int multiplier, const bool change_input_storage)
+void employment_location::on_employee_added(population_unit *employee, const profession *profession, const int multiplier, const bool change_input_storage)
 {
-	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
+	assert_throw(vector::contains(this->get_employment_professions(), profession));
 
-	const commodity_map<centesimal_int> employee_outputs = this->get_employee_commodity_outputs(employee->get_type());
+	const commodity_map<centesimal_int> employee_outputs = this->get_employee_commodity_outputs(employee->get_type(), profession);
 	for (const auto &[commodity, output] : employee_outputs) {
 		this->change_total_employee_commodity_output(commodity, output * multiplier);
 
 		if (commodity == profession->get_output_commodity()) {
-			this->change_employed_production_capacity(output);
+			this->change_employed_production_capacity(output * multiplier);
 		}
 	}
 
@@ -127,7 +128,7 @@ void employment_location::on_employee_added(population_unit *employee, const int
 	assert_throw(this->get_employment_country() != nullptr);
 	country_economy *country_economy = this->get_employment_country()->get_economy();
 
-	const commodity_map<int> inputs = this->get_employee_commodity_inputs(employee->get_type());
+	const commodity_map<int> inputs = this->get_employee_commodity_inputs(employee->get_type(), profession);
 	for (const auto &[input_commodity, input_value] : inputs) {
 		if (input_commodity->is_storable() && change_input_storage) {
 			country_economy->change_stored_commodity(input_commodity, -input_value * multiplier);
@@ -183,7 +184,6 @@ void employment_location::change_employed_production_capacity(const centesimal_i
 	this->employed_production_capacity += change;
 
 	assert_throw(this->get_employed_production_capacity() >= 0);
-	assert_throw(this->get_employed_production_capacity() <= this->get_production_capacity());
 }
 
 centesimal_int employment_location::get_available_production_capacity() const
@@ -191,12 +191,11 @@ centesimal_int employment_location::get_available_production_capacity() const
 	return this->get_production_capacity() - this->get_employed_production_capacity();
 }
 
-commodity_map<int> employment_location::get_employee_commodity_inputs(const population_type *population_type) const
+commodity_map<int> employment_location::get_employee_commodity_inputs(const population_type *population_type, const profession *profession) const
 {
 	assert_throw(population_type != nullptr);
-
-	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
+	assert_throw(vector::contains(this->get_employment_professions(), profession));
 
 	if (profession->get_input_commodities().empty()) {
 		return {};
@@ -228,17 +227,16 @@ commodity_map<int> employment_location::get_employee_commodity_inputs(const popu
 	return ret_inputs;
 }
 
-commodity_map<centesimal_int> employment_location::get_employee_commodity_outputs(const population_type *population_type) const
+commodity_map<centesimal_int> employment_location::get_employee_commodity_outputs(const population_type *population_type, const profession *profession) const
 {
 	assert_throw(population_type != nullptr);
-
-	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
+	assert_throw(vector::contains(this->get_employment_professions(), profession));
 
 	commodity_map<decimillesimal_int> outputs;
 
 	const commodity *main_output_commodity = profession->get_output_commodity();
-	outputs[main_output_commodity] = this->get_employee_main_commodity_output(population_type);
+	outputs[main_output_commodity] = this->get_employee_main_commodity_output(population_type, profession);
 
 	const country *employment_country = this->get_employment_country();
 	if (employment_country != nullptr) {
@@ -264,12 +262,11 @@ commodity_map<centesimal_int> employment_location::get_employee_commodity_output
 	return ret_outputs;
 }
 
-decimillesimal_int employment_location::get_employee_main_commodity_output(const population_type *population_type) const
+decimillesimal_int employment_location::get_employee_main_commodity_output(const population_type *population_type, const profession *profession) const
 {
 	assert_throw(population_type != nullptr);
-
-	const profession *profession = this->get_employment_profession();
 	assert_throw(profession != nullptr);
+	assert_throw(vector::contains(this->get_employment_professions(), profession));
 
 	decimillesimal_int main_output(profession->get_output_value());
 	main_output *= this->get_employment_output_multiplier();
@@ -310,7 +307,7 @@ void employment_location::calculate_total_employee_commodity_outputs()
 	}
 
 	for (const population_unit *employee : this->get_employees()) {
-		const commodity_map<centesimal_int> employee_outputs = this->get_employee_commodity_outputs(employee->get_type());
+		const commodity_map<centesimal_int> employee_outputs = this->get_employee_commodity_outputs(employee->get_type(), employee->get_profession());
 
 		for (const auto &[commodity, output] : employee_outputs) {
 			new_outputs[commodity] += output;
@@ -327,7 +324,12 @@ void employment_location::check_excess_employment()
 {
 	//remove employees in excess of capacity
 	while (this->get_available_production_capacity() < 0) {
-		this->decrease_employment(true, std::nullopt);
+		for (const profession *profession : this->get_employment_professions()) {
+			const bool changed = this->decrease_employment(profession, true, std::nullopt);
+			if (changed) {
+				break;
+			}
+		}
 	}
 }
 
@@ -340,24 +342,25 @@ void employment_location::check_superfluous_employment()
 	//remove employees who only produce fractional output, if together with others they don't contribute to integer output
 	//for example, if the employment location has a single employee who produces 0.5 of a commodity, then this may result superfluous production: inputs will still be consumed, but 0 output will be available for transport (since transport uses integers)
 
-	const profession *profession = this->get_employment_profession();
-	assert_throw(profession != nullptr);
+	for (const profession *profession : this->get_employment_professions()) {
+		centesimal_int main_commodity_output = this->get_total_employee_commodity_outputs().find(profession->get_output_commodity())->second;
 
-	centesimal_int main_commodity_output = this->get_total_employee_commodity_outputs().find(profession->get_output_commodity())->second;
+		bool changed = true;
+		while (this->get_employee_count() > 0 && main_commodity_output.get_fractional_value() > 0 && changed) {
+			changed = this->decrease_employment(profession, true, centesimal_int::from_value(main_commodity_output.get_fractional_value()));
 
-	bool changed = true;
-	while (this->get_employee_count() > 0 && main_commodity_output.get_fractional_value() > 0 && changed) {
-		changed = this->decrease_employment(true, centesimal_int::from_value(main_commodity_output.get_fractional_value()));
-
-		if (changed && this->get_employee_count() > 0) {
-			main_commodity_output = this->get_total_employee_commodity_outputs().find(profession->get_output_commodity())->second;
+			if (changed && this->get_employee_count() > 0) {
+				main_commodity_output = this->get_total_employee_commodity_outputs().find(profession->get_output_commodity())->second;
+			}
 		}
 	}
 }
 
-bool employment_location::decrease_employment(const bool change_input_storage, const std::optional<centesimal_int> &max_employee_output_value)
+bool employment_location::decrease_employment(const profession *profession, const bool change_input_storage, const std::optional<centesimal_int> &max_employee_output_value)
 {
 	assert_throw(this->get_employee_count() > 0);
+	assert_throw(profession != nullptr);
+	assert_throw(vector::contains(this->get_employment_professions(), profession));
 
 	std::vector<population_unit *> potential_employees;
 
@@ -366,11 +369,12 @@ bool employment_location::decrease_employment(const bool change_input_storage, c
 		lowest_output_value = max_employee_output_value.value();
 	}
 
-	const profession *profession = this->get_employment_profession();
-	assert_throw(profession != nullptr);
-
 	for (population_unit *employee : this->get_employees()) {
-		const centesimal_int output_value = this->get_employee_commodity_outputs(employee->get_type())[profession->get_output_commodity()];
+		if (employee->get_profession() != profession) {
+			continue;
+		}
+
+		const centesimal_int output_value = this->get_employee_commodity_outputs(employee->get_type(), profession)[profession->get_output_commodity()];
 
 		if (output_value > lowest_output_value) {
 			continue;
@@ -391,7 +395,7 @@ bool employment_location::decrease_employment(const bool change_input_storage, c
 	}
 
 	population_unit *employee_to_remove = vector::get_random(potential_employees);
-	employee_to_remove->set_employment_location(nullptr, change_input_storage);
+	employee_to_remove->set_employment_location(nullptr, nullptr, change_input_storage);
 
 	return true;
 }

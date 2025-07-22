@@ -120,7 +120,7 @@ bool settlement_building_slot::can_build_building(const building_type *building)
 
 void settlement_building_slot::on_building_gained(const building_type *building, const int multiplier)
 {
-	if (building->get_employment_profession() != nullptr) {
+	if (!building->get_employment_professions().empty()) {
 		this->change_production_capacity(building->get_production_capacity() * multiplier);
 	}
 
@@ -329,7 +329,7 @@ QString settlement_building_slot::get_modifier_string() const
 		settlement_modifier_str += this->get_building()->get_settlement_modifier()->get_string(this->get_settlement());
 	}
 
-	if (this->get_employment_profession() != nullptr && this->get_employee_count() > 0) {
+	if (!this->get_employment_professions().empty() && this->get_employee_count() > 0) {
 		const commodity_map<centesimal_int> commodity_outputs = this->get_total_employee_commodity_outputs();
 
 		for (const auto &[commodity, output] : commodity_outputs) {
@@ -418,13 +418,14 @@ const site *settlement_building_slot::get_employment_site() const
 	return this->get_settlement();
 }
 
-const profession *settlement_building_slot::get_employment_profession() const
+const std::vector<const profession *> &settlement_building_slot::get_employment_professions() const
 {
 	if (this->get_building() != nullptr) {
-		return this->get_building()->get_employment_profession();
+		return this->get_building()->get_employment_professions();
 	}
 
-	return nullptr;
+	static constexpr std::vector<const profession *> empty_vector;
+	return empty_vector;
 }
 
 }

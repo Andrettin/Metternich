@@ -261,7 +261,7 @@ public:
 	population_unit *choose_population_unit_for_reallocation() const;
 
 	virtual const site *get_employment_site() const override;
-	virtual const profession *get_employment_profession() const override;
+	virtual const std::vector<const profession *> &get_employment_professions() const override;
 
 	virtual bool is_resource_employment() const override
 	{

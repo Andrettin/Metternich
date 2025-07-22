@@ -29,6 +29,19 @@ improvement::~improvement()
 {
 }
 
+void improvement::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "employment_profession") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		this->employment_professions = { profession::get(value) };
+	} else {
+		named_data_entry::process_gsml_property(property);
+	}
+}
+
 void improvement::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
@@ -39,6 +52,10 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 			resource *resource = resource::get(value);
 			resource->add_improvement(this);
 			this->resources.push_back(resource);
+		}
+	} else if (tag == "employment_professions") {
+		for (const std::string &value : values) {
+			this->employment_professions.push_back(profession::get(value));
 		}
 	} else if (tag == "terrain_types") {
 		for (const std::string &value : values) {
@@ -109,15 +126,15 @@ void improvement::check() const
 		throw std::runtime_error(std::format("Improvement \"{}\" is visitable, but is not a main improvement.", this->get_identifier()));
 	}
 
-	if (this->get_slot() == improvement_slot::resource && this->get_employment_profession() == nullptr) {
+	if (this->get_slot() == improvement_slot::resource && this->get_employment_professions().empty()) {
 		throw std::runtime_error(std::format("Resource improvement \"{}\" has no employment profession.", this->get_identifier()));
 	}
 
-	if (this->get_employment_profession() != nullptr && this->get_production_capacity() == 0) {
+	if (!this->get_employment_professions().empty() && this->get_production_capacity() == 0) {
 		throw std::runtime_error(std::format("Improvement \"{}\" has an employment profession, but no production capacity.", this->get_identifier()));
 	}
 
-	if (this->get_production_capacity() > 0 && this->get_employment_profession() == nullptr) {
+	if (this->get_production_capacity() > 0 && this->get_employment_professions().empty()) {
 		throw std::runtime_error(std::format("Improvement \"{}\" has a production capacity, but no employment profession.", this->get_identifier()));
 	}
 

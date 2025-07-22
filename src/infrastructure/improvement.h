@@ -34,7 +34,6 @@ class improvement final : public named_data_entry, public data_type<improvement>
 	Q_PROPERTY(bool visitable MEMBER visitable READ is_visitable NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
-	Q_PROPERTY(const metternich::profession* employment_profession MEMBER employment_profession READ get_employment_profession NOTIFY changed)
 	Q_PROPERTY(int production_capacity MEMBER production_capacity READ get_production_capacity NOTIFY changed)
 	Q_PROPERTY(int variation_count MEMBER variation_count READ get_variation_count)
 	Q_PROPERTY(const metternich::population_class* default_population_class MEMBER default_population_class READ get_default_population_class NOTIFY changed)
@@ -50,6 +49,7 @@ public:
 	explicit improvement(const std::string &identifier);
 	~improvement();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -103,9 +103,9 @@ public:
 		return this->terrain_image_filepaths.contains(terrain);
 	}
 
-	const profession *get_employment_profession() const
+	const std::vector<const profession *> &get_employment_professions() const
 	{
-		return this->employment_profession;
+		return this->employment_professions;
 	}
 
 	int get_production_capacity() const
@@ -183,7 +183,7 @@ private:
 	const metternich::icon *icon = nullptr;
 	std::filesystem::path image_filepath;
 	std::map<const terrain_type *, std::filesystem::path> terrain_image_filepaths;
-	const profession *employment_profession = nullptr;
+	std::vector<const profession *> employment_professions;
 	int production_capacity = 0;
 	std::vector<const terrain_type *> terrain_types; //the terrain types where the improvement can be built
 	int variation_count = 1;

@@ -140,7 +140,7 @@ public:
 		return this->get_employment_location() == nullptr;
 	}
 
-	void set_employment_location(metternich::employment_location *employment_location, const bool change_input_storage);
+	void set_employment_location(metternich::employment_location *employment_location, const profession *profession, const bool change_input_storage);
 
 	const profession *get_profession() const;
 	bool is_food_producer() const;
@@ -196,6 +196,7 @@ private:
 	centesimal_int consciousness;
 	centesimal_int militancy;
 	metternich::employment_location *employment_location = nullptr;
+	const metternich::profession *profession = nullptr;
 	bool everyday_consumption_fulfilled = true;
 	bool luxury_consumption_fulfilled = true;
 };

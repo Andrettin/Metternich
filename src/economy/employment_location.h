@@ -18,7 +18,7 @@ public:
 	virtual const site *get_employment_site() const = 0;
 	const province *get_employment_province() const;
 	const country *get_employment_country() const;
-	virtual const profession *get_employment_profession() const = 0;
+	virtual const std::vector<const profession *> &get_employment_professions() const = 0;
 
 	virtual bool is_resource_employment() const
 	{
@@ -41,18 +41,18 @@ public:
 	}
 
 	QVariantList get_employees_qvariant_list() const;
-	bool can_employ(const population_unit *population_unit, const population_type *&converted_population_type) const;
-	bool can_fulfill_inputs_for_employment(const population_unit *population_unit) const;
-	void add_employee(population_unit *employee);
+	bool can_employ(const population_unit *population_unit, const profession *profession, const population_type *&converted_population_type) const;
+	bool can_fulfill_inputs_for_employment(const population_unit *population_unit, const profession *profession) const;
+	void add_employee(population_unit *employee, const profession *profession);
 
-	void remove_employee(population_unit *employee, const bool change_input_storage)
+	void remove_employee(population_unit *employee, const profession *profession, const bool change_input_storage)
 	{
 		std::erase(this->employees, employee);
 
-		this->on_employee_added(employee, -1, change_input_storage);
+		this->on_employee_added(employee, profession, -1, change_input_storage);
 	}
 
-	void on_employee_added(population_unit *employee, const int multiplier, const bool change_input_storage);
+	void on_employee_added(population_unit *employee, const profession *profession, const int multiplier, const bool change_input_storage);
 
 	int get_production_capacity() const;
 	void change_production_capacity(const int change);
@@ -61,9 +61,9 @@ public:
 	void change_employed_production_capacity(const centesimal_int &change);
 	centesimal_int get_available_production_capacity() const;
 
-	commodity_map<int> get_employee_commodity_inputs(const population_type *population_type) const;
-	commodity_map<centesimal_int> get_employee_commodity_outputs(const population_type *population_type) const;
-	decimillesimal_int get_employee_main_commodity_output(const population_type *population_type) const;
+	commodity_map<int> get_employee_commodity_inputs(const population_type *population_type, const profession *profession) const;
+	commodity_map<centesimal_int> get_employee_commodity_outputs(const population_type *population_type, const profession *profession) const;
+	decimillesimal_int get_employee_main_commodity_output(const population_type *population_type, const profession *profession) const;
 
 	const commodity_map<centesimal_int> &get_total_employee_commodity_outputs() const
 	{
@@ -75,7 +75,7 @@ public:
 
 	void check_excess_employment();
 	void check_superfluous_employment();
-	bool decrease_employment(const bool change_input_storage, const std::optional<centesimal_int> &max_employee_output_value);
+	bool decrease_employment(const profession *profession, const bool change_input_storage, const std::optional<centesimal_int> &max_employee_output_value);
 
 private:
 	std::vector<population_unit *> employees;

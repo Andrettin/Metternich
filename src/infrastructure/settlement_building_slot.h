@@ -63,7 +63,7 @@ public:
 	QString get_modifier_string() const;
 
 	virtual const site *get_employment_site() const override;
-	virtual const profession *get_employment_profession() const override;
+	virtual const std::vector<const profession *> &get_employment_professions() const override;
 
 signals:
 	void wonder_changed();

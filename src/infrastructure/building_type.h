@@ -56,7 +56,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
-	Q_PROPERTY(const metternich::profession* employment_profession MEMBER employment_profession READ get_employment_profession NOTIFY changed)
 	Q_PROPERTY(int production_capacity MEMBER production_capacity READ get_production_capacity NOTIFY changed)
 	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList education_types READ get_education_types_qvariant_list NOTIFY changed)
@@ -89,6 +88,7 @@ public:
 	explicit building_type(const std::string &identifier);
 	~building_type();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -137,9 +137,9 @@ public:
 		return this->settlement_types;
 	}
 
-	const profession *get_employment_profession() const
+	const std::vector<const profession *> &get_employment_professions() const
 	{
-		return this->employment_profession;
+		return this->employment_professions;
 	}
 
 	int get_production_capacity() const
@@ -357,7 +357,7 @@ private:
 	bool provincial = false;
 	int level = 0;
 	std::vector<const settlement_type *> settlement_types;
-	const profession *employment_profession = nullptr;
+	std::vector<const profession *> employment_professions;
 	int production_capacity = 0;
 	std::vector<const production_type *> production_types;
 	std::vector<const education_type *> education_types;

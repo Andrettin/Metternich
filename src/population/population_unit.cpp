@@ -83,7 +83,7 @@ void population_unit::set_type(const population_type *type)
 	this->get_site()->get_game_data()->get_population()->change_type_count(this->get_type(), -1);
 
 	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->on_employee_added(this, -1, true);
+		this->get_employment_location()->on_employee_added(this, this->get_profession(),  -1, true);
 	}
 
 	this->type = type;
@@ -91,12 +91,12 @@ void population_unit::set_type(const population_type *type)
 	this->get_site()->get_game_data()->get_population()->change_type_count(this->get_type(), 1);
 
 	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->on_employee_added(this, 1, true);
+		this->get_employment_location()->on_employee_added(this, this->get_profession(), 1, true);
 
-		const profession *profession = this->get_employment_location()->get_employment_profession();
+		const metternich::profession *profession = this->get_profession();
 		assert_throw(profession != nullptr);
 		if (!profession->can_employ(type)) {
-			this->set_employment_location(nullptr, true);
+			this->set_employment_location(nullptr, nullptr, true);
 		}
 	}
 
@@ -305,19 +305,19 @@ void population_unit::set_militancy(const centesimal_int &militancy)
 	}
 }
 
-void population_unit::set_employment_location(metternich::employment_location *employment_location, const bool change_input_storage)
+void population_unit::set_employment_location(metternich::employment_location *employment_location, const metternich::profession *profession, const bool change_input_storage)
 {
 	if (employment_location == this->get_employment_location()) {
 		return;
 	}
 
 	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->remove_employee(this, change_input_storage);
+		this->get_employment_location()->remove_employee(this, this->get_profession(), change_input_storage);
 	}
 
 	if (employment_location != nullptr) {
 		const population_type *converted_population_type = nullptr;
-		const bool can_be_employed = employment_location->get_employment_profession()->can_employ_with_conversion(this->get_type(), converted_population_type);
+		const bool can_be_employed = profession->can_employ_with_conversion(this->get_type(), converted_population_type);
 		assert_throw(can_be_employed);
 		if (converted_population_type != nullptr) {
 			this->set_type(converted_population_type);
@@ -325,19 +325,18 @@ void population_unit::set_employment_location(metternich::employment_location *e
 	}
 
 	this->employment_location = employment_location;
+	this->profession = profession;
 
 	if (this->get_employment_location() != nullptr) {
-		this->get_employment_location()->add_employee(this);
+		assert_throw(profession != nullptr);
+
+		this->get_employment_location()->add_employee(this, profession);
 	}
 }
 
 const profession *population_unit::get_profession() const
 {
-	if (this->get_employment_location() != nullptr) {
-		return this->get_employment_location()->get_employment_profession();
-	}
-
-	return nullptr;
+	return this->profession;
 }
 
 bool population_unit::is_food_producer() const
@@ -346,7 +345,7 @@ bool population_unit::is_food_producer() const
 		return this->get_type()->get_output_commodity()->is_food();
 	}
 
-	const profession *profession = this->get_profession();
+	const metternich::profession *profession = this->get_profession();
 	if (profession != nullptr) {
 		return profession->get_output_commodity()->is_food();
 	}
