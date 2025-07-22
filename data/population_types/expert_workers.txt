@@ -7,6 +7,16 @@ expert_workers = {
 	small_icon = expert_workers_small
 	output_commodity = labor
 	output_value = 4
+	profession_output_modifiers = {
+		carpenter = 300
+		officer = 300
+		preacher = 300
+		researcher = 300
+		sawyer = 300
+		statesman = 300
+		tobacconist = 300
+		weaver = 300
+	}
 	everyday_consumption = {
 		amenities = 1
 	}

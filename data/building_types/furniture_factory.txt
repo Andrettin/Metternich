@@ -12,13 +12,17 @@ carpenters_house = {
 		city
 		metropolis
 	}
-	base_capacity = 1
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = timber
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 2
 		cast_iron = 2
-	}
-	production_types = {
-		furniture_making
 	}
 }
 
@@ -30,19 +34,23 @@ carpenters_shop = {
 	provincial = true
 	employment_profession = carpenter
 	production_capacity = 2
-	base_capacity = 2
 	required_building = carpenters_house
 	settlement_types = {
 		town
 		city
 		metropolis
 	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = timber
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 4
 		cast_iron = 4
-	}
-	production_types = {
-		furniture_making
 	}
 }
 
@@ -54,20 +62,22 @@ furniture_factory = {
 	provincial = true
 	employment_profession = carpenter
 	production_capacity = 4
-	base_capacity = 4
-	capacity_increment = 4
-	expandable = true
 	required_building = carpenters_shop
 	settlement_types = {
 		town
 		city
 		metropolis
 	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = timber
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 8
 		steel = 8
-	}
-	production_types = {
-		furniture_making
 	}
 }
