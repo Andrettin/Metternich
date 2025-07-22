@@ -25,6 +25,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
+#include "population/profession.h"
 #include "religion/deity.h"
 #include "religion/deity_trait.h"
 #include "religion/religion.h"
@@ -249,6 +250,7 @@ void technology::check() const
 		&& this->get_enabled_pathway_terrains().empty()
 		&& this->get_enabled_pathways().empty()
 		&& this->get_enabled_production_types().empty()
+		&& this->get_enabled_professions().empty()
 		&& this->get_enabled_research_organizations().empty()
 		&& this->get_enabled_resources().empty()
 		&& this->get_enabled_river_crossing_pathways().empty()
@@ -923,6 +925,16 @@ QString technology::get_effects_string(const metternich::country *country) const
 			}
 
 			str += std::format("Enables {} production type", production_type->get_name());
+		}
+	}
+
+	if (!this->get_enabled_professions().empty()) {
+		for (const profession *profession : this->get_enabled_professions()) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} profession", profession->get_name());
 		}
 	}
 

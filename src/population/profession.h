@@ -7,10 +7,12 @@
 #include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("economy/commodity.h")
+Q_MOC_INCLUDE("technology/technology.h")
 
 namespace metternich {
 
 class commodity;
+class technology;
 
 class profession final : public named_data_entry, public data_type<profession>
 {
@@ -20,6 +22,7 @@ class profession final : public named_data_entry, public data_type<profession>
 	Q_PROPERTY(int input_wealth MEMBER input_wealth READ get_input_wealth NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int output_value MEMBER output_value READ get_output_value NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(bool industrial READ is_industrial CONSTANT)
 
 public:
@@ -64,6 +67,11 @@ public:
 
 	bool can_employ_with_conversion(const population_type *population_type, const metternich::population_type *&converted_population_type) const;
 
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
 	bool is_industrial() const
 	{
 		return this->industrial;
@@ -78,6 +86,7 @@ private:
 	commodity *output_commodity = nullptr;
 	centesimal_int output_value = centesimal_int(1);
 	std::set<const population_type *> population_types;
+	technology *required_technology = nullptr;
 	bool industrial = false;
 };
 

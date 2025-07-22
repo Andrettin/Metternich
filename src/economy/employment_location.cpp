@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_economy.h"
+#include "country/country_game_data.h"
 #include "economy/commodity.h"
 #include "map/province.h"
 #include "map/site.h"
@@ -40,6 +41,13 @@ bool employment_location::can_employ(const population_unit *population_unit, con
 
 	if (!profession->can_employ_with_conversion(population_unit->get_type(), converted_population_type)) {
 		return false;
+	}
+
+	if (profession->get_required_technology() != nullptr) {
+		const country *employment_country = this->get_employment_country();
+		if (employment_country == nullptr || !employment_country->get_game_data()->has_technology(profession->get_required_technology())) {
+			return false;
+		}
 	}
 
 	if (population_unit->get_employment_location() != this) {
