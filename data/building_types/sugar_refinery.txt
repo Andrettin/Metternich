@@ -3,11 +3,21 @@ sugar_refinery = {
 	building_class = sugar_refinery
 	portrait = factory
 	icon = refined_sugar
-	production_types = {
-		sugar_refining
-	}
-	base_capacity = 8
-	capacity_increment = 8
-	expandable = true
+	provincial = true
+	employment_profession = sugar_refiner
+	production_capacity = 8
 	required_technology = sugar_refining
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = sugar_cane
+			}
+		}
+	}
 }
