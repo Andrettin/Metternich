@@ -1,0 +1,11 @@
+apprentice_furriers = {
+	name = "Apprentice Furriers"
+}
+
+journeyman_furriers = {
+	name = "Journeyman Furriers"
+}
+
+master_furriers = {
+	name = "Master Furriers"
+}

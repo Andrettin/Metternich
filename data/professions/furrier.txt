@@ -1,0 +1,17 @@
+furrier = {
+	name = "Furrier"
+	input_commodities = {
+		furs = 1
+	}
+	output_commodity = fur_hats
+	output_value = 0.5
+	population_types = {
+		tribesmen
+		untrained_workers
+		trained_workers
+		expert_workers
+		apprentice_furriers
+		journeyman_furriers
+		master_furriers
+	}
+}

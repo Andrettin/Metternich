@@ -10,6 +10,7 @@ expert_workers = {
 	profession_output_modifiers = {
 		carpenter = 300
 		cotton_weaver = 300
+		furrier = 300
 		officer = 300
 		preacher = 300
 		researcher = 300

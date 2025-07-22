@@ -52,6 +52,9 @@ town = {
 		apprentice_carpenters
 		journeyman_carpenters
 		master_carpenters
+		apprentice_furriers
+		journeyman_furriers
+		master_furriers
 		apprentice_tobacconists
 		journeyman_tobacconists
 		master_tobacconists
@@ -95,6 +98,9 @@ city = {
 		apprentice_carpenters
 		journeyman_carpenters
 		master_carpenters
+		apprentice_furriers
+		journeyman_furriers
+		master_furriers
 		apprentice_tobacconists
 		journeyman_tobacconists
 		master_tobacconists
@@ -132,6 +138,9 @@ metropolis = {
 		apprentice_carpenters
 		journeyman_carpenters
 		master_carpenters
+		apprentice_furriers
+		journeyman_furriers
+		master_furriers
 		apprentice_tobacconists
 		journeyman_tobacconists
 		master_tobacconists
