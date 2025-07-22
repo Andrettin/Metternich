@@ -3,13 +3,28 @@ tailors_house = {
 	building_class = tailors_house
 	portrait = factory
 	icon = clothing
-	base_capacity = 2
+	provincial = true
+	employment_profession = tailor
+	production_capacity = 1
+	settlement_types = {
+		village
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = cotton
+				has_resource = sheep
+				has_resource = silk
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 2
 		cast_iron = 2
-	}
-	production_types = {
-		clothing_making
 	}
 }
 
@@ -18,14 +33,28 @@ tailors_shop = {
 	building_class = tailors_shop
 	portrait = factory
 	icon = clothing
-	base_capacity = 4
+	provincial = true
+	employment_profession = tailor
+	production_capacity = 2
 	required_building = tailors_house
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = cotton
+				has_resource = sheep
+				has_resource = silk
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 4
 		cast_iron = 4
-	}
-	production_types = {
-		clothing_making
 	}
 }
 
@@ -34,15 +63,27 @@ clothing_factory = {
 	building_class = clothing_factory
 	portrait = factory
 	icon = clothing
-	base_capacity = 8
-	capacity_increment = 8
-	expandable = true
+	provincial = true
+	employment_profession = tailor
+	production_capacity = 4
 	required_building = tailors_shop
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = cotton
+				has_resource = sheep
+				has_resource = silk
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 8
 		steel = 8
-	}
-	production_types = {
-		clothing_making
 	}
 }

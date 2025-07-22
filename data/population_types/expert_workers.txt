@@ -17,6 +17,7 @@ expert_workers = {
 		silk_weaver = 300
 		statesman = 300
 		sugar_refiner = 300
+		tailor = 300
 		tobacconist = 300
 		wool_weaver = 300
 	}

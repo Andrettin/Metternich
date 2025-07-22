@@ -7,7 +7,6 @@ sawyers_house = {
 	employment_profession = sawyer
 	production_capacity = 2
 	production_types = {
-		lumber_making
 		papermaking
 	}
 	base_capacity = 2
@@ -36,7 +35,6 @@ sawyers_shop = {
 	employment_profession = sawyer
 	production_capacity = 4
 	production_types = {
-		lumber_making
 		papermaking
 	}
 	base_capacity = 4
@@ -65,7 +63,6 @@ lumber_mill = {
 	employment_profession = sawyer
 	production_capacity = 8
 	production_types = {
-		lumber_making
 		papermaking
 	}
 	base_capacity = 8

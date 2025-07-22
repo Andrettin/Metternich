@@ -8,6 +8,7 @@ apprentice_weavers = {
 	profession_output_modifiers = {
 		cotton_weaver = 300
 		silk_weaver = 300
+		tailor = 300
 		wool_weaver = 300
 	}
 	everyday_consumption = {
@@ -37,6 +38,7 @@ journeyman_weavers = {
 	profession_output_modifiers = {
 		cotton_weaver = 500
 		silk_weaver = 500
+		tailor = 500
 		wool_weaver = 500
 	}
 	everyday_consumption = {
@@ -66,6 +68,7 @@ master_weavers = {
 	profession_output_modifiers = {
 		cotton_weaver = 700
 		silk_weaver = 700
+		tailor = 700
 		wool_weaver = 700
 	}
 	everyday_consumption = {
