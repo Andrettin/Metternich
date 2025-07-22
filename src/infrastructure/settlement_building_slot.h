@@ -19,7 +19,7 @@ class settlement_building_slot final : public building_slot, public employment_l
 	Q_PROPERTY(QString modifier_string READ get_modifier_string NOTIFY country_modifier_changed)
 	Q_PROPERTY(QVariantList employees READ get_employees_qvariant_list NOTIFY building_changed)
 	Q_PROPERTY(int production_capacity READ get_production_capacity NOTIFY building_changed)
-	Q_PROPERTY(int employed_production_capacity READ get_employed_production_capacity NOTIFY building_changed)
+	Q_PROPERTY(int employed_production_capacity READ get_employed_production_capacity_int NOTIFY building_changed)
 
 public:
 	explicit settlement_building_slot(const building_slot_type *type, const site *settlement);

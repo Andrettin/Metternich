@@ -113,6 +113,10 @@ void employment_location::on_employee_added(population_unit *employee, const int
 	const commodity_map<centesimal_int> employee_outputs = this->get_employee_commodity_outputs(employee->get_type());
 	for (const auto &[commodity, output] : employee_outputs) {
 		this->change_total_employee_commodity_output(commodity, output * multiplier);
+
+		if (commodity == profession->get_output_commodity()) {
+			this->change_employed_production_capacity(output);
+		}
 	}
 
 	if (profession->get_output_commodity()->is_food() && this->is_resource_employment()) {
@@ -160,14 +164,31 @@ void employment_location::change_production_capacity(const int change)
 	}
 }
 
-int employment_location::get_employed_production_capacity() const
+const centesimal_int &employment_location::get_employed_production_capacity() const
 {
-	return this->get_total_employee_main_commodity_output().to_int();
+	return this->employed_production_capacity;
+}
+
+int employment_location::get_employed_production_capacity_int() const
+{
+	return this->get_employed_production_capacity().to_int();
+}
+
+void employment_location::change_employed_production_capacity(const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->employed_production_capacity += change;
+
+	assert_throw(this->get_employed_production_capacity() >= 0);
+	assert_throw(this->get_employed_production_capacity() <= this->get_production_capacity());
 }
 
 centesimal_int employment_location::get_available_production_capacity() const
 {
-	return this->get_production_capacity() - this->get_total_employee_main_commodity_output();
+	return this->get_production_capacity() - this->get_employed_production_capacity();
 }
 
 commodity_map<int> employment_location::get_employee_commodity_inputs(const population_type *population_type) const
@@ -300,22 +321,6 @@ void employment_location::calculate_total_employee_commodity_outputs()
 		const centesimal_int output_change = output - old_outputs[commodity];
 		this->change_total_employee_commodity_output(commodity, output_change);
 	}
-}
-
-const centesimal_int &employment_location::get_total_employee_main_commodity_output() const
-{
-	const profession *profession = this->get_employment_profession();
-	assert_throw(profession != nullptr);
-
-	const commodity *main_output_commodity = profession->get_output_commodity();
-
-	const auto find_iterator = this->get_total_employee_commodity_outputs().find(main_output_commodity);
-	if (find_iterator != this->get_total_employee_commodity_outputs().end()) {
-		return find_iterator->second;
-	}
-
-	static constexpr centesimal_int zero;
-	return zero;
 }
 
 void employment_location::check_excess_employment()

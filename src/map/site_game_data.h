@@ -56,7 +56,7 @@ class site_game_data final : public QObject, public employment_location
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(QVariantList employees READ get_employees_qvariant_list NOTIFY population_units_changed)
 	Q_PROPERTY(int production_capacity READ get_production_capacity NOTIFY improvements_changed)
-	Q_PROPERTY(int employed_production_capacity READ get_employed_production_capacity NOTIFY population_units_changed)
+	Q_PROPERTY(int employed_production_capacity READ get_employed_production_capacity_int NOTIFY population_units_changed)
 	Q_PROPERTY(int housing READ get_housing_int NOTIFY housing_changed)
 	Q_PROPERTY(const metternich::character* landholder READ get_landholder NOTIFY landholder_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
