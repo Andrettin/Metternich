@@ -4,9 +4,12 @@ weavers_house = {
 	portrait = factory
 	icon = fabric
 	provincial = true
-	employment_profession = weaver
 	production_capacity = 2
-	base_capacity = 2
+	employment_professions = {
+		cotton_weaver
+		silk_weaver
+		wool_weaver
+	}
 	settlement_types = {
 		village
 		town
@@ -27,11 +30,6 @@ weavers_house = {
 		lumber = 2
 		cast_iron = 2
 	}
-	production_types = {
-		cotton_fabric_weaving
-		silk_fabric_weaving
-		wool_fabric_weaving
-	}
 }
 
 weavers_shop = {
@@ -40,10 +38,13 @@ weavers_shop = {
 	portrait = factory
 	icon = fabric
 	provincial = true
-	employment_profession = weaver
 	production_capacity = 4
-	base_capacity = 4
 	required_building = weavers_house
+	employment_professions = {
+		cotton_weaver
+		silk_weaver
+		wool_weaver
+	}
 	settlement_types = {
 		town
 		city
@@ -63,11 +64,6 @@ weavers_shop = {
 		lumber = 4
 		cast_iron = 4
 	}
-	production_types = {
-		cotton_fabric_weaving
-		silk_fabric_weaving
-		wool_fabric_weaving
-	}
 }
 
 textile_mill = {
@@ -76,12 +72,13 @@ textile_mill = {
 	portrait = factory
 	icon = fabric
 	provincial = true
-	employment_profession = weaver
 	production_capacity = 8
-	base_capacity = 8
-	capacity_increment = 8
-	expandable = true
 	required_building = weavers_shop
+	employment_professions = {
+		cotton_weaver
+		silk_weaver
+		wool_weaver
+	}
 	settlement_types = {
 		town
 		city
@@ -100,10 +97,5 @@ textile_mill = {
 	commodity_costs = {
 		lumber = 8
 		steel = 8
-	}
-	production_types = {
-		cotton_fabric_weaving
-		silk_fabric_weaving
-		wool_fabric_weaving
 	}
 }

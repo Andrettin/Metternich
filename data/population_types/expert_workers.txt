@@ -9,14 +9,16 @@ expert_workers = {
 	output_value = 4
 	profession_output_modifiers = {
 		carpenter = 300
+		cotton_weaver = 300
 		officer = 300
 		preacher = 300
 		researcher = 300
 		sawyer = 300
+		silk_weaver = 300
 		statesman = 300
 		sugar_refiner = 300
 		tobacconist = 300
-		weaver = 300
+		wool_weaver = 300
 	}
 	everyday_consumption = {
 		amenities = 1

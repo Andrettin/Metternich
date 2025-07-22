@@ -6,7 +6,9 @@ apprentice_weavers = {
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
 	profession_output_modifiers = {
-		weaver = 300
+		cotton_weaver = 300
+		silk_weaver = 300
+		wool_weaver = 300
 	}
 	everyday_consumption = {
 		amenities = 1
@@ -33,7 +35,9 @@ journeyman_weavers = {
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
 	profession_output_modifiers = {
-		weaver = 500
+		cotton_weaver = 500
+		silk_weaver = 500
+		wool_weaver = 500
 	}
 	everyday_consumption = {
 		amenities = 1
@@ -60,7 +64,9 @@ master_weavers = {
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
 	profession_output_modifiers = {
-		weaver = 700
+		cotton_weaver = 700
+		silk_weaver = 700
+		wool_weaver = 700
 	}
 	everyday_consumption = {
 		amenities = 1
