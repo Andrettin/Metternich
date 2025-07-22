@@ -3,11 +3,21 @@ iron_smelter = {
 	building_class = iron_smelter
 	portrait = factory
 	icon = iron
-	production_types = {
-		iron_smelting
-	}
-	base_capacity = 8
-	capacity_increment = 8
-	expandable = true
+	provincial = true
+	employment_profession = iron_smelter
+	production_capacity = 8
 	required_technology = ironworking
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = iron_ore
+			}
+		}
+	}
 }

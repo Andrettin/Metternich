@@ -1,0 +1,80 @@
+apprentice_blacksmiths = {
+	name = "Apprentice Blacksmiths"
+	population_class = apprentice_blacksmiths
+	literate = true
+	icon = expert_workers
+	small_icon = expert_workers_small
+	required_game_rule = additional_population_types
+	profession_output_modifiers = {
+		iron_smelter = 300
+	}
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 0.25
+		furniture = 0.25
+		brass_lamps = 0.125
+		coffee = 0.25
+		opium = 0.125
+		salt = 0.25
+		tea = 0.25
+	}
+}
+
+journeyman_blacksmiths = {
+	name = "Journeyman Blacksmiths"
+	population_class = journeyman_blacksmiths
+	literate = true
+	icon = expert_workers
+	small_icon = expert_workers_small
+	required_game_rule = additional_population_types
+	profession_output_modifiers = {
+		iron_smelter = 500
+	}
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 0.25
+		furniture = 0.25
+		brass_lamps = 0.125
+		coffee = 0.25
+		opium = 0.125
+		salt = 0.25
+		tea = 0.25
+	}
+}
+
+master_blacksmiths = {
+	name = "Master Blacksmiths"
+	population_class = master_blacksmiths
+	literate = true
+	icon = expert_workers
+	small_icon = expert_workers_small
+	required_game_rule = additional_population_types
+	profession_output_modifiers = {
+		iron_smelter = 700
+	}
+	everyday_consumption = {
+		amenities = 1
+	}
+	luxury_consumption = {
+		amenities = 1
+	}
+	commodity_demands = {
+		clothing = 0.25
+		furniture = 0.25
+		brass_lamps = 0.125
+		coffee = 0.25
+		opium = 0.125
+		salt = 0.25
+		tea = 0.25
+	}
+}

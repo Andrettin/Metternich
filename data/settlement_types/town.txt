@@ -49,6 +49,9 @@ town = {
 		untrained_workers
 		trained_workers
 		expert_workers
+		apprentice_blacksmiths
+		journeyman_blacksmiths
+		master_blacksmiths
 		apprentice_carpenters
 		journeyman_carpenters
 		master_carpenters
@@ -95,6 +98,9 @@ city = {
 		trained_workers
 		expert_workers
 		soldiers
+		apprentice_blacksmiths
+		journeyman_blacksmiths
+		master_blacksmiths
 		apprentice_carpenters
 		journeyman_carpenters
 		master_carpenters
@@ -135,6 +141,9 @@ metropolis = {
 		trained_workers
 		expert_workers
 		soldiers
+		apprentice_blacksmiths
+		journeyman_blacksmiths
+		master_blacksmiths
 		apprentice_carpenters
 		journeyman_carpenters
 		master_carpenters

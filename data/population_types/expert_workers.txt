@@ -11,6 +11,7 @@ expert_workers = {
 		carpenter = 300
 		cotton_weaver = 300
 		furrier = 300
+		iron_smelter = 300
 		mercury_refiner = 300
 		officer = 300
 		preacher = 300
