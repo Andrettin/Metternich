@@ -13,6 +13,16 @@ weavers_house = {
 		city
 		metropolis
 	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = cotton
+				has_resource = sheep
+				has_resource = silk
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 2
 		cast_iron = 2
@@ -38,6 +48,16 @@ weavers_shop = {
 		town
 		city
 		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = cotton
+				has_resource = sheep
+				has_resource = silk
+			}
+		}
 	}
 	commodity_costs = {
 		lumber = 4
@@ -66,6 +86,16 @@ textile_mill = {
 		town
 		city
 		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = cotton
+				has_resource = sheep
+				has_resource = silk
+			}
+		}
 	}
 	commodity_costs = {
 		lumber = 8

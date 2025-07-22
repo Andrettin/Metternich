@@ -6,17 +6,21 @@ tobacconists_house = {
 	provincial = true
 	employment_profession = tobacconist
 	production_capacity = 2
+	required_technology = cigar_production
 	settlement_types = {
 		village
 		town
 		city
 		metropolis
 	}
-	production_types = {
-		cigar_production
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = tobacco
+			}
+		}
 	}
-	base_capacity = 2
-	required_technology = cigar_production
 }
 
 tobacconists_shop = {
@@ -27,17 +31,21 @@ tobacconists_shop = {
 	provincial = true
 	employment_profession = tobacconist
 	production_capacity = 4
+	required_building = tobacconists_house
+	required_technology = cigar_production
 	settlement_types = {
 		town
 		city
 		metropolis
 	}
-	production_types = {
-		cigar_production
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = tobacco
+			}
+		}
 	}
-	base_capacity = 4
-	required_building = tobacconists_house
-	required_technology = cigar_production
 }
 
 cigar_factory = {
@@ -48,17 +56,19 @@ cigar_factory = {
 	provincial = true
 	employment_profession = tobacconist
 	production_capacity = 8
+	required_building = tobacconists_shop
+	required_technology = cigar_production
 	settlement_types = {
 		town
 		city
 		metropolis
 	}
-	production_types = {
-		cigar_production
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = tobacco
+			}
+		}
 	}
-	base_capacity = 8
-	capacity_increment = 8
-	expandable = true
-	required_building = tobacconists_shop
-	required_technology = cigar_production
 }
