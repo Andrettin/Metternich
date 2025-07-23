@@ -6,6 +6,7 @@ apprentice_blacksmiths = {
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
 	profession_output_modifiers = {
+		brass_maker = 300
 		iron_smelter = 300
 	}
 	everyday_consumption = {
@@ -33,6 +34,7 @@ journeyman_blacksmiths = {
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
 	profession_output_modifiers = {
+		brass_maker = 500
 		iron_smelter = 500
 	}
 	everyday_consumption = {
@@ -60,6 +62,7 @@ master_blacksmiths = {
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
 	profession_output_modifiers = {
+		brass_maker = 700
 		iron_smelter = 700
 	}
 	everyday_consumption = {

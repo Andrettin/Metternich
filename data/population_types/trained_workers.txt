@@ -8,6 +8,7 @@ trained_workers = {
 	output_commodity = labor
 	output_value = 2
 	profession_output_modifiers = {
+		brass_maker = 100
 		carpenter = 100
 		cotton_weaver = 100
 		furrier = 100

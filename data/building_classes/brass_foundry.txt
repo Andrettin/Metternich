@@ -1,0 +1,4 @@
+brass_foundry = {
+	name = "Brass Foundry"
+	slot_type = brass_foundry
+}
