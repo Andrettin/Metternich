@@ -3,16 +3,37 @@ food_processing_center = {
 	building_class = food_processing_center
 	portrait = factory
 	icon = canned_food
-	base_capacity = 8
-	capacity_increment = 8
-	expandable = true
+	provincial = true
+	production_capacity = 8
 	required_technology = improved_food_preservation
+	employment_professions = {
+		canned_food_maker_meat
+		canned_food_maker_fish
+	}
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				and = {
+					has_resource = grain
+					has_resource = fruit
+					or = {
+						has_resource = cattle
+						has_resource = bison
+						has_resource = fish
+						has_building_class = dock
+					}
+				}
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 8
 		steel = 8
-	}
-	production_types = {
-		canned_food_making_meat
-		canned_food_making_fish
 	}
 }
