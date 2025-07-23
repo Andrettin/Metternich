@@ -3,11 +3,24 @@ bronze_foundry = {
 	building_class = bronze_foundry
 	portrait = factory
 	icon = bronze
-	production_types = {
-		bronze_making
-	}
-	base_capacity = 8
-	capacity_increment = 8
-	expandable = true
+	provincial = true
+	employment_profession = bronze_maker
+	production_capacity = 8
 	required_technology = bronzeworking
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				and = {
+					has_resource = copper
+					has_resource = tin
+				}
+			}
+		}
+	}
 }

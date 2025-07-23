@@ -9,6 +9,7 @@ expert_workers = {
 	output_value = 4
 	profession_output_modifiers = {
 		brass_maker = 300
+		bronze_maker = 300
 		carpenter = 300
 		cotton_weaver = 300
 		furrier = 300
