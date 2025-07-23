@@ -97,7 +97,7 @@ void country_economy::do_production()
 				continue;
 			}
 
-			while (this->get_commodity_input(commodity) > this->get_stored_commodity(commodity)) {
+			while (this->get_commodity_input(commodity).to_int() > this->get_stored_commodity(commodity)) {
 				employment_location *affected_employment_location = this->decrease_commodity_consumption(commodity, false);
 				if (affected_employment_location != nullptr && !vector::contains(changed_employment_locations, affected_employment_location)) {
 					changed_employment_locations.push_back(affected_employment_location);
@@ -112,15 +112,17 @@ void country_economy::do_production()
 
 		for (const auto &[commodity, input] : this->get_commodity_inputs()) {
 			try {
+				const int input_int = input.to_int();
+
 				if (!commodity->is_storable()) {
 					const int output = this->get_commodity_output(commodity).to_int();
-					if (input > output) {
-						throw std::runtime_error(std::format("Input for non-storable commodity \"{}\" ({}) is greater than its output ({}).", commodity->get_identifier(), input, output));
+					if (input_int > output) {
+						throw std::runtime_error(std::format("Input for non-storable commodity \"{}\" ({}) is greater than its output ({}).", commodity->get_identifier(), input_int, output));
 					}
 					continue;
 				}
 
-				this->change_stored_commodity(commodity, -input);
+				this->change_stored_commodity(commodity, -input_int);
 			} catch (...) {
 				std::throw_with_nested(std::runtime_error("Error processing input storage reduction for commodity \"" + commodity->get_identifier() + "\"."));
 			}
@@ -658,25 +660,39 @@ QVariantList country_economy::get_commodity_inputs_qvariant_list() const
 
 int country_economy::get_commodity_input(const QString &commodity_identifier) const
 {
-	return this->get_commodity_input(commodity::get(commodity_identifier.toStdString()));
+	return this->get_commodity_input(commodity::get(commodity_identifier.toStdString())).to_int();
 }
 
-void country_economy::change_commodity_input(const commodity *commodity, const int change)
+void country_economy::change_commodity_input(const commodity *commodity, const centesimal_int &change, const bool change_input_storage)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int count = (this->commodity_inputs[commodity] += change);
+	const centesimal_int old_input = this->get_commodity_input(commodity);
 
-	assert_throw(count >= 0);
+	if (commodity->get_base_price() != 0) {
+		this->get_game_data()->change_economic_score(old_input.to_int() * commodity->get_base_price());
+	}
 
-	if (count == 0) {
+	if (commodity->is_storable() && change_input_storage) {
+		this->change_stored_commodity(commodity, old_input.to_int());
+	}
+
+	const centesimal_int new_input = (this->commodity_inputs[commodity] += change);
+
+	assert_throw(new_input >= 0);
+
+	if (new_input == 0) {
 		this->commodity_inputs.erase(commodity);
 	}
 
 	if (commodity->get_base_price() != 0) {
-		this->get_game_data()->change_economic_score(-change * commodity->get_base_price());
+		this->get_game_data()->change_economic_score(-new_input.to_int() * commodity->get_base_price());
+	}
+
+	if (commodity->is_storable() && change_input_storage) {
+		this->change_stored_commodity(commodity, -new_input.to_int());
 	}
 
 	if (game::get()->is_running()) {
@@ -1359,10 +1375,7 @@ void country_economy::set_throughput_modifier(const int value)
 		for (const production_type *production_type : building_slot->get_available_production_types()) {
 			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
 			for (const auto &[input_commodity, input_value] : inputs) {
-				if (input_commodity->is_storable()) {
-					this->change_stored_commodity(input_commodity, input_value);
-				}
-				this->change_commodity_input(input_commodity, -input_value);
+				this->change_commodity_input(input_commodity, -centesimal_int(input_value), true);
 			}
 		}
 	}
@@ -1373,10 +1386,7 @@ void country_economy::set_throughput_modifier(const int value)
 		for (const production_type *production_type : building_slot->get_available_production_types()) {
 			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
 			for (const auto &[input_commodity, input_value] : inputs) {
-				if (input_commodity->is_storable()) {
-					this->change_stored_commodity(input_commodity, -input_value);
-				}
-				this->change_commodity_input(input_commodity, input_value);
+				this->change_commodity_input(input_commodity, centesimal_int(input_value), true);
 			}
 		}
 	}
@@ -1400,10 +1410,7 @@ void country_economy::set_commodity_throughput_modifier(const commodity *commodi
 
 			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
 			for (const auto &[input_commodity, input_value] : inputs) {
-				if (input_commodity->is_storable()) {
-					this->change_stored_commodity(input_commodity, input_value);
-				}
-				this->change_commodity_input(input_commodity, -input_value);
+				this->change_commodity_input(input_commodity, -centesimal_int(input_value), true);
 			}
 		}
 	}
@@ -1422,10 +1429,7 @@ void country_economy::set_commodity_throughput_modifier(const commodity *commodi
 
 			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
 			for (const auto &[input_commodity, input_value] : inputs) {
-				if (input_commodity->is_storable()) {
-					this->change_stored_commodity(input_commodity, -input_value);
-				}
-				this->change_commodity_input(input_commodity, input_value);
+				this->change_commodity_input(input_commodity, centesimal_int(input_value), true);
 			}
 		}
 	}

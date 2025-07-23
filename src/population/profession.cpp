@@ -21,9 +21,8 @@ void profession::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			const commodity *commodity = commodity::get(key);
-			const int value_int = std::stoi(value);
 
-			this->input_commodities[commodity] = value_int;
+			this->input_commodities[commodity] = centesimal_int(value);
 		});
 	} else if (tag == "population_types") {
 		for (const std::string &value : values) {

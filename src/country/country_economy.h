@@ -270,14 +270,14 @@ public:
 		this->set_storage_capacity(this->get_storage_capacity() + change);
 	}
 
-	const commodity_map<int> &get_commodity_inputs() const
+	const commodity_map<centesimal_int> &get_commodity_inputs() const
 	{
 		return this->commodity_inputs;
 	}
 
 	QVariantList get_commodity_inputs_qvariant_list() const;
 
-	int get_commodity_input(const commodity *commodity) const
+	const centesimal_int &get_commodity_input(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_inputs.find(commodity);
 
@@ -285,11 +285,12 @@ public:
 			return find_iterator->second;
 		}
 
-		return 0;
+		static constexpr centesimal_int zero;
+		return zero;
 	}
 
 	Q_INVOKABLE int get_commodity_input(const QString &commodity_identifier) const;
-	void change_commodity_input(const commodity *commodity, const int change);
+	void change_commodity_input(const commodity *commodity, const centesimal_int &change, const bool change_input_storage);
 
 	const commodity_map<centesimal_int> &get_transportable_commodity_outputs() const
 	{
@@ -357,7 +358,7 @@ public:
 
 	int get_net_commodity_output(const commodity *commodity) const
 	{
-		return this->get_commodity_output(commodity).to_int() - this->get_commodity_input(commodity);
+		return this->get_commodity_output(commodity).to_int() - this->get_commodity_input(commodity).to_int();
 	}
 
 	void calculate_site_commodity_outputs();
@@ -976,7 +977,7 @@ private:
 	commodity_set tradeable_commodities;
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;
-	commodity_map<int> commodity_inputs;
+	commodity_map<centesimal_int> commodity_inputs;
 	commodity_map<centesimal_int> transportable_commodity_outputs;
 	commodity_map<int> transported_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;

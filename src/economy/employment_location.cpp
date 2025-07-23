@@ -68,7 +68,7 @@ bool employment_location::can_fulfill_inputs_for_employment(const population_uni
 	assert_throw(profession != nullptr);
 	assert_throw(vector::contains(this->get_employment_professions(), profession));
 
-	const commodity_map<int> inputs = this->get_employee_commodity_inputs(population_unit->get_type(), profession);
+	const commodity_map<centesimal_int> inputs = this->get_employee_commodity_inputs(population_unit->get_type(), profession);
 
 	if (inputs.empty() && profession->get_input_wealth() > 0) {
 		return true;
@@ -82,7 +82,9 @@ bool employment_location::can_fulfill_inputs_for_employment(const population_uni
 
 	for (const auto &[input_commodity, input_value] : inputs) {
 		if (input_commodity->is_storable()) {
-			if (country_economy->get_stored_commodity(input_commodity) < input_value) {
+			const int storage_change = (country_economy->get_commodity_input(input_commodity) + input_value).to_int() - country_economy->get_commodity_input(input_commodity).to_int();
+
+			if (country_economy->get_stored_commodity(input_commodity) < storage_change) {
 				return false;
 			}
 		} else {
@@ -119,13 +121,12 @@ void employment_location::on_employee_added(population_unit *employee, const pro
 	assert_throw(profession != nullptr);
 	assert_throw(vector::contains(this->get_employment_professions(), profession));
 
+	const centesimal_int employee_production_capacity = profession->get_output_value() * (100 + employee->get_type()->get_profession_output_modifier(profession)) / 100;
+	this->change_employed_production_capacity(employee_production_capacity * multiplier);
+
 	const commodity_map<centesimal_int> employee_outputs = this->get_employee_commodity_outputs(employee->get_type(), profession);
 	for (const auto &[commodity, output] : employee_outputs) {
 		this->change_total_employee_commodity_output(commodity, output * multiplier);
-
-		if (commodity == profession->get_output_commodity()) {
-			this->change_employed_production_capacity(output * multiplier);
-		}
 	}
 
 	if (profession->get_output_commodity()->is_food() && this->is_resource_employment()) {
@@ -136,12 +137,9 @@ void employment_location::on_employee_added(population_unit *employee, const pro
 	assert_throw(this->get_employment_country() != nullptr);
 	country_economy *country_economy = this->get_employment_country()->get_economy();
 
-	const commodity_map<int> inputs = this->get_employee_commodity_inputs(employee->get_type(), profession);
+	const commodity_map<centesimal_int> inputs = this->get_employee_commodity_inputs(employee->get_type(), profession);
 	for (const auto &[input_commodity, input_value] : inputs) {
-		if (input_commodity->is_storable() && change_input_storage) {
-			country_economy->change_stored_commodity(input_commodity, -input_value * multiplier);
-		}
-		country_economy->change_commodity_input(input_commodity, input_value * multiplier);
+		country_economy->change_commodity_input(input_commodity, input_value * multiplier, change_input_storage);
 	}
 
 	const int input_wealth = profession->get_input_wealth();
@@ -199,7 +197,7 @@ centesimal_int employment_location::get_available_production_capacity() const
 	return this->get_production_capacity() - this->get_employed_production_capacity();
 }
 
-commodity_map<int> employment_location::get_employee_commodity_inputs(const population_type *population_type, const profession *profession) const
+commodity_map<centesimal_int> employment_location::get_employee_commodity_inputs(const population_type *population_type, const profession *profession) const
 {
 	assert_throw(population_type != nullptr);
 	assert_throw(profession != nullptr);
@@ -212,7 +210,7 @@ commodity_map<int> employment_location::get_employee_commodity_inputs(const popu
 	commodity_map<decimillesimal_int> inputs;
 
 	for (const auto &[commodity, input] : profession->get_input_commodities()) {
-		inputs[commodity] += input;
+		inputs[commodity] += decimillesimal_int(input);
 	}
 
 	const int output_modifier = population_type->get_profession_output_modifier(profession);
@@ -226,10 +224,9 @@ commodity_map<int> employment_location::get_employee_commodity_inputs(const popu
 		}
 	}
 
-	commodity_map<int> ret_inputs;
+	commodity_map<centesimal_int> ret_inputs;
 	for (const auto &[commodity, input] : inputs) {
-		assert_throw(input.get_fractional_value() == 0);
-		ret_inputs[commodity] = input.to_int();
+		ret_inputs[commodity] = centesimal_int(input);
 	}
 
 	return ret_inputs;

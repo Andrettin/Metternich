@@ -344,10 +344,7 @@ void country_building_slot::change_production(const production_type *production_
 		const int new_input = new_inputs.find(input_commodity)->second;
 		const int input_change = new_input - old_input;
 
-		if (input_commodity->is_storable() && change_input_storage) {
-			country_economy->change_stored_commodity(input_commodity, -input_change);
-		}
-		country_economy->change_commodity_input(input_commodity, input_change);
+		country_economy->change_commodity_input(input_commodity, centesimal_int(input_change), change_input_storage);
 	}
 
 	const int new_input_wealth = this->get_production_type_input_wealth(production_type);
@@ -527,10 +524,7 @@ void country_building_slot::change_education(const education_type *education_typ
 		const int new_input = new_inputs.find(input_commodity)->second;
 		const int input_change = new_input - old_input;
 
-		if (input_commodity->is_storable() && change_input_storage) {
-			country_economy->change_stored_commodity(input_commodity, -input_change);
-		}
-		country_economy->change_commodity_input(input_commodity, input_change);
+		country_economy->change_commodity_input(input_commodity, centesimal_int(input_change), change_input_storage);
 	}
 
 	const int new_input_wealth = this->get_education_type_input_wealth(education_type);

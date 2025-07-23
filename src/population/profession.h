@@ -38,7 +38,7 @@ public:
 	virtual void initialize() override;
 	virtual void check() const override;
 
-	const commodity_map<int> &get_input_commodities() const
+	const commodity_map<centesimal_int> &get_input_commodities() const
 	{
 		return this->input_commodities;
 	}
@@ -81,7 +81,7 @@ signals:
 	void changed();
 
 private:
-	commodity_map<int> input_commodities;
+	commodity_map<centesimal_int> input_commodities;
 	int input_wealth = 0;
 	commodity *output_commodity = nullptr;
 	centesimal_int output_value = centesimal_int(1);
