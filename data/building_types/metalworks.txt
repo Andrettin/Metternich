@@ -3,7 +3,26 @@ blacksmiths_house = {
 	building_class = blacksmiths_house
 	portrait = factory
 	icon = tools
-	base_capacity = 1
+	provincial = true
+	employment_profession = blacksmith
+	production_capacity = 1
+	settlement_types = {
+		village
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				and = {
+					has_resource = iron_ore
+					has_resource = coal
+				}
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 1
 		steel = 1
@@ -17,9 +36,6 @@ blacksmiths_house = {
 			}
 		}
 	}
-	production_types = {
-		tool_making
-	}
 }
 
 blacksmiths_shop = {
@@ -27,8 +43,26 @@ blacksmiths_shop = {
 	building_class = blacksmiths_shop
 	portrait = factory
 	icon = tools
-	base_capacity = 2
+	provincial = true
+	employment_profession = blacksmith
+	production_capacity = 2
 	required_building = blacksmiths_house
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				and = {
+					has_resource = iron_ore
+					has_resource = coal
+				}
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 2
 		steel = 2
@@ -42,9 +76,6 @@ blacksmiths_shop = {
 			}
 		}
 	}
-	production_types = {
-		tool_making
-	}
 }
 
 metalworks = {
@@ -52,10 +83,26 @@ metalworks = {
 	building_class = metalworks
 	portrait = factory
 	icon = tools
-	base_capacity = 4
-	capacity_increment = 4
-	expandable = true
+	provincial = true
+	employment_profession = blacksmith
+	production_capacity = 4
 	required_building = blacksmiths_shop
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				and = {
+					has_resource = iron_ore
+					has_resource = coal
+				}
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 4
 		steel = 4
@@ -68,8 +115,5 @@ metalworks = {
 				trait = industrious
 			}
 		}
-	}
-	production_types = {
-		tool_making
 	}
 }

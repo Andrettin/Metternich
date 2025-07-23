@@ -1,0 +1,17 @@
+blacksmith = {
+	name = "Blacksmith"
+	input_commodities = {
+		steel = 1
+	}
+	output_commodity = tools
+	output_value = 0.5
+	population_types = {
+		tribesmen
+		untrained_workers
+		trained_workers
+		expert_workers
+		apprentice_blacksmiths
+		journeyman_blacksmiths
+		master_blacksmiths
+	}
+}

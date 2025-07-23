@@ -8,6 +8,7 @@ expert_workers = {
 	output_commodity = labor
 	output_value = 4
 	profession_output_modifiers = {
+		blacksmith = 300
 		brass_maker = 300
 		bronze_maker = 300
 		canned_food_maker_fish = 300
