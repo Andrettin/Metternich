@@ -10,6 +10,7 @@ apprentice_blacksmiths = {
 		brass_maker = 300
 		bronze_maker = 300
 		iron_smelter = 300
+		lead_smelter = 300
 		steel_maker = 300
 	}
 	everyday_consumption = {
@@ -41,6 +42,7 @@ journeyman_blacksmiths = {
 		brass_maker = 500
 		bronze_maker = 500
 		iron_smelter = 500
+		lead_smelter = 500
 		steel_maker = 500
 	}
 	everyday_consumption = {
@@ -72,6 +74,7 @@ master_blacksmiths = {
 		brass_maker = 700
 		bronze_maker = 700
 		iron_smelter = 700
+		lead_smelter = 700
 		steel_maker = 700
 	}
 	everyday_consumption = {

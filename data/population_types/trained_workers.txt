@@ -18,6 +18,7 @@ trained_workers = {
 		furrier = 100
 		gunsmith = 100
 		iron_smelter = 100
+		lead_smelter = 100
 		mercury_refiner = 100
 		officer = 100
 		paper_maker = 100

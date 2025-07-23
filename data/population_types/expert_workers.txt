@@ -18,6 +18,7 @@ expert_workers = {
 		furrier = 300
 		gunsmith = 300
 		iron_smelter = 300
+		lead_smelter = 300
 		mercury_refiner = 300
 		officer = 300
 		paper_maker = 300
