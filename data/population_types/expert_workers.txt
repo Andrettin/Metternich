@@ -22,6 +22,7 @@ expert_workers = {
 		mercury_refiner = 300
 		officer = 300
 		paper_maker = 300
+		pipe_maker = 300
 		preacher = 300
 		researcher = 300
 		sawyer = 300
