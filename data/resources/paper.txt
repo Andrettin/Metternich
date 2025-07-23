@@ -1,0 +1,16 @@
+paper = {
+	name = "Paper"
+	icon = paper
+	tiny_icon = trade_consulate
+	prospectable = true
+	terrain_types = {
+		plains
+		savannah
+		desert
+		barren_hills
+		mountains
+	}
+	site_types = {
+		settlement
+	}
+}
