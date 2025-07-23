@@ -30,6 +30,10 @@ mercury_refinery = {
 	name = "Mercury Refinery"
 }
 
+paper_mill = {
+	name = "Paper Mill"
+}
+
 steel_mill = {
 	name = "Steel Mill"
 }

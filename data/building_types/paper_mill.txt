@@ -1,0 +1,23 @@
+paper_mill = {
+	name = "Paper Mill"
+	building_class = paper_mill
+	portrait = factory
+	icon = paper
+	provincial = true
+	employment_profession = paper_maker
+	production_capacity = 8
+	required_technology = papermaking
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				has_resource = timber
+			}
+		}
+	}
+}

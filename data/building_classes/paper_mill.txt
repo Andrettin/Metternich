@@ -1,0 +1,4 @@
+paper_mill = {
+	name = "Paper Mill"
+	slot_type = paper_mill
+}

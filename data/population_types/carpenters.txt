@@ -7,6 +7,7 @@ apprentice_carpenters = {
 	required_game_rule = additional_population_types
 	profession_output_modifiers = {
 		carpenter = 300
+		paper_maker = 300
 		sawyer = 300
 	}
 	everyday_consumption = {
@@ -35,6 +36,7 @@ journeyman_carpenters = {
 	required_game_rule = additional_population_types
 	profession_output_modifiers = {
 		carpenter = 500
+		paper_maker = 500
 		sawyer = 500
 	}
 	everyday_consumption = {
