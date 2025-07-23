@@ -1,0 +1,14 @@
+armory = {
+	name = "Armory"
+	slot_type = arsenal
+}
+
+magazine = {
+	name = "Magazine"
+	slot_type = arsenal
+}
+
+arsenal = {
+	name = "Arsenal"
+	slot_type = arsenal
+}

@@ -12,6 +12,7 @@ trained_workers = {
 		carpenter = 100
 		cotton_weaver = 100
 		furrier = 100
+		gunsmith = 100
 		iron_smelter = 100
 		mercury_refiner = 100
 		officer = 100

@@ -2,6 +2,10 @@ food_processing_center = {
 	name = "Food Processing Center"
 }
 
+arsenal = {
+	name = "Arsenal"
+}
+
 brass_foundry = {
 	name = "Brass Foundry"
 }

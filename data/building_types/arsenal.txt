@@ -1,0 +1,92 @@
+armory = {
+	name = "Armory"
+	building_class = armory
+	portrait = factory
+	icon = tools
+	provincial = true
+	employment_profession = gunsmith
+	production_capacity = 1
+	settlement_types = {
+		village
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				and = {
+					has_resource = iron_ore
+					has_resource = coal
+				}
+			}
+		}
+	}
+	commodity_costs = {
+		lumber = 1
+		steel = 1
+	}
+}
+
+magazine = {
+	name = "Magazine"
+	building_class = magazine
+	portrait = factory
+	icon = tools
+	provincial = true
+	employment_profession = gunsmith
+	production_capacity = 2
+	required_building = armory
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				and = {
+					has_resource = iron_ore
+					has_resource = coal
+				}
+			}
+		}
+	}
+	commodity_costs = {
+		lumber = 2
+		steel = 2
+	}
+}
+
+arsenal = {
+	name = "Arsenal"
+	building_class = arsenal
+	portrait = factory
+	icon = tools
+	provincial = true
+	employment_profession = gunsmith
+	production_capacity = 4
+	required_building = magazine
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				and = {
+					has_resource = iron_ore
+					has_resource = coal
+				}
+			}
+		}
+	}
+	commodity_costs = {
+		lumber = 4
+		steel = 4
+	}
+}
