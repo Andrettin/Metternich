@@ -1706,7 +1706,7 @@ std::vector<employment_location *> site_game_data::get_employment_locations()
 
 void site_game_data::check_employment()
 {
-	const std::vector<employment_location *> employment_locations = this->get_employment_locations();
+	const std::vector<employment_location *> employment_locations = vector::shuffled(this->get_employment_locations());
 
 	for (employment_location *employment_location : employment_locations) {
 		employment_location->check_superfluous_employment();
@@ -1719,6 +1719,8 @@ void site_game_data::check_employment()
 			unemployed_population_units.push_back(population_unit.get());
 		}
 	}
+
+	vector::shuffle(unemployed_population_units);
 
 	std::vector<employment_location *> food_employment_locations = employment_locations;
 	std::erase_if(food_employment_locations, [this](const employment_location *employment_location) {
@@ -1759,7 +1761,8 @@ void site_game_data::check_available_employment(const std::vector<employment_loc
 			continue;
 		}
 
-		for (const profession *profession : employment_location->get_employment_professions()) {
+		const std::vector<const profession *> professions = vector::shuffled(employment_location->get_employment_professions());
+		for (const profession *profession : professions) {
 			const commodity *output_commodity = profession->get_output_commodity();
 
 			std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;

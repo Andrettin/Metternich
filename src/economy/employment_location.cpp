@@ -329,7 +329,8 @@ void employment_location::check_excess_employment()
 {
 	//remove employees in excess of capacity
 	while (this->get_available_production_capacity() < 0) {
-		for (const profession *profession : this->get_employment_professions()) {
+		const std::vector<const profession *> professions = vector::shuffled(this->get_employment_professions());
+		for (const profession *profession : professions) {
 			const bool changed = this->decrease_employment(profession, true, std::nullopt);
 			if (changed) {
 				break;
@@ -347,7 +348,8 @@ void employment_location::check_superfluous_employment()
 	//remove employees who only produce fractional output, if together with others they don't contribute to integer output
 	//for example, if the employment location has a single employee who produces 0.5 of a commodity, then this may result superfluous production: inputs will still be consumed, but 0 output will be available for transport (since transport uses integers)
 
-	for (const profession *profession : this->get_employment_professions()) {
+	const std::vector<const profession *> professions = vector::shuffled(this->get_employment_professions());
+	for (const profession *profession : professions) {
 		centesimal_int main_commodity_output = this->get_total_employee_commodity_outputs().find(profession->get_output_commodity())->second;
 
 		bool changed = true;

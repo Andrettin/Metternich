@@ -1003,7 +1003,8 @@ employment_location *country_economy::decrease_wealth_consumption(const bool res
 
 	const std::vector<const province *> provinces = vector::shuffled(this->get_game_data()->get_provinces());
 	for (const province *province : provinces) {
-		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+		const std::vector<employment_location *> employment_locations = vector::shuffled(province->get_game_data()->get_employment_locations());
+		for (employment_location *employment_location : employment_locations) {
 			if (employment_location->get_employee_count() == 0) {
 				continue;
 			}
@@ -1061,7 +1062,8 @@ employment_location *country_economy::decrease_commodity_consumption(const commo
 
 	const std::vector<const province *> provinces = vector::shuffled(this->get_game_data()->get_provinces());
 	for (const province *province : provinces) {
-		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+		const std::vector<employment_location *> employment_locations = vector::shuffled(province->get_game_data()->get_employment_locations());
+		for (employment_location *employment_location : employment_locations) {
 			if (employment_location->get_employee_count() == 0) {
 				continue;
 			}
