@@ -3,15 +3,28 @@ steel_mill = {
 	building_class = steel_mill
 	portrait = factory
 	icon = steel
-	base_capacity = 8
-	capacity_increment = 8
-	expandable = true
+	provincial = true
+	employment_profession = steel_maker
+	production_capacity = 8
 	required_technology = crucible_process
+	settlement_types = {
+		town
+		city
+		metropolis
+	}
+	settlement_conditions = {
+		province = {
+			or = {
+				capital = true
+				and = {
+					has_resource = iron_ore
+					has_resource = coal
+				}
+			}
+		}
+	}
 	commodity_costs = {
 		lumber = 8
 		steel = 8
-	}
-	production_types = {
-		steel_making
 	}
 }

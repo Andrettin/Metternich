@@ -26,6 +26,7 @@ expert_workers = {
 		sawyer = 300
 		silk_weaver = 300
 		statesman = 300
+		steel_maker = 300
 		sugar_refiner = 300
 		tailor = 300
 		tobacconist = 300

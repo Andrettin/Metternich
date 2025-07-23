@@ -26,6 +26,7 @@ trained_workers = {
 		sawyer = 100
 		silk_weaver = 100
 		statesman = 100
+		steel_maker = 100
 		sugar_refiner = 100
 		tailor = 100
 		tobacconist = 100
