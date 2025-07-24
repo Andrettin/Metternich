@@ -209,9 +209,20 @@ void employment_location::change_employed_production_capacity(const centesimal_i
 	assert_throw(this->get_employed_production_capacity() >= 0);
 }
 
+int employment_location::get_effective_production_capacity() const
+{
+	const commodity *output_commodity = this->get_employment_professions().at(0)->get_output_commodity();
+	if (output_commodity->is_food() || output_commodity->is_abstract()) {
+		return this->get_production_capacity();
+	} else {
+		const int transport_level = this->get_employment_site()->get_game_data()->get_best_transport_level();
+		return std::min(this->get_production_capacity(), transport_level);
+	}
+}
+
 centesimal_int employment_location::get_available_production_capacity() const
 {
-	return this->get_production_capacity() - this->get_employed_production_capacity();
+	return this->get_effective_production_capacity() - this->get_employed_production_capacity();
 }
 
 commodity_map<centesimal_int> employment_location::get_employee_commodity_inputs(const population_type *population_type, const profession *profession) const

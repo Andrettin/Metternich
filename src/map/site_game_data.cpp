@@ -1867,6 +1867,10 @@ void site_game_data::set_transport_level(const int level)
 		}
 	}
 
+	for (employment_location *employment_location : this->get_employment_locations()) {
+		employment_location->check_excess_employment();
+	}
+
 	if (game::get()->is_running()) {
 		emit transport_level_changed();
 	}
@@ -1898,6 +1902,10 @@ void site_game_data::set_sea_transport_level(const int level)
 				this->get_owner()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
 			}
 		}
+	}
+
+	for (employment_location *employment_location : this->get_employment_locations()) {
+		employment_location->check_excess_employment();
 	}
 
 	if (game::get()->is_running()) {

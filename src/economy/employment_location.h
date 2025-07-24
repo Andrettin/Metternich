@@ -63,6 +63,7 @@ public:
 	const centesimal_int &get_employed_production_capacity() const;
 	int get_employed_production_capacity_int() const;
 	void change_employed_production_capacity(const centesimal_int &change);
+	int get_effective_production_capacity() const;
 	centesimal_int get_available_production_capacity() const;
 
 	commodity_map<centesimal_int> get_employee_commodity_inputs(const population_type *population_type, const profession *profession) const;
