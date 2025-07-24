@@ -1,6 +1,7 @@
 #pragma once
 
 #include "economy/commodity_container.h"
+#include "population/profession_container.h"
 #include "util/fractional_int.h"
 
 namespace metternich {
@@ -41,9 +42,12 @@ public:
 	}
 
 	QVariantList get_employees_qvariant_list() const;
+	profession_map<std::vector<population_unit *>> take_employees();
+
 	bool can_employ(const population_unit *population_unit, const profession *profession, const population_type *&converted_population_type) const;
 	bool can_fulfill_inputs_for_employment(const population_unit *population_unit, const profession *profession) const;
 	void add_employee(population_unit *employee, const profession *profession);
+	void add_employees_if_possible(const profession_map<std::vector<population_unit *>> &employees_by_profession);
 
 	void remove_employee(population_unit *employee, const profession *profession, const bool change_input_storage)
 	{

@@ -500,6 +500,18 @@ void country_economy::set_inflation(const centesimal_int &inflation)
 		}
 	}
 
+	std::map<const employment_location *, profession_map<std::vector<population_unit *>>> location_employees_by_profession;
+
+	for (const province *province : this->get_game_data()->get_provinces()) {
+		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+			if (employment_location->get_employee_count() == 0) {
+				continue;
+			}
+
+			location_employees_by_profession[employment_location] = employment_location->take_employees();
+		}
+	}
+
 	this->inflation = inflation;
 
 	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
@@ -511,6 +523,16 @@ void country_economy::set_inflation(const centesimal_int &inflation)
 			const int input_wealth = building_slot->get_education_type_input_wealth(education_type);
 			this->change_wealth(-input_wealth);
 			this->change_wealth_income(-input_wealth);
+		}
+	}
+
+	for (const province *province : this->get_game_data()->get_provinces()) {
+		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+			if (!location_employees_by_profession.contains(employment_location)) {
+				continue;
+			}
+
+			employment_location->add_employees_if_possible(location_employees_by_profession[employment_location]);
 		}
 	}
 
@@ -1258,7 +1280,29 @@ void country_economy::set_throughput_modifier(const int value)
 		return;
 	}
 
+	std::map<const employment_location *, profession_map<std::vector<population_unit *>>> location_employees_by_profession;
+
+	for (const province *province : this->get_game_data()->get_provinces()) {
+		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+			if (employment_location->get_employee_count() == 0) {
+				continue;
+			}
+
+			location_employees_by_profession[employment_location] = employment_location->take_employees();
+		}
+	}
+
 	this->throughput_modifier = value;
+
+	for (const province *province : this->get_game_data()->get_provinces()) {
+		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+			if (!location_employees_by_profession.contains(employment_location)) {
+				continue;
+			}
+
+			employment_location->add_employees_if_possible(location_employees_by_profession[employment_location]);
+		}
+	}
 
 	if (game::get()->is_running()) {
 		emit throughput_modifier_changed();
@@ -1271,10 +1315,36 @@ void country_economy::set_commodity_throughput_modifier(const commodity *commodi
 		return;
 	}
 
+	std::map<const employment_location *, profession_map<std::vector<population_unit *>>> location_employees_by_profession;
+
+	for (const province *province : this->get_game_data()->get_provinces()) {
+		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+			if (employment_location->get_employee_count() == 0) {
+				continue;
+			}
+
+			if (!employment_location->get_total_employee_commodity_outputs().contains(commodity)) {
+				continue;
+			}
+
+			location_employees_by_profession[employment_location] = employment_location->take_employees();
+		}
+	}
+
 	if (value == 0) {
 		this->commodity_throughput_modifiers.erase(commodity);
 	} else {
 		this->commodity_throughput_modifiers[commodity] = value;
+	}
+
+	for (const province *province : this->get_game_data()->get_provinces()) {
+		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
+			if (!location_employees_by_profession.contains(employment_location)) {
+				continue;
+			}
+
+			employment_location->add_employees_if_possible(location_employees_by_profession[employment_location]);
+		}
 	}
 }
 

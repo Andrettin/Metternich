@@ -34,6 +34,19 @@ QVariantList employment_location::get_employees_qvariant_list() const
 	return container::to_qvariant_list(this->get_employees());
 }
 
+profession_map<std::vector<population_unit *>> employment_location::take_employees()
+{
+	profession_map<std::vector<population_unit *>> employees_by_profession;
+
+	const std::vector<population_unit *> employees = this->get_employees();
+	for (population_unit *employee : employees) {
+		employees_by_profession[employee->get_profession()].push_back(employee);
+		employee->set_employment_location(nullptr, nullptr, true);
+	}
+
+	return employees_by_profession;
+}
+
 bool employment_location::can_employ(const population_unit *population_unit, const profession *profession, const population_type * &converted_population_type) const
 {
 	assert_throw(profession != nullptr);
@@ -106,6 +119,17 @@ void employment_location::add_employee(population_unit *employee, const professi
 	assert_throw(this->get_available_production_capacity() >= 0);
 }
 
+void employment_location::add_employees_if_possible(const profession_map<std::vector<population_unit *>> &employees_by_profession)
+{
+	for (const auto &[profession, employees] : employees_by_profession) {
+		for (population_unit *employee : employees) {
+			const population_type *converted_population_type = nullptr;
+			if (this->can_employ(employee, profession, converted_population_type)) {
+				employee->set_employment_location(this, profession, true);
+			}
+		}
+	}
+}
 
 void employment_location::on_employee_added(population_unit *employee, const profession *profession, const int multiplier, const bool change_input_storage)
 {
@@ -125,11 +149,10 @@ void employment_location::on_employee_added(population_unit *employee, const pro
 		this->get_employment_province()->get_provincial_capital()->get_game_data()->change_free_food_consumption(1 * multiplier);
 	}
 
-	assert_throw(this->get_employment_country() != nullptr);
-	country_economy *country_economy = this->get_employment_country()->get_economy();
-
 	const commodity_map<centesimal_int> inputs = this->get_employee_commodity_inputs(employee->get_type(), profession);
 	for (const auto &[input_commodity, input_value] : inputs) {
+		assert_throw(this->get_employment_country() != nullptr);
+		country_economy *country_economy = this->get_employment_country()->get_economy();
 		country_economy->change_commodity_input(input_commodity, input_value * multiplier, change_input_storage);
 	}
 
@@ -137,6 +160,9 @@ void employment_location::on_employee_added(population_unit *employee, const pro
 	//FIXME: apply production modifiers to input wealth
 
 	if (input_wealth != 0) {
+		assert_throw(this->get_employment_country() != nullptr);
+		country_economy *country_economy = this->get_employment_country()->get_economy();
+
 		if (change_input_storage) {
 			country_economy->change_wealth(-input_wealth * multiplier);
 		}
@@ -213,6 +239,16 @@ commodity_map<centesimal_int> employment_location::get_employee_commodity_inputs
 			input *= 100 + output_modifier;
 			input /= 100;
 		}
+
+		if (this->get_employment_country() != nullptr) {
+			const country_economy *country_economy = this->get_employment_country()->get_economy();
+
+			const int throughput_modifier = country_economy->get_throughput_modifier() + country_economy->get_commodity_throughput_modifier(profession->get_output_commodity());
+			if (throughput_modifier != 0) {
+				input *= 100 + throughput_modifier;
+				input /= 100;
+			}
+		}
 	}
 
 	commodity_map<centesimal_int> ret_inputs;
@@ -247,6 +283,18 @@ commodity_map<centesimal_int> employment_location::get_employee_commodity_output
 		for (auto &[commodity, output] : outputs) {
 			output *= 100 + output_modifier;
 			output /= 100;
+		}
+	}
+
+	if (employment_country != nullptr) {
+		const country_economy *country_economy = employment_country->get_economy();
+
+		for (auto &[commodity, output] : outputs) {
+			const int throughput_modifier = country_economy->get_throughput_modifier() + country_economy->get_commodity_throughput_modifier(commodity);
+			if (throughput_modifier != 0) {
+				output *= 100 + throughput_modifier;
+				output /= 100;
+			}
 		}
 	}
 
