@@ -1,0 +1,50 @@
+fabric = {
+	name = "Fabric"
+	icon = fabric
+	tiny_icon = trade_consulate
+	prospectable = true
+	terrain_types = {
+		plains
+		savannah
+		desert
+		barren_hills
+		mountains
+	}
+	site_types = {
+		settlement
+	}
+}
+
+paper = {
+	name = "Paper"
+	icon = paper
+	tiny_icon = trade_consulate
+	prospectable = true
+	terrain_types = {
+		plains
+		savannah
+		desert
+		barren_hills
+		mountains
+	}
+	site_types = {
+		settlement
+	}
+}
+
+steel = {
+	name = "Steel"
+	icon = steel
+	tiny_icon = trade_consulate
+	prospectable = true
+	terrain_types = {
+		plains
+		savannah
+		desert
+		barren_hills
+		mountains
+	}
+	site_types = {
+		settlement
+	}
+}

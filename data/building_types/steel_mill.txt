@@ -16,6 +16,7 @@ steel_mill = {
 		province = {
 			or = {
 				capital = true
+				has_resource = steel
 				and = {
 					has_resource = iron_ore
 					has_resource = coal
