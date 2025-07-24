@@ -65,11 +65,6 @@ country_game_data *country_economy::get_game_data() const
 void country_economy::do_production()
 {
 	try {
-		//FIXME: add preference for production being automatically assigned for person players
-		if (this->get_game_data()->is_ai()) {
-			this->assign_production();
-		}
-
 		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
 			if (!commodity->is_storable()) {
 				assert_throw(output >= 0);

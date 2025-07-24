@@ -62,7 +62,7 @@ void country_ai::do_turn()
 			continue;
 		}
 
-		if (building_slot->is_expanding() || building_slot->get_under_construction_building() != nullptr) {
+		if (building_slot->get_under_construction_building() != nullptr) {
 			continue;
 		}
 
