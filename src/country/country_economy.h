@@ -291,6 +291,7 @@ public:
 
 	Q_INVOKABLE int get_commodity_input(const QString &commodity_identifier) const;
 	void change_commodity_input(const commodity *commodity, const centesimal_int &change, const bool change_input_storage);
+	bool can_change_commodity_input(const commodity *commodity, const centesimal_int &change) const;
 
 	const commodity_map<centesimal_int> &get_transportable_commodity_outputs() const
 	{

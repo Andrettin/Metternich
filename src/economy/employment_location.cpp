@@ -81,17 +81,8 @@ bool employment_location::can_fulfill_inputs_for_employment(const population_uni
 	const country_economy *country_economy = this->get_employment_country()->get_economy();
 
 	for (const auto &[input_commodity, input_value] : inputs) {
-		if (input_commodity->is_storable()) {
-			const int storage_change = (country_economy->get_commodity_input(input_commodity) + input_value).to_int() - country_economy->get_commodity_input(input_commodity).to_int();
-
-			if (country_economy->get_stored_commodity(input_commodity) < storage_change) {
-				return false;
-			}
-		} else {
-			//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
-			if (country_economy->get_net_commodity_output(input_commodity) < input_value) {
-				return false;
-			}
+		if (!country_economy->can_change_commodity_input(input_commodity, input_value)) {
+			return false;
 		}
 	}
 

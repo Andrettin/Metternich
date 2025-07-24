@@ -674,6 +674,29 @@ void country_economy::change_commodity_input(const commodity *commodity, const c
 	}
 }
 
+bool country_economy::can_change_commodity_input(const commodity *commodity, const centesimal_int &change) const
+{
+	if (change <= 0) {
+		return true;
+	}
+
+	if (commodity->is_storable()) {
+		const centesimal_int current_commodity_input = this->get_commodity_input(commodity);
+		const int storage_change = (current_commodity_input + change).to_int() - current_commodity_input.to_int();
+
+		if (this->get_stored_commodity(commodity) < storage_change) {
+			return false;
+		}
+	} else {
+		//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
+		if (this->get_net_commodity_output(commodity) < change) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 QVariantList country_economy::get_transportable_commodity_outputs_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_transportable_commodity_outputs());
