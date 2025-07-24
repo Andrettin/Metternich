@@ -144,8 +144,8 @@ void employment_location::on_employee_added(population_unit *employee, const pro
 		this->change_total_employee_commodity_output(commodity, output * multiplier);
 	}
 
-	if (profession->get_output_commodity()->is_food() && this->is_resource_employment()) {
-		//workers employed in resource food production do not need food themselves
+	if (profession->get_output_commodity()->is_food()) {
+		//workers employed in food production do not need food themselves
 		this->get_employment_province()->get_provincial_capital()->get_game_data()->change_free_food_consumption(1 * multiplier);
 	}
 
