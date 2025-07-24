@@ -30,7 +30,6 @@
 #include "database/preferences.h"
 #include "economy/commodity_type.h"
 #include "economy/food_type.h"
-#include "economy/production_type.h"
 #include "engine_interface.h"
 #include "game/event.h"
 #include "game/event_instance.h"
@@ -216,7 +215,6 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<population_type>("", 1);
 		qmlRegisterAnonymousType<portrait>("", 1);
 		qmlRegisterAnonymousType<preferences>("", 1);
-		qmlRegisterAnonymousType<production_type>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);
 		qmlRegisterAnonymousType<province_game_data>("", 1);
 		qmlRegisterAnonymousType<research_organization>("", 1);

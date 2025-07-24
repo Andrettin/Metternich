@@ -929,13 +929,6 @@ void game::apply_site_buildings(const site *site)
 			}
 
 			slot_building = owner_game_data->get_slot_building(building_slot_type);
-
-			if (slot_building == building) {
-				country_building_slot *country_building_slot = static_cast<metternich::country_building_slot *>(building_slot);
-				if (country_building_slot->can_expand()) {
-					country_building_slot->change_expansion_count(1);
-				}
-			}
 		}
 
 		if (slot_building == nullptr || slot_building->get_level() < building->get_level()) {

@@ -25,7 +25,6 @@ class education_type;
 class icon;
 class population_unit;
 class portrait;
-class production_type;
 class profession;
 class province;
 class settlement_type;
@@ -57,13 +56,10 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(int production_capacity MEMBER production_capacity READ get_production_capacity NOTIFY changed)
-	Q_PROPERTY(QVariantList production_types READ get_production_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList education_types READ get_education_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList recruited_civilian_unit_types READ get_recruited_civilian_unit_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList recruited_military_unit_categories READ get_recruited_military_unit_categories_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList recruited_transporter_categories READ get_recruited_transporter_categories_qvariant_list NOTIFY changed)
-	Q_PROPERTY(int base_capacity MEMBER base_capacity READ get_base_capacity NOTIFY changed)
-	Q_PROPERTY(int capacity_increment MEMBER capacity_increment READ get_capacity_increment NOTIFY changed)
 	Q_PROPERTY(bool capitol MEMBER capitol READ is_capitol NOTIFY changed)
 	Q_PROPERTY(bool provincial_capitol MEMBER provincial_capitol READ is_provincial_capitol NOTIFY changed)
 	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
@@ -72,8 +68,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool capital_only MEMBER capital_only READ is_capital_only NOTIFY changed)
 	Q_PROPERTY(bool provincial_capital_only MEMBER provincial_capital_only READ is_provincial_capital_only NOTIFY changed)
 	Q_PROPERTY(bool wonder_only MEMBER wonder_only READ is_wonder_only NOTIFY changed)
-	Q_PROPERTY(bool expandable MEMBER expandable READ is_expandable NOTIFY changed)
-	Q_PROPERTY(int max_level MEMBER max_level READ get_max_level NOTIFY changed)
 	Q_PROPERTY(int fort_level MEMBER fort_level READ get_fort_level NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -147,13 +141,6 @@ public:
 		return this->production_capacity;
 	}
 
-	const std::vector<const production_type *> &get_production_types() const
-	{
-		return this->production_types;
-	}
-
-	QVariantList get_production_types_qvariant_list() const;
-
 	const std::vector<const education_type *> &get_education_types() const
 	{
 		return this->education_types;
@@ -181,16 +168,6 @@ public:
 	}
 
 	QVariantList get_recruited_transporter_categories_qvariant_list() const;
-
-	int get_base_capacity() const
-	{
-		return this->base_capacity;
-	}
-
-	int get_capacity_increment() const
-	{
-		return this->capacity_increment;
-	}
 
 	bool is_capitol() const
 	{
@@ -230,16 +207,6 @@ public:
 	bool is_wonder_only() const
 	{
 		return this->wonder_only;
-	}
-
-	bool is_expandable() const
-	{
-		return this->expandable;
-	}
-
-	int get_max_level() const
-	{
-		return this->max_level;
 	}
 
 	int get_fort_level() const
@@ -359,13 +326,10 @@ private:
 	std::vector<const settlement_type *> settlement_types;
 	std::vector<const profession *> employment_professions;
 	int production_capacity = 0;
-	std::vector<const production_type *> production_types;
 	std::vector<const education_type *> education_types;
 	std::vector<const civilian_unit_type *> recruited_civilian_unit_types;
 	std::vector<military_unit_category> recruited_military_unit_categories;
 	std::vector<transporter_category> recruited_transporter_categories;
-	int base_capacity = 0;
-	int capacity_increment = 0;
 	bool capitol = false;
 	bool provincial_capitol = false;
 	bool warehouse = false;
@@ -374,8 +338,6 @@ private:
 	bool capital_only = false;
 	bool provincial_capital_only = false;
 	bool wonder_only = false;
-	bool expandable = false;
-	int max_level = 0;
 	int fort_level = 0;
 	building_type *required_building = nullptr;
 	std::vector<const building_type *> requiring_buildings; //buildings which require this one

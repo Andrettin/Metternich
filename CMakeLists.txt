@@ -81,7 +81,6 @@ set(economy_SRCS
 	src/economy/employment_location.cpp
 	src/economy/expense_transaction.cpp
 	src/economy/income_transaction.cpp
-	src/economy/production_type.cpp
 	src/economy/resource.cpp
 	src/economy/resource_container.cpp
 	src/economy/transaction.cpp
@@ -401,7 +400,6 @@ set(economy_HDRS
 	src/economy/food_type.h
 	src/economy/income_transaction.h
 	src/economy/income_transaction_type.h
-	src/economy/production_type.h
 	src/economy/resource.h
 	src/economy/resource_container.h
 	src/economy/transaction.h
@@ -708,7 +706,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/advisor_cost_modifier_effect.h
 	src/script/modifier_effect/ai_building_desire_modifier_effect.h
 	src/script/modifier_effect/artillery_cost_modifier_effect.h
-	src/script/modifier_effect/building_capacity_modifier_effect.h
 	src/script/modifier_effect/building_cost_efficiency_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h

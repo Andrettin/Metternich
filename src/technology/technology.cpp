@@ -14,7 +14,6 @@
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/commodity_type.h"
-#include "economy/production_type.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "game/game_rules.h"
@@ -249,7 +248,6 @@ void technology::check() const
 		&& this->get_enabled_military_units().empty()
 		&& this->get_enabled_pathway_terrains().empty()
 		&& this->get_enabled_pathways().empty()
-		&& this->get_enabled_production_types().empty()
 		&& this->get_enabled_professions().empty()
 		&& this->get_enabled_research_organizations().empty()
 		&& this->get_enabled_resources().empty()
@@ -911,20 +909,6 @@ QString technology::get_effects_string(const metternich::country *country) const
 			}
 
 			str += std::format("Obsoletes {} wonder", wonder->get_name());
-		}
-	}
-
-	if (!this->get_enabled_production_types().empty()) {
-		for (const production_type *production_type : this->get_enabled_production_types()) {
-			if (!production_type->is_enabled()) {
-				continue;
-			}
-
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Enables {} production type", production_type->get_name());
 		}
 	}
 

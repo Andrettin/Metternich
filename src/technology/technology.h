@@ -35,7 +35,6 @@ class law;
 class military_unit_type;
 class pathway;
 class portrait;
-class production_type;
 class profession;
 class religion;
 class religious_group;
@@ -277,16 +276,6 @@ public:
 	void add_disabled_wonder(const wonder *wonder)
 	{
 		this->disabled_wonders.push_back(wonder);
-	}
-
-	const std::vector<const production_type *> &get_enabled_production_types() const
-	{
-		return this->enabled_production_types;
-	}
-
-	void add_enabled_production_type(const production_type *production_type)
-	{
-		this->enabled_production_types.push_back(production_type);
 	}
 
 	const std::vector<const profession *> &get_enabled_professions() const
@@ -546,7 +535,6 @@ private:
 	std::vector<const building_type *> enabled_buildings;
 	std::vector<const wonder *> enabled_wonders;
 	std::vector<const wonder *> disabled_wonders;
-	std::vector<const production_type *> enabled_production_types;
 	std::vector<const profession *> enabled_professions;
 	std::vector<const improvement *> enabled_improvements;
 	std::vector<const pathway *> enabled_pathways;

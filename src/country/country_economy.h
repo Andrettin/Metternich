@@ -436,7 +436,6 @@ public:
 
 	void change_commodity_demand(const commodity *commodity, const decimillesimal_int &change);
 
-	void assign_production();
 	employment_location * decrease_wealth_consumption(const bool restore_inputs = true);
 	employment_location * decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs = true);
 

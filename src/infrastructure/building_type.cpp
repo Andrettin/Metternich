@@ -7,7 +7,6 @@
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "economy/commodity.h"
-#include "economy/production_type.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/settlement_type.h"
@@ -69,10 +68,6 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "employment_professions") {
 		for (const std::string &value : values) {
 			this->employment_professions.push_back(profession::get(value));
-		}
-	} else if (tag == "production_types") {
-		for (const std::string &value : values) {
-			this->production_types.push_back(production_type::get(value));
 		}
 	} else if (tag == "education_types") {
 		for (const std::string &value : values) {
@@ -238,18 +233,6 @@ void building_type::check() const
 		throw std::runtime_error(std::format("Building type \"{}\" is not provincial, but does have settlement types listed for it.", this->get_identifier()));
 	}
 
-	if ((!this->get_production_types().empty() || !this->get_education_types().empty()) && !this->is_provincial()) {
-		assert_throw(this->get_base_capacity() > 0);
-	}
-
-	if (this->is_expandable() && this->get_base_capacity() > 0 && this->get_capacity_increment() == 0) {
-		throw std::runtime_error(std::format("Building type \"{}\" is expandable and has a base capacity, but has no capacity increment.", this->get_identifier()));
-	}
-
-	if (this->get_max_level() > 1 && !this->is_expandable()) {
-		throw std::runtime_error(std::format("Building type \"{}\" has a maximum level greater than 1, but is not expandable.", this->get_identifier()));
-	}
-
 	if (this->get_province_modifier() != nullptr && !this->is_provincial()) {
 		throw std::runtime_error(std::format("Building type \"{}\" has a province modifier, but is not a provincial building.", this->get_identifier()));
 	}
@@ -279,11 +262,6 @@ void building_type::calculate_level()
 	} else {
 		this->level = 1;
 	}
-}
-
-QVariantList building_type::get_production_types_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_production_types());
 }
 
 QVariantList building_type::get_education_types_qvariant_list() const

@@ -72,10 +72,6 @@ Item {
 			onEntered: {
 				if (building !== null) {
 					status_text = building.name
-					
-					if (building_slot.available_production_types.length > 0 ) {
-						middle_status_text = "Employed Capacity: " + building_slot.employed_capacity + "/" + building_slot.capacity
-					}
 				} else {
 					status_text = building_slot.type.name + " Slot"
 					middle_status_text = ""

@@ -9,7 +9,6 @@
 #include "economy/commodity.h"
 #include "economy/expense_transaction_type.h"
 #include "economy/income_transaction_type.h"
-#include "economy/production_type.h"
 #include "game/game.h"
 #include "infrastructure/country_building_slot.h"
 #include "map/map.h"
@@ -495,16 +494,6 @@ void country_economy::set_inflation(const centesimal_int &inflation)
 	}
 
 	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			const int input_wealth = building_slot->get_production_type_input_wealth(production_type);
-			this->change_wealth(input_wealth);
-			this->change_wealth_income(input_wealth);
-		}
-
 		for (const education_type *education_type : building_slot->get_available_education_types()) {
 			if (education_type->get_input_wealth() == 0) {
 				continue;
@@ -519,16 +508,6 @@ void country_economy::set_inflation(const centesimal_int &inflation)
 	this->inflation = inflation;
 
 	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			const int input_wealth = building_slot->get_production_type_input_wealth(production_type);
-			this->change_wealth(-input_wealth);
-			this->change_wealth_income(-input_wealth);
-		}
-
 		for (const education_type *education_type : building_slot->get_available_education_types()) {
 			if (education_type->get_input_wealth() == 0) {
 				continue;
@@ -939,32 +918,6 @@ void country_economy::change_commodity_demand(const commodity *commodity, const 
 	}
 }
 
-void country_economy::assign_production()
-{
-	bool changed = true;
-
-	while (changed) {
-		changed = false;
-
-		for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-			const building_type *building_type = building_slot->get_building();
-
-			if (building_type == nullptr) {
-				continue;
-			}
-
-			for (const production_type *production_type : building_slot->get_available_production_types()) {
-				if (!building_slot->can_increase_production(production_type)) {
-					continue;
-				}
-
-				building_slot->increase_production(production_type);
-				changed = true;
-			}
-		}
-	}
-}
-
 employment_location *country_economy::decrease_wealth_consumption(const bool restore_inputs)
 {
 	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
@@ -972,19 +925,6 @@ employment_location *country_economy::decrease_wealth_consumption(const bool res
 
 		if (building_type == nullptr) {
 			continue;
-		}
-
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			if (!building_slot->can_decrease_production(production_type)) {
-				continue;
-			}
-
-			building_slot->decrease_production(production_type, restore_inputs);
-			return nullptr;
 		}
 
 		for (const education_type *education_type : building_slot->get_available_education_types()) {
@@ -1033,19 +973,6 @@ employment_location *country_economy::decrease_commodity_consumption(const commo
 			continue;
 		}
 
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (!production_type->get_input_commodities().contains(commodity)) {
-				continue;
-			}
-
-			if (!building_slot->can_decrease_production(production_type)) {
-				continue;
-			}
-
-			building_slot->decrease_production(production_type, restore_inputs);
-			return nullptr;
-		}
-
 		for (const education_type *education_type : building_slot->get_available_education_types()) {
 			if (!education_type->get_input_commodities().contains(commodity)) {
 				continue;
@@ -1092,14 +1019,6 @@ bool country_economy::produces_commodity(const commodity *commodity) const
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		if (province->get_game_data()->produces_commodity(commodity)) {
 			return true;
-		}
-	}
-
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_output_commodity() == commodity && building_slot->get_production_type_output(production_type).to_int() > 0) {
-				return true;
-			}
 		}
 	}
 
@@ -1246,19 +1165,7 @@ void country_economy::set_output_modifier(const centesimal_int &value)
 		return;
 	}
 
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			this->change_commodity_output(production_type->get_output_commodity(), -building_slot->get_production_type_output(production_type));
-		}
-	}
-
 	this->output_modifier = value;
-
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			this->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
-		}
-	}
 
 	this->calculate_site_commodity_outputs();
 
@@ -1288,27 +1195,7 @@ void country_economy::set_industrial_output_modifier(const int value)
 		return;
 	}
 
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (!production_type->is_industrial()) {
-				continue;
-			}
-
-			this->change_commodity_output(production_type->get_output_commodity(), -building_slot->get_production_type_output(production_type));
-		}
-	}
-
 	this->industrial_output_modifier = value;
-
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (!production_type->is_industrial()) {
-				continue;
-			}
-
-			this->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
-		}
-	}
 
 	if (game::get()->is_running()) {
 		emit industrial_output_modifier_changed();
@@ -1321,30 +1208,10 @@ void country_economy::set_commodity_output_modifier(const commodity *commodity, 
 		return;
 	}
 
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_output_commodity() != commodity) {
-				continue;
-			}
-
-			this->change_commodity_output(production_type->get_output_commodity(), -building_slot->get_production_type_output(production_type));
-		}
-	}
-
 	if (value == 0) {
 		this->commodity_output_modifiers.erase(commodity);
 	} else {
 		this->commodity_output_modifiers[commodity] = value;
-	}
-
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_output_commodity() != commodity) {
-				continue;
-			}
-
-			this->change_commodity_output(production_type->get_output_commodity(), building_slot->get_production_type_output(production_type));
-		}
 	}
 
 	this->calculate_site_commodity_output(commodity);
@@ -1373,25 +1240,7 @@ void country_economy::set_throughput_modifier(const int value)
 		return;
 	}
 
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
-			for (const auto &[input_commodity, input_value] : inputs) {
-				this->change_commodity_input(input_commodity, -centesimal_int(input_value), true);
-			}
-		}
-	}
-
 	this->throughput_modifier = value;
-
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
-			for (const auto &[input_commodity, input_value] : inputs) {
-				this->change_commodity_input(input_commodity, centesimal_int(input_value), true);
-			}
-		}
-	}
 
 	if (game::get()->is_running()) {
 		emit throughput_modifier_changed();
@@ -1404,36 +1253,10 @@ void country_economy::set_commodity_throughput_modifier(const commodity *commodi
 		return;
 	}
 
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_output_commodity() != commodity) {
-				continue;
-			}
-
-			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
-			for (const auto &[input_commodity, input_value] : inputs) {
-				this->change_commodity_input(input_commodity, -centesimal_int(input_value), true);
-			}
-		}
-	}
-
 	if (value == 0) {
 		this->commodity_throughput_modifiers.erase(commodity);
 	} else {
 		this->commodity_throughput_modifiers[commodity] = value;
-	}
-
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const production_type *production_type : building_slot->get_available_production_types()) {
-			if (production_type->get_output_commodity() != commodity) {
-				continue;
-			}
-
-			const commodity_map<int> inputs = building_slot->get_production_type_inputs(production_type);
-			for (const auto &[input_commodity, input_value] : inputs) {
-				this->change_commodity_input(input_commodity, centesimal_int(input_value), true);
-			}
-		}
 	}
 }
 

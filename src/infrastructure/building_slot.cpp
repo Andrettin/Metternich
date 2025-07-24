@@ -88,10 +88,6 @@ bool building_slot::can_gain_building(const building_type *building) const
 			return false;
 		}
 
-		if (building->get_base_capacity() < this->get_building()->get_base_capacity()) {
-			return false;
-		}
-
 		if (building->get_fort_level() < this->get_building()->get_fort_level()) {
 			return false;
 		}
