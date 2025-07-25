@@ -1809,6 +1809,23 @@ void site_game_data::check_available_employment(const std::vector<employment_loc
 	}
 }
 
+bool site_game_data::has_available_employment_for(const population_unit *population_unit)
+{
+	const std::vector<employment_location *> employment_locations = this->get_employment_locations();
+
+	const population_type *converted_population_type = nullptr;
+
+	for (const employment_location *employment_location : employment_locations) {
+		for (const profession *profession : employment_location->get_employment_professions()) {
+			if (employment_location->can_employ(population_unit, profession, converted_population_type)) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 void site_game_data::set_depot_level(const int level)
 {
 	if (level == this->get_depot_level()) {

@@ -625,7 +625,19 @@ void province_game_data::allocate_population()
 
 		while (population_unit != nullptr) {
 			const site *chosen_resource_site = vector::get_random(available_resource_sites);
+
+			if (!chosen_resource_site->get_game_data()->has_available_employment_for(population_unit)) {
+				std::erase(available_resource_sites, chosen_resource_site);
+
+				if (available_resource_sites.empty()) {
+					break;
+				}
+
+				continue;
+			}
+
 			population_unit->migrate_to(chosen_resource_site);
+
 			if (chosen_resource_site->get_game_data()->get_available_housing() < 1) {
 				std::erase(available_resource_sites, chosen_resource_site);
 
