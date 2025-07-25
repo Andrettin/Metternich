@@ -80,11 +80,11 @@ void province_game_data::do_turn()
 {
 	this->allocate_population();
 
+	this->check_employment();
+
 	for (const site *site : this->get_sites()) {
 		site->get_game_data()->do_turn();
 	}
-
-	this->check_employment();
 
 	this->decrement_scripted_modifiers();
 }
@@ -1161,6 +1161,23 @@ void province_game_data::check_employment()
 
 		site->get_game_data()->check_employment();
 	}
+}
+
+bool province_game_data::can_employ(const population_unit *population_unit) const
+{
+	const std::vector<employment_location *> employment_locations = this->get_employment_locations();
+
+	const population_type *converted_population_type = nullptr;
+
+	for (const employment_location *employment_location : employment_locations) {
+		for (const profession *profession : employment_location->get_employment_professions()) {
+			if (employment_location->can_employ(population_unit, profession, converted_population_type)) {
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 }

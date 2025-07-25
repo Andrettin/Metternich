@@ -60,6 +60,37 @@ void population_unit::do_turn()
 			this->change_militancy(militancy_modifier);
 		}
 	}
+
+	this->do_migration();
+}
+
+void population_unit::do_migration()
+{
+	if (!this->is_unemployed()) {
+		return;
+	}
+
+	if (this->get_site()->is_settlement() && this->get_site()->get_game_data()->get_population_unit_count() == 1) {
+		//don't migrate away if they are the last population unit for their settlement
+		return;
+	}
+
+	if (this->get_country() != nullptr) {
+		std::vector<const province *> potential_provinces;
+
+		for (const province *province : this->get_country()->get_game_data()->get_provinces()) {
+			if (province->get_game_data()->can_employ(this)) {
+				potential_provinces.push_back(province);
+			}
+		}
+
+		if (!potential_provinces.empty()) {
+			const province *chosen_province = vector::get_random(potential_provinces);
+			this->migrate_to(chosen_province->get_provincial_capital());
+			chosen_province->get_game_data()->allocate_population();
+			chosen_province->get_game_data()->check_employment();
+		}
+	}
 }
 
 std::string population_unit::get_scope_name() const
@@ -303,6 +334,11 @@ void population_unit::set_militancy(const centesimal_int &militancy)
 	if (game::get()->is_running() && militancy.to_int() != old_militancy.to_int()) {
 		this->choose_ideology();
 	}
+}
+
+bool population_unit::is_unemployed() const
+{
+	return this->get_employment_location() == nullptr && this->get_type()->get_country_modifier() == nullptr;
 }
 
 void population_unit::set_employment_location(metternich::employment_location *employment_location, const metternich::profession *profession, const bool change_input_storage)

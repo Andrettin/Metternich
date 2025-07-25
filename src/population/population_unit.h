@@ -46,6 +46,7 @@ public:
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *site);
 
 	void do_turn();
+	void do_migration();
 
 	std::string get_scope_name() const;
 
@@ -135,10 +136,7 @@ public:
 		return this->employment_location;
 	}
 
-	bool is_unemployed() const
-	{
-		return this->get_employment_location() == nullptr;
-	}
+	bool is_unemployed() const;
 
 	void set_employment_location(metternich::employment_location *employment_location, const profession *profession, const bool change_input_storage);
 

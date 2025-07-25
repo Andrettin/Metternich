@@ -449,6 +449,8 @@ public:
 	std::vector<employment_location *> get_employment_locations() const;
 	void check_employment();
 
+	bool can_employ(const population_unit *population_unit) const;
+
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
