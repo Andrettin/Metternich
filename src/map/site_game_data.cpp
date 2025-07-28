@@ -1843,6 +1843,23 @@ bool site_game_data::has_available_employment_for(const population_unit *populat
 	return false;
 }
 
+int site_game_data::get_highest_production_capacity()
+{
+	int highest_production_capacity = 0;
+
+	for (const employment_location *employment_location : this->get_employment_locations()) {
+		const commodity *output_commodity = employment_location->get_employment_professions().at(0)->get_output_commodity();
+		if (output_commodity->is_abstract()) {
+			//only count transportable production
+			continue;
+		}
+
+		highest_production_capacity = std::max(highest_production_capacity, employment_location->get_production_capacity());
+	}
+
+	return highest_production_capacity;
+}
+
 void site_game_data::set_depot_level(const int level)
 {
 	if (level == this->get_depot_level()) {

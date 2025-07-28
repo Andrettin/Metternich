@@ -592,6 +592,7 @@ set(script_condition_HDRS
 	src/script/condition/has_resource_condition.h
 	src/script/condition/has_route_condition.h
 	src/script/condition/has_terrain_condition.h
+	src/script/condition/highest_production_capacity_condition.h
 	src/script/condition/housing_condition.h
 	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h

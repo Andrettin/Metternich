@@ -61,6 +61,7 @@
 #include "script/condition/has_resource_condition.h"
 #include "script/condition/has_route_condition.h"
 #include "script/condition/has_terrain_condition.h"
+#include "script/condition/highest_production_capacity_condition.h"
 #include "script/condition/housing_condition.h"
 #include "script/condition/ideology_condition.h"
 #include "script/condition/improvement_condition.h"
@@ -226,8 +227,12 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<adjacent_terrain_condition>(value, condition_operator);
 		} else if (key == "can_gain_building_class") {
 			return std::make_unique<can_gain_building_class_condition>(value, condition_operator);
+		} else if (key == "has_pathway") {
+			return std::make_unique<has_pathway_condition>(value, condition_operator);
 		} else if (key == "has_route") {
 			return std::make_unique<has_route_condition<site>>(value, condition_operator);
+		} else if (key == "highest_production_capacity") {
+			return std::make_unique<highest_production_capacity_condition>(value, condition_operator);
 		} else if (key == "improvement") {
 			return std::make_unique<improvement_condition>(value, condition_operator);
 		} else if (key == "resource") {
