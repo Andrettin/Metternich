@@ -98,26 +98,6 @@ Item {
 		visible: province !== null && is_center_tile && resource !== null && site && (site.game_data.settlement_type !== null || (improvement !== null && improvement.resource === null))
 	}
 	
-	Image {
-		id: depot_icon
-		anchors.left: resource_icon.left
-		anchors.leftMargin: 8 * scale_factor + 2 * scale_factor
-		anchors.top: parent.top
-		anchors.topMargin: 8 * scale_factor
-		source: (site && site.game_data.depot_improvement !== null) ? ("image://icon/" + site.game_data.depot_improvement.icon.identifier) : "image://empty/"
-		visible: site && site.game_data.depot_improvement !== null
-	}
-	
-	Image {
-		id: port_icon
-		anchors.left: depot_icon.left
-		anchors.leftMargin: 8 * scale_factor + 2 * scale_factor
-		anchors.top: parent.top
-		anchors.topMargin: 8 * scale_factor
-		source: (site && site.game_data.port_improvement !== null) ? ("image://icon/" + site.game_data.port_improvement.icon.identifier) : "image://empty/"
-		visible: site && site.game_data.port_improvement !== null
-	}
-	
 	Rectangle {
 		id: selection_rectangle
 		anchors.fill: parent
@@ -389,34 +369,6 @@ Item {
 			} else {
 				status_text = resource.name
 			}
-		}
-	}
-	
-	MouseArea {
-		anchors.horizontalCenter: depot_icon.horizontalCenter
-		anchors.verticalCenter: depot_icon.verticalCenter
-		width: Math.min(depot_icon.width + 8 * scale_factor, tile_size)
-		height: Math.min(depot_icon.height + 8 * scale_factor, tile_size)
-		hoverEnabled: true
-		enabled: depot_icon.visible
-		visible: enabled
-		
-		onEntered: {
-			status_text = site.game_data.depot_improvement.name
-		}
-	}
-	
-	MouseArea {
-		anchors.horizontalCenter: port_icon.horizontalCenter
-		anchors.verticalCenter: port_icon.verticalCenter
-		width: Math.min(port_icon.width + 8 * scale_factor, tile_size)
-		height: Math.min(port_icon.height + 8 * scale_factor, tile_size)
-		hoverEnabled: true
-		enabled: port_icon.visible
-		visible: enabled
-		
-		onEntered: {
-			status_text = site.game_data.port_improvement.name
 		}
 	}
 }

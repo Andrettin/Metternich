@@ -632,16 +632,6 @@ const improvement *site_game_data::get_resource_improvement() const
 	return this->get_improvement(improvement_slot::resource);
 }
 
-const improvement *site_game_data::get_depot_improvement() const
-{
-	return this->get_improvement(improvement_slot::depot);
-}
-
-const improvement *site_game_data::get_port_improvement() const
-{
-	return this->get_improvement(improvement_slot::port);
-}
-
 bool site_game_data::has_improvement(const improvement *improvement) const
 {
 	assert_throw(improvement != nullptr);
@@ -957,17 +947,6 @@ void site_game_data::check_free_buildings()
 			}
 
 			if (this->check_free_building(building)) {
-				changed = true;
-			}
-		}
-
-		//capitals get the highest level of depot and port improvements for free
-		for (const improvement *improvement : improvement::get_all()) {
-			if (improvement->get_slot() != improvement_slot::depot && improvement->get_slot() != improvement_slot::port) {
-				continue;
-			}
-
-			if (this->check_free_improvement(improvement)) {
 				changed = true;
 			}
 		}
