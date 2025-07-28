@@ -11,4 +11,29 @@ port = {
 	modifier = {
 		port_level = 4
 	}
+	free_on_start_conditions = {
+		highest_production_capacity >= 1
+		not = {
+			has_pathway = trail
+			has_pathway = road
+			has_pathway = railroad
+		}
+		or = {
+			not = {
+				any_adjacent_site = {
+					or = {
+						improvement = caravansary
+						improvement = port
+					}
+				}
+			}
+			any_adjacent_site = {
+				highest_production_capacity >= 1
+				not = {
+					improvement = caravansary
+					improvement = port
+				}
+			}
+		}
+	}
 }

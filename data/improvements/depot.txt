@@ -13,6 +13,22 @@ caravansary = {
 			has_pathway = railroad
 		}
 	}
+	free_on_start_conditions = {
+		highest_production_capacity >= 1
+		or = {
+			not = {
+				any_adjacent_site = {
+					improvement = caravansary
+				}
+			}
+			any_adjacent_site = {
+				highest_production_capacity >= 1
+				not = {
+					improvement = caravansary
+				}
+			}
+		}
+	}
 }
 
 rail_depot = {
@@ -27,5 +43,21 @@ rail_depot = {
 	}
 	conditions = {
 		has_pathway = railroad
+	}
+	free_on_start_conditions = {
+		highest_production_capacity >= 3
+		or = {
+			not = {
+				any_adjacent_site = {
+					improvement = rail_depot
+				}
+			}
+			any_adjacent_site = {
+				highest_production_capacity >= 3
+				not = {
+					improvement = rail_depot
+				}
+			}
+		}
 	}
 }
