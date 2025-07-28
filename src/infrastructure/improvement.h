@@ -23,6 +23,9 @@ class tile;
 enum class improvement_slot;
 
 template <typename scope_type>
+class and_condition;
+
+template <typename scope_type>
 class modifier;
 
 //tile improvement
@@ -160,6 +163,11 @@ public:
 		return this->commodity_costs;
 	}
 
+	const and_condition<site> *get_free_on_start_conditions() const
+	{
+		return this->free_on_start_conditions.get();
+	}
+
 	const metternich::modifier<const site> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -194,6 +202,7 @@ private:
 	technology *required_technology = nullptr;
 	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
+	std::unique_ptr<const and_condition<site>> free_on_start_conditions;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
 	std::unique_ptr<metternich::modifier<const country>> country_modifier;
 };

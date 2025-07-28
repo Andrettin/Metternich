@@ -1380,6 +1380,18 @@ QCoro::Task<void> game::on_setup_finished()
 			province->get_game_data()->check_governor();
 
 			for (const site *site : province->get_game_data()->get_sites()) {
+				for (const improvement *improvement : improvement::get_all()) {
+					if (improvement->get_free_on_start_conditions() == nullptr) {
+						continue;
+					}
+
+					if (!improvement->get_free_on_start_conditions()->check(site, read_only_context(site))) {
+						continue;
+					}
+
+					site->get_game_data()->check_free_improvement(improvement);
+				}
+
 				if (site->get_map_data()->get_type() == site_type::resource || site->get_map_data()->get_type() == site_type::celestial_body) {
 					site->get_game_data()->check_landholder();
 				}

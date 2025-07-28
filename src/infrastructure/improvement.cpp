@@ -14,6 +14,7 @@
 #include "population/population_class.h"
 #include "population/population_type.h"
 #include "population/profession.h"
+#include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
@@ -78,6 +79,10 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = std::stoi(property.get_value());
 		});
+	} else if (tag == "free_on_start_conditions") {
+		auto conditions = std::make_unique<and_condition<site>>();
+		conditions->process_gsml_data(scope);
+		this->free_on_start_conditions = std::move(conditions);
 	} else if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const site>>();
 		this->modifier->process_gsml_data(scope);
@@ -164,6 +169,10 @@ void improvement::check() const
 
 	if (this->get_default_population_class() != nullptr) {
 		assert_throw(vector::contains(this->get_population_classes(), this->get_default_population_class()));
+	}
+
+	if (this->get_free_on_start_conditions() != nullptr) {
+		this->get_free_on_start_conditions()->check_validity();
 	}
 }
 
