@@ -653,7 +653,13 @@ void map::calculate_tile_transport_level(const QPoint &tile_pos)
 		transport_level = tile::max_transport_level;
 		sea_transport_level = tile::max_transport_level;
 	} else {
+		int max_transport_level = tile::max_transport_level;
 		if (tile->get_site() != nullptr) {
+			if (tile->get_site()->is_settlement()) {
+				//settlements need depots to be connected to pathways
+				max_transport_level = tile->get_site()->get_game_data()->get_depot_level();
+			}
+
 			sea_transport_level = tile->get_site()->get_game_data()->get_port_level();
 		}
 
@@ -680,6 +686,8 @@ void map::calculate_tile_transport_level(const QPoint &tile_pos)
 			transport_level = std::max(transport_level, std::min(adjacent_tile->get_transport_level(), direction_pathway->get_transport_level()));
 			sea_transport_level = std::max(sea_transport_level, std::min(adjacent_tile->get_sea_transport_level(), direction_pathway->get_transport_level()));
 		}
+
+		transport_level = std::min(transport_level, max_transport_level);
 	}
 
 	tile->set_transport_level(transport_level);
