@@ -7,6 +7,7 @@
 #include "economy/commodity_container.h"
 #include "infrastructure/pathway_container.h"
 #include "religion/religion_container.h"
+#include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("technology/technology_category.h")

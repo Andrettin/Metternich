@@ -3,7 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "map/site_container.h"
-#include "util/fractional_int.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("ui/portrait.h")
 

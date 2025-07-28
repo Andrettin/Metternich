@@ -5,7 +5,7 @@
 #include "database/data_entry_container.h"
 #include "database/data_entry_history.h"
 #include "economy/commodity_container.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("country/government_type.h")

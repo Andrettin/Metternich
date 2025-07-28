@@ -4,7 +4,7 @@
 #include "script/scripted_modifier_container.h"
 #include "spell/spell_container.h"
 #include "unit/military_unit_type_container.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("country/office.h")

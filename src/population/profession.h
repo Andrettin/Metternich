@@ -4,7 +4,7 @@
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 #include "population/population_type_container.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("technology/technology.h")

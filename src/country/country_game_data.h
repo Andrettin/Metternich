@@ -17,7 +17,7 @@
 #include "script/scripted_modifier_container.h"
 #include "technology/technology_container.h"
 #include "unit/transporter_type_container.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 #include "util/point_container.h"
 #include "util/qunique_ptr.h"
 

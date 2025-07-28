@@ -5,7 +5,7 @@
 #include "economy/commodity.h"
 #include "script/effect/effect.h"
 #include "util/assert_util.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 #include "util/string_util.h"
 
 namespace metternich {

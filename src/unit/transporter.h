@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("ui/icon.h")

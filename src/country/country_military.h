@@ -3,7 +3,7 @@
 #include "economy/commodity_container.h"
 #include "unit/military_unit_type_container.h"
 #include "unit/promotion_container.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("unit/military_unit_type.h")

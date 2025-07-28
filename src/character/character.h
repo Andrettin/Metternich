@@ -2,7 +2,7 @@
 
 #include "character/character_base.h"
 #include "database/data_type.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/character_game_data.h")

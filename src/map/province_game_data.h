@@ -7,7 +7,7 @@
 #include "map/terrain_type_container.h"
 #include "religion/religion_container.h"
 #include "script/scripted_modifier_container.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/character.h")

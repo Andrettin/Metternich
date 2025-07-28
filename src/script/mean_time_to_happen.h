@@ -1,13 +1,10 @@
 #pragma once
 
+#include "util/centesimal_int.h"
+
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;
-
-	template <int N>
-	class fractional_int;
-
-	using centesimal_int = fractional_int<2>;
 }
 
 namespace metternich {

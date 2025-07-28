@@ -2,8 +2,8 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "util/centesimal_int.h"
 #include "util/geocoordinate.h"
-#include "util/fractional_int.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("economy/resource.h")

@@ -3,7 +3,7 @@
 #include "database/defines_base.h"
 #include "economy/commodity_container.h"
 #include "map/terrain_adjacency.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 #include "util/singleton.h"
 
 Q_MOC_INCLUDE("country/office.h")

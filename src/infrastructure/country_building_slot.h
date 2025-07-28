@@ -1,7 +1,6 @@
 #pragma once
 
 #include "infrastructure/building_slot.h"
-#include "util/fractional_int.h"
 
 namespace metternich {
 

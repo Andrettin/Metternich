@@ -5,7 +5,8 @@
 #include "economy/commodity_container.h"
 #include "population/profession_container.h"
 #include "species/phenotype_container.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")

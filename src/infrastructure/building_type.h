@@ -3,7 +3,6 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
-#include "util/fractional_int.h"
 
 Q_MOC_INCLUDE("country/cultural_group.h")
 Q_MOC_INCLUDE("country/culture.h")

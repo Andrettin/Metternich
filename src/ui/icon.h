@@ -2,7 +2,7 @@
 
 #include "database/data_type.h"
 #include "ui/icon_base.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 
 namespace metternich {
 

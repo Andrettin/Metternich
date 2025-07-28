@@ -4,7 +4,7 @@
 #include "database/data_entry_history.h"
 #include "population/population_group_map.h"
 #include "species/phenotype_container.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("religion/religion.h")

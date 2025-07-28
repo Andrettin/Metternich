@@ -20,7 +20,7 @@
 #include "script/factor.h"
 #include "script/mean_time_to_happen.h"
 #include "util/assert_util.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 #include "util/random.h"
 #include "util/vector_random_util.h"
 

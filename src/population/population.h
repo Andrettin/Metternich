@@ -5,7 +5,7 @@
 #include "population/population_type_container.h"
 #include "religion/religion_container.h"
 #include "species/phenotype_container.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 
 namespace metternich {
 

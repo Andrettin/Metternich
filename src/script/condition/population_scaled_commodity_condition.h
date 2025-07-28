@@ -4,7 +4,7 @@
 #include "country/country_game_data.h"
 #include "economy/commodity.h"
 #include "script/condition/numerical_condition.h"
-#include "util/fractional_int.h"
+#include "util/centesimal_int.h"
 
 namespace metternich {
 
