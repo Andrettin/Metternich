@@ -1385,7 +1385,7 @@ QCoro::Task<void> game::on_setup_finished()
 						continue;
 					}
 
-					if (!improvement->get_free_on_start_conditions()->check(site, read_only_context(site))) {
+					if (!improvement->get_free_on_start_conditions()->check(site)) {
 						continue;
 					}
 

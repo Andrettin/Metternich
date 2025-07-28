@@ -79,6 +79,10 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = std::stoi(property.get_value());
 		});
+	} else if (tag == "conditions") {
+		auto conditions = std::make_unique<and_condition<site>>();
+		conditions->process_gsml_data(scope);
+		this->conditions = std::move(conditions);
 	} else if (tag == "free_on_start_conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
 		conditions->process_gsml_data(scope);
@@ -171,6 +175,10 @@ void improvement::check() const
 		assert_throw(vector::contains(this->get_population_classes(), this->get_default_population_class()));
 	}
 
+	if (this->get_conditions() != nullptr) {
+		this->get_conditions()->check_validity();
+	}
+
 	if (this->get_free_on_start_conditions() != nullptr) {
 		this->get_free_on_start_conditions()->check_validity();
 	}
@@ -252,6 +260,10 @@ bool improvement::is_buildable_on_site(const site *site) const
 			//the improvement must be better in some way
 			return false;
 		}
+	}
+
+	if (this->get_conditions() != nullptr && !this->get_conditions()->check(site)) {
+		return false;
 	}
 
 	return true;

@@ -163,6 +163,11 @@ public:
 		return this->commodity_costs;
 	}
 
+	const and_condition<site> *get_conditions() const
+	{
+		return this->conditions.get();
+	}
+
 	const and_condition<site> *get_free_on_start_conditions() const
 	{
 		return this->free_on_start_conditions.get();
@@ -202,6 +207,7 @@ private:
 	technology *required_technology = nullptr;
 	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
+	std::unique_ptr<const and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> free_on_start_conditions;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
 	std::unique_ptr<metternich::modifier<const country>> country_modifier;
