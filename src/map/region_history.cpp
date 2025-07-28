@@ -12,6 +12,7 @@
 #include "map/site_history.h"
 #include "population/population_type.h"
 #include "species/phenotype.h"
+#include "util/decimal_int.h"
 #include "util/vector_util.h"
 
 namespace metternich {
