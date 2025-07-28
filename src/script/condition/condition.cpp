@@ -53,6 +53,7 @@
 #include "script/condition/has_building_condition.h"
 #include "script/condition/has_building_class_condition.h"
 #include "script/condition/has_flag_condition.h"
+#include "script/condition/has_pathway_condition.h"
 #include "script/condition/has_population_culture_condition.h"
 #include "script/condition/has_population_ideology_condition.h"
 #include "script/condition/has_population_religion_condition.h"

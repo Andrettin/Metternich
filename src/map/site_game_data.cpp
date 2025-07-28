@@ -234,6 +234,17 @@ bool site_game_data::has_route() const
 	return tile->has_route();
 }
 
+bool site_game_data::has_pathway(const pathway *pathway) const
+{
+	const tile *tile = this->get_tile();
+
+	if (tile == nullptr) {
+		return false;
+	}
+
+	return tile->has_pathway(pathway);
+}
+
 const province *site_game_data::get_province() const
 {
 	return this->site->get_map_data()->get_province();

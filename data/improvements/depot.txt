@@ -6,6 +6,13 @@ caravansary = {
 	modifier = {
 		depot_level = 2
 	}
+	conditions = {
+		or = {
+			has_pathway = trail
+			has_pathway = road
+			has_pathway = railroad
+		}
+	}
 }
 
 rail_depot = {
@@ -17,5 +24,8 @@ rail_depot = {
 	wealth_cost = 2000
 	modifier = {
 		depot_level = 4
+	}
+	conditions = {
+		has_pathway = railroad
 	}
 }

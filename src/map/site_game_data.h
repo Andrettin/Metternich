@@ -20,6 +20,7 @@ class building_type;
 class country;
 class culture;
 class improvement;
+class pathway;
 class phenotype;
 class population;
 class population_type;
@@ -84,6 +85,7 @@ public:
 	bool is_coastal() const;
 	bool is_near_water() const;
 	bool has_route() const;
+	bool has_pathway(const pathway *pathway) const;
 
 	const province *get_province() const;
 

@@ -151,6 +151,11 @@ public:
 		return !this->pathway_frames.empty();
 	}
 
+	bool has_pathway(const pathway *pathway) const
+	{
+		return this->pathway_frames.contains(pathway);
+	}
+
 	const pathway_map<short> &get_pathway_frames() const
 	{
 		return this->pathway_frames;
