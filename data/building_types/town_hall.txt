@@ -69,7 +69,9 @@ city_hall = {
 	}
 	free_on_start_conditions = {
 		capital = true
-		scripted_condition = is_power
+		country = {
+			scripted_condition = is_power
+		}
 	}
 }
 
@@ -95,7 +97,9 @@ state_house = {
 	}
 	free_on_start_conditions = {
 		capital = true
-		scripted_condition = is_power
+		country = {
+			scripted_condition = is_power
+		}
 	}
 }
 
@@ -121,6 +125,8 @@ capitol = {
 	}
 	free_on_start_conditions = {
 		capital = true
-		scripted_condition = is_power
+		country = {
+			scripted_condition = is_power
+		}
 	}
 }
