@@ -15,7 +15,7 @@ budweis = {
 		}
 		
 		1832 = {
-			improvements += rail_depot #Linz-Budweiser Pferdeeisenbahn commissioned in 1832; Source: Hans Peter Hye, "Die Wende zur Industrie- und Wissensgesselschaft", 2010, p. 23.
+			buildings += rail_depot #Linz-Budweiser Pferdeeisenbahn commissioned in 1832; Source: Hans Peter Hye, "Die Wende zur Industrie- und Wissensgesselschaft", 2010, p. 23.
 		}
 	}
 }

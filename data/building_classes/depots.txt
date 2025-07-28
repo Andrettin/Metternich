@@ -1,0 +1,9 @@
+caravansary = {
+	name = "Caravansary"
+	slot_type = depot
+}
+
+rail_depot = {
+	name = "Rail Depot"
+	slot_type = depot
+}

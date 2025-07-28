@@ -36,8 +36,15 @@ dock = {
 	settlement_conditions = {
 		near_water = true
 	}
-	effects = {
-		add_improvement = port
+	settlement_modifier = {
+		port_level = 4
+	}
+	free_on_start_conditions = {
+		or = {
+			settlement_type = town
+			settlement_type = city
+			settlement_type = metropolis
+		}
 	}
 }
 

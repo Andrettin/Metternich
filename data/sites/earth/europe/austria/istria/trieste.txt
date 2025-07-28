@@ -42,7 +42,7 @@ trieste = {
 		}
 		
 		1857 = {
-			improvements += rail_depot #Vienna-Trieste railroad built in 1857; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
+			buildings += rail_depot #Vienna-Trieste railroad built in 1857; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
 		}
 	}
 }

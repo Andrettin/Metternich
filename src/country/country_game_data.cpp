@@ -5282,7 +5282,7 @@ void country_game_data::calculate_tile_transport_levels()
 				continue;
 			}
 
-			if (site->get_game_data()->get_improvement(improvement_slot::port) == nullptr) {
+			if (site->get_game_data()->get_port_level() == 0) {
 				continue;
 			}
 
