@@ -457,6 +457,8 @@ public:
 	bool has_available_employment_for(const population_unit *population_unit);
 	int get_highest_production_capacity();
 
+	int get_pathway_level() const;
+
 	int get_depot_level() const
 	{
 		return this->depot_level;

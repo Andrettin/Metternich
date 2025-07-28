@@ -22,6 +22,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
+#include "infrastructure/pathway.h"
 #include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/settlement_type.h"
 #include "infrastructure/wonder.h"
@@ -1858,6 +1859,22 @@ int site_game_data::get_highest_production_capacity()
 	}
 
 	return highest_production_capacity;
+}
+
+int site_game_data::get_pathway_level() const
+{
+	const tile *tile = this->get_tile();
+
+	if (tile == nullptr) {
+		return 0;
+	}
+
+	const pathway *pathway = tile->get_best_pathway();
+	if (pathway == nullptr) {
+		return 0;
+	}
+
+	return pathway->get_transport_level();
 }
 
 void site_game_data::set_depot_level(const int level)
