@@ -102,14 +102,14 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<site>>();
 		conditions->process_gsml_data(scope);
 		this->settlement_conditions = std::move(conditions);
-	} else if (tag == "province_conditions") {
-		auto conditions = std::make_unique<and_condition<province>>();
-		conditions->process_gsml_data(scope);
-		this->province_conditions = std::move(conditions);
 	} else if (tag == "build_conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
 		conditions->process_gsml_data(scope);
 		this->build_conditions = std::move(conditions);
+	} else if (tag == "free_on_start_conditions") {
+		auto conditions = std::make_unique<and_condition<site>>();
+		conditions->process_gsml_data(scope);
+		this->free_on_start_conditions = std::move(conditions);
 	} else if (tag == "settlement_modifier") {
 		this->settlement_modifier = std::make_unique<modifier<const site>>();
 		this->settlement_modifier->process_gsml_data(scope);
@@ -201,16 +201,19 @@ void building_type::check() const
 		this->get_conditions()->check_validity();
 	}
 
-	if (this->get_province_conditions() != nullptr) {
-		this->get_province_conditions()->check_validity();
-	}
-
 	if (this->get_settlement_conditions() != nullptr) {
+		if (!this->is_provincial()) {
+			throw std::runtime_error(std::format("Building type \"{}\" has settlement conditions, but is not a provincial building.", this->get_identifier()));
+		}
 		this->get_settlement_conditions()->check_validity();
 	}
 
 	if (this->get_build_conditions() != nullptr) {
 		this->get_build_conditions()->check_validity();
+	}
+
+	if (this->get_free_on_start_conditions() != nullptr) {
+		this->get_free_on_start_conditions()->check_validity();
 	}
 
 	if (this->get_required_building() == this) {
@@ -239,10 +242,6 @@ void building_type::check() const
 
 	if (this->get_weighted_country_modifier() != nullptr && !this->is_provincial()) {
 		throw std::runtime_error(std::format("Building type \"{}\" has a weighted country modifier, but is not a provincial building.", this->get_identifier()));
-	}
-
-	if (this->get_province_conditions() != nullptr && !this->is_provincial()) {
-		throw std::runtime_error(std::format("Building type \"{}\" has province conditions, but is not a provincial building.", this->get_identifier()));
 	}
 }
 

@@ -64,7 +64,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool provincial_capitol MEMBER provincial_capitol READ is_provincial_capitol NOTIFY changed)
 	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
 	Q_PROPERTY(bool free_in_capital MEMBER free_in_capital READ is_free_in_capital NOTIFY changed)
-	Q_PROPERTY(bool free_on_start MEMBER free_on_start READ is_free_on_start NOTIFY changed)
 	Q_PROPERTY(bool capital_only MEMBER capital_only READ is_capital_only NOTIFY changed)
 	Q_PROPERTY(bool provincial_capital_only MEMBER provincial_capital_only READ is_provincial_capital_only NOTIFY changed)
 	Q_PROPERTY(bool wonder_only MEMBER wonder_only READ is_wonder_only NOTIFY changed)
@@ -189,11 +188,6 @@ public:
 		return this->free_in_capital;
 	}
 
-	bool is_free_on_start() const
-	{
-		return this->free_on_start;
-	}
-
 	bool is_capital_only() const
 	{
 		return this->capital_only;
@@ -275,14 +269,14 @@ public:
 		return this->settlement_conditions.get();
 	}
 
-	const and_condition<province> *get_province_conditions() const
-	{
-		return this->province_conditions.get();
-	}
-
 	const and_condition<site> *get_build_conditions() const
 	{
 		return this->build_conditions.get();
+	}
+
+	const and_condition<site> *get_free_on_start_conditions() const
+	{
+		return this->free_on_start_conditions.get();
 	}
 
 	const modifier<const site> *get_settlement_modifier() const
@@ -334,7 +328,6 @@ private:
 	bool provincial_capitol = false;
 	bool warehouse = false;
 	bool free_in_capital = false;
-	bool free_on_start = false;
 	bool capital_only = false;
 	bool provincial_capital_only = false;
 	bool wonder_only = false;
@@ -347,8 +340,8 @@ private:
 	std::unique_ptr<const factor<country>> cost_factor;
 	std::unique_ptr<const and_condition<country>> conditions;
 	std::unique_ptr<and_condition<site>> settlement_conditions;
-	std::unique_ptr<const and_condition<province>> province_conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;
+	std::unique_ptr<const and_condition<site>> free_on_start_conditions;
 	std::unique_ptr<modifier<const site>> settlement_modifier;
 	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const country>> country_modifier;

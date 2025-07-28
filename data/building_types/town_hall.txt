@@ -4,7 +4,6 @@ village_hall = {
 	portrait = town
 	icon = flag
 	provincial = true
-	free_in_capital = true
 	employment_profession = statesman
 	production_capacity = 1
 	settlement_types = {
@@ -19,6 +18,9 @@ village_hall = {
 			value = 1
 		}
 	}
+	free_on_start_conditions = {
+		capital = true
+	}
 }
 
 town_hall = {
@@ -28,7 +30,6 @@ town_hall = {
 	icon = flag
 	provincial = true
 	required_building = village_hall
-	free_in_capital = true
 	employment_profession = statesman
 	production_capacity = 2
 	settlement_types = {
@@ -41,6 +42,9 @@ town_hall = {
 			commodity = furniture
 			value = 1
 		}
+	}
+	free_on_start_conditions = {
+		capital = true
 	}
 }
 
@@ -62,6 +66,10 @@ city_hall = {
 			commodity = furniture
 			value = 1
 		}
+	}
+	free_on_start_conditions = {
+		capital = true
+		scripted_condition = is_power
 	}
 }
 
@@ -85,6 +93,10 @@ state_house = {
 			value = 1
 		}
 	}
+	free_on_start_conditions = {
+		capital = true
+		scripted_condition = is_power
+	}
 }
 
 capitol = {
@@ -106,5 +118,9 @@ capitol = {
 			commodity = furniture
 			value = 1
 		}
+	}
+	free_on_start_conditions = {
+		capital = true
+		scripted_condition = is_power
 	}
 }

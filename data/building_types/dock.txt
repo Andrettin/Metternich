@@ -48,7 +48,6 @@ shipyard = {
 	icon = anchor
 	provincial = true
 	capital_only = true
-	free_in_capital = true
 	employment_profession = fisherman
 	production_capacity = 1
 	required_building = dock
@@ -67,5 +66,9 @@ shipyard = {
 	}
 	settlement_conditions = {
 		near_water = true
+	}
+	free_on_start_conditions = {
+		capital = true
+		scripted_condition = is_power
 	}
 }

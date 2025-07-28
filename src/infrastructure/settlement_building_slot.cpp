@@ -77,12 +77,6 @@ bool settlement_building_slot::can_have_building(const building_type *building) 
 		}
 	}
 
-	if (building->get_province_conditions() != nullptr) {
-		if (!building->get_province_conditions()->check(settlement_game_data->get_province(), read_only_context(settlement_game_data->get_province()))) {
-			return false;
-		}
-	}
-
 	if (building->is_capitol() && !this->get_settlement()->get_game_data()->can_be_capital()) {
 		return false;
 	}
