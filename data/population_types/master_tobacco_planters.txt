@@ -2,8 +2,8 @@ master_tobacco_planters = {
 	name = "Master Tobacco Planters"
 	population_class = master_tobacco_planters
 	literate = true
-	icon = slaves_light
-	small_icon = slaves_light_small
+	icon = master_tobacco_planters
+	small_icon = master_tobacco_planters_small
 	profession_output_modifiers = {
 		tobacco_planter = 100
 	}
@@ -22,17 +22,5 @@ master_tobacco_planters = {
 		opium = 0.0625
 		salt = 0.125
 		tea = 0.125
-	}
-	phenotype_icons = {
-		afro_european = slaves_medium
-		amerindian = slaves_medium
-		south_asian = slaves_medium
-		african = slaves_dark
-	}
-	phenotype_small_icons = {
-		afro_european = slaves_medium_small
-		amerindian = slaves_medium_small
-		south_asian = slaves_medium_small
-		african = slaves_dark_small
 	}
 }

@@ -1,0 +1,23 @@
+master_cotton_planters = {
+	filepath = "icons/population/master_cotton_planters.png"
+}
+
+master_cotton_planters_small = {
+	filepath = "icons/population/master_cotton_planters_small.png"
+}
+
+master_sugar_planters = {
+	filepath = "icons/population/master_sugar_planters.png"
+}
+
+master_sugar_planters_small = {
+	filepath = "icons/population/master_sugar_planters_small.png"
+}
+
+master_tobacco_planters = {
+	filepath = "icons/population/master_tobacco_planters.png"
+}
+
+master_tobacco_planters_small = {
+	filepath = "icons/population/master_tobacco_planters_small.png"
+}
