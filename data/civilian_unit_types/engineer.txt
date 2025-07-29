@@ -1,7 +1,7 @@
 engineer = {
 	name = "Engineer"
 	unit_class = engineer
-	icon = craftsmen_light
+	icon = engineer
 	required_technology = engineering
 	wealth_cost = 2000
 	commodity_costs = {

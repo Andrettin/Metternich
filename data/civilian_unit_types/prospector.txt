@@ -1,7 +1,7 @@
 prospector = {
 	name = "Prospector"
 	unit_class = prospector
-	icon = miners
+	icon = prospector
 	prospector = true
 	wealth_cost = 500
 	commodity_costs = {

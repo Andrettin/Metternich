@@ -1,9 +1,25 @@
+engineer = {
+	filepath = "icons/units/civilians/engineer.png"
+}
+
+engineer_small = {
+	filepath = "icons/units/civilians/engineer_small.png"
+}
+
 forester = {
 	filepath = "icons/units/civilians/forester.png"
 }
 
 forester_small = {
 	filepath = "icons/units/civilians/forester_small.png"
+}
+
+prospector = {
+	filepath = "icons/units/civilians/prospector.png"
+}
+
+prospector_small = {
+	filepath = "icons/units/civilians/prospector_small.png"
 }
 
 rancher = {
