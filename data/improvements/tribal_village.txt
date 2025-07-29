@@ -2,7 +2,7 @@ tribal_village = {
 	name = "Tribal Village"
 	slot = main
 	visitable = true
-	image_filepath = "tiles/settlements/town.png"
+	image_filepath = "tiles/settlements/hamlet.png"
 	terrain_types = {
 		plains
 		savannah
