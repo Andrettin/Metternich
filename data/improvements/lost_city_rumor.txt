@@ -1,0 +1,11 @@
+lost_city_rumor = {
+	name = "Lost City Rumor"
+	slot = main
+	visitable = true
+	image_filepath = "tiles/settlements/hamlet.png"
+	terrain_types = {
+		plains
+		savannah
+		tundra
+	}
+}

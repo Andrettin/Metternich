@@ -5,7 +5,10 @@ ruins_explored = {
 	random = true
 	conditions = {
 		source_site = {
-			improvement = ruins
+			or = {
+				improvement = lost_city_rumor
+				improvement = ruins
+			}
 		}
 	}
 	option = {
