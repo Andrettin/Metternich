@@ -2,7 +2,6 @@ fabric = {
 	name = "Fabric"
 	icon = fabric
 	tiny_icon = trade_consulate
-	prospectable = true
 	terrain_types = {
 		plains
 		savannah
@@ -19,7 +18,6 @@ paper = {
 	name = "Paper"
 	icon = paper
 	tiny_icon = trade_consulate
-	prospectable = true
 	terrain_types = {
 		plains
 		savannah
@@ -36,7 +34,6 @@ steel = {
 	name = "Steel"
 	icon = steel
 	tiny_icon = trade_consulate
-	prospectable = true
 	terrain_types = {
 		plains
 		savannah
