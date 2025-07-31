@@ -483,7 +483,7 @@ MenuBase {
 	}
 	
 	function update_selected_country_data(country) {
-		ruler_portrait.ruler = country ? country.game_data.ruler : null
+		ruler_portrait.ruler = country ? country.game_data.government.ruler : null
 		if (ruler_portrait.ruler !== null) {
 			ruler_portrait.portrait = ruler_portrait.ruler.game_data.portrait
 		}

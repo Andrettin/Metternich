@@ -11,8 +11,8 @@ DialogBase {
 	readonly property int content_height: cancel_button.y + cancel_button.height + 8 * scale_factor
 	
 	property var office: null
-	readonly property string office_name: office ? metternich.game.player_country.game_data.get_office_title_name_qstring(office) : ""
-	readonly property var office_holders: office ? metternich.game.player_country.game_data.get_appointable_office_holders_qvariant_list(office) : []
+	readonly property string office_name: office ? metternich.game.player_country.game_data.government.get_office_title_name_qstring(office) : ""
+	readonly property var office_holders: office ? metternich.game.player_country.game_data.government.get_appointable_office_holders_qvariant_list(office) : []
 	
 	SmallText {
 		id: text_label
@@ -44,16 +44,16 @@ DialogBase {
 				tooltip: tooltip_string.length > 0 ? format_text(small_text(tooltip_string)) : ""
 				
 				readonly property var office_holder: model.modelData
-				readonly property string costs_string: costs_to_string(metternich.game.player_country.game_data.get_advisor_commodity_costs_qvariant_list(office))
+				readonly property string costs_string: costs_to_string(metternich.game.player_country.game_data.government.get_advisor_commodity_costs_qvariant_list(office))
 				readonly property string modifier_string: office_holder.game_data.get_office_modifier_qstring(metternich.game.player_country, office)
 				readonly property string tooltip_string: costs_string + (costs_string.length > 0 && modifier_string.length > 0 ? "\n\n" : "") + modifier_string
 				
 				onClicked: {
-					if (metternich.game.player_country.game_data.can_appoint_office_holder(office, office_holder)) {
-						metternich.game.player_country.game_data.set_appointed_office_holder(office, office_holder)
+					if (metternich.game.player_country.game_data.government.can_appoint_office_holder(office, office_holder)) {
+						metternich.game.player_country.game_data.government.set_appointed_office_holder(office, office_holder)
 						dialog.close()
 					} else {
-						add_notification("Costs", metternich.game.player_country.game_data.interior_minister_portrait, "Your Excellency, we unfortunately cannot pay the costs of appointing a new " + office_name.toLowerCase() + ".", dialog.parent)
+						add_notification("Costs", metternich.game.player_country.game_data.government.interior_minister_portrait, "Your Excellency, we unfortunately cannot pay the costs of appointing a new " + office_name.toLowerCase() + ".", dialog.parent)
 					}
 				}
 			}

@@ -4,6 +4,7 @@
 
 #include "country/country_ai.h"
 #include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "country/country_history.h"
 #include "country/country_tier.h"
 #include "country/country_tier_data.h"
@@ -137,13 +138,18 @@ void country::reset_game_data()
 	this->reset_ai();
 
 	this->get_game_data()->set_tier(this->get_default_tier());
-	this->get_game_data()->set_government_type(this->get_default_government_type());
+	this->get_government()->set_government_type(this->get_default_government_type());
 	this->get_game_data()->initialize_building_slots();
 }
 
 country_economy *country::get_economy() const
 {
 	return this->get_game_data()->get_economy();
+}
+
+country_government *country::get_government() const
+{
+	return this->get_game_data()->get_government();
 }
 
 country_military *country::get_military() const

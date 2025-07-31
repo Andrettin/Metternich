@@ -2,7 +2,7 @@
 
 #include "character/character.h"
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "script/condition/condition.h"
 #include "util/vector_util.h"
 
@@ -27,7 +27,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return vector::contains(scope->get_game_data()->get_advisors(), this->advisor);
+		return vector::contains(scope->get_government()->get_advisors(), this->advisor);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

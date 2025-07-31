@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "country/law.h"
 #include "script/condition/condition.h"
 #include "util/string_util.h"
@@ -34,7 +34,7 @@ public:
 			return false;
 		}
 
-		return country->get_game_data()->has_law(this->law);
+		return country->get_government()->has_law(this->law);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

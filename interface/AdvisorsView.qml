@@ -5,8 +5,8 @@ import "./dialogs"
 Item {
 	id: advisors_view
 	
-	readonly property var minister_offices: get_minister_offices(country_game_data.available_offices)
-	readonly property var offices: filter_offices(country_game_data.available_offices)
+	readonly property var minister_offices: get_minister_offices(country_game_data.government.available_offices)
+	readonly property var offices: filter_offices(country_game_data.government.available_offices)
 	
 	PortraitGridItem {
 		id: ruler_portrait
@@ -42,8 +42,8 @@ Item {
 			portrait_identifier: appointed_office_holder ? appointed_office_holder.game_data.portrait.identifier + "/grayscale" : (office_holder ? office_holder.game_data.portrait.identifier : "no_character")
 			
 			readonly property var office: model.modelData
-			readonly property var office_holder: country_game_data.get_office_holder(office)
-			readonly property var appointed_office_holder: country_game_data.appointed_office_holders.length > 0 ? country_game_data.get_appointed_office_holder(office) : null //the check here is for the sake of property binding
+			readonly property var office_holder: country_game_data.government.get_office_holder(office)
+			readonly property var appointed_office_holder: country_game_data.government.appointed_office_holders.length > 0 ? country_game_data.government.get_appointed_office_holder(office) : null //the check here is for the sake of property binding
 			
 			onClicked: {
 				if (office_holder !== null || appointed_office_holder !== null) {
@@ -58,7 +58,7 @@ Item {
 			}
 			
 			onEntered: {
-				status_text = appointed_office_holder ? "Appointing " + appointed_office_holder.full_name + " as " + country_game_data.get_office_title_name_qstring(office) : (office_holder ? office_holder.game_data.titled_name : country_game_data.get_office_title_name_qstring(office))
+				status_text = appointed_office_holder ? "Appointing " + appointed_office_holder.full_name + " as " + country_game_data.government.get_office_title_name_qstring(office) : (office_holder ? office_holder.game_data.titled_name : country_game_data.government.get_office_title_name_qstring(office))
 			}
 				
 			onExited: {
@@ -77,8 +77,8 @@ Item {
 			portrait_identifier: appointed_office_holder ? appointed_office_holder.game_data.portrait.identifier + "/grayscale" : (office_holder ? office_holder.game_data.portrait.identifier : "no_character")
 			
 			readonly property var office: model.modelData
-			readonly property var office_holder: country_game_data.get_office_holder(office)
-			readonly property var appointed_office_holder: country_game_data.appointed_office_holders.length > 0 ? country_game_data.get_appointed_office_holder(office) : null //the check here is for the sake of property binding
+			readonly property var office_holder: country_game_data.government.get_office_holder(office)
+			readonly property var appointed_office_holder: country_game_data.government.appointed_office_holders.length > 0 ? country_game_data.government.get_appointed_office_holder(office) : null //the check here is for the sake of property binding
 			
 			onClicked: {
 				if (office_holder !== null || appointed_office_holder !== null) {
@@ -108,7 +108,7 @@ Item {
 		anchors.topMargin: spacing
 		anchors.bottom: parent.bottom
 		anchors.horizontalCenter: parent.horizontalCenter
-		entries: country_game_data.advisors
+		entries: country_game_data.government.advisors
 		delegate: PortraitGridItem {
 			portrait_identifier: advisor.game_data.portrait.identifier
 			

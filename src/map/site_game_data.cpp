@@ -8,6 +8,7 @@
 #include "country/country.h"
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "country/country_turn_data.h"
 #include "country/culture.h"
 #include "database/defines.h"
@@ -307,14 +308,14 @@ site_tier site_game_data::get_tier() const
 const std::string &site_game_data::get_title_name() const
 {
 	const site_tier tier = this->get_tier();
-	return this->site->get_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, tier, this->get_culture());
+	return this->site->get_title_name(this->get_owner() ? this->get_owner()->get_government()->get_government_type() : nullptr, tier, this->get_culture());
 }
 
 const std::string &site_game_data::get_landholder_title_name() const
 {
 	const site_tier tier = this->get_tier();
 	const gender gender = this->get_landholder() != nullptr ? this->get_landholder()->get_gender() : gender::male;
-	return this->site->get_landholder_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, tier, gender, this->get_culture());
+	return this->site->get_landholder_title_name(this->get_owner() ? this->get_owner()->get_government()->get_government_type() : nullptr, tier, gender, this->get_culture());
 }
 
 void site_game_data::set_owner(const country *owner)
@@ -1300,7 +1301,7 @@ const population_class *site_game_data::get_default_literate_population_class() 
 	assert_throw(this->is_built());
 
 	if (this->site->is_settlement()) {
-		if (this->get_owner() != nullptr && !this->get_owner()->get_game_data()->is_tribal() && !this->get_owner()->get_game_data()->is_clade()) {
+		if (this->get_owner() != nullptr && !this->get_owner()->get_government()->is_tribal() && !this->get_owner()->get_government()->is_clade()) {
 			return defines::get()->get_default_literate_population_class();
 		}
 	}
@@ -1436,7 +1437,7 @@ void site_game_data::check_landholder()
 	if (this->get_landholder() != nullptr && this->get_landholder()->get_obsolescence_technology() != nullptr && this->get_owner()->get_game_data()->has_technology(this->get_landholder()->get_obsolescence_technology())) {
 		if (game::get()->is_running()) {
 			if (this->get_owner() == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = this->get_owner()->get_game_data()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification(std::format("Landholder of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, landholder {} of {} has decided to retire.", this->get_landholder()->get_full_name(), this->get_current_cultural_name()));
 			}
@@ -1481,7 +1482,7 @@ void site_game_data::check_landholder()
 			this->set_landholder(vector::get_random(potential_landholders));
 
 			if (this->get_owner() == game::get()->get_player_country() && game::get()->is_running()) {
-				const portrait *interior_minister_portrait = this->get_owner()->get_game_data()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification(std::format("New Landholder of {}", this->get_current_cultural_name()), interior_minister_portrait, std::format("{} has become the new landholder of {}!\n\n{}", this->get_landholder()->get_full_name(), this->get_current_cultural_name(), this->get_landholder()->get_game_data()->get_landholder_modifier_string(this->site)));
 			}

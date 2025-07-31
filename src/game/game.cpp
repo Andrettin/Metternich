@@ -9,6 +9,7 @@
 #include "country/country_ai.h"
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "country/country_history.h"
 #include "country/country_military.h"
 #include "country/country_rank.h"
@@ -251,6 +252,7 @@ QCoro::Task<void> game::start_coro()
 
 		for (const country *country : this->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
+			country_government *country_government = country->get_government();
 
 			for (const province *province : country_game_data->get_provinces()) {
 				province->get_game_data()->check_employment();
@@ -261,7 +263,7 @@ QCoro::Task<void> game::start_coro()
 			}
 
 			for (const office *office : office::get_all()) {
-				country_game_data->check_office_holder(office, nullptr);
+				country_government->check_office_holder(office, nullptr);
 			}
 
 			country_game_data->check_ideas();
@@ -399,6 +401,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			const country_history *country_history = country->get_history();
 			country_game_data *country_game_data = country->get_game_data();
 			country_economy *country_economy = country->get_economy();
+			country_government *country_government = country->get_government();
 
 			if (country_history->get_tier() != country_tier::none) {
 				country->get_game_data()->set_tier(country_history->get_tier());
@@ -414,13 +417,13 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			if (country_history->get_government_type() != nullptr) {
-				country_game_data->set_government_type(country_history->get_government_type());
+				country_government->set_government_type(country_history->get_government_type());
 
 				if (country_history->get_government_type()->get_required_technology() != nullptr) {
 					country_game_data->add_technology_with_prerequisites(country_history->get_government_type()->get_required_technology());
 				}
 			} else if (country->get_default_government_type() != nullptr) {
-				country_game_data->set_government_type(country->get_default_government_type());
+				country_government->set_government_type(country->get_default_government_type());
 
 				if (country->get_default_government_type()->get_required_technology() != nullptr) {
 					country_game_data->add_technology_with_prerequisites(country->get_default_government_type()->get_required_technology());
@@ -434,10 +437,10 @@ void game::apply_history(const metternich::scenario *scenario)
 					throw std::runtime_error(std::format("Cannot set \"{}\" as an office holder for \"{}\", as they are already assigned to another country.", office_holder->get_identifier(), country->get_identifier()));
 				}
 
-				if (office_holder->has_role(character_role::advisor) && defines::get()->get_advisors_game_rule() != nullptr && game::get()->get_rules()->get_value(defines::get()->get_advisors_game_rule()) && country_game_data->can_have_advisors()) {
-					country_game_data->add_advisor(office_holder);
+				if (office_holder->has_role(character_role::advisor) && defines::get()->get_advisors_game_rule() != nullptr && game::get()->get_rules()->get_value(defines::get()->get_advisors_game_rule()) && country_government->can_have_advisors()) {
+					country_government->add_advisor(office_holder);
 				} else {
-					country_game_data->set_office_holder(office, office_holder);
+					country_government->set_office_holder(office, office_holder);
 				}
 
 				if (office_holder->get_required_technology() != nullptr) {
@@ -450,7 +453,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			for (const auto &[law_group, law] : country_history->get_laws()) {
-				country_game_data->set_law(law_group, law);
+				country_government->set_law(law_group, law);
 
 				if (law->get_required_technology() != nullptr) {
 					country_game_data->add_technology_with_prerequisites(law->get_required_technology());
@@ -480,6 +483,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 		for (const country *country : this->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
+			country_government *country_government = country->get_government();
 
 			if (country_game_data->get_overlord() != nullptr) {
 				if (country_game_data->get_subject_type() == nullptr) {
@@ -493,7 +497,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 			}
 
-			country_game_data->check_government_type();
+			country_government->check_government_type();
 		}
 
 		this->apply_sites();
@@ -1362,12 +1366,13 @@ QCoro::Task<void> game::on_setup_finished()
 	for (const country *country : this->get_countries()) {
 		country_game_data *country_game_data = country->get_game_data();
 		country_economy *country_economy = country->get_economy();
+		country_government *country_government = country->get_government();
 
-		country_game_data->check_government_type();
-		country_game_data->check_laws();
+		country_government->check_government_type();
+		country_government->check_laws();
 
 		for (const office *office : office::get_all()) {
-			country_game_data->check_office_holder(office, nullptr);
+			country_government->check_office_holder(office, nullptr);
 		}
 
 		country_game_data->check_ideas();
@@ -1693,7 +1698,7 @@ void game::remove_country(country *country)
 		std::erase(this->great_powers, country);
 	}
 
-	country->get_game_data()->clear_advisors();
+	country->get_government()->clear_advisors();
 	country->get_military()->clear_leaders();
 
 	for (const metternich::country *other_country : this->get_countries()) {
@@ -1781,7 +1786,7 @@ void game::set_player_country(const country *country)
 		emit player_country_changed();
 	}
 
-	this->set_player_character(country ? country->get_game_data()->get_ruler() : nullptr);
+	this->set_player_character(country ? country->get_government()->get_ruler() : nullptr);
 }
 
 int game::get_price(const commodity *commodity) const

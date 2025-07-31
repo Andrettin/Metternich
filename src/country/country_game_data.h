@@ -2,7 +2,6 @@
 
 #include "country/consulate_container.h"
 #include "country/country_container.h"
-#include "country/law_group_container.h"
 #include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "infrastructure/building_class_container.h"
@@ -24,12 +23,10 @@
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("country/country_economy.h")
+Q_MOC_INCLUDE("country/country_government.h")
 Q_MOC_INCLUDE("country/country_military.h")
 Q_MOC_INCLUDE("country/country_tier.h")
-Q_MOC_INCLUDE("country/government_type.h")
 Q_MOC_INCLUDE("country/journal_entry.h")
-Q_MOC_INCLUDE("country/law.h")
-Q_MOC_INCLUDE("country/law_group.h")
 Q_MOC_INCLUDE("country/subject_type.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
@@ -49,18 +46,16 @@ class country;
 class country_ai;
 class country_building_slot;
 class country_economy;
+class country_government;
 class country_military;
 class country_rank;
 class culture;
 class education_type;
 class event;
 class flag;
-class government_type;
 class idea;
 class idea_slot;
 class journal_entry;
-class law;
-class office;
 class opinion_modifier;
 class phenotype;
 class population;
@@ -97,6 +92,7 @@ class country_game_data final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country_economy* economy READ get_economy CONSTANT)
+	Q_PROPERTY(metternich::country_government* government READ get_government CONSTANT)
 	Q_PROPERTY(metternich::country_military* military READ get_military CONSTANT)
 	Q_PROPERTY(metternich::country_tier tier READ get_tier NOTIFY tier_changed)
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY title_name_changed)
@@ -134,22 +130,11 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
-	Q_PROPERTY(const metternich::government_type* government_type READ get_government_type NOTIFY government_type_changed)
-	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY laws_changed)
 	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
 	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
 	Q_PROPERTY(QVariantList available_research_organization_slots READ get_available_research_organization_slots_qvariant_list NOTIFY available_idea_slots_changed)
 	Q_PROPERTY(QVariantList available_deity_slots READ get_available_deity_slots_qvariant_list NOTIFY available_idea_slots_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
-	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
-	Q_PROPERTY(QVariantList office_holders READ get_office_holders_qvariant_list NOTIFY office_holders_changed)
-	Q_PROPERTY(QVariantList appointed_office_holders READ get_appointed_office_holders_qvariant_list NOTIFY appointed_office_holders_changed)
-	Q_PROPERTY(QVariantList available_offices READ get_available_offices_qvariant_list NOTIFY available_offices_changed)
-	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
-	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
-	Q_PROPERTY(const metternich::character* next_advisor READ get_next_advisor WRITE set_next_advisor NOTIFY next_advisor_changed)
-	Q_PROPERTY(const metternich::portrait* interior_minister_portrait READ get_interior_minister_portrait NOTIFY office_holders_changed)
-	Q_PROPERTY(const metternich::portrait* war_minister_portrait READ get_war_minister_portrait NOTIFY office_holders_changed)
 	Q_PROPERTY(QVariantList transporters READ get_transporters_qvariant_list NOTIFY transporters_changed)
 	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList inactive_journal_entries READ get_inactive_journal_entries_qvariant_list NOTIFY journal_entries_changed)
@@ -159,7 +144,6 @@ public:
 	static constexpr int first_deity_cost = 10;
 	static constexpr int base_deity_cost = 200;
 	static constexpr int deity_cost_increment = 100;
-	static constexpr int base_advisor_cost = 80;
 	static constexpr int vassal_tax_rate = 50;
 
 	explicit country_game_data(metternich::country *country);
@@ -180,6 +164,11 @@ public:
 	country_economy *get_economy() const
 	{
 		return this->economy.get();
+	}
+
+	country_government *get_government() const
+	{
+		return this->government.get();
 	}
 
 	country_military *get_military() const
@@ -216,13 +205,6 @@ public:
 	QString get_title_name_qstring() const
 	{
 		return QString::fromStdString(this->get_title_name());
-	}
-
-	const std::string &get_office_title_name(const office *office) const;
-
-	Q_INVOKABLE QString get_office_title_name_qstring(const metternich::office *office) const
-	{
-		return QString::fromStdString(this->get_office_title_name(office));
 	}
 
 	const metternich::religion *get_religion() const
@@ -830,49 +812,6 @@ public:
 	void gain_free_technologies(const int count);
 	void gain_technologies_known_by_others();
 
-	const metternich::government_type *get_government_type() const
-	{
-		return this->government_type;
-	}
-
-	void set_government_type(const metternich::government_type *government_type);
-	bool can_have_government_type(const metternich::government_type *government_type) const;
-	void check_government_type();
-
-	bool is_tribal() const;
-	bool is_clade() const;
-
-	const law_group_map<const law *> &get_laws() const
-	{
-		return this->laws;
-	}
-
-	QVariantList get_laws_qvariant_list() const;
-
-	Q_INVOKABLE const metternich::law *get_law(const metternich::law_group *law_group) const
-	{
-		const auto find_iterator = this->get_laws().find(law_group);
-
-		if (find_iterator != this->get_laws().end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	void set_law(const law_group *law_group, const law *law);
-	bool has_law(const law *law) const;
-	Q_INVOKABLE bool can_have_law(const metternich::law *law) const;
-	Q_INVOKABLE bool can_enact_law(const metternich::law *law) const;
-	Q_INVOKABLE void enact_law(const metternich::law *law);
-
-	Q_INVOKABLE int get_total_law_cost_modifier() const
-	{
-		return 100 + (this->get_population_unit_count() - 1) + this->get_law_cost_modifier();
-	}
-
-	void check_laws();
-
 	const std::map<idea_type, data_entry_map<idea_slot, const idea *>> &get_ideas() const
 	{
 		return this->ideas;
@@ -951,118 +890,6 @@ public:
 	}
 
 	void check_characters();
-
-	const character *get_ruler() const;
-
-	const data_entry_map<office, const character *> &get_office_holders() const
-	{
-		return this->office_holders;
-	}
-
-	QVariantList get_office_holders_qvariant_list() const;
-
-	Q_INVOKABLE const metternich::character *get_office_holder(const metternich::office *office) const
-	{
-		const auto find_iterator = this->office_holders.find(office);
-
-		if (find_iterator != this->office_holders.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	void set_office_holder(const office *office, const character *character);
-
-	const data_entry_map<office, const character *> &get_appointed_office_holders() const
-	{
-		return this->appointed_office_holders;
-	}
-
-	QVariantList get_appointed_office_holders_qvariant_list() const;
-
-	Q_INVOKABLE const metternich::character *get_appointed_office_holder(const metternich::office *office) const
-	{
-		const auto find_iterator = this->appointed_office_holders.find(office);
-
-		if (find_iterator != this->appointed_office_holders.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	Q_INVOKABLE void set_appointed_office_holder(const metternich::office *office, const metternich::character *character);
-
-	void check_office_holder(const office *office, const character *previous_holder);
-	std::vector<const character *> get_appointable_office_holders(const office *office) const;
-	Q_INVOKABLE QVariantList get_appointable_office_holders_qvariant_list(const metternich::office *office) const;
-	const character *get_best_office_holder(const office *office, const character *previous_holder) const;
-	bool can_have_office_holder(const office *office, const character *character) const;
-	bool can_gain_office_holder(const office *office, const character *character) const;
-	Q_INVOKABLE bool can_appoint_office_holder(const metternich::office *office, const metternich::character *character) const;
-	void on_office_holder_died(const office *office, const character *office_holder);
-
-	std::vector<const office *> get_available_offices() const;
-	std::vector<const office *> get_appointable_available_offices() const;
-	QVariantList get_available_offices_qvariant_list() const;
-
-	const std::vector<const character *> &get_advisors() const
-	{
-		return this->advisors;
-	}
-
-	QVariantList get_advisors_qvariant_list() const;
-	void check_advisors();
-	void add_advisor(const character *advisor);
-	void remove_advisor(const character *advisor);
-	void clear_advisors();
-
-	int get_advisor_cost() const
-	{
-		int cost = 0;
-
-		const int advisor_count = static_cast<int>(this->get_advisors().size() + this->get_office_holders().size() + this->get_appointed_office_holders().size()) - 1;
-
-		if (advisor_count <= 0) {
-			cost = country_game_data::base_advisor_cost / 2;
-		} else {
-			cost = country_game_data::base_advisor_cost * (advisor_count + 1);
-		}
-
-		cost *= 100 + this->get_advisor_cost_modifier();
-		cost /= 100;
-
-		return std::max(0, cost);
-	}
-
-	commodity_map<int> get_advisor_commodity_costs(const office *office) const;
-	Q_INVOKABLE QVariantList get_advisor_commodity_costs_qvariant_list(const metternich::office *office) const;
-
-	const character *get_next_advisor() const
-	{
-		return this->next_advisor;
-	}
-
-	void set_next_advisor(const character *advisor)
-	{
-		if (advisor == this->get_next_advisor()) {
-			return;
-		}
-
-		this->next_advisor = advisor;
-		emit next_advisor_changed();
-	}
-
-	void choose_next_advisor();
-	bool can_have_advisors() const;
-	bool can_recruit_advisor(const character *advisor) const;
-	bool has_incompatible_advisor_to(const character *advisor) const;
-	const character *get_replaced_advisor_for(const character *advisor) const;
-	bool can_have_advisors_or_appointable_offices() const;
-
-	const metternich::portrait *get_interior_minister_portrait() const;
-	const metternich::portrait *get_war_minister_portrait() const;
 
 	bool has_civilian_character(const character *character) const;
 	std::vector<const character *> get_civilian_characters() const;
@@ -1253,26 +1080,6 @@ public:
 		this->set_population_type_militancy_modifier(type, this->get_population_type_militancy_modifier(type) + change);
 	}
 
-	int get_law_cost_modifier() const
-	{
-		return this->law_cost_modifier;
-	}
-
-	void change_law_cost_modifier(const int change)
-	{
-		this->law_cost_modifier += change;
-	}
-
-	int get_advisor_cost_modifier() const
-	{
-		return this->advisor_cost_modifier;
-	}
-
-	void change_advisor_cost_modifier(const int change)
-	{
-		this->advisor_cost_modifier += change;
-	}
-
 	int get_building_cost_efficiency_modifier() const
 	{
 		return this->building_cost_efficiency_modifier;
@@ -1444,7 +1251,6 @@ public:
 signals:
 	void tier_changed();
 	void title_name_changed();
-	void office_title_names_changed();
 	void religion_changed();
 	void overlord_changed();
 	void type_name_changed();
@@ -1468,19 +1274,10 @@ signals:
 	void current_researches_changed();
 	void technology_researched(const technology *technology);
 	void technology_lost(const technology *technology);
-	void government_type_changed();
-	void laws_changed();
 	void ideas_changed();
 	void appointed_ideas_changed();
 	void available_idea_slots_changed();
 	void scripted_modifiers_changed();
-	void ruler_changed();
-	void office_holders_changed();
-	void appointed_office_holders_changed();
-	void available_offices_changed();
-	void advisors_changed();
-	void next_advisor_changed();
-	void advisor_recruited(const character *advisor);
 	void transporters_changed();
 	void prospected_tiles_changed();
 	void journal_entries_changed();
@@ -1536,13 +1333,7 @@ private:
 	int free_technology_count = 0;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
-	const metternich::government_type *government_type = nullptr;
-	law_group_map<const law *> laws;
 	scripted_country_modifier_map<int> scripted_modifiers;
-	data_entry_map<office, const character *> office_holders;
-	data_entry_map<office, const character *> appointed_office_holders;
-	std::vector<const character *> advisors;
-	const character *next_advisor = nullptr;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	data_entry_map<civilian_unit_type, int> civilian_unit_recruitment_counts;
 	std::vector<qunique_ptr<transporter>> transporters;
@@ -1554,8 +1345,6 @@ private:
 	data_entry_map<technology_subcategory, centesimal_int> technology_subcategory_cost_modifiers;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	population_type_map<centesimal_int> population_type_militancy_modifiers;
-	int law_cost_modifier = 0;
-	int advisor_cost_modifier = 0;
 	int building_cost_efficiency_modifier = 0;
 	building_class_map<int> building_class_cost_efficiency_modifiers;
 	int wonder_cost_efficiency_modifier = 0;
@@ -1571,6 +1360,7 @@ private:
 	consulate_map<int> free_consulate_counts;
 	std::set<const flag *> flags;
 	qunique_ptr<country_economy> economy;
+	qunique_ptr<country_government> government;
 	qunique_ptr<country_military> military;
 };
 

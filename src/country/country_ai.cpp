@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "country/country_military.h"
 #include "country/idea_type.h"
 #include "country/journal_entry.h"
@@ -193,22 +194,22 @@ void country_ai::appoint_ideas()
 
 void country_ai::appoint_office_holders()
 {
-	for (const office *office : this->get_game_data()->get_available_offices()) {
+	for (const office *office : this->country->get_government()->get_available_offices()) {
 		if (!office->is_appointable()) {
 			continue;
 		}
 
-		if (this->get_game_data()->get_office_holder(office) != nullptr) {
+		if (this->country->get_government()->get_office_holder(office) != nullptr) {
 			continue;
 		}
 
-		if (this->get_game_data()->get_appointed_office_holder(office) != nullptr) {
+		if (this->country->get_government()->get_appointed_office_holder(office) != nullptr) {
 			continue;
 		}
 
-		const character *character = this->get_game_data()->get_best_office_holder(office, nullptr);
+		const character *character = this->country->get_government()->get_best_office_holder(office, nullptr);
 		if (character != nullptr) {
-			this->get_game_data()->set_appointed_office_holder(office, character);
+			this->country->get_government()->set_appointed_office_holder(office, character);
 		}
 	}
 }

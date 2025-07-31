@@ -8,6 +8,7 @@
 #include "country/country.h"
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "country/culture.h"
 #include "economy/commodity.h"
 #include "engine_interface.h"
@@ -78,7 +79,7 @@ void country_military::check_leaders()
 	for (const character *leader : leaders) {
 		if (leader->get_obsolescence_technology() != nullptr && this->get_game_data()->has_technology(leader->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *war_minister_portrait = this->get_game_data()->get_war_minister_portrait();
+				const portrait *war_minister_portrait = this->country->get_government()->get_war_minister_portrait();
 
 				const std::string_view leader_type_name = leader->get_leader_type_name();
 

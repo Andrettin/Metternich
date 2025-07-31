@@ -4,7 +4,6 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "country/country_game_data.h"
 #include "database/gsml_operator.h"
 #include "database/named_data_entry.h"
 #include "map/province.h"

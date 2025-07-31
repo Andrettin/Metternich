@@ -34,7 +34,7 @@ Rectangle {
 	
 	SmallText {
 		id: advisor_cost_label
-		text: "(" + number_string(country_game_data.advisor_cost) + ")"
+		text: "(" + number_string(country_game_data.government.advisor_cost) + ")"
 		anchors.top: advisor_commodity_counter.bottom
 		anchors.topMargin: 4 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
@@ -68,19 +68,19 @@ Rectangle {
 		anchors.top: next_advisor_label.bottom
 		anchors.topMargin: 8 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		portrait_identifier: country_game_data.next_advisor ? country_game_data.next_advisor.game_data.portrait.identifier : ""
-		visible: country_game_data.next_advisor !== null
+		portrait_identifier: country_game_data.government.next_advisor ? country_game_data.government.next_advisor.game_data.portrait.identifier : ""
+		visible: country_game_data.government.next_advisor !== null
 		
 		onClicked: {
 			character_dialog.office = null
-			character_dialog.character = country_game_data.next_advisor
-			character_dialog.modifier_string = country_game_data.next_advisor.game_data.get_advisor_effects_string(country)
+			character_dialog.character = country_game_data.government.next_advisor
+			character_dialog.modifier_string = country_game_data.government.next_advisor.game_data.get_advisor_effects_string(country)
 			character_dialog.open()
 		}
 		
 		onHoveredChanged: {
-			if (hovered && country_game_data.next_advisor) {
-				status_text = country_game_data.next_advisor.full_name
+			if (hovered && country_game_data.government.next_advisor) {
+				status_text = country_game_data.government.next_advisor.full_name
 			} else {
 				status_text = ""
 			}

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "script/effect/scope_effect.h"
 
 namespace metternich {
@@ -26,7 +26,7 @@ public:
 	
 	virtual const character *get_scope(const country *upper_scope) const override
 	{
-		return upper_scope->get_game_data()->get_office_holder(this->office);
+		return upper_scope->get_government()->get_office_holder(this->office);
 	}
 
 private:

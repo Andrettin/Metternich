@@ -32,7 +32,7 @@ public:
 			return nullptr;
 		}
 
-		return country->get_game_data()->get_ruler();
+		return country->get_government()->get_ruler();
 	}
 
 	virtual std::string get_scope_name() const override

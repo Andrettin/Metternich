@@ -2,7 +2,7 @@
 
 #include "character/character.h"
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "script/condition/condition.h"
 
 namespace metternich {
@@ -26,7 +26,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_ruler() == this->ruler;
+		return scope->get_government()->get_ruler() == this->ruler;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

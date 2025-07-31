@@ -2,17 +2,14 @@
 
 #include "country/country_game_data.h"
 
-#include "character/advisor_category.h"
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/character_role.h"
-#include "character/character_trait.h"
-#include "character/character_trait_type.h"
-#include "character/character_type.h"
 #include "country/consulate.h"
 #include "country/country.h"
 #include "country/country_ai.h"
 #include "country/country_economy.h"
+#include "country/country_government.h"
 #include "country/country_military.h"
 #include "country/country_rank.h"
 #include "country/country_tier.h"
@@ -21,16 +18,11 @@
 #include "country/country_type.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
-#include "country/government_group.h"
-#include "country/government_type.h"
 #include "country/idea.h"
 #include "country/idea_slot.h"
 #include "country/idea_trait.h"
 #include "country/idea_type.h"
 #include "country/journal_entry.h"
-#include "country/law.h"
-#include "country/law_group.h"
-#include "country/office.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
@@ -90,7 +82,6 @@
 #include "unit/transporter_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
-#include "util/gender.h"
 #include "util/image_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
@@ -113,15 +104,12 @@ country_game_data::country_game_data(metternich::country *country)
 	: country(country), tier(country_tier::none), religion(country->get_default_religion())
 {
 	this->economy = make_qunique<country_economy>(country, this);
+	this->government = make_qunique<country_government>(country, this);
 	this->military = make_qunique<country_military>(country);
 
 	connect(this, &country_game_data::tier_changed, this, &country_game_data::title_name_changed);
-	connect(this, &country_game_data::tier_changed, this, &country_game_data::office_title_names_changed);
-	connect(this, &country_game_data::government_type_changed, this, &country_game_data::title_name_changed);
-	connect(this, &country_game_data::government_type_changed, this, &country_game_data::office_title_names_changed);
+	connect(this->get_government(), &country_government::government_type_changed, this, &country_game_data::title_name_changed);
 	connect(this, &country_game_data::religion_changed, this, &country_game_data::title_name_changed);
-	connect(this, &country_game_data::religion_changed, this, &country_game_data::office_title_names_changed);
-	connect(this, &country_game_data::office_holders_changed, this, &country_game_data::office_title_names_changed);
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 
 	this->population = make_qunique<metternich::population>();
@@ -173,7 +161,7 @@ void country_game_data::do_turn()
 
 		this->check_journal_entries();
 
-		this->check_government_type();
+		this->get_government()->check_government_type();
 		this->check_characters();
 		this->check_ideas();
 	} catch (...) {
@@ -367,7 +355,7 @@ void country_game_data::do_starvation()
 	if (starvation_count > 0 && this->country == game::get()->get_player_country()) {
 		const bool plural = starvation_count > 1;
 
-		const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
+		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
 		engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
 	}
@@ -495,24 +483,17 @@ void country_game_data::set_tier(const country_tier tier)
 
 const std::string &country_game_data::get_name() const
 {
-	return this->country->get_name(this->get_government_type(), this->get_tier());
+	return this->country->get_name(this->get_government()->get_government_type(), this->get_tier());
 }
 
 std::string country_game_data::get_titled_name() const
 {
-	return this->country->get_titled_name(this->get_government_type(), this->get_tier(), this->get_religion());
+	return this->country->get_titled_name(this->get_government()->get_government_type(), this->get_tier(), this->get_religion());
 }
 
 const std::string &country_game_data::get_title_name() const
 {
-	return this->country->get_title_name(this->get_government_type(), this->get_tier(), this->get_religion());
-}
-
-const std::string &country_game_data::get_office_title_name(const office *office) const
-{
-	const character *office_holder = this->get_office_holder(office);
-	const gender gender = office_holder != nullptr ? office_holder->get_gender() : gender::male;
-	return this->country->get_office_title_name(office, this->get_government_type(), this->get_tier(), gender, this->get_religion());
+	return this->country->get_title_name(this->get_government()->get_government_type(), this->get_tier(), this->get_religion());
 }
 
 void country_game_data::set_religion(const metternich::religion *religion)
@@ -643,7 +624,7 @@ void country_game_data::set_subject_type(const metternich::subject_type *subject
 		emit subject_type_changed();
 	}
 
-	this->check_government_type();
+	this->get_government()->check_government_type();
 }
 
 QVariantList country_game_data::get_provinces_qvariant_list() const
@@ -1339,9 +1320,9 @@ bool country_game_data::can_attack(const metternich::country *other_country) con
 		return false;
 	}
 
-	if (other_country->get_game_data()->is_clade()) {
+	if (other_country->get_government()->is_clade()) {
 		return true;
-	} else if (this->is_clade()) {
+	} else if (this->get_government()->is_clade()) {
 		return false;
 	}
 
@@ -1355,7 +1336,7 @@ bool country_game_data::can_attack(const metternich::country *other_country) con
 			break;
 	}
 
-	if (other_country->get_game_data()->is_tribal() || this->is_tribal()) {
+	if (other_country->get_government()->is_tribal() || this->get_government()->is_tribal()) {
 		return true;
 	}
 
@@ -1813,7 +1794,7 @@ void country_game_data::change_military_score(const int change)
 
 const population_class *country_game_data::get_default_population_class() const
 {
-	if (this->is_tribal() || this->is_clade()) {
+	if (this->get_government()->is_tribal() || this->get_government()->is_clade()) {
 		return defines::get()->get_default_tribal_population_class();
 	} else {
 		return defines::get()->get_default_population_class();
@@ -2512,7 +2493,7 @@ void country_game_data::add_technology(const technology *technology)
 
 	if (game::get()->is_running()) {
 		if (!technology->get_enabled_laws().empty()) {
-			this->check_laws();
+			this->get_government()->check_laws();
 		}
 
 		emit technologies_changed();
@@ -2555,7 +2536,7 @@ void country_game_data::remove_technology(const technology *technology)
 	}
 
 	if (!technology->get_enabled_laws().empty()) {
-		this->check_laws();
+		this->get_government()->check_laws();
 	}
 
 	//remove any technologies requiring this one as well
@@ -2843,198 +2824,6 @@ void country_game_data::gain_technologies_known_by_others()
 	}
 }
 
-void country_game_data::set_government_type(const metternich::government_type *government_type)
-{
-	if (government_type == this->get_government_type()) {
-		return;
-	}
-
-	if (government_type != nullptr) {
-		if (this->country->is_tribe() && !government_type->get_group()->is_tribal()) {
-			throw std::runtime_error(std::format("Tried to set a non-tribal government type (\"{}\") for a tribal country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
-		}
-
-		if (this->country->is_clade() && !government_type->get_group()->is_clade()) {
-			throw std::runtime_error(std::format("Tried to set a non-clade government type (\"{}\") for a clade country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
-		}
-	}
-
-	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
-		this->get_government_type()->get_modifier()->apply(this->country, -1);
-	}
-
-	this->government_type = government_type;
-
-	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
-		this->get_government_type()->get_modifier()->apply(this->country, 1);
-	}
-
-	if (game::get()->is_running()) {
-		emit government_type_changed();
-	}
-}
-
-bool country_game_data::can_have_government_type(const metternich::government_type *government_type) const
-{
-	if (government_type->get_required_technology() != nullptr && !this->has_technology(government_type->get_required_technology())) {
-		return false;
-	}
-
-	for (const law *forbidden_law : government_type->get_forbidden_laws()) {
-		if (this->has_law(forbidden_law)) {
-			return false;
-		}
-	}
-
-	if (government_type->get_conditions() != nullptr && !government_type->get_conditions()->check(this->country, read_only_context(this->country))) {
-		return false;
-	}
-
-	return true;
-}
-
-void country_game_data::check_government_type()
-{
-	if (this->get_government_type() != nullptr && this->can_have_government_type(this->get_government_type())) {
-		return;
-	}
-
-	std::vector<const metternich::government_type *> potential_government_types;
-
-	for (const metternich::government_type *government_type : government_type::get_all()) {
-		if (this->can_have_government_type(government_type)) {
-			potential_government_types.push_back(government_type);
-		}
-	}
-
-	assert_throw(!potential_government_types.empty());
-
-	this->set_government_type(vector::get_random(potential_government_types));
-}
-
-bool country_game_data::is_tribal() const
-{
-	return this->get_government_type()->get_group()->is_tribal();
-}
-
-bool country_game_data::is_clade() const
-{
-	return this->get_government_type()->get_group()->is_clade();
-}
-
-QVariantList country_game_data::get_laws_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_laws());
-}
-
-void country_game_data::set_law(const law_group *law_group, const law *law)
-{
-	assert_throw(law_group != nullptr);
-
-	if (law == this->get_law(law_group)) {
-		return;
-	}
-
-	const metternich::law *old_law = this->get_law(law_group);
-	if (old_law != nullptr) {
-		old_law->get_modifier()->remove(this->country);
-	}
-
-	this->laws[law_group] = law;
-
-	if (law != nullptr) {
-		assert_throw(law->get_group() == law_group);
-		law->get_modifier()->apply(this->country);
-	}
-
-	this->check_government_type();
-
-	if (game::get()->is_running()) {
-		emit laws_changed();
-	}
-}
-
-bool country_game_data::has_law(const law *law) const
-{
-	return this->get_law(law->get_group()) == law;
-}
-
-bool country_game_data::can_have_law(const metternich::law *law) const
-{
-	if (law->get_required_technology() != nullptr && !this->has_technology(law->get_required_technology())) {
-		return false;
-	}
-
-	if (law->get_conditions() != nullptr && !law->get_conditions()->check(this->country, read_only_context(this->country))) {
-		return false;
-	}
-
-	return true;
-}
-
-bool country_game_data::can_enact_law(const metternich::law *law) const
-{
-	if (!this->can_have_law(law)) {
-		return false;
-	}
-
-	if (vector::contains(this->get_government_type()->get_forbidden_laws(), law)) {
-		return false;
-	}
-
-	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		if (this->get_economy()->get_stored_commodity(commodity) < (cost * this->get_total_law_cost_modifier() / 100)) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-void country_game_data::enact_law(const law *law)
-{
-	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		this->get_economy()->change_stored_commodity(commodity, -cost * this->get_total_law_cost_modifier() / 100);
-	}
-
-	this->set_law(law->get_group(), law);
-}
-
-void country_game_data::check_laws()
-{
-	for (const law_group *law_group : law_group::get_all()) {
-		if (this->get_law(law_group) != nullptr && !this->can_have_law(this->get_law(law_group))) {
-			this->set_law(law_group, nullptr);
-		}
-
-		if (this->get_law(law_group) == nullptr) {
-			const law *government_type_default_law = this->get_government_type()->get_default_law(law_group);
-			if (government_type_default_law != nullptr && this->can_have_law(government_type_default_law)) {
-				this->set_law(law_group, government_type_default_law);
-			}
-		}
-
-		if (this->get_law(law_group) == nullptr) {
-			if (this->can_have_law(law_group->get_default_law())) {
-				this->set_law(law_group, law_group->get_default_law());
-			}
-		}
-
-		if (this->get_law(law_group) == nullptr) {
-			std::vector<const law *> potential_laws;
-			for (const metternich::law *group_law : law_group->get_laws()) {
-				if (this->can_have_law(group_law)) {
-					potential_laws.push_back(group_law);
-				}
-			}
-			if (!potential_laws.empty()) {
-				this->set_law(law_group, vector::get_random(potential_laws));
-			}
-		}
-	}
-}
-
-
 QVariantList country_game_data::get_ideas_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_ideas());
@@ -3081,7 +2870,7 @@ void country_game_data::set_idea(const idea_slot *slot, const idea *idea)
 		emit ideas_changed();
 
 		if (this->country == game::get()->get_player_country() && idea != nullptr) {
-			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
+			const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
 			switch (slot->get_idea_type()) {
 				case idea_type::deity:
@@ -3168,7 +2957,7 @@ void country_game_data::check_idea(const idea_slot *slot)
 
 		if (game::get()->is_running()) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
 				switch (slot->get_idea_type()) {
 					case idea_type::deity:
@@ -3474,21 +3263,8 @@ void country_game_data::apply_modifier(const modifier<const metternich::country>
 
 void country_game_data::check_characters()
 {
-	const std::vector<const office *> available_offices = this->get_available_offices();
-	for (const office *office : available_offices) {
-		this->check_office_holder(office, nullptr);
-	}
-
-	const data_entry_map<office, const character *> office_holders = this->get_office_holders();
-	for (const auto &[office, office_holder] : office_holders) {
-		if (!vector::contains(available_offices, office)) {
-			this->set_office_holder(office, nullptr);
-		}
-	}
-
-	this->appointed_office_holders.clear();
-
-	this->check_advisors();
+	this->get_government()->check_office_holders();
+	this->get_government()->check_advisors();
 
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->check_governor();
@@ -3502,683 +3278,6 @@ void country_game_data::check_characters()
 
 	this->get_military()->check_leaders();
 	this->check_civilian_characters();
-}
-
-const character *country_game_data::get_ruler() const
-{
-	return this->get_office_holder(defines::get()->get_ruler_office());
-}
-
-QVariantList country_game_data::get_office_holders_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_office_holders());
-}
-
-void country_game_data::set_office_holder(const office *office, const character *character)
-{
-	const metternich::character *old_office_holder = this->get_office_holder(office);
-
-	if (character == old_office_holder) {
-		return;
-	}
-
-	if (old_office_holder != nullptr) {
-		old_office_holder->get_game_data()->apply_office_modifier(this->country, office, -1);
-		old_office_holder->get_game_data()->set_office(nullptr);
-		old_office_holder->get_game_data()->set_country(nullptr);
-	}
-
-	const metternich::office *old_office = character ? character->get_game_data()->get_office() : nullptr;
-	if (old_office != nullptr) {
-		this->set_office_holder(old_office, nullptr);
-	}
-
-	if (character != nullptr) {
-		this->office_holders[office] = character;
-	} else {
-		this->office_holders.erase(office);
-	}
-
-	if (character != nullptr) {
-		character->get_game_data()->apply_office_modifier(this->country, office, 1);
-		character->get_game_data()->set_office(office);
-		character->get_game_data()->set_country(this->country);
-	}
-
-	if (old_office != nullptr) {
-		this->check_office_holder(old_office, character);
-	}
-
-	if (office->is_ruler()) {
-		if (this->country == game::get()->get_player_country()) {
-			game::get()->set_player_character(character);
-		}
-	}
-
-	if (game::get()->is_running()) {
-		emit office_holders_changed();
-
-		if (office->is_ruler()) {
-			emit ruler_changed();
-
-			if (old_office_holder != nullptr) {
-				emit old_office_holder->get_game_data()->ruler_changed();
-			}
-
-			if (character != nullptr) {
-				emit character->get_game_data()->ruler_changed();
-			}
-		}
-
-		if (this->country == game::get()->get_player_country() && character != nullptr) {
-			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
-
-			engine_interface::get()->add_notification(std::format("New {}", office->get_name()), interior_minister_portrait, std::format("{} has become our new {}!\n\n{}", character->get_full_name(), string::lowered(office->get_name()), character->get_game_data()->get_office_modifier_string(this->country, office)));
-		}
-	}
-}
-
-QVariantList country_game_data::get_appointed_office_holders_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_appointed_office_holders());
-}
-
-void country_game_data::set_appointed_office_holder(const office *office, const character *character)
-{
-	assert_throw(office->is_appointable());
-
-	const metternich::character *old_appointee = this->get_appointed_office_holder(office);
-
-	if (character == old_appointee) {
-		return;
-	}
-
-	if (character != nullptr) {
-		const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
-		for (const auto &[commodity, cost] : commodity_costs) {
-			this->get_economy()->change_stored_commodity(commodity, -cost);
-		}
-
-		this->appointed_office_holders[office] = character;
-	} else {
-		this->appointed_office_holders.erase(office);
-	}
-
-	if (old_appointee != nullptr) {
-		const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
-		for (const auto &[commodity, cost] : commodity_costs) {
-			this->get_economy()->change_stored_commodity(commodity, cost);
-		}
-	}
-
-	if (game::get()->is_running()) {
-		emit appointed_office_holders_changed();
-	}
-}
-
-void country_game_data::check_office_holder(const office *office, const character *previous_holder)
-{
-	if (this->is_under_anarchy()) {
-		this->set_office_holder(office, nullptr);
-		return;
-	}
-
-	//process appointment, if any
-	const character *appointed_holder = this->get_appointed_office_holder(office);
-	if (appointed_holder != nullptr && this->can_have_office_holder(office, appointed_holder)) {
-		assert_throw(office->is_appointable());
-		this->set_office_holder(office, appointed_holder);
-		this->set_appointed_office_holder(office, nullptr);
-	}
-
-	//remove office holders if they have become obsolete
-	if (this->get_office_holder(office) != nullptr && this->get_office_holder(office)->get_obsolescence_technology() != nullptr && this->has_technology(this->get_office_holder(office)->get_obsolescence_technology())) {
-		this->get_office_holder(office)->get_game_data()->die();
-		return; //the office holder death will already trigger a re-check of the office holder position
-	}
-
-	//if the country has no holder for a non-appointable office, see if there is any character who can become the holder
-	if (this->get_office_holder(office) == nullptr && !office->is_appointable()) {
-		const character *character = this->get_best_office_holder(office, previous_holder);
-		if (character != nullptr) {
-			this->set_office_holder(office, character);
-		}
-	}
-}
-
-std::vector<const character *> country_game_data::get_appointable_office_holders(const office *office) const
-{
-	assert_throw(this->get_government_type() != nullptr);
-
-	std::vector<const character *> potential_holders;
-
-	for (const character *character : character::get_all()) {
-		if (office->is_ruler()) {
-			if (!character->has_role(character_role::ruler)) {
-				continue;
-			}
-		} else {
-			if (!character->has_role(character_role::advisor)) {
-				continue;
-			}
-		}
-
-		if (!this->can_gain_office_holder(office, character)) {
-			continue;
-		}
-
-		potential_holders.push_back(character);
-	}
-
-	return potential_holders;
-}
-
-QVariantList country_game_data::get_appointable_office_holders_qvariant_list(const office *office) const
-{
-	return container::to_qvariant_list(this->get_appointable_office_holders(office));
-}
-
-const character *country_game_data::get_best_office_holder(const office *office, const character *previous_holder) const
-{
-	assert_throw(this->get_government_type() != nullptr);
-
-	std::vector<const character *> potential_holders;
-	int best_attribute_value = 0;
-	bool found_same_dynasty = false;
-
-	for (const character *character : this->get_appointable_office_holders(office)) {
-		if (!this->can_appoint_office_holder(office, character)) {
-			continue;
-		}
-
-		const character_game_data *character_game_data = character->get_game_data();
-
-		if (office->is_ruler()) {
-			if (previous_holder != nullptr && previous_holder->get_dynasty() != nullptr) {
-				const bool same_dynasty = character->get_dynasty() == previous_holder->get_dynasty();
-				if (same_dynasty && !found_same_dynasty) {
-					potential_holders.clear();
-					best_attribute_value = 0;
-					found_same_dynasty = true;
-				} else if (!same_dynasty && found_same_dynasty) {
-					continue;
-				}
-			}
-		}
-
-		const int attribute_value = character_game_data->get_attribute_value(office->get_attribute());
-
-		if (attribute_value < best_attribute_value) {
-			continue;
-		}
-
-		if (attribute_value > best_attribute_value) {
-			best_attribute_value = attribute_value;
-			potential_holders.clear();
-		}
-
-		potential_holders.push_back(character);
-	}
-
-	if (!potential_holders.empty()) {
-		const character *office_holder = vector::get_random(potential_holders);
-		return office_holder;
-	}
-
-	return nullptr;
-}
-
-bool country_game_data::can_have_office_holder(const office *office, const character *character) const
-{
-	const character_game_data *character_game_data = character->get_game_data();
-	if (character_game_data->get_country() != nullptr && character_game_data->get_country() != this->country) {
-		return false;
-	}
-
-	if (character_game_data->is_dead()) {
-		return false;
-	}
-
-	if (character->get_required_technology() != nullptr && !this->has_technology(character->get_required_technology())) {
-		return false;
-	}
-
-	if (character->get_obsolescence_technology() != nullptr && this->has_technology(character->get_obsolescence_technology())) {
-		return false;
-	}
-
-	if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->country, read_only_context(this->country))) {
-		return false;
-	}
-
-	if (office->is_ruler()) {
-		if (!vector::contains(this->country->get_rulers(), character)) {
-			return false;
-		}
-	} else {
-		if (character_game_data->get_office() != nullptr) {
-			return false;
-		}
-	}
-
-	if (office->get_holder_conditions() != nullptr && !office->get_holder_conditions()->check(character, read_only_context(character))) {
-		return false;
-	}
-
-	return true;
-}
-
-bool country_game_data::can_gain_office_holder(const office *office, const character *character) const
-{
-	if (!this->can_have_office_holder(office, character)) {
-		return false;
-	}
-
-	for (const auto &[loop_office, office_appointee] : this->get_appointed_office_holders()) {
-		if (office_appointee == character) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-bool country_game_data::can_appoint_office_holder(const office *office, const character *character) const
-{
-	if (!this->can_gain_office_holder(office, character)) {
-		return false;
-	}
-
-	const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
-	for (const auto &[commodity, cost] : commodity_costs) {
-		if (this->get_economy()->get_stored_commodity(commodity) < cost) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-void country_game_data::on_office_holder_died(const office *office, const character *office_holder)
-{
-	if (game::get()->is_running()) {
-		if (this->country == game::get()->get_player_country()) {
-			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
-
-			if (office->is_ruler()) {
-				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
-			} else {
-				engine_interface::get()->add_notification(std::format("{} Retired", office_holder->get_full_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, {} {} has decided to retire.", string::lowered(office->get_name()), office_holder->get_full_name()));
-			}
-		}
-
-		if (office->is_ruler()) {
-			context ctx(this->country);
-			ctx.source_scope = office_holder;
-			country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
-		}
-	}
-
-	this->check_office_holder(office, office_holder);
-}
-
-std::vector<const office *> country_game_data::get_available_offices() const
-{
-	std::vector<const office *> available_offices;
-
-	for (const office *office : office::get_all()) {
-		if (office->get_conditions() != nullptr && !office->get_conditions()->check(this->country, read_only_context(this->country))) {
-			continue;
-		}
-
-		available_offices.push_back(office);
-	}
-
-	return available_offices;
-}
-
-std::vector<const office *> country_game_data::get_appointable_available_offices() const
-{
-	std::vector<const office *> available_offices = this->get_available_offices();
-	std::erase_if(available_offices, [](const office *office) {
-		return !office->is_appointable();
-	});
-	return available_offices;
-}
-
-QVariantList country_game_data::get_available_offices_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_available_offices());
-}
-
-QVariantList country_game_data::get_advisors_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_advisors());
-}
-
-void country_game_data::check_advisors()
-{
-	//remove obsolete advisors
-	const std::vector<const character *> advisors = this->get_advisors();
-	for (const character *advisor : advisors) {
-		if (advisor->get_obsolescence_technology() != nullptr && this->has_technology(advisor->get_obsolescence_technology())) {
-			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
-
-				engine_interface::get()->add_notification("Advisor Retired", interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the advisor {} has decided to retire.", advisor->get_full_name()));
-			}
-
-			this->remove_advisor(advisor);
-			advisor->get_game_data()->set_dead(true);
-		}
-	}
-
-	if (this->is_under_anarchy() || !this->can_have_advisors()) {
-		if (this->get_next_advisor() != nullptr) {
-			this->set_next_advisor(nullptr);
-		}
-
-		return;
-	}
-
-	if (this->get_next_advisor() != nullptr) {
-		if (this->get_next_advisor()->get_game_data()->get_country() != nullptr) {
-			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
-
-				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor {} has unfortunately decided to join {}, and is no longer available for recruitment.", this->get_next_advisor()->get_full_name(), this->get_next_advisor()->get_game_data()->get_country()->get_game_data()->get_name()));
-			}
-
-			this->set_next_advisor(nullptr);
-		} else if (this->get_next_advisor()->get_obsolescence_technology() != nullptr && this->has_technology(this->get_next_advisor()->get_obsolescence_technology())) {
-			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
-
-				engine_interface::get()->add_notification("Advisor Unavailable", interior_minister_portrait, std::format("Your Excellency, the advisor {} is no longer available for recruitment.", this->get_next_advisor()->get_full_name()));
-			}
-
-			this->set_next_advisor(nullptr);
-		} else {
-			if (this->get_economy()->get_stored_commodity(defines::get()->get_advisor_commodity()) >= this->get_advisor_cost()) {
-				this->get_economy()->change_stored_commodity(defines::get()->get_advisor_commodity(), -this->get_advisor_cost());
-
-				this->add_advisor(this->get_next_advisor());
-
-				for (const character_trait *trait : this->get_next_advisor()->get_game_data()->get_traits()) {
-					if (trait->get_advisor_effects() != nullptr) {
-						context ctx(this->country);
-						trait->get_advisor_effects()->do_effects(this->country, ctx);
-					}
-				}
-
-				emit advisor_recruited(this->get_next_advisor());
-
-				this->set_next_advisor(nullptr);
-			}
-		}
-	} else {
-		if (this->get_economy()->get_commodity_output(defines::get()->get_advisor_commodity()).to_int() > 0 || this->get_economy()->get_stored_commodity(defines::get()->get_advisor_commodity()) > 0) {
-			this->choose_next_advisor();
-		}
-	}
-}
-
-void country_game_data::add_advisor(const character *advisor)
-{
-	try {
-		assert_throw(this->can_have_advisors());
-		assert_throw(advisor->has_role(character_role::advisor));
-
-		const character *replaced_advisor = this->get_replaced_advisor_for(advisor);
-		if (replaced_advisor != nullptr) {
-			this->remove_advisor(replaced_advisor);
-		}
-
-		this->advisors.push_back(advisor);
-		advisor->get_game_data()->set_country(this->country);
-		advisor->get_game_data()->apply_advisor_modifier(this->country, 1);
-
-		emit advisors_changed();
-	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Failed to add advisor \"{}\" for country \"{}\".", advisor->get_identifier(), this->country->get_identifier())));
-	}
-}
-
-void country_game_data::remove_advisor(const character *advisor)
-{
-	assert_throw(advisor->get_game_data()->get_country() == this->country);
-
-	if (advisor->get_game_data()->get_civilian_unit() != nullptr) {
-		advisor->get_game_data()->get_civilian_unit()->disband(false);
-	}
-
-	std::erase(this->advisors, advisor);
-	advisor->get_game_data()->set_country(nullptr);
-	advisor->get_game_data()->apply_advisor_modifier(this->country, -1);
-
-	emit advisors_changed();
-}
-
-void country_game_data::clear_advisors()
-{
-	const std::vector<const character *> advisors = this->get_advisors();
-	for (const character *advisor : advisors) {
-		this->remove_advisor(advisor);
-	}
-
-	assert_throw(this->get_advisors().empty());
-
-	emit advisors_changed();
-}
-
-commodity_map<int> country_game_data::get_advisor_commodity_costs(const office *office) const
-{
-	commodity_map<int> commodity_costs;
-
-	if (office != nullptr && office->is_appointable()) {
-		const int cost = this->get_advisor_cost();
-		commodity_costs[defines::get()->get_advisor_commodity()] = cost;
-	}
-
-	return commodity_costs;
-}
-
-QVariantList country_game_data::get_advisor_commodity_costs_qvariant_list(const office *office) const
-{
-	return archimedes::map::to_qvariant_list(this->get_advisor_commodity_costs(office));
-}
-
-void country_game_data::choose_next_advisor()
-{
-	std::map<advisor_category, std::vector<const character *>> potential_advisors_per_category;
-
-	for (const character *character : character::get_all()) {
-		if (!character->has_role(character_role::advisor)) {
-			continue;
-		}
-
-		if (!this->can_recruit_advisor(character)) {
-			continue;
-		}
-
-		int weight = 1;
-
-		if (character->get_home_settlement()->get_game_data()->get_owner() == this->country) {
-			weight += 4;
-		}
-
-		std::vector<const metternich::character *> &category_advisors = potential_advisors_per_category[character->get_character_type()->get_advisor_category()];
-
-		for (int i = 0; i < weight; ++i) {
-			category_advisors.push_back(character);
-		}
-	}
-
-	if (potential_advisors_per_category.empty()) {
-		return;
-	}
-
-	std::map<advisor_category, const character *> potential_advisor_map;
-	const std::vector<advisor_category> potential_categories = archimedes::map::get_keys(potential_advisors_per_category);
-
-	for (const advisor_category category : potential_categories) {
-		potential_advisor_map[category] = vector::get_random(potential_advisors_per_category[category]);
-	}
-
-	if (this->is_ai()) {
-		std::vector<const character *> preferred_advisors;
-
-		int best_desire = 0;
-		for (const auto &[category, advisor] : potential_advisor_map) {
-			//consider advisors with special modifiers or effects to have maximum skill, for the purposes of preferring to select them
-			int advisor_skill = advisor->get_game_data()->get_primary_attribute_value();
-			for (const character_trait *trait : advisor->get_game_data()->get_traits_of_type(character_trait_type::advisor)) {
-				if ((trait->get_advisor_modifier() != nullptr || trait->get_advisor_effects() != nullptr) && trait->get_scaled_advisor_modifier() == nullptr) {
-					advisor_skill = defines::get()->get_max_character_skill();
-					break;
-				}
-			}
-
-			int desire = advisor_skill * 100;
-
-			for (const journal_entry *journal_entry : this->get_active_journal_entries()) {
-				if (vector::contains(journal_entry->get_recruited_characters(), advisor)) {
-					desire += journal_entry::ai_advisor_desire_modifier;
-				}
-			}
-
-			assert_throw(desire > 0);
-
-			if (desire > best_desire) {
-				preferred_advisors.clear();
-				best_desire = desire;
-			}
-
-			if (desire >= best_desire) {
-				preferred_advisors.push_back(advisor);
-			}
-		}
-
-		assert_throw(!preferred_advisors.empty());
-
-		const character *chosen_advisor = vector::get_random(preferred_advisors);
-		this->set_next_advisor(chosen_advisor);
-	} else {
-		const std::vector<const character *> potential_advisors = archimedes::map::get_values(potential_advisor_map);
-		emit engine_interface::get()->next_advisor_choosable(container::to_qvariant_list(potential_advisors));
-	}
-}
-
-bool country_game_data::can_have_advisors() const
-{
-	//only great powers can have advisors
-	return this->country->is_great_power() && defines::get()->get_advisors_game_rule() != nullptr && game::get()->get_rules()->get_value(defines::get()->get_advisors_game_rule());
-}
-
-bool country_game_data::can_recruit_advisor(const character *advisor) const
-{
-	const character_game_data *advisor_game_data = advisor->get_game_data();
-	if (advisor_game_data->get_country() != nullptr) {
-		return false;
-	}
-
-	if (advisor_game_data->is_dead()) {
-		return false;
-	}
-
-	if (advisor->get_required_technology() != nullptr && !this->has_technology(advisor->get_required_technology())) {
-		return false;
-	}
-
-	if (advisor->get_obsolescence_technology() != nullptr && this->has_technology(advisor->get_obsolescence_technology())) {
-		return false;
-	}
-
-	if (advisor->get_conditions() != nullptr && !advisor->get_conditions()->check(this->country, read_only_context(this->country))) {
-		return false;
-	}
-
-	if (this->has_incompatible_advisor_to(advisor)) {
-		return false;
-	}
-
-	return true;
-}
-
-bool country_game_data::has_incompatible_advisor_to(const character *advisor) const
-{
-	const std::vector<const character_trait *> advisor_traits = advisor->get_game_data()->get_traits_of_type(character_trait_type::advisor);
-
-	//only one advisor with the same advisor type can be obtained (though advisors can be replaced with higher-skilled ones)
-	for (const character *other_advisor : this->get_advisors()) {
-		if (other_advisor->get_character_type() != advisor->get_character_type()) {
-			continue;
-		}
-
-		if (other_advisor->get_game_data()->get_traits_of_type(character_trait_type::advisor) != advisor_traits) {
-			continue;
-		}
-
-		bool has_better_attribute = false;
-		for (const character_trait *advisor_trait : advisor_traits) {
-			if (advisor_trait->get_scaled_advisor_modifier() != nullptr && advisor->get_game_data()->get_attribute_value(advisor_trait->get_attribute()) > other_advisor->get_game_data()->get_attribute_value(advisor_trait->get_attribute())) {
-				has_better_attribute = true;
-				break;
-			}
-		}
-		if (has_better_attribute) {
-			continue;
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
-const character *country_game_data::get_replaced_advisor_for(const character *advisor) const
-{
-	const std::vector<const character_trait *> advisor_traits = advisor->get_game_data()->get_traits_of_type(character_trait_type::advisor);
-
-	//only one advisor with the same advisor trait can be obtained (though advisors can be replaced with higher-skilled ones)
-	for (const character *other_advisor : this->get_advisors()) {
-		if (other_advisor->get_character_type() != advisor->get_character_type()) {
-			continue;
-		}
-
-		if (other_advisor->get_game_data()->get_traits_of_type(character_trait_type::advisor) != advisor_traits) {
-			continue;
-		}
-
-		return other_advisor;
-	}
-
-	return nullptr;
-}
-
-bool country_game_data::can_have_advisors_or_appointable_offices() const
-{
-	return this->can_have_advisors() || !this->get_appointable_available_offices().empty();
-}
-
-const metternich::portrait *country_game_data::get_interior_minister_portrait() const
-{
-	const character *office_holder = this->get_office_holder(defines::get()->get_interior_minister_office());
-	if (office_holder != nullptr) {
-		return office_holder->get_game_data()->get_portrait();
-	}
-
-	return defines::get()->get_interior_minister_portrait();
-}
-
-const metternich::portrait *country_game_data::get_war_minister_portrait() const
-{
-	const character *office_holder = this->get_office_holder(defines::get()->get_war_minister_office());
-	if (office_holder != nullptr) {
-		return office_holder->get_game_data()->get_portrait();
-	}
-
-	return defines::get()->get_war_minister_portrait();
 }
 
 bool country_game_data::has_civilian_character(const character *character) const
@@ -4212,7 +3311,7 @@ void country_game_data::check_civilian_characters()
 	for (const character *character : civilian_characters) {
 		if (character->get_obsolescence_technology() != nullptr && this->has_technology(character->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
 				const std::string &civilian_unit_type_name = character->get_civilian_unit_type()->get_name();
 

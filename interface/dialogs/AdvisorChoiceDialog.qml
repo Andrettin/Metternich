@@ -43,7 +43,7 @@ DialogBase {
 				readonly property var advisor: model.modelData
 				
 				onClicked: {
-					metternich.game.player_country.game_data.next_advisor = advisor
+					metternich.game.player_country.game_data.government.next_advisor = advisor
 					advisor_choice_dialog.close()
 				}
 			}

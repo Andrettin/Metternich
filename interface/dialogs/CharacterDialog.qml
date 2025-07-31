@@ -13,7 +13,7 @@ ModifierDialog {
 	
 	property var character: null
 	property var office: null
-	readonly property bool is_appointee: office ? metternich.game.player_country.game_data.get_appointed_office_holder(office) === character : false
+	readonly property bool is_appointee: office ? metternich.game.player_country.game_data.government.get_appointed_office_holder(office) === character : false
 	
 	TextButton {
 		id: appoint_button
@@ -24,7 +24,7 @@ ModifierDialog {
 		visible: office !== null && office.appointable
 		onClicked: {
 			if (is_appointee) {
-				metternich.game.player_country.game_data.set_appointed_office_holder(office, null)
+				metternich.game.player_country.game_data.government.set_appointed_office_holder(office, null)
 				character_dialog.close()
 			} else {
 				office_holder_choice_dialog.office = office

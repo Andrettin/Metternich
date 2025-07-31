@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "script/modifier_effect/modifier_effect.h"
 
 namespace metternich {
@@ -21,11 +21,11 @@ public:
 
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
-		if (!scope->get_game_data()->can_have_advisors_or_appointable_offices()) {
+		if (!scope->get_government()->can_have_advisors_or_appointable_offices()) {
 			return;
 		}
 
-		scope->get_game_data()->change_advisor_cost_modifier((this->value * multiplier).to_int());
+		scope->get_government()->change_advisor_cost_modifier((this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string(const country *scope) const override
@@ -47,7 +47,7 @@ public:
 
 	virtual bool is_hidden(const country *scope) const override
 	{
-		return !scope->get_game_data()->can_have_advisors_or_appointable_offices();
+		return !scope->get_government()->can_have_advisors_or_appointable_offices();
 	}
 };
 

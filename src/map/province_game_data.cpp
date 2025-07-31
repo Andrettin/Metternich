@@ -7,6 +7,7 @@
 #include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "country/country_military.h"
 #include "country/country_turn_data.h"
 #include "database/defines.h"
@@ -695,7 +696,7 @@ void province_game_data::check_governor()
 	if (this->get_governor() != nullptr && this->get_governor()->get_obsolescence_technology() != nullptr && this->get_owner()->get_game_data()->has_technology(this->get_governor()->get_obsolescence_technology())) {
 		if (game::get()->is_running()) {
 			if (this->get_owner() == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = this->get_owner()->get_game_data()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification(std::format("Governor of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, governor {} of {} has decided to retire.", this->get_governor()->get_full_name(), this->get_current_cultural_name()));
 			}
@@ -740,7 +741,7 @@ void province_game_data::check_governor()
 			this->set_governor(vector::get_random(potential_governors));
 
 			if (this->get_owner() == game::get()->get_player_country() && game::get()->is_running()) {
-				const portrait *interior_minister_portrait = this->get_owner()->get_game_data()->get_interior_minister_portrait();
+				const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
 
 				engine_interface::get()->add_notification(std::format("New Governor of {}", this->get_current_cultural_name()), interior_minister_portrait, std::format("{} has become the new governor of {}!\n\n{}", this->get_governor()->get_full_name(), this->get_current_cultural_name(), this->get_governor()->get_game_data()->get_governor_modifier_string(this->province)));
 			}

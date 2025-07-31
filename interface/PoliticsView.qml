@@ -14,7 +14,7 @@ Item {
 	
 	property var country: null
 	readonly property var country_game_data: country ? country.game_data : null
-	readonly property var ruler: country_game_data ? country_game_data.ruler : null
+	readonly property var ruler: country_game_data ? country_game_data.government.ruler : null
 	property string status_text: ""
 	property string middle_status_text: ""
 	

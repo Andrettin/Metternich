@@ -25,6 +25,7 @@ class character;
 class country_ai;
 class country_economy;
 class country_game_data;
+class country_government;
 class country_history;
 class country_military;
 class country_turn_data;
@@ -98,6 +99,7 @@ public:
 	}
 
 	country_economy *get_economy() const;
+	country_government *get_government() const;
 	country_military *get_military() const;
 
 	void reset_turn_data();

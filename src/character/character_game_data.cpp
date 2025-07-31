@@ -11,6 +11,7 @@
 #include "character/character_type.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "country/country_military.h"
 #include "country/office.h"
 #include "database/defines.h"
@@ -65,6 +66,7 @@ void character_game_data::apply_history()
 
 	if ((this->character->has_role(character_role::advisor) || this->character->has_role(character_role::leader) || this->character->has_role(character_role::civilian)) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
 		country_game_data *country_game_data = country->get_game_data();
+		country_government *country_government = country->get_government();
 		const technology *obsolescence_technology = this->character->get_obsolescence_technology();
 
 		if (this->character->get_required_technology() != nullptr) {
@@ -75,8 +77,8 @@ void character_game_data::apply_history()
 			this->set_dead(true);
 		} else {
 			if (this->character->has_role(character_role::advisor)) {
-				if (country_game_data->can_have_advisors() && !country_game_data->has_incompatible_advisor_to(this->character)) {
-					country_game_data->add_advisor(this->character);
+				if (country_government->can_have_advisors() && !country_government->has_incompatible_advisor_to(this->character)) {
+					country_government->add_advisor(this->character);
 				}
 			} else if (this->character->has_role(character_role::leader)) {
 				const province *deployment_province = character_history->get_deployment_province();
@@ -205,7 +207,7 @@ void character_game_data::on_setup_finished()
 std::string character_game_data::get_titled_name() const
 {
 	if (this->get_office() != nullptr) {
-		return std::format("{} {}", this->get_country()->get_game_data()->get_office_title_name(this->get_office()), this->character->get_full_name());
+		return std::format("{} {}", this->get_country()->get_government()->get_office_title_name(this->get_office()), this->character->get_full_name());
 	}
 
 	if (this->is_governor()) {
@@ -315,7 +317,7 @@ void character_game_data::set_dead(const bool dead)
 void character_game_data::die()
 {
 	if (this->get_office() != nullptr) {
-		this->get_country()->get_game_data()->on_office_holder_died(this->get_office(), this->character);
+		this->get_country()->get_government()->on_office_holder_died(this->get_office(), this->character);
 	}
 
 	this->set_country(nullptr);
@@ -683,7 +685,7 @@ void character_game_data::decrement_scripted_modifiers()
 
 bool character_game_data::is_ruler() const
 {
-	return this->get_country() != nullptr && this->get_country()->get_game_data()->get_ruler() == this->character;
+	return this->get_country() != nullptr && this->get_country()->get_government()->get_ruler() == this->character;
 }
 
 void character_game_data::set_office(const metternich::office *office)
@@ -787,7 +789,7 @@ void character_game_data::apply_trait_office_modifier(const character_trait *tra
 
 bool character_game_data::is_advisor() const
 {
-	return this->get_country() != nullptr && vector::contains(this->get_country()->get_game_data()->get_advisors(), this->character);
+	return this->get_country() != nullptr && vector::contains(this->get_country()->get_government()->get_advisors(), this->character);
 }
 
 QString character_game_data::get_advisor_effects_string(const metternich::country *country) const
@@ -837,7 +839,7 @@ QString character_game_data::get_advisor_effects_string(const metternich::countr
 	}
 
 	if (this->get_country() != country) {
-		const metternich::character *replaced_advisor = country->get_game_data()->get_replaced_advisor_for(this->character);
+		const metternich::character *replaced_advisor = country->get_government()->get_replaced_advisor_for(this->character);
 		if (replaced_advisor != nullptr) {
 			if (!str.empty()) {
 				str += '\n';

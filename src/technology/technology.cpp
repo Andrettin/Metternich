@@ -6,6 +6,7 @@
 #include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_government.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "country/government_type.h"
@@ -1078,7 +1079,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 void technology::write_character_effects_string(const character_role role, const std::string_view &role_name, const country *country, std::string &str) const
 {
 	if (role == character_role::advisor) {
-		const bool can_recruit_advisors = country->get_game_data()->can_have_advisors_or_appointable_offices();
+		const bool can_recruit_advisors = country->get_government()->can_have_advisors_or_appointable_offices();
 		if (!can_recruit_advisors) {
 			return;
 		}

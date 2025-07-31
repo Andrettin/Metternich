@@ -220,7 +220,7 @@ Item {
 			
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: technology.discovery ? "Discovery" : "Technology Researched",
-				portrait_object: metternich.game.player_country.game_data.interior_minister_portrait,
+				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
 				text: technology.discovery ? ("Your Excellency, we have discovered " + technology.name + "!") : ("Your Excellency, our scholars have made a breakthrough in the research of the " + technology.name + " technology!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string): "")),
 				second_button_text: "View Technologies",
 				second_button_effects: () => {
@@ -241,36 +241,13 @@ Item {
 			
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: "Technology Lost",
-				portrait_object: metternich.game.player_country.game_data.interior_minister_portrait,
+				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
 				text: "Your Excellency, we have lost knowledge of the " + technology.name + " technology!",
 				second_button_text: "View Technologies",
 				second_button_effects: () => {
 					if (!technology.discovery && !(menu_stack.currentItem instanceof TechnologyView)) {
 						menu_stack.push("TechnologyView.qml")
 					}
-				}
-			})
-			
-			dialog.open()
-		}
-		
-		function onAdvisor_recruited(advisor) {
-			if (notification_dialog_component.status == Component.Error) {
-				console.error(notification_dialog_component.errorString())
-				return
-			}
-			
-			var dialog = notification_dialog_component.createObject(map_view, {
-				title: "Advisor Recruited",
-				portrait_object: metternich.game.player_country.game_data.interior_minister_portrait,
-				text: "Your Excellency, " + advisor.full_name  + " has joined our nation as an advisor!",
-				second_button_text: "View Advisors",
-				second_button_effects: () => {
-					politics_view_mode = PoliticsView.Mode.Advisors
-					
-					menu_stack.push("PoliticsView.qml", {
-						country: metternich.game.player_country
-					})
 				}
 			})
 			
@@ -295,6 +272,33 @@ Item {
 	}
 	
 	Connections {
+		target: metternich.game.player_country.game_data.government
+		
+		function onAdvisor_recruited(advisor) {
+			if (notification_dialog_component.status == Component.Error) {
+				console.error(notification_dialog_component.errorString())
+				return
+			}
+			
+			var dialog = notification_dialog_component.createObject(map_view, {
+				title: "Advisor Recruited",
+				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
+				text: "Your Excellency, " + advisor.full_name  + " has joined our nation as an advisor!",
+				second_button_text: "View Advisors",
+				second_button_effects: () => {
+					politics_view_mode = PoliticsView.Mode.Advisors
+					
+					menu_stack.push("PoliticsView.qml", {
+						country: metternich.game.player_country
+					})
+				}
+			})
+			
+			dialog.open()
+		}
+	}
+	
+	Connections {
 		target: metternich.game.player_country.game_data.military
 		
 		function onLeader_recruited(leader) {
@@ -305,7 +309,7 @@ Item {
 			
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: leader.leader_type_name + " Recruited",
-				portrait_object: metternich.game.player_country.game_data.war_minister_portrait,
+				portrait_object: metternich.game.player_country.game_data.government.war_minister_portrait,
 				text: "Your Excellency, the " + leader.leader_type_name.toLowerCase() + " " + leader.full_name  + " has joined our nation!"
 			})
 			
