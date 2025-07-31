@@ -5,6 +5,7 @@
 #include "economy/resource_container.h"
 #include "map/province_container.h"
 #include "util/color_container.h"
+#include "util/geocoordinate.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("map/province_game_data.h")
@@ -32,6 +33,7 @@ class province final : public named_data_entry, public data_type<province>
 
 	Q_PROPERTY(const metternich::world* world MEMBER world READ get_world NOTIFY changed)
 	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
+	Q_PROPERTY(archimedes::geocoordinate geocoordinate MEMBER geocoordinate NOTIFY changed)
 	Q_PROPERTY(bool sea MEMBER sea READ is_sea NOTIFY changed)
 	Q_PROPERTY(bool bay MEMBER bay READ is_bay NOTIFY changed)
 	Q_PROPERTY(bool lake MEMBER lake READ is_lake NOTIFY changed)
@@ -140,6 +142,8 @@ public:
 		this->color = color;
 		province::provinces_by_color[color] = this;
 	}
+
+	const geocoordinate &get_geocoordinate() const;
 
 	bool is_sea() const
 	{
@@ -257,6 +261,7 @@ signals:
 private:
 	const metternich::world *world = nullptr;
 	QColor color;
+	archimedes::geocoordinate geocoordinate;
 	bool sea = false;
 	bool bay = false;
 	bool lake = false;

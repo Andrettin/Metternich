@@ -160,6 +160,15 @@ void province::reset_game_data()
 	this->game_data = make_qunique<province_game_data>(this);
 }
 
+const geocoordinate &province::get_geocoordinate() const
+{
+	if (this->get_provincial_capital() != nullptr) {
+		return this->get_provincial_capital()->get_geocoordinate();
+	}
+
+	return this->geocoordinate;
+}
+
 std::string province::get_scope_name() const
 {
 	return this->get_game_data()->get_current_cultural_name();
