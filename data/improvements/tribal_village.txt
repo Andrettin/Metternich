@@ -8,4 +8,19 @@ tribal_village = {
 		savannah
 		tundra
 	}
+	#free_on_start_conditions = {
+	#	improvement = none
+	#	settlement_type = none
+	#	not = {
+	#		resource = none
+	#		resource = oil
+	#	}
+	#	random_chance = 5
+	#	country = {
+	#		or = {
+	#			scripted_condition = is_tribe
+	#			subject_type = colony
+	#		}
+	#	}
+	#}
 }
