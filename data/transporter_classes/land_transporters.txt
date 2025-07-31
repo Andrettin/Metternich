@@ -2,3 +2,8 @@ wagon = {
 	name = "Wagon"
 	category = land_transporter
 }
+
+locomotive = {
+	name = "Locomotive"
+	category = land_transporter
+}

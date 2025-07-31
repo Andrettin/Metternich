@@ -12,3 +12,19 @@ wagon = {
 		fabric = 2
 	}
 }
+
+locomotive = {
+	name = "Locomotive"
+	transporter_class = locomotive
+	icon = paddlewheeler
+	hit_points = 10
+	stats = {
+		movement = 2
+	}
+	cargo = 2
+	required_technology = high_pressure_steam_engine
+	commodity_costs = {
+		steel = 2
+		lumber = 2
+	}
+}
