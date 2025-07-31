@@ -9,6 +9,7 @@
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/country_government.h"
+#include "country/country_technology.h"
 #include "country/country_turn_data.h"
 #include "country/culture.h"
 #include "database/defines.h"
@@ -983,7 +984,7 @@ bool site_game_data::check_free_building(const building_type *building)
 		return false;
 	}
 
-	if (building->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_game_data()->has_technology(building->get_required_technology()))) {
+	if (building->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_technology()->has_technology(building->get_required_technology()))) {
 		return false;
 	}
 
@@ -993,7 +994,7 @@ bool site_game_data::check_free_building(const building_type *building)
 
 bool site_game_data::check_free_improvement(const improvement *improvement)
 {
-	if (improvement->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_game_data()->has_technology(improvement->get_required_technology()))) {
+	if (improvement->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_technology()->has_technology(improvement->get_required_technology()))) {
 		return false;
 	}
 
@@ -1434,7 +1435,7 @@ void site_game_data::check_landholder()
 	}
 
 	//remove the landholder if they have become obsolete
-	if (this->get_landholder() != nullptr && this->get_landholder()->get_obsolescence_technology() != nullptr && this->get_owner()->get_game_data()->has_technology(this->get_landholder()->get_obsolescence_technology())) {
+	if (this->get_landholder() != nullptr && this->get_landholder()->get_obsolescence_technology() != nullptr && this->get_owner()->get_technology()->has_technology(this->get_landholder()->get_obsolescence_technology())) {
 		if (game::get()->is_running()) {
 			if (this->get_owner() == game::get()->get_player_country()) {
 				const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
@@ -1463,11 +1464,11 @@ void site_game_data::check_landholder()
 				continue;
 			}
 
-			if (character->get_required_technology() != nullptr && !this->get_owner()->get_game_data()->has_technology(character->get_required_technology())) {
+			if (character->get_required_technology() != nullptr && !this->get_owner()->get_technology()->has_technology(character->get_required_technology())) {
 				continue;
 			}
 
-			if (character->get_obsolescence_technology() != nullptr && this->get_owner()->get_game_data()->has_technology(character->get_obsolescence_technology())) {
+			if (character->get_obsolescence_technology() != nullptr && this->get_owner()->get_technology()->has_technology(character->get_obsolescence_technology())) {
 				continue;
 			}
 

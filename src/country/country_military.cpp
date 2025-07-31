@@ -9,6 +9,7 @@
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/country_government.h"
+#include "country/country_technology.h"
 #include "country/culture.h"
 #include "economy/commodity.h"
 #include "engine_interface.h"
@@ -77,7 +78,7 @@ void country_military::check_leaders()
 	//remove obsolete leaders
 	const std::vector<const character *> leaders = this->get_leaders();
 	for (const character *leader : leaders) {
-		if (leader->get_obsolescence_technology() != nullptr && this->get_game_data()->has_technology(leader->get_obsolescence_technology())) {
+		if (leader->get_obsolescence_technology() != nullptr && this->country->get_technology()->has_technology(leader->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
 				const portrait *war_minister_portrait = this->country->get_government()->get_war_minister_portrait();
 
@@ -420,7 +421,7 @@ const military_unit_type *country_military::get_best_military_unit_category_type
 			continue;
 		}
 
-		if (type->get_required_technology() != nullptr && !this->get_game_data()->has_technology(type->get_required_technology())) {
+		if (type->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(type->get_required_technology())) {
 			continue;
 		}
 
@@ -430,7 +431,7 @@ const military_unit_type *country_military::get_best_military_unit_category_type
 				continue;
 			}
 
-			if (upgrade->get_required_technology() != nullptr && !this->get_game_data()->has_technology(upgrade->get_required_technology())) {
+			if (upgrade->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(upgrade->get_required_technology())) {
 				continue;
 			}
 

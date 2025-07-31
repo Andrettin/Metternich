@@ -90,7 +90,7 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		icon_identifier: "cog"
 		highlighted: politics_view_mode === PoliticsView.Mode.ResearchOrganizations
-		visible: country_game_data.available_research_organization_slots.length > 0
+		visible: country_game_data.technology.available_research_organization_slots.length > 0
 		
 		onClicked: {
 			politics_view_mode = PoliticsView.Mode.ResearchOrganizations

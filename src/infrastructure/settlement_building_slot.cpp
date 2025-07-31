@@ -5,6 +5,7 @@
 #include "country/country.h"
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
+#include "country/country_technology.h"
 #include "country/culture.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
@@ -189,7 +190,7 @@ bool settlement_building_slot::can_gain_wonder(const metternich::wonder *wonder)
 		return false;
 	}
 
-	if (wonder->get_obsolescence_technology() != nullptr && this->get_country() != nullptr && this->get_country()->get_game_data()->has_technology(wonder->get_obsolescence_technology())) {
+	if (wonder->get_obsolescence_technology() != nullptr && this->get_country() != nullptr && this->get_country()->get_technology()->has_technology(wonder->get_obsolescence_technology())) {
 		return false;
 	}
 
@@ -268,7 +269,7 @@ const wonder *settlement_building_slot::get_buildable_wonder() const
 				continue;
 			}
 
-			if (!this->get_country()->get_game_data()->has_technology(wonder->get_required_technology())) {
+			if (!this->get_country()->get_technology()->has_technology(wonder->get_required_technology())) {
 				continue;
 			}
 		}

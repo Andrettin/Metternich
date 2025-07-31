@@ -4,7 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_economy.h"
-#include "country/country_game_data.h"
+#include "country/country_technology.h"
 #include "economy/commodity.h"
 #include "map/province.h"
 #include "map/site.h"
@@ -58,7 +58,7 @@ bool employment_location::can_employ(const population_unit *population_unit, con
 
 	if (profession->get_required_technology() != nullptr) {
 		const country *employment_country = this->get_employment_country();
-		if (employment_country == nullptr || !employment_country->get_game_data()->has_technology(profession->get_required_technology())) {
+		if (employment_country == nullptr || !employment_country->get_technology()->has_technology(profession->get_required_technology())) {
 			return false;
 		}
 	}

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_technology.h"
 #include "script/effect/effect.h"
 #include "util/string_util.h"
 
@@ -25,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		scope->get_game_data()->gain_free_technologies(this->count);
+		scope->get_technology()->gain_free_technologies(this->count);
 	}
 
 	virtual std::string get_assignment_string() const override

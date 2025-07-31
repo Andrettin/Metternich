@@ -4,7 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_economy.h"
-#include "country/country_game_data.h"
+#include "country/country_technology.h"
 #include "country/culture.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
@@ -191,7 +191,7 @@ const building_type *building_slot::get_buildable_building() const
 				continue;
 			}
 
-			if (!this->get_country()->get_game_data()->has_technology(building->get_required_technology())) {
+			if (!this->get_country()->get_technology()->has_technology(building->get_required_technology())) {
 				continue;
 			}
 		}
@@ -229,7 +229,7 @@ bool building_slot::is_available() const
 					continue;
 				}
 
-				if (wonder->get_obsolescence_technology() != nullptr && this->get_country() != nullptr && this->get_country()->get_game_data()->has_technology(wonder->get_obsolescence_technology())) {
+				if (wonder->get_obsolescence_technology() != nullptr && this->get_country() != nullptr && this->get_country()->get_technology()->has_technology(wonder->get_obsolescence_technology())) {
 					continue;
 				}
 

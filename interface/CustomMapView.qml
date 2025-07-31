@@ -210,6 +210,26 @@ Item {
 	Connections {
 		target: metternich.game.player_country.game_data
 		
+		function onJournal_entry_completed(journal_entry) {
+			if (notification_dialog_component.status == Component.Error) {
+				console.error(notification_dialog_component.errorString())
+				return
+			}
+			
+			var dialog = notification_dialog_component.createObject(map_view, {
+				title: journal_entry.name,
+				portrait_object: journal_entry.portrait,
+				text: journal_entry.description,
+				effects_text: journal_entry.get_completion_effects_string(metternich.game.player_country)
+			})
+			
+			dialog.open()
+		}
+	}
+	
+	Connections {
+		target: metternich.game.player_country.game_data.technology
+		
 		function onTechnology_researched(technology) {
 			if (notification_dialog_component.status == Component.Error) {
 				console.error(notification_dialog_component.errorString())
@@ -249,22 +269,6 @@ Item {
 						menu_stack.push("TechnologyView.qml")
 					}
 				}
-			})
-			
-			dialog.open()
-		}
-		
-		function onJournal_entry_completed(journal_entry) {
-			if (notification_dialog_component.status == Component.Error) {
-				console.error(notification_dialog_component.errorString())
-				return
-			}
-			
-			var dialog = notification_dialog_component.createObject(map_view, {
-				title: journal_entry.name,
-				portrait_object: journal_entry.portrait,
-				text: journal_entry.description,
-				effects_text: journal_entry.get_completion_effects_string(metternich.game.player_country)
 			})
 			
 			dialog.open()

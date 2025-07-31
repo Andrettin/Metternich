@@ -1,7 +1,7 @@
 #pragma once
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_technology.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
@@ -43,11 +43,11 @@ public:
 	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
 	{
 		if (this->subcategory != nullptr) {
-			scope->get_game_data()->change_technology_subcategory_cost_modifier(this->subcategory, this->value * multiplier);
+			scope->get_technology()->change_technology_subcategory_cost_modifier(this->subcategory, this->value * multiplier);
 		} else if (this->category != nullptr) {
-			scope->get_game_data()->change_technology_category_cost_modifier(this->category, this->value * multiplier);
+			scope->get_technology()->change_technology_category_cost_modifier(this->category, this->value * multiplier);
 		} else {
-			scope->get_game_data()->change_technology_cost_modifier(this->value * multiplier);
+			scope->get_technology()->change_technology_cost_modifier(this->value * multiplier);
 		}
 	}
 

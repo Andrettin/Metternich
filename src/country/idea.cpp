@@ -3,7 +3,7 @@
 #include "country/idea.h"
 
 #include "country/country.h"
-#include "country/country_game_data.h"
+#include "country/country_technology.h"
 #include "country/idea_trait.h"
 #include "country/idea_slot.h"
 #include "country/idea_type.h"
@@ -69,13 +69,13 @@ bool idea::is_available_for_country_slot(const country *country, const idea_slot
 		return false;
 	}
 
-	const country_game_data *country_game_data = country->get_game_data();
+	const country_technology *country_technology = country->get_technology();
 
-	if (this->get_required_technology() != nullptr && !country_game_data->has_technology(this->get_required_technology())) {
+	if (this->get_required_technology() != nullptr && !country_technology->has_technology(this->get_required_technology())) {
 		return false;
 	}
 
-	if (this->get_obsolescence_technology() != nullptr && country_game_data->has_technology(this->get_obsolescence_technology())) {
+	if (this->get_obsolescence_technology() != nullptr && country_technology->has_technology(this->get_obsolescence_technology())) {
 		return false;
 	}
 

@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_technology.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/region.h"
@@ -13,9 +14,10 @@ namespace metternich {
 void culture_history::apply_to_country(const country *country) const
 {
 	country_game_data *country_game_data = country->get_game_data();
+	country_technology *country_technology = country->get_technology();
 
 	for (const technology *technology : this->get_technologies()) {
-		country_game_data->add_technology_with_prerequisites(technology);
+		country_technology->add_technology_with_prerequisites(technology);
 	}
 
 	for (const province *province : this->get_explored_provinces()) {

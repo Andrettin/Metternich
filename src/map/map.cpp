@@ -4,6 +4,7 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_technology.h"
 #include "country/country_turn_data.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -597,16 +598,17 @@ void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discov
 	if (discovered && resource->get_discovery_technology() != nullptr && tile->get_owner() != nullptr) {
 		for (const country *country : game::get()->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
+			country_technology *country_technology = country->get_technology();
 
 			if (!country_game_data->is_tile_explored(tile_pos)) {
 				continue;
 			}
 
-			if (country_game_data->can_gain_technology(resource->get_discovery_technology())) {
-				country_game_data->add_technology(resource->get_discovery_technology());
+			if (country_technology->can_gain_technology(resource->get_discovery_technology())) {
+				country_technology->add_technology(resource->get_discovery_technology());
 
 				if (game::get()->is_running()) {
-					emit country_game_data->technology_researched(resource->get_discovery_technology());
+					emit country_technology->technology_researched(resource->get_discovery_technology());
 				}
 			}
 		}

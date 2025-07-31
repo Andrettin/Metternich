@@ -7,6 +7,7 @@
 #include "country/country_game_data.h"
 #include "country/country_government.h"
 #include "country/country_military.h"
+#include "country/country_technology.h"
 #include "country/idea_type.h"
 #include "country/journal_entry.h"
 #include "country/office.h"
@@ -125,7 +126,7 @@ void country_ai::choose_current_research()
 {
 	assert_throw(this->get_game_data()->is_ai());
 
-	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_game_data()->get_research_choice_map(false);
+	const data_entry_map<technology_category, const technology *> research_choice_map = this->country->get_technology()->get_research_choice_map(false);
 
 	if (research_choice_map.empty()) {
 		return;
@@ -134,7 +135,7 @@ void country_ai::choose_current_research()
 	const technology *chosen_technology = this->get_research_choice(research_choice_map);
 
 	if (chosen_technology != nullptr) {
-		this->get_game_data()->add_current_research(chosen_technology);
+		this->country->get_technology()->add_current_research(chosen_technology);
 	}
 }
 

@@ -19,6 +19,7 @@
 #include "map/site.h"
 #include "religion/religion.h"
 #include "technology/technology.h"
+#include "technology/technology_container.h"
 #include "time/era.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -155,6 +156,11 @@ country_government *country::get_government() const
 country_military *country::get_military() const
 {
 	return this->get_game_data()->get_military();
+}
+
+country_technology *country::get_technology() const
+{
+	return this->get_game_data()->get_technology();
 }
 
 void country::reset_turn_data()

@@ -13,6 +13,7 @@
 #include "country/country_game_data.h"
 #include "country/country_government.h"
 #include "country/country_military.h"
+#include "country/country_technology.h"
 #include "country/office.h"
 #include "database/defines.h"
 #include "game/character_event.h"
@@ -67,13 +68,14 @@ void character_game_data::apply_history()
 	if ((this->character->has_role(character_role::advisor) || this->character->has_role(character_role::leader) || this->character->has_role(character_role::civilian)) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
 		country_game_data *country_game_data = country->get_game_data();
 		country_government *country_government = country->get_government();
+		country_technology *country_technology = country->get_technology();
 		const technology *obsolescence_technology = this->character->get_obsolescence_technology();
 
 		if (this->character->get_required_technology() != nullptr) {
-			country_game_data->add_technology_with_prerequisites(this->character->get_required_technology());
+			country_technology->add_technology_with_prerequisites(this->character->get_required_technology());
 		}
 
-		if (obsolescence_technology != nullptr && country_game_data->has_technology(obsolescence_technology)) {
+		if (obsolescence_technology != nullptr && country_technology->has_technology(obsolescence_technology)) {
 			this->set_dead(true);
 		} else {
 			if (this->character->has_role(character_role::advisor)) {
@@ -112,7 +114,7 @@ void character_game_data::apply_history()
 				assert_throw(type != nullptr);
 
 				if (type->get_required_technology() != nullptr) {
-					country_game_data->add_technology_with_prerequisites(type->get_required_technology());
+					country_technology->add_technology_with_prerequisites(type->get_required_technology());
 				}
 
 				QPoint tile_pos = deployment_site->get_game_data()->get_tile_pos();

@@ -6,7 +6,7 @@ import "./dialogs"
 Item {
 	id: research_organizations_view
 	
-	readonly property var research_organization_slots: country_game_data.available_research_organization_slots
+	readonly property var research_organization_slots: country_game_data.technology.available_research_organization_slots
 	
 	IdeaSlotGrid {
 		id: research_organization_portrait_grid

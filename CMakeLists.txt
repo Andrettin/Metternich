@@ -43,6 +43,7 @@ set(country_SRCS
 	src/country/country_history.cpp
 	src/country/country_military.cpp
 	src/country/country_rank.cpp
+	src/country/country_technology.cpp
 	src/country/country_tier_data.cpp
 	src/country/country_turn_data.cpp
 	src/country/cultural_group.cpp
@@ -356,6 +357,7 @@ set(country_HDRS
 	src/country/country_history.h
 	src/country/country_military.h
 	src/country/country_rank.h
+	src/country/country_technology.h
 	src/country/country_tier.h
 	src/country/country_tier_data.h
 	src/country/country_turn_data.h

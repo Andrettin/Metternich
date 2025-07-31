@@ -7,6 +7,7 @@
 #include "country/country.h"
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
+#include "country/country_technology.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "economy/resource.h"
@@ -44,11 +45,11 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owne
 
 	connect(this->get_owner()->get_game_data(), &country_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_economy(), &country_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
-	connect(this->get_owner()->get_game_data(), &country_game_data::technologies_changed, this, &civilian_unit::improvable_resources_changed);
+	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::improvable_resources_changed);
 
 	connect(this->get_owner()->get_game_data(), &country_game_data::provinces_changed, this, &civilian_unit::prospectable_tiles_changed);
 	connect(this->get_owner()->get_game_data(), &country_game_data::prospected_tiles_changed, this, &civilian_unit::prospectable_tiles_changed);
-	connect(this->get_owner()->get_game_data(), &country_game_data::technologies_changed, this, &civilian_unit::prospectable_tiles_changed);
+	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::prospectable_tiles_changed);
 }
 
 civilian_unit::civilian_unit(const metternich::character *character, const country *owner)
@@ -287,10 +288,10 @@ void civilian_unit::build_on_tile()
 
 bool civilian_unit::can_build_improvement(const improvement *improvement) const
 {
-	const country_game_data *country_game_data = this->get_owner()->get_game_data();
 	const country_economy *country_economy = this->get_owner()->get_economy();
+	const country_technology *country_technology = this->get_owner()->get_technology();
 
-	if (improvement->get_required_technology() != nullptr && !country_game_data->has_technology(improvement->get_required_technology())) {
+	if (improvement->get_required_technology() != nullptr && !country_technology->has_technology(improvement->get_required_technology())) {
 		return false;
 	}
 
@@ -475,7 +476,7 @@ bool civilian_unit::can_prospect_tile(const QPoint &tile_pos) const
 			continue;
 		}
 
-		if (resource->get_required_technology() != nullptr && !this->get_owner()->get_game_data()->has_technology(resource->get_required_technology())) {
+		if (resource->get_required_technology() != nullptr && !this->get_owner()->get_technology()->has_technology(resource->get_required_technology())) {
 			continue;
 		}
 
@@ -500,7 +501,7 @@ terrain_type_map<std::vector<QPoint>> civilian_unit::get_prospectable_tiles() co
 			continue;
 		}
 
-		if (resource->get_required_technology() != nullptr && !this->get_owner()->get_game_data()->has_technology(resource->get_required_technology())) {
+		if (resource->get_required_technology() != nullptr && !this->get_owner()->get_technology()->has_technology(resource->get_required_technology())) {
 			continue;
 		}
 

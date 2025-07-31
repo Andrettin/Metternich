@@ -13,6 +13,7 @@
 #include "country/country_history.h"
 #include "country/country_military.h"
 #include "country/country_rank.h"
+#include "country/country_technology.h"
 #include "country/country_tier.h"
 #include "country/country_turn_data.h"
 #include "country/cultural_group.h"
@@ -402,6 +403,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			country_game_data *country_game_data = country->get_game_data();
 			country_economy *country_economy = country->get_economy();
 			country_government *country_government = country->get_government();
+			country_technology *country_technology = country->get_technology();
 
 			if (country_history->get_tier() != country_tier::none) {
 				country->get_game_data()->set_tier(country_history->get_tier());
@@ -420,13 +422,13 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_government->set_government_type(country_history->get_government_type());
 
 				if (country_history->get_government_type()->get_required_technology() != nullptr) {
-					country_game_data->add_technology_with_prerequisites(country_history->get_government_type()->get_required_technology());
+					country_technology->add_technology_with_prerequisites(country_history->get_government_type()->get_required_technology());
 				}
 			} else if (country->get_default_government_type() != nullptr) {
 				country_government->set_government_type(country->get_default_government_type());
 
 				if (country->get_default_government_type()->get_required_technology() != nullptr) {
-					country_game_data->add_technology_with_prerequisites(country->get_default_government_type()->get_required_technology());
+					country_technology->add_technology_with_prerequisites(country->get_default_government_type()->get_required_technology());
 				}
 			}
 
@@ -444,19 +446,19 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 
 				if (office_holder->get_required_technology() != nullptr) {
-					country_game_data->add_technology_with_prerequisites(office_holder->get_required_technology());
+					country_technology->add_technology_with_prerequisites(office_holder->get_required_technology());
 				}
 			}
 
 			for (const technology *technology : country_history->get_technologies()) {
-				country_game_data->add_technology_with_prerequisites(technology);
+				country_technology->add_technology_with_prerequisites(technology);
 			}
 
 			for (const auto &[law_group, law] : country_history->get_laws()) {
 				country_government->set_law(law_group, law);
 
 				if (law->get_required_technology() != nullptr) {
-					country_game_data->add_technology_with_prerequisites(law->get_required_technology());
+					country_technology->add_technology_with_prerequisites(law->get_required_technology());
 				}
 			}
 
@@ -525,7 +527,7 @@ void game::apply_history(const metternich::scenario *scenario)
 							tile->set_direction_pathway(direction, route_pathway);
 
 							if (tile->has_river() && tile->get_owner() != nullptr && route_pathway->get_river_crossing_required_technology() != nullptr && tile->is_river_crossing_direction(direction)) {
-								tile->get_owner()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_river_crossing_required_technology());
+								tile->get_owner()->get_technology()->add_technology_with_prerequisites(route_pathway->get_river_crossing_required_technology());
 							}
 						}
 					}
@@ -535,12 +537,12 @@ void game::apply_history(const metternich::scenario *scenario)
 					//add prerequisites for the tile's pathway to its owner's researched technologies
 					if (tile->get_owner() != nullptr) {
 						if (route_pathway->get_required_technology() != nullptr) {
-							tile->get_owner()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_required_technology());
+							tile->get_owner()->get_technology()->add_technology_with_prerequisites(route_pathway->get_required_technology());
 						}
 
 						const technology *terrain_required_technology = route_pathway->get_terrain_required_technology(tile->get_terrain());
 						if (terrain_required_technology != nullptr) {
-							tile->get_owner()->get_game_data()->add_technology_with_prerequisites(terrain_required_technology);
+							tile->get_owner()->get_technology()->add_technology_with_prerequisites(terrain_required_technology);
 						}
 					}
 				}
@@ -595,6 +597,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				assert_throw(owner != nullptr);
 
 				country_game_data *owner_game_data = owner->get_game_data();
+				country_technology *owner_technology = owner->get_technology();
 
 				assert_throw(owner_game_data->is_alive());
 
@@ -606,7 +609,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				assert_throw(type != nullptr);
 
 				if (type->get_required_technology() != nullptr) {
-					owner_game_data->add_technology_with_prerequisites(type->get_required_technology());
+					owner_technology->add_technology_with_prerequisites(type->get_required_technology());
 				}
 
 				const phenotype *phenotype = historical_civilian_unit->get_phenotype();
@@ -646,6 +649,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 				country_game_data *country_game_data = country->get_game_data();
 				country_military *country_military = country->get_military();
+				country_technology *country_technology = country->get_technology();
 
 				assert_throw(country_game_data->is_alive());
 
@@ -653,7 +657,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				assert_throw(type != nullptr);
 
 				if (type->get_required_technology() != nullptr) {
-					country_game_data->add_technology_with_prerequisites(type->get_required_technology());
+					country_technology->add_technology_with_prerequisites(type->get_required_technology());
 				}
 
 				const phenotype *phenotype = historical_military_unit->get_phenotype();
@@ -678,6 +682,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			assert_throw(country != nullptr);
 
 			country_game_data *country_game_data = country->get_game_data();
+			country_technology *country_technology = country->get_technology();
 
 			if (!country_game_data->is_alive()) {
 				continue;
@@ -691,7 +696,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			assert_throw(type != nullptr);
 
 			if (type->get_required_technology() != nullptr) {
-				country_game_data->add_technology_with_prerequisites(type->get_required_technology());
+				country_technology->add_technology_with_prerequisites(type->get_required_technology());
 			}
 
 			const phenotype *phenotype = historical_transporter->get_phenotype();
@@ -833,7 +838,7 @@ void game::apply_sites()
 
 					//add prerequisites for the tile's improvement to its owner's researched technologies
 					if (improvement->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
-						tile->get_owner()->get_game_data()->add_technology_with_prerequisites(improvement->get_required_technology());
+						tile->get_owner()->get_technology()->add_technology_with_prerequisites(improvement->get_required_technology());
 					}
 				}
 			}
@@ -886,6 +891,7 @@ void game::apply_site_buildings(const site *site)
 
 	const country *owner = settlement_game_data->get_owner();
 	country_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
+	country_technology *owner_technology = owner ? owner->get_technology() : nullptr;
 
 	for (auto [building_slot_type, building] : site_history->get_buildings()) {
 		building_slot *building_slot = nullptr;
@@ -944,7 +950,7 @@ void game::apply_site_buildings(const site *site)
 		}
 
 		if (building->get_required_technology() != nullptr && owner_game_data != nullptr) {
-			owner_game_data->add_technology_with_prerequisites(building->get_required_technology());
+			owner_technology->add_technology_with_prerequisites(building->get_required_technology());
 		}
 	}
 
@@ -974,7 +980,7 @@ void game::apply_site_buildings(const site *site)
 		building_slot->set_wonder(wonder);
 
 		if (wonder->get_required_technology() != nullptr && owner_game_data != nullptr) {
-			owner_game_data->add_technology_with_prerequisites(wonder->get_required_technology());
+			owner_technology->add_technology_with_prerequisites(wonder->get_required_technology());
 		}
 	}
 }

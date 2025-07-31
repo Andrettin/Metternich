@@ -28,6 +28,7 @@ class country_game_data;
 class country_government;
 class country_history;
 class country_military;
+class country_technology;
 class country_turn_data;
 class culture;
 class government_group;
@@ -101,6 +102,7 @@ public:
 	country_economy *get_economy() const;
 	country_government *get_government() const;
 	country_military *get_military() const;
+	country_technology *get_technology() const;
 
 	void reset_turn_data();
 

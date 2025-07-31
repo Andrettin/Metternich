@@ -12,6 +12,7 @@
 #include "country/country.h"
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
+#include "country/country_technology.h"
 #include "country/government_group.h"
 #include "country/government_type.h"
 #include "country/journal_entry.h"
@@ -98,7 +99,7 @@ void country_government::set_government_type(const metternich::government_type *
 
 bool country_government::can_have_government_type(const metternich::government_type *government_type) const
 {
-	if (government_type->get_required_technology() != nullptr && !this->get_game_data()->has_technology(government_type->get_required_technology())) {
+	if (government_type->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(government_type->get_required_technology())) {
 		return false;
 	}
 
@@ -183,7 +184,7 @@ bool country_government::has_law(const law *law) const
 
 bool country_government::can_have_law(const metternich::law *law) const
 {
-	if (law->get_required_technology() != nullptr && !this->get_game_data()->has_technology(law->get_required_technology())) {
+	if (law->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(law->get_required_technology())) {
 		return false;
 	}
 
@@ -389,7 +390,7 @@ void country_government::check_office_holder(const office *office, const charact
 	}
 
 	//remove office holders if they have become obsolete
-	if (this->get_office_holder(office) != nullptr && this->get_office_holder(office)->get_obsolescence_technology() != nullptr && this->get_game_data()->has_technology(this->get_office_holder(office)->get_obsolescence_technology())) {
+	if (this->get_office_holder(office) != nullptr && this->get_office_holder(office)->get_obsolescence_technology() != nullptr && this->country->get_technology()->has_technology(this->get_office_holder(office)->get_obsolescence_technology())) {
 		this->get_office_holder(office)->get_game_data()->die();
 		return; //the office holder death will already trigger a re-check of the office holder position
 	}
@@ -513,11 +514,11 @@ bool country_government::can_have_office_holder(const office *office, const char
 		return false;
 	}
 
-	if (character->get_required_technology() != nullptr && !this->get_game_data()->has_technology(character->get_required_technology())) {
+	if (character->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(character->get_required_technology())) {
 		return false;
 	}
 
-	if (character->get_obsolescence_technology() != nullptr && this->get_game_data()->has_technology(character->get_obsolescence_technology())) {
+	if (character->get_obsolescence_technology() != nullptr && this->country->get_technology()->has_technology(character->get_obsolescence_technology())) {
 		return false;
 	}
 
@@ -635,7 +636,7 @@ void country_government::check_advisors()
 	//remove obsolete advisors
 	const std::vector<const character *> advisors = this->get_advisors();
 	for (const character *advisor : advisors) {
-		if (advisor->get_obsolescence_technology() != nullptr && this->get_game_data()->has_technology(advisor->get_obsolescence_technology())) {
+		if (advisor->get_obsolescence_technology() != nullptr && this->country->get_technology()->has_technology(advisor->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
 				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
@@ -664,7 +665,7 @@ void country_government::check_advisors()
 			}
 
 			this->set_next_advisor(nullptr);
-		} else if (this->get_next_advisor()->get_obsolescence_technology() != nullptr && this->get_game_data()->has_technology(this->get_next_advisor()->get_obsolescence_technology())) {
+		} else if (this->get_next_advisor()->get_obsolescence_technology() != nullptr && this->country->get_technology()->has_technology(this->get_next_advisor()->get_obsolescence_technology())) {
 			if (this->country == game::get()->get_player_country()) {
 				const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
@@ -860,11 +861,11 @@ bool country_government::can_recruit_advisor(const character *advisor) const
 		return false;
 	}
 
-	if (advisor->get_required_technology() != nullptr && !this->get_game_data()->has_technology(advisor->get_required_technology())) {
+	if (advisor->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(advisor->get_required_technology())) {
 		return false;
 	}
 
-	if (advisor->get_obsolescence_technology() != nullptr && this->get_game_data()->has_technology(advisor->get_obsolescence_technology())) {
+	if (advisor->get_obsolescence_technology() != nullptr && this->country->get_technology()->has_technology(advisor->get_obsolescence_technology())) {
 		return false;
 	}
 

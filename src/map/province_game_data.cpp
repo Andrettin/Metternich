@@ -9,6 +9,7 @@
 #include "country/country_game_data.h"
 #include "country/country_government.h"
 #include "country/country_military.h"
+#include "country/country_technology.h"
 #include "country/country_turn_data.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -693,7 +694,7 @@ void province_game_data::check_governor()
 	}
 
 	//remove the governor if they have become obsolete
-	if (this->get_governor() != nullptr && this->get_governor()->get_obsolescence_technology() != nullptr && this->get_owner()->get_game_data()->has_technology(this->get_governor()->get_obsolescence_technology())) {
+	if (this->get_governor() != nullptr && this->get_governor()->get_obsolescence_technology() != nullptr && this->get_owner()->get_technology()->has_technology(this->get_governor()->get_obsolescence_technology())) {
 		if (game::get()->is_running()) {
 			if (this->get_owner() == game::get()->get_player_country()) {
 				const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
@@ -722,11 +723,11 @@ void province_game_data::check_governor()
 				continue;
 			}
 
-			if (character->get_required_technology() != nullptr && !this->get_owner()->get_game_data()->has_technology(character->get_required_technology())) {
+			if (character->get_required_technology() != nullptr && !this->get_owner()->get_technology()->has_technology(character->get_required_technology())) {
 				continue;
 			}
 
-			if (character->get_obsolescence_technology() != nullptr && this->get_owner()->get_game_data()->has_technology(character->get_obsolescence_technology())) {
+			if (character->get_obsolescence_technology() != nullptr && this->get_owner()->get_technology()->has_technology(character->get_obsolescence_technology())) {
 				continue;
 			}
 

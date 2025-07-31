@@ -14,7 +14,6 @@
 #include "population/profession_container.h"
 #include "script/opinion_modifier_container.h"
 #include "script/scripted_modifier_container.h"
-#include "technology/technology_container.h"
 #include "unit/transporter_type_container.h"
 #include "util/centesimal_int.h"
 #include "util/point_container.h"
@@ -25,13 +24,13 @@ Q_MOC_INCLUDE("country/country.h")
 Q_MOC_INCLUDE("country/country_economy.h")
 Q_MOC_INCLUDE("country/country_government.h")
 Q_MOC_INCLUDE("country/country_military.h")
+Q_MOC_INCLUDE("country/country_technology.h")
 Q_MOC_INCLUDE("country/country_tier.h")
 Q_MOC_INCLUDE("country/journal_entry.h")
 Q_MOC_INCLUDE("country/subject_type.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
-Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 Q_MOC_INCLUDE("unit/transporter_type.h")
@@ -49,6 +48,7 @@ class country_economy;
 class country_government;
 class country_military;
 class country_rank;
+class country_technology;
 class culture;
 class education_type;
 class event;
@@ -70,8 +70,6 @@ class religion;
 class scripted_country_modifier;
 class site;
 class subject_type;
-class technology_category;
-class technology_subcategory;
 class transporter;
 class transporter_type;
 class wonder;
@@ -94,6 +92,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(metternich::country_economy* economy READ get_economy CONSTANT)
 	Q_PROPERTY(metternich::country_government* government READ get_government CONSTANT)
 	Q_PROPERTY(metternich::country_military* military READ get_military CONSTANT)
+	Q_PROPERTY(metternich::country_technology* technology READ get_technology CONSTANT)
 	Q_PROPERTY(metternich::country_tier tier READ get_tier NOTIFY tier_changed)
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY title_name_changed)
@@ -125,14 +124,9 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_type_inputs READ get_population_type_inputs_qvariant_list NOTIFY population_type_inputs_changed)
 	Q_PROPERTY(QVariantList population_type_outputs READ get_population_type_outputs_qvariant_list NOTIFY population_type_outputs_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
-	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
-	Q_PROPERTY(QVariantList researchable_technologies READ get_researchable_technologies_qvariant_list NOTIFY technologies_changed)
-	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
-	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
 	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
-	Q_PROPERTY(QVariantList available_research_organization_slots READ get_available_research_organization_slots_qvariant_list NOTIFY available_idea_slots_changed)
 	Q_PROPERTY(QVariantList available_deity_slots READ get_available_deity_slots_qvariant_list NOTIFY available_idea_slots_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(QVariantList transporters READ get_transporters_qvariant_list NOTIFY transporters_changed)
@@ -153,7 +147,6 @@ public:
 	void do_education();
 	void do_civilian_unit_recruitment();
 	void do_transporter_recruitment();
-	void do_research();
 	void do_population_growth();
 	void do_food_consumption(const int food_consumption);
 	void do_starvation();
@@ -174,6 +167,11 @@ public:
 	country_military *get_military() const
 	{
 		return this->military.get();
+	}
+
+	country_technology *get_technology() const
+	{
+		return this->technology.get();
 	}
 
 	bool is_ai() const;
@@ -747,71 +745,6 @@ public:
 
 	bool can_declare_war_on(const metternich::country *other_country) const;
 
-	const technology_set &get_technologies() const
-	{
-		return this->technologies;
-	}
-
-	QVariantList get_technologies_qvariant_list() const;
-
-	bool has_technology(const technology *technology) const
-	{
-		return this->get_technologies().contains(technology);
-	}
-
-	Q_INVOKABLE bool has_technology(metternich::technology *technology) const
-	{
-		const metternich::technology *const_technology = technology;
-		return this->has_technology(const_technology);
-	}
-
-	void add_technology(const technology *technology);
-	void add_technology_with_prerequisites(const technology *technology);
-	void remove_technology(const technology *technology);
-	void check_technologies();
-
-	bool can_gain_technology(const technology *technology) const;
-	Q_INVOKABLE bool can_research_technology(const metternich::technology *technology) const;
-
-	std::vector<const technology *> get_researchable_technologies() const;
-	QVariantList get_researchable_technologies_qvariant_list() const;
-	Q_INVOKABLE bool is_technology_researchable(const metternich::technology *technology) const;
-
-	QVariantList get_future_technologies_qvariant_list() const;
-
-	const technology_set &get_current_researches() const
-	{
-		return this->current_researches;
-	}
-
-	QVariantList get_current_researches_qvariant_list() const;
-	Q_INVOKABLE void add_current_research(const metternich::technology *technology);
-	Q_INVOKABLE void remove_current_research(const metternich::technology *technology, const bool restore_costs);
-	void on_technology_researched(const technology *technology);
-
-	data_entry_map<technology_category, const technology *> get_research_choice_map(const bool is_free) const;
-
-	void gain_free_technology();
-
-	void gain_free_technology(const technology *technology)
-	{
-		this->on_technology_researched(technology);
-		--this->free_technology_count;
-
-		if (this->free_technology_count > 0) {
-			this->gain_free_technology();
-		}
-	}
-
-	Q_INVOKABLE void gain_free_technology(metternich::technology *technology)
-	{
-		const metternich::technology *const_technology = technology;
-		return this->gain_free_technology(const_technology);
-	}
-
-	void gain_free_technologies(const int count);
-	void gain_technologies_known_by_others();
-
 	const std::map<idea_type, data_entry_map<idea_slot, const idea *>> &get_ideas() const
 	{
 		return this->ideas;
@@ -864,7 +797,6 @@ public:
 	Q_INVOKABLE bool can_appoint_idea(const metternich::idea_slot *slot, const metternich::idea *idea) const;
 
 	std::vector<const idea_slot *> get_available_idea_slots(const idea_type idea_type) const;
-	QVariantList get_available_research_organization_slots_qvariant_list() const;
 	QVariantList get_available_deity_slots_qvariant_list() const;
 
 	int get_deity_cost() const;
@@ -994,54 +926,6 @@ public:
 		this->set_transporter_type_stat_modifier(type, stat, this->get_transporter_type_stat_modifier(type, stat) + change);
 	}
 
-	const centesimal_int &get_technology_cost_modifier() const
-	{
-		return this->technology_cost_modifier;
-	}
-
-	void change_technology_cost_modifier(const centesimal_int &change)
-	{
-		this->technology_cost_modifier += change;
-	}
-
-	const centesimal_int &get_technology_category_cost_modifier(const technology_category *category) const
-	{
-		const auto find_iterator = this->technology_category_cost_modifiers.find(category);
-
-		if (find_iterator != this->technology_category_cost_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	void set_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value);
-
-	void change_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value)
-	{
-		this->set_technology_category_cost_modifier(category, this->get_technology_category_cost_modifier(category) + value);
-	}
-
-	const centesimal_int &get_technology_subcategory_cost_modifier(const technology_subcategory *subcategory) const
-	{
-		const auto find_iterator = this->technology_subcategory_cost_modifiers.find(subcategory);
-
-		if (find_iterator != this->technology_subcategory_cost_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	void set_technology_subcategory_cost_modifier(const technology_subcategory *subcategory, const centesimal_int &value);
-
-	void change_technology_subcategory_cost_modifier(const technology_subcategory *subcategory, const centesimal_int &value)
-	{
-		this->set_technology_subcategory_cost_modifier(subcategory, this->get_technology_subcategory_cost_modifier(subcategory) + value);
-	}
-
 	Q_INVOKABLE const centesimal_int &get_population_type_modifier_multiplier(const population_type *type) const
 	{
 		const auto find_iterator = this->population_type_modifier_multipliers.find(type);
@@ -1128,8 +1012,18 @@ public:
 		this->diplomatic_penalty_for_expansion_modifier += change;
 	}
 
+	const point_set &get_explored_tiles() const
+	{
+		return this->explored_tiles;
+	}
+
 	Q_INVOKABLE bool is_tile_explored(const QPoint &tile_pos) const;
 	bool is_province_discovered(const province *province) const;
+
+	const province_set &get_explored_provinces() const
+	{
+		return this->explored_provinces;
+	}
 
 	bool is_province_explored(const province *province) const
 	{
@@ -1141,6 +1035,11 @@ public:
 
 	void explore_tile(const QPoint &tile_pos);
 	void explore_province(const province *province);
+
+	const point_set &get_prospected_tiles() const
+	{
+		return this->prospected_tiles;
+	}
 
 	bool is_tile_prospected(const QPoint &tile_pos) const
 	{
@@ -1176,18 +1075,6 @@ public:
 	bool check_potential_journal_entries();
 	bool check_inactive_journal_entries();
 	bool check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects, const bool ignore_random_chance);
-
-	int get_gain_technologies_known_by_others_count() const
-	{
-		return this->gain_technologies_known_by_others_count;
-	}
-
-	void set_gain_technologies_known_by_others_count(const int value);
-
-	void change_gain_technologies_known_by_others_count(const int value)
-	{
-		this->set_gain_technologies_known_by_others_count(this->get_gain_technologies_known_by_others_count()  + value);
-	}
 
 	const building_class_map<int> &get_free_building_class_counts() const
 	{
@@ -1270,10 +1157,6 @@ signals:
 	void population_type_inputs_changed();
 	void population_type_outputs_changed();
 	void settlement_building_counts_changed();
-	void technologies_changed();
-	void current_researches_changed();
-	void technology_researched(const technology *technology);
-	void technology_lost(const technology *technology);
 	void ideas_changed();
 	void appointed_ideas_changed();
 	void available_idea_slots_changed();
@@ -1328,9 +1211,6 @@ private:
 	std::vector<qunique_ptr<country_building_slot>> building_slots;
 	building_slot_type_map<country_building_slot *> building_slot_map;
 	building_type_map<int> settlement_building_counts;
-	technology_set technologies;
-	technology_set current_researches;
-	int free_technology_count = 0;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
 	scripted_country_modifier_map<int> scripted_modifiers;
@@ -1340,9 +1220,6 @@ private:
 	transporter_type_map<int> transporter_recruitment_counts;
 	std::map<std::string, int> unit_name_counts;
 	transporter_type_map<std::map<transporter_stat, centesimal_int>> transporter_type_stat_modifiers;
-	centesimal_int technology_cost_modifier;
-	data_entry_map<technology_category, centesimal_int> technology_category_cost_modifiers;
-	data_entry_map<technology_subcategory, centesimal_int> technology_subcategory_cost_modifiers;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	population_type_map<centesimal_int> population_type_militancy_modifiers;
 	int building_cost_efficiency_modifier = 0;
@@ -1355,13 +1232,13 @@ private:
 	std::vector<const journal_entry *> active_journal_entries;
 	std::vector<const journal_entry *> inactive_journal_entries;
 	std::vector<const journal_entry *> finished_journal_entries;
-	int gain_technologies_known_by_others_count = 0;
 	building_class_map<int> free_building_class_counts;
 	consulate_map<int> free_consulate_counts;
 	std::set<const flag *> flags;
 	qunique_ptr<country_economy> economy;
 	qunique_ptr<country_government> government;
 	qunique_ptr<country_military> military;
+	qunique_ptr<country_technology> technology;
 };
 
 }

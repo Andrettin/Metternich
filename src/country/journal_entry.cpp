@@ -9,6 +9,7 @@
 #include "country/country_game_data.h"
 #include "country/country_government.h"
 #include "country/country_military.h"
+#include "country/country_technology.h"
 #include "country/office.h"
 #include "database/defines.h"
 #include "game/game.h"
@@ -225,10 +226,10 @@ bool journal_entry::check_conditions(const country *country) const
 		return false;
 	}
 
-	const country_game_data *country_game_data = country->get_game_data();
+	const country_technology *country_technology = country->get_technology();
 
 	for (const technology *technology : this->get_researched_technologies()) {
-		if (!technology->is_discovery() && !country_game_data->is_technology_researchable(technology) && !country_game_data->has_technology(technology)) {
+		if (!technology->is_discovery() && !country_technology->is_technology_researchable(technology) && !country_technology->has_technology(technology)) {
 			return false;
 		}
 	}
@@ -262,6 +263,7 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 	const country_game_data *country_game_data = country->get_game_data();
 	const country_government *country_government = country->get_government();
 	const country_military *country_military = country->get_military();
+	const country_technology *country_technology = country->get_technology();
 
 	for (const province *province : this->owned_provinces) {
 		if (province->get_game_data()->get_owner() != country) {
@@ -314,7 +316,7 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 	}
 
 	for (const technology *technology : this->get_researched_technologies()) {
-		if (!country_game_data->has_technology(technology)) {
+		if (!country_technology->has_technology(technology)) {
 			return false;
 		}
 	}

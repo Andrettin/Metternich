@@ -18,9 +18,9 @@ Item {
 	property string status_text: ""
 	property string middle_status_text: ""
 	
-	readonly property var technologies: technology_view_mode === TechnologyView.Mode.Researched ? country_game_data.technologies : (technology_view_mode === TechnologyView.Mode.Available ? researchable_technologies : (technology_view_mode === TechnologyView.Mode.Future ? country_game_data.future_technologies : country.available_technologies))
+	readonly property var technologies: technology_view_mode === TechnologyView.Mode.Researched ? country_game_data.technology.technologies : (technology_view_mode === TechnologyView.Mode.Available ? researchable_technologies : (technology_view_mode === TechnologyView.Mode.Future ? country_game_data.technology.future_technologies : country.available_technologies))
 	readonly property var category_technologies: get_category_technologies(technologies, technology_view_category, technology_view_subcategory)
-	readonly property var researchable_technologies: country_game_data.researchable_technologies
+	readonly property var researchable_technologies: country_game_data.technology.researchable_technologies
 	
 	TiledBackground {
 		anchors.top: top_bar.bottom
@@ -104,7 +104,7 @@ Item {
 							anchors.verticalCenter: research_technology_button_item.verticalCenter
 							anchors.horizontalCenter: research_technology_button_item.horizontalCenter
 							spacing: 8 * scale_factor
-							visible: country_game_data.current_researches.includes(technology) === false
+							visible: country_game_data.technology.current_researches.includes(technology) === false
 							
 							SmallText {
 								id: wealth_cost_label
@@ -145,16 +145,16 @@ Item {
 							color: "white"
 							horizontalAlignment: Text.AlignHCenter
 							verticalAlignment: Text.AlignVCenter
-							visible: country_game_data.current_researches.includes(technology)
+							visible: country_game_data.technology.current_researches.includes(technology)
 						}
 					}
 					
 					onClicked: {
-						if (country_game_data.current_researches.includes(technology)) {
-							country_game_data.remove_current_research(technology, true)
+						if (country_game_data.technology.current_researches.includes(technology)) {
+							country_game_data.technology.remove_current_research(technology, true)
 						} else {
-							if (country_game_data.can_research_technology(technology)) {
-								country_game_data.add_current_research(technology)
+							if (country_game_data.technology.can_research_technology(technology)) {
+								country_game_data.technology.add_current_research(technology)
 							} else {
 								add_notification("Costs", country_game_data.government.interior_minister_portrait, "Your Excellency, we unfortunately cannot afford the costs of researching the " + technology.name + " technology.", technology_view)
 							}
@@ -193,7 +193,7 @@ Item {
 		entries: country.available_technologies
 		visible: technology_view_mode === TechnologyView.Mode.TechTree
 		delegate: TreePortraitButton {
-			highlighted: country_game_data.has_technology(technology)
+			highlighted: country_game_data.technology.has_technology(technology)
 			
 			readonly property var technology: model.modelData
 			

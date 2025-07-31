@@ -7,6 +7,7 @@
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_government.h"
+#include "country/country_technology.h"
 #include "country/cultural_group.h"
 #include "country/culture.h"
 #include "country/government_type.h"
@@ -317,7 +318,7 @@ int technology::get_shared_prestige_for_country(const country *country) const
 			continue;
 		}
 
-		if (loop_country->get_game_data()->has_technology(this)) {
+		if (loop_country->get_technology()->has_technology(this)) {
 			prestige /= 2;
 		}
 
@@ -418,7 +419,7 @@ centesimal_int technology::get_cost_for_country(const country *country) const
 	centesimal_int cost(this->cost);
 
 	if (cost > 0) {
-		cost *= centesimal_int(100) + country->get_game_data()->get_technology_cost_modifier() + country->get_game_data()->get_technology_category_cost_modifier(this->get_category()) + country->get_game_data()->get_technology_subcategory_cost_modifier(this->get_subcategory());
+		cost *= centesimal_int(100) + country->get_technology()->get_technology_cost_modifier() + country->get_technology()->get_technology_category_cost_modifier(this->get_category()) + country->get_technology()->get_technology_subcategory_cost_modifier(this->get_subcategory());
 		cost /= 100;
 
 		if (this->get_cost_factor() != nullptr) {
