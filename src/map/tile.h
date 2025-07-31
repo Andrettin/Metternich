@@ -2,6 +2,7 @@
 
 #include "economy/commodity_container.h"
 #include "infrastructure/pathway_container.h"
+#include "util/centesimal_int.h"
 
 namespace archimedes {
 	enum class direction;

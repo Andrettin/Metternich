@@ -14,6 +14,8 @@
 #include "economy/commodity.h"
 #include "util/map_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 country_history::country_history(const metternich::country *country)

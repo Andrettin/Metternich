@@ -2,6 +2,7 @@
 
 #include "country/idea_trait.h"
 
+#include "country/idea_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 

@@ -7,6 +7,7 @@
 #include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/country_government.h"
+#include "country/idea_slot.h"
 #include "country/idea_type.h"
 #include "database/defines.h"
 #include "economy/commodity.h"

@@ -24,6 +24,7 @@
 #include "country/idea_trait.h"
 #include "country/idea_type.h"
 #include "country/journal_entry.h"
+#include "country/subject_type.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
