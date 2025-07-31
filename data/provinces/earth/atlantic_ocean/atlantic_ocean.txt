@@ -1,6 +1,7 @@
 bay_of_biscay = {
 	name = "Bay of Biscay"
 	color = { 28 250 250 }
+	geocoordinate = { -4.4 45.5 }
 	bay = true
 	regions = {
 		atlantic_ocean
@@ -55,6 +56,7 @@ davis_strait = {
 english_channel = {
 	name = "English Channel"
 	color = { 48 128 128 }
+	geocoordinate = { -2 50 }
 	bay = true
 	cultural_names = {
 		briton = "British Ocean"
@@ -125,6 +127,7 @@ labrador_sea = {
 
 north_atlantic_ocean = {
 	name = "North Atlantic Ocean"
+	geocoordinate = { -33 47 }
 	color = { 135 11 136 }
 	sea = true
 	regions = {
@@ -144,6 +147,7 @@ sargasso_sea = {
 south_atlantic_ocean = {
 	name = "South Atlantic Ocean"
 	color = { 153 220 205 }
+	geocoordinate = { -18.83777 -33.73345 }
 	sea = true
 	regions = {
 		atlantic_ocean
