@@ -20,6 +20,7 @@ bay_of_campeche = {
 bristol_channel = {
 	name = "Bristol Channel"
 	color = { 100 44 144 }
+	geocoordinate = { -3.7 51.35 }
 	bay = true
 	regions = {
 		atlantic_ocean
@@ -67,6 +68,15 @@ english_channel = {
 	}
 }
 
+galway_bay = {
+	name = "Galway Bay"
+	geocoordinate = { -9.2333333333333 53.2 }
+	bay = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 gulf_of_maine = {
 	name = "Gulf of Maine"
 	color = { 73 176 214 }
@@ -97,6 +107,7 @@ gulf_of_saint_lawrence = {
 inner_seas = {
 	name = "Inner Seas"
 	color = { 70 247 84 }
+	geocoordinate = { -7 56 }
 	sea = true
 	regions = {
 		atlantic_ocean
@@ -106,6 +117,7 @@ inner_seas = {
 irish_sea = {
 	name = "Irish Sea"
 	color = { 48 144 144 }
+	geocoordinate = { -5 53.5 }
 	sea = true
 	cultural_names = {
 		#gaelic = "Hibernian Ocean"

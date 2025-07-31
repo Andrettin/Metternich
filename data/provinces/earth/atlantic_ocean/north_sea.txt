@@ -7,6 +7,15 @@ danish_waters = {
 	}
 }
 
+heligoland_bight = {
+	name = "Heligoland Bight"
+	geocoordinate = { 8.15 54.05 }
+	bay = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 kattegat = {
 	name = "Kattegat"
 	color = { 16 144 120 }
@@ -19,6 +28,7 @@ kattegat = {
 north_sea = {
 	name = "North Sea"
 	color = { 0 144 120 }
+	geocoordinate = { 3.6825 56.459 }
 	sea = true
 	cultural_names = {
 		gothic = "German Ocean"
@@ -27,6 +37,15 @@ north_sea = {
 	}
 	regions = {
 		north_sea
+	}
+}
+
+norwegian_sea = {
+	name = "Norwegian Sea"
+	geocoordinate = { 0 69 }
+	sea = true
+	regions = {
+		atlantic_ocean
 	}
 }
 
