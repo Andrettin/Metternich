@@ -1,0 +1,11 @@
+austrian_locomotives = {
+	type = locomotive
+	country = austria
+	quantity = 6
+	
+	history = {
+		1820 = {
+			active = true
+		}
+	}
+}
