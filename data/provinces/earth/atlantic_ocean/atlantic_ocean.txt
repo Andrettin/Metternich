@@ -30,6 +30,7 @@ bristol_channel = {
 caribbean_sea = {
 	name = "Caribbean Sea"
 	color = { 41 137 162 }
+	geocoordinate = { -75 15 }
 	sea = true
 	regions = {
 		atlantic_ocean
@@ -150,6 +151,7 @@ north_atlantic_ocean = {
 sargasso_sea = {
 	name = "Sargasso Sea"
 	color = { 221 89 67 }
+	geocoordinate = { -66.175 28.335555555556 }
 	sea = true
 	regions = {
 		atlantic_ocean
@@ -169,6 +171,7 @@ south_atlantic_ocean = {
 straits_of_florida = {
 	name = "Straits of Florida"
 	color = { 208 222 251 }
+	geocoordinate = { -80.925833333333 23.934166666667 }
 	sea = true
 	regions = {
 		atlantic_ocean
