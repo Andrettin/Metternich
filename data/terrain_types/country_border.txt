@@ -1,0 +1,156 @@
+country_border = {
+	name = "Country Border"
+	image_filepath = "tiles/terrain/country_border.png"
+	adjacency_subtiles = {
+		0 = {
+			north = other
+			south = same
+			west = other
+			east = same
+			northwest = any
+			northeast = any
+			southwest = any
+			southeast = same
+		}
+		1 = {
+			north = other
+			south = same
+			west = same
+			east = same
+			northwest = any
+			northeast = any
+			southwest = same
+			southeast = same
+		}
+		2 = {
+			north = other
+			south = same
+			west = same
+			east = other
+			northwest = any
+			northeast = any
+			southwest = same
+			southeast = any
+		}
+		16 = {
+			north = same
+			south = same
+			west = other
+			east = same
+			northwest = any
+			northeast = same
+			southwest = any
+			southeast = same
+		}
+		17 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = same
+			northeast = same
+			southwest = same
+			southeast = same
+		}
+		18 = {
+			north = same
+			south = same
+			west = same
+			east = other
+			northwest = same
+			northeast = any
+			southwest = same
+			southeast = any
+		}
+		32 = {
+			north = same
+			south = other
+			west = other
+			east = same
+			northwest = any
+			northeast = same
+			southwest = any
+			southeast = any
+		}
+		33 = {
+			north = same
+			south = other
+			west = same
+			east = same
+			northwest = same
+			northeast = same
+			southwest = any
+			southeast = any
+		}
+		34 = {
+			north = same
+			south = other
+			west = same
+			east = other
+			northwest = same
+			northeast = any
+			southwest = any
+			southeast = any
+		}
+		48 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = other
+			northeast = same
+			southwest = same
+			southeast = same
+		}
+		49 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = same
+			northeast = other
+			southwest = same
+			southeast = same
+		}
+		64 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = same
+			northeast = same
+			southwest = other
+			southeast = same
+		}
+		65 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = same
+			northeast = same
+			southwest = same
+			southeast = other
+		}
+		80 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = same
+			northeast = other
+			southwest = other
+			southeast = same
+		}
+		81 = {
+			north = same
+			south = same
+			west = same
+			east = same
+			northwest = other
+			northeast = same
+			southwest = same
+			southeast = other
+		}
+	}
+}

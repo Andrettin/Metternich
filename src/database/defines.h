@@ -81,6 +81,8 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(std::filesystem::path river_image_filepath MEMBER river_image_filepath WRITE set_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path rivermouth_image_filepath MEMBER rivermouth_image_filepath WRITE set_rivermouth_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
+	Q_PROPERTY(QSize border_subtile_size MEMBER border_subtile_size READ get_border_subtile_size NOTIFY changed)
+	Q_PROPERTY(const metternich::terrain_type* country_border_terrain MEMBER country_border_terrain READ get_country_border_terrain NOTIFY changed)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
 
@@ -382,6 +384,16 @@ public:
 
 	void set_province_border_image_filepath(const std::filesystem::path &filepath);
 
+	const QSize &get_border_subtile_size() const
+	{
+		return this->border_subtile_size;
+	}
+
+	const terrain_type *get_country_border_terrain() const
+	{
+		return this->country_border_terrain;
+	}
+
 	const std::map<event_trigger, int> get_event_trigger_none_random_weights() const
 	{
 		return this->event_trigger_none_random_weights;
@@ -459,6 +471,8 @@ private:
 	std::filesystem::path rivermouth_image_filepath;
 	std::filesystem::path route_image_filepath;
 	std::filesystem::path province_border_image_filepath;
+	QSize border_subtile_size;
+	const terrain_type *country_border_terrain = nullptr;
 	std::map<event_trigger, int> event_trigger_none_random_weights; //the weight for no event happening for a given event trigger's random event selection
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;

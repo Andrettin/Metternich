@@ -18,6 +18,7 @@ public:
 		image_sources,
 		underlay_image_sources,
 		overlay_image_sources,
+		border_image_sources,
 		object_image_sources,
 		site,
 		province,
@@ -67,6 +68,7 @@ public:
 		role_names.insert(static_cast<int>(role::image_sources), "image_sources");
 		role_names.insert(static_cast<int>(role::underlay_image_sources), "underlay_image_sources");
 		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");
+		role_names.insert(static_cast<int>(role::border_image_sources), "border_image_sources");
 		role_names.insert(static_cast<int>(role::object_image_sources), "object_image_sources");
 		role_names.insert(static_cast<int>(role::site), "site");
 		role_names.insert(static_cast<int>(role::province), "province");

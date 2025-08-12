@@ -94,6 +94,8 @@ diplomacy_state_colors = {
 river_image_filepath = "tiles/river.png"
 rivermouth_image_filepath = "tiles/rivermouth.png"
 province_border_image_filepath = "tiles/borders/province_border.png"
+border_subtile_size = { 64 64 }
+country_border_terrain = country_border
 min_diplomatic_map_tile_scale = 2
 
 event_trigger_none_random_weights = {
