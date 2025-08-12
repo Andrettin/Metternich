@@ -1664,8 +1664,8 @@ QCoro::Task<void> country_game_data::create_diplomatic_map_mode_image(const dipl
 				case diplomatic_map_mode::cultural: {
 					const culture *culture = nullptr;
 
-					if (tile->get_settlement() != nullptr && tile->get_settlement()->get_game_data()->get_culture() != nullptr) {
-						culture = tile->get_settlement()->get_game_data()->get_culture();
+					if (tile->get_site() != nullptr && tile->get_site()->get_game_data()->can_have_population() && tile->get_site()->get_game_data()->get_culture() != nullptr) {
+						culture = tile->get_site()->get_game_data()->get_culture();
 					} else {
 						culture = tile->get_province()->get_game_data()->get_culture();
 					}
