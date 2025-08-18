@@ -750,6 +750,11 @@ void game::apply_sites()
 		}
 
 		const site *provincial_capital = province->get_provincial_capital();
+
+		if (!provincial_capital->get_map_data()->is_on_map()) {
+			continue;
+		}
+
 		site_game_data *provincial_capital_game_data = provincial_capital->get_game_data();
 
 		if (provincial_capital_game_data->is_built()) {
@@ -865,7 +870,7 @@ void game::apply_site_buildings(const site *site)
 
 	const metternich::site *settlement = site->is_settlement() && tile != nullptr ? site : site_province->get_provincial_capital();
 
-	if (settlement == nullptr) {
+	if (settlement == nullptr || !settlement->get_map_data()->is_on_map()) {
 		return;
 	}
 
