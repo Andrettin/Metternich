@@ -719,72 +719,6 @@ bool country_economy::can_change_commodity_input(const commodity *commodity, con
 	return true;
 }
 
-QVariantList country_economy::get_transportable_commodity_outputs_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_transportable_commodity_outputs());
-}
-
-int country_economy::get_transportable_commodity_output(const QString &commodity_identifier) const
-{
-	return this->get_transportable_commodity_output(commodity::get(commodity_identifier.toStdString())).to_int();
-}
-
-void country_economy::change_transportable_commodity_output(const commodity *commodity, const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	if (commodity->is_abstract()) {
-		this->change_commodity_output(commodity, change);
-		return;
-	}
-
-	const centesimal_int new_output = (this->transportable_commodity_outputs[commodity] += change);
-
-	assert_throw(new_output >= 0);
-
-	if (new_output == 0) {
-		this->transportable_commodity_outputs.erase(commodity);
-	}
-
-	const int transported_output = this->get_transported_commodity_output(commodity);
-	if (new_output < transported_output) {
-		this->change_transported_commodity_output(commodity, new_output.to_int() - transported_output);
-	}
-
-	if (game::get()->is_running()) {
-		emit transportable_commodity_outputs_changed();
-	}
-}
-
-QVariantList country_economy::get_transported_commodity_outputs_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_transported_commodity_outputs());
-}
-
-void country_economy::change_transported_commodity_output(const commodity *commodity, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int new_output = (this->transported_commodity_outputs[commodity] += change);
-
-	assert_throw(new_output >= 0);
-	assert_throw(new_output <= this->get_transportable_commodity_output(commodity).to_int());
-
-	if (new_output == 0) {
-		this->transported_commodity_outputs.erase(commodity);
-	}
-
-	this->change_commodity_output(commodity, centesimal_int(change));
-
-	if (game::get()->is_running()) {
-		emit transported_commodity_outputs_changed();
-	}
-}
-
 QVariantList country_economy::get_commodity_outputs_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
@@ -1063,54 +997,6 @@ bool country_economy::produces_commodity(const commodity *commodity) const
 	}
 
 	return false;
-}
-
-void country_economy::set_land_transport_capacity(const int capacity)
-{
-	if (capacity == this->get_land_transport_capacity()) {
-		return;
-	}
-
-	this->land_transport_capacity = capacity;
-
-	if (game::get()->is_running()) {
-		emit land_transport_capacity_changed();
-	}
-}
-
-void country_economy::set_sea_transport_capacity(const int capacity)
-{
-	if (capacity == this->get_sea_transport_capacity()) {
-		return;
-	}
-
-	this->sea_transport_capacity = capacity;
-
-	if (game::get()->is_running()) {
-		emit sea_transport_capacity_changed();
-	}
-}
-
-void country_economy::assign_transport_orders()
-{
-	if (this->get_game_data()->is_under_anarchy()) {
-		return;
-	}
-
-	for (const auto &[commodity, transportable_output] : this->get_transportable_commodity_outputs()) {
-		const int available_transportable_output = transportable_output.to_int() - this->get_transported_commodity_output(commodity);
-		assert_throw(available_transportable_output >= 0);
-		if (available_transportable_output == 0) {
-			continue;
-		}
-
-		const int available_transport_capacity = this->get_available_transport_capacity();
-		if (available_transport_capacity == 0) {
-			break;
-		}
-
-		this->change_transported_commodity_output(commodity, std::min(available_transportable_output, available_transport_capacity));
-	}
 }
 
 QVariantList country_economy::get_bids_qvariant_list() const

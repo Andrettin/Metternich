@@ -118,7 +118,6 @@ void country_ai::do_turn()
 		}
 	}
 
-	this->get_game_data()->get_economy()->assign_transport_orders();
 	this->assign_trade_orders();
 }
 

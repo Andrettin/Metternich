@@ -59,7 +59,6 @@ class site_game_data final : public QObject, public employment_location
 	Q_PROPERTY(int housing READ get_housing_int NOTIFY housing_changed)
 	Q_PROPERTY(const metternich::character* landholder READ get_landholder NOTIFY landholder_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
-	Q_PROPERTY(int transport_level READ get_best_transport_level NOTIFY transport_level_changed)
 	Q_PROPERTY(QVariantList visiting_armies READ get_visiting_armies_qvariant_list NOTIFY visiting_armies_changed)
 
 public:
@@ -451,7 +450,6 @@ public:
 	void check_employment();
 	void check_available_employment(const std::vector<employment_location *> &employment_locations, std::vector<population_unit *> &unemployed_population_units);
 	bool has_available_employment_for(const population_unit *population_unit);
-	int get_highest_production_capacity();
 
 	int get_pathway_level() const;
 
@@ -478,27 +476,6 @@ public:
 	{
 		this->set_port_level(this->get_port_level() + change);
 	}
-
-	int get_transport_level() const
-	{
-		return this->transport_level;
-	}
-
-	void set_transport_level(const int level);
-
-	int get_sea_transport_level() const
-	{
-		return this->sea_transport_level;
-	}
-
-	void set_sea_transport_level(const int level);
-
-	int get_best_transport_level() const
-	{
-		return std::max(this->get_transport_level(), this->get_sea_transport_level());
-	}
-
-	centesimal_int get_transportable_commodity_output(const commodity *commodity) const;
 
 	bool can_be_visited() const;
 
@@ -534,7 +511,6 @@ signals:
 	void housing_changed();
 	void landholder_changed();
 	void commodity_outputs_changed();
-	void transport_level_changed();
 	void visiting_armies_changed();
 
 private:
@@ -562,8 +538,6 @@ private:
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	int depot_level = 0;
 	int port_level = 0;
-	int transport_level = 0;
-	int sea_transport_level = 0;
 	std::vector<army *> visiting_armies; //armies visiting this site
 };
 

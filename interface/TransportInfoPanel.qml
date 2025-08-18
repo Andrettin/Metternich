@@ -20,26 +20,6 @@ Rectangle {
 		width: 1 * scale_factor
 	}
 	
-	IndustryCounter {
-		id: land_transport_capacity_counter
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.topMargin: 96 * scale_factor
-		name: "Available Land Transport Capacity"
-		icon_identifier: "road"
-		count: country_game_data.economy.land_transport_capacity //FIXME: should be the available capacity, not the total capacity
-	}
-	
-	IndustryCounter {
-		id: sea_transport_capacity_counter
-		anchors.left: parent.left
-		anchors.top: land_transport_capacity_counter.bottom
-		anchors.topMargin: 16 * scale_factor
-		name: "Available Sea Transport Capacity"
-		icon_identifier: "anchor"
-		count: country_game_data.economy.sea_transport_capacity //FIXME: should be the available capacity, not the total capacity
-	}
-	
 	IconButton {
 		id: transporters_button
 		anchors.bottom: back_button.top

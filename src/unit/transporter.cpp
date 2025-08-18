@@ -84,14 +84,6 @@ void transporter::set_type(const transporter_type *type)
 
 	const transporter_type *old_type = this->get_type();
 
-	if (this->get_country() != nullptr) {
-		if (this->is_ship()) {
-			this->get_country()->get_economy()->change_sea_transport_capacity(-this->get_cargo());
-		} else {
-			this->get_country()->get_economy()->change_land_transport_capacity(-this->get_cargo());
-		}
-	}
-
 	this->type = type;
 
 	if (type->get_hit_points() != old_type->get_hit_points()) {
@@ -104,14 +96,6 @@ void transporter::set_type(const transporter_type *type)
 		const centesimal_int old_type_stat_value = old_type->get_stat_for_country(stat, this->get_country());
 		if (type_stat_value != old_type_stat_value) {
 			this->change_stat(stat, type_stat_value - old_type_stat_value);
-		}
-	}
-
-	if (this->get_country() != nullptr) {
-		if (this->is_ship()) {
-			this->get_country()->get_economy()->change_sea_transport_capacity(this->get_cargo());
-		} else {
-			this->get_country()->get_economy()->change_land_transport_capacity(this->get_cargo());
 		}
 	}
 

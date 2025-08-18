@@ -1117,9 +1117,6 @@ public:
 		this->set_free_consulate_count(consulate, this->get_free_consulate_count(consulate) + value);
 	}
 
-	void calculate_tile_transport_levels();
-	void clear_tile_transport_levels();
-
 	bool has_flag(const flag *flag) const
 	{
 		return this->flags.contains(flag);

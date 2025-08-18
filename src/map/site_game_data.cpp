@@ -365,7 +365,7 @@ void site_game_data::set_owner(const country *owner)
 				continue;
 			}
 
-			old_owner->get_economy()->change_transportable_commodity_output(commodity, -this->get_transportable_commodity_output(commodity));
+			old_owner->get_economy()->change_commodity_output(commodity, -this->get_commodity_output(commodity));
 		}
 	}
 
@@ -381,7 +381,7 @@ void site_game_data::set_owner(const country *owner)
 				continue;
 			}
 
-			this->get_owner()->get_economy()->change_transportable_commodity_output(commodity, this->get_transportable_commodity_output(commodity));
+			this->get_owner()->get_economy()->change_commodity_output(commodity, this->get_commodity_output(commodity));
 		}
 
 		for (const auto &[improvement, commodity_bonuses] : this->get_owner()->get_economy()->get_improvement_commodity_bonuses()) {
@@ -1522,29 +1522,26 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		return;
 	}
 
-	const centesimal_int old_transportable_output = this->get_transportable_commodity_output(commodity);
-
 	if (output == 0) {
 		this->commodity_outputs.erase(commodity);
 	} else {
 		this->commodity_outputs[commodity] = output;
 	}
 
-	const centesimal_int transportable_output = this->get_transportable_commodity_output(commodity);
-	const centesimal_int transportable_change = transportable_output - old_transportable_output;
+	const centesimal_int output_change = output - old_output;
 
 	if (commodity->is_local()) {
 		if (commodity->is_provincial() && this->get_province() != nullptr) {
-			this->get_province()->get_game_data()->change_local_commodity_output(commodity, transportable_change);
+			this->get_province()->get_game_data()->change_local_commodity_output(commodity, output_change);
 		}
 	} else {
 		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
+			this->get_owner()->get_economy()->change_commodity_output(commodity, output_change);
 		}
 	}
 
 	if (commodity->is_housing()) {
-		this->change_housing(transportable_change);
+		this->change_housing(output_change);
 	}
 
 	emit commodity_outputs_changed();
@@ -1825,23 +1822,6 @@ bool site_game_data::has_available_employment_for(const population_unit *populat
 	return false;
 }
 
-int site_game_data::get_highest_production_capacity()
-{
-	int highest_production_capacity = 0;
-
-	for (const employment_location *employment_location : this->get_employment_locations()) {
-		const commodity *output_commodity = employment_location->get_employment_professions().at(0)->get_output_commodity();
-		if (output_commodity->is_abstract()) {
-			//only count transportable production
-			continue;
-		}
-
-		highest_production_capacity = std::max(highest_production_capacity, employment_location->get_production_capacity());
-	}
-
-	return highest_production_capacity;
-}
-
 int site_game_data::get_pathway_level() const
 {
 	const tile *tile = this->get_tile();
@@ -1865,12 +1845,6 @@ void site_game_data::set_depot_level(const int level)
 	}
 
 	this->depot_level = level;
-
-	if (game::get()->is_running()) {
-		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_turn_data()->set_transport_level_recalculation_needed(true);
-		}
-	}
 }
 
 void site_game_data::set_port_level(const int level)
@@ -1880,97 +1854,6 @@ void site_game_data::set_port_level(const int level)
 	}
 
 	this->port_level = level;
-
-	if (game::get()->is_running()) {
-		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_turn_data()->set_transport_level_recalculation_needed(true);
-		}
-	}
-}
-
-void site_game_data::set_transport_level(const int level)
-{
-	if (level == this->get_transport_level()) {
-		return;
-	}
-
-	commodity_map<centesimal_int> old_transportable_outputs;
-	for (auto &[commodity, output] : this->get_commodity_outputs()) {
-		old_transportable_outputs[commodity] = this->get_transportable_commodity_output(commodity);
-	}
-
-	this->transport_level = level;
-
-	for (const auto &[commodity, old_transportable_output] : old_transportable_outputs) {
-		const centesimal_int transportable_output = this->get_transportable_commodity_output(commodity);
-		const centesimal_int transportable_change = transportable_output - old_transportable_output;
-
-		if (commodity->is_local()) {
-			if (commodity->is_provincial() && this->get_province() != nullptr) {
-				this->get_province()->get_game_data()->change_local_commodity_output(commodity, transportable_change);
-			}
-		} else {
-			if (this->get_owner() != nullptr) {
-				this->get_owner()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
-			}
-		}
-	}
-
-	for (employment_location *employment_location : this->get_employment_locations()) {
-		employment_location->check_excess_employment();
-	}
-
-	if (game::get()->is_running()) {
-		emit transport_level_changed();
-	}
-}
-
-void site_game_data::set_sea_transport_level(const int level)
-{
-	if (level == this->get_sea_transport_level()) {
-		return;
-	}
-
-	commodity_map<centesimal_int> old_transportable_outputs;
-	for (auto &[commodity, output] : this->get_commodity_outputs()) {
-		old_transportable_outputs[commodity] = this->get_transportable_commodity_output(commodity);
-	}
-
-	this->sea_transport_level = level;
-
-	for (const auto &[commodity, old_transportable_output] : old_transportable_outputs) {
-		const centesimal_int transportable_output = this->get_transportable_commodity_output(commodity);
-		const centesimal_int transportable_change = transportable_output - old_transportable_output;
-
-		if (commodity->is_local()) {
-			if (commodity->is_provincial() && this->get_province() != nullptr) {
-				this->get_province()->get_game_data()->change_local_commodity_output(commodity, transportable_change);
-			}
-		} else {
-			if (this->get_owner() != nullptr) {
-				this->get_owner()->get_economy()->change_transportable_commodity_output(commodity, transportable_change);
-			}
-		}
-	}
-
-	for (employment_location *employment_location : this->get_employment_locations()) {
-		employment_location->check_excess_employment();
-	}
-
-	if (game::get()->is_running()) {
-		emit transport_level_changed();
-	}
-}
-
-centesimal_int site_game_data::get_transportable_commodity_output(const commodity *commodity) const
-{
-	const centesimal_int &output = this->get_commodity_output(commodity);
-
-	if (commodity->is_abstract()) {
-		return output;
-	}
-
-	return centesimal_int::min(output, centesimal_int(this->get_best_transport_level()));
 }
 
 bool site_game_data::can_be_visited() const

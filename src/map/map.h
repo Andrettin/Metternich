@@ -84,8 +84,6 @@ public:
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	void set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
 	void set_tile_direction_pathway(const QPoint &tile_pos, const direction direction, const pathway *pathway);
-	void calculate_tile_transport_level(const QPoint &tile_pos);
-	void clear_tile_transport_level(const QPoint &tile_pos);
 	void set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
 
 	bool is_tile_water(const QPoint &tile_pos) const;
@@ -144,7 +142,6 @@ signals:
 	void tile_settlement_type_changed(const QPoint &tile_pos);
 	void tile_improvement_changed(const QPoint &tile_pos);
 	void tile_pathway_changed(const QPoint &tile_pos);
-	void tile_transport_level_changed(const QPoint &tile_pos);
 	void tile_civilian_unit_changed(const QPoint &tile_pos);
 	void provinces_changed();
 	void diplomatic_map_image_size_changed();

@@ -31,13 +31,9 @@ class country_economy final : public QObject
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(int storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
 	Q_PROPERTY(QVariantList commodity_inputs READ get_commodity_inputs_qvariant_list NOTIFY commodity_inputs_changed)
-	Q_PROPERTY(QVariantList transportable_commodity_outputs READ get_transportable_commodity_outputs_qvariant_list NOTIFY transportable_commodity_outputs_changed)
-	Q_PROPERTY(QVariantList transported_commodity_outputs READ get_transported_commodity_outputs_qvariant_list NOTIFY transported_commodity_outputs_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(QVariantList everyday_consumption READ get_everyday_consumption_qvariant_list NOTIFY everyday_consumption_changed)
 	Q_PROPERTY(QVariantList luxury_consumption READ get_luxury_consumption_qvariant_list NOTIFY luxury_consumption_changed)
-	Q_PROPERTY(int land_transport_capacity READ get_land_transport_capacity NOTIFY land_transport_capacity_changed)
-	Q_PROPERTY(int sea_transport_capacity READ get_sea_transport_capacity NOTIFY sea_transport_capacity_changed)
 	Q_PROPERTY(QVariantList bids READ get_bids_qvariant_list NOTIFY bids_changed)
 	Q_PROPERTY(QVariantList offers READ get_offers_qvariant_list NOTIFY offers_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier_int NOTIFY output_modifier_changed)
@@ -294,48 +290,6 @@ public:
 	void change_commodity_input(const commodity *commodity, const centesimal_int &change, const bool change_input_storage);
 	bool can_change_commodity_input(const commodity *commodity, const centesimal_int &change) const;
 
-	const commodity_map<centesimal_int> &get_transportable_commodity_outputs() const
-	{
-		return this->transportable_commodity_outputs;
-	}
-
-	QVariantList get_transportable_commodity_outputs_qvariant_list() const;
-
-	const centesimal_int &get_transportable_commodity_output(const commodity *commodity) const
-	{
-		const auto find_iterator = this->transportable_commodity_outputs.find(commodity);
-
-		if (find_iterator != this->transportable_commodity_outputs.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
-
-	Q_INVOKABLE int get_transportable_commodity_output(const QString &commodity_identifier) const;
-	void change_transportable_commodity_output(const commodity *commodity, const centesimal_int &change);
-
-	const commodity_map<int> &get_transported_commodity_outputs() const
-	{
-		return this->transported_commodity_outputs;
-	}
-
-	QVariantList get_transported_commodity_outputs_qvariant_list() const;
-
-	Q_INVOKABLE int get_transported_commodity_output(const metternich::commodity *commodity) const
-	{
-		const auto find_iterator = this->transported_commodity_outputs.find(commodity);
-
-		if (find_iterator != this->transported_commodity_outputs.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	Q_INVOKABLE void change_transported_commodity_output(const metternich::commodity *commodity, const int change);
-
 	const commodity_map<centesimal_int> &get_commodity_outputs() const
 	{
 		return this->commodity_outputs;
@@ -442,42 +396,6 @@ public:
 	employment_location * decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs = true);
 
 	bool produces_commodity(const commodity *commodity) const;
-
-	int get_land_transport_capacity() const
-	{
-		return this->land_transport_capacity;
-	}
-
-	void set_land_transport_capacity(const int capacity);
-
-	void change_land_transport_capacity(const int change)
-	{
-		this->set_land_transport_capacity(this->get_land_transport_capacity() + change);
-	}
-
-	int get_sea_transport_capacity() const
-	{
-		return this->sea_transport_capacity;
-	}
-
-	void set_sea_transport_capacity(const int capacity);
-
-	void change_sea_transport_capacity(const int change)
-	{
-		this->set_sea_transport_capacity(this->get_sea_transport_capacity() + change);
-	}
-
-	int get_available_transport_capacity() const
-	{
-		const int total_capacity = this->get_land_transport_capacity() + this->get_sea_transport_capacity();
-		int available_capacity = total_capacity;
-		for (const auto &[commodity, transported_output] : this->get_transported_commodity_outputs()) {
-			available_capacity -= transported_output;
-		}
-		return available_capacity;
-	}
-
-	void assign_transport_orders();
 
 	const commodity_map<int> &get_bids() const
 	{
@@ -950,14 +868,10 @@ signals:
 	void stored_commodities_changed();
 	void storage_capacity_changed();
 	void commodity_inputs_changed();
-	void transportable_commodity_outputs_changed();
-	void transported_commodity_outputs_changed();
 	void commodity_outputs_changed();
 	void everyday_wealth_consumption_changed();
 	void everyday_consumption_changed();
 	void luxury_consumption_changed();
-	void land_transport_capacity_changed();
-	void sea_transport_capacity_changed();
 	void bids_changed();
 	void offers_changed();
 	void output_modifier_changed();
@@ -979,15 +893,11 @@ private:
 	commodity_map<int> stored_commodities;
 	int storage_capacity = 0;
 	commodity_map<centesimal_int> commodity_inputs;
-	commodity_map<centesimal_int> transportable_commodity_outputs;
-	commodity_map<int> transported_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	int everyday_wealth_consumption = 0;
 	commodity_map<centesimal_int> everyday_consumption;
 	commodity_map<centesimal_int> luxury_consumption;
 	commodity_map<decimillesimal_int> commodity_demands;
-	int land_transport_capacity = 0;
-	int sea_transport_capacity = 0;
 	commodity_map<int> bids;
 	commodity_map<int> offers;
 	commodity_map<int> commodity_needs;

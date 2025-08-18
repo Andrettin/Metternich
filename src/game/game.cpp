@@ -1436,12 +1436,6 @@ QCoro::Task<void> game::on_setup_finished()
 			province->get_game_data()->check_employment();
 		}
 
-		//calculate it here rather than on start so that score is displayed properly
-		country_game_data->calculate_tile_transport_levels();
-
-		//assign transport orders for countries, here rather than on start so that food output can be calculated correctly, for decreasing the population
-		country_economy->assign_transport_orders();
-
 		//decrease population if there's too much for the starting food output
 		while ((country_economy->get_food_output() - country_game_data->get_net_food_consumption()) < 0) {
 			country_game_data->decrease_population(false);
@@ -1491,11 +1485,6 @@ QCoro::Task<void> game::do_turn_coro()
 		for (const country *country : this->get_countries()) {
 			//do inflation after processing the normal turn for all countries, since subjects can send treasure fleets to their overlords, causing inflation in the latter
 			country->get_economy()->do_inflation();
-
-			if (country->get_turn_data()->is_transport_level_recalculation_needed()) {
-				country->get_game_data()->calculate_tile_transport_levels();
-				country->get_turn_data()->set_transport_level_recalculation_needed(false);
-			}
 		}
 
 		for (const country *country : this->get_countries()) {

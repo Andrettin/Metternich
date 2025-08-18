@@ -310,10 +310,6 @@ Item {
 				}
 			}
 			
-			if (site !== null && (site.settlement || resource !== null)) {
-				text += " (Max Transport: " + site.game_data.transport_level + ")"
-			}
-			
 			status_text = text
 			saved_status_text = text
 		}

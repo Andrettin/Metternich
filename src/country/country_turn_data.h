@@ -59,16 +59,6 @@ public:
 
 	void calculate_inflation();
 
-	bool is_transport_level_recalculation_needed() const
-	{
-		return this->transport_level_recalculation_needed;
-	}
-
-	void set_transport_level_recalculation_needed(const bool value)
-	{
-		this->transport_level_recalculation_needed = value;
-	}
-
 	bool is_diplomatic_map_dirty() const
 	{
 		return this->diplomatic_map_dirty;
@@ -106,7 +96,6 @@ private:
 	centesimal_int total_inflation_change;
 	std::vector<qunique_ptr<income_transaction>> income_transactions;
 	std::vector<qunique_ptr<expense_transaction>> expense_transactions;
-	bool transport_level_recalculation_needed = false;
 	bool diplomatic_map_dirty = false;
 	std::set<diplomatic_map_mode> dirty_diplomatic_map_modes;
 	std::set<diplomacy_state> dirty_diplomatic_map_diplomacy_states;

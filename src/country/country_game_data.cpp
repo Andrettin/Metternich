@@ -803,10 +803,6 @@ void country_game_data::on_province_gained(const province *province, const int m
 			province_game_data->change_commodity_bonus_for_tile_threshold(commodity, threshold, value * multiplier);
 		}
 	}
-
-	if (game::get()->is_running()) {
-		this->country->get_turn_data()->set_transport_level_recalculation_needed(true);
-	}
 }
 
 void country_game_data::on_site_gained(const site *site, const int multiplier)
@@ -3082,12 +3078,6 @@ bool country_game_data::create_transporter(const transporter_type *transporter_t
 
 void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
 {
-	if (transporter->is_ship()) {
-		this->get_economy()->change_sea_transport_capacity(transporter->get_cargo());
-	} else {
-		this->get_economy()->change_land_transport_capacity(transporter->get_cargo());
-	}
-
 	this->add_unit_name(transporter->get_name());
 	this->transporters.push_back(std::move(transporter));
 
@@ -3096,12 +3086,6 @@ void country_game_data::add_transporter(qunique_ptr<transporter> &&transporter)
 
 void country_game_data::remove_transporter(transporter *transporter)
 {
-	if (transporter->is_ship()) {
-		this->get_economy()->change_sea_transport_capacity(-transporter->get_cargo());
-	} else {
-		this->get_economy()->change_land_transport_capacity(-transporter->get_cargo());
-	}
-
 	this->remove_unit_name(transporter->get_name());
 
 	for (size_t i = 0; i < this->transporters.size(); ++i) {
@@ -3823,43 +3807,6 @@ void country_game_data::set_free_consulate_count(const consulate *consulate, con
 			if (current_consulate == nullptr || current_consulate->get_level() < consulate->get_level()) {
 				this->set_consulate(known_country, consulate);
 			}
-		}
-	}
-}
-
-void country_game_data::calculate_tile_transport_levels()
-{
-	this->clear_tile_transport_levels();
-
-	const site *capital = this->get_capital();
-	if (capital == nullptr) {
-		return;
-	}
-
-	map::get()->calculate_tile_transport_level(capital->get_map_data()->get_tile_pos());
-
-	//calculate transport levels beginning from sites with ports
-	for (const province *province : this->get_provinces()) {
-		for (const site *site : province->get_game_data()->get_sites()) {
-			if (site == capital) {
-				//already calculated
-				continue;
-			}
-
-			if (site->get_game_data()->get_port_level() == 0) {
-				continue;
-			}
-
-			map::get()->calculate_tile_transport_level(site->get_map_data()->get_tile_pos());
-		}
-	}
-}
-
-void country_game_data::clear_tile_transport_levels()
-{
-	for (const province *province : this->get_provinces()) {
-		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-			map::get()->clear_tile_transport_level(settlement->get_map_data()->get_tile_pos());
 		}
 	}
 }
