@@ -258,7 +258,7 @@ void map::update_tile_terrain_tile(const QPoint &tile_pos)
 			}
 
 			if (!tile->get_terrain()->get_subtiles().empty()) {
-				std::array<const std::vector<int> *, 4> terrain_subtiles {};
+				std::array<const std::vector<int> *, 4> terrain_subtiles{};
 
 				if (tile->get_terrain()->has_adjacency_subtiles()) {
 					const std::array<terrain_adjacency, 4> subtile_adjacencies = adjacency.get_subtile_adjacencies();

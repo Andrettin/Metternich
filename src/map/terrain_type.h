@@ -211,8 +211,6 @@ public:
 
 	void set_adjacency_subtiles(const terrain_adjacency &adjacency, const std::vector<int> &subtiles);
 
-	bool is_border() const;
-
 signals:
 	void changed();
 

@@ -17,8 +17,6 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
-#include "map/terrain_adjacency.h"
-#include "map/terrain_adjacency_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "ui/icon.h"
@@ -135,40 +133,6 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 
 				return overlay_image_sources;
-			}
-			case role::border_image_sources: {
-				QStringList border_image_sources;
-
-				const std::vector<direction> &country_border_directions = tile->get_country_border_directions();
-				if (!country_border_directions.empty()) {
-					terrain_adjacency adjacency;
-					for (const direction direction : country_border_directions) {
-						adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::other);
-					}
-
-					assert_throw(defines::get()->get_country_border_terrain()->has_adjacency_subtiles());
-
-					std::array<const std::vector<int> *, 4> potential_terrain_subtiles {};
-
-					const std::array<terrain_adjacency, 4> subtile_adjacencies = adjacency.get_subtile_adjacencies();
-
-					for (size_t i = 0; i < potential_terrain_subtiles.size(); ++i) {
-						potential_terrain_subtiles[i] = &defines::get()->get_country_border_terrain()->get_adjacency_subtiles(subtile_adjacencies.at(i));
-					}
-
-					std::array<short, 4> terrain_subtiles {};
-					for (size_t i = 0; i < potential_terrain_subtiles.size(); ++i) {
-						const short terrain_subtile = static_cast<short>((*potential_terrain_subtiles[i]).at(0));
-
-						terrain_subtiles[i] = terrain_subtile;
-					}
-
-					for (const short subtile : terrain_subtiles) {
-						border_image_sources.push_back(map_grid_model::build_image_source(defines::get()->get_country_border_terrain(), subtile));
-					}
-				}
-
-				return border_image_sources;
 			}
 			case role::object_image_sources: {
 				QStringList object_image_sources;

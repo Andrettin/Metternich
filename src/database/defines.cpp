@@ -19,7 +19,6 @@
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
-#include "util/size_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 

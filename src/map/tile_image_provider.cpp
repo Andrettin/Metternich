@@ -37,7 +37,6 @@ QCoro::Task<void> tile_image_provider::load_image(const std::string id)
 
 	bool is_subtile_image = false;
 	bool is_frame_image = false;
-	bool is_border = false;
 
 	if (tile_image_type == "terrain") {
 		const terrain_type *terrain = terrain_type::get(identifier);
@@ -45,11 +44,6 @@ QCoro::Task<void> tile_image_provider::load_image(const std::string id)
 		is_frame_image = true;
 
 		if (!terrain->get_subtiles().empty()) {
-			is_subtile_image = true;
-		}
-
-		if (terrain->is_border()) {
-			is_border = true;
 			is_subtile_image = true;
 		}
 	} else if (tile_image_type == "celestial_body") {
@@ -120,7 +114,7 @@ QCoro::Task<void> tile_image_provider::load_image(const std::string id)
 
 	assert_throw(!image.isNull());
 
-	const QSize frame_size = is_subtile_image ? (is_border ? defines::get()->get_border_subtile_size() : defines::get()->get_tile_size() / 2) : defines::get()->get_tile_size();
+	const QSize frame_size = is_subtile_image ? defines::get()->get_tile_size() / 2 : defines::get()->get_tile_size();
 
 	if (image_scale_factor != scale_factor) {
 		co_await QtConcurrent::run([this, &image, &scale_factor, &image_scale_factor, frame_size]() {

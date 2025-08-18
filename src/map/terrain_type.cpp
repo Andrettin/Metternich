@@ -170,12 +170,10 @@ void terrain_type::initialize()
 
 void terrain_type::check() const
 {
-	if (!this->is_border()) {
-		assert_throw(this->get_color().isValid());
+	assert_throw(this->get_color().isValid());
 
-		if (this->get_icon() == nullptr) {
-			throw std::runtime_error(std::format("Terrain type \"{}\" has no icon.", this->get_identifier()));
-		}
+	if (this->get_icon() == nullptr) {
+		throw std::runtime_error(std::format("Terrain type \"{}\" has no icon.", this->get_identifier()));
 	}
 
 	assert_throw(!this->get_image_filepath().empty());
@@ -270,11 +268,6 @@ void terrain_type::set_adjacency_subtiles(const terrain_adjacency &adjacency, co
 	//if this is false, that means there was already a definition for the same adjacency data
 	//multiple adjacency definitions with the same adjacency data is an error
 	assert_throw(result.second); 
-}
-
-bool terrain_type::is_border() const
-{
-	return defines::get()->get_country_border_terrain() == this;
 }
 
 }

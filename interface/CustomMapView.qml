@@ -83,24 +83,6 @@ Item {
 		}
 	}
 	
-	TableView {
-		id: border_map
-		anchors.fill: map
-		leftMargin: 0
-		rightMargin: 0
-		topMargin: 0
-		bottomMargin: 0
-		contentX: map.contentX
-		contentY: map.contentY
-		contentWidth: tile_size * metternich.map.width
-		contentHeight: tile_size * metternich.map.height
-		boundsBehavior: Flickable.StopAtBounds
-		clip: true
-		visible: false
-		model: MapGridModel {}
-		delegate: TileBorderView {}
-	}
-	
 	RightBar {
 		id: right_bar
 		anchors.top: parent.top
