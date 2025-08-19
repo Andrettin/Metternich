@@ -25,3 +25,18 @@ earth_random = {
 	separate_poles = true
 	pole_flattening = 100
 }
+
+europe = {
+	name = "Europe"
+	size = { 1024 857 }
+	world = earth
+	map_projection = miller
+	min_longitude = -15
+	max_longitude = 30
+	min_latitude = 30
+	max_latitude = 60
+	terrain_image_filepath = "earth/terrain_europe.png"
+	river_image_filepath = "earth/rivers_europe.png"
+	#route_image_filepath = "earth/routes.png"
+	province_image_filepath = "earth/provinces_europe.png"
+}
