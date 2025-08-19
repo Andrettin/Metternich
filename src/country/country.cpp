@@ -192,7 +192,7 @@ bool country::is_clade() const
 
 const QColor &country::get_color() const
 {
-	if (!this->is_great_power()) {
+	if (!this->is_great_power() && !this->color.isValid()) {
 		return defines::get()->get_minor_nation_color();
 	}
 
