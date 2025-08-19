@@ -161,6 +161,20 @@ Flickable {
 		province_map.contentY = Math.min(Math.max(pixel_y, 0), province_map.contentHeight - province_map.height)
 	}
 	
+	function center_on_country_capital(country) {
+		var capital = country.game_data.capital
+		
+		if (capital === null) {
+			return
+		}
+		
+		var capital_game_data = capital.game_data
+		var capital_x = capital_game_data.tile_pos.x
+		var capital_y = capital_game_data.tile_pos.y
+		
+		center_on_tile_pos(capital_x, capital_y)
+	}
+	
 	function get_map_mode_suffix(mode, province) {
 		switch (mode) {
 			case DiplomaticMap.Mode.Treaty:

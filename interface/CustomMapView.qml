@@ -335,5 +335,6 @@ Item {
 	
 	Component.onCompleted: {
 		map.center_on_country_capital(metternich.game.player_country)
+		province_map.center_on_country_capital(metternich.game.player_country)
 	}
 }
