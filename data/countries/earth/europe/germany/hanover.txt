@@ -1,6 +1,7 @@
 hanover = {
 	name = "Hanover"
 	type = minor_nation
+	color = { 164 217 127 }
 	culture = german
 	default_religion = protestant
 	default_tier = kingdom

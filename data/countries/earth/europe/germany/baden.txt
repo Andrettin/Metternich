@@ -1,6 +1,7 @@
 baden = {
 	name = "Baden"
 	type = minor_nation
+	color = { 118 229 215 }
 	culture = german
 	default_religion = protestant
 	default_tier = duchy
