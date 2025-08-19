@@ -1,6 +1,7 @@
 nassau = {
 	name = "Nassau"
 	type = minor_nation
+	color = { 107 94 169 }
 	culture = german
 	default_religion = protestant
 	default_tier = county
