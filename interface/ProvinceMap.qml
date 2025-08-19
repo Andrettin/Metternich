@@ -56,49 +56,19 @@ Flickable {
 						province_map.selected_province = province
 					}
 				}
-			}
-			
-			CustomTooltip {
-				text: province.game_data.current_cultural_name + tooltip_suffix
-				visible: province_mouse_area.containsMouse
 				
-				property string tooltip_suffix: "" /*province_mouse_area.containsMouse ? (province_map.mode === DiplomaticMap.Mode.Terrain ?
-					format_text("\n" + small_text(counts_to_percent_strings(country.game_data.tile_terrain_counts)))
-				: (province_map.mode === DiplomaticMap.Mode.Cultural ?
-					format_text("\n" + small_text(counts_to_percent_strings(country.game_data.population.culture_counts)))
-				: (province_map.mode === DiplomaticMap.Mode.Religious ?
-					format_text("\n" + small_text(counts_to_percent_strings(country.game_data.population.religion_counts)))
-				: ""))) : ""*/
-				
-				
-				function counts_to_percent_strings(counts) {
-					var str = ""
+				onContainsMouseChanged: {
+					var text = province.game_data.current_cultural_name
 					
-					var total_count = 0
-					
-					for (const kv_pair of counts) {
-						var count = kv_pair.value
-						total_count += count
+					if (province.game_data.owner !== null) {
+						text += ", " + province.game_data.owner.name
 					}
 					
-					var first = true
-					
-					for (const kv_pair of counts) {
-						var key = kv_pair.key
-						var count = kv_pair.value
-						
-						if (first) {
-							first = false
-						} else {
-							str += "\n"
-						}
-						
-						var color_hex_str = color_hex_string(key.color)
-						
-						str += "<font color=\"#" + color_hex_str + "\">⬤</font> " + (count * 100 / total_count).toFixed(2) + "% " + key.name
+					if (containsMouse) {
+						status_text = text
+					} else if (status_text === text) {
+						status_text = ""
 					}
-					
-					return str
 				}
 			}
 		}
