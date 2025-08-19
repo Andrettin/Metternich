@@ -461,7 +461,11 @@ const QColor &province_game_data::get_map_color() const
 		return this->get_owner()->get_game_data()->get_diplomatic_map_color();
 	}
 
-	return defines::get()->get_minor_nation_color();
+	if (this->province->is_water_zone()) {
+		return defines::get()->get_ocean_color();
+	} else {
+		return defines::get()->get_minor_nation_color();
+	}
 }
 
 QImage province_game_data::prepare_map_image() const

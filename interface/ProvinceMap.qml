@@ -50,7 +50,7 @@ Flickable {
 				maskSource: parent.source
 				
 				onClicked: {
-					if (selected) {
+					if (selected || province.water_zone) {
 						province_map.selected_province = null
 					} else {
 						province_map.selected_province = province
