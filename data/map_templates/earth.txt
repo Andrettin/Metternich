@@ -40,3 +40,18 @@ europe = {
 	#route_image_filepath = "earth/routes.png"
 	province_image_filepath = "earth/provinces_europe.png"
 }
+
+central_europe = {
+	name = "Central Europe"
+	size = { 546 358 }
+	world = earth
+	map_projection = miller
+	min_longitude = 2
+	max_longitude = 26
+	min_latitude = 44
+	max_latitude = 56.01
+	terrain_image_filepath = "earth/terrain_central_europe.png"
+	#river_image_filepath = "earth/rivers_europe.png"
+	#route_image_filepath = "earth/routes.png"
+	province_image_filepath = "earth/provinces_central_europe.png"
+}
