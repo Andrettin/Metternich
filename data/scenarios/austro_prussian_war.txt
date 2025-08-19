@@ -3,6 +3,7 @@ austro_prussian_war = {
 	parent_scenario = restoration_of_europe
 	start_date = 1866
 	map_template = earth
+	hidden = true
 	default_countries = {
 		austria
 		prussia

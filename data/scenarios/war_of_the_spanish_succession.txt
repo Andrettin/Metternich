@@ -3,4 +3,5 @@ war_of_the_spanish_succession = {
 	parent_scenario = age_of_discovery
 	start_date = 1701
 	map_template = earth
+	hidden = true
 }

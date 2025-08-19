@@ -2,6 +2,7 @@ age_of_discovery = {
 	name = "Age of Discovery"
 	start_date = 1492
 	map_template = earth
+	hidden = true
 	default_countries = {
 		england
 		france

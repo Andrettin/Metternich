@@ -3,6 +3,7 @@ first_world_war = {
 	parent_scenario = restoration_of_europe
 	start_date = 1914.7.28
 	map_template = earth
+	hidden = true
 	default_countries = {
 		austria
 		france

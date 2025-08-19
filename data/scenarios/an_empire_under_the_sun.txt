@@ -3,6 +3,7 @@ an_empire_under_the_sun = {
 	parent_scenario = restoration_of_europe
 	start_date = 1836
 	map_template = earth
+	hidden = true
 	default_countries = {
 		great_britain
 	}

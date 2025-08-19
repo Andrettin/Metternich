@@ -3,6 +3,7 @@ war_of_the_austrian_succession = {
 	parent_scenario = age_of_discovery
 	start_date = 1740
 	map_template = earth
+	hidden = true
 	default_countries = {
 		austria
 		prussia

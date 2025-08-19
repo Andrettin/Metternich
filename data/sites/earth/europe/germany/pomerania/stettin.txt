@@ -3,6 +3,7 @@ stettin = {
 	world = earth
 	geocoordinate = { 14.53000687530 53.42039430650 } #from Natural Earth
 	type = settlement
+	province = hither_pomerania
 	cultural_names = {
 		polish = "Szczecin"
 	}
