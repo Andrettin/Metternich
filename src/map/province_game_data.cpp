@@ -455,6 +455,128 @@ const std::vector<const site *> &province_game_data::get_settlement_sites() cons
 	return this->province->get_map_data()->get_settlement_sites();
 }
 
+const QColor &province_game_data::get_map_color() const
+{
+	if (this->get_owner() != nullptr) {
+		return this->get_owner()->get_game_data()->get_diplomatic_map_color();
+	}
+
+	return defines::get()->get_minor_nation_color();
+}
+
+QImage province_game_data::prepare_map_image() const
+{
+	assert_throw(this->province->get_map_data()->get_territory_rect().width() > 0);
+	assert_throw(this->province->get_map_data()->get_territory_rect().height() > 0);
+
+	QImage image(this->province->get_map_data()->get_territory_rect().size(), QImage::Format_RGBA8888);
+	image.fill(Qt::transparent);
+
+	return image;
+}
+
+QCoro::Task<QImage> province_game_data::finalize_map_image(QImage &&image) const
+{
+	QImage scaled_image;
+
+	const int tile_pixel_size = map::get()->get_diplomatic_map_tile_pixel_size();
+
+	co_await QtConcurrent::run([tile_pixel_size, &image, &scaled_image]() {
+		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	image = std::move(scaled_image);
+
+	std::vector<QPoint> border_pixels;
+
+	for (int x = 0; x < image.width(); ++x) {
+		for (int y = 0; y < image.height(); ++y) {
+			const QPoint pixel_pos(x, y);
+			const QColor pixel_color = image.pixelColor(pixel_pos);
+
+			if (pixel_color.alpha() == 0) {
+				continue;
+			}
+
+			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (image.width() - 1) || pixel_pos.y() == (image.height() - 1)) {
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			if (pixel_color.alpha() != 255) {
+				//blended color
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			bool is_border_pixel = false;
+			point::for_each_cardinally_adjacent_until(pixel_pos, [&image, &is_border_pixel](const QPoint &adjacent_pos) {
+				if (image.pixelColor(adjacent_pos).alpha() != 0) {
+					return false;
+				}
+
+				is_border_pixel = true;
+				return true;
+			});
+
+			if (is_border_pixel) {
+				border_pixels.push_back(pixel_pos);
+			}
+		}
+	}
+
+	const QColor &border_pixel_color = defines::get()->get_country_border_color();
+
+	for (const QPoint &border_pixel_pos : border_pixels) {
+		image.setPixelColor(border_pixel_pos, border_pixel_color);
+	}
+
+	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+
+	co_await QtConcurrent::run([&scale_factor, &image, &scaled_image]() {
+		scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+	});
+
+	co_return scaled_image;
+}
+
+QCoro::Task<void> province_game_data::create_map_image()
+{
+	const map *map = map::get();
+
+	QImage diplomatic_map_image = this->prepare_map_image();
+	QImage selected_diplomatic_map_image = diplomatic_map_image;
+
+	const QColor &color = this->get_map_color();
+	const QColor &selected_color = defines::get()->get_selected_country_color();
+
+	for (int x = 0; x < this->province->get_map_data()->get_territory_rect().width(); ++x) {
+		for (int y = 0; y < this->province->get_map_data()->get_territory_rect().height(); ++y) {
+			const QPoint relative_tile_pos = QPoint(x, y);
+			const tile *tile = map->get_tile(this->province->get_map_data()->get_territory_rect().topLeft() + relative_tile_pos);
+
+			if (tile->get_province() != this->province) {
+				continue;
+			}
+
+			diplomatic_map_image.setPixelColor(relative_tile_pos, color);
+			selected_diplomatic_map_image.setPixelColor(relative_tile_pos, selected_color);
+		}
+	}
+
+	this->map_image = co_await this->finalize_map_image(std::move(diplomatic_map_image));
+	this->selected_map_image = co_await this->finalize_map_image(std::move(selected_diplomatic_map_image));
+
+	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
+	this->map_image_rect = QRect(this->province->get_map_data()->get_territory_rect().topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->map_image.size());
+
+	emit map_image_changed();
+}
+
 bool province_game_data::produces_commodity(const commodity *commodity) const
 {
 	for (const QPoint &tile_pos : this->get_resource_tiles()) {

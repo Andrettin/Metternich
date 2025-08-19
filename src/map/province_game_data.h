@@ -51,6 +51,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(const metternich::country* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
+	Q_PROPERTY(QRect map_image_rect READ get_map_image_rect NOTIFY map_image_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect CONSTANT)
@@ -129,6 +130,31 @@ public:
 	const std::vector<QPoint> &get_resource_tiles() const;
 	const std::vector<const site *> &get_sites() const;
 	const std::vector<const site *> &get_settlement_sites() const;
+
+	const QColor &get_map_color() const;
+
+	const QImage &get_map_image() const
+	{
+		return this->map_image;
+	}
+
+	QImage prepare_map_image() const;
+
+	[[nodiscard]]
+	QCoro::Task<QImage> finalize_map_image(QImage &&image) const;
+
+	[[nodiscard]]
+	QCoro::Task<void> create_map_image();
+
+	const QRect &get_map_image_rect() const
+	{
+		return this->map_image_rect;
+	}
+
+	const QImage &get_selected_map_image() const
+	{
+		return this->selected_map_image;
+	}
 
 	int get_settlement_count() const
 	{
@@ -458,6 +484,7 @@ signals:
 	void owner_changed();
 	void culture_changed();
 	void religion_changed();
+	void map_image_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void governor_changed();
@@ -470,6 +497,9 @@ private:
 	const country *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
+	QImage map_image;
+	QImage selected_map_image;
+	QRect map_image_rect;
 	int settlement_count = 0; //only includes built settlements
 	scripted_province_modifier_map<int> scripted_modifiers;
 	std::vector<population_unit *> population_units;

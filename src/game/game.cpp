@@ -1372,6 +1372,10 @@ QCoro::Task<void> game::on_setup_finished()
 {
 	co_await this->create_diplomatic_map_image();
 
+	for (const province *province : map::get()->get_provinces()) {
+		co_await province->get_game_data()->create_map_image();
+	}
+
 	emit countries_changed();
 
 	for (const country *country : this->get_countries()) {
