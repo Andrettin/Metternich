@@ -195,16 +195,3 @@ spiritual = {
 		}
 	}
 }
-
-well_connected = {
-	name = "Well-Connected"
-	types = {
-		ruler
-	}
-	icon = music
-	office_modifiers = {
-		ruler = {
-			advisor_cost_modifier = -20
-		}
-	}
-}

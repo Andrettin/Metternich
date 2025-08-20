@@ -67,7 +67,6 @@ void character_game_data::apply_history()
 
 	if ((this->character->has_role(character_role::advisor) || this->character->has_role(character_role::leader) || this->character->has_role(character_role::civilian)) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
 		country_game_data *country_game_data = country->get_game_data();
-		country_government *country_government = country->get_government();
 		country_technology *country_technology = country->get_technology();
 		const technology *obsolescence_technology = this->character->get_obsolescence_technology();
 
@@ -78,11 +77,7 @@ void character_game_data::apply_history()
 		if (obsolescence_technology != nullptr && country_technology->has_technology(obsolescence_technology)) {
 			this->set_dead(true);
 		} else {
-			if (this->character->has_role(character_role::advisor)) {
-				if (country_government->can_have_advisors() && !country_government->has_incompatible_advisor_to(this->character)) {
-					country_government->add_advisor(this->character);
-				}
-			} else if (this->character->has_role(character_role::leader)) {
+			if (this->character->has_role(character_role::leader)) {
 				const province *deployment_province = character_history->get_deployment_province();
 				if (deployment_province == nullptr && country_game_data->get_capital_province() != nullptr) {
 					deployment_province = country_game_data->get_capital_province();
@@ -335,9 +330,6 @@ void character_game_data::change_attribute_value(const character_attribute attri
 	if (this->get_office() != nullptr) {
 		this->apply_office_modifier(this->country, this->get_office(), -1);
 	}
-	if (this->is_advisor()) {
-		this->apply_advisor_modifier(this->get_country(), -1);
-	}
 	if (this->is_governor()) {
 		this->apply_governor_modifier(this->character->get_governable_province(), -1);
 	}
@@ -360,9 +352,6 @@ void character_game_data::change_attribute_value(const character_attribute attri
 
 	if (this->get_office() != nullptr) {
 		this->apply_office_modifier(this->country, this->get_office(), 1);
-	}
-	if (this->is_advisor()) {
-		this->apply_advisor_modifier(this->get_country(), 1);
 	}
 	if (this->is_governor()) {
 		this->apply_governor_modifier(this->character->get_governable_province(), 1);
@@ -529,18 +518,6 @@ void character_game_data::on_trait_gained(const character_trait *trait, const in
 		}
 	}
 
-	if (this->is_advisor()) {
-		assert_throw(this->get_country() != nullptr);
-
-		if (trait->get_advisor_modifier() != nullptr || trait->get_scaled_advisor_modifier() != nullptr) {
-			this->apply_trait_advisor_modifier(trait, this->get_country(), multiplier);
-		}
-
-		if (trait->get_advisor_effects() != nullptr && multiplier > 0) {
-			context ctx(this->get_country());
-			trait->get_advisor_effects()->do_effects(this->get_country(), ctx);
-		}
-	}
 	if (this->is_governor()) {
 		assert_throw(this->get_country() != nullptr);
 
@@ -786,92 +763,6 @@ void character_game_data::apply_trait_office_modifier(const character_trait *tra
 
 	if (trait->get_scaled_office_modifier(office) != nullptr) {
 		trait->get_scaled_office_modifier(office)->apply(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
-	}
-}
-
-bool character_game_data::is_advisor() const
-{
-	return this->get_country() != nullptr && vector::contains(this->get_country()->get_government()->get_advisors(), this->character);
-}
-
-QString character_game_data::get_advisor_effects_string(const metternich::country *country) const
-{
-	assert_throw(this->character->has_role(character_role::advisor));
-
-	std::string str;
-
-	for (const character_trait *trait : this->get_traits()) {
-		if (trait->get_advisor_modifier() == nullptr && trait->get_scaled_advisor_modifier() == nullptr && trait->get_advisor_effects() == nullptr) {
-			continue;
-		}
-
-		if (!trait->has_hidden_name()) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += string::highlight(trait->get_name());
-		}
-
-		const size_t indent = trait->has_hidden_name() ? 0 : 1;
-
-		if (trait->get_advisor_modifier() != nullptr) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += trait->get_advisor_modifier()->get_string(country, 1, indent);
-		}
-
-		if (trait->get_scaled_advisor_modifier() != nullptr) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += trait->get_scaled_advisor_modifier()->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), indent);
-		}
-
-		if (trait->get_advisor_effects() != nullptr) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += trait->get_advisor_effects()->get_effects_string(country, read_only_context(country), indent);
-		}
-	}
-
-	if (this->get_country() != country) {
-		const metternich::character *replaced_advisor = country->get_government()->get_replaced_advisor_for(this->character);
-		if (replaced_advisor != nullptr) {
-			if (!str.empty()) {
-				str += '\n';
-			}
-
-			str += std::format("Replaces {}", replaced_advisor->get_full_name());
-		}
-	}
-
-	return QString::fromStdString(str);
-}
-
-void character_game_data::apply_advisor_modifier(const metternich::country *country, const int multiplier) const
-{
-	assert_throw(this->character->has_role(character_role::advisor));
-	assert_throw(country != nullptr);
-
-	for (const character_trait *trait : this->get_traits()) {
-		this->apply_trait_advisor_modifier(trait, country, multiplier);
-	}
-}
-
-void character_game_data::apply_trait_advisor_modifier(const character_trait *trait, const metternich::country *country, const int multiplier) const
-{
-	if (trait->get_advisor_modifier() != nullptr) {
-		trait->get_advisor_modifier()->apply(country, multiplier);
-	}
-
-	if (trait->get_scaled_advisor_modifier() != nullptr) {
-		trait->get_scaled_advisor_modifier()->apply(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
 	}
 }
 

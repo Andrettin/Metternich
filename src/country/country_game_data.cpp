@@ -2581,7 +2581,6 @@ void country_game_data::apply_modifier(const modifier<const metternich::country>
 void country_game_data::check_characters()
 {
 	this->get_government()->check_office_holders();
-	this->get_government()->check_advisors();
 
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->check_governor();

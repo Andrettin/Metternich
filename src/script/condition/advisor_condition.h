@@ -1,6 +1,7 @@
 #pragma once
 
 #include "character/character.h"
+#include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_government.h"
 #include "script/condition/condition.h"
@@ -27,7 +28,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return vector::contains(scope->get_government()->get_advisors(), this->advisor);
+		return this->advisor->has_role(character_role::advisor) && this->advisor->get_game_data()->get_country() == scope && this->advisor->get_game_data()->get_office() != nullptr;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

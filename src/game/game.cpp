@@ -438,11 +438,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					throw std::runtime_error(std::format("Cannot set \"{}\" as an office holder for \"{}\", as they are already assigned to another country.", office_holder->get_identifier(), country->get_identifier()));
 				}
 
-				if (office_holder->has_role(character_role::advisor) && defines::get()->get_advisors_game_rule() != nullptr && game::get()->get_rules()->get_value(defines::get()->get_advisors_game_rule()) && country_government->can_have_advisors()) {
-					country_government->add_advisor(office_holder);
-				} else {
-					country_government->set_office_holder(office, office_holder);
-				}
+				country_government->set_office_holder(office, office_holder);
 
 				if (office_holder->get_required_technology() != nullptr) {
 					country_technology->add_technology_with_prerequisites(office_holder->get_required_technology());
@@ -1689,7 +1685,6 @@ void game::remove_country(country *country)
 		std::erase(this->great_powers, country);
 	}
 
-	country->get_government()->clear_advisors();
 	country->get_military()->clear_leaders();
 
 	for (const metternich::country *other_country : this->get_countries()) {

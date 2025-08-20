@@ -155,11 +155,6 @@ public:
 	void apply_office_modifier(const metternich::country *country, const metternich::office *office, const int multiplier) const;
 	void apply_trait_office_modifier(const character_trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const;
 
-	bool is_advisor() const;
-	Q_INVOKABLE QString get_advisor_effects_string(const metternich::country *country) const;
-	void apply_advisor_modifier(const metternich::country *country, const int multiplier) const;
-	void apply_trait_advisor_modifier(const character_trait *trait, const metternich::country *country, const int multiplier) const;
-
 	bool is_governor() const;
 	std::string get_governor_modifier_string(const metternich::province *province) const;
 

@@ -27,9 +27,7 @@ class country_government final : public QObject
 	Q_PROPERTY(QVariantList office_holders READ get_office_holders_qvariant_list NOTIFY office_holders_changed)
 	Q_PROPERTY(QVariantList appointed_office_holders READ get_appointed_office_holders_qvariant_list NOTIFY appointed_office_holders_changed)
 	Q_PROPERTY(QVariantList available_offices READ get_available_offices_qvariant_list NOTIFY available_offices_changed)
-	Q_PROPERTY(QVariantList advisors READ get_advisors_qvariant_list NOTIFY advisors_changed)
-	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY advisors_changed)
-	Q_PROPERTY(const metternich::character* next_advisor READ get_next_advisor WRITE set_next_advisor NOTIFY next_advisor_changed)
+	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY office_holders_changed)
 	Q_PROPERTY(const metternich::portrait* interior_minister_portrait READ get_interior_minister_portrait NOTIFY office_holders_changed)
 	Q_PROPERTY(const metternich::portrait* war_minister_portrait READ get_war_minister_portrait NOTIFY office_holders_changed)
 
@@ -142,22 +140,11 @@ public:
 	std::vector<const office *> get_appointable_available_offices() const;
 	QVariantList get_available_offices_qvariant_list() const;
 
-	const std::vector<const character *> &get_advisors() const
-	{
-		return this->advisors;
-	}
-
-	QVariantList get_advisors_qvariant_list() const;
-	void check_advisors();
-	void add_advisor(const character *advisor);
-	void remove_advisor(const character *advisor);
-	void clear_advisors();
-
 	int get_advisor_cost() const
 	{
 		int cost = 0;
 
-		const int advisor_count = static_cast<int>(this->get_advisors().size() + this->get_office_holders().size() + this->get_appointed_office_holders().size()) - 1;
+		const int advisor_count = static_cast<int>(this->get_office_holders().size() + this->get_appointed_office_holders().size()) - 1;
 
 		if (advisor_count <= 0) {
 			cost = country_government::base_advisor_cost / 2;
@@ -165,36 +152,13 @@ public:
 			cost = country_government::base_advisor_cost * (advisor_count + 1);
 		}
 
-		cost *= 100 + this->get_advisor_cost_modifier();
-		cost /= 100;
-
 		return std::max(0, cost);
 	}
 
 	commodity_map<int> get_advisor_commodity_costs(const office *office) const;
 	Q_INVOKABLE QVariantList get_advisor_commodity_costs_qvariant_list(const metternich::office *office) const;
 
-	const character *get_next_advisor() const
-	{
-		return this->next_advisor;
-	}
-
-	void set_next_advisor(const character *advisor)
-	{
-		if (advisor == this->get_next_advisor()) {
-			return;
-		}
-
-		this->next_advisor = advisor;
-		emit next_advisor_changed();
-	}
-
-	void choose_next_advisor();
-	bool can_have_advisors() const;
-	bool can_recruit_advisor(const character *advisor) const;
-	bool has_incompatible_advisor_to(const character *advisor) const;
-	const character *get_replaced_advisor_for(const character *advisor) const;
-	bool can_have_advisors_or_appointable_offices() const;
+	bool can_have_appointable_offices() const;
 
 	const metternich::portrait *get_interior_minister_portrait() const;
 	const metternich::portrait *get_war_minister_portrait() const;
@@ -209,16 +173,6 @@ public:
 		this->law_cost_modifier += change;
 	}
 
-	int get_advisor_cost_modifier() const
-	{
-		return this->advisor_cost_modifier;
-	}
-
-	void change_advisor_cost_modifier(const int change)
-	{
-		this->advisor_cost_modifier += change;
-	}
-
 signals:
 	void office_title_names_changed();
 	void government_type_changed();
@@ -227,9 +181,6 @@ signals:
 	void office_holders_changed();
 	void appointed_office_holders_changed();
 	void available_offices_changed();
-	void advisors_changed();
-	void next_advisor_changed();
-	void advisor_recruited(const character *advisor);
 
 private:
 	const metternich::country *country = nullptr;
@@ -237,10 +188,7 @@ private:
 	law_group_map<const law *> laws;
 	data_entry_map<office, const character *> office_holders;
 	data_entry_map<office, const character *> appointed_office_holders;
-	std::vector<const character *> advisors;
-	const character *next_advisor = nullptr;
 	int law_cost_modifier = 0;
-	int advisor_cost_modifier = 0;
 };
 
 }

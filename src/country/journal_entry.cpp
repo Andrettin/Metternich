@@ -202,7 +202,7 @@ bool journal_entry::check_preconditions(const country *country) const
 		}
 	}
 
-	const bool can_recruit_advisors = country->get_government()->can_have_advisors_or_appointable_offices();
+	const bool can_recruit_advisors = country->get_government()->can_have_appointable_offices();
 
 	for (const character *character : this->get_recruited_characters()) {
 		const metternich::country *character_country = character->get_game_data()->get_country();
@@ -261,7 +261,6 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 	}
 
 	const country_game_data *country_game_data = country->get_game_data();
-	const country_government *country_government = country->get_government();
 	const country_military *country_military = country->get_military();
 	const country_technology *country_technology = country->get_technology();
 
@@ -327,7 +326,7 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 		for (const character_role role : character->get_roles()) {
 			switch (role) {
 				case character_role::advisor:
-					recruited = vector::contains(country_government->get_advisors(), character);
+					recruited = character->get_game_data()->get_office() != nullptr && character->get_game_data()->get_country() == country;
 					break;
 				case character_role::leader:
 					recruited = vector::contains(country_military->get_leaders(), character);

@@ -139,10 +139,6 @@ Item {
 		id: research_choice_dialog
 	}
 	
-	AdvisorChoiceDialog {
-		id: advisor_choice_dialog
-	}
-	
 	CharacterDialog {
 		id: character_dialog
 	}
@@ -208,11 +204,6 @@ Item {
 			research_choice_dialog.free_technology = true
 			research_choice_dialog.open()
 		}
-		
-		function onNext_advisor_choosable(potential_advisors) {
-			advisor_choice_dialog.potential_advisors = potential_advisors
-			advisor_choice_dialog.open()
-		}
 	}
 	
 	Connections {
@@ -276,33 +267,6 @@ Item {
 					if (!technology.discovery && !(menu_stack.currentItem instanceof TechnologyView)) {
 						menu_stack.push("TechnologyView.qml")
 					}
-				}
-			})
-			
-			dialog.open()
-		}
-	}
-	
-	Connections {
-		target: metternich.game.player_country.game_data.government
-		
-		function onAdvisor_recruited(advisor) {
-			if (notification_dialog_component.status == Component.Error) {
-				console.error(notification_dialog_component.errorString())
-				return
-			}
-			
-			var dialog = notification_dialog_component.createObject(map_view, {
-				title: "Advisor Recruited",
-				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
-				text: "Your Excellency, " + advisor.full_name  + " has joined our nation as an advisor!",
-				second_button_text: "View Advisors",
-				second_button_effects: () => {
-					politics_view_mode = PoliticsView.Mode.Advisors
-					
-					menu_stack.push("PoliticsView.qml", {
-						country: metternich.game.player_country
-					})
 				}
 			})
 			
