@@ -43,7 +43,6 @@ class civilian_unit;
 class consulate;
 class country;
 class country_ai;
-class country_building_slot;
 class country_economy;
 class country_government;
 class country_military;
@@ -123,7 +122,6 @@ class country_game_data final : public QObject
 	Q_PROPERTY(int housing READ get_housing_int NOTIFY housing_changed)
 	Q_PROPERTY(QVariantList population_type_inputs READ get_population_type_inputs_qvariant_list NOTIFY population_type_inputs_changed)
 	Q_PROPERTY(QVariantList population_type_outputs READ get_population_type_outputs_qvariant_list NOTIFY population_type_outputs_changed)
-	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
 	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
@@ -144,14 +142,12 @@ public:
 	~country_game_data();
 
 	void do_turn();
-	void do_education();
 	void do_civilian_unit_recruitment();
 	void do_transporter_recruitment();
 	void do_population_growth();
 	void do_food_consumption(const int food_consumption);
 	void do_starvation();
 	void do_cultural_change();
-	void do_construction();
 	void do_events();
 
 	country_economy *get_economy() const
@@ -696,31 +692,8 @@ public:
 
 	population_unit *choose_education_population_unit(const education_type *education_type);
 
-	QVariantList get_building_slots_qvariant_list() const;
-	void initialize_building_slots();
-
-	const std::vector<qunique_ptr<country_building_slot>> &get_building_slots() const
-	{
-		return this->building_slots;
-	}
-
-	country_building_slot *get_building_slot(const building_slot_type *slot_type) const
-	{
-		const auto find_iterator = this->building_slot_map.find(slot_type);
-
-		if (find_iterator != this->building_slot_map.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	const building_type *get_slot_building(const building_slot_type *slot_type) const;
-	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
 	bool has_building(const building_type *building) const;
 	bool has_building_or_better(const building_type *building) const;
-	void clear_buildings();
-	bool check_free_building(const building_type *building);
 
 	int get_settlement_building_count(const building_type *building) const
 	{
@@ -1205,8 +1178,6 @@ private:
 	int food_consumption = 0;
 	population_type_map<int> population_type_inputs;
 	population_type_map<int> population_type_outputs;
-	std::vector<qunique_ptr<country_building_slot>> building_slots;
-	building_slot_type_map<country_building_slot *> building_slot_map;
 	building_type_map<int> settlement_building_counts;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;

@@ -10,7 +10,6 @@
 #include "economy/expense_transaction_type.h"
 #include "economy/income_transaction_type.h"
 #include "game/game.h"
-#include "infrastructure/country_building_slot.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -488,18 +487,6 @@ void country_economy::set_inflation(const centesimal_int &inflation)
 		return;
 	}
 
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const education_type *education_type : building_slot->get_available_education_types()) {
-			if (education_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			const int input_wealth = building_slot->get_education_type_input_wealth(education_type);
-			this->change_wealth(input_wealth);
-			this->change_wealth_income(input_wealth);
-		}
-	}
-
 	std::map<const employment_location *, profession_map<std::vector<population_unit *>>> location_employees_by_profession;
 
 	for (const province *province : this->get_game_data()->get_provinces()) {
@@ -513,18 +500,6 @@ void country_economy::set_inflation(const centesimal_int &inflation)
 	}
 
 	this->inflation = inflation;
-
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		for (const education_type *education_type : building_slot->get_available_education_types()) {
-			if (education_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			const int input_wealth = building_slot->get_education_type_input_wealth(education_type);
-			this->change_wealth(-input_wealth);
-			this->change_wealth_income(-input_wealth);
-		}
-	}
 
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
@@ -894,27 +869,6 @@ void country_economy::change_commodity_demand(const commodity *commodity, const 
 
 employment_location *country_economy::decrease_wealth_consumption(const bool restore_inputs)
 {
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		const building_type *building_type = building_slot->get_building();
-
-		if (building_type == nullptr) {
-			continue;
-		}
-
-		for (const education_type *education_type : building_slot->get_available_education_types()) {
-			if (education_type->get_input_wealth() == 0) {
-				continue;
-			}
-
-			if (!building_slot->can_decrease_education(education_type)) {
-				continue;
-			}
-
-			building_slot->decrease_education(education_type, restore_inputs);
-			return nullptr;
-		}
-	}
-
 	const std::vector<const province *> provinces = vector::shuffled(this->get_game_data()->get_provinces());
 	for (const province *province : provinces) {
 		const std::vector<employment_location *> employment_locations = vector::shuffled(province->get_game_data()->get_employment_locations());
@@ -940,27 +894,6 @@ employment_location *country_economy::decrease_wealth_consumption(const bool res
 
 employment_location *country_economy::decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs)
 {
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		const building_type *building_type = building_slot->get_building();
-
-		if (building_type == nullptr) {
-			continue;
-		}
-
-		for (const education_type *education_type : building_slot->get_available_education_types()) {
-			if (!education_type->get_input_commodities().contains(commodity)) {
-				continue;
-			}
-
-			if (!building_slot->can_decrease_education(education_type)) {
-				continue;
-			}
-
-			building_slot->decrease_education(education_type, restore_inputs);
-			return nullptr;
-		}
-	}
-
 	const std::vector<const province *> provinces = vector::shuffled(this->get_game_data()->get_provinces());
 	for (const province *province : provinces) {
 		const std::vector<employment_location *> employment_locations = vector::shuffled(province->get_game_data()->get_employment_locations());

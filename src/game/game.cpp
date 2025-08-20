@@ -35,7 +35,6 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
-#include "infrastructure/country_building_slot.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
@@ -903,11 +902,7 @@ void game::apply_site_buildings(const site *site)
 		if (building->is_provincial()) {
 			building_slot = settlement_game_data->get_building_slot(building_slot_type);
 		} else {
-			if (owner_game_data == nullptr) {
-				continue;
-			}
-
-			building_slot = owner_game_data->get_building_slot(building_slot_type);
+			continue;
 		}
 
 		assert_throw(building_slot != nullptr);
@@ -939,19 +934,11 @@ void game::apply_site_buildings(const site *site)
 		if (building->is_provincial()) {
 			slot_building = settlement_game_data->get_slot_building(building_slot_type);
 		} else {
-			if (owner == nullptr) {
-				continue;
-			}
-
-			slot_building = owner_game_data->get_slot_building(building_slot_type);
+			continue;
 		}
 
 		if (slot_building == nullptr || slot_building->get_level() < building->get_level()) {
-			if (building->is_provincial()) {
-				settlement_game_data->set_slot_building(building_slot_type, building);
-			} else {
-				owner_game_data->set_slot_building(building_slot_type, building);
-			}
+			settlement_game_data->set_slot_building(building_slot_type, building);
 		}
 
 		if (building->get_required_technology() != nullptr && owner_game_data != nullptr) {

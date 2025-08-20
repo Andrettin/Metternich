@@ -13,7 +13,6 @@
 #include "country/office.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/building_type_container.h"
-#include "infrastructure/country_building_slot.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "technology/technology.h"
@@ -49,52 +48,6 @@ void country_ai::do_turn()
 	this->choose_current_research();
 	this->appoint_office_holders();
 	this->appoint_ideas();
-
-	//build buildings
-	building_type_map<int> ai_building_desires;
-	std::vector<const building_type *> ai_desired_buildings;
-	for (const qunique_ptr<country_building_slot> &building_slot : this->get_game_data()->get_building_slots()) {
-		if (!building_slot->is_available()) {
-			continue;
-		}
-
-		const building_type *buildable_building = building_slot->get_buildable_building();
-
-		if (buildable_building == nullptr) {
-			continue;
-		}
-
-		if (building_slot->get_under_construction_building() != nullptr) {
-			continue;
-		}
-
-		int ai_building_desire = 0;
-		ai_building_desire += this->get_building_desire_modifier(buildable_building);
-
-		if (ai_building_desire <= 0) {
-			continue;
-		}
-
-		ai_building_desires[buildable_building] = ai_building_desire;
-		ai_desired_buildings.push_back(buildable_building);
-	}
-
-	std::sort(ai_desired_buildings.begin(), ai_desired_buildings.end(), [&](const building_type *lhs, const building_type *rhs) {
-		const int lhs_priority = ai_building_desires[lhs];
-		const int rhs_priority = ai_building_desires[rhs];
-		if (lhs_priority != rhs_priority) {
-			return lhs_priority > rhs_priority;
-		}
-
-		return lhs->get_identifier() < rhs->get_identifier();
-	});
-
-	for (const building_type *ai_desired_building : ai_desired_buildings) {
-		country_building_slot *building_slot = this->get_game_data()->get_building_slot(ai_desired_building->get_slot_type());
-		assert_throw(building_slot != nullptr);
-
-		building_slot->build_building(ai_desired_building);
-	}
 
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		province->get_game_data()->do_ai_turn();
