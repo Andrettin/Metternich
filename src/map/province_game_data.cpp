@@ -516,15 +516,9 @@ QCoro::Task<QImage> province_game_data::finalize_map_image(QImage &&image) const
 				continue;
 			}
 
-			bool is_border_pixel = false;
-			point::for_each_cardinally_adjacent_until(pixel_pos, [&image, &is_border_pixel](const QPoint &adjacent_pos) {
-				if (image.pixelColor(adjacent_pos).alpha() != 0) {
-					return false;
-				}
-
-				is_border_pixel = true;
-				return true;
-			});
+			const QPoint north_pos = pixel_pos + QPoint(0, -1);
+			const QPoint east_pos = pixel_pos + QPoint(1, 0);
+			const bool is_border_pixel = image.pixelColor(north_pos).alpha() == 0 || image.pixelColor(east_pos).alpha() == 0;
 
 			if (is_border_pixel) {
 				border_pixels.push_back(pixel_pos);
