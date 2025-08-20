@@ -85,6 +85,7 @@ Flickable {
 			var tile_x = Math.floor(pixel_x * tiles_per_pixel)
 			var tile_y = Math.floor(pixel_y * tiles_per_pixel)
 			map.center_on_tile(tile_x, tile_y)
+			province_map.center_on_tile_pos(tile_x, tile_y)
 		}
 		
 		function pos_in_visible_area(pixel_x, pixel_y) {
