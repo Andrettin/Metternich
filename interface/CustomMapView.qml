@@ -49,7 +49,7 @@ Item {
 		contentHeight: tile_size * metternich.map.height
 		boundsBehavior: Flickable.StopAtBounds
 		clip: true
-		visible: true
+		visible: false
 		model: MapGridModel {}
 		delegate: TileView {}
 		
