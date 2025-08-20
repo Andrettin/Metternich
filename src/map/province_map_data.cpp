@@ -77,6 +77,8 @@ void province_map_data::process_site_tile(const QPoint &tile_pos)
 	}
 
 	if (tile->get_site() != nullptr) {
+		assert_throw(tile->get_site()->get_map_data()->is_on_map());
+
 		this->sites.push_back(tile->get_site());
 
 		if (tile->get_site()->is_settlement()) {

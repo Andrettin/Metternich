@@ -109,7 +109,7 @@ void map_template::initialize()
 
 				QRect rect(tile_pos, QSize(1, 1));
 
-				static constexpr int max_range = 2;
+				static constexpr int max_range = 16;
 				for (int i = 0; i < max_range; ++i) {
 					rect.setTopLeft(rect.topLeft() - QPoint(1, 1));
 					rect.setBottomRight(rect.bottomRight() + QPoint(1, 1));

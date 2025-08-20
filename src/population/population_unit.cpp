@@ -392,6 +392,7 @@ bool population_unit::is_food_producer() const
 void population_unit::migrate_to(const metternich::site *site)
 {
 	assert_throw(site != nullptr);
+	assert_throw(site->get_map_data()->is_on_map());
 	assert_throw(site->get_game_data()->can_have_population());
 
 	this->get_province()->get_game_data()->remove_population_unit(this);
@@ -403,6 +404,7 @@ void population_unit::migrate_to(const metternich::site *site)
 	site->get_game_data()->add_population_unit(std::move(unique_ptr));
 
 	const province *province = site->get_game_data()->get_province();
+	assert_throw(province != nullptr);
 	province->get_game_data()->add_population_unit(this);
 
 	this->set_site(site);

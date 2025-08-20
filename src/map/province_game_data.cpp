@@ -85,6 +85,7 @@ void province_game_data::do_turn()
 	this->check_employment();
 
 	for (const site *site : this->get_sites()) {
+		assert_throw(site->get_map_data()->is_on_map());
 		site->get_game_data()->do_turn();
 	}
 
