@@ -1,6 +1,7 @@
 papal_states = {
 	name = "Papal States"
 	type = minor_nation
+	color = { 211 220 178 }
 	culture = italian
 	default_religion = catholic
 	default_tier = kingdom

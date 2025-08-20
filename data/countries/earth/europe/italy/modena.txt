@@ -1,6 +1,7 @@
 modena = {
 	name = "Modena"
 	type = minor_nation
+	color = { 241 252 151 }
 	culture = italian
 	default_religion = catholic
 	default_tier = duchy

@@ -1,6 +1,7 @@
 parma = {
 	name = "Parma"
 	type = minor_nation
+	color = { 128 202 129 }
 	culture = italian
 	default_religion = catholic
 	default_tier = duchy
