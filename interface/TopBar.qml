@@ -9,7 +9,7 @@ Rectangle {
 	
 	property bool prestige_visible: true
 	readonly property var stored_commodities: metternich.game.player_country.game_data.economy.stored_commodities
-	readonly property var wealth_value: metternich.game.player_country.game_data.economy.stored_commodities.length > 0 ? metternich.game.player_country.game_data.get_stored_commodity(metternich.defines.wealth_commodity) : 0 //refer to the stored commodities to ensure the counter is updated when wealth changes
+	readonly property var wealth_value: metternich.game.player_country.game_data.economy.stored_commodities.length > 0 ? metternich.game.player_country.game_data.economy.get_stored_commodity(metternich.defines.wealth_commodity) : 0 //refer to the stored commodities to ensure the counter is updated when wealth changes
 	readonly property var wealth_unit: metternich.defines.wealth_commodity.get_unit(wealth_value)
 	
 	PanelTiledBackground {
