@@ -554,10 +554,8 @@ set(script_condition_HDRS
 	src/script/condition/anarchy_condition.h
 	src/script/condition/and_condition.h
 	src/script/condition/any_adjacent_site_condition.h
-	src/script/condition/any_global_population_unit_condition.h
 	src/script/condition/any_known_country_condition.h
 	src/script/condition/any_neighbor_country_condition.h
-	src/script/condition/any_population_unit_condition.h
 	src/script/condition/any_settlement_condition.h
 	src/script/condition/any_subject_country_condition.h
 	src/script/condition/artillery_condition.h
@@ -618,7 +616,6 @@ set(script_condition_HDRS
 	src/script/condition/owns_site_condition.h
 	src/script/condition/population_scaled_commodity_condition.h
 	src/script/condition/population_type_condition.h
-	src/script/condition/population_unit_count_condition.h
 	src/script/condition/primary_attribute_condition.h
 	src/script/condition/produces_commodity_condition.h
 	src/script/condition/promotion_condition.h
@@ -659,7 +656,6 @@ set(script_effect_HDRS
 	src/script/effect/add_improvement_effect.h
 	src/script/effect/any_known_country_effect.h
 	src/script/effect/any_neighbor_country_effect.h
-	src/script/effect/any_population_unit_effect.h
 	src/script/effect/battle_effect.h
 	src/script/effect/capital_effect.h
 	src/script/effect/change_opinion_effect.h
@@ -687,7 +683,6 @@ set(script_effect_HDRS
 	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/population_scaled_commodity_effect.h
 	src/script/effect/random_effect.h
-	src/script/effect/random_global_population_unit_effect.h
 	src/script/effect/random_known_country_effect.h
 	src/script/effect/random_list_effect.h
 	src/script/effect/random_neighbor_country_effect.h

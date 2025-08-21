@@ -16,10 +16,8 @@
 #include "script/condition/anarchy_condition.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/any_adjacent_site_condition.h"
-#include "script/condition/any_global_population_unit_condition.h"
 #include "script/condition/any_known_country_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
-#include "script/condition/any_population_unit_condition.h"
 #include "script/condition/any_settlement_condition.h"
 #include "script/condition/any_subject_country_condition.h"
 #include "script/condition/artillery_condition.h"
@@ -80,7 +78,6 @@
 #include "script/condition/owns_site_condition.h"
 #include "script/condition/population_scaled_commodity_condition.h"
 #include "script/condition/population_type_condition.h"
-#include "script/condition/population_unit_count_condition.h"
 #include "script/condition/produces_commodity_condition.h"
 #include "script/condition/primary_attribute_condition.h"
 #include "script/condition/promotion_condition.h"
@@ -293,8 +290,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<has_population_religion_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_type") {
 			return std::make_unique<has_population_type_condition<scope_type>>(value, condition_operator);
-		} else if (key == "population_unit_count") {
-			return std::make_unique<population_unit_count_condition<scope_type>>(value, condition_operator);
 		}
 	}
 
@@ -394,21 +389,13 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
-		if (tag == "any_population_unit") {
-			condition = std::make_unique<any_population_unit_condition<scope_type>>(condition_operator);
-		}
-	}
-
 	if constexpr (std::is_same_v<scope_type, population_unit> || std::is_same_v<scope_type, site>) {
 		if (tag == "province") {
 			condition = std::make_unique<province_condition<scope_type>>(condition_operator);
 		}
 	}
 
-	if (tag == "any_global_population_unit") {
-		condition = std::make_unique<any_global_population_unit_condition<scope_type>>(condition_operator);
-	} else if (tag == "attacking_commander") {
+	if (tag == "attacking_commander") {
 		condition = std::make_unique<attacking_commander_condition<scope_type>>(condition_operator);
 	} else if (tag == "country") {
 		condition = std::make_unique<country_scope_condition<scope_type>>(condition_operator);
