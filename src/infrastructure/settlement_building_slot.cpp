@@ -208,7 +208,7 @@ bool settlement_building_slot::can_build_wonder(const metternich::wonder *wonder
 
 	const country_economy *country_economy = this->get_country()->get_economy();
 	const int wealth_cost = wonder->get_wealth_cost_for_country(this->get_country());
-	if (wealth_cost > 0 && country_economy->get_inflated_value(wealth_cost) > country_economy->get_wealth_with_credit()) {
+	if (wealth_cost > 0 && wealth_cost > country_economy->get_wealth_with_credit()) {
 		return false;
 	}
 
@@ -230,7 +230,7 @@ void settlement_building_slot::build_wonder(const metternich::wonder *wonder)
 	country_economy *country_economy = this->get_country()->get_economy();
 	const int wealth_cost = wonder->get_wealth_cost_for_country(this->get_country());
 	if (wealth_cost > 0) {
-		country_economy->change_wealth_inflated(-wealth_cost);
+		country_economy->change_wealth(-wealth_cost);
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_country(this->get_country())) {

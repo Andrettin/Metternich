@@ -20,15 +20,6 @@ Rectangle {
 		width: 1 * scale_factor
 	}
 	
-	SmallText {
-		id: inflation_label
-		text: "Inflation: +" + country_game_data.economy.inflation + "%"
-		anchors.top: parent.top
-		anchors.topMargin: 24 * scale_factor
-		anchors.left: parent.left
-		anchors.leftMargin: 4 * scale_factor
-	}
-	
 	TextButton {
 		id: back_button
 		anchors.horizontalCenter: parent.horizontalCenter

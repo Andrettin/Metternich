@@ -369,7 +369,7 @@ int country_military::get_military_unit_type_wealth_cost(const military_unit_typ
 		wealth_cost = std::max(wealth_cost, 1);
 	}
 
-	return this->country->get_economy()->get_inflated_value(wealth_cost);
+	return wealth_cost;
 }
 
 commodity_map<int> country_military::get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const

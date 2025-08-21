@@ -25,7 +25,6 @@ class country_economy final : public QObject
 	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int wealth_income READ get_wealth_income NOTIFY wealth_income_changed)
 	Q_PROPERTY(int credit_limit READ get_credit_limit NOTIFY credit_limit_changed)
-	Q_PROPERTY(QString inflation READ get_inflation_qstring NOTIFY inflation_changed)
 	Q_PROPERTY(QVariantList available_commodities READ get_available_commodities_qvariant_list NOTIFY available_commodities_changed)
 	Q_PROPERTY(QVariantList tradeable_commodities READ get_tradeable_commodities_qvariant_list NOTIFY tradeable_commodities_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
@@ -51,7 +50,6 @@ public:
 	void do_everyday_consumption();
 	void do_luxury_consumption();
 	void do_trade(country_map<commodity_map<int>> &country_luxury_demands);
-	void do_inflation();
 
 	const resource_map<int> &get_resource_counts() const
 	{
@@ -106,11 +104,6 @@ public:
 		this->set_wealth(this->get_wealth() + change);
 	}
 
-	void change_wealth_inflated(const int change)
-	{
-		this->change_wealth(this->get_inflated_value(change));
-	}
-
 	void add_taxable_wealth(const int taxable_wealth, const income_transaction_type tax_income_type);
 
 	int get_wealth_income() const
@@ -149,40 +142,6 @@ public:
 	int get_wealth_with_credit() const
 	{
 		return this->get_wealth() + this->get_credit_limit();
-	}
-
-	const centesimal_int &get_inflation() const
-	{
-		return this->inflation;
-	}
-
-	QString get_inflation_qstring() const
-	{
-		return QString::fromStdString(this->get_inflation().to_string());
-	}
-
-	void set_inflation(const centesimal_int &inflation);
-
-	void change_inflation(const centesimal_int &change)
-	{
-		this->set_inflation(this->get_inflation() + change);
-	}
-
-	Q_INVOKABLE int get_inflated_value(const int value) const
-	{
-		return (value * (centesimal_int(100) + this->get_inflation()) / 100).to_int();
-	}
-
-	const centesimal_int &get_inflation_change() const
-	{
-		return this->inflation_change;
-	}
-
-	void set_inflation_change(const centesimal_int &inflation_change);
-
-	void change_inflation_change(const centesimal_int &change)
-	{
-		this->set_inflation_change(this->get_inflation_change() + change);
 	}
 
 	const commodity_set &get_available_commodities() const
@@ -862,7 +821,6 @@ signals:
 	void wealth_changed();
 	void wealth_income_changed();
 	void credit_limit_changed();
-	void inflation_changed();
 	void available_commodities_changed();
 	void tradeable_commodities_changed();
 	void stored_commodities_changed();
@@ -886,8 +844,6 @@ private:
 	int wealth = 0;
 	int wealth_income = 0;
 	int credit_limit = 0;
-	centesimal_int inflation;
-	centesimal_int inflation_change;
 	commodity_set available_commodities;
 	commodity_set tradeable_commodities;
 	commodity_map<int> stored_commodities;

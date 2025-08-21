@@ -33,7 +33,6 @@
 #include "script/effect/gain_spell_scroll_effect.h"
 #include "script/effect/hidden_effect.h"
 #include "script/effect/if_effect.h"
-#include "script/effect/inflation_effect.h"
 #include "script/effect/location_effect.h"
 #include "script/effect/office_holder_effect.h"
 #include "script/effect/migrate_to_effect.h"
@@ -55,7 +54,6 @@
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
 #include "script/effect/wealth_effect.h"
-#include "script/effect/wealth_inflated_effect.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -87,12 +85,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<gain_spell_scroll_effect>(value, effect_operator);
 		} else if (key == "set_flag") {
 			return std::make_unique<set_flag_effect>(value, effect_operator);
-		} else if (key == "inflation") {
-			return std::make_unique<inflation_effect>(value, effect_operator);
 		} else if (key == "wealth") {
 			return std::make_unique<wealth_effect<scope_type>>(value, effect_operator);
-		} else if (key == "wealth_inflated") {
-			return std::make_unique<wealth_inflated_effect>(value, effect_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);
 		} else if (office::try_get(key) != nullptr) {

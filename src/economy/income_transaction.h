@@ -22,18 +22,12 @@ public:
 		return this->type;
 	}
 
-	void set_inflation_change(const centesimal_int &inflation_change)
-	{
-		this->inflation_change = inflation_change;
-	}
-
 	virtual QString get_name() const override;
 	virtual const icon *get_icon() const override;
 	virtual QString get_description() const override;
 
 private:
 	income_transaction_type type{};
-	centesimal_int inflation_change;
 };
 
 }

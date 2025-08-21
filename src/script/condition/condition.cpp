@@ -66,7 +66,6 @@
 #include "script/condition/improvement_condition.h"
 #include "script/condition/independent_condition.h"
 #include "script/condition/infantry_condition.h"
-#include "script/condition/inflation_condition.h"
 #include "script/condition/is_advisor_condition.h"
 #include "script/condition/is_military_unit_category_available_condition.h"
 #include "script/condition/is_ruler_condition.h"
@@ -113,7 +112,6 @@
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
 #include "script/condition/wealth_condition.h"
-#include "script/condition/wealth_inflated_condition.h"
 #include "script/condition/year_condition.h"
 #include "unit/military_unit.h"
 #include "util/string_util.h"
@@ -172,8 +170,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<government_type_condition>(value, condition_operator);
 		} else if (key == "has_flag") {
 			return std::make_unique<has_flag_condition>(value, condition_operator);
-		} else if (key == "inflation") {
-			return std::make_unique<inflation_condition>(value, condition_operator);
 		} else if (key == "independent") {
 			return std::make_unique<independent_condition>(value, condition_operator);
 		} else if (key == "is_military_unit_category_available") {
@@ -190,8 +186,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<subject_type_condition>(value, condition_operator);
 		} else if (key == "wealth") {
 			return std::make_unique<wealth_condition<scope_type>>(value, condition_operator);
-		} else if (key == "wealth_inflated") {
-			return std::make_unique<wealth_inflated_condition>(value, condition_operator);
 		} else if (commodity::try_get(key) != nullptr && string::is_number(value)) {
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		} else if (key.starts_with(population_scaled_commodity_prefix) && commodity::try_get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size())) != nullptr) {

@@ -2802,7 +2802,7 @@ void country_game_data::change_civilian_unit_recruitment_count(const civilian_un
 
 		if (civilian_unit_type->get_wealth_cost() > 0) {
 			const int wealth_cost_change = civilian_unit_type->get_wealth_cost() * change;
-			this->get_economy()->change_wealth_inflated(-wealth_cost_change);
+			this->get_economy()->change_wealth(-wealth_cost_change);
 		}
 	}
 }
@@ -2820,7 +2820,7 @@ bool country_game_data::can_increase_civilian_unit_recruitment(const civilian_un
 		}
 	}
 
-	if (civilian_unit_type->get_wealth_cost() != 0 && this->get_economy()->get_wealth_with_credit() < this->get_economy()->get_inflated_value(civilian_unit_type->get_wealth_cost())) {
+	if (civilian_unit_type->get_wealth_cost() != 0 && this->get_economy()->get_wealth_with_credit() < civilian_unit_type->get_wealth_cost()) {
 		return false;
 	}
 
@@ -3029,7 +3029,7 @@ int country_game_data::get_transporter_type_wealth_cost(const transporter_type *
 		wealth_cost = std::max(wealth_cost, 1);
 	}
 
-	return this->get_economy()->get_inflated_value(wealth_cost);
+	return wealth_cost;
 }
 
 commodity_map<int> country_game_data::get_transporter_type_commodity_costs(const transporter_type *transporter_type, const int quantity) const

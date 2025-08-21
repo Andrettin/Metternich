@@ -182,25 +182,10 @@ Flickable {
 				anchors.right: total_income_value_label.right
 			}
 			
-			SmallText {
-				id: total_inflation_change_label
-				text: "Total Inflation Change:"
-				anchors.top: total_expense_label.bottom
-				anchors.topMargin: 4 * scale_factor
-				anchors.left: total_income_label.left
-			}
-			
-			SmallText {
-				id: total_inflation_change_value_label
-				text: "+" + country_turn_data.total_inflation_change + "%"
-				anchors.top: total_inflation_change_label.top
-				anchors.right: total_income_value_label.right
-			}
-			
 			Rectangle {
 				id: balance_border
 				color: "gray"
-				anchors.top: total_inflation_change_label.bottom
+				anchors.top: total_expense_value_label.bottom
 				anchors.topMargin: 4 * scale_factor
 				anchors.left: parent.left
 				anchors.right: parent.right

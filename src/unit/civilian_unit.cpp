@@ -338,7 +338,7 @@ void civilian_unit::build_improvement(const improvement *improvement)
 	country_economy *country_economy = this->get_owner()->get_economy();
 
 	if (improvement->get_wealth_cost() > 0) {
-		country_economy->change_wealth_inflated(-improvement->get_wealth_cost());
+		country_economy->change_wealth(-improvement->get_wealth_cost());
 	}
 
 	for (const auto &[commodity, cost] : improvement->get_commodity_costs()) {

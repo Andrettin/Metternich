@@ -21,7 +21,6 @@ jakob_fugger = {
 		or = {
 			character_type = banker
 			character_type = farmer
-			character_type = master_of_mint
 			character_type = merchant
 			character_type = pioneer
 			character_type = treasurer

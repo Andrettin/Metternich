@@ -430,7 +430,7 @@ DialogBase {
 							
 							NormalText {
 								id: input_wealth_label
-								text: "$" + number_string(country_game_data.economy.get_inflated_value(education_type.input_wealth))
+								text: "$" + number_string(education_type.input_wealth)
 								anchors.verticalCenter: parent.verticalCenter
 								anchors.horizontalCenter: parent.horizontalCenter
 							}
@@ -621,7 +621,7 @@ DialogBase {
 				str += " + "
 			}
 			
-			str += "$" + number_string(country_game_data.economy.get_inflated_value(education_type.input_wealth))
+			str += "$" + number_string(education_type.input_wealth)
 		}
 		
 		str += " makes 1 " + education_type.output_population_type.name

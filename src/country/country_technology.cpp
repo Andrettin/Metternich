@@ -301,7 +301,7 @@ bool country_technology::can_research_technology(const technology *technology) c
 	}
 
 	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-	if (wealth_cost > 0 && this->country->get_economy()->get_inflated_value(wealth_cost) > this->country->get_economy()->get_wealth_with_credit()) {
+	if (wealth_cost > 0 && wealth_cost > this->country->get_economy()->get_wealth_with_credit()) {
 		return false;
 	}
 
@@ -381,7 +381,7 @@ void country_technology::add_current_research(const technology *technology)
 	assert_throw(this->can_research_technology(technology));
 
 	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-	this->country->get_economy()->change_wealth_inflated(-wealth_cost);
+	this->country->get_economy()->change_wealth(-wealth_cost);
 
 	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
 		this->country->get_economy()->change_stored_commodity(commodity, -cost);
@@ -397,7 +397,7 @@ void country_technology::remove_current_research(const technology *technology, c
 
 	if (restore_costs) {
 		const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-		this->country->get_economy()->change_wealth_inflated(wealth_cost);
+		this->country->get_economy()->change_wealth(wealth_cost);
 
 		for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
 			this->country->get_economy()->change_stored_commodity(commodity, cost);

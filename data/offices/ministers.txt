@@ -56,7 +56,6 @@ steward = {
 	}
 	holder_conditions = {
 		or = {
-			trait = master_of_mint
 			trait = merchant
 			trait = treasurer
 		}

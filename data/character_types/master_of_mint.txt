@@ -1,6 +1,0 @@
-master_of_mint = {
-	name = "Master of Mint"
-	advisor_category = trade
-	attribute = stewardship
-	starting_age_category = trained
-}

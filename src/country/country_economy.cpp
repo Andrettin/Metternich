@@ -142,10 +142,10 @@ void country_economy::do_everyday_consumption()
 		population_unit->set_everyday_consumption_fulfilled(true);
 	}
 
-	const int inflated_everyday_wealth_consumption = this->get_inflated_value(this->get_everyday_wealth_consumption());
+	const int everyday_wealth_consumption = this->get_everyday_wealth_consumption();
 
-	if (inflated_everyday_wealth_consumption > 0) {
-		const int effective_consumption = std::max(0, std::min(inflated_everyday_wealth_consumption, this->get_wealth_with_credit()));
+	if (everyday_wealth_consumption > 0) {
+		const int effective_consumption = std::max(0, std::min(everyday_wealth_consumption, this->get_wealth_with_credit()));
 
 		if (effective_consumption > 0) {
 			this->change_wealth(-effective_consumption);
@@ -155,14 +155,14 @@ void country_economy::do_everyday_consumption()
 					continue;
 				}
 
-				const int population_type_consumption = this->get_inflated_value(population_type->get_everyday_wealth_consumption() * count);
+				const int population_type_consumption = population_type->get_everyday_wealth_consumption() * count;
 				this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::population_upkeep, population_type_consumption, population_type, count);
 			}
 
-			int remaining_consumption = inflated_everyday_wealth_consumption - effective_consumption;
+			int remaining_consumption = everyday_wealth_consumption - effective_consumption;
 			if (remaining_consumption != 0) {
 				for (population_unit *population_unit : population_units) {
-					const int pop_consumption = this->get_inflated_value(population_unit->get_type()->get_everyday_wealth_consumption());
+					const int pop_consumption = population_unit->get_type()->get_everyday_wealth_consumption();
 					if (pop_consumption == 0) {
 						continue;
 					}
@@ -402,22 +402,6 @@ void country_economy::do_trade(country_map<commodity_map<int>> &country_luxury_d
 	}
 }
 
-void country_economy::do_inflation()
-{
-	try {
-		if (this->get_game_data()->is_under_anarchy()) {
-			return;
-		}
-
-		this->country->get_turn_data()->calculate_inflation();
-		this->change_inflation(this->country->get_turn_data()->get_total_inflation_change());
-
-		this->change_inflation(this->get_inflation_change());
-	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error doing inflation for country \"{}\".", this->country->get_identifier())));
-	}
-}
-
 QVariantList country_economy::get_resource_counts_qvariant_list() const
 {
 	return archimedes::map::to_value_sorted_qvariant_list(this->get_resource_counts());
@@ -468,59 +452,6 @@ void country_economy::set_wealth_income(const int income)
 	this->get_game_data()->change_economic_score(this->get_wealth_income());
 
 	emit wealth_income_changed();
-}
-
-void country_economy::set_inflation(const centesimal_int &inflation)
-{
-	if (inflation == this->get_inflation()) {
-		return;
-	}
-
-	if (inflation < 0) {
-		this->set_inflation(centesimal_int(0));
-		return;
-	}
-
-	if (!this->country->is_great_power()) {
-		//minor nations cannot be affected by inflation
-		this->set_inflation(centesimal_int(0));
-		return;
-	}
-
-	std::map<const employment_location *, profession_map<std::vector<population_unit *>>> location_employees_by_profession;
-
-	for (const province *province : this->get_game_data()->get_provinces()) {
-		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
-			if (employment_location->get_employee_count() == 0) {
-				continue;
-			}
-
-			location_employees_by_profession[employment_location] = employment_location->take_employees();
-		}
-	}
-
-	this->inflation = inflation;
-
-	for (const province *province : this->get_game_data()->get_provinces()) {
-		for (employment_location *employment_location : province->get_game_data()->get_employment_locations()) {
-			if (!location_employees_by_profession.contains(employment_location)) {
-				continue;
-			}
-
-			employment_location->add_employees_if_possible(location_employees_by_profession[employment_location]);
-		}
-	}
-
-	emit inflation_changed();
-}
-
-void country_economy::set_inflation_change(const centesimal_int &inflation_change)
-{
-	if (inflation_change == this->get_inflation_change()) {
-		return;
-	}
-
-	this->inflation_change = inflation_change;
 }
 
 QVariantList country_economy::get_available_commodities_qvariant_list() const
@@ -999,7 +930,7 @@ void country_economy::do_sale(const metternich::country *other_country, const co
 
 	if (state_purchase) {
 		other_country_economy->change_stored_commodity(commodity, sold_quantity);
-		const int purchase_expense = other_country_economy->get_inflated_value(price * sold_quantity);
+		const int purchase_expense = price * sold_quantity;
 		other_country_economy->change_wealth(-purchase_expense);
 		other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->country);
 
