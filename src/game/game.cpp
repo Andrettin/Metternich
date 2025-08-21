@@ -1400,8 +1400,6 @@ QCoro::Task<void> game::on_setup_finished()
 				}
 			}
 
-			province->get_game_data()->allocate_population();
-
 			//build free on start buildings
 			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
 				if (!settlement->get_game_data()->is_built()) {

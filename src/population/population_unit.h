@@ -46,7 +46,6 @@ public:
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *site);
 
 	void do_turn();
-	void do_migration();
 
 	std::string get_scope_name() const;
 
@@ -170,8 +169,6 @@ public:
 
 		this->luxury_consumption_fulfilled = value;
 	}
-
-	void migrate_to(const site *site);
 
 signals:
 	void type_changed();

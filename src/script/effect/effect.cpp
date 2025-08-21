@@ -34,7 +34,6 @@
 #include "script/effect/if_effect.h"
 #include "script/effect/location_effect.h"
 #include "script/effect/office_holder_effect.h"
-#include "script/effect/migrate_to_effect.h"
 #include "script/effect/militancy_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/population_scaled_commodity_effect.h"
@@ -99,8 +98,6 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		if (key == "consciousness") {
 			return std::make_unique<consciousness_effect>(value, effect_operator);
-		} else if (key == "migrate_to") {
-			return std::make_unique<migrate_to_effect>(value, effect_operator);
 		} else if (key == "militancy") {
 			return std::make_unique<militancy_effect>(value, effect_operator);
 		}

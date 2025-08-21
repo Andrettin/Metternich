@@ -60,37 +60,6 @@ void population_unit::do_turn()
 			this->change_militancy(militancy_modifier);
 		}
 	}
-
-	this->do_migration();
-}
-
-void population_unit::do_migration()
-{
-	if (!this->is_unemployed()) {
-		return;
-	}
-
-	if (this->get_site()->is_settlement() && this->get_site()->get_game_data()->get_population_unit_count() == 1) {
-		//don't migrate away if they are the last population unit for their settlement
-		return;
-	}
-
-	if (this->get_country() != nullptr) {
-		std::vector<const province *> potential_provinces;
-
-		for (const province *province : this->get_country()->get_game_data()->get_provinces()) {
-			if (province->get_game_data()->can_employ(this)) {
-				potential_provinces.push_back(province);
-			}
-		}
-
-		if (!potential_provinces.empty()) {
-			const province *chosen_province = vector::get_random(potential_provinces);
-			this->migrate_to(chosen_province->get_provincial_capital());
-			chosen_province->get_game_data()->allocate_population();
-			chosen_province->get_game_data()->check_employment();
-		}
-	}
 }
 
 std::string population_unit::get_scope_name() const
@@ -387,33 +356,6 @@ bool population_unit::is_food_producer() const
 	}
 
 	return false;
-}
-
-void population_unit::migrate_to(const metternich::site *site)
-{
-	assert_throw(site != nullptr);
-	assert_throw(site->get_map_data()->is_on_map());
-	assert_throw(site->get_game_data()->can_have_population());
-
-	this->get_province()->get_game_data()->remove_population_unit(this);
-
-	qunique_ptr<population_unit> unique_ptr = this->get_site()->get_game_data()->pop_population_unit(this);
-
-	assert_throw(unique_ptr != nullptr);
-
-	site->get_game_data()->add_population_unit(std::move(unique_ptr));
-
-	const province *province = site->get_game_data()->get_province();
-	assert_throw(province != nullptr);
-	province->get_game_data()->add_population_unit(this);
-
-	this->set_site(site);
-
-	if (!site->get_game_data()->can_have_population_type(this->get_type())) {
-		const population_type *default_population_type = this->get_culture()->get_population_class_type(site->get_game_data()->get_default_population_class());
-		assert_throw(default_population_type != nullptr);
-		this->set_type(default_population_type);
-	}
 }
 
 }
