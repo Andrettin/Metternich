@@ -49,7 +49,6 @@ class country_military;
 class country_rank;
 class country_technology;
 class culture;
-class education_type;
 class event;
 class flag;
 class idea;
@@ -690,8 +689,6 @@ public:
 	}
 
 	void change_population_type_output(const population_type *population_type, const int change);
-
-	population_unit *choose_education_population_unit(const education_type *education_type);
 
 	bool has_building(const building_type *building) const;
 	bool has_building_or_better(const building_type *building) const;

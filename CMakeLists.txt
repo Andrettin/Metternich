@@ -167,7 +167,6 @@ source_group(map FILES ${map_SRCS})
 set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
 set(population_SRCS
-	src/population/education_type.cpp
 	src/population/population.cpp
 	src/population/population_class.cpp
 	src/population/population_class_container.cpp
@@ -501,7 +500,6 @@ set(map_HDRS
 source_group(map FILES ${map_HDRS})
 
 set(population_HDRS
-	src/population/education_type.h
 	src/population/population.h
 	src/population/population_class.h
 	src/population/population_class_container.h

@@ -16,7 +16,6 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
-#include "population/education_type.h"
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"

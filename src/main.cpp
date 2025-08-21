@@ -64,7 +64,6 @@
 #include "map/site_type.h"
 #include "map/temperature_type.h"
 #include "map/tile_image_provider.h"
-#include "population/education_type.h"
 #include "population/population.h"
 #include "population/population_type.h"
 #include "script/scripted_character_modifier.h"
@@ -195,7 +194,6 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<country_turn_data>("", 1);
 		qmlRegisterAnonymousType<defines>("", 1);
 		qmlRegisterAnonymousType<dynasty>("", 1);
-		qmlRegisterAnonymousType<education_type>("", 1);
 		qmlRegisterAnonymousType<era>("", 1);
 		qmlRegisterAnonymousType<event>("", 1);
 		qmlRegisterAnonymousType<event_instance>("", 1);

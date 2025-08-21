@@ -10,7 +10,6 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/settlement_type.h"
-#include "population/education_type.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "population/profession.h"
@@ -68,10 +67,6 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "employment_professions") {
 		for (const std::string &value : values) {
 			this->employment_professions.push_back(profession::get(value));
-		}
-	} else if (tag == "education_types") {
-		for (const std::string &value : values) {
-			this->education_types.push_back(education_type::get(value));
 		}
 	} else if (tag == "recruited_civilian_unit_types") {
 		for (const std::string &value : values) {
@@ -261,11 +256,6 @@ void building_type::calculate_level()
 	} else {
 		this->level = 1;
 	}
-}
-
-QVariantList building_type::get_education_types_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_education_types());
 }
 
 QVariantList building_type::get_recruited_civilian_unit_types_qvariant_list() const

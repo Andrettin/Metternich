@@ -19,10 +19,6 @@ school = {
 			game_rule = research_commodity
 		}
 	}
-	education_types = {
-		trained_workers
-		expert_workers
-	}
 	country_modifier = {
 		commodity_demand = {
 			commodity = paper
@@ -53,10 +49,6 @@ college = {
 			capital = true
 			game_rule = research_commodity
 		}
-	}
-	education_types = {
-		trained_workers
-		expert_workers
 	}
 	country_modifier = {
 		commodity_demand = {
@@ -89,14 +81,6 @@ university = {
 			capital = true
 			game_rule = research_commodity
 		}
-	}
-	education_types = {
-		trained_workers
-		expert_workers
-		academics
-		bureaucrats
-		clergymen
-		officers
 	}
 	recruited_civilian_unit_types = {
 		miner
@@ -151,10 +135,6 @@ monastic_school = {
 			game_rule = research_commodity
 		}
 	}
-	education_types = {
-		trained_workers
-		expert_workers
-	}
 	country_modifier = {
 		commodity_demand = {
 			commodity = paper
@@ -184,10 +164,6 @@ cathedral_school = {
 			capital = true
 			game_rule = research_commodity
 		}
-	}
-	education_types = {
-		trained_workers
-		expert_workers
 	}
 	country_modifier = {
 		commodity_demand = {

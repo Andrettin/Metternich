@@ -54,7 +54,6 @@
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
-#include "population/education_type.h"
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
@@ -2050,29 +2049,6 @@ void country_game_data::change_population_type_output(const population_type *pop
 	if (game::get()->is_running()) {
 		emit population_type_outputs_changed();
 	}
-}
-
-population_unit *country_game_data::choose_education_population_unit(const education_type *education_type)
-{
-	std::vector<population_unit *> population_units;
-
-	for (population_unit *population_unit : this->get_population_units()) {
-		if (population_unit->get_type() != education_type->get_input_population_type()) {
-			continue;
-		}
-
-		if (!population_unit->get_site()->get_game_data()->can_have_population_type(education_type->get_output_population_type())) {
-			continue;
-		}
-
-		population_units.push_back(population_unit);
-	}
-
-	if (population_units.empty()) {
-		return nullptr;
-	}
-
-	return vector::get_random(population_units);
 }
 
 bool country_game_data::has_building(const building_type *building) const
