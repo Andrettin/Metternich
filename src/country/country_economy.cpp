@@ -76,13 +76,6 @@ void country_economy::do_production()
 		std::vector<employment_location *> changed_employment_locations;
 
 		//decrease consumption of commodities for which we no longer have enough in storage
-		while (this->get_wealth_income() < 0 && (this->get_wealth_income() * -1) > this->get_wealth_with_credit()) {
-			employment_location *affected_employment_location = this->decrease_wealth_consumption(false);
-			if (affected_employment_location != nullptr && !vector::contains(changed_employment_locations, affected_employment_location)) {
-				changed_employment_locations.push_back(affected_employment_location);
-			}
-		}
-
 		const std::vector<const commodity *> input_commodities = archimedes::map::get_keys(this->get_commodity_inputs());
 
 		for (const commodity *commodity : input_commodities) {
@@ -99,10 +92,6 @@ void country_economy::do_production()
 		}
 
 		//reduce inputs from the storage for the next turn (for production this turn it had already been subtracted)
-		if (this->get_wealth_income() != 0) {
-			this->change_wealth(this->get_wealth_income());
-		}
-
 		for (const auto &[commodity, input] : this->get_commodity_inputs()) {
 			try {
 				const int input_int = input.to_int();
@@ -412,6 +401,16 @@ QVariantList country_economy::get_vassal_resource_counts_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_vassal_resource_counts());
 }
 
+int country_economy::get_wealth() const
+{
+	return this->get_stored_commodity(defines::get()->get_wealth_commodity());
+}
+
+void country_economy::set_wealth(const int wealth)
+{
+	this->set_stored_commodity(defines::get()->get_wealth_commodity(), wealth);
+}
+
 void country_economy::add_taxable_wealth(const int taxable_wealth, const income_transaction_type tax_income_type)
 {
 	assert_throw(taxable_wealth >= 0);
@@ -437,21 +436,6 @@ void country_economy::add_taxable_wealth(const int taxable_wealth, const income_
 		this->get_game_data()->get_overlord()->get_turn_data()->add_income_transaction(tax_income_type, tax, nullptr, 0, this->country);
 		this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::tax, tax, nullptr, 0, this->get_game_data()->get_overlord());
 	}
-}
-
-void country_economy::set_wealth_income(const int income)
-{
-	if (income == this->get_wealth_income()) {
-		return;
-	}
-
-	this->get_game_data()->change_economic_score(-this->get_wealth_income());
-
-	this->wealth_income = income;
-
-	this->get_game_data()->change_economic_score(this->get_wealth_income());
-
-	emit wealth_income_changed();
 }
 
 QVariantList country_economy::get_available_commodities_qvariant_list() const

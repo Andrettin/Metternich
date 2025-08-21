@@ -166,7 +166,6 @@ void employment_location::on_employee_added(population_unit *employee, const pro
 		if (change_input_storage) {
 			country_economy->change_wealth(-input_wealth * multiplier);
 		}
-		country_economy->change_wealth_income(-input_wealth * multiplier);
 	}
 }
 

@@ -22,8 +22,6 @@ class country_economy final : public QObject
 
 	Q_PROPERTY(QVariantList resource_counts READ get_resource_counts_qvariant_list NOTIFY resource_counts_changed)
 	Q_PROPERTY(QVariantList vassal_resource_counts READ get_vassal_resource_counts_qvariant_list NOTIFY vassal_resource_counts_changed)
-	Q_PROPERTY(int wealth READ get_wealth NOTIFY wealth_changed)
-	Q_PROPERTY(int wealth_income READ get_wealth_income NOTIFY wealth_income_changed)
 	Q_PROPERTY(int credit_limit READ get_credit_limit NOTIFY credit_limit_changed)
 	Q_PROPERTY(QVariantList available_commodities READ get_available_commodities_qvariant_list NOTIFY available_commodities_changed)
 	Q_PROPERTY(QVariantList tradeable_commodities READ get_tradeable_commodities_qvariant_list NOTIFY tradeable_commodities_changed)
@@ -83,21 +81,8 @@ public:
 		}
 	}
 
-	int get_wealth() const
-	{
-		return this->wealth;
-	}
-
-	void set_wealth(const int wealth)
-	{
-		if (wealth == this->get_wealth()) {
-			return;
-		}
-
-		this->wealth = wealth;
-
-		emit wealth_changed();
-	}
+	int get_wealth() const;
+	void set_wealth(const int wealth);
 
 	void change_wealth(const int change)
 	{
@@ -105,18 +90,6 @@ public:
 	}
 
 	void add_taxable_wealth(const int taxable_wealth, const income_transaction_type tax_income_type);
-
-	int get_wealth_income() const
-	{
-		return this->wealth_income;
-	}
-
-	void set_wealth_income(const int income);
-
-	void change_wealth_income(const int change)
-	{
-		this->set_wealth_income(this->get_wealth_income() + change);
-	}
 
 	int get_credit_limit() const
 	{
@@ -818,8 +791,6 @@ public:
 signals:
 	void resource_counts_changed();
 	void vassal_resource_counts_changed();
-	void wealth_changed();
-	void wealth_income_changed();
 	void credit_limit_changed();
 	void available_commodities_changed();
 	void tradeable_commodities_changed();
@@ -841,8 +812,6 @@ private:
 	const metternich::country *country = nullptr;
 	resource_map<int> resource_counts;
 	resource_map<int> vassal_resource_counts;
-	int wealth = 0;
-	int wealth_income = 0;
 	int credit_limit = 0;
 	commodity_set available_commodities;
 	commodity_set tradeable_commodities;

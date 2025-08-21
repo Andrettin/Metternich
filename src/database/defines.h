@@ -58,6 +58,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
 	Q_PROPERTY(int population_per_unit MEMBER population_per_unit READ get_population_per_unit)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
+	Q_PROPERTY(const metternich::commodity* wealth_commodity MEMBER wealth_commodity READ get_wealth_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* prestige_commodity MEMBER prestige_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* piety_commodity MEMBER piety_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* default_research_commodity MEMBER default_research_commodity READ get_default_research_commodity NOTIFY changed)
@@ -223,6 +224,11 @@ public:
 	const commodity_map<int> &get_river_settlement_commodity_bonuses() const
 	{
 		return this->river_settlement_commodity_bonuses;
+	}
+
+	const commodity *get_wealth_commodity() const
+	{
+		return this->wealth_commodity;
 	}
 
 	const commodity *get_prestige_commodity() const
@@ -425,6 +431,7 @@ private:
 	int population_growth_threshold = 100;
 	commodity_map<int> settlement_commodity_bonuses;
 	commodity_map<int> river_settlement_commodity_bonuses;
+	const commodity *wealth_commodity = nullptr;
 	const commodity *prestige_commodity = nullptr;
 	const commodity *piety_commodity = nullptr;
 	const commodity *default_research_commodity = nullptr;

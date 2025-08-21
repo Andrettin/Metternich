@@ -39,6 +39,7 @@ river_settlement_commodity_bonuses = {
 	housing = 2
 }
 
+wealth_commodity = wealth
 prestige_commodity = prestige
 piety_commodity = piety
 default_research_commodity = research
