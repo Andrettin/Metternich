@@ -1,0 +1,23 @@
+cp = {
+	name = "Copper Piece"
+	icon = copper
+	suffix = "cp"
+}
+
+sp = {
+	name = "Silver Piece"
+	icon = silver
+	suffix = "sp"
+}
+
+gp = {
+	name = "Gold Piece"
+	icon = wealth
+	suffix = "gp"
+}
+
+gb = {
+	name = "Gold Bar"
+	icon = gold
+	suffix = "gb"
+}

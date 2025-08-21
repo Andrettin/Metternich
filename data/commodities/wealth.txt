@@ -5,4 +5,10 @@ wealth = {
 	base_price = 1
 	abstract = true
 	negative_allowed = true
+	units = {
+		1 = cp
+		10 = sp
+		100 = gp
+		200000 = gb
+	}
 }

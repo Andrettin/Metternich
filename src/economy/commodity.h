@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
@@ -7,11 +8,13 @@ Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("technology/technology.h")
 
 namespace archimedes {
+	class dice;
 	class game_rule;
 }
 
 namespace metternich {
 
+class commodity_unit;
 class icon;
 class technology;
 enum class commodity_type;
@@ -46,6 +49,7 @@ public:
 
 	explicit commodity(const std::string &identifier);
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -128,6 +132,34 @@ public:
 
 	bool is_enabled() const;
 
+	bool has_unit(const commodity_unit *unit) const
+	{
+		return this->unit_values.contains(unit);
+	}
+
+	Q_INVOKABLE const metternich::commodity_unit *get_unit(const int value) const
+	{
+		if (this->units.empty()) {
+			return nullptr;
+		}
+
+		for (auto it = this->units.rbegin(); it != this->units.rend(); ++it) {
+			const auto &[unit_value, unit] = *it;
+
+			if ((value / unit_value) >= 10) {
+				return unit;
+			}
+		}
+
+		return this->units.begin()->second;
+	}
+
+	Q_INVOKABLE int get_unit_value(const metternich::commodity_unit *unit) const;
+
+	std::pair<std::string, const commodity_unit *> string_to_number_string_and_unit(const std::string &str) const;
+	int string_to_value(const std::string &str) const;
+	std::pair<std::variant<int, dice>, const commodity_unit *> string_to_value_variant_with_unit(const std::string &str) const;
+
 signals:
 	void changed();
 
@@ -146,6 +178,8 @@ private:
 	int base_price = 0;
 	technology *required_technology = nullptr;
 	const game_rule *required_game_rule = nullptr;
+	std::map<int, const commodity_unit *> units;
+	data_entry_map<commodity_unit, int> unit_values;
 };
 
 }

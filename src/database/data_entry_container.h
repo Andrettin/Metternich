@@ -20,6 +20,7 @@ template <typename T, typename U>
 using data_entry_map = std::map<const T *, U, data_entry_compare<T>>;
 
 class civilian_unit_type;
+class commodity_unit;
 class cultural_group;
 class idea_slot;
 class office;
@@ -27,6 +28,7 @@ class technology_category;
 class technology_subcategory;
 
 extern template struct data_entry_compare<civilian_unit_type>;
+extern template struct data_entry_compare<commodity_unit>;
 extern template struct data_entry_compare<cultural_group>;
 extern template struct data_entry_compare<game_rule>;
 extern template struct data_entry_compare<idea_slot>;

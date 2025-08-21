@@ -29,6 +29,7 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity_type.h"
+#include "economy/commodity_unit.h"
 #include "economy/food_type.h"
 #include "engine_interface.h"
 #include "game/event.h"
@@ -185,6 +186,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<building_type>("", 1);
 		qmlRegisterAnonymousType<character>("", 1);
 		qmlRegisterAnonymousType<character_game_data>("", 1);
+		qmlRegisterAnonymousType<commodity_unit>("", 1);
+		qmlRegisterAnonymousType<const commodity_unit>("", 1);
 		qmlRegisterAnonymousType<consulate>("", 1);
 		qmlRegisterAnonymousType<country>("", 1);
 		qmlRegisterAnonymousType<country_game_data>("", 1);

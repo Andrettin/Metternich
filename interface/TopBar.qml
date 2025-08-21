@@ -9,6 +9,8 @@ Rectangle {
 	
 	property bool prestige_visible: true
 	readonly property var stored_commodities: metternich.game.player_country.game_data.economy.stored_commodities
+	readonly property var wealth_value: metternich.game.player_country.game_data.economy.stored_commodities.length > 0 ? metternich.game.player_country.game_data.get_stored_commodity(metternich.defines.wealth_commodity) : 0 //refer to the stored commodities to ensure the counter is updated when wealth changes
+	readonly property var wealth_unit: metternich.defines.wealth_commodity.get_unit(wealth_value)
 	
 	PanelTiledBackground {
 	}
@@ -42,23 +44,35 @@ Rectangle {
 		}
 	}
 	
-	SmallText {
-		id: wealth_label
-		text: (metternich.game.player_country.game_data.economy.get_stored_commodity(metternich.defines.wealth_commodity) < 0 ? "-" : "") + "$" + number_string(Math.abs(metternich.game.player_country.game_data.economy.get_stored_commodity(metternich.defines.wealth_commodity)))
+	Image {
+		id: wealth_icon
+		source: "image://icon/trade_consulate"
 		anchors.top: parent.top
-		anchors.topMargin: 1 * scale_factor
+		anchors.topMargin: 3 * scale_factor
 		anchors.left: date_label.left
 		anchors.leftMargin: 128 * scale_factor
-		
-		MouseArea {
-			anchors.fill: parent
-			hoverEnabled: true
-			onEntered: {
-				status_text = "Wealth"
-			}
-			onExited: {
-				status_text = ""
-			}
+	}
+
+	SmallText {
+		id: wealth_label
+		text: number_string(Math.floor(wealth_value / metternich.defines.wealth_commodity.get_unit_value(wealth_unit))) + " " + wealth_unit.suffix
+		anchors.top: parent.top
+		anchors.topMargin: 1 * scale_factor
+		anchors.left: wealth_icon.right
+		anchors.leftMargin: 4 * scale_factor
+	}
+
+	MouseArea {
+		anchors.top: wealth_icon.top
+		anchors.bottom: wealth_icon.bottom
+		anchors.left: wealth_icon.left
+		anchors.right: wealth_label.right
+		hoverEnabled: true
+		onEntered: {
+			status_text = "Wealth"
+		}
+		onExited: {
+			status_text = ""
 		}
 	}
 	
