@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "character/character_role.h"
 #include "country/country.h"
+#include "country/country_economy.h"
 #include "country/country_game_data.h"
 #include "country/country_government.h"
 #include "country/country_military.h"
@@ -51,6 +52,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/dice.h"
 #include "util/image_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
@@ -236,6 +238,15 @@ void province_game_data::do_ai_turn()
 			break;
 		}
 	}
+}
+
+void province_game_data::collect_taxes()
+{
+	assert_throw(this->get_owner() != nullptr);
+
+	const int taxation = (random::get()->roll_dice(dice(1, 3)) - 1) * 200000;
+
+	this->get_owner()->get_game_data()->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), taxation);
 }
 
 bool province_game_data::is_on_map() const

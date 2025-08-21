@@ -142,6 +142,7 @@ public:
 	~country_game_data();
 
 	void do_turn();
+	void collect_wealth();
 	void do_civilian_unit_recruitment();
 	void do_transporter_recruitment();
 	void do_population_growth();

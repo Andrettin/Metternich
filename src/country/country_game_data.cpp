@@ -129,6 +129,7 @@ void country_game_data::do_turn()
 		}
 
 		this->get_economy()->do_production();
+		this->collect_wealth();
 		this->do_transporter_recruitment();
 		this->do_civilian_unit_recruitment();
 		this->get_military()->do_military_unit_recruitment();
@@ -165,6 +166,13 @@ void country_game_data::do_turn()
 		this->check_ideas();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->country->get_identifier())));
+	}
+}
+
+void country_game_data::collect_wealth()
+{
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->collect_taxes();
 	}
 }
 

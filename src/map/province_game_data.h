@@ -73,6 +73,7 @@ public:
 	void do_luxury_consumption();
 	void do_events();
 	void do_ai_turn();
+	void collect_taxes();
 
 	bool is_on_map() const;
 
