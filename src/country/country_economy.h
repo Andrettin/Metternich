@@ -22,7 +22,6 @@ class country_economy final : public QObject
 
 	Q_PROPERTY(QVariantList resource_counts READ get_resource_counts_qvariant_list NOTIFY resource_counts_changed)
 	Q_PROPERTY(QVariantList vassal_resource_counts READ get_vassal_resource_counts_qvariant_list NOTIFY vassal_resource_counts_changed)
-	Q_PROPERTY(int credit_limit READ get_credit_limit NOTIFY credit_limit_changed)
 	Q_PROPERTY(QVariantList available_commodities READ get_available_commodities_qvariant_list NOTIFY available_commodities_changed)
 	Q_PROPERTY(QVariantList tradeable_commodities READ get_tradeable_commodities_qvariant_list NOTIFY tradeable_commodities_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
@@ -90,32 +89,6 @@ public:
 	}
 
 	void add_taxable_wealth(const int taxable_wealth, const income_transaction_type tax_income_type);
-
-	int get_credit_limit() const
-	{
-		return this->credit_limit;
-	}
-
-	void set_credit_limit(const int credit_limit)
-	{
-		if (credit_limit == this->get_credit_limit()) {
-			return;
-		}
-
-		this->credit_limit = credit_limit;
-
-		emit credit_limit_changed();
-	}
-
-	void change_credit_limit(const int change)
-	{
-		this->set_credit_limit(this->get_credit_limit() + change);
-	}
-
-	int get_wealth_with_credit() const
-	{
-		return this->get_wealth() + this->get_credit_limit();
-	}
 
 	const commodity_set &get_available_commodities() const
 	{
@@ -791,7 +764,6 @@ public:
 signals:
 	void resource_counts_changed();
 	void vassal_resource_counts_changed();
-	void credit_limit_changed();
 	void available_commodities_changed();
 	void tradeable_commodities_changed();
 	void stored_commodities_changed();
@@ -812,7 +784,6 @@ private:
 	const metternich::country *country = nullptr;
 	resource_map<int> resource_counts;
 	resource_map<int> vassal_resource_counts;
-	int credit_limit = 0;
 	commodity_set available_commodities;
 	commodity_set tradeable_commodities;
 	commodity_map<int> stored_commodities;

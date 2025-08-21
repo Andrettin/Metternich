@@ -301,7 +301,7 @@ bool country_military::can_increase_military_unit_recruitment(const military_uni
 	if (military_unit_type->get_wealth_cost() > 0) {
 		const int wealth_cost_change = this->get_military_unit_type_wealth_cost(military_unit_type, new_count) - this->get_military_unit_type_wealth_cost(military_unit_type, old_count);
 
-		if (this->country->get_economy()->get_wealth_with_credit() < wealth_cost_change) {
+		if (this->country->get_economy()->get_wealth() < wealth_cost_change) {
 			return false;
 		}
 	}

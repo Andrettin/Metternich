@@ -2820,7 +2820,7 @@ bool country_game_data::can_increase_civilian_unit_recruitment(const civilian_un
 		}
 	}
 
-	if (civilian_unit_type->get_wealth_cost() != 0 && this->get_economy()->get_wealth_with_credit() < civilian_unit_type->get_wealth_cost()) {
+	if (civilian_unit_type->get_wealth_cost() != 0 && this->get_economy()->get_wealth() < civilian_unit_type->get_wealth_cost()) {
 		return false;
 	}
 
@@ -2969,7 +2969,7 @@ bool country_game_data::can_increase_transporter_recruitment(const transporter_t
 	if (transporter_type->get_wealth_cost() > 0) {
 		const int wealth_cost_change = this->get_transporter_type_wealth_cost(transporter_type, new_count) - this->get_transporter_type_wealth_cost(transporter_type, old_count);
 
-		if (this->get_economy()->get_wealth_with_credit() < wealth_cost_change) {
+		if (this->get_economy()->get_wealth() < wealth_cost_change) {
 			return false;
 		}
 	}

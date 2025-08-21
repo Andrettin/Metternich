@@ -295,7 +295,7 @@ bool civilian_unit::can_build_improvement(const improvement *improvement) const
 		return false;
 	}
 
-	if (improvement->get_wealth_cost() > 0 && improvement->get_wealth_cost() > country_economy->get_wealth_with_credit()) {
+	if (improvement->get_wealth_cost() > 0 && improvement->get_wealth_cost() > country_economy->get_wealth()) {
 		return false;
 	}
 

@@ -113,7 +113,7 @@ bool building_slot::can_build_building(const building_type *building) const
 
 	const country_economy *country_economy = this->get_country()->get_economy();
 	const int wealth_cost = building->get_wealth_cost_for_country(this->get_country());
-	if (wealth_cost > 0 && wealth_cost > country_economy->get_wealth_with_credit()) {
+	if (wealth_cost > 0 && wealth_cost > country_economy->get_wealth()) {
 		return false;
 	}
 

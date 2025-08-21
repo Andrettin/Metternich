@@ -134,7 +134,7 @@ void country_economy::do_everyday_consumption()
 	const int everyday_wealth_consumption = this->get_everyday_wealth_consumption();
 
 	if (everyday_wealth_consumption > 0) {
-		const int effective_consumption = std::max(0, std::min(everyday_wealth_consumption, this->get_wealth_with_credit()));
+		const int effective_consumption = std::max(0, std::min(everyday_wealth_consumption, this->get_wealth()));
 
 		if (effective_consumption > 0) {
 			this->change_wealth(-effective_consumption);
@@ -356,7 +356,7 @@ void country_economy::do_trade(country_map<commodity_map<int>> &country_luxury_d
 				const int bid = other_country_economy->get_bid(commodity);
 				if (bid != 0) {
 					int sold_quantity = std::min(offer, bid);
-					sold_quantity = std::min(sold_quantity, other_country_economy->get_wealth_with_credit() / price);
+					sold_quantity = std::min(sold_quantity, other_country_economy->get_wealth() / price);
 
 					if (sold_quantity > 0) {
 						this->do_sale(other_country, commodity, sold_quantity, true);

@@ -301,7 +301,7 @@ bool country_technology::can_research_technology(const technology *technology) c
 	}
 
 	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-	if (wealth_cost > 0 && wealth_cost > this->country->get_economy()->get_wealth_with_credit()) {
+	if (wealth_cost > 0 && wealth_cost > this->country->get_economy()->get_wealth()) {
 		return false;
 	}
 

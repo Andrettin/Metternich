@@ -99,7 +99,7 @@ bool employment_location::can_fulfill_inputs_for_employment(const population_uni
 		}
 	}
 
-	if (profession->get_input_wealth() != 0 && country_economy->get_wealth_with_credit() < profession->get_input_wealth()) {
+	if (profession->get_input_wealth() != 0 && country_economy->get_wealth() < profession->get_input_wealth()) {
 		return false;
 	}
 
