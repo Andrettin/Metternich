@@ -4,8 +4,6 @@ iron_smelter = {
 	portrait = factory
 	icon = iron
 	provincial = true
-	employment_profession = iron_smelter
-	production_capacity = 8
 	required_technology = ironworking
 	settlement_types = {
 		town

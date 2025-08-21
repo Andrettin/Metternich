@@ -4,8 +4,6 @@ school = {
 	portrait = university
 	icon = university
 	provincial = true
-	employment_profession = researcher
-	production_capacity = 1
 	settlement_types = {
 		village
 		campus
@@ -36,8 +34,6 @@ college = {
 	portrait = university
 	icon = university
 	provincial = true
-	employment_profession = researcher
-	production_capacity = 2
 	required_building = school
 	settlement_types = {
 		campus
@@ -67,8 +63,6 @@ university = {
 	portrait = university
 	icon = university
 	provincial = true
-	employment_profession = researcher
-	production_capacity = 4
 	required_building = college
 	required_technology = university
 	settlement_types = {
@@ -123,8 +117,6 @@ monastic_school = {
 	portrait = university
 	icon = university
 	provincial = true
-	employment_profession = researcher
-	production_capacity = 1
 	required_technology = monastic_school
 	settlement_types = {
 		monastery
@@ -152,8 +144,6 @@ cathedral_school = {
 	portrait = university
 	icon = university
 	provincial = true
-	employment_profession = researcher
-	production_capacity = 2
 	required_building = monastic_school
 	required_technology = cathedral_school
 	settlement_types = {

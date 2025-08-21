@@ -9,8 +9,6 @@ cinnabar_mine = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = cinnabar_miner
-	production_capacity = 1
 	default_population_class = laborers
 	required_technology = alchemy
 	wealth_cost = 100
@@ -40,8 +38,6 @@ steam_pumped_cinnabar_mine = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = cinnabar_miner
-	production_capacity = 3
 	default_population_class = laborers
 	required_improvement = cinnabar_mine
 	required_technology = steam_in_mining

@@ -12,7 +12,6 @@
 #include "infrastructure/settlement_type.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
-#include "population/profession.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/capital_condition.h"
 #include "script/condition/or_condition.h"
@@ -42,19 +41,6 @@ building_type::~building_type()
 {
 }
 
-void building_type::process_gsml_property(const gsml_property &property)
-{
-	const std::string &key = property.get_key();
-	const std::string &value = property.get_value();
-
-	if (key == "employment_profession") {
-		assert_throw(property.get_operator() == gsml_operator::assignment);
-		this->employment_professions = { profession::get(value) };
-	} else {
-		named_data_entry::process_gsml_property(property);
-	}
-}
-
 void building_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
@@ -63,10 +49,6 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	if (tag == "settlement_types") {
 		for (const std::string &value : values) {
 			this->settlement_types.push_back(settlement_type::get(value));
-		}
-	} else if (tag == "employment_professions") {
-		for (const std::string &value : values) {
-			this->employment_professions.push_back(profession::get(value));
 		}
 	} else if (tag == "recruited_civilian_unit_types") {
 		for (const std::string &value : values) {
@@ -217,14 +199,6 @@ void building_type::check() const
 
 	if (this->is_provincial() && this->get_settlement_types().empty()) {
 		throw std::runtime_error(std::format("Building type \"{}\" is provincial, but does not have any settlement types listed for it.", this->get_identifier()));
-	}
-
-	if (!this->get_employment_professions().empty() && this->get_production_capacity() == 0) {
-		throw std::runtime_error(std::format("Building type \"{}\" has an employment profession, but no production capacity.", this->get_identifier()));
-	}
-
-	if (this->get_production_capacity() > 0 && this->get_employment_professions().empty()) {
-		throw std::runtime_error(std::format("Building type \"{}\" has a production capacity, but no employment profession.", this->get_identifier()));
 	}
 
 	if (!this->is_provincial() && !this->get_settlement_types().empty()) {

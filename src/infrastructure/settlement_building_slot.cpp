@@ -17,7 +17,6 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "population/population_unit.h"
-#include "population/profession.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -114,10 +113,6 @@ bool settlement_building_slot::can_build_building(const building_type *building)
 
 void settlement_building_slot::on_building_gained(const building_type *building, const int multiplier)
 {
-	if (!building->get_employment_professions().empty()) {
-		this->change_production_capacity(building->get_production_capacity() * multiplier);
-	}
-
 	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
 	settlement_game_data->on_building_gained(building, multiplier);
 }
@@ -323,24 +318,6 @@ QString settlement_building_slot::get_modifier_string() const
 		settlement_modifier_str += this->get_building()->get_settlement_modifier()->get_string(this->get_settlement());
 	}
 
-	if (!this->get_employment_professions().empty() && this->get_employee_count() > 0) {
-		const commodity_map<centesimal_int> commodity_outputs = this->get_total_employee_commodity_outputs();
-
-		for (const auto &[commodity, output] : commodity_outputs) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
-
-			const std::string number_str = output.to_signed_string();
-			const QColor &number_color = output < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
-			const std::string colored_number_str = string::colored(number_str, number_color);
-
-			str += base_string + colored_number_str;
-		}
-	}
-
 	const commodity_map<int> building_commodity_bonuses = this->get_country()->get_economy()->get_building_commodity_bonuses(this->get_building());
 	for (const auto &[commodity, bonus] : building_commodity_bonuses) {
 		const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
@@ -405,21 +382,6 @@ QString settlement_building_slot::get_modifier_string() const
 	}
 
 	return QString::fromStdString(str);
-}
-
-const site *settlement_building_slot::get_employment_site() const
-{
-	return this->get_settlement();
-}
-
-const std::vector<const profession *> &settlement_building_slot::get_employment_professions() const
-{
-	if (this->get_building() != nullptr) {
-		return this->get_building()->get_employment_professions();
-	}
-
-	static constexpr std::vector<const profession *> empty_vector;
-	return empty_vector;
 }
 
 }

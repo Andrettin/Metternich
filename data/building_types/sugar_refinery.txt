@@ -4,8 +4,6 @@ sugar_refinery = {
 	portrait = factory
 	icon = refined_sugar
 	provincial = true
-	employment_profession = sugar_refiner
-	production_capacity = 8
 	required_technology = sugar_refining
 	settlement_types = {
 		town

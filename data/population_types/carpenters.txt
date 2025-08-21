@@ -5,17 +5,6 @@ apprentice_carpenters = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	profession_output_modifiers = {
-		carpenter = 300
-		paper_maker = 300
-		sawyer = 300
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25
@@ -34,17 +23,6 @@ journeyman_carpenters = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	profession_output_modifiers = {
-		carpenter = 500
-		paper_maker = 500
-		sawyer = 500
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25
@@ -63,16 +41,6 @@ master_carpenters = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	profession_output_modifiers = {
-		carpenter = 700
-		sawyer = 700
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25

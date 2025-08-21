@@ -7,8 +7,6 @@ fur_camp = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/timber_lodge_clearing.png"
-	employment_profession = fur_trapper
-	production_capacity = 1
 	default_population_class = laborers
 	required_technology = furs
 	wealth_cost = 100
@@ -36,8 +34,6 @@ improved_fur_camp = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/timber_lodge_clearing.png"
-	employment_profession = fur_trapper
-	production_capacity = 2
 	default_population_class = laborers
 	required_improvement = fur_camp
 	required_technology = improved_trapping_techniques
@@ -66,8 +62,6 @@ advanced_fur_camp = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/timber_lodge_clearing.png"
-	employment_profession = fur_trapper
-	production_capacity = 3
 	default_population_class = laborers
 	required_improvement = improved_fur_camp
 	required_technology = riverboats
@@ -96,8 +90,6 @@ industrial_fur_camp = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/timber_lodge_clearing.png"
-	employment_profession = fur_trapper
-	production_capacity = 4
 	default_population_class = laborers
 	required_improvement = advanced_fur_camp
 	required_technology = excessive_fur_harvesting

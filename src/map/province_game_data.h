@@ -25,7 +25,6 @@ class civilian_unit;
 class commodity;
 class country;
 class culture;
-class employment_location;
 class icon;
 class improvement;
 class military_unit;
@@ -69,8 +68,6 @@ public:
 	~province_game_data();
 
 	void do_turn();
-	void do_everyday_consumption();
-	void do_luxury_consumption();
 	void do_events();
 	void do_ai_turn();
 	void collect_taxes();
@@ -209,8 +206,6 @@ public:
 		return this->population.get();
 	}
 
-	void on_population_type_count_changed(const population_type *type, const int change);
-
 	const character *get_governor() const
 	{
 		return this->governor;
@@ -290,34 +285,6 @@ public:
 	}
 
 	void change_local_commodity_output(const commodity *commodity, const centesimal_int &change);
-
-	const centesimal_int &get_local_everyday_consumption(const commodity *commodity) const
-	{
-		const auto find_iterator = this->local_everyday_consumption.find(commodity);
-
-		if (find_iterator != this->local_everyday_consumption.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	void change_local_everyday_consumption(const commodity *commodity, const centesimal_int &change);
-
-	const centesimal_int &get_local_luxury_consumption(const commodity *commodity) const
-	{
-		const auto find_iterator = this->local_luxury_consumption.find(commodity);
-
-		if (find_iterator != this->local_luxury_consumption.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	void change_local_luxury_consumption(const commodity *commodity, const centesimal_int &change);
 
 	const centesimal_int &get_output_modifier() const
 	{
@@ -472,11 +439,6 @@ public:
 
 	bool can_produce_commodity(const commodity *commodity) const;
 
-	std::vector<employment_location *> get_employment_locations() const;
-	void check_employment();
-
-	bool can_employ(const population_unit *population_unit) const;
-
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
@@ -509,8 +471,6 @@ private:
 	std::map<military_unit_category, int> military_unit_category_counts;
 	std::vector<army *> entering_armies; //armies entering this province
 	commodity_map<centesimal_int> local_commodity_outputs;
-	commodity_map<centesimal_int> local_everyday_consumption;
-	commodity_map<centesimal_int> local_luxury_consumption;
 	centesimal_int output_modifier;
 	int resource_output_modifier = 0;
 	commodity_map<centesimal_int> commodity_output_modifiers;

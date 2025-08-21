@@ -6,8 +6,6 @@ horse_ranch = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/cattle_ranch.png"
-	employment_profession = horse_rancher
-	production_capacity = 1
 	default_population_class = farmers
 	wealth_cost = 100
 	population_classes = {

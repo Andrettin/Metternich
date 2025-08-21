@@ -4,12 +4,6 @@ weavers_house = {
 	portrait = factory
 	icon = fabric
 	provincial = true
-	production_capacity = 2
-	employment_professions = {
-		cotton_weaver
-		silk_weaver
-		wool_weaver
-	}
 	settlement_types = {
 		village
 		town
@@ -39,13 +33,7 @@ weavers_shop = {
 	portrait = factory
 	icon = fabric
 	provincial = true
-	production_capacity = 4
 	required_building = weavers_house
-	employment_professions = {
-		cotton_weaver
-		silk_weaver
-		wool_weaver
-	}
 	settlement_types = {
 		town
 		city
@@ -74,13 +62,7 @@ textile_mill = {
 	portrait = factory
 	icon = fabric
 	provincial = true
-	production_capacity = 8
 	required_building = weavers_shop
-	employment_professions = {
-		cotton_weaver
-		silk_weaver
-		wool_weaver
-	}
 	settlement_types = {
 		town
 		city

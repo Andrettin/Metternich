@@ -5,7 +5,6 @@
 #include "economy/resource_container.h"
 #include "infrastructure/building_type_container.h"
 #include "infrastructure/improvement_container.h"
-#include "population/profession_container.h"
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 
@@ -13,7 +12,6 @@ namespace metternich {
 
 class country;
 class country_game_data;
-class employment_location;
 enum class income_transaction_type;
 
 class country_economy final : public QObject
@@ -28,8 +26,6 @@ class country_economy final : public QObject
 	Q_PROPERTY(int storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
 	Q_PROPERTY(QVariantList commodity_inputs READ get_commodity_inputs_qvariant_list NOTIFY commodity_inputs_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
-	Q_PROPERTY(QVariantList everyday_consumption READ get_everyday_consumption_qvariant_list NOTIFY everyday_consumption_changed)
-	Q_PROPERTY(QVariantList luxury_consumption READ get_luxury_consumption_qvariant_list NOTIFY luxury_consumption_changed)
 	Q_PROPERTY(QVariantList bids READ get_bids_qvariant_list NOTIFY bids_changed)
 	Q_PROPERTY(QVariantList offers READ get_offers_qvariant_list NOTIFY offers_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier_int NOTIFY output_modifier_changed)
@@ -44,8 +40,6 @@ public:
 	country_game_data *get_game_data() const;
 
 	void do_production();
-	void do_everyday_consumption();
-	void do_luxury_consumption();
 	void do_trade(country_map<commodity_map<int>> &country_luxury_demands);
 
 	const resource_map<int> &get_resource_counts() const
@@ -227,57 +221,6 @@ public:
 
 	int get_food_output() const;
 
-	int get_everyday_wealth_consumption() const
-	{
-		return this->everyday_wealth_consumption;
-	}
-
-	void change_everyday_wealth_consumption(const int change);
-
-	const commodity_map<centesimal_int> &get_everyday_consumption() const
-	{
-		return this->everyday_consumption;
-	}
-
-	QVariantList get_everyday_consumption_qvariant_list() const;
-
-	const centesimal_int &get_everyday_consumption(const commodity *commodity) const
-	{
-		const auto find_iterator = this->everyday_consumption.find(commodity);
-
-		if (find_iterator != this->everyday_consumption.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	Q_INVOKABLE int get_everyday_consumption(const QString &commodity_identifier) const;
-	void change_everyday_consumption(const commodity *commodity, const centesimal_int &change);
-
-	const commodity_map<centesimal_int> &get_luxury_consumption() const
-	{
-		return this->luxury_consumption;
-	}
-
-	QVariantList get_luxury_consumption_qvariant_list() const;
-
-	const centesimal_int &get_luxury_consumption(const commodity *commodity) const
-	{
-		const auto find_iterator = this->luxury_consumption.find(commodity);
-
-		if (find_iterator != this->luxury_consumption.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	Q_INVOKABLE int get_luxury_consumption(const QString &commodity_identifier) const;
-	void change_luxury_consumption(const commodity *commodity, const centesimal_int &change);
-
 	const commodity_map<decimillesimal_int> &get_commodity_demands() const
 	{
 		return this->commodity_demands;
@@ -296,9 +239,6 @@ public:
 	}
 
 	void change_commodity_demand(const commodity *commodity, const decimillesimal_int &change);
-
-	employment_location * decrease_wealth_consumption(const bool restore_inputs = true);
-	employment_location * decrease_commodity_consumption(const commodity *commodity, const bool restore_inputs = true);
 
 	bool produces_commodity(const commodity *commodity) const;
 
@@ -619,41 +559,6 @@ public:
 
 	void change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change);
 
-	const profession_map<commodity_map<decimillesimal_int>> &get_profession_commodity_bonuses() const
-	{
-		return this->profession_commodity_bonuses;
-	}
-
-	const commodity_map<decimillesimal_int> &get_profession_commodity_bonuses(const profession *profession) const
-	{
-		const auto find_iterator = this->profession_commodity_bonuses.find(profession);
-
-		if (find_iterator != this->profession_commodity_bonuses.end()) {
-			return find_iterator->second;
-		}
-
-		static const commodity_map<decimillesimal_int> empty_map;
-		return empty_map;
-	}
-
-	const decimillesimal_int &get_profession_commodity_bonus(const profession *profession, const commodity *commodity) const
-	{
-		const auto find_iterator = this->profession_commodity_bonuses.find(profession);
-
-		if (find_iterator != this->profession_commodity_bonuses.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(commodity);
-
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
-
-		static constexpr decimillesimal_int zero;
-		return zero;
-	}
-
-	void change_profession_commodity_bonus(const profession *profession, const commodity *commodity, const decimillesimal_int &change);
-
 	const commodity_map<std::map<int, int>> &get_commodity_bonuses_for_tile_thresholds() const
 	{
 		return this->commodity_bonuses_for_tile_thresholds;
@@ -770,9 +675,6 @@ signals:
 	void storage_capacity_changed();
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
-	void everyday_wealth_consumption_changed();
-	void everyday_consumption_changed();
-	void luxury_consumption_changed();
 	void bids_changed();
 	void offers_changed();
 	void output_modifier_changed();
@@ -790,9 +692,6 @@ private:
 	int storage_capacity = 0;
 	commodity_map<centesimal_int> commodity_inputs;
 	commodity_map<centesimal_int> commodity_outputs;
-	int everyday_wealth_consumption = 0;
-	commodity_map<centesimal_int> everyday_consumption;
-	commodity_map<centesimal_int> luxury_consumption;
 	commodity_map<decimillesimal_int> commodity_demands;
 	commodity_map<int> bids;
 	commodity_map<int> offers;
@@ -807,7 +706,6 @@ private:
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	improvement_map<commodity_map<centesimal_int>> improvement_commodity_bonuses;
 	building_type_map<commodity_map<int>> building_commodity_bonuses;
-	profession_map<commodity_map<decimillesimal_int>> profession_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	commodity_map<centesimal_int> commodity_bonuses_per_population;
 	commodity_map<centesimal_int> settlement_commodity_bonuses;

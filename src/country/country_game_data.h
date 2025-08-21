@@ -11,7 +11,6 @@
 #include "map/site_container.h"
 #include "map/terrain_type_container.h"
 #include "population/population_type_container.h"
-#include "population/profession_container.h"
 #include "script/opinion_modifier_container.h"
 #include "script/scripted_modifier_container.h"
 #include "unit/transporter_type_container.h"
@@ -61,7 +60,6 @@ class population_class;
 class population_type;
 class population_unit;
 class portrait;
-class profession;
 class province;
 class region;
 class religion;
@@ -119,8 +117,6 @@ class country_game_data final : public QObject
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 	Q_PROPERTY(int housing READ get_housing_int NOTIFY housing_changed)
-	Q_PROPERTY(QVariantList population_type_inputs READ get_population_type_inputs_qvariant_list NOTIFY population_type_inputs_changed)
-	Q_PROPERTY(QVariantList population_type_outputs READ get_population_type_outputs_qvariant_list NOTIFY population_type_outputs_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
 	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
@@ -650,46 +646,6 @@ public:
 	int get_net_food_consumption() const;
 	int get_available_food() const;
 
-	const population_type_map<int> &get_population_type_inputs() const
-	{
-		return this->population_type_inputs;
-	}
-
-	QVariantList get_population_type_inputs_qvariant_list() const;
-
-	int get_population_type_input(const population_type *population_type) const
-	{
-		const auto find_iterator = this->population_type_inputs.find(population_type);
-
-		if (find_iterator != this->population_type_inputs.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void change_population_type_input(const population_type *population_type, const int change);
-
-	const population_type_map<int> &get_population_type_outputs() const
-	{
-		return this->population_type_outputs;
-	}
-
-	QVariantList get_population_type_outputs_qvariant_list() const;
-
-	int get_population_type_output(const population_type *population_type) const
-	{
-		const auto find_iterator = this->population_type_outputs.find(population_type);
-
-		if (find_iterator != this->population_type_outputs.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void change_population_type_output(const population_type *population_type, const int change);
-
 	bool has_building(const building_type *building) const;
 	bool has_building_or_better(const building_type *building) const;
 
@@ -1174,8 +1130,6 @@ private:
 	int population_growth = 0; //population growth counter
 	centesimal_int housing;
 	int food_consumption = 0;
-	population_type_map<int> population_type_inputs;
-	population_type_map<int> population_type_outputs;
 	building_type_map<int> settlement_building_counts;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;

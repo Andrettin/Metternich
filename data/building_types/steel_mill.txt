@@ -4,8 +4,6 @@ steel_mill = {
 	portrait = factory
 	icon = steel
 	provincial = true
-	employment_profession = steel_maker
-	production_capacity = 8
 	required_technology = crucible_process
 	settlement_types = {
 		town

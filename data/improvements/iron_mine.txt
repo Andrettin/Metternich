@@ -9,8 +9,6 @@ iron_mine = {
 	terrain_image_filepaths = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = iron_miner
-	production_capacity = 1
 	default_population_class = laborers
 	required_technology = iron_mining
 	wealth_cost = 100
@@ -40,8 +38,6 @@ improved_iron_mine = {
 	terrain_image_filepaths = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = iron_miner
-	production_capacity = 2
 	default_population_class = laborers
 	required_technology = iron_mining
 	wealth_cost = 100
@@ -71,8 +67,6 @@ steam_pumped_iron_mine = {
 	terrain_image_filepaths = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = iron_miner
-	production_capacity = 3
 	default_population_class = laborers
 	required_improvement = improved_iron_mine
 	required_technology = steam_in_mining
@@ -103,8 +97,6 @@ industrial_iron_mine = {
 	terrain_image_filepaths = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = iron_miner
-	production_capacity = 4
 	default_population_class = laborers
 	required_improvement = steam_pumped_iron_mine
 	required_technology = industrial_iron_mining

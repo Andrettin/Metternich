@@ -4,8 +4,6 @@ village_hall = {
 	portrait = town
 	icon = flag
 	provincial = true
-	employment_profession = statesman
-	production_capacity = 1
 	settlement_types = {
 		village
 		town
@@ -30,8 +28,6 @@ town_hall = {
 	icon = flag
 	provincial = true
 	required_building = village_hall
-	employment_profession = statesman
-	production_capacity = 2
 	settlement_types = {
 		town
 		city
@@ -54,8 +50,6 @@ city_hall = {
 	portrait = city
 	icon = flag
 	provincial = true
-	employment_profession = statesman
-	production_capacity = 4
 	required_building = town_hall
 	settlement_types = {
 		city
@@ -82,8 +76,6 @@ state_house = {
 	icon = flag
 	provincial = true
 	provincial_capitol = true
-	employment_profession = statesman
-	production_capacity = 6
 	required_building = city_hall
 	settlement_types = {
 		city
@@ -110,8 +102,6 @@ capitol = {
 	icon = flag
 	provincial = true
 	capitol = true
-	employment_profession = statesman
-	production_capacity = 8
 	required_building = state_house
 	settlement_types = {
 		city

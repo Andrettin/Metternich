@@ -9,8 +9,6 @@ stone_quarry = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = stone_quarrier
-	production_capacity = 1
 	default_population_class = laborers
 	wealth_cost = 100
 	population_classes = {

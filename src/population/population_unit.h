@@ -15,12 +15,10 @@ namespace metternich {
 
 class country;
 class culture;
-class employment_location;
 class icon;
 class ideology;
 class phenotype;
 class population_type;
-class profession;
 class province;
 class religion;
 class site;
@@ -130,45 +128,7 @@ public:
 		this->set_militancy(this->get_militancy() + change);
 	}
 
-	metternich::employment_location *get_employment_location() const
-	{
-		return this->employment_location;
-	}
-
-	bool is_unemployed() const;
-
-	void set_employment_location(metternich::employment_location *employment_location, const profession *profession, const bool change_input_storage);
-
-	const profession *get_profession() const;
 	bool is_food_producer() const;
-
-	bool is_everyday_consumption_fulfilled() const
-	{
-		return this->everyday_consumption_fulfilled;
-	}
-
-	void set_everyday_consumption_fulfilled(const bool value)
-	{
-		if (value == this->is_everyday_consumption_fulfilled()) {
-			return;
-		}
-
-		this->everyday_consumption_fulfilled = value;
-	}
-
-	bool is_luxury_consumption_fulfilled() const
-	{
-		return this->luxury_consumption_fulfilled;
-	}
-
-	void set_luxury_consumption_fulfilled(const bool value)
-	{
-		if (value == this->is_luxury_consumption_fulfilled()) {
-			return;
-		}
-
-		this->luxury_consumption_fulfilled = value;
-	}
 
 signals:
 	void type_changed();
@@ -190,10 +150,6 @@ private:
 	const metternich::ideology *ideology = nullptr;
 	centesimal_int consciousness;
 	centesimal_int militancy;
-	metternich::employment_location *employment_location = nullptr;
-	const metternich::profession *profession = nullptr;
-	bool everyday_consumption_fulfilled = true;
-	bool luxury_consumption_fulfilled = true;
 };
 
 }

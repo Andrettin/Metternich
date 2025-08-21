@@ -4,8 +4,6 @@ carpenters_house = {
 	portrait = factory
 	icon = furniture
 	provincial = true
-	employment_profession = carpenter
-	production_capacity = 1
 	settlement_types = {
 		village
 		town
@@ -32,8 +30,6 @@ carpenters_shop = {
 	portrait = factory
 	icon = furniture
 	provincial = true
-	employment_profession = carpenter
-	production_capacity = 2
 	required_building = carpenters_house
 	settlement_types = {
 		town
@@ -60,8 +56,6 @@ furniture_factory = {
 	portrait = factory
 	icon = furniture
 	provincial = true
-	employment_profession = carpenter
-	production_capacity = 4
 	required_building = carpenters_shop
 	settlement_types = {
 		town

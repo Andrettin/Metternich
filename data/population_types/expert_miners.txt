@@ -4,28 +4,6 @@ expert_miners = {
 	literate = true
 	icon = miners
 	small_icon = miners_small
-	profession_output_modifiers = {
-		amber_miner = 100
-		cinnabar_miner = 100
-		coal_miner = 100
-		copper_miner = 100
-		diamond_miner = 100
-		gem_miner = 100
-		gold_miner = 100
-		iron_miner = 100
-		lead_miner = 100
-		salt_miner = 100
-		silver_miner = 100
-		stone_quarrier = 100
-		tin_miner = 100
-		zinc_miner = 100
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.125
 		furniture = 0.125

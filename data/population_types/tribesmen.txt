@@ -4,12 +4,6 @@ tribesmen = {
 	color = { 142 92 42 }
 	icon = slaves_light
 	small_icon = slaves_light_small
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.0625
 		furniture = 0.0625

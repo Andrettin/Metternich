@@ -9,8 +9,6 @@ gem_mine = {
 	terrain_image_filepaths = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = gem_miner
-	production_capacity = 1
 	default_population_class = laborers
 	required_technology = precious_stone_mining
 	wealth_cost = 100
@@ -40,8 +38,6 @@ large_gem_mine = {
 	terrain_image_filepaths = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = gem_miner
-	production_capacity = 2
 	default_population_class = laborers
 	required_improvement = gem_mine
 	required_technology = large_precious_stone_mines
@@ -72,8 +68,6 @@ steam_pumped_gem_mine = {
 	terrain_image_filepaths = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = gem_miner
-	production_capacity = 3
 	default_population_class = laborers
 	required_improvement = large_gem_mine
 	required_technology = geological_prospecting
@@ -104,8 +98,6 @@ industrial_gem_mine = {
 	terrain_image_filepaths = {
 		mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = gem_miner
-	production_capacity = 4
 	default_population_class = laborers
 	required_improvement = steam_pumped_gem_mine
 	required_technology = geological_prospecting

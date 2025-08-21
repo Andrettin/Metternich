@@ -254,10 +254,6 @@ QCoro::Task<void> game::start_coro()
 			country_game_data *country_game_data = country->get_game_data();
 			country_government *country_government = country->get_government();
 
-			for (const province *province : country_game_data->get_provinces()) {
-				province->get_game_data()->check_employment();
-			}
-
 			for (population_unit *population_unit : country_game_data->get_population_units()) {
 				population_unit->choose_ideology();
 			}
@@ -1422,8 +1418,6 @@ QCoro::Task<void> game::on_setup_finished()
 					settlement->get_game_data()->check_free_building(building);
 				}
 			}
-
-			province->get_game_data()->check_employment();
 		}
 
 		//decrease population if there's too much for the starting food output

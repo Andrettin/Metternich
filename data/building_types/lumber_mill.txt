@@ -4,8 +4,6 @@ sawyers_house = {
 	portrait = factory
 	icon = lumber
 	provincial = true
-	employment_profession = sawyer
-	production_capacity = 2
 	settlement_types = {
 		village
 		town
@@ -28,8 +26,6 @@ sawyers_shop = {
 	portrait = factory
 	icon = lumber
 	provincial = true
-	employment_profession = sawyer
-	production_capacity = 4
 	required_building = sawyers_house
 	settlement_types = {
 		town
@@ -52,8 +48,6 @@ lumber_mill = {
 	portrait = factory
 	icon = lumber
 	provincial = true
-	employment_profession = sawyer
-	production_capacity = 8
 	required_building = sawyers_shop
 	required_technology = saw_mill
 	settlement_types = {

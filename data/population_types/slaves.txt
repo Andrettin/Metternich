@@ -4,9 +4,6 @@ slaves = {
 	color = { 173 143 137 }
 	icon = slaves_light
 	small_icon = slaves_light_small
-	everyday_consumption = {
-		amenities = 1
-	}
 	phenotype_icons = {
 		afro_european = slaves_medium
 		amerindian = slaves_medium

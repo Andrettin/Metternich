@@ -11,12 +11,6 @@ untrained_workers = {
 		laborers
 		soldiers
 	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.125
 		furniture = 0.125

@@ -134,8 +134,6 @@ void country_game_data::do_turn()
 		this->get_military()->do_military_unit_recruitment();
 		this->get_technology()->do_research();
 		this->do_population_growth();
-		this->get_economy()->do_everyday_consumption();
-		this->get_economy()->do_luxury_consumption();
 		this->do_cultural_change();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
@@ -1744,34 +1742,6 @@ void country_game_data::remove_population_unit(population_unit *population_unit)
 
 void country_game_data::on_population_type_count_changed(const population_type *type, const int change)
 {
-	this->get_economy()->change_everyday_wealth_consumption(type->get_everyday_wealth_consumption() * change);
-
-	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
-		if (!commodity->is_enabled()) {
-			continue;
-		}
-
-		if (commodity->is_local()) {
-			//handled at the site or province level
-			continue;
-		}
-
-		this->get_economy()->change_everyday_consumption(commodity, value * change);
-	}
-
-	for (const auto &[commodity, value] : type->get_luxury_consumption()) {
-		if (!commodity->is_enabled()) {
-			continue;
-		}
-
-		if (commodity->is_local()) {
-			//handled at the site or province level
-			continue;
-		}
-
-		this->get_economy()->change_luxury_consumption(commodity, value * change);
-	}
-
 	//countries generate demand in the world market depending on population commodity demand
 	for (const auto &[commodity, value] : type->get_commodity_demands()) {
 		this->get_economy()->change_commodity_demand(commodity, value * change);
@@ -2001,54 +1971,6 @@ int country_game_data::get_net_food_consumption() const
 int country_game_data::get_available_food() const
 {
 	return this->get_economy()->get_stored_food() - this->get_net_food_consumption();
-}
-
-QVariantList country_game_data::get_population_type_inputs_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_population_type_inputs());
-}
-
-void country_game_data::change_population_type_input(const population_type *population_type, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->population_type_inputs[population_type] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->population_type_inputs.erase(population_type);
-	}
-
-	if (game::get()->is_running()) {
-		emit population_type_inputs_changed();
-	}
-}
-
-QVariantList country_game_data::get_population_type_outputs_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_population_type_outputs());
-}
-
-void country_game_data::change_population_type_output(const population_type *population_type, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->population_type_outputs[population_type] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->population_type_outputs.erase(population_type);
-	}
-
-	if (game::get()->is_running()) {
-		emit population_type_outputs_changed();
-	}
 }
 
 bool country_game_data::has_building(const building_type *building) const

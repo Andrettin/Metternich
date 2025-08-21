@@ -4,8 +4,6 @@ barracks = {
 	portrait = fort
 	icon = crossed_sabers
 	provincial = true
-	employment_profession = soldier
-	production_capacity = 1
 	settlement_types = {
 		city
 		metropolis

@@ -5,8 +5,6 @@ war_college = {
 	icon = wall
 	provincial = true
 	provincial_capital_only = true
-	employment_profession = officer
-	production_capacity = 4
 	settlement_types = {
 		city
 		metropolis

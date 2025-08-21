@@ -4,18 +4,6 @@ master_ranchers = {
 	literate = true
 	icon = rancher
 	small_icon = rancher_small
-	profession_output_modifiers = {
-		cattle_rancher = 100
-		horse_rancher = 100
-		sheep_rancher = 100
-		silkworm_rancher = 100
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.125
 		furniture = 0.125

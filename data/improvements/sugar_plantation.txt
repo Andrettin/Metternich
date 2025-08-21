@@ -6,8 +6,6 @@ sugar_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/sugar_plantation.png"
-	employment_profession = sugar_planter
-	production_capacity = 1
 	default_population_class = farmers
 	required_technology = sugar_planting
 	wealth_cost = 100
@@ -34,8 +32,6 @@ large_sugar_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/sugar_plantation.png"
-	employment_profession = sugar_planter
-	production_capacity = 2
 	default_population_class = farmers
 	required_improvement = sugar_plantation
 	required_technology = large_sugar_plantations
@@ -63,8 +59,6 @@ mechanized_sugar_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/sugar_plantation.png"
-	employment_profession = sugar_planter
-	production_capacity = 3
 	default_population_class = farmers
 	required_improvement = large_sugar_plantation
 	required_technology = sugar_industry
@@ -92,8 +86,6 @@ industrial_sugar_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/sugar_plantation.png"
-	employment_profession = sugar_planter
-	production_capacity = 4
 	default_population_class = farmers
 	required_improvement = mechanized_sugar_plantation
 	required_technology = sugar_industry

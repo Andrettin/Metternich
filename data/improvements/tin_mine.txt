@@ -9,8 +9,6 @@ tin_mine = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = tin_miner
-	production_capacity = 1
 	default_population_class = laborers
 	required_technology = copper_and_tin_mining
 	wealth_cost = 100
@@ -40,8 +38,6 @@ large_tin_mine = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = tin_miner
-	production_capacity = 2
 	default_population_class = laborers
 	required_improvement = tin_mine
 	required_technology = large_copper_and_tin_mines
@@ -72,8 +68,6 @@ steam_pumped_tin_mine = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = tin_miner
-	production_capacity = 3
 	default_population_class = laborers
 	required_improvement = large_tin_mine
 	required_technology = efficient_extraction_of_copper_and_tin
@@ -104,8 +98,6 @@ industrial_tin_mine = {
 	terrain_image_filepaths = {
 		#mountains = "tiles/improvements/quarry_mountains.png"
 	}
-	employment_profession = tin_miner
-	production_capacity = 4
 	default_population_class = laborers
 	required_improvement = steam_pumped_tin_mine
 	required_technology = efficient_extraction_of_copper_and_tin

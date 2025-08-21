@@ -4,12 +4,7 @@ food_processing_center = {
 	portrait = factory
 	icon = canned_food
 	provincial = true
-	production_capacity = 8
 	required_technology = improved_food_preservation
-	employment_professions = {
-		canned_food_maker_meat
-		canned_food_maker_fish
-	}
 	settlement_types = {
 		town
 		city

@@ -7,8 +7,6 @@ orchard = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/orchard.png"
-	employment_profession = fruit_grower
-	production_capacity = 1
 	default_population_class = farmers
 	wealth_cost = 100
 	population_classes = {
@@ -35,8 +33,6 @@ improved_orchard = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/orchard.png"
-	employment_profession = fruit_grower
-	production_capacity = 2
 	default_population_class = farmers
 	required_improvement = orchard
 	required_technology = seed_drill
@@ -65,8 +61,6 @@ mechanized_orchard = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/orchard.png"
-	employment_profession = fruit_grower
-	production_capacity = 3
 	default_population_class = farmers
 	required_improvement = improved_orchard
 	required_technology = moldboard_plow
@@ -95,8 +89,6 @@ industrial_orchard = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/orchard.png"
-	employment_profession = fruit_grower
-	production_capacity = 4
 	default_population_class = farmers
 	required_improvement = mechanized_orchard
 	required_technology = commercial_fertilizer

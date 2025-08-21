@@ -5,8 +5,6 @@ dock = {
 	icon = anchor
 	provincial = true
 	free_in_capital = true
-	employment_profession = fisherman
-	production_capacity = 1
 	required_technology = seafaring
 	settlement_types = {
 		camp
@@ -55,8 +53,6 @@ shipyard = {
 	icon = anchor
 	provincial = true
 	capital_only = true
-	employment_profession = fisherman
-	production_capacity = 1
 	required_building = dock
 	required_technology = seafaring
 	settlement_types = {

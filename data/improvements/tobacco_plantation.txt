@@ -6,8 +6,6 @@ tobacco_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/sugar_plantation.png"
-	employment_profession = tobacco_planter
-	production_capacity = 1
 	default_population_class = farmers
 	required_technology = tobacco_planting
 	wealth_cost = 100
@@ -34,8 +32,6 @@ large_tobacco_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/sugar_plantation.png"
-	employment_profession = tobacco_planter
-	production_capacity = 2
 	default_population_class = farmers
 	required_improvement = tobacco_plantation
 	required_technology = large_tobacco_plantations
@@ -63,8 +59,6 @@ mechanized_tobacco_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/sugar_plantation.png"
-	employment_profession = tobacco_planter
-	production_capacity = 3
 	default_population_class = farmers
 	required_improvement = large_tobacco_plantation
 	required_technology = tobacco_industry
@@ -92,8 +86,6 @@ industrial_tobacco_plantation = {
 	}
 	icon = trade_consulate
 	image_filepath = "tiles/improvements/sugar_plantation.png"
-	employment_profession = tobacco_planter
-	production_capacity = 4
 	default_population_class = farmers
 	required_improvement = mechanized_tobacco_plantation
 	required_technology = tobacco_industry

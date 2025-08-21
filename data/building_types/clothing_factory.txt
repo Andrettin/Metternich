@@ -4,8 +4,6 @@ tailors_house = {
 	portrait = factory
 	icon = clothing
 	provincial = true
-	employment_profession = tailor
-	production_capacity = 1
 	settlement_types = {
 		village
 		town
@@ -35,8 +33,6 @@ tailors_shop = {
 	portrait = factory
 	icon = clothing
 	provincial = true
-	employment_profession = tailor
-	production_capacity = 2
 	required_building = tailors_house
 	settlement_types = {
 		town
@@ -66,8 +62,6 @@ clothing_factory = {
 	portrait = factory
 	icon = clothing
 	provincial = true
-	employment_profession = tailor
-	production_capacity = 4
 	required_building = tailors_shop
 	settlement_types = {
 		town

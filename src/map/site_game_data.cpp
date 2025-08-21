@@ -40,7 +40,6 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
-#include "population/profession.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/effect_list.h"
@@ -114,96 +113,6 @@ void site_game_data::do_turn()
 	}
 
 	this->decrement_scripted_modifiers();
-}
-
-void site_game_data::do_everyday_consumption()
-{
-	std::vector<population_unit *> shuffled_population_units;
-	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
-		shuffled_population_units.push_back(population_unit.get());
-	}
-	vector::shuffle(shuffled_population_units);
-
-	std::vector<population_unit *> population_units;
-	for (population_unit *population_unit : shuffled_population_units) {
-		if (population_unit->is_everyday_consumption_fulfilled()) {
-			population_units.push_back(population_unit);
-		} else {
-			population_units.insert(population_units.begin(), population_unit);
-		}
-	}
-
-	for (const auto &[commodity, consumption] : this->local_everyday_consumption) {
-		assert_throw(commodity->is_local() && !commodity->is_provincial());
-		assert_throw(!commodity->is_storable());
-
-		const int effective_consumption = std::min(consumption.to_int(), this->get_commodity_output(commodity).to_int());
-
-		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
-		if (remaining_consumption == 0) {
-			continue;
-		}
-
-		//go through population units belonging to the settlement in random order, and cause the effects of them not being able to have their consumption fulfilled
-		for (population_unit *population_unit : population_units) {
-			const centesimal_int pop_consumption = population_unit->get_type()->get_everyday_consumption(commodity);
-			if (pop_consumption == 0) {
-				continue;
-			}
-
-			population_unit->set_everyday_consumption_fulfilled(false);
-			remaining_consumption -= pop_consumption;
-
-			if (remaining_consumption <= 0) {
-				break;
-			}
-		}
-	}
-}
-
-void site_game_data::do_luxury_consumption()
-{
-	std::vector<population_unit *> shuffled_population_units;
-	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
-		shuffled_population_units.push_back(population_unit.get());
-	}
-	vector::shuffle(shuffled_population_units);
-
-	std::vector<population_unit *> population_units;
-	for (population_unit *population_unit : shuffled_population_units) {
-		if (population_unit->is_luxury_consumption_fulfilled()) {
-			population_units.push_back(population_unit);
-		} else {
-			population_units.insert(population_units.begin(), population_unit);
-		}
-	}
-
-	for (const auto &[commodity, consumption] : this->local_luxury_consumption) {
-		assert_throw(commodity->is_local() && !commodity->is_provincial());
-		assert_throw(!commodity->is_storable());
-
-		const int effective_consumption = std::min(consumption.to_int(), this->get_commodity_output(commodity).to_int());
-
-		centesimal_int remaining_consumption(consumption.to_int() - effective_consumption);
-		if (remaining_consumption == 0) {
-			continue;
-		}
-
-		//go through population units belonging to the settlement in random order, and cause the effects of them not being able to have their consumption fulfilled
-		for (population_unit *population_unit : population_units) {
-			const centesimal_int pop_consumption = population_unit->get_type()->get_luxury_consumption(commodity);
-			if (pop_consumption == 0) {
-				continue;
-			}
-
-			population_unit->set_luxury_consumption_fulfilled(false);
-			remaining_consumption -= pop_consumption;
-
-			if (remaining_consumption <= 0) {
-				break;
-			}
-		}
-	}
 }
 
 const QPoint &site_game_data::get_tile_pos() const
@@ -1082,12 +991,6 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 		}
 	}
 
-	if (!improvement->get_employment_professions().empty()) {
-		assert_throw(this->get_resource() != nullptr);
-		assert_throw(improvement->get_slot() == improvement_slot::resource);
-		this->change_production_capacity(improvement->get_production_capacity() * multiplier);
-	}
-
 	if (this->get_owner() != nullptr) {
 		const country_economy *country_economy = this->get_owner()->get_economy();
 
@@ -1213,7 +1116,6 @@ qunique_ptr<population_unit> site_game_data::pop_population_unit(population_unit
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
 			this->population_units.erase(this->population_units.begin() + i);
 
-			population_unit->set_employment_location(nullptr, nullptr, true);
 			population_unit->set_site(nullptr);
 
 			this->get_population()->on_population_unit_lost(population_unit);
@@ -1261,18 +1163,6 @@ void site_game_data::on_population_type_count_changed(const population_type *typ
 	if (type->get_output_commodity() != nullptr) {
 		this->change_base_commodity_output(type->get_output_commodity(), centesimal_int(type->get_output_value()) * change);
 	}
-
-	for (const auto &[commodity, value] : type->get_everyday_consumption()) {
-		if (commodity->is_local() && !commodity->is_provincial()) {
-			this->change_local_everyday_consumption(commodity, value * change);
-		}
-	}
-
-	for (const auto &[commodity, value] : type->get_luxury_consumption()) {
-		if (commodity->is_local() && !commodity->is_provincial()) {
-			this->change_local_luxury_consumption(commodity, value * change);
-		}
-	}
 }
 
 const population_class *site_game_data::get_default_population_class() const
@@ -1303,75 +1193,6 @@ const population_class *site_game_data::get_default_literate_population_class() 
 	}
 
 	return nullptr;
-}
-
-population_unit *site_game_data::choose_population_unit_for_reallocation() const
-{
-	if (this->site->is_settlement() && this->get_population_unit_count() == 1) {
-		//do not remove a settlement's last population unit
-		return nullptr;
-	}
-
-	std::vector<population_unit *> population_units;
-
-	centesimal_int lowest_output_value = centesimal_int::from_value(std::numeric_limits<int64_t>::max());
-
-	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
-		if (population_unit->get_type()->get_output_commodity() != nullptr) {
-			if (!population_unit->get_type()->get_output_commodity()->is_labor()) {
-				continue;
-			}
-
-			if (this->get_owner() != nullptr && this->get_owner()->get_economy()->get_net_commodity_output(population_unit->get_type()->get_output_commodity()) < population_unit->get_type()->get_output_value()) {
-				continue;
-			}
-		}
-
-		if (population_unit->get_type()->get_country_modifier() != nullptr) {
-			continue;
-		}
-
-		centesimal_int output_value(0);
-
-		const profession *profession = population_unit->get_profession();
-		if (profession != nullptr) {
-			output_value = population_unit->get_employment_location()->get_employee_commodity_outputs(population_unit->get_type(), profession)[population_unit->get_profession()->get_output_commodity()];
-		} else {
-			output_value = centesimal_int(population_unit->get_type()->get_output_value());
-		}
-
-		if (output_value > lowest_output_value) {
-			continue;
-		} else if (output_value < lowest_output_value) {
-			lowest_output_value = output_value;
-			population_units.clear();
-		}
-
-		population_units.push_back(population_unit.get());
-	}
-
-	if (population_units.empty()) {
-		return nullptr;
-	}
-
-	return vector::get_random(population_units);
-}
-
-const site *site_game_data::get_employment_site() const
-{
-	return this->site;
-}
-
-const std::vector<const profession *> &site_game_data::get_employment_professions() const
-{
-	const improvement *resource_improvement = this->get_resource_improvement();
-
-	if (resource_improvement != nullptr) {
-		return resource_improvement->get_employment_professions();
-	}
-
-	static constexpr std::vector<const profession *> empty_vector;
-	return empty_vector;
 }
 
 void site_game_data::change_housing(const centesimal_int &change)
@@ -1626,195 +1447,6 @@ void site_game_data::calculate_commodity_outputs()
 
 		this->set_commodity_output(commodity, output);
 	}
-}
-
-void site_game_data::change_local_everyday_consumption(const commodity *commodity, const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	log_trace(std::format("Changing local everyday consumption in settlement {} of commodity {} (currently {}) by {}.", this->site->get_identifier(), commodity->get_identifier(), this->get_local_everyday_consumption(commodity).to_string(), change.to_string()));
-
-	const centesimal_int count = (this->local_everyday_consumption[commodity] += change);
-
-	log_trace(std::format("Changed local everyday consumption in settlement {} of commodity {} by {}, making it now {}.", this->site->get_identifier(), commodity->get_identifier(), change.to_string(), this->get_local_everyday_consumption(commodity).to_string()));
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->local_everyday_consumption.erase(commodity);
-	}
-}
-
-void site_game_data::change_local_luxury_consumption(const commodity *commodity, const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	log_trace(std::format("Changing local luxury consumption in settlement {} of commodity {} (currently {}) by {}.", this->site->get_identifier(), commodity->get_identifier(), this->get_local_luxury_consumption(commodity).to_string(), change.to_string()));
-
-	const centesimal_int count = (this->local_luxury_consumption[commodity] += change);
-
-	log_trace(std::format("Changed local luxury consumption in settlement {} of commodity {} by {}, making it now {}.", this->site->get_identifier(), commodity->get_identifier(), change.to_string(), this->get_local_luxury_consumption(commodity).to_string()));
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->local_luxury_consumption.erase(commodity);
-	}
-}
-
-std::vector<employment_location *> site_game_data::get_employment_locations()
-{
-	switch (this->site->get_map_data()->get_type()) {
-		case site_type::settlement:
-		case site_type::habitable_world:
-		{
-			std::vector<employment_location *> employment_locations;
-
-			for (const qunique_ptr<settlement_building_slot> &building_slot : this->get_building_slots()) {
-				if (building_slot->get_production_capacity() > 0) {
-					employment_locations.push_back(building_slot.get());
-				}
-			}
-
-			return employment_locations;
-		}
-		case site_type::resource:
-		case site_type::celestial_body:
-			if (this->get_resource() != nullptr && this->get_production_capacity() > 0) {
-				return { this };
-			}
-			break;
-		default:
-			break;
-	}
-
-	return {};
-}
-
-void site_game_data::check_employment()
-{
-	const std::vector<employment_location *> employment_locations = vector::shuffled(this->get_employment_locations());
-
-	for (employment_location *employment_location : employment_locations) {
-		employment_location->check_superfluous_employment();
-	}
-
-	std::vector<population_unit *> unemployed_population_units;
-
-	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
-		if (population_unit->is_unemployed()) {
-			unemployed_population_units.push_back(population_unit.get());
-		}
-	}
-
-	vector::shuffle(unemployed_population_units);
-
-	std::vector<employment_location *> food_employment_locations = employment_locations;
-	std::erase_if(food_employment_locations, [this](const employment_location *employment_location) {
-		for (const profession *profession : employment_location->get_employment_professions()) {
-			if (profession->get_output_commodity()->is_food()) {
-				return false;
-			}
-		}
-
-		return true;
-	});
-
-	std::vector<employment_location *> non_food_employment_locations = employment_locations;
-	std::erase_if(non_food_employment_locations, [this](const employment_location *employment_location) {
-		for (const profession *profession : employment_location->get_employment_professions()) {
-			if (profession->get_output_commodity()->is_food()) {
-				return true;
-			}
-		}
-
-		return false;
-	});
-
-	this->check_available_employment(food_employment_locations, unemployed_population_units);
-	this->check_available_employment(non_food_employment_locations, unemployed_population_units);
-}
-
-void site_game_data::check_available_employment(const std::vector<employment_location *> &employment_locations, std::vector<population_unit *> &unemployed_population_units)
-{
-	if (unemployed_population_units.empty()) {
-		return;
-	}
-
-	for (employment_location *employment_location : employment_locations) {
-		centesimal_int available_production_capacity = employment_location->get_available_production_capacity();
-		assert_throw(available_production_capacity >= 0);
-		if (available_production_capacity == 0) {
-			continue;
-		}
-
-		const std::vector<const profession *> professions = vector::shuffled(employment_location->get_employment_professions());
-		for (const profession *profession : professions) {
-			const commodity *output_commodity = profession->get_output_commodity();
-
-			std::map<centesimal_int, std::vector<population_unit *>, std::greater<centesimal_int>> unemployed_population_units_by_output;
-			for (population_unit *population_unit : unemployed_population_units) {
-				const population_type *converted_population_type = nullptr;
-				if (!employment_location->can_employ(population_unit, profession, converted_population_type)) {
-					continue;
-				}
-
-				unemployed_population_units_by_output[employment_location->get_employee_commodity_outputs(converted_population_type ? converted_population_type : population_unit->get_type(), profession)[output_commodity]].push_back(population_unit);
-			}
-
-			for (const auto &[output, output_population_units] : unemployed_population_units_by_output) {
-				for (population_unit *population_unit : output_population_units) {
-					if (available_production_capacity < output) {
-						break;
-					}
-
-					if (!employment_location->can_fulfill_inputs_for_employment(population_unit, profession)) {
-						//if the inputs are not available, it is pointless to check other potential employees with the same output value
-						break;
-					}
-
-					population_unit->set_employment_location(employment_location, profession, true);
-					available_production_capacity -= output;
-					std::erase(unemployed_population_units, population_unit);
-				}
-
-				if (available_production_capacity == 0) {
-					break;
-				}
-			}
-
-			employment_location->check_superfluous_employment();
-
-			if (available_production_capacity == 0 || unemployed_population_units.empty()) {
-				break;
-			}
-		}
-
-		if (unemployed_population_units.empty()) {
-			break;
-		}
-	}
-}
-
-bool site_game_data::has_available_employment_for(const population_unit *population_unit)
-{
-	const std::vector<employment_location *> employment_locations = this->get_employment_locations();
-
-	const population_type *converted_population_type = nullptr;
-
-	for (const employment_location *employment_location : employment_locations) {
-		for (const profession *profession : employment_location->get_employment_professions()) {
-			if (employment_location->can_employ(population_unit, profession, converted_population_type)) {
-				return true;
-			}
-		}
-	}
-
-	return false;
 }
 
 int site_game_data::get_pathway_level() const

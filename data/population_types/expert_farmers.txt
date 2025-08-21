@@ -4,23 +4,6 @@ expert_farmers = {
 	literate = true
 	icon = slaves_light
 	small_icon = slaves_light_small
-	profession_output_modifiers = {
-		coffee_planter = 100
-		dye_planter = 100
-		fruit_grower = 100
-		grain_farmer = 100
-		incense_planter = 100
-		opium_planter = 100
-		potato_farmer = 100
-		spice_planter = 100
-		tea_planter = 100
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.125
 		furniture = 0.125

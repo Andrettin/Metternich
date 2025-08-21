@@ -1,7 +1,6 @@
 #pragma once
 
 #include "economy/commodity_container.h"
-#include "economy/employment_location.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/qunique_ptr.h"
@@ -36,7 +35,7 @@ class tile;
 enum class improvement_slot;
 enum class site_tier;
 
-class site_game_data final : public QObject, public employment_location
+class site_game_data final : public QObject
 {
 	Q_OBJECT
 
@@ -53,9 +52,6 @@ class site_game_data final : public QObject, public employment_location
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
-	Q_PROPERTY(QVariantList employees READ get_employees_qvariant_list NOTIFY population_units_changed)
-	Q_PROPERTY(int production_capacity READ get_production_capacity NOTIFY improvements_changed)
-	Q_PROPERTY(int employed_production_capacity READ get_employed_production_capacity_int NOTIFY population_units_changed)
 	Q_PROPERTY(int housing READ get_housing_int NOTIFY housing_changed)
 	Q_PROPERTY(const metternich::character* landholder READ get_landholder NOTIFY landholder_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
@@ -68,8 +64,6 @@ public:
 
 	void initialize_resource();
 	void do_turn();
-	void do_everyday_consumption();
-	void do_luxury_consumption();
 
 	const QPoint &get_tile_pos() const;
 	tile *get_tile() const;
@@ -255,16 +249,6 @@ public:
 	const population_class *get_default_population_class() const;
 	const population_class *get_default_literate_population_class() const;
 
-	population_unit *choose_population_unit_for_reallocation() const;
-
-	virtual const site *get_employment_site() const override;
-	virtual const std::vector<const profession *> &get_employment_professions() const override;
-
-	virtual bool is_resource_employment() const override
-	{
-		return true;
-	}
-
 	const centesimal_int &get_housing() const
 	{
 		return this->housing;
@@ -333,34 +317,6 @@ public:
 
 	void set_commodity_output(const commodity *commodity, const centesimal_int &output);
 	void calculate_commodity_outputs();
-
-	const centesimal_int &get_local_everyday_consumption(const commodity *commodity) const
-	{
-		const auto find_iterator = this->local_everyday_consumption.find(commodity);
-
-		if (find_iterator != this->local_everyday_consumption.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	void change_local_everyday_consumption(const commodity *commodity, const centesimal_int &change);
-
-	const centesimal_int &get_local_luxury_consumption(const commodity *commodity) const
-	{
-		const auto find_iterator = this->local_luxury_consumption.find(commodity);
-
-		if (find_iterator != this->local_luxury_consumption.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	void change_local_luxury_consumption(const commodity *commodity, const centesimal_int &change);
 
 	const centesimal_int &get_output_modifier() const
 	{
@@ -446,11 +402,6 @@ public:
 		return this->get_commodity_outputs().contains(commodity);
 	}
 
-	std::vector<employment_location *> get_employment_locations();
-	void check_employment();
-	void check_available_employment(const std::vector<employment_location *> &employment_locations, std::vector<population_unit *> &unemployed_population_units);
-	bool has_available_employment_for(const population_unit *population_unit);
-
 	int get_pathway_level() const;
 
 	int get_depot_level() const
@@ -531,8 +482,6 @@ private:
 	const character *landholder = nullptr;
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
-	commodity_map<centesimal_int> local_everyday_consumption;
-	commodity_map<centesimal_int> local_luxury_consumption;
 	centesimal_int output_modifier;
 	int resource_output_modifier = 0;
 	commodity_map<centesimal_int> commodity_output_modifiers;

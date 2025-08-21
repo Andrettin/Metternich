@@ -4,8 +4,6 @@ blacksmiths_house = {
 	portrait = factory
 	icon = tools
 	provincial = true
-	employment_profession = blacksmith
-	production_capacity = 1
 	settlement_types = {
 		village
 		town
@@ -45,8 +43,6 @@ blacksmiths_shop = {
 	portrait = factory
 	icon = tools
 	provincial = true
-	employment_profession = blacksmith
-	production_capacity = 2
 	required_building = blacksmiths_house
 	settlement_types = {
 		town
@@ -86,8 +82,6 @@ metalworks = {
 	portrait = factory
 	icon = tools
 	provincial = true
-	employment_profession = blacksmith
-	production_capacity = 4
 	required_building = blacksmiths_shop
 	settlement_types = {
 		town

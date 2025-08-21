@@ -4,15 +4,6 @@ master_sugar_planters = {
 	literate = true
 	icon = master_sugar_planters
 	small_icon = master_sugar_planters_small
-	profession_output_modifiers = {
-		sugar_planter = 100
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.125
 		furniture = 0.125

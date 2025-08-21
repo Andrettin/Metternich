@@ -4,8 +4,6 @@ armory = {
 	portrait = factory
 	icon = tools
 	provincial = true
-	employment_profession = gunsmith
-	production_capacity = 1
 	settlement_types = {
 		village
 		town
@@ -36,8 +34,6 @@ magazine = {
 	portrait = factory
 	icon = tools
 	provincial = true
-	employment_profession = gunsmith
-	production_capacity = 2
 	required_building = armory
 	settlement_types = {
 		town
@@ -68,8 +64,6 @@ arsenal = {
 	portrait = factory
 	icon = tools
 	provincial = true
-	employment_profession = gunsmith
-	production_capacity = 4
 	required_building = magazine
 	settlement_types = {
 		town

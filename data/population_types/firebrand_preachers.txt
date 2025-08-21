@@ -6,15 +6,6 @@ firebrand_preachers = {
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
 	required_game_rule = additional_population_types
-	profession_output_modifiers = {
-		preacher = 700
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25

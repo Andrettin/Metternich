@@ -4,15 +4,6 @@ expert_fishermen = {
 	literate = true
 	icon = fishermen
 	small_icon = fishermen_small
-	profession_output_modifiers = {
-		fisherman = 100
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.125
 		furniture = 0.125

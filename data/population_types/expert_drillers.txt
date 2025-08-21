@@ -4,15 +4,6 @@ expert_drillers = {
 	literate = true
 	icon = miners
 	small_icon = miners_small
-	profession_output_modifiers = {
-		oil_driller = 100
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.125
 		furniture = 0.125

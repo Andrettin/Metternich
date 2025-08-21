@@ -3,7 +3,6 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
-#include "population/profession_container.h"
 #include "species/phenotype_container.h"
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
@@ -41,7 +40,6 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(bool literate MEMBER literate READ is_literate NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::icon* small_icon MEMBER small_icon NOTIFY changed)
-	Q_PROPERTY(int everyday_wealth_consumption MEMBER everyday_wealth_consumption READ get_everyday_wealth_consumption NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(int resource_output_bonus MEMBER resource_output_bonus READ get_resource_output_bonus NOTIFY changed)
@@ -119,43 +117,6 @@ public:
 		return this->get_small_icon();
 	}
 
-	int get_everyday_wealth_consumption() const
-	{
-		return this->everyday_wealth_consumption;
-	}
-
-	const commodity_map<centesimal_int> &get_everyday_consumption() const
-	{
-		return this->everyday_consumption;
-	}
-
-	const centesimal_int &get_everyday_consumption(const commodity *commodity) const
-	{
-		const auto find_iterator = this->get_everyday_consumption().find(commodity);
-		if (find_iterator != this->get_everyday_consumption().end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	const commodity_map<centesimal_int> &get_luxury_consumption() const
-	{
-		return this->luxury_consumption;
-	}
-
-	const centesimal_int &get_luxury_consumption(const commodity *commodity) const
-	{
-		const auto find_iterator = this->get_luxury_consumption().find(commodity);
-		if (find_iterator != this->get_luxury_consumption().end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
 	const commodity_map<decimillesimal_int> &get_commodity_demands() const
 	{
 		return this->commodity_demands;
@@ -185,37 +146,6 @@ public:
 	int get_resource_output_bonus() const
 	{
 		return this->resource_output_bonus;
-	}
-
-	const profession_map<centesimal_int> &get_profession_output_bonuses() const
-	{
-		return this->profession_output_bonuses;
-	}
-
-	const centesimal_int &get_profession_output_bonus(const profession *profession) const
-	{
-		const auto find_iterator = this->get_profession_output_bonuses().find(profession);
-		if (find_iterator != this->get_profession_output_bonuses().end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
-	const profession_map<int> &get_profession_output_modifiers() const
-	{
-		return this->profession_output_modifiers;
-	}
-
-	int get_profession_output_modifier(const profession *profession) const
-	{
-		const auto find_iterator = this->get_profession_output_modifiers().find(profession);
-		if (find_iterator != this->get_profession_output_modifiers().end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
 	}
 
 	const centesimal_int &get_max_modifier_multiplier() const
@@ -250,15 +180,10 @@ private:
 	metternich::icon *small_icon = nullptr;
 	phenotype_map<const metternich::icon *> phenotype_icons;
 	phenotype_map<const metternich::icon *> phenotype_small_icons;
-	int everyday_wealth_consumption = 0;
-	commodity_map<centesimal_int> everyday_consumption;
-	commodity_map<centesimal_int> luxury_consumption;
 	commodity_map<decimillesimal_int> commodity_demands;
 	commodity *output_commodity = nullptr;
 	int output_value = 1;
 	int resource_output_bonus = 0;
-	profession_map<centesimal_int> profession_output_bonuses;
-	profession_map<int> profession_output_modifiers;
 	centesimal_int max_modifier_multiplier = centesimal_int(0);
 	std::unique_ptr<modifier<const country>> country_modifier;
 	std::vector<const population_type *> equivalent_population_types;

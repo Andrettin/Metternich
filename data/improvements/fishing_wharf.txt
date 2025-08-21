@@ -6,8 +6,6 @@ fishing_wharf = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/fishing_wharf.png"
-	employment_profession = fisherman
-	production_capacity = 1
 	default_population_class = laborers
 	wealth_cost = 100
 	population_classes = {
@@ -33,8 +31,6 @@ improved_fishing_wharf = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/fishing_wharf.png"
-	employment_profession = fisherman
-	production_capacity = 2
 	default_population_class = laborers
 	required_improvement = fishing_wharf
 	required_technology = seafaring
@@ -62,8 +58,6 @@ advanced_fishing_wharf = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/fishing_wharf.png"
-	employment_profession = fisherman
-	production_capacity = 3
 	default_population_class = laborers
 	required_improvement = improved_fishing_wharf
 	required_technology = cartography
@@ -91,8 +85,6 @@ industrial_fishing_wharf = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/fishing_wharf.png"
-	employment_profession = fisherman
-	production_capacity = 4
 	default_population_class = laborers
 	required_improvement = advanced_fishing_wharf
 	required_technology = cartography

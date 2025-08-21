@@ -5,15 +5,6 @@ apprentice_gunsmiths = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	profession_output_modifiers = {
-		gunsmith = 300
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25
@@ -32,15 +23,6 @@ journeyman_gunsmiths = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	profession_output_modifiers = {
-		gunsmith = 500
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25
@@ -59,15 +41,6 @@ master_gunsmiths = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	profession_output_modifiers = {
-		gunsmith = 700
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25

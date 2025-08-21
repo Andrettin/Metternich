@@ -6,8 +6,6 @@ cattle_ranch = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/cattle_ranch.png"
-	employment_profession = cattle_rancher
-	production_capacity = 1
 	default_population_class = farmers
 	wealth_cost = 100
 	population_classes = {
@@ -33,8 +31,6 @@ improved_cattle_ranch = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/cattle_ranch.png"
-	employment_profession = cattle_rancher
-	production_capacity = 2
 	default_population_class = farmers
 	required_improvement = cattle_ranch
 	required_technology = crop_rotation
@@ -62,8 +58,6 @@ advanced_cattle_ranch = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/cattle_ranch.png"
-	employment_profession = cattle_rancher
-	production_capacity = 3
 	default_population_class = farmers
 	required_improvement = improved_cattle_ranch
 	required_technology = animal_husbandry
@@ -91,8 +85,6 @@ industrial_cattle_ranch = {
 	}
 	icon = garrison
 	image_filepath = "tiles/improvements/cattle_ranch.png"
-	employment_profession = cattle_rancher
-	production_capacity = 4
 	default_population_class = farmers
 	required_improvement = advanced_cattle_ranch
 	required_technology = scientific_cattle_breeding

@@ -5,21 +5,6 @@ apprentice_blacksmiths = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	profession_output_modifiers = {
-		blacksmith = 300
-		brass_maker = 300
-		bronze_maker = 300
-		iron_smelter = 300
-		lead_smelter = 300
-		pipe_maker = 300
-		steel_maker = 300
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25
@@ -38,21 +23,6 @@ journeyman_blacksmiths = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	profession_output_modifiers = {
-		blacksmith = 500
-		brass_maker = 500
-		bronze_maker = 500
-		iron_smelter = 500
-		lead_smelter = 500
-		pipe_maker = 500
-		steel_maker = 500
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25
@@ -71,21 +41,6 @@ master_blacksmiths = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	profession_output_modifiers = {
-		blacksmith = 700
-		brass_maker = 700
-		bronze_maker = 700
-		iron_smelter = 700
-		lead_smelter = 700
-		pipe_maker = 700
-		steel_maker = 700
-	}
-	everyday_consumption = {
-		amenities = 1
-	}
-	luxury_consumption = {
-		amenities = 1
-	}
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25

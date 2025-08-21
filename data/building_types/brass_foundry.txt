@@ -4,8 +4,6 @@ brass_foundry = {
 	portrait = factory
 	icon = bronze
 	provincial = true
-	employment_profession = brass_maker
-	production_capacity = 8
 	required_technology = bronzeworking
 	settlement_types = {
 		town
