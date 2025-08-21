@@ -12,9 +12,6 @@ campus = {
 		expert_workers
 		academics
 	}
-	build_conditions = {
-		population_unit_count = 6
-	}
 	conditions = {
 		game_rule = additional_settlement_types
 		not = {
