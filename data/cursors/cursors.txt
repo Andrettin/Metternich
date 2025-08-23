@@ -1,0 +1,24 @@
+dwarven_gauntlet = {
+	filepath = "cursors/dwarven_gauntlet.png"
+	hot_pos = { 3 1 }
+}
+
+germanic_hand = {
+	filepath = "cursors/germanic_hand.png"
+	hot_pos = { 0 0 }
+}
+
+goblin_gauntlet = {
+	filepath = "cursors/goblin_gauntlet.png"
+	hot_pos = { 1 1 }
+}
+
+magnifying_glass = {
+	filepath = "cursors/magnifying_glass.png"
+	hot_pos = { 11 11 }
+}
+
+teutonic_gauntlet = {
+	filepath = "cursors/teutonic_gauntlet.png"
+	hot_pos = { 0 0 }
+}

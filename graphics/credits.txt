@@ -1,4 +1,8 @@
 /graphics/buildings/university.png (by Exidelo) (licensed under the CC0)
+/graphics/cursors/dwarven_gauntlet.png (by Jinn) (licensed under the CC0)
+/graphics/cursors/germanic_hand.png (by Exidelo) (licensed under the CC0)
+/graphics/cursors/goblin_gauntlet.png (by Jinn) (licensed under the CC0)
+/graphics/cursors/magnifying_glass.png (by Jinn) (licensed under the CC0)
 /graphics/cursors/teutonic_gauntlet.png (by Exidelo) (licensed under the CC0)
 /graphics/icons/animals/beaver.png (by Jinn) (licensed under the CC0)
 /graphics/icons/animals/cow.png (by Jinn) (licensed under the CC0)
