@@ -188,7 +188,7 @@ Flickable {
 		}
 	}
 	
-	function center_on_tile_pos(tile_x, tile_y) {
+	function center_on_tile(tile_x, tile_y) {
 		var pixel_x = Math.round(tile_x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - diplomatic_map.width / 2)
 		var pixel_y = Math.round(tile_y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - diplomatic_map.height / 2)
 		
@@ -206,7 +206,7 @@ Flickable {
 		var capital_game_data = capital.game_data
 		var capital_x = capital_game_data.tile_pos.x
 		var capital_y = capital_game_data.tile_pos.y
-		center_on_tile_pos(capital_x, capital_y)
+		center_on_tile(capital_x, capital_y)
 	}
 	
 	function get_map_mode_suffix(mode, country) {

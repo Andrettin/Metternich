@@ -78,6 +78,6 @@ Item {
 	}
 	
 	Component.onCompleted: {
-		diplomatic_map.center_on_tile_pos(start_tile_x, start_tile_y)
+		diplomatic_map.center_on_tile(start_tile_x, start_tile_y)
 	}
 }

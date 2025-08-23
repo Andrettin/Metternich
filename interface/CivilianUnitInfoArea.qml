@@ -43,7 +43,7 @@ Item {
 					hoverEnabled: true
 					
 					onReleased: {
-						map.center_on_tile(tiles[next_tile_index].x, tiles[next_tile_index].y)
+						province_map.center_on_tile(tiles[next_tile_index].x, tiles[next_tile_index].y)
 						
 						next_tile_index += 1
 						if (next_tile_index >= tiles.length) {
@@ -102,7 +102,7 @@ Item {
 					hoverEnabled: true
 					
 					onReleased: {
-						map.center_on_tile(tiles[next_tile_index].x, tiles[next_tile_index].y)
+						province_map.center_on_tile(tiles[next_tile_index].x, tiles[next_tile_index].y)
 						
 						next_tile_index += 1
 						if (next_tile_index >= tiles.length) {
