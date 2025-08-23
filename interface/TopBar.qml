@@ -69,7 +69,7 @@ Rectangle {
 		anchors.right: wealth_label.right
 		hoverEnabled: true
 		onEntered: {
-			status_text = "Wealth"
+			status_text = get_plural_form(wealth_unit.name)
 		}
 		onExited: {
 			status_text = ""
