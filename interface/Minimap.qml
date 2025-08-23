@@ -5,15 +5,15 @@ Flickable {
 	id: minimap
 	width: 128 * scale_factor
 	height: 128 * scale_factor
-	contentX: Math.min(Math.max(Math.round(map_area_start_x) / tiles_per_pixel - minimap.width / 2, 0), minimap.contentWidth - minimap.width)
-	contentY: Math.min(Math.max(Math.round(map_area_start_y) / tiles_per_pixel - minimap.height / 2, 0), minimap.contentHeight - minimap.height)
+	contentX: Math.min(Math.max(Math.round(map_area_start_x / tiles_per_pixel) - Math.round(Math.min(minimap.width / 2, minimap.width - visible_area_rectangle.width)), 0), minimap.contentWidth - minimap.width)
+	contentY: Math.min(Math.max(Math.round(map_area_start_y / tiles_per_pixel) - Math.round(Math.min(minimap.height / 2, minimap.height - visible_area_rectangle.height)), 0), minimap.contentHeight - minimap.height)
 	contentWidth: minimap_image.width
 	contentHeight: minimap_image.height
 	boundsBehavior: Flickable.StopAtBounds
 	clip: true
 	interactive: false
 	
-	readonly property real tiles_per_pixel: (minimap_image.sourceSize.width / minimap_image.width) / metternich.defines.minimap_tile_scale_double
+	readonly property real tiles_per_pixel: Math.round(1 / metternich.defines.minimap_tile_scale_double)
 	
 	Image {
 		id: minimap_image

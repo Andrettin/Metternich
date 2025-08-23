@@ -1052,8 +1052,9 @@ void map::update_minimap_rect(const QRect &tile_rect)
 	const int start_x = (tile_rect.x() * minimap_tile_scale).to_int();
 	const int start_y = (tile_rect.y() * minimap_tile_scale).to_int();
 
-	const int end_x = (tile_rect.right() * minimap_tile_scale).to_int();
-	const int end_y = (tile_rect.bottom() * minimap_tile_scale).to_int();
+	const QSize minimap_size = this->minimap_image.size();
+	const int end_x = std::min(minimap_size.width() - 1, (tile_rect.right() * minimap_tile_scale).to_int());
+	const int end_y = std::min(minimap_size.height() - 1, (tile_rect.bottom() * minimap_tile_scale).to_int());
 
 	for (int x = start_x; x <= end_x; ++x) {
 		for (int y = start_y; y <= end_y; ++y) {
