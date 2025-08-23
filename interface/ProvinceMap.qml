@@ -52,6 +52,15 @@ Flickable {
 					if (selected || province.water_zone) {
 						select_province(null)
 					} else {
+						if (metternich.selected_military_units.length > 0) {
+							metternich.move_selected_military_units_to(province.provincial_capital.map_data.tile_pos)
+							selected_civilian_unit = null
+							selected_site = null
+							selected_province = null
+							selected_garrison = false
+							return
+						}
+						
 						select_province(province)
 					}
 				}
