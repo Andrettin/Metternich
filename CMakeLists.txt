@@ -257,6 +257,7 @@ source_group(technology FILES ${technology_SRCS})
 set_source_files_properties(${technology_SRCS} PROPERTIES UNITY_GROUP "technology")
 
 set(ui_SRCS
+	src/ui/cursor.cpp
 	src/ui/icon.cpp
 	src/ui/icon_base.cpp
 	src/ui/icon_container.cpp
@@ -781,6 +782,7 @@ set(technology_HDRS
 source_group(technology FILES ${technology_HDRS})
 
 set(ui_HDRS
+	src/ui/cursor.h
 	src/ui/icon.h
 	src/ui/icon_base.h
 	src/ui/icon_container.h

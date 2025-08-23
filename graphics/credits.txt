@@ -1,4 +1,5 @@
 /graphics/buildings/university.png (by Exidelo) (licensed under the CC0)
+/graphics/cursors/teutonic_gauntlet.png (by Exidelo) (licensed under the CC0)
 /graphics/icons/animals/beaver.png (by Jinn) (licensed under the CC0)
 /graphics/icons/animals/cow.png (by Jinn) (licensed under the CC0)
 /graphics/icons/animals/deer.png (by Jinn) (licensed under the CC0)

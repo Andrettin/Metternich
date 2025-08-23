@@ -1,0 +1,4 @@
+teutonic_gauntlet = {
+	filepath = "cursors/teutonic_gauntlet.png"
+	hot_pos = { 0 0 }
+}
