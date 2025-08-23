@@ -17,7 +17,6 @@ Flickable {
 		Religious
 	}
 	
-	property var selected_province: null
 	property int mode: DiplomaticMap.Mode.Political
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_country ? metternich.game.player_country : null)
 	
@@ -26,7 +25,7 @@ Flickable {
 		height: province_map.contentHeight
 		
 		onClicked: {
-			province_map.selected_province = null
+			select_province(null)
 		}
 	}
 	
@@ -51,9 +50,9 @@ Flickable {
 				
 				onClicked: {
 					if (selected || province.water_zone) {
-						province_map.selected_province = null
+						select_province(null)
 					} else {
-						province_map.selected_province = province
+						select_province(province)
 					}
 				}
 				
@@ -86,7 +85,7 @@ Flickable {
 			maskSource: parent.source
 			
 			onClicked: {
-				province_map.selected_province = null
+				select_province(null)
 			}
 		}
 	}
@@ -112,7 +111,7 @@ Flickable {
 				maskSource: parent.source
 				
 				onClicked: {
-					province_map.selected_province = other_country.game_data.capital.province
+					select_province(other_country.game_data.capital.province)
 				}
 			}
 			
@@ -120,6 +119,13 @@ Flickable {
 				text: small_text(consulate.name)
 				visible: consulate_mouse_area.containsMouse
 			}
+		}
+	}
+	
+	function select_province(province) {
+		selected_province = province
+		if (selected_garrison && (province === null || selected_province.game_data.military_unit_category_counts.length === 0)) {
+			selected_garrison = false
 		}
 	}
 	

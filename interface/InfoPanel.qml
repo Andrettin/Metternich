@@ -127,7 +127,9 @@ Rectangle {
 		wrapMode: Text.WordWrap
 		text: selected_garrison ? "Garrison" : (
 			selected_site ? selected_site.game_data.current_cultural_name
-				: (selected_civilian_unit ? selected_civilian_unit.type.name : "")
+				: (selected_civilian_unit ? selected_civilian_unit.type.name
+					: (selected_province ? selected_province.game_data.current_cultural_name : "")
+				)
 		)
 	}
 	
@@ -567,6 +569,28 @@ Rectangle {
 		anchors.rightMargin: 8 * scale_factor
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
+		icon_identifier: "rifle_infantry_light_small"
+		visible: selected_province !== null && selected_province.game_data.military_unit_category_counts.length > 0
+		
+		onReleased: {
+			selected_garrison = true
+		}
+		
+		onHoveredChanged: {
+			if (hovered) {
+				status_text = "View Garrison"
+			} else {
+				status_text = ""
+			}
+		}
+	}
+	
+	IconButton {
+		id: garrison_details_button
+		anchors.left: end_turn_button_internal.right
+		anchors.leftMargin: 8 * scale_factor
+		anchors.bottom: parent.bottom
+		anchors.bottomMargin: 4 * scale_factor
 		icon_identifier: "crossed_sabers"
 		visible: selected_garrison
 		
@@ -576,7 +600,7 @@ Rectangle {
 		
 		onHoveredChanged: {
 			if (hovered) {
-				status_text = "View Garrison"
+				status_text = "View Garrison Details"
 			} else {
 				status_text = ""
 			}
@@ -622,6 +646,27 @@ Rectangle {
 		onHoveredChanged: {
 			if (hovered) {
 				status_text = selected_site.settlement ? "Back to Settlement" : "Back to Site"
+			} else {
+				status_text = ""
+			}
+		}
+	}
+	IconButton {
+		id: garrison_back_button
+		anchors.right: end_turn_button_internal.left
+		anchors.rightMargin: 8 * scale_factor
+		anchors.bottom: parent.bottom
+		anchors.bottomMargin: 4 * scale_factor
+		icon_identifier: "mountains"
+		visible: selected_province !== null && selected_garrison
+		
+		onClicked: {
+			selected_garrison = false
+		}
+		
+		onHoveredChanged: {
+			if (hovered) {
+				status_text = "Back to Province"
 			} else {
 				status_text = ""
 			}
