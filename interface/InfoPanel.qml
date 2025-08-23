@@ -26,98 +26,94 @@ Rectangle {
 		width: 1 * scale_factor
 	}
 	
-	IconButton {
-		id: transport_button
-		anchors.top: industry_button.top
-		anchors.left: parent.left
-		anchors.leftMargin: 6 * scale_factor
-		icon_identifier: "railroad"
-		
-		onReleased: {
-			menu_stack.push("TransportView.qml", {
-				country: metternich.game.player_country
-			})
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "View Transport"
-			} else {
-				status_text = ""
-			}
-		}
-	}
-	
-	IconButton {
-		id: industry_button
+	Row {
+		id: button_row
 		anchors.top: parent.top
 		anchors.topMargin: 6 * scale_factor
-		anchors.left: transport_button.right
-		anchors.leftMargin: 4 * scale_factor
-		icon_identifier: "settlement"
+		anchors.left: parent.left
+		anchors.leftMargin: 6 * scale_factor
+		spacing: 4 * scale_factor
 		
-		onReleased: {
-			menu_stack.push("IndustryView.qml", {
-				country: metternich.game.player_country,
-				interface_style: map_view.interface_style
-			})
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "View Industry"
-			} else {
-				status_text = ""
+		IconButton {
+			id: transport_button
+			icon_identifier: "railroad"
+			
+			onReleased: {
+				menu_stack.push("TransportView.qml", {
+					country: metternich.game.player_country
+				})
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Transport"
+				} else {
+					status_text = ""
+				}
 			}
 		}
-	}
-	
-	IconButton {
-		id: trade_button
-		anchors.top: industry_button.top
-		anchors.left: industry_button.right
-		anchors.leftMargin: 4 * scale_factor
-		icon_identifier: "wealth"
 		
-		onReleased: {
-			menu_stack.push("TradeView.qml")
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "View Trade"
-			} else {
-				status_text = ""
+		IconButton {
+			id: industry_button
+			icon_identifier: "settlement"
+			
+			onReleased: {
+				menu_stack.push("IndustryView.qml", {
+					country: metternich.game.player_country,
+					interface_style: map_view.interface_style
+				})
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Industry"
+				} else {
+					status_text = ""
+				}
 			}
 		}
-	}
-	
-	IconButton {
-		id: diplomatic_map_button
-		anchors.top: industry_button.top
-		anchors.left: trade_button.right
-		anchors.leftMargin: 4 * scale_factor
-		icon_identifier: "globe"
 		
-		onReleased: {
-			menu_stack.push("DiplomaticView.qml", {
-				start_tile_x: map_area_start_x + map_area_tile_width / 2,
-				start_tile_y: map_area_start_y + map_area_tile_height / 2
-			})
+		IconButton {
+			id: trade_button
+			icon_identifier: "wealth"
+			
+			onReleased: {
+				menu_stack.push("TradeView.qml")
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Trade"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "View Diplomatic Map"
-			} else {
-				status_text = ""
+		IconButton {
+			id: diplomatic_map_button
+			icon_identifier: "globe"
+			
+			onReleased: {
+				menu_stack.push("DiplomaticView.qml", {
+					start_tile_x: map_area_start_x + map_area_tile_width / 2,
+					start_tile_y: map_area_start_y + map_area_tile_height / 2
+				})
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Diplomatic Map"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 	}
 	
 	NormalText {
 		id: title
-		anchors.top: industry_button.bottom
+		anchors.top: button_row.bottom
 		anchors.topMargin: 8 * scale_factor
 		anchors.left: parent.left
 		anchors.leftMargin: 8 * scale_factor
