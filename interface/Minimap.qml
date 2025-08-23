@@ -13,7 +13,7 @@ Flickable {
 	clip: true
 	interactive: false
 	
-	readonly property real tiles_per_pixel: minimap_image.sourceSize.width / minimap_image.width
+	readonly property real tiles_per_pixel: (minimap_image.sourceSize.width / minimap_image.width) / metternich.defines.minimap_tile_scale_double
 	
 	Image {
 		id: minimap_image

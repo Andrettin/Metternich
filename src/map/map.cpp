@@ -1039,7 +1039,7 @@ QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 
 void map::create_minimap_image()
 {
-	this->minimap_image = QImage(this->get_size(), QImage::Format_RGBA8888);
+	this->minimap_image = QImage(this->get_size() * defines::get()->get_minimap_tile_scale(), QImage::Format_RGBA8888);
 	this->minimap_image.fill(Qt::transparent);
 
 	this->update_minimap_rect(QRect(QPoint(0, 0), this->get_size()));
@@ -1047,31 +1047,37 @@ void map::create_minimap_image()
 
 void map::update_minimap_rect(const QRect &tile_rect)
 {
-	const int start_x = tile_rect.x();
-	const int start_y = tile_rect.y();
+	static const centesimal_int &minimap_tile_scale = defines::get()->get_minimap_tile_scale();
 
-	for (int x = start_x; x < this->get_width(); ++x) {
-		for (int y = start_y; y < this->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
+	const int start_x = (tile_rect.x() * minimap_tile_scale).to_int();
+	const int start_y = (tile_rect.y() * minimap_tile_scale).to_int();
+
+	const int end_x = (tile_rect.right() * minimap_tile_scale).to_int();
+	const int end_y = (tile_rect.bottom() * minimap_tile_scale).to_int();
+
+	for (int x = start_x; x <= end_x; ++x) {
+		for (int y = start_y; y <= end_y; ++y) {
+			const QPoint pixel_pos(x, y);
+			const QPoint tile_pos = pixel_pos / minimap_tile_scale;
 
 			if (game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
 				const tile *tile = this->get_tile(tile_pos);
 				const terrain_type *terrain = tile->get_terrain();
 
 				if (terrain->is_water()) {
-					this->minimap_image.setPixelColor(tile_pos, defines::get()->get_minimap_ocean_color());
+					this->minimap_image.setPixelColor(pixel_pos, defines::get()->get_minimap_ocean_color());
 					continue;
 				}
 
 				const country *country = tile->get_owner();
 
 				if (country != nullptr) {
-					this->minimap_image.setPixelColor(tile_pos, country->get_game_data()->get_diplomatic_map_color());
+					this->minimap_image.setPixelColor(pixel_pos, country->get_game_data()->get_diplomatic_map_color());
 					continue;
 				}
 			}
 
-			this->minimap_image.setPixelColor(tile_pos, defines::get()->get_unexplored_terrain()->get_color());
+			this->minimap_image.setPixelColor(pixel_pos, defines::get()->get_unexplored_terrain()->get_color());
 		}
 	}
 }

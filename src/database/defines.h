@@ -47,6 +47,8 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::cursor* default_cursor MEMBER default_cursor READ get_default_cursor NOTIFY changed)
 	Q_PROPERTY(QSize tile_size MEMBER tile_size READ get_tile_size NOTIFY changed)
 	Q_PROPERTY(QSize scaled_tile_size READ get_scaled_tile_size NOTIFY scaled_tile_size_changed)
+	Q_PROPERTY(archimedes::centesimal_int minimap_tile_scale MEMBER minimap_tile_scale READ get_minimap_tile_scale NOTIFY changed)
+	Q_PROPERTY(double minimap_tile_scale_double READ get_minimap_tile_scale_double NOTIFY changed)
 	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn NOTIFY changed)
 	Q_PROPERTY(QDate default_start_date MEMBER default_start_date READ get_default_start_date)
 	Q_PROPERTY(const metternich::terrain_type* default_base_terrain MEMBER default_base_terrain READ get_default_base_terrain NOTIFY changed)
@@ -125,6 +127,16 @@ public:
 	QSize get_scaled_tile_size() const;
 	int get_scaled_tile_width() const;
 	int get_scaled_tile_height() const;
+
+	const centesimal_int &get_minimap_tile_scale() const
+	{
+		return this->minimap_tile_scale;
+	}
+
+	double get_minimap_tile_scale_double() const
+	{
+		return this->get_minimap_tile_scale().to_double();
+	}
 
 	int get_months_per_turn(const int current_year) const
 	{
@@ -423,6 +435,7 @@ private:
 	log_level min_log_level;
 	cursor *default_cursor = nullptr;
 	QSize tile_size = QSize(64, 64);
+	centesimal_int minimap_tile_scale = centesimal_int(1);
 	int default_months_per_turn = 3;
 	std::map<int, int> months_per_turn_from_year;
 	QDate default_start_date;
