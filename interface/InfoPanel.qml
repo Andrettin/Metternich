@@ -37,6 +37,7 @@ Rectangle {
 		IconButton {
 			id: transport_button
 			icon_identifier: "railroad"
+			visible: false
 			
 			onReleased: {
 				menu_stack.push("TransportView.qml", {
