@@ -82,24 +82,28 @@ void cursor::set_filepath(const std::filesystem::path &filepath)
 
 QCoro::Task<void> cursor::load_image()
 {
-	if (!this->image.isNull()) {
-		//already loaded
-		co_return;
+	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+	std::filesystem::path filepath = this->get_filepath();
+
+	const std::pair<std::filesystem::path, centesimal_int> scale_suffix_result = image::get_scale_suffixed_filepath(filepath, scale_factor);
+
+	centesimal_int image_scale_factor(1);
+
+	if (!scale_suffix_result.first.empty()) {
+		filepath = scale_suffix_result.first;
+		image_scale_factor = scale_suffix_result.second;
 	}
 
-	this->image = QImage(path::to_qstring(this->get_filepath()));
-	assert_throw(!this->image.isNull());
+	QImage cursor_image = QImage(path::to_qstring(filepath));
+	assert_throw(!cursor_image.isNull());
 
-	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
-	QImage scaled_image;
-
-	co_await QtConcurrent::run([this, &scaled_image, &scale_factor]() {
-		scaled_image = image::scale<QImage::Format_ARGB32>(this->image, scale_factor, this->image.size(), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+	co_await QtConcurrent::run([this, &cursor_image, &scale_factor, &image_scale_factor]() {
+		cursor_image = image::scale<QImage::Format_ARGB32>(cursor_image, scale_factor / image_scale_factor, cursor_image.size(), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 	});
 
-	this->image = std::move(scaled_image);
+	this->image = std::move(cursor_image);
 }
 
 }

@@ -75,6 +75,7 @@
 #include "technology/technology_category.h"
 #include "technology/technology_model.h"
 #include "time/era.h"
+#include "ui/cursor.h"
 #include "ui/icon.h"
 #include "ui/icon_image_provider.h"
 #include "ui/interface_image_provider.h"
@@ -86,6 +87,7 @@
 #include "util/empty_image_provider.h"
 #include "util/exception_util.h"
 #include "util/gender.h"
+#include "util/image_util.h"
 #include "util/log_output_handler.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
@@ -113,6 +115,9 @@ static QCoro::Task<void> initialize()
 		preferences::get()->load();
 
 		database::get()->initialize();
+
+		co_await cursor::set_current_cursor(defines::get()->get_default_cursor());
+
 		engine_interface::get()->set_running(true);
 	} catch (...) {
 		exception::report(std::current_exception());

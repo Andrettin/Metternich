@@ -3,6 +3,8 @@ min_log_level = trace
 green_text_color = { 0 159 3 }
 red_text_color = { 255 50 50 }
 
+default_cursor = teutonic_gauntlet
+
 tile_size = { 64 64 }
 default_base_terrain = plains
 unexplored_terrain = unexplored
