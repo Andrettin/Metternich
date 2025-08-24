@@ -3,8 +3,8 @@ import QtQuick.Controls
 
 Flickable {
 	id: minimap
-	width: 128 * scale_factor
-	height: 128 * scale_factor
+	width: Math.min(128 * scale_factor, minimap_image.width)
+	height: Math.min(128 * scale_factor, minimap_image.height)
 	contentX: Math.min(Math.max(Math.round(map_area_start_x / tiles_per_pixel) - Math.round(Math.min(minimap.width / 2, minimap.width - visible_area_rectangle.width)), 0), minimap.contentWidth - minimap.width)
 	contentY: Math.min(Math.max(Math.round(map_area_start_y / tiles_per_pixel) - Math.round(Math.min(minimap.height / 2, minimap.height - visible_area_rectangle.height)), 0), minimap.contentHeight - minimap.height)
 	contentWidth: minimap_image.width

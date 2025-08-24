@@ -5,10 +5,18 @@ Rectangle {
 	id: minimap_area
 	color: interface_background_color
 	width: 176 * scale_factor
-	height: minimap_borders.height
+	height: 128 * scale_factor + 2 * scale_factor
 	clip: true
 	
 	PanelTiledBackground {
+	}
+	
+	Rectangle {
+		color: "black"
+		anchors.top: parent.top
+		anchors.bottom: parent.bottom
+		anchors.right: parent.right
+		width: 1 * scale_factor
 	}
 	
 	Rectangle {
