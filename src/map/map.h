@@ -80,6 +80,7 @@ public:
 	void update_tile_rect_terrain_tile(const QRect &tile_rect);
 	void add_tile_border_river_direction(const QPoint &tile_pos, const direction direction, const province *border_province);
 	void add_tile_route_direction(const QPoint &tile_pos, const direction direction);
+	Q_INVOKABLE const metternich::province *get_tile_province(const QPoint &tile_pos) const;
 	void set_tile_province(const QPoint &tile_pos, const province *province);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	void set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);

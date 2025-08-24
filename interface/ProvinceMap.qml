@@ -20,15 +20,6 @@ Flickable {
 	property int mode: DiplomaticMap.Mode.Political
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_country ? metternich.game.player_country : null)
 	
-	MouseArea {
-		width: province_map.contentWidth
-		height: province_map.contentHeight
-		
-		onClicked: {
-			select_province(null)
-		}
-	}
-	
 	Repeater {
 		model: metternich.map.provinces
 		
@@ -41,44 +32,6 @@ Flickable {
 			
 			readonly property var province: model.modelData
 			readonly property var selected: selected_province === province
-			
-			MaskedMouseArea {
-				id: province_mouse_area
-				anchors.fill: parent
-				alphaThreshold: 0.4
-				maskSource: parent.source
-				
-				onClicked: {
-					if (selected || province.water_zone) {
-						select_province(null)
-					} else {
-						if (metternich.selected_military_units.length > 0) {
-							metternich.move_selected_military_units_to(province.provincial_capital.map_data.tile_pos)
-							selected_civilian_unit = null
-							selected_site = null
-							selected_province = null
-							selected_garrison = false
-							return
-						}
-						
-						select_province(province)
-					}
-				}
-				
-				onContainsMouseChanged: {
-					var text = province.game_data.current_cultural_name
-					
-					if (province.game_data.owner !== null) {
-						text += ", " + province.game_data.owner.name
-					}
-					
-					if (containsMouse) {
-						status_text = text
-					} else if (status_text === text) {
-						status_text = ""
-					}
-				}
-			}
 		}
 	}
 	
@@ -96,11 +49,59 @@ Flickable {
 			wrapMode: Text.WordWrap
 			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (province.game_data.map_image_rect.x === 0 ? Text.AlignLeft : ((province.game_data.map_image_rect.x + province.game_data.map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
 			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province.game_data.map_image_rect.y === 0 ? Text.AlignTop : ((province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
-					
+			
 			readonly property var province: model.modelData
 			readonly property var text_rect: province.game_data.text_rect
 			readonly property int text_rect_width: text_rect.width * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
 			readonly property int text_rect_height: text_rect.height * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
+		}
+	}
+	
+	MouseArea {
+		width: province_map.contentWidth
+		height: province_map.contentHeight
+		hoverEnabled: true
+		
+		onClicked: function (mouse) {
+			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.diplomatic_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.diplomatic_map_tile_pixel_size / scale_factor)))
+			
+			if (province === null || selected_province === province || province.water_zone) {
+				select_province(null)
+			} else {
+				if (metternich.selected_military_units.length > 0) {
+					metternich.move_selected_military_units_to(province.provincial_capital.map_data.tile_pos)
+					selected_civilian_unit = null
+					selected_site = null
+					selected_province = null
+					selected_garrison = false
+					return
+				}
+				
+				select_province(province)
+			}
+		}
+		
+		onPositionChanged: function (mouse) {
+			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.diplomatic_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.diplomatic_map_tile_pixel_size / scale_factor)))
+			
+			if (province !== null) {
+				var text = province.game_data.current_cultural_name
+				
+				if (province.game_data.owner !== null) {
+					text += ", " + province.game_data.owner.name
+				}
+				
+				status_text = text
+			} else {
+				status_text = ""
+			}
+			
+		}
+		
+		onContainsMouseChanged: {
+			if (!containsMouse) {
+				status_text = ""
+			}
 		}
 	}
 	

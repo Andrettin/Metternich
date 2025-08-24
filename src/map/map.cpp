@@ -587,6 +587,16 @@ void map::add_tile_route_direction(const QPoint &tile_pos, const direction direc
 	tile->set_direction_pathway(direction, defines::get()->get_route_pathway());
 }
 
+const metternich::province *map::get_tile_province(const QPoint &tile_pos) const
+{
+	const tile *tile = this->get_tile(tile_pos);
+	if (tile == nullptr) {
+		return nullptr;
+	}
+
+	return tile->get_province();
+}
+
 void map::set_tile_province(const QPoint &tile_pos, const province *province)
 {
 	tile *tile = this->get_tile(tile_pos);
