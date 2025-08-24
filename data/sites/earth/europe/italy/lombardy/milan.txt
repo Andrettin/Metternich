@@ -3,8 +3,7 @@ milan = {
 	world = earth
 	geocoordinate = { 9.20500890976 45.46997519840 } #from Natural Earth
 	type = settlement
-	#resource = center_of_trade
-	resource = steel
+	resource = center_of_trade
 	cultural_names = {
 		roman = "Mediolanum" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}

@@ -3,7 +3,6 @@ metz = {
 	world = earth
 	geocoordinate = { 6.18002559269 49.12034669910 } #from Natural Earth
 	type = settlement
-	resource = steel
 	#resource = gold
 	province = moselle
 	cultural_names = {

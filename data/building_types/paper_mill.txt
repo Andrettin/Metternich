@@ -14,7 +14,6 @@ paper_mill = {
 		province = {
 			or = {
 				capital = true
-				has_resource = paper
 				has_resource = timber
 			}
 		}

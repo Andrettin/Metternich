@@ -4,7 +4,6 @@ brunn = {
 	geocoordinate = { 16.60998327500 49.20039349270 } #from Natural Earth
 	type = settlement
 	#resource = coal
-	resource = fabric
 	province = brunn
 	cultural_names = {
 		czech = "Brno"
