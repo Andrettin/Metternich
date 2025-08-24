@@ -589,7 +589,7 @@ Rectangle {
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
 		icon_identifier: "crossed_sabers"
-		visible: selected_garrison
+		visible: selected_garrison && selected_province.game_data.get_country_military_units_qvariant_list(metternich.game.player_country).length > 0
 		
 		onReleased: {
 			garrison_dialog.open()
