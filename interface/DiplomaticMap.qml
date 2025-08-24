@@ -112,24 +112,20 @@ Flickable {
 		}
 	}
 	
-	/*
 	Repeater {
 		model: metternich.game.countries
 		
 		TinyText {
 			id: country_label
-			text: country.game_data.titled_name
+			text: country.game_data.name
 			x: Math.floor(text_rect.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
 			y: Math.floor(text_rect.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
 			width: Math.floor(text_rect_width)
 			height: Math.floor(text_rect_height)
-			visible: contentWidth <= width && (diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic)
-			font.pixelSize: 8 * scale_factor
-			shadow_offset: 1
-			font.bold: true
+			visible: diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic
 			wrapMode: Text.WordWrap
-			horizontalAlignment: Text.AlignHCenter
-			verticalAlignment: Text.AlignVCenter
+			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (country.game_data.diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((country.game_data.diplomatic_map_image_rect.x + country.game_data.diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
+			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (country.game_data.diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((country.game_data.diplomatic_map_image_rect.y + country.game_data.diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
 					
 			readonly property var country: model.modelData
 			readonly property var text_rect: country.game_data.text_rect
@@ -137,7 +133,6 @@ Flickable {
 			readonly property int text_rect_height: text_rect.height * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
 		}
 	}
-	*/
 	
 	Image {
 		id: exploration_image
