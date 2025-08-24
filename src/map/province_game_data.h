@@ -51,6 +51,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(QRect map_image_rect READ get_map_image_rect NOTIFY map_image_changed)
+	Q_PROPERTY(QRect text_rect READ get_text_rect NOTIFY map_image_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect CONSTANT)
@@ -144,15 +145,22 @@ public:
 	[[nodiscard]]
 	QCoro::Task<void> create_map_image();
 
+	const QImage &get_selected_map_image() const
+	{
+		return this->selected_map_image;
+	}
+
 	const QRect &get_map_image_rect() const
 	{
 		return this->map_image_rect;
 	}
 
-	const QImage &get_selected_map_image() const
+	const QRect &get_text_rect() const
 	{
-		return this->selected_map_image;
+		return this->text_rect;
 	}
+
+	void calculate_text_rect();
 
 	int get_settlement_count() const
 	{
@@ -462,6 +470,7 @@ private:
 	QImage map_image;
 	QImage selected_map_image;
 	QRect map_image_rect;
+	QRect text_rect;
 	int settlement_count = 0; //only includes built settlements
 	scripted_province_modifier_map<int> scripted_modifiers;
 	std::vector<population_unit *> population_units;

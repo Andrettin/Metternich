@@ -82,6 +82,28 @@ Flickable {
 		}
 	}
 	
+	Repeater {
+		model: metternich.map.provinces
+		
+		TinyText {
+			id: province_label
+			text: province.game_data.current_cultural_name
+			x: Math.floor(text_rect.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
+			y: Math.floor(text_rect.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
+			width: Math.floor(text_rect_width)
+			height: Math.floor(text_rect_height)
+			//visible: contentWidth <= width// && (diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic)
+			wrapMode: Text.WordWrap
+			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (province.game_data.map_image_rect.x === 0 ? Text.AlignLeft : ((province.game_data.map_image_rect.x + province.game_data.map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
+			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province.game_data.map_image_rect.y === 0 ? Text.AlignTop : ((province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
+					
+			readonly property var province: model.modelData
+			readonly property var text_rect: province.game_data.text_rect
+			readonly property int text_rect_width: text_rect.width * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
+			readonly property int text_rect_height: text_rect.height * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
+		}
+	}
+	
 	Image {
 		id: exploration_image
 		source: metternich.game.running ? "image://province_map/exploration" : "image://empty/"
