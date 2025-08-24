@@ -269,11 +269,6 @@ void country_military::change_military_unit_recruitment_count(const military_uni
 
 			this->country->get_economy()->change_stored_commodity(commodity, -cost_change);
 		}
-
-		if (military_unit_type->get_wealth_cost() > 0) {
-			const int wealth_cost_change = this->get_military_unit_type_wealth_cost(military_unit_type, count) - this->get_military_unit_type_wealth_cost(military_unit_type, old_count);
-			this->country->get_economy()->change_wealth(-wealth_cost_change);
-		}
 	}
 }
 
@@ -294,14 +289,6 @@ bool country_military::can_increase_military_unit_recruitment(const military_uni
 		const int cost_change = cost - old_commodity_costs.find(commodity)->second;
 
 		if (this->country->get_economy()->get_stored_commodity(commodity) < cost_change) {
-			return false;
-		}
-	}
-
-	if (military_unit_type->get_wealth_cost() > 0) {
-		const int wealth_cost_change = this->get_military_unit_type_wealth_cost(military_unit_type, new_count) - this->get_military_unit_type_wealth_cost(military_unit_type, old_count);
-
-		if (this->country->get_economy()->get_wealth() < wealth_cost_change) {
 			return false;
 		}
 	}
@@ -355,21 +342,6 @@ int country_military::get_military_unit_type_cost_modifier(const military_unit_t
 	}
 
 	return 0;
-}
-
-int country_military::get_military_unit_type_wealth_cost(const military_unit_type *military_unit_type, const int quantity) const
-{
-	int wealth_cost = military_unit_type->get_wealth_cost() * quantity;
-
-	const int cost_modifier = this->get_military_unit_type_cost_modifier(military_unit_type);
-	wealth_cost *= 100 + cost_modifier;
-	wealth_cost /= 100;
-
-	if (military_unit_type->get_wealth_cost() > 0 && quantity > 0) {
-		wealth_cost = std::max(wealth_cost, 1);
-	}
-
-	return wealth_cost;
 }
 
 commodity_map<int> country_military::get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const

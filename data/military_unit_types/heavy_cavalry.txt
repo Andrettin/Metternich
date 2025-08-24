@@ -33,9 +33,9 @@ cuirassiers = {
 		movement = 9
 	}
 	required_technology = improved_cavalry_weapons
-	wealth_cost = 500
 	upkeep = 25
 	commodity_costs = {
+		wealth = 500
 		manpower = 1
 		armament = 1
 		horses = 1
@@ -57,9 +57,9 @@ carbine_cavalry = {
 		movement = 9
 	}
 	required_technology = repeating_cavalry_carbine
-	wealth_cost = 3500
 	upkeep = 50
 	commodity_costs = {
+		wealth = 3500
 		manpower = 1
 		armament = 2
 		horses = 1
@@ -82,9 +82,9 @@ armor = {
 	}
 	entrenchment_bonus = 5
 	required_technology = mobile_warfare
-	wealth_cost = 9000
 	upkeep = 250
 	commodity_costs = {
+		wealth = 9000
 		manpower = 1
 		armament = 10
 		fuel = 4

@@ -72,7 +72,6 @@ public:
 	Q_INVOKABLE void decrease_military_unit_recruitment(const metternich::military_unit_type *military_unit_type, const bool restore_inputs);
 
 	int get_military_unit_type_cost_modifier(const military_unit_type *military_unit_type) const;
-	Q_INVOKABLE int get_military_unit_type_wealth_cost(const metternich::military_unit_type *military_unit_type, const int quantity) const;
 	commodity_map<int> get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const;
 	Q_INVOKABLE QVariantList get_military_unit_type_commodity_costs_qvariant_list(const metternich::military_unit_type *military_unit_type, const int quantity) const;
 

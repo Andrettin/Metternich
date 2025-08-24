@@ -37,7 +37,6 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(bool entrench MEMBER entrench READ can_entrench NOTIFY changed)
 	Q_PROPERTY(int entrenchment_bonus MEMBER entrenchment_bonus READ get_entrenchment_bonus NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
-	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 	Q_PROPERTY(int upkeep MEMBER upkeep READ get_upkeep NOTIFY changed)
 
 public:
@@ -120,11 +119,6 @@ public:
 		return this->required_technology;
 	}
 
-	int get_wealth_cost() const
-	{
-		return this->wealth_cost;
-	}
-
 	int get_upkeep() const
 	{
 		return this->upkeep;
@@ -160,7 +154,6 @@ private:
 	bool entrench = false;
 	int entrenchment_bonus = 1; //the entrenchment bonus to defense
 	technology *required_technology = nullptr;
-	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
 	int upkeep = 0; //wealth paid per turn as upkeep for the military unit
 	std::vector<const promotion *> free_promotions;

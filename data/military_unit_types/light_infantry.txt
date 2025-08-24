@@ -34,9 +34,9 @@ skirmishers = {
 	}
 	entrench = true
 	required_technology = flintlock_rifle
-	wealth_cost = 200
 	upkeep = 25
 	commodity_costs = {
+		wealth = 200
 		manpower = 1
 		armament = 1
 	}
@@ -58,9 +58,9 @@ sharpshooters = {
 	}
 	entrench = true
 	required_technology = long_range_rifle
-	wealth_cost = 3000
 	upkeep = 50
 	commodity_costs = {
+		wealth = 3000
 		manpower = 1
 		armament = 2
 	}
@@ -83,9 +83,9 @@ rangers = {
 	entrench = true
 	entrenchment_bonus = 5
 	required_technology = machine_gun
-	wealth_cost = 5000
 	upkeep = 100
 	commodity_costs = {
+		wealth = 5000
 		manpower = 1
 		armament = 4
 	}

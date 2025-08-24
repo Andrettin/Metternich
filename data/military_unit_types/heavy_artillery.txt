@@ -74,9 +74,9 @@ artillery = {
 		movement = 3
 	}
 	required_technology = heavy_artillery
-	wealth_cost = 1000
 	upkeep = 50
 	commodity_costs = {
+		wealth = 1000
 		manpower = 1
 		armament = 2
 	}
@@ -97,9 +97,9 @@ siege_artillery = {
 		movement = 3
 	}
 	required_technology = rifled_artillery
-	wealth_cost = 5000
 	upkeep = 100
 	commodity_costs = {
+		wealth = 5000
 		manpower = 1
 		armament = 4
 	}
@@ -121,9 +121,9 @@ railroad_guns = {
 	}
 	entrenchment_bonus = 5
 	required_technology = large_artillery
-	wealth_cost = 9000
 	upkeep = 200
 	commodity_costs = {
+		wealth = 9000
 		manpower = 1
 		armament = 8
 	}
