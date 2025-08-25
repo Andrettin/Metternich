@@ -855,6 +855,8 @@ void map_template::apply_provinces() const
 
 	map *map = map::get();
 
+	std::map<const province *, int> province_tile_counts;
+
 	for (int x = 0; x < map->get_width(); ++x) {
 		for (int y = 0; y < map->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
@@ -865,6 +867,28 @@ void map_template::apply_provinces() const
 			}
 
 			const province *province = province::get_by_color(tile_color);
+			++province_tile_counts[province];
+		}
+	}
+
+	static constexpr int min_province_tile_count = 96;
+
+	for (int x = 0; x < map->get_width(); ++x) {
+		for (int y = 0; y < map->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			const QColor tile_color = province_image.pixelColor(tile_pos);
+
+			if (tile_color.alpha() == 0) {
+				continue;
+			}
+
+			const province *province = province::get_by_color(tile_color);
+
+			if (province_tile_counts.find(province)->second < min_province_tile_count) {
+				//do not place provinces if they would be too small
+				continue;
+			}
+
 			map->set_tile_province(tile_pos, province);
 		}
 	}
