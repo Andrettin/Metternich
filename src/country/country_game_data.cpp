@@ -76,6 +76,7 @@
 #include "unit/civilian_unit.h"
 #include "unit/civilian_unit_type.h"
 #include "unit/military_unit.h"
+#include "unit/military_unit_type.h"
 #include "unit/transporter.h"
 #include "unit/transporter_class.h"
 #include "unit/transporter_type.h"
@@ -129,6 +130,7 @@ void country_game_data::do_turn()
 
 		this->get_economy()->do_production();
 		this->collect_wealth();
+		this->pay_maintenance();
 		this->do_transporter_recruitment();
 		this->do_civilian_unit_recruitment();
 		this->get_military()->do_military_unit_recruitment();
@@ -170,6 +172,25 @@ void country_game_data::collect_wealth()
 {
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->collect_taxes();
+	}
+}
+
+void country_game_data::pay_maintenance()
+{
+	std::vector<military_unit *> military_units_to_disband;
+
+	for (const qunique_ptr<military_unit> &military_unit : this->get_military()->get_military_units()) {
+		for (const auto &[commodity, maintenance_cost] : military_unit->get_type()->get_maintenance_commodity_costs()) {
+			if (this->get_economy()->get_stored_commodity(commodity) >= maintenance_cost) {
+				this->get_economy()->change_stored_commodity(commodity, -maintenance_cost);
+			} else {
+				military_units_to_disband.push_back(military_unit.get());
+			}
+		}
+	}
+
+	for (military_unit *military_unit : military_units_to_disband) {
+		military_unit->disband(false);
 	}
 }
 
