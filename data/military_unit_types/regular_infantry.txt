@@ -2,20 +2,19 @@ regulars = {
 	name = "Regulars"
 	unit_class = regulars
 	icon = whitecoats
-	stats = {
-		missile = 10
-		melee = 10
-		defense = 5
-		movement = 4
-	}
 	required_technology = bayonet
+	stats = {
+		hit_points = 2
+		movement = 2
+		defense = 2
+		melee = 2
+		missile = 4
+	}
 	commodity_costs = {
-		wealth = 500
-		manpower = 1
-		armament = 1
+		wealth = 2gb
 	}
 	maintenance_commodity_costs = {
-		wealth = 25
+		wealth = 1gb
 	}
 	upgrades = {
 		rifle_infantry

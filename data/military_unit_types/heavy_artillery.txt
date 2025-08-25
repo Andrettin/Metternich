@@ -2,15 +2,19 @@ catapult = {
 	name = "Catapult"
 	unit_class = catapult
 	icon = artillery
-	stats = {
-		missile = 6
-		melee = 1
-		defense = 2
-		movement = 2
-	}
 	required_technology = mathematics
+	stats = {
+		hit_points = 2
+		movement = 1
+		defense = 1
+		melee = 1
+		missile = 5
+	}
 	commodity_costs = {
-		manpower = 1
+		wealth = 4gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 2gb
 	}
 	upgrades = {
 		culverin
@@ -21,17 +25,19 @@ culverin = {
 	name = "Culverin"
 	unit_class = culverin
 	icon = artillery
-	stats = {
-		missile = 8
-		melee = 1
-		defense = 2
-		movement = 2
-	}
 	required_technology = gunpowder
+	stats = {
+		hit_points = 2
+		movement = 1
+		defense = 1
+		melee = 1
+		missile = 5
+	}
 	commodity_costs = {
-		manpower = 1
-		fabric = 1
-		bronze = 4
+		wealth = 4gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 2gb
 	}
 	upgrades = {
 		royal_artillery
@@ -42,17 +48,19 @@ royal_artillery = {
 	name = "Royal Artillery"
 	unit_class = royal_artillery
 	icon = artillery
-	stats = {
-		missile = 9
-		melee = 2
-		defense = 2
-		movement = 2
-	}
 	required_technology = siege_engineering
+	stats = {
+		hit_points = 2
+		movement = 1
+		defense = 1
+		melee = 1
+		missile = 5
+	}
 	commodity_costs = {
-		manpower = 1
-		fabric = 1
-		bronze = 6
+		wealth = 4gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 2gb
 	}
 	upgrades = {
 		artillery
@@ -63,20 +71,19 @@ artillery = {
 	name = "Artillery"
 	unit_class = artillery
 	icon = artillery
-	stats = {
-		missile = 16
-		melee = 4
-		defense = 2
-		movement = 3
-	}
 	required_technology = heavy_artillery
+	stats = {
+		hit_points = 2
+		movement = 1
+		defense = 1
+		melee = 1
+		missile = 5
+	}
 	commodity_costs = {
-		wealth = 1000
-		manpower = 1
-		armament = 2
+		wealth = 4gb
 	}
 	maintenance_commodity_costs = {
-		wealth = 50
+		wealth = 2gb
 	}
 	upgrades = {
 		siege_artillery

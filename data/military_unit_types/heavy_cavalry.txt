@@ -2,18 +2,20 @@ harquebusiers = {
 	name = "Harquebusiers"
 	unit_class = harquebusiers
 	icon = cuirassiers
-	stats = {
-		missile = 2
-		melee = 6
-		defense = 5
-		movement = 6
-	}
 	required_technology = improved_cavalry_tactics
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 3
+		melee = 3
+		charge = 5
+		missile = 1
+	}
 	commodity_costs = {
-		manpower = 1
-		fabric = 1
-		bronze = 2
-		horses = 2
+		wealth = 4gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 2gb
 	}
 	upgrades = {
 		cuirassiers
@@ -24,21 +26,20 @@ cuirassiers = {
 	name = "Cuirassiers"
 	unit_class = cuirassiers
 	icon = cuirassiers
-	stats = {
-		missile = 15
-		melee = 19
-		defense = 5
-		movement = 9
-	}
 	required_technology = improved_cavalry_weapons
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 3
+		melee = 3
+		charge = 5
+		missile = 1
+	}
 	commodity_costs = {
-		wealth = 500
-		manpower = 1
-		armament = 1
-		horses = 1
+		wealth = 4gb
 	}
 	maintenance_commodity_costs = {
-		wealth = 25
+		wealth = 2gb
 	}
 	upgrades = {
 		carbine_cavalry

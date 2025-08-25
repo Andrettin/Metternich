@@ -25,17 +25,19 @@ crossbowmen = {
 	name = "Crossbowmen"
 	unit_class = crossbowmen
 	icon = crossbowmen
-	stats = {
-		missile = 3
-		melee = 1
-		defense = 2
-		movement = 3
-	}
 	required_technology = light_crossbow
+	stats = {
+		hit_points = 2
+		movement = 2
+		defense = 2
+		melee = 2
+		missile = 4
+	}
 	commodity_costs = {
-		manpower = 1
-		fabric = 1
-		lumber = 1
+		wealth = 2gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 1gb
 	}
 	upgrades = {
 		musketeers

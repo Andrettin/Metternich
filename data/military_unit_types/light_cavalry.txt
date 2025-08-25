@@ -2,17 +2,20 @@ squires = {
 	name = "Squires"
 	unit_class = squires
 	icon = knights
-	stats = {
-		melee = 4
-		defense = 4
-		movement = 6
-	}
 	required_technology = chivalry
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 3
+		melee = 3
+		charge = 5
+		missile = 1
+	}
 	commodity_costs = {
-		manpower = 1
-		fabric = 1
-		cast_iron = 1
-		horses = 1
+		wealth = 4gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 2gb
 	}
 	upgrades = {
 		cossacks
@@ -23,17 +26,20 @@ cossacks = {
 	name = "Cossacks"
 	unit_class = cossacks
 	icon = hussars
-	stats = {
-		melee = 5
-		defense = 5
-		movement = 8
-	}
 	required_technology = recruit_steppe_horsemen
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 3
+		melee = 3
+		charge = 5
+		missile = 1
+	}
 	commodity_costs = {
-		manpower = 1
-		fabric = 1
-		cast_iron = 1
-		horses = 2
+		wealth = 4gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 2gb
 	}
 	upgrades = {
 		hussars
@@ -44,21 +50,20 @@ hussars = {
 	name = "Hussars"
 	unit_class = hussars
 	icon = hussars
-	stats = {
-		missile = 7
-		melee = 10
-		defense = 7
-		movement = 11
-	}
 	required_technology = hussars
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 3
+		melee = 3
+		charge = 5
+		missile = 1
+	}
 	commodity_costs = {
-		wealth = 100
-		manpower = 1
-		armament = 1
-		horses = 1
+		wealth = 4gb
 	}
 	maintenance_commodity_costs = {
-		wealth = 25
+		wealth = 2gb
 	}
 	upgrades = {
 		scouts
