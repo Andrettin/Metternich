@@ -410,7 +410,8 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			const subject_type *subject_type = country_history->get_subject_type();
 			if (subject_type != nullptr) {
-				country_game_data->set_subject_type(subject_type);
+				//disable overlordship for now
+				//country_game_data->set_subject_type(subject_type);
 			}
 
 			if (country_history->get_government_type() != nullptr) {
@@ -457,6 +458,11 @@ void game::apply_history(const metternich::scenario *scenario)
 
 			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
 				if (!other_country->get_game_data()->is_alive()) {
+					continue;
+				}
+
+				if (is_vassalage_diplomacy_state(diplomacy_state) || is_overlordship_diplomacy_state(diplomacy_state)) {
+					//disable overlordship diplomacy states for now
 					continue;
 				}
 
