@@ -165,7 +165,7 @@ std::string commodity::value_to_string(const int value) const
 {
 	const commodity_unit *unit = this->get_unit(value);
 	if (unit != nullptr) {
-		return std::format("{} {}", value / this->get_unit_value(unit), unit->get_suffix());
+		return std::format("{} {}", number::to_formatted_string(value / this->get_unit_value(unit)), unit->get_suffix());
 	}
 
 	return number::to_formatted_string(value);
