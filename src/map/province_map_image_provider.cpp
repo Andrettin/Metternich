@@ -38,6 +38,12 @@ QImage province_map_image_provider::requestImage(const QString &id, QSize *size,
 		}
 		if (mode_identifier == "selected") {
 			image = &province_game_data->get_selected_map_image();
+		} else if (mode_identifier == "terrain") {
+			image = &province_game_data->get_map_mode_image(diplomatic_map_mode::terrain);
+		} else if (mode_identifier == "cultural") {
+			image = &province_game_data->get_map_mode_image(diplomatic_map_mode::cultural);
+		} else if (mode_identifier == "religious") {
+			image = &province_game_data->get_map_mode_image(diplomatic_map_mode::religious);
 		} else {
 			image = &province_game_data->get_map_image();
 		}

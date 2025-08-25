@@ -12,6 +12,7 @@
 #include "country/country_military.h"
 #include "country/country_technology.h"
 #include "country/country_turn_data.h"
+#include "country/culture.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
@@ -33,6 +34,7 @@
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
 #include "map/site_type.h"
+#include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
@@ -59,6 +61,8 @@
 #include "util/vector_random_util.h"
 
 #include "xbrz.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -480,9 +484,90 @@ QCoro::Task<void> province_game_data::create_map_image()
 	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
 	this->map_image_rect = QRect(this->province->get_map_data()->get_territory_rect().topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->map_image.size());
 
+	co_await this->create_map_mode_image(diplomatic_map_mode::terrain);
+	co_await this->create_map_mode_image(diplomatic_map_mode::cultural);
+	co_await this->create_map_mode_image(diplomatic_map_mode::religious);
+
 	this->calculate_text_rect();
 
 	emit map_image_changed();
+}
+
+const QImage &province_game_data::get_map_mode_image(const diplomatic_map_mode mode) const
+{
+	const auto find_iterator = this->map_mode_images.find(mode);
+	if (find_iterator != this->map_mode_images.end()) {
+		return find_iterator->second;
+	}
+
+	throw std::runtime_error(std::format("No map image found for mode {}.", magic_enum::enum_name(mode)));
+}
+
+QCoro::Task<void> province_game_data::create_map_mode_image(const diplomatic_map_mode mode)
+{
+	static const QColor empty_color(Qt::black);
+
+	const map *map = map::get();
+
+	QImage image = this->prepare_map_image();
+
+	for (int x = 0; x < this->get_territory_rect().width(); ++x) {
+		for (int y = 0; y < this->get_territory_rect().height(); ++y) {
+			const QPoint relative_tile_pos = QPoint(x, y);
+			const tile *tile = map->get_tile(this->get_territory_rect().topLeft() + relative_tile_pos);
+
+			if (tile->get_province() != this->province) {
+				continue;
+			}
+
+			const QColor *color = nullptr;
+
+			switch (mode) {
+				case diplomatic_map_mode::diplomatic:
+					assert_throw(false);
+					co_return;
+				case diplomatic_map_mode::terrain:
+					color = &tile->get_terrain()->get_color();
+					break;
+				case diplomatic_map_mode::cultural: {
+					const metternich::culture *culture = nullptr;
+
+					if (tile->get_site() != nullptr && tile->get_site()->get_game_data()->can_have_population() && tile->get_site()->get_game_data()->get_culture() != nullptr) {
+						culture = tile->get_site()->get_game_data()->get_culture();
+					} else {
+						culture = tile->get_province()->get_game_data()->get_culture();
+					}
+
+					if (culture != nullptr) {
+						color = &culture->get_color();
+					} else {
+						color = &empty_color;
+					}
+					break;
+				}
+				case diplomatic_map_mode::religious: {
+					const metternich::religion *religion = nullptr;
+
+					if (tile->get_settlement() != nullptr && tile->get_settlement()->get_game_data()->get_religion() != nullptr) {
+						religion = tile->get_settlement()->get_game_data()->get_religion();
+					} else {
+						religion = tile->get_province()->get_game_data()->get_religion();
+					}
+
+					if (religion != nullptr) {
+						color = &religion->get_color();
+					} else {
+						color = &empty_color;
+					}
+					break;
+				}
+			}
+
+			image.setPixelColor(relative_tile_pos, *color);
+		}
+	}
+
+	this->map_mode_images[mode] = co_await this->finalize_map_image(std::move(image));
 }
 
 void province_game_data::calculate_text_rect()
