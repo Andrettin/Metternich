@@ -156,9 +156,6 @@ Flickable {
 	
 	function select_province(province) {
 		selected_province = province
-		if (selected_garrison && province === null) {
-			selected_garrison = false
-		}
 	}
 	
 	function center_on_tile(tile_x, tile_y) {
