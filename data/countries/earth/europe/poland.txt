@@ -1,6 +1,7 @@
 poland = {
 	name = "Poland"
 	type = minor_nation
+	color = { 197 92 106 }
 	culture = polish
 	default_religion = catholic
 	default_tier = kingdom
