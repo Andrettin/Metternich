@@ -24,9 +24,8 @@ prussia = {
 	
 	history = {
 		1815 = { #1820 = {
-			wealth = 4000
-			
 			commodities = {
+				wealth = 4000gp
 				horses = 4
 				canned_food = 20
 				fabric = 3

@@ -50,7 +50,7 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "commodities") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
-			this->commodities[commodity] = std::stoi(property.get_value());
+			this->commodities[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "diplomacy_state") {
 		const metternich::country *other_country = nullptr;

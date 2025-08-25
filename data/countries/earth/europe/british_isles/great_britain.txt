@@ -33,9 +33,8 @@ great_britain = {
 	
 	history = {
 		1815 = { #1820 = {
-			wealth = 10000
-			
 			commodities = {
+				wealth = 10000gp
 				cotton = 8
 				wool = 8
 				horses = 2
