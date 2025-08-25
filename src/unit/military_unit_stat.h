@@ -19,7 +19,6 @@ enum class military_unit_stat {
 	bonus_vs_fortifications,
 	defense_modifier,
 	ranged_defense_modifier,
-	entrenchment_bonus_modifier,
 	movement_modifier,
 	recovery_modifier, //the speed at which strength is recovered
 	morale_recovery_modifier, //the speed at which morale is recovered
@@ -72,8 +71,6 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 			return "Defense";
 		case military_unit_stat::ranged_defense_modifier:
 			return "Ranged Defense";
-		case military_unit_stat::entrenchment_bonus_modifier:
-			return "Entrenchment Bonus";
 		case military_unit_stat::movement_modifier:
 			return "Movement";
 		case military_unit_stat::recovery_modifier:
@@ -121,7 +118,6 @@ inline bool is_percent_military_unit_stat(const military_unit_stat stat)
 		case military_unit_stat::bonus_vs_fortifications:
 		case military_unit_stat::defense_modifier:
 		case military_unit_stat::ranged_defense_modifier:
-		case military_unit_stat::entrenchment_bonus_modifier:
 		case military_unit_stat::movement_modifier:
 		case military_unit_stat::recovery_modifier:
 		case military_unit_stat::morale_recovery_modifier:

@@ -97,16 +97,6 @@ public:
 		this->deployment_limit += change;
 	}
 
-	int get_entrenchment_bonus_modifier() const
-	{
-		return this->entrenchment_bonus_modifier;
-	}
-
-	void change_entrenchment_bonus_modifier(const int change)
-	{
-		this->entrenchment_bonus_modifier += change;
-	}
-
 	const centesimal_int &get_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const
 	{
 		const auto find_iterator = this->military_unit_type_stat_modifiers.find(type);
@@ -293,7 +283,6 @@ private:
 	military_unit_type_map<int> military_unit_recruitment_counts;
 	std::vector<qunique_ptr<army>> armies;
 	int deployment_limit = country_military::base_deployment_limit;
-	int entrenchment_bonus_modifier = 0;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> military_unit_type_stat_modifiers;
 	int infantry_cost_modifier = 0;
 	int cavalry_cost_modifier = 0;

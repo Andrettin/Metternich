@@ -570,7 +570,7 @@ void military_unit::check_free_promotions()
 	}
 }
 
-void military_unit::attack(military_unit *target, const bool ranged, const bool target_entrenched)
+void military_unit::attack(military_unit *target, const bool ranged)
 {
 	assert_throw(target != nullptr);
 
@@ -637,12 +637,6 @@ void military_unit::attack(military_unit *target, const bool ranged, const bool 
 	if (defense_modifier != 0) {
 		defense *= 100 + defense_modifier;
 		defense /= 100;
-	}
-	if (target_entrenched) {
-		int entrenchment_bonus = target->get_type()->get_entrenchment_bonus();
-		entrenchment_bonus *= 100 + target->get_effective_stat(military_unit_stat::entrenchment_bonus_modifier).to_int() + (target->get_country() ? target->get_country()->get_military()->get_entrenchment_bonus_modifier() : 0);
-		entrenchment_bonus /= 100;
-		defense += entrenchment_bonus;
 	}
 
 	centesimal_int damage = attack * 2 - defense;
