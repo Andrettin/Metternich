@@ -1,5 +1,5 @@
-bern_spearmen = {
-	type = spearmen
+bern_pikemen = {
+	type = pikemen
 	quantity = 2
 	
 	history = {

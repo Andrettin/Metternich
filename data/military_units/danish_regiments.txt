@@ -1,5 +1,5 @@
-copenhagen_spearmen = {
-	type = spearmen
+copenhagen_pikemen = {
+	type = pikemen
 	quantity = 2
 	
 	history = {

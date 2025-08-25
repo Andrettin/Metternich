@@ -37,6 +37,8 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 
 inline bool is_percent_military_unit_stat(const military_unit_stat stat)
 {
+	Q_UNUSED(stat);
+
 	return false;
 }
 
