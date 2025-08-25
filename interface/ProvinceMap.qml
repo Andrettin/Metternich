@@ -156,7 +156,7 @@ Flickable {
 	
 	function select_province(province) {
 		selected_province = province
-		if (selected_garrison && (province === null || selected_province.game_data.military_unit_category_counts.length === 0)) {
+		if (selected_garrison && province === null) {
 			selected_garrison = false
 		}
 	}
