@@ -28,9 +28,10 @@ pikemen = {
 	}
 	required_technology = pike
 	commodity_costs = {
-		manpower = 1
-		fabric = 1
-		cast_iron = 1
+		wealth = 2gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 1gb
 	}
 	upgrades = {
 		halberdiers
