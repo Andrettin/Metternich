@@ -32,11 +32,13 @@ skirmishers = {
 		movement = 6
 	}
 	required_technology = flintlock_rifle
-	upkeep = 25
 	commodity_costs = {
 		wealth = 200
 		manpower = 1
 		armament = 1
+	}
+	maintenance_commodity_costs = {
+		wealth = 25
 	}
 	upgrades = {
 		sharpshooters
@@ -55,11 +57,13 @@ sharpshooters = {
 		movement = 6
 	}
 	required_technology = long_range_rifle
-	upkeep = 50
 	commodity_costs = {
 		wealth = 3000
 		manpower = 1
 		armament = 2
+	}
+	maintenance_commodity_costs = {
+		wealth = 50
 	}
 	upgrades = {
 		rangers
@@ -78,10 +82,12 @@ rangers = {
 		movement = 7
 	}
 	required_technology = machine_gun
-	upkeep = 100
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
 		armament = 4
+	}
+	maintenance_commodity_costs = {
+		wealth = 100
 	}
 }

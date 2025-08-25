@@ -52,7 +52,6 @@ great_power_commodity_demand_divisor = 2
 
 tariff_icon = wealth
 treasure_fleet_icon = chest
-military_upkeep_icon = crossed_sabers
 
 min_character_traits_per_type = {
 	background = 1

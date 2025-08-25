@@ -33,12 +33,14 @@ light_artillery = {
 		movement = 5
 	}
 	required_technology = light_artillery_tactics
-	upkeep = 50
 	commodity_costs = {
 		wealth = 1000
 		manpower = 1
 		armament = 2
 		horses = 1
+	}
+	maintenance_commodity_costs = {
+		wealth = 50
 	}
 	upgrades = {
 		field_artillery
@@ -57,12 +59,14 @@ field_artillery = {
 		movement = 6
 	}
 	required_technology = field_artillery_tactics
-	upkeep = 100
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
 		armament = 4
 		horses = 1
+	}
+	maintenance_commodity_costs = {
+		wealth = 100
 	}
 	upgrades = {
 		mobile_artillery
@@ -81,11 +85,13 @@ mobile_artillery = {
 		movement = 8
 	}
 	required_technology = large_artillery
-	upkeep = 150
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
 		armament = 6
 		fuel = 4
+	}
+	maintenance_commodity_costs = {
+		wealth = 150
 	}
 }

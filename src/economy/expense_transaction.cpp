@@ -14,8 +14,8 @@ namespace metternich {
 QString expense_transaction::get_name() const
 {
 	switch (this->get_type()) {
-		case expense_transaction_type::military_upkeep:
-			return "Military Upkeep";
+		case expense_transaction_type::military_maintenance:
+			return "Military Maintenance";
 		case expense_transaction_type::tax:
 			return "Tax";
 		default:
@@ -26,8 +26,6 @@ QString expense_transaction::get_name() const
 const icon *expense_transaction::get_icon() const
 {
 	switch (this->get_type()) {
-		case expense_transaction_type::military_upkeep:
-			return defines::get()->get_military_upkeep_icon();
 		case expense_transaction_type::tax:
 			return defines::get()->get_tariff_icon();
 		default:
@@ -45,12 +43,16 @@ QString expense_transaction::get_description() const
 		case expense_transaction_type::purchase:
 			str = std::format("Bought {} {} from {} for ${}", number::to_formatted_string(this->get_object_quantity()), this->get_object_name(), this->get_country()->get_game_data()->get_name(), amount_str);
 			break;
-		case expense_transaction_type::population_upkeep:
-			str = std::format("Supported {} {} for ${}", number::to_formatted_string(this->get_object_quantity()), this->get_object_name(), amount_str);
+		case expense_transaction_type::military_maintenance:
+		{
+			const commodity *commodity = std::get<const metternich::commodity *>(this->get_object());
+			if (commodity == defines::get()->get_wealth_commodity()) {
+				str = std::format("Paid {} in military maintenance", commodity->value_to_string(this->get_object_quantity()));
+			} else {
+				str = std::format("Spent {} {} in military maintenance", commodity->value_to_string(this->get_object_quantity()), commodity->get_name());
+			}
 			break;
-		case expense_transaction_type::military_upkeep:
-			str = std::format("Paid ${} in military upkeep", amount_str);
-			break;
+		}
 		case expense_transaction_type::tax:
 			str = std::format("Paid ${} in taxes to {}", amount_str, this->get_country()->get_game_data()->get_name());
 			break;

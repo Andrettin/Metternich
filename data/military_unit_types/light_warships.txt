@@ -52,11 +52,13 @@ frigate = {
 	}
 	hit_points = 35
 	required_technology = advanced_hull_design
-	upkeep = 50
 	commodity_costs = {
 		fabric = 2
 		lumber = 5
 		armament = 2
+	}
+	maintenance_commodity_costs = {
+		wealth = 50
 	}
 	upgrades = {
 		raider
@@ -76,11 +78,13 @@ raider = {
 	}
 	hit_points = 30
 	required_technology = paddlewheels
-	upkeep = 75
 	commodity_costs = {
 		lumber = 6
 		armament = 3
 		coal = 10
+	}
+	maintenance_commodity_costs = {
+		wealth = 75
 	}
 	upgrades = {
 		armored_cruiser
@@ -100,12 +104,14 @@ armored_cruiser = {
 	}
 	hit_points = 40
 	required_technology = marine_engineering
-	upkeep = 200
 	commodity_costs = {
 		lumber = 2
 		armament = 8
 		steel = 6
 		coal = 20
+	}
+	maintenance_commodity_costs = {
+		wealth = 200
 	}
 	upgrades = {
 		battlecruiser
@@ -125,10 +131,12 @@ battlecruiser = {
 	}
 	hit_points = 90
 	required_technology = improved_range_finding
-	upkeep = 450
 	commodity_costs = {
 		armament = 18
 		steel = 22
 		fuel = 20
+	}
+	maintenance_commodity_costs = {
+		wealth = 450
 	}
 }

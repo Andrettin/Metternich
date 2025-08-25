@@ -54,11 +54,13 @@ grenadiers = {
 		movement = 4
 	}
 	required_technology = explosives
-	upkeep = 25
 	commodity_costs = {
 		wealth = 1000
 		manpower = 1
 		armament = 1
+	}
+	maintenance_commodity_costs = {
+		wealth = 25
 	}
 	free_promotions = {
 		grenadier_1
@@ -80,11 +82,13 @@ guards = {
 		movement = 4
 	}
 	required_technology = elite_military_training
-	upkeep = 50
 	commodity_costs = {
 		wealth = 4000
 		manpower = 1
 		armament = 2
+	}
+	maintenance_commodity_costs = {
+		wealth = 50
 	}
 	upgrades = {
 		machine_gunners
@@ -103,10 +107,12 @@ machine_gunners = {
 		movement = 4
 	}
 	required_technology = machine_gun
-	upkeep = 100
 	commodity_costs = {
 		wealth = 7000
 		manpower = 1
 		armament = 4
+	}
+	maintenance_commodity_costs = {
+		wealth = 100
 	}
 }

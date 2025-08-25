@@ -54,12 +54,14 @@ hussars = {
 		movement = 11
 	}
 	required_technology = hussars
-	upkeep = 25
 	commodity_costs = {
 		wealth = 100
 		manpower = 1
 		armament = 1
 		horses = 1
+	}
+	maintenance_commodity_costs = {
+		wealth = 25
 	}
 	upgrades = {
 		scouts
@@ -78,12 +80,14 @@ scouts = {
 		movement = 11
 	}
 	required_technology = scouting
-	upkeep = 50
 	commodity_costs = {
 		wealth = 2000
 		manpower = 1
 		armament = 2
 		horses = 1
+	}
+	maintenance_commodity_costs = {
+		wealth = 50
 	}
 	upgrades = {
 		mechanized_infantry
@@ -102,11 +106,13 @@ mechanized_infantry = {
 		movement = 11
 	}
 	required_technology = internal_combustion
-	upkeep = 100
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
 		armament = 4
 		fuel = 4
+	}
+	maintenance_commodity_costs = {
+		wealth = 100
 	}
 }

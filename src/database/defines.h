@@ -71,7 +71,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(int great_power_commodity_demand_divisor MEMBER great_power_commodity_demand_divisor READ get_great_power_commodity_demand_divisor NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* tariff_icon MEMBER tariff_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* treasure_fleet_icon MEMBER treasure_fleet_icon NOTIFY changed)
-	Q_PROPERTY(const metternich::icon* military_upkeep_icon MEMBER military_upkeep_icon NOTIFY changed)
 	Q_PROPERTY(int max_character_skill MEMBER max_character_skill READ get_max_character_skill NOTIFY changed)
 	Q_PROPERTY(const metternich::office* ruler_office MEMBER ruler_office READ get_ruler_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* interior_minister_office MEMBER interior_minister_office READ get_interior_minister_office NOTIFY changed)
@@ -286,11 +285,6 @@ public:
 		return this->treasure_fleet_icon;
 	}
 
-	const icon *get_military_upkeep_icon() const
-	{
-		return this->military_upkeep_icon;
-	}
-
 	int get_min_character_traits_for_type(const character_trait_type type) const
 	{
 		const auto find_iterator = this->min_character_traits_per_type.find(type);
@@ -461,7 +455,6 @@ private:
 	int great_power_commodity_demand_divisor = 1;
 	const icon *tariff_icon = nullptr;
 	const icon *treasure_fleet_icon = nullptr;
-	const icon *military_upkeep_icon = nullptr;
 	std::map<character_trait_type, int> min_character_traits_per_type;
 	std::map<character_trait_type, int> max_character_traits_per_type;
 	std::unique_ptr<modifier<const site>> scaled_landholder_modifier;

@@ -8,11 +8,13 @@ sappers = {
 		movement = 4
 	}
 	required_technology = explosives
-	upkeep = 50
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
 		armament = 2
+	}
+	maintenance_commodity_costs = {
+		wealth = 50
 	}
 	upgrades = {
 		combat_engineers
@@ -29,11 +31,13 @@ combat_engineers = {
 		movement = 4
 	}
 	required_technology = bessemer_converter
-	upkeep = 50
 	commodity_costs = {
 		wealth = 7000
 		manpower = 1
 		armament = 2
+	}
+	maintenance_commodity_costs = {
+		wealth = 50
 	}
 	upgrades = {
 		saboteurs
@@ -50,10 +54,12 @@ saboteurs = {
 		movement = 5
 	}
 	required_technology = machine_gun
-	upkeep = 75
 	commodity_costs = {
 		wealth = 9000
 		manpower = 1
 		armament = 3
+	}
+	maintenance_commodity_costs = {
+		wealth = 75
 	}
 }

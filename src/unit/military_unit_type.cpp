@@ -34,6 +34,11 @@ void military_unit_type::process_gsml_scope(const gsml_data &scope)
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
+	} else if (tag == "maintenance_commodity_costs") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->maintenance_commodity_costs[commodity] = commodity->string_to_value(property.get_value());
+		});
 	} else if (tag == "free_promotions") {
 		for (const std::string &value : values) {
 			this->free_promotions.push_back(promotion::get(value));

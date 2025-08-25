@@ -34,11 +34,13 @@ ship_of_the_line = {
 	}
 	hit_points = 65
 	required_technology = ship_of_the_line
-	upkeep = 125
 	commodity_costs = {
 		fabric = 3
 		lumber = 8
 		armament = 5
+	}
+	maintenance_commodity_costs = {
+		wealth = 125
 	}
 	upgrades = {
 		ironclad
@@ -58,12 +60,14 @@ ironclad = {
 	}
 	hit_points = 50
 	required_technology = advanced_iron_working
-	upkeep = 150
 	commodity_costs = {
 		lumber = 4
 		armament = 6
 		steel = 4
 		coal = 10
+	}
+	maintenance_commodity_costs = {
+		wealth = 150
 	}
 	upgrades = {
 		advanced_ironclad
@@ -83,12 +87,14 @@ advanced_ironclad = {
 	}
 	hit_points = 70
 	required_technology = steel_armor_plate
-	upkeep = 375
 	commodity_costs = {
 		lumber = 8
 		armament = 15
 		steel = 10
 		coal = 20
+	}
+	maintenance_commodity_costs = {
+		wealth = 375
 	}
 	upgrades = {
 		dreadnought
@@ -108,10 +114,12 @@ dreadnought = {
 	}
 	hit_points = 115
 	required_technology = improved_range_finding
-	upkeep = 600
 	commodity_costs = {
 		armament = 24
 		steel = 30
 		fuel = 20
+	}
+	maintenance_commodity_costs = {
+		wealth = 600
 	}
 }

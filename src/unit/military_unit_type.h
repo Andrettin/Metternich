@@ -35,7 +35,6 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(int hit_points MEMBER hit_points READ get_hit_points NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
-	Q_PROPERTY(int upkeep MEMBER upkeep READ get_upkeep NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "military_unit_type";
@@ -107,14 +106,14 @@ public:
 		return this->required_technology;
 	}
 
-	int get_upkeep() const
-	{
-		return this->upkeep;
-	}
-
 	const commodity_map<int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
+	}
+
+	const commodity_map<int> &get_maintenance_commodity_costs() const
+	{
+		return this->maintenance_commodity_costs;
 	}
 
 	const std::vector<const promotion *> &get_free_promotions() const
@@ -141,7 +140,7 @@ private:
 	int hit_points = 25;
 	technology *required_technology = nullptr;
 	commodity_map<int> commodity_costs;
-	int upkeep = 0; //wealth paid per turn as upkeep for the military unit
+	commodity_map<int> maintenance_commodity_costs; //commodities paid per turn as maintenance for the military unit
 	std::vector<const promotion *> free_promotions;
 	military_unit_type_set upgrades;
 };

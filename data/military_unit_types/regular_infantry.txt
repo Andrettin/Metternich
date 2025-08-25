@@ -10,11 +10,13 @@ regulars = {
 		movement = 4
 	}
 	required_technology = bayonet
-	upkeep = 25
 	commodity_costs = {
 		wealth = 500
 		manpower = 1
 		armament = 1
+	}
+	maintenance_commodity_costs = {
+		wealth = 25
 	}
 	upgrades = {
 		rifle_infantry
@@ -33,11 +35,13 @@ rifle_infantry = {
 		movement = 4
 	}
 	required_technology = needle_gun
-	upkeep = 50
 	commodity_costs = {
 		wealth = 3000
 		manpower = 1
 		armament = 2
+	}
+	maintenance_commodity_costs = {
+		wealth = 50
 	}
 	upgrades = {
 		infantry
@@ -56,10 +60,12 @@ infantry = {
 		movement = 5
 	}
 	required_technology = machine_gun
-	upkeep = 100
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
 		armament = 4
+	}
+	maintenance_commodity_costs = {
+		wealth = 100
 	}
 }
