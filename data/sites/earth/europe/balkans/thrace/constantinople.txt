@@ -3,7 +3,7 @@ constantinople = {
 	world = earth
 	geocoordinate = { 29.01000158560 41.10499615380 } #from Natural Earth
 	type = settlement
-	resource = holy_site
+	#resource = holy_site
 	cultural_names = {
 		turkish = "Istanbul"
 	}

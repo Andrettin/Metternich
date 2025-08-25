@@ -3,6 +3,6 @@ merv = {
 	world = earth
 	geocoordinate = { 61.83332108440 37.60001629540 } #from Natural Earth
 	type = settlement
-	resource = holy_site
+	#resource = holy_site
 	province = merv
 }

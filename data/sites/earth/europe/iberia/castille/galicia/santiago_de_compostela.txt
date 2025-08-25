@@ -3,7 +3,7 @@ santiago_de_compostela = {
 	world = earth
 	geocoordinate = { -8.54109135073 42.88289796860 } #from Natural Earth
 	type = settlement
-	resource = holy_site
+	#resource = holy_site
 	
 	history = {
 		1532 = {

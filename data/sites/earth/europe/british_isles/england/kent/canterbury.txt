@@ -3,5 +3,5 @@ canterbury = {
 	world = earth
 	geocoordinate = { 1.0775 51.278333333333 }
 	type = settlement
-	resource = holy_site
+	#resource = holy_site
 }

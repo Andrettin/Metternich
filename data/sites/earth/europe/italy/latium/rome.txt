@@ -3,7 +3,7 @@ rome = {
 	world = earth
 	geocoordinate = { 12.48325842150 41.89595562650 } #from Natural Earth
 	type = settlement
-	resource = holy_site
+	#resource = holy_site
 	province = latium
 	
 	history = {
