@@ -7,7 +7,7 @@ dublin_pikemen = {
 			province = leinster
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ dublin_arquebusiers = {
 			province = leinster
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ dublin_crossbowmen = {
 			province = leinster
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -52,7 +52,7 @@ the_pale_crossbowmen = {
 			province = leinster
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -67,7 +67,7 @@ connaught_crossbowmen = {
 			province = connaught
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -82,7 +82,7 @@ munster_crossbowmen = {
 			province = munster
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -97,7 +97,7 @@ ulster_crossbowmen = {
 			province = ulster
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}

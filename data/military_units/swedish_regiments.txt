@@ -7,7 +7,7 @@ stockholm_pikemen = {
 			province = uppland
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ stockholm_arquebusiers = {
 			province = uppland
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ stockholm_knights = {
 			province = uppland
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -48,7 +48,7 @@ stockholm_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = uppland
 		}
 	}
@@ -59,7 +59,7 @@ stockholm_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = uppland
 		}
 	}

@@ -32,7 +32,7 @@ great_britain = {
 	}
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			wealth = 10000
 			
 			commodities = {

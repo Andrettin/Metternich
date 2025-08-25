@@ -7,7 +7,7 @@ bern_pikemen = {
 			province = bern
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ bern_arquebusiers = {
 			province = bern
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ bern_crossbowmen = {
 			province = bern
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -52,7 +52,7 @@ zurich_crossbowmen = {
 			province = zurich
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -67,7 +67,7 @@ basel_crossbowmen = {
 			province = bern
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -78,7 +78,7 @@ geneva_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = geneva
 		}
 	}
@@ -89,7 +89,7 @@ bern_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = bern
 		}
 	}
@@ -100,7 +100,7 @@ zurich_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = zurich
 		}
 	}
@@ -111,7 +111,7 @@ geneva_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = geneva
 		}
 	}
@@ -122,7 +122,7 @@ bern_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = bern
 		}
 	}
@@ -133,7 +133,7 @@ zurich_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = zurich
 		}
 	}

@@ -4,7 +4,7 @@ lithuanian_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = lithuania
 		}
 	}
@@ -16,7 +16,7 @@ lithuanian_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = lithuania
 		}
 	}
@@ -28,7 +28,7 @@ kovno_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = lithuania
 		}
 	}
@@ -40,7 +40,7 @@ moscow_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = moscow
 		}
 	}
@@ -52,7 +52,7 @@ moscow_cuirassiers = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = moscow
 		}
 	}
@@ -64,7 +64,7 @@ moscow_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = moscow
 		}
 	}
@@ -76,7 +76,7 @@ kievan_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = kyiv
 		}
 	}
@@ -88,7 +88,7 @@ chernigov_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = chernigov
 		}
 	}
@@ -100,7 +100,7 @@ krivoy_rog_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = krivoy_rog
 		}
 	}
@@ -112,7 +112,7 @@ bessarabian_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = bessarabia
 		}
 	}
@@ -124,7 +124,7 @@ bessarabian_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = bessarabia
 		}
 	}
@@ -136,7 +136,7 @@ odessa_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = odessa
 		}
 	}
@@ -148,7 +148,7 @@ vinnitsa_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = vinnitsa
 		}
 	}
@@ -160,7 +160,7 @@ belostok_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = warsaw
 		}
 	}
@@ -172,7 +172,7 @@ vilna_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = lithuania
 		}
 	}
@@ -184,7 +184,7 @@ minsk_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = minsk
 		}
 	}
@@ -196,7 +196,7 @@ belorussian_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = minsk
 		}
 	}
@@ -208,7 +208,7 @@ kharkov_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = kharkov
 		}
 	}
@@ -220,7 +220,7 @@ voronezh_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = voronezh
 		}
 	}
@@ -232,7 +232,7 @@ grodno_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = grodno
 		}
 	}
@@ -244,7 +244,7 @@ north_belorussian_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = vitebsk
 		}
 	}

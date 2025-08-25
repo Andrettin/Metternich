@@ -7,7 +7,7 @@ florence_pikemen = {
 			province = tuscany
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ florence_arquebusiers = {
 			province = tuscany
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ florence_crossbowmen = {
 			province = tuscany
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -52,7 +52,7 @@ genoa_crossbowmen = {
 			province = genoa
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -67,7 +67,7 @@ milan_crossbowmen = {
 			province = lombardy
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -82,7 +82,7 @@ savoy_crossbowmen = {
 			province = savoy
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -97,7 +97,7 @@ corsican_crossbowmen = {
 			province = corsica
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -108,7 +108,7 @@ romagna_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = romagna
 		}
 	}
@@ -119,7 +119,7 @@ savoy_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = savoy
 		}
 	}
@@ -130,7 +130,7 @@ genoa_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = genoa
 		}
 	}
@@ -141,7 +141,7 @@ rome_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = latium
 		}
 	}
@@ -152,7 +152,7 @@ rome_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = latium
 		}
 	}

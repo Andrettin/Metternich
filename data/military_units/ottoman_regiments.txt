@@ -3,7 +3,7 @@ istanbul_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = thrace
 		}
 	}
@@ -14,7 +14,7 @@ istanbul_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = thrace
 		}
 	}
@@ -25,7 +25,7 @@ bucharest_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = wallachia
 		}
 	}
@@ -36,7 +36,7 @@ dobruja_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = dobruja
 		}
 	}
@@ -47,7 +47,7 @@ moldavian_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = moldavia
 		}
 	}

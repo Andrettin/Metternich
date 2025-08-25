@@ -7,7 +7,7 @@ amsterdam_pikemen = {
 			province = holland
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ amsterdam_arquebusiers = {
 			province = holland
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ amsterdam_knights = {
 			province = holland
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -48,7 +48,7 @@ holland_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = holland
 		}
 	}
@@ -59,7 +59,7 @@ holland_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = holland
 		}
 	}
@@ -70,7 +70,7 @@ brussels_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = brabant
 		}
 	}

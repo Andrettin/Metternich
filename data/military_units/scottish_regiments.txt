@@ -7,7 +7,7 @@ edinburgh_pikemen = {
 			province = lothian
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ edinburgh_arquebusiers = {
 			province = lothian
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ edinburgh_crossbowmen = {
 			province = lothian
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -52,7 +52,7 @@ ayr_crossbowmen = {
 			province = ayrshire
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -67,7 +67,7 @@ highlands_crossbowmen = {
 			province = highlands
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}

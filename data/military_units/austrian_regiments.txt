@@ -4,7 +4,7 @@ trieste_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = istria
 		}
 	}
@@ -16,7 +16,7 @@ trieste_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = istria
 		}
 	}
@@ -28,7 +28,7 @@ galician_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = west_galicia
 		}
 	}
@@ -40,7 +40,7 @@ buda_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = buda
 		}
 	}
@@ -52,7 +52,7 @@ pest_hussars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = pest
 		}
 	}
@@ -64,7 +64,7 @@ venetian_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = venetia
 		}
 	}
@@ -76,7 +76,7 @@ lombard_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = lombardy
 		}
 	}

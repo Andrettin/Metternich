@@ -7,7 +7,7 @@ bavarian_crossbowmen = {
 			province = bavaria
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}

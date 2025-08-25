@@ -7,7 +7,7 @@ madrid_pikemen = {
 			province = castille
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ madrid_arquebusiers = {
 			province = castille
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ madrid_knights = {
 			province = castille
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -48,7 +48,7 @@ madrid_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = castille
 		}
 	}
@@ -59,7 +59,7 @@ madrid_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = castille
 		}
 	}

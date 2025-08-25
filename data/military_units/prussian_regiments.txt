@@ -3,7 +3,7 @@ west_prussian_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = west_prussia
 		}
 	}
@@ -14,7 +14,7 @@ east_prussian_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = east_prussia
 		}
 	}
@@ -25,7 +25,7 @@ east_prussian_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = east_prussia
 		}
 	}
@@ -36,7 +36,7 @@ lower_silesian_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = lower_silesia
 		}
 	}
@@ -47,7 +47,7 @@ berlin_regulars = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = brandenburg
 		}
 	}
@@ -58,7 +58,7 @@ berlin_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = brandenburg
 		}
 	}

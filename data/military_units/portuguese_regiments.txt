@@ -7,7 +7,7 @@ lisbon_pikemen = {
 			province = estremadura
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ lisbon_arquebusiers = {
 			province = estremadura
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ lisbon_knights = {
 			province = estremadura
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -48,7 +48,7 @@ lisbon_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = estremadura
 		}
 	}
@@ -59,7 +59,7 @@ lisbon_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = estremadura
 		}
 	}

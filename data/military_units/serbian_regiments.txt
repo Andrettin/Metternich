@@ -3,7 +3,7 @@ belgrade_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = serbia
 		}
 	}
@@ -14,7 +14,7 @@ belgrade_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = serbia
 		}
 	}

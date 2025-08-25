@@ -7,7 +7,7 @@ hamburg_pikemen = {
 			province = holstein
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ hamburg_arquebusiers = {
 			province = holstein
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ hamburg_crossbowmen = {
 			province = holstein
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -52,7 +52,7 @@ rhineland_crossbowmen = {
 			province = rhineland
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -67,7 +67,7 @@ brunswick_crossbowmen = {
 			province = hanover
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -82,7 +82,7 @@ saxony_crossbowmen = {
 			province = upper_saxony
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -93,7 +93,7 @@ hamburg_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = holstein
 		}
 	}
@@ -104,7 +104,7 @@ hamburg_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = holstein
 		}
 	}
@@ -115,7 +115,7 @@ bremen_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = bremen
 		}
 	}
@@ -126,7 +126,7 @@ bremen_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = bremen
 		}
 	}

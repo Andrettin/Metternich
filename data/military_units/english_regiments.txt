@@ -7,7 +7,7 @@ london_pikemen = {
 			province = middlesex
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ london_arquebusiers = {
 			province = middlesex
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ london_knights = {
 			province = middlesex
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}

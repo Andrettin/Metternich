@@ -7,7 +7,7 @@ copenhagen_pikemen = {
 			province = zealand
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -22,7 +22,7 @@ copenhagen_arquebusiers = {
 			province = zealand
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -37,7 +37,7 @@ copenhagen_crossbowmen = {
 			province = zealand
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -52,7 +52,7 @@ jutland_crossbowmen = {
 			province = jutland
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -67,7 +67,7 @@ schleswig_crossbowmen = {
 			province = schleswig
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -82,7 +82,7 @@ holstein_crossbowmen = {
 			province = holstein
 		}
 		
-		1820 = {
+		1815 = { #1820 = {
 			province = none
 		}
 	}
@@ -93,7 +93,7 @@ copenhagen_regulars = {
 	quantity = 2
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = zealand
 		}
 	}
@@ -104,7 +104,7 @@ copenhagen_artillery = {
 	quantity = 1
 	
 	history = {
-		1820 = {
+		1815 = { #1820 = {
 			province = zealand
 		}
 	}
