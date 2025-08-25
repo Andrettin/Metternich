@@ -20,13 +20,13 @@ pikemen = {
 	name = "Pikemen"
 	unit_class = pikemen
 	icon = pikemen
+	required_technology = pike
 	stats = {
 		hit_points = 2
 		movement = 1
 		defense = 3
 		melee = 3
 	}
-	required_technology = pike
 	commodity_costs = {
 		wealth = 2gb
 	}

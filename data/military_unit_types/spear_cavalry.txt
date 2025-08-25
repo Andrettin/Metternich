@@ -20,17 +20,19 @@ knights = {
 	name = "Knights"
 	unit_class = knights
 	icon = knights
-	stats = {
-		melee = 6
-		defense = 6
-		movement = 4
-	}
 	required_technology = chivalry
+	stats = {
+		hit_points = 3
+		movement = 2
+		defense = 4
+		melee = 4
+		charge = 6
+	}
 	commodity_costs = {
-		manpower = 1
-		fabric = 1
-		bronze = 2
-		horses = 2
+		wealth = 6gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 2gb
 	}
 	upgrades = {
 		lancers

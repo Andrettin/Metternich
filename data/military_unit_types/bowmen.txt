@@ -2,15 +2,19 @@ archers = {
 	name = "Archers"
 	unit_class = archers
 	icon = archers
-	stats = {
-		missile = 2
-		melee = 1
-		defense = 2
-		movement = 4
-	}
 	required_technology = shortbow
+	stats = {
+		hit_points = 2
+		movement = 2
+		defense = 2
+		melee = 2
+		missile = 4
+	}
 	commodity_costs = {
-		manpower = 1
+		wealth = 2gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 1gb
 	}
 	upgrades = {
 		crossbowmen
