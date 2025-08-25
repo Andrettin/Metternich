@@ -160,6 +160,9 @@ public:
 	int string_to_value(const std::string &str) const;
 	std::pair<std::variant<int, dice>, const commodity_unit *> string_to_value_variant_with_unit(const std::string &str) const;
 
+	std::string value_to_string(const int value) const;
+	Q_INVOKABLE QString value_to_qstring(const int value) const;
+
 signals:
 	void changed();
 

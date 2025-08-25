@@ -55,7 +55,7 @@ Rectangle {
 
 	SmallText {
 		id: wealth_label
-		text: number_string(Math.floor(wealth_value / metternich.defines.wealth_commodity.get_unit_value(wealth_unit))) + " " + wealth_unit.suffix
+		text: metternich.defines.wealth_commodity.value_to_qstring(wealth_value)
 		anchors.top: parent.top
 		anchors.topMargin: 1 * scale_factor
 		anchors.left: wealth_icon.right

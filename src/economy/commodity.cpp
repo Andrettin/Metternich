@@ -11,6 +11,7 @@
 #include "util/assert_util.h"
 #include "util/dice.h"
 #include "util/log_util.h"
+#include "util/number_util.h"
 
 namespace metternich {
 
@@ -159,5 +160,21 @@ std::pair<std::variant<int, dice>, const commodity_unit *> commodity::string_to_
 		return { std::stoi(number_str), unit };
 	}
 }
+
+std::string commodity::value_to_string(const int value) const
+{
+	const commodity_unit *unit = this->get_unit(value);
+	if (unit != nullptr) {
+		return std::format("{} {}", value / this->get_unit_value(unit), unit->get_suffix());
+	}
+
+	return number::to_formatted_string(value);
+}
+
+QString commodity::value_to_qstring(const int value) const
+{
+	return QString::fromStdString(this->value_to_string(value));
+}
+
 
 }
