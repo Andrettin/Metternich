@@ -15,6 +15,5 @@ tokugawa_ieyasu = {
 	}
 	traits = {
 		aggressive
-		protective
 	}
 }

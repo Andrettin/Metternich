@@ -53,7 +53,6 @@ otto_von_bismarck = {
 			character_type = conquistador
 			character_type = diplomat
 			character_type = general
-			character_type = military_engineer
 			character_type = statesman
 		}
 	}

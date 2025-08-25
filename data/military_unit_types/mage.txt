@@ -7,5 +7,4 @@ mage = {
 		defense = 3
 		movement = 4
 	}
-	entrench = true
 }

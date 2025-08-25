@@ -8,7 +8,6 @@ clubmen = {
 		defense = 3
 		movement = 4
 	}
-	entrench = true
 	required_technology = warrior_code
 	commodity_costs = {
 		manpower = 1
@@ -28,7 +27,6 @@ macemen = {
 		defense = 3
 		movement = 4
 	}
-	entrench = true
 	required_technology = mace
 	commodity_costs = {
 		manpower = 1

@@ -8,5 +8,4 @@ rogue = {
 		defense = 4
 		movement = 5
 	}
-	entrench = true
 }

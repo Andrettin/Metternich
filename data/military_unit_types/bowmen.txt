@@ -9,7 +9,6 @@ archers = {
 		defense = 2
 		movement = 4
 	}
-	entrench = true
 	required_technology = shortbow
 	commodity_costs = {
 		manpower = 1
@@ -30,7 +29,6 @@ crossbowmen = {
 		defense = 2
 		movement = 3
 	}
-	entrench = true
 	required_technology = light_crossbow
 	commodity_costs = {
 		manpower = 1

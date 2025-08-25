@@ -101,7 +101,6 @@ mechanized_infantry = {
 		defense = 10
 		movement = 11
 	}
-	entrenchment_bonus = 2
 	required_technology = internal_combustion
 	upkeep = 100
 	commodity_costs = {

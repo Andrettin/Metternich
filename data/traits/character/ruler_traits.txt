@@ -152,32 +152,6 @@ philosophical = {
 	}
 }
 
-prosperous = {
-	name = "Prosperous"
-	types = {
-		ruler
-	}
-	icon = wealth
-	office_modifiers = {
-		ruler = {
-			free_infantry_promotion = minuteman_1
-		}
-	}
-}
-
-protective = {
-	name = "Protective"
-	types = {
-		ruler
-	}
-	icon = heater_shield
-	office_modifiers = {
-		ruler = {
-			free_infantry_promotion = city_garrison_1
-		}
-	}
-}
-
 spiritual = {
 	name = "Spiritual"
 	types = {

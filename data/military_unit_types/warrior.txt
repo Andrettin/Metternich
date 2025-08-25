@@ -8,5 +8,4 @@ warrior = {
 		defense = 6
 		movement = 4
 	}
-	entrench = true
 }

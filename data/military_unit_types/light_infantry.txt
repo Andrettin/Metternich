@@ -9,7 +9,6 @@ calivermen = {
 		defense = 5
 		movement = 4
 	}
-	entrench = true
 	required_technology = improved_infantry_tactics
 	commodity_costs = {
 		manpower = 1
@@ -32,7 +31,6 @@ skirmishers = {
 		defense = 7
 		movement = 6
 	}
-	entrench = true
 	required_technology = flintlock_rifle
 	upkeep = 25
 	commodity_costs = {
@@ -56,7 +54,6 @@ sharpshooters = {
 		defense = 7
 		movement = 6
 	}
-	entrench = true
 	required_technology = long_range_rifle
 	upkeep = 50
 	commodity_costs = {
@@ -80,8 +77,6 @@ rangers = {
 		defense = 20
 		movement = 7
 	}
-	entrench = true
-	entrenchment_bonus = 5
 	required_technology = machine_gun
 	upkeep = 100
 	commodity_costs = {

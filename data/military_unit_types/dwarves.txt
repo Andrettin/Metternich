@@ -10,7 +10,6 @@ dwarven_guardsmen = {
 		movement = 4
 		bonus_vs_cavalry = 100
 	}
-	entrench = true
 	required_technology = warrior_code
 	commodity_costs = {
 		manpower = 1
@@ -32,7 +31,6 @@ dwarven_stalwarts = {
 		movement = 3
 		bonus_vs_cavalry = 100
 	}
-	entrench = true
 	required_technology = pike
 	commodity_costs = {
 		manpower = 1
@@ -56,7 +54,6 @@ dwarven_sentinels = {
 		movement = 4
 		bonus_vs_cavalry = 100
 	}
-	entrench = true
 	required_technology = halberd
 	commodity_costs = {
 		manpower = 1
@@ -80,7 +77,6 @@ dwarven_thunderers = {
 		defense = 3
 		movement = 2
 	}
-	entrench = true
 	required_technology = arquebus
 	commodity_costs = {
 		manpower = 1
@@ -104,7 +100,6 @@ dwarven_thunderguards = {
 		defense = 4
 		movement = 3
 	}
-	entrench = true
 	required_technology = weapon_craftsmanship
 	commodity_costs = {
 		manpower = 1
@@ -128,7 +123,6 @@ dwarven_dragonguards = {
 		defense = 5
 		movement = 4
 	}
-	entrench = true
 	required_technology = explosives
 	upkeep = 25
 	commodity_costs = {

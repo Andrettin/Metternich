@@ -9,5 +9,4 @@ ranger = {
 		defense = 4
 		movement = 3
 	}
-	entrench = true
 }

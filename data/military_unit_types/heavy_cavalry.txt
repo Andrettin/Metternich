@@ -80,7 +80,6 @@ armor = {
 		defense = 20
 		movement = 9
 	}
-	entrenchment_bonus = 5
 	required_technology = mobile_warfare
 	upkeep = 250
 	commodity_costs = {

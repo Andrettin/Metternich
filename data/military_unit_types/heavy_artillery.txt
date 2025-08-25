@@ -119,7 +119,6 @@ railroad_guns = {
 		defense = 20
 		movement = 3
 	}
-	entrenchment_bonus = 5
 	required_technology = large_artillery
 	upkeep = 200
 	commodity_costs = {

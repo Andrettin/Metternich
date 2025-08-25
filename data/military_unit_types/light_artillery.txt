@@ -80,7 +80,6 @@ mobile_artillery = {
 		defense = 20
 		movement = 8
 	}
-	entrenchment_bonus = 5
 	required_technology = large_artillery
 	upkeep = 150
 	commodity_costs = {

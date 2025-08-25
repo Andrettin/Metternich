@@ -42,7 +42,6 @@ marshal = {
 			trait = army_reformer
 			trait = commandant
 			trait = grand_captain
-			trait = military_engineer
 		}
 	}
 }

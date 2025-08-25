@@ -8,7 +8,6 @@ peasant_levies = {
 		defense = 3
 		movement = 3
 	}
-	entrench = true
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
@@ -29,11 +28,7 @@ minutemen = {
 		defense = 4
 		movement = 4
 	}
-	entrench = true
 	required_technology = conscription
-	free_promotions = {
-		minuteman_1
-	}
 	upgrades = {
 		militia
 	}
@@ -50,7 +45,6 @@ militia = {
 		defense = 4
 		movement = 4
 	}
-	entrench = true
 	required_technology = needle_gun
 	upgrades = {
 		conscripts
@@ -68,7 +62,5 @@ conscripts = {
 		defense = 10
 		movement = 5
 	}
-	entrench = true
-	entrenchment_bonus = 2
 	required_technology = machine_gun
 }

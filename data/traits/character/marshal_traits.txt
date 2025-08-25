@@ -107,23 +107,3 @@ grand_captain = {
 		}
 	}
 }
-
-military_engineer = {
-	name = "Military Engineer"
-	types = {
-		advisor
-	}
-	icon = crossed_sabers
-	attribute = martial
-	conditions = {
-		character_type = military_engineer
-	}
-	scaled_advisor_modifier = {
-		entrenchment_bonus_modifier = 5
-	}
-	scaled_office_modifiers = {
-		marshal = {
-			entrenchment_bonus_modifier = 5
-		}
-	}
-}
