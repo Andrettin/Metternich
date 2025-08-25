@@ -4,7 +4,6 @@ clubmen = {
 	icon = spearmen
 	stats = {
 		melee = 2
-		range = 1
 		defense = 3
 		movement = 4
 	}
@@ -23,7 +22,6 @@ macemen = {
 	icon = pikemen
 	stats = {
 		melee = 3
-		range = 1
 		defense = 3
 		movement = 4
 	}

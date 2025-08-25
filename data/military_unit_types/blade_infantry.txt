@@ -4,10 +4,8 @@ axemen = {
 	icon = longswordsmen
 	stats = {
 		melee = 4
-		range = 1
 		defense = 5
 		movement = 4
-		bonus_vs_infantry = 50
 	}
 	required_technology = handaxe
 	commodity_costs = {
@@ -24,10 +22,8 @@ swordsmen = {
 	icon = longswordsmen
 	stats = {
 		melee = 5
-		range = 1
 		defense = 5
 		movement = 3
-		bonus_vs_infantry = 50
 	}
 	required_technology = shortsword
 	commodity_costs = {
@@ -46,10 +42,8 @@ two_handed_swordsmen = {
 	icon = longswordsmen
 	stats = {
 		melee = 7
-		range = 1
 		defense = 6
 		movement = 4
-		bonus_vs_infantry = 50
 	}
 	required_technology = bastard_sword
 	commodity_costs = {

@@ -33,7 +33,6 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
-	Q_PROPERTY(int hit_points MEMBER hit_points READ get_hit_points NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
@@ -96,11 +95,6 @@ public:
 
 	centesimal_int get_stat_for_country(const military_unit_stat stat, const country *country) const;
 
-	int get_hit_points() const
-	{
-		return this->hit_points;
-	}
-
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -137,7 +131,6 @@ private:
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *icon = nullptr;
 	std::map<military_unit_stat, centesimal_int> stats;
-	int hit_points = 25;
 	technology *required_technology = nullptr;
 	commodity_map<int> commodity_costs;
 	commodity_map<int> maintenance_commodity_costs; //commodities paid per turn as maintenance for the military unit

@@ -4,10 +4,8 @@ spearmen = {
 	icon = spearmen
 	stats = {
 		melee = 4
-		range = 1
 		defense = 5
 		movement = 4
-		bonus_vs_cavalry = 100
 	}
 	required_technology = warrior_code
 	commodity_costs = {
@@ -23,11 +21,10 @@ pikemen = {
 	unit_class = pikemen
 	icon = pikemen
 	stats = {
-		melee = 5
-		range = 1
-		defense = 5
-		movement = 3
-		bonus_vs_cavalry = 100
+		hit_points = 2
+		movement = 1
+		defense = 3
+		melee = 3
 	}
 	required_technology = pike
 	commodity_costs = {
@@ -46,10 +43,8 @@ halberdiers = {
 	icon = halberdiers
 	stats = {
 		melee = 7
-		range = 1
 		defense = 6
 		movement = 4
-		bonus_vs_cavalry = 100
 	}
 	required_technology = halberd
 	commodity_costs = {

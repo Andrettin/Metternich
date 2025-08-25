@@ -3,9 +3,8 @@ archers = {
 	unit_class = archers
 	icon = archers
 	stats = {
-		firepower = 2
+		missile = 2
 		melee = 1
-		range = 4
 		defense = 2
 		movement = 4
 	}
@@ -23,9 +22,8 @@ crossbowmen = {
 	unit_class = crossbowmen
 	icon = crossbowmen
 	stats = {
-		firepower = 3
+		missile = 3
 		melee = 1
-		range = 4
 		defense = 2
 		movement = 3
 	}

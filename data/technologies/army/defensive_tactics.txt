@@ -8,23 +8,6 @@ defensive_terrain = {
 	prerequisites = {
 		feudalism
 	}
-	modifier = {
-		military_unit_stat = {
-			category = bowmen
-			stat = shock
-			value = 5
-		}
-		military_unit_stat = {
-			category = spear_infantry
-			stat = discipline
-			value = 5
-		}
-		military_unit_stat = {
-			type = peasant_levies
-			stat = discipline
-			value = 10
-		}
-	}
 }
 
 positional_combat = {
@@ -37,18 +20,6 @@ positional_combat = {
 	prerequisites = {
 		defensive_terrain
 	}
-	modifier = {
-		military_unit_stat = {
-			category = spear_infantry
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			category = blade_infantry
-			stat = discipline
-			value = 10
-		}
-	}
 }
 
 missile_barrage = {
@@ -60,13 +31,6 @@ missile_barrage = {
 	cost_commodity = leadership
 	prerequisites = {
 		positional_combat
-	}
-	modifier = {
-		military_unit_stat = {
-			category = bowmen
-			stat = shock
-			value = 10
-		}
 	}
 }
 
@@ -81,28 +45,6 @@ drilled_pikemen = {
 		missile_barrage
 		pike
 	}
-	modifier = {
-		military_unit_stat = {
-			type = pikemen
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			type = halberdiers
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			type = pikemen
-			stat = shock
-			value = 20
-		}
-		military_unit_stat = {
-			type = halberdiers
-			stat = shock
-			value = 20
-		}
-	}
 }
 
 pike_square = {
@@ -115,18 +57,6 @@ pike_square = {
 	prerequisites = {
 		drilled_pikemen
 	}
-	modifier = {
-		military_unit_stat = {
-			type = pikemen
-			stat = discipline
-			value = 5
-		}
-		military_unit_stat = {
-			type = halberdiers
-			stat = discipline
-			value = 5
-		}
-	}
 }
 
 unit_organization = {
@@ -138,28 +68,6 @@ unit_organization = {
 	cost_commodity = leadership
 	prerequisites = {
 		drilled_pikemen
-	}
-	modifier = {
-		military_unit_stat = {
-			type = peasant_levies
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			category = spear_infantry
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			category = blade_infantry
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			category = spear_cavalry
-			stat = discipline
-			value = 10
-		}
 	}
 }
 
@@ -174,27 +82,5 @@ pike_and_shot = {
 		pike_square
 		standardized_pikes
 		arquebus
-	}
-	modifier = {
-		military_unit_stat = {
-			type = pikemen
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			type = halberdiers
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			type = arquebusiers
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			type = musketeers
-			stat = discipline
-			value = 10
-		}
 	}
 }

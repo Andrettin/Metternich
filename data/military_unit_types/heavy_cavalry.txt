@@ -3,9 +3,8 @@ harquebusiers = {
 	unit_class = harquebusiers
 	icon = cuirassiers
 	stats = {
-		firepower = 2
+		missile = 2
 		melee = 6
-		range = 3
 		defense = 5
 		movement = 6
 	}
@@ -26,9 +25,8 @@ cuirassiers = {
 	unit_class = cuirassiers
 	icon = cuirassiers
 	stats = {
-		firepower = 15
+		missile = 15
 		melee = 19
-		range = 3
 		defense = 5
 		movement = 9
 	}
@@ -52,9 +50,8 @@ carbine_cavalry = {
 	unit_class = carbine_cavalry
 	icon = cuirassiers
 	stats = {
-		firepower = 20
+		missile = 20
 		melee = 26
-		range = 5
 		defense = 5
 		movement = 9
 	}
@@ -78,9 +75,8 @@ armor = {
 	unit_class = armor
 	icon = cuirassiers
 	stats = {
-		firepower = 45
+		missile = 45
 		melee = 60
-		range = 12
 		defense = 20
 		movement = 9
 	}

@@ -15,25 +15,6 @@ naval_tradition = {
 	}
 }
 
-naval_drill = {
-	name = "Naval Drill"
-	subcategory = naval_doctrine
-	portrait = unload
-	icon = anchor
-	cost_commodity = leadership
-	required_game_rule = additional_technologies
-	prerequisites = {
-		naval_tradition
-	}
-	modifier = {
-		military_unit_stat = {
-			domain = water
-			stat = discipline
-			value = 10
-		}
-	}
-}
-
 merchant_navy = {
 	name = "Merchant Navy"
 	subcategory = naval_doctrine

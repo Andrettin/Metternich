@@ -52,7 +52,6 @@ heraldry = {
 	cost_commodity = culture
 	prerequisites = {
 		romantic_poetry
-		tower_shield
 	}
 	modifier = {
 		aristocrats_militancy_modifier = -0.01

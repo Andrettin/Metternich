@@ -443,11 +443,6 @@ sun_tzu = {
 	conditions = {
 		character = sun_tzu
 	}
-	advisor_modifier = {
-		free_infantry_promotion = veteran_1
-		free_cavalry_promotion = veteran_1
-		free_artillery_promotion = veteran_1
-	}
 }
 
 theologian = {

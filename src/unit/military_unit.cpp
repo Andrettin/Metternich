@@ -44,7 +44,7 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 {
 	assert_throw(this->get_type() != nullptr);
 
-	this->max_hit_points = type->get_hit_points();
+	this->max_hit_points = type->get_stat(military_unit_stat::hit_points).to_int();
 	this->set_hit_points(this->get_max_hit_points());
 	this->set_morale(this->get_hit_points());
 
@@ -172,8 +172,8 @@ void military_unit::set_type(const military_unit_type *type)
 		this->get_province()->get_game_data()->change_military_unit_category_count(this->get_category(), 1);
 	}
 
-	if (type->get_hit_points() != old_type->get_hit_points()) {
-		this->change_max_hit_points(type->get_hit_points() - old_type->get_hit_points());
+	if (type->get_stat(military_unit_stat::hit_points).to_int() != old_type->get_stat(military_unit_stat::hit_points).to_int()) {
+		this->change_max_hit_points(type->get_stat(military_unit_stat::hit_points).to_int() - old_type->get_stat(military_unit_stat::hit_points).to_int());
 	}
 
 	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
@@ -395,12 +395,12 @@ void military_unit::set_hit_points(const int hit_points)
 
 int military_unit::get_hit_point_recovery_per_turn() const
 {
-	return military_unit::hit_point_recovery_per_turn * (100 + this->get_effective_stat(military_unit_stat::recovery_modifier).to_int()) / 100;
+	return military_unit::hit_point_recovery_per_turn;
 }
 
 int military_unit::get_morale_recovery_per_turn() const
 {
-	return military_unit::morale_recovery_per_turn * (100 + this->get_effective_stat(military_unit_stat::morale_recovery_modifier).to_int()) / 100;
+	return military_unit::morale_recovery_per_turn;
 }
 
 centesimal_int military_unit::get_effective_stat(const military_unit_stat stat) const
@@ -582,72 +582,19 @@ void military_unit::attack(military_unit *target, const bool ranged)
 
 	centesimal_int attack;
 	if (ranged) {
-		attack = this->get_effective_stat(military_unit_stat::firepower);
+		attack = this->get_effective_stat(military_unit_stat::missile);
 	} else {
 		attack = this->get_effective_stat(military_unit_stat::melee);
 	}
-	int attack_modifier = 0;
-	attack_modifier += this->get_effective_stat(military_unit_stat::damage_bonus).to_int();
-	if (ranged) {
-		attack_modifier += this->get_effective_stat(military_unit_stat::firepower_modifier).to_int();
-	}
-	if (target->get_type()->is_infantry()) {
-		attack_modifier += this->get_effective_stat(military_unit_stat::bonus_vs_infantry).to_int();
-	} else if (target->get_type()->is_cavalry()) {
-		attack_modifier += this->get_effective_stat(military_unit_stat::bonus_vs_cavalry).to_int();
-	} else if (target->get_type()->is_artillery()) {
-		attack_modifier += this->get_effective_stat(military_unit_stat::bonus_vs_artillery).to_int();
-	}
-	if (terrain != nullptr) {
-		if (terrain->is_desert()) {
-			attack_modifier += this->get_effective_stat(military_unit_stat::desert_attack_modifier).to_int();
-		} else if (terrain->is_forest()) {
-			attack_modifier += this->get_effective_stat(military_unit_stat::forest_attack_modifier).to_int();
-		} else if (terrain->is_hills()) {
-			attack_modifier += this->get_effective_stat(military_unit_stat::hills_attack_modifier).to_int();
-		} else if (terrain->is_mountains()) {
-			attack_modifier += this->get_effective_stat(military_unit_stat::mountains_attack_modifier).to_int();
-		} else if (terrain->is_wetland()) {
-			attack_modifier += this->get_effective_stat(military_unit_stat::wetland_attack_modifier).to_int();
-		}
-	}
-	if (attack_modifier != 0) {
-		attack *= 100 + attack_modifier;
-		attack /= 100;
-	}
 
 	centesimal_int defense = target->get_effective_stat(military_unit_stat::defense);
-	int defense_modifier = target->get_effective_stat(military_unit_stat::defense_modifier).to_int();
-	if (ranged) {
-		defense_modifier += target->get_effective_stat(military_unit_stat::ranged_defense_modifier).to_int();
-	}
-	if (terrain != nullptr) {
-		if (terrain->is_desert()) {
-			defense_modifier += target->get_effective_stat(military_unit_stat::desert_defense_modifier).to_int();
-		} else if (terrain->is_forest()) {
-			defense_modifier += target->get_effective_stat(military_unit_stat::forest_defense_modifier).to_int();
-		} else if (terrain->is_hills()) {
-			defense_modifier += target->get_effective_stat(military_unit_stat::hills_defense_modifier).to_int();
-		} else if (terrain->is_mountains()) {
-			defense_modifier += target->get_effective_stat(military_unit_stat::mountains_defense_modifier).to_int();
-		} else if (terrain->is_wetland()) {
-			defense_modifier += target->get_effective_stat(military_unit_stat::wetland_defense_modifier).to_int();
-		}
-	}
-	if (defense_modifier != 0) {
-		defense *= 100 + defense_modifier;
-		defense /= 100;
-	}
 
 	centesimal_int damage = attack * 2 - defense;
 	damage /= 2;
 
-	damage *= 100 + target->get_effective_stat(military_unit_stat::resistance).to_int();
-	damage /= 100;
-
 	damage = centesimal_int::max(damage, 1);
 
-	target->receive_damage(damage.to_int(), this->get_effective_stat(military_unit_stat::shock).to_int());
+	target->receive_damage(damage.to_int(), 0);
 }
 
 void military_unit::receive_damage(const int damage, const int morale_damage_modifier)
@@ -656,7 +603,7 @@ void military_unit::receive_damage(const int damage, const int morale_damage_mod
 
 	int morale_damage = damage;
 	morale_damage *= 100 + morale_damage_modifier;
-	morale_damage /= 100 + this->get_effective_stat(military_unit_stat::discipline).to_int();
+	morale_damage /= 100;
 
 	this->change_morale(-morale_damage);
 }

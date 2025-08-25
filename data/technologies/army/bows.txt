@@ -23,7 +23,7 @@ composite_bow = {
 	modifier = {
 		military_unit_stat = {
 			type = archers
-			stat = firepower
+			stat = missile
 			value = 0.25
 		}
 	}
@@ -43,7 +43,7 @@ longbow = {
 	modifier = {
 		military_unit_stat = {
 			type = archers
-			stat = firepower
+			stat = missile
 			value = 0.25
 		}
 	}
@@ -64,7 +64,7 @@ reinforced_longbow = {
 	modifier = {
 		military_unit_stat = {
 			type = archers
-			stat = firepower
+			stat = missile
 			value = 0.25
 		}
 	}
@@ -83,7 +83,7 @@ marksman_longbow = {
 	modifier = {
 		military_unit_stat = {
 			type = archers
-			stat = firepower
+			stat = missile
 			value = 0.25
 		}
 	}

@@ -11,11 +11,6 @@ serfdom = {
 	}
 	modifier = {
 		infantry_cost_modifier = -30
-		military_unit_stat = {
-			domain = land
-			stat = discipline
-			value = -20
-		}
 		technology_cost_modifier = 20
 	}
 }
@@ -33,11 +28,6 @@ free_subjects = {
 	}
 	modifier = {
 		infantry_cost_modifier = 30
-		military_unit_stat = {
-			domain = land
-			stat = discipline
-			value = 20
-		}
 		technology_cost_modifier = -20
 	}
 }

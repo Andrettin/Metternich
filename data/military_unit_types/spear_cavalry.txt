@@ -4,7 +4,6 @@ chariots = {
 	icon = knights
 	stats = {
 		melee = 5
-		range = 1
 		defense = 5
 		movement = 4
 	}
@@ -23,7 +22,6 @@ knights = {
 	icon = knights
 	stats = {
 		melee = 6
-		range = 1
 		defense = 6
 		movement = 4
 	}
@@ -45,7 +43,6 @@ lancers = {
 	icon = knights
 	stats = {
 		melee = 8
-		range = 1
 		defense = 5
 		movement = 6
 	}

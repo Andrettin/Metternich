@@ -430,15 +430,6 @@ strict = {
 		diplomacy = -1
 		martial = 1
 	}
-	office_modifiers = {
-		ruler = {
-			military_unit_stat = {
-				domain = land
-				stat = discipline
-				value = 5
-			}
-		}
-	}
 }
 
 stubborn = {

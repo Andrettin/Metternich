@@ -37,7 +37,7 @@ medium_crossbow = {
 	modifier = {
 		military_unit_stat = {
 			type = crossbowmen
-			stat = firepower
+			stat = missile
 			value = 0.33
 		}
 	}
@@ -56,7 +56,7 @@ heavy_crossbow = {
 	modifier = {
 		military_unit_stat = {
 			type = crossbowmen
-			stat = firepower
+			stat = missile
 			value = 0.33
 		}
 	}
@@ -75,7 +75,7 @@ arbalest = {
 	modifier = {
 		military_unit_stat = {
 			type = crossbowmen
-			stat = firepower
+			stat = missile
 			value = 0.34
 		}
 	}

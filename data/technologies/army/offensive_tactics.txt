@@ -8,18 +8,6 @@ offensive_terrain = {
 	prerequisites = {
 		feudalism
 	}
-	modifier = {
-		military_unit_stat = {
-			category = spear_cavalry
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			type = squires
-			stat = discipline
-			value = 10
-		}
-	}
 }
 
 frontal_charge = {
@@ -32,18 +20,6 @@ frontal_charge = {
 	prerequisites = {
 		offensive_terrain
 	}
-	modifier = {
-		military_unit_stat = {
-			category = spear_cavalry
-			stat = discipline
-			value = 20
-		}
-		military_unit_stat = {
-			type = squires
-			stat = discipline
-			value = 20
-		}
-	}
 }
 
 reserves = {
@@ -55,18 +31,6 @@ reserves = {
 	cost_commodity = leadership
 	prerequisites = {
 		frontal_charge
-	}
-	modifier = {
-		military_unit_stat = {
-			category = blade_infantry
-			stat = discipline
-			value = 20
-		}
-		military_unit_stat = {
-			category = spear_cavalry
-			stat = discipline
-			value = 10
-		}
 	}
 }
 
@@ -81,18 +45,6 @@ dismounted_knights = {
 		reserves
 		chivalry
 	}
-	modifier = {
-		military_unit_stat = {
-			category = blade_infantry
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			category = spear_cavalry
-			stat = discipline
-			value = 20
-		}
-	}
 }
 
 hierarchical_command = {
@@ -104,22 +56,5 @@ hierarchical_command = {
 	cost_commodity = leadership
 	prerequisites = {
 		dismounted_knights
-	}
-	modifier = {
-		military_unit_stat = {
-			category = blade_infantry
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			category = spear_cavalry
-			stat = discipline
-			value = 10
-		}
-		military_unit_stat = {
-			type = squires
-			stat = discipline
-			value = 10
-		}
 	}
 }

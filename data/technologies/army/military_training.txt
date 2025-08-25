@@ -34,25 +34,6 @@ chivalry = {
 	}
 }
 
-noble_knights = {
-	name = "Noble Knights"
-	subcategory = cavalry
-	portrait = baronial_crown
-	icon = crown_baronial
-	cost_commodity = leadership
-	required_game_rule = additional_technologies
-	prerequisites = {
-		chivalry
-	}
-	modifier = {
-		military_unit_stat = {
-			category = spear_cavalry
-			stat = damage_bonus
-			value = 15
-		}
-	}
-}
-
 recruit_steppe_horsemen = {
 	name = "Recruit Steppe Horsemen"
 	subcategory = cavalry

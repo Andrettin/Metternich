@@ -17,9 +17,6 @@ intelligent = {
 			research_output_modifier = 5
 		}
 	}
-	leader_modifier = {
-		discipline = 10
-	}
 }
 
 genius = {
@@ -40,9 +37,6 @@ genius = {
 		ruler = {
 			research_output_modifier = 5
 		}
-	}
-	leader_modifier = {
-		discipline = 10
 	}
 }
 

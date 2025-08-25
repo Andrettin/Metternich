@@ -8,22 +8,6 @@ grand_admiral = {
 	conditions = {
 		character_type = admiral
 	}
-	scaled_advisor_modifier = {
-		military_unit_stat = {
-			domain = water
-			stat = discipline
-			value = 2.5
-		}
-	}
-	scaled_office_modifiers = {
-		high_admiral = {
-			military_unit_stat = {
-				domain = water
-				stat = discipline
-				value = 2.5
-			}
-		}
-	}
 }
 
 naval_reformer = {
@@ -61,21 +45,5 @@ privateer = {
 	attribute = martial
 	conditions = {
 		character_type = privateer
-	}
-	scaled_advisor_modifier = {
-		military_unit_stat = {
-			category = light_warship
-			stat = damage_bonus
-			value = 5
-		}
-	}
-	scaled_office_modifiers = {
-		high_admiral = {
-			military_unit_stat = {
-				category = light_warship
-				stat = damage_bonus
-				value = 5
-			}
-		}
 	}
 }

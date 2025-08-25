@@ -3,7 +3,6 @@ sappers = {
 	unit_class = sappers
 	icon = engineer
 	stats = {
-		range = 5
 		defense = 3
 		movement = 4
 	}
@@ -26,7 +25,6 @@ combat_engineers = {
 	unit_class = combat_engineers
 	icon = engineer
 	stats = {
-		range = 8
 		defense = 4
 		movement = 4
 	}
@@ -49,7 +47,6 @@ saboteurs = {
 	unit_class = saboteurs
 	icon = engineer
 	stats = {
-		range = 10
 		defense = 10
 		movement = 5
 	}

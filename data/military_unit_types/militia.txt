@@ -4,7 +4,6 @@ peasant_levies = {
 	icon = pikemen
 	stats = {
 		melee = 3
-		range = 1
 		defense = 3
 		movement = 3
 	}
@@ -22,9 +21,8 @@ minutemen = {
 	unit_class = minutemen
 	icon = whitecoats
 	stats = {
-		firepower = 5
+		missile = 5
 		melee = 5
-		range = 5
 		defense = 4
 		movement = 4
 	}
@@ -39,9 +37,8 @@ militia = {
 	unit_class = militia
 	icon = rifle_infantry_light
 	stats = {
-		firepower = 7
+		missile = 7
 		melee = 7
-		range = 8
 		defense = 4
 		movement = 4
 	}
@@ -56,9 +53,8 @@ conscripts = {
 	unit_class = conscripts
 	icon = rifle_infantry_light
 	stats = {
-		firepower = 10
+		missile = 10
 		melee = 10
-		range = 10
 		defense = 10
 		movement = 5
 	}

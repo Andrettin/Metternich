@@ -3,9 +3,8 @@ catapult = {
 	unit_class = catapult
 	icon = artillery
 	stats = {
-		firepower = 6
+		missile = 6
 		melee = 1
-		range = 5
 		defense = 2
 		movement = 2
 	}
@@ -23,9 +22,8 @@ culverin = {
 	unit_class = culverin
 	icon = artillery
 	stats = {
-		firepower = 8
+		missile = 8
 		melee = 1
-		range = 5
 		defense = 2
 		movement = 2
 	}
@@ -45,9 +43,8 @@ royal_artillery = {
 	unit_class = royal_artillery
 	icon = artillery
 	stats = {
-		firepower = 9
+		missile = 9
 		melee = 2
-		range = 8
 		defense = 2
 		movement = 2
 	}
@@ -67,9 +64,8 @@ artillery = {
 	unit_class = artillery
 	icon = artillery
 	stats = {
-		firepower = 16
+		missile = 16
 		melee = 4
-		range = 11
 		defense = 2
 		movement = 3
 	}
@@ -92,9 +88,8 @@ siege_artillery = {
 	unit_class = siege_artillery
 	icon = artillery
 	stats = {
-		firepower = 30
+		missile = 30
 		melee = 8
-		range = 14
 		defense = 3
 		movement = 3
 	}
@@ -117,9 +112,8 @@ railroad_guns = {
 	unit_class = railroad_guns
 	icon = artillery
 	stats = {
-		firepower = 50
+		missile = 50
 		melee = 12
-		range = 17
 		defense = 20
 		movement = 3
 	}

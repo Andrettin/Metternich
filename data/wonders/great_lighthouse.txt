@@ -8,7 +8,6 @@ great_lighthouse = {
 		additional_buildings
 	}
 	country_modifier = {
-		free_warship_promotion = veteran_1
 		ship_movement_modifier = 1
 	}
 }

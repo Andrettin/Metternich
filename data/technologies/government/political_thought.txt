@@ -38,26 +38,6 @@ feudalism = {
 	}
 }
 
-order_of_the_golden_fleece = {
-	name = "Order of the Golden Fleece"
-	subcategory = political_thought
-	portrait = helmet
-	icon = saber
-	cost_commodity = statesmanship
-	required_game_rule = additional_technologies
-	cultures = {
-		austrian
-		castillian
-		french #Burgundian
-	}
-	prerequisites = {
-		noble_knights
-	}
-	modifier = {
-		capital_prestige_bonus = 1
-	}
-}
-
 nationalism = {
 	name = "Nationalism"
 	subcategory = political_thought
@@ -140,13 +120,6 @@ paternalism = {
 		modifier = {
 			factor = 0.33
 			consciousness < 3
-		}
-	}
-	modifier = {
-		military_unit_stat = {
-			domain = land
-			stat = morale_recovery_modifier
-			value = 5
 		}
 	}
 }

@@ -49,7 +49,7 @@ mangonel = {
 	modifier = {
 		military_unit_stat = {
 			type = catapult
-			stat = firepower
+			stat = missile
 			value = 0.5
 		}
 	}
@@ -68,7 +68,7 @@ trebuchet = {
 	modifier = {
 		military_unit_stat = {
 			type = catapult
-			stat = firepower
+			stat = missile
 			value = 0.5
 		}
 	}
@@ -111,31 +111,6 @@ heavy_artillery = {
 		heavy_emplaced_artillery
 		modern_fortifications
 		crucible_process
-	}
-}
-
-massed_battery = {
-	name = "Massed Battery"
-	subcategory = siege_weapons
-	portrait = engineering
-	icon = cannon
-	period = 1800_1825
-	cost_commodity = leadership
-	required_game_rule = additional_technologies
-	prerequisites = {
-		heavy_artillery
-	}
-	modifier = {
-		military_unit_stat = {
-			category = light_artillery
-			stat = damage_bonus
-			value = 10
-		}
-		military_unit_stat = {
-			category = heavy_artillery
-			stat = damage_bonus
-			value = 10
-		}
 	}
 }
 

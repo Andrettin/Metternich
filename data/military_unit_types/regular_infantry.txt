@@ -3,9 +3,8 @@ regulars = {
 	unit_class = regulars
 	icon = whitecoats
 	stats = {
-		firepower = 10
+		missile = 10
 		melee = 10
-		range = 5
 		defense = 5
 		movement = 4
 	}
@@ -28,9 +27,8 @@ rifle_infantry = {
 	unit_class = rifle_infantry
 	icon = rifle_infantry_light
 	stats = {
-		firepower = 15
+		missile = 15
 		melee = 15
-		range = 8
 		defense = 7
 		movement = 4
 	}
@@ -53,9 +51,8 @@ infantry = {
 	unit_class = infantry
 	icon = rifle_infantry_light
 	stats = {
-		firepower = 22
+		missile = 22
 		melee = 22
-		range = 10
 		defense = 20
 		movement = 5
 	}

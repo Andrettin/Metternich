@@ -20,9 +20,6 @@ administrator = {
 	attribute_bonuses = {
 		stewardship = 3
 	}
-	scaled_leader_modifier = {
-		discipline = 2.5
-	}
 }
 
 gifted_administrator = {
@@ -46,9 +43,6 @@ gifted_administrator = {
 	}
 	attribute_bonuses = {
 		stewardship = 4
-	}
-	scaled_leader_modifier = {
-		discipline = 2.5
 	}
 }
 

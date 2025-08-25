@@ -5,10 +5,8 @@ triceratops = {
 	icon = lion
 	stats = {
 		melee = 4
-		range = 1
 		defense = 5
 		movement = 4
-		bonus_vs_cavalry = 100
 	}
 	required_technology = horns
 	commodity_costs = {
@@ -22,7 +20,6 @@ coelophysis = {
 	icon = lion
 	stats = {
 		melee = 2
-		range = 1
 		defense = 3
 		movement = 4
 	}
@@ -35,7 +32,6 @@ acanthopholis = {
 	icon = lion
 	stats = {
 		melee = 2
-		range = 1
 		defense = 3
 		movement = 4
 	}
@@ -48,7 +44,6 @@ baryonyxes = {
 	icon = lion
 	stats = {
 		melee = 2
-		range = 1
 		defense = 3
 		movement = 4
 	}
@@ -61,7 +56,6 @@ stegosaurus = {
 	icon = lion
 	stats = {
 		melee = 2
-		range = 1
 		defense = 3
 		movement = 4
 	}
@@ -74,7 +68,6 @@ velociraptors = {
 	icon = lion
 	stats = {
 		melee = 2
-		range = 1
 		defense = 3
 		movement = 4
 	}
@@ -87,7 +80,6 @@ tyrannosaurus = {
 	icon = lion
 	stats = {
 		melee = 2
-		range = 1
 		defense = 3
 		movement = 4
 	}
@@ -100,7 +92,6 @@ pterodactyls = {
 	icon = lion
 	stats = {
 		melee = 2
-		range = 1
 		defense = 3
 		movement = 4
 	}
@@ -113,7 +104,6 @@ quetzalcoatlus = {
 	icon = lion
 	stats = {
 		melee = 2
-		range = 1
 		defense = 3
 		movement = 4
 	}

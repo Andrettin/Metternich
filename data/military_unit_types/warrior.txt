@@ -4,7 +4,6 @@ warrior = {
 	icon = longswordsmen
 	stats = {
 		melee = 7
-		range = 1
 		defense = 6
 		movement = 4
 	}

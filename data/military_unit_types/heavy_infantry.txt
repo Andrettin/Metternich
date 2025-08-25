@@ -3,9 +3,8 @@ arquebusiers = {
 	unit_class = arquebusiers
 	icon = arquebusiers
 	stats = {
-		firepower = 5
+		missile = 5
 		melee = 1
-		range = 3
 		defense = 3
 		movement = 2
 	}
@@ -25,9 +24,8 @@ musketeers = {
 	unit_class = musketeers
 	icon = musketeers
 	stats = {
-		firepower = 7
+		missile = 7
 		melee = 2
-		range = 4
 		defense = 4
 		movement = 3
 	}
@@ -47,9 +45,8 @@ grenadiers = {
 	unit_class = grenadiers
 	icon = grenadiers
 	stats = {
-		firepower = 12
+		missile = 12
 		melee = 12
-		range = 5
 		defense = 5
 		movement = 4
 	}
@@ -62,9 +59,6 @@ grenadiers = {
 	maintenance_commodity_costs = {
 		wealth = 25
 	}
-	free_promotions = {
-		grenadier_1
-	}
 	upgrades = {
 		guards
 	}
@@ -75,9 +69,8 @@ guards = {
 	unit_class = guards
 	icon = rifle_infantry_light
 	stats = {
-		firepower = 17
+		missile = 17
 		melee = 17
-		range = 8
 		defense = 7
 		movement = 4
 	}
@@ -100,9 +93,8 @@ machine_gunners = {
 	unit_class = machine_gunners
 	icon = rifle_infantry_light
 	stats = {
-		firepower = 25
+		missile = 25
 		melee = 25
-		range = 10
 		defense = 20
 		movement = 4
 	}

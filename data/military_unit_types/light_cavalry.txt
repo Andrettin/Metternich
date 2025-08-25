@@ -4,7 +4,6 @@ squires = {
 	icon = knights
 	stats = {
 		melee = 4
-		range = 1
 		defense = 4
 		movement = 6
 	}
@@ -26,7 +25,6 @@ cossacks = {
 	icon = hussars
 	stats = {
 		melee = 5
-		range = 1
 		defense = 5
 		movement = 8
 	}
@@ -47,9 +45,8 @@ hussars = {
 	unit_class = hussars
 	icon = hussars
 	stats = {
-		firepower = 7
+		missile = 7
 		melee = 10
-		range = 3
 		defense = 7
 		movement = 11
 	}
@@ -73,9 +70,8 @@ scouts = {
 	unit_class = scouts
 	icon = hussars
 	stats = {
-		firepower = 10
+		missile = 10
 		melee = 13
-		range = 5
 		defense = 7
 		movement = 11
 	}
@@ -99,9 +95,8 @@ mechanized_infantry = {
 	unit_class = mechanized_infantry
 	icon = hussars
 	stats = {
-		firepower = 22
+		missile = 22
 		melee = 28
-		range = 10
 		defense = 10
 		movement = 11
 	}

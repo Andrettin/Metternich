@@ -4,9 +4,8 @@ elven_archers = {
 	culture = elven
 	icon = archers
 	stats = {
-		firepower = 3
+		missile = 3
 		melee = 1
-		range = 4
 		defense = 2
 		movement = 4
 	}
@@ -25,9 +24,8 @@ elven_marksmen = {
 	culture = elven
 	icon = archers
 	stats = {
-		firepower = 4
+		missile = 4
 		melee = 1
-		range = 4
 		defense = 2
 		movement = 4
 	}

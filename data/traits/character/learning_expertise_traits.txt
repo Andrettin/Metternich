@@ -17,9 +17,6 @@ cartographer = {
 	attribute_bonuses = {
 		learning = 1
 	}
-	scaled_leader_modifier = {
-		movement_modifier = 5
-	}
 }
 
 mystic = {

@@ -3,9 +3,8 @@ horse_artillery = {
 	unit_class = horse_artillery
 	icon = artillery
 	stats = {
-		firepower = 5
+		missile = 5
 		melee = 2
-		range = 7
 		defense = 2
 		movement = 3
 	}
@@ -26,9 +25,8 @@ light_artillery = {
 	unit_class = light_artillery
 	icon = artillery
 	stats = {
-		firepower = 10
+		missile = 10
 		melee = 3
-		range = 9
 		defense = 3
 		movement = 5
 	}
@@ -52,9 +50,8 @@ field_artillery = {
 	unit_class = field_artillery
 	icon = artillery
 	stats = {
-		firepower = 17
+		missile = 17
 		melee = 5
-		range = 12
 		defense = 3
 		movement = 6
 	}
@@ -78,9 +75,8 @@ mobile_artillery = {
 	unit_class = mobile_artillery
 	icon = artillery
 	stats = {
-		firepower = 25
+		missile = 25
 		melee = 8
-		range = 15
 		defense = 20
 		movement = 8
 	}

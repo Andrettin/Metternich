@@ -3,9 +3,8 @@ ranger = {
 	unit_class = ranger
 	icon = archers
 	stats = {
-		firepower = 7
+		missile = 7
 		melee = 2
-		range = 4
 		defense = 4
 		movement = 3
 	}

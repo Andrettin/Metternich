@@ -5,10 +5,8 @@ dwarven_guardsmen = {
 	icon = pikemen
 	stats = {
 		melee = 4
-		range = 1
 		defense = 6
 		movement = 4
-		bonus_vs_cavalry = 100
 	}
 	required_technology = warrior_code
 	commodity_costs = {
@@ -26,10 +24,8 @@ dwarven_stalwarts = {
 	icon = pikemen
 	stats = {
 		melee = 5
-		range = 1
 		defense = 6
 		movement = 3
-		bonus_vs_cavalry = 100
 	}
 	required_technology = pike
 	commodity_costs = {
@@ -49,10 +45,8 @@ dwarven_sentinels = {
 	icon = halberdiers
 	stats = {
 		melee = 7
-		range = 1
 		defense = 7
 		movement = 4
-		bonus_vs_cavalry = 100
 	}
 	required_technology = halberd
 	commodity_costs = {
@@ -71,9 +65,8 @@ dwarven_thunderers = {
 	culture = dwarven
 	icon = arquebusiers
 	stats = {
-		firepower = 6
+		missile = 6
 		melee = 1
-		range = 3
 		defense = 3
 		movement = 2
 	}
@@ -94,9 +87,8 @@ dwarven_thunderguards = {
 	culture = dwarven
 	icon = musketeers
 	stats = {
-		firepower = 8
+		missile = 8
 		melee = 2
-		range = 4
 		defense = 4
 		movement = 3
 	}
@@ -117,9 +109,8 @@ dwarven_dragonguards = {
 	culture = dwarven
 	icon = grenadiers
 	stats = {
-		firepower = 13
+		missile = 13
 		melee = 12
-		range = 5
 		defense = 5
 		movement = 4
 	}
@@ -131,9 +122,6 @@ dwarven_dragonguards = {
 	}
 	maintenance_commodity_costs = {
 		wealth = 25
-	}
-	free_promotions = {
-		grenadier_1
 	}
 	upgrades = {
 		guards

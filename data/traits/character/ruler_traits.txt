@@ -4,11 +4,6 @@ aggressive = {
 		ruler
 	}
 	icon = crossed_sabers
-	office_modifiers = {
-		ruler = {
-			free_infantry_promotion = veteran_1
-		}
-	}
 }
 
 charismatic = {
@@ -80,11 +75,6 @@ impressionable = {
 		ruler
 	}
 	icon = painting
-	office_modifiers = {
-		ruler = {
-			free_infantry_promotion = grenadier_1
-		}
-	}
 }
 
 indulgent = {
@@ -93,11 +83,6 @@ indulgent = {
 		ruler
 	}
 	icon = treaty
-	office_modifiers = {
-		ruler = {
-			free_infantry_promotion = formation
-		}
-	}
 }
 
 industrious = {
@@ -119,11 +104,6 @@ militaristic = {
 		ruler
 	}
 	icon = crossed_sabers
-	office_modifiers = {
-		ruler = {
-			free_infantry_promotion = grenadier_1
-		}
-	}
 }
 
 organized = {
