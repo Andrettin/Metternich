@@ -69,10 +69,14 @@ Rectangle {
 		anchors.right: wealth_label.right
 		hoverEnabled: true
 		onEntered: {
-			status_text = get_plural_form(wealth_unit.name)
+			if (status_text !== undefined) {
+				status_text = get_plural_form(wealth_unit.name)
+			}
 		}
 		onExited: {
-			status_text = ""
+			if (status_text !== undefined) {
+				status_text = ""
+			}
 		}
 	}
 	
@@ -104,10 +108,14 @@ Rectangle {
 		hoverEnabled: true
 		enabled: prestige_visible && metternich.defines.prestige_commodity.enabled
 		onEntered: {
-			status_text = "Prestige"
+			if (status_text !== undefined) {
+				status_text = "Prestige"
+			}
 		}
 		onExited: {
-			status_text = ""
+			if (status_text !== undefined) {
+				status_text = ""
+			}
 		}
 	}
 }
