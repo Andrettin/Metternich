@@ -261,6 +261,19 @@ Rectangle {
 	}
 	
 	SmallText {
+		id: province_info_text
+		anchors.top: title.bottom
+		anchors.topMargin: 16 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		text: format_text(
+			selected_province ? (
+				("Province Level: " + selected_province.game_data.level)
+			) : ""
+		)
+		visible: selected_province && !selected_garrison
+	}
+	
+	SmallText {
 		id: site_info_text
 		anchors.top: subtitle.bottom
 		anchors.topMargin: 16 * scale_factor

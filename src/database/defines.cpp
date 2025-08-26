@@ -92,6 +92,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->event_trigger_none_random_weights[trigger] = weight;
 		});
+	} else if (tag == "province_population_per_level") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const int level = std::stoi(property.get_key());
+			const int population = std::stoi(property.get_value());
+
+			this->province_population_per_level[level] = population;
+		});
 	} else if (tag == "province_taxation_per_level") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());
@@ -228,6 +235,28 @@ QString defines::get_default_menu_background_filepath_qstring() const
 void defines::set_default_menu_background_filepath(const std::filesystem::path &filepath)
 {
 	this->default_menu_background_filepath = database::get()->get_graphics_filepath(filepath);
+}
+
+int defines::get_province_population_for_level(const int level) const
+{
+	const auto find_iterator = this->province_population_per_level.find(level);
+	assert_throw(find_iterator != this->province_population_per_level.end());
+	return find_iterator->second;
+}
+
+int defines::get_province_level_for_population(const int population) const
+{
+	int best_province_level = 0;
+
+	for (const auto &[province_level, province_level_population] : this->province_population_per_level) {
+		if (population >= province_level_population) {
+			best_province_level = province_level;
+		} else {
+			break;
+		}
+	}
+
+	return best_province_level;
 }
 
 const dice &defines::get_province_taxation_for_level(const int level) const
