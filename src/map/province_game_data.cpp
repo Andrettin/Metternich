@@ -144,7 +144,12 @@ void province_game_data::collect_taxes()
 {
 	assert_throw(this->get_owner() != nullptr);
 
-	const int taxation = (random::get()->roll_dice(dice(1, 3)) - 1) * 200000;
+	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
+	const int taxation = random::get()->roll_dice(taxation_dice) * 200000;
+	if (taxation < 0) {
+		//ignore negative results
+		return;
+	}
 
 	this->get_owner()->get_game_data()->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), taxation);
 }
@@ -303,6 +308,30 @@ void province_game_data::on_population_main_religion_changed(const metternich::r
 const std::string &province_game_data::get_current_cultural_name() const
 {
 	return this->province->get_cultural_name(this->get_culture());
+}
+
+void province_game_data::set_level(const int level)
+{
+	assert_throw(level >= 0);
+
+	if (level == this->get_level()) {
+		return;
+	}
+
+	this->level = level;
+
+	if (game::get()->is_running()) {
+		emit level_changed();
+
+		if (this->get_owner() != nullptr) {
+			emit this->get_owner()->get_game_data()->income_changed();
+		}
+	}
+}
+
+void province_game_data::change_level(const int change)
+{
+	this->set_level(this->get_level() + change);
 }
 
 bool province_game_data::is_coastal() const
@@ -1229,12 +1258,14 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 
 int province_game_data::get_min_income() const
 {
-	return 0;
+	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
+	return std::max(0, taxation_dice.get_minimum_result());
 }
 
 int province_game_data::get_max_income() const
 {
-	return 2 * 200000;
+	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
+	return taxation_dice.get_maximum_result() * 200000;
 }
 
 }

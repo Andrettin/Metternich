@@ -365,7 +365,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					log::log_error(std::format("Province \"{}\" has no owner for scenario \"{}\".", province->get_identifier(), scenario->get_identifier()));
 				}
 			} catch (...) {
-				std::throw_with_nested(std::runtime_error("Failed to apply history for province \"" + province->get_identifier() + "\"."));
+				std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for province \"{}\".", province->get_identifier())));
 			}
 		}
 
@@ -1018,6 +1018,11 @@ void game::apply_population_history()
 
 		if (province_game_data->get_settlement_count() == 0) {
 			continue;
+		}
+
+		if (province->get_history()->get_population() > 0) {
+			const int province_level = defines::get()->get_province_level_for_population(province->get_history()->get_population());
+			province_game_data->set_level(province_level);
 		}
 
 		province->get_history()->distribute_population();

@@ -51,6 +51,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(const metternich::country* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
+	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
 	Q_PROPERTY(QRect map_image_rect READ get_map_image_rect NOTIFY map_image_changed)
 	Q_PROPERTY(QRect text_rect READ get_text_rect NOTIFY map_image_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
@@ -114,6 +115,14 @@ public:
 	{
 		return QString::fromStdString(this->get_current_cultural_name());
 	}
+
+	int get_level() const
+	{
+		return this->level;
+	}
+
+	void set_level(const int level);
+	void change_level(const int change);
 
 	bool is_coastal() const;
 	bool is_near_water() const;
@@ -463,6 +472,7 @@ signals:
 	void owner_changed();
 	void culture_changed();
 	void religion_changed();
+	void level_changed();
 	void map_image_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
@@ -476,6 +486,7 @@ private:
 	const country *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
+	int level = 0;
 	QImage map_image;
 	QImage selected_map_image;
 	std::map<diplomatic_map_mode, QImage> map_mode_images;
