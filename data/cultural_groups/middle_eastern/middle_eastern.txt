@@ -15,5 +15,9 @@ middle_eastern = {
 		explored_provinces += red_sea
 		explored_provinces += djibouti
 		explored_provinces += somaliland
+		
+		1815 = {
+			explored_regions += europe
+		}
 	}
 }
