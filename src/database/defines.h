@@ -4,6 +4,7 @@
 #include "economy/commodity_container.h"
 #include "map/terrain_adjacency.h"
 #include "util/centesimal_int.h"
+#include "util/dice.h"
 #include "util/singleton.h"
 
 Q_MOC_INCLUDE("country/office.h")
@@ -414,6 +415,8 @@ public:
 		return this->min_diplomatic_map_tile_scale;
 	}
 
+	const dice &get_province_taxation_for_level(const int level) const;
+
 	const std::vector<int> &get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const;
 	void set_river_adjacency_subtiles(const terrain_adjacency &adjacency, const std::vector<int> &subtiles);
 	int get_rivermouth_adjacency_tile(const terrain_adjacency &adjacency) const;
@@ -477,6 +480,7 @@ private:
 	std::map<event_trigger, int> event_trigger_none_random_weights; //the weight for no event happening for a given event trigger's random event selection
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;
+	std::map<int, dice> province_taxation_per_level;
 	std::map<terrain_adjacency, std::vector<int>> river_adjacency_subtiles;
 	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;
 	std::map<terrain_adjacency, int> route_adjacency_tiles;

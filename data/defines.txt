@@ -74,6 +74,20 @@ scaled_landholder_modifier = {
 	resource_output_modifier = 5
 }
 
+province_taxation_per_level = {
+	0 = 0d0
+	1 = 1d3-1
+	2 = 1d3
+	3 = 1d4
+	4 = 1d4+1
+	5 = 1d6+1
+	6 = 1d8+1
+	7 = 1d10+1
+	8 = 1d12+1
+	9 = 2d8
+	10 = 2d8+2
+}
+
 max_character_skill = 10 #used for calculating character skill based on skill multipliers; this is not a hard cap
 ruler_office = ruler
 interior_minister_office = steward

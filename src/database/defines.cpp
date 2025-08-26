@@ -92,6 +92,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->event_trigger_none_random_weights[trigger] = weight;
 		});
+	} else if (tag == "province_taxation_per_level") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const int level = std::stoi(property.get_key());
+			dice dice(property.get_value());
+
+			this->province_taxation_per_level[level] = std::move(dice);
+		});
 	} else if (tag == "river_adjacency_subtiles") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const int subtile = std::stoi(child_scope.get_tag());
@@ -221,6 +228,13 @@ QString defines::get_default_menu_background_filepath_qstring() const
 void defines::set_default_menu_background_filepath(const std::filesystem::path &filepath)
 {
 	this->default_menu_background_filepath = database::get()->get_graphics_filepath(filepath);
+}
+
+const dice &defines::get_province_taxation_for_level(const int level) const
+{
+	const auto find_iterator = this->province_taxation_per_level.find(level);
+	assert_throw(find_iterator != this->province_taxation_per_level.end());
+	return find_iterator->second;
 }
 
 const std::vector<int> &defines::get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const
