@@ -115,6 +115,8 @@ country_game_data::country_game_data(metternich::country *country)
 
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::type_count_changed, this, &country_game_data::on_population_type_count_changed);
+
+	connect(this, &country_game_data::provinces_changed, this, &country_game_data::income_changed);
 }
 
 country_game_data::~country_game_data()
@@ -3549,6 +3551,28 @@ void country_game_data::set_free_consulate_count(const consulate *consulate, con
 			}
 		}
 	}
+}
+
+int country_game_data::get_min_income() const
+{
+	int min_income = 0;
+
+	for (const province *province : this->get_provinces()) {
+		min_income += province->get_game_data()->get_min_income();
+	}
+
+	return min_income;
+}
+
+int country_game_data::get_max_income() const
+{
+	int max_income = 0;
+
+	for (const province *province : this->get_provinces()) {
+		max_income += province->get_game_data()->get_max_income();
+	}
+
+	return max_income;
 }
 
 }

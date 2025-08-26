@@ -1227,4 +1227,14 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 	return false;
 }
 
+int province_game_data::get_min_income() const
+{
+	return 0;
+}
+
+int province_game_data::get_max_income() const
+{
+	return 2 * 200000;
+}
+
 }

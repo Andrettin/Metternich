@@ -68,14 +68,28 @@ Rectangle {
 		anchors.left: wealth_icon.left
 		anchors.right: wealth_label.right
 		hoverEnabled: true
+		
+		readonly property int min_income: metternich.game.player_country.game_data.min_income
+		readonly property int max_income: metternich.game.player_country.game_data.max_income
+		readonly property var income_unit: metternich.defines.wealth_commodity.get_unit(max_income)
+		readonly property int income_unit_value: metternich.defines.wealth_commodity.get_unit_value(income_unit)
+		readonly property string wealth_status_text: get_plural_form(wealth_unit.name)
+			+ format_text("\t\t" + metternich.defines.wealth_commodity.get_units_tooltip())
+			+ format_text("\t\tIncome: " + Math.floor(min_income / income_unit_value) + "-" + Math.floor(max_income / income_unit_value) + " " + income_unit.suffix)
+		
 		onEntered: {
 			if (status_text !== undefined) {
-				status_text = get_plural_form(wealth_unit.name) + format_text("\t\t" + metternich.defines.wealth_commodity.get_units_tooltip())
+				status_text = wealth_status_text
 			}
 		}
 		onExited: {
 			if (status_text !== undefined) {
 				status_text = ""
+			}
+		}
+		onWealth_status_textChanged: {
+			if (containsMouse) {
+				status_text = wealth_status_text
 			}
 		}
 	}

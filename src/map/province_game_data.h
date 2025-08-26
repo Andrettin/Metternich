@@ -453,6 +453,9 @@ public:
 
 	bool can_produce_commodity(const commodity *commodity) const;
 
+	int get_min_income() const;
+	int get_max_income() const;
+
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
