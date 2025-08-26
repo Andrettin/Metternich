@@ -14,7 +14,7 @@ ruins_explored = {
 	option = {
 		name = "Gold and glory!"
 		effects = {
-			wealth += 500
+			wealth += 500gp
 			prestige += 1
 		}
 	}
@@ -33,7 +33,7 @@ expedition_to_tribal_village = {
 	option = {
 		name = "To a lasting friendship!"
 		effects = {
-			wealth += 100
+			wealth += 100gp
 		}
 	}
 }

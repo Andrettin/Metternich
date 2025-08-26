@@ -11,7 +11,7 @@ beautiful_statuette = {
 	option = {
 		name = "Marvelous!"
 		effects = {
-			wealth += 100
+			wealth += 100gp
 			prestige += 1
 		}
 	}
