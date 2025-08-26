@@ -135,7 +135,11 @@ public:
 		}
 
 		if (this->unit != nullptr) {
-			str += " " + this->unit->get_suffix();
+			if (this->commodity == defines::get()->get_wealth_commodity()) {
+				str += " " + string::highlight(this->unit->get_suffix());
+			} else {
+				str += " " + this->unit->get_suffix();
+			}
 		}
 
 		return str;
