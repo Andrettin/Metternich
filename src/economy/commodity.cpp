@@ -12,6 +12,7 @@
 #include "util/dice.h"
 #include "util/log_util.h"
 #include "util/number_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -176,5 +177,26 @@ QString commodity::value_to_qstring(const int value) const
 	return QString::fromStdString(this->value_to_string(value));
 }
 
+QString commodity::get_units_tooltip() const
+{
+	std::string str;
+
+	const commodity_unit *previous_unit = nullptr;
+	int previous_unit_value = 0;
+	for (const auto &[unit_value, unit] : this->units) {
+		if (previous_unit != nullptr) {
+			if (str.empty()) {
+				str += std::format("{} {} ({}) = 1 {} ({})", number::to_formatted_string(unit_value / previous_unit_value), previous_unit->get_suffix(), string::get_plural_form(previous_unit->get_name()), unit->get_suffix(), string::get_plural_form(unit->get_name()));
+			} else {
+				str += std::format(", {} {} = 1 {} ({})", number::to_formatted_string(unit_value / previous_unit_value), previous_unit->get_suffix(), unit->get_suffix(), string::get_plural_form(unit->get_name()));
+			}
+		}
+
+		previous_unit = unit;
+		previous_unit_value = unit_value;
+	}
+
+	return QString::fromStdString(str);
+}
 
 }

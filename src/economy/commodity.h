@@ -163,6 +163,8 @@ public:
 	std::string value_to_string(const int value) const;
 	Q_INVOKABLE QString value_to_qstring(const int value) const;
 
+	Q_INVOKABLE QString get_units_tooltip() const;
+
 signals:
 	void changed();
 

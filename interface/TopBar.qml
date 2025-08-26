@@ -70,7 +70,7 @@ Rectangle {
 		hoverEnabled: true
 		onEntered: {
 			if (status_text !== undefined) {
-				status_text = get_plural_form(wealth_unit.name)
+				status_text = get_plural_form(wealth_unit.name) + format_text("\t" + metternich.defines.wealth_commodity.get_units_tooltip())
 			}
 		}
 		onExited: {
