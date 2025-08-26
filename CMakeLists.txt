@@ -639,7 +639,6 @@ set(script_condition_HDRS
 	src/script/condition/terrain_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
-	src/script/condition/wealth_condition.h
 	src/script/condition/year_condition.h
 )
 source_group(script\\condition FILES ${script_condition_HDRS})
@@ -690,7 +689,6 @@ set(script_effect_HDRS
 	src/script/effect/source_site_effect.h
 	src/script/effect/tooltip_effect.h
 	src/script/effect/traits_effect.h
-	src/script/effect/wealth_effect.h
 )
 source_group(script\\effect FILES ${script_effect_HDRS})
 

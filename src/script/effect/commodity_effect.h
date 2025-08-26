@@ -2,6 +2,7 @@
 
 #include "country/country.h"
 #include "country/country_economy.h"
+#include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/commodity_unit.h"
 #include "script/effect/effect.h"
@@ -106,12 +107,20 @@ public:
 
 	virtual std::string get_addition_string() const override
 	{
-		return std::format("Gain {} {}", this->get_quantity_string(), string::highlight(this->commodity->get_name()));
+		if (this->commodity == defines::get()->get_wealth_commodity()) {
+			return std::format("Gain {}", this->get_quantity_string());
+		} else {
+			return std::format("Gain {} {}", this->get_quantity_string(), string::highlight(this->commodity->get_name()));
+		}
 	}
 
 	virtual std::string get_subtraction_string() const override
 	{
-		return std::format("Lose {} {}", this->get_quantity_string(), string::highlight(this->commodity->get_name()));
+		if (this->commodity == defines::get()->get_wealth_commodity()) {
+			return std::format("Lose {}", this->get_quantity_string());
+		} else {
+			return std::format("Lose {} {}", this->get_quantity_string(), string::highlight(this->commodity->get_name()));
+		}
 	}
 
 	std::string get_quantity_string() const
