@@ -1016,13 +1016,13 @@ void game::apply_population_history()
 
 		province_game_data *province_game_data = province->get_game_data();
 
-		if (province_game_data->get_settlement_count() == 0) {
-			continue;
-		}
-
 		if (province->get_history()->get_population() > 0) {
 			const int province_level = defines::get()->get_province_level_for_population(province->get_history()->get_population());
 			province_game_data->set_level(province_level);
+		}
+
+		if (province_game_data->get_settlement_count() == 0) {
+			continue;
 		}
 
 		province->get_history()->distribute_population();
