@@ -77,8 +77,14 @@ scaled_landholder_modifier = {
 province_population_per_level = {
 	0 = 10000
 	1 = 20000
+	2 = 35000 #calculated
+	3 = 60000 #calculated
 	4 = 100000
+	5 = 150000 #calculated
+	6 = 250000 #calculated
 	7 = 400000
+	8 = 550000 #calculated
+	9 = 800000 #calculated
 	10 = 1000000
 }
 
