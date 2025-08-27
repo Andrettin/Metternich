@@ -1018,7 +1018,7 @@ void game::apply_population_history()
 
 		if (province->get_history()->get_population() > 0) {
 			const int province_level = defines::get()->get_province_level_for_population(province->get_history()->get_population());
-			province_game_data->set_level(province_level);
+			province_game_data->set_level(std::max(province_level, 1));
 		}
 
 		if (province_game_data->get_settlement_count() == 0) {
