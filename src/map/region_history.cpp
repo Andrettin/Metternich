@@ -119,6 +119,10 @@ void region_history::distribute_population()
 				++province_populatable_site_count;
 			}
 
+			if (!province->get_provincial_capital()->get_game_data()->is_on_map()) {
+				++province_populatable_site_count;
+			}
+
 			populatable_site_counts_by_province[province] = province_populatable_site_count;
 
 			if (province_populatable_site_count == 0) {
