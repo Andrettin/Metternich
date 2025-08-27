@@ -75,9 +75,9 @@ Rectangle {
 		readonly property int income_unit_value: metternich.defines.wealth_commodity.get_unit_value(income_unit)
 		readonly property int maintenance_cost: metternich.game.player_country.game_data.maintenance_cost
 		readonly property string wealth_status_text: get_plural_form(wealth_unit.name)
-			+ format_text("\t\t" + metternich.defines.wealth_commodity.get_units_tooltip())
 			+ format_text("\t\tIncome: " + number_string(Math.floor(min_income / income_unit_value)) + "-" + number_string(Math.floor(max_income / income_unit_value)) + " " + income_unit.suffix)
 			+ format_text("\t\tMaintenance Cost: " + metternich.defines.wealth_commodity.value_to_qstring(maintenance_cost))
+			+ format_text("\t\t" + metternich.defines.wealth_commodity.get_units_tooltip())
 		
 		onEntered: {
 			if (status_text !== undefined) {
