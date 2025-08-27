@@ -128,6 +128,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QVariantList finished_journal_entries READ get_finished_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(int min_income READ get_min_income NOTIFY income_changed)
 	Q_PROPERTY(int max_income READ get_max_income NOTIFY income_changed)
+	Q_PROPERTY(int maintenance_cost READ get_maintenance_cost NOTIFY maintenance_cost_changed)
 
 public:
 	static constexpr int first_deity_cost = 10;
@@ -1049,6 +1050,8 @@ public:
 
 	int get_min_income() const;
 	int get_max_income() const;
+	int get_domain_maintenance_cost() const;
+	int get_maintenance_cost() const;
 
 	bool has_flag(const flag *flag) const
 	{
@@ -1096,6 +1099,7 @@ signals:
 	void journal_entries_changed();
 	void journal_entry_completed(const journal_entry *journal_entry);
 	void income_changed();
+	void maintenance_cost_changed();
 
 private:
 	metternich::country *country = nullptr;

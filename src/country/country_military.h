@@ -275,6 +275,7 @@ public:
 signals:
 	void leaders_changed();
 	void leader_recruited(const character *leader);
+	void military_units_changed();
 
 private:
 	const metternich::country *country = nullptr;

@@ -106,6 +106,15 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->province_taxation_per_level[level] = std::move(dice);
 		});
+	} else if (tag == "domain_maintenance_cost_per_province_count") {
+		assert_throw(this->get_wealth_commodity() != nullptr);
+
+		scope.for_each_property([&](const gsml_property &property) {
+			const int province_count = std::stoi(property.get_key());
+			const int cost = this->get_wealth_commodity()->string_to_value(property.get_value());
+
+			this->domain_maintenance_cost_per_province_count[province_count] = cost;
+		});
 	} else if (tag == "river_adjacency_subtiles") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const int subtile = std::stoi(child_scope.get_tag());
@@ -264,6 +273,19 @@ const dice &defines::get_province_taxation_for_level(const int level) const
 	const auto find_iterator = this->province_taxation_per_level.find(level);
 	assert_throw(find_iterator != this->province_taxation_per_level.end());
 	return find_iterator->second;
+}
+
+int defines::get_domain_maintenance_cost_for_province_count(const int province_count) const
+{
+	if (province_count > 100) {
+		//special case for province counts above 100
+		return 200000 * province_count / 3;
+	}
+
+	const auto find_iterator = this->domain_maintenance_cost_per_province_count.upper_bound(province_count);
+	assert_throw(find_iterator != this->domain_maintenance_cost_per_province_count.end());
+	assert_throw(find_iterator != this->domain_maintenance_cost_per_province_count.begin());
+	return std::prev(find_iterator)->second;
 }
 
 const std::vector<int> &defines::get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const

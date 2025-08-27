@@ -117,6 +117,8 @@ country_game_data::country_game_data(metternich::country *country)
 	connect(this->get_population(), &population::type_count_changed, this, &country_game_data::on_population_type_count_changed);
 
 	connect(this, &country_game_data::provinces_changed, this, &country_game_data::income_changed);
+	connect(this, &country_game_data::provinces_changed, this, &country_game_data::maintenance_cost_changed);
+	connect(this->get_military(), &country_military::military_units_changed, this, &country_game_data::maintenance_cost_changed);
 }
 
 country_game_data::~country_game_data()
@@ -179,6 +181,13 @@ void country_game_data::collect_wealth()
 
 void country_game_data::pay_maintenance()
 {
+	const int domain_maintenance_cost = this->get_domain_maintenance_cost();
+	if (this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()) >= domain_maintenance_cost) {
+		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), -domain_maintenance_cost);
+	} else {
+		this->get_economy()->set_stored_commodity(defines::get()->get_wealth_commodity(), 0);
+	}
+
 	std::vector<military_unit *> military_units_to_disband;
 
 	for (const qunique_ptr<military_unit> &military_unit : this->get_military()->get_military_units()) {
@@ -3573,6 +3582,27 @@ int country_game_data::get_max_income() const
 	}
 
 	return max_income;
+}
+
+int country_game_data::get_domain_maintenance_cost() const
+{
+	const int province_count = this->get_province_count();
+	assert_throw(province_count > 0);
+	return defines::get()->get_domain_maintenance_cost_for_province_count(province_count);
+}
+
+int country_game_data::get_maintenance_cost() const
+{
+	int maintenance_cost = this->get_domain_maintenance_cost();
+
+	for (const qunique_ptr<military_unit> &military_unit : this->get_military()->get_military_units()) {
+		const auto find_iterator = military_unit->get_type()->get_maintenance_commodity_costs().find(defines::get()->get_wealth_commodity());
+		if (find_iterator != military_unit->get_type()->get_maintenance_commodity_costs().end()) {
+			maintenance_cost += find_iterator->second;
+		}
+	}
+
+	return maintenance_cost;
 }
 
 }

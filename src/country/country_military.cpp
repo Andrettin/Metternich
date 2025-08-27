@@ -220,6 +220,10 @@ void country_military::add_military_unit(qunique_ptr<military_unit> &&military_u
 
 	this->get_game_data()->add_unit_name(military_unit->get_name());
 	this->military_units.push_back(std::move(military_unit));
+
+	if (game::get()->is_running()) {
+		emit military_units_changed();
+	}
 }
 
 void country_military::remove_military_unit(military_unit *military_unit)
@@ -240,6 +244,10 @@ void country_military::remove_military_unit(military_unit *military_unit)
 			this->military_units.erase(this->military_units.begin() + i);
 			return;
 		}
+	}
+
+	if (game::get()->is_running()) {
+		emit military_units_changed();
 	}
 }
 

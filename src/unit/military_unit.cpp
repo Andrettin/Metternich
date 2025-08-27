@@ -193,6 +193,10 @@ void military_unit::set_type(const military_unit_type *type)
 	this->check_promotions();
 
 	emit type_changed();
+
+	if (this->get_country() != nullptr && type->get_maintenance_commodity_costs() != old_type->get_maintenance_commodity_costs()) {
+		emit this->get_country()->get_game_data()->maintenance_cost_changed();
+	}
 }
 
 military_unit_category military_unit::get_category() const

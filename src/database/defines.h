@@ -418,6 +418,7 @@ public:
 	int get_province_population_for_level(const int level) const;
 	int get_province_level_for_population(const int population) const;
 	const dice &get_province_taxation_for_level(const int level) const;
+	int get_domain_maintenance_cost_for_province_count(const int province_count) const;
 
 	const std::vector<int> &get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const;
 	void set_river_adjacency_subtiles(const terrain_adjacency &adjacency, const std::vector<int> &subtiles);
@@ -484,6 +485,7 @@ private:
 	int min_diplomatic_map_tile_scale = 2;
 	std::map<int, int> province_population_per_level;
 	std::map<int, dice> province_taxation_per_level;
+	std::map<int, int> domain_maintenance_cost_per_province_count;
 	std::map<terrain_adjacency, std::vector<int>> river_adjacency_subtiles;
 	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;
 	std::map<terrain_adjacency, int> route_adjacency_tiles;

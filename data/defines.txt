@@ -102,6 +102,19 @@ province_taxation_per_level = {
 	10 = 2d8+2
 }
 
+domain_maintenance_cost_per_province_count = {
+	1 = 0gb
+	3 = 1gb
+	7 = 2gb
+	13 = 3gb
+	19 = 4gb
+	25 = 5gb
+	31 = 7gb
+	41 = 10gb
+	51 = 20gb
+	76 = 30gb
+}
+
 max_character_skill = 10 #used for calculating character skill based on skill multipliers; this is not a hard cap
 ruler_office = ruler
 interior_minister_office = steward
