@@ -73,7 +73,7 @@ Flickable {
 					selected_civilian_unit = null
 					selected_site = null
 					selected_province = null
-					selected_garrison = false
+					metternich.clear_selected_military_units()
 					return
 				}
 				
