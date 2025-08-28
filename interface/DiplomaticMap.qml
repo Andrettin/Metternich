@@ -126,7 +126,7 @@ Flickable {
 			wrapMode: Text.WordWrap
 			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (country.game_data.diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((country.game_data.diplomatic_map_image_rect.x + country.game_data.diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
 			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (country.game_data.diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((country.game_data.diplomatic_map_image_rect.y + country.game_data.diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
-			font.pixelSize: Math.max(Math.floor(width * 3 / 4 / text.length), 8 * scale_factor)
+			font.pixelSize: Math.min(Math.max(Math.floor(width * 3 / 4 / text.length), 8 * scale_factor), 12 * scale_factor)
 					
 			readonly property var country: model.modelData
 			readonly property var text_rect: country.game_data.text_rect
