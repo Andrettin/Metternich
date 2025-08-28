@@ -1495,6 +1495,11 @@ QCoro::Task<void> game::do_turn_coro()
 		for (const country *country : this->get_countries()) {
 			if (country->get_turn_data()->is_diplomatic_map_dirty()) {
 				co_await country->get_game_data()->create_diplomatic_map_image();
+
+				//FIXME: add province turn data, and allow setting a "province map dirty" property for it to true, for recreating the province map image
+				for (const province *province : country->get_game_data()->get_provinces()) {
+					co_await province->get_game_data()->create_map_image();
+				}
 			} else {
 				for (const diplomatic_map_mode mode : country->get_turn_data()->get_dirty_diplomatic_map_modes()) {
 					co_await country->get_game_data()->create_diplomatic_map_mode_image(mode);
