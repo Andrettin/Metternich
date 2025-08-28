@@ -167,7 +167,7 @@ Rectangle {
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		horizontalAlignment: Text.AlignHCenter
-		text: selected_garrison ? "Garrison" : format_text((selected_site && !selected_garrison) ? (
+		text: selected_province && selected_garrison ? "Garrison" : format_text((selected_site && !selected_garrison) ? (
 			selected_site.settlement ? "" : (
 				selected_site.game_data.improvement ? (
 					selected_site.game_data.improvement.name
