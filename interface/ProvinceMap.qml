@@ -27,11 +27,20 @@ Flickable {
 			id: province_image
 			x: province.game_data.map_image_rect.x
 			y: province.game_data.map_image_rect.y
-			source: "image://province_map/" + province.identifier + (selected ? "/selected" : get_map_mode_suffix(province_map.mode, province))
+			source: "image://province_map/" + province.identifier + (selected ? "/selected" : get_map_mode_suffix(province_map.mode, province)) + "/" + change_count
 			cache: false
 			
 			readonly property var province: model.modelData
 			readonly property var selected: selected_province === province
+			property int change_count: 0
+			
+			Connections {
+				target: province.game_data
+				
+				function onMap_image_changed() {
+					change_count += 1
+				}
+			}
 		}
 	}
 	
@@ -182,6 +191,8 @@ Flickable {
 	
 	function get_map_mode_suffix(mode, province) {
 		switch (mode) {
+			case DiplomaticMap.Mode.Political:
+				return "/political"
 			case DiplomaticMap.Mode.Treaty:
 				if (reference_country !== null && province.game_data.owner !== null) {
 					return "/diplomatic/" + reference_country.game_data.get_diplomacy_state_diplomatic_map_suffix(province.game_data.owner)
