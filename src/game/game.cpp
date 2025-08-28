@@ -77,6 +77,7 @@
 #include "unit/historical_transporter_history.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
+#include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
 #include "unit/transporter.h"
 #include "unit/transporter_type.h"
@@ -1938,26 +1939,63 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 {
 	//this function returns true if the attackers won, or false otherwise
 
-	const int attacker_score = attacking_army->get_score();
-	const int defender_score = defending_army->get_score();
+	static constexpr dice battle_dice(1, 6);
 
-	if (attacker_score > defender_score) {
-		//destroy the defender units
-		for (military_unit *military_unit : defending_army->get_military_units()) {
-			military_unit->disband(true);
+	while (!attacking_army->get_military_units().empty() && !defending_army->get_military_units().empty()) {
+		int attacker_hits = 0;
+		for (const military_unit *attacking_unit : attacking_army->get_military_units()) {
+			const int attack = std::max(std::max(attacking_unit->get_stat(military_unit_stat::melee).to_int(), attacking_unit->get_stat(military_unit_stat::charge).to_int()), attacking_unit->get_stat(military_unit_stat::missile).to_int());
+
+			const int result = random::get()->roll_dice(battle_dice);
+			if (result <= attack) {
+				++attacker_hits;
+			}
 		}
 
-		return true;
-	}
+		int defender_hits = 0;
+		for (const military_unit *defending_unit : defending_army->get_military_units()) {
+			const int defense = std::max(defending_unit->get_stat(military_unit_stat::defense).to_int(), defending_unit->get_stat(military_unit_stat::missile).to_int());
 
-	if (attacker_score < defender_score) {
-		//destroy the attacker units
-		for (military_unit *military_unit : attacking_army->get_military_units()) {
-			military_unit->disband(true);
+			const int result = random::get()->roll_dice(battle_dice);
+			if (result <= defense) {
+				++defender_hits;
+			}
+		}
+		
+		while (attacker_hits > 0 && !defending_army->get_military_units().empty()) {
+			const std::vector<military_unit *> defending_units = defending_army->get_military_units();
+			for (military_unit *defending_unit : defending_units) {
+				defending_unit->change_hit_points(-1);
+				--attacker_hits;
+				if (attacker_hits == 0) {
+					break;
+				}
+			}
+		}
+		
+		while (defender_hits > 0 && !attacking_army->get_military_units().empty()) {
+			const std::vector<military_unit *> attacking_units = attacking_army->get_military_units();
+			for (military_unit *attacking_unit : attacking_units) {
+				attacking_unit->change_hit_points(-1);
+				--defender_hits;
+				if (defender_hits == 0) {
+					break;
+				}
+			}
 		}
 	}
 
-	return false;
+	//restore hit points of the surviving units
+	for (military_unit *attacking_unit : attacking_army->get_military_units()) {
+		attacking_unit->set_hit_points(attacking_unit->get_max_hit_points());
+	}
+	for (military_unit *defending_unit : defending_army->get_military_units()) {
+		defending_unit->set_hit_points(defending_unit->get_max_hit_points());
+	}
+
+	assert_throw(attacking_army->get_military_units().empty() || defending_army->get_military_units().empty());
+
+	return defending_army->get_military_units().empty() && !attacking_army->get_military_units().empty();
 }
 
 }
