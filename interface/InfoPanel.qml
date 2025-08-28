@@ -122,12 +122,10 @@ Rectangle {
 		anchors.rightMargin: 8 * scale_factor
 		horizontalAlignment: Text.AlignHCenter
 		wrapMode: Text.WordWrap
-		text: selected_garrison ? "Garrison" : (
-			selected_site ? selected_site.game_data.current_cultural_name
+		text: selected_site ? selected_site.game_data.current_cultural_name
 				: (selected_civilian_unit ? selected_civilian_unit.type.name
 					: (selected_province ? selected_province.game_data.current_cultural_name : "")
 				)
-		)
 	}
 	
 	Image {
@@ -136,7 +134,7 @@ Rectangle {
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		source: icon_identifier.length > 0 ? ("image://icon/" + icon_identifier) : "image://empty/"
-		visible: !selected_garrison && !population_info_text.visible
+		visible: !selected_garrison && !population_info_text.visible && icon_identifier.length > 0
 		
 		readonly property string icon_identifier: selected_civilian_unit ? selected_civilian_unit.icon.identifier : (
 			selected_site ? (
@@ -165,11 +163,11 @@ Rectangle {
 	
 	SmallText {
 		id: subtitle
-		anchors.top: icon.bottom
+		anchors.top: icon.visible ? icon.bottom : title.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		horizontalAlignment: Text.AlignHCenter
-		text: format_text((selected_site && !selected_garrison) ? (
+		text: selected_garrison ? "Garrison" : format_text((selected_site && !selected_garrison) ? (
 			selected_site.settlement ? "" : (
 				selected_site.game_data.improvement ? (
 					selected_site.game_data.improvement.name
@@ -179,7 +177,7 @@ Rectangle {
 				)
 			)
 		) : (selected_civilian_unit ? selected_civilian_unit.name : ""))
-		visible: !population_info_text.visible
+		visible: !population_info_text.visible && text.length > 0
 		
 		readonly property string site_title_name: selected_site_game_data ? selected_site_game_data.title_name : ""
 	}
@@ -324,7 +322,7 @@ Rectangle {
 	
 	MilitaryUnitGrid {
 		id: military_unit_grid
-		anchors.top: title.bottom
+		anchors.top: subtitle.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.bottom: end_turn_button_internal.top
 		anchors.bottomMargin: 16 * scale_factor
