@@ -266,7 +266,17 @@ ApplicationWindow {
 				cost = Math.floor(cost * modifier / 100)
 			}
 			
-			str += "\n\t" + cost + " " + highlight(commodity.name)
+			var commodity_unit = commodity.get_unit(cost)
+			if (commodity_unit !== null) {
+				cost = Math.floor(cost / commodity.get_unit_value(commodity_unit))
+			}
+			
+			str += "\n\t" + number_string(cost)
+			if (commodity === metternich.defines.wealth_commodity) {
+				str += " " + highlight(commodity_unit.suffix)
+			} else {
+				str += (commodity_unit !== null ? (" " + commodity_unit.suffix) : "") + " " + highlight(commodity.name)
+			}
 		}
 		
 		return str

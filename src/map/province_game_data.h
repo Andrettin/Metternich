@@ -64,6 +64,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList military_units READ get_military_units_qvariant_list NOTIFY military_units_changed)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 	Q_PROPERTY(QVariantList entering_armies READ get_entering_armies_qvariant_list NOTIFY entering_armies_changed)
+	Q_PROPERTY(QVariantList recruitable_military_unit_categories READ get_recruitable_military_unit_categories_qvariant_list NOTIFY owner_changed)
 
 public:
 	explicit province_game_data(const metternich::province *province);
@@ -292,6 +293,9 @@ public:
 		std::erase(this->entering_armies, army);
 		emit entering_armies_changed();
 	}
+
+	const std::vector<military_unit_category> &get_recruitable_military_unit_categories() const;
+	QVariantList get_recruitable_military_unit_categories_qvariant_list() const;
 
 	void calculate_site_commodity_outputs();
 	void calculate_site_commodity_output(const commodity *commodity);

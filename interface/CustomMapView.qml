@@ -103,6 +103,10 @@ Item {
 		id: garrison_dialog
 	}
 	
+	MilitaryUnitRecruitmentDialog {
+		id: military_unit_recruiment_dialog
+	}
+	
 	Keys.onPressed: function(event) {
 		switch (event.key) {
 			case Qt.Key_E:

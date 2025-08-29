@@ -1138,6 +1138,18 @@ QVariantList province_game_data::get_entering_armies_qvariant_list() const
 	return container::to_qvariant_list(this->get_entering_armies());
 }
 
+const std::vector<military_unit_category> &province_game_data::get_recruitable_military_unit_categories() const
+{
+	static const std::vector<military_unit_category> recruitable_military_unit_categories{ military_unit_category::light_infantry, military_unit_category::regular_infantry, military_unit_category::heavy_infantry, military_unit_category::light_cavalry, military_unit_category::heavy_cavalry, military_unit_category::light_artillery, military_unit_category::heavy_artillery };
+
+	return recruitable_military_unit_categories;
+}
+
+QVariantList province_game_data::get_recruitable_military_unit_categories_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_recruitable_military_unit_categories());
+}
+
 void province_game_data::calculate_site_commodity_outputs()
 {
 	for (const site *site : this->get_sites()) {

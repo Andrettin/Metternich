@@ -616,6 +616,28 @@ Rectangle {
 	}
 	
 	IconButton {
+		id: recruit_military_units_button
+		anchors.left: end_turn_button_internal.right
+		anchors.leftMargin: 8 * scale_factor
+		anchors.bottom: parent.bottom
+		anchors.bottomMargin: 4 * scale_factor
+		icon_identifier: "musket"
+		visible: !selected_garrison && selected_province !== null && selected_province.game_data.owner == metternich.game.player_country
+		
+		onReleased: {
+			military_unit_recruiment_dialog.open()
+		}
+		
+		onHoveredChanged: {
+			if (hovered) {
+				status_text = "Recruit Military Units"
+			} else {
+				status_text = ""
+			}
+		}
+	}
+	
+	IconButton {
 		id: output_button
 		anchors.left: end_turn_button_internal.right
 		anchors.leftMargin: 8 * scale_factor
