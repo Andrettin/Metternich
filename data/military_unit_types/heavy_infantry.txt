@@ -2,17 +2,19 @@ arquebusiers = {
 	name = "Arquebusiers"
 	unit_class = arquebusiers
 	icon = arquebusiers
-	stats = {
-		missile = 5
-		melee = 1
-		defense = 3
-		movement = 2
-	}
 	required_technology = arquebus
+	stats = {
+		hit_points = 2
+		movement = 2
+		defense = 2
+		melee = 2
+		missile = 4
+	}
 	commodity_costs = {
-		manpower = 1
-		fabric = 1
-		bronze = 1
+		wealth = 2gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 1gb
 	}
 	upgrades = {
 		musketeers

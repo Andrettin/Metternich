@@ -43,6 +43,7 @@ DialogBase {
 						icon_identifier: military_unit_type !== null ? military_unit_type.icon.identifier : "skull"
 						
 						readonly property string costs_string: military_unit_type !== null ? costs_to_string(country_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(military_unit_type, 1), undefined, ", ") : ""
+						readonly property string stats_string: military_unit_type !== null ? military_unit_type.get_stats_for_country_qstring(metternich.game.player_country) : ""
 						
 						onClicked: {
 						}
@@ -51,9 +52,11 @@ DialogBase {
 							if (hovered) {
 								status_text = military_unit_type.name
 								middle_status_text = format_text("Costs: " + costs_string)
+								right_status_text = format_text(stats_string)
 							} else {
 								status_text = ""
 								middle_status_text = ""
+								right_status_text = ""
 							}
 						}
 					}

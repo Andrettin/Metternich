@@ -80,6 +80,18 @@ public:
 		this->deployment_limit += change;
 	}
 
+	const std::map<military_unit_stat, centesimal_int> &get_military_unit_type_stat_modifiers(const military_unit_type *type) const
+	{
+		const auto find_iterator = this->military_unit_type_stat_modifiers.find(type);
+
+		if (find_iterator != this->military_unit_type_stat_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		static const std::map<military_unit_stat, centesimal_int> empty_map;
+		return empty_map;
+	}
+
 	const centesimal_int &get_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const
 	{
 		const auto find_iterator = this->military_unit_type_stat_modifiers.find(type);

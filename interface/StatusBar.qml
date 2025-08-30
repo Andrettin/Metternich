@@ -34,4 +34,12 @@ Rectangle {
 		anchors.left: left_status_label.left
 		anchors.leftMargin: 192 * scale_factor
 	}
+	
+	SmallText {
+		id: right_status_label
+		text: right_status_text ? right_status_text : ""
+		anchors.bottom: left_status_label.bottom
+		anchors.left: left_status_label.left
+		anchors.leftMargin: 384 * scale_factor
+	}
 }

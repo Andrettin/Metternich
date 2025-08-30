@@ -11,8 +11,11 @@
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_class.h"
 #include "unit/military_unit_domain.h"
+#include "unit/military_unit_stat.h"
 #include "unit/promotion.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
+#include "util/map_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -156,6 +159,31 @@ centesimal_int military_unit_type::get_stat_for_country(const military_unit_stat
 	centesimal_int value = this->get_stat(stat);
 	value += country->get_military()->get_military_unit_type_stat_modifier(this, stat);
 	return value;
+}
+
+QString military_unit_type::get_stats_for_country_qstring(const country *country) const
+{
+	std::set<military_unit_stat> used_stats = container::to_set(archimedes::map::get_keys(this->get_stats()));
+	for (const auto &[stat, value] : country->get_military()->get_military_unit_type_stat_modifiers(this)) {
+		used_stats.insert(stat);
+	}
+
+	std::string str;
+
+	for (const military_unit_stat stat : used_stats) {
+		if (stat == military_unit_stat::movement) {
+			//this stat does nothing at the moment, so it is better to not display it
+			continue;
+		}
+
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += std::format("{} {}", this->get_stat_for_country(stat, country).to_string(), get_military_unit_stat_short_name(stat));
+	}
+
+	return QString::fromStdString(str);
 }
 
 int military_unit_type::get_score() const

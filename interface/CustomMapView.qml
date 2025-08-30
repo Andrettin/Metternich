@@ -13,6 +13,7 @@ Item {
 	
 	property string status_text: ""
 	property string middle_status_text: ""
+	property string right_status_text: ""
 	property string interface_style: "dwarven"
 	readonly property int tile_size: metternich.defines.tile_size.width * scale_factor
 	readonly property real map_area_start_x: province_map.contentX / (metternich.map.diplomatic_map_tile_pixel_size * scale_factor)

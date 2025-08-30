@@ -94,6 +94,7 @@ public:
 	}
 
 	centesimal_int get_stat_for_country(const military_unit_stat stat, const country *country) const;
+	Q_INVOKABLE QString get_stats_for_country_qstring(const country *country) const;
 
 	const technology *get_required_technology() const
 	{
