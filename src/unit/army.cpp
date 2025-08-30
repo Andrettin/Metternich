@@ -4,6 +4,8 @@
 
 #include "country/country.h"
 #include "country/country_game_data.h"
+#include "country/country_government.h"
+#include "engine_interface.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -15,6 +17,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "script/context.h"
+#include "ui/portrait.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -93,6 +96,11 @@ void army::do_turn()
 				success = game::get()->do_battle(this, defending_army.get());
 			} else {
 				success = true;
+
+				const portrait *war_minister_portrait = game::get()->get_player_country()->get_government()->get_war_minister_portrait();
+				if (this->get_country() == game::get()->get_player_country()) {
+					engine_interface::get()->add_notification("Victory!", war_minister_portrait, std::format("We have won a battle in {}!", target_province->get_game_data()->get_current_cultural_name()));
+				}
 			}
 
 			if (success && can_conquer_province) {

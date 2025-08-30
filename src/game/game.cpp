@@ -30,6 +30,7 @@
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
+#include "engine_interface.h"
 #include "game/game_rules.h"
 #include "game/scenario.h"
 #include "infrastructure/building_class.h"
@@ -66,6 +67,7 @@
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
 #include "time/era.h"
+#include "ui/portrait.h"
 #include "unit/army.h"
 #include "unit/civilian_unit.h"
 #include "unit/civilian_unit_type.h"
@@ -1946,6 +1948,27 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 
 	static constexpr dice battle_dice(1, 6);
 
+	military_unit_type_map<int> lost_unit_count;
+	//keep track of the player's starting unit count, so that we can later calculate their lost unit count
+	if (attacking_army->get_country() == this->get_player_country()) {
+		for (const military_unit *military_unit : attacking_army->get_military_units()) {
+			lost_unit_count[military_unit->get_type()]++;
+		}
+	} else if (defending_army->get_country() == this->get_player_country()) {
+		for (const military_unit *military_unit : defending_army->get_military_units()) {
+			lost_unit_count[military_unit->get_type()]++;
+		}
+	}
+
+	const province *battle_province = attacking_army->get_target_province();
+	if (battle_province == nullptr && !defending_army->get_military_units().empty()) {
+		battle_province = defending_army->get_military_units().at(0)->get_province();
+	}
+	if (battle_province == nullptr && !attacking_army->get_military_units().empty()) {
+		//this could happen if the army is garrisoned in a province, and is "attacking" something by event
+		battle_province = attacking_army->get_military_units().at(0)->get_province();
+	}
+
 	while (!attacking_army->get_military_units().empty() && !defending_army->get_military_units().empty()) {
 		int attacker_hits = 0;
 		for (const military_unit *attacking_unit : attacking_army->get_military_units()) {
@@ -2000,7 +2023,36 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 
 	assert_throw(attacking_army->get_military_units().empty() || defending_army->get_military_units().empty());
 
-	return defending_army->get_military_units().empty() && !attacking_army->get_military_units().empty();
+	const bool attack_success = defending_army->get_military_units().empty() && !attacking_army->get_military_units().empty();
+
+	//display a notification for the player about the battle
+	if (attacking_army->get_country() == this->get_player_country() || defending_army->get_country() == this->get_player_country()) {
+		const bool is_attacker = attacking_army->get_country() == this->get_player_country();
+		const bool victory = (is_attacker == attack_success);
+		const portrait *war_minister_portrait = this->get_player_country()->get_government()->get_war_minister_portrait();
+
+		std::string lost_units_str;
+		const std::vector<military_unit *> &remaining_military_units = is_attacker ? attacking_army->get_military_units() : defending_army->get_military_units();
+		//remove the remaining military units from the lost unit count, so that we get the actual count of lost units
+		for (const military_unit *military_unit : remaining_military_units) {
+			lost_unit_count[military_unit->get_type()]--;
+		}
+		for (const auto &[military_unit_type, lost_count] : lost_unit_count) {
+			if (lost_count == 0) {
+				continue;
+			}
+
+			if (lost_units_str.empty()) {
+				lost_units_str += "\n\nLost Units:";
+			}
+
+			lost_units_str += std::format("\n{} {}", lost_count, military_unit_type->get_name());
+		}
+
+		engine_interface::get()->add_notification(victory ? "Victory!" : "Defeat!", war_minister_portrait, std::format("We have {} a battle{}!{}", victory ? "won" : "lost", battle_province != nullptr ? std::format(" in {}", battle_province->get_game_data()->get_current_cultural_name()) : "", lost_units_str));
+	}
+
+	return attack_success;
 }
 
 }
