@@ -7,8 +7,8 @@ frankish_cleric = {
 			cultural_group = asian
 		}
 		or = {
-			character_type = inquisitor
-			character_type = theologian
+			character_class = inquisitor
+			character_class = theologian
 		}
 	}
 }

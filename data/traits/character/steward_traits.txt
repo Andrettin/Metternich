@@ -6,7 +6,7 @@ merchant = {
 	icon = wealth
 	attribute = stewardship
 	conditions = {
-		character_type = merchant
+		character_class = merchant
 	}
 	scaled_advisor_modifier = {
 		trade_output_modifier = 5
@@ -26,7 +26,7 @@ treasurer = {
 	icon = chest
 	attribute = stewardship
 	conditions = {
-		character_type = treasurer
+		character_class = treasurer
 	}
 	scaled_advisor_modifier = {
 		technology_cost_modifier = {

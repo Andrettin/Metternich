@@ -5,8 +5,8 @@
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("character/character_class.h")
 Q_MOC_INCLUDE("character/character_game_data.h")
-Q_MOC_INCLUDE("character/character_type.h")
 Q_MOC_INCLUDE("character/dynasty.h")
 Q_MOC_INCLUDE("country/culture.h")
 Q_MOC_INCLUDE("map/province.h")
@@ -25,10 +25,10 @@ namespace archimedes {
 
 namespace metternich {
 
+class character_class;
 class character_game_data;
 class character_history;
 class character_trait;
-class character_type;
 class civilian_unit_class;
 class civilian_unit_type;
 class country;
@@ -60,7 +60,7 @@ class character final : public character_base, public data_type<character>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::dynasty* dynasty MEMBER dynasty NOTIFY changed)
-	Q_PROPERTY(const metternich::character_type* character_type MEMBER character_type READ get_character_type NOTIFY changed)
+	Q_PROPERTY(const metternich::character_class* character_class MEMBER character_class READ get_character_class NOTIFY changed)
 	Q_PROPERTY(metternich::species* species MEMBER species NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
@@ -135,9 +135,9 @@ public:
 		return this->get_roles().contains(role);
 	}
 
-	const metternich::character_type *get_character_type() const
+	const metternich::character_class *get_character_class() const
 	{
-		return this->character_type;
+		return this->character_class;
 	}
 
 	const military_unit_category get_military_unit_category() const;
@@ -272,7 +272,7 @@ signals:
 private:
 	metternich::dynasty *dynasty = nullptr;
 	std::set<character_role> roles;
-	const metternich::character_type *character_type = nullptr;
+	const metternich::character_class *character_class = nullptr;
 	metternich::species *species = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;

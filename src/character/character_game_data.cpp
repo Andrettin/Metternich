@@ -4,11 +4,11 @@
 
 #include "character/character.h"
 #include "character/character_attribute.h"
+#include "character/character_class.h"
 #include "character/character_history.h"
 #include "character/character_role.h"
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
-#include "character/character_type.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_government.h"
@@ -370,7 +370,7 @@ void character_game_data::change_attribute_value(const character_attribute attri
 
 int character_game_data::get_primary_attribute_value() const
 {
-	assert_throw(this->character->get_character_type() != nullptr);
+	assert_throw(this->character->get_character_class() != nullptr);
 
 	return this->get_attribute_value(this->character->get_primary_attribute());
 }

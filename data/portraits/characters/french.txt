@@ -17,8 +17,8 @@ cardinal_richelieu = {
 		}
 		religion = catholic #because of the cardinal's hat
 		or = {
-			character_type = inquisitor
-			character_type = theologian
+			character_class = inquisitor
+			character_class = theologian
 		}
 	}
 }

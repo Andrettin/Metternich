@@ -6,7 +6,7 @@ diplomat = {
 	icon = treaty
 	attribute = diplomacy
 	conditions = {
-		character_type = diplomat
+		character_class = diplomat
 	}
 	scaled_advisor_modifier = {
 		diplomatic_penalty_for_expansion_modifier = -1
@@ -26,7 +26,7 @@ statesman = {
 	icon = bell
 	attribute = diplomacy
 	conditions = {
-		character_type = statesman
+		character_class = statesman
 	}
 	scaled_advisor_modifier = {
 		statesmanship_output_modifier = 5

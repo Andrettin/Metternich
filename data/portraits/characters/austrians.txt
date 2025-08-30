@@ -19,10 +19,10 @@ metternich = {
 		}
 		is_ruler = false
 		or = {
-			character_type = diplomat
-			character_type = high_judge
-			character_type = spymaster
-			character_type = statesman
+			character_class = diplomat
+			character_class = high_judge
+			character_class = spymaster
+			character_class = statesman
 		}
 	}
 }

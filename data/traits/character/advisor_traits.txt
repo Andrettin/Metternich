@@ -7,7 +7,7 @@ architect = {
 	icon = architecture
 	attribute = stewardship
 	conditions = {
-		character_type = architect
+		character_class = architect
 	}
 	attribute_bonuses = {
 		stewardship = 2
@@ -76,7 +76,7 @@ cotton_planter = {
 	icon = cotton
 	attribute = stewardship
 	conditions = {
-		character_type = farmer
+		character_class = farmer
 	}
 	scaled_office_modifiers = {
 		ruler = {
@@ -308,7 +308,7 @@ leonardo_da_vinci = {
 	icon = cog
 	hidden_name = true
 	conditions = {
-		character_type = engineer
+		character_class = engineer
 	}
 	advisor_modifier = {
 		unit_upgrade_cost_modifier = -50
@@ -338,7 +338,7 @@ natural_scientist = {
 	icon = research
 	attribute = learning
 	conditions = {
-		character_type = natural_scientist
+		character_class = natural_scientist
 	}
 	scaled_advisor_modifier = {
 		technology_cost_modifier = {
@@ -406,7 +406,7 @@ philosopher = {
 	icon = philosophy
 	attribute = learning
 	conditions = {
-		character_type = philosopher
+		character_class = philosopher
 	}
 	scaled_advisor_modifier = {
 		research_output_modifier = 5
@@ -453,7 +453,7 @@ theologian = {
 	icon = wooden_cross
 	attribute = learning
 	conditions = {
-		character_type = theologian
+		character_class = theologian
 	}
 	scaled_office_modifiers = {
 		ruler = {
@@ -473,7 +473,7 @@ tobacco_planter = {
 	icon = tobacco
 	attribute = stewardship
 	conditions = {
-		character_type = farmer
+		character_class = farmer
 	}
 	scaled_office_modifiers = {
 		ruler = {

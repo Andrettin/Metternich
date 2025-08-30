@@ -19,11 +19,11 @@ jakob_fugger = {
 			cultural_group = asian
 		}
 		or = {
-			character_type = banker
-			character_type = farmer
-			character_type = merchant
-			character_type = pioneer
-			character_type = treasurer
+			character_class = banker
+			character_class = farmer
+			character_class = merchant
+			character_class = pioneer
+			character_class = treasurer
 		}
 		birth_year < 1800
 	}
@@ -50,10 +50,10 @@ otto_von_bismarck = {
 		}
 		is_ruler = false
 		or = {
-			character_type = conquistador
-			character_type = diplomat
-			character_type = general
-			character_type = statesman
+			character_class = conquistador
+			character_class = diplomat
+			character_class = general
+			character_class = statesman
 		}
 	}
 }

@@ -37,13 +37,13 @@ negotiator = {
 	}
 	icon = treaty
 	conditions = {
-		character_type = none
+		character_class = none
 		or = {
-			character_type = banker
-			character_type = diplomat
-			character_type = merchant
-			character_type = statesman
-			character_type = treasurer
+			character_class = banker
+			character_class = diplomat
+			character_class = merchant
+			character_class = statesman
+			character_class = treasurer
 		}
 		not = {
 			trait = charismatic_negotiator
@@ -58,11 +58,11 @@ persuasive = {
 	}
 	icon = treaty
 	conditions = {
-		character_type = none
+		character_class = none
 		or = {
-			character_type = diplomat
-			character_type = spymaster
-			character_type = statesman
+			character_class = diplomat
+			character_class = spymaster
+			character_class = statesman
 		}
 	}
 }

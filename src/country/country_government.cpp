@@ -8,7 +8,6 @@
 #include "character/character_role.h"
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
-#include "character/character_type.h"
 #include "country/country.h"
 #include "country/country_economy.h"
 #include "country/country_game_data.h"

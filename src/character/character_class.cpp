@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "character/character_type.h"
+#include "character/character_class.h"
 
 #include "character/advisor_category.h"
 #include "character/character_attribute.h"
@@ -14,16 +14,16 @@
 
 namespace metternich {
 
-character_type::character_type(const std::string &identifier)
+character_class::character_class(const std::string &identifier)
 	: named_data_entry(identifier), advisor_category(advisor_category::none), attribute(character_attribute::none), military_unit_category(military_unit_category::none)
 {
 }
 
-character_type::~character_type()
+character_class::~character_class()
 {
 }
 
-void character_type::check() const
+void character_class::check() const
 {
 	assert_throw(this->get_advisor_category() != advisor_category::none);
 

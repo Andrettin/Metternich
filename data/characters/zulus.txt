@@ -1,7 +1,7 @@
 shaka = {
 	name = "Shaka"
 	role = ruler
-	character_type = general
+	character_class = general
 	culture = zulu
 	religion = pagan
 	portrait = shaka

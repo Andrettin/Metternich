@@ -21,11 +21,11 @@ include_directories(
 
 set(character_SRCS
 	src/character/character.cpp
+	src/character/character_class.cpp
+	src/character/character_class_container.cpp
 	src/character/character_container.cpp
 	src/character/character_game_data.cpp
 	src/character/character_trait.cpp
-	src/character/character_type.cpp
-	src/character/character_type_container.cpp
 	src/character/dynasty.cpp
 )
 source_group(character FILES ${character_SRCS})
@@ -330,14 +330,14 @@ set(character_HDRS
 	src/character/advisor_category.h
 	src/character/character.h
 	src/character/character_attribute.h
+	src/character/character_class.h
+	src/character/character_class_container.h
 	src/character/character_container.h
 	src/character/character_game_data.h
 	src/character/character_history.h
 	src/character/character_role.h
 	src/character/character_trait.h
 	src/character/character_trait_type.h
-	src/character/character_type.h
-	src/character/character_type_container.h
 	src/character/dynasty.h
 	src/character/starting_age_category.h
 )
@@ -561,8 +561,8 @@ set(script_condition_HDRS
 	src/script/condition/cavalry_condition.h
 	src/script/condition/character_condition.h
 	src/script/condition/character_attribute_condition.h
+	src/script/condition/character_class_condition.h
 	src/script/condition/character_role_condition.h
-	src/script/condition/character_type_condition.h
 	src/script/condition/coastal_condition.h
 	src/script/condition/commodity_condition.h
 	src/script/condition/condition.h

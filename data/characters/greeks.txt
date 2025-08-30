@@ -1,7 +1,7 @@
 perseus = {
 	name = "Perseus"
 	role = advisor
-	character_type = navigator
+	character_class = navigator
 	culture = greek
 	religion = pagan
 	home_site = mycenae
@@ -19,7 +19,7 @@ perseus = {
 archimedes = {
 	name = "Archimedes"
 	role = advisor
-	character_type = engineer
+	character_class = engineer
 	culture = greek
 	religion = pagan
 	home_site = syracuse

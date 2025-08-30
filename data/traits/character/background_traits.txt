@@ -5,8 +5,8 @@ adventurer = {
 	}
 	icon = saber
 	conditions = {
-		character_type = none
-		character_type = privateer
+		character_class = none
+		character_class = privateer
 	}
 	attribute_bonuses = {
 		diplomacy = -1
@@ -21,10 +21,10 @@ monk = {
 	}
 	icon = wooden_cross
 	conditions = {
-		character_type = none
+		character_class = none
 		or = {
-			character_type = inquisitor
-			character_type = theologian
+			character_class = inquisitor
+			character_class = theologian
 		}
 		gender = male
 	}
@@ -40,10 +40,10 @@ nun = {
 	}
 	icon = wooden_cross
 	conditions = {
-		character_type = none
+		character_class = none
 		or = {
-			character_type = inquisitor
-			character_type = theologian
+			character_class = inquisitor
+			character_class = theologian
 		}
 		gender = female
 	}
@@ -59,8 +59,8 @@ peasant_leader = {
 	}
 	icon = grain
 	conditions = {
-		character_type = none
-		character_type = statesman
+		character_class = none
+		character_class = statesman
 	}
 }
 
@@ -71,10 +71,10 @@ pirate = {
 	}
 	icon = skull
 	conditions = {
-		character_type = none
+		character_class = none
 		or = {
-			character_type = navigator
-			character_type = privateer
+			character_class = navigator
+			character_class = privateer
 		}
 	}
 	attribute_bonuses = {
@@ -89,13 +89,13 @@ professor = {
 	}
 	icon = university
 	conditions = {
-		character_type = none
+		character_class = none
 		or = {
-			character_type = high_judge
-			character_type = military_engineer
-			character_type = natural_scientist
-			character_type = philosopher
-			character_type = theologian
+			character_class = high_judge
+			character_class = military_engineer
+			character_class = natural_scientist
+			character_class = philosopher
+			character_class = theologian
 		}
 	}
 }

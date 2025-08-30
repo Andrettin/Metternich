@@ -1,7 +1,7 @@
 jan_stephan_van_calcar = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
 	name = "Jan Stephan"
 	surname = "van Calcar"
-	#character_type = artist
+	#character_class = artist
 	culture = flemish
 	religion = catholic
 	home_site = dordrecht
@@ -19,7 +19,7 @@ andreas_vesalius = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 	name = "Andreas"
 	surname = "Vesalius"
 	role = advisor
-	character_type = natural_scientist
+	character_class = natural_scientist
 	culture = flemish #correct?
 	religion = catholic
 	home_settlement = brussels #correct?

@@ -71,11 +71,11 @@ silver_palm = {
 	}
 	icon = chest
 	conditions = {
-		character_type = none
+		character_class = none
 		or = {
-			character_type = banker
-			character_type = merchant
-			character_type = treasurer
+			character_class = banker
+			character_class = merchant
+			character_class = treasurer
 		}
 	}
 }

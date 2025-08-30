@@ -3,10 +3,10 @@
 #include "character/character.h"
 
 #include "character/character_attribute.h"
+#include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
 #include "character/character_role.h"
-#include "character/character_type.h"
 #include "character/dynasty.h"
 #include "character/starting_age_category.h"
 #include "character/character_trait.h"
@@ -218,12 +218,12 @@ void character::initialize()
 		}
 	}
 
-	if (this->get_character_type() != nullptr) {
+	if (this->get_character_class() != nullptr) {
 		if (this->get_required_technology() == nullptr) {
-			this->required_technology = this->get_character_type()->get_required_technology();
+			this->required_technology = this->get_character_class()->get_required_technology();
 
 			if (this->get_obsolescence_technology() == nullptr) {
-				this->obsolescence_technology = this->get_character_type()->get_obsolescence_technology();
+				this->obsolescence_technology = this->get_character_class()->get_obsolescence_technology();
 			}
 		}
 	}
@@ -252,7 +252,7 @@ void character::initialize()
 void character::check() const
 {
 	if (!this->get_roles().empty()) {
-		if (this->get_character_type() == nullptr) {
+		if (this->get_character_class() == nullptr) {
 			throw std::runtime_error(std::format("Character \"{}\" has a role, but has no character type.", this->get_identifier()));
 		}
 
@@ -527,8 +527,8 @@ bool character::is_surname_first() const
 
 const military_unit_category character::get_military_unit_category() const
 {
-	if (this->get_character_type() != nullptr) {
-		return this->get_character_type()->get_military_unit_category();
+	if (this->get_character_class() != nullptr) {
+		return this->get_character_class()->get_military_unit_category();
 	}
 
 	return military_unit_category::none;
@@ -536,8 +536,8 @@ const military_unit_category character::get_military_unit_category() const
 
 const civilian_unit_class *character::get_civilian_unit_class() const
 {
-	if (this->get_character_type() != nullptr) {
-		return this->get_character_type()->get_civilian_unit_class();
+	if (this->get_character_class() != nullptr) {
+		return this->get_character_class()->get_civilian_unit_class();
 	}
 
 	return nullptr;
@@ -574,13 +574,13 @@ const dice &character::get_maximum_age_modifier() const
 const dice &character::get_starting_age_modifier() const
 {
 	assert_throw(this->get_species() != nullptr);
-	return this->get_species()->get_starting_age_modifier(this->get_character_type() ? this->get_character_type()->get_starting_age_category() : starting_age_category::intuitive);
+	return this->get_species()->get_starting_age_modifier(this->get_character_class() ? this->get_character_class()->get_starting_age_category() : starting_age_category::intuitive);
 }
 
 character_attribute character::get_primary_attribute() const
 {
-	if (this->get_character_type() != nullptr) {
-		return this->get_character_type()->get_attribute();
+	if (this->get_character_class() != nullptr) {
+		return this->get_character_class()->get_attribute();
 	}
 
 	return character_attribute::none;

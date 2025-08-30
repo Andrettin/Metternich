@@ -2,8 +2,8 @@
 
 #include "character/advisor_category.h"
 #include "character/character.h"
+#include "character/character_class.h"
 #include "character/character_role.h"
-#include "character/character_type.h"
 #include "script/condition/condition.h"
 
 #include <magic_enum/magic_enum.hpp>
@@ -29,7 +29,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		if (scope->get_character_type() == nullptr) {
+		if (scope->get_character_class() == nullptr) {
 			return false;
 		}
 
@@ -37,7 +37,7 @@ public:
 			return false;
 		}
 
-		return scope->get_character_type()->get_advisor_category() == this->advisor_category;
+		return scope->get_character_class()->get_advisor_category() == this->advisor_category;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

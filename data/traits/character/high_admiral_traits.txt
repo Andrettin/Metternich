@@ -6,7 +6,7 @@ grand_admiral = {
 	icon = anchor
 	attribute = martial
 	conditions = {
-		character_type = admiral
+		character_class = admiral
 	}
 }
 
@@ -18,7 +18,7 @@ naval_reformer = {
 	icon = anchor
 	attribute = martial
 	conditions = {
-		character_type = admiral
+		character_class = admiral
 	}
 	scaled_advisor_modifier = {
 		technology_cost_modifier = {
@@ -44,6 +44,6 @@ privateer = {
 	icon = skull
 	attribute = martial
 	conditions = {
-		character_type = privateer
+		character_class = privateer
 	}
 }

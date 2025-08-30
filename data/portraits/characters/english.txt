@@ -19,8 +19,8 @@ francis_drake = {
 		}
 		is_ruler = false
 		or = {
-			character_type = admiral
-			character_type = privateer
+			character_class = admiral
+			character_class = privateer
 		}
 	}
 }
@@ -34,7 +34,7 @@ henry_hudson = {
 			cultural_group = asian
 		}
 		is_ruler = false
-		character_type = navigator
+		character_class = navigator
 	}
 }
 
@@ -48,8 +48,8 @@ william_penn = {
 		}
 		religion = protestant
 		or = {
-			character_type = inquisitor
-			character_type = theologian
+			character_class = inquisitor
+			character_class = theologian
 		}
 	}
 }
