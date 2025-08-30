@@ -1,14 +1,8 @@
 prestige = {
 	name = "Prestige"
-	default_value = true
+	default_value = false
 	description = "Allow countries to accrue Prestige, which impacts score and trade order"
-}
-
-advisors = {
-	name = "Advisors"
-	group = advisors
-	default_value = true
-	description = "Allow advisors to be recruited with Statesmanship"
+	hidden = true
 }
 
 offices = {
@@ -28,8 +22,9 @@ laws = {
 
 research_organizations = {
 	name = "Research Organizations"
-	default_value = true
+	default_value = false
 	description = "Allow countries to select research organizations"
+	hidden = true
 }
 
 culture_commodity = {
@@ -41,14 +36,16 @@ culture_commodity = {
 
 research_commodity = {
 	name = "Research Commodity"
-	default_value = true
+	default_value = false
 	description = "Allow the Research commodity, which is used for acquiring technologies"
+	hidden = true
 }
 
 trade_commodity = {
 	name = "Trade Commodity"
-	default_value = true
+	default_value = false
 	description = "Allow the Trade commodity, which is directly converted into wealth"
+	hidden = true
 }
 
 brass_commodity = {
