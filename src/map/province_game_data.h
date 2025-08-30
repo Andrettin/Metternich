@@ -7,6 +7,7 @@
 #include "map/terrain_type_container.h"
 #include "religion/religion_container.h"
 #include "script/scripted_modifier_container.h"
+#include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
@@ -65,6 +66,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 	Q_PROPERTY(QVariantList entering_armies READ get_entering_armies_qvariant_list NOTIFY entering_armies_changed)
 	Q_PROPERTY(QVariantList recruitable_military_unit_categories READ get_recruitable_military_unit_categories_qvariant_list NOTIFY owner_changed)
+	Q_PROPERTY(QVariantList military_unit_recruitment_counts READ get_military_unit_recruitment_counts_qvariant_list NOTIFY military_unit_recruitment_counts_changed)
 
 public:
 	explicit province_game_data(const metternich::province *province);
@@ -75,6 +77,7 @@ public:
 	void do_events();
 	void do_ai_turn();
 	void collect_taxes();
+	void do_military_unit_recruitment();
 
 	bool is_on_map() const;
 
@@ -297,6 +300,27 @@ public:
 	const std::vector<military_unit_category> &get_recruitable_military_unit_categories() const;
 	QVariantList get_recruitable_military_unit_categories_qvariant_list() const;
 
+	const military_unit_type_map<int> &get_military_unit_recruitment_counts() const;
+	QVariantList get_military_unit_recruitment_counts_qvariant_list() const;
+
+	Q_INVOKABLE int get_military_unit_recruitment_count(const metternich::military_unit_type *military_unit_type) const
+	{
+		const auto find_iterator = this->military_unit_recruitment_counts.find(military_unit_type);
+
+		if (find_iterator != this->military_unit_recruitment_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_military_unit_recruitment_count(const military_unit_type *military_unit_type, const int change, const bool change_input_storage = true);
+	Q_INVOKABLE bool can_increase_military_unit_recruitment(const metternich::military_unit_type *military_unit_type) const;
+	Q_INVOKABLE void increase_military_unit_recruitment(const metternich::military_unit_type *military_unit_type);
+	Q_INVOKABLE bool can_decrease_military_unit_recruitment(const metternich::military_unit_type *military_unit_type) const;
+	Q_INVOKABLE void decrease_military_unit_recruitment(const metternich::military_unit_type *military_unit_type, const bool restore_inputs);
+	void clear_military_unit_recruitment_counts();
+
 	void calculate_site_commodity_outputs();
 	void calculate_site_commodity_output(const commodity *commodity);
 
@@ -484,6 +508,7 @@ signals:
 	void military_units_changed();
 	void military_unit_category_counts_changed();
 	void entering_armies_changed();
+	void military_unit_recruitment_counts_changed();
 
 private:
 	const metternich::province *province = nullptr;
@@ -504,6 +529,7 @@ private:
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;
 	std::vector<army *> entering_armies; //armies entering this province
+	military_unit_type_map<int> military_unit_recruitment_counts;
 	commodity_map<centesimal_int> local_commodity_outputs;
 	centesimal_int output_modifier;
 	int resource_output_modifier = 0;

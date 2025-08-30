@@ -51,18 +51,9 @@ void country_military::do_military_unit_recruitment()
 			return;
 		}
 
-		const military_unit_type_map<int> recruitment_counts = this->military_unit_recruitment_counts;
-		for (const auto &[military_unit_type, recruitment_count] : recruitment_counts) {
-			assert_throw(recruitment_count > 0);
-
-			for (int i = 0; i < recruitment_count; ++i) {
-				const bool created = this->create_military_unit(military_unit_type, nullptr, nullptr, {});
-				const bool restore_costs = !created;
-				this->change_military_unit_recruitment_count(military_unit_type, -1, restore_costs);
-			}
+		for (const province *province : this->get_game_data()->get_provinces()) {
+			province->get_game_data()->do_military_unit_recruitment();
 		}
-
-		assert_throw(this->military_unit_recruitment_counts.empty());
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\".", this->country->get_identifier())));
 	}
@@ -248,90 +239,6 @@ void country_military::remove_military_unit(military_unit *military_unit)
 
 	if (game::get()->is_running()) {
 		emit military_units_changed();
-	}
-}
-
-void country_military::change_military_unit_recruitment_count(const military_unit_type *military_unit_type, const int change, const bool change_input_storage)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->military_unit_recruitment_counts[military_unit_type] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->military_unit_recruitment_counts.erase(military_unit_type);
-	}
-
-	if (change_input_storage) {
-		const int old_count = count - change;
-		const commodity_map<int> old_commodity_costs = this->get_military_unit_type_commodity_costs(military_unit_type, old_count);
-		const commodity_map<int> new_commodity_costs = this->get_military_unit_type_commodity_costs(military_unit_type, count);
-
-		for (const auto &[commodity, cost] : new_commodity_costs) {
-			assert_throw(commodity->is_storable());
-
-			const int cost_change = cost - old_commodity_costs.find(commodity)->second;
-
-			this->country->get_economy()->change_stored_commodity(commodity, -cost_change);
-		}
-	}
-}
-
-bool country_military::can_increase_military_unit_recruitment(const military_unit_type *military_unit_type) const
-{
-	if (this->get_best_military_unit_category_type(military_unit_type->get_category()) != military_unit_type) {
-		return false;
-	}
-
-	const int old_count = this->get_military_unit_recruitment_count(military_unit_type);
-	const int new_count = old_count + 1;
-	const commodity_map<int> old_commodity_costs = this->get_military_unit_type_commodity_costs(military_unit_type, old_count);
-	const commodity_map<int> new_commodity_costs = this->get_military_unit_type_commodity_costs(military_unit_type, new_count);
-
-	for (const auto &[commodity, cost] : new_commodity_costs) {
-		assert_throw(commodity->is_storable());
-
-		const int cost_change = cost - old_commodity_costs.find(commodity)->second;
-
-		if (this->country->get_economy()->get_stored_commodity(commodity) < cost_change) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-void country_military::increase_military_unit_recruitment(const military_unit_type *military_unit_type)
-{
-	try {
-		assert_throw(this->can_increase_military_unit_recruitment(military_unit_type));
-
-		this->change_military_unit_recruitment_count(military_unit_type, 1);
-	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" military unit type for country \"{}\".", military_unit_type->get_identifier(), this->country->get_identifier())));
-	}
-}
-
-bool country_military::can_decrease_military_unit_recruitment(const military_unit_type *military_unit_type) const
-{
-	if (this->get_military_unit_recruitment_count(military_unit_type) == 0) {
-		return false;
-	}
-
-	return true;
-}
-
-void country_military::decrease_military_unit_recruitment(const military_unit_type *military_unit_type, const bool restore_inputs)
-{
-	try {
-		assert_throw(this->can_decrease_military_unit_recruitment(military_unit_type));
-
-		this->change_military_unit_recruitment_count(military_unit_type, -1, restore_inputs);
-	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" military unit type for country \"{}\".", military_unit_type->get_identifier(), this->country->get_identifier())));
 	}
 }
 

@@ -54,23 +54,6 @@ public:
 	void add_military_unit(qunique_ptr<military_unit> &&military_unit);
 	void remove_military_unit(military_unit *military_unit);
 
-	Q_INVOKABLE int get_military_unit_recruitment_count(const metternich::military_unit_type *military_unit_type) const
-	{
-		const auto find_iterator = this->military_unit_recruitment_counts.find(military_unit_type);
-
-		if (find_iterator != this->military_unit_recruitment_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void change_military_unit_recruitment_count(const military_unit_type *military_unit_type, const int change, const bool change_input_storage = true);
-	Q_INVOKABLE bool can_increase_military_unit_recruitment(const metternich::military_unit_type *military_unit_type) const;
-	Q_INVOKABLE void increase_military_unit_recruitment(const metternich::military_unit_type *military_unit_type);
-	Q_INVOKABLE bool can_decrease_military_unit_recruitment(const metternich::military_unit_type *military_unit_type) const;
-	Q_INVOKABLE void decrease_military_unit_recruitment(const metternich::military_unit_type *military_unit_type, const bool restore_inputs);
-
 	int get_military_unit_type_cost_modifier(const military_unit_type *military_unit_type) const;
 	commodity_map<int> get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const;
 	Q_INVOKABLE QVariantList get_military_unit_type_commodity_costs_qvariant_list(const metternich::military_unit_type *military_unit_type, const int quantity) const;
@@ -281,7 +264,6 @@ private:
 	const metternich::country *country = nullptr;
 	std::vector<const character *> leaders;
 	std::vector<qunique_ptr<military_unit>> military_units;
-	military_unit_type_map<int> military_unit_recruitment_counts;
 	std::vector<qunique_ptr<army>> armies;
 	int deployment_limit = country_military::base_deployment_limit;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> military_unit_type_stat_modifiers;

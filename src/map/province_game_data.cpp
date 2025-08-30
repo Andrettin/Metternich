@@ -154,6 +154,34 @@ void province_game_data::collect_taxes()
 	this->get_owner()->get_game_data()->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), taxation);
 }
 
+void province_game_data::do_military_unit_recruitment()
+{
+	if (this->get_owner() == nullptr) {
+		return;
+	}
+
+	try {
+		if (this->get_owner()->get_game_data()->is_under_anarchy()) {
+			return;
+		}
+
+		const military_unit_type_map<int> recruitment_counts = this->military_unit_recruitment_counts;
+		for (const auto &[military_unit_type, recruitment_count] : recruitment_counts) {
+			assert_throw(recruitment_count > 0);
+
+			for (int i = 0; i < recruitment_count; ++i) {
+				const bool created = this->get_owner()->get_military()->create_military_unit(military_unit_type, this->province, nullptr, {});
+				const bool restore_costs = !created;
+				this->change_military_unit_recruitment_count(military_unit_type, -1, restore_costs);
+			}
+		}
+
+		assert_throw(this->military_unit_recruitment_counts.empty());
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\" in province \"{}\".", this->get_owner()->get_identifier(), this->province->get_identifier())));
+	}
+}
+
 bool province_game_data::is_on_map() const
 {
 	return this->province->get_map_data()->is_on_map();
@@ -202,6 +230,9 @@ void province_game_data::set_owner(const country *country)
 			population_unit->get_site()->get_game_data()->pop_population_unit(population_unit);
 		}
 	}
+
+	//clear military unit recruitment if the owner changes
+	this->clear_military_unit_recruitment_counts();
 
 	if (game::get()->is_running()) {
 		for (const QPoint &tile_pos : this->get_border_tiles()) {
@@ -1148,6 +1179,116 @@ const std::vector<military_unit_category> &province_game_data::get_recruitable_m
 QVariantList province_game_data::get_recruitable_military_unit_categories_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_recruitable_military_unit_categories());
+}
+
+const military_unit_type_map<int> &province_game_data::get_military_unit_recruitment_counts() const
+{
+	return this->military_unit_recruitment_counts;
+}
+
+QVariantList province_game_data::get_military_unit_recruitment_counts_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_military_unit_recruitment_counts());
+}
+
+void province_game_data::change_military_unit_recruitment_count(const military_unit_type *military_unit_type, const int change, const bool change_input_storage)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int count = (this->military_unit_recruitment_counts[military_unit_type] += change);
+
+	assert_throw(count >= 0);
+
+	if (count == 0) {
+		this->military_unit_recruitment_counts.erase(military_unit_type);
+	}
+
+	if (change_input_storage) {
+		assert_throw(this->get_owner() != nullptr);
+
+		const int old_count = count - change;
+		const commodity_map<int> old_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, old_count);
+		const commodity_map<int> new_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, count);
+
+		for (const auto &[commodity, cost] : new_commodity_costs) {
+			assert_throw(commodity->is_storable());
+
+			const int cost_change = cost - old_commodity_costs.find(commodity)->second;
+
+			this->get_owner()->get_economy()->change_stored_commodity(commodity, -cost_change);
+		}
+	}
+
+	if (game::get()->is_running()) {
+		emit military_unit_recruitment_counts_changed();
+	}
+}
+
+bool province_game_data::can_increase_military_unit_recruitment(const military_unit_type *military_unit_type) const
+{
+	if (this->get_owner() == nullptr) {
+		return false;
+	}
+
+	if (this->get_owner()->get_military()->get_best_military_unit_category_type(military_unit_type->get_category()) != military_unit_type) {
+		return false;
+	}
+
+	const int old_count = this->get_military_unit_recruitment_count(military_unit_type);
+	const int new_count = old_count + 1;
+	const commodity_map<int> old_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, old_count);
+	const commodity_map<int> new_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, new_count);
+
+	for (const auto &[commodity, cost] : new_commodity_costs) {
+		assert_throw(commodity->is_storable());
+
+		const int cost_change = cost - old_commodity_costs.find(commodity)->second;
+
+		if (this->get_owner()->get_economy()->get_stored_commodity(commodity) < cost_change) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void province_game_data::increase_military_unit_recruitment(const military_unit_type *military_unit_type)
+{
+	try {
+		assert_throw(this->can_increase_military_unit_recruitment(military_unit_type));
+
+		this->change_military_unit_recruitment_count(military_unit_type, 1);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" military unit type for country \"{}\" in province \"{}\".", military_unit_type->get_identifier(), this->get_owner()->get_identifier(), this->province->get_identifier())));
+	}
+}
+
+bool province_game_data::can_decrease_military_unit_recruitment(const military_unit_type *military_unit_type) const
+{
+	if (this->get_military_unit_recruitment_count(military_unit_type) == 0) {
+		return false;
+	}
+
+	return true;
+}
+
+void province_game_data::decrease_military_unit_recruitment(const military_unit_type *military_unit_type, const bool restore_inputs)
+{
+	try {
+		assert_throw(this->can_decrease_military_unit_recruitment(military_unit_type));
+
+		this->change_military_unit_recruitment_count(military_unit_type, -1, restore_inputs);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" military unit type for country \"{}\" in province \"{}\".", military_unit_type->get_identifier(), this->get_owner()->get_identifier(), this->province->get_identifier())));
+	}
+}
+
+void province_game_data::clear_military_unit_recruitment_counts()
+{
+	this->military_unit_recruitment_counts.clear();
+	emit military_unit_recruitment_counts_changed();
 }
 
 void province_game_data::calculate_site_commodity_outputs()
