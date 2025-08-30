@@ -121,7 +121,7 @@ DialogBase {
 						icon_identifier: civilian_unit_type.icon.identifier
 						tooltip: tooltip_string.length > 0 ? format_text(small_text(tooltip_string)) : ""
 						
-						readonly property string costs_string: civilian_unit_type !== null ? costs_to_string(civilian_unit_type.commodity_costs, undefined, civilian_unit_type.wealth_cost) : ""
+						readonly property string costs_string: civilian_unit_type !== null ? costs_to_string(civilian_unit_type.commodity_costs, undefined, "\n\t", civilian_unit_type.wealth_cost) : ""
 						readonly property string tooltip_string: costs_string
 						
 						onClicked: {
@@ -208,7 +208,7 @@ DialogBase {
 						icon_identifier: transporter_type !== null ? transporter_type.icon.identifier : "skull"
 						tooltip: tooltip_string.length > 0 ? format_text(small_text(tooltip_string)) : ""
 						
-						readonly property string costs_string: transporter_type !== null ? costs_to_string(country_game_data.get_transporter_type_commodity_costs_qvariant_list(transporter_type, 1), undefined, country_game_data.get_transporter_type_wealth_cost(transporter_type, 1)) : ""
+						readonly property string costs_string: transporter_type !== null ? costs_to_string(country_game_data.get_transporter_type_commodity_costs_qvariant_list(transporter_type, 1), undefined, "\n\t", country_game_data.get_transporter_type_wealth_cost(transporter_type, 1)) : ""
 						readonly property string tooltip_string: costs_string
 						
 						onClicked: {

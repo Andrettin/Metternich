@@ -251,11 +251,18 @@ ApplicationWindow {
 		return name_list
 	}
 	
-	function costs_to_string(costs, modifier, wealth_cost = 0) {
-		var str = "Costs:"
+	function costs_to_string(costs, modifier, separator = "\n\t", wealth_cost = 0) {
+		var str = ""
+		
+		if (separator == "\n\t") {
+			str += "Costs:"
+		}
 		
 		if (wealth_cost > 0) {
-			str += "\n\t$" + number_string(wealth_cost)
+			if (str.length > 0) {
+				str += separator
+			}
+			str += "$" + number_string(wealth_cost)
 		}
 		
 		for (var i = 0; i < costs.length; i++) {
@@ -271,7 +278,10 @@ ApplicationWindow {
 				cost = Math.floor(cost / commodity.get_unit_value(commodity_unit))
 			}
 			
-			str += "\n\t" + number_string(cost)
+			if (str.length > 0) {
+				str += separator
+			}
+			str += number_string(cost)
 			if (commodity === metternich.defines.wealth_commodity) {
 				str += " " + highlight(commodity_unit.suffix)
 			} else {
