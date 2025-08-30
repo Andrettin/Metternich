@@ -76,5 +76,19 @@ austria = {
 		1850 = {
 			literacy_rate = 60 #50-70% of adults; Source: Eric J. Hobsbawm, "A Era do Capital 1848-1875", 1977, p. 522.
 		}
+		
+		1866.6.14 = {
+			diplomacy_state = { #Austro-Prussian War
+				country = prussia
+				state = war
+			}
+		}
+		
+		1866.7.22 = {
+			diplomacy_state = {
+				country = prussia
+				state = peace
+			}
+		}
 	}
 }
