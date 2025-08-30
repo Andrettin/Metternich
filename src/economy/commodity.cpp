@@ -105,8 +105,7 @@ int commodity::get_unit_value(const commodity_unit *unit) const
 		return find_iterator->second;
 	}
 
-	log::log_error(std::format("Commodity \"{}\" has no value for unit \"{}\".", this->get_identifier(), unit->get_identifier()));
-	return 1;
+	throw std::runtime_error(std::format("Commodity \"{}\" has no value for unit \"{}\".", this->get_identifier(), unit->get_identifier()));
 }
 
 std::pair<std::string, const commodity_unit *> commodity::string_to_number_string_and_unit(const std::string &str) const
@@ -143,12 +142,16 @@ std::pair<std::string, const commodity_unit *> commodity::string_to_number_strin
 
 int commodity::string_to_value(const std::string &str) const
 {
-	const auto [number_str, unit] = this->string_to_number_string_and_unit(str);
-	int value = std::stoi(number_str);
-	if (unit != nullptr) {
-		value *= this->get_unit_value(unit);
+	try {
+		const auto [number_str, unit] = this->string_to_number_string_and_unit(str);
+		int value = std::stoi(number_str);
+		if (unit != nullptr) {
+			value *= this->get_unit_value(unit);
+		}
+		return value;
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Failed to convert string \"{}\" to a value for commodity \"{}\".", str, this->get_identifier())));
 	}
-	return value;
 }
 
 std::pair<std::variant<int, dice>, const commodity_unit *> commodity::string_to_value_variant_with_unit(const std::string &str) const

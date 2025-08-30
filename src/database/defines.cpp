@@ -287,7 +287,7 @@ int defines::get_domain_maintenance_cost_for_province_count(const int province_c
 	const auto find_iterator = this->domain_maintenance_cost_per_province_count.upper_bound(province_count);
 	assert_throw(find_iterator != this->domain_maintenance_cost_per_province_count.end());
 	assert_throw(find_iterator != this->domain_maintenance_cost_per_province_count.begin());
-	return std::prev(find_iterator)->second;
+	return std::prev(find_iterator)->second * 200000;
 }
 
 const std::vector<int> &defines::get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const
