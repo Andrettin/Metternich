@@ -185,16 +185,12 @@ void province_game_data::do_military_unit_recruitment()
 		if (this->get_owner() == game::get()->get_player_country()) {
 			std::string recruitment_counts_str;
 			for (const auto &[military_unit_type, recruitment_count] : recruitment_counts) {
-				if (!recruitment_counts_str.empty()) {
-					recruitment_counts_str += "\n";
-				}
-
-				recruitment_counts_str += std::format("{} {}", recruitment_count, military_unit_type->get_name());
+				recruitment_counts_str += std::format("\n{} {}", recruitment_count, military_unit_type->get_name());
 			}
 
 			const portrait *war_minister_portrait = this->get_owner()->get_government()->get_war_minister_portrait();
 
-			engine_interface::get()->add_notification(std::format("Military Units Recruited in {}", this->get_current_cultural_name()), war_minister_portrait, recruitment_counts_str);
+			engine_interface::get()->add_notification(std::format("Military Units Recruited in {}", this->get_current_cultural_name()), war_minister_portrait, std::format("Your Excellency, we have recruited new military units for our army in {}.\n{}", this->get_current_cultural_name(), recruitment_counts_str));
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\" in province \"{}\".", this->get_owner()->get_identifier(), this->province->get_identifier())));
