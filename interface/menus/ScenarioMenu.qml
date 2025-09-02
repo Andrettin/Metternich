@@ -320,7 +320,7 @@ MenuBase {
 		anchors.leftMargin: 16 * scale_factor
 		anchors.top: title_item.bottom
 		anchors.topMargin: 32 * scale_factor
-		anchors.bottom: start_game_button.top
+		anchors.bottom: button_column.top
 		anchors.bottomMargin: 16 * scale_factor
 		width: 256 * scale_factor
 		height: 128 * scale_factor
@@ -363,52 +363,51 @@ MenuBase {
 		}
 	}
 	
-	TextButton {
-		id: start_game_button
+	Column {
+		id: button_column
 		anchors.horizontalCenter: scenario_list.horizontalCenter
-		anchors.bottom: game_rules_button.top
-		anchors.bottomMargin: 8 * scale_factor
-		text: qsTr("Start Game")
-		width: 96 * scale_factor
-		height: 24 * scale_factor
-		enabled: !loading_scenario && selected_country !== null && !selected_country.game_data.anarchy
-		tooltip: enabled ? "" : small_text(
-			selected_country === null ? "You must select a country to play" : "You cannot play as a country under anarchy"
-		)
-		
-		onClicked: {
-			metternich.game.player_country = selected_country
-			metternich.game.start()
-		}
-	}
-	
-	TextButton {
-		id: game_rules_button
-		anchors.horizontalCenter: start_game_button.horizontalCenter
-		anchors.bottom: previous_menu_button.top
-		anchors.bottomMargin: 8 * scale_factor
-		text: qsTr("Game Rules")
-		width: 96 * scale_factor
-		height: 24 * scale_factor
-		
-		onClicked: {
-			menu_stack.push("GameRulesMenu.qml", {
-				selected_scenario: scenario_menu.selected_scenario
-			})
-		}
-	}
-	
-	TextButton {
-		id: previous_menu_button
-		anchors.horizontalCenter: start_game_button.horizontalCenter
 		anchors.bottom: diplomatic_map.bottom
 		anchors.bottomMargin: 8 * scale_factor
-		text: qsTr("Previous Menu")
-		width: 96 * scale_factor
-		height: 24 * scale_factor
+		spacing: 8 * scale_factor
 		
-		onClicked: {
-			menu_stack.pop()
+		TextButton {
+			id: start_game_button
+			text: qsTr("Start Game")
+			width: 96 * scale_factor
+			height: 24 * scale_factor
+			enabled: !loading_scenario && selected_country !== null && !selected_country.game_data.anarchy
+			tooltip: enabled ? "" : small_text(
+				selected_country === null ? "You must select a country to play" : "You cannot play as a country under anarchy"
+			)
+			
+			onClicked: {
+				metternich.game.player_country = selected_country
+				metternich.game.start()
+			}
+		}
+		
+		TextButton {
+			id: game_rules_button
+			text: qsTr("Game Rules")
+			width: 96 * scale_factor
+			height: 24 * scale_factor
+			
+			onClicked: {
+				menu_stack.push("GameRulesMenu.qml", {
+					selected_scenario: scenario_menu.selected_scenario
+				})
+			}
+		}
+		
+		TextButton {
+			id: previous_menu_button
+			text: qsTr("Previous Menu")
+			width: 96 * scale_factor
+			height: 24 * scale_factor
+			
+			onClicked: {
+				menu_stack.pop()
+			}
 		}
 	}
 	
