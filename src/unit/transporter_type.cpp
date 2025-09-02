@@ -94,17 +94,7 @@ centesimal_int transporter_type::get_stat_for_country(const transporter_stat sta
 
 int transporter_type::get_score() const
 {
-	int score = this->get_wealth_cost();
-
-	for (const auto &[commodity, cost] : this->get_commodity_costs()) {
-		if (commodity->get_base_price() == 0) {
-			continue;
-		}
-
-		score += cost * commodity->get_base_price();
-	}
-
-	return score;
+	return 0;
 }
 
 }

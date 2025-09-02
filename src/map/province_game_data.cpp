@@ -364,7 +364,15 @@ void province_game_data::set_level(const int level)
 		return;
 	}
 
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_economic_score(-this->get_level() * 100);
+	}
+
 	this->level = level;
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_economic_score(this->get_level() * 100);
+	}
 
 	if (game::get()->is_running()) {
 		emit level_changed();

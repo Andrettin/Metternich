@@ -188,7 +188,17 @@ QString military_unit_type::get_stats_for_country_qstring(const country *country
 
 int military_unit_type::get_score() const
 {
-	return 0;
+	int score = 0;
+
+	for (const auto &[stat, stat_value] : this->get_stats()) {
+		if (is_percent_military_unit_stat(stat)) {
+			score += stat_value.to_int() / 10;
+		} else {
+			score += (stat_value * 10).to_int();
+		}
+	}
+
+	return score;
 }
 
 }

@@ -277,18 +277,10 @@ void country_economy::set_stored_commodity(const commodity *commodity, const int
 		return;
 	}
 
-	if (commodity == defines::get()->get_prestige_commodity()) {
-		this->get_game_data()->change_score(-this->get_stored_commodity(commodity));
-	}
-
 	if (value <= 0) {
 		this->stored_commodities.erase(commodity);
 	} else {
 		this->stored_commodities[commodity] = value;
-	}
-
-	if (commodity == defines::get()->get_prestige_commodity()) {
-		this->get_game_data()->change_score(value);
 	}
 
 	if (this->get_offer(commodity) > value) {
@@ -344,10 +336,6 @@ void country_economy::change_commodity_input(const commodity *commodity, const c
 
 	const centesimal_int old_input = this->get_commodity_input(commodity);
 
-	if (commodity->get_base_price() != 0) {
-		this->get_game_data()->change_economic_score(old_input.to_int() * commodity->get_base_price());
-	}
-
 	if (commodity->is_storable() && change_input_storage) {
 		this->change_stored_commodity(commodity, old_input.to_int());
 	}
@@ -358,10 +346,6 @@ void country_economy::change_commodity_input(const commodity *commodity, const c
 
 	if (new_input == 0) {
 		this->commodity_inputs.erase(commodity);
-	}
-
-	if (commodity->get_base_price() != 0) {
-		this->get_game_data()->change_economic_score(-new_input.to_int() * commodity->get_base_price());
 	}
 
 	if (commodity->is_storable() && change_input_storage) {
@@ -414,22 +398,12 @@ void country_economy::change_commodity_output(const commodity *commodity, const 
 
 	const centesimal_int old_output = this->get_commodity_output(commodity);
 
-	if (commodity->get_base_price() != 0 || commodity->get_wealth_value() != 0) {
-		const int commodity_value = commodity->get_base_price() != 0 ? commodity->get_base_price() : commodity->get_wealth_value();
-		this->get_game_data()->change_economic_score(-old_output.to_int() * commodity_value);
-	}
-
 	const centesimal_int &new_output = (this->commodity_outputs[commodity] += change);
 
 	assert_throw(new_output >= 0);
 
 	if (new_output == 0) {
 		this->commodity_outputs.erase(commodity);
-	}
-
-	if (commodity->get_base_price() != 0 || commodity->get_wealth_value() != 0) {
-		const int commodity_value = commodity->get_base_price() != 0 ? commodity->get_base_price() : commodity->get_wealth_value();
-		this->get_game_data()->change_economic_score(new_output.to_int() * commodity_value);
 	}
 
 	if (game::get()->is_running()) {

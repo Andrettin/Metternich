@@ -198,18 +198,7 @@ public:
 		return zero;
 	}
 
-	void set_stat(const military_unit_stat stat, const centesimal_int &value)
-	{
-		if (value == this->get_stat(stat)) {
-			return;
-		}
-
-		if (value == 0) {
-			this->stats.erase(stat);
-		} else {
-			this->stats[stat] = value;
-		}
-	}
+	void set_stat(const military_unit_stat stat, const centesimal_int &value);
 
 	void change_stat(const military_unit_stat stat, const centesimal_int &change)
 	{

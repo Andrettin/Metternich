@@ -766,6 +766,8 @@ void country_game_data::on_province_gained(const province *province, const int m
 		this->coastal_province_count += 1 * multiplier;
 	}
 
+	this->change_economic_score(province_game_data->get_level() * 100 * multiplier);
+
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->get_economy()->change_resource_count(resource, count * multiplier);
 
