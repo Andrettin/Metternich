@@ -17,9 +17,4 @@ monarchy = {
 			subject_type = colony
 		}
 	}
-	modifier = {
-		housing_per_stockade = 1
-		housing_per_fort = 2
-		housing_per_fortress = 3
-	}
 }

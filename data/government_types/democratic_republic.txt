@@ -21,9 +21,6 @@ democratic_republic = {
 			subject_type = colony
 		}
 	}
-	modifier = {
-		trade_bonus_for_tile_threshold = 1
-	}
 	office_title_names = {
 		ruler = {
 			duchy = "President"

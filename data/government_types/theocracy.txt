@@ -10,9 +10,4 @@ theocracy = {
 			subject_type = colony
 		}
 	}
-	modifier = {
-		trade_per_shrine = 1
-		trade_per_temple = 2
-		trade_per_cathedral = 3
-	}
 }

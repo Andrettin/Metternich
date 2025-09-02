@@ -21,7 +21,4 @@ feudal_monarchy = {
 			subject_type = colony
 		}
 	}
-	modifier = {
-		manpower_output_modifier = 10
-	}
 }
