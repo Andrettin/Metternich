@@ -1,7 +1,6 @@
 sweden = {
 	name = "Sweden"
-	#type = great_power
-	type = minor_nation
+	type = polity
 	color = { 0 173 198 }
 	culture = swedish
 	default_religion = protestant

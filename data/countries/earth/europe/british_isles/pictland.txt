@@ -1,6 +1,6 @@
 pictland = {
 	name = "Pictland"
-	type = minor_nation
+	type = polity
 	culture = pictish
 	default_religion = pagan
 	default_tier = duchy

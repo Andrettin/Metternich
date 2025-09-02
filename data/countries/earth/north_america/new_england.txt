@@ -1,6 +1,6 @@
 new_england = {
 	name = "New England"
-	type = great_power
+	type = polity
 	color = { 166 224 85 }
 	culture = american
 	default_religion = protestant

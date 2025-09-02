@@ -1,6 +1,6 @@
 untersberg = {
 	name = "Untersberg"
-	type = minor_nation
+	type = polity
 	culture = gnomish
 	default_religion = pagan
 	default_tier = kingdom

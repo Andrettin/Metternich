@@ -1,6 +1,6 @@
 moldavia = {
 	name = "Moldavia"
-	type = minor_nation
+	type = polity
 	color = { 136 157 23 }
 	culture = romanian
 	default_religion = orthodox

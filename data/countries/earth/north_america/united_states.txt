@@ -1,6 +1,6 @@
 united_states = {
 	name = "United States"
-	type = great_power
+	type = polity
 	color = { 66 94 193 }
 	culture = american
 	default_religion = protestant

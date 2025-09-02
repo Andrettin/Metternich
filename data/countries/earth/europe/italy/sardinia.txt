@@ -1,6 +1,6 @@
 sardinia = {
 	name = "Sardinia"
-	type = great_power
+	type = polity
 	color = { 142 167 80 }
 	culture = italian
 	default_religion = catholic

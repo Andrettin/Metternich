@@ -1,6 +1,6 @@
 inca_empire = {
 	name = "Inca Empire"
-	type = great_power
+	type = polity
 	color = { 125 92 110 }
 	culture = inca
 	default_religion = pagan

@@ -1,6 +1,6 @@
 granada = {
 	name = "Granada"
-	type = minor_nation
+	type = polity
 	culture = arabic
 	default_religion = sunni
 	default_tier = duchy

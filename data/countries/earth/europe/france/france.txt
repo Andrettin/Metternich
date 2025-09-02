@@ -1,6 +1,6 @@
 france = {
 	name = "France"
-	type = great_power
+	type = polity
 	color = { 87 139 166 }
 	culture = french
 	default_religion = catholic

@@ -1,6 +1,6 @@
 alfheim = {
 	name = "Alfheim"
-	type = great_power
+	type = polity
 	color = { 142 167 80 }
 	culture = elven
 	default_religion = pagan

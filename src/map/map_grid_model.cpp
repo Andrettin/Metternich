@@ -243,7 +243,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 
 				if (upper_tile_province != nullptr && upper_tile_province->get_game_data()->get_center_tile_pos() == upper_tile_pos) {
 					const province_game_data *upper_tile_province_game_data = upper_tile_province->get_game_data();
-					if (upper_tile_province_game_data->is_capital() && (upper_tile_province_game_data->get_owner()->get_game_data()->get_province_count() > 1 || upper_tile_province_game_data->get_owner()->is_great_power())) {
+					if (upper_tile_province_game_data->is_capital() && upper_tile_province_game_data->get_owner()->get_game_data()->get_province_count() > 1) {
 						assert_throw(upper_tile->get_settlement() != nullptr);
 						return upper_tile->get_settlement()->get_game_data()->get_current_cultural_name_qstring();
 					} else {

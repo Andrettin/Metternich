@@ -1,6 +1,6 @@
 wallachia = {
 	name = "Wallachia"
-	type = minor_nation
+	type = polity
 	color = { 161 126 128 }
 	culture = romanian
 	default_religion = orthodox

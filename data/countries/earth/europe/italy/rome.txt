@@ -1,6 +1,6 @@
 rome = {
 	name = "Rome"
-	type = great_power
+	type = polity
 	color = { 139 16 13 }
 	culture = roman
 	default_religion = pagan

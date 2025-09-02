@@ -1,6 +1,6 @@
 montenegro = {
 	name = "Montenegro"
-	type = minor_nation
+	type = polity
 	culture = serbian
 	default_religion = orthodox
 	default_tier = kingdom

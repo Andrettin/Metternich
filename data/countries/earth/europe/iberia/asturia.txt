@@ -1,6 +1,6 @@
 asturia = {
 	name = "Asturia"
-	type = minor_nation
+	type = polity
 	culture = asturian
 	default_religion = pagan
 	default_tier = duchy

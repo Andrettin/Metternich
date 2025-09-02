@@ -1,6 +1,6 @@
 japan = {
 	name = "Japan"
-	type = great_power
+	type = polity
 	color = { 255 191 191 }
 	culture = japanese
 	default_religion = pagan

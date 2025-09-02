@@ -1,6 +1,6 @@
 svithjod = {
 	name = "Svithjod" #"Sviþjod"
-	type = great_power
+	type = polity
 	color = { 0 173 198 }
 	culture = norse
 	default_religion = pagan

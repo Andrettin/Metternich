@@ -1,6 +1,6 @@
 mecklenburg = {
 	name = "Mecklenburg"
-	type = minor_nation
+	type = polity
 	color = { 207 111 64 }
 	culture = german
 	default_religion = protestant

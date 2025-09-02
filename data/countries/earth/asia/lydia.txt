@@ -1,6 +1,6 @@
 lydia = {
 	name = "Lydia"
-	type = minor_nation
+	type = polity
 	culture = lydian
 	default_religion = pagan
 	default_tier = kingdom

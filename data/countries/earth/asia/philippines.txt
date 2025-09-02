@@ -1,6 +1,6 @@
 philippines = {
 	name = "Philippines"
-	type = minor_nation
+	type = polity
 	culture = filipino
 	default_religion = catholic
 	default_tier = kingdom

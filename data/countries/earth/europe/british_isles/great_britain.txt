@@ -1,6 +1,6 @@
 great_britain = {
 	name = "Great Britain"
-	type = great_power
+	type = polity
 	#color = { 254 249 69 }
 	color = { 206 8 8 }
 	culture = english

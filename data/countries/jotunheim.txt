@@ -1,6 +1,6 @@
 jotunheim = {
 	name = "Jotunheim"
-	type = great_power
+	type = polity
 	color = { 170 148 214 }
 	culture = giant
 	default_religion = pagan

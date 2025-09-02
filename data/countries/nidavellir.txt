@@ -1,6 +1,6 @@
 nidavellir = {
 	name = "Nidavellir"
-	type = great_power
+	type = polity
 	color = { 206 8 8 }
 	culture = dwarven
 	default_religion = pagan

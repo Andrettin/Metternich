@@ -1,6 +1,6 @@
 bavaria = {
 	name = "Bavaria"
-	type = minor_nation
+	type = polity
 	color = { 121 175 235 }
 	culture = german
 	default_religion = catholic

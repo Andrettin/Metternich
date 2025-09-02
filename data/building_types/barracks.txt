@@ -30,8 +30,5 @@ barracks = {
 	}
 	free_on_start_conditions = {
 		capital = true
-		country = {
-			scripted_condition = is_power
-		}
 	}
 }

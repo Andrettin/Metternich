@@ -1,6 +1,6 @@
 lower_burgundy = {
 	name = "Lower Burgundy"
-	type = minor_nation
+	type = polity
 	culture = french
 	default_religion = catholic
 	default_tier = kingdom

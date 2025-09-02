@@ -1,6 +1,6 @@
 babylonia = {
 	name = "Babylonia"
-	type = great_power
+	type = polity
 	color = { 27 73 157 }
 	culture = babylonian
 	default_religion = pagan

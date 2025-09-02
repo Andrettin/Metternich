@@ -1,6 +1,6 @@
 bosnia = {
 	name = "Bosnia"
-	type = minor_nation
+	type = polity
 	culture = bosnian
 	default_religion = orthodox
 	default_tier = kingdom

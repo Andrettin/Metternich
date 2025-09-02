@@ -699,7 +699,7 @@ int map_generator::choose_sea_zone_for_removal(const std::set<int> &remaining_se
 	std::vector<int> best_zone_indexes;
 	int best_distance = 0;
 
-	//get the zones which are as far away from other powers as possible
+	//get the zones which are as far away from other countries as possible
 	for (const int zone_index : remaining_sea_zones) {
 		const zone &zone = this->zones.at(zone_index);
 		const QPoint &zone_seed = zone.seed;
@@ -858,8 +858,7 @@ void map_generator::generate_countries_from_provinces(const std::vector<const pr
 
 	std::vector<const province *> potential_seas;
 	std::vector<const province *> potential_lakes;
-	std::vector<const country *> potential_powers;
-	std::vector<const country *> potential_minor_nations;
+	std::vector<const country *> potential_countries;
 	country_map<std::vector<const province *>> provinces_by_country;
 
 	for (const province *province : provinces) {
@@ -900,25 +899,12 @@ void map_generator::generate_countries_from_provinces(const std::vector<const pr
 	}
 
 	for (const auto &[country, country_provinces] : provinces_by_country) {
-		if (country->is_great_power()) {
-			potential_powers.push_back(country);
-		} else {
-			potential_minor_nations.push_back(country);
-		}
+		potential_countries.push_back(country);
 	}
 
-	vector::shuffle(potential_powers);
-	vector::shuffle(potential_minor_nations);
+	vector::shuffle(potential_countries);
 
-	for (const country *country : potential_powers) {
-		if (static_cast<int>(this->generated_provinces.size()) >= this->zone_count) {
-			break;
-		}
-
-		this->generate_country(country, provinces_by_country.find(country)->second);
-	}
-
-	for (const country *country : potential_minor_nations) {
+	for (const country *country : potential_countries) {
 		if (static_cast<int>(this->generated_provinces.size()) >= this->zone_count) {
 			break;
 		}
@@ -1037,7 +1023,7 @@ int map_generator::generate_province(const province *province, std::vector<int> 
 
 		const QPoint map_center_pos(this->get_width() / 2 - 1, this->get_height() / 2 - 1);
 
-		//get the zones which are as far away from other powers as possible
+		//get the zones which are as far away from other countries as possible
 		for (size_t i = 0; i < this->zones.size(); ++i) {
 			const zone &zone = this->zones.at(i);
 

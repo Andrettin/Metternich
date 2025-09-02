@@ -1,6 +1,6 @@
 anglia = {
 	name = "Anglia"
-	type = minor_nation
+	type = polity
 	culture = anglian
 	default_religion = pagan
 	default_tier = duchy

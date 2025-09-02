@@ -1,6 +1,6 @@
 wurtemberg = {
 	name = "Wurtemberg"
-	type = minor_nation
+	type = polity
 	color = { 111 162 128 }
 	culture = german
 	default_religion = protestant

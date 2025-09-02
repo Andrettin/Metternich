@@ -1,6 +1,6 @@
 teutonia = {
 	name = "Teutonia"
-	type = minor_nation
+	type = polity
 	culture = teutonian
 	default_religion = pagan
 	default_tier = duchy

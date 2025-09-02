@@ -1,6 +1,6 @@
 strathclyde = {
 	name = "Strathclyde"
-	type = minor_nation
+	type = polity
 	culture = cumbrian
 	default_religion = pagan
 	default_tier = kingdom

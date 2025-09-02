@@ -1,6 +1,6 @@
 gold_coast = {
 	name = "Gold Coast"
-	type = minor_nation
+	type = polity
 	culture = akan
 	default_religion = pagan
 	default_tier = duchy

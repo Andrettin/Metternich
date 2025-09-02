@@ -1,6 +1,6 @@
 persia = {
 	name = "Persia"
-	type = great_power
+	type = polity
 	color = { 229 170 87 }
 	culture = persian
 	default_religion = shiite

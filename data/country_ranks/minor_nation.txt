@@ -1,0 +1,4 @@
+minor_nation = {
+	name = "Minor Nation"
+	priority = 1
+}

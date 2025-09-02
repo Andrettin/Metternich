@@ -1,6 +1,6 @@
 austria = {
 	name = "Austria"
-	type = great_power
+	type = polity
 	color = { 244 121 126 }
 	culture = austrian
 	default_religion = catholic

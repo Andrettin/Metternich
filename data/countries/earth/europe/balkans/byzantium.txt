@@ -1,6 +1,6 @@
 byzantium = {
 	name = "Byzantium"
-	type = great_power
+	type = polity
 	color = { 170 148 214 }
 	culture = greek
 	default_religion = orthodox

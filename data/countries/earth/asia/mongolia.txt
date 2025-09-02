@@ -1,6 +1,6 @@
 mongolia = {
 	name = "Mongolia"
-	type = great_power
+	type = polity
 	color = { 100 100 250 }
 	culture = mongol
 	default_religion = pagan

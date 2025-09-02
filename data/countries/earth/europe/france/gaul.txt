@@ -1,6 +1,6 @@
 gaul = {
 	name = "Gaul"
-	type = great_power
+	type = polity
 	color = { 94 130 93 }
 	culture = gaulish
 	default_religion = pagan

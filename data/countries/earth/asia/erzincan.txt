@@ -1,6 +1,6 @@
 erzincan = {
 	name = "Erzincan"
-	type = minor_nation
+	type = polity
 	culture = turkish
 	default_religion = sunni
 	default_tier = duchy

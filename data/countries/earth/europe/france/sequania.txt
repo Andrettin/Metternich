@@ -1,6 +1,6 @@
 sequania = {
 	name = "Sequania"
-	type = minor_nation
+	type = polity
 	culture = helvetian
 	default_religion = pagan
 	default_tier = duchy

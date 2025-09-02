@@ -311,7 +311,6 @@ void game::clear()
 
 		this->scenario = nullptr;
 		this->countries.clear();
-		this->great_powers.clear();
 		this->wonder_countries.clear();
 		this->prices.clear();
 
@@ -1443,7 +1442,7 @@ QCoro::Task<void> game::on_setup_finished()
 		emit country->game_data_changed();
 	}
 
-	this->calculate_great_power_ranks();
+	this->calculate_country_ranks();
 
 	for (const character *character : character::get_all()) {
 		character->get_game_data()->on_setup_finished();
@@ -1519,7 +1518,7 @@ QCoro::Task<void> game::do_turn_coro()
 			this->exploration_changed = false;
 		}
 
-		this->calculate_great_power_ranks();
+		this->calculate_country_ranks();
 
 		this->increment_turn();
 	} catch (...) {
@@ -1556,7 +1555,6 @@ void game::do_trade()
 	});
 
 	country_map<commodity_map<int>> country_luxury_demands;
-	const int great_power_commodity_demand_divisor = defines::get()->get_great_power_commodity_demand_divisor();
 
 	for (const country *country : trade_countries) {
 		country_economy *country_economy = country->get_economy();
@@ -1568,9 +1566,6 @@ void game::do_trade()
 
 			//increase demand if prices are lower than the base price, or the inverse if they are higher
 			decimillesimal_int effective_demand = demand * commodity->get_base_price() / game::get()->get_price(commodity);
-			if (country->is_great_power()) {
-				effective_demand /= great_power_commodity_demand_divisor;
-			}
 
 			int effective_demand_int = effective_demand.to_int();
 
@@ -1675,10 +1670,6 @@ void game::add_country(country *country)
 {
 	this->countries.push_back(country);
 
-	if (country->is_great_power()) {
-		this->great_powers.push_back(country);
-	}
-
 	if (this->is_running()) {
 		emit countries_changed();
 	}
@@ -1687,10 +1678,6 @@ void game::add_country(country *country)
 void game::remove_country(country *country)
 {
 	std::erase(this->countries, country);
-
-	if (country->is_great_power()) {
-		std::erase(this->great_powers, country);
-	}
 
 	country->get_military()->clear_leaders();
 
@@ -1713,20 +1700,15 @@ void game::remove_country(country *country)
 	country->reset_game_data();
 }
 
-QVariantList game::get_great_powers_qvariant_list() const
+void game::calculate_country_ranks()
 {
-	return container::to_qvariant_list(this->get_great_powers());
-}
+	std::vector<metternich::country *> countries = game::get()->get_countries();
 
-void game::calculate_great_power_ranks()
-{
-	std::vector<const metternich::country *> great_powers = game::get()->get_great_powers();
-
-	if (great_powers.empty()) {
+	if (countries.empty()) {
 		return;
 	}
 
-	std::sort(great_powers.begin(), great_powers.end(), [](const metternich::country *lhs, const metternich::country *rhs) {
+	std::sort(countries.begin(), countries.end(), [](const metternich::country *lhs, const metternich::country *rhs) {
 		if (lhs->get_game_data()->is_under_anarchy() != rhs->get_game_data()->is_under_anarchy()) {
 			return rhs->get_game_data()->is_under_anarchy();
 		}
@@ -1735,25 +1717,25 @@ void game::calculate_great_power_ranks()
 	});
 
 	int64_t average_score = 0;
-	int highest_score = great_powers.at(0)->get_game_data()->get_score();
+	int highest_score = countries.at(0)->get_game_data()->get_score();
 	
-	for (size_t i = 0; i < great_powers.size(); ++i) {
-		const country *great_power = great_powers.at(i);
-		great_power->get_game_data()->set_score_rank(static_cast<int>(i));
+	for (size_t i = 0; i < countries.size(); ++i) {
+		const country *country = countries.at(i);
+		country->get_game_data()->set_score_rank(static_cast<int>(i));
 
-		average_score += great_power->get_game_data()->get_score();
+		average_score += country->get_game_data()->get_score();
 	}
 
-	average_score /= great_powers.size();
+	average_score /= countries.size();
 
-	for (const country *great_power : great_powers) {
+	for (const country *country : countries) {
 		const country_rank *best_rank = nullptr;
 		for (const country_rank *rank : country_rank::get_all()) {
 			if (best_rank != nullptr && best_rank->get_priority() >= rank->get_priority()) {
 				continue;
 			}
 
-			const centesimal_int score(great_power->get_game_data()->get_score());
+			const centesimal_int score(country->get_game_data()->get_score());
 			const centesimal_int average_score_threshold = rank->get_average_score_threshold() * average_score;
 			const centesimal_int relative_score_threshold = rank->get_relative_score_threshold() * highest_score;
 			if (score >= average_score_threshold || score >= relative_score_threshold) {
@@ -1762,7 +1744,7 @@ void game::calculate_great_power_ranks()
 		}
 
 		if (best_rank != nullptr) {
-			great_power->get_game_data()->set_rank(best_rank);
+			country->get_game_data()->set_rank(best_rank);
 		}
 	}
 }

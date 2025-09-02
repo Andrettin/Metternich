@@ -1,6 +1,6 @@
 cantabria = {
 	name = "Cantabria"
-	type = minor_nation
+	type = polity
 	culture = cantabrian
 	default_religion = pagan
 	default_tier = duchy

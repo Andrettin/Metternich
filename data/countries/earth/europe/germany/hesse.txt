@@ -1,6 +1,6 @@
 hesse = {
 	name = "Hesse"
-	type = minor_nation
+	type = polity
 	color = { 48 169 96 }
 	culture = german
 	default_religion = protestant

@@ -1,6 +1,6 @@
 catalonia = {
 	name = "Catalonia"
-	type = minor_nation
+	type = polity
 	culture = catalan
 	default_religion = catholic
 	default_tier = county

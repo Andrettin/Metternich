@@ -1,6 +1,6 @@
 carthage = {
 	name = "Carthage"
-	type = great_power
+	type = polity
 	color = { 74 174 85 }
 	culture = carthaginian
 	default_religion = pagan

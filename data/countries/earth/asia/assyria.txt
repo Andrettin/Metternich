@@ -1,6 +1,6 @@
 assyria = {
 	name = "Assyria"
-	type = great_power
+	type = polity
 	color = { 31 198 35 }
 	culture = assyrian
 	default_religion = pagan

@@ -1,6 +1,6 @@
 goldemarland = {
 	name = "Goldemarland"
-	type = minor_nation
+	type = polity
 	culture = dwarven
 	default_religion = pagan
 	default_tier = kingdom

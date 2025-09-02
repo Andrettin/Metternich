@@ -1,6 +1,6 @@
 hawaii = {
 	name = "Hawaii"
-	type = minor_nation
+	type = polity
 	culture = polynesian
 	default_religion = pagan
 	default_tier = duchy

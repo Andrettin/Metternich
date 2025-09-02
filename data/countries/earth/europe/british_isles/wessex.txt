@@ -1,6 +1,6 @@
 wessex = {
 	name = "Wessex"
-	type = great_power
+	type = polity
 	color = { 206 8 8 }
 	culture = anglo_saxon
 	default_religion = catholic

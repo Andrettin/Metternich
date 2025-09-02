@@ -1,6 +1,6 @@
 new_netherland = {
 	name = "New Netherland"
-	type = great_power
+	type = polity
 	color = { 226 168 131 }
 	culture = dutch
 	default_religion = protestant

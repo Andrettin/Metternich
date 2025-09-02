@@ -1,6 +1,6 @@
 greece = {
 	name = "Greece"
-	type = great_power
+	type = polity
 	color = { 122 180 210 }
 	culture = greek
 	default_religion = orthodox

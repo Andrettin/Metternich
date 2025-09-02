@@ -1,6 +1,6 @@
 visigothia = {
 	name = "Visigothia"
-	type = great_power
+	type = polity
 	color = { 116 135 65 }
 	culture = gothic
 	default_religion = catholic #Arianism

@@ -1,6 +1,6 @@
 mycenae = {
 	name = "Mycenae"
-	type = minor_nation
+	type = polity
 	culture = greek
 	default_religion = pagan
 	default_tier = duchy

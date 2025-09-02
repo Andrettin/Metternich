@@ -3,21 +3,20 @@
 namespace metternich {
 
 enum class country_type {
-	great_power,
 	clade,
-	minor_nation,
-	tribe
+	tribe,
+	polity
 };
 
 inline std::string get_country_type_name(const country_type type)
 {
 	switch (type) {
-		case country_type::great_power:
 		case country_type::clade:
-			return "Great Power";
-		case country_type::minor_nation:
+			return "Clade";
 		case country_type::tribe:
-			return "Minor Nation";
+			return "Tribe";
+		case country_type::polity:
+			return "Polity";
 		default:
 			break;
 	}

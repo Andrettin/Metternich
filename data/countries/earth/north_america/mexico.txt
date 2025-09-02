@@ -1,6 +1,6 @@
 mexico = {
 	name = "Mexico"
-	type = great_power
+	type = polity
 	color = { 173 242 175 }
 	culture = castillian
 	default_religion = catholic

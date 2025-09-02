@@ -1,6 +1,6 @@
 trebizond = {
 	name = "Trebizond"
-	type = minor_nation
+	type = polity
 	culture = greek
 	default_religion = orthodox
 	default_tier = empire

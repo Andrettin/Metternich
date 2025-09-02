@@ -1,6 +1,6 @@
 oldenburg = {
 	name = "Oldenburg"
-	type = minor_nation
+	type = polity
 	color = { 147 130 118 }
 	culture = german
 	default_religion = protestant

@@ -1,6 +1,6 @@
 midian = {
 	name = "Midian"
-	type = minor_nation
+	type = polity
 	culture = arabic
 	default_religion = pagan
 	default_tier = duchy

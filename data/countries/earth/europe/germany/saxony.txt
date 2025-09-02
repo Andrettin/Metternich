@@ -1,6 +1,6 @@
 saxony = {
 	name = "Saxony"
-	type = minor_nation
+	type = polity
 	culture = german
 	default_religion = catholic
 	default_tier = duchy

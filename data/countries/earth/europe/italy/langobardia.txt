@@ -1,6 +1,6 @@
 langobardia = {
 	name = "Langobardia"
-	type = great_power
+	type = polity
 	color = { 234 217 110 }
 	culture = lombard
 	default_religion = catholic

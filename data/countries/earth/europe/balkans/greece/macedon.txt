@@ -1,6 +1,6 @@
 macedon = {
 	name = "Macedon"
-	type = great_power
+	type = polity
 	color = { 16 41 202 }
 	culture = greek
 	default_religion = pagan

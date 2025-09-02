@@ -1,6 +1,6 @@
 bohemia = {
 	name = "Bohemia"
-	type = minor_nation
+	type = polity
 	culture = czech
 	default_religion = catholic
 	default_tier = kingdom

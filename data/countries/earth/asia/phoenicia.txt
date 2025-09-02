@@ -1,6 +1,6 @@
 phoenicia = {
 	name = "Phoenicia"
-	type = great_power
+	type = polity
 	color = { 204 161 197 }
 	culture = phoenician
 	default_religion = pagan

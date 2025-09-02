@@ -1,6 +1,6 @@
 lotharingia = {
 	name = "Lotharingia"
-	type = minor_nation
+	type = polity
 	culture = frankish
 	default_religion = catholic
 	default_tier = kingdom

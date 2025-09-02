@@ -1,6 +1,6 @@
 danelaw = {
 	name = "Danelaw"
-	type = minor_nation
+	type = polity
 	culture = norse
 	default_religion = pagan
 	default_tier = kingdom

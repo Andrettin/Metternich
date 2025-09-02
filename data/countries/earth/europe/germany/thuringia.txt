@@ -1,6 +1,6 @@
 thuringia = {
 	name = "Thuringia"
-	type = minor_nation
+	type = polity
 	color = { 207 206 226 }
 	culture = german
 	default_religion = protestant

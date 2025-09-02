@@ -1,6 +1,6 @@
 switzerland = {
 	name = "Switzerland"
-	type = minor_nation
+	type = polity
 	color = { 170 13 13 }
 	culture = german
 	default_religion = protestant

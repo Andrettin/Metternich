@@ -1,6 +1,6 @@
 afghanistan = {
 	name = "Afghanistan"
-	type = minor_nation
+	type = polity
 	culture = pashtun
 	default_religion = sunni
 	default_tier = kingdom

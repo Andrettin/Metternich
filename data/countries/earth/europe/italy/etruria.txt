@@ -1,6 +1,6 @@
 etruria = {
 	name = "Etruria"
-	type = minor_nation
+	type = polity
 	culture = etruscan
 	default_religion = pagan
 	default_tier = kingdom

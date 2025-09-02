@@ -1,6 +1,6 @@
 palatinate = {
 	name = "Palatinate"
-	type = minor_nation
+	type = polity
 	culture = german
 	default_religion = catholic
 	default_tier = county

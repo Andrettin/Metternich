@@ -1,6 +1,6 @@
 arvernia = {
 	name = "Arvernia"
-	type = minor_nation
+	type = polity
 	culture = arverni
 	default_religion = pagan
 	default_tier = duchy

@@ -1,6 +1,6 @@
 japonica = {
 	name = "Japonica"
-	type = minor_nation
+	type = polity
 	culture = japanese
 	default_religion = shinto
 	default_tier = duchy

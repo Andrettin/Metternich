@@ -1,6 +1,6 @@
 parma = {
 	name = "Parma"
-	type = minor_nation
+	type = polity
 	color = { 128 202 129 }
 	culture = italian
 	default_religion = catholic

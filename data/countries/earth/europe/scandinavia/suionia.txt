@@ -1,6 +1,6 @@
 suionia = {
 	name = "Suionia"
-	type = great_power
+	type = polity
 	color = { 0 173 198 }
 	culture = suioni
 	default_religion = pagan

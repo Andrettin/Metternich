@@ -1,6 +1,6 @@
 egypt = {
 	name = "Egypt"
-	type = great_power
+	type = polity
 	color = { 143 141 128 }
 	culture = egyptian
 	default_religion = pagan
@@ -21,7 +21,7 @@ egypt = {
 
 egypt_arabic = {
 	name = "Egypt"
-	type = minor_nation
+	type = polity
 	culture = arabic
 	default_religion = sunni
 	default_tier = kingdom

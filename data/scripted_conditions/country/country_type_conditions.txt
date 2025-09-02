@@ -10,7 +10,3 @@ is_tribe = {
 		government_type = tribal_despotism
 	}
 }
-
-is_power = {
-	country_type = great_power
-}

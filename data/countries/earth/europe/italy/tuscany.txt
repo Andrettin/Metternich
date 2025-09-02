@@ -1,6 +1,6 @@
 tuscany = {
 	name = "Tuscany"
-	type = minor_nation
+	type = polity
 	color = { 84 96 136 }
 	culture = italian
 	default_religion = catholic

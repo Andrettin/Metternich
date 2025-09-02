@@ -1,6 +1,6 @@
 fafnir = {
 	name = "Fafnir"
-	type = minor_nation
+	type = polity
 	culture = draconic
 	default_religion = pagan
 	default_tier = duchy

@@ -1,6 +1,6 @@
 lesser_armenia = {
 	name = "Lesser Armenia"
-	type = minor_nation
+	type = polity
 	culture = armenian
 	default_religion = orthodox
 	default_tier = kingdom

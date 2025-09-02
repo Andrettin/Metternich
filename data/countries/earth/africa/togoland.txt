@@ -1,6 +1,6 @@
 togoland = {
 	name = "Togoland"
-	type = minor_nation
+	type = polity
 	culture = ewe
 	default_religion = pagan
 	default_tier = duchy

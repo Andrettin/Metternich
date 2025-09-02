@@ -1,6 +1,6 @@
 arabia = {
 	name = "Arabia"
-	type = great_power
+	type = polity
 	color = { 66 111 19 }
 	culture = arabic
 	default_religion = pagan

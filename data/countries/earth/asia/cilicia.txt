@@ -1,6 +1,6 @@
 cilicia = {
 	name = "Cilicia"
-	type = minor_nation
+	type = polity
 	culture = cilician
 	default_religion = pagan
 	default_tier = kingdom

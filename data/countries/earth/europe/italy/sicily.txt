@@ -1,6 +1,6 @@
 sicily = {
 	name = "Sicily"
-	type = minor_nation
+	type = polity
 	culture = italian
 	default_religion = catholic
 	default_tier = kingdom

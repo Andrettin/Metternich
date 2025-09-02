@@ -1,6 +1,6 @@
 eastern_rome = {
 	name = "Eastern Rome"
-	type = great_power
+	type = polity
 	color = { 170 148 214 }
 	culture = roman
 	default_religion = orthodox

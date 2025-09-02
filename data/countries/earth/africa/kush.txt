@@ -1,6 +1,6 @@
 kush = {
 	name = "Kush"
-	type = minor_nation
+	type = polity
 	culture = meroitic
 	default_religion = pagan
 	default_tier = kingdom

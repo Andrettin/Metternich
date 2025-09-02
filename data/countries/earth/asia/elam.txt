@@ -1,6 +1,6 @@
 elam = {
 	name = "Elam"
-	type = minor_nation
+	type = polity
 	culture = elamite
 	default_religion = pagan
 	default_tier = duchy

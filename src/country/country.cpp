@@ -30,7 +30,7 @@
 namespace metternich {
 
 country::country(const std::string &identifier)
-	: named_data_entry(identifier), type(country_type::minor_nation), default_tier(country_tier::none), min_tier(country_tier::none), max_tier(country_tier::none)
+	: named_data_entry(identifier), type(country_type::polity), default_tier(country_tier::none), min_tier(country_tier::none), max_tier(country_tier::none)
 {
 	this->reset_game_data();
 }
@@ -174,9 +174,9 @@ void country::reset_ai()
 	emit ai_changed();
 }
 
-bool country::is_great_power() const
+bool country::is_playable() const
 {
-	return this->get_type() == country_type::great_power || this->get_type() == country_type::clade;
+	return this->get_type() == country_type::polity;
 }
 
 bool country::is_tribe() const
@@ -191,7 +191,7 @@ bool country::is_clade() const
 
 const QColor &country::get_color() const
 {
-	if (!this->is_great_power() && !this->color.isValid()) {
+	if (!this->color.isValid()) {
 		return defines::get()->get_minor_nation_color();
 	}
 
@@ -340,7 +340,7 @@ const std::string &country::get_office_title_name(const office *office, const go
 
 bool country::can_declare_war() const
 {
-	return this->get_type() == country_type::great_power;
+	return this->get_type() == country_type::polity;
 }
 
 std::vector<const technology *> country::get_available_technologies() const

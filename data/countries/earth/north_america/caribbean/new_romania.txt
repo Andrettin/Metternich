@@ -1,6 +1,6 @@
 new_romania = {
 	name = "New Romania"
-	type = minor_nation
+	type = polity
 	culture = romanian
 	default_religion = orthodox
 	default_tier = duchy

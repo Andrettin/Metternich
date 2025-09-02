@@ -1,6 +1,6 @@
 vestindielandt = {
 	name = "Vestindielandt"
-	type = minor_nation
+	type = polity
 	culture = german
 	default_religion = protestant
 	default_tier = duchy

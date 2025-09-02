@@ -1,6 +1,6 @@
 new_france = {
 	name = "New France"
-	type = great_power
+	type = polity
 	color = { 194 140 86 }
 	culture = french
 	default_religion = catholic

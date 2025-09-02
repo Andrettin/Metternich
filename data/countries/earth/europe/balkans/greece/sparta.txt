@@ -1,6 +1,6 @@
 sparta = {
 	name = "Sparta"
-	type = great_power
+	type = polity
 	color = { 150 70 78 }
 	culture = greek
 	default_religion = pagan

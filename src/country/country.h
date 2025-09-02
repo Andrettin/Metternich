@@ -46,7 +46,6 @@ class country final : public named_data_entry, public data_type<country>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country_type type MEMBER type READ get_type NOTIFY changed)
-	Q_PROPERTY(bool great_power READ is_great_power CONSTANT)
 	Q_PROPERTY(bool tribe READ is_tribe CONSTANT)
 	Q_PROPERTY(bool clade READ is_clade CONSTANT)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
@@ -123,7 +122,7 @@ public:
 		return this->type;
 	}
 
-	bool is_great_power() const;
+	bool is_playable() const;
 	bool is_tribe() const;
 	bool is_clade() const;
 

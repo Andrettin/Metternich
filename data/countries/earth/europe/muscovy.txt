@@ -1,6 +1,6 @@
 muscovy = {
 	name = "Muscovy"
-	type = great_power
+	type = polity
 	color = { 111 177 210 }
 	culture = russian
 	default_religion = orthodox

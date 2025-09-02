@@ -1,6 +1,6 @@
 aeduia = {
 	name = "Aeduia"
-	type = minor_nation
+	type = polity
 	culture = haedui
 	default_religion = pagan
 	default_tier = duchy

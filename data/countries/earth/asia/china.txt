@@ -1,6 +1,6 @@
 china = {
 	name = "China"
-	type = great_power
+	type = polity
 	color = { 255 234 154 }
 	culture = chinese
 	default_religion = pagan

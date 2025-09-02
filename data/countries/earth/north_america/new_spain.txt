@@ -1,6 +1,6 @@
 new_spain = {
 	name = "New Spain"
-	type = great_power
+	type = polity
 	color = { 231 181 12 }
 	culture = castillian
 	default_religion = catholic

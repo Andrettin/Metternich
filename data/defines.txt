@@ -48,8 +48,6 @@ piety_commodity = piety
 default_research_commodity = research
 advisor_commodity = statesmanship
 
-great_power_commodity_demand_divisor = 2
-
 tariff_icon = wealth
 treasure_fleet_icon = chest
 

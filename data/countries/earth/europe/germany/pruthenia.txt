@@ -1,6 +1,6 @@
 pruthenia = {
 	name = "Pruthenia"
-	type = minor_nation
+	type = polity
 	culture = prussian
 	default_religion = pagan
 	default_tier = duchy

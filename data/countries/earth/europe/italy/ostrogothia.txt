@@ -1,6 +1,6 @@
 ostrogothia = {
 	name = "Ostrogothia"
-	type = great_power
+	type = polity
 	color = { 76 100 219 }
 	culture = gothic
 	default_religion = catholic #Arianism

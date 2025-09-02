@@ -1,6 +1,6 @@
 vandalia = {
 	name = "Vandalia"
-	type = great_power
+	type = polity
 	color = { 21 190 219 }
 	culture = vandal
 	default_religion = catholic #Arianism

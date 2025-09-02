@@ -1,6 +1,6 @@
 argentina = {
 	name = "Argentina"
-	type = minor_nation
+	type = polity
 	culture = castillian
 	default_religion = catholic
 	default_tier = kingdom

@@ -560,20 +560,13 @@ bool country_game_data::is_any_overlord_of(const metternich::country *country) c
 std::string country_game_data::get_type_name() const
 {
 	switch (this->country->get_type()) {
-		case country_type::great_power:
-		case country_type::clade:
-			if (this->get_overlord() != nullptr) {
-				return "Subject Power";
-			}
-
+		case country_type::polity:
 			if (this->get_rank() != nullptr) {
 				return this->get_rank()->get_name();
 			}
-
-			return "Great Power";
-		case country_type::minor_nation:
+		case country_type::clade:
 		case country_type::tribe:
-			return "Minor Nation";
+			return get_country_type_name(this->country->get_type());
 		default:
 			assert_throw(false);
 	}
@@ -1196,26 +1189,7 @@ void country_game_data::set_diplomacy_state(const metternich::country *other_cou
 		return;
 	}
 
-	//minor nations cannot have diplomacy with one another
-	assert_throw(this->country->is_great_power() || other_country->is_great_power());
-
-	switch (state) {
-		case diplomacy_state::alliance:
-			//only great powers can ally between themselves
-			assert_throw(this->country->is_great_power() && other_country->is_great_power());
-			break;
-		case diplomacy_state::non_aggression_pact:
-			//non-aggression pacts can only be formed between a great power and a minor nation
-			assert_throw(this->country->is_great_power() != other_country->is_great_power());
-			break;
-		default:
-			break;
-	}
-
 	if (is_vassalage_diplomacy_state(state)) {
-		//only great powers can have vassals
-		assert_throw(other_country->is_great_power());
-
 		this->set_overlord(other_country);
 	} else {
 		if (this->get_overlord() == other_country) {

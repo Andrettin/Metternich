@@ -1,6 +1,6 @@
 ran = {
 	name = "Ran"
-	type = minor_nation
+	type = polity
 	culture = aquan
 	default_religion = asatru
 	default_tier = duchy

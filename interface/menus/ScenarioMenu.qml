@@ -165,7 +165,7 @@ MenuBase {
 				) : "")
 				+ "\n" + selected_country.game_data.title_name
 				+ (selected_country.game_data.anarchy ? "\nAnarchy" : "")
-				+ (selected_country.great_power && !selected_country.game_data.anarchy ? ("\nScore: " + number_string(selected_country.game_data.score) + " (#" + (selected_country.game_data.score_rank + 1) + ")") : "")
+				+ (!selected_country.game_data.anarchy ? ("\nScore: " + number_string(selected_country.game_data.score) + " (#" + (selected_country.game_data.score_rank + 1) + ")") : "")
 				+ "\nPopulation: " + number_string(selected_country.game_data.population.size)
 				+ get_subject_type_counts_string(selected_country.game_data.subject_type_counts)
 				+ "\n" + selected_country.game_data.provinces.length + " " + (selected_country.game_data.provinces.length > 1 ? "Provinces" : "Province")
@@ -371,11 +371,9 @@ MenuBase {
 		text: qsTr("Start Game")
 		width: 96 * scale_factor
 		height: 24 * scale_factor
-		enabled: !loading_scenario && selected_country !== null && selected_country.great_power && !selected_country.game_data.anarchy
+		enabled: !loading_scenario && selected_country !== null && !selected_country.game_data.anarchy
 		tooltip: enabled ? "" : small_text(
-			selected_country === null ? "You must select a country to play" : (
-				!selected_country.great_power ? "You cannot play as a Minor Nation" : "You cannot play as a country under anarchy"
-			)
+			selected_country === null ? "You must select a country to play" : "You cannot play as a country under anarchy"
 		)
 		
 		onClicked: {
@@ -460,8 +458,6 @@ MenuBase {
 	function select_random_country() {
 		if (selected_scenario.default_countries.length > 0) {
 			diplomatic_map.selected_country = selected_scenario.default_countries[random(selected_scenario.default_countries.length)]
-		} else if (metternich.game.great_powers.length > 0) {
-			diplomatic_map.selected_country = metternich.game.great_powers[random(metternich.game.great_powers.length)]
 		} else {
 			diplomatic_map.selected_country = metternich.game.countries[random(metternich.game.countries.length)]
 		}

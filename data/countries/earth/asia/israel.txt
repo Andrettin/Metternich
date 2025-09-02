@@ -1,6 +1,6 @@
 israel = {
 	name = "Israel"
-	type = minor_nation
+	type = polity
 	culture = hebrew
 	default_religion = jewish
 	default_tier = kingdom

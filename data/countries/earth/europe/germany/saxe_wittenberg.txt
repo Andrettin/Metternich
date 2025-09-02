@@ -1,6 +1,6 @@
 saxe_wittenberg = {
 	name = "Saxe-Wittenberg"
-	type = minor_nation
+	type = polity
 	color = { 155 147 180 }
 	culture = german
 	default_religion = protestant

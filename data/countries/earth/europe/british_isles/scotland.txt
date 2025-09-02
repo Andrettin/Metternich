@@ -1,6 +1,6 @@
 alba = {
 	name = "Alba"
-	type = minor_nation
+	type = polity
 	culture = highlander
 	default_religion = catholic
 	default_tier = kingdom
@@ -16,7 +16,7 @@ alba = {
 
 scotland = {
 	name = "Scotland"
-	type = minor_nation
+	type = polity
 	culture = scottish
 	default_religion = protestant
 	default_tier = kingdom

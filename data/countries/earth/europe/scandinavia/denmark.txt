@@ -1,6 +1,6 @@
 denmark = {
 	name = "Denmark"
-	type = minor_nation
+	type = polity
 	color = { 172 70 66 }
 	culture = danish
 	default_religion = protestant
