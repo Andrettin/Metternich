@@ -200,8 +200,21 @@ void country_game_data::pay_maintenance()
 		}
 	}
 
+	military_unit_type_map<int> disbanded_type_counts;
 	for (military_unit *military_unit : military_units_to_disband) {
+		disbanded_type_counts[military_unit->get_type()]++;
 		military_unit->disband(false);
+	}
+
+	if (!disbanded_type_counts.empty() && this->country == game::get()->get_player_country()) {
+		const portrait *war_minister_portrait = this->get_government()->get_war_minister_portrait();
+
+		std::string disbanded_units_str;
+		for (const auto &[military_unit_type, disbanded_count] : disbanded_type_counts) {
+			disbanded_units_str += std::format("\n{} {}", disbanded_count, military_unit_type->get_name());
+		}
+
+		engine_interface::get()->add_notification("Military Units Disbanded", war_minister_portrait, std::format("Your Excellency, our finances are in dire straits! Due to a lack of available resources, we were forced to disband some of our military units.\n\nDisbanded Units:{}", disbanded_units_str));
 	}
 }
 
