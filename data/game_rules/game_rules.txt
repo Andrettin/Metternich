@@ -83,13 +83,6 @@ myths_enabled = {
 	hidden = true
 }
 
-ruler_traits = {
-	name = "Ruler Traits"
-	default_value = false
-	description = "Allow rulers to have traits"
-	hidden = true
-}
-
 additional_settlement_types = {
 	name = "Additional Settlement Types"
 	default_value = false
