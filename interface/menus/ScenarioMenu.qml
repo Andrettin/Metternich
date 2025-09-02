@@ -391,6 +391,7 @@ MenuBase {
 			text: qsTr("Game Rules")
 			width: 96 * scale_factor
 			height: 24 * scale_factor
+			visible: false
 			
 			onClicked: {
 				menu_stack.push("GameRulesMenu.qml", {
