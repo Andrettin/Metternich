@@ -2,7 +2,6 @@ architect = {
 	name = "Architect"
 	types = {
 		background
-		advisor
 	}
 	icon = architecture
 	attribute = stewardship
@@ -40,7 +39,7 @@ architect = {
 benjamin_franklin = {
 	name = "Benjamin Franklin"
 	types = {
-		advisor
+		personality
 	}
 	icon = bell
 	hidden_name = true
@@ -56,7 +55,7 @@ benjamin_franklin = {
 charles_darwin = {
 	name = "Charles Darwin"
 	types = {
-		advisor
+		personality
 	}
 	icon = research
 	hidden_name = true
@@ -71,7 +70,7 @@ charles_darwin = {
 cotton_planter = {
 	name = "Cotton Planter"
 	types = {
-		advisor
+		background
 	}
 	icon = cotton
 	attribute = stewardship
@@ -91,7 +90,7 @@ cotton_planter = {
 cyrus_mccormick = {
 	name = "Cyrus McCormick"
 	types = {
-		advisor
+		personality
 	}
 	icon = grain
 	hidden_name = true
@@ -109,7 +108,7 @@ cyrus_mccormick = {
 ferdinand_magellan = {
 	name = "Ferdinand Magellan"
 	types = {
-		advisor
+		personality
 	}
 	icon = anchor
 	hidden_name = true
@@ -127,7 +126,7 @@ ferdinand_magellan = {
 francisco_de_coronado = {
 	name = "Francisco de Coronado"
 	types = {
-		advisor
+		personality
 	}
 	icon = crossed_sabers
 	hidden_name = true
@@ -146,7 +145,7 @@ francisco_de_coronado = {
 giovanni_da_verrazano = {
 	name = "Giovanni da Verrazano"
 	types = {
-		advisor
+		personality
 	}
 	icon = anchor
 	hidden_name = true
@@ -161,7 +160,7 @@ giovanni_da_verrazano = {
 henry_hudson = {
 	name = "Henry Hudson"
 	types = {
-		advisor
+		personality
 	}
 	icon = furs
 	hidden_name = true
@@ -176,7 +175,7 @@ henry_hudson = {
 isaac_newton = {
 	name = "Isaac Newton"
 	types = {
-		advisor
+		personality
 	}
 	icon = research
 	hidden_name = true
@@ -191,7 +190,7 @@ isaac_newton = {
 jacques_marquette = {
 	name = "Jacques Marquette"
 	types = {
-		advisor
+		personality
 	}
 	icon = crossed_sabers
 	hidden_name = true
@@ -210,7 +209,7 @@ jacques_marquette = {
 johann_sebastian_bach = {
 	name = "Johann Sebastian Bach"
 	types = {
-		advisor
+		personality
 	}
 	icon = music
 	hidden_name = true
@@ -225,7 +224,7 @@ johann_sebastian_bach = {
 john_harvard = {
 	name = "John Harvard"
 	types = {
-		advisor
+		personality
 	}
 	icon = wooden_cross
 	hidden_name = true
@@ -240,7 +239,7 @@ john_harvard = {
 john_jacob_astor = {
 	name = "John Jacob Astor"
 	types = {
-		advisor
+		personality
 	}
 	icon = furs
 	hidden_name = true
@@ -255,7 +254,7 @@ john_jacob_astor = {
 john_paul_jones = {
 	name = "John Paul Jones"
 	types = {
-		advisor
+		personality
 	}
 	icon = anchor
 	hidden_name = true
@@ -270,7 +269,7 @@ john_paul_jones = {
 john_winthrop = {
 	name = "John Winthrop"
 	types = {
-		advisor
+		personality
 	}
 	icon = wooden_cross
 	hidden_name = true
@@ -288,7 +287,7 @@ john_winthrop = {
 juan_de_bermudez = {
 	name = "Juan de Bermudez"
 	types = {
-		advisor
+		personality
 	}
 	icon = anchor
 	hidden_name = true
@@ -303,7 +302,7 @@ juan_de_bermudez = {
 leonardo_da_vinci = {
 	name = "Leonardo da Vinci"
 	types = {
-		advisor
+		personality
 	}
 	icon = cog
 	hidden_name = true
@@ -318,7 +317,7 @@ leonardo_da_vinci = {
 marco_polo = {
 	name = "Marco Polo"
 	types = {
-		advisor
+		personality
 	}
 	icon = wealth
 	hidden_name = true
@@ -333,7 +332,7 @@ marco_polo = {
 natural_scientist = {
 	name = "Natural Scientist"
 	types = {
-		advisor
+		background
 	}
 	icon = research
 	attribute = learning
@@ -367,7 +366,7 @@ natural_scientist = {
 nicolaus_copernicus = {
 	name = "Nicolaus Copernicus"
 	types = {
-		advisor
+		personality
 	}
 	icon = research
 	hidden_name = true
@@ -382,7 +381,7 @@ nicolaus_copernicus = {
 patrick_henry = {
 	name = "Patrick Henry"
 	types = {
-		advisor
+		personality
 	}
 	icon = bell
 	hidden_name = true
@@ -401,7 +400,7 @@ patrick_henry = {
 philosopher = {
 	name = "Philosopher"
 	types = {
-		advisor
+		background
 	}
 	icon = philosophy
 	attribute = learning
@@ -421,7 +420,7 @@ philosopher = {
 sieur_de_la_salle = {
 	name = "Sieur de La Salle"
 	types = {
-		advisor
+		personality
 	}
 	icon = crossed_sabers
 	hidden_name = true
@@ -436,7 +435,7 @@ sieur_de_la_salle = {
 sun_tzu = {
 	name = "Sun Tzu"
 	types = {
-		advisor
+		personality
 	}
 	icon = crossed_sabers
 	hidden_name = true
@@ -448,7 +447,7 @@ sun_tzu = {
 theologian = {
 	name = "Theologian"
 	types = {
-		advisor
+		background
 	}
 	icon = wooden_cross
 	attribute = learning
@@ -468,7 +467,7 @@ theologian = {
 tobacco_planter = {
 	name = "Tobacco Planter"
 	types = {
-		advisor
+		background
 	}
 	icon = tobacco
 	attribute = stewardship
@@ -488,7 +487,7 @@ tobacco_planter = {
 washington_irving = {
 	name = "Washington Irving"
 	types = {
-		advisor
+		personality
 	}
 	icon = bell
 	hidden_name = true

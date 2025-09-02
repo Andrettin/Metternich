@@ -5,10 +5,7 @@ namespace metternich {
 enum class character_trait_type {
 	background,
 	personality,
-	expertise,
-	ruler,
-	advisor,
-	governor
+	expertise
 };
 
 }

@@ -1,7 +1,7 @@
 diplomat = {
 	name = "Diplomat"
 	types = {
-		advisor
+		background
 	}
 	icon = treaty
 	attribute = diplomacy
@@ -21,7 +21,7 @@ diplomat = {
 statesman = {
 	name = "Statesman"
 	types = {
-		advisor
+		background
 	}
 	icon = bell
 	attribute = diplomacy

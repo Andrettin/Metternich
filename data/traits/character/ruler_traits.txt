@@ -1,7 +1,7 @@
 aggressive = {
 	name = "Aggressive"
 	types = {
-		ruler
+		personality
 	}
 	icon = crossed_sabers
 }
@@ -9,7 +9,7 @@ aggressive = {
 charismatic = {
 	name = "Charismatic"
 	types = {
-		ruler
+		personality
 	}
 	icon = music
 	office_modifiers = {
@@ -27,7 +27,7 @@ charismatic = {
 creative = {
 	name = "Creative"
 	types = {
-		ruler
+		personality
 	}
 	icon = music
 	office_modifiers = {
@@ -43,7 +43,7 @@ creative = {
 expansive = {
 	name = "Expansive"
 	types = {
-		ruler
+		personality
 	}
 	icon = settlement
 	office_modifiers = {
@@ -59,7 +59,7 @@ expansive = {
 financial = {
 	name = "Financial"
 	types = {
-		ruler
+		personality
 	}
 	icon = chest
 	office_modifiers = {
@@ -72,7 +72,7 @@ financial = {
 impressionable = {
 	name = "Impressionable"
 	types = {
-		ruler
+		personality
 	}
 	icon = painting
 }
@@ -80,7 +80,7 @@ impressionable = {
 indulgent = {
 	name = "Indulgent"
 	types = {
-		ruler
+		personality
 	}
 	icon = treaty
 }
@@ -88,7 +88,7 @@ indulgent = {
 industrious = {
 	name = "Industrious"
 	types = {
-		ruler
+		personality
 	}
 	icon = cog
 	office_modifiers = {
@@ -101,7 +101,7 @@ industrious = {
 militaristic = {
 	name = "Militaristic"
 	types = {
-		ruler
+		personality
 	}
 	icon = crossed_sabers
 }
@@ -109,7 +109,7 @@ militaristic = {
 organized = {
 	name = "Organized"
 	types = {
-		ruler
+		personality
 	}
 	icon = philosophy
 	office_modifiers = {
@@ -122,7 +122,7 @@ organized = {
 philosophical = {
 	name = "Philosophical"
 	types = {
-		ruler
+		personality
 	}
 	icon = philosophy
 	office_modifiers = {
@@ -135,7 +135,7 @@ philosophical = {
 spiritual = {
 	name = "Spiritual"
 	types = {
-		ruler
+		personality
 	}
 	icon = wooden_cross
 	attribute = learning

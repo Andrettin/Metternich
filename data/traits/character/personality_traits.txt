@@ -15,8 +15,6 @@ assertive = {
 	name = "Assertive"
 	types = {
 		personality
-		ruler
-		governor
 	}
 	icon = saber
 	conditions = {
@@ -42,7 +40,6 @@ careful = {
 	name = "Careful"
 	types = {
 		personality
-		ruler
 	}
 	icon = heater_shield
 	office_modifiers = {
@@ -131,7 +128,6 @@ devout = {
 	name = "Devout"
 	types = {
 		personality
-		ruler
 	}
 	icon = wooden_cross
 	conditions = {
@@ -168,7 +164,6 @@ disciplined = {
 	name = "Disciplined"
 	types = {
 		personality
-		ruler
 	}
 	icon = crossed_sabers
 	attribute = martial
@@ -231,7 +226,6 @@ imperialistic = {
 	name = "Imperialistic"
 	types = {
 		personality
-		ruler
 	}
 	icon = globe
 	attribute = martial
@@ -274,7 +268,6 @@ lapsed = {
 	name = "Lapsed"
 	types = {
 		personality
-		ruler
 	}
 	icon = skull
 	conditions = {
@@ -296,7 +289,6 @@ libertarian = {
 	name = "Libertarian"
 	types = {
 		personality
-		ruler
 	}
 	icon = courthouse
 	attribute = diplomacy
@@ -315,7 +307,6 @@ narrow_minded = {
 	name = "Narrow-Minded"
 	types = {
 		personality
-		ruler
 	}
 	icon = cattle
 	attribute_bonuses = {
@@ -333,7 +324,6 @@ prominent = {
 	name = "Prominent"
 	types = {
 		personality
-		governor
 	}
 	icon = flag
 	attribute_bonuses = {
@@ -356,7 +346,6 @@ reckless = {
 	name = "Reckless"
 	types = {
 		personality
-		ruler
 	}
 	icon = saber
 	attribute_bonuses = {
@@ -373,8 +362,6 @@ scholar = {
 	name = "Scholar"
 	types = {
 		personality
-		ruler
-		governor
 	}
 	icon = university
 	attribute_bonuses = {
@@ -406,7 +393,6 @@ skeptical = {
 	name = "Skeptical"
 	types = {
 		personality
-		ruler
 	}
 	icon = philosophy
 	attribute_bonuses = {
@@ -423,7 +409,6 @@ strict = {
 	name = "Strict"
 	types = {
 		personality
-		ruler
 	}
 	icon = saber
 	attribute_bonuses = {
@@ -448,8 +433,6 @@ submissive = {
 	name = "Submissive"
 	types = {
 		personality
-		ruler
-		governor
 	}
 	icon = skull
 	conditions = {
@@ -485,7 +468,6 @@ unnoticeable = {
 	name = "Unnoticeable"
 	types = {
 		personality
-		governor
 	}
 	icon = skull
 	attribute_bonuses = {

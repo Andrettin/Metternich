@@ -144,13 +144,6 @@ void character_game_data::on_setup_finished()
 	}
 
 	std::vector<character_trait_type> generated_trait_types{ character_trait_type::background, character_trait_type::personality, character_trait_type::expertise };
-	if (this->character->has_role(character_role::ruler)) {
-		generated_trait_types.insert(generated_trait_types.begin(), character_trait_type::ruler);
-	} else if (this->character->has_role(character_role::advisor)) {
-		generated_trait_types.insert(generated_trait_types.begin(), character_trait_type::advisor);
-	} else if (this->character->has_role(character_role::governor)) {
-		generated_trait_types.insert(generated_trait_types.begin(), character_trait_type::governor);
-	}
 
 	bool success = true;
 	for (const character_trait_type trait_type : generated_trait_types) {
@@ -174,26 +167,6 @@ void character_game_data::on_setup_finished()
 
 			if (this->get_trait_count_for_type(trait_type) < defines::get()->get_max_character_traits_for_type(trait_type)) {
 				success = this->generate_initial_trait(trait_type);
-			}
-		}
-	}
-
-	if (this->character->has_role(character_role::ruler)) {
-		for (const character_trait *trait : this->get_traits_of_type(character_trait_type::ruler)) {
-			if (trait->get_office_modifier(defines::get()->get_ruler_office()) == nullptr && trait->get_scaled_office_modifier(defines::get()->get_ruler_office()) != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
-				throw std::runtime_error(std::format("Character \"{}\" is a ruler with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
-			}
-		}
-	} else if (this->character->has_role(character_role::advisor)) {
-		for (const character_trait *trait : this->get_traits_of_type(character_trait_type::advisor)) {
-			if (trait->get_advisor_modifier() == nullptr && trait->get_advisor_effects() == nullptr && trait->get_scaled_advisor_modifier() != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
-				throw std::runtime_error(std::format("Character \"{}\" is an advisor with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
-			}
-		}
-	} else if (this->character->has_role(character_role::governor)) {
-		for (const character_trait *trait : this->get_traits_of_type(character_trait_type::governor)) {
-			if (trait->get_governor_modifier() == nullptr && trait->get_scaled_governor_modifier() != nullptr && this->get_attribute_value(trait->get_attribute()) == 0) {
-				throw std::runtime_error(std::format("Character \"{}\" is a governor with a scaled modifier for trait \"{}\", but has an initial value of zero for that trait's attribute.", this->character->get_identifier(), trait->get_identifier()));
 			}
 		}
 	}
@@ -438,18 +411,6 @@ bool character_game_data::can_gain_trait(const character_trait *trait) const
 	}
 
 	for (const character_trait_type trait_type : trait->get_types()) {
-		if (trait_type == character_trait_type::ruler && !this->character->has_role(character_role::ruler)) {
-			continue;
-		}
-
-		if (trait_type == character_trait_type::advisor && !this->character->has_role(character_role::advisor)) {
-			continue;
-		}
-
-		if (trait_type == character_trait_type::governor && !this->character->has_role(character_role::governor)) {
-			continue;
-		}
-
 		if (this->get_trait_count_for_type(trait_type) >= defines::get()->get_max_character_traits_for_type(trait_type)) {
 			return false;
 		}
@@ -684,10 +645,6 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 {
 	if (office->is_ruler()) {
 		assert_throw(this->character->has_role(character_role::ruler));
-
-		if (defines::get()->get_ruler_traits_game_rule() != nullptr && !game::get()->get_rules()->get_value(defines::get()->get_ruler_traits_game_rule())) {
-			return {};
-		}
 	} else {
 		assert_throw(this->character->has_role(character_role::advisor));
 	}
@@ -753,10 +710,6 @@ void character_game_data::apply_office_modifier(const metternich::country *count
 
 void character_game_data::apply_trait_office_modifier(const character_trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const
 {
-	if (office->is_ruler() && defines::get()->get_ruler_traits_game_rule() != nullptr && !game::get()->get_rules()->get_value(defines::get()->get_ruler_traits_game_rule())) {
-		return;
-	}
-
 	if (trait->get_office_modifier(office) != nullptr) {
 		trait->get_office_modifier(office)->apply(country, multiplier);
 	}

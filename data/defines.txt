@@ -27,8 +27,6 @@ months_per_turn_from_year = { #months per turn after a certain year has been rea
 	1800 = 3
 }
 
-ruler_traits_game_rule = ruler_traits
-
 default_population_class = untrained_workers
 default_tribal_population_class = tribesmen
 default_literate_population_class = trained_workers
@@ -55,17 +53,11 @@ min_character_traits_per_type = {
 	background = 1
 	personality = 1
 	expertise = 0
-	ruler = 2
-	advisor = 1
-	governor = 1
 }
 
 max_character_traits_per_type = {
 	background = 1
 	personality = 1
-	ruler = 2
-	advisor = 1
-	governor = 1
 }
 
 scaled_landholder_modifier = {

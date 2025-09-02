@@ -1,7 +1,7 @@
 merchant = {
 	name = "Merchant"
 	types = {
-		advisor
+		background
 	}
 	icon = wealth
 	attribute = stewardship
@@ -21,7 +21,7 @@ merchant = {
 treasurer = {
 	name = "Treasurer"
 	types = {
-		advisor
+		background
 	}
 	icon = chest
 	attribute = stewardship

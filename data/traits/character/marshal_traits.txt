@@ -1,7 +1,7 @@
 army_organizer = {
 	name = "Army Organizer"
 	types = {
-		advisor
+		background
 	}
 	icon = crossed_sabers
 	attribute = martial
@@ -13,7 +13,7 @@ army_organizer = {
 army_reformer = {
 	name = "Army Reformer"
 	types = {
-		advisor
+		background
 	}
 	icon = crossed_sabers
 	attribute = martial
@@ -39,7 +39,7 @@ army_reformer = {
 commandant = { #person responsible for drilling troops
 	name = "Commandant"
 	types = {
-		advisor
+		background
 	}
 	icon = crossed_sabers
 	attribute = martial
@@ -51,7 +51,7 @@ commandant = { #person responsible for drilling troops
 grand_captain = {
 	name = "Grand Captain"
 	types = {
-		advisor
+		background
 	}
 	icon = crossed_sabers
 	attribute = martial

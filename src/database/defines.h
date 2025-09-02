@@ -58,7 +58,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain  READ get_default_water_zone_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_space_terrain MEMBER default_space_terrain READ get_default_space_terrain NOTIFY changed)
 	Q_PROPERTY(metternich::pathway* route_pathway MEMBER route_pathway NOTIFY changed)
-	Q_PROPERTY(const archimedes::game_rule* ruler_traits_game_rule MEMBER ruler_traits_game_rule READ get_ruler_traits_game_rule NOTIFY changed)
 	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
 	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
 	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
@@ -203,11 +202,6 @@ public:
 	const pathway *get_route_pathway() const
 	{
 		return this->route_pathway;
-	}
-
-	const game_rule *get_ruler_traits_game_rule() const
-	{
-		return this->ruler_traits_game_rule;
 	}
 
 	const population_class *get_default_population_class() const
@@ -439,7 +433,6 @@ private:
 	const terrain_type *default_water_zone_terrain = nullptr;
 	const terrain_type *default_space_terrain = nullptr;
 	pathway *route_pathway = nullptr;
-	const game_rule *ruler_traits_game_rule = nullptr;
 	population_class *default_population_class = nullptr;
 	population_class *default_tribal_population_class = nullptr;
 	population_class *default_literate_population_class = nullptr;

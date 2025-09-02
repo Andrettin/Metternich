@@ -1,7 +1,7 @@
 grand_admiral = {
 	name = "Grand Admiral"
 	types = {
-		advisor
+		background
 	}
 	icon = anchor
 	attribute = martial
@@ -13,7 +13,7 @@ grand_admiral = {
 naval_reformer = {
 	name = "Naval Reformer"
 	types = {
-		advisor
+		background
 	}
 	icon = anchor
 	attribute = martial
@@ -39,7 +39,7 @@ naval_reformer = {
 privateer = {
 	name = "Privateer"
 	types = {
-		advisor
+		background
 	}
 	icon = skull
 	attribute = martial

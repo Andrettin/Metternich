@@ -267,57 +267,12 @@ void character::check() const
 				if (this->get_rulable_countries().empty()) {
 					throw std::runtime_error(std::format("Character \"{}\" is a ruler, but has no rulable countries.", this->get_identifier()));
 				}
-
-				std::vector<const character_trait *> ruler_traits = this->get_traits();
-				std::erase_if(ruler_traits, [](const character_trait *trait) {
-					return !trait->get_types().contains(character_trait_type::ruler);
-				});
-				const int ruler_trait_count = static_cast<int>(ruler_traits.size());
-				const int min_ruler_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::ruler);
-				const int max_ruler_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::ruler);
-
-				if (ruler_trait_count < min_ruler_traits) {
-					log::log_error(std::format("Ruler character \"{}\" only has {} ruler {}, less than the expected minimum of {}.", this->get_identifier(), ruler_trait_count, ruler_trait_count == 1 ? "trait" : "traits", min_ruler_traits));
-				} else if (ruler_trait_count > max_ruler_traits) {
-					log::log_error(std::format("Ruler character \"{}\" has {} ruler {}, more than the expected maximum of {}.", this->get_identifier(), ruler_trait_count, ruler_trait_count == 1 ? "trait" : "traits", max_ruler_traits));
-				}
-				break;
-			}
-			case character_role::advisor:
-			{
-				std::vector<const character_trait *> advisor_traits = this->get_traits();
-				std::erase_if(advisor_traits, [](const character_trait *trait) {
-					return !trait->get_types().contains(character_trait_type::advisor);
-				});
-				const int advisor_trait_count = static_cast<int>(advisor_traits.size());
-				const int min_advisor_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::advisor);
-				const int max_advisor_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::advisor);
-
-				if (advisor_trait_count < min_advisor_traits) {
-					throw std::runtime_error(std::format("Advisor character \"{}\" only has {} advisor {}, less than the expected minimum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", min_advisor_traits));
-				} else if (advisor_trait_count > max_advisor_traits) {
-					throw std::runtime_error(std::format("Advisor character \"{}\" has {} advisor {}, more than the expected maximum of {}.", this->get_identifier(), advisor_trait_count, advisor_trait_count == 1 ? "trait" : "traits", max_advisor_traits));
-				}
 				break;
 			}
 			case character_role::governor:
 			{
 				if (this->get_governable_province() == nullptr) {
 					throw std::runtime_error(std::format("Character \"{}\" is a governor, but has no governable province.", this->get_identifier()));
-				}
-
-				std::vector<const character_trait *> governor_traits = this->get_traits();
-				std::erase_if(governor_traits, [](const character_trait *trait) {
-					return !trait->get_types().contains(character_trait_type::governor);
-				});
-				const int governor_trait_count = static_cast<int>(governor_traits.size());
-				const int min_governor_traits = defines::get()->get_min_character_traits_for_type(character_trait_type::governor);
-				const int max_governor_traits = defines::get()->get_max_character_traits_for_type(character_trait_type::governor);
-
-				if (governor_trait_count < min_governor_traits) {
-					throw std::runtime_error(std::format("Governor character \"{}\" only has {} governor {}, less than the expected minimum of {}.", this->get_identifier(), governor_trait_count, governor_trait_count == 1 ? "trait" : "traits", min_governor_traits));
-				} else if (governor_trait_count > max_governor_traits) {
-					throw std::runtime_error(std::format("Governor character \"{}\" has {} governor {}, more than the expected maximum of {}.", this->get_identifier(), governor_trait_count, governor_trait_count == 1 ? "trait" : "traits", max_governor_traits));
 				}
 				break;
 			}
