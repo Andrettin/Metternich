@@ -188,19 +188,7 @@ QString military_unit_type::get_stats_for_country_qstring(const country *country
 
 int military_unit_type::get_score() const
 {
-	int score = 0;
-
-	for (const auto &[commodity, cost] : this->get_commodity_costs()) {
-		if (commodity->get_base_price() != 0) {
-			score += cost * commodity->get_base_price();
-		} else if (commodity->is_abstract()) {
-			if (this->get_category() != military_unit_category::none && is_leader_military_unit_category(this->get_category())) {
-				score += cost * commodity::abstract_commodity_value;
-			}
-		}
-	}
-
-	return score;
+	return 0;
 }
 
 }
