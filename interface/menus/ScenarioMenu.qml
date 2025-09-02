@@ -212,7 +212,7 @@ MenuBase {
 	
 	SmallText {
 		id: ruler_label
-		anchors.top: population_type_chart_label.top
+		anchors.top: country_text_area.top
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
 		text: "Ruler"
 		visible: ruler_portrait.visible
@@ -220,8 +220,8 @@ MenuBase {
 	
 	PortraitButton {
 		id: ruler_portrait
-		anchors.top: population_type_chart.top
-		anchors.topMargin: 8 * scale_factor
+		anchors.top: ruler_label.bottom
+		anchors.topMargin: 4 * scale_factor
 		anchors.right: population_type_chart.left
 		anchors.rightMargin: 32 * scale_factor
 		portrait_identifier: portrait ? portrait.identifier : ""
@@ -251,7 +251,7 @@ MenuBase {
 		anchors.top: culture_chart.top
 		anchors.right: culture_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: selected_country !== null
+		visible: false//selected_country !== null
 	}
 	
 	SmallText {
@@ -268,7 +268,7 @@ MenuBase {
 		anchors.topMargin: 4 * scale_factor
 		anchors.right: religion_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: selected_country !== null
+		visible: false//selected_country !== null
 	}
 	
 	SmallText {
@@ -284,7 +284,7 @@ MenuBase {
 		anchors.top: population_type_chart.top
 		anchors.right: phenotype_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: selected_country !== null
+		visible: false//selected_country !== null
 	}
 	
 	SmallText {
@@ -300,7 +300,7 @@ MenuBase {
 		anchors.top: population_type_chart.top
 		anchors.right: diplomatic_map_background.right
 		anchors.rightMargin: 4 * scale_factor
-		visible: selected_country !== null
+		visible: false//selected_country !== null
 	}
 	
 	Rectangle {

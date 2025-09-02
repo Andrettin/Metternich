@@ -120,7 +120,7 @@ Rectangle {
 	
 	SmallText {
 		id: ruler_label
-		anchors.top: population_type_chart_label.top
+		anchors.top: country_text.top
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
 		text: "Ruler"
 		visible: ruler_portrait.visible
@@ -128,8 +128,8 @@ Rectangle {
 	
 	PortraitButton {
 		id: ruler_portrait
-		anchors.top: population_type_chart.top
-		anchors.topMargin: 8 * scale_factor
+		anchors.top: ruler_label.bottom
+		anchors.topMargin: 4 * scale_factor
 		anchors.right: population_type_chart.left
 		anchors.rightMargin: 32 * scale_factor
 		portrait_identifier: selected_country_ruler && selected_country_ruler.game_data.portrait ? selected_country_ruler.game_data.portrait.identifier : ""
@@ -156,7 +156,7 @@ Rectangle {
 		anchors.top: culture_chart.top
 		anchors.right: culture_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: selected_country !== null
+		visible: false//selected_country !== null
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
 	}
 	
@@ -174,7 +174,7 @@ Rectangle {
 		anchors.topMargin: 4 * scale_factor
 		anchors.right: religion_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: selected_country !== null
+		visible: false//selected_country !== null
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
 	}
 	
@@ -191,7 +191,7 @@ Rectangle {
 		anchors.top: population_type_chart.top
 		anchors.right: ideology_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: selected_country !== null
+		visible: false//selected_country !== null
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
 	}
 	
@@ -208,7 +208,7 @@ Rectangle {
 		anchors.top: population_type_chart.top
 		anchors.right: religious_map_mode_button.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: selected_country !== null
+		visible: false//selected_country !== null
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
 	}
 	
