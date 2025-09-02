@@ -15,15 +15,6 @@ lighthouse = {
 	settlement_conditions = {
 		coastal = true
 	}
-	cost_factor = {
-		modifier = {
-			factor = 0.5
-			game_rule = ruler_traits
-			ruler = {
-				trait = organized
-			}
-		}
-	}
 	province_modifier = {
 		fish_bonus_for_tile_threshold = 1
 	}

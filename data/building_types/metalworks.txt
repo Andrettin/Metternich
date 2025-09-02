@@ -25,15 +25,6 @@ blacksmiths_house = {
 		lumber = 1
 		steel = 1
 	}
-	cost_factor = {
-		modifier = {
-			factor = 0.5
-			game_rule = ruler_traits
-			ruler = {
-				trait = industrious
-			}
-		}
-	}
 }
 
 blacksmiths_shop = {
@@ -63,15 +54,6 @@ blacksmiths_shop = {
 		lumber = 2
 		steel = 2
 	}
-	cost_factor = {
-		modifier = {
-			factor = 0.5
-			game_rule = ruler_traits
-			ruler = {
-				trait = industrious
-			}
-		}
-	}
 }
 
 metalworks = {
@@ -100,14 +82,5 @@ metalworks = {
 	commodity_costs = {
 		lumber = 4
 		steel = 4
-	}
-	cost_factor = {
-		modifier = {
-			factor = 0.5
-			game_rule = ruler_traits
-			ruler = {
-				trait = industrious
-			}
-		}
 	}
 }

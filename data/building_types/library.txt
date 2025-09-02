@@ -13,15 +13,6 @@ library = {
 	conditions = {
 		game_rule = research_commodity
 	}
-	cost_factor = {
-		modifier = {
-			factor = 0.5
-			game_rule = ruler_traits
-			ruler = {
-				trait = creative
-			}
-		}
-	}
 	province_modifier = {
 		research_output_modifier = 50
 	}

@@ -29,15 +29,6 @@ temple = {
 		city
 		metropolis
 	}
-	cost_factor = {
-		modifier = {
-			factor = 0.5
-			game_rule = ruler_traits
-			ruler = {
-				trait = spiritual
-			}
-		}
-	}
 	settlement_modifier = {
 		amenities_bonus = 1
 	}

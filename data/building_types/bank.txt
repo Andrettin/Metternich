@@ -21,15 +21,6 @@ bank = {
 			produces_commodity = trade
 		}
 	}
-	cost_factor = {
-		modifier = {
-			factor = 0.5
-			game_rule = ruler_traits
-			ruler = {
-				trait = financial
-			}
-		}
-	}
 	settlement_modifier = {
 		trade_output_modifier = 50
 	}

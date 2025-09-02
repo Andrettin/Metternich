@@ -9,15 +9,6 @@ arena = {
 		city
 		metropolis
 	}
-	cost_factor = {
-		modifier = {
-			factor = 0.5
-			game_rule = ruler_traits
-			ruler = {
-				trait = creative
-			}
-		}
-	}
 	conditions = {
 		game_rule = additional_buildings
 	}

@@ -22,15 +22,6 @@ dock = {
 		lumber = 5
 		cast_iron = 5
 	}
-	cost_factor = {
-		modifier = {
-			factor = 0.5
-			game_rule = ruler_traits
-			ruler = {
-				trait = expansive
-			}
-		}
-	}
 	settlement_conditions = {
 		near_water = true
 	}
