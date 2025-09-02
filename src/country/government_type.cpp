@@ -350,6 +350,10 @@ const std::string &government_type::get_landholder_title_name(const site_tier ti
 
 QString government_type::get_modifier_string(const metternich::country *country) const
 {
+	if (this->get_modifier() == nullptr) {
+		return QString();
+	}
+
 	return QString::fromStdString(this->get_modifier()->get_string(country));
 }
 
