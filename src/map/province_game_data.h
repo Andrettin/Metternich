@@ -76,7 +76,7 @@ public:
 	void do_turn();
 	void do_events();
 	void do_ai_turn();
-	void collect_taxes();
+	int collect_taxes();
 	void do_military_unit_recruitment();
 
 	bool is_on_map() const;

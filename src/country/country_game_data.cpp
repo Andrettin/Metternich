@@ -28,6 +28,7 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
+#include "economy/income_transaction_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
 #include "game/country_event.h"
@@ -174,9 +175,13 @@ void country_game_data::do_turn()
 
 void country_game_data::collect_wealth()
 {
+	int collected_taxes = 0;
+
 	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->collect_taxes();
+		collected_taxes += province->get_game_data()->collect_taxes();
 	}
+
+	this->country->get_turn_data()->add_income_transaction(income_transaction_type::taxation, collected_taxes, nullptr, 0, this->country);
 }
 
 void country_game_data::pay_maintenance()

@@ -140,7 +140,7 @@ void province_game_data::do_ai_turn()
 	}
 }
 
-void province_game_data::collect_taxes()
+int province_game_data::collect_taxes()
 {
 	assert_throw(this->get_owner() != nullptr);
 
@@ -148,10 +148,12 @@ void province_game_data::collect_taxes()
 	const int taxation = random::get()->roll_dice(taxation_dice) * 200000;
 	if (taxation < 0) {
 		//ignore negative results
-		return;
+		return 0;
 	}
 
 	this->get_owner()->get_game_data()->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), taxation);
+
+	return taxation;
 }
 
 void province_game_data::do_military_unit_recruitment()
