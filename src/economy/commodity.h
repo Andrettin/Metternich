@@ -146,7 +146,7 @@ public:
 		for (auto it = this->units.rbegin(); it != this->units.rend(); ++it) {
 			const auto &[unit_value, unit] = *it;
 
-			if ((value / unit_value) >= 10) {
+			if (std::abs(value / unit_value) >= 10) {
 				return unit;
 			}
 		}
