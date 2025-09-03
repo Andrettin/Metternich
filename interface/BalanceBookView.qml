@@ -161,7 +161,7 @@ Flickable {
 			
 			SmallText {
 				id: total_income_value_label
-				text: "$" + number_string(country_turn_data.total_income)
+				text: metternich.defines.wealth_commodity.value_to_qstring(country_turn_data.total_income)
 				anchors.top: total_income_label.top
 				anchors.right: parent.right
 				anchors.rightMargin: 4 * scale_factor
@@ -177,7 +177,7 @@ Flickable {
 			
 			SmallText {
 				id: total_expense_value_label
-				text: "-$" + number_string(country_turn_data.total_expense)
+				text: "-" + metternich.defines.wealth_commodity.value_to_qstring(country_turn_data.total_expense)
 				anchors.top: total_expense_label.top
 				anchors.right: total_income_value_label.right
 			}
@@ -202,7 +202,7 @@ Flickable {
 			
 			SmallText {
 				id: balance_value_label
-				text: (country_turn_data.total_expense > country_turn_data.total_income ? "-" : "") + "$" + number_string(Math.abs(country_turn_data.total_income - country_turn_data.total_expense))
+				text: metternich.defines.wealth_commodity.value_to_qstring(country_turn_data.total_income - country_turn_data.total_expense)
 				anchors.top: balance_label.top
 				anchors.right: total_income_value_label.right
 			}
