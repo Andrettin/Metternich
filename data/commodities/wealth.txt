@@ -1,7 +1,7 @@
 wealth = {
 	name = "Wealth"
 	type = resource
-	icon = wealth
+	icon = chest
 	base_price = 1
 	abstract = true
 	negative_allowed = true
