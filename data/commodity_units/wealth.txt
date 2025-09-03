@@ -20,4 +20,5 @@ gb = {
 	name = "Gold Bar"
 	icon = gold
 	suffix = "gb"
+	displayed = false
 }

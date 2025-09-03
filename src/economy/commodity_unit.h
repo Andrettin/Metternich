@@ -13,6 +13,7 @@ class commodity_unit final : public named_data_entry, public data_type<commodity
 
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(QString suffix READ get_suffix_qstring NOTIFY changed)
+	Q_PROPERTY(bool displayed MEMBER displayed READ is_displayed NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "commodity_unit";
@@ -43,12 +44,18 @@ public:
 		this->suffix = suffix;
 	}
 
+	bool is_displayed() const
+	{
+		return this->displayed;
+	}
+
 signals:
 	void changed();
 
 private:
 	const metternich::icon *icon = nullptr;
 	std::string suffix;
+	bool displayed = true;
 };
 
 }

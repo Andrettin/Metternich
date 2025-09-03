@@ -137,23 +137,7 @@ public:
 		return this->unit_values.contains(unit);
 	}
 
-	Q_INVOKABLE const metternich::commodity_unit *get_unit(const int value) const
-	{
-		if (this->units.empty()) {
-			return nullptr;
-		}
-
-		for (auto it = this->units.rbegin(); it != this->units.rend(); ++it) {
-			const auto &[unit_value, unit] = *it;
-
-			if (std::abs(value / unit_value) >= 10) {
-				return unit;
-			}
-		}
-
-		return this->units.begin()->second;
-	}
-
+	Q_INVOKABLE const metternich::commodity_unit *get_unit(const int value) const;
 	Q_INVOKABLE int get_unit_value(const metternich::commodity_unit *unit) const;
 
 	std::pair<std::string, const commodity_unit *> string_to_number_string_and_unit(const std::string &str) const;
