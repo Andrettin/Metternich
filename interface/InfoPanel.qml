@@ -57,6 +57,7 @@ Rectangle {
 		IconButton {
 			id: industry_button
 			icon_identifier: "settlement"
+			visible: false
 			
 			onReleased: {
 				menu_stack.push("IndustryView.qml", {
