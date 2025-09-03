@@ -28,6 +28,7 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
+#include "economy/expense_transaction_type.h"
 #include "economy/income_transaction_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
@@ -186,11 +187,11 @@ void country_game_data::collect_wealth()
 
 void country_game_data::pay_maintenance()
 {
-	const int domain_maintenance_cost = this->get_domain_maintenance_cost();
-	if (this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()) >= domain_maintenance_cost) {
+	const int domain_maintenance_cost = std::min(this->get_domain_maintenance_cost(), this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
+	if (domain_maintenance_cost != 0) {
 		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), -domain_maintenance_cost);
-	} else {
-		this->get_economy()->set_stored_commodity(defines::get()->get_wealth_commodity(), 0);
+
+		this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::domain_maintenance, domain_maintenance_cost, nullptr, 0, this->country);
 	}
 
 	std::vector<military_unit *> military_units_to_disband;
@@ -199,6 +200,12 @@ void country_game_data::pay_maintenance()
 		for (const auto &[commodity, maintenance_cost] : military_unit->get_type()->get_maintenance_commodity_costs()) {
 			if (this->get_economy()->get_stored_commodity(commodity) >= maintenance_cost) {
 				this->get_economy()->change_stored_commodity(commodity, -maintenance_cost);
+
+				if (commodity == defines::get()->get_wealth_commodity()) {
+					this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::military_maintenance, maintenance_cost, nullptr, 0, this->country);
+				} else {
+					this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::military_maintenance, 0, commodity, maintenance_cost, this->country);
+				}
 			} else {
 				military_units_to_disband.push_back(military_unit.get());
 			}
