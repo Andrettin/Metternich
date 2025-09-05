@@ -2038,4 +2038,23 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 	return attack_success;
 }
 
+
+bool game::do_combat(const std::vector<const character *> &attackers, const std::vector<const character *> &defenders)
+{
+	//this function returns true if the attackers won, or false otherwise
+
+	static constexpr dice initiative_dice(1, 10);
+
+	int attacker_initiative = 0;
+	int defender_initiative = 0;
+	while (attacker_initiative == defender_initiative) {
+		attacker_initiative = random::get()->roll_dice(initiative_dice);
+		defender_initiative = random::get()->roll_dice(initiative_dice);
+	}
+
+	//FIXME: add combat;
+
+	return false;
+}
+
 }

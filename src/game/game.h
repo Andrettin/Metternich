@@ -252,6 +252,7 @@ public:
 	void add_fired_event(const metternich::event *event);
 
 	bool do_battle(army *attacking_army, army *defending_army);
+	bool do_combat(const std::vector<const character *> &attackers, const std::vector<const character *> &defenders);
 
 signals:
 	void running_changed();
