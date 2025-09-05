@@ -50,10 +50,9 @@ otto_von_bismarck = {
 		}
 		is_ruler = false
 		or = {
-			character_class = conquistador
 			character_class = diplomat
-			character_class = general
 			character_class = statesman
+			character_class = warrior
 		}
 	}
 }

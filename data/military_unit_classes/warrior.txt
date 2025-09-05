@@ -1,5 +1,0 @@
-warrior = {
-	name = "Warrior"
-	domain = land
-	category = warrior
-}

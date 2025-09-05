@@ -1,6 +1,6 @@
 warrior = {
 	name = "Warrior"
 	attribute = martial
-	military_unit_category = warrior
+	military_unit_category = general
 	starting_age_category = self_taught
 }

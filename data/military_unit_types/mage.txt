@@ -1,9 +1,0 @@
-mage = {
-	name = "Mage"
-	unit_class = mage
-	icon = artillerist
-	stats = {
-		defense = 3
-		movement = 4
-	}
-}

@@ -1,6 +1,6 @@
 rogue = {
 	name = "Rogue"
 	attribute = intrigue
-	military_unit_category = rogue
+	civilian_unit_class = spy
 	starting_age_category = intuitive
 }

@@ -21,7 +21,6 @@ metternich = {
 		or = {
 			character_class = diplomat
 			character_class = high_judge
-			character_class = spymaster
 			character_class = statesman
 		}
 	}

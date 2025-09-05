@@ -39,7 +39,7 @@ isabella_i_of_castille = {
 juan_ponce_de_leon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 201.
 	name = "Juan Ponce"
 	surname = "de Leon" #"de León"
-	#conquistador
+	character_class = warrior #conquistador
 	culture = castillian
 	religion = catholic
 	home_settlement = valladolid
@@ -76,7 +76,7 @@ francisco_fernandez_de_cordoba = { #Source: Isaac Asimov, "Cronologia das Ciênc
 francisco_pizarro = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
 	name = "Francisco"
 	surname = "Pizarro"
-	#conquistador
+	character_class = warrior #conquistador
 	culture = castillian
 	religion = catholic
 	home_site = caceres
@@ -118,7 +118,7 @@ bartolome_de_las_casas = {
 hernan_cortes = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
 	name = "Hernan" #"Hernán"
 	surname = "Cortes" #"Cortés"
-	#conquistador
+	character_class = warrior #conquistador
 	culture = castillian
 	religion = catholic
 	home_site = almendralejo
@@ -130,7 +130,7 @@ hernan_cortes = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 francisco_de_orellana = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 209.
 	name = "Francisco"
 	surname = "de Orellana"
-	#conquistador
+	character_class = warrior #conquistador
 	culture = castillian
 	religion = catholic
 	home_site = caceres
@@ -190,7 +190,7 @@ francisco_de_coronado = {
 	name = "Francisco"
 	surname = "de Coronado"
 	role = advisor
-	character_class = conquistador
+	character_class = warrior #conquistador
 	culture = castillian
 	religion = catholic
 	home_site = salamanca

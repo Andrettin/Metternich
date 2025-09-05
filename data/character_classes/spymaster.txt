@@ -1,6 +1,0 @@
-spymaster = {
-	name = "Spymaster"
-	attribute = intrigue
-	civilian_unit_class = spy
-	starting_age_category = self_taught
-}

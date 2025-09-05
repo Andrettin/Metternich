@@ -25,14 +25,6 @@ enum class military_unit_category {
 	heavy_artillery,
 	combat_engineers,
 	general,
-	alchemist,
-	bard,
-	cleric,
-	mage,
-	paladin,
-	ranger,
-	rogue,
-	warrior,
 	light_warship,
 	heavy_warship
 };
@@ -82,22 +74,6 @@ inline std::string_view get_military_unit_category_name(const military_unit_cate
 			return "Combat Engineers";
 		case military_unit_category::general:
 			return "General";
-		case military_unit_category::alchemist:
-			return "Alchemist";
-		case military_unit_category::bard:
-			return "Bard";
-		case military_unit_category::cleric:
-			return "Cleric";
-		case military_unit_category::mage:
-			return "Mage";
-		case military_unit_category::ranger:
-			return "Ranger";
-		case military_unit_category::rogue:
-			return "Rogue";
-		case military_unit_category::paladin:
-			return "Paladin";
-		case military_unit_category::warrior:
-			return "Warrior";
 		case military_unit_category::light_warship:
 			return "Light Warship";
 		case military_unit_category::heavy_warship:
@@ -124,14 +100,6 @@ inline bool is_leader_military_unit_category(const military_unit_category catego
 {
 	switch (category) {
 		case military_unit_category::general:
-		case military_unit_category::alchemist:
-		case military_unit_category::bard:
-		case military_unit_category::cleric:
-		case military_unit_category::mage:
-		case military_unit_category::ranger:
-		case military_unit_category::rogue:
-		case military_unit_category::paladin:
-		case military_unit_category::warrior:
 			return true;
 		default:
 			return false;

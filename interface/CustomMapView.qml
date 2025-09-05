@@ -162,6 +162,15 @@ Item {
 			research_choice_dialog.open()
 		}
 	}
+		
+	Connections {
+		target: metternich.game
+		
+		function onTurn_changed() {
+			//FIXME: add preference to display the balance book every turn
+			//menu_stack.push("TradeView.qml")
+		}
+	}
 	
 	Connections {
 		target: metternich.game.player_country.game_data
