@@ -6,10 +6,7 @@ investigator = {
 	icon = treaty
 	conditions = {
 		character_class = none
-		or = {
-			character_class = inquisitor
-			character_class = spymaster
-		}
+		character_class = rogue
 	}
 }
 
@@ -21,7 +18,7 @@ stealthy = {
 	icon = dagger
 	conditions = {
 		character_class = none
-		character_class = spymaster
+		character_class = rogue
 	}
 }
 
@@ -33,10 +30,7 @@ thug = {
 	icon = dagger
 	conditions = {
 		character_class = none
-		or = {
-			character_class = privateer
-			character_class = spymaster
-		}
+		character_class = rogue
 	}
 	military_unit_modifier = {
 		melee = 1

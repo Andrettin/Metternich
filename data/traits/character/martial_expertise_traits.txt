@@ -106,7 +106,7 @@ strategist = {
 	icon = crossed_sabers
 	conditions = {
 		character_class = none
-		character_class = privateer
+		character_class = warrior
 		not = {
 			trait = brilliant_strategist
 		}

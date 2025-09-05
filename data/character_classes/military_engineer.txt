@@ -1,6 +1,0 @@
-military_engineer = {
-	name = "Military Engineer"
-	attribute = martial
-	military_unit_category = general
-	starting_age_category = trained
-}

@@ -18,10 +18,7 @@ francis_drake = {
 			cultural_group = asian
 		}
 		is_ruler = false
-		or = {
-			character_class = admiral
-			character_class = privateer
-		}
+		character_class = rogue
 	}
 }
 

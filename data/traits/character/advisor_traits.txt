@@ -452,7 +452,7 @@ theologian = {
 	icon = wooden_cross
 	attribute = learning
 	conditions = {
-		character_class = theologian
+		character_class = cleric
 	}
 	scaled_office_modifiers = {
 		ruler = {

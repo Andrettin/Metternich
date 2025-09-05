@@ -61,7 +61,7 @@ persuasive = {
 		character_class = none
 		or = {
 			character_class = diplomat
-			character_class = spymaster
+			character_class = rogue
 			character_class = statesman
 		}
 	}
