@@ -4,5 +4,6 @@ warrior = {
 	military_unit_category = general
 	max_level = 3
 	hit_dice = 1d10
+	damage_dice = 1d8 #long sword/battle axe
 	starting_age_category = self_taught
 }
