@@ -1,5 +1,7 @@
 philosopher = {
 	name = "Philosopher"
 	attribute = learning
+	max_level = 3
+	hit_dice = 1d4 #as Mage
 	starting_age_category = trained
 }

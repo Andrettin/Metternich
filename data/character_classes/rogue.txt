@@ -2,5 +2,7 @@ rogue = {
 	name = "Rogue"
 	attribute = intrigue
 	civilian_unit_class = spy
+	max_level = 3
+	hit_dice = 1d6
 	starting_age_category = intuitive
 }

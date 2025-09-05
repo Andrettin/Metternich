@@ -1,5 +1,7 @@
 cleric = {
 	name = "Cleric"
 	attribute = learning
+	max_level = 3
+	hit_dice = 1d8
 	starting_age_category = trained
 }

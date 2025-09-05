@@ -2,5 +2,7 @@ navigator = {
 	name = "Navigator"
 	attribute = learning
 	military_unit_category = light_warship
+	max_level = 3
+	hit_dice = 1d6 #as Rogue
 	starting_age_category = self_taught
 }

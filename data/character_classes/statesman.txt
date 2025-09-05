@@ -1,5 +1,7 @@
 statesman = {
 	name = "Statesman"
 	attribute = diplomacy
+	max_level = 3
+	hit_dice = 1d6 #as Rogue
 	starting_age_category = trained
 }
