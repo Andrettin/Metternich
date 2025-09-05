@@ -1,6 +1,5 @@
 warrior = {
 	name = "Warrior"
-	advisor_category = military
 	attribute = martial
 	military_unit_category = warrior
 	starting_age_category = self_taught

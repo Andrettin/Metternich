@@ -1,6 +1,5 @@
 treasurer = {
 	name = "Treasurer"
-	advisor_category = trade
 	attribute = stewardship
 	starting_age_category = trained
 }

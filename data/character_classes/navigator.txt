@@ -1,6 +1,5 @@
 navigator = {
 	name = "Navigator"
-	advisor_category = exploration
 	attribute = learning
 	military_unit_category = light_warship
 	starting_age_category = self_taught

@@ -327,7 +327,6 @@ set(metternich_SRCS
 )
 
 set(character_HDRS
-	src/character/advisor_category.h
 	src/character/character.h
 	src/character/character_attribute.h
 	src/character/character_class.h
@@ -542,7 +541,6 @@ source_group(script FILES ${script_HDRS})
 set(script_condition_HDRS
 	src/script/condition/adjacent_terrain_condition.h
 	src/script/condition/advisor_condition.h
-	src/script/condition/advisor_category_condition.h
 	src/script/condition/age_condition.h
 	src/script/condition/anarchy_condition.h
 	src/script/condition/and_condition.h

@@ -11,7 +11,6 @@ namespace metternich {
 class civilian_unit_class;
 class country;
 class technology;
-enum class advisor_category;
 enum class character_attribute;
 enum class military_unit_category;
 enum class starting_age_category;
@@ -26,7 +25,6 @@ class character_class final : public named_data_entry, public data_type<characte
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::advisor_category advisor_category MEMBER advisor_category NOTIFY changed)
 	Q_PROPERTY(metternich::character_attribute attribute MEMBER attribute NOTIFY changed)
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(const metternich::civilian_unit_class* civilian_unit_class MEMBER civilian_unit_class READ get_civilian_unit_class NOTIFY changed)
@@ -43,11 +41,6 @@ public:
 	~character_class();
 
 	virtual void check() const override;
-
-	metternich::advisor_category get_advisor_category() const
-	{
-		return this->advisor_category;
-	}
 
 	character_attribute get_attribute() const
 	{
@@ -83,7 +76,6 @@ signals:
 	void changed();
 
 private:
-	metternich::advisor_category advisor_category;
 	character_attribute attribute;
 	metternich::military_unit_category military_unit_category;
 	const metternich::civilian_unit_class *civilian_unit_class = nullptr;

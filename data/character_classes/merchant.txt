@@ -1,6 +1,5 @@
 merchant = {
 	name = "Merchant"
-	advisor_category = trade
 	attribute = stewardship
 	civilian_unit_class = merchant
 	starting_age_category = self_taught

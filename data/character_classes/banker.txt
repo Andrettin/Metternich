@@ -1,6 +1,5 @@
 banker = {
 	name = "Banker"
-	advisor_category = trade
 	attribute = stewardship
 	civilian_unit_class = developer
 	starting_age_category = self_taught

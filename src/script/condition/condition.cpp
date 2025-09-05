@@ -11,7 +11,6 @@
 #include "population/population_unit.h"
 #include "script/condition/adjacent_terrain_condition.h"
 #include "script/condition/advisor_condition.h"
-#include "script/condition/advisor_category_condition.h"
 #include "script/condition/age_condition.h"
 #include "script/condition/anarchy_condition.h"
 #include "script/condition/and_condition.h"
@@ -124,9 +123,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	const std::string &value = property.get_value();
 
 	if constexpr (std::is_same_v<scope_type, character>) {
-		if (key == "advisor_category") {
-			return std::make_unique<advisor_category_condition>(value, condition_operator);
-		} else if (key == "age") {
+		if (key == "age") {
 			return std::make_unique<age_condition>(value, condition_operator);
 		} else if (key == "can_gain_trait") {
 			return std::make_unique<can_gain_trait_condition>(value, condition_operator);

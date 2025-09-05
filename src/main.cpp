@@ -1,6 +1,5 @@
 #include "metternich.h"
 
-#include "character/advisor_category.h"
 #include "character/character.h"
 #include "character/character_attribute.h"
 #include "character/character_game_data.h"
@@ -158,7 +157,6 @@ int main(int argc, char **argv)
 		enum_converter<gender>();
 		enum_converter<log_level>();
 
-		database_util::register_enum<advisor_category>();
 		database_util::register_enum<character_attribute>();
 		database_util::register_enum<character_role>();
 		database_util::register_enum<character_trait_type>();

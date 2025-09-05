@@ -2,7 +2,6 @@
 
 #include "country/country_government.h"
 
-#include "character/advisor_category.h"
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/character_role.h"

@@ -1,6 +1,5 @@
 mage = {
 	name = "Mage"
-	advisor_category = military
 	attribute = learning
 	military_unit_category = mage
 	starting_age_category = trained

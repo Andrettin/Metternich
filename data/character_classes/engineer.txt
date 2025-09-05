@@ -1,6 +1,5 @@
 engineer = {
 	name = "Engineer"
-	advisor_category = trade
 	attribute = learning
 	civilian_unit_class = engineer
 	starting_age_category = trained
