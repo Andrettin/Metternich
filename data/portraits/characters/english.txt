@@ -47,9 +47,6 @@ william_penn = {
 			cultural_group = asian
 		}
 		religion = protestant
-		or = {
-			character_class = inquisitor
-			character_class = theologian
-		}
+		character_class = cleric
 	}
 }

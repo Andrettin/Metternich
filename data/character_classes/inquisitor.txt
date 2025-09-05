@@ -1,6 +1,0 @@
-inquisitor = {
-	name = "Inquisitor"
-	attribute = learning
-	military_unit_category = cleric
-	starting_age_category = trained
-}

@@ -6,10 +6,7 @@ frankish_cleric = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		or = {
-			character_class = inquisitor
-			character_class = theologian
-		}
+		character_class = cleric
 	}
 }
 
