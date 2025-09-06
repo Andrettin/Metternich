@@ -39,6 +39,8 @@ class character_game_data final : public QObject
 	Q_PROPERTY(const metternich::country* country READ get_country NOTIFY country_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
+	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
+	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
@@ -51,6 +53,7 @@ class character_game_data final : public QObject
 public:
 	explicit character_game_data(const metternich::character *character);
 
+	void apply_species_and_class();
 	void apply_history();
 	void on_setup_finished();
 
@@ -100,6 +103,38 @@ public:
 	int get_primary_attribute_value() const;
 
 	std::set<character_attribute> get_main_attributes() const;
+
+	int get_hit_dice_count() const
+	{
+		return this->hit_dice_count;
+	}
+
+	void change_hit_dice_count(const int change)
+	{
+		if (change == 0) {
+			return;
+		}
+
+		this->hit_dice_count += change;
+	}
+
+	void apply_hit_dice(const dice &hit_dice);
+
+	int get_hit_points() const
+	{
+		return this->hit_points;
+	}
+
+	void set_hit_points(const int hit_points);
+	void change_hit_points(const int change);
+
+	int get_max_hit_points() const
+	{
+		return this->max_hit_points;
+	}
+
+	void set_max_hit_points(const int hit_points);
+	void change_max_hit_points(const int change);
 
 	const std::vector<const character_trait *> &get_traits() const
 	{
@@ -298,6 +333,8 @@ signals:
 	void country_changed();
 	void age_changed();
 	void dead_changed();
+	void hit_points_changed();
+	void max_hit_points_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void ruler_changed();
@@ -312,6 +349,9 @@ private:
 	const metternich::country *country = nullptr;
 	bool dead = false;
 	std::map<character_attribute, int> attribute_values;
+	int hit_dice_count = 0;
+	int hit_points = 0;
+	int max_hit_points = 0;
 	std::vector<const character_trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	const metternich::office *office = nullptr;

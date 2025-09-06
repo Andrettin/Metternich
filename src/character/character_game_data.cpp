@@ -59,9 +59,23 @@ character_game_data::character_game_data(const metternich::character *character)
 	this->portrait = this->character->get_portrait();
 }
 
+void character_game_data::apply_species_and_class()
+{
+	const species *species = this->character->get_species();
+	if (species->get_modifier() != nullptr) {
+		species->get_modifier()->apply(this->character);
+	}
+
+	const character_class *character_class = this->character->get_character_class();
+	const dice class_hit_dice = character_class->get_hit_dice();
+	this->apply_hit_dice(class_hit_dice);
+}
+
 void character_game_data::apply_history()
 {
 	const character_history *character_history = this->character->get_history();
+
+	this->apply_species_and_class();
 
 	const metternich::country *country = character_history->get_country();
 
@@ -135,10 +149,6 @@ void character_game_data::apply_history()
 
 void character_game_data::on_setup_finished()
 {
-	if (this->character->get_species()->get_modifier() != nullptr) {
-		this->character->get_species()->get_modifier()->apply(this->character, 1);
-	}
-
 	for (const character_trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);
 	}
@@ -363,6 +373,55 @@ std::set<character_attribute> character_game_data::get_main_attributes() const
 	}
 
 	return attributes;
+}
+
+void character_game_data::apply_hit_dice(const dice &hit_dice)
+{
+	assert_throw(hit_dice.get_count() == 1);
+
+	this->change_hit_dice_count(1);
+
+	const int hit_point_increase = random::get()->roll_dice(hit_dice);
+	this->change_max_hit_points(hit_point_increase);
+	this->change_hit_points(hit_point_increase);
+}
+
+void character_game_data::set_hit_points(int hit_points)
+{
+	hit_points = std::min(hit_points, this->get_max_hit_points());
+
+	if (hit_points == this->get_hit_points()) {
+		return;
+	}
+
+	this->hit_points = hit_points;
+
+	if (game::get()->is_running()) {
+		emit hit_points_changed();
+	}
+}
+
+void character_game_data::change_hit_points(const int change)
+{
+	this->set_hit_points(this->get_hit_points() + change);
+}
+
+void character_game_data::set_max_hit_points(const int hit_points)
+{
+	if (hit_points == this->get_max_hit_points()) {
+		return;
+	}
+
+	this->max_hit_points = hit_points;
+
+	if (game::get()->is_running()) {
+		emit max_hit_points_changed();
+	}
+}
+
+void character_game_data::change_max_hit_points(const int change)
+{
+	this->set_max_hit_points(this->get_max_hit_points() + change);
 }
 
 QVariantList character_game_data::get_traits_qvariant_list() const
