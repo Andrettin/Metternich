@@ -138,7 +138,6 @@ Rectangle {
 		
 		onClicked: {
 			character_dialog.character = selected_country_ruler
-			character_dialog.modifier_string = selected_country_ruler.game_data.get_office_modifier_qstring(selected_country_ruler.game_data.country, selected_country_ruler.game_data.office)
 			character_dialog.open()
 		}
 	}

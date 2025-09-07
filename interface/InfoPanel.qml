@@ -455,7 +455,6 @@ Rectangle {
 		
 		onClicked: {
 			character_dialog.character = holder
-			character_dialog.modifier_string = holder.game_data.governor ? holder.game_data.get_governor_modifier_qstring(holder.governable_province) : holder.game_data.get_landholder_modifier_qstring(selected_site)
 			character_dialog.open()
 		}
 		

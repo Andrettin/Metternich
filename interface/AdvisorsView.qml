@@ -19,7 +19,6 @@ Item {
 		onClicked: {
 			character_dialog.office = null
 			character_dialog.character = ruler
-			character_dialog.modifier_string = ruler.game_data.get_office_modifier_qstring(country, ruler.game_data.office)
 			character_dialog.open()
 		}
 		
@@ -49,7 +48,6 @@ Item {
 				if (office_holder !== null || appointed_office_holder !== null) {
 					character_dialog.office = office
 					character_dialog.character = appointed_office_holder ? appointed_office_holder : office_holder
-					character_dialog.modifier_string = appointed_office_holder ? appointed_office_holder.game_data.get_office_modifier_qstring(country, office) : office_holder.game_data.get_office_modifier_qstring(country, office)
 					character_dialog.open()
 				} else {
 					office_holder_choice_dialog.office = office
@@ -84,7 +82,6 @@ Item {
 				if (office_holder !== null || appointed_office_holder !== null) {
 					character_dialog.office = office
 					character_dialog.character = appointed_office_holder ? appointed_office_holder : office_holder
-					character_dialog.modifier_string = appointed_office_holder ? appointed_office_holder.game_data.get_office_modifier_qstring(country, office) : office_holder.game_data.get_office_modifier_qstring(country, office)
 					character_dialog.open()
 				} else {
 					office_holder_choice_dialog.office = office
