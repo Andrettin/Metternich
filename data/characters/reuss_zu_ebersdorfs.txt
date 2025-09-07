@@ -1,6 +1,7 @@
 heinrich_von_reuss_zu_ebersdorf = { #Heinrich von Reuss zu Ebersdorf; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
 	name = "Heinrich"
 	dynasty = reuss_zu_ebersdorf
+	character_class = warrior
 	culture = german #Thuringian
 	religion = protestant
 	home_settlement = erfurt #Ebersdorf
@@ -11,6 +12,7 @@ heinrich_von_reuss_zu_ebersdorf = { #Heinrich von Reuss zu Ebersdorf; Source: "G
 auguste_karoline_von_reuss_zu_ebersdorf = { #Auguste Karoline von Reuss zu Ebersdorf; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
 	name = "Auguste Karoline"
 	dynasty = reuss_zu_ebersdorf
+	character_class = warrior #aristocrat
 	culture = german #Thuringian
 	religion = protestant
 	home_settlement = erfurt #Ebersdorf

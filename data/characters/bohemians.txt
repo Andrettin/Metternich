@@ -1,6 +1,7 @@
 vlatislav_ii_of_bohemia = { #Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 207.
 	name = "Vlatislav"
 	surname = "II" #regnal number
+	character_class = warrior
 	culture = czech
 	religion = catholic
 	home_settlement = prague #Bohemia

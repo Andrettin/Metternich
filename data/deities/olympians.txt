@@ -6,6 +6,7 @@ aphrodite = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p
 	}
 	character = {
 		species = archon #Olympian
+		character_class = rogue
 		culture = celestial
 		religion = hellenic
 		gender = female
@@ -21,6 +22,7 @@ apollo = {
 	}
 	character = {
 		species = archon
+		character_class = warrior
 		culture = celestial
 		religion = hellenic
 		gender = male
@@ -40,6 +42,7 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 	}
 	character = {
 		species = archon
+		character_class = warrior
 		culture = celestial
 		religion = hellenic
 		gender = female
@@ -55,6 +58,7 @@ athena = {
 	}
 	character = {
 		species = archon
+		character_class = warrior
 		culture = celestial
 		religion = hellenic
 		gender = female
@@ -73,6 +77,7 @@ hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 23
 	}
 	character = {
 		species = archon
+		character_class = cleric
 		culture = celestial
 		religion = hellenic
 		gender = female
@@ -95,6 +100,7 @@ hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 	}
 	character = {
 		species = archon
+		character_class = rogue
 		culture = celestial
 		religion = hellenic
 		gender = male
@@ -122,6 +128,7 @@ poseidon = {
 	}
 	character = {
 		species = triton
+		character_class = warrior
 		culture = aquan
 		religion = hellenic
 		gender = male
@@ -138,6 +145,7 @@ zeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 28
 	}
 	character = {
 		species = archon #Olympian
+		character_class = warrior
 		culture = celestial
 		religion = hellenic
 		gender = male

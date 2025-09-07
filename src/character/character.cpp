@@ -326,6 +326,10 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has no species.", this->get_identifier()));
 	}
 
+	if (this->get_character_class() == nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has no character class.", this->get_identifier()));
+	}
+
 	if (this->get_culture() == nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has no culture.", this->get_identifier()));
 	}

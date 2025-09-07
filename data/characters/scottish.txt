@@ -122,6 +122,7 @@ thomas_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 robert_lewis_balfour_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, pp. 907-908.
 	name = "Robert Lewis Balfour"
 	surname = "Stevenson"
+	character_class = engineer
 	culture = scottish
 	religion = protestant
 	home_settlement = edinburgh

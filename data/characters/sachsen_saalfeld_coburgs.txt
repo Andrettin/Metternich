@@ -1,6 +1,7 @@
 franz_von_sachsen_saalfeld_coburg = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
 	name = "Franz"
 	dynasty = sachsen_saalfeld_coburg
+	character_class = warrior
 	culture = german #Thuringian
 	religion = protestant #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
 	home_settlement = erfurt #Saalfeld
@@ -17,6 +18,7 @@ franz_von_sachsen_saalfeld_coburg = { #Source: "Gothaischer Hofkalender zum Nutz
 juliane_von_sachsen_saalfeld_coburg = { #Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 1-2.
 	name = "Juliane"
 	dynasty = sachsen_saalfeld_coburg
+	character_class = warrior #aristocrat
 	culture = german #Thuringian
 	religion = protestant
 	home_settlement = erfurt #Saalfeld

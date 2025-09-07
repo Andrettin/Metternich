@@ -1,6 +1,7 @@
 cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	name = "Cymburgis"
 	surname = "of Masovia"
+	character_class = warrior #aristocrat
 	culture = polish
 	religion = catholic
 	home_settlement = warsaw

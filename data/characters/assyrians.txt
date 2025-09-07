@@ -1,6 +1,7 @@
 sargon_ii_of_assyria = { #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 	name = "Sargon"
 	epithet = "II"
+	character_class = warrior
 	culture = assyrian
 	religion = pagan
 	home_settlement = nineveh
@@ -10,6 +11,7 @@ sargon_ii_of_assyria = { #Source: William R. Shepherd, "Historical Atlas", 1911,
 
 assurbanipal_of_assyria = { #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 	name = "Assurbanipal"
+	character_class = warrior
 	culture = assyrian
 	religion = pagan
 	home_settlement = nineveh

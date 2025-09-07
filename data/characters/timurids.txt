@@ -1,6 +1,7 @@
 babur = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
 	name = "Babur"
 	#descendant of Tamerlane (i.e. Timurid)
+	character_class = warrior
 	culture = uzbek
 	religion = sunni
 	home_settlement = fergana

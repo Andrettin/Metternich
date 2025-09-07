@@ -1,6 +1,7 @@
 pleione = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 338, 403.
 	name = "Pleione"
 	species = nymph
+	character_class = mage
 	culture = fey
 	religion = hellenic
 	home_site = corinth #Mount Cyllene, Arcadia; since it's the home site of her daughter Maia

@@ -1,6 +1,7 @@
 louise_de_penthievre = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 15-16.
 	name = "Louise"
 	dynasty = penthievre
+	character_class = warrior #aristocrat
 	culture = french
 	religion = catholic
 	home_settlement = nantes #Penthièvre

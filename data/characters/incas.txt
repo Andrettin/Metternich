@@ -20,6 +20,7 @@ huayna_capac = {
 
 atahualpa = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
 	name = "Atahualpa"
+	character_class = warrior
 	culture = inca
 	religion = pagan
 	home_settlement = cuzco

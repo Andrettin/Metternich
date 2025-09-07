@@ -1,7 +1,7 @@
 jan_stephan_van_calcar = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
 	name = "Jan Stephan"
 	surname = "van Calcar"
-	#character_class = artist
+	character_class = artist
 	culture = flemish
 	religion = catholic
 	home_site = dordrecht

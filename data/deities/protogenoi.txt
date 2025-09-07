@@ -6,6 +6,7 @@ chaos = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 12
 	}
 	character = {
 		species = air_elemental #Protogenoi; should be a void elemental or similar instead
+		character_class = warrior
 		culture = auran #Protogenoi
 		religion = hellenic
 		gender = female #correct?
@@ -25,6 +26,7 @@ gaia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 20
 	}
 	character = {
 		species = earth_elemental #Protogenoi
+		character_class = warrior
 		culture = terran_elemental
 		religion = hellenic
 		gender = female
@@ -41,6 +43,7 @@ uranus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 4
 	}
 	character = {
 		species = air_elemental #Protogenoi
+		character_class = warrior
 		culture = auran
 		religion = hellenic
 		gender = male
