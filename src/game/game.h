@@ -253,6 +253,7 @@ public:
 
 	bool do_battle(army *attacking_army, army *defending_army);
 	bool do_combat(const std::vector<const character *> &attackers, const std::vector<const character *> &defenders);
+	void do_combat_round(const std::vector<const character *> &characters, std::vector<const character *> &enemy_characters);
 
 signals:
 	void running_changed();

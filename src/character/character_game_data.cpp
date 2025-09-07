@@ -396,6 +396,10 @@ void character_game_data::set_hit_points(int hit_points)
 
 	this->hit_points = hit_points;
 
+	if (this->get_hit_points() < 0 && this->get_max_hit_points() > 0) {
+		this->set_dead(true);
+	}
+
 	if (game::get()->is_running()) {
 		emit hit_points_changed();
 	}
@@ -413,6 +417,10 @@ void character_game_data::set_max_hit_points(const int hit_points)
 	}
 
 	this->max_hit_points = hit_points;
+
+	if (this->get_hit_points() > this->get_max_hit_points()) {
+		this->set_hit_points(this->get_max_hit_points());
+	}
 
 	if (game::get()->is_running()) {
 		emit max_hit_points_changed();

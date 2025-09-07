@@ -3,6 +3,7 @@
 #include "game/game.h"
 
 #include "character/character.h"
+#include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/character_role.h"
 #include "country/country.h"
@@ -2038,23 +2039,55 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 	return attack_success;
 }
 
-
 bool game::do_combat(const std::vector<const character *> &attackers, const std::vector<const character *> &defenders)
 {
 	//this function returns true if the attackers won, or false otherwise
 
 	static constexpr dice initiative_dice(1, 10);
 
-	int attacker_initiative = 0;
-	int defender_initiative = 0;
-	while (attacker_initiative == defender_initiative) {
-		attacker_initiative = random::get()->roll_dice(initiative_dice);
-		defender_initiative = random::get()->roll_dice(initiative_dice);
+	std::vector<const character *> surviving_attackers = attackers;
+	std::vector<const character *> surviving_defenders = defenders;
+
+	while (!surviving_attackers.empty() && !surviving_defenders.empty()) {
+		int attacker_initiative = 0;
+		int defender_initiative = 0;
+		while (attacker_initiative == defender_initiative) {
+			attacker_initiative = random::get()->roll_dice(initiative_dice);
+			defender_initiative = random::get()->roll_dice(initiative_dice);
+		}
+
+		if (attacker_initiative < defender_initiative) {
+			this->do_combat_round(surviving_attackers, surviving_defenders);
+			this->do_combat_round(surviving_defenders, surviving_attackers);
+		} else {
+			this->do_combat_round(surviving_defenders, surviving_attackers);
+			this->do_combat_round(surviving_attackers, surviving_defenders);
+		}
 	}
 
-	//FIXME: add combat;
+	return surviving_defenders.empty();
+}
 
-	return false;
+void game::do_combat_round(const std::vector<const character *> &characters, std::vector<const character *> &enemy_characters)
+{
+	if (characters.empty()) {
+		return;
+	}
+
+	assert_throw(!enemy_characters.empty());
+
+	for (const character *character : characters) {
+		const metternich::character *chosen_enemy = vector::get_random(enemy_characters);
+
+		//FIXME: add to-hit rolls
+
+		const int damage = random::get()->roll_dice(character->get_character_class()->get_damage_dice());
+		chosen_enemy->get_game_data()->change_hit_points(-damage);
+
+		if (chosen_enemy->get_game_data()->is_dead()) {
+			std::erase(enemy_characters, chosen_enemy);
+		}
+	}
 }
 
 }
