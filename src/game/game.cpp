@@ -2079,9 +2079,16 @@ void game::do_combat_round(const std::vector<const character *> &characters, std
 	for (const character *character : characters) {
 		const metternich::character *chosen_enemy = vector::get_random(enemy_characters);
 
-		//FIXME: add to-hit rolls
+		static constexpr dice to_hit_dice(1, 20);
+		const int to_hit = 20 - character->get_game_data()->get_to_hit_bonus();
+		const int to_hit_result = to_hit - random::get()->roll_dice(to_hit_dice);
 
-		const int damage = random::get()->roll_dice(character->get_character_class()->get_damage_dice());
+		const int armor_class = 10 - chosen_enemy->get_game_data()->get_character_class()->get_armor_class();
+		if (to_hit_result > armor_class) {
+			continue;
+		}
+
+		const int damage = random::get()->roll_dice(character->get_game_data()->get_character_class()->get_damage_dice());
 		chosen_enemy->get_game_data()->change_hit_points(-damage);
 
 		if (chosen_enemy->get_game_data()->is_dead()) {
