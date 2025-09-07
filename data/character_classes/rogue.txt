@@ -7,4 +7,9 @@ rogue = {
 	damage_dice = 1d8 #bow
 	armor_class = 2 #leather armor
 	starting_age_category = intuitive
+	level_modifiers = {
+		3 = {
+			to_hit_bonus = 1
+		}
+	}
 }

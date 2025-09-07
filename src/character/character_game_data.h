@@ -43,6 +43,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
+	Q_PROPERTY(int to_hit_bonus READ get_to_hit_bonus NOTIFY to_hit_bonus_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
@@ -99,6 +100,11 @@ public:
 	void change_level(const int change);
 	void on_level_gained(const int affected_level, const int multiplier);
 
+	const std::map<character_attribute, int> &get_attribute_values() const
+	{
+		return this->attribute_values;
+	}
+
 	int get_attribute_value(const character_attribute attribute) const
 	{
 		const auto find_iterator = this->attribute_values.find(attribute);
@@ -145,6 +151,14 @@ public:
 
 	void set_max_hit_points(const int hit_points);
 	void change_max_hit_points(const int change);
+
+	int get_to_hit_bonus() const
+	{
+		return this->to_hit_bonus;
+	}
+
+	void set_to_hit_bonus(const int bonus);
+	void change_to_hit_bonus(const int change);
 
 	const std::vector<const character_trait *> &get_traits() const
 	{
@@ -347,6 +361,7 @@ signals:
 	void level_changed();
 	void hit_points_changed();
 	void max_hit_points_changed();
+	void to_hit_bonus_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void ruler_changed();
@@ -366,6 +381,7 @@ private:
 	int hit_dice_count = 0;
 	int hit_points = 0;
 	int max_hit_points = 0;
+	int to_hit_bonus = 0;
 	std::vector<const character_trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	const metternich::office *office = nullptr;

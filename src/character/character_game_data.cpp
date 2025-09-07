@@ -501,6 +501,24 @@ void character_game_data::change_max_hit_points(const int change)
 	this->set_max_hit_points(this->get_max_hit_points() + change);
 }
 
+void character_game_data::set_to_hit_bonus(const int bonus)
+{
+	if (bonus == this->get_to_hit_bonus()) {
+		return;
+	}
+
+	this->to_hit_bonus = bonus;
+
+	if (game::get()->is_running()) {
+		emit to_hit_bonus_changed();
+	}
+}
+
+void character_game_data::change_to_hit_bonus(const int change)
+{
+	this->set_to_hit_bonus(this->get_to_hit_bonus() + change);
+}
+
 QVariantList character_game_data::get_traits_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_traits());

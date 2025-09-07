@@ -47,6 +47,7 @@
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 #include "script/modifier_effect/technology_cost_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
+#include "script/modifier_effect/to_hit_bonus_modifier_effect.h"
 #include "script/modifier_effect/unit_upgrade_cost_modifier_effect.h"
 #include "script/modifier_effect/warship_cost_modifier_effect.h"
 #include "script/modifier_effect/wonder_cost_efficiency_modifier_effect.h"
@@ -64,7 +65,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	static const std::string bonus_suffix = "_bonus";
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (magic_enum::enum_contains<character_attribute>(key)) {
+		if (key == "to_hit_bonus") {
+			return std::make_unique<to_hit_bonus_modifier_effect>(value);
+		} else if (magic_enum::enum_contains<character_attribute>(key)) {
 			return std::make_unique<character_attribute_modifier_effect>(magic_enum::enum_cast<character_attribute>(key).value(), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
