@@ -5,5 +5,6 @@ warrior = {
 	max_level = 3
 	hit_dice = 1d10
 	damage_dice = 1d8 #long sword/battle axe
+	armor_class = 6 #chain mail and shield
 	starting_age_category = self_taught
 }

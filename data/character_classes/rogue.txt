@@ -5,5 +5,6 @@ rogue = {
 	max_level = 3
 	hit_dice = 1d6
 	damage_dice = 1d8 #bow
+	armor_class = 2 #leather armor
 	starting_age_category = intuitive
 }
