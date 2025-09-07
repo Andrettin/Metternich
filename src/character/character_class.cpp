@@ -5,7 +5,6 @@
 #include "character/character_attribute.h"
 #include "character/starting_age_category.h"
 #include "script/condition/and_condition.h"
-#include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "ui/portrait.h"
 #include "unit/military_unit_category.h"
@@ -20,6 +19,23 @@ character_class::character_class(const std::string &identifier)
 
 character_class::~character_class()
 {
+}
+
+void character_class::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "level_modifiers") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const int level = std::stoi(child_tag);
+			auto modifier = std::make_unique<metternich::modifier<const character>>();
+			modifier->process_gsml_data(child_scope);
+			this->level_modifiers[level] = std::move(modifier);
+		});
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
 }
 
 void character_class::check() const
@@ -43,6 +59,18 @@ void character_class::check() const
 	if (this->get_starting_age_category() == starting_age_category::none) {
 		throw std::runtime_error(std::format("Character type \"{}\" has no starting age category.", this->get_identifier()));
 	}
+}
+
+std::string character_class::get_level_modifier_string(const int level, const metternich::character *character) const
+{
+	std::string str = std::format("Hit Points: +{}", this->get_hit_dice().to_string());
+
+	const modifier<const metternich::character> *level_modifier = this->get_level_modifier(level);
+	if (level_modifier != nullptr) {
+		str += "\n" + level_modifier->get_string(character);
+	}
+
+	return str;
 }
 
 }

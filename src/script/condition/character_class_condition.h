@@ -25,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_character_class() == this->character_class;
+		return scope->get_game_data()->get_character_class() == this->character_class;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

@@ -25,6 +25,7 @@ set(character_SRCS
 	src/character/character_class_container.cpp
 	src/character/character_container.cpp
 	src/character/character_game_data.cpp
+	src/character/character_history.cpp
 	src/character/character_trait.cpp
 	src/character/dynasty.cpp
 )

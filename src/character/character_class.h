@@ -45,6 +45,7 @@ public:
 	explicit character_class(const std::string &identifier);
 	~character_class();
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	character_attribute get_attribute() const
@@ -97,6 +98,18 @@ public:
 		return this->obsolescence_technology;
 	}
 
+	const modifier<const character> *get_level_modifier(const int level) const
+	{
+		const auto find_iterator = this->level_modifiers.find(level);
+		if (find_iterator != this->level_modifiers.end()) {
+			return find_iterator->second.get();
+		}
+
+		return nullptr;
+	}
+
+	std::string get_level_modifier_string(const int level, const metternich::character *character) const;
+
 signals:
 	void changed();
 
@@ -111,6 +124,7 @@ private:
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
+	std::map<int, std::unique_ptr<const modifier<const character>>> level_modifiers;
 };
 
 }

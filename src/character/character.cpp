@@ -253,7 +253,7 @@ void character::check() const
 {
 	if (!this->get_roles().empty()) {
 		if (this->get_character_class() == nullptr) {
-			throw std::runtime_error(std::format("Character \"{}\" has a role, but has no character type.", this->get_identifier()));
+			throw std::runtime_error(std::format("Character \"{}\" has a role, but has no character class.", this->get_identifier()));
 		}
 
 		if (this->get_roles().size() > 1 && this->get_roles() != std::set<character_role>{ character_role::advisor, character_role::civilian }) {

@@ -59,23 +59,23 @@ character_game_data::character_game_data(const metternich::character *character)
 	this->portrait = this->character->get_portrait();
 }
 
-void character_game_data::apply_species_and_class()
+void character_game_data::apply_species_and_class(const int level)
 {
 	const species *species = this->character->get_species();
 	if (species->get_modifier() != nullptr) {
 		species->get_modifier()->apply(this->character);
 	}
 
-	const character_class *character_class = this->character->get_character_class();
-	const dice class_hit_dice = character_class->get_hit_dice();
-	this->apply_hit_dice(class_hit_dice);
+	this->set_level(level);
 }
 
 void character_game_data::apply_history()
 {
 	const character_history *character_history = this->character->get_history();
 
-	this->apply_species_and_class();
+	this->character_class = this->character->get_character_class();
+	const int level = std::max(character_history->get_level(), 1);
+	this->apply_species_and_class(level);
 
 	const metternich::country *country = character_history->get_country();
 
@@ -304,6 +304,75 @@ void character_game_data::die()
 	this->set_dead(true);
 }
 
+const metternich::character_class *character_game_data::get_character_class() const
+{
+	return this->character_class;
+}
+
+void character_game_data::set_character_class(const metternich::character_class *character_class)
+{
+	if (character_class == this->get_character_class()) {
+		return;
+	}
+
+	this->character_class = character_class;
+
+	if (game::get()->is_running()) {
+		emit character_class_changed();
+	}
+}
+
+int character_game_data::get_level() const
+{
+	return this->level;
+}
+
+void character_game_data::set_level(const int level)
+{
+	const int old_level = this->get_level();
+	if (level == old_level) {
+		return;
+	}
+
+	//characters losing levels is not supported
+	assert_throw(level > old_level);
+
+	this->level = level;
+
+	for (int i = old_level + 1; i <= level; ++i) {
+		this->on_level_gained(i, 1);
+	}
+
+	if (game::get()->is_running()) {
+		emit level_changed();
+	}
+}
+
+void character_game_data::change_level(const int change)
+{
+	this->set_level(this->get_level() + change);
+}
+
+void character_game_data::on_level_gained(const int affected_level, const int multiplier)
+{
+	//only the effects of one level at a time should be applied
+	assert_throw(std::abs(multiplier) == 1);
+
+	//only gaining levels is supported
+	assert_throw(multiplier > 0);
+
+	assert_throw(affected_level >= 1);
+
+	const metternich::character_class *character_class = this->get_character_class();
+	const dice class_hit_dice = character_class->get_hit_dice();
+	this->apply_hit_dice(class_hit_dice);
+
+	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);
+	if (level_modifier != nullptr) {
+		level_modifier->apply(this->character);
+	}
+}
+
 void character_game_data::change_attribute_value(const character_attribute attribute, const int change)
 {
 	if (change == 0) {
@@ -353,7 +422,7 @@ void character_game_data::change_attribute_value(const character_attribute attri
 
 int character_game_data::get_primary_attribute_value() const
 {
-	assert_throw(this->character->get_character_class() != nullptr);
+	assert_throw(this->get_character_class() != nullptr);
 
 	return this->get_attribute_value(this->character->get_primary_attribute());
 }
@@ -397,7 +466,7 @@ void character_game_data::set_hit_points(int hit_points)
 	this->hit_points = hit_points;
 
 	if (this->get_hit_points() < 0 && this->get_max_hit_points() > 0) {
-		this->set_dead(true);
+		this->die();
 	}
 
 	if (game::get()->is_running()) {

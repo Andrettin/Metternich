@@ -60,8 +60,9 @@ class character final : public character_base, public data_type<character>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::dynasty* dynasty MEMBER dynasty NOTIFY changed)
-	Q_PROPERTY(const metternich::character_class* character_class MEMBER character_class READ get_character_class NOTIFY changed)
 	Q_PROPERTY(metternich::species* species MEMBER species NOTIFY changed)
+	Q_PROPERTY(const metternich::character_class* character_class MEMBER character_class READ get_character_class NOTIFY changed)
+	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(const metternich::phenotype* phenotype MEMBER phenotype READ get_phenotype NOTIFY changed)
@@ -135,6 +136,11 @@ public:
 		return this->get_roles().contains(role);
 	}
 
+	const metternich::species *get_species() const
+	{
+		return this->species;
+	}
+
 	const metternich::character_class *get_character_class() const
 	{
 		return this->character_class;
@@ -144,9 +150,9 @@ public:
 	const civilian_unit_class *get_civilian_unit_class() const;
 	const civilian_unit_type *get_civilian_unit_type() const;
 
-	const metternich::species *get_species() const
+	int get_level() const
 	{
-		return this->species;
+		return this->level;
 	}
 
 	const metternich::culture *get_culture() const
@@ -272,8 +278,9 @@ signals:
 private:
 	metternich::dynasty *dynasty = nullptr;
 	std::set<character_role> roles;
-	const metternich::character_class *character_class = nullptr;
 	metternich::species *species = nullptr;
+	const metternich::character_class *character_class = nullptr;
+	int level = 0;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;

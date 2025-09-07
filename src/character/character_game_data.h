@@ -39,6 +39,8 @@ class character_game_data final : public QObject
 	Q_PROPERTY(const metternich::country* country READ get_country NOTIFY country_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
+	Q_PROPERTY(const metternich::character_class* character_class READ get_character_class NOTIFY character_class_changed)
+	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
@@ -53,7 +55,7 @@ class character_game_data final : public QObject
 public:
 	explicit character_game_data(const metternich::character *character);
 
-	void apply_species_and_class();
+	void apply_species_and_class(const int level);
 	void apply_history();
 	void on_setup_finished();
 
@@ -88,6 +90,14 @@ public:
 
 	void set_dead(const bool dead);
 	void die();
+
+	const metternich::character_class *get_character_class() const;
+	void set_character_class(const metternich::character_class *character_class);
+
+	int get_level() const;
+	void set_level(const int level);
+	void change_level(const int change);
+	void on_level_gained(const int affected_level, const int multiplier);
 
 	int get_attribute_value(const character_attribute attribute) const
 	{
@@ -333,6 +343,8 @@ signals:
 	void country_changed();
 	void age_changed();
 	void dead_changed();
+	void character_class_changed();
+	void level_changed();
 	void hit_points_changed();
 	void max_hit_points_changed();
 	void traits_changed();
@@ -348,6 +360,8 @@ private:
 	const metternich::portrait *portrait = nullptr;
 	const metternich::country *country = nullptr;
 	bool dead = false;
+	const character_class *character_class = nullptr;
+	int level = 0;
 	std::map<character_attribute, int> attribute_values;
 	int hit_dice_count = 0;
 	int hit_points = 0;
