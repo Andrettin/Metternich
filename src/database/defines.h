@@ -329,6 +329,21 @@ public:
 		return this->war_minister_portrait;
 	}
 
+	int64_t get_experience_for_level(const int level) const
+	{
+		const auto find_iterator = this->experience_per_level.find(level);
+		if (find_iterator != this->experience_per_level.end()) {
+			return find_iterator->second;
+		}
+
+		if (level <= 0) {
+			throw std::runtime_error(std::format("No experience total is given for level {}.", level));
+		}
+
+		const int64_t previous_level_experience = this->get_experience_for_level(level - 1);
+		return (previous_level_experience - this->get_experience_for_level(level - 2)) * 2 + previous_level_experience;
+	}
+
 	const QColor &get_minor_nation_color() const
 	{
 		return this->minor_nation_color;
@@ -456,6 +471,7 @@ private:
 	const office *war_minister_office = nullptr;
 	const portrait *interior_minister_portrait = nullptr;
 	const portrait *war_minister_portrait = nullptr;
+	std::map<int, int64_t> experience_per_level;
 	QColor minor_nation_color;
 	QColor country_border_color;
 	QColor selected_country_color;

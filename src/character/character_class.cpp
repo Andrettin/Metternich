@@ -4,6 +4,7 @@
 
 #include "character/character_attribute.h"
 #include "character/starting_age_category.h"
+#include "database/defines.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
@@ -26,7 +27,14 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "level_modifiers") {
+	if (tag == "experience_per_level") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const int level = std::stoi(property.get_key());
+			const int64_t experience = std::stoll(property.get_value());
+
+			this->experience_per_level[level] = experience;
+		});
+	} else if (tag == "level_modifiers") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const int level = std::stoi(child_tag);
@@ -68,6 +76,16 @@ void character_class::check() const
 	if (this->get_starting_age_category() == starting_age_category::none) {
 		throw std::runtime_error(std::format("Character type \"{}\" has no starting age category.", this->get_identifier()));
 	}
+}
+
+int64_t character_class::get_experience_for_level(const int level) const
+{
+	const auto find_iterator = this->experience_per_level.find(level);
+	if (find_iterator != this->experience_per_level.end()) {
+		return find_iterator->second;
+	}
+
+	return defines::get()->get_experience_for_level(level);
 }
 
 std::string character_class::get_level_effects_string(const int level, const metternich::character *character) const

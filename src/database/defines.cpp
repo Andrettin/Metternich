@@ -79,6 +79,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const site>>();
 		modifier->process_gsml_data(scope);
 		this->scaled_landholder_modifier = std::move(modifier);
+	} else if (tag == "experience_per_level") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const int level = std::stoi(property.get_key());
+			const int64_t experience = std::stoll(property.get_value());
+
+			this->experience_per_level[level] = experience;
+		});
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();

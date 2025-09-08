@@ -41,6 +41,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
 	Q_PROPERTY(const metternich::character_class* character_class READ get_character_class NOTIFY character_class_changed)
 	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
+	Q_PROPERTY(qint64 experience READ get_experience NOTIFY experience_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
 	Q_PROPERTY(int to_hit_bonus READ get_to_hit_bonus NOTIFY to_hit_bonus_changed)
@@ -99,6 +100,20 @@ public:
 	void set_level(const int level);
 	void change_level(const int change);
 	void on_level_gained(const int affected_level, const int multiplier);
+	void check_level_experience();
+
+
+	int64_t get_experience() const
+	{
+		return this->experience;
+	}
+
+	void set_experience(const int64_t experience)
+	{
+		this->change_experience(experience - this->get_experience());
+	}
+
+	void change_experience(const int64_t change);
 
 	const std::map<character_attribute, int> &get_attribute_values() const
 	{
@@ -359,6 +374,7 @@ signals:
 	void dead_changed();
 	void character_class_changed();
 	void level_changed();
+	void experience_changed();
 	void hit_points_changed();
 	void max_hit_points_changed();
 	void to_hit_bonus_changed();
@@ -377,6 +393,7 @@ private:
 	bool dead = false;
 	const character_class *character_class = nullptr;
 	int level = 0;
+	int64_t experience = 0;
 	std::map<character_attribute, int> attribute_values;
 	int hit_dice_count = 0;
 	int hit_points = 0;

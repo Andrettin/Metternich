@@ -49,21 +49,6 @@ advisor_commodity = statesmanship
 tariff_icon = wealth
 treasure_fleet_icon = chest
 
-min_character_traits_per_type = {
-	background = 1
-	personality = 1
-	expertise = 0
-}
-
-max_character_traits_per_type = {
-	background = 1
-	personality = 1
-}
-
-scaled_landholder_modifier = {
-	resource_output_modifier = 5
-}
-
 province_population_per_level = {
 	0 = 1000
 	1 = 2000
@@ -119,12 +104,50 @@ domain_maintenance_cost_per_province_count = {
 	76 = 30 #gb
 }
 
+min_character_traits_per_type = {
+	background = 1
+	personality = 1
+	expertise = 0
+}
+
+max_character_traits_per_type = {
+	background = 1
+	personality = 1
+}
+
+scaled_landholder_modifier = {
+	resource_output_modifier = 5
+}
+
 max_character_skill = 10 #used for calculating character skill based on skill multipliers; this is not a hard cap
 ruler_office = ruler
 interior_minister_office = steward
 war_minister_office = marshal
 interior_minister_portrait = jp_morgan
 war_minister_portrait = otto_von_bismarck
+
+experience_per_level = {
+	1 = 0
+	2 = 2000
+	3 = 5000
+	4 = 9000
+	5 = 15000
+	6 = 23000
+	7 = 35000
+	8 = 51000
+	9 = 75000
+	10 = 105000
+	11 = 155000
+	12 = 220000
+	13 = 315000
+	14 = 445000
+	15 = 635000
+	16 = 890000
+	17 = 1300000
+	18 = 1800000
+	19 = 2550000
+	20 = 3600000
+}
 
 minor_nation_color = { 221 216 181 }
 country_border_color = { 0 0 0 }

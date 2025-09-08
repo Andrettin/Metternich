@@ -98,6 +98,8 @@ public:
 		return this->obsolescence_technology;
 	}
 
+	int64_t get_experience_for_level(const int level) const;
+
 	const modifier<const character> *get_level_modifier(const int level) const
 	{
 		const auto find_iterator = this->level_modifiers.find(level);
@@ -134,6 +136,7 @@ private:
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
+	std::map<int, int64_t> experience_per_level;
 	std::map<int, std::unique_ptr<const modifier<const character>>> level_modifiers;
 	std::map<int, std::unique_ptr<const effect_list<const character>>> level_effects;
 };

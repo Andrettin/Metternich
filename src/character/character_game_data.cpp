@@ -16,6 +16,7 @@
 #include "country/country_technology.h"
 #include "country/office.h"
 #include "database/defines.h"
+#include "engine_interface.h"
 #include "game/character_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -343,6 +344,12 @@ void character_game_data::set_level(const int level)
 		this->on_level_gained(i, 1);
 	}
 
+	const metternich::character_class *character_class = this->get_character_class();
+	const int64_t level_experience = character_class->get_experience_for_level(this->get_level());
+	if (this->get_experience() < level_experience) {
+		this->set_experience(level_experience);
+	}
+
 	if (game::get()->is_running()) {
 		emit level_changed();
 	}
@@ -377,6 +384,34 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 		context ctx(this->character);
 		effects->do_effects(this->character, ctx);
 	}
+}
+
+void character_game_data::check_level_experience()
+{
+	const metternich::character_class *character_class = this->get_character_class();
+
+	while (this->get_experience() >= character_class->get_experience_for_level(this->get_level() + 1)) {
+		if (this->get_level() == character_class->get_max_level()) {
+			break;
+		}
+
+		this->change_level(1);
+	}
+}
+
+void character_game_data::change_experience(const int64_t change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->experience += change;
+
+	if (game::get()->is_running()) {
+		emit experience_changed();
+	}
+
+	this->check_level_experience();
 }
 
 void character_game_data::change_attribute_value(const character_attribute attribute, const int change)

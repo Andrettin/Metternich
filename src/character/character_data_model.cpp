@@ -136,6 +136,8 @@ void character_data_model::set_character(const metternich::character *character)
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Level:", std::to_string(character_game_data->get_level())));
 
+		this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", number::to_formatted_string(character_game_data->get_experience())));
+
 		this->top_rows.push_back(std::make_unique<character_data_row>("Age:", number::to_formatted_string(character_game_data->get_age())));
 
 		if (character->get_culture() != nullptr) {
