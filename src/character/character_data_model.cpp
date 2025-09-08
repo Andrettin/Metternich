@@ -152,7 +152,7 @@ void character_data_model::set_character(const metternich::character *character)
 
 		this->create_attribute_rows();
 
-		this->top_rows.push_back(std::make_unique<character_data_row>("Hit Points:", std::to_string(character_game_data->get_hit_points())));
+		this->top_rows.push_back(std::make_unique<character_data_row>("Hit Points:", std::format("{}/{}", character_game_data->get_hit_points(), character_game_data->get_max_hit_points())));
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Armor Class:", std::to_string(character_game_data->get_character_class()->get_armor_class())));
 
