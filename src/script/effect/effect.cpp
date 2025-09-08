@@ -28,6 +28,7 @@
 #include "script/effect/delayed_effect.h"
 #include "script/effect/else_effect.h"
 #include "script/effect/event_effect.h"
+#include "script/effect/experience_effect.h"
 #include "script/effect/free_technologies_effect.h"
 #include "script/effect/gain_spell_scroll_effect.h"
 #include "script/effect/hidden_effect.h"
@@ -62,7 +63,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	const std::string &value = property.get_value();
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (key == "traits") {
+		if (key == "experience") {
+			return std::make_unique<experience_effect>(value, effect_operator);
+		} else if (key == "traits") {
 			return std::make_unique<traits_effect>(value, effect_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
@@ -83,8 +86,6 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<set_flag_effect>(value, effect_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);
-		} else if (office::try_get(key) != nullptr) {
-			return std::make_unique<office_holder_effect>(office::get(key), effect_operator);
 		} else if (key.starts_with(population_scaled_commodity_prefix) && commodity::try_get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size()));
 			return std::make_unique<population_scaled_commodity_effect>(commodity, value, effect_operator);
@@ -164,6 +165,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<random_neighbor_country_effect>(effect_operator);
 		} else if (effect_identifier == "random_settlement") {
 			effect = std::make_unique<random_settlement_effect>(effect_operator);
+		} else if (office::try_get(effect_identifier) != nullptr) {
+			effect = std::make_unique<office_holder_effect>(office::get(effect_identifier), effect_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (effect_identifier == "location") {

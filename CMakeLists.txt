@@ -665,6 +665,7 @@ set(script_effect_HDRS
 	src/script/effect/effect_list.h
 	src/script/effect/else_effect.h
 	src/script/effect/event_effect.h
+	src/script/effect/experience_effect.h
 	src/script/effect/free_technologies_effect.h
 	src/script/effect/gain_spell_scroll_effect.h
 	src/script/effect/hidden_effect.h
