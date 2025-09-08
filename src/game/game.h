@@ -53,6 +53,12 @@ public:
 
 	gsml_data to_gsml_data() const;
 
+	void save(const std::filesystem::path &filepath) const;
+	Q_INVOKABLE void save(const QUrl &filepath) const;
+
+	void load(const std::filesystem::path &filepath);
+	Q_INVOKABLE void load(const QUrl &filepath);
+
 	const game_rules *get_rules() const
 	{
 		return this->rules.get();

@@ -27,6 +27,7 @@
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"
+#include "database/gsml_parser.h"
 #include "database/gsml_property.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
@@ -95,6 +96,7 @@
 #include "util/number_util.h"
 #include "util/path_util.h"
 #include "util/size_util.h"
+#include "util/string_conversion_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -131,8 +133,19 @@ game::~game()
 void game::process_gsml_property(const gsml_property &property)
 {
 	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
 
-	throw std::runtime_error("Invalid game data property: \"" + key + "\".");
+	if (key == "date") {
+		this->date = string::to_date(value);
+	} else if (key == "turn") {
+		this->turn = std::stoi(value);
+	} else if (key == "player_character") {
+		this->player_character = character::get(value);
+	} else if (key == "player_country") {
+		this->player_country = country::get(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid game data property: \"{}\".", key));
+	}
 }
 
 void game::process_gsml_scope(const gsml_data &scope)
@@ -168,7 +181,7 @@ void game::process_gsml_scope(const gsml_data &scope)
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
 	} else {
-		throw std::runtime_error("Invalid game data scope: \"" + scope.get_tag() + "\".");
+		throw std::runtime_error(std::format("Invalid game data scope: \"{}\".", tag));
 	}
 }
 
@@ -177,6 +190,11 @@ gsml_data game::to_gsml_data() const
 	gsml_data data;
 
 	data.add_child("rules", this->get_rules()->to_gsml_data());
+
+	data.add_property("date", date::to_string(this->get_date()));
+	data.add_property("turn", std::to_string(this->turn));
+	data.add_property("player_character", this->get_player_character()->get_identifier());
+	data.add_property("player_country", this->get_player_country()->get_identifier());
 
 	if (!this->character_delayed_effects.empty()) {
 		gsml_data delayed_effects_data("character_delayed_effects");
@@ -203,6 +221,49 @@ gsml_data game::to_gsml_data() const
 	}
 
 	return data;
+}
+
+void game::save(const std::filesystem::path &filepath) const
+{
+	try {
+		const gsml_data game_data = this->to_gsml_data();
+		game_data.print_to_file(filepath);
+	} catch (...) {
+		exception::report(std::current_exception());
+	}
+}
+
+void game::save(const QUrl &filepath) const
+{
+	this->save(path::from_qurl(filepath));
+}
+
+void game::load(const std::filesystem::path &filepath)
+{
+	try {
+		if (!std::filesystem::exists(filepath)) {
+			return;
+		}
+
+		gsml_parser parser;
+		gsml_data data;
+
+		try {
+			data = parser.parse(filepath);
+		} catch (...) {
+			exception::report(std::current_exception());
+			log::log_error(std::format("Failed to parse save file: {}", path::to_string(filepath)));
+		}
+
+		data.process(this);
+	} catch (...) {
+		exception::report(std::current_exception());
+	}
+}
+
+void game::load(const QUrl &filepath)
+{
+	this->load(path::from_qurl(filepath));
 }
 
 QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)

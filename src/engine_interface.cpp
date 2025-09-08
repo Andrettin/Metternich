@@ -8,6 +8,7 @@
 #include "country/country_tier.h"
 #include "country/country_tier_data.h"
 #include "country/law_group.h"
+#include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
@@ -72,6 +73,13 @@ map *engine_interface::get_map() const
 preferences *engine_interface::get_preferences() const
 {
 	return preferences::get();
+}
+
+QString engine_interface::get_save_path() const
+{
+	std::filesystem::path save_path = database::get_save_path();
+	save_path.make_preferred();
+	return path::to_qstring(save_path);
 }
 
 QVariantList engine_interface::get_game_rule_groups() const

@@ -108,6 +108,14 @@ Item {
 		id: military_unit_recruiment_dialog
 	}
 	
+	SaveGameDialog {
+		id: save_game_dialog
+	}
+	
+	LoadGameDialog {
+		id: load_game_dialog
+	}
+	
 	Keys.onPressed: function(event) {
 		switch (event.key) {
 			case Qt.Key_E:

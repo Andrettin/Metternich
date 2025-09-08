@@ -19,6 +19,15 @@ DialogBase {
 		spacing: 8 * scale_factor
 		
 		TextButton {
+			id: save_game_button
+			text: "Save Game"
+			width: 128 * scale_factor
+			onClicked: {
+				save_game_dialog.open()
+			}
+		}
+		
+		TextButton {
 			id: start_new_game_button
 			text: "Start New Game"
 			width: 128 * scale_factor
@@ -26,6 +35,15 @@ DialogBase {
 				dialog.close()
 				menu_stack.pop()
 				metternich.game.stop()
+			}
+		}
+		
+		TextButton {
+			id: load_game_button
+			text: "Load Game"
+			width: 128 * scale_factor
+			onClicked: {
+				load_game_dialog.open()
 			}
 		}
 		
