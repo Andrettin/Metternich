@@ -60,6 +60,11 @@ public:
 		return this;
 	}
 
+	virtual std::string_view get_event_type_string() const override
+	{
+		return "character";
+	}
+
 	virtual event_trigger get_trigger() const override
 	{
 		return event::get_trigger();

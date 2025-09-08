@@ -33,8 +33,12 @@
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
+#include "game/character_event.h"
+#include "game/country_event.h"
 #include "game/game_rules.h"
+#include "game/province_event.h"
 #include "game/scenario.h"
+#include "game/site_event.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
@@ -180,6 +184,28 @@ void game::process_gsml_scope(const gsml_data &scope)
 			delayed_effect_data.process(delayed_effect.get());
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
+	} else if (tag == "fired_events") {
+		scope.for_each_child([&](const gsml_data &fired_events_data) {
+			const std::string &event_type_string = fired_events_data.get_tag();
+			const std::vector<std::string> &child_values = fired_events_data.get_values();
+
+			for (const std::string &child_value : child_values) {
+				const metternich::event *event = nullptr;
+				if (event_type_string == "character") {
+					event = character_event::get(child_value);
+				} else if (event_type_string == "country") {
+					event = country_event::get(child_value);
+				} else if (event_type_string == "province") {
+					event = province_event::get(child_value);
+				} else if (event_type_string == "site") {
+					event = site_event::get(child_value);
+				} else {
+					assert_throw(false);
+				}
+
+				this->fired_events.insert(event);
+			}
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid game data scope: \"{}\".", tag));
 	}
@@ -218,6 +244,20 @@ gsml_data game::to_gsml_data() const
 			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
 		}
 		data.add_child(std::move(delayed_effects_data));
+	}
+
+	if (!this->fired_events.empty()) {
+		gsml_data fired_events_data("fired_events");
+		for (const metternich::event *fired_event : this->fired_events) {
+			const std::string event_type_string(fired_event->get_event_type_string());
+			if (!fired_events_data.has_child(event_type_string)) {
+				gsml_data fired_events_type_data(event_type_string);
+				fired_events_data.add_child(std::move(fired_events_type_data));
+			}
+			
+			fired_events_data.get_child(event_type_string).add_value(fired_event->get_identifier());
+		}
+		data.add_child(std::move(fired_events_data));
 	}
 
 	return data;

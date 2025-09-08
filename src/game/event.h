@@ -38,6 +38,8 @@ public:
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void initialize() override;
 
+	virtual std::string_view get_event_type_string() const = 0;
+
 	bool has_circular_portrait() const
 	{
 		return this->circular_portrait;
