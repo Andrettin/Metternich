@@ -5,6 +5,7 @@
 #include "character/character_attribute.h"
 #include "character/starting_age_category.h"
 #include "script/condition/and_condition.h"
+#include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "ui/portrait.h"
 #include "unit/military_unit_category.h"
@@ -32,6 +33,14 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 			auto modifier = std::make_unique<metternich::modifier<const character>>();
 			modifier->process_gsml_data(child_scope);
 			this->level_modifiers[level] = std::move(modifier);
+		});
+	} else if (tag == "level_effects") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const int level = std::stoi(child_tag);
+			auto effect_list = std::make_unique<metternich::effect_list<const character>>();
+			effect_list->process_gsml_data(child_scope);
+			this->level_effects[level] = std::move(effect_list);
 		});
 	} else {
 		data_entry::process_gsml_scope(scope);
@@ -61,13 +70,18 @@ void character_class::check() const
 	}
 }
 
-std::string character_class::get_level_modifier_string(const int level, const metternich::character *character) const
+std::string character_class::get_level_effects_string(const int level, const metternich::character *character) const
 {
 	std::string str = std::format("Hit Points: +{}", this->get_hit_dice().to_string());
 
 	const modifier<const metternich::character> *level_modifier = this->get_level_modifier(level);
 	if (level_modifier != nullptr) {
 		str += "\n" + level_modifier->get_string(character);
+	}
+
+	const effect_list<const metternich::character> *level_effects = this->get_level_effects(level);
+	if (level_effects != nullptr) {
+		str += "\n" + level_effects->get_effects_string(character, read_only_context(character));
 	}
 
 	return str;

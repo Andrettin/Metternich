@@ -371,6 +371,12 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 	if (level_modifier != nullptr) {
 		level_modifier->apply(this->character);
 	}
+
+	const effect_list<const metternich::character> *effects = character_class->get_level_effects(affected_level);
+	if (effects != nullptr) {
+		context ctx(this->character);
+		effects->do_effects(this->character, ctx);
+	}
 }
 
 void character_game_data::change_attribute_value(const character_attribute attribute, const int change)

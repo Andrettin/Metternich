@@ -108,7 +108,17 @@ public:
 		return nullptr;
 	}
 
-	std::string get_level_modifier_string(const int level, const metternich::character *character) const;
+	const effect_list<const character> *get_level_effects(const int level) const
+	{
+		const auto find_iterator = this->level_effects.find(level);
+		if (find_iterator != this->level_effects.end()) {
+			return find_iterator->second.get();
+		}
+
+		return nullptr;
+	}
+
+	std::string get_level_effects_string(const int level, const metternich::character *character) const;
 
 signals:
 	void changed();
@@ -125,6 +135,7 @@ private:
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
 	std::map<int, std::unique_ptr<const modifier<const character>>> level_modifiers;
+	std::map<int, std::unique_ptr<const effect_list<const character>>> level_effects;
 };
 
 }
