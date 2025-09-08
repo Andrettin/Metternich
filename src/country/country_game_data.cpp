@@ -127,6 +127,37 @@ country_game_data::~country_game_data()
 {
 }
 
+void country_game_data::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "tier") {
+		this->tier = magic_enum::enum_cast<country_tier>(value).value();
+	} else if (key == "religion") {
+		this->religion = religion::get(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid country game data property: \"{}\".", key));
+	}
+}
+
+void country_game_data::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	throw std::runtime_error(std::format("Invalid country game data scope: \"{}\".", tag));
+}
+
+gsml_data country_game_data::to_gsml_data() const
+{
+	gsml_data data(this->country->get_identifier());
+
+	data.add_property("tier", std::string(magic_enum::enum_name(this->get_tier())));
+	data.add_property("religion", this->get_religion()->get_identifier());
+
+	return data;
+}
+
 void country_game_data::do_turn()
 {
 	try {

@@ -139,6 +139,11 @@ public:
 	explicit country_game_data(metternich::country *country);
 	~country_game_data();
 
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
+
 	void do_turn();
 	void collect_wealth();
 	void pay_maintenance();

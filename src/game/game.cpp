@@ -206,6 +206,11 @@ void game::process_gsml_scope(const gsml_data &scope)
 				this->fired_events.insert(event);
 			}
 		});
+	} else if (tag == "countries") {
+		scope.for_each_child([&](const gsml_data &country_data) {
+			const country *country = country::get(country_data.get_tag());
+			country_data.process(country->get_game_data());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid game data scope: \"{}\".", tag));
 	}
@@ -259,6 +264,12 @@ gsml_data game::to_gsml_data() const
 		}
 		data.add_child(std::move(fired_events_data));
 	}
+
+	gsml_data countries_data("countries");
+	for (const country *country : this->get_countries()) {
+		countries_data.add_child(country->get_game_data()->to_gsml_data());
+	}
+	data.add_child(std::move(countries_data));
 
 	return data;
 }
