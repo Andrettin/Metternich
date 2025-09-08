@@ -7,6 +7,12 @@ rogue = {
 	damage_dice = 1d8 #bow
 	armor_class = 2 #leather armor
 	starting_age_category = intuitive
+	experience_per_level = {
+		1 = 0
+		2 = 1250
+		3 = 2500
+		4 = 5000
+	}
 	level_modifiers = {
 		3 = {
 			to_hit_bonus = 1

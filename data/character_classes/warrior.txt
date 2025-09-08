@@ -7,6 +7,12 @@ warrior = {
 	damage_dice = 1d8 #long sword/battle axe
 	armor_class = 6 #chain mail and shield
 	starting_age_category = self_taught
+	experience_per_level = {
+		1 = 0
+		2 = 2000
+		3 = 4000
+		4 = 8000
+	}
 	level_modifiers = {
 		1 = {
 			to_hit_bonus = 1
