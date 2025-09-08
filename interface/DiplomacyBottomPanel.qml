@@ -126,20 +126,14 @@ Rectangle {
 		visible: ruler_portrait.visible
 	}
 	
-	PortraitButton {
+	CharacterPortraitButton {
 		id: ruler_portrait
 		anchors.top: ruler_label.bottom
 		anchors.topMargin: 4 * scale_factor
 		anchors.right: population_type_chart.left
 		anchors.rightMargin: 32 * scale_factor
-		portrait_identifier: selected_country_ruler && selected_country_ruler.game_data.portrait ? selected_country_ruler.game_data.portrait.identifier : ""
-		visible: selected_country_ruler !== null
+		character: selected_country_ruler
 		tooltip: selected_country_ruler ? selected_country_ruler.game_data.titled_name : ""
-		
-		onClicked: {
-			character_dialog.character = selected_country_ruler
-			character_dialog.open()
-		}
 	}
 	
 	SmallText {

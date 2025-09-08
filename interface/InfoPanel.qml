@@ -125,7 +125,9 @@ Rectangle {
 		wrapMode: Text.WordWrap
 		text: selected_site ? selected_site.game_data.current_cultural_name
 				: (selected_civilian_unit ? selected_civilian_unit.type.name
-					: (selected_province ? selected_province.game_data.current_cultural_name : "")
+					: (selected_province ? selected_province.game_data.current_cultural_name
+						: (metternich.game.player_character ? metternich.game.player_character.game_data.titled_name : "")
+					)
 				)
 	}
 	
@@ -162,9 +164,18 @@ Rectangle {
 		}
 	}
 	
+	CharacterPortraitButton {
+		id: character_portrait
+		anchors.top: title.bottom
+		anchors.topMargin: 16 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		character: metternich.game.player_character
+		visible: !selected_site && !selected_garrison && !selected_civilian_unit && !selected_province
+	}
+	
 	SmallText {
 		id: subtitle
-		anchors.top: icon.visible ? icon.bottom : title.bottom
+		anchors.top: icon.visible ? icon.bottom : (character_portrait.visible ? character_portrait.bottom : title.bottom)
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		horizontalAlignment: Text.AlignHCenter
@@ -177,7 +188,8 @@ Rectangle {
 					selected_site.map_data.resource ? (selected_site.map_data.resource.natural_wonder ? "Natural Wonder" : selected_site.map_data.resource.name) : ""
 				)
 			)
-		) : (selected_civilian_unit ? selected_civilian_unit.name : ""))
+		) : (selected_civilian_unit ? selected_civilian_unit.name
+			: (!selected_province && metternich.game.player_character ? metternich.game.player_character.game_data.character_class.name : "")))
 		visible: !population_info_text.visible && text.length > 0
 		
 		readonly property string site_title_name: selected_site_game_data ? selected_site_game_data.title_name : ""
