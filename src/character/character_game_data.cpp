@@ -224,11 +224,6 @@ bool character_game_data::is_current_portrait_valid() const
 
 void character_game_data::check_portrait()
 {
-	if (!this->character->has_role(character_role::ruler) && !this->character->has_role(character_role::advisor) && !this->character->has_role(character_role::governor) && !this->character->has_role(character_role::landholder)) {
-		//only rulers, advisors, governors and landholders need portraits
-		return;
-	}
-
 	if (this->is_current_portrait_valid()) {
 		return;
 	}
