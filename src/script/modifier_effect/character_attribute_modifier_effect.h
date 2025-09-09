@@ -10,7 +10,7 @@ namespace metternich {
 class character_attribute_modifier_effect final : public modifier_effect<const character>
 {
 public:
-	explicit character_attribute_modifier_effect(const character_attribute attribute, const std::string &value)
+	explicit character_attribute_modifier_effect(const character_attribute *attribute, const std::string &value)
 		: modifier_effect<const character>(value), attribute(attribute)
 	{
 	}
@@ -30,11 +30,11 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return std::string(get_character_attribute_name(this->attribute));
+		return this->attribute->get_name();
 	}
 
 private:
-	character_attribute attribute = character_attribute::none;
+	const character_attribute *attribute = nullptr;
 };
 
 }

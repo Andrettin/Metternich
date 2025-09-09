@@ -1,6 +1,6 @@
 engineer = {
 	name = "Engineer"
-	attribute = learning
+	attribute = intelligence
 	civilian_unit_class = engineer
 	max_level = 3
 	hit_dice = 1d4 #as Mage

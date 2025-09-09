@@ -36,7 +36,7 @@ void office::process_gsml_scope(const gsml_data &scope)
 
 void office::check() const
 {
-	assert_throw(this->get_attribute() != character_attribute::none);
+	assert_throw(this->get_attribute() != nullptr);
 
 	if (this->is_ruler()) {
 		assert_throw(!this->is_minister());

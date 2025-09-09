@@ -15,7 +15,7 @@
 namespace metternich {
 
 character_class::character_class(const std::string &identifier)
-	: named_data_entry(identifier), attribute(character_attribute::none), military_unit_category(military_unit_category::none)
+	: named_data_entry(identifier), military_unit_category(military_unit_category::none)
 {
 }
 
@@ -57,7 +57,7 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 void character_class::check() const
 {
-	if (this->get_attribute() == character_attribute::none) {
+	if (this->get_attribute() == nullptr) {
 		throw std::runtime_error(std::format("Character type \"{}\" has no attribute.", this->get_identifier()));
 	}
 

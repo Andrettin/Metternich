@@ -1,6 +1,6 @@
 cleric = {
 	name = "Cleric"
-	attribute = learning
+	attribute = wisdom
 	max_level = 3
 	hit_dice = 1d8
 	damage_dice = 1d6+1 #mace

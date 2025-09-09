@@ -1,36 +1,25 @@
 #pragma once
 
+#include "database/data_type.h"
+#include "database/named_data_entry.h"
+
 namespace metternich {
 
-enum class character_attribute {
-	none,
-	diplomacy,
-	martial,
-	stewardship,
-	intrigue,
-	learning
-};
-
-inline std::string_view get_character_attribute_name(const character_attribute attribute)
+class character_attribute final : public named_data_entry, public data_type<character_attribute>
 {
-	switch (attribute) {
-		case character_attribute::diplomacy:
-			return "Diplomacy";
-		case character_attribute::martial:
-			return "Martial";
-		case character_attribute::stewardship:
-			return "Stewardship";
-		case character_attribute::intrigue:
-			return "Intrigue";
-		case character_attribute::learning:
-			return "Learning";
-		default:
-			break;
+	Q_OBJECT
+
+public:
+	static constexpr const char class_identifier[] = "character_attribute";
+	static constexpr const char property_class_identifier[] = "metternich::character_attribute*";
+	static constexpr const char database_folder[] = "character_attributes";
+
+	explicit character_attribute(const std::string &identifier) : named_data_entry(identifier)
+	{
 	}
 
-	throw std::runtime_error(std::format("Invalid character attribute: \"{}\".", static_cast<int>(attribute)));
-}
+signals:
+	void changed();
+};
 
 }
-
-Q_DECLARE_METATYPE(metternich::character_attribute)

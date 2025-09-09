@@ -1,6 +1,6 @@
 farmer = {
 	name = "Farmer"
-	attribute = stewardship
+	attribute = strength
 	civilian_unit_class = farmer
 	max_level = 3
 	hit_dice = 1d4 #as Mage

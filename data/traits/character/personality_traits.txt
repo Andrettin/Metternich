@@ -4,11 +4,6 @@ arbitrary = {
 		personality
 	}
 	icon = blood
-	attribute_bonuses = {
-		stewardship = -2
-		intrigue = 1
-		learning = -1
-	}
 }
 
 assertive = {
@@ -21,18 +16,6 @@ assertive = {
 		not = {
 			trait = submissive
 		}
-	}
-	attribute_bonuses = {
-		diplomacy = 1
-		stewardship = 1
-	}
-	office_modifiers = {
-		ruler = {
-			trade_output_modifier = 5
-		}
-	}
-	governor_modifier = {
-		trade_output_modifier = 5
 	}
 }
 
@@ -55,9 +38,6 @@ cautious = {
 		personality
 	}
 	icon = heater_shield
-	attribute_bonuses = {
-		martial = -1
-	}
 }
 
 celibate = {
@@ -74,9 +54,6 @@ charitable = {
 		personality
 	}
 	icon = golden_cross
-	attribute_bonuses = {
-		diplomacy = 3
-	}
 }
 
 chaste = {
@@ -85,9 +62,6 @@ chaste = {
 		personality
 	}
 	icon = wooden_cross
-	attribute_bonuses = {
-		learning = 1
-	}
 }
 
 compassionate = {
@@ -96,10 +70,6 @@ compassionate = {
 		personality
 	}
 	icon = love
-	attribute_bonuses = {
-		diplomacy = 2
-		intrigue = -2
-	}
 }
 
 content = {
@@ -108,9 +78,6 @@ content = {
 		personality
 	}
 	icon = anchor
-	attribute_bonuses = {
-		intrigue = -1
-	}
 }
 
 cynical = {
@@ -119,9 +86,6 @@ cynical = {
 		personality
 	}
 	icon = blood
-	attribute_bonuses = {
-		intrigue = 2
-	}
 }
 
 devout = {
@@ -135,14 +99,6 @@ devout = {
 			trait = lapsed
 		}
 	}
-	attribute_bonuses = {
-		learning = 1
-	}
-	office_modifiers = {
-		ruler = {
-			piety_output_modifier = 5
-		}
-	}
 }
 
 diligent = {
@@ -151,13 +107,6 @@ diligent = {
 		personality
 	}
 	icon = hammer
-	attribute_bonuses = {
-		diplomacy = 1
-		martial = 1
-		stewardship = 1
-		intrigue = 1
-		learning = 1
-	}
 }
 
 disciplined = {
@@ -166,16 +115,6 @@ disciplined = {
 		personality
 	}
 	icon = crossed_sabers
-	attribute = martial
-	max_scaling = 10
-	attribute_bonuses = {
-		martial = 1
-	}
-	scaled_office_modifiers = {
-		ruler = {
-			infantry_cost_modifier = -5
-		}
-	}
 }
 
 erudite = {
@@ -184,9 +123,6 @@ erudite = {
 		personality
 	}
 	icon = university
-	attribute_bonuses = {
-		learning = 2
-	}
 }
 
 gluttonous = {
@@ -195,9 +131,6 @@ gluttonous = {
 		personality
 	}
 	icon = cattle
-	attribute_bonuses = {
-		stewardship = -2
-	}
 }
 
 greedy = {
@@ -206,9 +139,6 @@ greedy = {
 		personality
 	}
 	icon = chest
-	attribute_bonuses = {
-		diplomacy = -1
-	}
 }
 
 gregarious = {
@@ -217,9 +147,6 @@ gregarious = {
 		personality
 	}
 	icon = music
-	attribute_bonuses = {
-		diplomacy = 2
-	}
 }
 
 imperialistic = {
@@ -228,16 +155,6 @@ imperialistic = {
 		personality
 	}
 	icon = globe
-	attribute = martial
-	max_scaling = 5
-	attribute_bonuses = {
-		martial = 1
-	}
-	scaled_office_modifiers = {
-		ruler = {
-			leadership_output_modifier = 5
-		}
-	}
 }
 
 just = {
@@ -246,10 +163,6 @@ just = {
 		personality
 	}
 	icon = courthouse
-	attribute_bonuses = {
-		stewardship = 2
-		learning = 1
-	}
 }
 
 kind = {
@@ -258,10 +171,6 @@ kind = {
 		personality
 	}
 	icon = love
-	attribute_bonuses = {
-		diplomacy = 2
-		intrigue = -2
-	}
 }
 
 lapsed = {
@@ -275,14 +184,6 @@ lapsed = {
 			trait = devout
 		}
 	}
-	attribute_bonuses = {
-		learning = -1
-	}
-	office_modifiers = {
-		ruler = {
-			piety_output_modifier = -10
-		}
-	}
 }
 
 libertarian = {
@@ -291,16 +192,6 @@ libertarian = {
 		personality
 	}
 	icon = courthouse
-	attribute = diplomacy
-	max_scaling = 5
-	attribute_bonuses = {
-		diplomacy = 1
-	}
-	scaled_office_modifiers = {
-		ruler = {
-			statesmanship_output_modifier = 5
-		}
-	}
 }
 
 narrow_minded = {
@@ -309,15 +200,6 @@ narrow_minded = {
 		personality
 	}
 	icon = cattle
-	attribute_bonuses = {
-		martial = 1
-		learning = -1
-	}
-	office_modifiers = {
-		ruler = {
-			research_output_modifier = -10
-		}
-	}
 }
 
 prominent = {
@@ -326,12 +208,6 @@ prominent = {
 		personality
 	}
 	icon = flag
-	attribute_bonuses = {
-		diplomacy = 1
-	}
-	governor_modifier = {
-		trade_output_modifier = 10
-	}
 }
 
 proud = {
@@ -348,14 +224,6 @@ reckless = {
 		personality
 	}
 	icon = saber
-	attribute_bonuses = {
-		martial = 1
-	}
-	office_modifiers = {
-		ruler = {
-			diplomatic_penalty_for_expansion_modifier = 10
-		}
-	}
 }
 
 scholar = {
@@ -364,18 +232,6 @@ scholar = {
 		personality
 	}
 	icon = university
-	attribute_bonuses = {
-		martial = -1
-		learning = 3
-	}
-	office_modifiers = {
-		ruler = {
-			research_output_modifier = 5
-		}
-	}
-	governor_modifier = {
-		research_output_modifier = 10
-	}
 }
 
 shy = {
@@ -384,9 +240,6 @@ shy = {
 		personality
 	}
 	icon = wall
-	attribute_bonuses = {
-		diplomacy = -2
-	}
 }
 
 skeptical = {
@@ -395,14 +248,6 @@ skeptical = {
 		personality
 	}
 	icon = philosophy
-	attribute_bonuses = {
-		intrigue = 1
-	}
-	office_modifiers = {
-		ruler = {
-			piety_output_modifier = -5
-		}
-	}
 }
 
 strict = {
@@ -411,10 +256,6 @@ strict = {
 		personality
 	}
 	icon = saber
-	attribute_bonuses = {
-		diplomacy = -1
-		martial = 1
-	}
 }
 
 stubborn = {
@@ -423,10 +264,6 @@ stubborn = {
 		personality
 	}
 	icon = wall
-	attribute_bonuses = {
-		diplomacy = -1
-		stewardship = 1
-	}
 }
 
 submissive = {
@@ -440,17 +277,6 @@ submissive = {
 			trait = assertive
 		}
 	}
-	attribute_bonuses = {
-		diplomacy = -1
-	}
-	office_modifiers = {
-		ruler = {
-			trade_output_modifier = -5
-		}
-	}
-	governor_modifier = {
-		trade_output_modifier = -5
-	}
 }
 
 temperate = {
@@ -459,9 +285,6 @@ temperate = {
 		personality
 	}
 	icon = philosophy
-	attribute_bonuses = {
-		stewardship = 2
-	}
 }
 
 unnoticeable = {
@@ -470,12 +293,6 @@ unnoticeable = {
 		personality
 	}
 	icon = skull
-	attribute_bonuses = {
-		diplomacy = -1
-	}
-	governor_modifier = {
-		trade_output_modifier = -10
-	}
 }
 
 wroth = {
@@ -484,11 +301,6 @@ wroth = {
 		personality
 	}
 	icon = blood
-	attribute_bonuses = {
-		diplomacy = -1
-		martial = 3
-		intrigue = -1
-	}
 }
 
 zealous = {
@@ -497,7 +309,4 @@ zealous = {
 		personality
 	}
 	icon = wooden_cross
-	attribute_bonuses = {
-		martial = 2
-	}
 }

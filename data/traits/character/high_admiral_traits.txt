@@ -4,7 +4,6 @@ grand_admiral = {
 		background
 	}
 	icon = anchor
-	attribute = martial
 	conditions = {
 		character_class = warrior
 	}
@@ -16,23 +15,8 @@ naval_reformer = {
 		background
 	}
 	icon = anchor
-	attribute = martial
 	conditions = {
 		character_class = warrior
-	}
-	scaled_advisor_modifier = {
-		technology_cost_modifier = {
-			category = navy
-			value = -5
-		}
-	}
-	scaled_office_modifiers = {
-		high_admiral = {
-			technology_cost_modifier = {
-				category = navy
-				value = -5
-			}
-		}
 	}
 }
 
@@ -42,7 +26,6 @@ privateer = {
 		background
 	}
 	icon = skull
-	attribute = martial
 	conditions = {
 		character_class = rogue
 	}

@@ -1,6 +1,6 @@
 pioneer = {
 	name = "Pioneer"
-	attribute = stewardship
+	attribute = constitution
 	civilian_unit_class = pioneer
 	max_level = 3
 	hit_dice = 1d6 #as Rogue

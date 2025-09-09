@@ -1,6 +1,6 @@
 merchant = {
 	name = "Merchant"
-	attribute = stewardship
+	attribute = intelligence
 	civilian_unit_class = merchant
 	max_level = 3
 	hit_dice = 1d6 #as Rogue

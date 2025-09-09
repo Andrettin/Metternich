@@ -1,0 +1,23 @@
+strength = {
+	name = "Strength"
+}
+
+dexterity = {
+	name = "Dexterity"
+}
+
+constitution = {
+	name = "Constitution"
+}
+
+intelligence = {
+	name = "Intelligence"
+}
+
+wisdom = {
+	name = "Wisdom"
+}
+
+charisma = {
+	name = "Charisma"
+}

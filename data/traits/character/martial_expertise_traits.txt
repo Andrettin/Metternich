@@ -4,13 +4,9 @@ cavalry_leader = {
 		expertise
 	}
 	icon = horses
-	attribute = martial
 	max_scaling = 4
 	conditions = {
 		military_unit_category = general
-	}
-	attribute_bonuses = {
-		martial = 1
 	}
 }
 
@@ -20,13 +16,9 @@ drillmaster = {
 		expertise
 	}
 	icon = horses
-	attribute = martial
 	max_scaling = 4
 	conditions = {
 		military_unit_category = general
-	}
-	attribute_bonuses = {
-		martial = 1
 	}
 }
 
@@ -37,10 +29,7 @@ duelist = {
 	}
 	icon = saber
 	conditions = {
-		primary_attribute = martial
-	}
-	attribute_bonuses = {
-		martial = 3
+		primary_attribute = dexterity
 	}
 	military_unit_modifier = {
 		melee = 1
@@ -54,13 +43,9 @@ heavy_infantry_leader = {
 		expertise
 	}
 	icon = saber
-	attribute = martial
 	max_scaling = 4
 	conditions = {
 		military_unit_category = general
-	}
-	attribute_bonuses = {
-		martial = 1
 	}
 }
 
@@ -72,13 +57,9 @@ hunter = {
 	icon = bow
 	conditions = {
 		or = {
-			primary_attribute = martial
-			primary_attribute = diplomacy
+			primary_attribute = dexterity
+			primary_attribute = charisma
 		}
-	}
-	attribute_bonuses = {
-		martial = 2
-		diplomacy = 1
 	}
 }
 
@@ -88,13 +69,9 @@ light_infantry_leader = {
 		expertise
 	}
 	icon = saber
-	attribute = martial
 	max_scaling = 4
 	conditions = {
 		military_unit_category = general
-	}
-	attribute_bonuses = {
-		martial = 1
 	}
 }
 

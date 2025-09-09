@@ -5,7 +5,7 @@ naive_appeaser = {
 	}
 	icon = treaty
 	conditions = {
-		primary_attribute = diplomacy
+		primary_attribute = charisma
 		not = {
 			trait = underhanded_rogue
 			trait = charismatic_negotiator
@@ -13,7 +13,7 @@ naive_appeaser = {
 		}
 	}
 	attribute_bonuses = {
-		diplomacy = 2
+		charisma = 2
 	}
 }
 
@@ -24,7 +24,7 @@ underhanded_rogue = {
 	}
 	icon = treaty
 	conditions = {
-		primary_attribute = diplomacy
+		primary_attribute = charisma
 		not = {
 			trait = naive_appeaser
 			trait = charismatic_negotiator
@@ -32,7 +32,7 @@ underhanded_rogue = {
 		}
 	}
 	attribute_bonuses = {
-		diplomacy = 4
+		charisma = 4
 	}
 }
 
@@ -43,7 +43,7 @@ charismatic_negotiator = {
 	}
 	icon = treaty
 	conditions = {
-		primary_attribute = diplomacy
+		primary_attribute = charisma
 		not = {
 			trait = naive_appeaser
 			trait = underhanded_rogue
@@ -51,9 +51,9 @@ charismatic_negotiator = {
 		}
 	}
 	attribute_bonuses = {
-		diplomacy = 6
-		intrigue = 1
-		learning = 1
+		charisma = 6
+		intelligence = 1
+		wisdom = 1
 	}
 }
 
@@ -64,7 +64,7 @@ grey_eminence = {
 	}
 	icon = treaty
 	conditions = {
-		primary_attribute = diplomacy
+		primary_attribute = charisma
 		not = {
 			trait = naive_appeaser
 			trait = underhanded_rogue
@@ -72,8 +72,8 @@ grey_eminence = {
 		}
 	}
 	attribute_bonuses = {
-		diplomacy = 8
-		intrigue = 2
-		learning = 2
+		charisma = 8
+		intelligence = 2
+		wisdom = 2
 	}
 }

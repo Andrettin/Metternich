@@ -8,10 +8,6 @@ adventurer = {
 		character_class = none
 		character_class = rogue
 	}
-	attribute_bonuses = {
-		diplomacy = -1
-		martial = 1
-	}
 }
 
 monk = {
@@ -25,9 +21,6 @@ monk = {
 		character_class = cleric
 		gender = male
 	}
-	attribute_bonuses = {
-		learning = 1
-	}
 }
 
 nun = {
@@ -40,9 +33,6 @@ nun = {
 		character_class = none
 		character_class = cleric
 		gender = female
-	}
-	attribute_bonuses = {
-		learning = 1
 	}
 }
 
@@ -70,9 +60,6 @@ pirate = {
 			character_class = navigator
 			character_class = rogue
 		}
-	}
-	attribute_bonuses = {
-		martial = 1
 	}
 }
 

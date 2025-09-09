@@ -141,8 +141,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<primary_attribute_condition>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
-		} else if (magic_enum::enum_cast<character_attribute>(key).has_value()) {
-			return std::make_unique<character_attribute_condition>(magic_enum::enum_cast<character_attribute>(key).value(), value, condition_operator);
+		} else if (character_attribute::try_get(key) != nullptr) {
+			return std::make_unique<character_attribute_condition>(character_attribute::get(key), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, country>) {
 		static const std::string population_scaled_commodity_prefix = "population_scaled_";

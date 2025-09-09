@@ -10,7 +10,7 @@ namespace metternich {
 class character_attribute_condition final : public numerical_condition<character, read_only_context>
 {
 public:
-	explicit character_attribute_condition(const character_attribute attribute, const std::string &value, const gsml_operator condition_operator)
+	explicit character_attribute_condition(const character_attribute *attribute, const std::string &value, const gsml_operator condition_operator)
 		: numerical_condition<character, read_only_context>(value, condition_operator), attribute(attribute)
 	{
 	}
@@ -28,11 +28,11 @@ public:
 
 	virtual std::string get_value_name() const override
 	{
-		return std::string(get_character_attribute_name(this->attribute));
+		return this->attribute->get_name();
 	}
 
 private:
-	character_attribute attribute = character_attribute::none;
+	const character_attribute *attribute = nullptr;
 };
 
 }

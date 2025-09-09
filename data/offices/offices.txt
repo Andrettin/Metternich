@@ -1,6 +1,6 @@
 chief_builder = {
 	name = "Chief Builder"
-	attribute = stewardship
+	attribute = intelligence
 	conditions = {
 		game_rule = offices
 	}
@@ -11,7 +11,7 @@ chief_builder = {
 
 court_scholar = {
 	name = "Court Scholar"
-	attribute = learning
+	attribute = intelligence
 	conditions = {
 		game_rule = offices
 	}

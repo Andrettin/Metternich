@@ -9,10 +9,10 @@ Q_MOC_INCLUDE("unit/civilian_unit_class.h")
 
 namespace metternich {
 
+class character_attribute;
 class civilian_unit_class;
 class country;
 class technology;
-enum class character_attribute;
 enum class military_unit_category;
 enum class starting_age_category;
 
@@ -26,7 +26,7 @@ class character_class final : public named_data_entry, public data_type<characte
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::character_attribute attribute MEMBER attribute NOTIFY changed)
+	Q_PROPERTY(const metternich::character_attribute* attribute MEMBER attribute READ get_attribute NOTIFY changed)
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(const metternich::civilian_unit_class* civilian_unit_class MEMBER civilian_unit_class READ get_civilian_unit_class NOTIFY changed)
 	Q_PROPERTY(int max_level MEMBER max_level READ get_max_level NOTIFY changed)
@@ -48,7 +48,7 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
-	character_attribute get_attribute() const
+	const character_attribute *get_attribute() const
 	{
 		return this->attribute;
 	}
@@ -126,7 +126,7 @@ signals:
 	void changed();
 
 private:
-	character_attribute attribute;
+	const character_attribute *attribute = nullptr;
 	metternich::military_unit_category military_unit_category;
 	const metternich::civilian_unit_class *civilian_unit_class = nullptr;
 	int max_level = 0;

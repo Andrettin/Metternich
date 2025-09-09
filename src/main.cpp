@@ -158,7 +158,6 @@ int main(int argc, char **argv)
 		enum_converter<gender>();
 		enum_converter<log_level>();
 
-		database_util::register_enum<character_attribute>();
 		database_util::register_enum<character_role>();
 		database_util::register_enum<character_trait_type>();
 		database_util::register_enum<commodity_type>();
@@ -188,6 +187,7 @@ int main(int argc, char **argv)
 
 		qmlRegisterAnonymousType<building_type>("", 1);
 		qmlRegisterAnonymousType<character>("", 1);
+		qmlRegisterAnonymousType<character_attribute>("", 1);
 		qmlRegisterAnonymousType<character_game_data>("", 1);
 		qmlRegisterAnonymousType<commodity_unit>("", 1);
 		qmlRegisterAnonymousType<const commodity_unit>("", 1);

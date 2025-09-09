@@ -95,7 +95,7 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "attributes") {
 		scope.for_each_property([&](const gsml_property &attribute_property) {
-			this->attribute_values[magic_enum::enum_cast<character_attribute>(attribute_property.get_key()).value()] = std::stoi(attribute_property.get_value());
+			this->attribute_values[character_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data scope: \"{}\".", tag));
@@ -115,7 +115,7 @@ gsml_data character_game_data::to_gsml_data() const
 	if (!this->attribute_values.empty()) {
 		gsml_data attributes_data("attributes");
 		for (const auto &[attribute, value] : this->attribute_values) {
-			attributes_data.add_property(std::string(magic_enum::enum_name(attribute)), std::to_string(value));
+			attributes_data.add_property(attribute->get_name(), std::to_string(value));
 		}
 		data.add_child(std::move(attributes_data));
 	}
@@ -233,9 +233,9 @@ void character_game_data::on_setup_finished()
 	}
 
 	success = true;
-	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : character_attribute::none;
+	const character_attribute *target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : nullptr;
 	const int target_attribute_value = this->character->get_skill();
-	while (target_attribute != character_attribute::none && success) {
+	while (target_attribute != nullptr && success) {
 		for (const character_trait_type trait_type : generated_trait_types) {
 			success = false;
 
@@ -484,7 +484,7 @@ void character_game_data::change_experience(const int64_t change)
 	this->check_level_experience();
 }
 
-void character_game_data::change_attribute_value(const character_attribute attribute, const int change)
+void character_game_data::change_attribute_value(const character_attribute *attribute, const int change)
 {
 	if (change == 0) {
 		return;
@@ -538,16 +538,16 @@ int character_game_data::get_primary_attribute_value() const
 	return this->get_attribute_value(this->character->get_primary_attribute());
 }
 
-std::set<character_attribute> character_game_data::get_main_attributes() const
+data_entry_set<character_attribute> character_game_data::get_main_attributes() const
 {
-	std::set<character_attribute> attributes;
+	data_entry_set<character_attribute> attributes;
 
-	if (this->character->get_primary_attribute() != character_attribute::none) {
+	if (this->character->get_primary_attribute() != nullptr) {
 		attributes.insert(this->character->get_primary_attribute());
 	}
 
 	for (const character_trait *trait : this->get_traits()) {
-		if (trait->get_attribute() != character_attribute::none) {
+		if (trait->get_attribute() != nullptr) {
 			attributes.insert(trait->get_attribute());
 		}
 	}
@@ -682,7 +682,7 @@ bool character_game_data::can_gain_trait(const character_trait *trait) const
 	}
 
 	// characters cannot gain a trait which would reduce their main attributes below 1
-	for (const character_attribute attribute : this->get_main_attributes()) {
+	for (const character_attribute *attribute : this->get_main_attributes()) {
 		const int trait_primary_attribute_bonus = trait->get_attribute_bonus(attribute);
 		if (trait_primary_attribute_bonus < 0 && (this->get_attribute_value(attribute) + trait_primary_attribute_bonus) <= 0) {
 			return false;
@@ -775,7 +775,7 @@ void character_game_data::on_trait_gained(const character_trait *trait, const in
 	}
 }
 
-bool character_game_data::generate_trait(const character_trait_type trait_type, const character_attribute target_attribute, const int target_attribute_bonus)
+bool character_game_data::generate_trait(const character_trait_type trait_type, const character_attribute *target_attribute, const int target_attribute_bonus)
 {
 	std::vector<const character_trait *> potential_traits;
 	int best_attribute_bonus = 0;
@@ -789,7 +789,7 @@ bool character_game_data::generate_trait(const character_trait_type trait_type, 
 			continue;
 		}
 
-		if (target_attribute != character_attribute::none) {
+		if (target_attribute != nullptr) {
 			const int trait_attribute_bonus = trait->get_attribute_bonus(target_attribute);
 			if (trait_attribute_bonus > target_attribute_bonus) {
 				continue;
@@ -816,7 +816,7 @@ bool character_game_data::generate_trait(const character_trait_type trait_type, 
 
 bool character_game_data::generate_initial_trait(const character_trait_type trait_type)
 {
-	const character_attribute target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : character_attribute::none;
+	const character_attribute *target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : nullptr;
 	const int target_attribute_value = this->character->get_skill();
 	const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
 
@@ -1050,7 +1050,7 @@ std::string character_game_data::get_landholder_modifier_string(const metternich
 	std::string str;
 
 	if (defines::get()->get_scaled_landholder_modifier() != nullptr) {
-		str = defines::get()->get_scaled_landholder_modifier()->get_string(site, this->get_attribute_value(character_attribute::stewardship));
+		str = defines::get()->get_scaled_landholder_modifier()->get_string(site, this->get_attribute_value(character_attribute::get("intelligence")));
 	}
 
 	return str;
@@ -1062,7 +1062,7 @@ void character_game_data::apply_landholder_modifier(const metternich::site *site
 	assert_throw(site != nullptr);
 
 	if (defines::get()->get_scaled_landholder_modifier() != nullptr) {
-		defines::get()->get_scaled_landholder_modifier()->apply(site, this->get_attribute_value(character_attribute::stewardship) * multiplier);
+		defines::get()->get_scaled_landholder_modifier()->apply(site, this->get_attribute_value(character_attribute::get("intelligence")) * multiplier);
 	}
 }
 

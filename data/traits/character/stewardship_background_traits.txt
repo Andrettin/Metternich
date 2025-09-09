@@ -5,15 +5,12 @@ indulgent_wastrel = {
 	}
 	icon = chest
 	conditions = {
-		primary_attribute = stewardship
+		primary_attribute = intelligence
 		not = {
 			trait = thrifty_clerk
 			trait = fortune_builder
 			trait = midas_touched
 		}
-	}
-	attribute_bonuses = {
-		stewardship = 2
 	}
 }
 
@@ -37,9 +34,6 @@ thrifty_clerk = {
 			trait = midas_touched
 		}
 	}
-	attribute_bonuses = {
-		stewardship = 4
-	}
 }
 
 fortune_builder = {
@@ -49,17 +43,12 @@ fortune_builder = {
 	}
 	icon = chest
 	conditions = {
-		primary_attribute = stewardship
+		primary_attribute = intelligence
 		not = {
 			trait = indulgent_wastrel
 			trait = thrifty_clerk
 			trait = midas_touched
 		}
-	}
-	attribute_bonuses = {
-		stewardship = 6
-		martial = 1
-		learning = 1
 	}
 }
 
@@ -70,16 +59,11 @@ midas_touched = {
 	}
 	icon = chest
 	conditions = {
-		primary_attribute = stewardship
+		primary_attribute = intelligence
 		not = {
 			trait = indulgent_wastrel
 			trait = thrifty_clerk
 			trait = fortune_builder
 		}
-	}
-	attribute_bonuses = {
-		stewardship = 8
-		martial = 2
-		learning = 2
 	}
 }

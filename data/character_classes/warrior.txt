@@ -1,6 +1,6 @@
 warrior = {
 	name = "Warrior"
-	attribute = martial
+	attribute = strength
 	military_unit_category = general
 	max_level = 3
 	hit_dice = 1d10

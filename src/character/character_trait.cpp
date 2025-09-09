@@ -15,7 +15,7 @@
 namespace metternich {
 
 character_trait::character_trait(const std::string &identifier)
-	: trait_base(identifier), attribute(character_attribute::none)
+	: trait_base(identifier)
 {
 }
 
@@ -34,7 +34,7 @@ void character_trait::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "attribute_bonuses") {
 		scope.for_each_property([&](const gsml_property &property) {
-			const character_attribute attribute = magic_enum::enum_cast<character_attribute>(property.get_key()).value();
+			const character_attribute *attribute = character_attribute::get(property.get_key());
 			const int value = std::stoi(property.get_value());
 
 			this->attribute_bonuses[attribute] = value;
@@ -108,11 +108,11 @@ void character_trait::check() const
 		throw std::runtime_error(std::format("Character trait \"{}\" has no type.", this->get_identifier()));
 	}
 
-	if (!this->scaled_office_modifiers.empty() && this->get_attribute() == character_attribute::none) {
+	if (!this->scaled_office_modifiers.empty() && this->get_attribute() == nullptr) {
 		throw std::runtime_error(std::format("Character trait \"{}\" with scaled office modifier has no attribute.", this->get_identifier()));
 	}
 
-	if (this->get_scaled_advisor_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
+	if (this->get_scaled_advisor_modifier() != nullptr && this->get_attribute() == nullptr) {
 		throw std::runtime_error(std::format("Character trait \"{}\" with scaled advisor modifier has no attribute.", this->get_identifier()));
 	}
 
@@ -120,11 +120,11 @@ void character_trait::check() const
 		this->get_advisor_effects()->check();
 	}
 
-	if (this->get_scaled_governor_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
+	if (this->get_scaled_governor_modifier() != nullptr && this->get_attribute() == nullptr) {
 		throw std::runtime_error(std::format("Character trait \"{}\" with scaled governor modifier has no attribute.", this->get_identifier()));
 	}
 
-	if (this->get_scaled_leader_modifier() != nullptr && this->get_attribute() == character_attribute::none) {
+	if (this->get_scaled_leader_modifier() != nullptr && this->get_attribute() == nullptr) {
 		throw std::runtime_error(std::format("Character trait \"{}\" with scaled leader modifier has no attribute.", this->get_identifier()));
 	}
 

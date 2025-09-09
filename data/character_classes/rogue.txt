@@ -1,6 +1,6 @@
 rogue = {
 	name = "Rogue"
-	attribute = intrigue
+	attribute = dexterity
 	civilian_unit_class = spy
 	max_level = 3
 	hit_dice = 1d6

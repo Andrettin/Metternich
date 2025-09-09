@@ -4,17 +4,8 @@ merchant = {
 		background
 	}
 	icon = wealth
-	attribute = stewardship
 	conditions = {
 		character_class = merchant
-	}
-	scaled_advisor_modifier = {
-		trade_output_modifier = 5
-	}
-	scaled_office_modifiers = {
-		steward = {
-			trade_output_modifier = 5
-		}
 	}
 }
 
@@ -24,22 +15,7 @@ treasurer = {
 		background
 	}
 	icon = chest
-	attribute = stewardship
 	conditions = {
 		character_class = treasurer
-	}
-	scaled_advisor_modifier = {
-		technology_cost_modifier = {
-			category = finance
-			value = -5
-		}
-	}
-	scaled_office_modifiers = {
-		steward = {
-			technology_cost_modifier = {
-				category = finance
-				value = -5
-			}
-		}
 	}
 }

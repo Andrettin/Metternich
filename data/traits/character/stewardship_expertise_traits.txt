@@ -4,11 +4,10 @@ administrator = {
 		expertise
 	}
 	icon = chest
-	attribute = stewardship
 	max_scaling = 3
 	conditions = {
 		or = {
-			primary_attribute = stewardship
+			primary_attribute = intelligence
 			military_unit_category = general
 			military_unit_category = light_warship
 			military_unit_category = heavy_warship
@@ -16,9 +15,6 @@ administrator = {
 		not = {
 			trait = gifted_administrator
 		}
-	}
-	attribute_bonuses = {
-		stewardship = 3
 	}
 }
 
@@ -28,11 +24,9 @@ gifted_administrator = {
 		expertise
 	}
 	icon = chest
-	attribute = stewardship
-	max_scaling = 6
 	conditions = {
 		or = {
-			primary_attribute = stewardship
+			primary_attribute = intelligence
 			military_unit_category = general
 			military_unit_category = light_warship
 			military_unit_category = heavy_warship
@@ -40,9 +34,6 @@ gifted_administrator = {
 		not = {
 			trait = administrator
 		}
-	}
-	attribute_bonuses = {
-		stewardship = 4
 	}
 }
 
@@ -54,13 +45,9 @@ gardener = {
 	icon = architecture
 	conditions = {
 		or = {
-			primary_attribute = stewardship
-			primary_attribute = learning
+			primary_attribute = intelligence
+			primary_attribute = wisdom
 		}
-	}
-	attribute_bonuses = {
-		stewardship = 2
-		learning = 1
 	}
 }
 

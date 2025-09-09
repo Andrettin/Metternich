@@ -12,7 +12,7 @@ public:
 	explicit primary_attribute_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<character>(condition_operator)
 	{
-		this->attribute = magic_enum::enum_cast<character_attribute>(value).value();
+		this->attribute = character_attribute::get(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -32,11 +32,11 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return std::format("{} primary attribute", get_character_attribute_name(this->attribute));
+		return std::format("{} primary attribute", this->attribute->get_name());
 	}
 
 private:
-	character_attribute attribute = character_attribute::none;
+	const character_attribute *attribute = nullptr;
 };
 
 }

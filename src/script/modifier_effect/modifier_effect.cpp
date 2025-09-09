@@ -67,8 +67,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		if (key == "to_hit_bonus") {
 			return std::make_unique<to_hit_bonus_modifier_effect>(value);
-		} else if (magic_enum::enum_contains<character_attribute>(key)) {
-			return std::make_unique<character_attribute_modifier_effect>(magic_enum::enum_cast<character_attribute>(key).value(), value);
+		} else if (character_attribute::try_get(key) != nullptr) {
+			return std::make_unique<character_attribute_modifier_effect>(character_attribute::get(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		static const std::string capital_commodity_bonus_prefix = "capital_";

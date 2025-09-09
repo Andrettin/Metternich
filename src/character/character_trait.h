@@ -7,11 +7,11 @@
 namespace metternich {
 
 class character;
+class character_attribute;
 class country;
 class military_unit;
 class office;
 class province;
-enum class character_attribute;
 enum class character_trait_type;
 
 template <typename scope_type>
@@ -27,7 +27,7 @@ class character_trait final : public trait_base, public data_type<character_trai
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::character_attribute attribute MEMBER attribute READ get_attribute NOTIFY changed)
+	Q_PROPERTY(const metternich::character_attribute* attribute MEMBER attribute READ get_attribute NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
 
@@ -47,17 +47,17 @@ public:
 		return this->types;
 	}
 
-	character_attribute get_attribute() const
+	const character_attribute *get_attribute() const
 	{
 		return this->attribute;
 	}
 
-	const std::map<character_attribute, int> &get_attribute_bonuses() const
+	const data_entry_map<character_attribute, int> &get_attribute_bonuses() const
 	{
 		return this->attribute_bonuses;
 	}
 
-	int get_attribute_bonus(const character_attribute attribute) const
+	int get_attribute_bonus(const character_attribute *attribute) const
 	{
 		const auto find_iterator = this->get_attribute_bonuses().find(attribute);
 		if (find_iterator != this->get_attribute_bonuses().end()) {
@@ -151,8 +151,8 @@ signals:
 
 private:
 	std::set<character_trait_type> types;
-	character_attribute attribute{};
-	std::map<character_attribute, int> attribute_bonuses;
+	const character_attribute *attribute = nullptr;
+	data_entry_map<character_attribute, int> attribute_bonuses;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const and_condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;

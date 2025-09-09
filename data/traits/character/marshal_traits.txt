@@ -4,7 +4,6 @@ army_organizer = {
 		background
 	}
 	icon = crossed_sabers
-	attribute = martial
 	conditions = {
 		character_class = warrior
 	}
@@ -16,23 +15,8 @@ army_reformer = {
 		background
 	}
 	icon = crossed_sabers
-	attribute = martial
 	conditions = {
 		character_class = warrior
-	}
-	scaled_advisor_modifier = {
-		technology_cost_modifier = {
-			category = army
-			value = -5
-		}
-	}
-	scaled_office_modifiers = {
-		marshal = {
-			technology_cost_modifier = {
-				category = army
-				value = -5
-			}
-		}
 	}
 }
 
@@ -42,7 +26,6 @@ commandant = { #person responsible for drilling troops
 		background
 	}
 	icon = crossed_sabers
-	attribute = martial
 	conditions = {
 		character_class = warrior
 	}
@@ -54,7 +37,6 @@ grand_captain = {
 		background
 	}
 	icon = crossed_sabers
-	attribute = martial
 	conditions = {
 		character_class = warrior
 	}

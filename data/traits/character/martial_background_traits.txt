@@ -5,15 +5,12 @@ misguided_warrior = {
 	}
 	icon = crossed_sabers
 	conditions = {
-		primary_attribute = martial
+		primary_attribute = strength
 		not = {
 			trait = tough_soldier
 			trait = skilled_tactician
 			trait = brilliant_strategist
 		}
-	}
-	attribute_bonuses = {
-		martial = 2
 	}
 }
 
@@ -24,15 +21,12 @@ tough_soldier = {
 	}
 	icon = crossed_sabers
 	conditions = {
-		primary_attribute = martial
+		primary_attribute = strength
 		not = {
 			trait = misguided_warrior
 			trait = skilled_tactician
 			trait = brilliant_strategist
 		}
-	}
-	attribute_bonuses = {
-		martial = 4
 	}
 }
 
@@ -43,17 +37,12 @@ skilled_tactician = {
 	}
 	icon = crossed_sabers
 	conditions = {
-		primary_attribute = martial
+		primary_attribute = strength
 		not = {
 			trait = misguided_warrior
 			trait = tough_soldier
 			trait = brilliant_strategist
 		}
-	}
-	attribute_bonuses = {
-		martial = 6
-		stewardship = 1
-		intrigue = 1
 	}
 }
 
@@ -64,16 +53,11 @@ brilliant_strategist = {
 	}
 	icon = crossed_sabers
 	conditions = {
-		primary_attribute = martial
+		primary_attribute = strength
 		not = {
 			trait = misguided_warrior
 			trait = tough_soldier
 			trait = skilled_tactician
 		}
-	}
-	attribute_bonuses = {
-		martial = 8
-		stewardship = 2
-		intrigue = 2
 	}
 }

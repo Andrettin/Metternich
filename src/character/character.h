@@ -25,6 +25,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class character_attribute;
 class character_class;
 class character_game_data;
 class character_history;
@@ -42,7 +43,6 @@ class religion;
 class site;
 class species;
 class technology;
-enum class character_attribute;
 enum class character_role;
 enum class military_unit_category;
 
@@ -215,7 +215,7 @@ public:
 		return static_cast<character *>(character_base::get_mother());
 	}
 
-	character_attribute get_primary_attribute() const;
+	const character_attribute *get_primary_attribute() const;
 
 	int get_skill() const
 	{

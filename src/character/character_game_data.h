@@ -1,6 +1,7 @@
 #pragma once
 
 #include "character/character_container.h"
+#include "database/data_entry_container.h"
 #include "script/scripted_modifier_container.h"
 #include "spell/spell_container.h"
 #include "unit/military_unit_type_container.h"
@@ -13,6 +14,7 @@ Q_MOC_INCLUDE("ui/portrait.h")
 namespace metternich {
 
 class character;
+class character_attribute;
 class character_trait;
 class civilian_unit;
 class country;
@@ -23,7 +25,6 @@ class portrait;
 class province;
 class scripted_character_modifier;
 class spell;
-enum class character_attribute;
 enum class character_trait_type;
 enum class military_unit_stat;
 
@@ -120,12 +121,12 @@ public:
 
 	void change_experience(const int64_t change);
 
-	const std::map<character_attribute, int> &get_attribute_values() const
+	const data_entry_map<character_attribute, int> &get_attribute_values() const
 	{
 		return this->attribute_values;
 	}
 
-	int get_attribute_value(const character_attribute attribute) const
+	int get_attribute_value(const character_attribute *attribute) const
 	{
 		const auto find_iterator = this->attribute_values.find(attribute);
 		if (find_iterator != this->attribute_values.end()) {
@@ -135,10 +136,10 @@ public:
 		return 0;
 	}
 
-	void change_attribute_value(const character_attribute attribute, const int change);
+	void change_attribute_value(const character_attribute *attribute, const int change);
 	int get_primary_attribute_value() const;
 
-	std::set<character_attribute> get_main_attributes() const;
+	data_entry_set<character_attribute> get_main_attributes() const;
 
 	int get_hit_dice_count() const
 	{
@@ -201,7 +202,7 @@ public:
 	void add_trait(const character_trait *trait);
 	void remove_trait(const character_trait *trait);
 	void on_trait_gained(const character_trait *trait, const int multiplier);
-	[[nodiscard]] bool generate_trait(const character_trait_type trait_type, const character_attribute target_attribute, const int target_attribute_bonus);
+	[[nodiscard]] bool generate_trait(const character_trait_type trait_type, const character_attribute *target_attribute, const int target_attribute_bonus);
 	[[nodiscard]] bool generate_initial_trait(const character_trait_type trait_type);
 	void sort_traits();
 
@@ -399,7 +400,7 @@ private:
 	const character_class *character_class = nullptr;
 	int level = 0;
 	int64_t experience = 0;
-	std::map<character_attribute, int> attribute_values;
+	data_entry_map<character_attribute, int> attribute_values;
 	int hit_dice_count = 0;
 	int hit_points = 0;
 	int max_hit_points = 0;

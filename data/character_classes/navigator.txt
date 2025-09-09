@@ -1,6 +1,6 @@
 navigator = {
 	name = "Navigator"
-	attribute = learning
+	attribute = intelligence
 	military_unit_category = light_warship
 	max_level = 3
 	hit_dice = 1d6 #as Rogue

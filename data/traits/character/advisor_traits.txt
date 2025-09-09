@@ -4,35 +4,8 @@ architect = {
 		background
 	}
 	icon = architecture
-	attribute = stewardship
 	conditions = {
 		character_class = architect
-	}
-	attribute_bonuses = {
-		stewardship = 2
-		martial = 1
-	}
-	scaled_advisor_modifier = {
-		technology_cost_modifier = {
-			subcategory = architecture
-			value = -5
-		}
-		technology_cost_modifier = {
-			subcategory = infrastructure
-			value = -5
-		}
-	}
-	scaled_office_modifiers = {
-		chief_builder = {
-			technology_cost_modifier = {
-				subcategory = architecture
-				value = -5
-			}
-			technology_cost_modifier = {
-				subcategory = infrastructure
-				value = -5
-			}
-		}
 	}
 }
 
@@ -73,17 +46,8 @@ cotton_planter = {
 		background
 	}
 	icon = cotton
-	attribute = stewardship
 	conditions = {
 		character_class = farmer
-	}
-	scaled_office_modifiers = {
-		ruler = {
-			cotton_output_modifier = 5
-		}
-	}
-	scaled_advisor_modifier = {
-		cotton_output_modifier = 5
 	}
 }
 
@@ -335,31 +299,8 @@ natural_scientist = {
 		background
 	}
 	icon = research
-	attribute = learning
 	conditions = {
 		character_class = natural_scientist
-	}
-	scaled_advisor_modifier = {
-		technology_cost_modifier = {
-			category = gathering
-			value = -5
-		}
-		technology_cost_modifier = {
-			category = industry
-			value = -5
-		}
-	}
-	scaled_office_modifiers = {
-		court_scholar = {
-			technology_cost_modifier = {
-				category = gathering
-				value = -5
-			}
-			technology_cost_modifier = {
-				category = industry
-				value = -5
-			}
-		}
 	}
 }
 
@@ -403,17 +344,8 @@ philosopher = {
 		background
 	}
 	icon = philosophy
-	attribute = learning
 	conditions = {
 		character_class = philosopher
-	}
-	scaled_advisor_modifier = {
-		research_output_modifier = 5
-	}
-	scaled_office_modifiers = {
-		court_scholar = {
-			research_output_modifier = 5
-		}
 	}
 }
 
@@ -450,17 +382,8 @@ theologian = {
 		background
 	}
 	icon = wooden_cross
-	attribute = learning
 	conditions = {
 		character_class = cleric
-	}
-	scaled_office_modifiers = {
-		ruler = {
-			piety_output_modifier = 5
-		}
-	}
-	scaled_advisor_modifier = {
-		piety_output_modifier = 5
 	}
 }
 
@@ -470,17 +393,8 @@ tobacco_planter = {
 		background
 	}
 	icon = tobacco
-	attribute = stewardship
 	conditions = {
 		character_class = farmer
-	}
-	scaled_office_modifiers = {
-		ruler = {
-			tobacco_output_modifier = 5
-		}
-	}
-	scaled_advisor_modifier = {
-		tobacco_output_modifier = 5
 	}
 }
 

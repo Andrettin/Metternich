@@ -138,14 +138,4 @@ spiritual = {
 		personality
 	}
 	icon = wooden_cross
-	attribute = learning
-	max_scaling = 5
-	attribute_bonuses = {
-		learning = 1
-	}
-	scaled_office_modifiers = {
-		ruler = {
-			piety_output_modifier = 5
-		}
-	}
 }

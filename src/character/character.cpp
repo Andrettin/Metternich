@@ -536,13 +536,13 @@ const dice &character::get_starting_age_modifier() const
 	return this->get_species()->get_starting_age_modifier(this->get_character_class() ? this->get_character_class()->get_starting_age_category() : starting_age_category::intuitive);
 }
 
-character_attribute character::get_primary_attribute() const
+const character_attribute *character::get_primary_attribute() const
 {
 	if (this->get_character_class() != nullptr) {
 		return this->get_character_class()->get_attribute();
 	}
 
-	return character_attribute::none;
+	return nullptr;
 }
 
 centesimal_int character::get_skill_multiplier() const

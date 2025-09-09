@@ -13,9 +13,6 @@ detached_priest = {
 			trait = mastermind_theologian
 		}
 	}
-	attribute_bonuses = {
-		learning = 2
-	}
 }
 
 dutiful_cleric = {
@@ -32,9 +29,6 @@ dutiful_cleric = {
 			trait = scholarly_theologian
 			trait = mastermind_theologian
 		}
-	}
-	attribute_bonuses = {
-		learning = 4
 	}
 }
 
@@ -53,10 +47,6 @@ martial_cleric = {
 			trait = mastermind_theologian
 		}
 	}
-	attribute_bonuses = {
-		learning = 4
-		martial = 1
-	}
 }
 
 scholarly_theologian = {
@@ -74,11 +64,6 @@ scholarly_theologian = {
 			trait = mastermind_theologian
 		}
 	}
-	attribute_bonuses = {
-		learning = 6
-		diplomacy = 1
-		stewardship = 1
-	}
 }
 
 mastermind_theologian = {
@@ -95,11 +80,6 @@ mastermind_theologian = {
 			trait = martial_cleric
 			trait = scholarly_theologian
 		}
-	}
-	attribute_bonuses = {
-		learning = 8
-		diplomacy = 2
-		stewardship = 2
 	}
 }
 
@@ -123,9 +103,6 @@ conscientious_scribe = {
 			trait = mastermind_philosopher
 		}
 	}
-	attribute_bonuses = {
-		learning = 2
-	}
 }
 
 insightful_thinker = {
@@ -147,9 +124,6 @@ insightful_thinker = {
 			trait = astute_intellectual
 			trait = mastermind_philosopher
 		}
-	}
-	attribute_bonuses = {
-		learning = 4
 	}
 }
 
@@ -173,11 +147,6 @@ astute_intellectual = {
 			trait = mastermind_philosopher
 		}
 	}
-	attribute_bonuses = {
-		learning = 6
-		diplomacy = 1
-		stewardship = 1
-	}
 }
 
 mastermind_philosopher = {
@@ -199,10 +168,5 @@ mastermind_philosopher = {
 			trait = insightful_thinker
 			trait = astute_intellectual
 		}
-	}
-	attribute_bonuses = {
-		learning = 8
-		diplomacy = 2
-		stewardship = 2
 	}
 }
