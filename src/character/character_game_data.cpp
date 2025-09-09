@@ -135,6 +135,32 @@ void character_game_data::apply_species_and_class(const int level)
 		species->get_modifier()->apply(this->character);
 	}
 
+	const metternich::character_class *character_class = this->get_character_class();
+	for (const character_attribute *attribute : character_attribute::get_all()) {
+		int min_result = 1;
+		min_result = std::max(species->get_min_attribute_value(attribute), min_result);
+		if (character_class != nullptr) {
+			min_result = std::max(character_class->get_min_attribute_value(attribute), min_result);
+		}
+
+		static constexpr dice attribute_dice(3, 6);
+		const int maximum_result = attribute_dice.get_maximum_result() + this->get_attribute_value(attribute);
+		if (maximum_result < min_result) {
+			throw std::runtime_error(std::format("Character \"{}\" of species \"{}\" cannot be generated with character class \"{}\", since it cannot possibly fulfill the attribute requirements.", this->character->get_identifier(), species->get_identifier(), character_class->get_identifier()));
+		}
+
+		bool valid_result = false;
+		while (!valid_result) {
+			const int base_result = random::get()->roll_dice(attribute_dice);
+			const int result = base_result + this->get_attribute_value(attribute);
+
+			valid_result = result >= min_result;
+			if (valid_result) {
+				this->change_attribute_value(attribute, base_result);
+			}
+		}
+	}
+
 	this->set_level(level);
 }
 
@@ -817,8 +843,8 @@ bool character_game_data::generate_trait(const character_trait_type trait_type, 
 bool character_game_data::generate_initial_trait(const character_trait_type trait_type)
 {
 	const character_attribute *target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : nullptr;
-	const int target_attribute_value = this->character->get_skill();
-	const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
+	const int target_attribute_value = target_attribute ? this->character->get_skill() : 0;
+	const int target_attribute_bonus = target_attribute ? (target_attribute_value - this->get_attribute_value(target_attribute)) : 0;
 
 	return this->generate_trait(trait_type, target_attribute, target_attribute_bonus);
 }

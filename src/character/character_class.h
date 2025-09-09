@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "util/dice.h"
@@ -98,6 +99,16 @@ public:
 		return this->obsolescence_technology;
 	}
 
+	int get_min_attribute_value(const character_attribute *attribute) const
+	{
+		const auto find_iterator = this->min_attribute_values.find(attribute);
+		if (find_iterator != this->min_attribute_values.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
 	int64_t get_experience_for_level(const int level) const;
 
 	const modifier<const character> *get_level_modifier(const int level) const
@@ -136,6 +147,7 @@ private:
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
+	data_entry_map<character_attribute, int> min_attribute_values;
 	std::map<int, int64_t> experience_per_level;
 	std::map<int, std::unique_ptr<const modifier<const character>>> level_modifiers;
 	std::map<int, std::unique_ptr<const effect_list<const character>>> level_effects;
