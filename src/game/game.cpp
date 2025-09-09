@@ -211,6 +211,11 @@ void game::process_gsml_scope(const gsml_data &scope)
 			const country *country = country::get(country_data.get_tag());
 			country_data.process(country->get_game_data());
 		});
+	} else if (tag == "characters") {
+		scope.for_each_child([&](const gsml_data &character_data) {
+			const character *character = character::get(character_data.get_tag());
+			character_data.process(character->get_game_data());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid game data scope: \"{}\".", tag));
 	}
@@ -270,6 +275,12 @@ gsml_data game::to_gsml_data() const
 		countries_data.add_child(country->get_game_data()->to_gsml_data());
 	}
 	data.add_child(std::move(countries_data));
+
+	gsml_data characters_data("characters");
+	for (const character *character : character::get_all()) {
+		characters_data.add_child(character->get_game_data()->to_gsml_data());
+	}
+	data.add_child(std::move(characters_data));
 
 	return data;
 }

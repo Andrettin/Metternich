@@ -43,6 +43,7 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -58,6 +59,73 @@ character_game_data::character_game_data(const metternich::character *character)
 	connect(this, &character_game_data::office_changed, this, &character_game_data::titled_name_changed);
 
 	this->portrait = this->character->get_portrait();
+}
+
+void character_game_data::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "portrait") {
+		this->portrait = portrait::get(value);
+	} else if (key == "dead") {
+		this->dead = string::to_bool(value);
+	} else if (key == "character_class") {
+		this->character_class = character_class::get(value);
+	} else if (key == "level") {
+		this->level = std::stoi(value);
+	} else if (key == "experience") {
+		this->experience = std::stoll(value);
+	} else if (key == "hit_dice_count") {
+		this->hit_dice_count = std::stoi(value);
+	} else if (key == "hit_points") {
+		this->hit_points = std::stoi(value);
+	} else if (key == "max_hit_points") {
+		this->max_hit_points = std::stoi(value);
+	} else if (key == "to_hit_bonus") {
+		this->to_hit_bonus = std::stoi(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid character game data property: \"{}\".", key));
+	}
+}
+
+void character_game_data::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "attributes") {
+		scope.for_each_property([&](const gsml_property &attribute_property) {
+			this->attribute_values[magic_enum::enum_cast<character_attribute>(attribute_property.get_key()).value()] = std::stoi(attribute_property.get_value());
+		});
+	} else {
+		throw std::runtime_error(std::format("Invalid character game data scope: \"{}\".", tag));
+	}
+}
+
+gsml_data character_game_data::to_gsml_data() const
+{
+	gsml_data data(this->character->get_identifier());
+
+	data.add_property("portrait", this->get_portrait()->get_identifier());
+	data.add_property("dead", string::from_bool(this->is_dead()));
+	data.add_property("character_class", this->get_character_class()->get_identifier());
+	data.add_property("level", std::to_string(this->get_level()));
+	data.add_property("experience", std::to_string(this->get_experience()));
+
+	if (!this->attribute_values.empty()) {
+		gsml_data attributes_data("attributes");
+		for (const auto &[attribute, value] : this->attribute_values) {
+			attributes_data.add_property(std::string(magic_enum::enum_name(attribute)), std::to_string(value));
+		}
+		data.add_child(std::move(attributes_data));
+	}
+
+	data.add_property("hit_dice_count", std::to_string(this->get_hit_dice_count()));
+	data.add_property("hit_points", std::to_string(this->get_hit_points()));
+	data.add_property("max_hit_points", std::to_string(this->get_max_hit_points()));
+	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
+
+	return data;
 }
 
 void character_game_data::apply_species_and_class(const int level)

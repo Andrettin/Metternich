@@ -57,6 +57,11 @@ class character_game_data final : public QObject
 public:
 	explicit character_game_data(const metternich::character *character);
 
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
+
 	void apply_species_and_class(const int level);
 	void apply_history();
 	void on_setup_finished();
