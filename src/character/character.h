@@ -64,7 +64,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(const metternich::character_class* character_class MEMBER character_class READ get_character_class NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
-	Q_PROPERTY(metternich::religion* religion MEMBER religion NOTIFY changed)
+	Q_PROPERTY(const metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(const metternich::phenotype* phenotype MEMBER phenotype READ get_phenotype NOTIFY changed)
 	Q_PROPERTY(const metternich::deity* deity READ get_deity CONSTANT)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
@@ -93,6 +93,8 @@ public:
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 
+	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::culture *culture, const metternich::religion *religion, const site *home_settlement);
+
 	explicit character(const std::string &identifier);
 	~character();
 
@@ -101,6 +103,8 @@ public:
 	virtual void initialize() override;
 	virtual void check() const override;
 	virtual data_entry_history *get_history_base() override;
+
+	gsml_data to_gsml_data() const;
 
 	character_history *get_history() const
 	{
@@ -282,7 +286,7 @@ private:
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;
 	metternich::culture *culture = nullptr;
-	metternich::religion *religion = nullptr;
+	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::deity *deity = nullptr; //the deity which the character is (if it is a deity)
 	metternich::portrait *portrait = nullptr;

@@ -216,6 +216,12 @@ void game::process_gsml_scope(const gsml_data &scope)
 			const character *character = character::get(character_data.get_tag());
 			character_data.process(character->get_game_data());
 		});
+	} else if (tag == "generated_characters") {
+		scope.for_each_child([&](const gsml_data &character_data) {
+			auto generated_character = make_qunique<character>(character_data.get_tag());
+			generated_character->moveToThread(QApplication::instance()->thread());
+			character_data.process(generated_character.get());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid game data scope: \"{}\".", tag));
 	}
@@ -281,6 +287,12 @@ gsml_data game::to_gsml_data() const
 		characters_data.add_child(character->get_game_data()->to_gsml_data());
 	}
 	data.add_child(std::move(characters_data));
+
+	gsml_data generated_characters_data("generated_characters");
+	for (const qunique_ptr<character> &character : this->get_generated_characters()) {
+		generated_characters_data.add_child(character->to_gsml_data());
+	}
+	data.add_child(std::move(generated_characters_data));
 
 	return data;
 }
@@ -467,6 +479,8 @@ void game::reset_game_data()
 	for (character *character : character::get_all()) {
 		character->reset_game_data();
 	}
+
+	this->generated_characters.clear();
 }
 
 void game::apply_history(const metternich::scenario *scenario)
@@ -2001,6 +2015,16 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 	assert_throw(this->exploration_diplomatic_map_image.size() == map::get()->get_diplomatic_map_image_size() * preferences::get()->get_scale_factor());
 	assert_throw(this->exploration_diplomatic_map_image.size
 	() == map::get()->get_ocean_diplomatic_map_image().size());
+}
+
+void game::add_generated_character(qunique_ptr<character> &&character)
+{
+	this->generated_characters.push_back(std::move(character));
+}
+
+void game::remove_generated_character(character *character)
+{
+	vector::remove(this->generated_characters, character);
 }
 
 void game::process_delayed_effects()

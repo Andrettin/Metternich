@@ -14,6 +14,8 @@
 #include "country/country.h"
 #include "country/culture.h"
 #include "database/defines.h"
+#include "game/game.h"
+#include "language/name_generator.h"
 #include "map/province.h"
 #include "map/site.h"
 #include "map/site_type.h"
@@ -30,9 +32,11 @@
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/date_util.h"
+#include "util/gender.h"
 #include "util/log_util.h"
 #include "util/random.h"
 #include "util/string_util.h"
+#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 #include <magic_enum/magic_enum.hpp>
@@ -99,6 +103,47 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
+character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::culture *culture, const metternich::religion *religion, const site *home_settlement)
+{
+	auto generated_character = make_qunique<character>(QUuid::createUuid().toString(QUuid::WithoutBraces).toStdString());
+	generated_character->moveToThread(QApplication::instance()->thread());
+
+	generated_character->species = const_cast<metternich::species *>(species);
+	generated_character->character_class = character_class;
+	generated_character->level = level;
+	if (culture != nullptr) {
+		generated_character->culture = const_cast<metternich::culture *>(culture);
+	} else if (!generated_character->get_species()->get_cultures().empty()) {
+		generated_character->culture = const_cast<metternich::culture *>(vector::get_random(generated_character->get_species()->get_cultures()));
+	}
+	generated_character->religion = religion;
+	if (generated_character->get_culture() != nullptr) {
+		generated_character->phenotype = generated_character->get_culture()->get_default_phenotype();
+	}
+	generated_character->home_settlement = home_settlement;
+	generated_character->set_start_date(game::get()->get_date());
+
+	const archimedes::gender gender = random::get()->generate(2) == 0 ? gender::male : gender::female;
+	generated_character->set_gender(gender);
+	if (generated_character->get_culture() != nullptr) {
+		generated_character->set_name(generated_character->get_culture()->get_personal_name_generator(gender)->generate_name());
+		const archimedes::name_generator *surname_generator = generated_character->get_culture()->get_surname_generator(gender);
+		if (surname_generator != nullptr) {
+			generated_character->set_surname(surname_generator->generate_name());
+		}
+	} else {
+		generated_character->set_name(generated_character->get_species()->get_given_name_generator(gender)->generate_name());
+	}
+
+	generated_character->initialize_dates();
+	generated_character->check();
+	generated_character->get_game_data()->apply_species_and_class(level);
+	generated_character->get_game_data()->on_setup_finished();
+
+	game::get()->add_generated_character(std::move(generated_character));
+	return game::get()->get_generated_characters().back().get();
+}
+
 character::character(const std::string &identifier)
 	: character_base(identifier)
 {
@@ -143,6 +188,8 @@ void character::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<country>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
+	} else if (tag == "game_data") {
+		scope.process(this->get_game_data());
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -362,6 +409,40 @@ void character::check() const
 data_entry_history *character::get_history_base()
 {
 	return this->history.get();
+}
+
+gsml_data character::to_gsml_data() const
+{
+	gsml_data data(this->get_identifier());
+
+	data.add_property("name", this->get_name());
+	if (!this->get_surname().empty()) {
+		data.add_property("surname", this->get_surname());
+	}
+	data.add_property("character_class", this->get_character_class()->get_identifier());
+	data.add_property("level", std::to_string(this->get_level()));
+	if (this->get_culture() != nullptr) {
+		data.add_property("culture", this->get_culture()->get_identifier());
+	}
+	if (this->get_religion() != nullptr) {
+		data.add_property("religion", this->get_religion()->get_identifier());
+	}
+	if (this->get_phenotype() != nullptr) {
+		data.add_property("phenotype", this->get_phenotype()->get_identifier());
+	}
+	if (this->get_home_settlement() != nullptr) {
+		data.add_property("home_settlement", this->get_home_settlement()->get_identifier());
+	}
+	data.add_property("gender", std::string(magic_enum::enum_name(this->get_gender())));
+	data.add_property("start_date", date::to_string(this->get_start_date()));
+	data.add_property("birth_date", date::to_string(this->get_birth_date()));
+	data.add_property("death_date", date::to_string(this->get_death_date()));
+
+	gsml_data game_data = this->get_game_data()->to_gsml_data();
+	game_data.set_tag("game_data");
+	data.add_child(std::move(game_data));
+
+	return data;
 }
 
 void character::reset_history()
