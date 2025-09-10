@@ -143,9 +143,17 @@ void character_game_data::apply_species_and_class(const int level)
 			min_result = std::max(character_class->get_min_attribute_value(attribute), min_result);
 		}
 
+		int max_result = std::numeric_limits<int>::max();
+		if (species->get_max_attribute_value(attribute) != 0) {
+			max_result = std::min(species->get_max_attribute_value(attribute), max_result);
+		}
+
+		assert_throw(max_result >= min_result);
+
 		static constexpr dice attribute_dice(3, 6);
-		const int maximum_result = attribute_dice.get_maximum_result() + this->get_attribute_value(attribute);
-		if (maximum_result < min_result) {
+		const int minimum_possible_result = attribute_dice.get_minimum_result() + this->get_attribute_value(attribute);
+		const int maximum_possible_result = attribute_dice.get_maximum_result() + this->get_attribute_value(attribute);
+		if (maximum_possible_result < min_result || minimum_possible_result > max_result) {
 			throw std::runtime_error(std::format("Character \"{}\" of species \"{}\" cannot be generated with character class \"{}\", since it cannot possibly fulfill the attribute requirements.", this->character->get_identifier(), species->get_identifier(), character_class->get_identifier()));
 		}
 
@@ -154,7 +162,7 @@ void character_game_data::apply_species_and_class(const int level)
 			const int base_result = random::get()->roll_dice(attribute_dice);
 			const int result = base_result + this->get_attribute_value(attribute);
 
-			valid_result = result >= min_result;
+			valid_result = result >= min_result && result <= max_result;
 			if (valid_result) {
 				this->change_attribute_value(attribute, base_result);
 			}

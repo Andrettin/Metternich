@@ -137,6 +137,16 @@ public:
 		return 0;
 	}
 
+	int get_max_attribute_value(const character_attribute *attribute) const
+	{
+		const auto find_iterator = this->max_attribute_values.find(attribute);
+		if (find_iterator != this->max_attribute_values.end()) {
+			return find_iterator->second;
+		}
+
+		return std::numeric_limits<int>::max();
+	}
+
 	const metternich::modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -154,6 +164,7 @@ private:
 	std::vector<const phenotype *> phenotypes;
 	std::vector<const culture *> cultures;
 	data_entry_map<character_attribute, int> min_attribute_values;
+	data_entry_map<character_attribute, int> max_attribute_values;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 };
 

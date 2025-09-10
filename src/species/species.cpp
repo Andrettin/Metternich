@@ -158,6 +158,13 @@ void species::process_gsml_scope(const gsml_data &scope)
 
 			this->min_attribute_values[character_attribute::get(key)] = std::stoi(value);
 		});
+	} else if (tag == "max_attribute_values") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->max_attribute_values[character_attribute::get(key)] = std::stoi(value);
+		});
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);
