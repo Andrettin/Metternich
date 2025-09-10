@@ -19,6 +19,7 @@
 #include "country/country_type.h"
 #include "country/culture.h"
 #include "country/diplomacy_state.h"
+#include "country/government_type.h"
 #include "country/idea.h"
 #include "country/idea_slot.h"
 #include "country/idea_trait.h"
@@ -2564,6 +2565,25 @@ void country_game_data::check_characters()
 
 	this->get_military()->check_leaders();
 	this->check_civilian_characters();
+}
+
+void country_game_data::generate_ruler()
+{
+	const government_type *government_type = this->get_government()->get_government_type();
+	assert_throw(government_type != nullptr);
+
+	const species *species = vector::get_random(this->country->get_culture()->get_species());
+
+	std::vector<const character_class *> potential_classes;
+	for (const character_class *character_class : government_type->get_ruler_character_classes()) {
+		potential_classes.push_back(character_class);
+	}
+	assert_throw(!potential_classes.empty());
+
+	const character_class *character_class = vector::get_random(potential_classes);
+
+	const character *ruler = character::generate(species, character_class, 1, this->country->get_culture(), this->get_religion(), this->get_capital());
+	this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
 }
 
 bool country_game_data::has_civilian_character(const character *character) const

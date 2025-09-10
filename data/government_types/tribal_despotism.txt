@@ -14,4 +14,7 @@ tribal_despotism = {
 			country_type = clade
 		}
 	}
+	ruler_character_classes = {
+		warrior
+	}
 }

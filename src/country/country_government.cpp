@@ -398,6 +398,11 @@ void country_government::check_office_holder(const office *office, const charact
 		const character *character = this->get_best_office_holder(office, previous_holder);
 		if (character != nullptr) {
 			this->set_office_holder(office, character);
+		} else {
+			if (office == defines::get()->get_ruler_office()) {
+				this->get_game_data()->generate_ruler();
+				assert_throw(this->get_ruler() != nullptr);
+			}
 		}
 	}
 }
@@ -441,6 +446,24 @@ std::vector<const character *> country_government::get_appointable_office_holder
 		}
 
 		potential_holders.push_back(character);
+	}
+
+	for (const qunique_ptr<character> &character : game::get()->get_generated_characters()) {
+		if (office->is_ruler()) {
+			if (!character->has_role(character_role::ruler)) {
+				continue;
+			}
+		} else {
+			if (!character->has_role(character_role::advisor)) {
+				continue;
+			}
+		}
+
+		if (!this->can_gain_office_holder(office, character.get())) {
+			continue;
+		}
+
+		potential_holders.push_back(character.get());
 	}
 
 	return potential_holders;
@@ -525,7 +548,7 @@ bool country_government::can_have_office_holder(const office *office, const char
 	}
 
 	if (office->is_ruler()) {
-		if (!vector::contains(this->country->get_rulers(), character)) {
+		if (character->get_character_class() == nullptr || !vector::contains(this->get_government_type()->get_ruler_character_classes(), character->get_character_class())) {
 			return false;
 		}
 	} else {

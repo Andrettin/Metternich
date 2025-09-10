@@ -19,4 +19,9 @@ enlightened_despotism = {
 			subject_type = colony
 		}
 	}
+	ruler_character_classes = {
+		statesman
+		treasurer
+		warrior
+	}
 }

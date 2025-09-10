@@ -10,6 +10,11 @@ crown_colony = {
 			country_type = tribe
 		}
 	}
+	ruler_character_classes = {
+		statesman
+		treasurer
+		warrior
+	}
 	title_names = {
 		duchy = "Captaincy General"
 		kingdom = "Viceroyalty"

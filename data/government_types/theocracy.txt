@@ -10,4 +10,7 @@ theocracy = {
 			subject_type = colony
 		}
 	}
+	ruler_character_classes = {
+		cleric
+	}
 }

@@ -21,6 +21,12 @@ democratic_republic = {
 			subject_type = colony
 		}
 	}
+	ruler_character_classes = {
+		rogue
+		statesman
+		treasurer
+		warrior
+	}
 	office_title_names = {
 		ruler = {
 			duchy = "President"

@@ -759,6 +759,8 @@ public:
 
 	void check_characters();
 
+	void generate_ruler();
+
 	bool has_civilian_character(const character *character) const;
 	std::vector<const character *> get_civilian_characters() const;
 	void check_civilian_characters();

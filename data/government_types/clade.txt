@@ -5,4 +5,7 @@ clade = {
 	conditions = {
 		country_type = clade
 	}
+	ruler_character_classes = {
+		warrior
+	}
 }

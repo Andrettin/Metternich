@@ -10,6 +10,11 @@ communism = {
 			subject_type = colony
 		}
 	}
+	ruler_character_classes = {
+		statesman
+		treasurer
+		warrior
+	}
 	office_title_names = {
 		ruler = {
 			barony = "Comrade"

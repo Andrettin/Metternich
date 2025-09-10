@@ -2,6 +2,7 @@
 
 #include "country/government_type.h"
 
+#include "character/character_class.h"
 #include "country/country_tier.h"
 #include "country/government_group.h"
 #include "country/law.h"
@@ -248,6 +249,10 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const country>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "ruler_character_classes") {
+		for (const std::string &value : values) {
+			this->ruler_character_classes.push_back(character_class::get(value));
+		}
 	} else if (tag == "title_names") {
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "site_title_names") {
@@ -286,6 +291,10 @@ void government_type::check() const
 
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
+	}
+
+	if (this->get_ruler_character_classes().empty()) {
+		throw std::runtime_error(std::format("Government type \"{}\" has no ruler character classes.", this->get_identifier()));
 	}
 }
 

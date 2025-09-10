@@ -15,6 +15,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class character_class;
 class government_group;
 class law;
 class law_group;
@@ -122,6 +123,11 @@ public:
 
 	Q_INVOKABLE QString get_modifier_string(const metternich::country *country) const;
 
+	const std::vector<const character_class *> &get_ruler_character_classes() const
+	{
+		return this->ruler_character_classes;
+	}
+
 signals:
 	void changed();
 
@@ -133,6 +139,7 @@ private:
 	technology *required_technology = nullptr;
 	std::unique_ptr<const and_condition<country>> conditions;
 	std::unique_ptr<const modifier<const country>> modifier;
+	std::vector<const character_class *> ruler_character_classes;
 	title_name_map title_names;
 	site_title_name_map site_title_names;
 	office_title_name_map office_title_names;

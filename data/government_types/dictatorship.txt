@@ -20,6 +20,12 @@ dictatorship = {
 			subject_type = colony
 		}
 	}
+	ruler_character_classes = {
+		rogue
+		statesman
+		treasurer
+		warrior
+	}
 	office_title_names = {
 		ruler = {
 			barony = "Dictator"

@@ -9,6 +9,11 @@ colony = {
 			country_type = tribe
 		}
 	}
+	ruler_character_classes = {
+		statesman
+		treasurer
+		warrior
+	}
 	title_names = {
 		duchy = "Colony"
 		kingdom = "Governorate General"
