@@ -13,4 +13,24 @@ half_elf = {
 		self_taught = 2d6
 		trained = 3d6
 	}
+	min_attribute_values = {
+		strength = 4
+		dexterity = 7
+		constitution = 3
+		intelligence = 6
+		wisdom = 3
+		charisma = 6
+	}
+	max_attribute_values = {
+		strength = 18
+		dexterity = 19
+		constitution = 17
+		intelligence = 18
+		wisdom = 18
+		charisma = 18
+	}
+	modifier = {
+		dexterity = 1
+		constitution = -1
+	}
 }
