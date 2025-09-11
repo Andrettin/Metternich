@@ -110,6 +110,7 @@ character *character::generate(const metternich::species *species, const mettern
 
 	generated_character->species = const_cast<metternich::species *>(species);
 	generated_character->character_class = character_class;
+	generated_character->get_game_data()->set_character_class(character_class);
 	generated_character->level = level;
 	if (culture != nullptr) {
 		generated_character->culture = const_cast<metternich::culture *>(culture);
