@@ -1,0 +1,7 @@
+bard = {
+	name = "Bard"
+	attribute = charisma
+	max_level = 3
+	hit_dice = 1d8 #as Cleric
+	starting_age_category = self_taught
+}
