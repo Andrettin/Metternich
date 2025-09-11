@@ -6,6 +6,7 @@ elizabeth_i_of_england = {
 			cultural_group = african
 		}
 		character_class = warrior #aristocrat
+		birth_year < 1700
 	}
 }
 
