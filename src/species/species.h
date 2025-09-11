@@ -1,5 +1,6 @@
 #pragma once
 
+#include "character/character_class_container.h"
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "species/taxon_base.h"
@@ -147,6 +148,16 @@ public:
 		return std::numeric_limits<int>::max();
 	}
 
+	int get_character_class_level_limit(const character_class *character_class) const
+	{
+		const auto find_iterator = this->character_class_level_limits.find(character_class);
+		if (find_iterator != this->character_class_level_limits.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
 	const metternich::modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -165,6 +176,7 @@ private:
 	std::vector<const culture *> cultures;
 	data_entry_map<character_attribute, int> min_attribute_values;
 	data_entry_map<character_attribute, int> max_attribute_values;
+	character_class_map<int> character_class_level_limits;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 };
 

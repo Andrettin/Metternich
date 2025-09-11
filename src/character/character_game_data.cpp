@@ -463,8 +463,7 @@ void character_game_data::set_level(const int level)
 		this->on_level_gained(i, 1);
 	}
 
-	const metternich::character_class *character_class = this->get_character_class();
-	const int64_t level_experience = character_class->get_experience_for_level(this->get_level());
+	const int64_t level_experience = this->get_experience_for_level(this->get_level());
 	if (this->get_experience() < level_experience) {
 		this->set_experience(level_experience);
 	}
@@ -516,7 +515,7 @@ void character_game_data::check_level_experience()
 {
 	const metternich::character_class *character_class = this->get_character_class();
 
-	while (this->get_experience() >= character_class->get_experience_for_level(this->get_level() + 1)) {
+	while (this->get_experience() >= this->get_experience_for_level(this->get_level() + 1)) {
 		if (this->get_level() == character_class->get_max_level()) {
 			break;
 		}
@@ -538,6 +537,20 @@ void character_game_data::change_experience(const int64_t change)
 	}
 
 	this->check_level_experience();
+}
+
+int64_t character_game_data::get_experience_for_level(const int level) const
+{
+	assert_throw(this->get_character_class() != nullptr);
+	int64_t experience = this->get_character_class()->get_experience_for_level(level);
+
+	const int level_limit = this->character->get_species()->get_character_class_level_limit(this->get_character_class());
+	if (level_limit != 0 && level > level_limit) {
+		//multiply experience required by 4 for levels beyond the species level limit for the class
+		experience *= 4;
+	}
+
+	return experience;
 }
 
 void character_game_data::change_attribute_value(const character_attribute *attribute, const int change)

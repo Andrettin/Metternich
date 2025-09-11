@@ -29,6 +29,14 @@ half_elf = {
 		wisdom = 18
 		charisma = 18
 	}
+	character_class_level_limits = {
+		cleric = 9
+		druid = 9
+		mage = 12
+		ranger = 16
+		rogue = 12
+		warrior = 14
+	}
 	modifier = {
 		dexterity = 1
 		constitution = -1

@@ -3,6 +3,7 @@
 #include "species/species.h"
 
 #include "character/character_attribute.h"
+#include "character/character_class.h"
 #include "character/starting_age_category.h"
 #include "script/modifier.h"
 #include "species/geological_era.h"
@@ -164,6 +165,13 @@ void species::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			this->max_attribute_values[character_attribute::get(key)] = std::stoi(value);
+		});
+	} else if (tag == "character_class_level_limits") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->character_class_level_limits[character_class::get(key)] = std::stoi(value);
 		});
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const character>>();

@@ -32,6 +32,12 @@ halfling = {
 		wisdom = 19
 		charisma = 18
 	}
+	character_class_level_limits = {
+		cleric = 8
+		druid = 8
+		ranger = 7
+		warrior = 7
+	}
 	modifier = {
 		dexterity = 1
 		wisdom = 1

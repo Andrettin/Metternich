@@ -108,7 +108,6 @@ public:
 	void on_level_gained(const int affected_level, const int multiplier);
 	void check_level_experience();
 
-
 	int64_t get_experience() const
 	{
 		return this->experience;
@@ -120,6 +119,7 @@ public:
 	}
 
 	void change_experience(const int64_t change);
+	int64_t get_experience_for_level(const int level) const;
 
 	const data_entry_map<character_attribute, int> &get_attribute_values() const
 	{

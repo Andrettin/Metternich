@@ -32,6 +32,14 @@ elf = {
 		wisdom = 18
 		charisma = 18
 	}
+	character_class_level_limits = {
+		bard = 9
+		cleric = 12
+		druid = 12
+		ranger = 12
+		rogue = 12
+		warrior = 12
+	}
 	modifier = {
 		dexterity = 1
 		intelligence = 1
