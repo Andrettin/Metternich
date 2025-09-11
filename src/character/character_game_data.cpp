@@ -194,67 +194,58 @@ void character_game_data::apply_history(const QDate &start_date)
 	if ((this->character->has_role(character_role::advisor) || this->character->has_role(character_role::leader) || this->character->has_role(character_role::civilian)) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
 		country_game_data *country_game_data = country->get_game_data();
 		country_technology *country_technology = country->get_technology();
-		const technology *obsolescence_technology = this->character->get_obsolescence_technology();
 
-		if (this->character->get_required_technology() != nullptr) {
-			country_technology->add_technology_with_prerequisites(this->character->get_required_technology());
-		}
-
-		if (obsolescence_technology != nullptr && country_technology->has_technology(obsolescence_technology)) {
-			this->set_dead(true);
-		} else {
-			if (this->character->has_role(character_role::leader)) {
-				const province *deployment_province = character_history->get_deployment_province();
-				if (deployment_province == nullptr && country_game_data->get_capital_province() != nullptr) {
-					deployment_province = country_game_data->get_capital_province();
-				}
-
-				assert_throw(deployment_province != nullptr);
-
-				if (deployment_province->is_water_zone() || deployment_province->get_game_data()->get_owner() == country) {
-					assert_throw(country != nullptr);
-					this->deploy_to_province(country, deployment_province);
-				}
-			} else if (this->character->has_role(character_role::civilian)) {
-				const site *deployment_site = character_history->get_deployment_site();
-				if (deployment_site == nullptr && country_game_data->get_capital() != nullptr) {
-					deployment_site = country_game_data->get_capital();
-				}
-
-				assert_throw(deployment_site != nullptr);
-
-				if (!deployment_site->get_game_data()->is_on_map()) {
-					return;
-				}
-
-				if (deployment_site->get_game_data()->get_owner() != country) {
-					return;
-				}
-
-				const civilian_unit_type *type = this->character->get_civilian_unit_type();
-				assert_throw(type != nullptr);
-
-				if (type->get_required_technology() != nullptr) {
-					country_technology->add_technology_with_prerequisites(type->get_required_technology());
-				}
-
-				QPoint tile_pos = deployment_site->get_game_data()->get_tile_pos();
-
-				if (map::get()->get_tile(tile_pos)->get_civilian_unit() != nullptr) {
-					const std::optional<QPoint> nearest_tile_pos = map::get()->get_nearest_available_tile_pos_for_civilian_unit(tile_pos);
-					if (!nearest_tile_pos.has_value()) {
-						log::log_error(std::format("Cannot deploy civilian character \"{}\", since the tile of its deployment site (\"{}\") is already occupied by another civilian unit, and so are any valid tiles near it.", this->character->get_identifier(), deployment_site->get_identifier()));
-						return;
-					}
-
-					tile_pos = nearest_tile_pos.value();
-				}
-
-				auto civilian_unit = make_qunique<metternich::civilian_unit>(this->character, country);
-				civilian_unit->set_tile_pos(tile_pos);
-
-				country_game_data->add_civilian_unit(std::move(civilian_unit));
+		if (this->character->has_role(character_role::leader)) {
+			const province *deployment_province = character_history->get_deployment_province();
+			if (deployment_province == nullptr && country_game_data->get_capital_province() != nullptr) {
+				deployment_province = country_game_data->get_capital_province();
 			}
+
+			assert_throw(deployment_province != nullptr);
+
+			if (deployment_province->is_water_zone() || deployment_province->get_game_data()->get_owner() == country) {
+				assert_throw(country != nullptr);
+				this->deploy_to_province(country, deployment_province);
+			}
+		} else if (this->character->has_role(character_role::civilian)) {
+			const site *deployment_site = character_history->get_deployment_site();
+			if (deployment_site == nullptr && country_game_data->get_capital() != nullptr) {
+				deployment_site = country_game_data->get_capital();
+			}
+
+			assert_throw(deployment_site != nullptr);
+
+			if (!deployment_site->get_game_data()->is_on_map()) {
+				return;
+			}
+
+			if (deployment_site->get_game_data()->get_owner() != country) {
+				return;
+			}
+
+			const civilian_unit_type *type = this->character->get_civilian_unit_type();
+			assert_throw(type != nullptr);
+
+			if (type->get_required_technology() != nullptr) {
+				country_technology->add_technology_with_prerequisites(type->get_required_technology());
+			}
+
+			QPoint tile_pos = deployment_site->get_game_data()->get_tile_pos();
+
+			if (map::get()->get_tile(tile_pos)->get_civilian_unit() != nullptr) {
+				const std::optional<QPoint> nearest_tile_pos = map::get()->get_nearest_available_tile_pos_for_civilian_unit(tile_pos);
+				if (!nearest_tile_pos.has_value()) {
+					log::log_error(std::format("Cannot deploy civilian character \"{}\", since the tile of its deployment site (\"{}\") is already occupied by another civilian unit, and so are any valid tiles near it.", this->character->get_identifier(), deployment_site->get_identifier()));
+					return;
+				}
+
+				tile_pos = nearest_tile_pos.value();
+			}
+
+			auto civilian_unit = make_qunique<metternich::civilian_unit>(this->character, country);
+			civilian_unit->set_tile_pos(tile_pos);
+
+			country_game_data->add_civilian_unit(std::move(civilian_unit));
 		}
 	}
 }
@@ -405,6 +396,22 @@ void character_game_data::die()
 {
 	if (this->get_office() != nullptr) {
 		this->get_country()->get_government()->on_office_holder_died(this->get_office(), this->character);
+	}
+
+	if (this->get_civilian_unit() != nullptr) {
+		this->get_country()->get_game_data()->on_civilian_character_died(this->character);
+	}
+
+	if (this->get_military_unit() != nullptr) {
+		this->get_country()->get_military()->on_leader_died(this->character);
+	}
+
+	if (this->is_governor()) {
+		this->character->get_governable_province()->get_game_data()->on_governor_died(this->character);
+	}
+
+	if (this->is_landholder()) {
+		this->character->get_holdable_site()->get_game_data()->on_landholder_died(this->character);
 	}
 
 	this->set_country(nullptr);

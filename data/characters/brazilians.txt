@@ -9,7 +9,6 @@ bernardo_pereira_de_vasconcelos = {
 	gender = male
 	birth_date = 1795.8.27
 	skill_multiplier = 1
-	required_technology = constitutionalism
 	conditions = {
 		country = brazil
 	}

@@ -64,25 +64,6 @@ QVariantList country_military::get_leaders_qvariant_list() const
 	return container::to_qvariant_list(this->get_leaders());
 }
 
-void country_military::check_leaders()
-{
-	//remove obsolete leaders
-	const std::vector<const character *> leaders = this->get_leaders();
-	for (const character *leader : leaders) {
-		if (leader->get_obsolescence_technology() != nullptr && this->country->get_technology()->has_technology(leader->get_obsolescence_technology())) {
-			if (this->country == game::get()->get_player_country()) {
-				const portrait *war_minister_portrait = this->country->get_government()->get_war_minister_portrait();
-
-				const std::string_view leader_type_name = leader->get_leader_type_name();
-
-				engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(leader_type_name), leader->get_full_name()));
-			}
-
-			leader->get_game_data()->get_military_unit()->disband(true);
-		}
-	}
-}
-
 void country_military::add_leader(const character *leader)
 {
 	this->leaders.push_back(leader);
@@ -109,6 +90,19 @@ void country_military::clear_leaders()
 	assert_throw(this->get_leaders().empty());
 
 	emit leaders_changed();
+}
+
+void country_military::on_leader_died(const character *leader)
+{
+	if (this->country == game::get()->get_player_country()) {
+		const portrait *war_minister_portrait = this->country->get_government()->get_war_minister_portrait();
+
+		const std::string_view leader_type_name = leader->get_leader_type_name();
+
+		engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(leader_type_name), leader->get_full_name()));
+	}
+
+	leader->get_game_data()->get_military_unit()->disband(true);
 }
 
 bool country_military::create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions)

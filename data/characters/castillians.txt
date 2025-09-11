@@ -9,7 +9,6 @@ juan_de_bermudez = {
 	gender = male
 	birth_date = 1450
 	death_date = 1520
-	required_technology = navigation
 	traits = {
 		juan_de_bermudez
 	}
@@ -192,7 +191,6 @@ francisco_de_coronado = {
 	gender = male
 	birth_date = 1510
 	death_date = 1544
-	required_technology = colonization
 	traits = {
 		francisco_de_coronado
 	}

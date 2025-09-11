@@ -8,8 +8,6 @@ sun_tzu = {
 	gender = male
 	birth_date = -771
 	death_date = -256
-	required_technology = feudalism
-	obsolescence_technology = mobile_warfare
 	traits = {
 		sun_tzu
 	}

@@ -2604,9 +2604,6 @@ void country_game_data::check_characters()
 			}
 		}
 	}
-
-	this->get_military()->check_leaders();
-	this->check_civilian_characters();
 }
 
 void country_game_data::generate_ruler()
@@ -2652,24 +2649,18 @@ std::vector<const character *> country_game_data::get_civilian_characters() cons
 	return civilian_characters;
 }
 
-void country_game_data::check_civilian_characters()
+void country_game_data::on_civilian_character_died(const character *character)
 {
-	//remove obsolete civilian characters
-	const std::vector<const character *> civilian_characters = this->get_civilian_characters();
-	for (const character *character : civilian_characters) {
-		if (character->get_obsolescence_technology() != nullptr && this->get_technology()->has_technology(character->get_obsolescence_technology())) {
-			if (this->country == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
+	if (this->country == game::get()->get_player_country()) {
+		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
-				const std::string &civilian_unit_type_name = character->get_civilian_unit_type()->get_name();
+		const std::string &civilian_unit_type_name = character->get_civilian_unit_type()->get_name();
 
-				engine_interface::get()->add_notification(std::format("{} Retired", civilian_unit_type_name), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(civilian_unit_type_name), character->get_full_name()));
-			}
-
-			assert_throw(character->get_game_data()->get_civilian_unit() != nullptr);
-			character->get_game_data()->get_civilian_unit()->disband(true);
-		}
+		engine_interface::get()->add_notification(std::format("{} Retired", civilian_unit_type_name), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(civilian_unit_type_name), character->get_full_name()));
 	}
+
+	assert_throw(character->get_game_data()->get_civilian_unit() != nullptr);
+	character->get_game_data()->get_civilian_unit()->disband(true);
 }
 
 bool country_game_data::create_civilian_unit(const civilian_unit_type *civilian_unit_type, const site *deployment_site, const phenotype *phenotype)

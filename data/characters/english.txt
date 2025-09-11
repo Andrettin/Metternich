@@ -80,7 +80,6 @@ elizabeth_i_of_england = {
 	gender = female
 	birth_date = 1533
 	death_date = 1603
-	obsolescence_technology = individualism
 	traits = {
 		financial
 		philosophical
@@ -102,7 +101,6 @@ edward_kelley = {
 	birth_date = 1552
 	death_date = 1597
 	skill_multiplier = 0.17
-	required_technology = merchant_companies
 	traits = {
 		merchant
 	}
@@ -119,11 +117,12 @@ francis_bacon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	gender = male
 	birth_date = 1561
 	death_date = 1626
-	required_technology = scientific_method #developed the scientific method
 	skill_multiplier = 0.83
 	traits = {
 		philosopher
 	}
+	
+	#developed the scientific method
 	
 	history = {
 		1620 = {
@@ -144,7 +143,6 @@ henry_hudson = {
 	gender = male
 	birth_date = 1565
 	death_date = 1611
-	required_technology = navigation
 	traits = {
 		henry_hudson
 	}
@@ -163,7 +161,6 @@ francis_drake = {
 	birth_date = 1540
 	death_date = 1596
 	skill = 10 #+50% Light Warship Damage Bonus
-	required_technology = privateering_companies
 	traits = {
 		privateer
 	}
@@ -196,7 +193,6 @@ john_rolfe = {
 	birth_date = 1585
 	death_date = 1622
 	skill = 5 #+25% Tobacco
-	required_technology = large_tobacco_plantations
 	traits = {
 		tobacco_planter
 	}
@@ -213,7 +209,6 @@ john_winthrop = {
 	gender = male
 	birth_date = 1587
 	death_date = 1649
-	required_technology = propaganda
 	traits = {
 		john_winthrop
 	}
@@ -230,7 +225,6 @@ john_harvard = {
 	gender = male
 	birth_date = 1607
 	death_date = 1638
-	required_technology = university
 	traits = {
 		john_harvard
 	}
@@ -265,7 +259,6 @@ isaac_newton = {
 	gender = male
 	birth_date = 1669
 	death_date = 1727.3.31
-	required_technology = theory_of_gravity
 	traits = {
 		isaac_newton
 	}
@@ -282,7 +275,6 @@ charles_darwin = {
 	gender = male
 	birth_date = 1809
 	death_date = 1882
-	required_technology = merchant_steamships
 	traits = {
 		charles_darwin
 	}
@@ -298,11 +290,6 @@ victoria_i_of_great_britain = {
 	gender = female
 	birth_date = 1819
 	death_date = 1901
-	required_technology = individualism
-	#rulable_countries = {
-	#	england
-	#	great_britain
-	#}
 	traits = {
 		financial
 		imperialistic

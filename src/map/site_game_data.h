@@ -283,6 +283,7 @@ public:
 
 	void set_landholder(const character *landholder);
 	void check_landholder();
+	void on_landholder_died(const character *landholder);
 
 	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
 	{

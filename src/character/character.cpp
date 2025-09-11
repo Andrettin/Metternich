@@ -262,26 +262,6 @@ void character::initialize()
 		}
 	}
 
-	if (this->get_character_class() != nullptr) {
-		if (this->get_required_technology() == nullptr) {
-			this->required_technology = this->get_character_class()->get_required_technology();
-
-			if (this->get_obsolescence_technology() == nullptr) {
-				this->obsolescence_technology = this->get_character_class()->get_obsolescence_technology();
-			}
-		}
-	}
-
-	for (const character_role role : this->get_roles()) {
-		if (this->required_technology != nullptr) {
-			this->required_technology->add_enabled_character(role, this);
-		}
-
-		if (this->obsolescence_technology != nullptr) {
-			this->obsolescence_technology->add_retired_character(role, this);
-		}
-	}
-
 	if (this->get_governable_province() != nullptr) {
 		this->governable_province->add_governor(this);
 	}

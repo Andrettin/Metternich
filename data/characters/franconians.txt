@@ -24,7 +24,6 @@ regiomontanus = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
 	gender = male
 	birth_date = 1436.6.6
 	death_date = 1476.7.6 #died in Rome on 1476.7.6
-	required_technology = mathematics
 	skill_multiplier = 0.5
 	traits = {
 		natural_scientist

@@ -12,8 +12,6 @@ marco_polo = {
 	gender = male
 	birth_date = 1254.9.15
 	death_date = 1324.1.9
-	required_technology = trade
-	obsolescence_technology = communism
 	traits = {
 		marco_polo
 	}
@@ -42,7 +40,6 @@ antonio_bonfini = {
 	birth_date = 1428
 	death_date = 1503.6.6
 	skill_multiplier = 0.5
-	required_technology = philosophy
 	conditions = {
 		country = hungary
 	}
@@ -62,8 +59,6 @@ leonardo_da_vinci = {
 	gender = male
 	birth_date = 1450.4.15
 	death_date = 1519.5.2
-	required_technology = invention
-	obsolescence_technology = internal_combustion #automobile
 	conditions = {
 		not = {
 			culture = greek
@@ -100,7 +95,6 @@ mercurino_gattinara = {
 	birth_date = 1465
 	death_date = 1530
 	skill_multiplier = 0.83
-	required_technology = feudalism
 	traits = {
 		statesman
 	}
@@ -131,7 +125,6 @@ giovanni_da_verrazano = { #Source: Isaac Asimov, "Cronologia das Ciências e das
 	gender = male
 	birth_date = 1485
 	death_date = 1528
-	required_technology = navigation
 	traits = {
 		giovanni_da_verrazano
 	}
@@ -150,7 +143,6 @@ niccolo_tartaglia = { #Source: Isaac Asimov, "Cronologia das Ciências e das Des
 	gender = male
 	birth_date = 1499
 	death_date = 1557
-	required_technology = mathematics #inventor of method to solve cubic equations
 	skill_multiplier = 0.33
 	conditions = {
 		culture = italian
@@ -158,6 +150,8 @@ niccolo_tartaglia = { #Source: Isaac Asimov, "Cronologia das Ciências e das Des
 	traits = {
 		philosopher
 	}
+	
+	#inventor of method to solve cubic equations
 }
 
 geronimo_cardano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 206, 212.
@@ -171,7 +165,6 @@ geronimo_cardano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 	gender = male
 	birth_date = 1501
 	death_date = 1576
-	required_technology = mathematics #developed the concept of negative numbers
 	skill_multiplier = 0.67
 	conditions = {
 		culture = italian
@@ -180,6 +173,7 @@ geronimo_cardano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 		philosopher
 	}
 	
+	#developed the concept of negative numbers
 	#published Niccolò Tartaglia's method to solve cubic equations
 }
 

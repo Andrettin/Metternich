@@ -10,7 +10,6 @@ tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 	birth_date = 1442
 	death_date = 1521
 	skill_multiplier = 0.5
-	required_technology = feudalism
 	conditions = {
 		country = hungary
 	}
@@ -44,7 +43,6 @@ istvan_bathory = {
 	birth_date = 1473
 	death_date = 1534
 	skill_multiplier = 0.33
-	required_technology = national_bureaucracy
 	traits = {
 		statesman
 	}
@@ -62,7 +60,6 @@ juraj_thurzo = {
 	birth_date = 1567
 	death_date = 1616
 	skill_multiplier = 0.33
-	required_technology = national_bureaucracy
 	traits = {
 		statesman
 	}
@@ -80,7 +77,6 @@ palffy_janos_iv = {
 	birth_date = 1678
 	death_date = 1750.3.24
 	skill_multiplier = 0.5
-	required_technology = national_bureaucracy
 	traits = {
 		statesman
 	}
@@ -98,7 +94,6 @@ franciszek_rakoczy = {
 	birth_date = 1676
 	death_date = 1738
 	skill_multiplier = 0.33
-	required_technology = national_bureaucracy
 	traits = {
 		statesman
 	}

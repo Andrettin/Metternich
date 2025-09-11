@@ -40,10 +40,10 @@ public:
 	}
 
 	QVariantList get_leaders_qvariant_list() const;
-	void check_leaders();
 	void add_leader(const character *leader);
 	void remove_leader(const character *leader);
 	void clear_leaders();
+	void on_leader_died(const character *leader);
 
 	const std::vector<qunique_ptr<military_unit>> &get_military_units() const
 	{

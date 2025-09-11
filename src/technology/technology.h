@@ -22,7 +22,6 @@ namespace archimedes {
 namespace metternich {
 
 class building_type;
-class character;
 class civilian_unit_type;
 class commodity;
 class country;
@@ -46,7 +45,6 @@ class technology_subcategory;
 class terrain_type;
 class transporter_type;
 class wonder;
-enum class character_role;
 
 template <typename scope_type>
 class factor;
@@ -411,36 +409,6 @@ public:
 		this->disabled_deities.push_back(deity);
 	}
 
-	const std::vector<const character *> &get_enabled_characters(const character_role role) const
-	{
-		static const std::vector<const character *> empty_vector;
-
-		const auto find_iterator = this->enabled_characters.find(role);
-		if (find_iterator != this->enabled_characters.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_vector;
-	}
-
-	std::vector<const character *> get_enabled_characters_for_country(const character_role role, const country *country) const;
-	void add_enabled_character(const character_role role, const character *character);
-
-	const std::vector<const character *> &get_retired_characters(const character_role role) const
-	{
-		static const std::vector<const character *> empty_vector;
-
-		const auto find_iterator = this->retired_characters.find(role);
-		if (find_iterator != this->retired_characters.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_vector;
-	}
-
-	std::vector<const character *> get_retired_characters_for_country(const character_role role, const country *country) const;
-	void add_retired_character(const character_role role, const character *character);
-
 	const metternich::modifier<const country> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -448,7 +416,6 @@ public:
 
 	std::string get_modifier_string(const country *country) const;
 	Q_INVOKABLE QString get_effects_string(const metternich::country *country) const;
-	void write_character_effects_string(const character_role role, const std::string_view &role_name, const country *country, std::string &str) const;
 
 	virtual named_data_entry *get_tree_parent() const override
 	{
@@ -538,8 +505,6 @@ private:
 	std::vector<const research_organization *> disabled_research_organizations;
 	std::vector<const deity *> enabled_deities;
 	std::vector<const deity *> disabled_deities;
-	std::map<character_role, std::vector<const character *>> enabled_characters;
-	std::map<character_role, std::vector<const character *>> retired_characters;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;
 	const game_rule *required_game_rule = nullptr;
 };

@@ -918,20 +918,6 @@ void province_game_data::check_governor()
 		return;
 	}
 
-	//remove the governor if they have become obsolete
-	if (this->get_governor() != nullptr && this->get_governor()->get_obsolescence_technology() != nullptr && this->get_owner()->get_technology()->has_technology(this->get_governor()->get_obsolescence_technology())) {
-		if (game::get()->is_running()) {
-			if (this->get_owner() == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
-
-				engine_interface::get()->add_notification(std::format("Governor of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, governor {} of {} has decided to retire.", this->get_governor()->get_full_name(), this->get_current_cultural_name()));
-			}
-		}
-
-		this->set_governor(nullptr);
-		this->get_governor()->get_game_data()->set_dead(true);
-	}
-
 	//if the province has no governor, see if there is any character who can become its governor
 	if (this->get_governor() == nullptr) {
 		std::vector<const character *> potential_governors;
@@ -945,14 +931,6 @@ void province_game_data::check_governor()
 			}
 
 			if (character_game_data->is_dead()) {
-				continue;
-			}
-
-			if (character->get_required_technology() != nullptr && !this->get_owner()->get_technology()->has_technology(character->get_required_technology())) {
-				continue;
-			}
-
-			if (character->get_obsolescence_technology() != nullptr && this->get_owner()->get_technology()->has_technology(character->get_obsolescence_technology())) {
 				continue;
 			}
 
@@ -973,6 +951,20 @@ void province_game_data::check_governor()
 			}
 		}
 	}
+}
+
+void province_game_data::on_governor_died(const character *governor)
+{
+	if (game::get()->is_running()) {
+		if (this->get_owner() == game::get()->get_player_country()) {
+			const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
+
+			engine_interface::get()->add_notification(std::format("Governor of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, governor {} of {} has decided to retire.", this->get_governor()->get_full_name(), this->get_current_cultural_name()));
+		}
+	}
+
+	this->set_governor(nullptr);
+	this->check_governor();
 }
 
 QVariantList province_game_data::get_military_units_qvariant_list() const

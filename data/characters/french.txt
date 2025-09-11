@@ -8,7 +8,6 @@ philip_the_fair = {
 	gender = male
 	birth_date = 1268.6.8
 	death_date = 1314.11.29
-	obsolescence_technology = national_bureaucracy
 	traits = {
 		dutiful_cleric
 		temperate
@@ -58,7 +57,6 @@ ambroise_pare = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	gender = male
 	birth_date = 1510
 	death_date = 1590
-	required_technology = medicine
 	skill_multiplier = 0.67
 	conditions = {
 		country = france
@@ -106,7 +104,6 @@ jacques_marquette = {
 	gender = male
 	birth_date = 1637
 	death_date = 1675
-	required_technology = colonization
 	traits = {
 		jacques_marquette
 	}
@@ -129,7 +126,6 @@ sieur_de_la_salle = {
 	gender = male
 	birth_date = 1643
 	death_date = 1687
-	required_technology = colonization
 	traits = {
 		sieur_de_la_salle
 	}
@@ -152,7 +148,6 @@ louis_xiv_of_france = {
 	gender = male
 	birth_date = 1638
 	death_date = 1715
-	required_technology = national_bureaucracy
 	traits = {
 		creative
 		industrious

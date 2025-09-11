@@ -11,7 +11,6 @@ nikolaus_von_kues = { #Source: "Encyclopædia Britannica", 1911, vol. 7, pp. 665
 	birth_date = 1401
 	death_date = 1464.8.11 #died at Lodi in Umbria on 1464.8.11
 	skill_multiplier = 0.83
-	required_technology = astronomy
 	traits = {
 		natural_scientist
 	}
@@ -45,7 +44,6 @@ johann_widman = {
 	birth_date = 1460
 	death_date = 1498
 	skill_multiplier = 0.17
-	required_technology = mathematics
 	traits = {
 		natural_scientist
 	}
@@ -76,7 +74,6 @@ martin_luther = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	gender = male
 	birth_date = 1483
 	death_date = 1546
-	required_technology = printing_press
 	skill_multiplier = 1
 	conditions = {
 		or = {
@@ -104,7 +101,6 @@ anton_fugger = {
 	birth_date = 1493
 	death_date = 1560.9.14
 	skill_multiplier = 0.67
-	required_technology = banking
 	traits = {
 		treasurer
 	}
@@ -157,7 +153,6 @@ franz_dietrichstein = {
 	birth_date = 1570
 	death_date = 1636.9.19
 	skill_multiplier = 0.33
-	required_technology = national_bureaucracy
 	traits = {
 		treasurer
 	}
@@ -174,7 +169,6 @@ johann_sebastian_bach = {
 	gender = male
 	birth_date = 1685
 	death_date = 1750
-	required_technology = theology
 	conditions = {
 		or = {
 			country = prussia
@@ -198,7 +192,6 @@ maximilian_hell = {
 	birth_date = 1720.5.15
 	death_date = 1792.4.14
 	skill_multiplier = 0.5
-	required_technology = astronomy
 	traits = {
 		natural_scientist
 	}
@@ -215,7 +208,6 @@ franz_joseph_gall = {
 	gender = male
 	death_date = 1828.8.22
 	skill_multiplier = 0.67
-	required_technology = medicine
 	traits = {
 		natural_scientist
 	}
@@ -233,7 +225,6 @@ johann_spurzheim = {
 	birth_date = 1776.12.3
 	death_date = 1832
 	skill_multiplier = 0.33
-	required_technology = medicine
 	traits = {
 		natural_scientist
 	}

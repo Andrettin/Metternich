@@ -581,10 +581,6 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 
 				country_government->set_office_holder(office, office_holder);
-
-				if (office_holder->get_required_technology() != nullptr) {
-					country_technology->add_technology_with_prerequisites(office_holder->get_required_technology());
-				}
 			}
 
 			for (const technology *technology : country_history->get_technologies()) {

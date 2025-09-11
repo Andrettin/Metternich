@@ -26,7 +26,6 @@ andreas_vesalius = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 	gender = male
 	birth_date = 1514
 	death_date = 1564
-	required_technology = medicine #revolutionized the understanding of anatomy
 	skill_multiplier = 0.83
 	conditions = {
 		or = {
@@ -38,6 +37,8 @@ andreas_vesalius = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 	traits = {
 		natural_scientist
 	}
+	
+	#revolutionized the understanding of anatomy
 	
 	history = {
 		#published the book "De Corporis Humani Fabrica" in 1543

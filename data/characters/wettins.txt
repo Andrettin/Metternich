@@ -9,7 +9,6 @@ friedrich_ii_of_saxony = {
 	gender = male
 	birth_date = 1412.8.22
 	death_date = 1464.9.7
-	obsolescence_technology = nationalism
 	traits = {
 		industrious
 	}
@@ -26,7 +25,6 @@ august_iii_of_poland = {
 	gender = male
 	birth_date = 1696.10.17
 	death_date = 1763.10.5
-	required_technology = nationalism
 	traits = {
 		industrious
 	}

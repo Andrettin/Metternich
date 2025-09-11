@@ -9,7 +9,6 @@ benjamin_franklin = {
 	gender = male
 	birth_date = 1706
 	death_date = 1790
-	required_technology = constitutionalism
 	traits = {
 		benjamin_franklin
 	}
@@ -27,7 +26,6 @@ george_washington = {
 	birth_date = 1732
 	death_date = 1799
 	skill = 10 #Disciplined: -50% Infantry Cost
-	obsolescence_technology = individualism
 	traits = {
 		disciplined
 		expansive
@@ -44,7 +42,6 @@ john_adams = {
 	gender = male
 	birth_date = 1735
 	death_date = 1826
-	required_technology = individualism
 	traits = {
 		libertarian
 	}
@@ -61,7 +58,6 @@ patrick_henry = {
 	gender = male
 	birth_date = 1736
 	death_date = 1799
-	required_technology = rights_of_man
 	traits = {
 		patrick_henry
 	}
@@ -79,7 +75,6 @@ thomas_jefferson = {
 	birth_date = 1743
 	death_date = 1826
 	skill = 10 #+50% Statesmanship
-	required_technology = constitutionalism
 	traits = {
 		statesman
 	}
@@ -97,7 +92,6 @@ john_jay = {
 	birth_date = 1745
 	death_date = 1829
 	skill = 5 #+25% Statesmanship
-	required_technology = constitutionalism
 	traits = {
 		statesman
 	}
@@ -114,7 +108,6 @@ john_paul_jones = {
 	gender = male
 	birth_date = 1747
 	death_date = 1792
-	required_technology = advanced_hull_design
 	traits = {
 		john_paul_jones
 	}
@@ -134,7 +127,6 @@ john_jacob_astor = {
 	gender = male
 	birth_date = 1763
 	death_date = 1848
-	required_technology = excessive_fur_harvesting
 	traits = {
 		john_jacob_astor
 	}
@@ -155,7 +147,6 @@ eli_whitney = {
 	birth_date = 1765
 	death_date = 1825
 	skill = 10 #+50% Cotton
-	required_technology = cotton_gin
 	traits = {
 		cotton_planter
 	}
@@ -172,7 +163,6 @@ washington_irving = {
 	gender = male
 	birth_date = 1783
 	death_date = 1859
-	required_technology = romanticism
 	traits = {
 		washington_irving
 	}
@@ -188,7 +178,6 @@ abraham_lincoln = {
 	gender = male
 	birth_date = 1809
 	death_date = 1865
-	required_technology = individualism
 	traits = {
 		philosophical
 		charismatic
@@ -206,7 +195,6 @@ cyrus_mccormick = {
 	gender = male
 	birth_date = 1809
 	death_date = 1884
-	required_technology = mechanical_reaper
 	traits = {
 		cyrus_mccormick
 	}

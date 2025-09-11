@@ -240,6 +240,7 @@ public:
 
 	void set_governor(const character *governor);
 	void check_governor();
+	void on_governor_died(const character *governor);
 
 	const std::vector<military_unit *> &get_military_units() const
 	{

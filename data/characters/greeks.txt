@@ -7,7 +7,6 @@ perseus = {
 	home_site = mycenae
 	gender = male
 	start_date = -1550 #possible year of the foundation of Mycenae
-	required_technology = seafaring
 	conditions = {
 		culture = greek
 	}
@@ -26,8 +25,6 @@ archimedes = {
 	gender = male
 	birth_date = -287
 	death_date = -212
-	required_technology = invention
-	obsolescence_technology = internal_combustion #automobile
 	conditions = {
 		culture = greek
 	}

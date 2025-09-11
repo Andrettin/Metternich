@@ -1250,20 +1250,6 @@ void site_game_data::check_landholder()
 		return;
 	}
 
-	//remove the landholder if they have become obsolete
-	if (this->get_landholder() != nullptr && this->get_landholder()->get_obsolescence_technology() != nullptr && this->get_owner()->get_technology()->has_technology(this->get_landholder()->get_obsolescence_technology())) {
-		if (game::get()->is_running()) {
-			if (this->get_owner() == game::get()->get_player_country()) {
-				const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
-
-				engine_interface::get()->add_notification(std::format("Landholder of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, landholder {} of {} has decided to retire.", this->get_landholder()->get_full_name(), this->get_current_cultural_name()));
-			}
-		}
-
-		this->set_landholder(nullptr);
-		this->get_landholder()->get_game_data()->set_dead(true);
-	}
-
 	//if the site has no landholder, see if there is any character who can become its landholder
 	if (this->get_landholder() == nullptr) {
 		std::vector<const character *> potential_landholders;
@@ -1277,14 +1263,6 @@ void site_game_data::check_landholder()
 			}
 
 			if (character_game_data->is_dead()) {
-				continue;
-			}
-
-			if (character->get_required_technology() != nullptr && !this->get_owner()->get_technology()->has_technology(character->get_required_technology())) {
-				continue;
-			}
-
-			if (character->get_obsolescence_technology() != nullptr && this->get_owner()->get_technology()->has_technology(character->get_obsolescence_technology())) {
 				continue;
 			}
 
@@ -1305,6 +1283,20 @@ void site_game_data::check_landholder()
 			}
 		}
 	}
+}
+
+void site_game_data::on_landholder_died(const character *landholder)
+{
+	if (game::get()->is_running()) {
+		if (this->get_owner() == game::get()->get_player_country()) {
+			const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
+
+			engine_interface::get()->add_notification(std::format("Landholder of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, landholder {} of {} has decided to retire.", this->get_landholder()->get_full_name(), this->get_current_cultural_name()));
+		}
+	}
+
+	this->set_landholder(nullptr);
+	this->check_landholder();
 }
 
 void site_game_data::change_base_commodity_output(const commodity *commodity, const centesimal_int &change)

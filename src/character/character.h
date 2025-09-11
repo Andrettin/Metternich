@@ -15,7 +15,6 @@ Q_MOC_INCLUDE("religion/deity.h")
 Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("species/phenotype.h")
 Q_MOC_INCLUDE("species/species.h")
-Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace archimedes {
@@ -42,7 +41,6 @@ class province;
 class religion;
 class site;
 class species;
-class technology;
 enum class character_role;
 enum class military_unit_category;
 
@@ -76,8 +74,6 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::province* governable_province MEMBER governable_province NOTIFY changed)
 	Q_PROPERTY(metternich::site* holdable_site MEMBER holdable_site NOTIFY changed)
-	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
-	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
@@ -234,16 +230,6 @@ public:
 		return this->traits;
 	}
 
-	const technology *get_required_technology() const
-	{
-		return this->required_technology;
-	}
-
-	const technology *get_obsolescence_technology() const
-	{
-		return this->obsolescence_technology;
-	}
-
 	const and_condition<country> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -289,8 +275,6 @@ private:
 	province *governable_province = nullptr;
 	site *holdable_site = nullptr;
 	std::vector<const character_trait *> traits;
-	technology *required_technology = nullptr;
-	technology *obsolescence_technology = nullptr;
 	std::unique_ptr<const and_condition<country>> conditions;
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;

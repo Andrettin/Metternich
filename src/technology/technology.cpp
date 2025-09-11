@@ -2,8 +2,6 @@
 
 #include "technology/technology.h"
 
-#include "character/character.h"
-#include "character/character_role.h"
 #include "country/country.h"
 #include "country/country_game_data.h"
 #include "country/country_government.h"
@@ -235,10 +233,6 @@ void technology::check() const
 		&& this->get_free_technologies() == 0
 		&& this->get_shared_prestige() == 0
 		&& this->get_enabled_buildings().empty()
-		&& this->get_enabled_characters(character_role::advisor).empty()
-		&& this->get_enabled_characters(character_role::governor).empty()
-		&& this->get_enabled_characters(character_role::landholder).empty()
-		&& this->get_enabled_characters(character_role::leader).empty()
 		&& this->get_enabled_civilian_units().empty()
 		&& this->get_enabled_commodities().empty()
 		&& this->get_enabled_deities().empty()
@@ -752,70 +746,6 @@ std::vector<const deity *> technology::get_disabled_deities_for_country(const co
 	return deities;
 }
 
-std::vector<const character *> technology::get_enabled_characters_for_country(const character_role role, const country *country) const
-{
-	std::vector<const character *> characters;
-
-	for (const character *character : this->get_enabled_characters(role)) {
-		if (role == character_role::governor && !vector::contains(country->get_game_data()->get_provinces(), character->get_governable_province())) {
-			continue;
-		}
-
-		if (role == character_role::landholder && character->get_holdable_site()->get_game_data()->get_owner() != country) {
-			continue;
-		}
-
-		if (character->get_conditions() != nullptr && !character->get_conditions()->check(country, read_only_context(country))) {
-			continue;
-		}
-
-		characters.push_back(character);
-	}
-
-	return characters;
-}
-
-void technology::add_enabled_character(const character_role role, const character *character)
-{
-	this->enabled_characters[role].push_back(character);
-
-	std::sort(this->enabled_characters[role].begin(), this->enabled_characters[role].end(), [](const metternich::character *lhs, const metternich::character *rhs) {
-		return lhs->get_full_name() < rhs->get_full_name();
-	});
-}
-
-std::vector<const character *> technology::get_retired_characters_for_country(const character_role role, const country *country) const
-{
-	std::vector<const character *> characters;
-
-	for (const character *character : this->get_retired_characters(role)) {
-		if (role == character_role::governor && !vector::contains(country->get_game_data()->get_provinces(), character->get_governable_province())) {
-			continue;
-		}
-
-		if (role == character_role::landholder && character->get_holdable_site()->get_game_data()->get_owner() != country) {
-			continue;
-		}
-
-		if (character->get_conditions() != nullptr && !character->get_conditions()->check(country, read_only_context(country))) {
-			continue;
-		}
-
-		characters.push_back(character);
-	}
-
-	return characters;
-}
-
-void technology::add_retired_character(const character_role role, const character *character)
-{
-	this->retired_characters[role].push_back(character);
-
-	std::sort(this->retired_characters[role].begin(), this->retired_characters[role].end(), [](const metternich::character *lhs, const metternich::character *rhs) {
-		return lhs->get_full_name() < rhs->get_full_name();
-	});
-}
-
 std::string technology::get_modifier_string(const country *country) const
 {
 	if (this->get_modifier() == nullptr) {
@@ -1046,58 +976,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 		}
 	}
 
-	this->write_character_effects_string(character_role::advisor, "advisor", country, str);
-	this->write_character_effects_string(character_role::governor, "governor", country, str);
-	this->write_character_effects_string(character_role::landholder, "landholder", country, str);
-	this->write_character_effects_string(character_role::leader, "leader", country, str);
-	//this->write_character_effects_string(character_role::civilian, "civilian", country, str);
-
 	return QString::fromStdString(str);
-}
-
-void technology::write_character_effects_string(const character_role role, const std::string_view &role_name, const country *country, std::string &str) const
-{
-	if (role == character_role::advisor) {
-		const bool can_recruit_advisors = country->get_government()->can_have_appointable_offices();
-		if (!can_recruit_advisors) {
-			return;
-		}
-	}
-
-	const std::vector<const character *> enabled_characters = get_enabled_characters_for_country(role, country);
-
-	if (!enabled_characters.empty()) {
-		for (const character *character : enabled_characters) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			std::string character_type_name = std::string(role_name);
-
-			switch (role) {
-				case character_role::leader:
-					character_type_name = string::lowered(character->get_leader_type_name());
-					break;
-				case character_role::civilian:
-					character_type_name = string::lowered(character->get_civilian_unit_type()->get_name());
-					break;
-			}
-
-			str += std::format("Enables {} {}", character->get_full_name(), character_type_name);
-		}
-	}
-
-	const std::vector<const character *> retired_characters = get_retired_characters_for_country(role, country);
-
-	if (!retired_characters.empty()) {
-		for (const character *character : retired_characters) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Retires {} {}", character->get_full_name(), role_name);
-		}
-	}
 }
 
 bool technology::is_hidden_in_tree() const

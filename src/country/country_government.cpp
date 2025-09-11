@@ -387,12 +387,6 @@ void country_government::check_office_holder(const office *office, const charact
 		this->set_appointed_office_holder(office, nullptr);
 	}
 
-	//remove office holders if they have become obsolete
-	if (this->get_office_holder(office) != nullptr && this->get_office_holder(office)->get_obsolescence_technology() != nullptr && this->country->get_technology()->has_technology(this->get_office_holder(office)->get_obsolescence_technology())) {
-		this->get_office_holder(office)->get_game_data()->die();
-		return; //the office holder death will already trigger a re-check of the office holder position
-	}
-
 	//if the country has no holder for a non-appointable office, see if there is any character who can become the holder
 	if (this->get_office_holder(office) == nullptr && !office->is_appointable()) {
 		const character *character = this->get_best_office_holder(office, previous_holder);
@@ -527,6 +521,7 @@ bool country_government::can_have_office_holder(const office *office, const char
 		return false;
 	}
 
+	//FIXME: instead of checking the character dates, have a list of characters in the game object, and add characters to it as appropriate
 	if (game::get()->get_date() < character->get_start_date()) {
 		return false;
 	}
@@ -536,14 +531,6 @@ bool country_government::can_have_office_holder(const office *office, const char
 	}
 
 	if (character_game_data->is_dead()) {
-		return false;
-	}
-
-	if (character->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(character->get_required_technology())) {
-		return false;
-	}
-
-	if (character->get_obsolescence_technology() != nullptr && this->country->get_technology()->has_technology(character->get_obsolescence_technology())) {
 		return false;
 	}
 
