@@ -19,7 +19,7 @@ russia = {
 	history = {
 		1505 = {
 			offices = {
-				#ruler = basil_iii_of_russia #Basil III became Czar of Russia in 1505; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
+				ruler = basil_iii_of_russia #Basil III became Czar of Russia in 1505; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
 			}
 			
 			government_type = monarchy

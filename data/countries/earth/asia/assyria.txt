@@ -21,7 +21,7 @@ assyria = {
 	history = {
 		-720 = {
 			offices = {
-				#ruler = sargon_ii_of_assyria #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+				ruler = sargon_ii_of_assyria #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 			}
 			
 			government_type = monarchy
@@ -29,7 +29,7 @@ assyria = {
 		
 		-640 = {
 			offices = {
-				#ruler = assurbanipal_of_assyria #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+				ruler = assurbanipal_of_assyria #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 			}
 		}
 	}

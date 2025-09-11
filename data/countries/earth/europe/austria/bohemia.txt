@@ -27,7 +27,7 @@ bohemia = {
 		
 		1152 = {
 			offices = {
-				#ruler = vlatislav_ii_of_bohemia
+				ruler = vlatislav_ii_of_bohemia
 			}
 		}
 		
