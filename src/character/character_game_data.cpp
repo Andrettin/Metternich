@@ -993,9 +993,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 
 void character_game_data::apply_office_modifier(const metternich::country *country, const metternich::office *office, const int multiplier) const
 {
-	if (office->is_ruler()) {
-		assert_throw(this->character->has_role(character_role::ruler));
-	} else {
+	if (!office->is_ruler()) {
 		assert_throw(this->character->has_role(character_role::advisor));
 	}
 

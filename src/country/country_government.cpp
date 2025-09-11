@@ -435,6 +435,10 @@ std::vector<const character *> country_government::get_appointable_office_holder
 			if (!character->has_role(character_role::ruler)) {
 				continue;
 			}
+
+			if (!vector::contains(character->get_rulable_countries(), this->country)) {
+				continue;
+			}
 		} else {
 			if (!character->has_role(character_role::advisor)) {
 				continue;
