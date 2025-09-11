@@ -6,6 +6,6 @@ william_the_silent = {
 			culture = dutch
 			culture = english
 		}
-		is_ruler = true
+		character_class = warrior
 	}
 }

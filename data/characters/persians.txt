@@ -1,7 +1,6 @@
 darius_i_of_persia = {
 	name = "Darius"
 	epithet = "I"
-	role = ruler
 	character_class = treasurer
 	culture = persian
 	religion = pagan
@@ -9,9 +8,6 @@ darius_i_of_persia = {
 	gender = male
 	birth_date = -550
 	death_date = -486
-	rulable_countries = {
-		persia
-	}
 	traits = {
 		financial
 		organized

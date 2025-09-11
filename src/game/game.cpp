@@ -569,6 +569,11 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			for (const auto &[office, office_holder] : country_history->get_office_holders()) {
+				assert_throw(scenario->get_start_date() >= office_holder->get_start_date());
+				if (office_holder->get_death_date().isValid() && scenario->get_start_date() >= office_holder->get_death_date()) {
+					continue;
+				}
+
 				character_game_data *office_holder_game_data = office_holder->get_game_data();
 
 				if (office_holder_game_data->get_country() != nullptr && office_holder_game_data->get_country() != country) {
@@ -706,7 +711,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 		for (const character *character : character::get_all()) {
 			character_game_data *character_game_data = character->get_game_data();
-			character_game_data->apply_history();
+			character_game_data->apply_history(scenario->get_start_date());
 		}
 
 		for (const historical_civilian_unit *historical_civilian_unit : historical_civilian_unit::get_all()) {

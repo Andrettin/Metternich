@@ -757,6 +757,7 @@ public:
 		this->apply_modifier(modifier, -1);
 	}
 
+	std::vector<const character *> get_characters() const;
 	void check_characters();
 
 	void generate_ruler();

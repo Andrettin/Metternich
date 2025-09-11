@@ -6,6 +6,6 @@ gustav_adolf_of_sweden = {
 			culture = swedish
 			culture = russian
 		}
-		is_ruler = true
+		character_class = warrior
 	}
 }

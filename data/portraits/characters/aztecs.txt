@@ -7,6 +7,5 @@ montezuma_ii = {
 			cultural_group = mesoamerican
 			cultural_group = andean
 		}
-		is_ruler = true
 	}
 }

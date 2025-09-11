@@ -1,7 +1,6 @@
 hannibal = {
 	name = "Hannibal"
 	surname = "Barca"
-	role = ruler
 	character_class = statesman
 	culture = carthaginian
 	religion = pagan
@@ -9,9 +8,6 @@ hannibal = {
 	gender = male
 	birth_date = -247
 	death_date = -181
-	rulable_countries = {
-		carthage
-	}
 	traits = {
 		financial
 		charismatic

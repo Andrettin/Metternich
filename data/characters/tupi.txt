@@ -1,6 +1,5 @@
 cunhambebe = {
 	name = "Cunhambebe"
-	role = ruler
 	character_class = warrior
 	culture = tupi
 	religion = pagan
@@ -8,9 +7,6 @@ cunhambebe = {
 	home_site = santos #Ubatuba
 	gender = male
 	death_date = 1555
-	rulable_countries = {
-		tupi
-	}
 	traits = {
 		indulgent
 	}

@@ -18,7 +18,6 @@ juan_de_bermudez = {
 isabella_i_of_castille = {
 	name = "Isabella"
 	epithet = "I"
-	role = ruler
 	character_class = statesman
 	culture = castillian
 	religion = catholic
@@ -26,10 +25,6 @@ isabella_i_of_castille = {
 	gender = female
 	birth_date = 1451.4.22
 	death_date = 1504.11.26
-	rulable_countries = {
-		castille
-		spain
-	}
 	traits = {
 		expansive
 		spiritual

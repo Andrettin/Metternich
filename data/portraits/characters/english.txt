@@ -5,7 +5,7 @@ elizabeth_i_of_england = {
 		not = {
 			cultural_group = african
 		}
-		is_ruler = true
+		character_class = warrior #aristocrat
 	}
 }
 
@@ -17,7 +17,6 @@ francis_drake = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		is_ruler = false
 		character_class = rogue
 	}
 }
@@ -30,7 +29,6 @@ henry_hudson = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		is_ruler = false
 		character_class = navigator
 	}
 }

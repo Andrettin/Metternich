@@ -6,7 +6,6 @@ scholar = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		is_ruler = false
 		or = {
 			character_class = architect
 			character_class = artist

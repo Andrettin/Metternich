@@ -249,13 +249,6 @@ public:
 		return this->conditions.get();
 	}
 
-	const std::vector<const country *> &get_rulable_countries() const
-	{
-		return this->rulable_countries;
-	}
-
-	void add_rulable_country(country *country);
-
 	const province *get_governable_province() const
 	{
 		return this->governable_province;
@@ -293,7 +286,6 @@ private:
 	const site *home_settlement = nullptr;
 	const site *home_site = nullptr;
 	int skill = 0;
-	std::vector<const country *> rulable_countries;
 	province *governable_province = nullptr;
 	site *holdable_site = nullptr;
 	std::vector<const character_trait *> traits;

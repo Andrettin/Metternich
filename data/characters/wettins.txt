@@ -2,7 +2,6 @@ friedrich_ii_of_saxony = {
 	name = "Friedrich"
 	epithet = "II"
 	dynasty = wettin
-	role = ruler
 	character_class = statesman
 	culture = german #Thuringian
 	religion = catholic
@@ -11,9 +10,6 @@ friedrich_ii_of_saxony = {
 	birth_date = 1412.8.22
 	death_date = 1464.9.7
 	obsolescence_technology = nationalism
-	rulable_countries = {
-		saxe_wittenberg
-	}
 	traits = {
 		industrious
 	}
@@ -23,7 +19,6 @@ august_iii_of_poland = {
 	name = "August"
 	epithet = "III"
 	dynasty = wettin
-	role = ruler
 	character_class = statesman
 	culture = german #Thuringian
 	religion = catholic
@@ -32,10 +27,6 @@ august_iii_of_poland = {
 	birth_date = 1696.10.17
 	death_date = 1763.10.5
 	required_technology = nationalism
-	rulable_countries = {
-		poland
-		saxe_wittenberg
-	}
 	traits = {
 		industrious
 	}

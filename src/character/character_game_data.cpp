@@ -172,13 +172,22 @@ void character_game_data::apply_species_and_class(const int level)
 	this->set_level(level);
 }
 
-void character_game_data::apply_history()
+void character_game_data::apply_history(const QDate &start_date)
 {
 	const character_history *character_history = this->character->get_history();
 
 	this->character_class = this->character->get_character_class();
 	const int level = std::max(character_history->get_level(), 1);
 	this->apply_species_and_class(level);
+
+	if (start_date < this->character->get_start_date()) {
+		return;
+	}
+
+	if (this->character->get_death_date().isValid() && start_date >= this->character->get_death_date()) {
+		this->set_dead(true);
+		return;
+	}
 
 	const metternich::country *country = character_history->get_country();
 
@@ -942,9 +951,7 @@ void character_game_data::set_office(const metternich::office *office)
 
 std::string character_game_data::get_office_modifier_string(const metternich::country *country, const metternich::office *office) const
 {
-	if (office->is_ruler()) {
-		assert_throw(this->character->has_role(character_role::ruler));
-	} else {
+	if (!office->is_ruler()) {
 		assert_throw(this->character->has_role(character_role::advisor));
 	}
 

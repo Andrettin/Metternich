@@ -18,7 +18,6 @@ benjamin_franklin = {
 george_washington = {
 	name = "George"
 	surname = "Washington"
-	role = ruler
 	character_class = warrior
 	culture = american
 	religion = protestant
@@ -29,9 +28,6 @@ george_washington = {
 	death_date = 1799
 	skill = 10 #Disciplined: -50% Infantry Cost
 	obsolescence_technology = individualism
-	rulable_countries = {
-		united_states
-	}
 	traits = {
 		disciplined
 		expansive
@@ -41,7 +37,6 @@ george_washington = {
 john_adams = {
 	name = "John"
 	surname = "Adams"
-	role = ruler
 	character_class = statesman
 	culture = american
 	religion = protestant
@@ -50,9 +45,6 @@ john_adams = {
 	birth_date = 1735
 	death_date = 1826
 	required_technology = individualism
-	rulable_countries = {
-		united_states
-	}
 	traits = {
 		libertarian
 	}
@@ -189,7 +181,6 @@ washington_irving = {
 abraham_lincoln = {
 	name = "Abraham"
 	surname = "Lincoln"
-	role = ruler
 	character_class = statesman
 	culture = american
 	religion = protestant
@@ -198,9 +189,6 @@ abraham_lincoln = {
 	birth_date = 1809
 	death_date = 1865
 	required_technology = individualism
-	rulable_countries = {
-		united_states
-	}
 	traits = {
 		philosophical
 		charismatic

@@ -64,7 +64,7 @@ public:
 	gsml_data to_gsml_data() const;
 
 	void apply_species_and_class(const int level);
-	void apply_history();
+	void apply_history(const QDate &start_date);
 	void on_setup_finished();
 
 	std::string get_titled_name() const;

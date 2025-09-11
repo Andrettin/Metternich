@@ -5,7 +5,10 @@ maria_theresia = {
 		not = {
 			cultural_group = african
 		}
-		is_ruler = true
+		or = {
+			character_class = statesman
+			character_class = warrior #aristocrat
+		}
 	}
 }
 
@@ -17,7 +20,6 @@ metternich = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		is_ruler = false
 		or = {
 			character_class = diplomat
 			character_class = high_judge

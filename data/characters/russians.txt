@@ -15,7 +15,6 @@ basil_iii_of_russia = { #Source: Isaac Asimov, "Cronologia das Ciências e das D
 peter_the_great_of_russia = {
 	name = "Peter"
 	epithet = "the Great"
-	role = ruler
 	character_class = warrior
 	culture = russian
 	religion = orthodox
@@ -23,10 +22,6 @@ peter_the_great_of_russia = {
 	gender = male
 	birth_date = 1672
 	death_date = 1725
-	rulable_countries = {
-		russia
-		muscovy
-	}
 	traits = {
 		expansive
 		philosophical

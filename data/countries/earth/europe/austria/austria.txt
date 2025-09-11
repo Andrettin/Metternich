@@ -38,10 +38,16 @@ austria = {
 			}
 		}
 		
+		1740 = {
+			offices = {
+				ruler = maria_theresia_of_austria #Maria Theresia became queen of Bohemia and Hungary on 1740; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+			}
+		}
+		
 		1804.8.11 = {
 			tier = empire #Empire of Austria founded on 1804.8.11; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
 			offices = {
-				#ruler = franz_i_of_austria
+				ruler = franz_i_of_austria
 			}
 		}
 		

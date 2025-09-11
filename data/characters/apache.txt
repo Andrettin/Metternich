@@ -1,6 +1,5 @@
 mangas_coloradas = {
 	name = "Mangas Coloradas"
-	role = ruler
 	character_class = warrior
 	culture = apache
 	religion = pagan
@@ -8,9 +7,6 @@ mangas_coloradas = {
 	gender = male
 	birth_date = 1793
 	death_date = 1863
-	rulable_countries = {
-		apache
-	}
 	traits = {
 		impressionable
 		indulgent

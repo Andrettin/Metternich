@@ -2549,8 +2549,50 @@ void country_game_data::apply_modifier(const modifier<const metternich::country>
 	modifier->apply(this->country, multiplier);
 }
 
+std::vector<const character *> country_game_data::get_characters() const
+{
+	std::vector<const character *> characters;
+
+	for (const auto &[office, office_holder] : this->get_government()->get_office_holders()) {
+		characters.push_back(office_holder);
+	}
+
+	vector::merge(characters, this->get_military()->get_leaders());
+	vector::merge(characters, this->get_civilian_characters());
+
+	for (const province *province : this->get_provinces()) {
+		if (province->get_game_data()->get_governor() != nullptr) {
+			characters.push_back(province->get_game_data()->get_governor());
+		}
+
+		for (const site *site : province->get_map_data()->get_sites()) {
+			if (site->get_game_data()->get_landholder() != nullptr) {
+				characters.push_back(site->get_game_data()->get_landholder());
+			}
+		}
+	}
+
+	return characters;
+}
+
 void country_game_data::check_characters()
 {
+	const std::vector<const character *> characters = this->get_characters();
+	const QDate &current_date = game::get()->get_next_date();
+	for (const character *character : characters) {
+		if (character->is_immortal()) {
+			continue;
+		}
+
+		assert_throw(character->get_death_date().isValid());
+
+		if (character->get_death_date() > current_date) {
+			continue;
+		}
+
+		character->get_game_data()->die();
+	}
+
 	this->get_government()->check_office_holders();
 
 	for (const province *province : this->get_provinces()) {

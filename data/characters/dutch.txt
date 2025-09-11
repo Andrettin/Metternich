@@ -1,7 +1,6 @@
 william_the_silent_of_the_netherlands = {
 	name = "William"
 	epithet = "the Silent"
-	role = ruler
 	character_class = treasurer
 	culture = dutch
 	religion = protestant
@@ -9,9 +8,6 @@ william_the_silent_of_the_netherlands = {
 	gender = male
 	birth_date = 1533
 	death_date = 1584
-	rulable_countries = {
-		netherlands
-	}
 	traits = {
 		creative
 		financial

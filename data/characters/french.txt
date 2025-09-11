@@ -1,7 +1,6 @@
 philip_the_fair = {
 	name = "Philip"
 	epithet = "the Fair"
-	role = ruler
 	character_class = statesman
 	culture = french
 	religion = catholic
@@ -10,9 +9,6 @@ philip_the_fair = {
 	birth_date = 1268.6.8
 	death_date = 1314.11.29
 	obsolescence_technology = national_bureaucracy
-	rulable_countries = {
-		france
-	}
 	traits = {
 		dutiful_cleric
 		temperate
@@ -148,7 +144,6 @@ sieur_de_la_salle = {
 louis_xiv_of_france = {
 	name = "Louis"
 	epithet = "XIV"
-	role = ruler
 	character_class = statesman
 	culture = french
 	religion = catholic
@@ -158,9 +153,6 @@ louis_xiv_of_france = {
 	birth_date = 1638
 	death_date = 1715
 	required_technology = national_bureaucracy
-	rulable_countries = {
-		france
-	}
 	traits = {
 		creative
 		industrious

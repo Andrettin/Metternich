@@ -177,10 +177,6 @@ void character::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->roles.insert(magic_enum::enum_cast<character_role>(value).value());
 		}
-	} else if (tag == "rulable_countries") {
-		for (const std::string &value : values) {
-			this->add_rulable_country(country::get(value));
-		}
 	} else if (tag == "traits") {
 		for (const std::string &value : values) {
 			this->traits.push_back(character_trait::get(value));
@@ -311,12 +307,6 @@ void character::check() const
 
 	for (const character_role role : this->get_roles()) {
 		switch (role) {
-			case character_role::ruler: {
-				if (this->get_rulable_countries().empty()) {
-					throw std::runtime_error(std::format("Character \"{}\" is a ruler, but has no rulable countries.", this->get_identifier()));
-				}
-				break;
-			}
 			case character_role::governor:
 			{
 				if (this->get_governable_province() == nullptr) {
@@ -356,10 +346,6 @@ void character::check() const
 			default:
 				break;
 		}
-	}
-
-	if (!this->has_role(character_role::ruler) && !this->get_rulable_countries().empty()) {
-		throw std::runtime_error(std::format("Character \"{}\" has rulable countries, but is not a ruler.", this->get_identifier()));
 	}
 
 	if (!this->has_role(character_role::governor) && this->get_governable_province() != nullptr) {
@@ -637,12 +623,6 @@ void character::set_skill_multiplier(const centesimal_int &skill_multiplier)
 {
 	assert_throw(defines::get()->get_max_character_skill() > 0);
 	this->skill = (skill_multiplier * defines::get()->get_max_character_skill()).to_int();
-}
-
-void character::add_rulable_country(country *country)
-{
-	this->rulable_countries.push_back(country);
-	country->add_ruler(this);
 }
 
 bool character::is_admiral() const

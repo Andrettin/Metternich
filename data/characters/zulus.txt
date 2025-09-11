@@ -1,6 +1,5 @@
 shaka = {
 	name = "Shaka"
-	role = ruler
 	character_class = warrior
 	culture = zulu
 	religion = pagan
@@ -9,9 +8,6 @@ shaka = {
 	gender = male
 	birth_date = 1787.7.1
 	death_date = 1828.9.24
-	rulable_countries = {
-		zululand
-	}
 	traits = {
 		aggressive
 		expansive

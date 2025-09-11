@@ -1,7 +1,6 @@
 huayna_capac = {
 	name = "Huayna"
 	surname = "Capac"
-	role = ruler
 	character_class = statesman
 	culture = inca
 	religion = pagan
@@ -9,9 +8,6 @@ huayna_capac = {
 	gender = male
 	birth_date = 1464
 	death_date = 1527
-	rulable_countries = {
-		inca_empire
-	}
 	traits = {
 		financial
 		industrious
@@ -27,5 +23,6 @@ atahualpa = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas
 	gender = male
 	birth_date = 1502
 	death_date = 1533
+	
 	#became emperor of the Incas in 1530
 }

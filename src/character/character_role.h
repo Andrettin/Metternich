@@ -3,7 +3,6 @@
 namespace metternich {
 
 enum class character_role {
-	ruler,
 	advisor,
 	governor,
 	landholder,
@@ -14,8 +13,6 @@ enum class character_role {
 inline std::string_view get_character_role_name(const character_role role)
 {
 	switch (role) {
-		case character_role::ruler:
-			return "Ruler";
 		case character_role::advisor:
 			return "Advisor";
 		case character_role::governor:

@@ -1,7 +1,6 @@
 frederick_the_great_of_prussia = {
 	name = "Frederick"
 	epithet = "the Great"
-	role = ruler
 	character_class = warrior
 	culture = german
 	religion = protestant
@@ -10,11 +9,6 @@ frederick_the_great_of_prussia = {
 	gender = male
 	birth_date = 1712
 	death_date = 1786
-	rulable_countries = {
-		brandenburg
-		prussia
-		germany
-	}
 	traits = {
 		organized
 		philosophical

@@ -7,6 +7,6 @@ philip_ii_of_spain = {
 			culture = austrian
 			culture = persian
 		}
-		is_ruler = true
+		character_class = warrior
 	}
 }

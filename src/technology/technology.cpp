@@ -235,7 +235,6 @@ void technology::check() const
 		&& this->get_free_technologies() == 0
 		&& this->get_shared_prestige() == 0
 		&& this->get_enabled_buildings().empty()
-		&& this->get_enabled_characters(character_role::ruler).empty()
 		&& this->get_enabled_characters(character_role::advisor).empty()
 		&& this->get_enabled_characters(character_role::governor).empty()
 		&& this->get_enabled_characters(character_role::landholder).empty()
@@ -758,10 +757,6 @@ std::vector<const character *> technology::get_enabled_characters_for_country(co
 	std::vector<const character *> characters;
 
 	for (const character *character : this->get_enabled_characters(role)) {
-		if (role == character_role::ruler && !vector::contains(country->get_rulers(), character)) {
-			continue;
-		}
-
 		if (role == character_role::governor && !vector::contains(country->get_game_data()->get_provinces(), character->get_governable_province())) {
 			continue;
 		}
@@ -794,10 +789,6 @@ std::vector<const character *> technology::get_retired_characters_for_country(co
 	std::vector<const character *> characters;
 
 	for (const character *character : this->get_retired_characters(role)) {
-		if (role == character_role::ruler && !vector::contains(country->get_rulers(), character)) {
-			continue;
-		}
-
 		if (role == character_role::governor && !vector::contains(country->get_game_data()->get_provinces(), character->get_governable_province())) {
 			continue;
 		}
@@ -1055,7 +1046,6 @@ QString technology::get_effects_string(const metternich::country *country) const
 		}
 	}
 
-	this->write_character_effects_string(character_role::ruler, "ruler", country, str);
 	this->write_character_effects_string(character_role::advisor, "advisor", country, str);
 	this->write_character_effects_string(character_role::governor, "governor", country, str);
 	this->write_character_effects_string(character_role::landholder, "landholder", country, str);

@@ -6,7 +6,6 @@ alchemist = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		is_ruler = false
 		or = {
 			character_class = engineer
 			character_class = natural_scientist

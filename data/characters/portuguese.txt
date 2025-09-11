@@ -1,7 +1,6 @@
 joao_ii_of_portugal = {
 	name = "Joao" #"João"
 	epithet = "II"
-	role = ruler
 	character_class = statesman
 	culture = portuguese
 	religion = catholic
@@ -9,9 +8,6 @@ joao_ii_of_portugal = {
 	gender = male
 	birth_date = 1455.3.3
 	death_date = 1495.10.25
-	rulable_countries = {
-		portugal
-	}
 	traits = {
 		expansive
 		imperialistic

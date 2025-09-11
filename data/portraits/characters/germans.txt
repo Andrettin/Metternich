@@ -6,7 +6,7 @@ frederick_the_great = {
 			culture = german
 			culture = polish
 		}
-		is_ruler = true
+		character_class = warrior
 	}
 }
 
@@ -36,7 +36,6 @@ wilhelmine_von_sagan = {
 		not = {
 			cultural_group = african
 		}
-		is_ruler = false
 	}
 }
 
@@ -48,7 +47,6 @@ otto_von_bismarck = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		is_ruler = false
 		or = {
 			character_class = diplomat
 			character_class = statesman

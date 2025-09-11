@@ -17,4 +17,12 @@ inca_empire = {
 	core_provinces = {
 		cuzco
 	}
+	
+	history = {
+		1530 = {
+			offices = {
+				ruler = atahualpa #Atahualpa became emperor of the Incas in 1530; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
+			}
+		}
+	}
 }

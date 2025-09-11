@@ -3,7 +3,7 @@ louis_xiv = {
 	character_conditions = {
 		gender = male
 		culture = french
-		is_ruler = true
+		character_class = warrior
 	}
 }
 

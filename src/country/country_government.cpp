@@ -431,15 +431,7 @@ std::vector<const character *> country_government::get_appointable_office_holder
 	std::vector<const character *> potential_holders;
 
 	for (const character *character : character::get_all()) {
-		if (office->is_ruler()) {
-			if (!character->has_role(character_role::ruler)) {
-				continue;
-			}
-
-			if (!vector::contains(character->get_rulable_countries(), this->country)) {
-				continue;
-			}
-		} else {
+		if (!office->is_ruler()) {
 			if (!character->has_role(character_role::advisor)) {
 				continue;
 			}
@@ -453,11 +445,7 @@ std::vector<const character *> country_government::get_appointable_office_holder
 	}
 
 	for (const qunique_ptr<character> &character : game::get()->get_generated_characters()) {
-		if (office->is_ruler()) {
-			if (!character->has_role(character_role::ruler)) {
-				continue;
-			}
-		} else {
+		if (!office->is_ruler()) {
 			if (!character->has_role(character_role::advisor)) {
 				continue;
 			}
@@ -532,6 +520,18 @@ bool country_government::can_have_office_holder(const office *office, const char
 {
 	const character_game_data *character_game_data = character->get_game_data();
 	if (character_game_data->get_country() != nullptr && character_game_data->get_country() != this->country) {
+		return false;
+	}
+
+	if (character->get_home_settlement() == nullptr || (character_game_data->get_country() != this->country && character->get_home_settlement()->get_game_data()->get_owner() != this->country)) {
+		return false;
+	}
+
+	if (game::get()->get_date() < character->get_start_date()) {
+		return false;
+	}
+
+	if (character->get_death_date().isValid() && game::get()->get_date() >= character->get_death_date()) {
 		return false;
 	}
 

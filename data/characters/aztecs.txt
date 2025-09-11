@@ -1,7 +1,6 @@
 montezuma_ii = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
 	name = "Montezuma"
 	epithet = "II"
-	role = ruler
 	character_class = warrior
 	culture = aztec
 	religion = pagan
@@ -10,10 +9,9 @@ montezuma_ii = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descober
 	gender = male
 	birth_date = 1466
 	death_date = 1520
-	rulable_countries = {
-		aztec_empire #emperor of the Aztecs
-	}
 	traits = {
 		aggressive
 	}
+	
+	#emperor of the Aztecs
 }

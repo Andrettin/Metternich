@@ -72,7 +72,6 @@ catherine_howard = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 elizabeth_i_of_england = {
 	name = "Elizabeth"
 	epithet = "I"
-	role = ruler
 	character_class = treasurer
 	culture = english
 	religion = protestant
@@ -82,10 +81,6 @@ elizabeth_i_of_england = {
 	birth_date = 1533
 	death_date = 1603
 	obsolescence_technology = individualism
-	rulable_countries = {
-		england
-		great_britain
-	}
 	traits = {
 		financial
 		philosophical
@@ -296,7 +291,6 @@ charles_darwin = {
 victoria_i_of_great_britain = {
 	name = "Victoria"
 	epithet = "I"
-	role = ruler
 	character_class = treasurer
 	culture = english
 	religion = protestant
@@ -305,10 +299,10 @@ victoria_i_of_great_britain = {
 	birth_date = 1819
 	death_date = 1901
 	required_technology = individualism
-	rulable_countries = {
-		england
-		great_britain
-	}
+	#rulable_countries = {
+	#	england
+	#	great_britain
+	#}
 	traits = {
 		financial
 		imperialistic
