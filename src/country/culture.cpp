@@ -6,6 +6,7 @@
 #include "infrastructure/building_class.h"
 #include "population/population_class.h"
 #include "script/condition/and_condition.h"
+#include "script/modifier.h"
 #include "species/phenotype.h"
 #include "species/species.h"
 #include "util/assert_util.h"
@@ -43,6 +44,10 @@ void culture::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<population_unit>>();
 		conditions->process_gsml_data(scope);
 		this->derivation_conditions = std::move(conditions);
+	} else if (tag == "character_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const character>>();
+		modifier->process_gsml_data(scope);
+		this->character_modifier = std::move(modifier);
 	} else {
 		culture_base::process_gsml_scope(scope);
 	}

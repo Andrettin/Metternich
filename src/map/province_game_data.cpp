@@ -959,7 +959,7 @@ void province_game_data::on_governor_died(const character *governor)
 		if (this->get_owner() == game::get()->get_player_country()) {
 			const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
 
-			engine_interface::get()->add_notification(std::format("Governor of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, governor {} of {} has decided to retire.", this->get_governor()->get_full_name(), this->get_current_cultural_name()));
+			engine_interface::get()->add_notification(std::format("Governor of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, governor {} of {} has decided to retire.", governor->get_full_name(), this->get_current_cultural_name()));
 		}
 	}
 

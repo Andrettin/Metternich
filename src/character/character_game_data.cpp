@@ -14,6 +14,7 @@
 #include "country/country_government.h"
 #include "country/country_military.h"
 #include "country/country_technology.h"
+#include "country/culture.h"
 #include "country/office.h"
 #include "database/defines.h"
 #include "engine_interface.h"
@@ -133,6 +134,11 @@ void character_game_data::apply_species_and_class(const int level)
 	const species *species = this->character->get_species();
 	if (species->get_modifier() != nullptr) {
 		species->get_modifier()->apply(this->character);
+	}
+
+	const culture *culture = this->character->get_culture();
+	if (culture->get_character_modifier() != nullptr) {
+		culture->get_character_modifier()->apply(this->character);
 	}
 
 	const metternich::character_class *character_class = this->get_character_class();

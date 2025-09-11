@@ -5,12 +5,16 @@
 
 namespace metternich {
 
+class character;
 class cultural_group;
 class population_unit;
 class species;
 
 template <typename scope_type>
 class and_condition;
+
+template <typename scope_type>
+class modifier;
 
 class culture final : public culture_base, public data_type<culture>
 {
@@ -61,6 +65,11 @@ public:
 		return this->derivation_conditions.get();
 	}
 
+	const metternich::modifier<const character> *get_character_modifier() const
+	{
+		return this->character_modifier.get();
+	}
+
 signals:
 	void changed();
 
@@ -70,6 +79,7 @@ private:
 	std::vector<const metternich::species *> species; //species which can have this culture
 	std::vector<const culture *> derived_cultures;
 	std::unique_ptr<const and_condition<population_unit>> derivation_conditions;
+	std::unique_ptr<const metternich::modifier<const character>> character_modifier;
 };
 
 }
