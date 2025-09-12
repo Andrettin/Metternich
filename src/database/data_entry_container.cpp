@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 
 #include "character/character_attribute.h"
+#include "character/monster_type.h"
 #include "country/cultural_group.h"
 #include "country/idea_slot.h"
 #include "country/office.h"
@@ -26,6 +27,7 @@ template struct data_entry_compare<commodity_unit>;
 template struct data_entry_compare<cultural_group>;
 template struct data_entry_compare<game_rule>;
 template struct data_entry_compare<idea_slot>;
+template struct data_entry_compare<monster_type>;
 template struct data_entry_compare<named_data_entry>;
 template struct data_entry_compare<office>;
 template struct data_entry_compare<technology_category>;
