@@ -100,6 +100,7 @@ void character_class::check() const
 
 bool character_class::is_allowed_for_species(const species *species) const
 {
+	//FIXME: remove this once all character classes have a list of allowed species
 	if (this->allowed_species.empty()) {
 		return true;
 	}

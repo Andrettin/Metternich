@@ -3,4 +3,10 @@ triton = {
 	supertaxon = aquan
 	era = holocene
 	sapient = true
+	allowed_character_classes = {
+		warrior #correct?
+	}
+	character_class_level_limits = {
+		warrior = U
+	}
 }

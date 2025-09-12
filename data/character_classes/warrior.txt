@@ -7,6 +7,13 @@ warrior = {
 	damage_dice = 1d8 #long sword/battle axe
 	armor_class = 6 #chain mail and shield
 	starting_age_category = self_taught
+	allowed_species = {
+		dwarf
+		elf
+		half_elf
+		halfling
+		human
+	}
 	experience_per_level = {
 		1 = 0
 		2 = 2000
