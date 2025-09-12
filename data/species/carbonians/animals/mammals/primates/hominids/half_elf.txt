@@ -30,6 +30,7 @@ half_elf = {
 		charisma = 18
 	}
 	character_class_level_limits = {
+		bard = U
 		cleric = 9
 		druid = 9
 		mage = 12

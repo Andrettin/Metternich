@@ -34,7 +34,6 @@ dwarf = {
 	}
 	character_class_level_limits = {
 		cleric = 12
-		druid = 12
 		rogue = 8
 		warrior = 15
 	}

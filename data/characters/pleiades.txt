@@ -1,7 +1,7 @@
 electra = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 171-172.
 	name = "Electra"
 	species = nymph
-	character_class = mage
+	character_class = warrior
 	culture = fey
 	religion = hellenic
 	home_site = troy
@@ -13,7 +13,7 @@ electra = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 maia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 297.
 	name = "Maia"
 	species = nymph
-	character_class = mage
+	character_class = warrior
 	culture = fey
 	religion = hellenic
 	home_site = corinth #Mount Cyllene, Arcadia

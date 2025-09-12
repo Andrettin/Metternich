@@ -4,4 +4,8 @@ druid = {
 	max_level = 3
 	hit_dice = 1d8 #as Cleric
 	starting_age_category = trained
+	allowed_species = {
+		half_elf
+		human
+	}
 }

@@ -6,6 +6,12 @@ cleric = {
 	damage_dice = 1d6+1 #mace
 	armor_class = 3 #leather armor and shield
 	starting_age_category = trained
+	allowed_species = {
+		dwarf
+		half_elf
+		halfling
+		human
+	}
 	experience_per_level = {
 		1 = 0
 		2 = 1500

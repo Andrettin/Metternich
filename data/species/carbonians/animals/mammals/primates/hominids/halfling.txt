@@ -34,8 +34,8 @@ halfling = {
 	}
 	character_class_level_limits = {
 		cleric = 8
-		druid = 8
 		ranger = 7
+		rogue = U
 		warrior = 7
 	}
 	modifier = {

@@ -435,6 +435,9 @@ void character_game_data::set_character_class(const metternich::character_class 
 		return;
 	}
 
+	assert_throw(character_class != nullptr);
+	assert_throw(character_class->is_allowed_for_species(this->character->get_species()));
+
 	this->character_class = character_class;
 
 	if (game::get()->is_running()) {
@@ -545,7 +548,8 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 	int64_t experience = this->get_character_class()->get_experience_for_level(level);
 
 	const int level_limit = this->character->get_species()->get_character_class_level_limit(this->get_character_class());
-	if (level_limit != 0 && level > level_limit) {
+	assert_throw(level_limit > 0);
+	if (level > level_limit) {
 		//multiply experience required by 4 for levels beyond the species level limit for the class
 		experience *= 4;
 	}

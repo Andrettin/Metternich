@@ -143,7 +143,7 @@ rhea = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 42
 	}
 	character = {
 		species = titan
-		character_class = cleric
+		character_class = warrior
 		culture = abyssal #Titan
 		religion = hellenic
 		gender = female

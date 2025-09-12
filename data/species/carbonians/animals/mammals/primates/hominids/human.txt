@@ -17,4 +17,14 @@ human = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=
 		self_taught = 1d6
 		trained = 2d6
 	}
+	character_class_level_limits = {
+		bard = U
+		cleric = U
+		druid = U
+		mage = U
+		paladin = U
+		ranger = U
+		rogue = U
+		warrior = U
+	}
 }

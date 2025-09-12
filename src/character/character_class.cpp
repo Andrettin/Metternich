@@ -8,9 +8,11 @@
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
+#include "species/species.h"
 #include "ui/portrait.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -26,8 +28,13 @@ character_class::~character_class()
 void character_class::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "min_attribute_values") {
+	if (tag == "allowed_species") {
+		for (const std::string &value : values) {
+			this->allowed_species.push_back(species::get(value));
+		}
+	} else if (tag == "min_attribute_values") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
@@ -65,7 +72,7 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 void character_class::check() const
 {
 	if (this->get_attribute() == nullptr) {
-		throw std::runtime_error(std::format("Character type \"{}\" has no attribute.", this->get_identifier()));
+		throw std::runtime_error(std::format("Character class \"{}\" has no attribute.", this->get_identifier()));
 	}
 
 	if (this->get_max_level() == 0) {
@@ -81,8 +88,28 @@ void character_class::check() const
 	}
 
 	if (this->get_starting_age_category() == starting_age_category::none) {
-		throw std::runtime_error(std::format("Character type \"{}\" has no starting age category.", this->get_identifier()));
+		throw std::runtime_error(std::format("Character class \"{}\" has no starting age category.", this->get_identifier()));
 	}
+
+	for (const species *species : this->allowed_species) {
+		if (species->get_character_class_level_limit(this) == 0) {
+			throw std::runtime_error(std::format("Species \"{}\" is allowed for character class \"{}\", but has no level limit for it.", species->get_identifier(), this->get_identifier()));
+		}
+	}
+}
+
+bool character_class::is_allowed_for_species(const species *species) const
+{
+	if (this->allowed_species.empty()) {
+		return true;
+	}
+
+	return vector::contains(this->allowed_species, species);
+}
+
+void character_class::add_allowed_species(const species *species)
+{
+	this->allowed_species.push_back(species);
 }
 
 int64_t character_class::get_experience_for_level(const int level) const

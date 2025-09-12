@@ -13,6 +13,7 @@ namespace metternich {
 class character_attribute;
 class civilian_unit_class;
 class country;
+class species;
 class technology;
 enum class military_unit_category;
 enum class starting_age_category;
@@ -99,6 +100,9 @@ public:
 		return this->obsolescence_technology;
 	}
 
+	bool is_allowed_for_species(const species *species) const;
+	void add_allowed_species(const species *species);
+
 	int get_min_attribute_value(const character_attribute *attribute) const
 	{
 		const auto find_iterator = this->min_attribute_values.find(attribute);
@@ -147,6 +151,7 @@ private:
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
+	std::vector<const species *> allowed_species;
 	data_entry_map<character_attribute, int> min_attribute_values;
 	std::map<int, int64_t> experience_per_level;
 	std::map<int, std::unique_ptr<const modifier<const character>>> level_modifiers;

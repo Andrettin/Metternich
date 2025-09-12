@@ -3,6 +3,7 @@
 #include "country/country_game_data.h"
 
 #include "character/character.h"
+#include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/character_role.h"
 #include "country/consulate.h"
@@ -2611,12 +2612,24 @@ void country_game_data::generate_ruler()
 	const government_type *government_type = this->get_government()->get_government_type();
 	assert_throw(government_type != nullptr);
 
-	const species *species = vector::get_random(this->country->get_culture()->get_species());
+	std::vector<const species *> species_list = this->country->get_culture()->get_species();
+	assert_throw(!species_list.empty());
 
+	const species *species = nullptr;
 	std::vector<const character_class *> potential_classes;
-	for (const character_class *character_class : government_type->get_ruler_character_classes()) {
-		potential_classes.push_back(character_class);
+
+	while (potential_classes.empty() && !species_list.empty()) {
+		species = vector::take_random(species_list);
+
+		for (const character_class *character_class : government_type->get_ruler_character_classes()) {
+			if (!character_class->is_allowed_for_species(species)) {
+				continue;
+			}
+
+			potential_classes.push_back(character_class);
+		}
 	}
+
 	assert_throw(!potential_classes.empty());
 
 	const character_class *character_class = vector::get_random(potential_classes);

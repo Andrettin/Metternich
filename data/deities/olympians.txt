@@ -6,7 +6,7 @@ aphrodite = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p
 	}
 	character = {
 		species = archon #Olympian
-		character_class = rogue
+		character_class = warrior
 		culture = celestial
 		religion = hellenic
 		gender = female
@@ -77,7 +77,7 @@ hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 23
 	}
 	character = {
 		species = archon
-		character_class = cleric
+		character_class = warrior
 		culture = celestial
 		religion = hellenic
 		gender = female
@@ -100,7 +100,7 @@ hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 	}
 	character = {
 		species = archon
-		character_class = rogue
+		character_class = warrior
 		culture = celestial
 		religion = hellenic
 		gender = male

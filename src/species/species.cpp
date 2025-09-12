@@ -152,6 +152,11 @@ void species::process_gsml_scope(const gsml_data &scope)
 			this->pre_evolutions.push_back(other_species);
 			other_species->evolutions.push_back(this);
 		}
+	} else if (tag == "allowed_character_classes") {
+		for (const std::string &value : values) {
+			character_class *character_class = character_class::get(value);
+			character_class->add_allowed_species(this);
+		}
 	} else if (tag == "min_attribute_values") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -171,7 +176,14 @@ void species::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->character_class_level_limits[character_class::get(key)] = std::stoi(value);
+			int value_int = 0;
+			if (value == "U") {
+				value_int = std::numeric_limits<int>::max();
+			} else {
+				value_int = std::stoi(value);
+			}
+
+			this->character_class_level_limits[character_class::get(key)] = value_int;
 		});
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
@@ -215,6 +227,12 @@ void species::check() const
 
 		if (this->get_cultures().empty()) {
 			throw std::runtime_error(std::format("Sapient species \"{}\" has no cultures set for it.", this->get_identifier()));
+		}
+	}
+
+	for (const auto &[character_class, level_limit] : this->character_class_level_limits) {
+		if (!character_class->is_allowed_for_species(this)) {
+			throw std::runtime_error(std::format("Species \"{}\" has a level limit for character class \"{}\", but the latter is not allowed for the species.", this->get_identifier(), character_class->get_identifier()));
 		}
 	}
 }
