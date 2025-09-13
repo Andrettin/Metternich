@@ -116,7 +116,7 @@ gsml_data character_game_data::to_gsml_data() const
 	if (!this->attribute_values.empty()) {
 		gsml_data attributes_data("attributes");
 		for (const auto &[attribute, value] : this->attribute_values) {
-			attributes_data.add_property(attribute->get_name(), std::to_string(value));
+			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
 		}
 		data.add_child(std::move(attributes_data));
 	}
