@@ -181,6 +181,8 @@ public:
 	void set_to_hit_bonus(const int bonus);
 	void change_to_hit_bonus(const int change);
 
+	const dice &get_damage_dice() const;
+
 	const std::vector<const character_trait *> &get_traits() const
 	{
 		return this->traits;

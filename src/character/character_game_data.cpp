@@ -703,6 +703,16 @@ void character_game_data::change_to_hit_bonus(const int change)
 	this->set_to_hit_bonus(this->get_to_hit_bonus() + change);
 }
 
+const dice &character_game_data::get_damage_dice() const
+{
+	if (this->get_character_class() != nullptr) {
+		return this->get_character_class()->get_damage_dice();
+	}
+
+	static constexpr dice null_dice;
+	return null_dice;
+}
+
 QVariantList character_game_data::get_traits_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_traits());

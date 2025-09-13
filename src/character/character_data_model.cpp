@@ -163,6 +163,8 @@ void character_data_model::set_character(const metternich::character *character)
 		this->top_rows.push_back(std::make_unique<character_data_row>("Armor Class:", std::to_string(character_game_data->get_character_class()->get_armor_class())));
 
 		this->create_to_hit_bonus_rows();
+
+		this->top_rows.push_back(std::make_unique<character_data_row>("Damage:", character_game_data->get_damage_dice().to_string()));
 	}
 
 	this->endResetModel();
