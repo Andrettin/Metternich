@@ -24,6 +24,7 @@ class office;
 class portrait;
 class province;
 class scripted_character_modifier;
+class species;
 class spell;
 enum class character_trait_type;
 enum class military_unit_stat;
@@ -172,6 +173,25 @@ public:
 
 	void set_max_hit_points(const int hit_points);
 	void change_max_hit_points(const int change);
+
+	int get_armor_class() const;
+
+	const data_entry_map<species, int> &get_species_armor_class_bonuses() const
+	{
+		return this->species_armor_class_bonuses;
+	}
+
+	int get_species_armor_class_bonus(const species *species) const
+	{
+		const auto find_iterator = this->species_armor_class_bonuses.find(species);
+		if (find_iterator != this->species_armor_class_bonuses.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_species_armor_class_bonus(const species *species, const int change);
 
 	int get_to_hit_bonus() const
 	{
@@ -406,6 +426,7 @@ private:
 	int hit_dice_count = 0;
 	int hit_points = 0;
 	int max_hit_points = 0;
+	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
 	int to_hit_bonus = 0;
 	std::vector<const character_trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;

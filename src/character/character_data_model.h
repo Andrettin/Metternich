@@ -48,6 +48,7 @@ public:
 	void set_character(const metternich::character *character);
 
 	void create_attribute_rows();
+	void create_armor_class_rows();
 	void create_to_hit_bonus_rows();
 
 signals:

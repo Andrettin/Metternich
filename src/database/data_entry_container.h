@@ -27,6 +27,7 @@ class cultural_group;
 class idea_slot;
 class monster_type;
 class office;
+class species;
 class technology_category;
 class technology_subcategory;
 
@@ -40,6 +41,7 @@ extern template struct data_entry_compare<idea_slot>;
 extern template struct data_entry_compare<monster_type>;
 extern template struct data_entry_compare<named_data_entry>;
 extern template struct data_entry_compare<office>;
+extern template struct data_entry_compare<species>;
 extern template struct data_entry_compare<technology_category>;
 extern template struct data_entry_compare<technology_subcategory>;
 

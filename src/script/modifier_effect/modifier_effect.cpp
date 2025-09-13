@@ -44,6 +44,7 @@
 #include "script/modifier_effect/port_level_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
 #include "script/modifier_effect/ship_stat_modifier_effect.h"
+#include "script/modifier_effect/species_armor_class_bonus_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 #include "script/modifier_effect/technology_cost_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
@@ -234,7 +235,11 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	const std::string &tag = scope.get_tag();
 	std::unique_ptr<modifier_effect> modifier_effect;
 
-	if constexpr (std::is_same_v<scope_type, const country>) {
+	if constexpr (std::is_same_v<scope_type, const character>) {
+		if (tag == "species_armor_class_bonus") {
+			modifier_effect = std::make_unique<species_armor_class_bonus_modifier_effect>();
+		}
+	} else if constexpr (std::is_same_v<scope_type, const country>) {
 		if (tag == "ai_building_desire") {
 			modifier_effect = std::make_unique<ai_building_desire_modifier_effect>();
 		} else if (tag == "building_cost_efficiency") {

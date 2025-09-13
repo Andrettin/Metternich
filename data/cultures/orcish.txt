@@ -3,5 +3,6 @@ orcish = {
 	species = {
 		orc
 		half_orc
+		orog
 	}
 }

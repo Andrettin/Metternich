@@ -98,6 +98,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &attribute_property) {
 			this->attribute_values[character_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
+	} else if (tag == "species_armor_class_bonuses") {
+		scope.for_each_property([&](const gsml_property &property) {
+			this->species_armor_class_bonuses[species::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data scope: \"{}\".", tag));
 	}
@@ -125,6 +129,14 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("hit_points", std::to_string(this->get_hit_points()));
 	data.add_property("max_hit_points", std::to_string(this->get_max_hit_points()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
+
+	if (!this->species_armor_class_bonuses.empty()) {
+		gsml_data species_armor_class_bonuses_data("species_armor_class_bonuses");
+		for (const auto &[species, bonus] : this->species_armor_class_bonuses) {
+			species_armor_class_bonuses_data.add_property(species->get_identifier(), std::to_string(bonus));
+		}
+		data.add_child(std::move(species_armor_class_bonuses_data));
+	}
 
 	return data;
 }
@@ -683,6 +695,28 @@ void character_game_data::set_max_hit_points(const int hit_points)
 void character_game_data::change_max_hit_points(const int change)
 {
 	this->set_max_hit_points(this->get_max_hit_points() + change);
+}
+
+int character_game_data::get_armor_class() const
+{
+	if (this->get_character_class() != nullptr) {
+		return this->get_character_class()->get_armor_class();
+	}
+
+	return 0;
+}
+
+void character_game_data::change_species_armor_class_bonus(const species *species, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->species_armor_class_bonuses[species] += change);
+
+	if (new_value == 0) {
+		this->species_armor_class_bonuses.erase(species);
+	}
 }
 
 void character_game_data::set_to_hit_bonus(const int bonus)

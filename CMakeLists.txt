@@ -738,6 +738,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/port_level_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h
 	src/script/modifier_effect/ship_stat_modifier_effect.h
+	src/script/modifier_effect/species_armor_class_bonus_modifier_effect.h
 	src/script/modifier_effect/storage_capacity_modifier_effect.h
 	src/script/modifier_effect/technology_cost_modifier_effect.h
 	src/script/modifier_effect/throughput_modifier_effect.h

@@ -9,6 +9,7 @@
 #include "country/office.h"
 #include "economy/commodity_unit.h"
 #include "game/game_rule.h"
+#include "species/species.h"
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
 #include "unit/civilian_unit_type.h"
@@ -30,6 +31,7 @@ template struct data_entry_compare<idea_slot>;
 template struct data_entry_compare<monster_type>;
 template struct data_entry_compare<named_data_entry>;
 template struct data_entry_compare<office>;
+template struct data_entry_compare<species>;
 template struct data_entry_compare<technology_category>;
 template struct data_entry_compare<technology_subcategory>;
 

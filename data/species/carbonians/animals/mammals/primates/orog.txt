@@ -1,0 +1,16 @@
+orog = {
+	name = "Orog"
+	supertaxon = primates
+	era = holocene
+	sapient = true
+	adulthood_age = 12 #as Orc
+	middle_age = 20 #as Orc
+	old_age = 30 #as Orc
+	venerable_age = 40 #as Orc
+	maximum_age_modifier = 1d20 #as Orc
+	starting_age_modifiers = { #as Orc
+		intuitive = 1d4
+		self_taught = 1d6
+		trained = 2d6
+	}
+}

@@ -40,6 +40,18 @@ dwarf = {
 	modifier = {
 		constitution = 2
 		dexterity = -2
+		#FIXME: add constitution-based saving throw bonus against magic and poison
+		#FIXME: add 20% magic item malfunction chance
+		#FIXME: add mining-related perception chances
+		#FIXME: add 90 feet infravision
+		species_armor_class_bonus = {
+			species = orog
+			bonus = 2
+		}
+		species_armor_class_bonus = {
+			species = ogre
+			bonus = 2
+		}
 	}
 	#in prehistoric times, the ancestors of dwarves and gnomes were transported to Nidavellir by the magic of the Aesir
 }

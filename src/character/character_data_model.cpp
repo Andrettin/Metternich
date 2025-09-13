@@ -15,6 +15,7 @@
 #include "util/exception_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
+#include "util/string_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -160,8 +161,7 @@ void character_data_model::set_character(const metternich::character *character)
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Hit Points:", std::format("{}/{}", character_game_data->get_hit_points(), character_game_data->get_max_hit_points())));
 
-		this->top_rows.push_back(std::make_unique<character_data_row>("Armor Class:", std::to_string(character_game_data->get_character_class()->get_armor_class())));
-
+		this->create_armor_class_rows();
 		this->create_to_hit_bonus_rows();
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Damage:", character_game_data->get_damage_dice().to_string()));
@@ -182,6 +182,21 @@ void character_data_model::create_attribute_rows()
 	}
 
 	this->top_rows.push_back(std::move(top_row));
+}
+
+
+void character_data_model::create_armor_class_rows()
+{
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	auto armor_class_row = std::make_unique<character_data_row>("Armor Class:", std::to_string(character_game_data->get_armor_class()));
+
+	for (const auto &[species, bonus] : character_game_data->get_species_armor_class_bonuses()) {
+		auto row = std::make_unique<character_data_row>(std::format("Against {}:", string::get_plural_form(species->get_name())), std::to_string(character_game_data->get_armor_class() + bonus), armor_class_row.get());
+		armor_class_row->child_rows.push_back(std::move(row));
+	}
+
+	this->top_rows.push_back(std::move(armor_class_row));
 }
 
 void character_data_model::create_to_hit_bonus_rows()
