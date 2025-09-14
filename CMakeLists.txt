@@ -125,6 +125,13 @@ set(infrastructure_SRCS
 source_group(infrastructure FILES ${infrastructure_SRCS})
 set_source_files_properties(${infrastructure_SRCS} PROPERTIES UNITY_GROUP "infrastructure")
 
+set(item_SRCS
+	src/item/item_class.cpp
+	src/item/item_type.cpp
+)
+source_group(item FILES ${item_SRCS})
+set_source_files_properties(${item_SRCS} PROPERTIES UNITY_GROUP "item")
+
 set(language_SRCS
 	src/language/fallback_name_generator.cpp
 )
@@ -311,6 +318,7 @@ set(metternich_SRCS
 	${economy_SRCS}
 	${game_SRCS}
 	${infrastructure_SRCS}
+	${item_SRCS}
 	${language_SRCS}
 	${map_SRCS}
 	${population_SRCS}
@@ -448,6 +456,13 @@ set(infrastructure_HDRS
 	src/infrastructure/wonder.h
 )
 source_group(infrastructure FILES ${infrastructure_HDRS})
+
+set(item_HDRS
+	src/item/item_class.h
+	src/item/item_slot.h
+	src/item/item_type.h
+)
+source_group(item FILES ${item_HDRS})
 
 set(language_HDRS
 	src/language/fallback_name_generator.h
@@ -843,6 +858,7 @@ set(metternich_HDRS
 	${economy_HDRS}
 	${game_HDRS}
 	${infrastructure_HDRS}
+	${item_HDRS}
 	${language_HDRS}
 	${map_HDRS}
 	${population_HDRS}
