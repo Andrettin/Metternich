@@ -1,0 +1,24 @@
+belt = {
+	name = "Belt"
+	slot = belt
+}
+
+boots = {
+	name = "Boots"
+	slot = boots
+}
+
+cloak = {
+	name = "Cloak"
+	slot = cloak
+}
+
+gloves = {
+	name = "Gloves"
+	slot = gloves
+}
+
+helmet = {
+	name = "Helmet"
+	slot = helmet
+}

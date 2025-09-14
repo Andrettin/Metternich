@@ -1,0 +1,40 @@
+weapon = {
+	name = "Weapon"
+	weapon = true
+}
+
+shield = {
+	name = "Shield"
+}
+
+armor = {
+	name = "Armor"
+}
+
+helmet = {
+	name = "Helmet"
+}
+
+amulet = {
+	name = "Amulet"
+}
+
+cloak = {
+	name = "Cloak"
+}
+
+belt = {
+	name = "Belt"
+}
+
+gloves = {
+	name = "Gloves"
+}
+
+ring = {
+	name = "Ring"
+}
+
+boots = {
+	name = "Boots"
+}

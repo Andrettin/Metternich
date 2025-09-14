@@ -1,0 +1,36 @@
+robe = {
+	name = "Robe"
+	item_class = armor
+	icon = clothing
+	price = 1gp
+}
+
+leather_armor = {
+	name = "Leather Armor"
+	item_class = armor
+	icon = clothing
+	price = 5gp
+	modifier = {
+		armor_class = 2
+	}
+}
+
+chain_mail = {
+	name = "Chain Mail"
+	item_class = armor
+	icon = clothing
+	price = 75gp
+	modifier = {
+		armor_class = 5
+	}
+}
+
+plate_mail = {
+	name = "Plate Mail"
+	item_class = armor
+	icon = clothing
+	price = 600gp
+	modifier = {
+		armor_class = 7
+	}
+}

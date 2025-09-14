@@ -1,0 +1,4 @@
+weapon = {
+	name = "Weapon"
+	slot = weapon
+}

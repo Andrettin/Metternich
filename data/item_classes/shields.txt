@@ -1,0 +1,4 @@
+shield = {
+	name = "Shield"
+	slot = shield
+}

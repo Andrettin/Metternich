@@ -1,0 +1,23 @@
+mace = {
+	name = "Mace"
+	item_class = weapon
+	icon = saber
+	price = 8gp
+	damage_dice = 1d6+1
+}
+
+short_sword = {
+	name = "Short Sword"
+	item_class = weapon
+	icon = saber
+	price = 10gp
+	damage_dice = 1d6
+}
+
+long_sword = {
+	name = "Long Sword"
+	item_class = weapon
+	icon = saber
+	price = 15gp
+	damage_dice = 1d8
+}

@@ -1,0 +1,9 @@
+shield = {
+	name = "Shield"
+	item_class = shield
+	icon = heater_shield
+	price = 5gp
+	modifier = {
+		armor_class = 1
+	}
+}

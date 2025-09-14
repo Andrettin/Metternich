@@ -1,0 +1,9 @@
+amulet = {
+	name = "Amulet"
+	slot = amulet
+}
+
+ring = {
+	name = "Ring"
+	slot = ring
+}
