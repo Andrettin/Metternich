@@ -189,10 +189,10 @@ void character_data_model::create_armor_class_rows()
 {
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	auto armor_class_row = std::make_unique<character_data_row>("Armor Class:", std::to_string(character_game_data->get_armor_class()));
+	auto armor_class_row = std::make_unique<character_data_row>("Armor Class:", std::to_string(character_game_data->get_armor_class_bonus()));
 
 	for (const auto &[species, bonus] : character_game_data->get_species_armor_class_bonuses()) {
-		auto row = std::make_unique<character_data_row>(std::format("Against {}:", string::get_plural_form(species->get_name())), std::to_string(character_game_data->get_armor_class() + bonus), armor_class_row.get());
+		auto row = std::make_unique<character_data_row>(std::format("Against {}:", string::get_plural_form(species->get_name())), std::to_string(character_game_data->get_armor_class_bonus() + bonus), armor_class_row.get());
 		armor_class_row->child_rows.push_back(std::move(row));
 	}
 

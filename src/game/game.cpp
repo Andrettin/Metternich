@@ -2231,7 +2231,7 @@ void game::do_combat_round(const std::vector<const character *> &characters, std
 		const int to_hit = 20 - character->get_game_data()->get_to_hit_bonus();
 		const int to_hit_result = to_hit - random::get()->roll_dice(to_hit_dice);
 
-		const int armor_class_bonus = chosen_enemy->get_game_data()->get_armor_class() + chosen_enemy->get_game_data()->get_species_armor_class_bonus(character->get_species());
+		const int armor_class_bonus = chosen_enemy->get_game_data()->get_armor_class_bonus() + chosen_enemy->get_game_data()->get_species_armor_class_bonus(character->get_species());
 		const int armor_class = 10 - armor_class_bonus;
 		if (to_hit_result > armor_class) {
 			continue;

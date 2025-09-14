@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
+#include "script/modifier_effect/armor_class_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
 #include "script/modifier_effect/building_cost_efficiency_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_modifier_effect.h"
@@ -66,7 +67,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	static const std::string bonus_suffix = "_bonus";
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (key == "to_hit_bonus") {
+		if (key == "armor_class") {
+			return std::make_unique<armor_class_modifier_effect>(value);
+		} else if (key == "to_hit_bonus") {
 			return std::make_unique<to_hit_bonus_modifier_effect>(value);
 		} else if (character_attribute::try_get(key) != nullptr) {
 			return std::make_unique<character_attribute_modifier_effect>(character_attribute::get(key), value);

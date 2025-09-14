@@ -46,6 +46,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(qint64 experience READ get_experience NOTIFY experience_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
+	Q_PROPERTY(int armor_class_bonus READ get_armor_class_bonus NOTIFY armor_class_bonus_changed)
 	Q_PROPERTY(int to_hit_bonus READ get_to_hit_bonus NOTIFY to_hit_bonus_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
@@ -174,7 +175,13 @@ public:
 	void set_max_hit_points(const int hit_points);
 	void change_max_hit_points(const int change);
 
-	int get_armor_class() const;
+	int get_armor_class_bonus() const
+	{
+		return this->armor_class_bonus;
+	}
+
+	void set_armor_class_bonus(const int bonus);
+	void change_armor_class_bonus(const int change);
 
 	const data_entry_map<species, int> &get_species_armor_class_bonuses() const
 	{
@@ -405,6 +412,7 @@ signals:
 	void experience_changed();
 	void hit_points_changed();
 	void max_hit_points_changed();
+	void armor_class_bonus_changed();
 	void to_hit_bonus_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
@@ -426,6 +434,7 @@ private:
 	int hit_dice_count = 0;
 	int hit_points = 0;
 	int max_hit_points = 0;
+	int armor_class_bonus = 0;
 	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
 	int to_hit_bonus = 0;
 	std::vector<const character_trait *> traits;

@@ -83,6 +83,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->hit_points = std::stoi(value);
 	} else if (key == "max_hit_points") {
 		this->max_hit_points = std::stoi(value);
+	} else if (key == "armor_class_bonus") {
+		this->armor_class_bonus = std::stoi(value);
 	} else if (key == "to_hit_bonus") {
 		this->to_hit_bonus = std::stoi(value);
 	} else {
@@ -128,6 +130,7 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("hit_dice_count", std::to_string(this->get_hit_dice_count()));
 	data.add_property("hit_points", std::to_string(this->get_hit_points()));
 	data.add_property("max_hit_points", std::to_string(this->get_max_hit_points()));
+	data.add_property("armor_class_bonus", std::to_string(this->get_armor_class_bonus()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
 
 	if (!this->species_armor_class_bonuses.empty()) {
@@ -697,13 +700,22 @@ void character_game_data::change_max_hit_points(const int change)
 	this->set_max_hit_points(this->get_max_hit_points() + change);
 }
 
-int character_game_data::get_armor_class() const
+void character_game_data::set_armor_class_bonus(const int bonus)
 {
-	if (this->get_character_class() != nullptr) {
-		return this->get_character_class()->get_armor_class();
+	if (bonus == this->get_armor_class_bonus()) {
+		return;
 	}
 
-	return 0;
+	this->armor_class_bonus = bonus;
+
+	if (game::get()->is_running()) {
+		emit armor_class_bonus_changed();
+	}
+}
+
+void character_game_data::change_armor_class_bonus(const int change)
+{
+	this->set_armor_class_bonus(this->get_armor_class_bonus() + change);
 }
 
 void character_game_data::change_species_armor_class_bonus(const species *species, const int change)

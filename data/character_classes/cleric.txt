@@ -4,7 +4,6 @@ cleric = {
 	max_level = 3
 	hit_dice = 1d8
 	damage_dice = 1d6+1 #mace
-	armor_class = 3 #leather armor and shield
 	starting_age_category = trained
 	allowed_species = {
 		dwarf
@@ -17,5 +16,10 @@ cleric = {
 		2 = 1500
 		3 = 3000
 		4 = 6000
+	}
+	level_modifiers = {
+		1 = {
+			armor_class = 3 #leather armor and shield
+		}
 	}
 }

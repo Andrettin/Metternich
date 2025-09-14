@@ -5,7 +5,6 @@ warrior = {
 	max_level = 3
 	hit_dice = 1d10
 	damage_dice = 1d8 #long sword/battle axe
-	armor_class = 6 #chain mail and shield
 	starting_age_category = self_taught
 	allowed_species = {
 		dwarf
@@ -23,6 +22,7 @@ warrior = {
 	level_modifiers = {
 		1 = {
 			to_hit_bonus = 1
+			armor_class = 6 #chain mail and shield
 		}
 		2 = {
 			to_hit_bonus = 1
