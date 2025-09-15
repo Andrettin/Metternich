@@ -22,6 +22,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/game_rules.h"
+#include "item/enchantment.h"
 #include "item/item.h"
 #include "item/item_type.h"
 #include "map/map.h"
@@ -1373,6 +1374,21 @@ void character_game_data::on_item_equipped(const item *item, const int multiplie
 	const item_type *type = item->get_type();
 	if (type->get_modifier() != nullptr) {
 		type->get_modifier()->apply(this->character, multiplier);
+	}
+
+	if (item->get_enchantment() != nullptr) {
+		this->on_item_equipped_with_enchantment(item->get_enchantment(), multiplier);
+	}
+}
+
+void character_game_data::on_item_equipped_with_enchantment(const enchantment *enchantment, const int multiplier)
+{
+	if (enchantment->get_modifier() != nullptr) {
+		enchantment->get_modifier()->apply(this->character, multiplier);
+	}
+
+	for (const metternich::enchantment *subenchantment : enchantment->get_subenchantments()) {
+		this->on_item_equipped_with_enchantment(subenchantment, multiplier);
 	}
 }
 

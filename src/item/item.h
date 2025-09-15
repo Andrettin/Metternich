@@ -1,5 +1,7 @@
 #pragma once
 
+Q_MOC_INCLUDE("item/enchantment.h")
+Q_MOC_INCLUDE("item/item_material.h")
 Q_MOC_INCLUDE("item/item_type.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
@@ -10,7 +12,9 @@ namespace archimedes {
 
 namespace metternich {
 
+class enchantment;
 class icon;
+class item_material;
 class item_slot;
 class item_type;
 
@@ -21,9 +25,11 @@ class item final : public QObject
 	Q_PROPERTY(const QString name READ get_name_qstring NOTIFY name_changed)
 	Q_PROPERTY(const metternich::item_type* type READ get_type CONSTANT)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon CONSTANT)
+	Q_PROPERTY(const metternich::item_material* material READ get_material CONSTANT)
+	Q_PROPERTY(const metternich::enchantment* enchantment READ get_enchantment CONSTANT)
 
 public:
-	explicit item(const item_type *type);
+	explicit item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment);
 	explicit item(const gsml_data &scope);
 
 	void process_gsml_property(const gsml_property &property);
@@ -62,6 +68,16 @@ public:
 	const item_slot *get_slot() const;
 	const icon *get_icon() const;
 
+	const item_material *get_material() const
+	{
+		return this->material;
+	}
+
+	const metternich::enchantment *get_enchantment() const
+	{
+		return this->enchantment;
+	}
+
 	bool is_equipped() const
 	{
 		return this->equipped;
@@ -78,6 +94,8 @@ signals:
 private:
 	std::string name;
 	const item_type *type = nullptr;
+	const item_material *material = nullptr;
+	const metternich::enchantment *enchantment = nullptr;
 	bool equipped = false;
 };
 

@@ -45,6 +45,7 @@
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/wonder.h"
+#include "item/affix_type.h"
 #include "map/diplomatic_map_image_provider.h"
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
@@ -158,6 +159,7 @@ int main(int argc, char **argv)
 		enum_converter<gender>();
 		enum_converter<log_level>();
 
+		database_util::register_enum<affix_type>();
 		database_util::register_enum<character_role>();
 		database_util::register_enum<character_trait_type>();
 		database_util::register_enum<commodity_type>();
