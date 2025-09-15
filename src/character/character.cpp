@@ -118,8 +118,10 @@ character *character::generate(const metternich::species *species, const mettern
 		generated_character->culture = const_cast<metternich::culture *>(vector::get_random(generated_character->get_species()->get_cultures()));
 	}
 	generated_character->religion = religion;
-	if (generated_character->get_culture() != nullptr) {
+	if (generated_character->get_culture() != nullptr && generated_character->get_culture()->get_default_phenotype()->get_species() == generated_character->get_species()) {
 		generated_character->phenotype = generated_character->get_culture()->get_default_phenotype();
+	} else if (generated_character->get_species()->get_phenotypes().size() == 1) {
+		generated_character->phenotype = generated_character->get_species()->get_phenotypes().at(0);
 	}
 	generated_character->home_settlement = home_settlement;
 	generated_character->set_start_date(game::get()->get_date());
@@ -204,7 +206,7 @@ void character::initialize()
 		}
 	}
 
-	if (this->get_phenotype() == nullptr && this->get_culture() != nullptr) {
+	if (this->get_phenotype() == nullptr && this->get_culture() != nullptr && this->get_culture()->get_default_phenotype() != nullptr && (this->get_species() == nullptr || this->get_culture()->get_default_phenotype()->get_species() == this->get_species())) {
 		this->phenotype = this->get_culture()->get_default_phenotype();
 	}
 
