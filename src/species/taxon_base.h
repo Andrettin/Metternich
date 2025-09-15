@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "database/named_data_entry.h"
 #include "language/name_variant.h"
 #include "util/dice.h"
@@ -58,6 +59,7 @@ public:
 	const dice &get_maximum_age_modifier() const;
 	const dice &get_starting_age_modifier(const starting_age_category category) const;
 
+	const data_entry_map<item_slot, int> &get_item_slot_counts() const;
 	int get_item_slot_count(const item_slot *slot) const;
 
 	const name_generator *get_given_name_generator(const gender gender) const;

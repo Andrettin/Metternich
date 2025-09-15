@@ -50,6 +50,8 @@ public:
 	void create_attribute_rows();
 	void create_armor_class_rows();
 	void create_to_hit_bonus_rows();
+	void create_equipment_rows();
+	void create_inventory_rows();
 
 signals:
 	void character_changed();

@@ -7,6 +7,8 @@
 #include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "country/culture.h"
+#include "item/item.h"
+#include "item/item_slot.h"
 #include "religion/deity.h"
 #include "religion/pantheon.h"
 #include "religion/religion.h"
@@ -165,6 +167,9 @@ void character_data_model::set_character(const metternich::character *character)
 		this->create_to_hit_bonus_rows();
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Damage:", character_game_data->get_damage_dice().to_display_string()));
+
+		this->create_equipment_rows();
+		this->create_inventory_rows();
 	}
 
 	this->endResetModel();
@@ -206,6 +211,54 @@ void character_data_model::create_to_hit_bonus_rows()
 	auto to_hit_bonus_row = std::make_unique<character_data_row>("To Hit Bonus:", number::to_signed_string(character_game_data->get_to_hit_bonus()));
 
 	this->top_rows.push_back(std::move(to_hit_bonus_row));
+}
+
+void character_data_model::create_equipment_rows()
+{
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	auto top_row = std::make_unique<character_data_row>("Equipment");
+
+	for (const auto &[item_slot, count] : this->get_character()->get_species()->get_item_slot_counts()) {
+		const std::vector<item *> &slot_equipped_items = character_game_data->get_equipped_items(item_slot);
+
+		for (int i = 0; i < count; ++i) {
+			std::string slot_name;
+			if (count > 1) {
+				slot_name = std::format("{} {}:", item_slot->get_name(), i + 1);
+			} else {
+				slot_name = item_slot->get_name() + ":";
+			}
+
+			std::string item_name = "None";
+			if (static_cast<size_t>(i) < slot_equipped_items.size()) {
+				item_name = slot_equipped_items[i]->get_name();
+			}
+
+			auto row = std::make_unique<character_data_row>(slot_name, item_name, top_row.get());
+			top_row->child_rows.push_back(std::move(row));
+		}
+	}
+
+	this->top_rows.push_back(std::move(top_row));
+}
+
+void character_data_model::create_inventory_rows()
+{
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	auto top_row = std::make_unique<character_data_row>("Inventory");
+
+	for (const qunique_ptr<item> &item : character_game_data->get_items()) {
+		if (item->is_equipped()) {
+			continue;
+		}
+
+		auto row = std::make_unique<character_data_row>(item->get_name(), std::string(), top_row.get());
+		top_row->child_rows.push_back(std::move(row));
+	}
+
+	this->top_rows.push_back(std::move(top_row));
 }
 
 }

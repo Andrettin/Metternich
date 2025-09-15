@@ -210,6 +210,11 @@ const dice &taxon_base::get_starting_age_modifier(const starting_age_category ca
 	return dice;
 }
 
+const data_entry_map<item_slot, int> &taxon_base::get_item_slot_counts() const
+{
+	return this->item_slot_counts;
+}
+
 int taxon_base::get_item_slot_count(const item_slot *slot) const
 {
 	const auto find_iterator = this->item_slot_counts.find(slot);
