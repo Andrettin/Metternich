@@ -22,6 +22,8 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/game_rules.h"
+#include "item/item.h"
+#include "item/item_type.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -1264,6 +1266,95 @@ bool character_game_data::can_learn_spell(const spell *spell) const
 void character_game_data::learn_spell(const spell *spell)
 {
 	this->add_spell(spell);
+}
+
+QVariantList character_game_data::get_items_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_items());
+}
+
+void character_game_data::add_item(qunique_ptr<item> &&item)
+{
+	metternich::item *item_ptr = item.get();
+	this->items.push_back(std::move(item));
+	emit items_changed();
+
+	if (this->can_equip_item(item_ptr, false)) {
+		this->equip_item(item_ptr);
+	}
+}
+
+void character_game_data::remove_item(item *item)
+{
+	if (item->is_equipped()) {
+		this->deequip_item(item);
+	}
+
+	vector::remove(this->items, item);
+	emit items_changed();
+}
+
+bool character_game_data::can_equip_item(const item *item, const bool ignore_already_equipped) const
+{
+	const item_slot *slot = item->get_slot();
+	if (slot == nullptr) {
+		return false;
+	}
+
+	const int item_slot_count = this->character->get_species()->get_item_slot_count(slot);
+	if (ignore_already_equipped) {
+		if (item_slot_count == 0) {
+			return false;
+		}
+	} else {
+		if (item_slot_count == this->get_equipped_item_count(slot)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void character_game_data::equip_item(item *item)
+{
+	assert_throw(item->get_slot() != nullptr);
+
+	const int slot_count = this->character->get_species()->get_item_slot_count(item->get_slot());
+	assert_throw(slot_count > 0);
+
+	const int used_slots = this->get_equipped_item_count(item->get_slot());
+	assert_throw(used_slots <= slot_count);
+	if (used_slots == slot_count) {
+		this->deequip_item(this->get_equipped_items(item->get_slot()).at(0));
+	}
+
+	this->equipped_items[item->get_slot()].push_back(item);
+
+	item->set_equipped(true);
+
+	this->on_item_equipped(item, 1);
+}
+
+void character_game_data::deequip_item(item *item)
+{
+	std::vector<metternich::item *> &equipped_items = this->equipped_items[item->get_slot()];
+	std::erase(equipped_items, item);
+
+	if (equipped_items.empty()) {
+		this->equipped_items.erase(item->get_slot());
+	}
+
+	item->set_equipped(false);
+
+	this->on_item_equipped(item, -1);
+}
+
+void character_game_data::on_item_equipped(const item *item, const int multiplier)
+{
+	const item_type *type = item->get_type();
+	if (type->get_modifier() != nullptr) {
+		type->get_modifier()->apply(this->character, multiplier);
+	}
 }
 
 void character_game_data::set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value)

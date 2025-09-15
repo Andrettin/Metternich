@@ -4,12 +4,15 @@
 
 #include "character/starting_age_category.h"
 #include "database/gsml_data.h"
+#include "item/item_slot.h"
 #include "language/fallback_name_generator.h"
 #include "language/gendered_name_generator.h"
 #include "language/name_generator.h"
 #include "species/taxon.h"
 #include "util/gender.h"
 #include "util/vector_util.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -32,6 +35,13 @@ void taxon_base::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			this->starting_age_modifiers[magic_enum::enum_cast<starting_age_category>(key).value()] = dice(value);
+		});
+	} else if (tag == "item_slots") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->item_slot_counts[item_slot::get(key)] = std::stoi(value);
 		});
 	} else if (tag == "given_names") {
 		if (this->given_name_generator == nullptr) {
@@ -198,6 +208,17 @@ const dice &taxon_base::get_starting_age_modifier(const starting_age_category ca
 
 	static constexpr dice dice;
 	return dice;
+}
+
+int taxon_base::get_item_slot_count(const item_slot *slot) const
+{
+	const auto find_iterator = this->item_slot_counts.find(slot);
+
+	if (find_iterator != this->item_slot_counts.end()) {
+		return find_iterator->second;
+	}
+
+	return this->get_supertaxon()->get_item_slot_count(slot);
 }
 
 const name_generator *taxon_base::get_given_name_generator(const gender gender) const

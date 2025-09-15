@@ -27,4 +27,16 @@ human = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=
 		rogue = U
 		warrior = U
 	}
+	item_slots = {
+		weapon = 1
+		shield = 1
+		armor = 1
+		helmet = 1
+		amulet = 1
+		belt = 1
+		cloak = 1
+		gloves = 1
+		ring = 2
+		boots = 1
+	}
 }

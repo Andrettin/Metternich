@@ -38,6 +38,18 @@ half_elf = {
 		rogue = 12
 		warrior = 14
 	}
+	item_slots = {
+		weapon = 1
+		shield = 1
+		armor = 1
+		helmet = 1
+		amulet = 1
+		belt = 1
+		cloak = 1
+		gloves = 1
+		ring = 2
+		boots = 1
+	}
 	modifier = {
 		dexterity = 1
 		constitution = -1

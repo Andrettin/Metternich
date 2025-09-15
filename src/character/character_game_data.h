@@ -18,6 +18,8 @@ class character_attribute;
 class character_trait;
 class civilian_unit;
 class country;
+class item;
+class item_slot;
 class military_unit;
 class military_unit_type;
 class office;
@@ -55,6 +57,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(bool governor READ is_governor NOTIFY governor_changed)
 	Q_PROPERTY(bool landholder READ is_landholder NOTIFY landholder_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
+	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
 
 public:
@@ -359,6 +362,37 @@ public:
 
 	void learn_spell(const spell *spell);
 
+	const std::vector<qunique_ptr<item>> &get_items() const
+	{
+		return this->items;
+	}
+
+	QVariantList get_items_qvariant_list() const;
+	void add_item(qunique_ptr<item> &&item);
+	void remove_item(item *item);
+
+	const std::vector<item *> &get_equipped_items(const item_slot *slot) const
+	{
+		const auto find_iterator = this->equipped_items.find(slot);
+
+		if (find_iterator != this->equipped_items.end()) {
+			return find_iterator->second;
+		}
+
+		static const std::vector<item *> empty_vector;
+		return empty_vector;
+	}
+
+	int get_equipped_item_count(const item_slot *slot) const
+	{
+		return static_cast<int>(this->get_equipped_items(slot).size());
+	}
+
+	bool can_equip_item(const item *item, const bool ignore_already_equipped) const;
+	void equip_item(item *item);
+	void deequip_item(item *item);
+	void on_item_equipped(const item *item, const int multiplier);
+
 	const centesimal_int &get_commanded_military_unit_stat_modifier(const military_unit_stat stat) const
 	{
 		const auto find_iterator = this->commanded_military_unit_stat_modifiers.find(stat);
@@ -421,6 +455,8 @@ signals:
 	void governor_changed();
 	void landholder_changed();
 	void spells_changed();
+	void items_changed();
+	void equipped_items_changed();
 
 private:
 	const metternich::character *character = nullptr;
@@ -444,6 +480,8 @@ private:
 	metternich::civilian_unit *civilian_unit = nullptr;
 	spell_set spells;
 	spell_set item_spells;
+	std::vector<qunique_ptr<item>> items;
+	data_entry_map<item_slot, std::vector<item *>> equipped_items;
 	std::map<military_unit_stat, centesimal_int> commanded_military_unit_stat_modifiers;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> commanded_military_unit_type_stat_modifiers;
 };
