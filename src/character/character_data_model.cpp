@@ -168,8 +168,10 @@ void character_data_model::set_character(const metternich::character *character)
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Damage:", character_game_data->get_damage_dice().to_display_string()));
 
-		this->create_equipment_rows();
-		this->create_inventory_rows();
+		if (!character_game_data->get_items().empty()) {
+			this->create_equipment_rows();
+			this->create_inventory_rows();
+		}
 	}
 
 	this->endResetModel();
@@ -223,6 +225,10 @@ void character_data_model::create_equipment_rows()
 		const std::vector<item *> &slot_equipped_items = character_game_data->get_equipped_items(item_slot);
 
 		for (int i = 0; i < count; ++i) {
+			if (static_cast<size_t>(i) >= slot_equipped_items.size()) {
+				break;
+			}
+
 			std::string slot_name;
 			if (count > 1) {
 				slot_name = std::format("{} {}:", item_slot->get_name(), i + 1);
@@ -230,14 +236,13 @@ void character_data_model::create_equipment_rows()
 				slot_name = item_slot->get_name() + ":";
 			}
 
-			std::string item_name = "None";
-			if (static_cast<size_t>(i) < slot_equipped_items.size()) {
-				item_name = slot_equipped_items[i]->get_name();
-			}
-
-			auto row = std::make_unique<character_data_row>(slot_name, item_name, top_row.get());
+			auto row = std::make_unique<character_data_row>(slot_name, slot_equipped_items[i]->get_name(), top_row.get());
 			top_row->child_rows.push_back(std::move(row));
 		}
+	}
+
+	if (top_row->child_rows.empty()) {
+		return;
 	}
 
 	this->top_rows.push_back(std::move(top_row));
@@ -256,6 +261,10 @@ void character_data_model::create_inventory_rows()
 
 		auto row = std::make_unique<character_data_row>(item->get_name(), std::string(), top_row.get());
 		top_row->child_rows.push_back(std::move(row));
+	}
+
+	if (top_row->child_rows.empty()) {
+		return;
 	}
 
 	this->top_rows.push_back(std::move(top_row));
