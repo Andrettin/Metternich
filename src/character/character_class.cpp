@@ -125,7 +125,7 @@ int64_t character_class::get_experience_for_level(const int level) const
 
 std::string character_class::get_level_effects_string(const int level, const metternich::character *character) const
 {
-	std::string str = std::format("Hit Points: +{}", this->get_hit_dice().to_string());
+	std::string str = std::format("Hit Points: +{}", this->get_hit_dice().to_display_string());
 
 	const modifier<const metternich::character> *level_modifier = this->get_level_modifier(level);
 	if (level_modifier != nullptr) {

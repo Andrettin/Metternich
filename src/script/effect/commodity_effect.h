@@ -129,7 +129,7 @@ public:
 
 		if (std::holds_alternative<dice>(this->quantity_variant)) {
 			const dice dice = std::get<archimedes::dice>(this->quantity_variant);
-			str = dice.to_string();
+			str = dice.to_display_string();
 		} else {
 			str = number::to_formatted_string(std::get<int>(this->quantity_variant));
 		}
