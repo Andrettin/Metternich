@@ -3,6 +3,11 @@
 Q_MOC_INCLUDE("item/item_type.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
+namespace archimedes {
+	class gsml_data;
+	class gsml_property;
+}
+
 namespace metternich {
 
 class icon;
@@ -19,6 +24,12 @@ class item final : public QObject
 
 public:
 	explicit item(const item_type *type);
+	explicit item(const gsml_data &scope);
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	const std::string &get_name() const
 	{

@@ -106,6 +106,17 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &property) {
 			this->species_armor_class_bonuses[species::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "items") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			auto item = make_qunique<metternich::item>(child_scope);
+			child_scope.process(item.get());
+			metternich::item *item_ptr = item.get();
+			this->items.push_back(std::move(item));
+
+			if (item_ptr->is_equipped()) {
+				this->equipped_items[item_ptr->get_slot()].push_back(item_ptr);
+			}
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data scope: \"{}\".", tag));
 	}
@@ -141,6 +152,14 @@ gsml_data character_game_data::to_gsml_data() const
 			species_armor_class_bonuses_data.add_property(species->get_identifier(), std::to_string(bonus));
 		}
 		data.add_child(std::move(species_armor_class_bonuses_data));
+	}
+
+	if (!this->items.empty()) {
+		gsml_data items_data("items");
+		for (const qunique_ptr<item> &item : this->items) {
+			items_data.add_child(item->to_gsml_data());
+		}
+		data.add_child(std::move(items_data));
 	}
 
 	return data;
