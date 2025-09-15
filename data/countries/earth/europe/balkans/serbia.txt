@@ -1,6 +1,7 @@
 serbia = {
 	name = "Serbia"
 	type = polity
+	color = { 166 72 57 }
 	culture = serbian
 	default_religion = orthodox
 	default_tier = kingdom

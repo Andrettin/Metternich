@@ -1,11 +1,15 @@
 lithuania = {
 	name = "Lithuania"
 	type = polity
+	color = { 154 69 116 }
 	culture = lithuanian
 	default_religion = catholic
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = vilnius
+	short_names = {
+		tribe = "Lithuanians"
+	}
 	eras = {
 		medieval_era
 	}

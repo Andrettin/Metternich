@@ -26,6 +26,10 @@ croatia = {
 			religion = catholic
 		}
 		
+		1000 = {
+			owner = croatia #part of the Kingdom of Croatia c. 1000; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 58-59.
+		}
+		
 		1204 = {
 			owner = hungary #part of Hungary in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
 		}

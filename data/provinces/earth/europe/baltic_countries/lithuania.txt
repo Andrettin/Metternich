@@ -31,6 +31,11 @@ lithuania = {
 			culture = estonian
 		}
 		
+		1000 = {
+			owner = lithuania #territory of the Lithuanians c. 1000; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 58-59.
+			culture = lithuanian
+		}
+		
 		1360 = {
 			owner = lithuania #part of Lithuania in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = lithuanian

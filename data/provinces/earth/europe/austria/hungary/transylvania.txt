@@ -22,6 +22,12 @@ transylvania = {
 			culture = gothic
 		}
 		
+		1000 = {
+			owner = hungary #part of the Kingdom of Hungary c. 1000; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 58-59.
+			culture = romanian
+			religion = orthodox
+		}
+		
 		1204 = {
 			owner = hungary #part of Hungary in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
 			culture = romanian
