@@ -1,6 +1,7 @@
 carniola = {
 	name = "Carniola"
 	type = polity
+	color = { 150 200 230 }
 	culture = austrian
 	default_religion = catholic
 	default_tier = duchy

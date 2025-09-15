@@ -1,6 +1,7 @@
 estonians = {
 	name = "Estonians"
 	type = tribe
+	color = { 179 29 100 }
 	culture = estonian
 	default_religion = pagan
 	default_tier = duchy

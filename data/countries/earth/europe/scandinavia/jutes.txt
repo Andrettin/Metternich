@@ -1,6 +1,7 @@
 jutes = {
 	name = "Jutes"
 	type = tribe
+	color = { 224 74 74 }
 	culture = anglian
 	default_religion = pagan
 	default_tier = duchy

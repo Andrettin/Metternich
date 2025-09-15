@@ -1,6 +1,7 @@
 trent = {
 	name = "Trent"
 	type = polity
+	color = { 148 122 151 }
 	culture = austrian
 	default_religion = catholic
 	default_tier = county #bishopric

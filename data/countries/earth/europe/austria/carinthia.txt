@@ -1,6 +1,7 @@
 carinthia = {
 	name = "Carinthia"
 	type = polity
+	color = { 165 255 250 }
 	culture = austrian
 	default_religion = catholic
 	default_tier = duchy

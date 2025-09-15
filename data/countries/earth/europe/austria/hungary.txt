@@ -1,6 +1,7 @@
 hungary = {
 	name = "Hungary"
 	type = polity
+	color = { 152 85 92 }
 	culture = magyar
 	default_religion = catholic
 	default_tier = kingdom

@@ -1,6 +1,7 @@
 ostmark = {
 	name = "Ostmark"
 	type = polity
+	color = { 180 180 180 }
 	culture = german
 	default_religion = catholic
 	default_tier = duchy #march

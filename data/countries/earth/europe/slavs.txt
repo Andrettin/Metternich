@@ -1,6 +1,7 @@
 slavs = {
 	name = "Slavs"
 	type = tribe
+	color = { 50 150 130 }
 	culture = slavic
 	default_religion = pagan
 	default_tier = kingdom

@@ -1,6 +1,7 @@
 danes = {
 	name = "Danes"
 	type = tribe
+	color = { 172 70 66 }
 	culture = norse
 	default_religion = pagan
 	default_tier = kingdom

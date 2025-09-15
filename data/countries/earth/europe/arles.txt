@@ -1,6 +1,7 @@
 arles = { #Kingdom of Arles
 	name = "Arles"
 	type = polity
+	color = { 134 0 37 }
 	culture = french
 	default_religion = catholic
 	default_tier = kingdom

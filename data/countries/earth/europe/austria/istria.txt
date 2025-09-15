@@ -1,6 +1,7 @@
 istria = {
 	name = "Istria"
 	type = polity
+	color = { 165 245 200 }
 	culture = italian
 	default_religion = catholic
 	default_tier = duchy

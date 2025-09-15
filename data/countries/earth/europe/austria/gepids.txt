@@ -1,6 +1,7 @@
 gepids = {
 	name = "Gepids"
 	type = tribe
+	color = { 170 211 67 }
 	culture = gothic
 	default_religion = pagan
 	default_tier = duchy

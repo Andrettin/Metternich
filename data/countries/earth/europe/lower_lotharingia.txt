@@ -1,6 +1,7 @@
 lower_lotharingia = {
 	name = "Lower Lotharingia"
 	type = polity
+	color = { 95 106 207 }
 	culture = frankish
 	default_religion = catholic
 	default_tier = duchy
