@@ -21,7 +21,6 @@ warrior = {
 	level_modifiers = {
 		1 = {
 			to_hit_bonus = 1
-			armor_class = 6 #chain mail and shield
 		}
 		2 = {
 			to_hit_bonus = 1
@@ -29,5 +28,10 @@ warrior = {
 		3 = {
 			to_hit_bonus = 1
 		}
+	}
+	starting_items = {
+		long_sword
+		shield
+		chain_mail
 	}
 }

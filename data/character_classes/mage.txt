@@ -15,4 +15,9 @@ mage = {
 		3 = 5000
 		4 = 10000
 	}
+	starting_items = {
+		quarterstaff
+		dagger
+		robe
+	}
 }

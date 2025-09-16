@@ -16,9 +16,9 @@ cleric = {
 		3 = 3000
 		4 = 6000
 	}
-	level_modifiers = {
-		1 = {
-			armor_class = 3 #leather armor and shield
-		}
+	starting_items = {
+		mace
+		shield
+		leather_armor
 	}
 }

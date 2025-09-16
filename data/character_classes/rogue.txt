@@ -19,11 +19,13 @@ rogue = {
 		4 = 5000
 	}
 	level_modifiers = {
-		1 = {
-			armor_class = 2 #leather armor
-		}
 		3 = {
 			to_hit_bonus = 1
 		}
+	}
+	starting_items = {
+		short_sword
+		bow
+		leather_armor
 	}
 }
