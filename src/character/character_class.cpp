@@ -5,6 +5,7 @@
 #include "character/character_attribute.h"
 #include "character/starting_age_category.h"
 #include "database/defines.h"
+#include "item/item_type.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
@@ -64,6 +65,10 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 			effect_list->process_gsml_data(child_scope);
 			this->level_effects[level] = std::move(effect_list);
 		});
+	} else if (tag == "starting_items") {
+		for (const std::string &value : values) {
+			this->starting_items.push_back(item_type::get(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

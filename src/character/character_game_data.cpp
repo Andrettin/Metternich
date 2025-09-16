@@ -213,6 +213,26 @@ void character_game_data::apply_species_and_class(const int level)
 	}
 
 	this->set_level(level);
+
+	if (character_class != nullptr) {
+		data_entry_set<item_slot> filled_item_slots;
+		for (const qunique_ptr<item> &item : this->get_items()) {
+			if (item->get_slot() != nullptr) {
+				filled_item_slots.insert(item->get_slot());
+
+				//FIXME: if the item is a two-handed weapon, it should also add mark the shield slot as filled
+			}
+		}
+
+		for (const item_type *starting_item_type : character_class->get_starting_items()) {
+			if (starting_item_type->get_slot() != nullptr && filled_item_slots.contains(starting_item_type->get_slot())) {
+				continue;
+			}
+
+			auto item = make_qunique<metternich::item>(starting_item_type, nullptr, nullptr);
+			this->add_item(std::move(item));
+		}
+	}
 }
 
 void character_game_data::apply_history(const QDate &start_date)

@@ -1,9 +1,26 @@
+dagger = {
+	name = "Dagger"
+	item_class = weapon
+	icon = dagger
+	price = 2gp
+	damage_dice = 1d4
+}
+
 mace = {
 	name = "Mace"
 	item_class = weapon
 	icon = saber
 	price = 8gp
 	damage_dice = 1d6+1
+}
+
+quarterstaff = {
+	name = "Quarterstaff"
+	item_class = weapon
+	icon = saber
+	price = 1gp #0gp
+	damage_dice = 1d6
+	#two_handed = true
 }
 
 short_sword = {

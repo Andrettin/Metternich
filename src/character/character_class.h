@@ -13,6 +13,7 @@ namespace metternich {
 class character_attribute;
 class civilian_unit_class;
 class country;
+class item_type;
 class species;
 class technology;
 enum class military_unit_category;
@@ -131,6 +132,11 @@ public:
 
 	std::string get_level_effects_string(const int level, const metternich::character *character) const;
 
+	const std::vector<const item_type *> &get_starting_items() const
+	{
+		return this->starting_items;
+	}
+
 signals:
 	void changed();
 
@@ -149,6 +155,7 @@ private:
 	std::map<int, int64_t> experience_per_level;
 	std::map<int, std::unique_ptr<const modifier<const character>>> level_modifiers;
 	std::map<int, std::unique_ptr<const effect_list<const character>>> level_effects;
+	std::vector<const item_type *> starting_items;
 };
 
 }
