@@ -3,4 +3,16 @@ high_middle_ages = {
 	start_date = 1066.12.26
 	map_template = earth
 	hidden = true
+	map_template = central_europe
+	default_countries = {
+		#apulia
+		bohemia
+		denmark
+		#england
+		#holy_roman_empire
+		#normandy
+		#norway
+		#scotland
+		#tuscany
+	}
 }
