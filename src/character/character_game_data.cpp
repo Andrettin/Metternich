@@ -437,7 +437,10 @@ void character_game_data::set_dead(const bool dead)
 
 void character_game_data::die()
 {
+	this->set_dead(true);
+
 	if (this->get_office() != nullptr) {
+		assert_throw(this->get_country() != nullptr);
 		this->get_country()->get_government()->on_office_holder_died(this->get_office(), this->character);
 	}
 
@@ -457,8 +460,8 @@ void character_game_data::die()
 		this->character->get_holdable_site()->get_game_data()->on_landholder_died(this->character);
 	}
 
+	assert_throw(this->get_office() == nullptr);
 	this->set_country(nullptr);
-	this->set_dead(true);
 }
 
 const metternich::character_class *character_game_data::get_character_class() const
@@ -1048,6 +1051,10 @@ void character_game_data::set_office(const metternich::office *office)
 {
 	if (office == this->get_office()) {
 		return;
+	}
+
+	if (office != nullptr) {
+		assert_throw(!this->is_dead());
 	}
 
 	this->office = office;

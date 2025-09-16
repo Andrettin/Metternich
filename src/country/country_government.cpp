@@ -513,6 +513,11 @@ const character *country_government::get_best_office_holder(const office *office
 bool country_government::can_have_office_holder(const office *office, const character *character) const
 {
 	const character_game_data *character_game_data = character->get_game_data();
+	
+	if (character_game_data->is_dead()) {
+		return false;
+	}
+
 	if (character_game_data->get_country() != nullptr && character_game_data->get_country() != this->country) {
 		return false;
 	}
@@ -527,10 +532,6 @@ bool country_government::can_have_office_holder(const office *office, const char
 	}
 
 	if (character->get_death_date().isValid() && game::get()->get_date() >= character->get_death_date()) {
-		return false;
-	}
-
-	if (character_game_data->is_dead()) {
 		return false;
 	}
 
@@ -606,7 +607,12 @@ void country_government::on_office_holder_died(const office *office, const chara
 		}
 	}
 
+	this->set_office_holder(office, nullptr);
+	assert_throw(office_holder->get_game_data()->get_office() == nullptr);
+
 	this->check_office_holder(office, office_holder);
+	assert_throw(this->get_office_holder(office) != office_holder);
+	assert_throw(office_holder->get_game_data()->get_office() == nullptr);
 }
 
 std::vector<const office *> country_government::get_available_offices() const
