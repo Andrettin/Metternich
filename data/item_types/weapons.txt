@@ -1,3 +1,11 @@
+bow = {
+	name = "Bow"
+	item_class = weapon
+	icon = bow
+	price = 100gp
+	damage_dice = 1d8
+}
+
 dagger = {
 	name = "Dagger"
 	item_class = weapon
