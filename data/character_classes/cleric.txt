@@ -3,7 +3,6 @@ cleric = {
 	attribute = wisdom
 	max_level = 3
 	hit_dice = 1d8
-	damage_dice = 1d6+1 #mace
 	starting_age_category = trained
 	allowed_species = {
 		dwarf

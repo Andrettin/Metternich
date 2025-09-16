@@ -4,7 +4,6 @@ rogue = {
 	civilian_unit_class = spy
 	max_level = 3
 	hit_dice = 1d6
-	damage_dice = 1d8 #bow
 	starting_age_category = intuitive
 	allowed_species = {
 		dwarf

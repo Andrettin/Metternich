@@ -24,6 +24,7 @@
 #include "game/game_rules.h"
 #include "item/enchantment.h"
 #include "item/item.h"
+#include "item/item_slot.h"
 #include "item/item_type.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -796,8 +797,12 @@ void character_game_data::change_to_hit_bonus(const int change)
 
 const dice &character_game_data::get_damage_dice() const
 {
-	if (this->get_character_class() != nullptr) {
-		return this->get_character_class()->get_damage_dice();
+	for (const auto &[slot, items] : this->equipped_items) {
+		if (!slot->is_weapon()) {
+			continue;
+		}
+
+		return items.at(0)->get_type()->get_damage_dice();
 	}
 
 	static constexpr dice null_dice;

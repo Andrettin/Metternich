@@ -3,7 +3,6 @@ mage = {
 	attribute = intelligence
 	max_level = 3
 	hit_dice = 1d4
-	damage_dice = 1d6 #quarterstaff
 	starting_age_category = trained
 	allowed_species = {
 		elf
