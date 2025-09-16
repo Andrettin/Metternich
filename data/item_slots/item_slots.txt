@@ -5,6 +5,7 @@ weapon = {
 
 shield = {
 	name = "Shield"
+	off_hand = true
 }
 
 armor = {

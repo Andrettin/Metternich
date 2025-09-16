@@ -10,6 +10,7 @@ class item_slot final : public named_data_entry, public data_type<item_slot>
 	Q_OBJECT
 
 	Q_PROPERTY(bool weapon MEMBER weapon READ is_weapon NOTIFY changed)
+	Q_PROPERTY(bool off_hand MEMBER off_hand READ is_off_hand NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "item_slot";
@@ -25,11 +26,17 @@ public:
 		return this->weapon;
 	}
 
+	bool is_off_hand() const
+	{
+		return this->off_hand;
+	}
+
 signals:
 	void changed();
 
 private:
 	bool weapon = false;
+	bool off_hand = false;
 };
 
 }

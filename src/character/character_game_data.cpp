@@ -802,6 +802,7 @@ const dice &character_game_data::get_damage_dice() const
 			continue;
 		}
 
+		assert_throw(!items.empty());
 		return items.at(0)->get_type()->get_damage_dice();
 	}
 
@@ -1362,6 +1363,27 @@ bool character_game_data::can_equip_item(const item *item, const bool ignore_alr
 		if (item_slot_count == this->get_equipped_item_count(slot)) {
 			return false;
 		}
+
+		if (item->get_type()->is_two_handed()) {
+			for (const auto &[other_slot, other_items] : this->equipped_items) {
+				assert_throw(!other_items.empty());
+
+				if (other_slot->is_off_hand()) {
+					//cannot equip a two-handed weapon if something is already equipped in the off-hand slot
+					return false;
+				}
+			}
+		} else if (slot->is_off_hand()) {
+			for (const auto &[other_slot, other_items] : this->equipped_items) {
+				for (const metternich::item *other_item : other_items) {
+					if (other_item->get_type()->is_two_handed()) {
+						//cannot equip something in the off-hand slot if a two-handed weapon is already equipped
+						assert_throw(other_slot->is_weapon());
+						return false;
+					}
+				}
+			}
+		}
 	}
 
 	return true;
@@ -1374,10 +1396,35 @@ void character_game_data::equip_item(item *item)
 	const int slot_count = this->character->get_species()->get_item_slot_count(item->get_slot());
 	assert_throw(slot_count > 0);
 
+	std::vector<metternich::item *> items_to_deequip;
+
 	const int used_slots = this->get_equipped_item_count(item->get_slot());
 	assert_throw(used_slots <= slot_count);
 	if (used_slots == slot_count) {
-		this->deequip_item(this->get_equipped_items(item->get_slot()).at(0));
+		items_to_deequip.push_back(this->get_equipped_items(item->get_slot()).at(0));
+	}
+
+	if (item->get_type()->is_two_handed()) {
+		for (const auto &[other_slot, other_items] : this->equipped_items) {
+			if (other_slot->is_off_hand()) {
+				//de-equip what is already equipped in the off-hand slot if a two-handed weapon is being equipped
+				vector::merge(items_to_deequip, other_items);
+			}
+		}
+	} else if (item->get_slot()->is_off_hand()) {
+		for (const auto &[other_slot, other_items] : this->equipped_items) {
+			for (metternich::item *other_item : other_items) {
+				if (other_item->get_type()->is_two_handed()) {
+					//de-equip two-handed weapons if something is being equipped in the off-hand slot
+					assert_throw(other_slot->is_weapon());
+					items_to_deequip.push_back(other_item);
+				}
+			}
+		}
+	}
+
+	for (metternich::item *item_to_deequip : items_to_deequip) {
+		this->deequip_item(item_to_deequip);
 	}
 
 	this->equipped_items[item->get_slot()].push_back(item);
