@@ -223,7 +223,11 @@ int taxon_base::get_item_slot_count(const item_slot *slot) const
 		return find_iterator->second;
 	}
 
-	return this->get_supertaxon()->get_item_slot_count(slot);
+	if (this->get_supertaxon() != nullptr) {
+		return this->get_supertaxon()->get_item_slot_count(slot);
+	}
+
+	return 0;
 }
 
 const name_generator *taxon_base::get_given_name_generator(const gender gender) const
