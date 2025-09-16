@@ -304,10 +304,11 @@ MenuBase {
 	
 	Rectangle {
 		id: scenario_list_border
+		anchors.top: scenario_list.top
+		anchors.topMargin: -1
 		anchors.horizontalCenter: scenario_list.horizontalCenter
-		anchors.verticalCenter: scenario_list.verticalCenter
 		width: scenario_list.width + 2
-		height: scenario_list.height + 2
+		height: Math.min(scenario_list.height, scenario_list.contentHeight) + 2
 		color: "transparent"
 		border.color: "white"
 		border.width: 1
