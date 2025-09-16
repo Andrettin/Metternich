@@ -594,7 +594,10 @@ void country_government::on_office_holder_died(const office *office, const chara
 			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 			if (office->is_ruler()) {
-				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
+				//engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
+
+				//FIXME: allow players to continue playing with player character succession
+				emit game::get()->game_over();
 			} else {
 				engine_interface::get()->add_notification(std::format("{} Retired", office_holder->get_full_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, {} {} has decided to retire.", string::lowered(office->get_name()), office_holder->get_full_name()));
 			}

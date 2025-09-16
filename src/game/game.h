@@ -276,6 +276,7 @@ signals:
 	void countries_changed();
 	void player_character_changed();
 	void player_country_changed();
+	void game_over();
 
 private:
 	qunique_ptr<game_rules> rules;

@@ -178,6 +178,12 @@ Item {
 			//FIXME: add preference to display the balance book every turn
 			//menu_stack.push("TradeView.qml")
 		}
+		
+		function onGame_over() {
+			menu_stack.replace("GameOverView.qml", {
+				character: metternich.game.player_character
+			})
+		}
 	}
 	
 	Connections {
